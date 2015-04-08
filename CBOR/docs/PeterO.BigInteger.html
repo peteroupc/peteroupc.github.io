@@ -1,0 +1,1585 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.BigInteger</title><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://peteroupc.github.io/canvasback/canvasback_min.js"></script>
+<script>
+CanvasBackground.colorBackground("#80ff80");
+</script>
+</head><body><div style="float:right; max-width: 50%; min-width: 20%; padding-left: 5px; padding-bottom: 5px"><!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.BigInteger</title><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://peteroupc.github.io/canvasback/canvasback_min.js"></script>
+<script>
+CanvasBackground.colorBackground("#80ff80");
+</script>
+</head><body><p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div><h1>PeterO.BigInteger</h1>
+
+<h2>PeterO.BigInteger</h2>
+
+<pre><code>public sealed class BigInteger :
+    System.IComparable,
+    System.IEquatable
+</code></pre>
+
+<p>An arbitrary-precision integer. Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, so they should not be compared using the &quot;==&quot; operator (which only checks if each side of the operator is the same instance).</p>
+
+<p>An arbitrary-precision integer.</p>
+
+<h3>fromByteArray</h3>
+
+<pre><code>public static PeterO.BigInteger fromByteArray(
+    byte[] bytes,
+    bool littleEndian);
+</code></pre>
+
+<p>Initializes a BigInteger object from an array of bytes.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A byte array. Can be empty, in which case the return value is 0.</p></li>
+<li><p><i>littleEndian</i>: A Boolean object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</li>
+</ul>
+
+<h3>testBit</h3>
+
+<pre><code>public bool testBit(
+    int index);
+</code></pre>
+
+<p>Returns whether a bit is set in the two&#39;s-complement representation of this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>index</i>: Zero based index of the bit to test. 0 means the least significant bit.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if the specified bit is set; otherwise, false.</p>
+
+<h3>toByteArray</h3>
+
+<pre><code>public byte[] toByteArray(
+    bool littleEndian);
+</code></pre>
+
+<p>Returns a byte array of this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>littleEndian</i>: A Boolean object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A byte array that represents the value of this object.</p>
+
+<h3>shiftLeft</h3>
+
+<pre><code>public PeterO.BigInteger shiftLeft(
+    int numberBits);
+</code></pre>
+
+<p>Shifts this object&#39;s value by a number of bits. A value of 1 doubles this value, a value of 2 multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>numberBits</i>: The number of bits to shift. Can be negative, in which case this is the same as shiftRight with the absolute value of numberBits.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<h3>shiftRight</h3>
+
+<pre><code>public PeterO.BigInteger shiftRight(
+    int numberBits);
+</code></pre>
+
+<p>Returns a big integer with the bits shifted to the right.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>numberBits</i>: Number of bits to shift right.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<h3>valueOf</h3>
+
+<pre><code>public static PeterO.BigInteger valueOf(
+    long longerValue);
+</code></pre>
+
+<p>Converts a 64-bit signed integer to a big integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>longerValue</i>: A 64-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object with the same value as the 64-bit number.</p>
+
+<h3>intValueChecked</h3>
+
+<pre><code>public int intValueChecked();
+</code></pre>
+
+<p>Converts this object&#39;s value to a 32-bit signed integer.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is too big to fit a 32-bit signed integer.</li>
+</ul>
+
+<h3>intValueUnchecked</h3>
+
+<pre><code>public int intValueUnchecked();
+</code></pre>
+
+<p>Converts this object&#39;s value to a 32-bit signed integer. If the value can&#39;t fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s two&#39;s complement representation (in which case the return value might have a different sign than this object&#39;s value).</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>longValueChecked</h3>
+
+<pre><code>public long longValueChecked();
+</code></pre>
+
+<p>Converts this object&#39;s value to a 64-bit signed integer.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is too big to fit a 64-bit signed integer.</li>
+</ul>
+
+<h3>longValueUnchecked</h3>
+
+<pre><code>public long longValueUnchecked();
+</code></pre>
+
+<p>Converts this object&#39;s value to a 64-bit signed integer. If the value can&#39;t fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s two&#39;s complement representation (in which case the return value might have a different sign than this object&#39;s value).</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<h3>intValue</h3>
+
+<pre><code>public int intValue();
+</code></pre>
+
+<p>Converts this object&#39;s value to a 32-bit signed integer. To make the conversion intention clearer, use the  <code>intValueChecked</code> and <code>intValueUnchecked</code> methods instead.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is too big to fit a 32-bit signed integer.</li>
+</ul>
+
+<h3>canFitInInt</h3>
+
+<pre><code>public bool canFitInInt();
+</code></pre>
+
+<p>Returns whether this object&#39;s value can fit in a 32-bit signed integer.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object&#39;s value is MinValue or greater, and MaxValue or less; otherwise, false.</p>
+
+<h3>longValue</h3>
+
+<pre><code>public long longValue();
+</code></pre>
+
+<p>Converts this object&#39;s value to a 64-bit signed integer. To make the conversion intention clearer, use the  <code>longValueChecked</code> and <code>longValueUnchecked</code> methods instead.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is too big to fit a 64-bit signed integer.</li>
+</ul>
+
+<h3>PowBigIntVar</h3>
+
+<pre><code>public PeterO.BigInteger PowBigIntVar(
+    PeterO.BigInteger power);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>power</i>: A BigInteger object. (2).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>power</i>
+is null.</li>
+</ul>
+
+<h3>pow</h3>
+
+<pre><code>public PeterO.BigInteger pow(
+    int powerSmall);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>powerSmall</i>: A 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<h3>negate</h3>
+
+<pre><code>public PeterO.BigInteger negate();
+</code></pre>
+
+<p>Gets the value of this object with the sign reversed.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object&#39;s value with the sign reversed.</p>
+
+<h3>abs</h3>
+
+<pre><code>public PeterO.BigInteger abs();
+</code></pre>
+
+<p>Returns the absolute value of this object&#39;s value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object&#39;s value with the sign removed.</p>
+
+<h3>getUnsignedBitLength</h3>
+
+<pre><code>public int getUnsignedBitLength();
+</code></pre>
+
+<p>Finds the minimum number of bits needed to represent this object&#39;s absolute value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The number of bits in this object&#39;s value. Returns 0 if this object&#39;s value is 0, and returns 1 if the value is negative 1.</p>
+
+<h3>bitLength</h3>
+
+<pre><code>public int bitLength();
+</code></pre>
+
+<p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign. If the value is negative, finds the number of bits in a value equal to this object&#39;s absolute value minus 1.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The number of bits in this object&#39;s value. Returns 0 if this object&#39;s value is 0 or negative 1.</p>
+
+<h3>getDigitCount</h3>
+
+<pre><code>public int getDigitCount();
+</code></pre>
+
+<p>Finds the number of decimal digits this number has.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The number of decimal digits. Returns 1 if this object&#39; s value is 0.</p>
+
+<h3>toRadixString</h3>
+
+<pre><code>public string toRadixString(
+    int radix);
+</code></pre>
+
+<p>Generates a string representing the value of this object, in the given radix.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>radix</i>: A radix from 2 through 36. For example, to generate a hexadecimal string, specify 16. To generate a decimal string, specify 10.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A string object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2 or greater than 36.</li>
+</ul>
+
+<h3>ToString</h3>
+
+<pre><code>public override string ToString();
+</code></pre>
+
+<p>Converts this object to a text string in base 10.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string representation of this object.</p>
+
+<h3>fromString</h3>
+
+<pre><code>public static PeterO.BigInteger fromString(
+    string str);
+</code></pre>
+
+<p>Converts a string to an arbitrary-precision integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string containing only digits, except that it may start with a minus sign.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object with the same value as given in the string.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>System.FormatException:
+The parameter  <i>str</i>
+is in an invalid format.</p></li>
+</ul>
+
+<h3>fromRadixString</h3>
+
+<pre><code>public static PeterO.BigInteger fromRadixString(
+    string str,
+    int radix);
+</code></pre>
+
+<p>Converts a portion of a string to an arbitrary-precision integer. The string portion can begin with a minus sign (&#39;-&#39;) to indicate that it&#39;s negative.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A string object.</p></li>
+<li><p><i>radix</i>: A 32-bit signed integer.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object with the same value as given in the string portion.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2 or greater than 36.</p></li>
+<li><p>System.FormatException:
+The string portion is empty or in an invalid format.</p></li>
+</ul>
+
+<h3>fromSubstring</h3>
+
+<pre><code>public static PeterO.BigInteger fromSubstring(
+    string str,
+    int index,
+    int endIndex);
+</code></pre>
+
+<p>Converts a portion of a string to an arbitrary-precision integer. The string portion can begin with a minus sign (&#39;-&#39;) to indicate that it&#39;s negative.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A string object.</p></li>
+<li><p><i>index</i>: The index of the string that starts the string portion.</p></li>
+<li><p><i>endIndex</i>: The index of the string that ends the string portion. The length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object with the same value as given in the string portion.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is less than 0,  <i>endIndex</i>
+is less than 0, or either is greater than the string&#39;s length, or  <i>endIndex</i>
+is less than  <i>index</i>
+.</p></li>
+<li><p>System.FormatException:
+The string portion is empty or in an invalid format.</p></li>
+</ul>
+
+<h3>fromRadixSubstring</h3>
+
+<pre><code>public static PeterO.BigInteger fromRadixSubstring(
+    string str,
+    int radix,
+    int index,
+    int endIndex);
+</code></pre>
+
+<p>Converts a portion of a string to an arbitrary-precision integer in a given radix. The string portion can begin with a minus sign (&#39;-&#39;) to indicate that it&#39;s negative.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A string object.</p></li>
+<li><p><i>radix</i>: A base from 2 to 36. The possible digits start from 0 to 9, then from A to Z in base 36, and the possible digits start from 0 to 9, then from A to F in base 16.</p></li>
+<li><p><i>index</i>: The index of the string that starts the string portion.</p></li>
+<li><p><i>endIndex</i>: The index of the string that ends the string portion. The length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object with the same value as given in the string portion.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is less than 0,  <i>endIndex</i>
+is less than 0, or either is greater than the string&#39;s length, or  <i>endIndex</i>
+is less than  <i>index</i>
+.</p></li>
+<li><p>System.FormatException:
+The string portion is empty or in an invalid format.</p></li>
+</ul>
+
+<h3>getLowestSetBit</h3>
+
+<pre><code>public int getLowestSetBit();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>gcd</h3>
+
+<pre><code>public PeterO.BigInteger gcd(
+    PeterO.BigInteger bigintSecond);
+</code></pre>
+
+<p>Returns the greatest common divisor of two integers. The greatest common divisor (GCD) is also known as the greatest common factor (GCF).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigintSecond</i>: A BigInteger object. (2).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigintSecond</i>
+is null.</li>
+</ul>
+
+<h3>ModPow</h3>
+
+<pre><code>public PeterO.BigInteger ModPow(
+    PeterO.BigInteger pow,
+    PeterO.BigInteger mod);
+</code></pre>
+
+<p>Calculates the remainder when a BigInteger raised to a certain power is divided by another BigInteger.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>pow</i>: A BigInteger object. (2).</p></li>
+<li><p><i>mod</i>: A BigInteger object. (3).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>pow</i>
+is null.</li>
+</ul>
+
+<h3>Equals</h3>
+
+<pre><code>public override bool Equals(
+    object obj);
+</code></pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: An arbitrary object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if the objects are equal; otherwise, false.</p>
+
+<h3>GetHashCode</h3>
+
+<pre><code>public override int GetHashCode();
+</code></pre>
+
+<p>Returns the hash code for this instance.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit hash code.</p>
+
+<h3>add</h3>
+
+<pre><code>public PeterO.BigInteger add(
+    PeterO.BigInteger bigintAugend);
+</code></pre>
+
+<p>Adds this object and another object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigintAugend</i>: A BigInteger object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The sum of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigintAugend</i>
+is null.</li>
+</ul>
+
+<h3>subtract</h3>
+
+<pre><code>public PeterO.BigInteger subtract(
+    PeterO.BigInteger subtrahend);
+</code></pre>
+
+<p>Subtracts a BigInteger from this BigInteger.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>subtrahend</i>: A BigInteger object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The difference of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>subtrahend</i>
+is null.</li>
+</ul>
+
+<h3>multiply</h3>
+
+<pre><code>public PeterO.BigInteger multiply(
+    PeterO.BigInteger bigintMult);
+</code></pre>
+
+<p>Multiplies this instance by the value of a BigInteger object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigintMult</i>: A BigInteger object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The product of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigintMult</i>
+is null.</li>
+</ul>
+
+<h3>divide</h3>
+
+<pre><code>public PeterO.BigInteger divide(
+    PeterO.BigInteger bigintDivisor);
+</code></pre>
+
+<p>Divides this instance by the value of a BigInteger object. The result is rounded down (the fractional part is discarded). Except if the result is 0, it will be negative if this object is positive and the other is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigintDivisor</i>: A BigInteger object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The quotient of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.DivideByZeroException:
+The divisor is zero.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bigintDivisor</i>
+is null.</p></li>
+<li><p>System.DivideByZeroException:
+Attempted to divide by zero.</p></li>
+</ul>
+
+<h3>divideAndRemainder</h3>
+
+<pre><code>public PeterO.BigInteger[] divideAndRemainder(
+    PeterO.BigInteger divisor);
+</code></pre>
+
+<p>Divides this object by another big integer and returns the quotient and remainder.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>divisor</i>: The divisor.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An array with two big integers: the first is the quotient, and the second is the remainder.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter divisor is null.</p></li>
+<li><p>System.DivideByZeroException:
+The parameter divisor is 0.</p></li>
+<li><p>System.DivideByZeroException:
+Attempted to divide by zero.</p></li>
+</ul>
+
+<h3>mod</h3>
+
+<pre><code>public PeterO.BigInteger mod(
+    PeterO.BigInteger divisor);
+</code></pre>
+
+<p>Finds the modulus remainder that results when this instance is divided by the value of a BigInteger object. The modulus remainder is the same as the normal remainder if the normal remainder is positive, and equals divisor plus normal remainder if the normal remainder is negative.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>divisor</i>: A divisor greater than 0 (the modulus).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArithmeticException:
+The parameter  <i>divisor</i>
+is negative.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>divisor</i>
+is null.</p></li>
+</ul>
+
+<h3>remainder</h3>
+
+<pre><code>public PeterO.BigInteger remainder(
+    PeterO.BigInteger divisor);
+</code></pre>
+
+<p>Finds the remainder that results when this instance is divided by the value of a BigInteger object. The remainder is the value that remains when the absolute value of this object is divided by the absolute value of the other object; the remainder has the same sign (positive or negative) as this object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>divisor</i>: A BigInteger object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The remainder of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>divisor</i>
+is null.</p></li>
+<li><p>System.DivideByZeroException:
+Attempted to divide by zero.</p></li>
+</ul>
+
+<h3>CompareTo</h3>
+
+<pre><code>public sealed int CompareTo(
+    PeterO.BigInteger other);
+</code></pre>
+
+<p>Compares a BigInteger object with this instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: A BigInteger object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
+
+<h3>sqrt</h3>
+
+<pre><code>public PeterO.BigInteger sqrt();
+</code></pre>
+
+<p>Finds the square root of this instance&#39;s value, rounded down.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The square root of this object&#39;s value. Returns 0 if this value is 0 or less.</p>
+
+<h3>sqrtWithRemainder</h3>
+
+<pre><code>public PeterO.BigInteger[] sqrtWithRemainder();
+</code></pre>
+
+<p>Calculates the square root and the remainder.</p>
+
+<p><b>Returns:</b></p>
+
+<p>An array of two big integers: the first integer is the square root, and the second is the difference between this value and the square of the first integer. Returns two zeros if this value is 0 or less, or one and zero if this value equals 1.</p>
+
+<h3>ZERO</h3>
+
+<pre><code>public static readonly PeterO.BigInteger ZERO;
+</code></pre>
+
+<p>BigInteger object for the number zero.</p>
+
+<h3>ONE</h3>
+
+<pre><code>public static readonly PeterO.BigInteger ONE;
+</code></pre>
+
+<p>BigInteger object for the number one.</p>
+
+<h3>TEN</h3>
+
+<pre><code>public static readonly PeterO.BigInteger TEN;
+</code></pre>
+
+<p>BigInteger object for the number ten.</p>
+
+<h3>Operator <code>+</code></h3>
+
+<pre><code>public static PeterO.BigInteger operator +(
+    PeterO.BigInteger bthis,
+    PeterO.BigInteger augend);
+</code></pre>
+
+<p>Adds a BigInteger object and a BigInteger object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bthis</i>: A BigInteger object.</p></li>
+<li><p><i>augend</i>: A BigInteger object. (2).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The sum of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bthis</i>
+is null.</li>
+</ul>
+
+<h3>Operator <code>-</code></h3>
+
+<pre><code>public static PeterO.BigInteger operator -(
+    PeterO.BigInteger bthis,
+    PeterO.BigInteger subtrahend);
+</code></pre>
+
+<p>Subtracts two BigInteger values.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bthis</i>: A BigInteger value.</p></li>
+<li><p><i>subtrahend</i>: A BigInteger object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The difference of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bthis</i>
+is null.</li>
+</ul>
+
+<h3>Operator <code>*</code></h3>
+
+<pre><code>public static PeterO.BigInteger operator *(
+    PeterO.BigInteger operand1,
+    PeterO.BigInteger operand2);
+</code></pre>
+
+<p>Multiplies a BigInteger object by the value of a BigInteger object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>operand1</i>: A BigInteger object.</p></li>
+<li><p><i>operand2</i>: A BigInteger object. (2).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The product of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>operand1</i>
+is null.</li>
+</ul>
+
+<h3>Operator <code>/</code></h3>
+
+<pre><code>public static PeterO.BigInteger operator /(
+    PeterO.BigInteger dividend,
+    PeterO.BigInteger divisor);
+</code></pre>
+
+<p>Divides a BigInteger object by the value of a BigInteger object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>dividend</i>: A BigInteger object.</p></li>
+<li><p><i>divisor</i>: A BigInteger object. (2).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The quotient of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>dividend</i>
+is null.</li>
+</ul>
+
+<h3>Operator <code>%</code></h3>
+
+<pre><code>public static PeterO.BigInteger operator %(
+    PeterO.BigInteger dividend,
+    PeterO.BigInteger divisor);
+</code></pre>
+
+<p>Finds the remainder that results when a BigInteger object is divided by the value of a BigInteger object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>dividend</i>: A BigInteger object.</p></li>
+<li><p><i>divisor</i>: A BigInteger object. (2).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The remainder of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>dividend</i>
+is null.</li>
+</ul>
+
+<h3>Operator <code>&lt;&lt;</code></h3>
+
+<pre><code>public static PeterO.BigInteger operator &lt;&lt;(
+    PeterO.BigInteger bthis,
+    int bitCount);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bthis</i>: A BigInteger object. (2).</p></li>
+<li><p><i>bitCount</i>: A 32-bit signed integer.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bthis</i>
+is null.</li>
+</ul>
+
+<h3>ModPow</h3>
+
+<pre><code>public static PeterO.BigInteger ModPow(
+    PeterO.BigInteger bigintValue,
+    PeterO.BigInteger pow,
+    PeterO.BigInteger mod);
+</code></pre>
+
+<p>Calculates the remainder when a BigInteger raised to a certain power is divided by another BigInteger.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigintValue</i>: A BigInteger object.</p></li>
+<li><p><i>pow</i>: A BigInteger object. (2).</p></li>
+<li><p><i>mod</i>: A BigInteger object. (3).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The value (  <i>bigintValue</i>
+ ^  <i>pow</i>
+)%  <i>mod</i>
+ .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigintValue</i>
+is null.</li>
+</ul>
+
+<h3>Operator <code>&gt;&gt;</code></h3>
+
+<pre><code>public static PeterO.BigInteger operator &gt;&gt;(
+    PeterO.BigInteger bthis,
+    int bigValue);
+</code></pre>
+
+<p>Shifts the bits of a BigInteger instance to the right.</p>
+
+<p>For this operation, the BigInteger is treated as a two&#39;s complement representation. Thus, for negative values, the BigInteger is sign-extended.<b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bthis</i>: A BigInteger object. (2).</p></li>
+<li><p><i>bigValue</i>: A 32-bit signed integer.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bthis</i>
+is null.</li>
+</ul>
+
+<h3>Operator <code>-</code></h3>
+
+<pre><code>public static PeterO.BigInteger operator -(
+    PeterO.BigInteger bigValue);
+</code></pre>
+
+<p>Negates a BigInteger object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigValue</i>: A BigInteger object. (2).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigValue</i>
+is null.</li>
+</ul>
+
+<h3>Operator <code>&lt;</code></h3>
+
+<pre><code>public static bool operator &lt;(
+    PeterO.BigInteger thisValue,
+    PeterO.BigInteger otherValue);
+</code></pre>
+
+<p>Determines whether a BigInteger instance is less than another BigInteger instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>thisValue</i>: The first BigInteger object.</p></li>
+<li><p><i>otherValue</i>: The second BigInteger object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if  <i>thisValue</i>
+ is less than  <i>otherValue</i>
+ ; otherwise, false.</p>
+
+<h3>Operator <code>&lt;=</code></h3>
+
+<pre><code>public static bool operator &lt;=(
+    PeterO.BigInteger thisValue,
+    PeterO.BigInteger otherValue);
+</code></pre>
+
+<p>Determines whether a BigInteger instance is less than or equal to another BigInteger instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>thisValue</i>: The first BigInteger object.</p></li>
+<li><p><i>otherValue</i>: The second BigInteger object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if  <i>thisValue</i>
+ is up to  <i>otherValue</i>
+ ; otherwise, false.</p>
+
+<h3>Operator <code>&gt;</code></h3>
+
+<pre><code>public static bool operator &gt;(
+    PeterO.BigInteger thisValue,
+    PeterO.BigInteger otherValue);
+</code></pre>
+
+<p>Determines whether a BigInteger instance is greater than another BigInteger instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>thisValue</i>: The first BigInteger object.</p></li>
+<li><p><i>otherValue</i>: The second BigInteger object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if  <i>thisValue</i>
+ is greater than  <i>otherValue</i>
+ ; otherwise, false.</p>
+
+<h3>Operator <code>&gt;=</code></h3>
+
+<pre><code>public static bool operator &gt;=(
+    PeterO.BigInteger thisValue,
+    PeterO.BigInteger otherValue);
+</code></pre>
+
+<p>Determines whether a BigInteger value is greater than another BigInteger value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>thisValue</i>: The first BigInteger object.</p></li>
+<li><p><i>otherValue</i>: The second BigInteger object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if  <i>thisValue</i>
+ is at least  <i>otherValue</i>
+ ; otherwise, false.</p>
+
+<h3>Abs</h3>
+
+<pre><code>public static PeterO.BigInteger Abs(
+    PeterO.BigInteger thisValue);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>thisValue</i>: A BigInteger object. (2).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>thisValue</i>
+is null.</li>
+</ul>
+
+<h3>GetBits</h3>
+
+<pre><code>public long GetBits(
+    int index,
+    int numberBits);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>index</i>: A 32-bit signed integer.</p></li>
+<li><p><i>numberBits</i>: A 32-bit signed integer. (2).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<h3>GreatestCommonDivisor</h3>
+
+<pre><code>public static PeterO.BigInteger GreatestCommonDivisor(
+    PeterO.BigInteger bigintFirst,
+    PeterO.BigInteger bigintSecond);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigintFirst</i>: A BigInteger object. (2).</p></li>
+<li><p><i>bigintSecond</i>: A BigInteger object. (3).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigintFirst</i>
+is null.</li>
+</ul>
+
+<h3>ToByteArray</h3>
+
+<pre><code>public byte[] ToByteArray();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A byte array.</p>
+
+<h3>Pow</h3>
+
+<pre><code>public static PeterO.BigInteger Pow(
+    PeterO.BigInteger bigValue,
+    PeterO.BigInteger power);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigValue</i>: A BigInteger object. (2).</p></li>
+<li><p><i>power</i>: A BigInteger object. (3).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigValue</i>
+or  <i>power</i>
+is null.</li>
+</ul>
+
+<h3>Pow</h3>
+
+<pre><code>public static PeterO.BigInteger Pow(
+    PeterO.BigInteger bigValue,
+    int power);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigValue</i>: A BigInteger object. (2).</p></li>
+<li><p><i>power</i>: A 32-bit signed integer.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigValue</i>
+is null.</li>
+</ul>
+
+<h3>Equals</h3>
+
+<pre><code>public sealed bool Equals(
+    PeterO.BigInteger other);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: A BigInteger object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A Boolean object.</p>
+
+<h3>Not</h3>
+
+<pre><code>public static PeterO.BigInteger Not(
+    PeterO.BigInteger valueA);
+</code></pre>
+
+<p>Returns a BigInteger with every bit flipped.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>valueA</i>: A BigInteger object. (2).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>valueA</i>
+is null.</li>
+</ul>
+
+<h3>And</h3>
+
+<pre><code>public static PeterO.BigInteger And(
+    PeterO.BigInteger a,
+    PeterO.BigInteger b);
+</code></pre>
+
+<p>Does an AND operation between two BigInteger values.</p>
+
+<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.<b>Parameters:</b></p>
+
+<ul>
+<li><p><i>a</i>: A BigInteger instance.</p></li>
+<li><p><i>b</i>: Another BigInteger instance.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>a</i>
+or  <i>b</i>
+is null.</li>
+</ul>
+
+<h3>Or</h3>
+
+<pre><code>public static PeterO.BigInteger Or(
+    PeterO.BigInteger first,
+    PeterO.BigInteger second);
+</code></pre>
+
+<p>Does an OR operation between two BigInteger instances.</p>
+
+<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.<b>Parameters:</b></p>
+
+<ul>
+<li><p><i>first</i>: A BigInteger object. (2).</p></li>
+<li><p><i>second</i>: A BigInteger object. (3).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
+<h3>Xor</h3>
+
+<pre><code>public static PeterO.BigInteger Xor(
+    PeterO.BigInteger a,
+    PeterO.BigInteger b);
+</code></pre>
+
+<p>Finds the exclusive &quot;or&quot; of two BigInteger objects.</p>
+
+<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.<b>Parameters:</b></p>
+
+<ul>
+<li><p><i>a</i>: A BigInteger instance.</p></li>
+<li><p><i>b</i>: Another BigInteger instance.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>a</i>
+or  <i>b</i>
+is null.</li>
+</ul>
+
+<h3>Sign</h3>
+
+<pre><code>public int Sign { get; }
+</code></pre>
+
+<p>Gets the sign of this object&#39;s value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>0 if this value is zero; -1 if this value is negative, or 1 if this value is positive.</p>
+
+<h3>IsZero</h3>
+
+<pre><code>public bool IsZero { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this value is 0.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this value is 0; otherwise, false.</p>
+
+<h3>IsEven</h3>
+
+<pre><code>public bool IsEven { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this value is even.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this value is even; otherwise, false.</p>
+
+<h3>IsPowerOfTwo</h3>
+
+<pre><code>public bool IsPowerOfTwo { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value is a power of two.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object&#39;s value is a power of two; otherwise, false.</p>
+
+<h3>Zero</h3>
+
+<pre><code>public static PeterO.BigInteger Zero { get; }
+</code></pre>
+
+<p>Gets the BigInteger object for zero.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The BigInteger object for zero.</p>
+
+<h3>One</h3>
+
+<pre><code>public static PeterO.BigInteger One { get; }
+</code></pre>
+
+<p>Gets the BigInteger object for one.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The BigInteger object for one.</p>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

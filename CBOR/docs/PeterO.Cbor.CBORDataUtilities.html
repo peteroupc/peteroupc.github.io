@@ -1,9 +1,9 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>peteroupc.github.io</title><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBORDataUtilities</title><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://peteroupc.github.io/canvasback/canvasback_min.js"></script>
 <script>
 CanvasBackground.colorBackground("#80ff80");
 </script>
-</head><body><div style="float:right; max-width: 50%; min-width: 20%; padding-left: 5px; padding-bottom: 5px"><!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>peteroupc.github.io</title><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head><body><div style="float:right; max-width: 50%; min-width: 20%; padding-left: 5px; padding-bottom: 5px"><!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBORDataUtilities</title><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://peteroupc.github.io/canvasback/canvasback_min.js"></script>
 <script>
 CanvasBackground.colorBackground("#80ff80");
@@ -24,36 +24,56 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-</div><h1>peteroupc.github.io</h1>
+</div><h1>PeterO.Cbor.CBORDataUtilities</h1>
 
-<p>Welcome to peteroupc.github.io. This page contains more information
-on several of my programming projects on GitHub:</p>
+<h2>PeterO.Cbor.CBORDataUtilities</h2>
 
-<h3>HTML/JavaScript</h3>
+<pre><code>public static class CBORDataUtilities
+</code></pre>
+
+<p>Contains methods useful for reading and writing data, with a focus on CBOR.</p>
+
+<h3>ParseJSONNumber</h3>
+
+<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
+    string str);
+</code></pre>
+
+<p>Parses a number whose format follows the JSON specification. See #ParseJSONNumber(String, integersOnly, parseOnly) for more information.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><a href="./html3dutil">html3dutil</a>: A public domain JavaScript library for easing the development of HTML 3D applications.</li>
-<li><a href="./html-gears">html-gears</a>: An HTML5 3D implementation of the public domain sample, gears.c </li>
-<li><a href="./canvasback">canvasback</a>: Displays an HTML canvas-based background that draws boxes in about the same color as the background color<br></li>
-<li><a href="./colorpicker">colorpicker</a>: A color picker in JavaScript. Supports adapters for integrating other popular color pickers, and can use native color selection controls. In the public domain. </li>
-<li><a href="./IdnaJS">IdnaJS</a>: A JavaScript implementation of IDNA 2008 and Unicode normalization</li>
+<li><i>str</i>: A string to parse.</li>
 </ul>
 
-<h3>C-sharp</h3>
+<p><b>Returns:</b></p>
+
+<p>A CBOR object that represents the parsed number. Returns null if the parsing fails.</p>
+
+<h3>ParseJSONNumber</h3>
+
+<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
+    string str,
+    bool integersOnly,
+    bool positiveOnly);
+</code></pre>
+
+<p>Parses a number whose format follows the JSON specification (RFC 7159). Roughly speaking, a valid number consists of an optional minus sign, one or more digits (starting with 1 to 9 unless the only digit is 0), an optional decimal point with one or more digits, and an optional letter E or e with an optional plus or minus sign and one or more digits (the exponent).</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><a href="./CBOR">CBOR</a>: A C# implementation of Concise Binary Object Representation (RFC 7049). </li>
-<li><a href="./Enriched">Enriched</a>: C# program that converts text/enriched files to HTML</li>
-<li><a href="./MailLib">MailLib</a>: A portable library in C# and Java for parsing Internet mail messages</li>
-<li><a href="./Calculator">Calculator</a>: A calculator for .NET, intended to demonstrate the arbitrary-precision arithmetic capabilities of the CBOR library. </li>
+<li><p><i>str</i>: A string to parse.</p></li>
+<li><p><i>integersOnly</i>: If true, no decimal points or exponents are allowed in the string.</p></li>
+<li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is disallowed).</p></li>
 </ul>
 
-<h2>About</h2>
+<p><b>Returns:</b></p>
 
-<p>Written by <a href="https://github.com/peteroupc/">Peter O.</a></p>
+<p>A CBOR object that represents the parsed number. Returns null if the parsing fails.</p>
 
-<p>If you like any of these projects, you should donate to Peter O.
-at: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
 <script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
