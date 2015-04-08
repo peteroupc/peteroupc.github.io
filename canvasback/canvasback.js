@@ -203,15 +203,13 @@ CanvasBackground.prototype.drawBack=function(){
  document.body.style.backgroundColor=this.constructor.hls2hex(this.hls);
  if(this.use3d){
   var rgb=this.constructor.hls2rgb(this.hls);
-  var uniformValues={};
-  this.cubeMesh=Meshes.createBox(2,2,2);
-  this.sphereMesh=Meshes.createSphere();
-  this.torusMesh=Meshes.createTorus(0.5,1);
-  this.cylinderMesh=Meshes.createClosedCylinder(1,1,2);
-  var amb=8;
   this.scene=new Scene3D(this.context)
     .setDirectionalLight(0, [0,0,-1])
     .setClearColor(rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0, 1.0);
+  this.cubeMesh=this.scene.makeShape(Meshes.createBox(2,2,2));
+  this.sphereMesh=this.scene.makeShape(Meshes.createSphere());
+  this.torusMesh=this.scene.makeShape(Meshes.createTorus(0.5,1));
+  this.cylinderMesh=this.scene.makeShape(Meshes.createClosedCylinder(1,1,2));
  } else {
   this.context.fillStyle=this.constructor.hls2hex(this.hls);
   this.context.fillRect(0,0,this.width,this.height);
@@ -249,7 +247,7 @@ CanvasBackground.prototype.drawOne=function(){
      (this.constructor.rand(360)),
      (this.constructor.rand(360)),
      (this.constructor.rand(360)));
-   var shape=this.scene.makeShape(mesh)
+   var shape=mesh.copy()
     .setScale(radius,radius,radius)
     .setQuaternion(vector)
     .setPosition(x,y,z)
