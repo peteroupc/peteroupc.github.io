@@ -1765,6 +1765,25 @@ Shape.prototype.primitiveCount=function(){
 }
 
 /**
+* Makes a copy of this object.  The copied object
+* will have its own version of the rotation, scale,
+* position, matrix, and material data, but any texture
+* image data and vertex buffers will not be duplicated,
+* but rather just references to them will be used.
+* @return {glutil.Shape} A copy of this object.
+*/
+Shape.prototype.copy=function(){
+ var ret=new Shape(this.bufferedMesh);
+ ret.material=this.material.copy();
+ ret.scale=this.scale.slice(0,this.scale.length);
+ ret.position=this.position.slice(0,this.scale.length);
+ ret.complexMatrix=this.complexMatrix;
+ ret._matrixDirty=this._matrixDirty;
+ ret.matrix=this.matrix.slice(0,this.matrix.length);
+ return ret;
+}
+
+/**
 * An object that associates a geometric mesh (the shape of the object) with
 *  material data (which defines what is seen on the object's surface)
  * and a transformation matrix (which defines the object's position and size).
