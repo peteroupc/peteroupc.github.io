@@ -1,0 +1,2060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Source: glutil.js</title>
+<script src="mathml.js"></script>
+</head>
+<body style="margin-top:0px">
+<div style="width:75%;float:left;">
+    <h1>Source: glutil.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+* Contains classes and methods for easing development
+* of WebGL applications.
+* @module glutil
+*/
+(function (root, factory) {
+	if (typeof define === "function" &amp;&amp; define["amd"]) {
+		define([ "exports" ], factory);
+	} else if (typeof exports === "object") {
+		factory(exports);
+	} else {
+		factory(root);
+	}
+}(this, function (exports) {
+	if (exports.GLUtil) { return; }
+
+/**
+* Contains miscellaneous utility methods.
+* @class
+* @alias glutil.GLUtil
+*/
+var GLUtil={
+/**
+* This method will call the function once before returning,
+* and queue requests to call that function once per frame.
+* (If the browser doesn't
+* support requestAnimationFrame or an equivalent, uses
+* setTimeout to implement this method.)
+* @param {Function} func The function to call.
+*/
+"renderLoop":function(func){
+  func();
+  var selfRefFunc=function(){
+   window.requestAnimationFrame(selfRefFunc);
+   func();
+  };
+  window.requestAnimationFrame(selfRefFunc);
+},
+/**
+* Creates an HTML canvas element, optionally appending
+* it to an existing HTML element.
+* @param {number|null} width Width of the new canvas
+* element, or if null, the value &lt;code>window.innerWidth&lt;/code>.
+* The resulting width will be rounded up.
+* This parameter can't be a negative number.
+* @param {number|null} height Height of the new canvas
+* element, or if null, the value &lt;code>window.innerHeight&lt;/code>.
+* The resulting height will be rounded up.
+* This parameter can't be a negative number.
+* @param {HTMLElement|null} parent If non-null, the parent
+* element of the new HTML canvas element. The element will be
+* appended as a child of this parent.
+* @return {HTMLCanvasElement} The resulting canvas element.
+*/
+"createCanvas":function(width, height, parent){
+ var canvas=document.createElement("canvas");
+ if(width==null){
+  canvas.width=Math.ceil(window.innerWidth)+"";
+ } else if(width&lt;0){
+  throw new Error("width negative");
+ } else {
+  canvas.width=Math.ceil(width)+"";
+ }
+ if(height==null){
+  canvas.height=Math.ceil(window.innerHeight)+"";
+ } else if(height&lt;0){
+  throw new Error("height negative");
+ } else {
+  canvas.height=Math.ceil(height)+"";
+ }
+ if(parent){
+  parent.appendChild(canvas);
+ }
+ return canvas;
+},
+/**
+* Creates a 3D rendering context from an HTML canvas element,
+* falling back to a 2D context if that fails.
+* @param {HTMLCanvasElement} canvasElement An HTML
+* canvas element.
+* @return {WebGLRenderingContext} A 3D or 2D rendering context, or null
+* if an error occurred in creating the context. Returns null if "canvasElement"
+* is null or not an HTML canvas element.
+*/
+"get3DOr2DContext":function(canvasElement){
+  if(!canvasElement)return null;
+  if(!canvasElement.getContext)return null;
+  var context=null;
+  var options={antialias:true};
+  try { context=canvasElement.getContext("webgl", options);
+  } catch(e) { context=null; }
+  if(!context){
+    try { context=canvasElement.getContext("experimental-webgl", options);
+    } catch(e) { context=null; }
+  }
+  if(!context){
+    try { context=canvasElement.getContext("moz-webgl", options);
+    } catch(e) { context=null; }
+  }
+  if(!context){
+    try { context=canvasElement.getContext("webkit-3d", options);
+    } catch(e) { context=null; }
+  }
+  if(!context){
+    try { context=canvasElement.getContext("2d", options);
+    } catch(e) { context=null; }
+  }
+  if(GLUtil.is3DContext(context)){
+   context.getExtension("OES_element_index_uint");
+  }
+  return context;
+},
+/**
+* Creates a 3D rendering context from an HTML canvas element.
+* @param {HTMLCanvasElement} canvasElement An HTML
+* canvas element.
+* @param {function} err A function to call if an error occurs in creating
+* the context.  The function takes one parameter consisting of a human-
+* readable error message.  If "err" is null, window.alert() will be used instead.
+* @return {WebGLRenderingContext} A 3D rendering context, or null
+* if an error occurred in creating the context.  Returns null if "canvasElement"
+* is null or not an HTML canvas element.
+*/
+"get3DContext":function(canvasElement,err){
+  var c=GLUtil.get3DOr2DContext(canvasElement);
+  var errmsg=null;
+  if(!c &amp;&amp; window.WebGLShader){
+    errmsg="Failed to initialize graphics support required by this page.";
+  } else if(window.WebGLShader &amp;&amp; !GLUtil.is3DContext(c)){
+    errmsg="This page requires WebGL, but it failed to start. Your computer might not support WebGL.";
+  } else if(!c || !GLUtil.is3DContext(c)){
+    errmsg="This page requires a WebGL-supporting browser.";
+  }
+  if(errmsg){
+   (err || window.alert)(errmsg);
+   return null;
+  }
+  return c;
+},
+/**
+* Returns whether the given object is a 3D rendering context.
+* @return {boolean}
+*/
+"is3DContext":function(context){
+ return context &amp;&amp; ("compileShader" in context);
+},
+/**
+* Utility function that returns a promise that
+ * resolves after the given list of promises finishes
+ * its work.
+ * @param {Array&lt;Promise>} promises - an array containing promise objects
+ *  @param {Function|undefined} progressResolve - a function called as each
+ *   individual promise is resolved; optional
+ *  @param {Function|undefined} progressReject - a function called as each
+ *   individual promise is rejected; optional
+ * @return {Promise} A promise that is never rejected and resolves when
+* all of the promises are each resolved or rejected. The result
+ * of the promise will be an object with
+ * two keys:
+ *  "successes" - contains a list of results from the
+ *  promises that succeeded.
+ *  "failures" - contains a list of results from the
+ *  promises that failed.
+ */
+"getPromiseResults":function(promises,
+   progressResolve, progressReject){
+ if(!promises || promises.length==0){
+  return Promise.resolve({
+    successes:[], failures:[]});
+ }
+ return new Promise(function(resolve, reject){
+  var ret={successes:[], failures:[]};
+  var totalPromises=promises.length;
+  var count=0;
+  for(var i=0;i&lt;totalPromises;i++){
+   var promise=promises[i];
+   promise.then(function(result){
+    ret.successes.push(result);
+    if(progressResolve)progressResolve(result);
+    count++;
+    if(count==totalPromises){ resolve(ret); }
+   }, function(result){
+    ret.failures.push(result);
+    if(progressReject)progressReject(result);
+    count++;
+    if(count==totalPromises){ resolve(ret); }
+   });
+  }
+ });
+},
+/**
+* Loads a file from a URL asynchronously, using XMLHttpRequest.
+* @param {string} url URL of the file to load.
+* @param {string|null} responseType Expected data type of
+* the file.  Can be "json", "xml", or "text".  If null or omitted,
+* the default is "text".
+* @return {Promise} A promise that resolves when the data
+* file is loaded successfully (the result will be an object with
+* two properties: "url", the URL of the file, and "data", the
+* file's text or data), and is rejected when an error occurs (the
+* result may be an object with
+* one property: "url", the URL of the file).
+*/
+"loadFileFromUrl":function(url,responseType){
+ var urlstr=url;
+ var respType=responseType||"text";
+ return new Promise(function(resolve, reject){
+   var xhr=new XMLHttpRequest();
+   xhr.onreadystatechange=function(e){
+    var t=e.target;
+    if(t.readyState==4){
+     if(t.status>=200 &amp;&amp; t.status&lt;300){
+      var resp=t.response
+      if(!resp){
+       if(respType=="xml")resp=t.responseXML
+       else if(respType=="json")
+        resp=t.responseJSON||JSON.parse(t.responseText)
+       else resp=t.responseText
+      }
+      resolve({url: urlstr, data: resp+""});
+     } else {
+      reject({url: urlstr});
+     }
+    }
+   };
+   xhr.onerror=function(e){
+    reject({url: urlstr});
+   }
+   xhr.open("get", url, true);
+   xhr.responseType=respType
+   xhr.send();
+ });
+}
+};
+
+if(!window.requestAnimationFrame){
+ window.requestAnimationFrame=window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+ if(!window.requestAnimationFrame){
+  window.requestAnimationFrame=function(func){
+   window.setTimeout(func,17);
+  }
+ }
+}
+
+(function(exports){
+
+var hlsToRgb=function(hls) {
+ "use strict";
+var hueval=hls[0]*1.0;//[0-360)
+ var lum=hls[1]*1.0;//[0-255]
+ var sat=hls[2]*1.0;//[0-255]
+ lum=(lum&lt;0 ? 0 : (lum>255 ? 255 : lum));
+ sat=(sat&lt;0 ? 0 : (sat>255 ? 255 : sat));
+ if(sat===0){
+  return [lum,lum,lum];
+ }
+ var b=0;
+ if (lum&lt;=127.5){
+  b=(lum*(255.0+sat))/255.0;
+ } else {
+  b=lum*sat;
+  b=b/255.0;
+  b=lum+sat-b;
+ }
+ var a=(lum*2)-b;
+ var r,g,bl;
+ if(hueval&lt;0||hueval>=360)hueval=(((hueval%360)+360)%360);
+ var hue=hueval+120;
+ if(hue>=360)hue-=360;
+ if (hue&lt;60) r=(a+(b-a)*hue/60);
+ else if (hue&lt;180) r=b;
+ else if (hue&lt;240) r=(a+(b-a)*(240-hue)/60);
+ else r=a;
+ hue=hueval;
+ if (hue&lt;60) g=(a+(b-a)*hue/60);
+ else if (hue&lt;180) g=b;
+ else if (hue&lt;240) g=(a+(b-a)*(240-hue)/60);
+ else g=a;
+ hue=hueval-120;
+ if(hue&lt;0)hue+=360;
+ if (hue&lt;60) bl=(a+(b-a)*hue/60);
+ else if (hue&lt;180) bl=b;
+ else if (hue&lt;240) bl=(a+(b-a)*(240-hue)/60);
+ else bl=a;
+ return [(r&lt;0 ? 0 : (r>255 ? 255 : r)),
+   (g&lt;0 ? 0 : (g>255 ? 255 : g)),
+   (bl&lt;0 ? 0 : (bl>255 ? 255 : bl))];
+}
+// Converts a representation of a color to its RGB form
+// Returns a 4-item array containing the intensity of red,
+// green, blue, and alpha (each from 0-255)
+// Returns null if the color can't be converted
+var colorToRgba=function(x){
+ "use strict";
+ function parsePercent(x){ var c; return ((c=parseFloat(x))&lt;0 ? 0 : (c>100 ? 100 : c))*255/100; }
+ function parseAlpha(x){ var c; return ((c=parseFloat(x))&lt;0 ? 0 : (c>1 ? 1 : c))*255; }
+ function parseByte(x){ var c; return ((c=parseInt(x,10))&lt;0 ? 0 : (c>255 ? 255 : c)); }
+ function parseHue(x){ var r1=parseFloat(e[1]);if(r1&lt;0||r1>=360)r1=(((r1%360)+360)%360); return r1; }
+var e=null;
+ if(!x)return null;
+ var b,c,r1,r2,r3,r4,rgb;
+ if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
+  return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),255];
+ } else if((e=(/^rgb\(\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*\)$/.exec(x)))!==null){
+  return [parsePercent(e[1]),parsePercent(e[2]),parsePercent(e[3]),255];
+ } else if((e=(/^rgb\(\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*\)$/.exec(x)))!==null){
+  return [parseByte(e[1]),parseByte(e[2]),parseByte(e[3]),255];
+ } else if((e=(/^rgba\(\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?)\s*\)$/.exec(x)))!==null){
+  return [parsePercent(e[1]),parsePercent(e[2]),parsePercent(e[3]),parseAlpha(e[4])];
+ } else if((e=(/^rgba\(\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+(?:\.\d+)?)\s*\)$/.exec(x)))!==null){
+  return [parseByte(e[1]),parseByte(e[2]),parseByte(e[3]),parseAlpha(e[4])];
+ } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
+  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
+  return [a+(a&lt;&lt;4),b+(b&lt;&lt;4),c+(c&lt;&lt;4),255];
+ } else if((e=(/^hsl\(\s*([\+\-]?\d+(?:\.\d+)?)\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*\)$/.exec(x)))!==null){
+  rgb=hlsToRgb([parseHue(e[1]),parsePercent(e[3]),parsePercent(e[2])]);
+  return [rgb[0],rgb[1],rgb[2],255];
+ } else if((e=(/^hsla\(\s*([\+\-]?\d+(?:\.\d+)?)\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*,\s*([\+\-]?\d+(?:\.\d+)?)\s*\)$/.exec(x)))!==null){
+  rgb=hlsToRgb([parseHue(e[1]),parsePercent(e[3]),parsePercent(e[2])]);
+  return [rgb[0],rgb[1],rgb[2],parseAlpha(e[4])];
+ } else {
+  setUpNamedColors();
+  x=x.toLowerCase();
+  if(x.indexOf("grey")>=0)x=x.replace("grey","gray");// support "grey" variants
+  var ret=namedColors[x];
+  if(typeof ret==="string")return colorToRgba(ret);
+  if(x==="transparent")return [0,0,0,0];
+  return null;
+ }
+}
+/**
+* Creates a 4-element array representing a color.  Each element
+* can range from 0 to 1 and specifies the red, green, blue or alpha
+* component, respectively.
+* This method also converts HTML and CSS colors to 4-element RGB
+* colors.  The following lists the kinds of colors accepted:
+* &lt;ul>
+* &lt;li>HTML colors with the syntax &lt;code>#RRGGBB&lt;/code>, where
+* RR is the hexadecimal form of the red component (00-FF), GG
+* is the hexadecimal green component, and BB is the hexadecimal
+* blue component.  Example: #88DFE0.
+* &lt;li>HTML colors with the syntax &lt;code>#RGB&lt;/code>, where
+* R is the hexadecimal form of the red component (0-F), G
+* is the hexadecimal green component, and B is the hexadecimal
+* blue component.  Example: #8DE.
+* &lt;li>CSS colors with the syntax &lt;code>rgb(red, green, blue)&lt;/code> or
+* &lt;code>rgba(red, green, blue, alpha)&lt;/code> where
+* &lt;code>red&lt;/code>, &lt;code>green&lt;/code>, and &lt;code>blue&lt;/code>
+* are the red, green, and blue components, respectively, either as a
+* number (0-255) or as a percent, and &lt;code>alpha&lt;/code> is
+* a number from 0-1 specifying the alpha component.
+* Examples: &lt;code>rgb(255,0,0)&lt;/code>,
+* &lt;code>rgb(100%,50%,0%)&lt;/code>, &lt;code>rgba(20,255,255,0.5)&lt;/code>.
+* &lt;li>CSS colors with the syntax &lt;code>hsl(hue, sat, light)&lt;/code> or
+* &lt;code>hsla(hue, sat, light, alpha)&lt;/code> where
+* &lt;code>hue&lt;/code> is the hue component in degrees (0-360),
+* &lt;code>sat&lt;/code> and &lt;code>light&lt;/code>
+* are the saturation and lightness components, respectively, as percents,
+* and &lt;code>alpha&lt;/code> is
+* a number from 0-1 specifying the alpha component.
+* Examples: &lt;code>rgb(255,0,0)&lt;/code>,
+* &lt;code>hsl(200,50%,50%)&lt;/code>, &lt;code>hsla(20,80%,90%,0.5)&lt;/code>.
+* &lt;li>CSS colors such as &lt;code>red&lt;/code>, &lt;code>green&lt;/code>,
+* &lt;code>white&lt;/code>, &lt;code>lemonchiffon&lt;/code>, &lt;code>chocolate&lt;/code>,
+* and so on, including the newly added &lt;code>rebeccapurple&lt;/code>.
+* &lt;li>The value &lt;code>transparent&lt;/code>, meaning transparent black.
+* &lt;/ul>
+* For more information:
+* [Colors in HTML and How to Enter Them]{@link http://upokecenter.dreamhosters.com/articles/miscellaneous/how-to-enter-colors/}.
+* @alias glutil.GLUtil.toGLColor
+* @param {Array&lt;number>|number|string} r Array of three or
+* four color components; or the red color component (0-1); or a string
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.  Returns (0,0,0,0) if this value is null.
+* @param {number} g Green color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} b Blue color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} a Alpha color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @return the color as a 4-element array; if the color is
+* invalid, returns [0,0,0,0] (transparent black).
+*/
+exports["toGLColor"]=function(r,g,b,a){
+ if(r==null)return [0,0,0,0];
+ if(typeof r=="string"){
+   var rgba=colorToRgba(r) || [0,0,0,0];
+   var mul=1.0/255;
+   rgba[0]*=mul;
+   rgba[1]*=mul;
+   rgba[2]*=mul;
+   rgba[3]*=mul;
+   return rgba;
+ }
+ if(typeof r=="number" &amp;&amp;
+     typeof g=="number" &amp;&amp; typeof b=="number"){
+   return [r,g,b,(typeof a!="number") ? 1.0 : a];
+ } else if(r.constructor==Array){
+   return [r[0]||0,r[1]||0,r[2]||0,
+     (typeof r[3]!="number") ? 1.0 : r[3]];
+ } else {
+   return r || [0,0,0,0];
+ }
+}
+
+var namedColors=null;
+var setUpNamedColors=function(){
+  "use strict";
+if(!namedColors){
+    var nc=("aliceblue,f0f8ff,antiquewhite,faebd7,aqua,00ffff,aquamarine,7fffd4,azure,f0ffff,beige,f5f5dc,bisque,ffe4c4,black,000000,blanchedalmond,ffebcd,blue,0000ff,"+
+"blueviolet,8a2be2,brown,a52a2a,burlywood,deb887,cadetblue,5f9ea0,chartreuse,7fff00,chocolate,d2691e,coral,ff7f50,cornflowerblue,6495ed,cornsilk,fff8dc,"+
+"crimson,dc143c,cyan,00ffff,darkblue,00008b,darkcyan,008b8b,darkgoldenrod,b8860b,darkgray,a9a9a9,darkgreen,006400,darkkhaki,bdb76b,darkmagenta,8b008b,"+
+"darkolivegreen,556b2f,darkorange,ff8c00,darkorchid,9932cc,darkred,8b0000,darksalmon,e9967a,darkseagreen,8fbc8f,darkslateblue,483d8b,darkslategray,2f4f4f,"+
+"darkturquoise,00ced1,darkviolet,9400d3,deeppink,ff1493,deepskyblue,00bfff,dimgray,696969,dodgerblue,1e90ff,firebrick,b22222,floralwhite,fffaf0,forestgreen,"+
+"228b22,fuchsia,ff00ff,gainsboro,dcdcdc,ghostwhite,f8f8ff,gold,ffd700,goldenrod,daa520,gray,808080,green,008000,greenyellow,adff2f,honeydew,f0fff0,hotpink,"+
+"ff69b4,indianred,cd5c5c,indigo,4b0082,ivory,fffff0,khaki,f0e68c,lavender,e6e6fa,lavenderblush,fff0f5,lawngreen,7cfc00,lemonchiffon,fffacd,lightblue,add8e6,"+
+"lightcoral,f08080,lightcyan,e0ffff,lightgoldenrodyellow,fafad2,lightgray,d3d3d3,lightgreen,90ee90,lightpink,ffb6c1,lightsalmon,ffa07a,lightseagreen,20b2aa,"+
+"lightskyblue,87cefa,lightslategray,778899,lightsteelblue,b0c4de,lightyellow,ffffe0,lime,00ff00,limegreen,32cd32,linen,faf0e6,magenta,ff00ff,maroon,800000,"+
+"mediumaquamarine,66cdaa,mediumblue,0000cd,mediumorchid,ba55d3,mediumpurple,9370d8,mediumseagreen,3cb371,mediumslateblue,7b68ee,mediumspringgreen,"+
+"00fa9a,mediumturquoise,48d1cc,mediumvioletred,c71585,midnightblue,191970,mintcream,f5fffa,mistyrose,ffe4e1,moccasin,ffe4b5,navajowhite,ffdead,navy,"+
+"000080,oldlace,fdf5e6,olive,808000,olivedrab,6b8e23,orange,ffa500,orangered,ff4500,orchid,da70d6,palegoldenrod,eee8aa,palegreen,98fb98,paleturquoise,"+
+"afeeee,palevioletred,d87093,papayawhip,ffefd5,peachpuff,ffdab9,peru,cd853f,pink,ffc0cb,plum,dda0dd,powderblue,b0e0e6,purple,800080,rebeccapurple,663399,red,ff0000,rosybrown,"+
+"bc8f8f,royalblue,4169e1,saddlebrown,8b4513,salmon,fa8072,sandybrown,f4a460,seagreen,2e8b57,seashell,fff5ee,sienna,a0522d,silver,c0c0c0,skyblue,87ceeb,"+
+"slateblue,6a5acd,slategray,708090,snow,fffafa,springgreen,00ff7f,steelblue,4682b4,tan,d2b48c,teal,008080,thistle,d8bfd8,tomato,ff6347,turquoise,40e0d0,violet,"+
+"ee82ee,wheat,f5deb3,white,ffffff,whitesmoke,f5f5f5,yellow,ffff00,yellowgreen,9acd32").split(",");
+    namedColors={};
+    for(var i=0;i&lt;nc.length;i+=2){
+     namedColors[nc[i]]="#"+nc[i+1];
+    }
+  }
+};
+})(GLUtil);
+
+/** @private */
+GLUtil._toContext=function(context){
+ return (context &amp;&amp; context.getContext) ? context.getContext() : context;
+}
+/** @private */
+GLUtil._isPowerOfTwo=function(a){
+   if(Math.floor(a)!=a || a&lt;=0)return false;
+   while(a>1 &amp;&amp; (a&amp;1)==0){
+    a>>=1;
+   }
+   return (a==1);
+}
+///////////////////////
+
+/**
+* Specifies parameters for light sources.
+* @class
+* @alias glutil.LightSource
+*/
+function LightSource(position, ambient, diffuse, specular) {
+ this.ambient=ambient || [0,0,0,1.0]
+ /**
+ * Light position.  An array of four numbers.
+* If the fourth element is 0, this is a directional light, shining an infinitely
+* long light at the direction given by the first three elements (the X, Y, and Z
+* coordinates respectively).  If the fourth element is 1, this is a point
+* light located at the position, in world space, given by the first three elements (the X, Y, and Z
+* coordinates respectively).
+*/
+ this.position=position ? [position[0],position[1],position[2],1.0] :
+   [0, 0, 1, 0];
+ /**
+ * A 3-element vector giving the diffuse color of the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ */
+ this.diffuse=diffuse||[1,1,1];
+ /**
+ * A 3-element vector giving the color of specular highlights caused by
+ * the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ */
+ this.specular=specular||[1,1,1];
+};
+/**
+* Sets parameters for this material object.
+* @param {object} params An object whose keys have
+* the possibilities given below, and whose values are those
+* allowed for each key.&lt;ul>
+* &lt;li>&lt;code>position&lt;/code> - Light position.
+* &lt;li>&lt;code>ambient&lt;/code> - Not used in the default shader program.
+* &lt;li>&lt;code>diffuse&lt;/code> - Diffuse color.
+* &lt;li>&lt;code>specular&lt;/code> - Specular highlight color.
+* &lt;/ul>
+* If a value is null or undefined, it is ignored.
+* @return {glutil.Material} This object.
+*/
+LightSource.prototype.setParams=function(params){
+ if(params["ambient"]!=null){
+  this.ambient=GLUtil["toGLColor"](params.ambient);
+ }
+ if(params["position"]!=null){
+  var position=params["position"]
+  this.position=[position[0],position[1],position[2],
+    (position[3]==null) ? 0.0 : position[3]];
+ }
+ if(params["specular"]!=null){
+  this.specular=GLUtil["toGLColor"](params.specular);
+ }
+ if(params["diffuse"]!=null){
+  this.diffuse=GLUtil["toGLColor"](params.emission);
+ }
+ return this;
+}
+
+/**
+* A collection of light sources.  It stores the scene's
+* ambient color as well as data on one or more light sources.
+* When constructed, the default lighting will have a default
+* ambient color and one directional light source.
+* @class
+* @alias glutil.Lights
+*/
+function Lights(){
+ this.lights=[new LightSource()];
+ /**
+ *  Ambient color for the scene.  In the absence of
+ *  other lighting effects, all objects will be given this color.
+ *  @default
+ */
+ this.sceneAmbient=[0.2,0.2,0.2];
+}
+/** Maximum number of lights supported
+   by the default shader program.
+   @const
+   */
+Lights.MAX_LIGHTS = 3;
+/** @private */
+Lights._createNewLight=function(index){
+ var ret=new LightSource();
+ if(index!=0){
+  ret.diffuse=[0,0,0];
+  ret.specular=[0,0,0];
+ }
+ return ret;
+}
+
+/**
+ * Sets a directional light.
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
+ * @param {Array&lt;number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
+ * axes, respectively.  May be null, in which case the default
+ * is (0, 0, 1).
+ * @return {Lights} This object.
+ */
+Lights.prototype.setDirectionalLight=function(index,direction){
+ if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
+ this.lights[index].setParams({"position":[direction[0],direction[1],direction[2],0]});
+ return this;
+}
+/**
+ * Sets a point light.
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
+ * @param {Array&lt;number>} position A 3-element vector giving the X, Y, and Z
+ * coordinates, respectively, of the light, in world coordinates.  May be null, in which case the default
+ * is (0, 0, 0).
+ * @return {Lights} This object.
+ */
+Lights.prototype.setPointLight=function(index,position){
+ if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
+ this.lights[index].setParams({"position":[position[0],position[1],position[2],1]});
+ return this;
+}
+
+/**
+* Specifies parameters for geometry materials, which describe the appearance of a
+* 3D object. This includes how an object reflects or absorbs light, as well
+* as well as a texture image to apply on that object's surface.&lt;p>
+* The full structure is only used if the shader program supports lighting, as the
+* default shader program does.  If [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting} is called,
+* disabling lighting calculations in the default shader, the "ambient", "specular", "shininess",
+* and "emission" properties of this object are not used.
+* @class
+* @alias glutil.Material
+* @param {Array&lt;number>} ambient Ambient reflection.
+* Can be an array of three numbers,
+* ranging from 0 to 1 and giving the red, green, and blue components, respectively,
+* or can be a string representing an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* May be null or omitted; default is (0.2, 0.2, 0.2).
+* @param {Array&lt;number>} diffuse Diffuse reflection.  A color with the same format
+* as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).
+* @param {Array&lt;number>} specular Specular highlight reflection.
+* A color with the same format as for "ambient".
+* May be null or omitted; default is (0,0,0), meaning no specular highlights.
+* @param {Array&lt;number>} shininess Specular highlight exponent of this material.
+* Ranges from 0 through 128. May be null or omitted; default is 0.
+* @param {Array&lt;number>} emission Additive color emitted by an object.
+* A color with the same format as for "ambient", except the array's numbers
+* range from -1 to 1.
+* May be null or omitted; default is (0,0,0).
+*/
+function Material(ambient, diffuse, specular,shininess,emission) {
+ if(ambient!=null)ambient=GLUtil["toGLColor"](ambient)
+ if(diffuse!=null)diffuse=GLUtil["toGLColor"](diffuse)
+ if(specular!=null)specular=GLUtil["toGLColor"](specular)
+ if(emission!=null)emission=GLUtil["toGLColor"](emission)
+ /** Specular highlight exponent of this material.
+* The greater the number, the more concentrated the specular
+* highlights are.  The lower the number, the more extended the highlights are.
+* Ranges from 0 through 128.
+*/
+ this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
+ /** Ambient reflection of this material.&lt;p>
+ * Ambient reflection indicates how much an object reflects
+ * ambient lights (lights that color pixels
+ * the same way regardless of direction or distance)
+ * in the red, green, and blue components.
+ * Because every part of an object will be shaded the same way by ambient
+ * light, an object with just ambient reflection will not look much like a 3D object.
+ * Ambient reflection
+ * depends on the color of ambient lights.&lt;p>
+ * (0,0,0) means no ambient reflection,
+ * and (1,1,1) means total ambient reflection.&lt;p>
+ * Setting ambient and diffuse reflection to the same value usually defines an object's
+ * color.&lt;p>
+ * In the default shader program, if a mesh defines its own colors, those
+ * colors are used for ambient reflection rather than this property.
+ */
+ this.ambient=ambient||[0.2,0.2,0.2];
+ /**
+ * Diffuse reflection of this material.&lt;p>
+ * Diffuse reflection indicates how much an object reflects
+ * diffuse lights (lights that point
+ * directly on the object) in the red, green, and blue components.
+ * Because different parts of an object are shaded differently depending
+ * on how directly they face diffuse lights, diffuse reflection can contribute
+ * much of the 3D effect of that object.  Diffuse reflection
+ * depends on the color of diffuse lights.&lt;p>
+ * (0,0,0) means no diffuse reflection,
+ * and (1,1,1) means total diffuse reflection.&lt;p>
+ * Setting ambient and diffuse reflection to the same value usually defines an object's
+ * color.&lt;p>
+ * In the default shader program, if a mesh defines its own colors, those
+ * colors are used for diffuse reflection rather than this property.
+ */
+ this.diffuse=diffuse||[0.8,0.8,0.8];
+ /** Specular highlight reflection of this material.
+ * Specular reflection makes an object shiny, and it depends
+ * on lights that give off specular highlights as well as on the color
+ * of those highlights. Similar to diffuse reflection, specular reflection
+ * is affected by how directly each part of an object faces
+ * a light that gives off specular highlights.
+ * (0,0,0) means no specular reflection,
+ * and (1,1,1) means total specular reflection.&lt;p>
+*/
+ this.specular=specular||[0,0,0];
+ /**
+* Additive color emitted by objects with this material.
+* Used for objects that glow on their own, among other things.
+* Each part of the object will be affected by the additive color the
+* same way regardless of lighting (this property won't be used in the
+* default shader if [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting}
+* is called, disabling lighting calculations).&lt;p>
+* For each of the three color components, positive values add to that component,
+* while negative values subtract from it. (0,0,0) means no additive color.
+ */
+ this.emission=emission||[0,0,0];
+ this.textureMap=null;
+}
+/**
+* Clones this object's parameters to a new Material
+* object and returns that object. The material's texture
+* map, if any, won't be cloned, but rather, a reference
+* to the same object will be used.
+* @return {glutil.Material} A copy of this object.
+*/
+Material.prototype.copy=function(){
+ return new Material(
+  this.ambient.slice(0,this.ambient.length),
+  this.diffuse.slice(0,this.diffuse.length),
+  this.specular.slice(0,this.specular.length),
+  this.shininess,
+  this.emission.slice(0,this.emission.length)
+ ).setParams({"textureMap":this.textureMap});
+}
+/**
+* Sets parameters for this material object.
+* @param {object} params An object whose keys have
+* the possibilities given below, and whose values are those
+* allowed for each key.&lt;ul>
+* &lt;li>&lt;code>ambient&lt;/code> - Ambient reflection (see {@link glutil.Material} constructor).
+* &lt;li>&lt;code>diffuse&lt;/code> - Diffuse reflection (see {@link glutil.Material} constructor).
+* &lt;li>&lt;code>specular&lt;/code> - Specular reflection (see {@link glutil.Material} constructor).
+* &lt;li>&lt;code>shininess&lt;/code> - Specular reflection exponent (see {@link glutil.Material} constructor).
+* &lt;li>&lt;code>emission&lt;/code> - Additive color (see {@link glutil.Material} constructor).
+* &lt;li>&lt;code>textureMap&lt;/code> - {@link glutil.Texture} object, or a string with the URL of the texture
+* to use.
+* &lt;/ul>
+* If a value is null or undefined, it is ignored.
+* @return {glutil.Material} This object.
+*/
+Material.prototype.setParams=function(params){
+ if(params["ambient"]!=null){
+  this.ambient=GLUtil["toGLColor"](params.ambient);
+ }
+ if(params["diffuse"]!=null){
+  this.diffuse=GLUtil["toGLColor"](params.diffuse);
+ }
+ if(params["specular"]!=null){
+  this.specular=GLUtil["toGLColor"](params.specular);
+ }
+ if(params["emission"]!=null){
+  this.emission=GLUtil["toGLColor"](params.emission);
+ }
+ if(params["shininess"]!=null){
+  this.shininess=params.shininess;
+ }
+ if(params["textureMap"]!=null){
+   var param=params["textureMap"]
+   if(typeof param=="string"){
+    this.textureMap=new Texture(param)
+   } else {
+    this.textureMap=param
+   }
+ }
+ return this;
+}
+/** Convenience method that returns a Material
+ * object from an RGBA color.
+* @param {Array&lt;number>|number|string} r Array of three or
+* four color components; or the red color component (0-1); or a string
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* @param {number} g Green color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} b Blue color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} a Alpha color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @return {glutil.Material} The resulting material object.
+ */
+Material.fromColor=function(r,g,b,a){
+ var color=GLUtil["toGLColor"](r,g,b,a);
+ return new Material(color,color);
+}
+
+/** Convenience method that returns a Material
+ * object from a texture to apply to a 3D object's surface.
+* @param {string} texture URL of the texture data.  It will be loaded via
+*  the JavaScript DOM's Image class.  However, this constructor
+*  will not load that image yet.
+* @return {glutil.Material} The resulting material object.
+ */
+Material.fromTexture=function(texture){
+ return new Material().setParams({"textureMap":texture});
+}
+
+////////////////////
+
+/**
+*  Specifies a texture, which can serve as image data applied to
+*  the surface of a shape, or even a 2-dimensional array of pixels
+*  used for some other purpose, such as a depth map, a height map,
+*  a bump map, a reflection map, and so on.
+* @class
+* @alias glutil.Texture
+* @param {string} name URL of the texture data.  It will be loaded via
+*  the JavaScript DOM's Image class.  However, this constructor
+*  will not load that image yet.
+*/
+var Texture=function(name){
+ this.image=null;
+ this.loadedTexture=null;
+ this.name=name;
+ this.width=0;
+ this.height=0;
+}
+
+/**
+*  Loads a texture by its URL.
+* @param {string} name URL of the texture data.  It will be loaded via
+*  the JavaScript DOM's Image class
+* @param {Object|undefined} textureCache An object whose keys
+* are the names of textures already loaded.  This will help avoid loading
+* the same texture more than once.  This parameter is optional
+* and may be omitted.
+* @return {Promise} A promise that resolves when the texture
+* is fully loaded.  If it resolves, the result will be a Texture object.
+*/
+Texture.loadTexture=function(name, textureCache){
+ // Get cached texture
+ if(textureCache &amp;&amp; textureCache[name]){
+   return Promise.resolve(textureCache[name]);
+ }
+ var texImage=new Texture(name);
+ if(textureCache){
+  textureCache[name]=texImage;
+ }
+ // Load new texture and cache it
+ return texImage.loadImage().then(
+  function(result){
+   return result;
+  },
+  function(name){
+    return Promise.reject(name.name);
+  });
+}
+
+/** @private */
+Texture.prototype.loadImage=function(){
+ if(this.image!==null){
+  // already loaded
+  return Promise.resolve(this);
+ }
+ var thisImage=this;
+ var thisName=this.name;
+ return new Promise(function(resolve,reject){
+  var image=new Image();
+  image.onload=function(e) {
+   var target=e.target;
+   thisImage.image=target;
+   thisImage.width=target.width;
+   thisImage.height=target.height;
+   thisImage.powerOfTwo=(
+      GLUtil._isPowerOfTwo(thisImage.width) &amp;&amp;
+      GLUtil._isPowerOfTwo(thisImage.height));
+   resolve(thisImage);
+  }
+  image.onerror=function(e){
+   reject({name:name,error:e});
+  }
+  image.src=thisName;
+ });
+}
+/**
+ * Not documented yet.
+ */
+Texture.prototype.dispose=function(){
+ if(this.loadedTexture==null){
+  this.loadedTexture.dispose();
+  this.loadedTexture=null;
+ }
+}
+
+////////////////////
+
+/**
+* A geometric mesh in the form of vertex buffer objects.
+* @class
+* @alias glutil.BufferedMesh
+* @param {glutil.Mesh} mesh A geometric mesh object.
+* @param {WebGLRenderingContext|object} context A WebGL context to
+*  create vertex buffers from, or an object, such as Scene3D, that
+* implements a no-argument &lt;code>getContext&lt;/code> method
+* that returns a WebGL context. (Note that this constructor uses
+*  a WebGL context rather than a shader program because
+*  vertex buffer objects are not specific to shader programs.)
+*/
+function BufferedMesh(mesh, context){
+ this.subMeshes=[];
+ this.context=GLUtil._toContext(context);
+ for(var i=0;i&lt;mesh.subMeshes.length;i++){
+  var sm=mesh.subMeshes[i];
+  // skip empty submeshes
+  if(sm.indices.length==0)continue;
+  this.subMeshes.push(new BufferedSubMesh(
+    sm,this.context));
+ }
+}
+/**
+ * Returns the WebGL context associated with this object.
+ * @return {WebGLRenderingContext}
+ */
+BufferedMesh.prototype.getContext=function(){
+ return this.context;
+}
+/** @private */
+BufferedMesh.prototype.getFormat=function(){
+ var format=0;
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  var sm=this.subMeshes[i];
+  format|=sm.format;
+ }
+ return format;
+}
+
+/**
+* Binds the buffers in this object to attributes according
+* to their data format, and draws the elements in this mesh
+* according to the data in its vertex buffers.
+* @param {glutil.ShaderProgram} program A shader program object to get
+* the IDs from for attributes named "position", "normal",
+* "colorAttr", and "uv", and the "useColorAttr" uniform.
+*/
+BufferedMesh.prototype.draw=function(program){
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  this.subMeshes[i].draw(program);
+ }
+}
+/**
+* Deletes the vertex and index buffers associated with this object.
+*/
+BufferedMesh.prototype.dispose=function(){
+ for(var i=0;i&lt;this.subMeshes;i++){
+  this.subMeshes[i].dispose();
+ }
+}
+/** @private */
+function BufferedSubMesh(mesh, context){
+ var vertbuffer=context.createBuffer();
+ var facebuffer=context.createBuffer();
+ context.bindBuffer(context.ARRAY_BUFFER, vertbuffer);
+ context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, facebuffer);
+ context.bufferData(context.ARRAY_BUFFER,
+   new Float32Array(mesh.vertices), context.STATIC_DRAW);
+ var type=context.UNSIGNED_SHORT;
+ if(mesh.vertices.length>=65536 || mesh.indices.length>=65536){
+  type=context.UNSIGNED_INT;
+  context.bufferData(context.ELEMENT_ARRAY_BUFFER,
+    new Uint32Array(mesh.indices), context.STATIC_DRAW);
+ } else if(mesh.vertices.length&lt;=256 &amp;&amp; mesh.indices.length&lt;=256){
+  type=context.UNSIGNED_BYTE;
+  context.bufferData(context.ELEMENT_ARRAY_BUFFER,
+    new Uint8Array(mesh.indices), context.STATIC_DRAW);
+ } else {
+  context.bufferData(context.ELEMENT_ARRAY_BUFFER,
+    new Uint16Array(mesh.indices), context.STATIC_DRAW);
+ }
+  this.verts=vertbuffer;
+  this.faces=facebuffer;
+  this.facesLength=mesh.indices.length;
+  this.type=type;
+  this.format=mesh.attributeBits;
+  this.context=context;
+}
+/**
+ * @private
+ */
+BufferedSubMesh.prototype.dispose=function(){
+ if(this.verts!=null)
+  this.context.deleteBuffer(this.verts);
+ if(this.faces!=null)
+  this.context.deleteBuffer(this.faces);
+ this.verts=null;
+ this.faces=null;
+}
+
+/**
+ * @private
+ */
+BufferedSubMesh.prototype.draw=function(program){
+  // Binding phase
+  function _vertexAttrib(context, attrib, size, type, stride, offset){
+    if(attrib!==null){
+      context.enableVertexAttribArray(attrib);
+      context.vertexAttribPointer(attrib,size,type,false,stride,offset);
+    }
+  }
+  var context=program.getContext();
+  if(this.verts==null || this.faces==null){
+   throw new Error("mesh buffer disposed");
+  }
+  if(context!=this.context){
+   throw new Error("can't bind mesh: context mismatch");
+  }
+  context.bindBuffer(context.ARRAY_BUFFER, this.verts);
+  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.faces);
+  var format=this.format;
+  var stride=Mesh.getStride(format);
+  var boundAttributes=[];
+  var attr=program.get("position");
+  boundAttributes.push(attr)
+  _vertexAttrib(context,
+    attr, 3, context.FLOAT, stride*4, 0);
+  var offset=Mesh.normalOffset(format);
+  if(offset>=0){
+   attr=program.get("normal");
+   boundAttributes.push(attr)
+   _vertexAttrib(context,
+    attr, 3,
+    context.FLOAT, stride*4, offset*4);
+  }
+  offset=Mesh.colorOffset(format);
+  if(offset>=0){
+   program.setUniforms({"useColorAttr":1.0});
+   attr=program.get("colorAttr");
+   boundAttributes.push(attr)
+   _vertexAttrib(context,
+    attr, 3,
+    context.FLOAT, stride*4, offset*4);
+  } else {
+   program.setUniforms({"useColorAttr":0.0});
+  }
+  offset=Mesh.texCoordOffset(format);
+  if(offset>=0){
+   attr=program.get("uv");
+   boundAttributes.push(attr)
+   _vertexAttrib(context,
+     attr, 2,
+    context.FLOAT, stride*4, offset*4);
+  }
+  // Drawing phase
+  var context=program.getContext();
+  if(this.verts==null || this.faces==null){
+   throw new Error("mesh buffer disposed");
+  }
+  if(context!=this.context){
+   throw new Error("can't bind mesh: context mismatch");
+  }
+  var primitive=context.TRIANGLES;
+  if((this.format&amp;Mesh.LINES_BIT)!=0)primitive=context.LINES;
+  if((this.format&amp;Mesh.POINTS_BIT)!=0)primitive=context.POINTS;
+  context.drawElements(primitive,
+    this.facesLength,
+    this.type, 0);
+  // Disable attributes to avoid them leaking in future
+  // drawElements calls (in case a future vertex buffer object
+  // that doesn't use the attribute needs to be drawn)
+  for(var i=0;i&lt;boundAttributes.length;i++){
+   context.disableVertexAttribArray(boundAttributes[i]);
+  }
+}
+
+/////////////////////////////////
+
+/**
+* Represents an off-screen frame buffer.&lt;p>
+* When FrameBuffer's
+* constructor is called, it will create a texture buffer with the given
+* width and height and a depth buffer with the same dimensions,
+* and will bind both to the frame buffer.  The frame buffer currently
+* bound to the WebGL context will remain unchanged.
+* @class
+* @alias glutil.FrameBuffer
+* @param {WebGLRenderingContext|object} context
+* WebGL context to associate with this buffer, or an object, such as Scene3D, that
+* implements a no-argument &lt;code>getContext&lt;/code> method
+* that returns a WebGL context.
+* @param {number} width Width, in pixels, of the frame buffer.
+* Fractional values are rounded up.
+* @param {number} height Height, in pixels, of the frame buffer.
+* Fractional values are rounded up.
+*/
+function FrameBuffer(context, width, height){
+ if(width&lt;0 || height&lt;0)throw new Error("width or height negative");
+ this.context=context;
+ this.textureUnit=0;
+ this.buffer=context.createFramebuffer();
+ // create color texture
+ this.colorTexture = context.createTexture();
+ this.width=Math.ceil(width);
+ this.height=Math.ceil(height);
+ this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
+ this.context.bindTexture(this.context.TEXTURE_2D, this.colorTexture);
+ // In WebGL, texture coordinates start at the upper left corner rather than
+ // the lower left as in OpenGL and OpenGL ES, so we use this method call
+ // to reestablish the lower left corner.
+ this.context.pixelStorei(this.context.UNPACK_FLIP_Y_WEBGL, 1);
+ this.context.texImage2D(this.context.TEXTURE_2D, 0,
+   this.context.RGBA, this.width, this.height, 0,
+   this.context.RGBA, this.context.UNSIGNED_BYTE, null);
+ // set essential parameters now to eliminate warnings (will
+ // be set again as the texture is bound)
+  this.context.texParameteri(this.context.TEXTURE_2D,
+   this.context.TEXTURE_MAG_FILTER, this.context.NEAREST);
+ this.context.texParameteri(this.context.TEXTURE_2D,
+  this.context.TEXTURE_MIN_FILTER, this.context.NEAREST);
+ this.context.texParameteri(this.context.TEXTURE_2D,
+  this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
+ this.context.texParameteri(this.context.TEXTURE_2D,
+  this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
+ // create depth renderbuffer
+ this.depthbuffer=this.context.createRenderbuffer();
+ var oldBuffer=this.context.getParameter(
+   context.FRAMEBUFFER_BINDING);
+ this.context.bindFramebuffer(
+   context.FRAMEBUFFER,this.buffer);
+ this.context.bindRenderbuffer(
+   context.RENDERBUFFER,this.depthbuffer);
+ this.context.renderbufferStorage(
+   context.RENDERBUFFER,context.DEPTH_COMPONENT16,
+   this.width,this.height);
+ // attach color and depth buffers
+ this.context.framebufferTexture2D(
+   context.FRAMEBUFFER,context.COLOR_ATTACHMENT0,
+   context.TEXTURE_2D,this.colorTexture,0);
+ this.context.framebufferRenderbuffer(
+   context.FRAMEBUFFER,context.DEPTH_ATTACHMENT,
+   context.RENDERBUFFER,this.depthbuffer);
+ this.context.bindFramebuffer(
+   context.FRAMEBUFFER,oldBuffer);
+}
+/**
+ * Gets the WebGL context associated with this frame buffer.
+ * @return {WebGLRenderingContext}
+ */
+FrameBuffer.prototype.getContext=function(){
+ return this.context;
+}
+/**
+ * Not documented yet.
+ * @param {glutil.ShaderProgram} program
+ */
+FrameBuffer.prototype.bind=function(program){
+  if(program.getContext()!=this.context){
+   throw new Error("can't bind buffer: context mismatch");
+  }
+  this.context.bindFramebuffer(
+    this.context.FRAMEBUFFER,this.buffer);
+}
+/**
+ * Unbinds this frame buffer from its associated WebGL context.
+ */
+FrameBuffer.prototype.unbind=function(){
+  this.context.bindFramebuffer(
+    this.context.FRAMEBUFFER,null);
+}
+/**
+ * Disposes all resources from this frame buffer object.
+ */
+FrameBuffer.prototype.dispose=function(){
+ if(this.buffer!=null)
+  this.context.deleteFramebuffer(this.buffer);
+ if(this.depthbuffer!=null)
+  this.context.deleteRenderbuffer(this.depthbuffer);
+ if(this.colorTexture!=null)
+  this.context.deleteTexture(this.colorTexture);
+ this.buffer=null;
+ this.depthbuffer=null;
+ this.colorTexture=null;
+}
+
+////////////////////////////////////////
+
+/**
+ * A holder object representing a 3D scene.  This object includes
+ * information on:&lt;ul>
+ *&lt;li> A projection matrix, for setting the camera projection.&lt;/li>
+ *&lt;li> A view matrix, for setting the camera's view and position.&lt;/li>
+ *&lt;li> Lighting parameters.&lt;/li>
+ *&lt;li> Shapes to be drawn to the screen.&lt;/li>
+ *&lt;li> A texture cache.&lt;/li>
+ *&lt;li> A screen-clearing background color.&lt;/li>
+ *&lt;/ul>
+ * When a Scene3D object is created, it compiles and loads
+ * a default shader program that enables lighting parameters,
+ * and sets the projection and view matrices to identity.
+ * The default lighting for the scene will have a default
+* ambient color and one directional light source.
+*  @class
+* @alias glutil.Scene3D
+ * @param {WebGLRenderingContext|object} context
+ * A WebGL 3D context to associate with this scene, or an HTML
+ * canvas element to create a WebGL context from, or an object, such as Scene3D, that
+* implements a no-argument &lt;code>getContext&lt;/code> method
+* that returns a WebGL context.
+ */
+function Scene3D(canvasOrContext){
+ var context=canvasOrContext;
+ if(typeof canvasOrContext.getContext=="function"){
+  // This might be a canvas, so create a WebGL context.
+  if(HTMLCanvasElement &amp;&amp; context.constructor==HTMLCanvasElement){
+   context=GLUtil.get3DContext(canvasOrContext);
+  } else {
+   context=GLUtil._toContext(context);
+  }
+ }
+ this.context=context;
+ this.lightingEnabled=true;
+ this.specularEnabled=true;
+ this.program=new ShaderProgram(context,
+   this._getDefines()+ShaderProgram.getDefaultVertex(),
+   this._getDefines()+ShaderProgram.getDefaultFragment());
+ /** An array of shapes that are part of the scene. */
+ this.shapes=[];
+ this.clearColor=[0,0,0,1];
+ this.fboFilter=null;
+ this.textureCache={};
+ this._projectionMatrix=GLMath.mat4identity();
+ this._viewMatrix=GLMath.mat4identity();
+ this._invView=null;
+ this.lightSource=new Lights();
+ this.width=Math.ceil(this.context.canvas.width*1.0);
+ this.height=Math.ceil(this.context.canvas.height*1.0);
+ this.context.viewport(0,0,this.width,this.height);
+ this.context.enable(context.BLEND);
+ this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
+ this.context.enable(this.context.DEPTH_TEST);
+ this.context.depthFunc(this.context.LEQUAL);
+ this.context.clearDepth(999999);
+ this._setClearColor();
+ this.context.clear(
+    this.context.COLOR_BUFFER_BIT |
+    this.context.DEPTH_BUFFER_BIT);
+ this.useProgram(this.program);
+}
+/** Returns the WebGL context associated with this scene. */
+Scene3D.prototype.getContext=function(){
+ return this.context;
+}
+ /**
+  Gets the color used when clearing the screen each frame.
+   @return {Array&lt;number>} An array of four numbers, from 0 through
+   1, specifying the red, green, blue, and alpha components of the color.
+   */
+Scene3D.prototype.getClearColor=function(){
+ return this.clearColor.slice(0,4);
+}
+/** @private */
+Scene3D.prototype._getDefines=function(){
+ var ret="";
+ if(this.lightingEnabled)
+  ret+="#define SHADING\n"
+ if(this.specularEnabled)
+  ret+="#define SPECULAR\n"
+ return ret;
+}
+/** @private */
+Scene3D.prototype._initProgramData=function(){
+ new LightsBinder(this.lightSource).bind(this.program);
+ this._updateMatrix();
+}
+/**
+* Changes the active shader program for this scene
+* and prepares this object for the new program.
+* @param {glutil.ShaderProgram} program The shader program to use.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.useProgram=function(program){
+ if(!program)throw new Error("invalid program");
+ program.use();
+ this.program=program;
+ this._initProgramData();
+ return this;
+}
+/** Changes the active shader program for this scene
+* to a program that doesn't support lighting.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.disableLighting=function(){
+ this.lightingEnabled=false;
+ var program=new ShaderProgram(this.context,
+   this._getDefines()+ShaderProgram.getDefaultVertex(),
+   this._getDefines()+ShaderProgram.getDefaultFragment());
+ return this.useProgram(program);
+}
+/**
+* Sets the viewport width and height for this scene.
+* @param {number} width Width of the scene, in pixels.
+*  Will be rounded up.
+* @param {number} height Height of the scene, in pixels.
+*  Will be rounded up.
+* @return {number}
+*/
+Scene3D.prototype.setDimensions=function(width, height){
+ if(width&lt;0 || height&lt;0)throw new Error("width or height negative");
+ this.width=Math.ceil(width);
+ this.height=Math.ceil(height);
+ this.context.canvas.width=this.width+"";
+ this.context.canvas.height=this.height+"";
+ this.context.viewport(0,0,this.width,this.height);
+  if(this.fbo!="undefined" &amp;&amp; this.fbo){
+   this.fbo.dispose();
+   this.fbo=this.createBuffer();
+  }
+}
+/** Gets the viewport width for this scene.
+* @return {number}
+*/
+Scene3D.prototype.getWidth=function(){
+ return this.width;
+}
+/** Gets the viewport height for this scene.
+* @return {number}
+*/
+Scene3D.prototype.getHeight=function(){
+ return this.height;
+}
+/** Gets the ratio of width to height for this scene.
+* @return {number}
+*/
+Scene3D.prototype.getAspect=function(){
+ return this.getWidth()/this.getHeight();
+}
+/**
+ * Creates a frame buffer object associated with this scene.
+ * @return {FrameBuffer} A buffer with the same size as this scene.
+ */
+Scene3D.prototype.createBuffer=function(){
+ return new FrameBuffer(this.context,
+   this.getWidth(),this.getHeight());
+}
+
+/**
+*  Sets this scene's projection matrix to a perspective projection.
+* @param {number}  fov Vertical field of view, in degrees. Should be less
+* than 180 degrees. (The smaller
+* this number, the bigger close objects appear to be.  As a result,
+* zoom can be implemented by multiplying field of view by an
+* additional factor.)
+* @param {number}  aspect The ratio of width to height of the viewport, usually
+*  the scene's aspect ratio (getAspect()).
+* @param {number} near The distance from the camera to
+* the near clipping plane. Objects closer than this distance won't be
+* seen. This should be slightly greater than 0.
+* @param {number}  far The distance from the camera to
+* the far clipping plane. Objects beyond this distance will be too far
+* to be seen.
+* @return {glutil.Scene3D} This object.
+* @example
+* // Set the perspective projection.  Camera has a 45-degree field of view
+* // and will see objects from 0.1 to 100 units away.
+* scene.setPerspective(45,scene.getAspect(),0.1,100);
+*/
+Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
+ return this.setProjectionMatrix(GLMath.mat4perspective(fov,
+   aspect,near,far));
+}
+/**
+ * Sets this scene's projection matrix to a perspective projection that defines
+ * the view frustum, or the limits in the camera's view.
+ * @param {number} left X-coordinate of the point where the left
+ * clipping plane meets the near clipping plane.
+ * @param {number} right X-coordinate of the point where the right
+ * clipping plane meets the near clipping plane.
+ * @param {number} bottom Y-coordinate of the point where the bottom
+ * clipping plane meets the near clipping plane.
+ * @param {number} top Y-coordinate of the point where the top
+ * clipping plane meets the near clipping plane.
+* @param {number} near The distance from the camera to
+* the near clipping plane. Objects closer than this distance won't be
+* seen. This should be slightly greater than 0.
+* @param {number}  far The distance from the camera to
+* the far clipping plane. Objects beyond this distance will be too far
+* to be seen.
+* @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
+ return this.setProjectionMatrix(GLMath.mat4frustum(
+   left, right, top, bottom, near, far));
+}
+/**
+ * Sets this scene's projection matrix to an orthographic projection.
+ * In this projection, the left clipping plane is parallel to the right clipping
+ * plane and the top to the bottom.
+ * @param {number} left Leftmost coordinate of the 3D view.
+ * @param {number} right Rightmost coordinate of the 3D view.
+ * (Note that right can be greater than left or vice versa.)
+ * @param {number} bottom Bottommost coordinate of the 3D view.
+ * @param {number} top Topmost coordinate of the 3D view.
+ * (Note that top can be greater than bottom or vice versa.)
+ * @param {number} near Distance from the camera to the near clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @param {number} far Distance from the camera to the far clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
+ return this.setProjectionMatrix(GLMath.mat4ortho(
+   left, right, bottom, top, near, far));
+}
+/**
+ * Sets this scene's projection matrix to a 2D orthographic projection.
+ * @param {number} left Leftmost coordinate of the 2D view.
+ * @param {number} right Rightmost coordinate of the 2D view.
+ * (Note that right can be greater than left or vice versa.)
+ * @param {number} bottom Bottommost coordinate of the 2D view.
+ * @param {number} top Topmost coordinate of the 2D view.
+ * (Note that top can be greater than bottom or vice versa.)
+ * @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
+ return this.setProjectionMatrix(GLMath.mat4ortho(
+   left, right, bottom, top, -1, 1));
+}
+/** @private */
+Scene3D.prototype._setClearColor=function(){
+  this.context.clearColor(this.clearColor[0],this.clearColor[1],
+    this.clearColor[2],this.clearColor[3]);
+  return this;
+}
+
+/**
+* Sets the color used when clearing the screen each frame.
+* This color is black by default.
+* @param {Array&lt;number>|number|string} r Array of three or
+* four color components; or the red color component (0-1); or a string
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* @param {number} g Green color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} b Blue color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} a Alpha color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.setClearColor=function(r,g,b,a){
+ this.clearColor=GLUtil["toGLColor"](r,g,b,a);
+ return this._setClearColor();
+}
+/**
+* Loads a texture from an image URL.
+* @param {string} URL of the image to load.
+* @return {Promise} A promise that is resolved when
+* the image is loaded successfully (the result will be a Texture
+* object), and is rejected when an error occurs.
+*/
+Scene3D.prototype.loadTexture=function(name){
+ return Texture.loadTexture(name, this.textureCache);
+}
+/**
+* Loads a texture from an image URL and uploads it
+* to a texture buffer object.
+* @param {string} name URL of the image to load.
+* @return {Promise} A promise that is resolved when
+* the image is loaded successfully and uploaded
+* to a texture buffer (the result will be a Texture
+* object), and is rejected when an error occurs.
+*/
+Scene3D.prototype.loadAndMapTexture=function(name){
+ return Texture.loadAndMapTexture(
+   name, this.context, this.textureCache);
+}
+/**
+* Loads one or more textures from an image URL and uploads each of them
+* to a texture buffer object.
+* @param {Array&lt;string>} textureFiles A list of URLs of the image to load.
+* @param {Function|undefined} resolved Called for each URL that is loaded successfully
+* and uploaded to a texture buffer (the argument will be a Texture object.)
+* @param {Function|undefined} rejected Called for each URL for which an error
+* occurs (the argument will be the data passed upon
+* rejection).
+* @return {Promise} A promise that is resolved when
+* all the URLs in the textureFiles array are either resolved or rejected.
+* The result will be an object with two properties: "successes" and "failures".
+* See GLUtil.getPromiseResults.
+*/
+Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
+ var promises=[];
+ var context=this.context;
+ for(var i=0;i&lt;textureFiles.length;i++){
+  var objf=textureFiles[i];
+  var p=this.loadAndMapTexture(objf).then(function(texture){
+    texture.loadedTexture=new LoadedTexture(texture,context);
+  });
+  promises.push(p);
+ }
+ return GLUtil.getPromiseResults(promises, resolve, reject);
+}
+/** @private */
+Scene3D.prototype._setIdentityMatrices=function(){
+ this._projectionMatrix=GLMath.mat4identity();
+ this._viewMatrix=GLMath.mat4identity();
+ this._updateMatrix();
+}
+/** @private */
+Scene3D.prototype._updateMatrix=function(){
+ this.program.setUniforms({
+   "view":this._viewMatrix,
+   "projection":this._projectionMatrix,
+   "viewMatrix":this._viewMatrix,
+   "projectionMatrix":this._projectionMatrix
+ });
+}
+/**
+ * Sets the projection matrix for this object.  The projection
+ * matrix can also be set using the {@link glutil.Scene3D#setFrustum}, {@link glutil.Scene3D#setOrtho},
+ * {@link glutil.Scene3D#setOrtho2D}, and {@link glutil.Scene3D#setPerspective} methods.
+ * @param {Array&lt;number>} matrix A 16-element matrix (4x4).
+ * @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setProjectionMatrix=function(matrix){
+ this._projectionMatrix=GLMath.mat4copy(matrix);
+ this._updateMatrix();
+ return this;
+}
+/**
+*  Sets this scene's view matrix. The view matrix can also
+* be set using the {@link glutil.Scene3D#setLookAt} method.
+ * @param {Array&lt;number>} matrix A 16-element matrix (4x4).
+ * @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.setViewMatrix=function(matrix){
+ this._viewMatrix=GLMath.mat4copy(matrix);
+ this._updateMatrix();
+ return this;
+}
+/**
+*  Sets this scene's view matrix to represent a camera view.
+* @param {Array&lt;number>} eye A 3-element vector specifying
+* the camera position in world space.
+* @param {Array&lt;number>|undefined} center A 3-element vector specifying
+* the point in world space that the camera is looking at. May be null or omitted,
+* in which case the default is the coordinates (0,0,0).
+* @param {Array&lt;number>|undefined} up A 3-element vector specifying
+* the up-vector direction.  May be null or omitted, in which case
+* the default is a vector pointing positive on the Y axis.  This
+* vector must not point in the same or opposite direction as
+* the camera's view direction.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.setLookAt=function(eye, center, up){
+ up = up || [0,1,0];
+ center = center || [0,0,0];
+ this._viewMatrix=GLMath.mat4lookat(eye, center, up);
+ this._updateMatrix();
+ return this;
+}
+/**
+* Adds a 3D shape to this scene.
+* @param {Shape|MultiShape} shape A 3D shape.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.addShape=function(shape){
+ this.shapes.push(shape);
+ return this;
+}
+/**
+ * Creates a vertex buffer from a geometric mesh and
+ * returns a shape object.
+ * @param {glutil.Mesh} mesh A geometric mesh object.  The shape
+ * created will use the mesh in its current state and won't
+ * track future changes.
+ * @return {glutil.Shape} The generated shape object.
+ */
+Scene3D.prototype.makeShape=function(mesh){
+ var buffer=new BufferedMesh(mesh,this.context);
+ return new Shape(buffer);
+}
+
+/**
+* Removes all instances of a 3D shape from this scene.
+* @param {Shape|MultiShape} shape The 3D shape to remove.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.removeShape=function(shape){
+ for(var i=0;i&lt;this.shapes.length;i++){
+   if(this.shapes[i]==shape){
+     this.shapes.splice(i,1);
+     i--;
+   }
+ }
+ return this;
+}
+/**
+ *
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
+ * @param {Array&lt;number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
+ * axes, respectively.  May be null, in which case the default
+ * is (0, 0, 1).
+ * @param {Array&lt;number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ * May be null, in which case the default is (1, 1, 1).
+ * @param {Array&lt;number>} specular A 3-element vector giving the color of specular highlights caused by
+ * the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ * May be null, in which case the default is (1, 1, 1).
+* @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
+ this.lightSource.setDirectionalLight(index,position,diffuse,specular);
+ new LightsBinder(this.lightSource).bind(this.program);
+ return this;
+}
+/**
+ * Sets the color of the scene's ambient light.
+* @param {Array&lt;number>|number|string} r Array of three or
+* four color components; or the red color component (0-1); or a string
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* @param {number} g Green color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} b Blue color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} a Alpha color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setAmbient=function(r,g,b,a){
+ this.lightSource.ambient=GLUtil["toGLColor"](r,g,b,a);
+ this.lightSource.ambient=this.lightSource.ambient.slice(0,4)
+ new LightsBinder(this.lightSource).bind(this.program);
+ return this;
+}
+
+/**
+ *
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
+ * @param {Array&lt;number>} position
+ * @param {Array&lt;number>} diffuse A 3-element vector giving the diffuse color of the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ * May be null, in which case the default is (1, 1, 1).
+ * @param {Array&lt;number>} specular A 3-element vector giving the color of specular highlights caused by
+ * the light, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ * May be null, in which case the default is (1, 1, 1).
+* @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
+ this.lightSource.setPointLight(index,position,diffuse,specular);
+ new LightsBinder(this.lightSource).bind(this.program);
+ return this;
+}
+/** @private */
+Scene3D.prototype._setupMatrices=function(shape,program){
+  var uniforms={};
+  var currentMatrix=shape.getMatrix();
+  var viewWorld=GLMath.mat4multiply(this._viewMatrix,
+    currentMatrix);
+  var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
+  uniforms["world"]=currentMatrix;
+  uniforms["modelMatrix"]=currentMatrix;
+  uniforms["modelViewMatrix"]=viewWorld;
+  uniforms["worldViewInvTrans3"]=invTrans;
+  uniforms["normalMatrix"]=invTrans;
+  program.setUniforms(uniforms);
+}
+/**
+ *  Renders all shapes added to this scene.
+ *  This is usually called in a render loop, such
+ *  as {@link glutil.GLUtil.renderLoop}.&lt;p>
+ * This method may set the following uniforms if they exist in the
+ * shader program:&lt;ul>
+ * &lt;li>&lt;code>projection&lt;/code>, &lt;code>projectionMatrix&lt;/code>: this scene's
+ * projection matrix
+ * &lt;li>&lt;code>view&lt;/code>, &lt;code>viewMatrix&lt;/code>: this scene's view
+ * matrix
+ * &lt;/ul>
+ * @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.render=function(){
+  if(typeof this.fboFilter!="undefined" &amp;&amp; this.fboFilter){
+   // Render to the framebuffer, then to the main buffer via
+   // a filter
+   this.fbo.bind(this.program);
+   this._renderInner();
+   this.fbo.unbind();
+   var oldProgram=this.program;
+   var oldProj=this._projectionMatrix.slice(0,16);
+   var oldView=this._viewMatrix.slice(0,16);
+   this.useProgram(this.fboFilter);
+   this.context.clear(
+    this.context.COLOR_BUFFER_BIT|this.context.DEPTH_BUFFER_BIT);
+   this._setIdentityMatrices();
+   // Do the rendering to main buffer
+   this._renderShape(this.fboQuad,this.fboFilter);
+   // Restore old matrices and program
+   this.setProjectionMatrix(oldProj);
+   this.setViewMatrix(oldView);
+   this.useProgram(oldProgram);
+   this.context.flush();
+   return this;
+  } else {
+   // Render as usual
+   this._renderInner();
+   this.context.flush();
+   return this;
+ }
+}
+
+/** @private */
+Scene3D.prototype._renderShape=function(shape,program){
+   this._setupMatrices(shape,program);
+   Binders.getMaterialBinder(shape.material).bind(program);
+   shape.bufferedMesh.draw(program);
+}
+/**
+ * Uses a shader program to apply a texture filter after the
+ * scene is rendered.  If a filter program is used, the scene will
+ * create a frame buffer object, render its shapes to that frame
+ * buffer, and then apply the filter program as it renders the
+ * frame buffer to the canvas.
+ * @param {ShaderProgram|string|null} filterProgram A shader
+ * program that implements a texture filter.  The program
+ * could be created using the {@link glutil.ShaderProgram.makeEffect} method.
+ * This parameter can also be a string that could be a parameter
+ * to the ShaderProgram.makeEffect() method.
+ * If this value is null, texture filtering is disabled and shapes
+ * are rendered to the canvas normally.
+ * @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.useFilter=function(filterProgram){
+ if(filterProgram==null){
+  this.fboFilter=null;
+ } else {
+  if(typeof filterProgram=="string"){
+   // Assume the string is GLSL source code
+   this.fboFilter=ShaderProgram.makeEffect(this.context,
+    filterProgram);
+  } else {
+   this.fboFilter=filterProgram;
+  }
+  if(typeof this.fbo=="undefined" || !this.fbo){
+   this.fbo=this.createBuffer();
+  }
+  if(typeof this.fboQuad=="undefined" || !this.fboQuad){
+   var width=this.getWidth();
+   var height=this.getHeight();
+   // Create a mesh of a rectangle that will
+   // fit the screen in the presence of identity projection
+   // and view matrices
+   var mesh=new Mesh(
+     [-1,1,0,0,1,
+      -1,-1,0,0,0,
+      1,1,0,1,1,
+      1,-1,0,1,0],
+     [0,1,2,2,1,3],
+     Mesh.TEXCOORDS_BIT);
+   this.fboQuad=this.makeShape(mesh).setMaterial(this.fbo);
+  }
+ }
+ return this;
+}
+/** @private */
+Scene3D.prototype._renderInner=function(){
+  this._updateMatrix();
+  this.context.clear(
+    this.context.COLOR_BUFFER_BIT |
+    this.context.DEPTH_BUFFER_BIT);
+  for(var i=0;i&lt;this.shapes.length;i++){
+   this._renderShape(this.shapes[i],this.program);
+  }
+  return this;
+}
+
+/**
+* An object that associates a geometric mesh (the shape of the object) with
+*  material data (which defines what is seen on the object's surface)
+ * and a transformation matrix (which defines the object's position and size).
+* See the "{@tutorial shapes}" tutorial.
+ *  @class
+* @alias glutil.Shape
+* @param {BufferedMesh} mesh A mesh in the form of a vertex buffer object.
+* For {@link glutil.Mesh} objects, use the {@link glutil.Scene3D#makeShape}
+* method instead.
+  */
+function Shape(mesh){
+  if(mesh==null)throw new Error("mesh is null");
+  this.bufferedMesh=mesh;
+  this.material=new Material();
+  /**
+  * A three-element array giving the scaling of this object for this shape's width,
+  * height, and depth, respectively.
+  * For each component, 1 means no scaling.
+  * The value given here is informational only and should not be modified directly.
+  * Use the setScale method to set this value.
+  * @default
+  */
+  this.scale=[1,1,1];
+  /**
+  * A three-element array giving the X, Y, and Z coordinates of the position
+  * of this shape relative to its original position.
+  * The value given here is informational only and should not be modified directly.
+  * Use the setPosition method to set this value.
+  * @default
+  */
+  this.position=[0,0,0];
+  /**
+   * The rotation of this object in the form of a [quaternion]{@link glmath.GLMath}.
+   * The value given here is informational only and should not be modified directly.
+   * Use the setRotation or setQuaternion method to set this value.
+   */
+  this.rotation=GLMath.quatIdentity();
+  this.complexMatrix=false;
+  this._matrixDirty=false;
+  /** @private */
+  this.matrix=GLMath.mat4identity();
+}
+/**
+ * Sets this shape's transformation matrix. This method
+ * will set the position, rotation, and scale properties
+ * accordingly to the matrix given.
+ * @param {Array&lt;number>} value A 4x4 matrix.
+ * This method will copy the value of this parameter.
+ * @return {glutil.Shape} This object.
+ */
+Shape.prototype.setMatrix=function(value){
+ this._matrixDirty=false;
+ this.complexMatrix=true;
+ this.matrix=value.slice(0,16);
+ this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
+ this.rotation=GLMath.quatFromMat4(this.matrix);
+ this.rotation=GLMath.quatNormInPlace(this.rotation);
+ this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
+ return this;
+}
+/**
+* Sets material parameters that give the shape a certain color.
+* However, if the mesh defines its own colors, those colors will take
+* precedence over the color given in this method.
+* @param {Array&lt;number>|number|string} r Array of three or
+* four color components; or the red color component (0-1); or a string
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* @param {number} g Green color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} b Blue color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} a Alpha color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+ * @return {glutil.Shape} This object.
+*/
+Shape.prototype.setColor=function(r,g,b,a){
+ this.material=Material.fromColor(r,g,b,a);
+ return this;
+}
+/**
+ * Sets this shape's material to a texture with the given URL.
+ * @param {string} name URL of the texture to use.
+ * @return {glutil.Shape} This object.
+ */
+Shape.prototype.setTexture=function(name){
+ this.material=Material.fromTexture(name);
+ return this;
+}
+/**
+* Sets this shape's material parameters.
+* @param {Material} material
+ * @return {glutil.Shape} This object.
+*/
+Shape.prototype.setMaterial=function(material){
+ this.material=material;
+ return this;
+}
+/**
+* Resets this shape to the untransformed state.
+* @return {glutil.Shape} This object.
+*/
+Shape.prototype.resetTransform=function(){
+ this.matrix=GLMath.mat4identity();
+ this.position=[0,0,0];
+ this.scale=[1,1,1];
+ this.rotation=GLMath.quatIdentity();
+ this.complexMatrix=false;
+ this._matrixDirty=false;
+ return this;
+}
+/**
+ * Sets the scale of this shape relative to its original
+ * size. Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * @param {number|Array&lt;number>} x Scaling factor for this object's width.
+ *   If "y" and "z" are null or omitted, this can
+ * instead be a 3-element array giving the scaling factors
+ * for width, height, and depth, respectively.
+ * @param {number} y Scaling factor for this object's height.
+ * @param {number} z Scaling factor for this object's depth.
+* @return {glutil.Scene3D} This object.
+ */
+Shape.prototype.setScale=function(x,y,z){
+  if(this.complexMatrix)return this;
+  if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
+   if(x.constructor==Array)
+    this.scale=x.slice(0,3);
+   else
+    this.scale=[x,x,x];
+  } else {
+   this.scale=[x,y,z];
+  }
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets the relative position of this shape from its original
+ * position.  Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * @param {Array&lt;number>|number} x Either the X-coordinate,
+ * or an array of 3 numbers giving the x, y, and z coordinates.
+ * @param {number} y The Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z The Z-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @return {glutil.Shape} This object.
+ */
+Shape.prototype.setPosition=function(x,y,z){
+  if(this.complexMatrix)return this;
+  if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
+   if(x.constructor==Array)
+    this.position=x.slice(0,3);
+   else
+    this.position=[x,x,x];
+  } else {
+   this.position=[x,y,z];
+  }
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets this object's rotation in the form of a [quaternion]{@link glmath.GLMath} (a 4-element array
+ * for describing 3D rotations). Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * @param {Array&lt;number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
+ * and {@link glmath.GLMath.quatFromEuler}, among others.
+ * @return {glutil.Shape} This object.
+ * @example
+ * // Set this shape's rotation to 30 degrees about the X-axis
+ * shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
+ * // Set this shape's rotation to identity (no rotation)
+ * shape.setQuaternion(GLMath.quatIdentity());
+ * // Set this shape's rotation to 30 degree pitch multiplied
+ * // by 40 degree roll
+ * shape.setQuaternion(GLMath.quatFromEuler(30,0,40));
+ */
+Shape.prototype.setQuaternion=function(quat){
+  if(this.complexMatrix)return this;
+  this.rotation=quat.slice(0,4);
+  GLMath.quatNormInPlace(this.rotation);
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets this object's rotation in the form of an angle and an axis of
+ * rotation. Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * @param {Array&lt;number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.  If the axis of rotation
+ * points toward the viewer, the angle's value is increasing in
+ * a counterclockwise direction.
+ * @param {Array&lt;number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
+ * @return {glutil.Shape} This object.
+ */
+Shape.prototype.setRotation=function(angle, v,vy,vz){
+ return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+}
+/**
+ * Combines this shape's current rotation with another rotation
+ * described by a [quaternion]{@link glmath.GLMath} (a 4-element array
+ * for describing 3D rotations).  The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ *  Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * @param {Array&lt;number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
+ * or {@link glmath.GLMath.quatFromEuler}.
+ * @return {glutil.Shape} This object.
+ * @example
+ * // Combine this shape's rotation with a rotation 20 degrees about the X-axis
+ * shape.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
+ * // Combine this shape's rotation with identity (no rotation)
+ * shape.multQuaternion(GLMath.quatIdentity());
+ * // Combine this shape's rotation with 30 degree pitch multiplied
+ * // by 40 degree roll
+ * shape.multQuaternion(GLMath.quatFromEuler(30,0,40));
+ */
+Shape.prototype.multQuaternion=function(quat){
+  if(this.complexMatrix)return this;
+  this.rotation=GLMath.quatMultiply(this.rotation,quat);
+  GLMath.quatNormInPlace(this.rotation);
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Combines this shape's current rotation with another rotation
+ * in the form of an angle and an axis of
+ * rotation. The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ *  Has no effect if a matrix was defined with {@link glutil.Shape#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * @param {Array&lt;number>|number} angle The desired angle
+ * to rotate in degrees. See {@link glutil.Shape#setRotation}.
+ * @param {Array&lt;number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
+ * @return {glutil.Shape} This object.
+ */
+Shape.prototype.multRotation=function(angle, v,vy,vz){
+ return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+}
+/**
+ * Gets the transformation matrix used by this shape.  It is a combination
+ * of the scale, position, and rotation properties,
+ * unless a matrix was defined with {@link glutil.Shape#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Shape#resetTransform}.
+ * @return {Array&lt;number>}
+ */
+Shape.prototype.getMatrix=function(){
+  if(this._matrixDirty){
+   this._matrixDirty=false;
+   this.matrix=GLMath.mat4translated(this.position[0],
+   this.position[1],this.position[2]);
+   if(!GLMath.quatIsIdentity(this.rotation)){
+    this.matrix=GLMath.mat4multiply(this.matrix,
+      GLMath.quatToMat4(this.rotation));
+   }
+   GLMath.mat4scaleInPlace(this.matrix,this.scale);
+  }
+  return this.matrix.slice(0,16);
+}
+/////////////
+exports["BufferedMesh"]=BufferedMesh;
+exports["Lights"]=Lights;
+exports["FrameBuffer"]=FrameBuffer;
+exports["LightSource"]=LightSource;
+exports["Texture"]=Texture;
+exports["Material"]=Material;
+exports["Shape"]=Shape;
+exports["Scene3D"]=Scene3D;
+exports["GLUtil"]=GLUtil;
+}));
+</code></pre>
+        </article>
+    </section>
+
+</div>
+<nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHfwYJKoZIhvcNAQcEoIIHcDCCB2wCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBTEjVSqAfM9cTLwXVwxBqNI8r1Il0SJNqahKnIJrEIZOdmziEnZsYS8kifxxbWCBrNGl1S/eO5kcMG6WO50eBSxFlNpweevNYIs0dIdfQZtiWcRD2yYzaWHBkHu3PmCCLmc3pPT5QaOc949w2dPcg+syabMOSwN94Mk67Wh//7pTELMAkGBSsOAwIaBQAwgfwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIm7w2yVS0zOeAgdhYAX/keBkbLTGS2k5QcVstRROvRVuMlDL7sy/YUie0YlEJKDFTFE7n6LP15AFfODDattjmqKJ7UZ+6hY9sqJhayUNqdl/rA/RYgPVKGWTM1l68+KFdz2SO3IHvBUJIAwnHFX1JVyNUAofSxWj+3eoN5MnQzskA4cKe/RFWB04oXxZS7/WCOHL3q3mlwFDSK83C3Wcqro7S18YnVxfJ4XGUQ7nlx1C9K0Xq+JbCGEC4D8yjQHzm9w3LqUOogiI3l9VVlXxuqcAdq+iBkAGIt3y4TXABMtXEFG2gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MTAxMzA4NDBaMCMGCSqGSIb3DQEJBDEWBBQImRl0rdSM38l1aTcRhxgiKb7ipTANBgkqhkiG9w0BAQEFAASBgE0IsEWvN+n6QuwDFkBMQO9C4z5uf7wAvoMDgifDKBCyGFmpYZPsKawkYVcS/kASDtyq6aWU3lqP+KweyA+0xfpAyE3R8/7p80uqGGs8bHGicxkl2pEkX95R23HGRa1pEDHFF1XQNkhns558WioFipI2RvmAAEaMgZQ1p+SV/cdu-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-shapes.html">shapes</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

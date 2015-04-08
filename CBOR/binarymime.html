@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Binary MIME Messages</title>
+</head>
+<body>
+<h1>Binary MIME Messages</h1>
+<p>
+This document registers a tag for binary MIME messages in Concise Binary Object Representation (CBOR) (ref. 1).
+</p>
+<ul>
+<li>Tag:   257
+<li>Data item: byte string
+<li>Semantics: Binary MIME message
+</ul>
+<h2>
+Introduction
+</h2>
+<p>
+The CBOR specification already defines a tag for messages according to the Multipurpose Internet Mail Extensions (MIME).
+But unfortunately, its choice of major type, a UTF-8 string, leaves much to be desired; namely, it becomes undefined
+how to interpret a string representing a MIME message if the message uses a Content-Transfer-Encoding of 8bit or Binary.
+The tag defined here serves to identify these and other kinds of MIME messages using their binary encoding rather than
+a UTF-8 encoding.
+</p>
+<h2>
+Detailed Semantics
+</h2>
+<p>
+Tag 257 can be applied to a byte string (major type 2) to indicate that the byte string is a MIME message under RFC 2045
+(ref. 2).  Note that headers are included in MIME messages.
+</p>
+<p>
+A CBOR decoder can treat data items with tag 257 that are not MIME messages as an error,
+but this specification doesn't define how a CBOR implementation ought to behave in this case.
+Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
+</p>
+<h2>
+Security Considerations
+</h2>
+<p>If a CBOR implementation interprets a media type encoded in a MIME message, the security considerations of that media type
+apply.  In particular, MIME messages can use character encodings other than ASCII and Unicode, and some features of other
+character encodings can cause security issues when converting to Unicode due to misinterpretation of the encoded bytes (see
+section 3.6 of Unicode Technical Report 36 for more information, ref. 3).</p>
+
+<p>MIME is based on the Internet Message Format (RFC 5322, ref. 4); see section 5 of that RFC for additional security
+considerations.</p>
+<h2>
+References
+</h2>
+<p>
+Ref. 1. Bormann, C. and Hoffman, P. "Concise Binary Object Representation (CBOR)". RFC 7049, October 2013.
+</p>
+<p>
+Ref. 2. Freed, N. and Borenstein, N. "Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies". RFC 2045, November 1996.
+</p>
+<p>
+Ref. 3 (informative). Davis, M. and Suignard, M. "Unicode Security Considerations". Unicode Technical Report 36, 12 Nov. 2013. <a href="http://unicode.org/reports/tr36/">http://unicode.org/reports/tr36/</a>
+</p>
+<p>
+Ref. 4 (informative). Resnick, P., ed. "Internet Message Format". RFC 5322, October 2008.
+</p>
+<h2>
+Author
+</h2>
+<p>
+Peter Occil (poccil14 at gmail dot com)
+</p>
+<p>
+My <a href='http://peteroupc.github.io/CBOR/'>CBOR home page</a>.
+</p>
+<p>
+Any copyright to this specification is released to the Public Domain. <a href='http://creativecommons.org/publicdomain/zero/1.0/'>http://creativecommons.org/publicdomain/zero/1.0/</a>
+</p>
+</body></html>

@@ -1,0 +1,153 @@
+<meta charset=utf-8>
+<head>
+<script type="text/javascript" src="glutil_min.js"></script>
+<script type="text/javascript" src="matrixstack.js"></script>
+<script>
+//<!--
+
+// Adapted by Peter O. from gears.c (3D Gears), a public domain program
+// written by Brian Paul.
+
+function createGear(inner_radius, outer_radius, width, teeth, tooth_depth)
+{
+var i;
+var r0, r1, r2;
+var angle, da;
+var u, v, len;
+r0 = inner_radius;
+r1 = outer_radius - tooth_depth/2.0;
+r2 = outer_radius + tooth_depth/2.0;
+da = 2.0*Math.PI / teeth / 4.0;
+var mesh=new Mesh();
+mesh.normal3( 0.0, 0.0, 1.0 );
+/* draw front face */
+mesh.mode(Mesh.QUAD_STRIP );
+for (i=0;i<=teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+mesh.vertex3( r0*Math.cos(angle), r0*Math.sin(angle), width*0.5 );
+mesh.vertex3( r1*Math.cos(angle), r1*Math.sin(angle), width*0.5 );
+mesh.vertex3( r0*Math.cos(angle), r0*Math.sin(angle), width*0.5 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), width*0.5 );
+}
+
+/* draw front sides of teeth */
+mesh.mode(Mesh.QUADS );
+da = 2.0*Math.PI / teeth / 4.0;
+for (i=0;i<teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+mesh.vertex3( r1*Math.cos(angle), r1*Math.sin(angle), width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+da), r2*Math.sin(angle+da), width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+2*da), r2*Math.sin(angle+2*da), width*0.5 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), width*0.5 );
+}
+
+mesh.normal3( 0.0, 0.0, -1.0 );
+/* draw back face */
+mesh.mode(Mesh.QUAD_STRIP );
+for (i=0;i<=teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+mesh.vertex3( r1*Math.cos(angle), r1*Math.sin(angle), -width*0.5 );
+mesh.vertex3( r0*Math.cos(angle), r0*Math.sin(angle), -width*0.5 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), -width*0.5 );
+mesh.vertex3( r0*Math.cos(angle), r0*Math.sin(angle), -width*0.5 );
+}
+
+/* draw back sides of teeth */
+mesh.mode(Mesh.QUADS );
+da = 2.0*Math.PI / teeth / 4.0;
+for (i=0;i<teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), -width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+2*da), r2*Math.sin(angle+2*da), -width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+da), r2*Math.sin(angle+da), -width*0.5 );
+mesh.vertex3( r1*Math.cos(angle), r1*Math.sin(angle), -width*0.5 );
+}
+
+/* draw outward faces of teeth */
+mesh.mode(Mesh.QUAD_STRIP );
+for (i=0;i<teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+mesh.vertex3( r1*Math.cos(angle), r1*Math.sin(angle), width*0.5 );
+mesh.vertex3( r1*Math.cos(angle), r1*Math.sin(angle), -width*0.5 );
+u = r2*Math.cos(angle+da) - r1*Math.cos(angle);
+v = r2*Math.sin(angle+da) - r1*Math.sin(angle);
+len = Math.sqrt( u*u + v*v );
+u /= len;
+v /= len;
+mesh.normal3( v, -u, 0.0 );
+mesh.vertex3( r2*Math.cos(angle+da), r2*Math.sin(angle+da), width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+da), r2*Math.sin(angle+da), -width*0.5 );
+mesh.normal3( Math.cos(angle), Math.sin(angle), 0.0 );
+mesh.vertex3( r2*Math.cos(angle+2*da), r2*Math.sin(angle+2*da), width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+2*da), r2*Math.sin(angle+2*da), -width*0.5 );
+u = r1*Math.cos(angle+3*da) - r2*Math.cos(angle+2*da);
+v = r1*Math.sin(angle+3*da) - r2*Math.sin(angle+2*da);
+mesh.normal3( v, -u, 0.0 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), width*0.5 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), -width*0.5 );
+mesh.normal3( Math.cos(angle), Math.sin(angle), 0.0 );
+}
+mesh.vertex3( r1*Math.cos(0), r1*Math.sin(0), width*0.5 );
+mesh.vertex3( r1*Math.cos(0), r1*Math.sin(0), -width*0.5 );
+
+/* draw inside radius cylinder */
+mesh.mode(Mesh.QUAD_STRIP );
+for (i=0;i<=teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+mesh.normal3( -Math.cos(angle), -Math.sin(angle), 0.0 );
+mesh.vertex3( r0*Math.cos(angle), r0*Math.sin(angle), -width*0.5 );
+mesh.vertex3( r0*Math.cos(angle), r0*Math.sin(angle), width*0.5 );
+}
+return mesh;
+}
+
+window.onload=(function(){
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setDirectionalLight(0,[5,5,10]);
+  var gear1=createGear(1.0, 4.0, 1.0, 20, 0.7);
+  var gear2=createGear(0.5, 2.0, 2.0, 10, 0.7);
+  var gear3=createGear(1.3, 2.0, 0.5, 10, 0.7);
+  gear1=scene.makeShape(gear1).setColor("red");
+  gear2=scene.makeShape(gear2).setColor("lime");
+  gear3=scene.makeShape(gear3).setColor("blue");
+  scene.addShape(gear1).addShape(gear2).addShape(gear3);
+  var h=scene.getHeight()/scene.getWidth();
+  scene.setProjectionMatrix(GLMath.mat4frustum(
+    -1,1,-h,h,5,60));
+  scene.setViewMatrix(GLMath.mat4translated(0,0,-40));
+  var view_rotx=20,view_roty=30,view_rotz=0;
+  var angle=0;
+  GLUtil.renderLoop(function(){
+   var matrix=new MatrixStack()
+    .pushMatrix()
+    .rotate(view_rotx,1,0,0)
+    .rotate(view_roty,0,1,0)
+    .rotate(view_rotz,0,0,1)
+    .pushMatrix()
+    .translate(-3,-2,0)
+    .rotate(angle,0,0,1);
+   gear1.setMatrix(matrix.get());
+   matrix.popMatrix()
+     .pushMatrix()
+     .translate(3.1,-2,0)
+     .rotate(-2*angle-9,0,0,1);
+   gear2.setMatrix(matrix.get());
+   matrix.popMatrix()
+     .pushMatrix()
+     .translate(-3.1,4.2,0)
+     .rotate(-2*angle-25,0,0,1);
+   gear3.setMatrix(matrix.get());
+   scene.render();
+   angle+=4/2.0;
+   view_rotx+=3/2.0;
+   view_roty+=1;
+   view_rotz+=1/2.0;
+ });
+})
+//-->
+</script>
+</head>
+<body>
+<h1>3D Gears</h1>
+<canvas width="600" height="450" id=canvas></canvas>
+</body>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Language-Tagged Strings</title>
+</head>
+<body>
+<h1>Language-Tagged Strings</h1>
+<p>
+This document registers a tag for serializing language-tagged strings in Concise Binary Object Representation (CBOR) (ref. 1).
+</p>
+<ul>
+<li>Tag:   38
+<li>Data item: array
+<li>Semantics: Language-tagged string
+</ul>
+<h2>
+Introduction
+</h2>
+<p>
+In some cases it's useful to specify the natural language of a text string.  This specification defines a new tag
+that does just that.  One technology that supports language-tagged strings is the Resource Description Framework (RDF)
+(ref. 2).
+</p>
+<h2>
+Detailed Semantics
+</h2>
+<p>
+A language-tagged string in CBOR has the tag 38 and consists of an array with a length of 2.
+The first element is a well-formed language tag under Best Current Practice 47 (ref. 3 and 4),
+represented as a UTF-8 text string (major type 3).
+The second element is an arbitrary UTF-8 text string (major type 3).  Both the language
+tag and the arbitrary string can optionally be annotated with CBOR tags.
+</p>
+<p style="margin-left: 2em; margin-right: 2em;">
+NOTE: Language tags of any combination of case are allowed.
+But section 2.1.1 of RFC 5646 (ref. 3), part of Best Current Practice 47,
+recommends a case combination, for language tags, that encoders
+that support tag 38 may wish to follow when generating language tags.<p>
+</p>
+<p>
+A CBOR decoder can treat data items with tag 38 that don't meet the criteria above as an error,
+but this specification doesn't define how a CBOR implementation ought to behave in this case.
+Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
+</p>
+<p style="margin-left: 2em; margin-right: 2em;">
+NOTE: The Unicode Standard (ref. 5) includes a set of characters designed for tagging text (including
+language tagging), in the range U+E0000 to U+E007F.  Although many applications, including RDF (ref. 2),
+do not disallow these characters in text strings, the Unicode Consortium has deprecated these
+characters and recommends annotating language via
+a higher-level protocol instead. See the section "Deprecated Tag Characters" in the Unicode Standard
+(found at section 16.9 in version 6.2 of the Core Specification, the latest specification available
+at the time of this writing).
+</p>
+<h2>Examples</h2>
+<p>
+The following example shows how the English-language string "Hello" is encoded.
+</p>
+<pre>
+    d8 26      ---- Tag 38
+       82      ---- Array length 2
+          62 65 6E   ---- "en"
+          65 48 65 6C 6C 6F ---- "Hello"
+</pre>
+<p>
+The following example shows how the French-language string "Bonjour" is encoded.
+</p>
+<pre>
+    d8 26     ---- Tag 38
+       82      ---- Array length 2
+          62 66 72   ---- "fr"
+          67 42 6F 6E 6A 6F 75 72 ---- "Bonjour"
+</pre>
+<h2>
+References
+</h2>
+<p>
+Ref. 1. Bormann, C. and Hoffman, P. "Concise Binary Object Representation (CBOR)". RFC 7049, October 2013.
+</p>
+<p>
+Ref. 2 (informative). Cyganiak, R. et al. "RDF 1.1 Concepts and Abstract Syntax". W3C Recommendation, 25 Feb. 2014.
+&lt;<a href="http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/</a>&gt;
+</p>
+<p>
+Ref. 3. Phillips, A. and Davis, M. "Tags for Identifying Languages". BCP 47, RFC 5646, September 2009.
+</p>
+<p>
+Ref. 4. Phillips, A. and Davis, M. "Matching of Language Tags". BCP 47, RFC 4647, September 2006.
+</p>
+<p>
+Ref. 5. The Unicode Consortium.  "The Unicode Standard". &lt;<a href="http://www.unicode.org/versions/latest/">http://www.unicode.org/versions/latest/</a>&gt;
+</p>
+<h2>
+Author
+</h2>
+<p>
+Peter Occil (poccil14 at gmail dot com)
+</p>
+<p>
+My <a href='http://peteroupc.github.io/CBOR/'>CBOR home page</a>.
+</p>
+<p>
+Any copyright to this specification is released to the Public Domain. <a href='http://creativecommons.org/publicdomain/zero/1.0/'>http://creativecommons.org/publicdomain/zero/1.0/</a>
+</p>
+<h2>
+Acknowledgments
+</h2>
+<p>Carsten Bormann reviewed this document and gave helpful suggestions.
+John Cowan and Doug Ewell are also to be acknowledged.  This document was also discussed in
+the "apps-discuss at ietf.org" and "ltru at ietf.org" mailing lists. </p>
+</body></html>

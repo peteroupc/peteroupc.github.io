@@ -1,0 +1,4473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Class: GLMath</title>
+<script src="mathml.js"></script>
+</head>
+<body style="margin-top:0px">
+<div style="width:75%;float:left;">
+    <h1>Class: GLMath</h1>
+
+<section>
+
+<header>
+
+        <h2>
+        GLMath
+        </h2>
+
+</header>
+
+<article>
+    <div class="container-overview">
+
+    <h4 style="border-bottom: 1px solid;" id="GLMath"><span style="font-weight:lighter"></span>new GLMath<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    A collection of math functions for working
+with vectors and matrices.<p>
+See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more information.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line33">line 33</a>
+    </li></ul></dd>
+
+</dl>
+
+    </div>
+
+        <h3 class="subsection-title">Members</h3>
+
+<h4 style="border-bottom: 1px solid;" id=".Num180DividedByPi"><span style="font-weight:lighter">(static, constant) </span>Num180DividedByPi<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Closest approximation to 180 divided by pi. Multiply by this number to convert radians to degrees.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>57.29577951308232</li>
+        </ul></dd>
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1484">line 1484</a>
+    </li></ul></dd>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;" id=".PiDividedBy180"><span style="font-weight:lighter">(static, constant) </span>PiDividedBy180<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Closest approximation to pi divided by 180. Multiply by this number to convert degrees to radians.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0.017453292519943295</li>
+        </ul></dd>
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1468">line 1468</a>
+    </li></ul></dd>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;" id=".PitchRollYaw"><span style="font-weight:lighter">(static, constant) </span>PitchRollYaw<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1494">line 1494</a>
+    </li></ul></dd>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;" id=".PitchYawRoll"><span style="font-weight:lighter">(static, constant) </span>PitchYawRoll<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1489">line 1489</a>
+    </li></ul></dd>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;" id=".RollPitchYaw"><span style="font-weight:lighter">(static, constant) </span>RollPitchYaw<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1509">line 1509</a>
+    </li></ul></dd>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;" id=".RollYawPitch"><span style="font-weight:lighter">(static, constant) </span>RollYawPitch<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1514">line 1514</a>
+    </li></ul></dd>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;" id=".YawPitchRoll"><span style="font-weight:lighter">(static, constant) </span>YawPitchRoll<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1499">line 1499</a>
+    </li></ul></dd>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;" id=".YawRollPitch"><span style="font-weight:lighter">(static, constant) </span>YawRollPitch<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1504">line 1504</a>
+    </li></ul></dd>
+
+</dl>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat3identity"><span style="font-weight:lighter">(static) </span>mat3identity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns the identity 3x3 matrix.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line261">line 261</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat3transform"><span style="font-weight:lighter">(static) </span>mat3transform<span class="signature">(mat, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Transforms a 3-element vector with a 3x3 matrix and returns
+the transformed vector.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 3x3 matrix.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">X coordinate.
+If "vy", and "vz" are omitted, this value can instead
+be a 4-element array giving the X, Y, and Z coordinates.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vy</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y coordinate.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vz</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z coordinate.  To transform a 2D
+point, set Z to 1.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line943">line 943</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The transformed vector.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4copy"><span style="font-weight:lighter">(static) </span>mat4copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a copy of a 4x4 matrix.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line280">line 280</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4frustum"><span style="font-weight:lighter">(static) </span>mat4frustum<span class="signature">(l, r, b, t, n, f)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a 4x4 matrix representing a view frustum,
+or the limits in the camera's view.<p>
+This method assumes a right-handed coordinate system, such as
+OpenGL's. To adjust the result of this method to a left-handed system,
+such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
+elements of the result (zero-based indices 8, 9, 10, and 11).
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>l</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">X-coordinate of the point where the left
+clipping plane meets the near clipping plane.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>r</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">X-coordinate of the point where the right
+clipping plane meets the near clipping plane.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y-coordinate of the point where the bottom
+clipping plane meets the near clipping plane.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>t</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y-coordinate of the point where the top
+clipping plane meets the near clipping plane.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>n</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The distance from the camera to
+the near clipping plane. Objects closer than this distance won't be
+seen. This should be slightly greater than 0.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>f</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The distance from the camera to
+the far clipping plane. Objects beyond this distance will be too far
+to be seen.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1153">line 1153</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4identity"><span style="font-weight:lighter">(static) </span>mat4identity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns the identity 4x4 matrix.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line268">line 268</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4inverseTranspose"><span style="font-weight:lighter">(static) </span>mat4inverseTranspose<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Inverts a 4x4 matrix, then transposes it. Returns
+a new matrix.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>m4</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line811">line 811</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+Returns the identity matrix if this matrix is not invertible.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4inverseTranspose3"><span style="font-weight:lighter">(static) </span>mat4inverseTranspose3<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns the transposed result of the inverted upper left corner of
+the given 4x4 matrix.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>m4</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line829">line 829</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 3x3 matrix. If the matrix
+can't be inverted, returns the identity 3x3 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4invert"><span style="font-weight:lighter">(static) </span>mat4invert<span class="signature">(m)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Finds the inverse of a 4x4 matrix.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>m</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line296">line 296</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+Returns the identity matrix if this matrix is not invertible.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4lookat"><span style="font-weight:lighter">(static) </span>mat4lookat<span class="signature">(viewerPos, lookingAt, up)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a 4x4 matrix representing a camera view.<p>
+This method assumes a right-handed coordinate system, such as
+OpenGL's. To adjust the result of this method to a left-handed system,
+such as Direct3D's, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
+13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
+10, 12, and 14).
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>viewerPos</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 3-element vector specifying
+the camera position in world space.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>lookingAt</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+            <td class="description last">A 3-element vector specifying
+the point in world space that the camera is looking at.  May be null or omitted,
+in which case the default is the coordinates (0,0,0).</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>up</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+            <td class="description last">A 3-element vector specifying
+the up-vector direction.  May be null or omitted, in which case
+the default is a vector pointing positive on the Y axis.  This
+vector must not point in the same or opposite direction as
+the camera's view direction.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1060">line 1060</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4multiply"><span style="font-weight:lighter">(static) </span>mat4multiply<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies two 4x4 matrices.  A new matrix is returned.
+The matrices are multiplied such that the transformations
+they describe happen in reverse order. For example, if the first
+matrix (input matrix) describes a translation and the second
+matrix describes a scaling, the multiplied matrix will describe
+the effect of scaling then translation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">*</span>
+
+            </td>
+
+            <td class="description last">The first matrix.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">*</span>
+
+            </td>
+
+            <td class="description last">The second matrix.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1212">line 1212</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4ortho"><span style="font-weight:lighter">(static) </span>mat4ortho<span class="signature">(l, r, b, t, n, f)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a 4x4 matrix representing an orthographic projection.
+In this projection, the left clipping plane is parallel to the right clipping
+plane and the top to the bottom.<p>
+This method assumes a right-handed coordinate system, such as
+OpenGL's. To adjust the result of this method to a left-handed system,
+such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
+elements of the result (zero-based indices 8, 9, 10, and 11).
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>l</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Leftmost coordinate of the 3D view.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>r</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Rightmost coordinate of the 3D view.
+(Note that r can be greater than l or vice versa.)</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Bottommost coordinate of the 3D view.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>t</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Topmost coordinate of the 3D view.
+(Note that t can be greater than b or vice versa.)</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>n</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Distance from the camera to the near clipping
+plane.  A positive value means the plane is in front of the viewer.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>f</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Distance from the camera to the far clipping
+plane.  A positive value means the plane is in front of the viewer.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1106">line 1106</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4ortho2d"><span style="font-weight:lighter">(static) </span>mat4ortho2d<span class="signature">(l, r, b, t)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a 4x4 matrix representing a 2D orthographic projection.<p>
+This method assumes a right-handed coordinate system, such as
+OpenGL's. To adjust the result of this method to a left-handed system,
+such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
+elements of the result (zero-based indices 8, 9, 10, and 11).
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>l</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Leftmost coordinate of the 2D view.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>r</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Rightmost coordinate of the 2D view.
+(Note that r can be greater than l or vice versa.)</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Bottommost coordinate of the 2D view.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>t</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Topmost coordinate of the 2D view.
+(Note that t can be greater than b or vice versa.)</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1127">line 1127</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4perspective"><span style="font-weight:lighter">(static) </span>mat4perspective<span class="signature">(fovY, aspectRatio, near, farZ)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a 4x4 matrix representing a perspective projection.<p>
+This method assumes a right-handed coordinate system, such as
+OpenGL's. To adjust the result of this method to a left-handed system,
+such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
+elements of the result (zero-based indices 8, 9, 10, and 11).
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>fovY</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Vertical field of view, in degrees. Should be less
+than 180 degrees.  (The smaller
+this number, the bigger close objects appear to be.  As a result,
+zoom can be implemented by multiplying field of view by an
+additional factor.)</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>aspectRatio</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The ratio of width to height of the viewport, usually
+ the scene's aspect ratio.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>near</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The distance from the camera to
+the near clipping plane. Objects closer than this distance won't be
+seen. This should be slightly greater than 0.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>farZ</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The distance from the camera to
+the far clipping plane. Objects beyond this distance will be too far
+to be seen.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1034">line 1034</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4rotate"><span style="font-weight:lighter">(static) </span>mat4rotate<span class="signature">(mat, angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies a 4x4 matrix by a rotation transformation,
+and returns a new matrix.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix to multiply.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>angle</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The desired angle
+to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+instead be a 4-element array giving the axis
+of rotation as the first three elements, followed by the angle
+in degrees as the fourth element.  If the axis of rotation
+points toward the viewer, the angle's value is increasing in
+a counterclockwise direction.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">X-component of the axis
+of rotation.  If "vy" and "vz" are omitted, this can
+instead be a 3-element array giving the axis
+of rotation in x, y, and z, respectively.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vy</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y-component of the axis
+of rotation.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vz</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z-component of the axis
+of rotation.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1261">line 1261</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4rotated"><span style="font-weight:lighter">(static) </span>mat4rotated<span class="signature">(mat, angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a 4x4 matrix representing a rotation transformation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix to multiply.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>angle</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The desired angle
+to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+instead be a 4-element array giving the axis
+of rotation as the first three elements, followed by the angle
+in degrees as the fourth element.  If the axis of rotation
+points toward the viewer, the angle's value is increasing in
+a counterclockwise direction.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">X-component of the axis
+of rotation.  If "vy" and "vz" are omitted, this can
+instead be a 3-element array giving the axis
+of rotation in x, y, and z, respectively.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vy</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y-component of the axis
+of rotation.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vz</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z-component of the axis
+of rotation.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1358">line 1358</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4scale"><span style="font-weight:lighter">(static) </span>mat4scale<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies a 4x4 matrix by a scaling transformation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scaling factor along the
+X axis.  If "v3y" and "v3z" are omitted, this value can instead
+be a 3-element array giving the scaling factors along the X, Y, and
+Z axes.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scaling factor along the Y axis.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scaling factor along the Z axis.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line864">line 864</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4scaled"><span style="font-weight:lighter">(static) </span>mat4scaled<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a 4x4 matrix representing a scaling transformation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scaling factor along the
+X axis.  If "v3y" and "v3z" are omitted, this value can instead
+be a 3-element array giving the scaling factors along the X, Y, and
+Z axes.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scaling factor along the Y axis.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scaling factor along the Z axis.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line892">line 892</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4scaleInPlace"><span style="font-weight:lighter">(static) </span>mat4scaleInPlace<span class="signature">(mat, v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Modifies a 4x4 matrix by multiplying it by a
+scaling transformation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scale factor along the
+X axis.  If "v3y" and "v3z" are omitted, this value can instead
+be a 3-element array giving the scale factors along the X, Y, and
+Z axes.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scale factor along the Y axis.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Scale factor along the Z axis.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1176">line 1176</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The same parameter as "mat".
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4toMat3"><span style="font-weight:lighter">(static) </span>mat4toMat3<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns the upper-left part of a 4x4 matrix as a new
+3x3 matrix.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>m4</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line797">line 797</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 3x3 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4transform"><span style="font-weight:lighter">(static) </span>mat4transform<span class="signature">(mat, v, vy, vz, vw)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Transforms a 4-element vector with a 4x4 matrix and returns
+the transformed vector.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">X coordinate.
+If "vy", "vz", and "vw" are omitted, this value can instead
+be a 4-element array giving the X, Y, Z, and W coordinates.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vy</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y coordinate.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vz</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z coordinate.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vw</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">W coordinate.  To transform a 3D
+point, set W to 1.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line912">line 912</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The transformed vector.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4translate"><span style="font-weight:lighter">(static) </span>mat4translate<span class="signature">(mat, v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies a 4x4 matrix by a translation transformation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The matrix to multiply.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Translation along the
+X axis.  If "v3y" and "v3z" are omitted, this value can instead
+be a 3-element array giving the translations along the X, Y, and
+Z axes.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Translation along the Y axis.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Translation along the Z axis.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line992">line 992</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".mat4translated"><span style="font-weight:lighter">(static) </span>mat4translated<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a 4x4 matrix representing a translation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Translation along the
+X axis.  If "v3y" and "v3z" are omitted, this value can instead
+be a 3-element array giving the translations along the X, Y, and
+Z axes.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Translation along the Y axis.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v3z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Translation along the Z axis.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line968">line 968</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting 4x4 matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatConjugate"><span style="font-weight:lighter">(static) </span>quatConjugate<span class="signature">(quat)</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Inverts the rotation given in this quaternion without normalizing it;
+returns a new quaternion.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>quat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A quaternion, containing four elements.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line389">line 389</a>
+    </li></ul></dd>
+
+</dl>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatCopy"><span style="font-weight:lighter">(static) </span>quatCopy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a copy of a quaternion.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1462">line 1462</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatDot"><span style="font-weight:lighter">(static) </span>quatDot<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+
+<div class="description">
+    Finds the dot product of two quaternions.
+It's equal to the sum of the products of
+their components (for example, <b>a</b>'s X times <b>b</b>'s X).
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first quaternion.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second quaternion.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1417">line 1417</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatFromAxisAngle"><span style="font-weight:lighter">(static) </span>quatFromAxisAngle<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Generates a quaternion from an angle and axis of rotation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>angle</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The desired angle
+to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+instead be a 4-element array giving the axis
+of rotation as the first three elements, followed by the angle
+in degrees as the fourth element.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">X-component of the axis
+of rotation.  If "vy" and "vz" are omitted, this can
+instead be a 3-element array giving the axis
+of rotation in x, y, and z, respectively.  If the axis of rotation
+points toward the viewer, the angle's value is increasing in
+a counterclockwise direction.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vy</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y-component of the axis
+of rotation.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vz</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z-component of the axis
+of rotation.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line493">line 493</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The generated quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatFromEuler"><span style="font-weight:lighter">(static) </span>quatFromEuler<span class="signature">(pitchDegrees, yawDegrees, rollDegrees, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Generates a quaternion from pitch, yaw and roll angles.
+In the parameters given below, when the axis points toward
+the viewer, the angle's value is increasing in a counterclockwise
+direction.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>pitchDegrees</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Rotation about the x-axis (upward or downward turn), in degrees.
+ This can instead be a 3-element
+array giving the rotation about the x-axis, y-axis, and z-axis,
+respectively.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>yawDegrees</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Rotation about the y-axis (left or right turn), in degrees.
+May be null or omitted if "pitchDegrees" is an array.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>rollDegrees</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Rotation about the z-axis (swaying side by side), in degrees.
+May be null or omitted if "pitchDegrees" is an array.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mode</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">null</span>
+
+            </td>
+
+            <td class="description last">Specifies the order in which the rotations will occur (in terms of their effect).
+Is one of the GLMath constants such as GLMath.PitchYawRoll
+and GLMath.RollYawPitch. If null or omitted, the rotation will be
+described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line540">line 540</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The generated quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatFromMat4"><span style="font-weight:lighter">(static) </span>quatFromMat4<span class="signature">(m)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Generates a quaternion from the rotation described in a 4x4 matrix.
+The results are undefined if the matrix doesn't describe a rotation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>m</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line741">line 741</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatFromVectors"><span style="font-weight:lighter">(static) </span>quatFromVectors<span class="signature">(vec1, vec2)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Generates a quaternion describing a rotation between
+two 3-element vectors.  The quaternion
+will describe the rotation required to rotate
+the ray described in the first vector toward the ray described
+in the second vector.  The vectors need not be normalized.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vec1</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first 3-element vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vec2</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second 3-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line466">line 466</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The generated quaternion, which
+will be normalized.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatIdentity"><span style="font-weight:lighter">(static) </span>quatIdentity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns the identity quaternion, (0, 0, 0, 1).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line273">line 273</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatInverse"><span style="font-weight:lighter">(static) </span>quatInverse<span class="signature">(quat)</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Inverts the rotation given in this quaternion, then normalizes the result;
+returns a new quaternion.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>quat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A quaternion, containing four elements.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line397">line 397</a>
+    </li></ul></dd>
+
+</dl>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatIsIdentity"><span style="font-weight:lighter">(static) </span>quatIsIdentity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {boolean}</span></h4>
+
+<div class="description">
+    Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line405">line 405</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatLength"><span style="font-weight:lighter">(static) </span>quatLength<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+
+<div class="description">
+    Returns the distance of this quaternion from the origin.
+It's the same as the square root of the sum of the squares
+of its components.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>quat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The quaternion.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1447">line 1447</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatMultiply"><span style="font-weight:lighter">(static) </span>quatMultiply<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies two quaternions, creating a composite rotation.
+The quaternions are multiplied such that the second quaternion's
+rotation happens before the first quaternion's rotation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first quaternion.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second quaternion.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1233">line 1233</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatNorm"><span style="font-weight:lighter">(static) </span>quatNorm<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Converts a quaternion to its normalized version; returns a new quaternion.
+When a quaternion is normalized, the distance from the origin
+to that quaternion becomes 1 (unless all its components are 0).
+A quaternion is normalized by dividing each of its components
+by its <a href="glmath.GLMath.html#.quatLength">length</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vec</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A quaternion.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1439">line 1439</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The normalized quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatNormInPlace"><span style="font-weight:lighter">(static) </span>quatNormInPlace<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Converts a quaternion to its normalized version.
+When a quaternion is normalized, the distance from the origin
+to that quaternion becomes 1 (unless all its components are 0).
+A quaternion is normalized by dividing each of its components
+by its <a href="glmath.GLMath.html#.quatLength">length</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vec</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A quaternion.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1428">line 1428</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "vec".
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatRotate"><span style="font-weight:lighter">(static) </span>quatRotate<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies a quaternion by a rotation transformation
+described as an angle and axis of rotation.
+The result is such that the angle-axis
+rotation happens before the quaternion's rotation.<p>
+This method is equivalent to the following:<pre>
+return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
+</pre>
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>angle</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">The desired angle
+to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+instead be a 4-element array giving the axis
+of rotation as the first three elements, followed by the angle
+in degrees as the fourth element.  If the axis of rotation
+points toward the viewer, the angle's value is increasing in
+a counterclockwise direction.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">X-component of the axis
+of rotation.  If "vy" and "vz" are omitted, this can
+instead be a 3-element array giving the axis
+of rotation in x, y, and z, respectively.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vy</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y-component of the axis
+of rotation.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vz</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z-component of the axis
+of rotation.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line711">line 711</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatScaleInPlace"><span style="font-weight:lighter">(static) </span>quatScaleInPlace<span class="signature">(a, scalar)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies each element of a quaternion by a factor
+and stores the result in that quaternion.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A quaternion.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>scalar</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">A factor to multiply.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1456">line 1456</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "a".
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatSlerp"><span style="font-weight:lighter">(static) </span>quatSlerp<span class="signature">(q1, q2, factor)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Does a spherical linear interpolation between two quaternions.
+This method is useful for smoothly animating between the two
+rotations they describe.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>q1</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first quaternion.  Should be normalized.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>q2</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second quaternion.  Should be normalized.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>factor</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">A value from 0 through 1.  Closer to 0 means
+closer to q1, and closer to 1 means closer to q2.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line658">line 658</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The interpolated quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatToAxisAngle"><span style="font-weight:lighter">(static) </span>quatToAxisAngle<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Calculates the angle and axis of rotation for this
+quaternion.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A quaternion.  Must be normalized.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line444">line 444</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A 4-element array giving the axis
+of rotation as the first three elements, followed by the angle
+in degrees as the fourth element. If the axis of rotation
+points toward the viewer, the angle's value is increasing in
+a counterclockwise direction.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatToEuler"><span style="font-weight:lighter">(static) </span>quatToEuler<span class="signature">(a, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Converts this quaternion to the same version of the rotation
+in the form of pitch, yaw, and roll angles.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A quaternion.  Should be normalized.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mode</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">null</span>
+
+            </td>
+
+            <td class="description last">Specifies the order in which the rotations will occur
+(in terms of their effect, not in terms of how they will be returned by this method).
+Is one of the GLMath constants such as GLMath.PitchYawRoll
+and GLMath.RollYawPitch. If null or omitted, the rotation will be
+described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line590">line 590</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A 3-element array containing the
+pitch, yaw, and roll angles, in that order, in degrees.  For each
+angle, if the corresponding axis points toward
+the viewer, the angle's value is increasing in a counterclockwise
+direction.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatToMat4"><span style="font-weight:lighter">(static) </span>quatToMat4<span class="signature">(quat)</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Generates a 4x4 matrix describing the rotation
+described by this quaternion.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>quat</code></td>
+
+            <td class="type">
+
+<span class="param-type">*</span>
+
+            </td>
+
+            <td class="description last">A quaternion.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line413">line 413</a>
+    </li></ul></dd>
+
+</dl>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatTransform"><span style="font-weight:lighter">(static) </span>quatTransform<span class="signature">(q, v)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Transforms a vector using a quaternion's rotation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>q</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A quaternion describing
+the rotation.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The vector to transform.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line722">line 722</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The transformed vector.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3addInPlace"><span style="font-weight:lighter">(static) </span>vec3addInPlace<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Adds two 3-element vectors and stores
+the result in the first vector. Adding two vectors
+is the same as adding each of their components.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first 3-element vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second 3-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line77">line 77</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "a"
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3cross"><span style="font-weight:lighter">(static) </span>vec3cross<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Finds the cross product of two 3-element vectors.
+The cross product is the vector that is perpendicular to
+each of two other vectors.  If both vectors are unit length
+(via <a href="glmath.GLMath.html#.vec3norm">glmath.GLMath.vec3norm</a>), the sine of
+the angle between them is equal to the length of their
+cross product.<p>
+The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
+follows:<pre>
+<b>c</b>.x = <b>a</b>.y * <b>b</b>.z - <b>a</b>.z * <b>b</b>.y
+<b>c</b>.y = <b>a</b>.z * <b>b</b>.x - <b>a</b>.x * <b>b</b>.z
+<b>c</b>.z = <b>a</b>.x * <b>b</b>.y - <b>a</b>.y * <b>b</b>.x
+</pre>
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line51">line 51</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A 3-element vector containing the cross product.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3dot"><span style="font-weight:lighter">(static) </span>vec3dot<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+
+<div class="description">
+    Finds the dot product of two 3-element vectors. It's the
+sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
+If both vectors are unit length
+(via <a href="glmath.GLMath.html#.vec3norm">glmath.GLMath.vec3norm</a>), the cosine
+of the angle between them is equal to their dot product.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line66">line 66</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A number representing the dot product.
+
+     (Type:
+<span class="param-type">number</span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3length"><span style="font-weight:lighter">(static) </span>vec3length<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+
+<div class="description">
+    Returns the distance of this 3-element vector from the origin.
+It's the same as the square root of the sum of the squares
+of its components.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 3-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line237">line 237</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3mulInPlace"><span style="font-weight:lighter">(static) </span>vec3mulInPlace<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies two 3-element vectors and stores
+the result in the first vector. Multiplying two vectors
+is the same as multiplying each of their components.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first 3-element vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second 3-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line113">line 113</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "a"
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3norm"><span style="font-weight:lighter">(static) </span>vec3norm<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a normalized version of a 3-element vector.
+When a vector is normalized, the distance from the origin
+to that vector becomes 1 (unless all its components are 0).
+A vector is normalized by dividing each of its components
+by its <a href="glmath.GLMath.html#.vec3length">length</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vec</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 3-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line214">line 214</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting vector.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3normInPlace"><span style="font-weight:lighter">(static) </span>vec3normInPlace<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Converts a 3-element vector to its normalized version.
+When a vector is normalized, the distance from the origin
+to that vector becomes 1 (unless all its components are 0).
+A vector is normalized by dividing each of its components
+by its <a href="glmath.GLMath.html#.vec3length">length</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vec</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 3-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line168">line 168</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "vec".
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3scaleInPlace"><span style="font-weight:lighter">(static) </span>vec3scaleInPlace<span class="signature">(a, scalar)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies each element of a 3-element vector by a factor
+and stores the result in that vector.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 3-element vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>scalar</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">A factor to multiply.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line130">line 130</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "a".
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec3subInPlace"><span style="font-weight:lighter">(static) </span>vec3subInPlace<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Subtracts two 3-element vectors and stores
+the result in the first vector. Subtracting two vectors
+is the same as subtracting each of their components.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first 3-element vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second 3-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line95">line 95</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "a"
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec4copy"><span style="font-weight:lighter">(static) </span>vec4copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a copy of a 4-element vector.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line287">line 287</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec4dot"><span style="font-weight:lighter">(static) </span>vec4dot<span class="signature">(a, b)</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Finds the dot product of two 4-element vectors. It's the
+sum of the products of their components (for example, <b>a</b>'s X times <b>b</b>'s X).
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The first 4-element vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>b</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">The second 4-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line142">line 142</a>
+    </li></ul></dd>
+
+</dl>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec4length"><span style="font-weight:lighter">(static) </span>vec4length<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+
+<div class="description">
+    Returns the distance of this 4-element vector from the origin.
+It's the same as the square root of the sum of the squares
+of its components.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line250">line 250</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec4norm"><span style="font-weight:lighter">(static) </span>vec4norm<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Returns a normalized version of a 4-element vector.
+When a vector is normalized, the distance from the origin
+to that vector becomes 1 (unless all its components are 0).
+A vector is normalized by dividing each of its components
+by its <a href="glmath.GLMath.html#.vec4length">length</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vec</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line227">line 227</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting vector.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec4normInPlace"><span style="font-weight:lighter">(static) </span>vec4normInPlace<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Converts a 4-element vector to its normalized version.
+When a vector is normalized, the distance from the origin
+to that vector becomes 1 (unless all its components are 0).
+A vector is normalized by dividing each of its components
+by its <a href="glmath.GLMath.html#.vec4length">length</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vec</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4-element vector.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line190">line 190</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "vec".
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".vec4scaleInPlace"><span style="font-weight:lighter">(static) </span>vec4scaleInPlace<span class="signature">(a, scalar)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Multiplies each element of a 4-element vector by a factor
+and stores the result in that vector.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>a</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4-element vector.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>scalar</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">A factor to multiply.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line152">line 152</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "a".
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+</article>
+
+</section>
+
+</div>
+<nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHfwYJKoZIhvcNAQcEoIIHcDCCB2wCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBTEjVSqAfM9cTLwXVwxBqNI8r1Il0SJNqahKnIJrEIZOdmziEnZsYS8kifxxbWCBrNGl1S/eO5kcMG6WO50eBSxFlNpweevNYIs0dIdfQZtiWcRD2yYzaWHBkHu3PmCCLmc3pPT5QaOc949w2dPcg+syabMOSwN94Mk67Wh//7pTELMAkGBSsOAwIaBQAwgfwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIm7w2yVS0zOeAgdhYAX/keBkbLTGS2k5QcVstRROvRVuMlDL7sy/YUie0YlEJKDFTFE7n6LP15AFfODDattjmqKJ7UZ+6hY9sqJhayUNqdl/rA/RYgPVKGWTM1l68+KFdz2SO3IHvBUJIAwnHFX1JVyNUAofSxWj+3eoN5MnQzskA4cKe/RFWB04oXxZS7/WCOHL3q3mlwFDSK83C3Wcqro7S18YnVxfJ4XGUQ7nlx1C9K0Xq+JbCGEC4D8yjQHzm9w3LqUOogiI3l9VVlXxuqcAdq+iBkAGIt3y4TXABMtXEFG2gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MTAxMzA4NDBaMCMGCSqGSIb3DQEJBDEWBBQImRl0rdSM38l1aTcRhxgiKb7ipTANBgkqhkiG9w0BAQEFAASBgE0IsEWvN+n6QuwDFkBMQO9C4z5uf7wAvoMDgifDKBCyGFmpYZPsKawkYVcS/kASDtyq6aWU3lqP+KweyA+0xfpAyE3R8/7p80uqGGs8bHGicxkl2pEkX95R23HGRa1pEDHFF1XQNkhns558WioFipI2RvmAAEaMgZQ1p+SV/cdu-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-shapes.html">shapes</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

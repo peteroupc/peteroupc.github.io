@@ -1,0 +1,143 @@
+<meta charset=utf-8>
+<head>
+<script type="text/javascript" src="glutil_min.js"></script>
+<script id="demo">
+//<!--
+/*
+
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+function createQuad(x,y,width,height){
+ var builder=new Mesh();
+ builder.mode(Mesh.QUAD_STRIP);
+ var x2=x+width;
+ var y2=y+height;
+ builder.vertex3(x,y,0);
+ builder.vertex3(x,y2,0);
+ var slices=10;
+ for(var i=1;i<=slices;i++){
+  builder.vertex3(x+(x2-x)*i/slices,y,0);
+  builder.vertex3(x+(x2-x)*i/slices,y2,0);
+ }
+ return builder.recalcNormals();
+};
+
+var scene3d=null;
+var currentFilter=null;
+
+function makeWave(context){
+return ShaderProgram.makeEffect(context,[
+"uniform float time;",
+"const float pi = 3.14159265;",
+"float interp(float t){",
+" return sin(t*pi*2.0);",
+"}",
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" float t=float(time)/100.0;",
+" t=t+uvCoord.y;",
+" float offset=interp(fract(t*8.0));",
+" float x=clamp(uvCoord.x+offset*0.02,0.0,1.0);",
+" vec4 color=texture2D(sampler,vec2(x,uvCoord.y));",
+" return color;",
+"}"].join("\n"));
+}
+
+function makeGrayscale(context){
+return ShaderProgram.makeEffect(context,[
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" vec4 color=texture2D(sampler,uvCoord);",
+" float gray=(color.r+color.g+color.b)/3.0;",
+" return vec4(gray,gray,gray,color.a);",
+"}"].join("\n"));
+}
+
+function link1(){
+ if(scene3d){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=makeGrayscale(scene3d.getContext());
+  scene3d.useFilter(currentFilter);
+ }
+}
+
+function link2(){
+ if(scene3d){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=ShaderProgram.getInvertEffect(scene3d.getContext());
+  scene3d.useFilter(currentFilter);
+ }
+}
+
+function link3(){
+ if(scene3d){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=makeWave(scene3d.getContext());
+  scene3d.useFilter(currentFilter);
+ }
+}
+
+function linknone(){
+ if(scene3d){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=null;
+  scene3d.useFilter(currentFilter);
+ }
+}
+
+onload=(function(){
+  var scene=new Scene3D(document.getElementById("canvas"));
+  var context=scene.getContext();
+  scene.setDirectionalLight(0,[0,0,-1]);
+  scene3d=scene;
+  var color=true;
+  var oddrow=false;
+  for(var x=-100;x<100;x+=20){
+   color=oddrow;
+   for(var y=-100;y<100;y+=20){
+    var xx=((x/100)+1)/2
+    var yy=((y/100)+1)/2
+    var mesh=Meshes.createPlane(0.2,0.2);
+    scene.addShape(scene.makeShape(mesh)
+      .setColor(color ? [0,xx,yy] : "white")
+      .setPosition(x/100+0.1,y/100+0.1,0));
+    color=!color;
+   }
+   oddrow=!oddrow
+  }
+  var rot=0;
+  var time=0;
+  GLUtil.renderLoop(function(){
+   if(currentFilter)currentFilter.setUniforms({"time":time});
+   time+=1;
+   time%=100;
+   scene.render();
+   for(var i=0;i<scene.shapes.length;i++){
+    scene.shapes[i].setRotation(rot,0,1,0);
+   }
+   rot+=5;
+ });
+})
+//-->
+</script>
+</head>
+<body>
+<h1>Quads</h1>
+<a href="javascript:link1()">Grayscale</a>,
+<a href="javascript:link2()">Invert colors</a>,
+<a href="javascript:link3()">Wave</a>,
+<a href="javascript:linknone()">No filters</a>
+<br>
+<canvas width="600" height="450" id=canvas></canvas>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
+</body>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Arbitrary-Exponent Numbers</title>
+</head>
+<body>
+<h1>Arbitrary-Exponent Numbers</h1>
+<p>
+This document registers tags for arbitrary-exponent numbers in Concise Binary Object Representation (CBOR) (ref. 1).
+</p>
+<ul>
+<li>Tag:   264
+<li>Data item: array
+<li>Semantics: Decimal fraction with arbitrary exponent
+</ul>
+<ul>
+<li>Tag:   265
+<li>Data item: array
+<li>Semantics: Bigfloat with arbitrary exponent
+</ul>
+<h2>
+Introduction
+</h2>
+<p>
+The CBOR specification already defines two tags for arbitrary-precision floating-point numbers: tag 4 for decimal
+fractions, and 5 for bigfloats.  But unfortunately, both tags limit the exponent to major types 0 and 1 (about 65 bits), and some number formats,
+notably the one used in JavaScript Object Notation (JSON, ref. 2), don't have a theoretical limit on exponents.
+For example, it would be impractical to serialize the JSON number <code>10e+99999999999999999999</code> in tag 4, or the number <code>10e-99999999999999999999</code>
+in tag 4 without loss of information, since in both cases, the exponent doesn't fit the range of major types 0 or 1.
+The tags defined here are intended to make it possible to serialize numbers like these by allowing the exponent to be
+a big integer.
+</p>
+<h2>
+Detailed Semantics
+</h2>
+<p>
+Tag 264 has the same semantics as tag 4, except that the exponent can also be a bignum (major type 6, tag 2 or 3).
+</p>
+<p>
+Tag 265 has the same semantics as tag 5, except that the exponent can also be a bignum (major type 6, tag 2 or 3).
+</p>
+<p>
+If a number's exponent is less than 1<sup>64</sup>, and not less than -(1<sup>64</sup>), an implementation may
+use tag 4 or 5 instead, but this behavior is not required.
+</p>
+<p>
+A CBOR decoder can treat data items with tag 264 or 265 that don't meet the criteria above as an error,
+but this specification doesn't define how a CBOR implementation ought to behave in this case.
+Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
+</p>
+<h2>
+References
+</h2>
+<p>
+Ref. 1. Bormann, C. and Hoffman, P. "Concise Binary Object Representation (CBOR)". RFC 7049, October 2013.
+</p>
+<p>
+Ref. 2 (informative). Bray T., ed. "The JavaScript Object Notation (JSON) Data Interchange Format". RFC 7159, March 2014.
+</p>
+<h2>
+Author
+</h2>
+<p>
+Peter Occil (poccil14 at gmail dot com)
+</p>
+<p>
+My <a href='http://peteroupc.github.io/CBOR/'>CBOR home page</a>.
+</p>
+<p>
+Any copyright to this specification is released to the Public Domain. <a href='http://creativecommons.org/publicdomain/zero/1.0/'>http://creativecommons.org/publicdomain/zero/1.0/</a>
+</p>
+</body></html>

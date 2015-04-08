@@ -1,0 +1,106 @@
+<meta charset=utf-8>
+<head>
+<script type="text/javascript" src="glutil_min.js"></script>
+</head>
+<body>
+<a href="javascript:link1()">Single color</a>,
+<a href="javascript:link2()">Multicolor</a><br>
+<canvas width="600" height="450" id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+// Generate a composite mesh representing an arrow
+function arrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
+ var slices=32;
+ // generate the four parts of the arrow
+ var shaft=Meshes.createCylinder(shaftRadius,shaftRadius,
+   shaftLength,slices);
+ var pointer=Meshes.createCylinder(pointerRadius,0,pointerLength,slices);
+ var base=Meshes.createDisk(0,shaftRadius,slices,1,true);
+ var pointerBase=Meshes.createDisk(shaftRadius,pointerRadius,slices,1,true);
+ // move the pointer base to the top of the shaft
+ pointerBase.transform(GLMath.mat4translated(0,0,shaftLength));
+ // move the pointer to the top of the shaft
+ pointer.transform(GLMath.mat4translated(0,0,shaftLength));
+ // merge the four parts of the arrow
+ return shaft.merge(base).merge(pointer).merge(pointerBase);
+}
+
+function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
+ var slices=32;
+ // generate the four parts of the arrow
+ var shaft=Meshes.createCylinder(shaftRadius,shaftRadius,
+   shaftLength,slices);
+ var pointer=Meshes.createCylinder(pointerRadius,0,pointerLength,slices);
+ var base=Meshes.createDisk(0,shaftRadius,slices,1,true);
+ var pointerBase=Meshes.createDisk(shaftRadius,pointerRadius,slices,1,true);
+ shaft.setColor3("red");
+ pointer.setColor3("blue");
+ base.setColor3("red");
+ pointerBase.setColor3("blue");
+ // move the pointer base to the top of the shaft
+ pointerBase.transform(GLMath.mat4translated(0,0,shaftLength));
+ // move the pointer to the top of the shaft
+ pointer.transform(GLMath.mat4translated(0,0,shaftLength));
+ // merge the four parts of the arrow
+ return shaft.merge(base).merge(pointer).merge(pointerBase);
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setDirectionalLight(0,[5,5,10])
+  // Set the perspective view.  Camera has a 45-degree field of view
+  // and will see objects from 0.1 to 100 units away.
+  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  // Move the camera back 40 units.
+  scene.setLookAt([0,0,40]);
+  // Create an arrow mesh 10 units in size
+  var mesh1=multiColoredArrow(10,2,1,2);
+  var mesh2=arrow(10,2,1,2);
+  // Create a shape based on the mesh and give it a red color
+  var shape1=scene.makeShape(mesh1)
+  var shape2=scene.makeShape(mesh2).setColor("green")
+  // Add the shape to the scene
+  scene.addShape(shape1);
+  // Set the starting rotation
+  var rotation=[0,0,0];
+  // Set up the render loop
+  GLUtil.renderLoop(function(){
+   rotation[0]+=.5; // Adjust x-rotation by .5 degree
+   rotation[1]+=1.0; // Adjust y-rotation by 1 degree
+   // Update the shape's rotation
+   var q=GLMath.quatFromEuler(rotation);
+   scene.shapes[0].setQuaternion(q);
+   // Render the scene
+   scene.render();
+  });
+
+function link1(){
+ scene.removeShape(shape1);
+ scene.addShape(shape2);
+}
+
+function link2(){
+ scene.removeShape(shape2);
+ scene.addShape(shape1);
+}
+
+//-->
+</script>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
+</body>

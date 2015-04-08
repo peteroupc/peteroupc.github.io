@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Class: ObjData</title>
+<script src="mathml.js"></script>
+</head>
+<body style="margin-top:0px">
+<div style="width:75%;float:left;">
+    <h1>Class: ObjData</h1>
+
+<section>
+
+<header>
+
+        <h2>
+        ObjData
+        </h2>
+
+            <div class="class-description">OBJ file.</div>
+
+</header>
+
+<article>
+    <div class="container-overview">
+
+    <h2>Constructor</h2>
+
+    <h4 style="border-bottom: 1px solid;" id="ObjData"><span style="font-weight:lighter"></span>new ObjData<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="objmtl.js.html">objmtl.js</a>, <a href="objmtl.js.html#line10">line 10</a>
+    </li></ul></dd>
+
+</dl>
+
+    </div>
+
+        <h3 class="subsection-title">Members</h3>
+
+<h4 style="border-bottom: 1px solid;" id="mtllib"><span style="font-weight:lighter"></span>mtllib<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    An array of meshes.  Two or more meshes may have
+the same name (the "name" property in each mesh).  The "data"
+property holds data for each mesh.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="objmtl.js.html">objmtl.js</a>, <a href="objmtl.js.html#line16">line 16</a>
+    </li></ul></dd>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;" id="url"><span style="font-weight:lighter"></span>url<span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    URL of the OBJ file
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="objmtl.js.html">objmtl.js</a>, <a href="objmtl.js.html#line12">line 12</a>
+    </li></ul></dd>
+
+</dl>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="border-bottom: 1px solid;" id=".loadObjFromUrl"><span style="font-weight:lighter">(static) </span>loadObjFromUrl<span class="signature">(url)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+<div class="description">
+    Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available) asynchronously.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>url</code></td>
+
+            <td class="type">
+
+<span class="param-type">string</span>
+
+            </td>
+
+            <td class="description last">The URL to load.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="objmtl.js.html">objmtl.js</a>, <a href="objmtl.js.html#line197">line 197</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that:
+- Resolves when:
+The OBJ file is loaded successfully, whether or not its associated
+MTL is also loaded successfully.  The result is an ObjData object.
+- Is rejected when:
+An error occurs when loading the OBJ file.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="toShape"><span style="font-weight:lighter"></span>toShape<span class="signature">(scene)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Shape>}</span></h4>
+
+<div class="description">
+    Creates one or more 3D shapes from the data
+in this OBJ file.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>scene</code></td>
+
+            <td class="type">
+
+<span class="param-type">Scene3D</span>
+
+            </td>
+
+            <td class="description last">3D scene to load the shape with.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="objmtl.js.html">objmtl.js</a>, <a href="objmtl.js.html#line30">line 30</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Array of shapes.
+
+     (Type:
+<span class="param-type">Array.&lt;Shape></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="toShapeFromName"><span style="font-weight:lighter"></span>toShapeFromName<span class="signature">(scene, name)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Shape>}</span></h4>
+
+<div class="description">
+    Creates one or more 3D shapes from the named portion
+of the data in this OBJ file.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>scene</code></td>
+
+            <td class="type">
+
+<span class="param-type">Scene3D</span>
+
+            </td>
+
+            <td class="description last">3D scene to load the shape with.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>name</code></td>
+
+            <td class="type">
+
+<span class="param-type">string</span>
+
+            </td>
+
+            <td class="description last">Name from the OBJ file of the portion
+of the model to use.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="objmtl.js.html">objmtl.js</a>, <a href="objmtl.js.html#line48">line 48</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Array of shapes.
+
+     (Type:
+<span class="param-type">Array.&lt;Shape></span>
+
+)
+
+</div>
+
+</article>
+
+</section>
+
+</div>
+<nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHfwYJKoZIhvcNAQcEoIIHcDCCB2wCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBTEjVSqAfM9cTLwXVwxBqNI8r1Il0SJNqahKnIJrEIZOdmziEnZsYS8kifxxbWCBrNGl1S/eO5kcMG6WO50eBSxFlNpweevNYIs0dIdfQZtiWcRD2yYzaWHBkHu3PmCCLmc3pPT5QaOc949w2dPcg+syabMOSwN94Mk67Wh//7pTELMAkGBSsOAwIaBQAwgfwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIm7w2yVS0zOeAgdhYAX/keBkbLTGS2k5QcVstRROvRVuMlDL7sy/YUie0YlEJKDFTFE7n6LP15AFfODDattjmqKJ7UZ+6hY9sqJhayUNqdl/rA/RYgPVKGWTM1l68+KFdz2SO3IHvBUJIAwnHFX1JVyNUAofSxWj+3eoN5MnQzskA4cKe/RFWB04oXxZS7/WCOHL3q3mlwFDSK83C3Wcqro7S18YnVxfJ4XGUQ7nlx1C9K0Xq+JbCGEC4D8yjQHzm9w3LqUOogiI3l9VVlXxuqcAdq+iBkAGIt3y4TXABMtXEFG2gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MTAxMzA4NDBaMCMGCSqGSIb3DQEJBDEWBBQImRl0rdSM38l1aTcRhxgiKb7ipTANBgkqhkiG9w0BAQEFAASBgE0IsEWvN+n6QuwDFkBMQO9C4z5uf7wAvoMDgifDKBCyGFmpYZPsKawkYVcS/kASDtyq6aWU3lqP+KweyA+0xfpAyE3R8/7p80uqGGs8bHGicxkl2pEkX95R23HGRa1pEDHFF1XQNkhns558WioFipI2RvmAAEaMgZQ1p+SV/cdu-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-shapes.html">shapes</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>
