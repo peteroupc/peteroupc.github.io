@@ -455,10 +455,10 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "vec4 calcLightPower(light lt, vec4 viewWorldPosition){\n" +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
-" if(lt.position.w == 0.0){\n" +
+" if(lt.position.w == 0.0){ /* directional light */\n" +
 "  sdir=normalize((lt.position).xyz);\n" +
 "  attenuation=1.0;\n" +
-" } else {\n" +
+" } else { /* point light */\n" +
 "  vec3 vertexToLight=(lt.position-viewWorldPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
 "  if(dist==0.0){\n" +
@@ -496,6 +496,7 @@ for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
  shader+="SET_LIGHTPOWER("+i+");\n";
 }
 shader+=""+
+"if(baseColor.a==0.0)discard;\n" +
 "vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
 "vec3 phong=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
@@ -505,23 +506,23 @@ for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
 }
 shader+="#ifdef SPECULAR\n" +
 "// specular reflection\n" +
+"if((ms.x*ms.y*ms.z)!=0.0){\n" +
 "vec3 viewDirection=vec3(0,0,1.);\n" +
 "bool spectmp;\n" +
-"float specular;\n" +
-"bool nonZeroMaterialSpecular=((ms.x*ms.y*ms.z)!=0.0);\n";
+"float specular;\n";
 for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
 shader+="  spectmp = dot(transformedNormalVar, lightPower["+i+"].xyz) >= 0.0;\n" +
-"  if (spectmp &amp;&amp; nonZeroMaterialSpecular) {\n" +
+"  if (spectmp) {\n" +
 "  vec3 lightSpecular=vec3(lights["+i+"].specular);\n"+
 "    specular=dot (-lightPower["+i+"].xyz - (2.0 * dot (transformedNormalVar, -lightPower["+i+"].xyz)*\n"+
 " transformedNormalVar), viewDirection);\n" +
 "    specular=max(specular,0.0);\n" +
 "    specular=pow(specular,mshin);\n"+
-"    specular=specular*lightPower["+i+"].w;\n";
-shader+="    vec3 specularCompo = ms*specular*lightSpecular;\n";
-shader+="    phong+=specularCompo;\n" +
+"    specular=specular*lightPower["+i+"].w;\n" +
+"    phong+=ms*specular*lightSpecular;\n" +
 "  }\n";
 }
+shader+="}\n";
 shader+="#endif\n";
 shader+=" // emission\n"+
 " phong+=me;\n" +

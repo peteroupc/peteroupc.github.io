@@ -23,7 +23,9 @@
     <h4 style="border-bottom: 1px solid;" id="Mesh"><span style="font-weight:lighter"></span>new Mesh<span class="signature">(vertices, indices, format)</span><span style="font-weight:lighter"></span></h4>
 
 <div class="description">
-    Specifies the triangles and lines that make up a geometric shape.
+    Specifies the triangles, lines, and points that make up a geometric shape.
+Each vertex, that is, each point, each end of a line, and each corner
+of a triangle, can also specify a color, normal, and texture coordinates.
 See the "<a href="tutorial-shapes.html">shapes</a>" tutorial.
 </div>
 
@@ -113,7 +115,7 @@ May be null or omitted, in which case "format" is set to 0.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line34">line 34</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line36">line 36</a>
     </li></ul></dd>
 
 </dl>
@@ -137,7 +139,7 @@ May be null or omitted, in which case "format" is set to 0.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line787">line 787</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line948">line 948</a>
     </li></ul></dd>
 
 </dl>
@@ -154,7 +156,7 @@ line is made up of the last vertex and 1 new vertex.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line860">line 860</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line1021">line 1021</a>
     </li></ul></dd>
 
 </dl>
@@ -170,7 +172,7 @@ of 2 vertices each.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line835">line 835</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line996">line 996</a>
     </li></ul></dd>
 
 </dl>
@@ -186,12 +188,12 @@ of triangles (3 vertices per line).
 
     <dt class="tag-default">Default Value:</dt>
     <dd class="tag-default"><ul class="dummy">
-            <li>8</li>
+            <li>256</li>
         </ul></dd>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line798">line 798</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line959">line 959</a>
     </li></ul></dd>
 
 </dl>
@@ -211,7 +213,7 @@ of triangles (3 vertices per line).
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line782">line 782</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line943">line 943</a>
     </li></ul></dd>
 
 </dl>
@@ -227,7 +229,7 @@ of 1 vertex each.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line866">line 866</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line1027">line 1027</a>
     </li></ul></dd>
 
 </dl>
@@ -242,12 +244,12 @@ of 1 vertex each.
 
     <dt class="tag-default">Default Value:</dt>
     <dd class="tag-default"><ul class="dummy">
-            <li>16</li>
+            <li>512</li>
         </ul></dd>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line803">line 803</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line964">line 964</a>
     </li></ul></dd>
 
 </dl>
@@ -268,7 +270,7 @@ vertices, in that order.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line820">line 820</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line981">line 981</a>
     </li></ul></dd>
 
 </dl>
@@ -287,7 +289,7 @@ vertices, in that order.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line829">line 829</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line990">line 990</a>
     </li></ul></dd>
 
 </dl>
@@ -307,7 +309,7 @@ vertices, in that order.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line792">line 792</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line953">line 953</a>
     </li></ul></dd>
 
 </dl>
@@ -318,14 +320,14 @@ vertices, in that order.
     Primitive mode for rendering a triangle fan.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the first vertex of the first triangle,
-the last vertex, and 1 new vertex.
+the previous vertex, and 1 new vertex.
 </div>
 
 <dl class="details">
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line843">line 843</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line1004">line 1004</a>
     </li></ul></dd>
 
 </dl>
@@ -345,7 +347,7 @@ vertices are swapped when generating that triangle.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line853">line 853</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line1014">line 1014</a>
     </li></ul></dd>
 
 </dl>
@@ -361,7 +363,7 @@ of 3 vertices each.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line809">line 809</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line970">line 970</a>
     </li></ul></dd>
 
 </dl>
@@ -444,7 +446,7 @@ May be null or omitted if a string is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line318">line 318</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line321">line 321</a>
     </li></ul></dd>
 
 </dl>
@@ -456,6 +458,142 @@ May be null or omitted if a string is given as the "r" parameter.</td>
 
      (Type:
 <span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="getVertex"><span style="font-weight:lighter"></span>getVertex<span class="signature">(index)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Gets the position of the vertex with the given
+index in this mesh.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>index</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Zero-based index of
+the vertex to get.
+The index ranges from 0 to less than
+the number of vertices in the mesh, not the
+number of vertex indices.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line560">line 560</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A 3-element array giving
+the X, Y, and Z coordinates, respectively, of the vertex
+position, or null if the index is less than 0 or
+equals the number of vertices in this mesh or greater.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="getVertexNormal"><span style="font-weight:lighter"></span>getVertexNormal<span class="signature">(index)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Gets the normal of the vertex with the given
+index in this mesh.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>index</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Zero-based index of
+the vertex normal to get.
+The index ranges from 0 to less than
+the number of vertices in the mesh, not the
+number of vertex indices.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line591">line 591</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A 3-element array giving
+the X, Y, and Z coordinates, respectively, of the vertex
+normal, or null if the index is less than 0 or
+equals the number of vertices in this mesh or greater.
+Returns (0,0,0) if the given vertex exists but doesn't define
+a normal.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
 
 )
 
@@ -509,7 +647,7 @@ given in this parameter will remain unchanged.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line235">line 235</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line237">line 237</a>
     </li></ul></dd>
 
 </dl>
@@ -574,7 +712,7 @@ Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line206">line 206</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line208">line 208</a>
     </li></ul></dd>
 
 </dl>
@@ -598,7 +736,8 @@ Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.</td>
 defined (with vertex3()) will have this normal.  The new current
 normal will apply to future vertices even if the current mode
 is TRIANGLE_FAN and some vertices were already given for
-that mode.
+that mode.  The normal passed to this method will
+not automatically be normalized to unit length.
 </div>
 
     <h5>Parameters:</h5>
@@ -663,7 +802,7 @@ that mode.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line282">line 282</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line285">line 285</a>
     </li></ul></dd>
 
 </dl>
@@ -691,7 +830,7 @@ to unit length.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line418">line 418</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line421">line 421</a>
     </li></ul></dd>
 
 </dl>
@@ -772,7 +911,7 @@ will point inward; otherwise, outward.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line405">line 405</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line408">line 408</a>
     </li></ul></dd>
 
 </dl>
@@ -800,7 +939,7 @@ by swapping the second and third vertex indices of each one.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line693">line 693</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line857">line 857</a>
     </li></ul></dd>
 
 </dl>
@@ -890,7 +1029,216 @@ May be null or omitted if a string is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line375">line 375</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line378">line 378</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="setVertex"><span style="font-weight:lighter"></span>setVertex<span class="signature">(index, x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Mesh.html">glutil.Mesh</a>}</span></h4>
+
+<div class="description">
+    Sets the X, Y, and Z coordinates of the vertex with the
+given index.  Has no effect if the index is less than 0 or
+equals the number of vertices in this mesh or greater.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>index</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Zero-based index of
+the vertex to set.
+The index ranges from 0 to less than
+the number of vertices in the mesh, not the
+number of vertex indices.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>x</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">X coordinate of the vertex position.
+Can also be a 3-element array giving
+the X, Y, and Z coordinates, respectively, of the vertex
+position.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y coordinate of the vertex position.
+May be null or omitted if "x" is an array.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z coordinate of the vertex position.
+May be null or omitted if "x" is an array.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line479">line 479</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="setVertexNormal"><span style="font-weight:lighter"></span>setVertexNormal<span class="signature">(index, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Mesh.html">glutil.Mesh</a>}</span></h4>
+
+<div class="description">
+    Sets the normal associated with the vertex with the
+given index.  Has no effect if the index exceeds the number
+of vertices in the mesh.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>index</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Zero-based index of
+the vertex to set.
+The index ranges from 0 to less than
+the number of vertices in the mesh, not the
+number of vertex indices.
+s * @param {number|Array<number>} x X coordinate of the vertex normal.
+Can also be a 3-element array giving
+the X, Y, and Z coordinates, respectively, of the vertex
+normal.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y coordinate of the vertex normal.
+May be null or omitted if "x" is an array.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z coordinate of the vertex normal.
+May be null or omitted if "x" is an array.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line522">line 522</a>
     </li></ul></dd>
 
 </dl>
@@ -967,7 +1315,7 @@ that mode.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line343">line 343</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line346">line 346</a>
     </li></ul></dd>
 
 </dl>
@@ -990,7 +1338,7 @@ that mode.
     Converts this mesh to a new mesh with triangles converted
 to line segments.  The new mesh will reuse the vertices
 contained in this one without copying the vertices.  Parts
-of the mesh already consisting of line segments will remain
+of the mesh consisting of points or line segments will remain
 unchanged.
 </div>
 
@@ -998,7 +1346,7 @@ unchanged.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line450">line 450</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line453">line 453</a>
     </li></ul></dd>
 
 </dl>
@@ -1061,7 +1409,7 @@ the transformation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line297">line 297</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line300">line 300</a>
     </li></ul></dd>
 
 </dl>
@@ -1149,7 +1497,7 @@ and texture coordinates if they have been defined.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line359">line 359</a>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line362">line 362</a>
     </li></ul></dd>
 
 </dl>
@@ -1165,6 +1513,23 @@ and texture coordinates if they have been defined.
 )
 
 </div>
+
+    <h4 style="border-bottom: 1px solid;" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+
+<div class="description">
+    Gets the number of vertices included in this mesh.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil-mesh.js.html">glutil-mesh.js</a>, <a href="glutil-mesh.js.html#line615">line 615</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
 
 </article>
 

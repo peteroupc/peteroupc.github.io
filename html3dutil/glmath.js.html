@@ -145,6 +145,22 @@ a[2]*=scalar;
 return a;
 },
 /**
+ * Does a linear interpolation between two 3-element vectors;
+ * returns a new vector.
+ * @param {Array&lt;number>} v1 The first vector.
+ * @param {Array&lt;number>} v2 The second vector.
+ * @param {number} factor A value from 0 through 1.  Closer to 0 means
+ * closer to v1, and closer to 1 means closer to v2.
+ * @return {Array&lt;number>} The interpolated vector.
+ */
+vec3lerp:function(v1,v2,factor){
+ return [
+  v1[0]+(v2[0]-v1[0])*factor,
+  v1[1]+(v2[1]-v1[1])*factor,
+  v1[2]+(v2[2]-v1[2])*factor
+ ];
+},
+/**
  * Finds the dot product of two 4-element vectors. It's the
  * sum of the products of their components (for example, &lt;b>a&lt;/b>'s X times &lt;b>b&lt;/b>'s X).
  * @param {Array&lt;number>} a The first 4-element vector.
@@ -166,6 +182,23 @@ a[1]*=scalar;
 a[2]*=scalar;
 a[3]*=scalar;
 return a;
+},
+/**
+ * Does a linear interpolation between two 4-element vectors;
+ * returns a new vector.
+ * @param {Array&lt;number>} v1 The first vector.
+ * @param {Array&lt;number>} v2 The second vector.
+ * @param {number} factor A value from 0 through 1.  Closer to 0 means
+ * closer to v1, and closer to 1 means closer to v2.
+ * @return {Array&lt;number>} The interpolated vector.
+ */
+vec4lerp:function(v1,v2,factor){
+ return [
+  v1[0]+(v2[0]-v1[0])*factor,
+  v1[1]+(v2[1]-v1[1])*factor,
+  v1[2]+(v2[2]-v1[2])*factor,
+  v1[3]+(v2[3]-v1[3])*factor
+ ];
 },
 /**
  * Converts a 3-element vector to its normalized version.
@@ -657,7 +690,8 @@ quatToEuler:function(a,mode){
   return euler;
 },
 /**
- * Does a spherical linear interpolation between two quaternions.
+ * Does a spherical linear interpolation between two quaternions;
+ * returns a new quaternion.
  * This method is useful for smoothly animating between the two
  * rotations they describe.
  * @param {Array&lt;number>} q1 The first quaternion.  Should be normalized.

@@ -100,7 +100,7 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 * 3 and either radius is zero; a rectangular prism if "slices" is 4
 * and both radiuses are the same; and a rectangular pyramid if "slices"
 * is 4 and either radius is zero. Must be 3 or greater.
-* May be null or omitted, in which case the default is 16.
+* May be null or omitted, in which case the default is 32.
 * @param {number} stacks Number of vertical stacks the cylinder consists of.
 * May be null or omitted, in which case the default is 1.
 * @param {boolean} flat If true, will generate normals such that the
@@ -113,7 +113,7 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 */
 Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, inside){
  var mesh=new Mesh();
- if(slices==null)slices=16;
+ if(slices==null)slices=32;
  if(stacks==null)stacks=1;
  if(slices&lt;=2)throw new Error("too few slices");
  if(stacks&lt;1)throw new Error("too few stacks");
@@ -271,7 +271,7 @@ Meshes.createDisk=function(inner, outer, slices, loops, inward){
 * complete disk would be.  If 0, no hole is created.
 * @param {number} outer Outer radius of the disk.
 * @param {number} slices Number of slices going around the partial disk.
-* May be null or omitted; default is 16.
+* May be null or omitted; default is 32.
 * @param {number} loops Number of concentric rings the partial disk makes up.
 * May be null or omitted; default is 1.
 * @param {number} start Starting angle of the partial disk, in degrees.
@@ -288,7 +288,7 @@ Meshes.createDisk=function(inner, outer, slices, loops, inward){
 */
 Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inward){
  var mesh=new Mesh();
- if(slices==null)slices=16;
+ if(slices==null)slices=32;
  if(loops==null)loops=1;
  if(start==null)start=0;
  if(sweep==null)sweep=360;
