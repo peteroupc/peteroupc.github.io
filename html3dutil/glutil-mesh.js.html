@@ -977,8 +977,9 @@ Mesh.POINTS_BIT = 512;
 Primitive mode for rendering triangles, made up
 of 3 vertices each.
  @const
+ @default
 */
-Mesh.TRIANGLES = 0;
+Mesh.TRIANGLES = 4;
 /**
 Primitive mode for rendering a strip of quadrilaterals (quads).
 The first 4 vertices make up the first quad, and each additional
@@ -988,8 +989,9 @@ triangle consists of the first, second, and third vertices, in that order,
 and the second triangle consists of the third, second, and fourth
 vertices, in that order.
  @const
+ @default
 */
-Mesh.QUAD_STRIP = 1;
+Mesh.QUAD_STRIP = 8;
 /**
 Primitive mode for rendering quadrilaterals, made up
 of 4 vertices each.  Each quadrilateral is broken into two triangles: the first
@@ -997,22 +999,24 @@ triangle consists of the first, second, and third vertices, in that order,
 and the second triangle consists of the first, third, and fourth
 vertices, in that order.
  @const
-*/
-Mesh.QUADS = 2;
+ @default
+ */
+Mesh.QUADS = 7;
 /**
 Primitive mode for rendering line segments, made up
 of 2 vertices each.
  @const
 */
-Mesh.LINES = 3;
+Mesh.LINES = 1;
 /**
 Primitive mode for rendering a triangle fan.  The first 3
 vertices make up the first triangle, and each additional
 triangle is made up of the first vertex of the first triangle,
 the previous vertex, and 1 new vertex.
  @const
+ @default
 */
-Mesh.TRIANGLE_FAN = 4;
+Mesh.TRIANGLE_FAN = 6;
 /**
 Primitive mode for rendering a triangle strip.  The first 3
 vertices make up the first triangle, and each additional
@@ -1021,6 +1025,7 @@ new vertex.  For the second triangle in the strip, and
 every other triangle after that, the first and second
 vertices are swapped when generating that triangle.
  @const
+ @default
 */
 Mesh.TRIANGLE_STRIP = 5;
 /**
@@ -1028,14 +1033,16 @@ Primitive mode for rendering connected line segments.
 The first 2 vertices make up the first line, and each additional
 line is made up of the last vertex and 1 new vertex.
  @const
+ @default
 */
-Mesh.LINE_STRIP = 6;
+Mesh.LINE_STRIP = 3;
 /**
 Primitive mode for rendering points, made up
 of 1 vertex each.
  @const
+ @default
 */
-Mesh.POINTS = 7;
+Mesh.POINTS = 0;
 
 this["Mesh"]=Mesh;
 </code></pre>
