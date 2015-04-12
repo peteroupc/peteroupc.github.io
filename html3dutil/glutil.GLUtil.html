@@ -282,7 +282,7 @@ is null or not an HTML canvas element.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve, progressReject)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<span style="font-weight:lighter">opt</span>, progressReject<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
 <div class="description">
     Utility function that returns a promise that
@@ -300,6 +300,8 @@ its work.
 
         <th>Type</th>
 
+        <th>Attributes</th>
+
         <th class="last">Description</th>
     </tr>
     </thead>
@@ -316,6 +318,10 @@ its work.
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">an array containing promise objects</td>
         </tr>
 
@@ -326,11 +332,14 @@ its work.
             <td class="type">
 
 <span class="param-type">function</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">a function called as each
   individual promise is resolved; optional</td>
@@ -343,11 +352,14 @@ its work.
             <td class="type">
 
 <span class="param-type">function</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">a function called as each
   individual promise is rejected; optional</td>

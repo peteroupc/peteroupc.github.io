@@ -38,10 +38,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * compiled shader program, or an object, such as Scene3D, that
 * implements a no-argument &lt;code>getContext&lt;/code> method
 * that returns a WebGL context.
-* @param {String|undefined} vertexShader Source text of a vertex shader, in OpenGL
+* @param {String} [vertexShader] Source text of a vertex shader, in OpenGL
 * ES Shading Language (GLSL).  If null, a default
 * vertex shader is used instead.
-* @param {String|undefined} fragmentShader Source text of a fragment shader in GLSL.
+* @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
 * If null, a default fragment shader is used instead.
 */
 var ShaderProgram=function(context, vertexShader, fragmentShader){

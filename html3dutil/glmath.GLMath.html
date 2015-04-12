@@ -56,7 +56,7 @@ See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more informatio
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1518">line 1518</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1519">line 1519</a>
     </li></ul></dd>
 
 </dl>
@@ -76,7 +76,7 @@ See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more informatio
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1502">line 1502</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1503">line 1503</a>
     </li></ul></dd>
 
 </dl>
@@ -91,7 +91,7 @@ See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more informatio
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1528">line 1528</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1529">line 1529</a>
     </li></ul></dd>
 
 </dl>
@@ -106,7 +106,7 @@ See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more informatio
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1523">line 1523</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1524">line 1524</a>
     </li></ul></dd>
 
 </dl>
@@ -121,7 +121,7 @@ See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more informatio
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1543">line 1543</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1544">line 1544</a>
     </li></ul></dd>
 
 </dl>
@@ -136,7 +136,7 @@ See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more informatio
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1548">line 1548</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1549">line 1549</a>
     </li></ul></dd>
 
 </dl>
@@ -151,7 +151,7 @@ See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more informatio
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1533">line 1533</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1534">line 1534</a>
     </li></ul></dd>
 
 </dl>
@@ -166,7 +166,7 @@ See the tutorial "<a href="tutorial-glmath.html">glmath</a>" for more informatio
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1538">line 1538</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1539">line 1539</a>
     </li></ul></dd>
 
 </dl>
@@ -432,7 +432,7 @@ to be seen.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1187">line 1187</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1188">line 1188</a>
     </li></ul></dd>
 
 </dl>
@@ -648,7 +648,7 @@ Returns the identity matrix if this matrix is not invertible.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".mat4lookat"><span style="font-weight:lighter">(static) </span>mat4lookat<span class="signature">(viewerPos, lookingAt, up)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id=".mat4lookat"><span style="font-weight:lighter">(static) </span>mat4lookat<span class="signature">(viewerPos, lookingAt<span style="font-weight:lighter">opt</span>, up<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
     Returns a 4x4 matrix representing a camera view.<p>
@@ -669,6 +669,8 @@ such as Direct3D's, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
         <th>Type</th>
 
+        <th>Attributes</th>
+
         <th class="last">Description</th>
     </tr>
     </thead>
@@ -685,6 +687,10 @@ such as Direct3D's, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">A 3-element vector specifying
 the camera position in world space.</td>
         </tr>
@@ -696,11 +702,14 @@ the camera position in world space.</td>
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">A 3-element vector specifying
 the point in world space that the camera is looking at.  May be null or omitted,
@@ -714,17 +723,21 @@ in which case the default is the coordinates (0,0,0).</td>
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">A 3-element vector specifying
 the up-vector direction.  May be null or omitted, in which case
 the default is a vector pointing positive on the Y axis.  This
 vector must not point in the same or opposite direction as
-the camera's view direction.</td>
+the camera's view direction. (For best results, rotate the vector (0, 1, 0)
+so it points perpendicular to the camera's view direction.)</td>
         </tr>
 
     </tbody>
@@ -734,7 +747,7 @@ the camera's view direction.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1094">line 1094</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1095">line 1095</a>
     </li></ul></dd>
 
 </dl>
@@ -811,7 +824,7 @@ the effect of scaling then translation.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1246">line 1246</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1247">line 1247</a>
     </li></ul></dd>
 
 </dl>
@@ -945,7 +958,7 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1140">line 1140</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1141">line 1141</a>
     </li></ul></dd>
 
 </dl>
@@ -1049,7 +1062,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1161">line 1161</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1162">line 1162</a>
     </li></ul></dd>
 
 </dl>
@@ -1289,7 +1302,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1295">line 1295</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1296">line 1296</a>
     </li></ul></dd>
 
 </dl>
@@ -1417,7 +1430,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1392">line 1392</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1393">line 1393</a>
     </li></ul></dd>
 
 </dl>
@@ -1704,7 +1717,7 @@ Z axes.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1210">line 1210</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1211">line 1211</a>
     </li></ul></dd>
 
 </dl>
@@ -2152,7 +2165,7 @@ returns a new quaternion.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1496">line 1496</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1497">line 1497</a>
     </li></ul></dd>
 
 </dl>
@@ -2216,7 +2229,7 @@ their components (for example, <b>a</b>'s X times <b>b</b>'s X).
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1451">line 1451</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1452">line 1452</a>
     </li></ul></dd>
 
 </dl>
@@ -2713,7 +2726,7 @@ of its components.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1481">line 1481</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1482">line 1482</a>
     </li></ul></dd>
 
 </dl>
@@ -2777,7 +2790,7 @@ rotation happens before the first quaternion's rotation.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1267">line 1267</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1268">line 1268</a>
     </li></ul></dd>
 
 </dl>
@@ -2840,7 +2853,7 @@ by its <a href="glmath.GLMath.html#.quatLength">length</a>.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1473">line 1473</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1474">line 1474</a>
     </li></ul></dd>
 
 </dl>
@@ -2903,7 +2916,7 @@ by its <a href="glmath.GLMath.html#.quatLength">length</a>.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1462">line 1462</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1463">line 1463</a>
     </li></ul></dd>
 
 </dl>
@@ -3097,7 +3110,7 @@ and stores the result in that quaternion.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1490">line 1490</a>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line1491">line 1491</a>
     </li></ul></dd>
 
 </dl>

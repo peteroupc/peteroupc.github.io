@@ -25,16 +25,16 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * See the "{@tutorial shapes}" tutorial.
 * @class
 * @alias glutil.Mesh
-* @param {Array&lt;number>|undefined} vertices An array that contains data on each
+* @param {Array&lt;number>} [vertices] An array that contains data on each
 * vertex of the mesh.
 * Each vertex is made up of the same number of elements, as defined in
 * format. If null or omitted, creates an initially empty mesh.
 * May be null or omitted, in which case an empty vertex array is used.
-* @param {Array&lt;number>|undefined} indices An array of vertex indices.  Each trio of
+* @param {Array&lt;number>} [indices] An array of vertex indices.  Each trio of
 * indices specifies a separate triangle, or each pair of indices specifies
 * a line segment.
 * If null or omitted, creates an initially empty mesh.
-* @param {number|undefined} format A set of bit flags depending on the kind of data
+* @param {number} [format] A set of bit flags depending on the kind of data
 * each vertex contains.  Each vertex contains 3 elements plus:&lt;ul>
 *  &lt;li> 3 more elements if Mesh.NORMALS_BIT is set, plus
 *  &lt;li> 3 more elements if Mesh.COLORS_BIT is set, plus

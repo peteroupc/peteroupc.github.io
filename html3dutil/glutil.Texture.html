@@ -76,7 +76,7 @@
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;" id=".loadTexture"><span style="font-weight:lighter">(static) </span>loadTexture<span class="signature">(name, textureCache)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id=".loadTexture"><span style="font-weight:lighter">(static) </span>loadTexture<span class="signature">(name, textureCache<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
 <div class="description">
     Loads a texture by its URL.
@@ -91,6 +91,8 @@
         <th>Name</th>
 
         <th>Type</th>
+
+        <th>Attributes</th>
 
         <th class="last">Description</th>
     </tr>
@@ -108,6 +110,10 @@
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">URL of the texture data.  It will be loaded via
  the JavaScript DOM's Image class</td>
         </tr>
@@ -119,11 +125,14 @@
             <td class="type">
 
 <span class="param-type">Object</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">An object whose keys
 are the names of textures already loaded.  This will help avoid loading

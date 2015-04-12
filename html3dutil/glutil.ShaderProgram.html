@@ -20,7 +20,7 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;" id="ShaderProgram"><span style="font-weight:lighter"></span>new ShaderProgram<span class="signature">(context, vertexShader, fragmentShader)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;" id="ShaderProgram"><span style="font-weight:lighter"></span>new ShaderProgram<span class="signature">(context, vertexShader<span style="font-weight:lighter">opt</span>, fragmentShader<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"></span></h4>
 
 <div class="description">
     Represents a WebGL shader program.  A shader program in
@@ -48,6 +48,8 @@ log is output to the JavaScript console.
 
         <th>Type</th>
 
+        <th>Attributes</th>
+
         <th class="last">Description</th>
     </tr>
     </thead>
@@ -67,6 +69,10 @@ log is output to the JavaScript console.
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">A WebGL context associated with the
 compiled shader program, or an object, such as Scene3D, that
 implements a no-argument <code>getContext</code> method
@@ -80,11 +86,14 @@ that returns a WebGL context.</td>
             <td class="type">
 
 <span class="param-type">String</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">Source text of a vertex shader, in OpenGL
 ES Shading Language (GLSL).  If null, a default
@@ -98,11 +107,14 @@ vertex shader is used instead.</td>
             <td class="type">
 
 <span class="param-type">String</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">Source text of a fragment shader in GLSL.
 If null, a default fragment shader is used instead.</td>

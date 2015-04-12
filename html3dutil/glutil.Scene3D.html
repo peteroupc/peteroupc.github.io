@@ -152,7 +152,7 @@ that returns a WebGL context.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1541">line 1541</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1542">line 1542</a>
     </li></ul></dd>
 
 </dl>
@@ -381,7 +381,7 @@ object), and is rejected when an error occurs.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="loadAndMapTextures"><span style="font-weight:lighter"></span>loadAndMapTextures<span class="signature">(textureFiles, resolved, rejected)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="loadAndMapTextures"><span style="font-weight:lighter"></span>loadAndMapTextures<span class="signature">(textureFiles, resolved<span style="font-weight:lighter">opt</span>, rejected<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
 <div class="description">
     Loads one or more textures from an image URL and uploads each of them
@@ -397,6 +397,8 @@ to a texture buffer object.
         <th>Name</th>
 
         <th>Type</th>
+
+        <th>Attributes</th>
 
         <th class="last">Description</th>
     </tr>
@@ -414,6 +416,10 @@ to a texture buffer object.
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">A list of URLs of the image to load.</td>
         </tr>
 
@@ -424,11 +430,14 @@ to a texture buffer object.
             <td class="type">
 
 <span class="param-type">function</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">Called for each URL that is loaded successfully
 and uploaded to a texture buffer (the argument will be a Texture object.)</td>
@@ -441,11 +450,14 @@ and uploaded to a texture buffer (the argument will be a Texture object.)</td>
             <td class="type">
 
 <span class="param-type">function</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">Called for each URL for which an error
 occurs (the argument will be the data passed upon
@@ -585,7 +597,7 @@ track future changes.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1553">line 1553</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1554">line 1554</a>
     </li></ul></dd>
 
 </dl>
@@ -647,7 +659,7 @@ track future changes.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1563">line 1563</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1564">line 1564</a>
     </li></ul></dd>
 
 </dl>
@@ -683,7 +695,7 @@ matrix
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1659">line 1659</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1660">line 1660</a>
     </li></ul></dd>
 
 </dl>
@@ -792,7 +804,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1606">line 1606</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1607">line 1607</a>
     </li></ul></dd>
 
 </dl>
@@ -1068,7 +1080,7 @@ May be null, in which case the default is (1, 1, 1).</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1588">line 1588</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1589">line 1589</a>
     </li></ul></dd>
 
 </dl>
@@ -1218,7 +1230,7 @@ to be seen.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="setLookAt"><span style="font-weight:lighter"></span>setLookAt<span class="signature">(eye, center, up)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="setLookAt"><span style="font-weight:lighter"></span>setLookAt<span class="signature">(eye, center<span style="font-weight:lighter">opt</span>, up<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
 <div class="description">
     Sets this scene's view matrix to represent a camera view.
@@ -1236,6 +1248,8 @@ This method takes a camera's position (<code>eye</code>), and the point the came
 
         <th>Type</th>
 
+        <th>Attributes</th>
+
         <th class="last">Description</th>
     </tr>
     </thead>
@@ -1252,6 +1266,10 @@ This method takes a camera's position (<code>eye</code>), and the point the came
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">A 3-element vector specifying
 the camera position in world space.</td>
         </tr>
@@ -1263,11 +1281,14 @@ the camera position in world space.</td>
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">A 3-element vector specifying
 the point in world space that the camera is looking at. May be null or omitted,
@@ -1281,17 +1302,21 @@ in which case the default is the coordinates (0,0,0).</td>
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">A 3-element vector specifying
 the up-vector direction.  May be null or omitted, in which case
 the default is a vector pointing positive on the Y axis.  This
 vector must not point in the same or opposite direction as
-the camera's view direction.</td>
+the camera's view direction. (For best results, rotate the vector (0, 1, 0)
+so it points perpendicular to the camera's view direction.)</td>
         </tr>
 
     </tbody>
@@ -1301,7 +1326,7 @@ the camera's view direction.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1529">line 1529</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1530">line 1530</a>
     </li></ul></dd>
 
 </dl>
@@ -1744,7 +1769,7 @@ May be null, in which case the default is (1, 1, 1).</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1627">line 1627</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1628">line 1628</a>
     </li></ul></dd>
 
 </dl>
@@ -1940,7 +1965,7 @@ are rendered to the canvas normally.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1710">line 1710</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1711">line 1711</a>
     </li></ul></dd>
 
 </dl>

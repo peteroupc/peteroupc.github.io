@@ -20,7 +20,7 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;" id="Mesh"><span style="font-weight:lighter"></span>new Mesh<span class="signature">(vertices, indices, format)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;" id="Mesh"><span style="font-weight:lighter"></span>new Mesh<span class="signature">(vertices<span style="font-weight:lighter">opt</span>, indices<span style="font-weight:lighter">opt</span>, format<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"></span></h4>
 
 <div class="description">
     Specifies the triangles, lines, and points that make up a geometric shape.
@@ -39,6 +39,8 @@ See the "<a href="tutorial-shapes.html">shapes</a>" tutorial.
 
         <th>Type</th>
 
+        <th>Attributes</th>
+
         <th class="last">Description</th>
     </tr>
     </thead>
@@ -52,11 +54,14 @@ See the "<a href="tutorial-shapes.html">shapes</a>" tutorial.
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">An array that contains data on each
 vertex of the mesh.
@@ -72,11 +77,14 @@ May be null or omitted, in which case an empty vertex array is used.</td>
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">An array of vertex indices.  Each trio of
 indices specifies a separate triangle, or each pair of indices specifies
@@ -91,11 +99,14 @@ If null or omitted, creates an initially empty mesh.</td>
             <td class="type">
 
 <span class="param-type">number</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">A set of bit flags depending on the kind of data
 each vertex contains.  Each vertex contains 3 elements plus:<ul>
