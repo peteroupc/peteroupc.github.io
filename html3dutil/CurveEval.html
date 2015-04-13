@@ -73,7 +73,9 @@ of a curve.
 
             </td>
 
-            <td class="description last">An object that must contain a functionnamed "evaluate", giving 3 values as a result.  See <a href="CurveEval.html#vertex">CurveEval#vertex</a>.</ul></td>
+            <td class="description last">An object that must contain a function
+named "evaluate", giving 3 values as a result.  See <a href="CurveEval.html#vertex">CurveEval#vertex</a>.
+</ul></td>
         </tr>
 
     </tbody>
@@ -138,7 +140,9 @@ of a curve.
 
                 </td>
 
-            <td class="description last">Control points as specified in <a href="BezierCurve.html">BezierCurve</a>,where each point is a 3-element array giving the red, green, and bluevalues of a color.</td>
+            <td class="description last">Control points as specified in <a href="BezierCurve.html">BezierCurve</a>,
+where each point is a 3-element array giving the red, green, and blue
+values of a color.</td>
         </tr>
 
         <tr>
@@ -285,7 +289,8 @@ this method has no effect.</td>
 
                 </td>
 
-            <td class="description last">Number of subdivisions of the curve to be drawn.May be omitted; default is 24.</td>
+            <td class="description last">Number of subdivisions of the curve to be drawn.
+May be omitted; default is 24.</td>
         </tr>
 
         <tr>
@@ -359,7 +364,8 @@ May be omitted; default is 1.</td>
     <h4 style="border-bottom: 1px solid;" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(mesh, u)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
 <div class="description">
-    Generates vertex positions and attributes based on a pointin a parametric curve.
+    Generates vertex positions and attributes based on a point
+in a parametric curve.
 </div>
 
     <h5>Parameters:</h5>
@@ -388,7 +394,10 @@ May be omitted; default is 1.</td>
 
             </td>
 
-            <td class="description last">Mesh where vertex positions and attributeswill be generated.  When this method returns, the current color, normal,and texture coordinates will be the same as they were before the methodstarted.</td>
+            <td class="description last">Mesh where vertex positions and attributes
+will be generated.  When this method returns, the current color, normal,
+and texture coordinates will be the same as they were before the method
+started.</td>
         </tr>
 
         <tr>
@@ -401,7 +410,10 @@ May be omitted; default is 1.</td>
 
             </td>
 
-            <td class="description last">Point of the curve to evaluate (forB&eacute;zier curve, generally within the rangegiven in the <code>vectorBezier</code>, <code>normalBezier</code>,<code>colorBezier</code>, and <code>texCoordBezier</code> methods).</td>
+            <td class="description last">Point of the curve to evaluate (for
+B&eacute;zier curve, generally within the range
+given in the <code>vectorBezier</code>, <code>normalBezier</code>,
+<code>colorBezier</code>, and <code>texCoordBezier</code> methods).</td>
         </tr>
 
     </tbody>
@@ -460,7 +472,9 @@ May be omitted; default is 1.</td>
 
             </td>
 
-            <td class="description last">An object that must contain a functionnamed "evaluate", giving 3 values as a result.  See <a href="CurveEval.html#vertex">CurveEval#vertex</a>.</ul></td>
+            <td class="description last">An object that must contain a function
+named "evaluate", giving 3 values as a result.  See <a href="CurveEval.html#vertex">CurveEval#vertex</a>.
+</ul></td>
         </tr>
 
     </tbody>
@@ -525,7 +539,8 @@ May be omitted; default is 1.</td>
 
                 </td>
 
-            <td class="description last">Control points as specified in <a href="BezierCurve.html">BezierCurve</a>,where each point is a 3-element array giving the x, y, and z coordinates of a normal.</td>
+            <td class="description last">Control points as specified in <a href="BezierCurve.html">BezierCurve</a>,
+where each point is a 3-element array giving the x, y, and z coordinates of a normal.</td>
         </tr>
 
         <tr>
@@ -622,7 +637,9 @@ May be omitted; default is 1.</td>
 
             </td>
 
-            <td class="description last">An object that must contain a functionnamed "evaluate", giving 2 values as a result.  See <a href="CurveEval.html#vertex">CurveEval#vertex</a>.</ul></td>
+            <td class="description last">An object that must contain a function
+named "evaluate", giving 2 values as a result.  See <a href="CurveEval.html#vertex">CurveEval#vertex</a>.
+</ul></td>
         </tr>
 
     </tbody>
@@ -687,7 +704,8 @@ May be omitted; default is 1.</td>
 
                 </td>
 
-            <td class="description last">Control points as specified in <a href="BezierCurve.html">BezierCurve</a>,where each point is a 1- or 2-element array giving the u and v texture coordinates.</td>
+            <td class="description last">Control points as specified in <a href="BezierCurve.html">BezierCurve</a>,
+where each point is a 1- or 2-element array giving the u and v texture coordinates.</td>
         </tr>
 
         <tr>
@@ -784,7 +802,15 @@ May be omitted; default is 1.</td>
 
             </td>
 
-            <td class="description last">An object that must contain a functionnamed "evaluate".  It takes the following parameters in this order:<ul><li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.<li><code>output</code> - Array to store the result of the evaluation.  It isexpected to write 3 values to the array starting with the first element.</ul>The evaluator function returns the number of values it wrote to the "output"array.</td>
+            <td class="description last">An object that must contain a function
+named "evaluate".  It takes the following parameters in this order:<ul>
+<li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
+<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
+<li><code>output</code> - Array to store the result of the evaluation.  It is
+expected to write 3 values to the array starting with the first element.
+</ul>
+The evaluator function returns the number of values it wrote to the "output"
+array.</td>
         </tr>
 
     </tbody>
@@ -849,7 +875,9 @@ May be omitted; default is 1.</td>
 
                 </td>
 
-            <td class="description last">Control points as specified in <a href="BezierCurve.html">BezierCurve</a>,where each point is a 3-element array giving the x, y, and z coordinates of a vertexposition.</td>
+            <td class="description last">Control points as specified in <a href="BezierCurve.html">BezierCurve</a>,
+where each point is a 3-element array giving the x, y, and z coordinates of a vertex
+position.</td>
         </tr>
 
         <tr>

@@ -659,8 +659,17 @@ SurfaceEval.prototype.evaluate=function(mesh,u,v){
    GLMath.vec3scaleInPlace(vv,1.0/dv);
    GLMath.vec3normInPlace(vu);
    GLMath.vec3normInPlace(vv);
-   vu=GLMath.vec3cross(vu,vv);
-   GLMath.vec3normInPlace(vu);
+   if(GLMath.vec3length(vu)==0){
+    // partial derivative of u is degenerate
+    //console.log([vu,vv]+" u degen")
+    vu=vv;
+   } else if(GLMath.vec3length(vv)!=0){
+    vu=GLMath.vec3cross(vu,vv);
+    GLMath.vec3normInPlace(vu);
+   } else {
+    // partial derivative of v is degenerate
+    //console.log([vu,vv]+" v degen")
+   }
    mesh.normal3(vu[0],vu[1],vu[2]);
   } else if(normal){
    mesh.normal3(normal[0],normal[1],normal[2]);
