@@ -32,7 +32,7 @@ of a curve.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line255">line 255</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line249">line 249</a>
     </li></ul></dd>
 
 </dl>
@@ -85,7 +85,7 @@ named "evaluate", giving 3 values as a result.  See <a href="CurveEval.html#vert
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line297">line 297</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line288">line 288</a>
     </li></ul></dd>
 
 </dl>
@@ -190,7 +190,7 @@ values of a color.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line364">line 364</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line355">line 355</a>
     </li></ul></dd>
 
 </dl>
@@ -344,7 +344,7 @@ May be omitted; default is 1.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line437">line 437</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line425">line 425</a>
     </li></ul></dd>
 
 </dl>
@@ -361,7 +361,7 @@ May be omitted; default is 1.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(mesh, u)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="evalOne"><span style="font-weight:lighter"></span>evalOne<span class="signature">(mesh, u)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
 <div class="description">
     Generates vertex positions and attributes based on a point
@@ -411,7 +411,7 @@ started.</td>
             </td>
 
             <td class="description last">Point of the curve to evaluate (for
-B&eacute;zier curve, generally within the range
+B&eacute;zier curves, generally within the range
 given in the <code>vectorBezier</code>, <code>normalBezier</code>,
 <code>colorBezier</code>, and <code>texCoordBezier</code> methods).</td>
         </tr>
@@ -423,7 +423,7 @@ given in the <code>vectorBezier</code>, <code>normalBezier</code>,
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line383">line 383</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line374">line 374</a>
     </li></ul></dd>
 
 </dl>
@@ -484,7 +484,7 @@ named "evaluate", giving 3 values as a result.  See <a href="CurveEval.html#vert
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line286">line 286</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line277">line 277</a>
     </li></ul></dd>
 
 </dl>
@@ -588,7 +588,7 @@ where each point is a 3-element array giving the x, y, and z coordinates of a no
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line335">line 335</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line326">line 326</a>
     </li></ul></dd>
 
 </dl>
@@ -649,7 +649,7 @@ named "evaluate", giving 2 values as a result.  See <a href="CurveEval.html#vert
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line308">line 308</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line299">line 299</a>
     </li></ul></dd>
 
 </dl>
@@ -753,7 +753,7 @@ where each point is a 1- or 2-element array giving the u and v texture coordinat
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line349">line 349</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line340">line 340</a>
     </li></ul></dd>
 
 </dl>
@@ -805,12 +805,8 @@ where each point is a 1- or 2-element array giving the u and v texture coordinat
             <td class="description last">An object that must contain a function
 named "evaluate".  It takes the following parameters in this order:<ul>
 <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
-<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
-<li><code>output</code> - Array to store the result of the evaluation.  It is
-expected to write 3 values to the array starting with the first element.
-</ul>
-The evaluator function returns the number of values it wrote to the "output"
-array.</td>
+<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.</ul>
+The evaluator function returns an array of the result of the evaluation.</td>
         </tr>
 
     </tbody>
@@ -820,7 +816,7 @@ array.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line275">line 275</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line266">line 266</a>
     </li></ul></dd>
 
 </dl>
@@ -925,7 +921,7 @@ position.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line321">line 321</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line312">line 312</a>
     </li></ul></dd>
 
 </dl>

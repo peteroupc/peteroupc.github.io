@@ -210,7 +210,12 @@ Mesh._recalcNormalsLines=function(vertices,faces,stride,offset,flat,inward){
  * Future vertices will be drawn as primitives of the new type.
  * The primitive type can be set to the same mode, in which
  * case future vertices given will not build upon previous
- * vertices.
+ * vertices.&lt;p>
+ * Note that a Mesh object can contain primitives of different
+ * types, such as triangles and lines.  For example, it's allowed
+ * to have a mesh with triangles, then call this method, say,
+ * with &lt;code>Mesh.LINE_STRIP&lt;/code> to add line segments
+ * to that mesh.
  * @param {number} m A primitive type.  One of the following:
  * Mesh.TRIANGLES, Mesh.LINES, Mesh.LINE_STRIP, Mesh.TRIANGLE_STRIP,
  * Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.

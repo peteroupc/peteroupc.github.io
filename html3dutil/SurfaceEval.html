@@ -32,7 +32,7 @@ of a surface.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line463">line 463</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line451">line 451</a>
     </li></ul></dd>
 
 </dl>
@@ -85,7 +85,7 @@ named "evaluate", giving 3 values as a result.  See <a href="SurfaceEval.html#ve
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line518">line 518</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line503">line 503</a>
     </li></ul></dd>
 
 </dl>
@@ -228,7 +228,99 @@ values of a color.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line593">line 593</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line578">line 578</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="SurfaceEval.html">SurfaceEval</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="evalOne"><span style="font-weight:lighter"></span>evalOne<span class="signature">(mesh, u, v)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceEval.html">SurfaceEval</a>}</span></h4>
+
+<div class="description">
+    Generates vertex positions and attributes based on a point
+in a parametric surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mesh</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
+
+            </td>
+
+            <td class="description last">Mesh where vertex positions and attributes
+will be generated.  When this method returns, the current color, normal,
+and texture coordinates will be the same as they were before the method
+started.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">U-coordinate of the curve to evaluate (for
+B&eacute;zier surfaces, generally within the range
+given in the <code>vectorBezier</code>, <code>normalBezier</code>,
+<code>colorBezier</code>, and <code>texCoordBezier</code> methods).</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">V-coordinate of the curve to evaluate.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line598">line 598</a>
     </li></ul></dd>
 
 </dl>
@@ -441,99 +533,7 @@ Default is 1.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line702">line 702</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="SurfaceEval.html">SurfaceEval</a></span>
-
-)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(mesh, u, v)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceEval.html">SurfaceEval</a>}</span></h4>
-
-<div class="description">
-    Generates vertex positions and attributes based on a point
-in a parametric surface.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>mesh</code></td>
-
-            <td class="type">
-
-<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
-
-            </td>
-
-            <td class="description last">Mesh where vertex positions and attributes
-will be generated.  When this method returns, the current color, normal,
-and texture coordinates will be the same as they were before the method
-started.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>u</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">U-coordinate of the curve to evaluate (for
-B&eacute;zier surfaces, generally within the range
-given in the <code>vectorBezier</code>, <code>normalBezier</code>,
-<code>colorBezier</code>, and <code>texCoordBezier</code> methods).</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>v</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">V-coordinate of the curve to evaluate.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line613">line 613</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line683">line 683</a>
     </li></ul></dd>
 
 </dl>
@@ -594,7 +594,7 @@ named "evaluate", giving 3 values as a result.  See <a href="SurfaceEval.html#ve
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line507">line 507</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line492">line 492</a>
     </li></ul></dd>
 
 </dl>
@@ -736,7 +736,7 @@ where each point is a 3-element array giving the x, y, and z coordinates of a no
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line560">line 560</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line545">line 545</a>
     </li></ul></dd>
 
 </dl>
@@ -799,7 +799,7 @@ will automatically be generated; false means they won't.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line479">line 479</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line467">line 467</a>
     </li></ul></dd>
 
 </dl>
@@ -860,7 +860,7 @@ named "evaluate", giving 2 values as a result.  See SurfaceEvals#vertex.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line529">line 529</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line514">line 514</a>
     </li></ul></dd>
 
 </dl>
@@ -1002,7 +1002,7 @@ where each point is a 1- or 2-element array giving the u and v texture coordinat
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line576">line 576</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line561">line 561</a>
     </li></ul></dd>
 
 </dl>
@@ -1054,12 +1054,8 @@ where each point is a 1- or 2-element array giving the u and v texture coordinat
             <td class="description last">An object that must contain a function
 named "evaluate".  It takes the following parameters in this order:<ul>
 <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
-<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
-<li><code>output</code> - Array to store the result of the evaluation.  It is
-expected to write 3 values to the array starting with the first element.
-</ul>
-The evaluator function returns the number of values it wrote to the "output"
-array.</td>
+<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.</ul>
+The evaluator function returns an array of the result of the evaluation.</td>
         </tr>
 
     </tbody>
@@ -1069,7 +1065,7 @@ array.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line496">line 496</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line481">line 481</a>
     </li></ul></dd>
 
 </dl>
@@ -1212,7 +1208,7 @@ position.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line544">line 544</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line529">line 529</a>
     </li></ul></dd>
 
 </dl>

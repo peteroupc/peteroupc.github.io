@@ -129,7 +129,7 @@ May be omitted; default is 1.</td>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u, output)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"></span></h4>
 
 <div class="description">
     Evaluates the curve function based on a point
@@ -166,22 +166,6 @@ in a B&eacute;zier curve.
 given in the constructor).</td>
         </tr>
 
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>output</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-
-            </td>
-
-            <td class="description last">Array where the result of
-the evaluation will be stored.  A number of elements equal to the
-length of a control point, as specified in the constructor, will be
-written to the array, starting with the first element.</td>
-        </tr>
-
     </tbody>
 </table>
 
@@ -189,7 +173,7 @@ written to the array, starting with the first element.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line170">line 170</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line166">line 166</a>
     </li></ul></dd>
 
 </dl>
@@ -197,14 +181,9 @@ written to the array, starting with the first element.</td>
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    Number of values written to the
-output array, which is the length of control points associated with the
-evaluator.
-
-     (Type:
-<span class="param-type">number</span>
-
-)
+    An array of the result of
+the evaluation.  Its length will be equal to the
+length of a control point, as specified in the constructor.
 
 </div>
 
