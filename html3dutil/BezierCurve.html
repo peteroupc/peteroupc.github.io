@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: LightSource</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: BezierCurve</title>
 <script src="mathml.js"></script>
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Class: LightSource</h1>
+    <h1>Class: BezierCurve</h1>
 
 <section>
 
 <header>
 
         <h2>
-        LightSource
+        BezierCurve
         </h2>
 
 </header>
@@ -20,84 +20,105 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;" id="LightSource"><span style="font-weight:lighter"></span>new LightSource<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;" id="BezierCurve"><span style="font-weight:lighter"></span>new BezierCurve<span class="signature">(controlPoints, u1<span style="font-weight:lighter">opt</span>, u2<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"></span></h4>
 
 <div class="description">
-    Specifies parameters for light sources.
+    A parametric evaluator for B&eacute;zier curves.<p>A B&eacute;zier curve is defined by a series of control points, wherethe first and last control points define the endpoints of the curve, andthe remaining control points define the curve's shape, though they don'tnecessarily cross the curve.
 </div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;number>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">An array of control points.  Eachcontrol point is an array with the same length as the other control points.It is assumed that:<ul><li>The length of this parameter minus 1 represents the degree of the B&eacute;ziercurve.  For example, a degree-3 (cubic) curvecontains 4 control points.  A degree of 1 results in a straight line segment.<li>The first control point's length represents the size of all the controlpoints.</ul></td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point for the purpose of interpolation; it will correspond to 0.May be omitted; default is 0.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point for the purpose of interpolation; it will correspond to 1.May be omitted; default is 1.</td>
+        </tr>
+
+    </tbody>
+</table>
 
 <dl class="details">
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line453">line 453</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line144">line 144</a>
     </li></ul></dd>
 
 </dl>
 
     </div>
 
-        <h3 class="subsection-title">Members</h3>
-
-<h4 style="border-bottom: 1px solid;" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    A 3-element vector giving the diffuse color of the light, in the red, green,
-and blue components respectively.  Each component ranges from 0 to 1.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line469">line 469</a>
-    </li></ul></dd>
-
-</dl>
-
-<h4 style="border-bottom: 1px solid;" id="position"><span style="font-weight:lighter"></span>position<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    Light position.  An array of four numbers.
-If the fourth element is 0, this is a directional light, shining an infinitely
-long light at the direction given by the first three elements (the X, Y, and Z
-coordinates respectively).  If the fourth element is 1, this is a point
-light located at the position, in world space, given by the first three elements (the X, Y, and Z
-coordinates respectively).
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line463">line 463</a>
-    </li></ul></dd>
-
-</dl>
-
-<h4 style="border-bottom: 1px solid;" id="specular"><span style="font-weight:lighter"></span>specular<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    A 3-element vector giving the color of specular highlights caused by
-the light, in the red, green,
-and blue components respectively.  Each component ranges from 0 to 1.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line475">line 475</a>
-    </li></ul></dd>
-
-</dl>
-
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u, output)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
 <div class="description">
-    Sets parameters for this material object.
+    Evaluates the curve function based on a pointin a B&eacute;zier curve.
 </div>
 
     <h5>Parameters:</h5>
@@ -118,23 +139,28 @@ and blue components respectively.  Each component ranges from 0 to 1.
 
         <tr>
 
-                <td style="border-bottom: 1px solid;"><code>params</code></td>
+                <td style="border-bottom: 1px solid;"><code>u</code></td>
 
             <td class="type">
 
-<span class="param-type">object</span>
+<span class="param-type">number</span>
 
             </td>
 
-            <td class="description last">An object whose keys have
-the possibilities given below, and whose values are those
-allowed for each key.<ul>
-<li><code>position</code> - Light position.
-<li><code>ambient</code> - Not used in the default shader program.
-<li><code>diffuse</code> - Diffuse color.
-<li><code>specular</code> - Specular highlight color.
-</ul>
-If a value is null or undefined, it is ignored.</td>
+            <td class="description last">Point on the curve to evaluate (generally within the rangegiven in the constructor).</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>output</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">Array where the result ofthe evaluation will be stored.  A number of elements equal to thelength of a control point, as specified in the constructor, will bewritten to the array, starting with the first element.</td>
         </tr>
 
     </tbody>
@@ -144,7 +170,7 @@ If a value is null or undefined, it is ignored.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line490">line 490</a>
+        <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line170">line 170</a>
     </li></ul></dd>
 
 </dl>
@@ -152,10 +178,10 @@ If a value is null or undefined, it is ignored.</td>
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    This object.
+    Number of values written to theoutput array, which is the length of control points associated with theevaluator.
 
      (Type:
-<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>
+<span class="param-type">number</span>
 
 )
 
