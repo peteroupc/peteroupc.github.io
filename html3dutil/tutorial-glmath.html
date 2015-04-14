@@ -30,6 +30,75 @@ with vectors begin with &quot;vec&quot;.</p>
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with &quot;mat&quot;.</p>
+<h3>Translation</h3><p>A translation is a shifting of an object's position.</p>
+<p>To create a translation matrix, use <a href="glmath.GLMath.html#.mat4translated">GLMath.mat4translated()</a>,
+and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
+an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
+<p>To multiply an existing matrix by a translation, use
+<a href="glmath.GLMath.html#.mat4translate">GLMath.mat4translate()</a>.  This will put the translation
+before the other transformations.</p>
+<h3>Scaling</h3><p>Scaling changes an object's size.</p>
+<p>To create a scaling matrix, use <a href="glmath.GLMath.html#.mat4scaled">GLMath.mat4scaled()</a>,
+and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
+factors to change the object's size.  For example, a Y-factor of 2 doubles an object's height.</p>
+<p>To multiply an existing matrix by a scaling, use
+<a href="glmath.GLMath.html#.mat4scale">GLMath.mat4scale()</a>.  This will put the scaling
+before the other transformations.</p>
+<h3>Rotation</h3><p>Rotation changes an object's orientation.</p>
+<p>To create a rotation matrix, use <a href="glmath.GLMath.html#.mat4rotated">GLMath.mat4rotated()</a>,
+and specify the angle (in degrees) to rotate, and the axis of rotation (three parameters for
+the X, Y, and Z components).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation
+around the X-axis, and (80, 0, 0, 1) means a 45-degree rotation around the Z-axis.</p>
+<p>To multiply an existing matrix by a rotation, use
+<a href="glmath.GLMath.html#.mat4rotate">GLMath.mat4rotate()</a>.  This will put the rotation
+before the other transformations.</p>
+<h3>Combining Transforms</h3><p>The order in which you do transforms is important.  In general, scaling then translating is
+not the same as translating then scaling.  Assuming your geometry is centered at the origin
+(0, 0, 0), you should create a transformation in this order:</p>
+<ul>
+<li>Call <code>GLMath.mat4identity()</code>, creating a matrix without a transformation.</li>
+<li>Do your translations if needed, using <code>mat4translate()</code>.</li>
+<li>Do your rotations if needed, using <code>mat4rotate()</code>.</li>
+<li>Do your scalings if needed, using <code>mat4scale()</code>.</li>
+</ul>
+<p>This way, the scalings and rotations will affect the object while it's still centered, and
+before the translations (shifts) take place.</p>
+<p>You can also multiply transforms using <a href="glmath.GLMath.html#.mat4multiply">GLMath.mat4multiply()</a>.
+This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
+of doing the second matrix's transform, then the first matrix's transform.</p>
+<h2>Quaternions</h2><p>A quaternion is a 4-element array that describes a
+3D rotation.  The first three elements are the X, Y, and Z components
+(axis of rotation multiplied by the sine of half the angle)
+and the fourth component is the W component (cosine of half the angle).
+Functions dealing with quaternions begin with &quot;quat&quot;.</p>
+<p>The methods quatMultiply and quatFromEuler, among others, involve
+multiplying quaternions, combining multiple rotations into a single
+rotation.  In these methods, multiplying one rotation by another
+creates a combined rotation in which the second rotation happens
+before the first rotation.  Like matrix multiplication, quaternion
+multiplication is not commutative. This multiplication behavior
+is opposite to that in the D3DX and DirectXMath libraries.</p>
+<h3>Euler angles and their disadvantages</h3><p>Euler angles (pitch, yaw, and roll angles) can also be used to describe 3D
+rotations, but they have disadvantages:</p>
+<ul>
+<li>In general, the order of Euler angle rotations is important. For example, a 30-degree
+pitch followed by a 20-degree roll is not the same as a 20-degree pitch followed
+by a 30-degree roll.</li>
+<li>There are multiple conventions for Euler angles, such as the order of
+rotations; pitch then yaw, or yaw then pitch?</li>
+<li>Euler angle rotations are not easily reversible when the same order
+of angles is used. For example, a negative 30-degree
+pitch followed by a negative 20-degree roll does not undo a 30-degree
+pitch followed by a 20-degree roll.</li>
+</ul>
+<p>Related functions:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.quatFromEuler">GLMath.quatFromEuler()</a> -
+Converts from Euler angles to a quaternion</li>
+<li><a href="glmath.GLMath.html#.quatToEuler">GLMath.quatToEuler()</a> -
+Converts from a quaternion to Euler angles</li>
+</ul>
+<h2>Matrix Details</h2><p>This section contains more details on matrices.</p>
 <p>All functions dealing with 4x4 matrices assume that
 the translation elements in x, y, and z are located in the
 13th, 14th, and 15th elements of the matrix array
@@ -73,8 +142,7 @@ into the matrix arrays passed to GLMath's matrix methods.</p>
 a right-handed coordinate system (such as OpenGL's), in which the z-axis points
 toward (not away from) the viewer whenever the x-axis points to
 the right and the y-axis points up.</p>
-<p><strong>Transforming Points</strong></p>
-<p>The transformation formula multiplies a matrix by a 3D point to change that point's
+<h3>Transforming Points</h3><p>The transformation formula multiplies a matrix by a 3D point to change that point's
 position:</p>
 <ul>
 <li><strong>a&prime;</strong><sub><em>x</em></sub> = matrix[0] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[4] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[8] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[12]</li>
@@ -97,8 +165,7 @@ Transforms a 4-element vector with a 4x4 matrix</li>
 <li><a href="glmath.GLMath.html#.mat3transform">GLMath.mat3transform()</a> -
 Transforms a 3-element vector with a 3x3 matrix</li>
 </ul>
-<p><strong>Translation</strong></p>
-<p>A translation is a shifting of an object's position.  In a transformation matrix,
+<h3>Translation</h3><p>A translation is a shifting of an object's position.  In a transformation matrix,
 this shifting effectively happens after all other transformations such as scaling and rotation.
 It uses the 13th, 14th, and 15th elements of the matrix as seen here:</p>
 <math>
@@ -148,8 +215,7 @@ Returns a translation matrix</li>
 <li><a href="glmath.GLMath.html#.mat4translate">GLMath.mat4translate()</a> -
 Multiplies a matrix by a translation.</li>
 </ul>
-<p><strong>Scaling</strong></p>
-<p>Scaling changes an object's size.  Scaling uses the 1st,
+<h3>Scaling</h3><p>Scaling changes an object's size.  Scaling uses the 1st,
 6th, and 11th elements of the matrix as seen here:</p>
 <math>
 <mfenced open="[" close="]">
@@ -208,8 +274,7 @@ Multiplies a matrix by a scaling.</li>
 <li><a href="glmath.GLMath.html#.mat4scaleInPlace">GLMath.mat4scaleInPlace()</a> -
 Multiplies a matrix in place by a scaling.</li>
 </ul>
-<p><strong>Rotation</strong></p>
-<p>Rotation changes an object's orientation.  Rotation uses the upper-left
+<h3>Rotation</h3><p>Rotation changes an object's orientation.  Rotation uses the upper-left
 corner of a matrix.  Given an angle of rotation, &theta; (in radians; multiply
 degrees by &pi; and divide by 180), the transformation matrix is as follows.</p>
 <figure>
@@ -358,8 +423,7 @@ Returns a rotation matrix</li>
 <li><a href="glmath.GLMath.html#.mat4rotate">GLMath.mat4rotate()</a> -
 Multiplies a matrix by a translation.</li>
 </ul>
-<p><strong>Matrix Multiplication</strong></p>
-<p>Two matrices can be combined into a single transformation. To do so,
+<h3>Matrix Multiplication</h3><p>Two matrices can be combined into a single transformation. To do so,
 the matrices are multiplied such that the transformations
 they describe happen in reverse order.  For example, if the first matrix
 (input matrix) describes a translation and the second
@@ -376,8 +440,7 @@ mat4rotate involve multiplying 4x4 matrices</p>
 <li><a href="glmath.GLMath.html#.mat4multiply">GLMath.mat4multiply()</a> -
 Multiplies two matrices</li>
 </ul>
-<p><strong>Other Transformations</strong></p>
-<p>In all the transformations described above, the last row in the transformation matrix is
+<h3>Other Transformations</h3><p>In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1).  (For that reason, they are called <em>affine transformations</em>, those that
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the GLMath library.</p>
@@ -397,8 +460,7 @@ Returns a frustum matrix</li>
 <li><a href="glmath.GLMath.html#.mat4perspective">GLMath.mat4perspective()</a> -
 Returns a field-of-view perspective matrix</li>
 </ul>
-<p><strong>Matrix Inversions</strong></p>
-<p>An inverted matrix describes a transformation that undoes another transformation.  For
+<h3>Matrix Inversions</h3><p>An inverted matrix describes a transformation that undoes another transformation.  For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
 size.</p>
 <p>To invert a <strong>translation</strong>, reverse the sign of the translation elements <code>tx</code>, <code>ty</code>, and <code>tz</code>
@@ -419,38 +481,6 @@ matrix is too complicated to discuss here.</p>
 <ul>
 <li><a href="glmath.GLMath.html#.mat4invert">GLMath.mat4invert()</a> -
 Inverts a matrix</li>
-</ul>
-<h2>Quaternions</h2><p>A quaternion is a 4-element array that describes a
-3D rotation.  The first three elements are the X, Y, and Z components
-(axis of rotation multiplied by the sine of half the angle)
-and the fourth component is the W component (cosine of half the angle).
-Functions dealing with quaternions begin with &quot;quat&quot;.</p>
-<p>The methods quatMultiply and quatFromEuler, among others, involve
-multiplying quaternions, combining multiple rotations into a single
-rotation.  In these methods, multiplying one rotation by another
-creates a combined rotation in which the second rotation happens
-before the first rotation.  Like matrix multiplication, quaternion
-multiplication is not commutative. This multiplication behavior
-is opposite to that in the D3DX and DirectXMath libraries.</p>
-<h3>Euler angles and their disadvantages</h3><p>Euler angles (pitch, yaw, and roll angles) can also be used to describe 3D
-rotations, but they have disadvantages:</p>
-<ul>
-<li>In general, the order of Euler angle rotations is important. For example, a 30-degree
-pitch followed by a 20-degree roll is not the same as a 20-degree pitch followed
-by a 30-degree roll.</li>
-<li>There are multiple conventions for Euler angles, such as the order of
-rotations; pitch then yaw, or yaw then pitch?</li>
-<li>Euler angle rotations are not easily reversible when the same order
-of angles is used. For example, a negative 30-degree
-pitch followed by a negative 20-degree roll does not undo a 30-degree
-pitch followed by a 20-degree roll.</li>
-</ul>
-<p>Related functions:</p>
-<ul>
-<li><a href="glmath.GLMath.html#.quatFromEuler">GLMath.quatFromEuler()</a> -
-Converts from Euler angles to a quaternion</li>
-<li><a href="glmath.GLMath.html#.quatToEuler">GLMath.quatToEuler()</a> -
-Converts from a quaternion to Euler angles</li>
 </ul>
 </article>
 

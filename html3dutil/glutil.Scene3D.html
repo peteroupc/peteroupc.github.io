@@ -152,7 +152,7 @@ that returns a WebGL context.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1551">line 1551</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1560">line 1560</a>
     </li></ul></dd>
 
 </dl>
@@ -361,7 +361,7 @@ to a texture buffer object.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1454">line 1454</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1463">line 1463</a>
     </li></ul></dd>
 
 </dl>
@@ -471,7 +471,7 @@ rejection).</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1472">line 1472</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1481">line 1481</a>
     </li></ul></dd>
 
 </dl>
@@ -533,7 +533,7 @@ See GLUtil.getPromiseResults.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1442">line 1442</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1451">line 1451</a>
     </li></ul></dd>
 
 </dl>
@@ -597,7 +597,7 @@ track future changes.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1563">line 1563</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1572">line 1572</a>
     </li></ul></dd>
 
 </dl>
@@ -659,7 +659,7 @@ track future changes.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1573">line 1573</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1582">line 1582</a>
     </li></ul></dd>
 
 </dl>
@@ -695,7 +695,7 @@ matrix
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1669">line 1669</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1678">line 1678</a>
     </li></ul></dd>
 
 </dl>
@@ -804,7 +804,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1616">line 1616</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1625">line 1625</a>
     </li></ul></dd>
 
 </dl>
@@ -914,7 +914,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1431">line 1431</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1440">line 1440</a>
     </li></ul></dd>
 
 </dl>
@@ -1080,7 +1080,7 @@ May be null, in which case the default is (1, 1, 1).</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1598">line 1598</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1607">line 1607</a>
     </li></ul></dd>
 
 </dl>
@@ -1102,6 +1102,7 @@ May be null, in which case the default is (1, 1, 1).</td>
 <div class="description">
     Sets this scene's projection matrix to a perspective projection that defines
 the view frustum, or the limits in the camera's view.
+<p>For considerations when choosing the "near" and "far" parameters,see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.
 </div>
 
     <h5>Parameters:</h5>
@@ -1188,7 +1189,7 @@ clipping plane meets the near clipping plane.</td>
 
             <td class="description last">The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
-seen. This should be slightly greater than 0.</td>
+seen.</td>
         </tr>
 
         <tr>
@@ -1213,7 +1214,7 @@ to be seen.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1372">line 1372</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1378">line 1378</a>
     </li></ul></dd>
 
 </dl>
@@ -1326,7 +1327,7 @@ so it points perpendicular to the camera's view direction.)</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1539">line 1539</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1548">line 1548</a>
     </li></ul></dd>
 
 </dl>
@@ -1349,6 +1350,7 @@ so it points perpendicular to the camera's view direction.)</td>
     Sets this scene's projection matrix to an orthographic projection.
 In this projection, the left clipping plane is parallel to the right clipping
 plane and the top to the bottom.
+<p>For considerations when choosing the "near" and "far" parameters,see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.
 </div>
 
     <h5>Parameters:</h5>
@@ -1456,7 +1458,7 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1392">line 1392</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1401">line 1401</a>
     </li></ul></dd>
 
 </dl>
@@ -1556,7 +1558,7 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1406">line 1406</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1415">line 1415</a>
     </li></ul></dd>
 
 </dl>
@@ -1577,6 +1579,7 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
 <div class="description">
     Sets this scene's projection matrix to a perspective projection.
+<p>For considerations when choosing the "near" and "far" parameters,see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.
 </div>
 
     <h5>Parameters:</h5>
@@ -1638,7 +1641,7 @@ additional factor.)</td>
 
             <td class="description last">The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
-seen. This should be slightly greater than 0.</td>
+seen.</td>
         </tr>
 
         <tr>
@@ -1663,7 +1666,7 @@ to be seen.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1349">line 1349</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1352">line 1352</a>
     </li></ul></dd>
 
 </dl>
@@ -1769,7 +1772,7 @@ May be null, in which case the default is (1, 1, 1).</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1637">line 1637</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1646">line 1646</a>
     </li></ul></dd>
 
 </dl>
@@ -1830,7 +1833,7 @@ matrix can also be set using the <a href="glutil.Scene3D.html#setFrustum">glutil
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1506">line 1506</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1515">line 1515</a>
     </li></ul></dd>
 
 </dl>
@@ -1890,7 +1893,7 @@ be set using the <a href="glutil.Scene3D.html#setLookAt">glutil.Scene3D#setLookA
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1517">line 1517</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1526">line 1526</a>
     </li></ul></dd>
 
 </dl>
@@ -1965,7 +1968,7 @@ are rendered to the canvas normally.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1720">line 1720</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1729">line 1729</a>
     </li></ul></dd>
 
 </dl>
