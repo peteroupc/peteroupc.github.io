@@ -630,7 +630,7 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
   if(this.autoNormal){
    var du=0.001
    var dv=0.001
-   // Find the derivatives of u and v
+   // Find the partial derivatives of u and v
    var vu=this.vertexSurface.evaluate(u+du,v);
    var vv=this.vertexSurface.evaluate(u,v+dv);
    GLMath.vec3subInPlace(vv,vertex);

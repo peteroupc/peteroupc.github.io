@@ -1364,6 +1364,59 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  return this.setProjectionMatrix(GLMath.mat4perspective(fov,
    aspect,near,far));
 }
+
+/**
+ * Sets this scene's projection matrix to an orthographic projection.
+ * In this projection, the left clipping plane is parallel to the right clipping
+ * plane and the top to the bottom.&lt;p>
+ * If the view rectangle's aspect ratio doesn't match the desired aspect
+ * ratio, the view rectangle will be centered on the 3D scene's viewport
+ * or otherwise moved so as to keep the 3D view from stretching or squishing.
+ * &lt;p>
+ * For considerations when choosing the "near" and "far" parameters,
+ * see {@link glmath.GLMath.mat4perspective}.
+ * @param {number} left Leftmost coordinate of the view rectangle.
+ * @param {number} right Rightmost coordinate of the view rectangle.
+ * (Note that right can be greater than left or vice versa.)
+ * @param {number} bottom Bottommost coordinate of the view rectangle.
+ * @param {number} top Topmost coordinate of the view rectangle.
+ * (Note that top can be greater than bottom or vice versa.)
+ * @param {number} near Distance from the camera to the near clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @param {number} far Distance from the camera to the far clipping
+ * plane.  A positive value means the plane is in front of the viewer.
+ * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
+ * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
+ * @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, aspect){
+ if(aspect==null)aspect=this.getAspect();
+ if(aspect&lt;1 &amp;&amp; aspect!=0){
+  return this.setOrtho(left,right,bottom/aspect,top/aspect,near,far);
+ } else {
+  return this.setOrtho(left*aspect,right*aspect,bottom,top,near,far);
+ }
+}
+/**
+ * Sets this scene's projection matrix to a 2D orthographic projection.
+ * The near and far clipping planes will be set to -1 and 1, respectively.&lt;p>
+ * If the view rectangle's aspect ratio doesn't match the desired aspect
+ * ratio, the view rectangle will be centered on the 3D scene's viewport
+ * or otherwise moved so as to keep the 3D view from stretching or squishing.
+ * @param {number} left Leftmost coordinate of the view rectangle.
+ * @param {number} right Rightmost coordinate of the view rectangle.
+ * (Note that right can be greater than left or vice versa.)
+ * @param {number} bottom Bottommost coordinate of the view rectangle.
+ * @param {number} top Topmost coordinate of the view rectangle.
+ * (Note that top can be greater than bottom or vice versa.)
+ * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
+ * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
+ * @return {glutil.Scene3D} This object.
+ */
+Scene3D.prototype.setOrtho2DAspect=function(left, right, bottom, top, aspect){
+ return this.setOrthoAspect(left, right, bottom, top, -1, 1, aspect);
+}
+
 /**
  * Sets this scene's projection matrix to a perspective projection that defines
  * the view frustum, or the limits in the camera's view.
@@ -1415,6 +1468,7 @@ Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
 }
 /**
  * Sets this scene's projection matrix to a 2D orthographic projection.
+ * The near and far clipping planes will be set to -1 and 1, respectively.
  * @param {number} left Leftmost coordinate of the 2D view.
  * @param {number} right Rightmost coordinate of the 2D view.
  * (Note that right can be greater than left or vice versa.)
@@ -1541,7 +1595,7 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 }
 /**
 *  Sets this scene's view matrix to represent a camera view.
-* This method takes a camera's position (&lt;code>eye&lt;/code>), and the point the camera is viewer
+* This method takes a camera's position (&lt;code>eye&lt;/code>), and the point the camera is viewing
 * (&lt;code>center&lt;/code>).
 * @param {Array&lt;number>} eye A 3-element vector specifying
 * the camera position in world space.

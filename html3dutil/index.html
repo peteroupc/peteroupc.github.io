@@ -29,6 +29,7 @@ platonic solids.  Demonstrates how vertex and index arrays are built up to creat
 a rotating, pulsating box.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/surfaces.html">surfaces.html</a> - Demonstrates
 using evaluators to generate parametric surfaces.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/stl.html">stl.html</a> - Demonstrates loading 3D models.</li>
 </ul>
 <h2>Examples</h2><pre class="prettyprint source lang-javascript"><code>  // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
@@ -38,7 +39,8 @@ using evaluators to generate parametric surfaces.</li>
   scene.setPerspective(45,scene.getAspect(),0.1,100);
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
-  // Create a box mesh 10 units in size
+  // Create a box mesh 10 units in width, 20 units
+  // in height, and 20 units in depth
   var mesh=Meshes.createBox(10,10,10);
   // Create a shape based on the mesh and give it a red color
   var shape=scene.makeShape(mesh).setColor(&quot;red&quot;);
