@@ -71,6 +71,8 @@ of doing the second matrix's transform, then the first matrix's transform.</p>
 (axis of rotation multiplied by the sine of half the angle)
 and the fourth component is the W component (cosine of half the angle).
 Functions dealing with quaternions begin with &quot;quat&quot;.</p>
+<p><small>A quaternion can be seen as an extension of complex numbers,
+with one real part (W), and three imaginary parts (X, Y, and Z).</small></p>
 <p>The methods quatMultiply and quatFromEuler, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
@@ -90,6 +92,9 @@ rotations; pitch then yaw, or yaw then pitch?</li>
 of angles is used. For example, a negative 30-degree
 pitch followed by a negative 20-degree roll does not undo a 30-degree
 pitch followed by a 20-degree roll.</li>
+<li>Euler angles can cause a problem called &quot;gimbal lock&quot;, in which a rotation along
+one axis (say, a pitch) can cause a vector to be parallel to another axis (say, the roll
+axis), so that a rotation along that axis will do nothing.</li>
 </ul>
 <p>Related functions:</p>
 <ul>
