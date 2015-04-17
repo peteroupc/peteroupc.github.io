@@ -1482,7 +1482,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
     <h4 style="border-bottom: 1px solid;" id="setOrtho2D"><span style="font-weight:lighter"></span>setOrtho2D<span class="signature">(left, right, bottom, top)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
 <div class="description">
-    Sets this scene's projection matrix to a 2D orthographic projection.The near and far clipping planes will be set to -1 and 1, respectively.
+    Sets this scene's projection matrix to a 2D orthographic projection.
+The near and far clipping planes will be set to -1 and 1, respectively.
 </div>
 
     <h5>Parameters:</h5>
@@ -1582,7 +1583,11 @@ plane.  A positive value means the plane is in front of the viewer.</td>
     <h4 style="border-bottom: 1px solid;" id="setOrtho2DAspect"><span style="font-weight:lighter"></span>setOrtho2DAspect<span class="signature">(left, right, bottom, top, aspect<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
 <div class="description">
-    Sets this scene's projection matrix to a 2D orthographic projection.The near and far clipping planes will be set to -1 and 1, respectively.<p>If the view rectangle's aspect ratio doesn't match the desired aspectratio, the view rectangle will be centered on the 3D scene's viewportor otherwise moved so as to keep the 3D view from stretching or squishing.
+    Sets this scene's projection matrix to a 2D orthographic projection.
+The near and far clipping planes will be set to -1 and 1, respectively.<p>
+If the view rectangle's aspect ratio doesn't match the desired aspect
+ratio, the view rectangle will be centered on the 3D scene's viewport
+or otherwise moved so as to keep the 3D view from stretching or squishing.
 </div>
 
     <h5>Parameters:</h5>
@@ -1634,7 +1639,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
                 </td>
 
-            <td class="description last">Rightmost coordinate of the view rectangle.(Note that right can be greater than left or vice versa.)</td>
+            <td class="description last">Rightmost coordinate of the view rectangle.
+(Note that right can be greater than left or vice versa.)</td>
         </tr>
 
         <tr>
@@ -1668,7 +1674,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
                 </td>
 
-            <td class="description last">Topmost coordinate of the view rectangle.(Note that top can be greater than bottom or vice versa.)</td>
+            <td class="description last">Topmost coordinate of the view rectangle.
+(Note that top can be greater than bottom or vice versa.)</td>
         </tr>
 
         <tr>
@@ -1687,7 +1694,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
                 </td>
 
-            <td class="description last">Desired aspect ratio of the viewport (ratioof width to height).  If null or omitted, uses this scene's aspect ratio instead.</td>
+            <td class="description last">Desired aspect ratio of the viewport (ratio
+of width to height).  If null or omitted, uses this scene's aspect ratio instead.</td>
         </tr>
 
     </tbody>
@@ -1717,7 +1725,15 @@ plane.  A positive value means the plane is in front of the viewer.</td>
     <h4 style="border-bottom: 1px solid;" id="setOrthoAspect"><span style="font-weight:lighter"></span>setOrthoAspect<span class="signature">(left, right, bottom, top, near, far, aspect<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
 <div class="description">
-    Sets this scene's projection matrix to an orthographic projection.In this projection, the left clipping plane is parallel to the right clippingplane and the top to the bottom.<p>If the view rectangle's aspect ratio doesn't match the desired aspectratio, the view rectangle will be centered on the 3D scene's viewportor otherwise moved so as to keep the 3D view from stretching or squishing.<p>For considerations when choosing the "near" and "far" parameters,see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.
+    Sets this scene's projection matrix to an orthographic projection.
+In this projection, the left clipping plane is parallel to the right clipping
+plane and the top to the bottom.<p>
+If the view rectangle's aspect ratio doesn't match the desired aspect
+ratio, the view rectangle will be centered on the 3D scene's viewport
+or otherwise moved so as to keep the 3D view from stretching or squishing.
+<p>
+For considerations when choosing the "near" and "far" parameters,
+see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.
 </div>
 
     <h5>Parameters:</h5>
@@ -1769,7 +1785,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
                 </td>
 
-            <td class="description last">Rightmost coordinate of the view rectangle.(Note that right can be greater than left or vice versa.)</td>
+            <td class="description last">Rightmost coordinate of the view rectangle.
+(Note that right can be greater than left or vice versa.)</td>
         </tr>
 
         <tr>
@@ -1803,7 +1820,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
                 </td>
 
-            <td class="description last">Topmost coordinate of the view rectangle.(Note that top can be greater than bottom or vice versa.)</td>
+            <td class="description last">Topmost coordinate of the view rectangle.
+(Note that top can be greater than bottom or vice versa.)</td>
         </tr>
 
         <tr>
@@ -1820,7 +1838,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
                 </td>
 
-            <td class="description last">Distance from the camera to the near clippingplane.  A positive value means the plane is in front of the viewer.</td>
+            <td class="description last">Distance from the camera to the near clipping
+plane.  A positive value means the plane is in front of the viewer.</td>
         </tr>
 
         <tr>
@@ -1837,7 +1856,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
                 </td>
 
-            <td class="description last">Distance from the camera to the far clippingplane.  A positive value means the plane is in front of the viewer.</td>
+            <td class="description last">Distance from the camera to the far clipping
+plane.  A positive value means the plane is in front of the viewer.</td>
         </tr>
 
         <tr>
@@ -1856,7 +1876,8 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
                 </td>
 
-            <td class="description last">Desired aspect ratio of the viewport (ratioof width to height).  If null or omitted, uses this scene's aspect ratio instead.</td>
+            <td class="description last">Desired aspect ratio of the viewport (ratio
+of width to height).  If null or omitted, uses this scene's aspect ratio instead.</td>
         </tr>
 
     </tbody>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Calculator</title><script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>BigNumber</title><script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="/canvasback/canvasback_min.js"></script>
 <script>
 CanvasBackground.colorBackground("#80ff80");
@@ -24,31 +24,77 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-<p style='font-size:150%;font-weight:bold'><a href='https://github.com/peteroupc/Calculator/archive/master.zip'>Download Source</a><br><a href='https://github.com/peteroupc/Calculator/releases'>Released Versions</a><br><a href='https://github.com/peteroupc/Calculator'>Browse Source Code</a></p></div><h1>Calculator</h1>
+<p style='font-size:150%;font-weight:bold'><a href='https://github.com/peteroupc/BigNumber/archive/master.zip'>Download Source</a><br><a href='https://github.com/peteroupc/BigNumber/releases'>Released Versions</a><br><a href='https://github.com/peteroupc/BigNumber'>Browse Source Code</a></p></div><h1>BigNumber</h1>
 
-<p><strong>Download source code: <a href="https://github.com/peteroupc/Calculator/archive/master.zip">ZIP file</a></strong></p>
+<p><strong>Download source code: <a href="https://github.com/peteroupc/BigNumber/archive/master.zip">ZIP file</a></strong></p>
 
 <p>If you like this software, consider donating to me at this link: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
 
 <hr>
 
-<p>A calculator for .NET, intended to demonstrate the arbitrary-precision arithmetic
-capabilities of the CBOR library.  To compile it, you need to install the package &quot;PeterO.Cbor&quot;
-from the NuGet repository.</p>
+<p>An arbitrary-precision arithmetic library for JavaScript.</p>
 
-<h2>Source Code</h2>
+<h2>Installation</h2>
 
-<p>Source code is available in the <a href="https://github.com/peteroupc/Calculator">project page</a>.</p>
+<p>To install, run the following:</p>
 
-<h2>About</h2>
+<pre><code>npm install peteroupc/BigNumber
+</code></pre>
 
-<p>Written by Peter O.</p>
+<p>or</p>
 
-<p>Any copyright is dedicated to the Public Domain.
-<a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>
+<pre><code>npm install bignumber-poupc
+</code></pre>
 
-<p>If you like this, you should donate to Peter O.
-at: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
+<p>You may need to install the latest version of Node.js or use <code>npm</code> version 1.3.15 or later.</p>
+
+<h2>Usage</h2>
+
+<pre><code>var bn=require(&quot;bignumber-poupc&quot;),
+      BigInteger=bn.BigInteger,
+      ExtendedDecimal=bn.ExtendedDecimal,
+      ExtendedFloat=bn.ExtendedFloat;
+
+var num=BigInteger.valueOf(2000);
+</code></pre>
+
+<p>For API documentation, see the <a href="https://github.com/peteroupc/CBOR-Java/wiki">CBOR-Java wiki</a>.
+Although the wiki describes the Java version, the JavaScript version uses essentially
+the same methods for BigInteger, ExtendedDecimal, and ExtendedFloat.</p>
+
+<h2>History</h2>
+
+<p>Version 1.2.1</p>
+
+<ul>
+<li>Fixed bug in the result of dividing certain numbers</li>
+<li>Old package name &quot;bignumber-petero&quot; removed entirely.</li>
+</ul>
+
+<p>Version 1.2</p>
+
+<ul>
+<li>Added Ulp, Precision, MovePointLeft, MovePointRight, and ScaleToPowerOfTwo/-Ten methods to
+ExtendedDecimal and ExtendedFloat</li>
+<li>Fixed double-rounding issue with ToDouble and ToFloat methods
+of ExtendedDecimal</li>
+<li>Added Odd and OddOrZeroFiveUp rounding modes</li>
+<li>Added non-decimal base conversion features to BigInteger</li>
+<li>Other bug fixes</li>
+</ul>
+
+<p>Version 1.1.1</p>
+
+<ul>
+<li>Package renamed to &quot;bignumber-poupc&quot;.  The old package name, &quot;bignumber-petero&quot;, is deprecated
+and will be removed soon.</li>
+</ul>
+
+<p>Version 1.1</p>
+
+<ul>
+<li>Added fromRadixString, fromRadixSubstring, and toRadixString methods to BigInteger.</li>
+</ul>
 <script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {

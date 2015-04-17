@@ -1095,17 +1095,17 @@ such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
 elements of the result (zero-based indices 8, 9, 10, and 11).
 <p><b>Choosing the "near" and "far" parameters:</b>
 Depth buffers often have 16 bits per pixel; each pixel isn't usually
-a floating-point number.  If the difference between "far" and "near"
+a floating-point number.  If the ratio of "far" to "near"
 is too high, the depth buffer can't distinguish well between two objects
-that are very close to each other, especially if both objects are quite far in the distance.
+that are very close to each other and both quite far in the distance.
 For best results:<ul>
 <li>For <code>mat4perspective</code> and <code>mat4frustum</code>,
 the "near" parameter should not be 0 or less, and should be set to the highest distance
 from the camera that the application can afford to clip out for being too
-close, for example, 0.1 or 1.  This doesn't apply to <code>mat4ortho</code>.</li>
+close, for example, 0.1, 1, or higher.  This doesn't apply to <code>mat4ortho</code>.</li>
 <li>The difference between "far" and "near" should not be greater than 65536
 (the number of possible values per pixel in a 16-bit depth buffer) and should be
-as small as the application can accept.  In any case, "far" should not be less than
+as small as the application can accept.  In any case, "far" should be greater than
 "near".</li>
 </ul>
 </div>

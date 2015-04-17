@@ -1204,7 +1204,7 @@ May be null or omitted if "x" is an array.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="setVertexNormal"><span style="font-weight:lighter"></span>setVertexNormal<span class="signature">(index, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Mesh.html">glutil.Mesh</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="setVertexNormal"><span style="font-weight:lighter"></span>setVertexNormal<span class="signature">(index, x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Mesh.html">glutil.Mesh</a>}</span></h4>
 
 <div class="description">
     Sets the normal associated with the vertex with the
@@ -1242,8 +1242,23 @@ of vertices in the mesh.
 the vertex to set.
 The index ranges from 0 to less than
 the number of vertices in the mesh, not the
-number of vertex indices.
-s * @param {number|Array<number>} x X coordinate of the vertex normal.
+number of vertex indices.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>x</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">X coordinate of the vertex normal.
 Can also be a 3-element array giving
 the X, Y, and Z coordinates, respectively, of the vertex
 normal.</td>

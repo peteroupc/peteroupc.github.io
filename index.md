@@ -11,6 +11,7 @@ on several of my programming projects on GitHub:
 * [canvasback](./canvasback): Displays an HTML canvas-based background that draws boxes in about the same color as the background color
 * [colorpicker](./colorpicker): A color picker in JavaScript. Supports adapters for integrating other popular color pickers, and can use native color selection controls. In the public domain.
 * [IdnaJS](./IdnaJS): A JavaScript implementation of IDNA 2008 and Unicode normalization
+* [BigNumber](./BigNumber): An arbitrary-precision arithmetic library for JavaScript
 
 ### C-sharp
 

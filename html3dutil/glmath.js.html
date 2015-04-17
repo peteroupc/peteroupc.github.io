@@ -1068,17 +1068,17 @@ mat4translate:function(mat,v3,v3y,v3z){
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * &lt;p>&lt;b>Choosing the "near" and "far" parameters:&lt;/b>
  * Depth buffers often have 16 bits per pixel; each pixel isn't usually
- * a floating-point number.  If the difference between "far" and "near"
+ * a floating-point number.  If the ratio of "far" to "near"
  * is too high, the depth buffer can't distinguish well between two objects
- * that are very close to each other, especially if both objects are quite far in the distance.
+ * that are very close to each other and both quite far in the distance.
  * For best results:&lt;ul>
  * &lt;li>For &lt;code>mat4perspective&lt;/code> and &lt;code>mat4frustum&lt;/code>,
 * the "near" parameter should not be 0 or less, and should be set to the highest distance
 * from the camera that the application can afford to clip out for being too
-* close, for example, 0.1 or 1.  This doesn't apply to &lt;code>mat4ortho&lt;/code>.&lt;/li>
+* close, for example, 0.1, 1, or higher.  This doesn't apply to &lt;code>mat4ortho&lt;/code>.&lt;/li>
  * &lt;li>The difference between "far" and "near" should not be greater than 65536
  * (the number of possible values per pixel in a 16-bit depth buffer) and should be
- * as small as the application can accept.  In any case, "far" should not be less than
+ * as small as the application can accept.  In any case, "far" should be greater than
  * "near".&lt;/li>
  * &lt;/ul>
 * @param {number}  fovY Y-axis field of view, in degrees. Should be less
