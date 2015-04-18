@@ -201,7 +201,7 @@ and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransfor
 
             <td class="description last">A four-element array describing the rotation.
 A quaternion is returned from the methods <a href="glmath.GLMath.html#.quatFromAxisAngle">glmath.GLMath.quatFromAxisAngle</a>
-or <a href="glmath.GLMath.html#.quatFromEuler">glmath.GLMath.quatFromEuler</a>.</td>
+or <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBryan</a>.</td>
         </tr>
 
     </tbody>
@@ -236,7 +236,7 @@ shape.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
 shape.multQuaternion(GLMath.quatIdentity());
 // Combine this shape's rotation with 30 degree pitch multiplied
 // by 40 degree roll
-shape.multQuaternion(GLMath.quatFromEuler(30,0,40));</code></pre>
+shape.multQuaternion(GLMath.quatFromTaitBryan(30,0,40));</code></pre>
 
     <h4 style="border-bottom: 1px solid;" id="multRotation"><span style="font-weight:lighter"></span>multRotation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
@@ -741,7 +741,7 @@ and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransfor
 
             <td class="description last">A four-element array describing the rotation.
 A quaternion is returned from the methods <a href="glmath.GLMath.html#.quatFromAxisAngle">glmath.GLMath.quatFromAxisAngle</a>
-and <a href="glmath.GLMath.html#.quatFromEuler">glmath.GLMath.quatFromEuler</a>, among others.</td>
+and <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBryan</a>, among others.</td>
         </tr>
 
     </tbody>
@@ -776,7 +776,7 @@ shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
 shape.setQuaternion(GLMath.quatIdentity());
 // Set this shape's rotation to 30 degree pitch multiplied
 // by 40 degree roll
-shape.setQuaternion(GLMath.quatFromEuler(30,0,40));</code></pre>
+shape.setQuaternion(GLMath.quatFromTaitBryan(30,0,40));</code></pre>
 
     <h4 style="border-bottom: 1px solid;" id="setRotation"><span style="font-weight:lighter"></span>setRotation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 

@@ -129,7 +129,7 @@ function shiny(color){
   GLUtil.renderLoop(function(){
    for(var i=0;i<scene.shapes.length;i++){
     scene.shapes[i].setQuaternion(
-      GLMath.quatFromEuler(rotation));
+      GLMath.quatFromTaitBryan(rotation));
    }
    rotation[0]+=0.5;
    rotation[1]+=1;

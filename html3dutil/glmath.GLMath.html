@@ -473,7 +473,10 @@ to be seen.</td>
 
 <div class="description">
     Returns the transposed result of the inverted upper left corner of
-the given 4x4 matrix.<p>This is usually used to convert a model-view matrix to a matrixfor transforming surface normals in order to keep them perpendicularto a surface transformed by the model-view matrix.
+the given 4x4 matrix.<p>
+This is usually used to convert a model-view matrix to a matrix
+for transforming surface normals in order to keep them perpendicular
+to a surface transformed by the model-view matrix.
 </div>
 
     <h5>Parameters:</h5>
@@ -2129,7 +2132,8 @@ Z axes.</td>
     <h4 style="border-bottom: 1px solid;" id=".mat4transposeInPlace"><span style="font-weight:lighter">(static) </span>mat4transposeInPlace<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
-    Transposes a 4x4 matrix in place without creatinga new matrix.
+    Transposes a 4x4 matrix in place without creating
+a new matrix.
 </div>
 
     <h5>Parameters:</h5>
@@ -2429,7 +2433,67 @@ of rotation.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".quatFromEuler"><span style="font-weight:lighter">(static) </span>quatFromEuler<span class="signature">(pitchDegrees, yawDegrees, rollDegrees, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id=".quatFromMat4"><span style="font-weight:lighter">(static) </span>quatFromMat4<span class="signature">(m)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+<div class="description">
+    Generates a quaternion from the rotation described in a 4x4 matrix.
+The results are undefined if the matrix doesn't describe a rotation.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>m</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A 4x4 matrix.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line780">line 780</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatFromTaitBryan"><span style="font-weight:lighter">(static) </span>quatFromTaitBryan<span class="signature">(pitchDegrees, yawDegrees, rollDegrees, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
     Generates a quaternion from pitch, yaw and roll angles.
@@ -2533,66 +2597,6 @@ described as the effect of a roll, then pitch, then yaw (each rotation around th
 
 <div class="param-desc">
     The generated quaternion.
-
-     (Type:
-<span class="param-type">Array.&lt;number></span>
-
-)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;" id=".quatFromMat4"><span style="font-weight:lighter">(static) </span>quatFromMat4<span class="signature">(m)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
-
-<div class="description">
-    Generates a quaternion from the rotation described in a 4x4 matrix.
-The results are undefined if the matrix doesn't describe a rotation.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>m</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-
-            </td>
-
-            <td class="description last">A 4x4 matrix.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line780">line 780</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    The resulting quaternion.
 
      (Type:
 <span class="param-type">Array.&lt;number></span>
@@ -3358,7 +3362,55 @@ a counterclockwise direction.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".quatToEuler"><span style="font-weight:lighter">(static) </span>quatToEuler<span class="signature">(a, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id=".quatToMat4"><span style="font-weight:lighter">(static) </span>quatToMat4<span class="signature">(quat)</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Generates a 4x4 matrix describing the rotation
+described by this quaternion.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>quat</code></td>
+
+            <td class="type">
+
+<span class="param-type">*</span>
+
+            </td>
+
+            <td class="description last">A quaternion.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line451">line 451</a>
+    </li></ul></dd>
+
+</dl>
+
+    <h4 style="border-bottom: 1px solid;" id=".quatToTaitBryan"><span style="font-weight:lighter">(static) </span>quatToTaitBryan<span class="signature">(a, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
     Converts this quaternion to the same version of the rotation
@@ -3441,54 +3493,6 @@ direction.
 )
 
 </div>
-
-    <h4 style="border-bottom: 1px solid;" id=".quatToMat4"><span style="font-weight:lighter">(static) </span>quatToMat4<span class="signature">(quat)</span><span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    Generates a 4x4 matrix describing the rotation
-described by this quaternion.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>quat</code></td>
-
-            <td class="type">
-
-<span class="param-type">*</span>
-
-            </td>
-
-            <td class="description last">A quaternion.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glmath.js.html">glmath.js</a>, <a href="glmath.js.html#line451">line 451</a>
-    </li></ul></dd>
-
-</dl>
 
     <h4 style="border-bottom: 1px solid;" id=".quatTransform"><span style="font-weight:lighter">(static) </span>quatTransform<span class="signature">(q, v)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 

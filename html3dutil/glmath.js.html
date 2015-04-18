@@ -586,7 +586,7 @@ return ret;
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
  * @return {Array&lt;number>} The generated quaternion.
  */
-quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
+quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  var rollRad,pitchRad,yawRad;
  if(mode==null)mode=GLMath.RollPitchYaw;
  if(mode&lt;0 || mode>=6)throw new Error("invalid mode");
@@ -636,7 +636,7 @@ quatFromEuler:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  * the viewer, the angle's value is increasing in a counterclockwise
  * direction.
  */
-quatToEuler:function(a,mode){
+quatToTaitBryan:function(a,mode){
   var c0=a[3];
   var c1,c2,c3;
   var e=1;
@@ -677,22 +677,22 @@ quatToEuler:function(a,mode){
     e1=Math.atan2(c1,c0)*GLMath.Num180DividedByPi;
     if(isNaN(e1))e1=0;
   }
-  // Return the Euler angles in the standard order
-  var euler=[];
+  // Return the pitch/yaw/roll angles in the standard order
+  var angles=[];
   if(mode==GLMath.RollPitchYaw){
-   euler[0]=e2; euler[1]=e1; euler[2]=e3;
+   angles[0]=e2; angles[1]=e1; angles[2]=e3;
   } else if(mode==GLMath.PitchYawRoll){
-   euler[0]=e3; euler[1]=e2; euler[2]=e1;
+   angles[0]=e3; angles[1]=e2; angles[2]=e1;
   } else if(mode==GLMath.PitchRollYaw){
-   euler[0]=e3; euler[1]=e1; euler[2]=e2;
+   angles[0]=e3; angles[1]=e1; angles[2]=e2;
   } else if(mode==GLMath.YawPitchRoll){
-   euler[0]=e2; euler[1]=e3; euler[2]=e1;
+   angles[0]=e2; angles[1]=e3; angles[2]=e1;
   } else if(mode==GLMath.YawRollPitch){
-   euler[0]=e1; euler[1]=e3; euler[2]=e2;
+   angles[0]=e1; angles[1]=e3; angles[2]=e2;
   } else {
-   euler[0]=e1; euler[1]=e2; euler[2]=e3;
+   angles[0]=e1; angles[1]=e2; angles[2]=e3;
   }
-  return euler;
+  return angles;
 },
 /**
  * Does a spherical linear interpolation between two quaternions;

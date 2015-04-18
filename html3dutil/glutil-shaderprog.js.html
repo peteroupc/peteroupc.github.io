@@ -257,6 +257,8 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
 		context.deleteProgram(program);
     program=null;
 	 }
+   context.detachShader(program, vs);
+   context.detachShader(program, fs);
   }
   if(vs!==null)context.deleteShader(vs);
   if(fs!==null)context.deleteShader(fs);

@@ -43,7 +43,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    rotation[0]+=.5; // Adjust x-rotation by .5 degree
    rotation[1]+=1.0; // Adjust y-rotation by 1 degree
    // Update the shape's rotation
-   var q=GLMath.quatFromEuler(rotation);
+   var q=GLMath.quatFromTaitBryan(rotation);
    shape.setQuaternion(q);
    // Render the scene
    scene.render();
