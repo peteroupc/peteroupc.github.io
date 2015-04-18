@@ -640,7 +640,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used for ambient reflection rather than this property.
  */
- this.ambient=ambient||[0.2,0.2,0.2];
+ this.ambient=ambient ? ambient.slice(0,3) : [0.2,0.2,0.2];
  /**
  * Diffuse reflection of this material.&lt;p>
  * Diffuse reflection indicates how much an object reflects
@@ -650,14 +650,16 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * on how directly they face diffuse lights, diffuse reflection can contribute
  * much of the 3D effect of that object.  Diffuse reflection
  * depends on the color of diffuse lights.&lt;p>
- * (0,0,0) means no diffuse reflection,
- * and (1,1,1) means total diffuse reflection.&lt;p>
+ * (0,0,0,1) means no diffuse reflection,
+ * and (1,1,1,1) means total diffuse reflection.&lt;p>
  * Setting ambient and diffuse reflection to the same value usually defines an object's
  * color.&lt;p>
  * In the default shader program, if a mesh defines its own colors, those
- * colors are used for diffuse reflection rather than this property.
+ * colors are used for diffuse reflection rather than this property.&lt;p>
+ * This value can have an optional fourth element giving the alpha component
+ * (0-1).  If this element is omitted, the default is 1.&lt;p>
  */
- this.diffuse=diffuse||[0.8,0.8,0.8];
+ this.diffuse=diffuse ? diffuse.slice(0,diffuse.length) : [0.8,0.8,0.8,1.0];
  /** Specular highlight reflection of this material.
  * Specular reflection makes an object shiny, and it depends
  * on lights that give off specular highlights as well as on the color
@@ -667,7 +669,7 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * (0,0,0) means no specular reflection,
  * and (1,1,1) means total specular reflection.&lt;p>
 */
- this.specular=specular||[0,0,0];
+ this.specular=specular ? specular.slice(0,3) : [0,0,0];
  /**
 * Additive color emitted by objects with this material.
 * Used for objects that glow on their own, among other things.
@@ -678,8 +680,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * For each of the three color components, positive values add to that component,
 * while negative values subtract from it. (0,0,0) means no additive color.
  */
- this.emission=emission||[0,0,0];
- this.textureMap=null;
+ this.emission=emission ? emission.slice(0,3) : [0,0,0];
+ this.texture=null;
 }
 /**
 * Clones this object's parameters to a new Material
@@ -695,7 +697,7 @@ Material.prototype.copy=function(){
   this.specular.slice(0,this.specular.length),
   this.shininess,
   this.emission.slice(0,this.emission.length)
- ).setParams({"textureMap":this.textureMap});
+ ).setParams({"texture":this.texture});
 }
 /**
 * Sets parameters for this material object.
@@ -707,7 +709,7 @@ Material.prototype.copy=function(){
 * &lt;li>&lt;code>specular&lt;/code> - Specular reflection (see {@link glutil.Material} constructor).
 * &lt;li>&lt;code>shininess&lt;/code> - Specular reflection exponent (see {@link glutil.Material} constructor).
 * &lt;li>&lt;code>emission&lt;/code> - Additive color (see {@link glutil.Material} constructor).
-* &lt;li>&lt;code>textureMap&lt;/code> - {@link glutil.Texture} object, or a string with the URL of the texture
+* &lt;li>&lt;code>texture&lt;/code> - {@link glutil.Texture} object, or a string with the URL of the texture
 * to use.
 * &lt;/ul>
 * If a value is null or undefined, it is ignored.
@@ -729,12 +731,12 @@ Material.prototype.setParams=function(params){
  if(params["shininess"]!=null){
   this.shininess=params.shininess;
  }
- if(params["textureMap"]!=null){
-   var param=params["textureMap"]
+ if(params["texture"]!=null){
+   var param=params["texture"]
    if(typeof param=="string"){
-    this.textureMap=new Texture(param)
+    this.texture=new Texture(param)
    } else {
-    this.textureMap=param
+    this.texture=param
    }
  }
  return this;
@@ -766,7 +768,7 @@ Material.fromColor=function(r,g,b,a){
 * @return {glutil.Material} The resulting material object.
  */
 Material.fromTexture=function(texture){
- return new Material().setParams({"textureMap":texture});
+ return new Material().setParams({"texture":texture});
 }
 
 ////////////////////
@@ -1371,7 +1373,8 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * plane and the top to the bottom.&lt;p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the 3D scene's viewport
- * or otherwise moved so as to keep the 3D view from stretching or squishing.
+ * or otherwise moved so as to keep the entire view rectangle visible without stretching
+ * or squishing it.
  * &lt;p>
  * For considerations when choosing the "near" and "far" parameters,
  * see {@link glmath.GLMath.mat4perspective}.
@@ -1399,7 +1402,7 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  if(aspect&lt;1){
   return this.setOrtho(left,right,bottom/aspect,top/aspect,near,far);
  } else {
-  return this.setOrtho(left/aspect,right/aspect,bottom,top,near,far);
+  return this.setOrtho(left*aspect,right*aspect,bottom,top,near,far);
  }
 }
 /**
@@ -1407,7 +1410,8 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  * The near and far clipping planes will be set to -1 and 1, respectively.&lt;p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the 3D scene's viewport
- * or otherwise moved so as to keep the 3D view from stretching or squishing.
+ * or otherwise moved so as to keep the entire view rectangle visible without stretching
+ * or squishing it.
  * @param {number} left Leftmost coordinate of the view rectangle.
  * @param {number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)

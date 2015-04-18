@@ -180,19 +180,19 @@ Because different parts of an object are shaded differently depending
 on how directly they face diffuse lights, diffuse reflection can contribute
 much of the 3D effect of that object.  Diffuse reflection
 depends on the color of diffuse lights.<p>
-(0,0,0) means no diffuse reflection,
-and (1,1,1) means total diffuse reflection.<p>
+(0,0,0,1) means no diffuse reflection,
+and (1,1,1,1) means total diffuse reflection.<p>
 Setting ambient and diffuse reflection to the same value usually defines an object's
-color.<p>
-In the default shader program, if a mesh defines its own colors, those
-colors are used for diffuse reflection rather than this property.
+color.<p>In the default shader program, if a mesh defines its own colors, those
+colors are used for diffuse reflection rather than this property.<p>
+This value can have an optional fourth element giving the alpha component(0-1).  If this element is omitted, the default is 1.<p>
 </div>
 
 <dl class="details">
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line649">line 649</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line651">line 651</a>
     </li></ul></dd>
 
 </dl>
@@ -214,7 +214,7 @@ while negative values subtract from it. (0,0,0) means no additive color.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line670">line 670</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line672">line 672</a>
     </li></ul></dd>
 
 </dl>
@@ -254,7 +254,7 @@ and (1,1,1) means total specular reflection.<p>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line659">line 659</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line661">line 661</a>
     </li></ul></dd>
 
 </dl>
@@ -354,7 +354,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line744">line 744</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line746">line 746</a>
     </li></ul></dd>
 
 </dl>
@@ -420,7 +420,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line757">line 757</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line759">line 759</a>
     </li></ul></dd>
 
 </dl>
@@ -450,7 +450,7 @@ to the same object will be used.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line680">line 680</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line682">line 682</a>
     </li></ul></dd>
 
 </dl>
@@ -507,7 +507,7 @@ allowed for each key.<ul>
 <li><code>specular</code> - Specular reflection (see <a href="glutil.Material.html">glutil.Material</a> constructor).
 <li><code>shininess</code> - Specular reflection exponent (see <a href="glutil.Material.html">glutil.Material</a> constructor).
 <li><code>emission</code> - Additive color (see <a href="glutil.Material.html">glutil.Material</a> constructor).
-<li><code>textureMap</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL of the texture
+<li><code>texture</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL of the texture
 to use.
 </ul>
 If a value is null or undefined, it is ignored.</td>
@@ -520,7 +520,7 @@ If a value is null or undefined, it is ignored.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line705">line 705</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line707">line 707</a>
     </li></ul></dd>
 
 </dl>

@@ -53,10 +53,7 @@ Camera.prototype.moveAngleHorizontal=function(angleDegrees){
  }
  return this;
 }
-/**
- * Not documented yet.
- * @param {*} angleDegrees
- *//** @private */
+/** @private */
 Camera.prototype._angleHorizontal=function(angleDegrees){
  var change=this.angleY;
  this.angleY+=(angleDegrees*GLMath.PiDividedBy180)%(Math.PI*2);
@@ -64,11 +61,9 @@ Camera.prototype._angleHorizontal=function(angleDegrees){
  change=this.angleY-change;
  this.angleQuat=GLMath.quatMultiply(this.angleQuat,
    GLMath.quatFromAxisAngle(change*GLMath.Num180DividedByPi,0,1,0));
+ GLMath.quatNormInPlace(this.angleQuat);
 }
-/**
- * Not documented yet.
- * @param {*} angleDegrees
- *//** @private */
+/** @private */
 Camera.prototype._angleVertical=function(angleDegrees){
   var change=this.angleX;
   this.angleX+=(angleDegrees*GLMath.PiDividedBy180)%(Math.PI*2);
@@ -76,6 +71,7 @@ Camera.prototype._angleVertical=function(angleDegrees){
  change=this.angleX-change;
  this.angleQuat=GLMath.quatMultiply(this.angleQuat,
    GLMath.quatFromAxisAngle(change*GLMath.Num180DividedByPi,1,0,0));
+ GLMath.quatNormInPlace(this.angleQuat);
 }
 
 /**

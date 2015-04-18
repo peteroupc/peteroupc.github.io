@@ -422,7 +422,7 @@ return shader;
 ShaderProgram.getDefaultFragment=function(){
 var shader=ShaderProgram.fragmentShaderHeader() +
  // if shading is disabled, this is solid color instead of material diffuse
- "uniform vec3 md;\n" + // material diffuse color (0-1 each component). Is multiplied by texture/solid color.
+ "uniform vec4 md;\n" +
 "#ifdef SHADING\n" +
 "struct light {\n" +
 // NOTE: These struct members must be aligned to
@@ -437,11 +437,11 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "const int MAX_LIGHTS = "+Lights.MAX_LIGHTS+"; /* internal */\n" +
 "uniform vec3 sceneAmbient;\n" +
 "uniform light lights[MAX_LIGHTS];\n" +
-"uniform vec3 ma;\n" + // material ambient color (-1 to 1 each component).
-"uniform vec3 me;\n" + // material emission color
+"uniform vec3 ma;\n" +
+"uniform vec3 me;\n" +
 "#ifdef SPECULAR\n" +
-"uniform vec3 ms;\n" + // material specular color (0-1 each comp.).  Affects how intense highlights are.
-"uniform float mshin;\n" + // material shininess
+"uniform vec3 ms;\n" +
+"uniform float mshin;\n" +
 "#endif\n" +
 "#endif\n" +
 "uniform sampler2D sampler;\n" + // texture sampler
@@ -479,9 +479,9 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 " tmp.xyz=colorAttrVar;\n"+
 " vec4 baseColor=mix(mix(\n"+
 "#ifdef SHADING\n" +
-"   vec4(1.0,1.0,1.0,1.0), /*when textures are not used*/\n" +
+"   vec4(1.0,1.0,1.0,md.a), /*when textures are not used*/\n" +
 "#else\n" +
-"   vec4(md,1.0), /*when textures are not used*/\n" +
+"   md, /*when textures are not used*/\n" +
 "#endif\n" +
 "   texture2D(sampler,uvVar), /*when textures are used*/\n"+
 "   useTexture), tmp, useColorAttr);\n"+
@@ -500,7 +500,7 @@ shader+=""+
 "vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
 "vec3 phong=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
-" vec3 materialDiffuse=md*baseColor.rgb;\n";
+" vec3 materialDiffuse=vec3(md)*baseColor.rgb;\n";
 for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
  shader+="ADD_DIFFUSE("+i+");\n";
 }

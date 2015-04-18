@@ -380,6 +380,16 @@ Mesh.prototype.normal3=function(x,y,z){
   return this;
  }
  /**
+  * Adds a new vertex to this mesh.  The Z-coordinate will
+  * be treated as 0.
+  * @param {number} x X-coordinate of the vertex.
+  * @param {number} y Y-coordinate of the vertex.
+  * @return {glutil.Mesh} This object.
+  */
+ Mesh.prototype.vertex2=function(x,y,z){
+  return this.vertex3(x,y,0);
+ }
+ /**
   * Sets all the vertices in this mesh to the given color.
   * This method doesn't change this mesh's current color.
   * @param {number} r Red component of the color (0-1).
