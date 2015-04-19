@@ -117,7 +117,8 @@ onload=(function(){
    time%=100;
    scene.render();
    for(var i=0;i<scene.shapes.length;i++){
-    scene.shapes[i].setOrientation(rot,0,1,0);
+    scene.shapes[i].setQuaternion(
+      GLMath.quatFromAxisAngle(rot,0,1,0));
    }
    rot+=5;
  });

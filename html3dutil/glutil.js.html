@@ -592,7 +592,7 @@ Lights.prototype.setParams=function(index,params){
  * @return {Lights} This object.
  */
 Lights.prototype.setDirectionalLight=function(index,direction){
- return this.setParams({"position":[direction[0],direction[1],direction[2],0]});
+ return this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
 }
 /**
  * Sets a point light.
@@ -686,7 +686,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * on lights that give off specular highlights as well as on the color
  * of those highlights. Similar to diffuse reflection, specular reflection
  * is affected by how directly each part of an object faces
- * a light that gives off specular highlights.
+ * a light that gives off specular highlights, but unlike diffuse light,
+ * specular light doesn't scatter very much to other parts of an object.
  * (0,0,0) means no specular reflection,
  * and (1,1,1) means total specular reflection.&lt;p>
 */
@@ -1882,16 +1883,31 @@ Scene3D.prototype._renderInner=function(){
   return this;
 }
 
+/**
+* Represents a grouping of shapes.
+* @class
+*/
 function ShapeGroup(){
  this.shapes=[];
  this.transform=new Transform();
 }
+/**
+ * Not documented yet.
+ * @param {*} shape
+ */
 ShapeGroup.prototype.addShape=function(shape){
  this.shapes.add(shape);
 }
+/**
+ * Not documented yet.
+ */
 ShapeGroup.prototype.getTransform=function(){
  return this.getTransform();
 }
+/**
+ * Not documented yet.
+ * @param {*} transform
+ */
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
@@ -1978,9 +1994,16 @@ Shape.prototype.copy=function(){
  ret.transform=this.getTransform().copy();
  return ret;
 }
+/**
+ * Not documented yet.
+ */
 Shape.prototype.getTransform=function(){
  return this.transform;
 }
+/**
+ * Not documented yet.
+ * @param {*} transform
+ */
 Shape.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;

@@ -67,7 +67,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1899">line 1899</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1915">line 1915</a>
     </li></ul></dd>
 
 </dl>
@@ -79,14 +79,18 @@ method instead.</td>
     <h4 style="border-bottom: 1px solid;" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
 <div class="description">
-    Makes a copy of this object.  The copied objectwill have its own version of the transform andmaterial data, but any textureimage data and vertex buffers will not be duplicated,but rather just references to them will be used.
+    Makes a copy of this object.  The copied object
+will have its own version of the transform and
+material data, but any texture
+image data and vertex buffers will not be duplicated,
+but rather just references to them will be used.
 </div>
 
 <dl class="details">
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1964">line 1964</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1980">line 1980</a>
     </li></ul></dd>
 
 </dl>
@@ -106,14 +110,15 @@ method instead.</td>
     <h4 style="border-bottom: 1px solid;" id="getMatrix"><span style="font-weight:lighter"></span>getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
-    Gets the transformation matrix used by this shape.See glutil.Transform.getMatrix.
+    Gets the transformation matrix used by this shape.
+See glutil.Transform.getMatrix.
 </div>
 
 <dl class="details">
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2018">line 2018</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2041">line 2041</a>
     </li></ul></dd>
 
 </dl>
@@ -130,6 +135,21 @@ method instead.</td>
 
 </div>
 
+    <h4 style="border-bottom: 1px solid;" id="getTransform"><span style="font-weight:lighter"></span>getTransform<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1989">line 1989</a>
+    </li></ul></dd>
+
+</dl>
+
     <h4 style="border-bottom: 1px solid;" id="multQuaternion"><span style="font-weight:lighter"></span>multQuaternion<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
 <dl class="details">
@@ -138,7 +158,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2024">line 2024</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2047">line 2047</a>
     </li></ul></dd>
 
 </dl>
@@ -151,7 +171,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2029">line 2029</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2052">line 2052</a>
     </li></ul></dd>
 
 </dl>
@@ -166,7 +186,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1915">line 1915</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1931">line 1931</a>
     </li></ul></dd>
 
 </dl>
@@ -174,7 +194,9 @@ method instead.</td>
     <h4 style="border-bottom: 1px solid;" id="setColor"><span style="font-weight:lighter"></span>setColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
 <div class="description">
-    Sets material parameters that give the shape a certain color.However, if the mesh defines its own colors, those colors will takeprecedence over the color given in this method.
+    Sets material parameters that give the shape a certain color.
+However, if the mesh defines its own colors, those colors will take
+precedence over the color given in this method.
 </div>
 
     <h5>Parameters:</h5>
@@ -209,7 +231,9 @@ method instead.</td>
 
             </td>
 
-            <td class="description last">Array of three orfour color components; or the red color component (0-1); or a stringspecifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
+            <td class="description last">Array of three or
+four color components; or the red color component (0-1); or a string
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
         </tr>
 
         <tr>
@@ -222,7 +246,8 @@ method instead.</td>
 
             </td>
 
-            <td class="description last">Green color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</td>
+            <td class="description last">Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</td>
         </tr>
 
         <tr>
@@ -235,7 +260,8 @@ method instead.</td>
 
             </td>
 
-            <td class="description last">Blue color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</td>
+            <td class="description last">Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</td>
         </tr>
 
         <tr>
@@ -248,7 +274,8 @@ method instead.</td>
 
             </td>
 
-            <td class="description last">Alpha color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</td>
+            <td class="description last">Alpha color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</td>
         </tr>
 
     </tbody>
@@ -258,7 +285,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1934">line 1934</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1950">line 1950</a>
     </li></ul></dd>
 
 </dl>
@@ -317,7 +344,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1952">line 1952</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1968">line 1968</a>
     </li></ul></dd>
 
 </dl>
@@ -407,7 +434,7 @@ or a 3-element position array, as specified in glutil.Transform.setScale.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1999">line 1999</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2022">line 2022</a>
     </li></ul></dd>
 
 </dl>
@@ -467,7 +494,7 @@ See glutil.Transform.setQuaternion.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2009">line 2009</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2032">line 2032</a>
     </li></ul></dd>
 
 </dl>
@@ -492,7 +519,7 @@ See glutil.Transform.setQuaternion.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2034">line 2034</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2057">line 2057</a>
     </li></ul></dd>
 
 </dl>
@@ -570,7 +597,7 @@ or a 3-element scaling array, as specified in glutil.Transform.setScale.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1986">line 1986</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2009">line 2009</a>
     </li></ul></dd>
 
 </dl>
@@ -629,7 +656,7 @@ or a 3-element scaling array, as specified in glutil.Transform.setScale.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1943">line 1943</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1959">line 1959</a>
     </li></ul></dd>
 
 </dl>
@@ -646,6 +673,53 @@ or a 3-element scaling array, as specified in glutil.Transform.setScale.</td>
 
 </div>
 
+    <h4 style="border-bottom: 1px solid;" id="setTransform"><span style="font-weight:lighter"></span>setTransform<span class="signature">(transform)</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>transform</code></td>
+
+            <td class="type">
+
+<span class="param-type">*</span>
+
+            </td>
+
+            <td class="description last"></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1996">line 1996</a>
+    </li></ul></dd>
+
+</dl>
+
     <h4 style="border-bottom: 1px solid;" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
 <div class="description">
@@ -656,7 +730,7 @@ or a 3-element scaling array, as specified in glutil.Transform.setScale.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1909">line 1909</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1925">line 1925</a>
     </li></ul></dd>
 
 </dl>

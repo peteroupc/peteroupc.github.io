@@ -45,7 +45,8 @@ var GLMath={
 /**
  * Finds the cross product of two 3-element vectors.
  * The cross product is the vector that is perpendicular to
- * each of two other vectors.  If both vectors are unit length
+ * each of two other vectors.&lt;p>
+ * If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the sine of
  * the angle between them is equal to the length of their
  * cross product. &lt;small>(More formally, the length of the cross
@@ -69,12 +70,14 @@ return [a[1]*b[2]-a[2]*b[1],
 /**
  * Finds the dot product of two 3-element vectors. It's the
  * sum of the products of their components (for example, &lt;b>a&lt;/b>'s X times &lt;b>b&lt;/b>'s X).
- * If both vectors are unit length
+ * &lt;p>If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the cosine
  * of the angle between them is equal to their dot product.
  * &lt;small>(More formally, the dot
  * product equals |&lt;b>a&lt;/b>| * |&lt;b>b&lt;/b>| * cos &amp;theta;
  * where |&lt;b>x&lt;/b>| is the length of vector &lt;b>x&lt;/b>.)&lt;/small>
+ * &lt;p>A dot product of 0 indicates that the two vectors
+ * are &lt;i>orthogonal&lt;/i> (perpendicular) to each other.
  * @param {Array&lt;number>} a The first vector.
  * @param {Array&lt;number>} b The second vector.
  * @return {number} A number representing the dot product.
@@ -964,7 +967,8 @@ mat4scaled:function(v3,v3y,v3z){
  * @param {number} vy Y coordinate.
  * @param {number} vz Z coordinate.
  * @param {number} vw W coordinate.  To transform a 3D
- * point, set W to 1.
+ * point, set W to 1; to transform a 2D
+ * point, set Z and W to 1.
  * @return {Array&lt;number>} The transformed vector.
  */
 mat4transform:function(mat,v,vy,vz,vw){
@@ -1075,15 +1079,16 @@ mat4translate:function(mat,v3,v3y,v3z){
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
  * &lt;p>&lt;b>Choosing the "near" and "far" parameters:&lt;/b>
- * Depth buffers often have 16 bits per pixel; each pixel isn't usually
- * a floating-point number.  If the ratio of "far" to "near"
+ * Depth buffers often have 16 bits per pixel, thus allowing only a limited
+ * range of possible values that, in addition, are not evenly spread within
+ * the range of "far" and "near".  If the ratio of "far" to "near"
  * is too high, the depth buffer can't distinguish well between two objects
  * that are very close to each other and both quite far in the distance.
  * For best results:&lt;ul>
  * &lt;li>For &lt;code>mat4perspective&lt;/code> and &lt;code>mat4frustum&lt;/code>,
 * the "near" parameter should not be 0 or less, and should be set to the highest distance
 * from the camera that the application can afford to clip out for being too
-* close, for example, 0.1, 1, or higher.  This doesn't apply to &lt;code>mat4ortho&lt;/code>.&lt;/li>
+* close, for example, 0.5, 1, or higher.  This doesn't apply to &lt;code>mat4ortho&lt;/code>.&lt;/li>
  * &lt;li>The difference between "far" and "near" should not be greater than 65536
  * (the number of possible values per pixel in a 16-bit depth buffer) and should be
  * as small as the application can accept.  In any case, "far" should be greater than
