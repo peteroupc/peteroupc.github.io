@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Source: glutil-transform.js</title>
+<script src="mathml.js"></script>
+</head>
+<body style="margin-top:0px">
+<div style="width:75%;float:left;">
+    <h1>Source: glutil-transform.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+/**
+*  A class offering a convenient way to set a transformation
+* from one coordinate system to another.
+* @class
+* @alias glutil.Transform
+*/
+function Transform(){
+  /**
+  * A three-element array giving the scaling for an object's width,
+  * height, and depth, respectively.
+  * For each component, 1 means no scaling.
+  * The value given here is informational only and should not be modified directly.
+  * Use the setScale method to set this value.
+  * @default
+  */
+  this.scale=[1,1,1];
+  /**
+  * A three-element array giving the X, Y, and Z coordinates of the position
+  * of an object relative to its original position.
+  * The value given here is informational only and should not be modified directly.
+  * Use the setPosition method to set this value.
+  * @default
+  */
+  this.position=[0,0,0];
+  /**
+   * The rotation of an object in the form of a [quaternion]{@link glmath.GLMath}.
+   * The value given here is informational only and should not be modified directly.
+   * Use the setOrientation or setQuaternion method to set this value.
+   */
+  this.rotation=GLMath.quatIdentity();
+  this.complexMatrix=false;
+  this._matrixDirty=false;
+  this._isIdentity=true;
+  /** @private */
+  this.matrix=GLMath.mat4identity();
+}
+/**
+* Resets this shape to the untransformed state.
+* @return {glutil.Shape} This object.
+*/
+Transform.prototype.reset=function(){
+ this.matrix=GLMath.mat4identity();
+ this.position=[0,0,0];
+ this.scale=[1,1,1];
+ this.rotation=GLMath.quatIdentity();
+ this.complexMatrix=false;
+ this._matrixDirty=false;
+ return this;
+}
+/**
+ * Sets this shape's transformation matrix. This method
+ * will set the position, rotation, and scale properties
+ * accordingly to the matrix given.
+ * @param {Array&lt;number>} value A 4x4 matrix.
+ * This method will copy the value of this parameter.
+ * @return {glutil.Transform} This object.
+ */
+Transform.prototype.setMatrix=function(value){
+ this._matrixDirty=false;
+ this._isIdentity=false;
+ this.complexMatrix=true;
+ this.matrix=value.slice(0,16);
+ this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
+ this.rotation=GLMath.quatFromMat4(this.matrix);
+ this.rotation=GLMath.quatNormInPlace(this.rotation);
+ this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
+ return this;
+}
+
+/**
+* Resets this transform to the untransformed state.
+* @return {glutil.Transform} This object.
+*/
+Transform.prototype.resetTransform=function(){
+ this.matrix=GLMath.mat4identity();
+ this.position=[0,0,0];
+ this.scale=[1,1,1];
+ this._isIdentity=true;
+ this.rotation=GLMath.quatIdentity();
+ this.complexMatrix=false;
+ this._matrixDirty=false;
+ return this;
+}
+/**
+ * Sets the scale of an object relative to its original
+ * size. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {number|Array&lt;number>} x Scaling factor for this object's width.
+ *   If "y" and "z" are null or omitted, this can
+ * instead be a 3-element array giving the scaling factors
+ * for width, height, and depth, respectively.
+ * @param {number} y Scaling factor for this object's height.
+ * @param {number} z Scaling factor for this object's depth.
+* @return {glutil.Transform} This object.
+ */
+Transform.prototype.setScale=function(x,y,z){
+  if(this.complexMatrix)return this;
+  if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
+   if(x.constructor==Array)
+    this.scale=x.slice(0,3);
+   else
+    this.scale=[x,x,x];
+  } else {
+   this.scale=[x,y,z];
+  }
+  this._isIdentity=(this._isIdentity &amp;&amp;
+   this.scale[0]==1 &amp;&amp;
+   this.scale[1]==1 &amp;&amp;
+   this.scale[2]==1);
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets the relative position of an object from its original
+ * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array&lt;number>|number} x Either the X-coordinate,
+ * or an array of 3 numbers giving the x, y, and z coordinates.
+ * @param {number} y The Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z The Z-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @return {glutil.Transform} This object.
+ */
+Transform.prototype.setPosition=function(x,y,z){
+  if(this.complexMatrix)return this;
+  if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
+   if(x.constructor==Array)
+    this.position=x.slice(0,3);
+   else
+    this.position=[x,x,x];
+  } else {
+   this.position=[x,y,z];
+  }
+  this._isIdentity=(this._isIdentity &amp;&amp;
+   this.position[0]==0 &amp;&amp;
+   this.position[1]==0 &amp;&amp;
+   this.position[2]==0);
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets this object's orientation in the form of a [quaternion]{@link glmath.GLMath} (a 4-element array
+ * for describing 3D rotations). Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array&lt;number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
+ * and {@link glmath.GLMath.quatFromTaitBryan}, among others.
+ * @return {glutil.Transform} This object.
+ * @example
+ * // Set an object's orientation to 30 degrees about the X-axis
+ * transform.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
+ * // Set an object's orientation to identity (no rotation)
+ * transform.setQuaternion(GLMath.quatIdentity());
+ * // Set an object's orientation to 30 degree pitch multiplied
+ * // by 40 degree roll
+ * transform.setQuaternion(GLMath.quatFromTaitBryan(30,0,40));
+ */
+Transform.prototype.setQuaternion=function(quat){
+  if(this.complexMatrix)return this;
+  this.rotation=quat.slice(0,4);
+  GLMath.quatNormInPlace(this.rotation);
+  this._isIdentity=false;
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Sets this object's orientation in the form of an angle and an axis of
+ * rotation. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array&lt;number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.  If the axis of rotation
+ * points toward the viewer, the angle's value is increasing in
+ * a counterclockwise direction.
+ * @param {Array&lt;number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
+ * @return {glutil.Transform} This object.
+ */
+Transform.prototype.setOrientation=function(angle, v,vy,vz){
+ return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+}
+/**
+ * Combines an object's current rotation with another rotation
+ * described by a [quaternion]{@link glmath.GLMath} (a 4-element array
+ * for describing 3D rotations).  The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ *  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array&lt;number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
+ * or {@link glmath.GLMath.quatFromTaitBryan}.
+ * @return {glutil.Transform} This object.
+ * @example
+ * // Combine an object's orientation with a rotation 20 degrees about the X-axis
+ * transform.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
+ * // Combine an object's orientation with identity (no rotation)
+ * transform.multQuaternion(GLMath.quatIdentity());
+ * // Combine an object's orientation with 30 degree pitch multiplied
+ * // by 40 degree roll
+ * transform.multQuaternion(GLMath.quatFromTaitBryan(30,0,40));
+ */
+Transform.prototype.multQuaternion=function(quat){
+  if(this.complexMatrix)return this;
+  this.rotation=GLMath.quatMultiply(this.rotation,quat);
+  GLMath.quatNormInPlace(this.rotation);
+  this._isIdentity=false;
+  this._matrixDirty=true;
+  return this;
+}
+/**
+ * Combines an object's current rotation with another rotation
+ * in the form of an angle and an axis of
+ * rotation. The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ *  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array&lt;number>|number} angle The desired angle
+ * to rotate in degrees. See {@link glutil.Transform#setOrientation}.
+ * @param {Array&lt;number>|number} v X-component of the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {number} vy Y-component of the axis
+ * of rotation.
+ * @param {number} vz Z-component of the axis
+ * of rotation.
+ * @return {glutil.Transform} This object.
+ */
+Transform.prototype.multOrientation=function(angle, v,vy,vz){
+ return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
+}
+/**
+ * Gets the transformation matrix used by an object.  It is a combination
+ * of the scale, position, and rotation properties,
+ * unless a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @return {Array&lt;number>}
+ */
+Transform.prototype.getMatrix=function(){
+  if(this._isIdentity){
+   return GLMath.mat4identity();
+  }
+  if(this._matrixDirty){
+   this._matrixDirty=false;
+   // for best results, multiply in this order:
+   // 1. translation
+   this.matrix=GLMath.mat4translated(this.position[0],
+   this.position[1],this.position[2]);
+   // 2. rotation
+   if(!GLMath.quatIsIdentity(this.rotation)){
+    this.matrix=GLMath.mat4multiply(this.matrix,
+      GLMath.quatToMat4(this.rotation));
+   }
+   // 3. scaling
+   GLMath.mat4scaleInPlace(this.matrix,this.scale);
+  }
+  return this.matrix.slice(0,16);
+}
+
+/**
+* Makes a copy of this object.  The copied object
+* will have its own version of the rotation, scale,
+* position, and matrix data.
+* @return {glutil.Transform} A copy of this object.
+*/
+Transform.prototype.copy=function(){
+ var ret=new Transform();
+ ret.scale=this.scale.slice(0,this.scale.length);
+ ret.position=this.position.slice(0,this.scale.length);
+ ret.complexMatrix=this.complexMatrix;
+ ret._matrixDirty=this._matrixDirty;
+ ret.matrix=this.matrix.slice(0,this.matrix.length);
+ return ret;
+}
+</code></pre>
+        </article>
+    </section>
+
+</div>
+<nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceEval.html">SurfaceEval</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>
