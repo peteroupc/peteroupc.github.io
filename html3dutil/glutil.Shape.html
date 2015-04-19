@@ -67,151 +67,26 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1878">line 1878</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1879">line 1879</a>
     </li></ul></dd>
 
 </dl>
 
     </div>
 
-        <h3 class="subsection-title">Members</h3>
-
-<h4 style="border-bottom: 1px solid;" id="position"><span style="font-weight:lighter"></span>position<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    A three-element array giving the X, Y, and Z coordinates of the position
-of this shape relative to its original position.
-The value given here is informational only and should not be modified directly.
-Use the setPosition method to set this value.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-default">Default Value:</dt>
-    <dd class="tag-default"><ul class="dummy">
-            <li class="object-value"><pre class="prettyprint"><code>[0,0,0]</code></pre></li>
-        </ul></dd>
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1898">line 1898</a>
-    </li></ul></dd>
-
-</dl>
-
-<h4 style="border-bottom: 1px solid;" id="rotation"><span style="font-weight:lighter"></span>rotation<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    The rotation of this object in the form of a <a href="glmath.GLMath.html">quaternion</a>.
-The value given here is informational only and should not be modified directly.
-Use the setRotation or setQuaternion method to set this value.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1904">line 1904</a>
-    </li></ul></dd>
-
-</dl>
-
-<h4 style="border-bottom: 1px solid;" id="scale"><span style="font-weight:lighter"></span>scale<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    A three-element array giving the scaling of this object for this shape's width,
-height, and depth, respectively.
-For each component, 1 means no scaling.
-The value given here is informational only and should not be modified directly.
-Use the setScale method to set this value.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-default">Default Value:</dt>
-    <dd class="tag-default"><ul class="dummy">
-            <li class="object-value"><pre class="prettyprint"><code>[1,1,1]</code></pre></li>
-        </ul></dd>
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1890">line 1890</a>
-    </li></ul></dd>
-
-</dl>
-
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;" id="getMatrix"><span style="font-weight:lighter"></span>getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
 <div class="description">
-    Gets the transformation matrix used by this shape.  It is a combination
-of the scale, position, and rotation properties,
-unless a matrix was defined with <a href="glutil.Shape.html#setMatrix">glutil.Shape#setMatrix</a>
-and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransform">glutil.Shape#resetTransform</a>.
+    Makes a copy of this object.  The copied objectwill have its own version of the transform andmaterial data, but any textureimage data and vertex buffers will not be duplicated,but rather just references to them will be used.
 </div>
 
 <dl class="details">
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2132">line 2132</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-    <h4 style="border-bottom: 1px solid;" id="multQuaternion"><span style="font-weight:lighter"></span>multQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
-
-<div class="description">
-    Combines this shape's current rotation with another rotation
-described by a <a href="glmath.GLMath.html">quaternion</a> (a 4-element array
-for describing 3D rotations).  The combined rotation will have the
-same effect as the new rotation followed by the existing rotation.
- Has no effect if a matrix was defined with <a href="glutil.Shape.html#setMatrix">glutil.Shape#setMatrix</a>
-and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransform">glutil.Shape#resetTransform</a>.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>quat</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-
-            </td>
-
-            <td class="description last">A four-element array describing the rotation.
-A quaternion is returned from the methods <a href="glmath.GLMath.html#.quatFromAxisAngle">glmath.GLMath.quatFromAxisAngle</a>
-or <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBryan</a>.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2096">line 2096</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1906">line 1906</a>
     </li></ul></dd>
 
 </dl>
@@ -219,7 +94,7 @@ or <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBry
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    This object.
+    A copy of this object.
 
      (Type:
 <span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
@@ -228,25 +103,39 @@ or <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBry
 
 </div>
 
-    <h5>Example</h5>
-
-    <pre class="prettyprint"><code>// Combine this shape's rotation with a rotation 20 degrees about the X-axis
-shape.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
-// Combine this shape's rotation with identity (no rotation)
-shape.multQuaternion(GLMath.quatIdentity());
-// Combine this shape's rotation with 30 degree pitch multiplied
-// by 40 degree roll
-shape.multQuaternion(GLMath.quatFromTaitBryan(30,0,40));</code></pre>
-
-    <h4 style="border-bottom: 1px solid;" id="multRotation"><span style="font-weight:lighter"></span>multRotation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="getMatrix"><span style="font-weight:lighter"></span>getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
-    Combines this shape's current rotation with another rotation
+    Gets the transformation matrix used by this shape.See glutil.Transform.getMatrix.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2067">line 2067</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The current transformation matrix.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="multOrientation"><span style="font-weight:lighter"></span>multOrientation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
+
+<div class="description">
+    Combines this shape's current orientation with another orientation
 in the form of an angle and an axis of
-rotation. The combined rotation will have the
-same effect as the new rotation followed by the existing rotation.
- Has no effect if a matrix was defined with <a href="glutil.Shape.html#setMatrix">glutil.Shape#setMatrix</a>
-and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransform">glutil.Shape#resetTransform</a>.
+rotation.See glutil.Transform.multOrientation.
 </div>
 
     <h5>Parameters:</h5>
@@ -278,8 +167,7 @@ and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransfor
 
             </td>
 
-            <td class="description last">The desired angle
-to rotate in degrees. See <a href="glutil.Shape.html#setRotation">glutil.Shape#setRotation</a>.</td>
+            <td class="description last">The desired angleto rotate in degrees, or a 4-element array as described in glutil.Transform.setOrientation.</td>
         </tr>
 
         <tr>
@@ -295,10 +183,7 @@ to rotate in degrees. See <a href="glutil.Shape.html#setRotation">glutil.Shape#s
 
             </td>
 
-            <td class="description last">X-component of the axis
-of rotation.  If "vy" and "vz" are omitted, this can
-instead be a 3-element array giving the axis
-of rotation in x, y, and z, respectively.</td>
+            <td class="description last">X-component of the axisof rotation or a 3-element array giving the axisof rotation in x, y, and z, respectively.</td>
         </tr>
 
         <tr>
@@ -311,8 +196,7 @@ of rotation in x, y, and z, respectively.</td>
 
             </td>
 
-            <td class="description last">Y-component of the axis
-of rotation.</td>
+            <td class="description last">Y-component of the axisof rotation.</td>
         </tr>
 
         <tr>
@@ -325,8 +209,7 @@ of rotation.</td>
 
             </td>
 
-            <td class="description last">Z-component of the axis
-of rotation.</td>
+            <td class="description last">Z-component of the axisof rotation.</td>
         </tr>
 
     </tbody>
@@ -336,7 +219,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2122">line 2122</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2058">line 2058</a>
     </li></ul></dd>
 
 </dl>
@@ -353,6 +236,82 @@ of rotation.</td>
 
 </div>
 
+    <h4 style="border-bottom: 1px solid;" id="multQuaternion"><span style="font-weight:lighter"></span>multQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
+
+<div class="description">
+    Combines this shape's current rotation with another rotation
+described by a <a href="glmath.GLMath.html">quaternion</a>.
+See glutil.Transform.multQuaternion.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>quat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A four-element array describing the rotation.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2038">line 2038</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1894">line 1894</a>
+    </li></ul></dd>
+
+</dl>
+
     <h4 style="border-bottom: 1px solid;" id="resetTransform"><span style="font-weight:lighter"></span>resetTransform<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
 <div class="description">
@@ -363,7 +322,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1969">line 1969</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1967">line 1967</a>
     </li></ul></dd>
 
 </dl>
@@ -474,7 +433,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1943">line 1943</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1941">line 1941</a>
     </li></ul></dd>
 
 </dl>
@@ -533,7 +492,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1961">line 1961</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1959">line 1959</a>
     </li></ul></dd>
 
 </dl>
@@ -595,7 +554,7 @@ This method will copy the value of this parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1918">line 1918</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1922">line 1922</a>
     </li></ul></dd>
 
 </dl>
@@ -612,178 +571,12 @@ This method will copy the value of this parameter.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="setPosition"><span style="font-weight:lighter"></span>setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="setOrientation"><span style="font-weight:lighter"></span>setOrientation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
 <div class="description">
-    Sets the relative position of this shape from its original
-position.  Has no effect if a matrix was defined with <a href="glutil.Shape.html#setMatrix">glutil.Shape#setMatrix</a>
-and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransform">glutil.Shape#resetTransform</a>.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>x</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Either the X-coordinate,
-or an array of 3 numbers giving the x, y, and z coordinates.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>y</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">The Y-coordinate.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>z</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">The Z-coordinate.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2015">line 2015</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
-
-)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;" id="setQuaternion"><span style="font-weight:lighter"></span>setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
-
-<div class="description">
-    Sets this object's rotation in the form of a <a href="glmath.GLMath.html">quaternion</a> (a 4-element array
-for describing 3D rotations). Has no effect if a matrix was defined with <a href="glutil.Shape.html#setMatrix">glutil.Shape#setMatrix</a>
-and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransform">glutil.Shape#resetTransform</a>.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>quat</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-
-            </td>
-
-            <td class="description last">A four-element array describing the rotation.
-A quaternion is returned from the methods <a href="glmath.GLMath.html#.quatFromAxisAngle">glmath.GLMath.quatFromAxisAngle</a>
-and <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBryan</a>, among others.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2045">line 2045</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
-
-)
-
-</div>
-
-    <h5>Example</h5>
-
-    <pre class="prettyprint"><code>// Set this shape's rotation to 30 degrees about the X-axis
-shape.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
-// Set this shape's rotation to identity (no rotation)
-shape.setQuaternion(GLMath.quatIdentity());
-// Set this shape's rotation to 30 degree pitch multiplied
-// by 40 degree roll
-shape.setQuaternion(GLMath.quatFromTaitBryan(30,0,40));</code></pre>
-
-    <h4 style="border-bottom: 1px solid;" id="setRotation"><span style="font-weight:lighter"></span>setRotation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
-
-<div class="description">
-    Sets this object's rotation in the form of an angle and an axis of
-rotation. Has no effect if a matrix was defined with <a href="glutil.Shape.html#setMatrix">glutil.Shape#setMatrix</a>
-and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransform">glutil.Shape#resetTransform</a>.
+    Sets this object's orientation in the form of an angle and an axis of
+rotation.
+See glutil.Transform.setOrientation.
 </div>
 
     <h5>Parameters:</h5>
@@ -816,12 +609,7 @@ and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransfor
             </td>
 
             <td class="description last">The desired angle
-to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
-instead be a 4-element array giving the axis
-of rotation as the first three elements, followed by the angle
-in degrees as the fourth element.  If the axis of rotation
-points toward the viewer, the angle's value is increasing in
-a counterclockwise direction.</td>
+to rotate in degrees, or a 4-element array as described in glutil.Transform.setOrientation.</td>
         </tr>
 
         <tr>
@@ -838,8 +626,7 @@ a counterclockwise direction.</td>
             </td>
 
             <td class="description last">X-component of the axis
-of rotation.  If "vy" and "vz" are omitted, this can
-instead be a 3-element array giving the axis
+of rotation or a 3-element array giving the axis
 of rotation in x, y, and z, respectively.</td>
         </tr>
 
@@ -878,7 +665,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2073">line 2073</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2027">line 2027</a>
     </li></ul></dd>
 
 </dl>
@@ -895,12 +682,11 @@ of rotation.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="setScale"><span style="font-weight:lighter"></span>setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;" id="setPosition"><span style="font-weight:lighter"></span>setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
 <div class="description">
-    Sets the scale of this shape relative to its original
-size. Has no effect if a matrix was defined with <a href="glutil.Shape.html#setMatrix">glutil.Shape#setMatrix</a>
-and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransform">glutil.Shape#resetTransform</a>.
+    Sets the relative position of this shape from its original
+position.  See glutil.Transform.setPosition
 </div>
 
     <h5>Parameters:</h5>
@@ -932,10 +718,158 @@ and the transform wasn't reset yet with <a href="glutil.Shape.html#resetTransfor
 
             </td>
 
-            <td class="description last">Scaling factor for this object's width.
-  If "y" and "z" are null or omitted, this can
-instead be a 3-element array giving the scaling factors
-for width, height, and depth, respectively.</td>
+            <td class="description last">X coordinate
+or a 3-element position array, as specified in glutil.Transform.setScale.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Y-coordinate.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Z-coordinate.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1998">line 1998</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Scene3D.html">glutil.Scene3D</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="setQuaternion"><span style="font-weight:lighter"></span>setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
+
+<div class="description">
+    Sets this object's orientation in the form of a <a href="glmath.GLMath.html">quaternion</a>.
+See glutil.Transform.setQuaternion.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>quat</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">A four-element array describing the rotation.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2008">line 2008</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="setScale"><span style="font-weight:lighter"></span>setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
+
+<div class="description">
+    Sets the scale of this shape relative to its original
+size. See glutil.Transform.setScale
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>x</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+            <td class="description last">Scaling factor for this object's width,
+or a 3-element scaling array, as specified in glutil.Transform.setScale.</td>
         </tr>
 
         <tr>
@@ -971,7 +905,7 @@ for width, height, and depth, respectively.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1990">line 1990</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1985">line 1985</a>
     </li></ul></dd>
 
 </dl>
@@ -1030,7 +964,7 @@ for width, height, and depth, respectively.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1952">line 1952</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1950">line 1950</a>
     </li></ul></dd>
 
 </dl>
@@ -1046,6 +980,21 @@ for width, height, and depth, respectively.</td>
 )
 
 </div>
+
+    <h4 style="border-bottom: 1px solid;" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1888">line 1888</a>
+    </li></ul></dd>
+
+</dl>
 
 </article>
 

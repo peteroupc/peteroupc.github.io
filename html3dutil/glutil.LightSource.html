@@ -129,7 +129,13 @@ and blue components respectively.  Each component ranges from 0 to 1.
             <td class="description last">An object whose keys have
 the possibilities given below, and whose values are those
 allowed for each key.<ul>
-<li><code>position</code> - Light position.
+<li><code>position</code> - Light position.  An array of four numbers,
+where the first three numbers are the X, Y, and Z components and the fourth
+number is the W component.<ul>
+<li>If W is 0, then X, Y, and Z specify a 3-element vector giving the direction
+of the light; the light will shine everywhere in the given direction.
+<li>If W is 0, then X, Y, and Z specify the position of the light in world
+space; the light will shine brightest at the given position.</p>
 <li><code>ambient</code> - Not used in the default shader program.
 <li><code>diffuse</code> - Diffuse color.
 <li><code>specular</code> - Specular highlight color.
@@ -144,7 +150,7 @@ If a value is null or undefined, it is ignored.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line490">line 490</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line496">line 496</a>
     </li></ul></dd>
 
 </dl>

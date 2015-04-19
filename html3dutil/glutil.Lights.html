@@ -33,7 +33,7 @@ ambient color and one directional light source.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line516">line 516</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line522">line 522</a>
     </li></ul></dd>
 
 </dl>
@@ -53,7 +53,7 @@ ambient color and one directional light source.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line538">line 538</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line544">line 544</a>
     </li></ul></dd>
 
 </dl>
@@ -83,12 +83,71 @@ Ambient lights simulate this phenomenon.</small>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line532">line 532</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line538">line 538</a>
     </li></ul></dd>
 
 </dl>
 
         <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="border-bottom: 1px solid;" id="getLight"><span style="font-weight:lighter"></span>getLight<span class="signature">(index)</span><span style="font-weight:lighter"> &rarr; {LightSource}</span></h4>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>index</code></td>
+
+            <td class="type">
+
+<span class="param-type">*</span>
+
+            </td>
+
+            <td class="description last"></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line559">line 559</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The corresponding light source object.
+
+     (Type:
+<span class="param-type">LightSource</span>
+
+)
+
+</div>
 
     <h4 style="border-bottom: 1px solid;" id="setDirectionalLight"><span style="font-weight:lighter"></span>setDirectionalLight<span class="signature">(index, position)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
 
@@ -123,7 +182,8 @@ Ambient lights simulate this phenomenon.</small>
             </td>
 
             <td class="description last">Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.</td>
+light has index 0, the second has index 1, and so on.
+If the light doesn't exist at that index, it will be created.</td>
         </tr>
 
         <tr>
@@ -137,8 +197,7 @@ light has index 0, the second has index 1, and so on.</td>
             </td>
 
             <td class="description last">A 3-element vector giving the direction of the light, along the X, Y, and Z
-axes, respectively.  May be null, in which case the default
-is (0, 0, 1).</td>
+axes, respectively.</td>
         </tr>
 
     </tbody>
@@ -148,7 +207,79 @@ is (0, 0, 1).</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line558">line 558</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line583">line 583</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">Lights</span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(index, params)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>index</code></td>
+
+            <td class="type">
+
+<span class="param-type">*</span>
+
+            </td>
+
+            <td class="description last"></td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>params</code></td>
+
+            <td class="type">
+
+<span class="param-type">object</span>
+
+            </td>
+
+            <td class="description last">An object as described in glutil.LightSource.setParams.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line569">line 569</a>
     </li></ul></dd>
 
 </dl>
@@ -198,7 +329,8 @@ is (0, 0, 1).</td>
             </td>
 
             <td class="description last">Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.</td>
+light has index 0, the second has index 1, and so on.
+If the light doesn't exist at that index, it will be created.</td>
         </tr>
 
         <tr>
@@ -212,8 +344,7 @@ light has index 0, the second has index 1, and so on.</td>
             </td>
 
             <td class="description last">A 3-element vector giving the X, Y, and Z
-coordinates, respectively, of the light, in world coordinates.  May be null, in which case the default
-is (0, 0, 0).</td>
+coordinates, respectively, of the light, in world coordinates.</td>
         </tr>
 
     </tbody>
@@ -223,7 +354,7 @@ is (0, 0, 0).</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line572">line 572</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line595">line 595</a>
     </li></ul></dd>
 
 </dl>
