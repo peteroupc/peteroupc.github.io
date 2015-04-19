@@ -376,6 +376,9 @@ Mesh.prototype.normal3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.vertex3=function(x,y,z){
+  if(this.subMeshes.length==0){
+   this.subMeshes.push(new SubMesh());
+  }
   this.subMeshes[this.subMeshes.length-1].vertex3(x,y,z,this);
   return this;
  }

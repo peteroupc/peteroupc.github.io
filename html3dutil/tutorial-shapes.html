@@ -199,10 +199,7 @@ shape.setQuaternion(GLMath.quatFromAxisAngle(20,0,1,0));
 // scale the shape by 2x in all axes
 shape.setScale(2,2,2);
 // same, but passing an array
-shape.setScale([2,2,2]);
-// use an arbitrary 4x4 matrix, overriding position,
-// scaling, and rotation
-shape.setMatrix(...);</code></pre><p>If setMatrix wasn't called, then when the shape is rendered, it will generate
+shape.setScale([2,2,2]);</code></pre><p>If setMatrix wasn't called, then when the shape is rendered, it will generate
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.</p>
 <p>(3) Add the shape to the 3D scene:</p>

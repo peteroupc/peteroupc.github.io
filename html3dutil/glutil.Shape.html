@@ -67,7 +67,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1879">line 1879</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1899">line 1899</a>
     </li></ul></dd>
 
 </dl>
@@ -86,7 +86,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1906">line 1906</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1964">line 1964</a>
     </li></ul></dd>
 
 </dl>
@@ -113,7 +113,7 @@ method instead.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2067">line 2067</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2018">line 2018</a>
     </li></ul></dd>
 
 </dl>
@@ -130,172 +130,31 @@ method instead.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="multOrientation"><span style="font-weight:lighter"></span>multOrientation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
-
-<div class="description">
-    Combines this shape's current orientation with another orientation
-in the form of an angle and an axis of
-rotation.See glutil.Transform.multOrientation.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>angle</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">The desired angleto rotate in degrees, or a 4-element array as described in glutil.Transform.setOrientation.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>v</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">X-component of the axisof rotation or a 3-element array giving the axisof rotation in x, y, and z, respectively.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>vy</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Y-component of the axisof rotation.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>vz</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Z-component of the axisof rotation.</td>
-        </tr>
-
-    </tbody>
-</table>
+    <h4 style="border-bottom: 1px solid;" id="multQuaternion"><span style="font-weight:lighter"></span>multQuaternion<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
 <dl class="details">
 
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use Shape.getTransform().multQuaternion(...) instead.</li></ul></dd>
+
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2058">line 2058</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2024">line 2024</a>
     </li></ul></dd>
 
 </dl>
 
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
-
-)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;" id="multQuaternion"><span style="font-weight:lighter"></span>multQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
-
-<div class="description">
-    Combines this shape's current rotation with another rotation
-described by a <a href="glmath.GLMath.html">quaternion</a>.
-See glutil.Transform.multQuaternion.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>quat</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-
-            </td>
-
-            <td class="description last">A four-element array describing the rotation.</td>
-        </tr>
-
-    </tbody>
-</table>
+    <h4 style="border-bottom: 1px solid;" id="multRotation"><span style="font-weight:lighter"></span>multRotation<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
 <dl class="details">
 
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use Shape.getTransform().multOrientation(...) instead.</li></ul></dd>
+
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2038">line 2038</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2029">line 2029</a>
     </li></ul></dd>
 
 </dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
-
-)
-
-</div>
 
     <h4 style="border-bottom: 1px solid;" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
@@ -307,44 +166,15 @@ See glutil.Transform.multQuaternion.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1894">line 1894</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1915">line 1915</a>
     </li></ul></dd>
 
 </dl>
-
-    <h4 style="border-bottom: 1px solid;" id="resetTransform"><span style="font-weight:lighter"></span>resetTransform<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
-
-<div class="description">
-    Resets this shape to the untransformed state.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1967">line 1967</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
-
-)
-
-</div>
 
     <h4 style="border-bottom: 1px solid;" id="setColor"><span style="font-weight:lighter"></span>setColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
 <div class="description">
-    Sets material parameters that give the shape a certain color.
-However, if the mesh defines its own colors, those colors will take
-precedence over the color given in this method.
+    Sets material parameters that give the shape a certain color.However, if the mesh defines its own colors, those colors will takeprecedence over the color given in this method.
 </div>
 
     <h5>Parameters:</h5>
@@ -379,9 +209,7 @@ precedence over the color given in this method.
 
             </td>
 
-            <td class="description last">Array of three or
-four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
+            <td class="description last">Array of three orfour color components; or the red color component (0-1); or a stringspecifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
         </tr>
 
         <tr>
@@ -394,8 +222,7 @@ specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td
 
             </td>
 
-            <td class="description last">Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
+            <td class="description last">Green color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</td>
         </tr>
 
         <tr>
@@ -408,8 +235,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
             </td>
 
-            <td class="description last">Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
+            <td class="description last">Blue color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</td>
         </tr>
 
         <tr>
@@ -422,8 +248,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
             </td>
 
-            <td class="description last">Alpha color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
+            <td class="description last">Alpha color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</td>
         </tr>
 
     </tbody>
@@ -433,7 +258,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1941">line 1941</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1934">line 1934</a>
     </li></ul></dd>
 
 </dl>
@@ -492,180 +317,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1959">line 1959</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
-
-)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;" id="setMatrix"><span style="font-weight:lighter"></span>setMatrix<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
-
-<div class="description">
-    Sets this shape's transformation matrix. This method
-will set the position, rotation, and scale properties
-accordingly to the matrix given.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>value</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-
-            </td>
-
-            <td class="description last">A 4x4 matrix.
-This method will copy the value of this parameter.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1922">line 1922</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
-
-)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;" id="setOrientation"><span style="font-weight:lighter"></span>setOrientation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
-
-<div class="description">
-    Sets this object's orientation in the form of an angle and an axis of
-rotation.
-See glutil.Transform.setOrientation.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>angle</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">The desired angle
-to rotate in degrees, or a 4-element array as described in glutil.Transform.setOrientation.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>v</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">X-component of the axis
-of rotation or a 3-element array giving the axis
-of rotation in x, y, and z, respectively.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>vy</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Y-component of the axis
-of rotation.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>vz</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Z-component of the axis
-of rotation.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2027">line 2027</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1952">line 1952</a>
     </li></ul></dd>
 
 </dl>
@@ -755,7 +407,7 @@ or a 3-element position array, as specified in glutil.Transform.setScale.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1998">line 1998</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1999">line 1999</a>
     </li></ul></dd>
 
 </dl>
@@ -815,7 +467,7 @@ See glutil.Transform.setQuaternion.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2008">line 2008</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2009">line 2009</a>
     </li></ul></dd>
 
 </dl>
@@ -831,6 +483,19 @@ See glutil.Transform.setQuaternion.
 )
 
 </div>
+
+    <h4 style="border-bottom: 1px solid;" id="setRotation"><span style="font-weight:lighter"></span>setRotation<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+<dl class="details">
+
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use Shape.getTransform().setOrientation(...) instead.</li></ul></dd>
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2034">line 2034</a>
+    </li></ul></dd>
+
+</dl>
 
     <h4 style="border-bottom: 1px solid;" id="setScale"><span style="font-weight:lighter"></span>setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
@@ -905,7 +570,7 @@ or a 3-element scaling array, as specified in glutil.Transform.setScale.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1985">line 1985</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1986">line 1986</a>
     </li></ul></dd>
 
 </dl>
@@ -964,7 +629,7 @@ or a 3-element scaling array, as specified in glutil.Transform.setScale.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1950">line 1950</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1943">line 1943</a>
     </li></ul></dd>
 
 </dl>
@@ -991,7 +656,7 @@ or a 3-element scaling array, as specified in glutil.Transform.setScale.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1888">line 1888</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1909">line 1909</a>
     </li></ul></dd>
 
 </dl>

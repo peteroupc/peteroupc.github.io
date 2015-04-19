@@ -39,7 +39,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    emissive+=step;
    // apply emissive to each color component of the
    // emission material
-   shape.material.emission=[emissive,emissive,emissive];
+   shape.material.setParams({
+    "emission":[emissive,emissive,emissive]
+   });
    rotation[0]+=.5; // Adjust x-rotation by .5 degree
    rotation[1]+=1.0; // Adjust y-rotation by 1 degree
    // Update the shape's rotation

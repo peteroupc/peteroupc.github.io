@@ -1813,9 +1813,15 @@ Scene3D.prototype.render=function(){
 
 /** @private */
 Scene3D.prototype._renderShape=function(shape,program){
+ if(shape.constructor==ShapeGroup){
+  for(var i=0;i&lt;shape.shapes.length;i++){
+   this._renderShape(shape.shapes[i],program);
+  }
+ } else {
    this._setupMatrices(shape,program);
    Binders.getMaterialBinder(shape.material).bind(program);
    shape.bufferedMesh.draw(program);
+ }
 }
 /**
  * Uses a shader program to apply a texture filter after the
@@ -1876,6 +1882,20 @@ Scene3D.prototype._renderInner=function(){
   return this;
 }
 
+function ShapeGroup(){
+ this.shapes=[];
+ this.transform=new Transform();
+}
+ShapeGroup.prototype.addShape=function(shape){
+ this.shapes.add(shape);
+}
+ShapeGroup.prototype.getTransform=function(){
+ return this.getTransform();
+}
+ShapeGroup.prototype.setTransform=function(transform){
+ this.transform=transform.copy();
+ return this;
+}
 /**
 * An object that associates a geometric mesh (the shape of the object) with
 *  material data (which defines what is seen on the object's surface)
@@ -1892,6 +1912,7 @@ function Shape(mesh){
   this.bufferedMesh=mesh;
   this.transform=new Transform();
   this.material=new Material();
+  this.parent=null;
 }
 /**
  * Not documented yet.
@@ -1906,33 +1927,6 @@ Shape.prototype.primitiveCount=function(){
  return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 }
 
-/**
-* Makes a copy of this object.  The copied object
-* will have its own version of the transform and
-* material data, but any texture
-* image data and vertex buffers will not be duplicated,
-* but rather just references to them will be used.
-* @return {glutil.Shape} A copy of this object.
-*/
-Shape.prototype.copy=function(){
- var ret=new Shape(this.bufferedMesh);
- ret.material=this.material.copy();
- ret.transform=this.transform.copy();
- return ret;
-}
-
-/**
- * Sets this shape's transformation matrix. This method
- * will set the position, rotation, and scale properties
- * accordingly to the matrix given.
- * @param {Array&lt;number>} value A 4x4 matrix.
- * This method will copy the value of this parameter.
- * @return {glutil.Shape} This object.
- */
-Shape.prototype.setMatrix=function(value){
- this.transform.setMatrix(value);
- return this;
-}
 /**
 * Sets material parameters that give the shape a certain color.
 * However, if the mesh defines its own colors, those colors will take
@@ -1971,16 +1965,24 @@ Shape.prototype.setMaterial=function(material){
  return this;
 }
 /**
-* Resets this shape to the untransformed state.
-* @return {glutil.Shape} This object.
+* Makes a copy of this object.  The copied object
+* will have its own version of the transform and
+* material data, but any texture
+* image data and vertex buffers will not be duplicated,
+* but rather just references to them will be used.
+* @return {glutil.Shape} A copy of this object.
 */
-Shape.prototype.resetTransform=function(){
- this.matrix=GLMath.mat4identity();
- this.position=[0,0,0];
- this.scale=[1,1,1];
- this.rotation=GLMath.quatIdentity();
- this.complexMatrix=false;
- this._matrixDirty=false;
+Shape.prototype.copy=function(){
+ var ret=new Shape(this.bufferedMesh);
+ ret.material=this.material.copy();
+ ret.transform=this.getTransform().copy();
+ return ret;
+}
+Shape.prototype.getTransform=function(){
+ return this.transform;
+}
+Shape.prototype.setTransform=function(transform){
+ this.transform=transform.copy();
  return this;
 }
 /**
@@ -1993,7 +1995,7 @@ Shape.prototype.resetTransform=function(){
 * @return {glutil.Scene3D} This object.
  */
 Shape.prototype.setScale=function(x,y,z){
- this.transform.setScale();
+  this.getTransform().setScale(x,y,z);
   return this;
 }
 /**
@@ -2006,7 +2008,7 @@ Shape.prototype.setScale=function(x,y,z){
 * @return {glutil.Scene3D} This object.
  */
 Shape.prototype.setPosition=function(x,y,z){
-  this.transform.setPosition();
+  this.getTransform().setPosition(x,y,z);
   return this;
 }
 /**
@@ -2016,57 +2018,7 @@ Shape.prototype.setPosition=function(x,y,z){
  * @return {glutil.Shape} This object.
  */
 Shape.prototype.setQuaternion=function(quat){
-  this.transform.setQuaternion(quat);
-  return this;
-}
-/**
- * Sets this object's orientation in the form of an angle and an axis of
- * rotation.
- * See {@link glutil.Transform.setOrientation}.
- * @param {Array&lt;number>|number} angle The desired angle
- * to rotate in degrees, or a 4-element array as described in {@link glutil.Transform.setOrientation}.
- * @param {Array&lt;number>|number} v X-component of the axis
- * of rotation or a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the axis
- * of rotation.
- * @param {number} vz Z-component of the axis
- * of rotation.
- * @return {glutil.Shape} This object.
- */
-Shape.prototype.setOrientation=function(angle, v,vy,vz){
-  this.transform.setOrientation(angle,v,vy,vz);
-  return this;
-}
-/**
- * Combines this shape's current rotation with another rotation
- * described by a [quaternion]{@link glmath.GLMath}.
-  * See {@link glutil.Transform.multQuaternion}.
- * @param {Array&lt;number>} quat A four-element array describing the rotation.
- * @return {glutil.Shape} This object.
- */
-Shape.prototype.multQuaternion=function(quat){
-  this.transform.multQuaternion(angle,v,vy,vz);
-  return this;
-}
-/**
- * Combines this shape's current orientation with another orientation
- * in the form of an angle and an axis of
- * rotation.
- * See {@link glutil.Transform.multOrientation}.
- * @param {Array&lt;number>|number} angle The desired angle
- * to rotate in degrees, or a 4-element array as described in {@link glutil.Transform.setOrientation}.
- * @param {Array&lt;number>|number} v X-component of the axis
- * of rotation or a 3-element array giving the axis
- * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the axis
- * of rotation.
- * @param {number} vz Z-component of the axis
- * of rotation.
- * @return {glutil.Shape} This object.
- */
-Shape.prototype.multOrientation=function(angle, v,vy,vz){
-  this.transform.multOrientation(angle,v,vy,vz);
+  this.getTransform().setQuaternion(quat);
   return this;
 }
 /**
@@ -2075,10 +2027,29 @@ Shape.prototype.multOrientation=function(angle, v,vy,vz){
  * @return {Array&lt;number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix=function(){
-  return this.transform.getMatrix();
+  return this.getTransform().getMatrix();
 }
 /////////////
+// Deprecated methods
+/** @deprecated Use Shape.getTransform().multQuaternion(...) instead. */
+Shape.prototype.multQuaternion=function(x){
+ this.getTransform().multQuaternion(x);
+ return this;
+}
+/** @deprecated Use Shape.getTransform().multOrientation(...) instead. */
+Shape.prototype.multRotation=function(a,b,c,d){
+ this.getTransform().multRotation(a,b,c,d);
+ return this;
+}
+/** @deprecated Use Shape.getTransform().setOrientation(...) instead. */
+Shape.prototype.setRotation=function(a,b,c,d){
+ this.getTransform().setOrientation(a,b,c,d);
+ return this;
+}
+
+/////////////
 exports["BufferedMesh"]=BufferedMesh;
+exports["ShapeGroup"]=ShapeGroup;
 exports["Lights"]=Lights;
 exports["FrameBuffer"]=FrameBuffer;
 exports["LightSource"]=LightSource;
