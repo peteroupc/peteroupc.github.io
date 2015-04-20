@@ -179,24 +179,19 @@ var GLUtil={
   return Promise.resolve({
     successes:[], failures:[]});
  }
- return new Promise(function(resolve, reject){
-  var ret={successes:[], failures:[]};
-  var totalPromises=promises.length;
-  var count=0;
-  for(var i=0;i&lt;totalPromises;i++){
-   var promise=promises[i];
-   promise.then(function(result){
-    ret.successes.push(result);
-    if(progressResolve)progressResolve(result);
-    count++;
-    if(count==totalPromises){ resolve(ret); }
-   }, function(result){
-    ret.failures.push(result);
-    if(progressReject)progressReject(result);
-    count++;
-    if(count==totalPromises){ resolve(ret); }
-   });
-  }
+ var ret={successes:[], failures:[]};
+ var newPromises=[]
+ for(var i=0;i&lt;promises.length;i++){
+  newPromises.push(promises[i].then(function(x){
+   ret.successes.push(x)
+   return true;
+  },function(x){
+   ret.failures.push(x)
+   return true;
+  }));
+ }
+ return Promise.all(newPromises).then(function(x){
+  return Promise.resolve(ret)
  });
 },
 /**
@@ -2011,7 +2006,7 @@ Shape.prototype.setTransform=function(transform){
 }
 /**
  * Sets the scale of this shape relative to its original
- * size. See {@link glutil.Transform#setScale}.
+ * size. See {@link glutil.Transform#setScale}
  * @param {number|Array&lt;number>} x Scaling factor for this object's width,
  * or a 3-element scaling array, as specified in {@link glutil.Transform#setScale}.
  * @param {number} y Scaling factor for this object's height.
@@ -2024,7 +2019,7 @@ Shape.prototype.setScale=function(x,y,z){
 }
 /**
  * Sets the relative position of this shape from its original
- * position.  See {@link glutil.Transform#setPosition}.
+ * position.  See {@link glutil.Transform#setPosition}
  * @param {number|Array&lt;number>} x X coordinate
  * or a 3-element position array, as specified in {@link glutil.Transform#setScale}.
  * @param {number} y Y-coordinate.
@@ -2036,7 +2031,7 @@ Shape.prototype.setPosition=function(x,y,z){
   return this;
 }
 /**
- * Sets this object's orientation in the form of a [quaternion]{@link glmath.GLMath}.
+ * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath}.
  * See {@link glutil.Transform#setQuaternion}.
  * @param {Array&lt;number>} quat A four-element array describing the rotation.
  * @return {glutil.Shape} This object.

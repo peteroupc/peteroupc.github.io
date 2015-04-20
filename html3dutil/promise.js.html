@@ -13,7 +13,7 @@
 	Any copyright is dedicated to the Public Domain.
 	http://creativecommons.org/publicdomain/zero/1.0/
 */
-// Note by Peter O., 2013-03-09: This file was taken
+// Note by Peter O., 2015-03-09: This file was taken
 // from https://github.com/ondras/promise/.
 (function (root, factory) {
 	if (typeof define === "function" &amp;&amp; define["amd"]) {
@@ -108,10 +108,6 @@
 		return thenPromise;
 	}
 
-	/**
-	 * Fulfill this promise with a given value
-	 * @param {any} value
-	 */
 	Promise.prototype.fulfill = function(value) {
 		if (this._state != 0) { return this; }
 
@@ -123,10 +119,6 @@
 		return this;
 	}
 
-	/**
-	 * Reject this promise with a given value
-	 * @param {any} value
-	 */
 	Promise.prototype.reject = function(value) {
 		if (this._state != 0) { return this; }
 
@@ -196,10 +188,6 @@
 		this.fulfill(x);
 	}
 
-	/**
-	 * Pass this promise's resolved value to another promise
-	 * @param {Promise} promise
-	 */
 	Promise.prototype.chain = function(promise) {
 		var resolve = function(value) {
 			promise.resolve(value);
