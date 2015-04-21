@@ -55,11 +55,29 @@ using evaluators to generate parametric surfaces.</li>
    rotation[0]+=.5; // Adjust x-rotation by .5 degree
    rotation[1]+=1.0; // Adjust y-rotation by 1 degree
    // Update the shape's rotation
-   var q=GLMath.quatFromTaitBryan(rotation);
-   shape.setOrientation(q);
+   shape.setQuaternion(GLMath.quatFromTaitBryan(rotation));
    // Render the scene
    scene.render();
-  });</code></pre><h2>Source Code</h2><p>Source code is available in the <a href="https://github.com/peteroupc/html3dutil">project page</a>.</p>
+  });</code></pre><h2>History</h2><p>Version 1.0:</p>
+<ul>
+<li>Adds setOrtho2DAspect and setOrthoAspect methods to Scene3D</li>
+<li>Adds mat4TransposeInPlace method and two constants to GLMath</li>
+<li>Renames fromEuler and toEuler methods in GLMath to fromTaitBryan
+and toTaitBryan</li>
+<li>Modifies the Lights class</li>
+<li>Allows alpha component in material diffuse</li>
+<li>Optimizes setting uniforms in shader programs</li>
+<li>Adds vertex2 method to Mesh class</li>
+<li>New classes: Transform and ShapeGroup</li>
+<li>Most methods that affect transforms removed, and their functionality
+now uses a new getTransform method and the Transform class</li>
+<li>Bug fixes</li>
+</ul>
+<p>Version 0.2:</p>
+<ul>
+<li>First Code Project release</li>
+</ul>
+<h2>Source Code</h2><p>Source code is available in the <a href="https://github.com/peteroupc/html3dutil">project page</a>.</p>
 <h2>About</h2><p>Written in 2015 by Peter O.</p>
 <p>Any copyright is dedicated to the Public Domain.
 <a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>

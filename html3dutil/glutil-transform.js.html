@@ -230,8 +230,8 @@ Transform.prototype.setOrientation=function(angle, v,vy,vz){
  */
 Transform.prototype.multQuaternion=function(quat){
   if(this.complexMatrix)return this;
-  this.rotation=GLMath.quatMultiply(this.rotation,quat);
-  GLMath.quatNormInPlace(this.rotation);
+  this.rotation=GLMath.quatNormInPlace(
+   GLMath.quatMultiply(this.rotation,quat));
   this._isIdentity=false;
   this._matrixDirty=true;
   return this;

@@ -162,6 +162,7 @@ ShaderProgram.prototype.use=function(){
  this.savedUniforms={};
  return this;
 }
+/** @private */
 ShaderProgram.prototype._log=function(i,v){
 // console.log("setting "+i+": "+v);
 }
@@ -454,6 +455,25 @@ return ShaderProgram.makeEffect(context,
 "return back_color;",
 "}}"
 ].join("\n"));
+}
+
+/** @private */
+ShaderProgram.getBasicVertex=function(){
+var shader=""+
+"attribute vec3 position;\n" +
+"attribute vec3 uv;\n" +
+"attribute vec3 colorAttr;\n" +
+"varying vec2 uvVar;\n"+
+"varying vec3 colorAttrVar;\n" +
+"void main(){\n"+
+"vec4 positionVec4;\n"+
+"positionVec4.w=1.0;\n"+
+"positionVec4.xyz=position;\n" +
+"gl_PointSize=1.0;\n" +
+"uvVar=uv;\n" +
+"colorAttrVar=colorAttr;\n" +
+"gl_Position=positionVec4;\n" +
+"}\n";
 }
 /**
 * Gets the text of the default vertex shader.  Putting "#define SHADING\n"

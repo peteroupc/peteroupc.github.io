@@ -77,8 +77,6 @@ Camera.prototype._angleVertical=function(angleDegrees){
 /**
 * Moves the camera up or down, adjusting its angle, while
 * maintaining its distance to the target position.
-* The camera won't turn to 90 degrees above or beyond,
-* or to 90 degrees below or beyond.
 * @param {number} angleDegrees Angle, in degrees,
 * to move the camera.  Positive angles mean down,
 * negative angles mean up.

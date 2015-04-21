@@ -126,7 +126,7 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
  var normDir=(inside) ? -1 : 1;
  var sc=[0,1]; // sin(0), cos(0)
  var tc=[0];
- var twopi=Math.PI*2;
+ var twopi=GLMath.PiTimes2;
  for(var i=1;i&lt;slices;i++){
   var t=i*1.0/slices;
   var angle=twopi*t;
@@ -305,7 +305,7 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
  if(sweep==0)sweep=360;
  var sc=[];
  var tc=[];
- var twopi=Math.PI*2;
+ var twopi=GLMath.PiTimes2;
  var arcLength=(sweep==360) ? twopi : sweep*GLMath.PiDividedBy180;
  start=start*GLMath.PiDividedBy180;
  if(sweepDir&lt;0){
@@ -405,7 +405,7 @@ Meshes.createTorus=function(inner, outer, lengthwise, crosswise,flat,inward){
  if(inner==0)return mesh;
  var tubeRadius=inner;
  var circleRad=outer;
- var twopi=Math.PI*2.0;
+ var twopi=GLMath.PiTimes2;
  var sci=[];
  var scj=[];
  for(var i = 0; i &lt;= crosswise; i++){
@@ -541,8 +541,8 @@ Meshes.createSphere=function(radius, slices, stacks, flat, inside){
  var scStack=[];
  var texc=[];
  var tc=[0];
- var twopi=Math.PI*2;
- var pidiv2=Math.PI*0.5;
+ var twopi=GLMath.PiTimes2;
+ var pidiv2=GLMath.HalfPi;
  for(var i=1;i&lt;slices;i++){
   var t=i*1.0/slices;
   var angle=twopi*t;

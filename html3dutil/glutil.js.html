@@ -167,30 +167,48 @@ var GLUtil={
  * @return {Promise} A promise that is never rejected and resolves when
 * all of the promises are each resolved or rejected. The result
  * of the promise will be an object with
- * two keys:
+ * three keys:
  *  "successes" - contains a list of results from the
- *  promises that succeeded.
+ *  promises that succeeded, in the order in which those promises were listed.
  *  "failures" - contains a list of results from the
- *  promises that failed.
+ *  promises that failed, in the order in which those promises were listed.
+ *  "results" - contains a list of boolean values for each
+ * promise, in the order in which the promises were listed.
+ * True means success, and false means failure.
  */
 "getPromiseResults":function(promises,
    progressResolve, progressReject){
  if(!promises || promises.length==0){
   return Promise.resolve({
-    successes:[], failures:[]});
+    successes:[], failures:[], results:[]});
  }
- var ret={successes:[], failures:[]};
+ var ret={successes:[], failures:[], results:[]};
  var newPromises=[]
  for(var i=0;i&lt;promises.length;i++){
+  var index=i;
   newPromises.push(promises[i].then(function(x){
-   ret.successes.push(x)
+   ret.successes[index]=x
    return true;
   },function(x){
-   ret.failures.push(x)
-   return true;
+   ret.failures[index]=x
+   return false;
   }));
  }
- return Promise.all(newPromises).then(function(x){
+ return Promise.all(newPromises).then(function(results){
+  // compact the successes and failures arrays
+  for(var i=0;i&lt;ret.successes.length;i++){
+   if(typeof ret.successes[i]=="undefined"){
+    ret.successes.splice(i,1);
+    i-=1;
+   }
+  }
+  for(var i=0;i&lt;ret.failures.length;i++){
+   if(typeof ret.failures[i]=="undefined"){
+    ret.failures.splice(i,1);
+    i-=1;
+   }
+  }
+  ret.results=results;
   return Promise.resolve(ret)
  });
 },
@@ -559,7 +577,9 @@ Lights._createNewLight=function(index){
 }
 /**
  * Not documented yet.
- * @param {*} index
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
+ * If the light doesn't exist at that index, it will be created.
  * @return {LightSource} The corresponding light source object.
  */
 Lights.prototype.getLight=function(index){
@@ -568,7 +588,9 @@ Lights.prototype.getLight=function(index){
 }
 /**
  * Not documented yet.
- * @param {*} index
+ * @param {number} index Zero-based index of the light to set.  The first
+ * light has index 0, the second has index 1, and so on.
+ * If the light doesn't exist at that index, it will be created.
  * @param {object} params An object as described in {@link glutil.LightSource.setParams}.
  * @return {Lights} This object.
  */
@@ -642,13 +664,13 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  this.shininess=(shininess==null) ? 0 : Math.min(Math.max(0,shininess),128);
  /** Ambient reflection of this material.&lt;p>
  * Ambient reflection indicates how much an object reflects
- * ambient lights (lights that color pixels
- * the same way regardless of direction or distance)
- * in the red, green, and blue components.
+ * ambient colors, those that color pixels the same way regardless
+ * of direction or distance.
  * Because every part of an object will be shaded the same way by ambient
- * light, an object with just ambient reflection will not look much like a 3D object.
- * Ambient reflection
- * depends on the color of ambient lights.&lt;p>
+ * light, an object with just ambient reflection will not look much like a 3D object.&lt;p>
+ * This value is a 3-element array giving the red, green, and blue
+ * components of the ambient reflection; the final ambient color depends
+ * on the ambient color of the scene.
  * (0,0,0) means no ambient reflection,
  * and (1,1,1) means total ambient reflection.&lt;p>
  * Setting ambient and diffuse reflection to the same value usually defines an object's
@@ -658,14 +680,14 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  */
  this.ambient=ambient ? ambient.slice(0,3) : [0.2,0.2,0.2];
  /**
- * Diffuse reflection of this material.&lt;p>
- * Diffuse reflection indicates how much an object reflects
- * diffuse lights (lights that point
- * directly on the object) in the red, green, and blue components.
- * Because different parts of an object are shaded differently depending
+ * Diffuse reflection of this material. Diffuse reflection is the color that a material
+ * reflects equally in all directions. Because different parts of an object are shaded
+ * differently depending
  * on how directly they face diffuse lights, diffuse reflection can contribute
- * much of the 3D effect of that object.  Diffuse reflection
- * depends on the color of diffuse lights.&lt;p>
+ * much of the 3D effect of that object.&lt;p>
+ * This value is a 4-element array giving the red, green, blue, and
+ * alpha components of the diffuse reflection; the final diffuse color depends
+ * on the reflected colors of lights that shine on the material.
  * (0,0,0,1) means no diffuse reflection,
  * and (1,1,1,1) means total diffuse reflection.&lt;p>
  * Setting ambient and diffuse reflection to the same value usually defines an object's
@@ -677,12 +699,14 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  */
  this.diffuse=diffuse ? diffuse.slice(0,diffuse.length) : [0.8,0.8,0.8,1.0];
  /** Specular highlight reflection of this material.
- * Specular reflection makes an object shiny, and it depends
- * on lights that give off specular highlights as well as on the color
- * of those highlights. Similar to diffuse reflection, specular reflection
+ * Similar to diffuse reflection, specular reflection
  * is affected by how directly each part of an object faces
  * a light that gives off specular highlights, but unlike diffuse light,
  * specular light doesn't scatter very much to other parts of an object.
+ * Specular reflection can make an object shiny.
+ * This value is a 3-element array giving the red, green, and blue
+ * components of the ambient reflection; the final specular color depends
+ * on the specular color of lights that shine on the material.
  * (0,0,0) means no specular reflection,
  * and (1,1,1) means total specular reflection.&lt;p>
 */
@@ -694,6 +718,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * same way regardless of lighting (this property won't be used in the
 * default shader if [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting}
 * is called, disabling lighting calculations).&lt;p>
+* This value is a 3-element array giving the red, green, and blue
+* components.
 * For each of the three color components, positive values add to that component,
 * while negative values subtract from it. (0,0,0) means no additive color.
  */
@@ -1362,9 +1388,7 @@ Scene3D.prototype.createBuffer=function(){
  * see {@link glmath.GLMath.mat4perspective}.
  * @param {number}  fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
-* this number, the bigger close objects appear to be.  As a result,
-* zoom can be implemented by multiplying field of view by an
-* additional factor.)
+* this number, the bigger close objects appear to be.)
 * @param {number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio (getAspect()).
 * @param {number} near The distance from the camera to
@@ -1390,7 +1414,7 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * plane and the top to the bottom.&lt;p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the 3D scene's viewport
- * or otherwise moved so as to keep the entire view rectangle visible without stretching
+ * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
  * &lt;p>
  * For considerations when choosing the "near" and "far" parameters,
@@ -1427,7 +1451,7 @@ Scene3D.prototype.setOrthoAspect=function(left, right, bottom, top, near, far, a
  * The near and far clipping planes will be set to -1 and 1, respectively.&lt;p>
  * If the view rectangle's aspect ratio doesn't match the desired aspect
  * ratio, the view rectangle will be centered on the 3D scene's viewport
- * or otherwise moved so as to keep the entire view rectangle visible without stretching
+ * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
  * @param {number} left Leftmost coordinate of the view rectangle.
  * @param {number} right Rightmost coordinate of the view rectangle.
@@ -1629,8 +1653,9 @@ Scene3D.prototype.setViewMatrix=function(matrix){
 * the point in world space that the camera is looking at. May be null or omitted,
 * in which case the default is the coordinates (0,0,0).
 * @param {Array&lt;number>} [up] A 3-element vector specifying
-* the up-vector direction.  May be null or omitted, in which case
-* the default is a vector pointing positive on the Y axis.  This
+* the direction from the center of the camera to its top. This parameter may
+* be null or omitted, in which case the default is the vector (0, 1, 0),
+* the vector that results when the camera is held upright.  This
 * vector must not point in the same or opposite direction as
 * the camera's view direction. (For best results, rotate the vector (0, 1, 0)
 * so it points perpendicular to the camera's view direction.)
@@ -1725,8 +1750,8 @@ Scene3D.prototype.setLightParams=function(index,params){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setAmbient=function(r,g,b,a){
- this.lightSource.ambient=GLUtil["toGLColor"](r,g,b,a);
- this.lightSource.ambient=this.lightSource.ambient.slice(0,4)
+ this.lightSource.sceneAmbient=GLUtil["toGLColor"](r,g,b,a);
+ this.lightSource.sceneAmbient=this.lightSource.sceneAmbient.slice(0,4)
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
