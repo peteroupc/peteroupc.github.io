@@ -273,8 +273,10 @@ Transform.prototype.getMatrix=function(){
    this._matrixDirty=false;
    // for best results, multiply in this order:
    // 1. translation
-   this.matrix=GLMath.mat4translated(this.position[0],
-   this.position[1],this.position[2]);
+   this.matrix=[1,0,0,0,0,1,0,0,0,0,1,0,
+    this.position[0],
+    this.position[1],
+    this.position[2],0];
    // 2. rotation
    if(!GLMath.quatIsIdentity(this.rotation)){
     this.matrix=GLMath.mat4multiply(this.matrix,

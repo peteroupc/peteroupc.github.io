@@ -1,4 +1,3 @@
-
 /**
 * A class for controlling the projection and
 * view of a 3D scene, in the nature of an abstract "camera".
@@ -55,20 +54,18 @@ Camera.prototype.moveAngleHorizontal=function(angleDegrees){
 }
 /** @private */
 Camera.prototype._angleHorizontal=function(angleDegrees){
- var change=this.angleY;
- this.angleY+=(angleDegrees*GLMath.PiDividedBy180)%(Math.PI*2);
- if(this.angleY<0)this.angleY=(Math.PI*2+this.angleY);
- change=this.angleY-change;
+ var change=((angleDegrees>=0 && angleDegrees<360) ? angleDegrees : ((angleDegrees%360)+(angleDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy180;
+ this.angleY+=change;
+ this.angleY=((this.angleY>=0 && this.angleY<GLMath.PiTimes2) ? this.angleY : ((this.angleY%GLMath.PiTimes2)+(this.angleY<0 ? GLMath.PiTimes2 : 0)))
  this.angleQuat=GLMath.quatMultiply(this.angleQuat,
    GLMath.quatFromAxisAngle(change*GLMath.Num180DividedByPi,0,1,0));
  GLMath.quatNormInPlace(this.angleQuat);
 }
 /** @private */
 Camera.prototype._angleVertical=function(angleDegrees){
-  var change=this.angleX;
-  this.angleX+=(angleDegrees*GLMath.PiDividedBy180)%(Math.PI*2);
-  if(this.angleX<0)this.angleX=(Math.PI*2+this.angleX);
- change=this.angleX-change;
+ var change=((angleDegrees>=0 && angleDegrees<360) ? angleDegrees : ((angleDegrees%360)+(angleDegrees<0 ? 360 : 0)))*GLMath.PiDividedBy180;
+ this.angleX+=change;
+ this.angleX=((this.angleX>=0 && this.angleX<GLMath.PiTimes2) ? this.angleX : ((this.angleX%GLMath.PiTimes2)+(this.angleX<0 ? GLMath.PiTimes2 : 0)))
  this.angleQuat=GLMath.quatMultiply(this.angleQuat,
    GLMath.quatFromAxisAngle(change*GLMath.Num180DividedByPi,1,0,0));
  GLMath.quatNormInPlace(this.angleQuat);

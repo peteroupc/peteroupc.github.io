@@ -1,4 +1,3 @@
-
 /**
 * A class for controlling the projection and
 * view of a 3D scene, in the nature of an abstract "camera".

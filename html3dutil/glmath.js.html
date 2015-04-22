@@ -17,6 +17,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+
 /**
 * A collection of math functions for working
 * with vectors and matrices.&lt;p>
@@ -24,15 +25,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @module glmath
 */
 (function (g,f) {
-	if (typeof define=="function" &amp;&amp; define["amd"]) {
-		define([ "exports" ], f);
-	} else if (typeof exports=="object") {
-		f(exports);
-	} else {
-		f(g);
-	}
+ if (typeof define=="function" &amp;&amp; define["amd"]) {
+  define([ "exports" ], f);
+ } else if (typeof exports=="object") {
+  f(exports);
+ } else {
+  f(g);
+ }
 }(this, function (exports) {
-	if (exports.GLMath) { return; }
+ if (exports.GLMath) { return; }
 
 /**
 * A collection of math functions for working
@@ -327,6 +328,7 @@ quatIdentity:function(){
 },
 /**
  * Returns a copy of a 4x4 matrix.
+ * @param {Array&lt;number>} mat A 4x4 matrix.
  * @return {Array&lt;number>}
  */
 mat4copy:function(mat){
@@ -334,10 +336,11 @@ mat4copy:function(mat){
 },
 /**
  * Returns a copy of a 4-element vector.
+ * @param {Array&lt;number>} mat A 4-element vector.
  * @return {Array&lt;number>}
  */
-vec4copy:function(mat){
- return mat.slice(0,4);
+vec4copy:function(vec){
+ return vec.slice(0,4);
 },
 /**
  * Finds the inverse of a 4x4 matrix.
@@ -435,8 +438,7 @@ return r;
 },
 /**
  * Inverts the rotation given in this quaternion without normalizing it;
- * returns a new quaternion.  The conjugate represents the same
- * rotation as the original.
+ * returns a new quaternion.
  * @param {Array&lt;number>} quat A quaternion, containing four elements.
  * @return {Array&lt;number>}
  */
@@ -444,11 +446,20 @@ quatConjugate:function(quat){
  return [-quat[0],-quat[1],-quat[2],quat[3]];
 },
 /**
- * Inverts the rotation given in this quaternion, then normalizes the result;
- * returns a new quaternion. The inverse represents the same
- * rotation as the original.
+ * Inverts the rotation given in this quaternion;
+ * returns a new quaternion.
  * @param {Array&lt;number>} quat A quaternion, containing four elements.
  * @return {Array&lt;number>}
+ */
+quatInvert:function(quat){
+ var lsq=1.0/GLMath.quatDot(quat,quat);
+ return GLMath.vec4scaleInPlace(lsq,
+  GLMath.quatConjugate(quat))
+},
+/**
+ * @deprecated This method incorrectly calculates a quaternion's
+ * inverse; use quatInvert instead.  This method will be changed to
+ * be equivalent to quatInvert in a future version.
  */
 quatInverse:function(quat){
  return GLMath.quatNormInPlace(
@@ -552,18 +563,18 @@ if(typeof vy!="undefined" &amp;&amp; typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*GLMath.PiDividedBy360;
+ ang=((angle>=0 &amp;&amp; angle&lt;360) ? angle : ((angle%360)+(angle&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*GLMath.PiDividedBy360;
+ ang=((angle>=0 &amp;&amp; angle&lt;360) ? angle : ((angle%360)+(angle&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*GLMath.PiDividedBy360;
+ ang=((angle>=0 &amp;&amp; angle&lt;360) ? angle : ((angle%360)+(angle&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -598,13 +609,13 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  if(mode==null)mode=GLMath.RollPitchYaw;
  if(mode&lt;0 || mode>=6)throw new Error("invalid mode");
  if(pitchDegrees.constructor==Array){
-  rollRad=pitchDegrees[2]*GLMath.PiDividedBy360;
-  pitchRad=pitchDegrees[0]*GLMath.PiDividedBy360;
-  yawRad=pitchDegrees[1]*GLMath.PiDividedBy360;
+  rollRad=((pitchDegrees[2]>=0 &amp;&amp; pitchDegrees[2]&lt;360) ? pitchDegrees[2] : ((pitchDegrees[2]%360)+(pitchDegrees[2]&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  pitchRad=((pitchDegrees[0]>=0 &amp;&amp; pitchDegrees[0]&lt;360) ? pitchDegrees[0] : ((pitchDegrees[0]%360)+(pitchDegrees[0]&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  yawRad=((pitchDegrees[1]>=0 &amp;&amp; pitchDegrees[1]&lt;360) ? pitchDegrees[1] : ((pitchDegrees[1]%360)+(pitchDegrees[1]&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
  } else {
-  rollRad=rollDegrees*GLMath.PiDividedBy360;
-  pitchRad=pitchDegrees*GLMath.PiDividedBy360;
-  yawRad=yawDegrees*GLMath.PiDividedBy360;
+  rollRad=((rollDegrees>=0 &amp;&amp; rollDegrees&lt;360) ? rollDegrees : ((rollDegrees%360)+(rollDegrees&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  pitchRad=((pitchDegrees>=0 &amp;&amp; pitchDegrees&lt;360) ? pitchDegrees : ((pitchDegrees%360)+(pitchDegrees&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
+  yawRad=((yawDegrees>=0 &amp;&amp; yawDegrees&lt;360) ? yawDegrees : ((yawDegrees%360)+(yawDegrees&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360;
  }
   var px = Math.sin(pitchRad);
   var py = Math.cos(pitchRad);
@@ -616,15 +627,15 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
   if(mode==GLMath.PitchYawRoll || mode==GLMath.PitchRollYaw){
    var t7 = [rx*yx, ry * yx, rx * yy, ry * yy];
    if(mode==GLMath.PitchYawRoll)t7[0]=-t7[0];
-   t8 = [((t7[3] * px) + (t7[0] * py)), ((t7[1] * py) + (t7[2] * px)), ((t7[2] * py) - (t7[1] * px)), ((t7[3] * py) - (t7[0] * px))];
+   t8 = [t7[3] * px + t7[0] * py, t7[1] * py + t7[2] * px, t7[2] * py - t7[1] * px, t7[3] * py - t7[0] * px];
   } else if(mode==GLMath.YawPitchRoll || mode==GLMath.YawRollPitch){
    var t7 = [ry * px, rx * px, rx * py, ry * py];
    if(mode==GLMath.YawRollPitch)t7[1]=-t7[1];
-   t8 = [((t7[0] * yy) - (t7[2] * yx)), ((t7[3] * yx) + (t7[1] * yy)), ((t7[2] * yy) + (t7[0] * yx)), ((t7[3] * yy) - (t7[1] * yx))];
+   t8 = [t7[0] * yy - t7[2] * yx, t7[3] * yx + t7[1] * yy, t7[2] * yy + t7[0] * yx, t7[3] * yy - t7[1] * yx];
   } else {
    var t7 = [yy * px, yx * py, yx * px, yy * py];
    if(mode==GLMath.RollPitchYaw)t7[2]=-t7[2];
-   t8 = [((t7[0] * ry) + (t7[1] * rx)), ((t7[1] * ry) - (t7[0] * rx)), ((t7[3] * rx) + (t7[2] * ry)), ((t7[3] * ry) - (t7[2] * rx))];
+   t8 = [t7[0] * ry + t7[1] * rx, t7[1] * ry - t7[0] * rx, t7[3] * rx + t7[2] * ry, t7[3] * ry - t7[2] * rx];
   }
   return t8;
 },
@@ -665,7 +676,7 @@ quatToTaitBryan:function(a,mode){
   } else {
    c1=a[0]; c2=a[1]; c3=a[2];
   }
-	var sq1=c1*c1;
+ var sq1=c1*c1;
   var sq2=c2*c2;
   var sq3=c3*c3;
   var e1=Math.atan2(2*(c0*c1-e*c2*c3),1-(sq1+sq2)*2);
@@ -770,10 +781,12 @@ quatRotate:function(quat,angle,v,vy,vz){
     GLMath.quatFromAxisAngle(angle,v,vy,vz));
 },
 /**
- * Transforms a vector using a quaternion's rotation.
+ * Transforms a 4-element vector using a quaternion's rotation.
  * @param {Array&lt;number>} q A quaternion describing
  * the rotation.
- * @param {Array&lt;number>} v The vector to transform.
+ * @param {Array&lt;number>} v A 4-element vector to transform.
+ * To transform a 3D point, set the vector's 4th element (zero-based
+ * index 3) to 1.
  * @return {Array&lt;number>} The transformed vector.
  */
 quatTransform:function(q,v){
@@ -937,12 +950,12 @@ mat4scale:function(mat,v3,v3y,v3z){
       scaleY=v3[1];
       scaleZ=v3[2];
   }
-	return [
+ return [
   mat[0]*scaleX, mat[1]*scaleX, mat[2]*scaleX, mat[3]*scaleX,
   mat[4]*scaleY, mat[5]*scaleY, mat[6]*scaleY, mat[7]*scaleY,
   mat[8]*scaleZ, mat[9]*scaleZ, mat[10]*scaleZ, mat[11]*scaleZ,
   mat[12], mat[13], mat[14], mat[15]
-	];
+ ];
 },
 /**
  * Returns a 4x4 matrix representing a scaling transformation.
@@ -1112,7 +1125,7 @@ mat4translate:function(mat,v3,v3y,v3z){
  * @return {Array&lt;number>} The resulting 4x4 matrix.
  */
 mat4perspective:function(fovY,aspectRatio,near,far){
- var f = 1/Math.tan(fovY*GLMath.PiDividedBy360);
+ var f = 1/Math.tan(((fovY>=0 &amp;&amp; fovY&lt;360) ? fovY : ((fovY%360)+(fovY&lt;0 ? 360 : 0)))*GLMath.PiDividedBy360);
  var nmf = near-far;
  nmf=1/nmf;
  return [f/aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
@@ -1200,7 +1213,9 @@ mat4ortho:function(l,r,b,t,n,f){
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
- * elements of the result (zero-based indices 8, 9, 10, and 11).
+ * elements of the result (zero-based indices 8, 9, 10, and 11).&lt;p>
+ * This is the same as mat4ortho2d() with the near clipping plane
+ * set to -1 and the far clipping plane set to 1.
  * @param {number} l Leftmost coordinate of the 2D view.
  * @param {number} r Rightmost coordinate of the 2D view.
  * (Note that r can be greater than l or vice versa.)
@@ -1293,19 +1308,19 @@ mat4scaleInPlace:function(mat,v3,v3y,v3z){
  * matrix (input matrix) describes a translation and the second
  * matrix describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
- * @param {*} a The first matrix.
- * @param {*} b The second matrix.
+ * @param {Array&lt;number>} a The first matrix.
+ * @param {Array&lt;number>} b The second matrix.
  * @return {Array&lt;number>} The resulting 4x4 matrix.
  */
 mat4multiply:function(a,b){
   var dst=[];
-	for(var i = 0; i &lt; 16; i+= 4){
-		for(var j = 0; j &lt; 4; j++){
-			dst[i+j] =
-				b[i]   * a[j]   +
-				b[i+1] * a[j+4] +
-				b[i+2] * a[j+8] +
-				b[i+3] * a[j+12];
+ for(var i = 0; i &lt; 16; i+= 4){
+  for(var j = 0; j &lt; 4; j++){
+   dst[i+j] =
+    b[i] * a[j] +
+    b[i+1] * a[j+4] +
+    b[i+2] * a[j+8] +
+    b[i+3] * a[j+12];
     }
   }
   return dst;
@@ -1324,10 +1339,10 @@ mat4multiply:function(a,b){
  * @return {Array&lt;number>} The resulting quaternion.
 */
 quatMultiply:function(a,b){
-	return [
-	a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
-	a[3] * b[1] + a[1] * b[3] + a[2] * b[0] - a[0] * b[2],
-	a[3] * b[2] + a[2] * b[3] + a[0] * b[1] - a[1] * b[0],
+ return [
+ a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
+ a[3] * b[1] + a[1] * b[3] + a[2] * b[0] - a[0] * b[2],
+ a[3] * b[2] + a[2] * b[3] + a[0] * b[1] - a[1] * b[0],
     a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]]
 },
 /**
@@ -1357,18 +1372,18 @@ if(typeof vy!="undefined" &amp;&amp; typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*GLMath.PiDividedBy180;
+ ang=((angle>=0 &amp;&amp; angle&lt;360) ? angle : ((angle%360)+(angle&lt;0 ? 360 : 0)))*GLMath.PiDividedBy180;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*GLMath.PiDividedBy180;
+ ang=((ang>=0 &amp;&amp; ang&lt;360) ? ang : ((ang%360)+(ang&lt;0 ? 360 : 0)))*GLMath.PiDividedBy180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*GLMath.PiDividedBy180;
+ ang=((angle>=0 &amp;&amp; angle&lt;360) ? angle : ((angle%360)+(angle&lt;0 ? 360 : 0)))*GLMath.PiDividedBy180;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -1454,18 +1469,18 @@ if(typeof vy!="undefined" &amp;&amp; typeof vz!="undefined"){
  v0=v;
  v1=vy;
  v2=vz;
- ang=angle*GLMath.PiDividedBy180;
+ ang=((angle>=0 &amp;&amp; angle&lt;360) ? angle : ((angle%360)+(angle&lt;0 ? 360 : 0)))*GLMath.PiDividedBy180;
 } else if(typeof v=="undefined"){
  v0=angle[0];
  v1=angle[1];
  v2=angle[2];
  ang=angle[3];
- ang=ang*GLMath.PiDividedBy180;
+ ang=((ang>=0 &amp;&amp; ang&lt;360) ? ang : ((ang%360)+(ang&lt;0 ? 360 : 0)))*GLMath.PiDividedBy180;
 } else {
  v0=v[0];
  v1=v[1];
  v2=v[2];
- ang=angle*GLMath.PiDividedBy180;
+ ang=((angle>=0 &amp;&amp; angle&lt;360) ? angle : ((angle%360)+(angle&lt;0 ? 360 : 0)))*GLMath.PiDividedBy180;
 }
 var cost = Math.cos(ang);
 var sint = Math.sin(ang);
@@ -1621,7 +1636,7 @@ GLMath.RollYawPitch = 5;
 GLMath.quatToEuler=GLMath.quatToTaitBryan;
 /** @deprecated Renamed to quatFromTaitBryan. */
 GLMath.quatFromEuler=GLMath.quatFromTaitBryan;
-	exports["GLMath"]=GLMath;
+ exports["GLMath"]=GLMath;
 }));
 </code></pre>
         </article>

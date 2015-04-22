@@ -590,7 +590,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#define SET_LIGHTPOWER(i) "+
 " lightPower[i]=calcLightPower(lights[i],viewWorldPositionVar)\n" +
 "#define ADD_DIFFUSE(i) "+
-" phong+=vec3(lights[i].diffuse)*max(dot(transformedNormalVar," +
+" lightedColor+=vec3(lights[i].diffuse)*max(dot(transformedNormalVar," +
 "   lightPower[i].xyz),0.0)*lightPower[i].w*materialDiffuse;\n" +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n";
 for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
@@ -599,7 +599,7 @@ for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
 shader+=""+
 "if(baseColor.a==0.0)discard;\n" +
 "vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
-"vec3 phong=sceneAmbient*materialAmbient; /* ambient*/\n" +
+"vec3 lightedColor=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=vec3(md)*baseColor.rgb;\n";
 for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
@@ -620,14 +620,14 @@ shader+="  spectmp = dot(transformedNormalVar, lightPower["+i+"].xyz) >= 0.0;\n"
 "    specular=max(specular,0.0);\n" +
 "    specular=pow(specular,mshin);\n"+
 "    specular=specular*lightPower["+i+"].w;\n" +
-"    phong+=ms*specular*lightSpecular;\n" +
+"    lightedColor+=ms*specular*lightSpecular;\n" +
 "  }\n";
 }
 shader+="}\n";
 shader+="#endif\n";
 shader+=" // emission\n"+
-" phong+=me;\n" +
-" baseColor=vec4(phong,baseColor.a);\n" +
+" lightedColor+=me;\n" +
+" baseColor=vec4(lightedColor,baseColor.a);\n" +
 "#endif\n" +
 " gl_FragColor=baseColor;\n" +
 "}";
