@@ -145,9 +145,14 @@ May be null or omitted; default is (0,0,0).</td>
 <div class="description">
     Ambient reflection of this material.<p>
 Ambient reflection indicates how much an object reflects
-ambient colors, those that color pixels the same way regardlessof direction or distance.
+ambient colors, those that color pixels the same way regardless
+of direction or distance.
 Because every part of an object will be shaded the same way by ambient
-light, an object with just ambient reflection will not look much like a 3D object.<p>This value is a 3-element array giving the red, green, and bluecomponents of the ambient reflection; the final ambient color dependson the ambient color of the scene.(0,0,0) means no ambient reflection,
+light, an object with just ambient reflection will not look much like a 3D object.<p>
+This value is a 3-element array giving the red, green, and blue
+components of the ambient reflection; the final ambient color depends
+on the ambient color of the scene.
+(0,0,0) means no ambient reflection,
 and (1,1,1) means total ambient reflection.<p>
 Setting ambient and diffuse reflection to the same value usually defines an object's
 color.<p>
@@ -167,10 +172,15 @@ colors are used for ambient reflection rather than this property.
 <h4 style="border-bottom: 1px solid;" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
 
 <div class="description">
-    Diffuse reflection of this material. Diffuse reflection is the color that a materialreflects equally in all directions. Because different parts of an object are shadeddifferently depending
+    Diffuse reflection of this material. Diffuse reflection is the color that a material
+reflects equally in all directions. Because different parts of an object are shaded
+differently depending
 on how directly they face diffuse lights, diffuse reflection can contribute
 much of the 3D effect of that object.<p>
-This value is a 4-element array giving the red, green, blue, andalpha components of the diffuse reflection; the final diffuse color dependson the reflected colors of lights that shine on the material.(0,0,0,1) means no diffuse reflection,
+This value is a 4-element array giving the red, green, blue, and
+alpha components of the diffuse reflection; the final diffuse color depends
+on the reflected colors of lights that shine on the material.
+(0,0,0,1) means no diffuse reflection,
 and (1,1,1,1) means total diffuse reflection.<p>
 Setting ambient and diffuse reflection to the same value usually defines an object's
 color.<p>
@@ -197,7 +207,9 @@ Used for objects that glow on their own, among other things.
 Each part of the object will be affected by the additive color the
 same way regardless of lighting (this property won't be used in the
 default shader if <a href="glutil.Scene3D.html#disableLighting">Scene3D.disableLighting()</a>
-is called, disabling lighting calculations).<p>This value is a 3-element array giving the red, green, and bluecomponents.
+is called, disabling lighting calculations).<p>
+This value is a 3-element array giving the red, green, and blue
+components.
 For each of the three color components, positive values add to that component,
 while negative values subtract from it. (0,0,0) means no additive color.
 </div>
@@ -236,7 +248,11 @@ Ranges from 0 through 128.
 Similar to diffuse reflection, specular reflection
 is affected by how directly each part of an object faces
 a light that gives off specular highlights, but unlike diffuse light,
-specular light doesn't scatter very much to other parts of an object.Specular reflection can make an object shiny.This value is a 3-element array giving the red, green, and bluecomponents of the ambient reflection; the final specular color dependson the specular color of lights that shine on the material.
+specular light doesn't scatter very much to other parts of an object.
+Specular reflection can make an object shiny.
+This value is a 3-element array giving the red, green, and blue
+components of the ambient reflection; the final specular color depends
+on the specular color of lights that shine on the material.
 (0,0,0) means no specular reflection,
 and (1,1,1) means total specular reflection.<p>
 </div>

@@ -313,7 +313,7 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
       var lines=text.split("\n")
       // add line numbers
       for(var i=0;i&lt;lines.length;i++){
-       lines[i]=(i+1)+"   "+lines[i]
+       lines[i]="/* "+(i+1)+" */   "+lines[i]
       }
       console.log(lines.join("\n"));
 	  	console.log((kind==context.VERTEX_SHADER ? "vertex: " : "fragment: ")+

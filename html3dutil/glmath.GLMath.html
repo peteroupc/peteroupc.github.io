@@ -1029,7 +1029,9 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 This method assumes a right-handed coordinate system, such as
 OpenGL's. To adjust the result of this method to a left-handed system,
 such as Direct3D's, reverse the sign of the 9th, 10th, 11th, and 12th
-elements of the result (zero-based indices 8, 9, 10, and 11).<p>This is the same as mat4ortho2d() with the near clipping planeset to -1 and the far clipping plane set to 1.
+elements of the result (zero-based indices 8, 9, 10, and 11).<p>
+This is the same as mat4ortho2d() with the near clipping plane
+set to -1 and the far clipping plane set to 1.
 </div>
 
     <h5>Parameters:</h5>
@@ -2804,7 +2806,9 @@ will be normalized.
 
 <dl class="details">
 
-        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul><li>This method incorrectly calculates a quaternion'sinverse; use quatInvert instead.  This method will be changed tobe equivalent to quatInvert in a future version.</li></ul></dd>
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul><li>This method incorrectly calculates a quaternion's
+inverse; use quatInvert instead.  This method will be changed to
+be equivalent to quatInvert in a future version.</li></ul></dd>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
@@ -2816,7 +2820,8 @@ will be normalized.
     <h4 style="border-bottom: 1px solid;" id=".quatInvert"><span style="font-weight:lighter">(static) </span>quatInvert<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
-    Inverts the rotation given in this quaternion;returns a new quaternion.
+    Inverts the rotation given in this quaternion;
+returns a new quaternion.
 </div>
 
     <h5>Parameters:</h5>
@@ -3660,7 +3665,9 @@ the rotation.</td>
 
             </td>
 
-            <td class="description last">A 4-element vector to transform.To transform a 3D point, set the vector's 4th element (zero-basedindex 3) to 1.</td>
+            <td class="description last">A 4-element vector to transform.
+To transform a 3D point, set the vector's 4th element (zero-based
+index 3) to 1.</td>
         </tr>
 
     </tbody>
@@ -3771,7 +3778,7 @@ If both vectors are unit length
 (via <a href="glmath.GLMath.html#.vec3norm">glmath.GLMath.vec3norm</a>), the absolute value
 of the sine of the angle between them is equal to the length of their
 cross product. <small>(More formally, the length of the cross
-product equals |<b>a</b>| * |<b>b</b>| * |sin &theta|;
+product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
 where |<b>x</b>| is the length of vector <b>x</b>.)</small><p>
 The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
 follows:<pre>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>APIDocs</title><script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBOREncodeOptions</title><script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="/canvasback/canvasback_min.js"></script>
 <script>
 CanvasBackground.colorBackground("#80ff80");
@@ -24,29 +24,75 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-</div><h1>APIDocs</h1>
+</div><h1>PeterO.Cbor.CBOREncodeOptions</h1>
+
+<h2>PeterO.Cbor.CBOREncodeOptions</h2>
+
+<pre><code>public sealed class CBOREncodeOptions
+</code></pre>
+
+<p>Specifies options for encoding CBOR objects to bytes.</p>
+
+<h3>None</h3>
+
+<pre><code>public static readonly PeterO.Cbor.CBOREncodeOptions None;
+</code></pre>
+
+<p>No special options for encoding. Value: 0.</p>
+
+<h3>NoIndefLengthStrings</h3>
+
+<pre><code>public static readonly PeterO.Cbor.CBOREncodeOptions NoIndefLengthStrings;
+</code></pre>
+
+<p>Always encode strings with a definite-length encoding. Value: 1.</p>
+
+<h3>Or</h3>
+
+<pre><code>public PeterO.Cbor.CBOREncodeOptions Or(
+    PeterO.Cbor.CBOREncodeOptions o);
+</code></pre>
+
+<p>Combines the flags of this options object with another options object.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><a href="PeterO.BigInteger.html">PeterO.BigInteger</a> - An arbitrary-precision integer.
-
-<ul>
-<li><a href="PeterO.Cbor.CBORDataUtilities.html">PeterO.Cbor.CBORDataUtilities</a> - Contains methods useful for reading and writing data, with a focus             on CBOR.</li>
-<li><a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> - Specifies options for encoding CBOR objects to bytes.</li>
-<li><a href="PeterO.Cbor.CBORException.html">PeterO.Cbor.CBORException</a> - Exception thrown for errors involving CBOR data.</li>
-<li><a href="PeterO.Cbor.CBORObject.html">PeterO.Cbor.CBORObject</a> - Represents an object in Concise Binary Object Representation (CBOR)             and contains methods for reading and writing CBOR data.</li>
-<li><a href="PeterO.Cbor.CBORType.html">PeterO.Cbor.CBORType</a> - Represents a type that a CBOR object can have.</li>
-<li><a href="PeterO.Cbor.CBORTypeFilter.html">PeterO.Cbor.CBORTypeFilter</a> - Specifies what kinds of CBOR objects a tag can be.</li>
-<li><a href="PeterO.Cbor.ICBORConverter-T.html">PeterO.Cbor.ICBORConverter&lt;T&gt;</a> - Interface implemented by classes that convert objects of arbitrary             types to CBOR objects.</li>
-<li><a href="PeterO.Cbor.ICBORTag.html">PeterO.Cbor.ICBORTag</a> - Implemented by classes that validate CBOR objects belonging to a             specific tag.</li>
-<li><a href="PeterO.DataUtilities.html">PeterO.DataUtilities</a> - Contains methods useful for reading and writing strings.</li>
-<li><a href="PeterO.ExtendedDecimal.html">PeterO.ExtendedDecimal</a> - Represents an arbitrary-precision decimal floating-point number.</li>
-<li><a href="PeterO.ExtendedFloat.html">PeterO.ExtendedFloat</a> - Represents an arbitrary-precision binary floating-point number.</li>
-<li><a href="PeterO.ExtendedRational.html">PeterO.ExtendedRational</a> - Arbitrary-precision rational number.</li>
-<li><a href="PeterO.PrecisionContext.html">PeterO.PrecisionContext</a> - Contains parameters for controlling the precision, rounding, and             exponent range of arbitrary-precision numbers.</li>
-<li><a href="PeterO.Rounding.html">PeterO.Rounding</a> - Specifies the mode to use when &quot;shortening&quot; numbers that             otherwise can&#39;t fit a given number of digits, so that the shortened             number has about the same value.</li>
-<li><a href="PeterO.TrapException.html">PeterO.TrapException</a> - Exception thrown for arithmetic trap errors.</li>
-</ul></li>
+<li><i>o</i>: A CBOREncodeOptions object. (2).</li>
 </ul>
+
+<p><b>Returns:</b></p>
+
+<p>A CBOREncodeOptions object.</p>
+
+<h3>And</h3>
+
+<pre><code>public PeterO.Cbor.CBOREncodeOptions And(
+    PeterO.Cbor.CBOREncodeOptions o);
+</code></pre>
+
+<p>Returns an options object whose flags are shared by this and another options object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>o</i>: A CBOREncodeOptions object. (2).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A CBOREncodeOptions object.</p>
+
+<h3>Value</h3>
+
+<pre><code>public int Value { get; }
+</code></pre>
+
+<p>Gets this options object&#39;s value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This options object&#39;s value.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 <script>

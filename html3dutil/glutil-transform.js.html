@@ -276,7 +276,7 @@ Transform.prototype.getMatrix=function(){
    this.matrix=[1,0,0,0,0,1,0,0,0,0,1,0,
     this.position[0],
     this.position[1],
-    this.position[2],0];
+    this.position[2],1];
    // 2. rotation
    if(!GLMath.quatIsIdentity(this.rotation)){
     this.matrix=GLMath.mat4multiply(this.matrix,

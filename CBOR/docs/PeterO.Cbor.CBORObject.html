@@ -1049,6 +1049,34 @@ An I/O error occurred.</p></li>
 <h3>Write</h3>
 
 <pre><code>public static void Write(
+    string str,
+    System.IO.Stream stream,
+    PeterO.Cbor.CBOREncodeOptions options);
+</code></pre>
+
+<p>Writes a string in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: The string to write. Can be null.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+<li><p><i>options</i>: Options for encoding the data to CBOR.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(
     PeterO.ExtendedFloat bignum,
     System.IO.Stream stream);
 </code></pre>
@@ -1176,6 +1204,32 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><i>stream</i>: A writable data stream.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
+<h3>WriteTo</h3>
+
+<pre><code>public void WriteTo(
+    System.IO.Stream stream,
+    PeterO.Cbor.CBOREncodeOptions options);
+</code></pre>
+
+<p>Writes this CBOR object to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+<li><p><i>options</i>: Options for encoding the data to CBOR.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -1410,6 +1464,24 @@ An I/O error occurred.</p></li>
 
 <p>A byte array in CBOR format.</p>
 
+<h3>EncodeToBytes</h3>
+
+<pre><code>public byte[] EncodeToBytes(
+    PeterO.Cbor.CBOREncodeOptions options);
+</code></pre>
+
+<p>Gets the binary representation of this data item.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>options</i>: Options for encoding the data to CBOR.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A byte array in CBOR format.</p>
+
 <h3>Write</h3>
 
 <pre><code>public static void Write(
@@ -1441,6 +1513,23 @@ is null.</li>
     System.IO.Stream stream);
 </code></pre>
 
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>objValue</i>: An arbitrary object.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(
+    object objValue,
+    System.IO.Stream stream,
+    PeterO.Cbor.CBOREncodeOptions options);
+</code></pre>
+
 <p>Writes an arbitrary object to a CBOR data stream. Currently, the following objects are supported:</p>
 
 <ul>
@@ -1455,6 +1544,7 @@ is null.</li>
 <ul>
 <li><p><i>objValue</i>: The value to write.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
+<li><p><i>options</i>: Options for encoding the data to CBOR.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
