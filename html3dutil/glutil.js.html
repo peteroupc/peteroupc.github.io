@@ -652,6 +652,7 @@ Lights.prototype.setPointLight=function(index,position){
 * May be null or omitted; default is (0,0,0).
 */
 function Material(ambient, diffuse, specular,shininess,emission) {
+ //console.log([ambient,diffuse,specular,shininess,emission]+"")
  if(ambient!=null)ambient=GLUtil["toGLColor"](ambient)
  if(diffuse!=null)diffuse=GLUtil["toGLColor"](diffuse)
  if(specular!=null)specular=GLUtil["toGLColor"](specular)
@@ -1806,12 +1807,12 @@ Scene3D.prototype.render=function(){
   if(typeof this.fboFilter!="undefined" &amp;&amp; this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter
-   this.fbo.bind(this.program);
-   this._renderInner();
-   this.fbo.unbind();
    var oldProgram=this.program;
    var oldProj=this._projectionMatrix.slice(0,16);
    var oldView=this._viewMatrix.slice(0,16);
+   this.fbo.bind(this.program);
+   this._renderInner();
+   this.fbo.unbind();
    this.useProgram(this.fboFilter);
    this.context.clear(
     this.context.COLOR_BUFFER_BIT|this.context.DEPTH_BUFFER_BIT);
@@ -1917,13 +1918,17 @@ function ShapeGroup(){
  * @param {*} shape
  */
 ShapeGroup.prototype.addShape=function(shape){
- this.shapes.add(shape);
+ shape.parent=this;
+ this.shapes.push(shape);
 }
 /**
  * Not documented yet.
  */
 ShapeGroup.prototype.getTransform=function(){
- return this.getTransform();
+ return this.transform;
+}
+ShapeGroup.prototype.getMatrix=function(){
+ return this.getTransform().getMatrix();
 }
 /**
  * Not documented yet.
@@ -1931,6 +1936,18 @@ ShapeGroup.prototype.getTransform=function(){
  */
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
+ return this;
+}
+ShapeGroup.prototype.setPosition=function(x,y,z){
+ this.transform.setPosition(x,y,z)
+ return this;
+}
+ShapeGroup.prototype.setQuaternion=function(quat){
+ this.transform.setQuaternion(quat);
+ return this;
+}
+ShapeGroup.prototype.setScale=function(x,y,z){
+ this.transform.setScale(x,y,z);
  return this;
 }
 /**
@@ -2071,7 +2088,12 @@ Shape.prototype.setQuaternion=function(quat){
  * @return {Array&lt;number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix=function(){
-  return this.getTransform().getMatrix();
+  var mat=this.getTransform().getMatrix();
+  if(this.parent!=null){
+   var pmat=this.parent.getMatrix();
+   mat=GLMath.mat4multiply(pmat,mat);
+  }
+  return mat;
 }
 /////////////
 // Deprecated methods

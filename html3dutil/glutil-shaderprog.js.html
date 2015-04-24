@@ -164,7 +164,7 @@ ShaderProgram.prototype.use=function(){
 }
 /** @private */
 ShaderProgram.prototype._log=function(i,v){
-// console.log("setting "+i+": "+v);
+ //console.log("setting "+i+": "+v);
 }
 /** @private */
 ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
@@ -189,6 +189,7 @@ ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
         newUv=true;
        } else if(uv!=v){
         uv=v;
+        this.uniformValues[i]=v;
         newUv=true;
        }
        if(newUv){
