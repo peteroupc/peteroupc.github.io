@@ -1,6 +1,7 @@
 <meta charset=utf-8>
 <head>
 <script type="text/javascript" src="glutil_min.js"></script>
+<script type="text/javascript" src="frame.js"></script>
 </head>
 <h1>Shader Filters</h1>
 <a href="javascript:link1()">Grayscale</a>,
@@ -292,21 +293,23 @@ function shiny(color){
 }
 
 function platonicGroup(scene){
+  var size=4.5;
+  var dims=size*2/Math.sqrt(3);
   var mesh=Meshes.createBox(dims,dims,dims);
   var group=new ShapeGroup();
   group.addShape(
     scene.makeShape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
   // this configuration of a sphere results in an octahedron
-  mesh=Meshes.createSphere(4.5,4,2,true);
+  mesh=Meshes.createSphere(size,4,2,true);
   group.addShape(
     scene.makeShape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
-  mesh=icosahedron(4.5);
+  mesh=icosahedron(size);
   group.addShape(
     scene.makeShape(mesh).setMaterial(shiny("lime")).setPosition(5,5,0))
-  mesh=tetrahedron(4.5);
+  mesh=tetrahedron(size);
   group.addShape(
     scene.makeShape(mesh).setMaterial(shiny("darkorange")).setPosition(15,5,0))
-  mesh=dodecahedron(4.5);
+  mesh=dodecahedron(size);
   group.addShape(
     scene.makeShape(mesh).setMaterial(shiny("yellow")).setPosition(-15,-5,0))
   return group
@@ -323,7 +326,7 @@ function blindsGroup(scene){
     var yy=((y/100)+1)/2
     var mesh=Meshes.createPlane(0.2,0.2);
     group.addShape(scene.makeShape(mesh)
-      .setColor(color ? [0,xx,yy] : "white")
+      .setColor(color ? [0,xx,yy] : [1,0.7,0.7])
       .setPosition(x/100+0.1,y/100+0.1,0));
     color=!color;
    }
@@ -335,7 +338,8 @@ function blindsGroup(scene){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D((document.getElementById("canvas")));
-  var dims=4.5*2/Math.sqrt(3);
+  scene.setClearColor("white")
+  var fc=new FrameCounterDiv(scene)
   var blinds=blindsGroup(scene)
   var platonic=platonicGroup(scene)
   linknone();
@@ -365,6 +369,7 @@ function blindsGroup(scene){
    rotation[0]+=0.5;
    rotation[1]+=1;
    scene.render();
+   fc.update();
   });
 //-->
 </script>

@@ -308,7 +308,8 @@ Mesh.prototype.normal3=function(x,y,z){
  /**
   * Transforms the positions and normals of all the vertices currently
   * in this mesh, using a 4x4 matrix.  The matrix won't affect
-  * vertices added afterwards.
+  * vertices added afterwards.  Future vertices should not be
+  * added after calling this method without calling mode() first.
   * @param {Array&lt;number>} matrix A 4x4 matrix describing
   * the transformation.
   * @return {glutil.Mesh} This object.
@@ -531,8 +532,8 @@ Mesh.prototype.setVertex=function(index,x,y,z){
 }
 /**
  * Sets the normal associated with the vertex with the
- * given index.  Has no effect if the index exceeds the number
- * of vertices in the mesh.
+ * given index.  Has no effect if the index is less than 0 or
+ * equals the number of vertices in this mesh or greater.
  * @param {number} index Zero-based index of
  * the vertex to set.
  * The index ranges from 0 to less than
@@ -549,6 +550,7 @@ Mesh.prototype.setVertex=function(index,x,y,z){
  * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.setVertexNormal=function(index,x,y,z){
+  if(index&lt;0)return this;
   var count=0;
   if(typeof y=="undefined" &amp;&amp; typeof z=="undefined"){
    y=x[1];
@@ -875,6 +877,11 @@ SubMesh.prototype.transform=function(matrix){
      v[i+normalOffset+2]=xform[2];
     }
   }
+  // TODO: Planned for 2.0.  Once implemented,
+  // Mesh#transform will say:  "Also, resets the primitive
+  // mode (see {@link glutil.Mesh#mode}) so that future vertices given
+  // will not build upon previous vertices."
+  //this.newPrimitive();
   return this;
 }
 

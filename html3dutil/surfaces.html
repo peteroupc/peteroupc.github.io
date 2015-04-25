@@ -190,6 +190,7 @@ function link6(){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white")
   var camera=new Camera(scene,45,1,100);
   camera.setDistance(5);
   var material=new Material().setParams({

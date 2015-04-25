@@ -23,6 +23,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white");
   var camera=new Camera(scene,45,1,1000).setDistance(80);
   var mat=new Material("red","red")
   GLUtil.loadStlFromUrl("holder.stl").then(function(mesh){

@@ -17,6 +17,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white");
   scene.setOrthoAspect(
    -20,20,
    -10,10,

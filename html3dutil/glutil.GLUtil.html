@@ -383,13 +383,13 @@ its work.
     A promise that is never rejected and resolves when
 all of the promises are each resolved or rejected. The result
 of the promise will be an object with
-three keys:
- "successes" - contains a list of results from the
+three keys:<ul>
+ <li>"successes" - contains a list of results from the
  promises that succeeded, in the order in which those promises were listed.
- "failures" - contains a list of results from the
+ <li>"failures" - contains a list of results from the
  promises that failed, in the order in which those promises were listed.
- "results" - contains a list of boolean values for each
-promise, in the order in which the promises were listed.
+ <li>"results" - contains a list of boolean values for each
+promise, in the order in which the promises were listed.</ul>
 True means success, and false means failure.
 
      (Type:
