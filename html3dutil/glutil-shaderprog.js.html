@@ -399,7 +399,8 @@ return shader;
 * @return {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.makeEffect=function(context,functionCode){
- return new ShaderProgram(context, null,
+ return new ShaderProgram(context,
+   ShaderProgram.getBasicVertex(),
    ShaderProgram.makeEffectFragment(functionCode));
 }
 /**
