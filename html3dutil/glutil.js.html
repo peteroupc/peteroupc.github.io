@@ -1081,12 +1081,6 @@ BufferedSubMesh.prototype.draw=function(program){
   context.drawElements(primitive,
     this.facesLength,
     this.type, 0);
-  // Disable attributes to avoid them leaking in future
-  // drawElements calls (in case a future vertex buffer object
-  // that doesn't use the attribute needs to be drawn)
-  for(var i=0;i&lt;boundAttributes.length;i++){
-   //context.disableVertexAttribArray(boundAttributes[i]);
-  }
 }
 /**
  * @private
@@ -1972,25 +1966,35 @@ ShapeGroup.prototype.getMatrix=function(){
 }
 /**
  * Not documented yet.
- * @param {Transform} transform
+ * @param {glutil.Transform} transform
  */
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
 }
 /**
- * Not documented yet.
- * @param {*} x
- * @param {*} y
- * @param {*} z
+ * Sets the relative position of the shapes in this group
+ * from their original position.
+ * See {@link glutil.Transform#setPosition}
+ * This method will modify this shape group's transform
+ * rather than the transform for each shape in the group.
+ * @param {number|Array&lt;number>} x X coordinate
+ * or a 3-element position array, as specified in {@link glutil.Transform#setScale}.
+ * @param {number} y Y-coordinate.
+ * @param {number} z Z-coordinate.
+* @return {glutil.Scene3D} This object.
  */
 ShapeGroup.prototype.setPosition=function(x,y,z){
  this.transform.setPosition(x,y,z)
  return this;
 }
 /**
- * Not documented yet.
- * @param {*} quat
+ * Sets this shape group's orientation in the form of a [quaternion]{@tutorial glmath}.
+ * See {@link glutil.Transform#setQuaternion}.
+ * This method will modify this shape group's transform
+ * rather than the transform for each shape in the group.
+ * @param {Array&lt;number>} quat A four-element array describing the rotation.
+ * @return {glutil.Shape} This object.
  */
 ShapeGroup.prototype.setQuaternion=function(quat){
  this.transform.setQuaternion(quat);

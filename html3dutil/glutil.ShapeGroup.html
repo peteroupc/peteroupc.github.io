@@ -30,7 +30,7 @@
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1930">line 1930</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1924">line 1924</a>
     </li></ul></dd>
 
 </dl>
@@ -85,7 +85,7 @@ will be stored in the list of shapes.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1941">line 1941</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1935">line 1935</a>
     </li></ul></dd>
 
 </dl>
@@ -112,7 +112,7 @@ will be stored in the list of shapes.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1954">line 1954</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1948">line 1948</a>
     </li></ul></dd>
 
 </dl>
@@ -127,15 +127,15 @@ will be stored in the list of shapes.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1948">line 1948</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1942">line 1942</a>
     </li></ul></dd>
 
 </dl>
 
-    <h4 style="border-bottom: 1px solid;" id="setPosition"><span style="font-weight:lighter"></span>setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;" id="setPosition"><span style="font-weight:lighter"></span>setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
 <div class="description">
-    Not documented yet.
+    Sets the relative position of the shapes in this groupfrom their original position.See <a href="glutil.Transform.html#setPosition">glutil.Transform#setPosition</a>This method will modify this shape group's transformrather than the transform for each shape in the group.
 </div>
 
     <h5>Parameters:</h5>
@@ -160,11 +160,14 @@ will be stored in the list of shapes.
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">number</span>
+|
+
+<span class="param-type">Array.&lt;number></span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">X coordinateor a 3-element position array, as specified in <a href="glutil.Transform.html#setScale">glutil.Transform#setScale</a>.</td>
         </tr>
 
         <tr>
@@ -173,11 +176,11 @@ will be stored in the list of shapes.
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">number</span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">Y-coordinate.</td>
         </tr>
 
         <tr>
@@ -186,11 +189,11 @@ will be stored in the list of shapes.
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">number</span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">Z-coordinate.</td>
         </tr>
 
     </tbody>
@@ -205,10 +208,22 @@ will be stored in the list of shapes.
 
 </dl>
 
-    <h4 style="border-bottom: 1px solid;" id="setQuaternion"><span style="font-weight:lighter"></span>setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"></span></h4>
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Scene3D.html">glutil.Scene3D</a></span>
+
+)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;" id="setQuaternion"><span style="font-weight:lighter"></span>setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
 <div class="description">
-    Not documented yet.
+    Sets this shape group's orientation in the form of a <a href="tutorial-glmath.html">quaternion</a>.See <a href="glutil.Transform.html#setQuaternion">glutil.Transform#setQuaternion</a>.This method will modify this shape group's transformrather than the transform for each shape in the group.
 </div>
 
     <h5>Parameters:</h5>
@@ -233,11 +248,11 @@ will be stored in the list of shapes.
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">Array.&lt;number></span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">A four-element array describing the rotation.</td>
         </tr>
 
     </tbody>
@@ -247,10 +262,22 @@ will be stored in the list of shapes.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1984">line 1984</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1988">line 1988</a>
     </li></ul></dd>
 
 </dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
+
+)
+
+</div>
 
     <h4 style="border-bottom: 1px solid;" id="setScale"><span style="font-weight:lighter"></span>setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"></span></h4>
 
@@ -320,7 +347,7 @@ will be stored in the list of shapes.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1994">line 1994</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1998">line 1998</a>
     </li></ul></dd>
 
 </dl>
@@ -353,7 +380,7 @@ will be stored in the list of shapes.
 
             <td class="type">
 
-<span class="param-type">Transform</span>
+<span class="param-type"><a href="glutil.Transform.html">glutil.Transform</a></span>
 
             </td>
 
@@ -367,7 +394,7 @@ will be stored in the list of shapes.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1966">line 1966</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1960">line 1960</a>
     </li></ul></dd>
 
 </dl>
