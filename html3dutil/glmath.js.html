@@ -905,7 +905,6 @@ mat4transposeInPlace:function(mat){
 * can't be inverted, returns the identity 3x3 matrix.
 */
 mat4inverseTranspose3:function(m4){
- // Operation equivalent to transpose(invert(mat3(m4)))
 var m=[m4[0],m4[1],m4[2],m4[4],m4[5],m4[6],
    m4[8],m4[9],m4[10]];
 var det=m[0] * m[4] * m[8] +

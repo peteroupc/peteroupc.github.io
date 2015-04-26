@@ -126,17 +126,17 @@ window.onload=(function(){
     .pushMatrix()
     .translate(-3,-2,0)
     .rotate(angle,0,0,1);
-   gear1.setMatrix(matrix.get());
+   gear1.getTransform().setMatrix(matrix.get());
    matrix.popMatrix()
      .pushMatrix()
      .translate(3.1,-2,0)
      .rotate(-2*angle-9,0,0,1);
-   gear2.setMatrix(matrix.get());
+   gear2.getTransform().setMatrix(matrix.get());
    matrix.popMatrix()
      .pushMatrix()
      .translate(-3.1,4.2,0)
      .rotate(-2*angle-25,0,0,1);
-   gear3.setMatrix(matrix.get());
+   gear3.getTransform().setMatrix(matrix.get());
    scene.render();
    angle+=4/2.0;
    view_rotx+=3/2.0;

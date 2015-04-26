@@ -700,13 +700,12 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  */
  this.diffuse=diffuse ? diffuse.slice(0,diffuse.length) : [0.8,0.8,0.8,1.0];
  /** Specular highlight reflection of this material.
- * Similar to diffuse reflection, specular reflection
- * is affected by how directly each part of an object faces
- * a light that gives off specular highlights, but unlike diffuse light,
- * specular light doesn't scatter very much to other parts of an object.
- * Specular reflection can make an object shiny.
+ * Specular reflection is a reflection in the same angle as
+ * the light reaches the material, similar to a mirror.  As a result, depending
+ * on the viewing angle, specular reflection can give off
+ * shiny highlights on the material.&lt;p>
  * This value is a 3-element array giving the red, green, and blue
- * components of the ambient reflection; the final specular color depends
+ * components of the specular reflection; the final specular color depends
  * on the specular color of lights that shine on the material.
  * (0,0,0) means no specular reflection,
  * and (1,1,1) means total specular reflection.&lt;p>
@@ -1040,6 +1039,9 @@ BufferedSubMesh.prototype.draw=function(program){
    _vertexAttrib(context,
     attr, 3,
     context.FLOAT, stride*4, offset*4);
+  } else {
+   attr=program.get("normal");
+   if(attr!==null)context.disableVertexAttribArray(attr);
   }
   offset=Mesh.colorOffset(format);
   if(offset>=0){
@@ -1051,6 +1053,8 @@ BufferedSubMesh.prototype.draw=function(program){
     context.FLOAT, stride*4, offset*4);
   } else {
    program.setUniforms({"useColorAttr":0.0});
+   attr=program.get("uv");
+   if(attr!==null)context.disableVertexAttribArray(attr);
   }
   offset=Mesh.texCoordOffset(format);
   if(offset>=0){
@@ -1059,6 +1063,9 @@ BufferedSubMesh.prototype.draw=function(program){
    _vertexAttrib(context,
      attr, 2,
     context.FLOAT, stride*4, offset*4);
+  } else {
+   attr=program.get("uv");
+   if(attr!==null)context.disableVertexAttribArray(attr);
   }
   // Drawing phase
   var context=program.getContext();
@@ -1078,7 +1085,7 @@ BufferedSubMesh.prototype.draw=function(program){
   // drawElements calls (in case a future vertex buffer object
   // that doesn't use the attribute needs to be drawn)
   for(var i=0;i&lt;boundAttributes.length;i++){
-   context.disableVertexAttribArray(boundAttributes[i]);
+   //context.disableVertexAttribArray(boundAttributes[i]);
   }
 }
 /**

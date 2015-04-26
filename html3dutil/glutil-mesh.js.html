@@ -325,14 +325,14 @@ Mesh.prototype.normal3=function(x,y,z){
   * defined (with vertex3()) will have this color. The new current
   * color will apply to future vertices even if the current mode
   * is TRIANGLE_FAN and some vertices were already given for
-  * that mode.
-  * @param {number} r Red component of the color (0-1).
-  * Can also be a string
+  * that mode.  Only the red, green, and blue components will be used.
+  * @param {Array&lt;number>|number|string} r Array of three or
+  * four color components; or the red color component (0-1); or a string
   * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
-  * @param {number} g Green component of the color (0-1).
-  * May be null or omitted if a string is given as the "r" parameter.
-  * @param {number} b Blue component of the color (0-1).
-  * May be null or omitted if a string is given as the "r" parameter.
+  * @param {number} g Green color component (0-1).
+  * May be null or omitted if a string or array is given as the "r" parameter.
+  * @param {number} b Blue color component (0-1).
+  * May be null or omitted if a string or array is given as the "r" parameter.
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.color3=function(x,y,z){
@@ -341,10 +341,15 @@ Mesh.prototype.normal3=function(x,y,z){
    this.color[0]=c[0];
    this.color[1]=c[1];
    this.color[2]=c[2];
-  } else {
+  } else if(typeof x=="number" &amp;&amp; typeof y=="number" &amp;&amp;
+   typeof z=="number"){
    this.color[0]=x;
    this.color[1]=y;
    this.color[2]=z;
+  } else {
+   this.color[0]=x[0];
+   this.color[1]=x[1];
+   this.color[2]=x[2];
   }
   this._elementsDefined|=Mesh.COLORS_BIT;
   return this;

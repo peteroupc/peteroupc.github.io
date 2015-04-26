@@ -218,7 +218,7 @@ while negative values subtract from it. (0,0,0) means no additive color.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line716">line 716</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line715">line 715</a>
     </li></ul></dd>
 
 </dl>
@@ -245,13 +245,12 @@ Ranges from 0 through 128.
 
 <div class="description">
     Specular highlight reflection of this material.
-Similar to diffuse reflection, specular reflection
-is affected by how directly each part of an object faces
-a light that gives off specular highlights, but unlike diffuse light,
-specular light doesn't scatter very much to other parts of an object.
-Specular reflection can make an object shiny.
+Specular reflection is a reflection in the same angle as
+the light reaches the material, similar to a mirror.  As a result, depending
+on the viewing angle, specular reflection can give off
+shiny highlights on the material.<p>
 This value is a 3-element array giving the red, green, and blue
-components of the ambient reflection; the final specular color depends
+components of the specular reflection; the final specular color depends
 on the specular color of lights that shine on the material.
 (0,0,0) means no specular reflection,
 and (1,1,1) means total specular reflection.<p>
@@ -261,7 +260,7 @@ and (1,1,1) means total specular reflection.<p>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line703">line 703</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line702">line 702</a>
     </li></ul></dd>
 
 </dl>
@@ -361,7 +360,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line790">line 790</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line789">line 789</a>
     </li></ul></dd>
 
 </dl>
@@ -427,7 +426,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line803">line 803</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line802">line 802</a>
     </li></ul></dd>
 
 </dl>
@@ -457,7 +456,7 @@ to the same object will be used.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line726">line 726</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line725">line 725</a>
     </li></ul></dd>
 
 </dl>
@@ -527,7 +526,7 @@ If a value is null or undefined, it is ignored.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line751">line 751</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line750">line 750</a>
     </li></ul></dd>
 
 </dl>

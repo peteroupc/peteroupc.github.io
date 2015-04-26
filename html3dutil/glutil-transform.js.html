@@ -116,8 +116,8 @@ Transform.prototype.resetTransform=function(){
 Transform.prototype.setScale=function(x,y,z){
   if(this.complexMatrix)return this;
   if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
-   if(x.constructor==Array)
-    this.scale=x.slice(0,3);
+   if(typeof x!="number")
+    this.scale=[x[0],x[1],x[2]];
    else
     this.scale=[x,x,x];
   } else {
@@ -145,12 +145,49 @@ Transform.prototype.setScale=function(x,y,z){
 Transform.prototype.setPosition=function(x,y,z){
   if(this.complexMatrix)return this;
   if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
-   if(x.constructor==Array)
-    this.position=x.slice(0,3);
+   if(typeof x!="number")
+    this.position=[x[0],x[1],x[2]];
    else
     this.position=[x,x,x];
   } else {
    this.position=[x,y,z];
+  }
+  this._isIdentity=(this._isIdentity &amp;&amp;
+   this.position[0]==0 &amp;&amp;
+   this.position[1]==0 &amp;&amp;
+   this.position[2]==0);
+  this._matrixDirty=true;
+  return this;
+}
+
+/**
+ * Moves the relative position of an object from its original
+ * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
+ * @param {Array&lt;number>|number} x Number to add to the X-coordinate,
+ * or an array of 3 numbers giving the numbers to add to the x, y, and z coordinates.
+ * @param {number} y Number to add to the Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} z Number to add to the Z-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @return {glutil.Transform} This object.
+ */
+Transform.prototype.movePosition=function(x,y,z){
+  if(this.complexMatrix)return this;
+  if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
+   if(typeof x!="number"){
+    this.position[0]+=x[0];
+    this.position[1]+=x[1];
+    this.position[2]+=x[2];
+   } else {
+    this.position[0]+=x;
+    this.position[1]+=x;
+    this.position[2]+=x;
+   }
+  } else {
+    this.position[0]+=x;
+    this.position[1]+=y;
+    this.position[2]+=z;
   }
   this._isIdentity=(this._isIdentity &amp;&amp;
    this.position[0]==0 &amp;&amp;

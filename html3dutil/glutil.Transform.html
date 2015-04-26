@@ -118,7 +118,7 @@ position, and matrix data.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line286">line 286</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line323">line 323</a>
     </li></ul></dd>
 
 </dl>
@@ -148,12 +148,105 @@ and the transform wasn't reset yet with <a href="glutil.Transform.html#resetTran
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line257">line 257</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line294">line 294</a>
     </li></ul></dd>
 
 </dl>
 
 <h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;" id="movePosition"><span style="font-weight:lighter"></span>movePosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Transform.html">glutil.Transform</a>}</span></h4>
+
+<div class="description">
+    Moves the relative position of an object from its original
+position.  Has no effect if a matrix was defined with <a href="glutil.Transform.html#setMatrix">glutil.Transform#setMatrix</a>
+and the transform wasn't reset yet with <a href="glutil.Transform.html#resetTransform">glutil.Transform#resetTransform</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>x</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+|
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Number to add to the X-coordinate,
+or an array of 3 numbers giving the numbers to add to the x, y, and z coordinates.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>y</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Number to add to the Y-coordinate.
+If "x" is an array, this parameter may be omitted.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>z</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Number to add to the Z-coordinate.
+If "x" is an array, this parameter may be omitted.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul><li>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line164">line 164</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Transform.html">glutil.Transform</a></span>
+
+)
+
+</div>
 
     <h4 style="border-bottom: 1px solid;" id="multOrientation"><span style="font-weight:lighter"></span>multOrientation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Transform.html">glutil.Transform</a>}</span></h4>
 
@@ -253,7 +346,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line247">line 247</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line284">line 284</a>
     </li></ul></dd>
 
 </dl>
@@ -319,7 +412,7 @@ or <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBry
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line220">line 220</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line257">line 257</a>
     </li></ul></dd>
 
 </dl>
@@ -562,7 +655,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line197">line 197</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line234">line 234</a>
     </li></ul></dd>
 
 </dl>
@@ -718,7 +811,7 @@ and <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBr
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line168">line 168</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line205">line 205</a>
     </li></ul></dd>
 
 </dl>
