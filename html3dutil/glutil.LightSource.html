@@ -134,8 +134,8 @@ where the first three numbers are the X, Y, and Z components and the fourth
 number is the W component.<ul>
 <li>If W is 0, then X, Y, and Z specify a 3-element vector giving the direction
 of the light; the light will shine everywhere in the given direction.
-<li>If W is 0, then X, Y, and Z specify the position of the light in world
-space; the light will shine brightest at the given position.</p>
+<li>If W is 1, then X, Y, and Z specify the position of the light in world
+space; the light will shine brightest, and in every direction, at the given position.</ul>
 <li><code>ambient</code> - Not used in the default shader program.
 <li><code>diffuse</code> - Diffuse color.
 <li><code>specular</code> - Specular highlight color.

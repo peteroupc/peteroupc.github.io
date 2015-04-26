@@ -10,6 +10,7 @@
 <a href="javascript:link4()">Blur</a>,
 <a href="javascript:link5()">Pixelate</a>,
 <a href="javascript:link6()">Waterpaint</a>,
+<a href="javascript:link7()">Mirror</a>,
 <a href="javascript:linknone()">No filters</a><br>
 <a href="javascript:link1a()">Blinds</a>,
 <a href="javascript:link2a()">Platonic solids</a>
@@ -135,6 +136,14 @@ return ShaderProgram.makeEffect(context,[
 "}"].join("\n"));
 }
 
+function makeMirror(context){
+return ShaderProgram.makeEffect(context,[
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
+" return color;",
+"}"].join("\n"));
+}
+
 function link1(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
@@ -193,6 +202,13 @@ function link6(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeWaterpaint(scene);
+  scene.useFilter(currentFilter);
+ }
+}
+function link7(){
+ if(scene){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=makeMirror(scene);
   scene.useFilter(currentFilter);
  }
 }

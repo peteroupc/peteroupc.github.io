@@ -508,8 +508,8 @@ function LightSource(position, ambient, diffuse, specular) {
 * number is the W component.&lt;ul>
 * &lt;li>If W is 0, then X, Y, and Z specify a 3-element vector giving the direction
 * of the light; the light will shine everywhere in the given direction.
-* &lt;li>If W is 0, then X, Y, and Z specify the position of the light in world
-* space; the light will shine brightest at the given position.&lt;/p>
+* &lt;li>If W is 1, then X, Y, and Z specify the position of the light in world
+* space; the light will shine brightest, and in every direction, at the given position.&lt;/ul>
 * &lt;li>&lt;code>ambient&lt;/code> - Not used in the default shader program.
 * &lt;li>&lt;code>diffuse&lt;/code> - Diffuse color.
 * &lt;li>&lt;code>specular&lt;/code> - Specular highlight color.
