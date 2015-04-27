@@ -224,7 +224,6 @@ ObjData.loadObjFromUrl=function(url){
        // otherwise just return the object
        return Promise.resolve(obj);
      }
-     return {url: e.url, "obj": obj};
    },
    function(e){
      return Promise.reject(e)

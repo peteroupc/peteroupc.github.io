@@ -216,8 +216,8 @@ var GLUtil={
 * Loads a file from a URL asynchronously, using XMLHttpRequest.
 * @param {string} url URL of the file to load.
 * @param {string|null} responseType Expected data type of
-* the file.  Can be "json", "xml", or "text".  If null or omitted,
-* the default is "text".
+* the file.  Can be "json", "xml", "text", or "arraybuffer".
+* If null or omitted, the default is "text".
 * @return {Promise} A promise that resolves when the data
 * file is loaded successfully (the result will be an object with
 * two properties: "url", the URL of the file, and "data", the
@@ -238,17 +238,19 @@ var GLUtil={
       if(!resp){
        if(respType=="xml")resp=t.responseXML
        else if(respType=="json")
-        resp=t.responseJSON||JSON.parse(t.responseText)
-       else resp=t.responseText
+        resp=(t.responseJSON||JSON.parse(t.responseText))+""
+       else if(respType=="arraybuffer")
+        resp=t.response
+       else resp=t.responseText+""
       }
-      resolve({url: urlstr, data: resp+""});
+      resolve({"url": urlstr, "data": resp});
      } else {
-      reject({url: urlstr});
+      reject({"url": urlstr});
      }
     }
    };
    xhr.onerror=function(e){
-    reject({url: urlstr});
+    reject({"url": urlstr, "error": e});
    }
    xhr.open("get", url, true);
    xhr.responseType=respType
@@ -530,7 +532,7 @@ LightSource.prototype.setParams=function(params){
   this.specular=GLUtil["toGLColor"](params.specular);
  }
  if(params["diffuse"]!=null){
-  this.diffuse=GLUtil["toGLColor"](params.emission);
+  this.diffuse=GLUtil["toGLColor"](params.diffuse);
  }
  return this;
 }
@@ -570,7 +572,7 @@ Lights.MAX_LIGHTS = 3;
 Lights._createNewLight=function(index){
  var ret=new LightSource();
  if(index!=0){
-  ret.diffuse=[0,0,0];
+  ret.diffuse=[0,0,0,0];
   ret.specular=[0,0,0];
  }
  return ret;
@@ -829,6 +831,7 @@ Material.fromTexture=function(texture){
 */
 var Texture=function(name){
  this.image=null;
+ this.loadStatus=0;
  this.loadedTexture=null;
  this.name=name;
  this.width=0;
@@ -866,6 +869,48 @@ Texture.loadTexture=function(name, textureCache){
 }
 
 /** @private */
+Texture.loadTga=function(name){
+ var tex=this;
+ return GLUtil.loadFileFromUrl(name,"arraybuffer")
+ .then(function(buf){
+   var view=new DataView(buf.data);
+   var id=view.getUint8(0);
+   var cmaptype=view.getUint8(1);
+   var imgtype=view.getUint8(2);
+   if(imgtype!=2){
+    return Promise.reject(new Error("unsupported image type"));
+   }
+   var xorg=view.getUint16(8,true);
+   var yorg=view.getUint16(10,true);
+   if(xorg!=0 || yorg!=0){
+    return Promise.reject(new Error("unsupported origins"));
+   }
+   var width=view.getUint16(12,true);
+   var height=view.getUint16(14,true);
+   if(width==0 || height==0){
+    return Promise.reject(new Error("invalid width or height"));
+   }
+   var pixelsize=view.getUint8(16);
+   var flags=view.getUint8(16);
+   if(pixelsize!=32){
+    return Promise.reject(new Error("unsupported pixelsize"));
+   }
+   var size=width*height;
+   var arr=new Uint8Array(size*4);
+   var offset=18;
+   var io=0;
+   for(var i=0,io=0;i&lt;size;i++,io+=4){
+    arr[io+2]=view.getUint8(offset)
+    arr[io+1]=view.getUint8(offset+1)
+    arr[io]=view.getUint8(offset+2)
+    arr[io+3]=view.getUint8(offset+3)
+    offset+=4;
+   }
+   return {"width":width,"height":height,"image":arr}
+  })
+}
+
+/** @private */
 Texture.prototype.loadImage=function(){
  if(this.image!==null){
   // already loaded
@@ -873,6 +918,19 @@ Texture.prototype.loadImage=function(){
  }
  var thisImage=this;
  var thisName=this.name;
+ thisImage.loadStatus=1;
+ if((/\.tga$/i).test(thisName)){
+  return Texture.loadTga(thisName).then(function(e){
+   thisImage.image=e.image;
+   thisImage.width=e.width;
+   thisImage.height=e.height;
+   thisImage.loadStatus=2;
+   return thisImage;
+  },function(e){
+   thisImage.loadStatus=-1;
+   return Promise.reject({"name":thisName,"error":e});
+  });
+ }
  return new Promise(function(resolve,reject){
   var image=new Image();
   image.onload=function(e) {
@@ -880,13 +938,12 @@ Texture.prototype.loadImage=function(){
    thisImage.image=target;
    thisImage.width=target.width;
    thisImage.height=target.height;
-   thisImage.powerOfTwo=(
-      GLUtil._isPowerOfTwo(thisImage.width) &amp;&amp;
-      GLUtil._isPowerOfTwo(thisImage.height));
+   thisImage.loadStatus=2;
    resolve(thisImage);
   }
   image.onerror=function(e){
-   reject({name:name,error:e});
+   thisImage.loadStatus=-1;
+   reject({"name":thisName,"error":e});
   }
   image.src=thisName;
  });
@@ -1745,7 +1802,8 @@ Scene3D.prototype.removeShape=function(shape){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
- this.lightSource.setDirectionalLight(index,position,diffuse,specular);
+ this.lightSource.setDirectionalLight(index,position)
+  .setParams(index,{"diffuse":diffuse,"specular":specular});
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
@@ -1794,7 +1852,8 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
 * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
- this.lightSource.setPointLight(index,position,diffuse,specular);
+ this.lightSource.setPointLight(index,position)
+   .setParams(index,{"diffuse":diffuse,"specular":specular});
  new LightsBinder(this.lightSource).bind(this.program);
  return this;
 }
