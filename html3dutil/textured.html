@@ -16,23 +16,37 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+var Timer=function(){
+ this.time=null
+ this.hasPerformance=("performance" in window)
+}
+Timer.prototype.getTimeMod=function(mod){
+ var t=(this.hasPerformance) ?
+   window.performance.now() : (new Date().getTime()*1000);
+ if(this.time==null) {
+  this.time=t
+  return 0
+ } else {
+  return (t-this.time)%mod
+ }
+}
+
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   var fc=new FrameCounterDiv(scene)
   scene.setPerspective(45,scene.getAspect(),0.1,100);
   scene.setLookAt([0,0,40]);
-  scene.loadAndMapTextures([
-   "461223191.jpg"
-  ]).then(function(results){
+  var timer=new Timer()
+  scene.loadAndMapTexture("461223191.jpg").then(function(tex){
    var mesh=Meshes.createBox(10,20,20);
-   var shape=scene.makeShape(mesh).setTexture(results.successes[0])
+   var shape=scene.makeShape(mesh).setTexture(tex)
    scene.addShape(shape);
    var rotation=[0,0,0];
    GLUtil.renderLoop(function(){
     fc.update();
-    rotation[0]+=.5; // Adjust x-rotation by .5 degree
-    rotation[1]+=1.0; // Adjust y-rotation by 1 degree
+    rotation[0]=timer.getTimeMod(12000)*360/12000;
+    rotation[1]=timer.getTimeMod(6000)*360/6000;
     var q=GLMath.quatFromTaitBryan(rotation);
     shape.setQuaternion(q);
     scene.render();

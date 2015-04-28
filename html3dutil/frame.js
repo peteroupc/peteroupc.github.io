@@ -5,7 +5,7 @@ var FrameCounter=function(){
  this.frameCount=0;
 }
 FrameCounter.prototype.update=function(){
- var now=("performance" in window) ?
+  var now=("performance" in window) ?
    window.performance.now() : (new Date().getTime()*1000);
   if(this.lastFrame>=0){
     var gap=now-this.lastFrame;

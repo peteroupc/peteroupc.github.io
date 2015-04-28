@@ -22,6 +22,7 @@ function Camera(scene, fov, nearZ, farZ){
  this.scene=scene;
  this.angleX=0;
  this.angleY=0;
+ this.trackballMode=true;
  this.oldpos=[null,null];
  this.fov=fov;
  this.near=nearZ;
@@ -80,7 +81,11 @@ Camera.prototype._trackball=function(deltaMouseX,deltaMouseY,angleMultiplier){
 Camera.prototype.update=function(){
  var delta=this.input.deltaXY();
  if(this.input.leftButton){
-  this._trackball(delta.x,delta.y,0.3);
+  if(this.trackballMode){
+   this._trackball(delta.x,delta.y,0.3);
+  } else {
+   this._orbit(delta.x,delta.y,0.3);
+  }
  } else {
   this.oldpos=[delta.cx,delta.cy]
  }

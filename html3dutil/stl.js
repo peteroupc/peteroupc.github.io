@@ -25,7 +25,7 @@ GLUtil.loadStlFromUrl=function(url){
    function(e){
      var obj;
      obj=StlData._loadStl(e.data);
-     if(obj.error)return Promise.reject({url:e.url, "error":obj.error});
+     if(obj.error)return Promise.reject({"url":e.url, "error":obj.error});
      obj=obj.success;
      obj.url=e.url;
      // otherwise just return the object
