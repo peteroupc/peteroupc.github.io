@@ -39,9 +39,9 @@ var Supertoroid=function(xRadius, yRadius, zRadius, innerRadius, n, m){
  this.m=(m==null) ? 1 : m;
  this.evaluate=function(u,v){
   u=1-u
-  u*=Math.PI*2;
+  u*=GLMath.PiTimes2;
   u-=Math.PI;
-  v*=Math.PI*2;
+  v*=GLMath.PiTimes2;
   v-=Math.PI;
   var cosu=Superellipsoid.cospow(u,this.n);
   return [
@@ -63,7 +63,7 @@ var Superellipsoid=function(xRadius, yRadius, zRadius, n, m){
   u=1-u
   u*=Math.PI;
   u-=Math.PI/2;
-  v*=Math.PI*2;
+  v*=GLMath.PiTimes2;
   v-=Math.PI;
   var cosu=Superellipsoid.cospow(u,this.n);
   return [
@@ -88,7 +88,7 @@ var RevolutionSurface=function(func,minval,maxval){
  this.maxval=maxval
  this.evaluate=function(u,v){
   v=1-v;
-  v*=Math.PI*2;
+  v*=GLMath.PiTimes2;
   u=minval+(maxval-minval)*u;
   var r=this.func(u);
   return [u,r*Math.cos(v),r*Math.sin(v)];
@@ -97,8 +97,8 @@ var RevolutionSurface=function(func,minval,maxval){
 
 var KleinBottle=function(){
  this.evaluate=function(u,v){
-  u*=Math.PI*2;
-  v*=Math.PI*2;
+  u*=GLMath.PiTimes2;
+  v*=GLMath.PiTimes2;
   var x, y, z;
   var sinu=Math.sin(u);
   var sinv=Math.sin(v);
@@ -122,7 +122,7 @@ var MoebiusStrip=function(maj, a, b){
  this.b=b==null ? 0.5 : b
  this.evaluate=function(u,v){
   u*=Math.PI;
-  v*=Math.PI*2;
+  v*=GLMath.PiTimes2;
   u=-u
   var x, y, z;
   var sinu=Math.sin(u);

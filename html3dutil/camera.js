@@ -23,7 +23,6 @@ function Camera(scene, fov, nearZ, farZ){
  this.angleX=0;
  this.angleY=0;
  this.trackballMode=true;
- this.oldpos=[null,null];
  this.fov=fov;
  this.near=nearZ;
  this.far=farZ;
@@ -33,6 +32,7 @@ function Camera(scene, fov, nearZ, farZ){
  this.currentAspect=this.scene.getAspect();
  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
  this._updateView();
+ this.input.mousewheel(this.mousewheel.bind(this));
 }
 /** @private */
 Camera.prototype._updateView=function(){
@@ -77,7 +77,12 @@ Camera.prototype._trackball=function(deltaMouseX,deltaMouseY,angleMultiplier){
    GLMath.quatNormInPlace(this.inverseQuat);
   }
 }
-
+Camera.prototype.mousewheel=function(e){
+ var ticks=e.delta/120.0;
+ // mousewheel up (negative) means move forward,
+ // mousewheel down (positive) means move back
+ this.setDistance(this.distance-0.6*ticks)
+}
 Camera.prototype.update=function(){
  var delta=this.input.deltaXY();
  if(this.input.leftButton){
@@ -86,13 +91,13 @@ Camera.prototype.update=function(){
   } else {
    this._orbit(delta.x,delta.y,0.3);
   }
- } else {
-  this.oldpos=[delta.cx,delta.cy]
+ } else if(this.input.middleButton){
+  this.setDistance(this.distance+0.2*delta.y)
  }
- if(this.input.keys[InputTracker.DOWN]){
+ if(this.input.keys[InputTracker.W]){
   this.setDistance(this.distance+0.2)
  }
- if(this.input.keys[InputTracker.UP]){
+ if(this.input.keys[InputTracker.S]){
   this.setDistance(this.distance-0.2)
  }
  var aspect=this.scene.getAspect();
@@ -107,10 +112,12 @@ Camera.prototype.update=function(){
 function InputTracker(element){
  this.leftButton=false;
  this.rightButton=false;
+ this.middleButton=false;
  this.keys={};
  this.lastClient=[];
  this.clientX=null;
  this.clientY=null;
+ this.element=element;
  var thisObj=this;
  window.addEventListener("blur",function(e){
   thisObj.leftButton=false;
@@ -123,31 +130,68 @@ function InputTracker(element){
  document.addEventListener("keyup",function(e){
   delete thisObj.keys[e.keyCode];
  })
- element.addEventListener("mousedown",function(e){
+ var mouseEvent=function(thisObj,e){
   if(e.button==0){
-   thisObj.leftButton=true;
+   thisObj.leftButton=e.isDown;
+  }
+  if(e.button==1){
+   thisObj.middleButton=e.isDown;
   }
   if(e.button==2){
-   thisObj.rightButton=true;
+   thisObj.rightButton=e.isDown;
   }
   thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
   thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
+ }
+ element.addEventListener("mousedown",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":e.button,
+    "clientX":e.clientX,"clientY":e.clientY});
+ })
+ element.addEventListener("touchstart",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":0});
  })
  element.addEventListener("mouseup",function(e){
-  if(e.button==0){
-   thisObj.leftButton=false;
-  }
-  if(e.button==2){
-   thisObj.rightButton=false;
-  }
-  thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
-  thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":e.button,
+    "clientX":e.clientX,"clientY":e.clientY});
+ })
+ element.addEventListener("touchend",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":0});
  })
  element.addEventListener("mousemove",function(e){
-  thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
-  thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
+    "clientX":e.clientX,"clientY":e.clientY});
+ })
+ element.addEventListener("touchmove",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1});
  })
 };
+InputTracker.prototype.mousewheel=function(func){
+ var cb=function(e, click){
+  var clientX=e.clientX-InputTracker._getPageX(e.target);
+  var clientY=e.clientY-InputTracker._getPageY(e.target);
+  var delta=0;
+  if (e.wheelDelta){
+		delta=e.wheelDelta;
+  } else if (e.detail){
+		delta=e.detail * -40;
+	} else if (e.originalEvent && e.originalEvent.wheelDelta){
+		delta=e.originalEvent.wheelDelta;
+  }
+  // delta of 120 represents 1 tick of the mouse wheel;
+  // positive values mean moving the mouse wheel up,
+  // negative values mean down
+  func({"target":e.target,
+     "delta":delta,
+     "click":click,
+     "x":clientX,
+     "y":clientY});
+ }
+ if("onmousewheel" in this.element){
+  this.element.addEventListener("mousewheel",cb);
+ } else {
+  this.element.addEventListener("DOMMouseScroll",cb);
+ }
+}
 
 /** @private */
 InputTracker._getPageX=function(o) {

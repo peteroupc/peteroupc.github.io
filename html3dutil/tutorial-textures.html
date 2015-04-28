@@ -1,208 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: FrameBuffer</title>
+<head><meta charset="utf-8"><title>JSDoc: Tutorial: textures</title>
 <script src="mathml.js"></script>
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Class: FrameBuffer</h1>
-
-<section>
+    <h1>Tutorial: textures</h1>
+    <section>
 
 <header>
 
-        <h2>
-        FrameBuffer
-        </h2>
-
+    <h2>textures</h2>
 </header>
 
 <article>
-    <div class="container-overview">
-
-    <h4 style="border-bottom: 1px solid;" id="FrameBuffer"><span style="font-weight:lighter"></span>new FrameBuffer<span class="signature">(context, width, height)</span><span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    Represents an off-screen frame buffer.<p>
-When FrameBuffer's
-constructor is called, it will create a texture buffer with the given
-width and height and a depth buffer with the same dimensions,
-and will bind both to the frame buffer.  The frame buffer currently
-bound to the WebGL context will remain unchanged.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>context</code></td>
-
-            <td class="type">
-
-<span class="param-type">WebGLRenderingContext</span>
-|
-
-<span class="param-type">object</span>
-
-            </td>
-
-            <td class="description last">WebGL context to associate with this buffer, or an object, such as Scene3D, that
-implements a no-argument <code>getContext</code> method
-that returns a WebGL context.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>width</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Width, in pixels, of the frame buffer.
-Fractional values are rounded up.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>height</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Height, in pixels, of the frame buffer.
-Fractional values are rounded up.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1198">line 1198</a>
-    </li></ul></dd>
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="border-bottom: 1px solid;" id="bind"><span style="font-weight:lighter"></span>bind<span class="signature">(program)</span><span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    Not documented yet.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>program</code></td>
-
-            <td class="type">
-
-<span class="param-type"><a href="glutil.ShaderProgram.html">glutil.ShaderProgram</a></span>
-
-            </td>
-
-            <td class="description last"></td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1254">line 1254</a>
-    </li></ul></dd>
-
-</dl>
-
-    <h4 style="border-bottom: 1px solid;" id="dispose"><span style="font-weight:lighter"></span>dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    Disposes all resources from this frame buffer object.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1284">line 1284</a>
-    </li></ul></dd>
-
-</dl>
-
-    <h4 style="border-bottom: 1px solid;" id="getContext"><span style="font-weight:lighter"></span>getContext<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
-
-<div class="description">
-    Gets the WebGL context associated with this frame buffer.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1247">line 1247</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-    <h4 style="border-bottom: 1px solid;" id="unbind"><span style="font-weight:lighter"></span>unbind<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    Unbinds this frame buffer from its associated WebGL this.context.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1271">line 1271</a>
-    </li></ul></dd>
-
-</dl>
-
+    <h2>Sample Code for Loading Textures</h2><h3>Loading a single texture</h3><p>The variable <code>textureURL</code> is the URL of the texture to load.</p>
+<pre class="prettyprint source"><code>  scene.loadAndMapTexture(textureURL).then(function(tex){
+    // texture is loaded, the Texture object is in the &quot;tex&quot; paramete
+  }, function(error){
+    // an error occurred
+  });</code></pre><h3>Loading multiple textures</h3><p>The variables <code>textureURL1</code> and <code>textureURL2</code> are URL textures.</p>
+<pre class="prettyprint source"><code>  scene.loadAndMapTextures([
+   textureURL1,
+   textureURL2
+  ]).then(function(res){
+    if(res.failures.length>0){
+      // Some of the textures failed to load
+    } else {
+      for(var i=0;i&lt;res.successes.length;i++){
+        var texture=res.successes[i];
+        // deal with the texture (a Texture object)
+      }
+    }
+  });</code></pre>
 </article>
 
 </section>

@@ -740,26 +740,33 @@ function SubMesh(vertices,faces,format){
    var v3=i3*stride;
    var triCount=0;
    var tribits=0;
+   var v=this.vertices;
    for(var i=vertexStartIndex-stride;
      i>=0 &amp;&amp; triCount&lt;16 &amp;&amp; tribits!=7;
      i-=stride,triCount++){
      var found=7;
      for(var j=0;j&lt;stride &amp;&amp; found!=0;j++){
-        if((found&amp;1)!=0 &amp;&amp; this.vertices[v1+j]!=this.vertices[i+j]){
+        if((found&amp;1)!=0 &amp;&amp; v[v1+j]!=v[i+j]){
          found&amp;=~1;
         }
-        if((found&amp;2)!=0 &amp;&amp; this.vertices[v2+j]!=this.vertices[i+j]){
+        if((found&amp;2)!=0 &amp;&amp; v[v2+j]!=v[i+j]){
          found&amp;=~2;
         }
-        if((found&amp;4)!=0 &amp;&amp; this.vertices[v3+j]!=this.vertices[i+j]){
+        if((found&amp;4)!=0 &amp;&amp; v[v3+j]!=v[i+j]){
          found&amp;=~4;
         }
      }
-     if((found&amp;1)!=0){ i1=i/stride; tribits|=1; break; }
-     if((found&amp;2)!=0){ i2=i/stride; tribits|=2; break; }
-     if((found&amp;4)!=0){ i3=i/stride; tribits|=4; break; }
+     if((found&amp;1)!=0){ i1=i/stride; v1=i1*stride; tribits|=1; break; }
+     if((found&amp;2)!=0){ i2=i/stride; v2=i2*stride; tribits|=2; break; }
+     if((found&amp;4)!=0){ i3=i/stride; v3=i3*stride; tribits|=4; break; }
    }
-   this.indices.push(i1,i2,i3);
+   if(
+    !(v[v1]==v[v2] &amp;&amp; v[v1+1]==v[v2+1] &amp;&amp; v[v1+2]==v[v2+2]) &amp;&amp;
+    !(v[v1]==v[v3] &amp;&amp; v[v1+1]==v[v3+1] &amp;&amp; v[v1+2]==v[v3+2]) &amp;&amp;
+    !(v[v2]==v[v3] &amp;&amp; v[v2+1]==v[v3+1] &amp;&amp; v[v2+2]==v[v3+2])){
+    // avoid identical vertex positions
+    this.indices.push(i1,i2,i3);
+   }
  }
  this.vertex3=function(x,y,z,state){
   var currentMode=state.currentMode;
@@ -781,11 +788,13 @@ function SubMesh(vertices,faces,format){
      (this.vertices.length-this.startIndex)>=stride*4 &amp;&amp;
      (this.vertices.length-this.startIndex)%(stride*2)==0){
    var index=(this.vertices.length/stride)-4;
-   this.indices.push(index,index+1,index+2,index+2,index+1,index+3);
+   this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
+   this._setTriangle(vertexStartIndex,stride,index+2,index+1,index+3);
   } else if(currentMode==Mesh.QUADS &amp;&amp;
      (this.vertices.length-this.startIndex)%(stride*4)==0){
    var index=(this.vertices.length/stride)-4;
-   this.indices.push(index,index+1,index+2,index,index+2,index+3);
+   this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
+   this._setTriangle(vertexStartIndex,stride,index,index+2,index+3);
   } else if(currentMode==Mesh.TRIANGLES &amp;&amp;
      (this.vertices.length-this.startIndex)%(stride*3)==0){
    var index=(this.vertices.length/stride)-3;
@@ -798,11 +807,7 @@ function SubMesh(vertices,faces,format){
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-2;
    var firstIndex=(this.startIndex/stride);
-   if(firstIndex==index-1){
-     this._setTriangle(vertexStartIndex,stride,firstIndex,index,index+1);
-   } else {
-     this.indices.push(firstIndex,index,index+1);
-   }
+   this._setTriangle(vertexStartIndex,stride,firstIndex,index,index+1);
   } else if(currentMode==Mesh.LINE_STRIP &amp;&amp;
      (this.vertices.length-this.startIndex)>=(stride*2)){
    var index=(this.vertices.length/stride)-2;
@@ -814,12 +819,10 @@ function SubMesh(vertices,faces,format){
      (this.vertices.length-this.startIndex)>=(stride*3)){
    var index=(this.vertices.length/stride)-3;
    var firstIndex=(this.startIndex/stride);
-   if(index==firstIndex){
+   if(((index-firstIndex)&amp;1)==0){
      this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
-   } else if(((index-firstIndex)&amp;1)==0){
-     this.indices.push(index,index+1,index+2);
    } else {
-     this.indices.push(index+1,index,index+2);
+     this._setTriangle(vertexStartIndex,stride,index+1,index,index+2);
    }
   }
   return this;
@@ -1131,7 +1134,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceEval.html">SurfaceEval</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceEval.html">SurfaceEval</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){
