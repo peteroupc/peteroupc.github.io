@@ -992,7 +992,9 @@ plane.  A positive value means the plane is in front of the viewer.</td>
             </td>
 
             <td class="description last">Distance from the camera to the far clipping
-plane.  A positive value means the plane is in front of the viewer.(Note that n can be greater than f or vice versa.)  The absolute differencebetween n and f should be as small as the application can accept.</td>
+plane.  A positive value means the plane is in front of the viewer.
+(Note that n can be greater than f or vice versa.)  The absolute difference
+between n and f should be as small as the application can accept.</td>
         </tr>
 
     </tbody>
@@ -1125,7 +1127,15 @@ set to -1 and the far clipping plane set to 1.
     <h4 style="border-bottom: 1px solid;" id=".mat4ortho2dAspect"><span style="font-weight:lighter">(static) </span>mat4ortho2dAspect<span class="signature">(l, r, b, t, aspect)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
-    Returns a 4x4 matrix representing a 2D orthographic projection,retaining the view rectangle's aspect ratio.<p>If the view rectangle's aspect ratio doesn't match the desired aspectratio, the view rectangle will be centered on the viewportor otherwise moved and scaled so as to keep the entire view rectangle visible without stretchingor squishing it.<p>This is the same as mat4orthoAspect() with the near clipping planeset to -1 and the far clipping plane set to 1.<p>This method assumes a right-handed coordinate system; see mat4ortho().<p>
+    Returns a 4x4 matrix representing a 2D orthographic projection,
+retaining the view rectangle's aspect ratio.<p>
+If the view rectangle's aspect ratio doesn't match the desired aspect
+ratio, the view rectangle will be centered on the viewport
+or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+or squishing it.<p>
+This is the same as mat4orthoAspect() with the near clipping plane
+set to -1 and the far clipping plane set to 1.<p>
+This method assumes a right-handed coordinate system; see mat4ortho().<p>
 </div>
 
     <h5>Parameters:</h5>
@@ -1167,7 +1177,8 @@ set to -1 and the far clipping plane set to 1.
 
             </td>
 
-            <td class="description last">Rightmost coordinate of the view rectangle.(Note that r can be greater than l or vice versa.)</td>
+            <td class="description last">Rightmost coordinate of the view rectangle.
+(Note that r can be greater than l or vice versa.)</td>
         </tr>
 
         <tr>
@@ -1193,7 +1204,8 @@ set to -1 and the far clipping plane set to 1.
 
             </td>
 
-            <td class="description last">Topmost coordinate of the view rectangle.(Note that t can be greater than b or vice versa.)</td>
+            <td class="description last">Topmost coordinate of the view rectangle.
+(Note that t can be greater than b or vice versa.)</td>
         </tr>
 
         <tr>
@@ -1206,7 +1218,8 @@ set to -1 and the far clipping plane set to 1.
 
             </td>
 
-            <td class="description last">The ratio of width to height of the viewport, usually the scene's aspect ratio.</td>
+            <td class="description last">The ratio of width to height of the viewport, usually
+ the scene's aspect ratio.</td>
         </tr>
 
     </tbody>
@@ -1236,7 +1249,15 @@ set to -1 and the far clipping plane set to 1.
     <h4 style="border-bottom: 1px solid;" id=".mat4orthoAspect"><span style="font-weight:lighter">(static) </span>mat4orthoAspect<span class="signature">(l, r, b, t, n, f, aspect)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
-    Returns a 4x4 matrix representing an orthographic projection,retaining the view rectangle's aspect ratio.<p>If the view rectangle's aspect ratio doesn't match the desired aspectratio, the view rectangle will be centered on the viewportor otherwise moved and scaled so as to keep the entire view rectangle visible without stretchingor squishing it.<p>This is the same as mat4ortho() with the near clipping planeset to -1 and the far clipping plane set to 1.<p>This method assumes a right-handed coordinate system; see mat4ortho().
+    Returns a 4x4 matrix representing an orthographic projection,
+retaining the view rectangle's aspect ratio.<p>
+If the view rectangle's aspect ratio doesn't match the desired aspect
+ratio, the view rectangle will be centered on the viewport
+or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+or squishing it.<p>
+This is the same as mat4ortho() with the near clipping plane
+set to -1 and the far clipping plane set to 1.<p>
+This method assumes a right-handed coordinate system; see mat4ortho().
 </div>
 
     <h5>Parameters:</h5>
@@ -1278,7 +1299,8 @@ set to -1 and the far clipping plane set to 1.
 
             </td>
 
-            <td class="description last">Rightmost coordinate of the view rectangle.(Note that r can be greater than l or vice versa.)</td>
+            <td class="description last">Rightmost coordinate of the view rectangle.
+(Note that r can be greater than l or vice versa.)</td>
         </tr>
 
         <tr>
@@ -1304,7 +1326,8 @@ set to -1 and the far clipping plane set to 1.
 
             </td>
 
-            <td class="description last">Topmost coordinate of the view rectangle.(Note that t can be greater than b or vice versa.)</td>
+            <td class="description last">Topmost coordinate of the view rectangle.
+(Note that t can be greater than b or vice versa.)</td>
         </tr>
 
         <tr>
@@ -1317,7 +1340,8 @@ set to -1 and the far clipping plane set to 1.
 
             </td>
 
-            <td class="description last">Distance from the camera to the near clippingplane.  A positive value means the plane is in front of the viewer.</td>
+            <td class="description last">Distance from the camera to the near clipping
+plane.  A positive value means the plane is in front of the viewer.</td>
         </tr>
 
         <tr>
@@ -1330,7 +1354,10 @@ set to -1 and the far clipping plane set to 1.
 
             </td>
 
-            <td class="description last">Distance from the camera to the far clippingplane.  A positive value means the plane is in front of the viewer.(Note that n can be greater than f or vice versa.)  The absolute differencebetween n and f should be as small as the application can accept.</td>
+            <td class="description last">Distance from the camera to the far clipping
+plane.  A positive value means the plane is in front of the viewer.
+(Note that n can be greater than f or vice versa.)  The absolute difference
+between n and f should be as small as the application can accept.</td>
         </tr>
 
         <tr>
@@ -1343,7 +1370,8 @@ set to -1 and the far clipping plane set to 1.
 
             </td>
 
-            <td class="description last">The ratio of width to height of the viewport, usually the scene's aspect ratio.</td>
+            <td class="description last">The ratio of width to height of the viewport, usually
+ the scene's aspect ratio.</td>
         </tr>
 
     </tbody>
@@ -1437,7 +1465,9 @@ this number, the bigger close objects appear to be.)</td>
 
             <td class="description last">The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
-seen.<p>This value should not be 0 or less, and should be set to the highest distancefrom the camera that the application can afford to clip out for being tooclose, for example, 0.5, 1, or higher.</td>
+seen.<p>This value should not be 0 or less, and should be set to the highest distance
+from the camera that the application can afford to clip out for being too
+close, for example, 0.5, 1, or higher.</td>
         </tr>
 
         <tr>
@@ -1452,7 +1482,13 @@ seen.<p>This value should not be 0 or less, and should be set to the highest dis
 
             <td class="description last">The distance from the camera to
 the far clipping plane. Objects beyond this distance will be too far
-to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"is as small as the application can accept.<p>(Depth buffers often allow only 65536 possible values per pixel,which are more spread out toward the far clipping plane than toward thenear plane due to the perspective projection.  The greater the ratio of "far" to"near", the more the values spread out, and the more likely two objects closeto the far plane will have identical depth values.)</td>
+to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
+is as small as the application can accept.<p>
+(Depth buffers often allow only 65536 possible values per pixel,
+which are more spread out toward the far clipping plane than toward the
+near plane due to the perspective projection.  The greater the ratio of "far" to
+"near", the more the values spread out, and the more likely two objects close
+to the far plane will have identical depth values.)</td>
         </tr>
 
     </tbody>
@@ -1482,7 +1518,12 @@ to be seen.  This value should be greater than "near" and be set so that the rat
     <h4 style="border-bottom: 1px solid;" id=".mat4perspectiveHorizontal"><span style="font-weight:lighter">(static) </span>mat4perspectiveHorizontal<span class="signature">(fovX, aspectRatio, near, far)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
-    Returns a 4x4 matrix representing a perspective projectiongiven an X-axis field of view.<p>This method assumes a right-hand coordinate system;see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.  For considerationswhen choosing the "n" and "f" parameters,see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.
+    Returns a 4x4 matrix representing a perspective projection
+given an X-axis field of view.<p>
+This method assumes a right-hand coordinate system;
+see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.  For considerations
+when choosing the "n" and "f" parameters,
+see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective</a>.
 </div>
 
     <h5>Parameters:</h5>
@@ -1511,7 +1552,9 @@ to be seen.  This value should be greater than "near" and be set so that the rat
 
             </td>
 
-            <td class="description last">X-axis field of view, in degrees. Should be lessthan 180 degrees.  (The smallerthis number, the bigger close objects appear to be.)</td>
+            <td class="description last">X-axis field of view, in degrees. Should be less
+than 180 degrees.  (The smaller
+this number, the bigger close objects appear to be.)</td>
         </tr>
 
         <tr>
@@ -1524,7 +1567,8 @@ to be seen.  This value should be greater than "near" and be set so that the rat
 
             </td>
 
-            <td class="description last">The ratio of width to height of the viewport, usually the scene's aspect ratio.</td>
+            <td class="description last">The ratio of width to height of the viewport, usually
+ the scene's aspect ratio.</td>
         </tr>
 
         <tr>
@@ -1537,7 +1581,9 @@ to be seen.  This value should be greater than "near" and be set so that the rat
 
             </td>
 
-            <td class="description last">The distance from the camera tothe near clipping plane. Objects closer than this distance won't beseen.</td>
+            <td class="description last">The distance from the camera to
+the near clipping plane. Objects closer than this distance won't be
+seen.</td>
         </tr>
 
         <tr>
@@ -1550,7 +1596,9 @@ to be seen.  This value should be greater than "near" and be set so that the rat
 
             </td>
 
-            <td class="description last">The distance from the camera tothe far clipping plane. Objects beyond this distance will be too farto be seen.</td>
+            <td class="description last">The distance from the camera to
+the far clipping plane. Objects beyond this distance will be too far
+to be seen.</td>
         </tr>
 
     </tbody>
@@ -4600,7 +4648,8 @@ by its <a href="glmath.GLMath.html#.vec3length">length</a>.
     <h4 style="border-bottom: 1px solid;" id=".vec3scale"><span style="font-weight:lighter">(static) </span>vec3scale<span class="signature">(a, scalar)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
 <div class="description">
-    Multiplies a 3-element vector by a factorand returns a new vector with the result.
+    Multiplies a 3-element vector by a factor
+and returns a new vector with the result.
 </div>
 
     <h5>Parameters:</h5>

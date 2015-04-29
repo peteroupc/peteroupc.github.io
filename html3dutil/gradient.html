@@ -4,6 +4,10 @@
 <script type="text/javascript" src="frame.js"></script>
 </head>
 <body>
+<a href="javascript:link1()">Red/blue linear</a>,
+<a href="javascript:link2()">Green/yellow linear</a>,
+<a href="javascript:link3()">Red/blue radial</a>,
+<a href="javascript:link4()">Green/yellow radial</a>
 <canvas width="600" height="450" id=canvas></canvas>
 <script id="demo">
 //<!--
@@ -32,14 +36,57 @@ function horizontalGradient(color1,color2){
  var i=0;
  for(var y=0;y<size;y++){
   for(var x=0;x<size;x++,i+=4){
-   gradient[i]=Math.floor(arr[x][0])
-   gradient[i+1]=Math.floor(arr[x][1])
-   gradient[i+2]=Math.floor(arr[x][2])
-   gradient[i+3]=Math.floor(arr[x][3])
+   gradient[i]=Math.round(arr[x][0])
+   gradient[i+1]=Math.round(arr[x][1])
+   gradient[i+2]=Math.round(arr[x][2])
+   gradient[i+3]=Math.round(arr[x][3])
   }
  }
  return Texture.fromUint8Array(
   new Uint8Array(gradient),size,size).setClamp(true);
+}
+
+// Generates a radial gradient
+function radialGradient(colorCenter,colorEdges){
+ colorCenter=GLUtil.toGLColor(colorCenter);
+ colorEdges=GLUtil.toGLColor(colorEdges);
+ var gradient=[]
+ var arr=[];
+ var size=32;
+ for(var i=0;i<32;i++){
+  arr.push(
+    GLMath.vec4scaleInPlace(GLMath.vec4lerp(colorCenter,colorEdges,i/31),255)
+  )
+ }
+ var i=0
+ var radius=(size-1)*0.5;
+ var recipradius=1.0/radius;
+ for (var y=0;y<size;y++){
+  for (var x=0;x<size;x++,i+=4){
+   var yy=(y-radius)*recipradius;
+   var xx=(x-radius)*recipradius;
+   var a=arr[Math.min(31,Math.floor(31 * Math.sqrt(xx * xx + yy * yy)))];
+   gradient[i]=Math.round(a[0])
+   gradient[i+1]=Math.round(a[1])
+   gradient[i+2]=Math.round(a[2])
+   gradient[i+3]=Math.round(a[3])
+  }
+ }
+ return Texture.fromUint8Array(
+  new Uint8Array(gradient),size,size).setClamp(true);
+}
+
+function link1(){
+ shape.setTexture(horizontalGradient("red","blue"))
+}
+function link2(){
+ shape.setTexture(horizontalGradient("green","yellow"))
+}
+function link3(){
+ shape.setTexture(radialGradient("red","blue"))
+}
+function link4(){
+ shape.setTexture(radialGradient("green","yellow"))
 }
 
   // Create the 3D scene; find the HTML canvas and pass it

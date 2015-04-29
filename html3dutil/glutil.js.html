@@ -892,6 +892,16 @@ Texture.loadTexture=function(name, textureCache){
   });
 }
 
+/**
+*  Creates a texture from a byte array specifying the texture data.
+* @param {Uint8Array} array A byte array containing the texture data,
+* with the pixels arranged in left-to-right rows from top to bottom.
+* Each pixel takes 4 bytes, where the bytes are the red, green, blue,
+* and alpha components, in that order.
+* @param {Uint8Array} width Width, in pixels, of the texture.
+* @param {Uint8Array} height Height, in pixels, of the texture.
+* @return {glutil.Texture} The new Texture object.
+*/
 Texture.fromUint8Array=function(array, width, height){
  if(width&lt;0)throw new Error("width less than 0")
  if(height&lt;0)throw new Error("height less than 0")

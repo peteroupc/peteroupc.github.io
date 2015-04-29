@@ -44,12 +44,16 @@ Camera.prototype._updateView=function(){
  this.scene.setViewMatrix(GLMath.mat4invert(look));
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.setDistance=function(dist){
  this.distance=Math.max(this.near,dist);
  this.position=[0,0,this.distance]
  return this._updateView();
 }
-
+/** @private */
 Camera.prototype._orbit=function(deltaMouseX,deltaMouseY,angleMultiplier){
   var x=deltaMouseX
   var y=deltaMouseY
@@ -63,7 +67,7 @@ Camera.prototype._orbit=function(deltaMouseX,deltaMouseY,angleMultiplier){
    this.angleY,this.angleX,0,GLMath.RollYawPitch);
   this.inverseQuat=GLMath.quatInverse(this.inverseQuat);
 }
-
+/** @private */
 Camera.prototype._trackball=function(deltaMouseX,deltaMouseY,angleMultiplier){
   var x=deltaMouseX
   var y=deltaMouseY
@@ -77,12 +81,19 @@ Camera.prototype._trackball=function(deltaMouseX,deltaMouseY,angleMultiplier){
    GLMath.quatNormInPlace(this.inverseQuat);
   }
 }
+/**
+ * Not documented yet.
+ * @param {*} e
+ */
 Camera.prototype.mousewheel=function(e){
  var ticks=e.delta/120.0;
  // mousewheel up (negative) means move forward,
  // mousewheel down (positive) means move back
  this.setDistance(this.distance-0.6*ticks)
 }
+/**
+ * Not documented yet.
+ */
 Camera.prototype.update=function(){
  var delta=this.input.deltaXY();
  if(this.input.leftButton){
@@ -165,6 +176,10 @@ function InputTracker(element){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1});
  })
 };
+/**
+ * Not documented yet.
+ * @param {*} func
+ */
 InputTracker.prototype.mousewheel=function(func){
  var cb=function(e, click){
   var clientX=e.clientX-InputTracker._getPageX(e.target);

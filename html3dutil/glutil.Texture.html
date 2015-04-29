@@ -76,6 +76,91 @@
 
         <h3 class="subsection-title">Methods</h3>
 
+    <h4 style="border-bottom: 1px solid;" id=".fromUint8Array"><span style="font-weight:lighter">(static) </span>fromUint8Array<span class="signature">(array, width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Texture.html">glutil.Texture</a>}</span></h4>
+
+<div class="description">
+    Creates a texture from a byte array specifying the texture data.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>array</code></td>
+
+            <td class="type">
+
+<span class="param-type">Uint8Array</span>
+
+            </td>
+
+            <td class="description last">A byte array containing the texture data,with the pixels arranged in left-to-right rows from top to bottom.Each pixel takes 4 bytes, where the bytes are the red, green, blue,and alpha components, in that order.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>width</code></td>
+
+            <td class="type">
+
+<span class="param-type">Uint8Array</span>
+
+            </td>
+
+            <td class="description last">Width, in pixels, of the texture.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>height</code></td>
+
+            <td class="type">
+
+<span class="param-type">Uint8Array</span>
+
+            </td>
+
+            <td class="description last">Height, in pixels, of the texture.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line895">line 895</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The new Texture object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Texture.html">glutil.Texture</a></span>
+
+)
+
+</div>
+
     <h4 style="border-bottom: 1px solid;" id=".loadTexture"><span style="font-weight:lighter">(static) </span>loadTexture<span class="signature">(name, textureCache<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
 <div class="description">
@@ -114,7 +199,9 @@
 
                 </td>
 
-            <td class="description last">URL of the texture data.  Images with a TGAextension that use the RGBA or grayscale format are supported.Images supported by the browser will be loaded via
+            <td class="description last">URL of the texture data.  Images with a TGA
+extension that use the RGBA or grayscale format are supported.
+Images supported by the browser will be loaded via
 the JavaScript DOM's Image class.</td>
         </tr>
 
@@ -175,7 +262,7 @@ is fully loaded.  If it resolves, the result will be a Texture object.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line991">line 991</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1002">line 1002</a>
     </li></ul></dd>
 
 </dl>
@@ -183,7 +270,12 @@ is fully loaded.  If it resolves, the result will be a Texture object.
     <h4 style="border-bottom: 1px solid;" id="setClamp"><span style="font-weight:lighter"></span>setClamp<span class="signature">(clamp)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Texture.html">glutil.Texture</a>}</span></h4>
 
 <div class="description">
-    Sets the wrapping behavior of texture coordinates thatfall out of range when using this texture.  This settingwill only have an effect on textures whose width and heightare both powers of two.  For other textures, this settingis ignored and out-of-range texture coordinates arealways clamped.
+    Sets the wrapping behavior of texture coordinates that
+fall out of range when using this texture.  This setting
+will only have an effect on textures whose width and height
+are both powers of two.  For other textures, this setting
+is ignored and out-of-range texture coordinates are
+always clamped.
 </div>
 
     <h5>Parameters:</h5>
@@ -212,7 +304,11 @@ is fully loaded.  If it resolves, the result will be a Texture object.
 
             </td>
 
-            <td class="description last">If true, the image's texturecoordinates will be clamped to the range [0, 1].  If false,the image's texture coordinates' fractional parts willbe used as the coordinates (causing wraparound).The default is false.</td>
+            <td class="description last">If true, the image's texture
+coordinates will be clamped to the range [0, 1].  If false,
+the image's texture coordinates' fractional parts will
+be used as the coordinates (causing wraparound).
+The default is false.</td>
         </tr>
 
     </tbody>
