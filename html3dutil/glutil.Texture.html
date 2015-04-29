@@ -147,7 +147,7 @@ and may be omitted.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line845">line 845</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line865">line 865</a>
     </li></ul></dd>
 
 </dl>
@@ -175,10 +175,69 @@ is fully loaded.  If it resolves, the result will be a Texture object.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line959">line 959</a>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line991">line 991</a>
     </li></ul></dd>
 
 </dl>
+
+    <h4 style="border-bottom: 1px solid;" id="setClamp"><span style="font-weight:lighter"></span>setClamp<span class="signature">(clamp)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Texture.html">glutil.Texture</a>}</span></h4>
+
+<div class="description">
+    Sets the wrapping behavior of texture coordinates thatfall out of range when using this texture.  This settingwill only have an effect on textures whose width and heightare both powers of two.  For other textures, this settingis ignored and out-of-range texture coordinates arealways clamped.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>clamp</code></td>
+
+            <td class="type">
+
+<span class="param-type">boolean</span>
+
+            </td>
+
+            <td class="description last">If true, the image's texturecoordinates will be clamped to the range [0, 1].  If false,the image's texture coordinates' fractional parts willbe used as the coordinates (causing wraparound).The default is false.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul><li>
+        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line847">line 847</a>
+    </li></ul></dd>
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Texture.html">glutil.Texture</a></span>
+
+)
+
+</div>
 
 </article>
 

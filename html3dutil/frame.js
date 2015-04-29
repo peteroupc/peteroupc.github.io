@@ -33,17 +33,22 @@ FrameCounter.prototype.update=function(){
 FrameCounter.prototype.getFPS=function(){
  return this.fps;
 }
+
 function FrameCounterDiv(scene){
  var canvas=scene.getContext().canvas
+ this.div=FrameCounterDiv._makeDiv(canvas);
+ this.count=0;
+ this.scene=scene;
+ this.fc=new FrameCounter();
+}
+FrameCounterDiv._makeDiv=function(element){
  var div=document.createElement("div")
  div.style.backgroundColor="white"
  div.style.position="absolute"
- div.style.left=canvas.offsetLeft+"px"
- div.style.top=canvas.offsetTop+"px"
+ div.style.left=element.offsetLeft+"px"
+ div.style.top=element.offsetTop+"px"
  document.body.appendChild(div)
- this.div=div;
- this.count=0;
- this.fc=new FrameCounter();
+ return div
 }
 FrameCounterDiv.prototype.update=function(){
  this.fc.update();
@@ -57,4 +62,16 @@ FrameCounterDiv.prototype.update=function(){
    this.count=0;
   }
  }
+}
+
+function PrimitiveCounter(scene){
+ var canvas=scene.getContext().canvas
+ this.div=FrameCounterDiv._makeDiv(canvas);
+ this.count=0;
+ this.scene=scene;
+}
+PrimitiveCounter.prototype.update=function(){
+ var v=this.scene.vertexCount();
+ var p=this.scene.primitiveCount();
+ this.div.innerHTML=v+" vertices, "+p+" primitives"
 }

@@ -837,7 +837,27 @@ var Texture=function(name){
  this.loadedTexture=null;
  this.name=name;
  this.width=0;
+ this.clamp=false;
  this.height=0;
+}
+
+/**
+* Sets the wrapping behavior of texture coordinates that
+* fall out of range when using this texture.  This setting
+* will only have an effect on textures whose width and height
+* are both powers of two.  For other textures, this setting
+* is ignored and out-of-range texture coordinates are
+* always clamped.
+* @param {boolean} clamp If true, the image's texture
+* coordinates will be clamped to the range [0, 1].  If false,
+* the image's texture coordinates' fractional parts will
+* be used as the coordinates (causing wraparound).
+* The default is false.
+* @return {glutil.Texture} This object.
+*/
+Texture.prototype.setClamp=function(clamp){
+ this.clamp=clamp;
+ return this;
 }
 
 /**
@@ -870,6 +890,18 @@ Texture.loadTexture=function(name, textureCache){
   function(name){
     return Promise.reject(name.name);
   });
+}
+
+Texture.fromUint8Array=function(array, width, height){
+ if(width&lt;0)throw new Error("width less than 0")
+ if(height&lt;0)throw new Error("height less than 0")
+ if(array.length&lt;width*height*4)throw new Error("array too short for texture")
+ var texImage=new Texture("")
+ texImage.image=array;
+ texImage.width=Math.ceil(width);
+ texImage.height=Math.ceil(height);
+ texImage.loadStatus=2;
+ return texImage;
 }
 
 /** @private */
@@ -1521,8 +1553,8 @@ Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * This value should be greater than "near" and be set to the lowest value that
- * the application can accept.
+ * (Note that near can be greater than far or vice versa.)  The absolute difference
+ * between near and far should be as small as the application can accept.
  * @param {number} [aspect] Desired aspect ratio of the viewport (ratio
  * of width to height).  If null or omitted, uses this scene's aspect ratio instead.
  * @return {glutil.Scene3D} This object.
@@ -1594,8 +1626,8 @@ Scene3D.prototype.setFrustum=function(left,right,bottom,top,near,far){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {number} far Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * This value should be greater than "near" and be set to the lowest value that
- * the application can accept.
+ * (Note that near can be greater than far or vice versa.)  The absolute difference
+ * between near and far should be as small as the application can accept.
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.setOrtho=function(left,right,bottom,top,near,far){
@@ -2038,6 +2070,46 @@ ShapeGroup.prototype.getMatrix=function(){
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
+}
+/**
+ * Not documented yet.
+ */
+ShapeGroup.prototype.vertexCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].vertexCount();
+ }
+ return c;
+}
+/**
+ * Not documented yet.
+ */
+ShapeGroup.prototype.primitiveCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].primitiveCount();
+ }
+ return c;
+}
+/**
+ * Not documented yet.
+ */
+Scene3D.prototype.vertexCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].vertexCount();
+ }
+ return c;
+}
+/**
+ * Not documented yet.
+ */
+Scene3D.prototype.primitiveCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].primitiveCount();
+ }
+ return c;
 }
 /**
  * Sets the relative position of the shapes in this group

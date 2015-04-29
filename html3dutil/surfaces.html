@@ -2,6 +2,7 @@
 <meta charset=utf-8>
 <script type="text/javascript" src="glutil_min.js"></script>
 <script type="text/javascript" src="camera.js"></script>
+<script type="text/javascript" src="frame.js"></script>
 </head>
 <body>
 <a href="javascript:link1()">Superellipsoid</a>,
@@ -197,10 +198,12 @@ function link6(){
    "specular":"white",
    "shininess":10
   })
+  var pc=new PrimitiveCounter(scene)
   var shape=null;
   link1();
   scene.addShape(shape.setMaterial(material));
   GLUtil.renderLoop(function(){
+   pc.update();
    camera.update();
    scene.render();
   });

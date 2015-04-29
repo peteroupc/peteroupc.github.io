@@ -25,7 +25,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
   var camera=new Camera(scene,45,1,1000).setDistance(80);
-  var mat=new Material("red","red")
   GLUtil.loadStlFromUrl("holder.stl").then(function(mesh){
     scene.addShape(scene.makeShape(mesh).setColor("red"));
   },function(err){
