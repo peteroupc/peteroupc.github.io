@@ -64,7 +64,18 @@ texture -- a linear gradient from one color to another.</li>
    shape.setQuaternion(GLMath.quatFromTaitBryan(rotation));
    // Render the scene
    scene.render();
-  });</code></pre><h2>History</h2><p>Version 1.1:</p>
+  });</code></pre><h2>History</h2><p>Version 1.2:</p>
+<ul>
+<li>Support TGA textures</li>
+<li>Camera class rewritten and support added for the mouse wheel
+and middle mouse button</li>
+<li>Lines and points supported in OBJ files</li>
+<li>Support loading custom textures from byte arrays</li>
+<li>Add method to create capsule shapes in Meshes class</li>
+<li>Mesh builder (vector3 method) avoids adding degenerate triangles</li>
+<li>Optimizations and bug fixes</li>
+</ul>
+<p>Version 1.1:</p>
 <ul>
 <li>Add frame.js, a frame counter helper used in some of the demos</li>
 <li>Add quatInvert method to the GLMath class</li>
