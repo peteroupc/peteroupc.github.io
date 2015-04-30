@@ -49,6 +49,24 @@ ObjData.prototype.toShape=function(scene){
  return multi;
 }
 /**
+ * Not documented yet.
+ * @param {*} scene
+ * @param {*} resolved
+ * @param {*} rejected
+ */
+ObjData.prototype.loadTextures=function(scene,resolved,rejected){
+ var textures=[];
+ if(this.mtl){
+  for(var i=0;i&lt;this.mtl.list.length;i++){
+    var mtl=this.mtl.list[i].data;
+    if(mtl.texture){
+      textures.push(mtl.texture);
+    }
+  }
+ }
+ return scene.loadAndMapTextures(textures,resolved,rejected);
+}
+/**
  * Creates one or more 3D shapes from the named portion
  * of the data in this OBJ file.
  * @param {Scene3D} scene 3D scene to load the shape with.

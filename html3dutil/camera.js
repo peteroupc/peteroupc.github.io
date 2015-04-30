@@ -49,6 +49,7 @@ Camera.prototype._updateView=function(){
  * @param {*} dist
  */
 Camera.prototype.setDistance=function(dist){
+ // don't move closer than the near plane
  this.distance=Math.max(this.near,dist);
  this.position=[0,0,this.distance]
  return this._updateView();
@@ -200,6 +201,7 @@ InputTracker.prototype.mousewheel=function(func){
      "click":click,
      "x":clientX,
      "y":clientY});
+   e.preventDefault();
  }
  if("onmousewheel" in this.element){
   this.element.addEventListener("mousewheel",cb);

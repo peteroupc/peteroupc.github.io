@@ -354,6 +354,19 @@ vec4copy:function(vec){
  return vec.slice(0,4);
 },
 /**
+ * Returns whether a 4x4 matrix is the identity matrix.
+ * @param {Array&lt;number>} mat A 4x4 matrix.
+ * @return {boolean}
+ */
+mat4isIdentity:function(mat){
+return (
+    mat[0]==1 &amp;&amp; mat[1]==0 &amp;&amp; mat[2]==0 &amp;&amp; mat[3]==0 &amp;&amp;
+    mat[4]==0 &amp;&amp; mat[5]==1 &amp;&amp; mat[6]==0 &amp;&amp; mat[7]==0 &amp;&amp;
+    mat[8]==0 &amp;&amp; mat[9]==0 &amp;&amp; mat[10]==1 &amp;&amp; mat[11]==0 &amp;&amp;
+    mat[12]==0 &amp;&amp; mat[13]==0 &amp;&amp; mat[14]==0 &amp;&amp; mat[15]==1
+ );
+},
+/**
  * Finds the inverse of a 4x4 matrix.
  * @param {Array&lt;number>} m A 4x4 matrix.
  * @return {Array&lt;number>} The resulting 4x4 matrix.
