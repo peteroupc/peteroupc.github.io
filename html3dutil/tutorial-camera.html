@@ -1,172 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: LightSource</title>
+<head><meta charset="utf-8"><title>JSDoc: Tutorial: camera</title>
 <script src="mathml.js"></script>
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Class: LightSource</h1>
-
-<section>
+    <h1>Tutorial: camera</h1>
+    <section>
 
 <header>
 
-        <h2>
-        LightSource
-        </h2>
-
+    <h2>camera</h2>
 </header>
 
 <article>
-    <div class="container-overview">
-
-    <h4 style="border-bottom: 1px solid;" id="LightSource"><span style="font-weight:lighter"></span>new LightSource<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    Specifies parameters for light sources.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line470">line 470</a>
-    </li></ul></dd>
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Members</h3>
-
-<h4 style="border-bottom: 1px solid;" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    A 3-element vector giving the diffuse color of the light, in the red, green,
-and blue components respectively.  Each component ranges from 0 to 1.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line486">line 486</a>
-    </li></ul></dd>
-
-</dl>
-
-<h4 style="border-bottom: 1px solid;" id="position"><span style="font-weight:lighter"></span>position<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    Light position.  An array of four numbers.
-If the fourth element is 0, this is a directional light, shining an infinitely
-long light at the direction given by the first three elements (the X, Y, and Z
-coordinates respectively).  If the fourth element is 1, this is a point
-light located at the position, in world space, given by the first three elements (the X, Y, and Z
-coordinates respectively).
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line480">line 480</a>
-    </li></ul></dd>
-
-</dl>
-
-<h4 style="border-bottom: 1px solid;" id="specular"><span style="font-weight:lighter"></span>specular<span style="font-weight:lighter"></span></h4>
-
-<div class="description">
-    A 3-element vector giving the color of specular highlights caused by
-the light, in the red, green,
-and blue components respectively.  Each component ranges from 0 to 1.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line492">line 492</a>
-    </li></ul></dd>
-
-</dl>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="border-bottom: 1px solid;" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
-
-<div class="description">
-    Sets parameters for this material object.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>params</code></td>
-
-            <td class="type">
-
-<span class="param-type">object</span>
-
-            </td>
-
-            <td class="description last">An object whose keys have
-the possibilities given below, and whose values are those
-allowed for each key.<ul>
-<li><code>position</code> - Light position.  An array of four numbers,
-where the first three numbers are the X, Y, and Z components and the fourth
-number is the W component.<ul>
-<li>If W is 0, then X, Y, and Z specify a 3-element vector giving the direction
-of the light; the light will shine everywhere in the given direction.
-<li>If W is 1, then X, Y, and Z specify the position of the light in world
-space; the light will shine brightest, and in every direction, at the given position.</ul>
-<li><code>ambient</code> - Not used in the default shader program.
-<li><code>diffuse</code> - Diffuse color.
-<li><code>specular</code> - Specular highlight color.
-</ul>
-If a value is null or undefined, it is ignored.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line513">line 513</a>
-    </li></ul></dd>
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>
-
-)
-
-</div>
-
+    <h2>The &quot;Camera&quot; and the Projection and View Transforms</h2><p>The <code>Scene3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and `setLookAt(), which are shown in the example below.</p>
+<p>  // Set the perspective view.  Camera has a 45-degree field of view
+  // and will see objects from 0.1 to 100 units away.
+  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  // Move the camera back 40 units.
+  scene.setLookAt([0,0,40]);
+  // Move the camera back 30 units instead, and turn it so it
+  // points at (0, 2, 0), that is, up 2 units.
+  scene.setLookAt([0,0,30], [0,2,0]);</p>
+<p>In 3D graphics, the two most commonly used projections are the perspective projection and the orthographic projection.  Both are described in detail below.</p>
+<h3>Perspective Projection</h3><p>A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects look bigger than more distant objects with the same size.  The <code>Scene3D</code> class's <code>setPerspective()</code> method defines a perspective projection.</p>
+<h3>Orthographic Projection</h3><p>In an orthographic projection, objects with the same size don't vary in size with their depth.  The <code>Scene3D</code> class's <code>setOrtho()</code> and <code>setOrthoAspect()</code> methods define an orthographic projection.</p>
 </article>
 
 </section>

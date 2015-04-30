@@ -6,8 +6,19 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+
+if(!GLUtil){
+ GLUtil={};
+}
+(function(GLUtil){
+var StlData={};
 /**
-Loads a .STL file asynchronously.
+* Loads a .STL file asynchronously.
+* To use this class, you must include the script "stl.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="stl.js">&lt;/script></pre>
+@alias glutil.GLUtil.loadStlFromUrl
 @param {string} url The URL to load.
 @return {Promise} A promise that:
 - Resolves when:
@@ -15,11 +26,6 @@ The .STL file is loaded successfully.  The result is a Mesh object.
 - Is rejected when:
 An error occurs when loading the .STL file.
 */
-if(!GLUtil){
- GLUtil={};
-}
-(function(GLUtil){
-var StlData={};
 GLUtil.loadStlFromUrl=function(url){
  return GLUtil.loadFileFromUrl(url).then(
    function(e){
