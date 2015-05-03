@@ -124,9 +124,10 @@ Transform.prototype.resetTransform=function(){
  * size. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
  * @param {number|Array&lt;number>} x Scaling factor for this object's width.
- *   If "y" and "z" are null or omitted, this can
- * instead be a 3-element array giving the scaling factors
- * for width, height, and depth, respectively.
+ *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the scaling factors
+ * for width, height, and depth, respectively, or a single number
+ * giving the scaling factor for all three dimensions.
  * @param {number} y Scaling factor for this object's height.
  * @param {number} z Scaling factor for this object's depth.
 * @return {glutil.Transform} This object.
@@ -152,8 +153,10 @@ Transform.prototype.setScale=function(x,y,z){
  * Sets the relative position of an object from its original
  * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array&lt;number>|number} x Either the X-coordinate,
- * or an array of 3 numbers giving the x, y, and z coordinates.
+ * @param {Array&lt;number>|number} x The X-coordinate.
+ *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
  * @param {number} y The Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @param {number} z The Z-coordinate.
@@ -183,7 +186,9 @@ Transform.prototype.setPosition=function(x,y,z){
  * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
  * @param {Array&lt;number>|number} x Number to add to the X-coordinate,
- * or an array of 3 numbers giving the numbers to add to the x, y, and z coordinates.
+ *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number
+ * to add to all three coordinates.
  * @param {number} y Number to add to the Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @param {number} z Number to add to the Z-coordinate.

@@ -1170,7 +1170,7 @@ BufferedSubMesh.prototype.draw=function(program){
     context.FLOAT, stride*4, offset*4);
   } else {
    program.setUniforms({"useColorAttr":0.0});
-   attr=program.get("uv");
+   attr=program.get("colorAttr");
    if(attr!==null)context.disableVertexAttribArray(attr);
   }
   offset=Mesh.texCoordOffset(format);

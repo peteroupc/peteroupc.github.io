@@ -118,7 +118,7 @@ position, and matrix data.
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line355">line 355</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line360">line 360</a>
     </li></ul></dd>
 
 </dl>
@@ -148,7 +148,7 @@ and the transform wasn't reset yet with <a href="glutil.Transform.html#resetTran
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line310">line 310</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line315">line 315</a>
     </li></ul></dd>
 
 </dl>
@@ -193,7 +193,7 @@ and the transform wasn't reset yet with <a href="glutil.Transform.html#resetTran
             </td>
 
             <td class="description last">Number to add to the X-coordinate,
-or an array of 3 numbers giving the numbers to add to the x, y, and z coordinates.</td>
+  If "y" and "z" are null or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single numberto add to all three coordinates.</td>
         </tr>
 
         <tr>
@@ -231,7 +231,7 @@ If "x" is an array, this parameter may be omitted.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line182">line 182</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line187">line 187</a>
     </li></ul></dd>
 
 </dl>
@@ -346,7 +346,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line300">line 300</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line305">line 305</a>
     </li></ul></dd>
 
 </dl>
@@ -412,7 +412,7 @@ or <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBry
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line274">line 274</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line279">line 279</a>
     </li></ul></dd>
 
 </dl>
@@ -655,7 +655,7 @@ of rotation.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line251">line 251</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line256">line 256</a>
     </li></ul></dd>
 
 </dl>
@@ -709,8 +709,7 @@ and the transform wasn't reset yet with <a href="glutil.Transform.html#resetTran
 
             </td>
 
-            <td class="description last">Either the X-coordinate,
-or an array of 3 numbers giving the x, y, and z coordinates.</td>
+            <td class="description last">The X-coordinate.  If "y" and "z" are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single numbergiving the coordinate for all three dimensions.</td>
         </tr>
 
         <tr>
@@ -748,7 +747,7 @@ If "x" is an array, this parameter may be omitted.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line152">line 152</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line155">line 155</a>
     </li></ul></dd>
 
 </dl>
@@ -811,7 +810,7 @@ and <a href="glmath.GLMath.html#.quatFromTaitBryan">glmath.GLMath.quatFromTaitBr
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line223">line 223</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line228">line 228</a>
     </li></ul></dd>
 
 </dl>
@@ -876,9 +875,8 @@ and the transform wasn't reset yet with <a href="glutil.Transform.html#resetTran
             </td>
 
             <td class="description last">Scaling factor for this object's width.
-  If "y" and "z" are null or omitted, this can
-instead be a 3-element array giving the scaling factors
-for width, height, and depth, respectively.</td>
+  If "y" and "z" are null or omitted, this is instead a 3-element array giving the scaling factors
+for width, height, and depth, respectively, or a single numbergiving the scaling factor for all three dimensions.</td>
         </tr>
 
         <tr>
@@ -914,7 +912,7 @@ for width, height, and depth, respectively.</td>
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul><li>
-        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line123">line 123</a>
+        <a href="glutil-transform.js.html">glutil-transform.js</a>, <a href="glutil-transform.js.html#line124">line 124</a>
     </li></ul></dd>
 
 </dl>

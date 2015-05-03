@@ -115,6 +115,8 @@ the first trangle, and 1 new vertex.</li>
 The first 4 vertices make up the first quad, and each additional
 quad is made up of the last 2 vertices of the previous quad and
 2 new vertices.</li>
+<li><code>Mesh.LINE_STRIP</code> - A series of points making up a connected line segment path.</li>
+<li><code>Mesh.POINTS</code> - A series of points.</li>
 </ul>
 <p>(2) Call the <code>normal3()</code>, <code>color3()</code>, and <code>texCoord2()</code> methods, as needed, to set the
 next vertex's parameters.  You don't need to do this for each vertex if multiple
@@ -177,11 +179,11 @@ as well as its color and appearance.  To attach a mesh to a 3D scene:</p>
 <pre class="prettyprint source"><code>shape.setColor(&quot;red&quot;); // set the color to a CSS color
 shape.setColor(&quot;#338845&quot;); // set the color to an HTML color
 shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
-// set Phong material parameters: ambient, diffuse,
+// set material parameters: ambient, diffuse,
 // specular, shininess (NOTE: if the mesh defines its own colors they
 // will override ambient and diffuse reflection given below)
 shape.setMaterial(new Material(&quot;blue&quot;,&quot;blue&quot;,&quot;white&quot;,30));
-// set Phong material parameters: ambient, diffuse,
+// set material parameters: ambient, diffuse,
 // specular, shininess, emission
 shape.setMaterial(new Material(&quot;lime&quot;,&quot;lime&quot;,&quot;white&quot;,30,[0.2,0.2,0.2]));
 // set a texture; this requires the mesh to have texture

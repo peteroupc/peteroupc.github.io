@@ -41,6 +41,7 @@ and applying them to 3D shapes.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/gradient.html">gradient.html</a> - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/starfield.html">starfield.html</a> - Demo of a star field.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/perspective.html">perspective.html</a> - Demonstrates a perspective projection.</li>
 </ul>
 <h2>Other Sites</h2><ul>
 <li>CodePlex: https://html3dutil.codeplex.com/</li>
@@ -72,7 +73,12 @@ texture -- a linear gradient from one color to another.</li>
    shape.setQuaternion(GLMath.quatFromTaitBryan(rotation));
    // Render the scene
    scene.render();
-  });</code></pre><h2>History</h2><p>Version 1.2:</p>
+  });</code></pre><h2>History</h2><p>Version 1.2.1:</p>
+<ul>
+<li>Fix bug that occurs when a shape derived from a mesh that defines its own
+colors is drawn before a shape derived from a mesh that doesn't define its own colors</li>
+</ul>
+<p>Version 1.2:</p>
 <ul>
 <li>Support TGA textures</li>
 <li>Camera class rewritten and support added for the mouse wheel

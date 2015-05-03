@@ -17,6 +17,7 @@ function OldCamera(scene, fov, nearZ, farZ){
  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
  this._updateLookAt();
 }
+/** @private */
 OldCamera._vec3diff=function(a,b){
  return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
 }
@@ -148,6 +149,7 @@ OldCamera.prototype._updateLookAt=function(){
 OldCamera.prototype.getPosition=function(){
   return this.position.slice(0,3);
 }
+
 /**
 * A class for controlling the projection and
 * view of a 3D scene, in the nature of an abstract "camera".
@@ -295,10 +297,7 @@ Camera.prototype.moveForward=function(dist){
 Camera.prototype.getPosition=function(){
   return this.position.slice(0,3);
 }
-/**
- * Not documented yet.
- * @param {*} e
- */
+/** @private */
 Camera.prototype.mousewheel=function(e){
  var ticks=e.delta/120.0;
  // mousewheel up (negative) means move forward,
@@ -452,6 +451,7 @@ InputTracker.ENTER=13;
 InputTracker.TAB=9;
 InputTracker.SHIFT=16;
 InputTracker.CTRL=17;
+InputTracker.ALT=18;
 InputTracker.ESC=27;
 InputTracker.SPACE=32;
 InputTracker.PAGEUP=33;

@@ -14,18 +14,67 @@
 </header>
 
 <article>
-    <h2>The &quot;Camera&quot; and the Projection and View Transforms</h2><p>The <code>Scene3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and `setLookAt(), which are shown in the example below.</p>
-<p>  // Set the perspective view.  Camera has a 45-degree field of view
-  // and will see objects from 0.1 to 100 units away.
-  scene.setPerspective(45,scene.getAspect(),0.1,100);
-  // Move the camera back 40 units.
-  scene.setLookAt([0,0,40]);
-  // Move the camera back 30 units instead, and turn it so it
-  // points at (0, 2, 0), that is, up 2 units.
-  scene.setLookAt([0,0,30], [0,2,0]);</p>
-<p>In 3D graphics, the two most commonly used projections are the perspective projection and the orthographic projection.  Both are described in detail below.</p>
-<h3>Perspective Projection</h3><p>A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects look bigger than more distant objects with the same size.  The <code>Scene3D</code> class's <code>setPerspective()</code> method defines a perspective projection.</p>
-<h3>Orthographic Projection</h3><p>In an orthographic projection, objects with the same size don't vary in size with their depth.  The <code>Scene3D</code> class's <code>setOrtho()</code> and <code>setOrthoAspect()</code> methods define an orthographic projection.</p>
+    <h2>The &quot;Camera&quot; and the Projection and View Transforms</h2><p>The <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html"><code>Scene3D</code></a> class of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
+<pre class="prettyprint source"><code>// Set the perspective view.  Camera has a 45-degree field of view
+// and will see objects from 0.1 to 100 units away.
+scene.setPerspective(45,scene.getAspect(),0.1,100);
+// Move the camera back 40 units.
+scene.setLookAt([0,0,40]);
+// Move the camera back 30 units instead, and turn it so it
+// points at (0, 2, 0), that is, up 2 units.
+scene.setLookAt([0,0,30], [0,2,0]);</code></pre><p>In 3D graphics, two commonly used projections are the perspective projection and the orthographic projection.  Both are described in detail below.</p>
+<h3>Perspective Projection</h3><p>A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects
+look bigger than more distant objects with the same size.</p>
+<p>The 3D scene is contained in a so-called <em>view volume</em>, and only objects contained in the view volume
+will be visible.  The view volume is bounded on all six sides by six <em>clipping planes</em>:</p>
+<ul>
+<li>The near and far clipping planes are placed a certain distance from the camera.  For example, if
+the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume
+will hold only objects between 3 and 5 units from the camera.  (Strictly speaking, a near clipping
+plane is not necessary, but practically speaking it is, in order to make the math work out correctly.)</li>
+<li>The left, right, top, and bottom clipping planes form the other four sides of the volume.</li>
+</ul>
+<p>Note further that:</p>
+<ul>
+<li>The angle extending from the eye position is the projection's <em>field of view</em>.  This is an angle
+similar to the aperture of a camera.  The greater the field of view, the greater
+the vertical visibility range.</li>
+<li>In a perspective projection, the near clipping plane segment bounding the view volume is smaller than
+the far clipping plane segment.  This is because the four other clipping planes are not parallel and extend
+from the eye position.</li>
+</ul>
+<p>The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also
+known as <em>clip coordinates</em>.  Since the graphics system (outside the HTML 3D library) only deals with
+3D points, it divides the X, Y, and Z components by the W component to get the 3D point's <em>normalized
+device coordinates</em> and achieve the perspective effect.</p>
+<p>The <code>Scene3D</code> class's <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setPerspective"><code>setPerspective()</code></a>
+and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setFrustum"><code>setFrustum()</code></a>
+methods define a perspective projection.</p>
+<p><strong><code>scene3d.setPerspective(fov, aspect, near, far)</code></strong></p>
+<p>This method calculates the appropriate clipping planes given a field of view and an aspect ratio,
+and sets the scene's projection matrix accordingly.</p>
+<ul>
+<li><code>fov</code> - Vertical field of view, in degrees.</li>
+<li><code>aspect</code> - Aspect ratio of the scene.  You should usually use <code>scene3d.getAspect()</code>.</li>
+<li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
+</ul>
+<p><strong><code>scene3d.setFrustum(left, right, bottom, top, near, far)</code></strong></p>
+<p>This method sets the scene's projection matrix based on the location of the six clipping planes that
+bound the view volume.</p>
+<ul>
+<li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Location of the left, right, bottom, and top clipping planes in terms
+of where they meet the near clipping plane.</li>
+<li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
+</ul>
+<h4>Demo</h4><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/perspective.html">perspective.html</a> - Demonstrates a perspective projection.</li>
+</ul>
+<h3>Orthographic Projection</h3><p>An orthographic projection is one in which the left and right clipping planes are parallel to each other,
+and the top and bottom clipping planes are parallel to each other.  This results in the near and far clipping
+planes having the same size, unlike in a perspective projection, and
+objects with the same size not varying in size with their depth.</p>
+<p>The <code>Scene3D</code> class's <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setOrtho"><code>setOrtho()</code></a>
+and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setOrthoAspect"><code>setOrthoAspect()</code></a> methods define an orthographic projection.</p>
 </article>
 
 </section>
