@@ -16,7 +16,8 @@
 <article>
     <h2>Introduction</h2><p>This article describes projection and view transforms commonly used in 3D graphics,
 especially when using my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.</p>
-<h2>The &quot;Camera&quot; and the Projection and View Transforms</h2><p>The <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html"><code>Scene3D</code></a> class of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library's Releases page</a>.</strong></p>
+<h2>The &quot;Camera&quot; and the Projection and View Transforms</h2><p>The <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html"><code>Scene3D</code></a> class of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setPerspective"><code>setPerspective()</code></a> and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setLookAt"><code>setLookAt()</code></a>, which are shown in the example below.</p>
 <pre class="prettyprint source"><code>// Set the perspective view.  Camera has a 45-degree field of view
 // and will see objects from 0.1 to 100 units away.
 scene.setPerspective(45,scene.getAspect(),0.1,100);
@@ -24,11 +25,28 @@ scene.setPerspective(45,scene.getAspect(),0.1,100);
 scene.setLookAt([0,0,40]);
 // Move the camera back 30 units instead, and turn it so it
 // points at (0, 2, 0), that is, up 2 units.
-scene.setLookAt([0,0,30], [0,2,0]);</code></pre><p>In 3D graphics, two commonly used projections are the perspective projection and the orthographic projection.  Both are described in detail below.</p>
+scene.setLookAt([0,0,30], [0,2,0]);</code></pre><h3>Overview of Transformations</h3><p>Here is an overview of transformations used in the graphics system and
+the HTML 3D library.</p>
+<ul>
+<li>A <em>world matrix</em> transforms an object's own coordinates to <em>world space</em>,
+the coordinate system shared by every object in the scene.  The world matrix
+is not discussed in this article.</li>
+<li>A <em>view matrix</em> transforms coordinates in world space to <em>camera space</em> or <em>eye space</em>.</li>
+<li>A <em>projection matrix</em> transforms coordinates in camera space to <em>clip space</em>.</li>
+<li>Additionally, the graphics pipeline (outside the HTML 3D library) converts the
+clip space coordinates to <em>normalized device coordinates</em>, then <em>screen space</em>
+coordinates when drawing objects on the screen.</li>
+</ul>
+<p>Two commonly used projections in 3D graphics are the perspective projection and
+orthographic projection, described below.</p>
 <h3>Perspective Projection</h3><p>A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects
 look bigger than more distant objects with the same size.</p>
+<p><img src="persp1.png" alt="Two rows of spheres, and a drawing of a perspective view volume."></p>
+<p><img src="persp2.png" alt="Two rows of spheres, and a side drawing of a perspective view volume."></p>
 <p>The 3D scene is contained in a so-called <em>view volume</em>, and only objects contained in the view volume
-will be visible.  The view volume is bounded on all six sides by six <em>clipping planes</em>:</p>
+will be visible.  The dark yellow lines above show what a perspective view volume looks like.  The red spheres
+would not be visible under this view volume.</p>
+<p>The view volume is bounded on all six sides by six <em>clipping planes</em>:</p>
 <ul>
 <li>The near and far clipping planes are placed a certain distance from the camera.  For example, if
 the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume
@@ -38,7 +56,7 @@ plane is not necessary, but practically speaking it is, in order to make the mat
 </ul>
 <p>Note further that:</p>
 <ul>
-<li>The angle extending from the eye position is the projection's <em>field of view</em>.  This is an angle
+<li>The angle separating the top and bottom clipping planes is the projection's <em>field of view</em>.  This is an angle
 similar to the aperture of a camera.  The greater the vertical field of view, the greater
 the vertical visibility range.</li>
 <li>In a perspective projection, the near clipping plane segment bounding the view volume is smaller than
@@ -49,8 +67,8 @@ from the eye position.</li>
 known as <em>clip coordinates</em>.  Since the graphics system (outside the HTML 3D library) only deals with
 3D points, it divides the X, Y, and Z components by the W component to get the 3D point's <em>normalized
 device coordinates</em> and achieve the perspective effect.</p>
-<p>The <code>Scene3D</code> class's <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setPerspective"><code>setPerspective()</code></a>
-and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setFrustum"><code>setFrustum()</code></a>
+<p>The <code>Scene3D</code> class's <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setPerspective"><code>setPerspective()</code></a>
+and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setFrustum"><code>setFrustum()</code></a>
 methods define a perspective projection.</p>
 <p><strong><code>scene3d.setPerspective(fov, aspect, near, far)</code></strong></p>
 <p>This method calculates the appropriate clipping planes given a field of view and an aspect ratio,
@@ -75,8 +93,8 @@ of where they meet the near clipping plane.</li>
 and the top and bottom clipping planes are parallel to each other.  This results in the near and far clipping
 planes having the same size, unlike in a perspective projection, and
 objects with the same size not varying in size with their depth.</p>
-<p>The <code>Scene3D</code> class's <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setOrtho"><code>setOrtho()</code></a>
-and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#setOrthoAspect"><code>setOrthoAspect()</code></a> methods
+<p>The <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html"><code>Scene3D</code></a> class's <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setOrtho"><code>setOrtho()</code></a>
+and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setOrthoAspect"><code>setOrthoAspect()</code></a> methods
 define an orthographic projection.</p>
 <p><strong><code>scene3d.setOrtho(left, right, bottom, top, near, far)</code></strong></p>
 <p>This method calculates an orthographic projection.</p>
@@ -92,8 +110,45 @@ can be negative.</li>
 <p>This method calculates an orthographic projection such that the resulting view isn't stretched
 or squished in case the view volume's aspect ratio and the scene's aspect ratio are different.</p>
 <ul>
+<li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code>, <code>near</code>, <code>far</code> - Same as in <code>setOrtho</code>.</li>
 <li><code>aspect</code> - Aspect ratio of the viewport.  May be omitted, in which case the scene's
 aspect ratio (<code>scene.getAspect()</code>) is used.</li>
+</ul>
+<h3>Other Projections</h3><p>There are other kinds of possible projections, such as oblique projections.  For these
+and other projections, you can specify a custom projection matrix to the 3D scene using the
+<a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setProjectionMatrix"><code>setProjectionMatrix()</code></a>
+method.</p>
+<p><strong><code>scene3d.setProjectionMatrix(matrix)</code></strong></p>
+<p>This method allows you to set the projection matrix to an arbitrary <a href="tutorial-glmath.html">4x4 matrix</a>.</p>
+<ul>
+<li><code>matrix</code> - The 4x4 matrix to use.</li>
+</ul>
+<h3>View Transform</h3><p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to <em>camera space</em>
+coordinates, in which the camera is located at the center of the coordinate system: (0, 0, 0).  A view matrix essentially rotates the camera and moves it to a given position in world space.  Specifically:</p>
+<ul>
+<li>The camera is rotated to point at a certain object or location on the scene.  This is represented by
+the <code>lookingAt</code> parameter in the <code>setLookAt()</code> method, below.</li>
+<li>The camera is placed somewhere on the scene.  This is represented by
+the <code>eye</code> parameter in the <code>setLookAt()</code> method.  It also represents the &quot;eye position&quot; in the perspective
+projection, above.</li>
+<li>The camera rolls itself, possibly turning it sideways or upside down.  This is represented by
+the <code>up</code> parameter in the <code>setLookAt()</code> method.  Turning the camera upside down, for example, will swap
+the placement of the top and bottom clipping planes, thus inverting the view of the scene.</li>
+</ul>
+<p>The <code>setLookAt()</code> and <code>setViewMatrix()</code> methods are described below.</p>
+<p><strong><code>scene3d.setLookAt(eye, lookingAt, up)</code></strong></p>
+<p>This method allows you to set a view matrix based on the camera's position and view.</p>
+<ul>
+<li><code>eye</code> - Array of three elements (X, Y, Z) giving the position of the camera in world space.</li>
+<li><code>lookingAt</code> - Array of three elements (X, Y, Z) giving the position the camera is looking at in world space.
+This is optional.  The default is [0, 0, 0].</li>
+<li><code>up</code> - Array of three elements (X, Y, Z) giving the vector from the center of the camera to the top.
+This is optional.  The default is [0, 1, 0].</li>
+</ul>
+<p><strong><code>scene3d.setViewMatrix(matrix)</code></strong></p>
+<p>This method allows you to set the view matrix to an arbitrary <a href="tutorial-glmath.html">4x4 matrix</a>.</p>
+<ul>
+<li><code>matrix</code> - The 4x4 matrix to use.</li>
 </ul>
 </article>
 

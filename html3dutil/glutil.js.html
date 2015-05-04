@@ -491,14 +491,21 @@ function LightSource(position, ambient, diffuse, specular) {
  this.position=position ? [position[0],position[1],position[2],1.0] :
    [0, 0, 1, 0];
  /**
- * A 3-element vector giving the diffuse color of the light, in the red, green,
+ * A 3-element vector giving the color of the light when it causes a diffuse
+ * reflection, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
+ * A diffuse reflection is a reflection that scatters evenly, in every direction.
+ * The default is (1,1,1), or white.
  */
  this.diffuse=diffuse||[1,1,1];
  /**
- * A 3-element vector giving the color of specular highlights caused by
- * the light, in the red, green,
+ * A 3-element vector giving the color of the light when it causes a specular
+ * reflection, in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
+ * A specular reflection is a reflection in the same angle as the light reaches
+ * an object, like a mirror.  Specular reflections can cause shiny
+ * highlights depending on the viewing angle.
+ * The default is (1,1,1), or white.
  */
  this.specular=specular||[1,1,1];
 };

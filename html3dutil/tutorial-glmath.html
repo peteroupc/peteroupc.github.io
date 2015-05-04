@@ -46,9 +46,8 @@ factors to change the object's size.  For example, a Y-factor of 2 doubles an ob
 before the other transformations.</p>
 <h3>Rotation</h3><p>Rotation changes an object's orientation.</p>
 <p>To create a rotation matrix, use <a href="glmath.GLMath.html#.mat4rotated">GLMath.mat4rotated()</a>,
-and specify the angle (in degrees) to rotate, and the axis of rotation (three parameters for
-the X, Y, and Z components).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation
-around the X-axis, and (80, 0, 0, 1) means a 45-degree rotation around the Z-axis.</p>
+and specify the angle (in degrees) to rotate, and the axis of rotation (a line that contains
+the origin and a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that contains the origin (0, 0, 0) and the point (0, 2, 3).</p>
 <p>To multiply an existing matrix by a rotation, use
 <a href="glmath.GLMath.html#.mat4rotate">GLMath.mat4rotate()</a>.  This will put the rotation
 before the other transformations.</p>
@@ -103,6 +102,16 @@ Converts from Tait-Bryan angles to a quaternion</li>
 <li><a href="glmath.GLMath.html#.quatToTaitBryan">GLMath.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
+<h2>Coordinate Systems</h2><p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
+<ul>
+<li>In a <em>left-handed</em> coordinate system, like in legacy Direct3D, the z-axis points <em>away from
+the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
+<li>In a <em>right-handed</em> coordinate system, like in OpenGL, the z-axis points <em>toward
+the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
+</ul>
+<p>If a GLMath method works differently in left- and right-handed coordinate systems,
+its description will note this. (In the absence of transformations, the coordinate
+system is effectively left-handed.)</p>
 <h2>Matrix Details</h2><p>This section contains more details on matrices.</p>
 <p>All functions dealing with 4x4 matrices assume that
 the translation elements in x, y, and z are located in the
@@ -143,10 +152,6 @@ element of the matrix is placed in columns, rather than in rows, as in the follo
 
 <p>The numbers in brackets in the matrix above are the zero-based indices
 into the matrix arrays passed to GLMath's matrix methods.</p>
-<p>All functions dealing with matrices also assume
-a right-handed coordinate system (such as OpenGL's), in which the z-axis points
-toward (not away from) the viewer whenever the x-axis points to
-the right and the y-axis points up.</p>
 <h3>Transforming Points</h3><p>The transformation formula multiplies a matrix by a 3D point to change that point's
 position:</p>
 <ul>

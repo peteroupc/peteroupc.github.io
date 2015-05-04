@@ -14,7 +14,13 @@
 </header>
 
 <article>
-    <h2>Creating Shapes</h2><p>The HTML 3D library contains several methods for creating 3D shapes such
+    <h2>Introduction</h2><p>This article explains how my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>
+supports 3D shapes and how to use the library to create shapes, both built-in and custom
+shapes.</p>
+<p><strong>Visit the <a href="https://github.com/peteroupc/html3dutil/releases">library's Releases page</a>
+for the latest version.</strong> As of version 1.2.1, it includes
+the shapes.html and platonic.html demos mentioned in this article.</p>
+<h2>Creating Shapes</h2><p>The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.</p>
 <p><img src="shapes.png" alt="An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
 orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
@@ -26,7 +32,7 @@ the built-in shapes.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/platonic.html">platonic.html</a> - A demo featuring the five
 platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.</li>
 </ul>
-<h3>Built-In Shapes</h3><p>The <code>Meshes</code> class includes several handy methods for creating built-in shapes.
+<h3>Built-In Shapes</h3><p>The <a href="glutil.Meshes.html"><code>Meshes</code></a> class includes several handy methods for creating built-in shapes.
 All methods described below return a <code>Mesh</code> object that describes the triangles they
 are composed of.  See &quot;Custom Shapes&quot; below for more on meshes.</p>
 <p><strong>3D Figures:</strong></p>
@@ -82,12 +88,12 @@ line segment.</p>
 var mesh = new Mesh(vertices, indices, bits);</code></pre><p>Note that you must include a set of bits indicating what kind of data the vertex
 array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; parameter.) The bits are:</p>
 <ul>
-<li>Mesh.NORMALS_BIT - if you included normals for each vertex (3 elements)</li>
-<li>Mesh.COLORS_BIT - if you included colors for each vertex (3 elements)</li>
-<li>Mesh.TEXCOORDS_BIT - if you included texture coordinates for each vertex (2 elements)</li>
-<li>Mesh.LINES_BIT - if the mesh defines a set of lines rather than triangles</li>
-<li>Mesh.POINTS_BIT - if the mesh defines a set of points (you can't set both LINES_BIT and
-POINTS_BIT).</li>
+<li><code>Mesh.NORMALS_BIT</code> - if you included normals for each vertex (3 elements)</li>
+<li><code>Mesh.COLORS_BIT</code> - if you included colors for each vertex (3 elements)</li>
+<li><code>Mesh.TEXCOORDS_BIT</code> - if you included texture coordinates for each vertex (2 elements)</li>
+<li><code>Mesh.LINES_BIT</code> - if the mesh defines a set of lines rather than triangles</li>
+<li><code>Mesh.POINTS_BIT</code> - if the mesh defines a set of points (you can't set both <code>LINES_BIT</code> and
+<code>POINTS_BIT</code>).</li>
 </ul>
 <p>The bits may be combined as in the following example:</p>
 <pre class="prettyprint source"><code>var bits = Mesh.NORMALS_BIT | Mesh.COLORS_BIT;</code></pre><p>Alternatively, you can call the Mesh constructor with no arguments:</p>
@@ -128,7 +134,7 @@ mesh.color3(&quot;#123FE8&quot;); // Set an HTML color.
 mesh.texCoord3(0.5,0.5); // Set the texture coordinates.</code></pre><p>(3) Call the <code>vertex3()</code> method to add a new vertex and set its position.  The vertex will
 have the last normal, color, and texture coordinates defined on the mesh, if any
 were given:</p>
-<pre class="prettyprint source"><code>mesh.vertex3(x, y, z);</code></pre><p>You can also call the mode() method any time to change the primitive mode, even to
+<pre class="prettyprint source"><code>mesh.vertex3(x, y, z);</code></pre><p>You can also call the <code>mode()</code> method any time to change the primitive mode, even to
 the same mode.  What this does is reset the state of the primitive so that future vertices
 won't depend on previous vertices.  For example, if you define a <code>TRIANGLE_FAN</code>, and
 you call <code>mesh.mode(Mesh.TRIANGLE_FAN)</code>, the newly defined <code>TRIANGLE_FAN</code> will be
@@ -170,11 +176,11 @@ the mesh must have its vertices defined in counterclockwise order.</p>
 mesh = mesh.recalcNormals(true, false);
 // Both parameters can be omitted, setting both to false
 mesh = mesh.recalcNormals();</code></pre><h2>Binding Shapes</h2><p>Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
-in order to have it drawn.  This is where the <code>Shape</code> class comes into
+in order to have it drawn.  This is where the <a href="glutil.Shape.html"><code>Shape</code></a> class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:</p>
-<p>(1) Create a Shape object by passing the mesh to the 3D scene's <code>makeShape()</code> method:</p>
-<pre class="prettyprint source"><code>var shape = scene3d.makeShape(mesh);</code></pre><p>(2) You may also set the Shape's color, appearance, and position, using the examples below:</p>
+<p>(1) Create a <code>Shape</code> object by passing the mesh to the 3D scene's <code>makeShape()</code> method:</p>
+<pre class="prettyprint source"><code>var shape = scene3d.makeShape(mesh);</code></pre><p>(2) You may also set the <code>Shape</code>'s color, appearance, and position, using the examples below:</p>
 <p>Examples for setting appearance:</p>
 <pre class="prettyprint source"><code>shape.setColor(&quot;red&quot;); // set the color to a CSS color
 shape.setColor(&quot;#338845&quot;); // set the color to an HTML color
@@ -206,7 +212,7 @@ shape.setScale([2,2,2]);</code></pre><p>If setMatrix wasn't called, then when th
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.</p>
 <p>(3) Add the shape to the 3D scene:</p>
-<pre class="prettyprint source"><code>scene3d.addShape(shape);</code></pre><p>Now, the next time <code>scene3d.render()</code> is called, the Scene3D will render the
+<pre class="prettyprint source"><code>scene3d.addShape(shape);</code></pre><p>Now, the next time <code>scene3d.render()</code> is called, the <a href="glutil.Scene3D.html"><code>Scene3D</code></a> will render the
 given shape to the scene.</p>
 </article>
 
