@@ -1740,7 +1740,7 @@ and returns a new matrix.
 to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
 instead be a 4-element array giving the axis
 of rotation as the first three elements, followed by the angle
-in degrees as the fourth element. If the axis of rotationpoints toward the viewer, the angle's value is increasing ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.</td>
+in degrees as the fourth element. If the axis of rotationpoints toward the viewer, a positive value means the angle runs ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.</td>
         </tr>
 
         <tr>
@@ -1867,7 +1867,7 @@ to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
 instead be a 4-element array giving the axis
 of rotation as the first three elements, followed by the angle
 in degrees as the fourth element.  If the axis of rotation
-points toward the viewer, the angle's value is increasing in
+points toward the viewer, a positive value means the angle runs in
 a counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.</td>
         </tr>
 
@@ -2912,7 +2912,7 @@ in degrees as the fourth element.</td>
             <td class="description last">X-component of the point lying on the axis
 of rotation.  If "vy" and "vz" are omitted, this can
 instead be a 3-element array giving the axis
-of rotation in x, y, and z, respectively.  If the axis of rotationpoints toward the viewer, the angle's value is increasing ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.</td>
+of rotation in x, y, and z, respectively.  If the axis of rotationpoints toward the viewer, a positive value means the angle runs ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.</td>
         </tr>
 
         <tr>
@@ -3031,7 +3031,7 @@ The results are undefined if the matrix doesn't describe a rotation.
 
 <div class="description">
     Generates a quaternion from pitch, yaw and roll angles.
-In the parameters given below, when the axis of rotationpoints toward the viewer, the angle's value is increasing ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.
+In the parameters given below, when the axis of rotationpoints toward the viewer, a positive value means the angle runs ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.
 </div>
 
     <h5>Parameters:</h5>
@@ -3614,7 +3614,7 @@ return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
 to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
 instead be a 4-element array giving the axis
 of rotation as the first three elements, followed by the angle
-in degrees as the fourth element. If the axis of rotationpoints toward the viewer, the angle's value is increasing ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.</td>
+in degrees as the fourth element. If the axis of rotationpoints toward the viewer, a positive value means the angle runs ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.</td>
         </tr>
 
         <tr>
@@ -3903,7 +3903,7 @@ quaternion. (The axis of rotation is a line that contains theorigin (0,0,0) and
 <div class="param-desc">
     A 4-element array giving the axis
 of rotation as the first three elements, followed by the angle
-in degrees as the fourth element. If the axis of rotationpoints toward the viewer, the angle's value is increasing ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.
+in degrees as the fourth element. If the axis of rotationpoints toward the viewer, a positive value means the angle runs ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.
 
      (Type:
 <span class="param-type">Array.&lt;number></span>
@@ -4033,7 +4033,7 @@ described as the effect of a roll, then pitch, then yaw (each rotation around th
 <div class="param-desc">
     A 3-element array containing the
 pitch, yaw, and roll angles, in that order, in degrees.  For each
-angle, if the corresponding axispoints toward the viewer, the angle's value is increasing ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.
+angle, if the corresponding axispoints toward the viewer, a positive value means the angle runs ina counterclockwise direction for right-handed coordinate systems andin a clockwise direction for left-handed systems.
 
      (Type:
 <span class="param-type">Array.&lt;number></span>

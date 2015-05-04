@@ -552,7 +552,7 @@ quatToMat4:function(quat){
 * @return  {Array&lt;number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
- * points toward the viewer, the angle's value is increasing in
+ * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
 */
@@ -599,7 +599,7 @@ quatFromVectors:function(vec1,vec2){
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.  If the axis of rotation
- * points toward the viewer, the angle's value is increasing in
+ * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  * @param {number} vy Y-component of the point lying on the axis
@@ -639,7 +639,7 @@ return ret;
 /**
  * Generates a quaternion from pitch, yaw and roll angles.
  * In the parameters given below, when the axis of rotation
- * points toward the viewer, the angle's value is increasing in
+ * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  * @param {number} pitchDegrees Rotation about the x-axis (upward or downward turn), in degrees.
@@ -703,7 +703,7 @@ quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
  * @return {Array&lt;number>} A 3-element array containing the
  * pitch, yaw, and roll angles, in that order, in degrees.  For each
  * angle, if the corresponding axis
- * points toward the viewer, the angle's value is increasing in
+ * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  */
@@ -817,7 +817,7 @@ quatSlerp:function(q1,q2,factor){
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
- * points toward the viewer, the angle's value is increasing in
+ * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  * @param {Array&lt;number>|number} v X-component of the point lying on the axis
@@ -1495,7 +1495,7 @@ quatMultiply:function(a,b){
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
- * points toward the viewer, the angle's value is increasing in
+ * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  * @param {Array&lt;number>|number} v X-component of the point lying on the axis
@@ -1593,7 +1593,7 @@ mat[12], mat[13], mat[14], mat[15]];
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element.  If the axis of rotation
- * points toward the viewer, the angle's value is increasing in
+ * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  * @param {Array&lt;number>|number} v X-component of the point lying on the axis
