@@ -1,0 +1,220 @@
+<head>
+<meta charset=utf-8>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../camera.js"></script>
+<script type="text/javascript" src="../frame.js"></script>
+</head>
+<body>
+<a href="javascript:link1()">Superellipsoid</a>,
+<a href="javascript:link2()">Klein bottle</a>,
+<a href="javascript:link3()">M&ouml;bius strip</a>,
+<a href="javascript:link4()">Surface of revolution for f(x) = sin x</a>,
+<a href="javascript:link5()">Surface of revolution for f(x) = x<sup>2</sup></a>,
+<a href="javascript:link6()">Supertoroid</a>
+<br>
+<canvas width="600" height="450" id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+if(typeof Math.sign=="undefined"){
+ Math.sign=function(x){
+  return (x<0) ? -1 : (x==0 ? 0 : 1);
+ }
+};
+
+var Supertoroid=function(xRadius, yRadius, zRadius, innerRadius, n, m){
+ this.xRadius=xRadius;
+ this.yRadius=yRadius;
+ this.zRadius=zRadius;
+ this.innerRadius=innerRadius;
+ // exponent for the sines and cosines in U-axis
+ this.n=(n==null) ? 1 : n;
+ // exponent for the sines and cosines in V-axis
+ this.m=(m==null) ? 1 : m;
+ this.evaluate=function(u,v){
+  u=1-u
+  u*=GLMath.PiTimes2;
+  u-=Math.PI;
+  v*=GLMath.PiTimes2;
+  v-=Math.PI;
+  var cosu=Superellipsoid.cospow(u,this.n);
+  return [
+   Superellipsoid.cospow(v,this.m)*(cosu+this.innerRadius)*this.xRadius,
+   Superellipsoid.sinpow(v,this.m)*(cosu+this.innerRadius)*this.yRadius,
+   Superellipsoid.sinpow(u,this.n)*this.zRadius
+  ];
+ }
+}
+var Superellipsoid=function(xRadius, yRadius, zRadius, n, m){
+ this.xRadius=xRadius;
+ this.yRadius=yRadius;
+ this.zRadius=zRadius;
+ // exponent for the sines and cosines in U-axis
+ this.n=(n==null) ? 1 : n;
+ // exponent for the sines and cosines in V-axis
+ this.m=(m==null) ? 1 : m;
+ this.evaluate=function(u,v){
+  u=1-u
+  u*=Math.PI;
+  u-=Math.PI/2;
+  v*=GLMath.PiTimes2;
+  v-=Math.PI;
+  var cosu=Superellipsoid.cospow(u,this.n);
+  return [
+   Superellipsoid.cospow(v,this.m)*cosu*this.xRadius,
+   Superellipsoid.sinpow(v,this.m)*cosu*this.yRadius,
+   Superellipsoid.sinpow(u,this.n)*this.zRadius
+  ];
+ }
+}
+
+Superellipsoid.sinpow=function(x,n){
+  var r=Math.sin(x);
+  return Math.sign(r)*Math.pow(Math.abs(r),n);
+ }
+Superellipsoid.cospow=function(x,n){
+  var r=Math.cos(x);
+  return Math.sign(r)*Math.pow(Math.abs(r),n);
+ }
+var RevolutionSurface=function(func,minval,maxval){
+ this.func=func
+ this.minval=minval
+ this.maxval=maxval
+ this.evaluate=function(u,v){
+  v=1-v;
+  v*=GLMath.PiTimes2;
+  u=minval+(maxval-minval)*u;
+  var r=this.func(u);
+  return [u,r*Math.cos(v),r*Math.sin(v)];
+ }
+}
+
+var KleinBottle=function(){
+ this.evaluate=function(u,v){
+  u*=GLMath.PiTimes2;
+  v*=GLMath.PiTimes2;
+  var x, y, z;
+  var sinu=Math.sin(u);
+  var sinv=Math.sin(v);
+  var cosu=Math.cos(u);
+  var cosv=Math.cos(v);
+  if(u<Math.PI){
+   x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * cosu * cosv;
+   z = -8 * sinu - 2 * (1 - cosu / 2) * sinu * cosv;
+  } else {
+   x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * Math.cos(v + Math.PI)
+   z = -8 * sinu
+  }
+  y = -2 * (1 - cosu / 2) * sinv;
+  return [x/6,z/6,y/6];
+ }
+}
+
+var MoebiusStrip=function(maj, a, b){
+ this.maj=maj==null ? 1.25 : maj
+ this.a=a==null ? 0.125 : a
+ this.b=b==null ? 0.5 : b
+ this.evaluate=function(u,v){
+  u*=Math.PI;
+  v*=GLMath.PiTimes2;
+  u=-u
+  var x, y, z;
+  var sinu=Math.sin(u);
+  var sinv=Math.sin(v);
+  var cosu=Math.cos(u);
+  var cosv=Math.cos(v);
+    x = this.a * cosv * cosu - this.b * sinv * sinu
+    z = this.a * cosv * sinu + this.b * sinv * cosu
+    y = (this.maj + x) * Math.sin(u*2)
+    x = (this.maj + x) * Math.cos(u*2)
+  return [x,z,y]
+ }
+}
+
+var ColorGradient={
+evaluate:function(u,v){
+ return [1-u,v,u];
+}
+}
+
+function makeMesh(func){
+  var mesh=new Mesh();
+  var ev=new SurfaceEval()
+    .vertex(func)
+    .color(ColorGradient)
+    .setAutoNormal(true)
+    .evalSurface(mesh,Mesh.TRIANGLES,50,50);
+  return mesh;
+}
+
+function link1(){
+ if(shape)scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new Superellipsoid(0.3,0.5,0.6))).setMaterial(material));
+}
+
+function link2(){
+ scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new KleinBottle())).setMaterial(material));
+}
+
+function link3(){
+ scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new MoebiusStrip())).setMaterial(material));
+}
+
+function link4(){
+ scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new RevolutionSurface(function(x){
+  return Math.sin(x)
+ },-Math.PI,Math.PI))).setMaterial(material));
+}
+
+function link5(){
+ scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new RevolutionSurface(function(x){
+  return x*x
+ },-1,1))).setMaterial(material));
+}
+
+function link6(){
+ scene.removeShape(shape);
+ scene.addShape(shape=scene.makeShape(makeMesh(new Supertoroid(0.6,0.5,0.3,2.0))).setMaterial(material));
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white")
+  var camera=new Camera(scene,45,1,100);
+  camera.setDistance(5);
+  var material=new Material().setParams({
+   "specular":"white",
+   "shininess":10
+  })
+  var pc=new PrimitiveCounter(scene)
+  var shape=null;
+  link1();
+  scene.addShape(shape.setMaterial(material));
+  GLUtil.renderLoop(function(){
+   pc.update();
+   camera.update();
+   scene.render();
+  });
+
+//-->
+</script>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
+</body>

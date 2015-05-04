@@ -1,0 +1,52 @@
+<meta charset=utf-8>
+<head>
+<script type="text/javascript" src="../glutil_min.js"></script>
+</head>
+<body>
+<canvas width="600" height="450" id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  // Set the perspective view.  Camera has a 45-degree field of view
+  // and will see objects from 0.1 to 100 units away.
+  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  // Move the camera back 40 units.
+  scene.setLookAt([0,0,40]);
+  // Create a box mesh 10 units in size
+  var mesh=Meshes.createBox(10,20,20);
+  // Create a shape based on the mesh and give it a red color
+  var shape=scene.makeShape(mesh).setColor("red");
+  // Add the shape to the scene
+  scene.addShape(shape);
+  // Set the starting rotation
+  var rotation=[0,0,0];
+  // Set up the render loop
+  GLUtil.renderLoop(function(){
+   rotation[0]+=.5; // Adjust x-rotation by .5 degree
+   rotation[1]+=1.0; // Adjust y-rotation by 1 degree
+   // Update the shape's rotation
+   var q=GLMath.quatFromTaitBryan(rotation);
+   shape.setQuaternion(q);
+   // Render the scene
+   scene.render();
+  });
+//-->
+</script>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
+</body>

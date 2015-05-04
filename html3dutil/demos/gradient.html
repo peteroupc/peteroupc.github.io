@@ -1,0 +1,121 @@
+<meta charset=utf-8>
+<head>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../frame.js"></script>
+</head>
+<body>
+<a href="javascript:link1()">Red/blue linear</a>,
+<a href="javascript:link2()">Green/yellow linear</a>,
+<a href="javascript:link3()">Red/blue radial</a>,
+<a href="javascript:link4()">Green/yellow radial</a>
+<canvas width="600" height="450" id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+// Generates a linear gradient in the horizontal direction.
+// This function demonstrates generating a custom texture.
+function horizontalGradient(color1,color2){
+ color1=GLUtil.toGLColor(color1);
+ color2=GLUtil.toGLColor(color2);
+ var arr=[];
+ var size=32;
+ for(var i=0;i<size;i++){
+  arr.push(
+    GLMath.vec4scaleInPlace(GLMath.vec4lerp(color1,color2,i/(size-1)),255)
+  )
+ }
+ var gradient=[]
+ var i=0;
+ for(var y=0;y<size;y++){
+  for(var x=0;x<size;x++,i+=4){
+   gradient[i]=Math.round(arr[x][0])
+   gradient[i+1]=Math.round(arr[x][1])
+   gradient[i+2]=Math.round(arr[x][2])
+   gradient[i+3]=Math.round(arr[x][3])
+  }
+ }
+ return Texture.fromUint8Array(
+  new Uint8Array(gradient),size,size).setClamp(true);
+}
+
+// Generates a radial gradient
+function radialGradient(colorCenter,colorEdges){
+ colorCenter=GLUtil.toGLColor(colorCenter);
+ colorEdges=GLUtil.toGLColor(colorEdges);
+ var gradient=[]
+ var arr=[];
+ var size=32;
+ for(var i=0;i<32;i++){
+  arr.push(
+    GLMath.vec4scaleInPlace(GLMath.vec4lerp(colorCenter,colorEdges,i/31),255)
+  )
+ }
+ var i=0
+ var radius=(size-1)*0.5;
+ var recipradius=1.0/radius;
+ for (var y=0;y<size;y++){
+  for (var x=0;x<size;x++,i+=4){
+   var yy=(y-radius)*recipradius;
+   var xx=(x-radius)*recipradius;
+   var a=arr[Math.min(31,Math.floor(31 * Math.sqrt(xx * xx + yy * yy)))];
+   gradient[i]=Math.round(a[0])
+   gradient[i+1]=Math.round(a[1])
+   gradient[i+2]=Math.round(a[2])
+   gradient[i+3]=Math.round(a[3])
+  }
+ }
+ return Texture.fromUint8Array(
+  new Uint8Array(gradient),size,size).setClamp(true);
+}
+
+function link1(){
+ shape.setTexture(horizontalGradient("red","blue"))
+}
+function link2(){
+ shape.setTexture(horizontalGradient("green","yellow"))
+}
+function link3(){
+ shape.setTexture(radialGradient("red","blue"))
+}
+function link4(){
+ shape.setTexture(radialGradient("green","yellow"))
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  var fc=new FrameCounterDiv(scene)
+  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  scene.setLookAt([0,0,40]);
+  // Generate a red-blue gradient texture
+  var tex=horizontalGradient("red","blue");
+   var mesh=Meshes.createBox(10,20,20);
+   var shape=scene.makeShape(mesh).setTexture(tex)
+   scene.addShape(shape);
+   var rotation=[0,0,0];
+   GLUtil.renderLoop(function(){
+    fc.update();
+    rotation[0]+=0.5;
+    rotation[1]+=1;
+    var q=GLMath.quatFromTaitBryan(rotation);
+    shape.setQuaternion(q);
+    scene.render();
+   })
+//-->
+</script>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
+</body>

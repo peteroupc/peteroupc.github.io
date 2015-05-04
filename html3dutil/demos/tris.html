@@ -1,0 +1,126 @@
+<meta charset=utf-8>
+<head>
+<script type="text/javascript" src="../glutil_min.js"></script>
+</head>
+<body>
+<canvas width="600" height="450" id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+function TriangleParticles(scene,count){
+ this.tris=[];
+ this.group=new ShapeGroup();
+ this.width=scene.getWidth();
+ this.scene=scene;
+ this.height=scene.getHeight();
+ for(var i=0;i<count;i++){
+  var tri=TriangleParticles.generateTri(this.width,this.height)
+  this.tris.push(tri);
+  this.group.addShape(
+    TriangleParticles.makeShapeFromTri(tri,scene));
+ }
+ this.scene.addShape(this.group);
+}
+TriangleParticles.prototype.update=function(){
+ for(var i=0;i<this.tris.length;i++){
+  this.tris[i].life--;
+  if(this.tris[i].life<=0){
+   var tri=TriangleParticles.generateTri(this.width,this.height)
+   this.tris[i]=tri;
+   this.group.shapes[i]=
+    TriangleParticles.makeShapeFromTri(tri,this.scene);
+  } else {
+   var trans=this.group.shapes[i].getTransform()
+   trans.movePosition(this.tris[i].movement)
+   trans.multOrientation(this.tris[i].rotation,0,0,1)
+  }
+ }
+}
+TriangleParticles.makeShapeFromTri=function(tri,shape){
+ var sh=scene.makeShape(new Mesh()
+   .mode(Mesh.TRIANGLES)
+   .color3(tri.color)
+   .vertex3(tri.position[0],tri.position[1],tri.position[2])
+   .vertex3(tri.position[3],tri.position[4],tri.position[5])
+   .vertex3(tri.position[6],tri.position[7],tri.position[8])
+   );
+ sh.getTransform().setPosition(
+  tri.center[0],tri.center[1],tri.center[2]
+ )
+ return sh;
+}
+
+// Calculates the area of a triangle
+TriangleParticles._getArea=function(tri){
+ var tx=[tri[0]-tri[3],tri[1]-tri[4],tri[2]-tri[5]];
+ var ty=[tri[6]-tri[3],tri[7]-tri[4],tri[8]-tri[5]];
+ var tz=GLMath.vec3cross(tx,ty);
+ return GLMath.vec3length(tz)*0.5;
+}
+
+TriangleParticles.generateTri=function(width,height){
+ var xpos=(Math.random()*(width+10))-5;
+ var ypos=(Math.random()*(height+10))-5;
+ var maxw=100
+ var maxh=100
+ var pos;
+ do {
+  pos=[
+  (Math.random()*maxw)-(maxw/2),
+  (Math.random()*maxh)-(maxh/2),
+  0,
+  (Math.random()*maxw)-(maxw/2),
+  (Math.random()*maxh)-(maxh/2),
+  0,
+  (Math.random()*maxw)-(maxw/2),
+  (Math.random()*maxh)-(maxh/2),
+  0]
+ } while(TriangleParticles._getArea(pos)<200);
+ var dx=(Math.random()*10)-5;
+ var dy=(Math.random()*10)-5;
+ var rotation=Math.floor(Math.random()*10)-5;
+ var life=Math.floor(Math.random()*200);
+ var r=Math.random();
+ var g=Math.random();
+ var b=Math.random();
+ return {
+    "center":[xpos,ypos,0],
+    "position":pos,
+    "rotation":rotation,
+    "movement":[dx,dy,0],
+    "color":[r,g,b],
+    "life":life}
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.disableLighting()
+  // Set the perspective view.  Camera has a 45-degree field of view
+  // and will see objects from 0.1 to 100 units away.
+  scene.setOrtho(0,scene.getWidth(),scene.getHeight(),0,-2,2);
+  var tris=new TriangleParticles(scene,200);
+  // Set up the render loop
+  GLUtil.renderLoop(function(){
+   tris.update();
+   // Render the scene
+   scene.render();
+  });
+//-->
+</script>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
+</body>

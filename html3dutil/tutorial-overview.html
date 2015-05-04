@@ -42,7 +42,8 @@
   scene.setLookAt([0,0,40]);
   // Move the camera back 30 units instead, and turn it so it
   // points at (0, 2, 0), that is, up 2 units.
-  scene.setLookAt([0,0,30], [0,2,0]);</code></pre><h3>3D Models</h3><p>Every 3D scene is made up of &quot;meshes&quot;, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the <code>Mesh</code> class, or create a built-in geometric shape using a method in the <code>Meshes</code> class. The example below shows how you can create a box mesh:</p>
+  scene.setLookAt([0,0,30], [0,2,0]);</code></pre><p>For more information, see the <a href="tutorial-camera.html">camera</a> tutorial.</p>
+<h3>3D Models</h3><p>Every 3D scene is made up of &quot;meshes&quot;, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the <code>Mesh</code> class, or create a built-in geometric shape using a method in the <code>Meshes</code> class. The example below shows how you can create a box mesh:</p>
 <pre class="prettyprint source"><code>  // Create a box mesh 10 units in width, 20 units
   // in height, and 25 units in depth
   var mesh=Meshes.createBox(10,20,25);</code></pre><p>Here are some other built-in mesh methods. This article doesn't explain all the features or parameters in the Meshes class; for that, see the <a href="http://peteroupc.github.io/html3dutil/glutil.Meshes.html">Meshes API documentation</a>.</p>

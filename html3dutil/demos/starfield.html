@@ -1,0 +1,78 @@
+<meta charset=utf-8>
+<head>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../frame.js"></script>
+</head>
+<body>
+<canvas width="600" height="450" id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+function setStarPos(star, range){
+   var x=0,y=0,z=0
+   var centerZone=range/20;
+   // avoid stars too close to the center
+   while(Math.abs(x)<centerZone){
+    x=Math.random()*range-range/2;
+   }
+   // avoid stars too close to the center
+   while(Math.abs(y)<centerZone){
+    y=Math.random()*range-range/2;
+   }
+   z=Math.random()*range-range/2;
+   return star.setPosition(x,y,z);
+}
+
+function starField(scene, range){
+  var group=new ShapeGroup();
+  // use a crude white sphere to represent a star
+  var star=scene.makeShape(Meshes.createSphere(range/1000,4,3)).setColor("white");
+  for(var i=0;i<200;i++){
+   group.addShape(setStarPos(star.copy(),range))
+  }
+  return group;
+}
+
+function moveStarField(group, range){
+ for(var i=0;i<group.shapes.length;i++){
+  var pos=group.shapes[i].getMatrix()
+  if(pos[14]>range/2){
+   // once the star is too close, move it elsewhere
+   setStarPos(group.shapes[i],range)
+   group.shapes[i].getTransform().movePosition(0,0,-range);
+  } else {
+   group.shapes[i].getTransform().movePosition(0,0,range/250);
+  }
+ }
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  var fc=new FrameCounterDiv(scene)
+  scene.setPerspective(45,scene.getAspect(),5,1000).setLookAt([0,0,500]);
+  var group=starField(scene,1000)
+  scene.addShape(group);
+   GLUtil.renderLoop(function(){
+    fc.update()
+    scene.render();
+    moveStarField(group,1000)
+   })
+//-->
+</script>
+<script>
+window.addEventListener("load",function(){
+ var e=document.createElement("pre")
+ e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
+ document.body.appendChild(e)
+})
+</script>
+</body>
