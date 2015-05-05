@@ -20,9 +20,9 @@
 function Camera(scene, fov, nearZ, farZ){
  if(nearZ<=0)throw new Error("invalid nearZ")
  this.target=[0,0,0]; // target position
- var distance=Math.max(nearZ,10); // distance from the target in units
- this.position=[0,0,distance];
- this.angleQuat=GLMath.quatIdentity();
+ this.rotation=GLMath.quatIdentity();
+ this.dolly=GLMath.quatIdentity();
+ this.position=[0,0,0];
  this.angleX=0;
  this.angleY=0;
  this.scene=scene;
@@ -32,10 +32,22 @@ function Camera(scene, fov, nearZ, farZ){
  if(typeof InputTracker!="undefined"){
   this.input=new InputTracker(scene.getContext().canvas);
  }
- this.currentAspect=this.scene.getAspect();
- this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
  this.scene.setLookAt(this.position,this.target);
 }
+
+function Perspective(scene, fov, nearZ, farZ){
+ if(nearZ<=0)throw new Error("invalid nearZ")
+ this.currentAspect=this.scene.getAspect();
+ this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+}
+Perspective.prototype.update=function(){
+ var aspect=this.scene.getAspect();
+ if(aspect!=this.currentAspect){
+  this.currentAspect=aspect;
+  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ }
+}
+
 Camera._vec3diff=function(a,b){
  return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
 }
@@ -119,7 +131,19 @@ Camera.prototype.moveAngleVertical=function(angleDegrees){
  }
  return this;
 }
-
+Camera._quatRotateRelative=function(quat, angle, x, y, z){
+ var vec=GLMath.quatTransform(quat,GLMath.vec3normInPlace([x,y,z]));
+ var q=GLMath.quatRotate(quat,vec);
+ quat[0]=q[0];
+ quat[1]=q[1];
+ quat[2]=q[2];
+ quat[3]=q[3];
+}
+Camera._moveRelative=function(vec, quat, dist, x, y, z){
+ var velocity=GLMath.quatTransform(quat,GLMath.vec3normInPlace([x,y,z]));
+ GLMath.vec3scaleInPlace(velocity,dist);
+ GLMath.vec3addInPlace(vec,velocity);
+}
 /**
 * Turns the camera up or down, maintaining
 * its current position.
@@ -130,9 +154,9 @@ Camera.prototype.moveAngleVertical=function(angleDegrees){
 */
 Camera.prototype.turnVertical=function(angleDegrees){
  if(angleDegrees!=0){
-  var pos=this.getPosition();
-  this._angleVertical(angleDegrees);
-  this._resetTarget();
+  Camera.quatRotateRelative(this.dolly,angleDegrees,0,1,0);
+  Camera.quatRotateRelative(this.rotation,angleDegrees,0,1,0);
+  this._updateLookAt();
  }
  return this;
 }
@@ -165,9 +189,9 @@ Camera.prototype._resetTarget=function(){
 */
 Camera.prototype.turnHorizontal=function(angleDegrees){
  if(angleDegrees!=0){
-  var pos=this.getPosition();
-  this._angleHorizontal(-angleDegrees);
-  this._resetTarget();
+  Camera.quatRotateRelative(this.dolly,angleDegrees,1,0,0);
+  Camera.quatRotateRelative(this.rotation,angleDegrees,1,0,0);
+  this._updateLookAt();
  }
  return this;
 }
@@ -193,14 +217,9 @@ Camera.prototype.getPosition=function(){
 * @return {Camera} This object.
 */
 Camera.prototype.movePosition=function(cx, cy, cz){
- if(cx!=0 && cy!=0 && cz!=0){
-  var pos=this.getPosition();
-  this.target[0]+=(cx-pos[0]);
-  this.target[1]+=(cy-pos[1]);
-  this.target[2]+=(cz-pos[2]);
-  this.position=[cx,cy,cz];
- }
- return this;
+ this.position[0]=cx;
+ this.position[1]=cy;
+ this.position[2]=cz;
 }
 
 /**
@@ -235,27 +254,21 @@ Camera.prototype.moveClose=function(dist){
 * @param {number} distance Distance, in world
 * space units, to move the target and camera, either forward
 * or back.  Positive values
-* cause the camera to move forward, negative angles
+* cause the camera to move forward, negative values
 * cause it to move back.
 * @return {Camera} This object.
 */
 Camera.prototype.moveForward=function(dist){
  if(dist!=0){
-  var diff=Camera._vec3diff(this.target,this.position);
-  var realDist=GLMath.vec3length(diff);
-  var factor=dist/realDist;
-  this.position[0]+=diff[0]*factor;
-  this.position[1]+=diff[1]*factor;
-  this.position[2]+=diff[2]*factor;
-  this.target[0]+=diff[0]*factor;
-  this.target[1]+=diff[1]*factor;
-  this.target[2]+=diff[2]*factor;
+  Camera._moveRelative(this.position,this.dolly,dist,0,0,-1);
   this._updateLookAt();
  }
  return this;
 }
 Camera.prototype._updateLookAt=function(){
- this.scene.setLookAt(this.getPosition(),this.target);
+ var mat=GLMath.quatToMat4(this.rotation);
+ GLMath.mat4translate(mat,-this.position[0],-this.position[1],-this.position[2]);
+ scene.setViewMatrix(mat);
 }
 
 Camera.prototype.update=function(){
@@ -276,10 +289,6 @@ Camera.prototype.update=function(){
  if(this.input.keys[InputTracker.RIGHT]){
   this.turnHorizontal(0.5)
  }
- var aspect=this.scene.getAspect();
- if(aspect!=this.currentAspect){
-  this.currentAspect=aspect;
-  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
- }
+
  this._updateLookAt();
 }

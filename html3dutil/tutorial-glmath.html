@@ -26,6 +26,9 @@ If a vector describes a color, the four elements are given as red, green,
 blue, and alpha, in that order (where each element ranges from 0-1).
 The methods in this class treat arrays as vectors.  Functions dealing
 with vectors begin with &quot;vec&quot;.</p>
+<p>If a 3D <em>position</em> (point) is used in a 4-element vector function (one beginning
+with &quot;vec4&quot;), use 1 as the fourth element of the vector.  If a 3D <em>direction</em>
+is used in a 4-element vector function, use 0 as the fourth element.</p>
 <h2>Matrices</h2><p>A matrix is a 16- or 9-element array that describes a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
