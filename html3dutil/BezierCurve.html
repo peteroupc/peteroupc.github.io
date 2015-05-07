@@ -194,7 +194,12 @@ length of a control point, as specified in the constructor.
 
     <h5>Example</h5>
 
-    <pre class="prettyprint"><code>// Generate 11 points forming the B&amp;eacute;zier curve.// Assumes the curve was created with u1=0 and u2=1 (the default).var points=[];for(var i=0;i&lt;=10;i++){ points.push(curve.evaluate(i/10.0));}</code></pre>
+    <pre class="prettyprint"><code>// Generate 11 points forming the B&amp;eacute;zier curve.
+// Assumes the curve was created with u1=0 and u2=1 (the default).
+var points=[];
+for(var i=0;i&lt;=10;i++){
+ points.push(curve.evaluate(i/10.0));
+}</code></pre>
 
 </article>
 

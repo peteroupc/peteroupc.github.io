@@ -512,7 +512,7 @@ var shader="" +
 "varying vec3 colorAttrVar;\n" +
 "#ifdef SHADING\n"+
 "uniform mat3 worldViewInvTrans3; /* internal */\n" +
-"varying vec4 viewWorldPositionVar;\n" +
+"varying vec4 worldPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
 "#endif\n"+
 "void main(){\n" +
@@ -525,7 +525,7 @@ var shader="" +
 "uvVar=uv;\n" +
 "#ifdef SHADING\n"+
 "transformedNormalVar=normalize(worldViewInvTrans3*normal);\n" +
-"viewWorldPositionVar=view*world*positionVec4;\n" +
+"worldPositionVar=world*positionVec4;\n" +
 "#endif\n"+
 "}";
 return shader;
@@ -562,6 +562,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "#ifdef SPECULAR\n" +
 "uniform vec3 ms;\n" +
 "uniform float mshin;\n" +
+"uniform vec4 viewInvW;\n" +
 "#endif\n" +
 "#endif\n" +
 "uniform sampler2D sampler;\n" + // texture sampler
@@ -570,16 +571,16 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "varying vec2 uvVar;\n"+
 "varying vec3 colorAttrVar;\n" +
 "#ifdef SHADING\n" +
-"varying vec4 viewWorldPositionVar;\n" +
+"varying vec4 worldPositionVar;\n" +
 "varying vec3 transformedNormalVar;\n"+
-"vec4 calcLightPower(light lt, vec4 viewWorldPosition){\n" +
+"vec4 calcLightPower(light lt, vec4 vertexPosition){\n" +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
 " if(lt.position.w == 0.0){ /* directional light */\n" +
 "  sdir=normalize((lt.position).xyz);\n" +
 "  attenuation=1.0;\n" +
 " } else { /* point light */\n" +
-"  vec3 vertexToLight=(lt.position-viewWorldPosition).xyz;\n" +
+"  vec3 vertexToLight=(lt.position-vertexPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
 "  if(dist==0.0){\n" +
 "   sdir=vertexToLight;\n" +
@@ -607,14 +608,11 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "   useTexture), tmp, useColorAttr);\n"+
 "#ifdef SHADING\n" +
 "#define SET_LIGHTPOWER(i) "+
-" lightPower[i]=calcLightPower(lights[i],viewWorldPositionVar)\n" +
+" lightPower[i]=calcLightPower(lights[i],worldPositionVar)\n" +
 "#define ADD_DIFFUSE(i) "+
-" lightedColor+=vec3(lights[i].diffuse)*max(dot(transformedNormalVar," +
-"   lightPower[i].xyz),0.0)*lightPower[i].w*materialDiffuse;\n" +
-"vec4 lightPower["+Lights.MAX_LIGHTS+"];\n";
-for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
- shader+="SET_LIGHTPOWER("+i+");\n";
-}
+" lightedColor+=vec3(lights[i].diffuse)*max(lightCosines[i],0.0)*lightPower[i].w*materialDiffuse;\n" +
+"vec4 lightPower["+Lights.MAX_LIGHTS+"];\n" +
+"float lightCosines["+Lights.MAX_LIGHTS+"];\n";
 shader+=""+
 "if(baseColor.a==0.0)discard;\n" +
 "vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
@@ -622,24 +620,27 @@ shader+=""+
 " // diffuse\n"+
 " vec3 materialDiffuse=vec3(md)*baseColor.rgb;\n";
 for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
+ shader+="SET_LIGHTPOWER("+i+");\n";
+ shader+="lightCosines["+i+"]=dot(transformedNormalVar,lightPower["+i+"].xyz);\n";
+}
+for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
  shader+="ADD_DIFFUSE("+i+");\n";
 }
 shader+="#ifdef SPECULAR\n" +
+"bool spectmp;\n" +
 "// specular reflection\n" +
 "if((ms.x*ms.y*ms.z)!=0.0){\n" +
-"vec3 viewDirection=vec3(0,0,1.);\n" +
-"bool spectmp;\n" +
+"vec3 viewDirection=normalize((viewInvW-worldPositionVar).xyz);\n" +
 "float specular;\n";
 for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
-shader+="  spectmp = dot(transformedNormalVar, lightPower["+i+"].xyz) >= 0.0;\n" +
+shader+="  spectmp = lightCosines["+i+"] >= 0.0;\n" +
 "  if (spectmp) {\n" +
 "  vec3 lightSpecular=vec3(lights["+i+"].specular);\n"+
 "    specular=dot (-lightPower["+i+"].xyz - (2.0 * dot (transformedNormalVar, -lightPower["+i+"].xyz)*\n"+
 " transformedNormalVar), viewDirection);\n" +
 "    specular=max(specular,0.0);\n" +
 "    specular=pow(specular,mshin);\n"+
-"    specular=specular*lightPower["+i+"].w;\n" +
-"    lightedColor+=ms*specular*lightSpecular;\n" +
+"    lightedColor+=ms*specular*lightPower["+i+"].w*lightSpecular;\n" +
 "  }\n";
 }
 shader+="}\n";

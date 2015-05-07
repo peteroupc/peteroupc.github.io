@@ -110,6 +110,7 @@ Camera.prototype._getView=function(){
 /** @private */
 Camera.prototype._updateView=function(){
  this.scene.setViewMatrix(this._getView());
+ this._moveLight();
  return this;
 }
 /**
@@ -346,22 +347,17 @@ Camera.prototype.update=function(){
  if(this.input.leftButton){
   if(this.trackballMode){
    this._trackball(delta.x,delta.y,0.3);
-   this._moveLight();
   } else {
    this._orbit(delta.x,delta.y,0.3);
-   this._moveLight();
   }
  } else if(this.input.middleButton){
    this._move(delta.x,delta.y,0.3);
-   this._moveLight();
  }
  if(this.input.keys[InputTracker.W]){
   this.setDistance(this.distance+0.2)
-  this._moveLight();
  }
  if(this.input.keys[InputTracker.S]){
   this.setDistance(this.distance-0.2)
-  this._moveLight();
  }
  this.persp.update();
  return this;

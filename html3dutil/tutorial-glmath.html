@@ -69,13 +69,17 @@ before the translations (shifts) take place.</p>
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.</p>
 <h2>Quaternions</h2><p>A quaternion is a 4-element array that describes a
-3D rotation.  The first three elements are the X, Y, and Z components
-(axis of rotation multiplied by the sine of half the angle)
-and the fourth component is the W component (cosine of half the angle).
-Functions dealing with quaternions begin with &quot;quat&quot;.</p>
-<p><small>A quaternion can be seen as an extension of complex numbers,
-with one real part (W), and three imaginary parts (X, Y, and Z).</small></p>
-<p>The methods quatMultiply and quatFromTaitBryan, among others, involve
+3D rotation.  The first three elements (X, Y, and Z), represents
+an axis of rotation, and the fourth element is
+the W component. Functions dealing with quaternions begin with
+&quot;quat&quot;.  A quaternion is generated as follows:</p>
+<ul>
+<li>Set X, Y, and Z to the axis of rotation multiplied by the sine of
+half the angle.  This results in the same axis of rotation as before,
+but in a different form.</li>
+<li>Set W to the cosine of half the angle.</li>
+</ul>
+<h3>Multiplying quaternions</h3><p>The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
