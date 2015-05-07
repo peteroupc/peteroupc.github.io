@@ -497,7 +497,7 @@ function LightSource(position, ambient, diffuse, specular) {
  * A diffuse reflection is a reflection that scatters evenly, in every direction.
  * The default is (1,1,1), or white.
  */
- this.diffuse=diffuse||[1,1,1];
+ this.diffuse=diffuse||[1,1,1,1];
  /**
  * A 3-element vector giving the color of the light when it causes a specular
  * reflection, in the red, green,
@@ -588,13 +588,30 @@ Lights._createNewLight=function(index){
 }
 /**
  * Not documented yet.
+ */
+Lights.prototype.getCount=function(){
+ return this.lights.length;
+}
+
+/**
+ * Gets information about the light source at the given index.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
  * @return {LightSource} The corresponding light source object.
  */
 Lights.prototype.getLight=function(index){
+ var oldLength=this.lights.length;
  if(!this.lights[index])this.lights[index]=Lights._createNewLight(index);
+ if(this.lights.length-oldLength>=2){
+  // Ensure existence of lights that come between the new
+  // light and the last light
+  for(var i=oldLength;i&lt;this.lights.length;i++){
+   if(!this.lights[i]){
+    this.lights[i]=Lights._createNewLight(i);
+   }
+  }
+ }
  return this.lights[index];
 }
 /**
@@ -1759,12 +1776,18 @@ Scene3D.prototype._setIdentityMatrices=function(){
 }
 /** @private */
 Scene3D.prototype._updateMatrix=function(){
- this.program.setUniforms({
+ var uniforms={
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
- });
+ };
+ if(this.program.get("viewInvW")!=null){
+  var invView=GLMath.mat4invert(this._viewMatrix);
+  // calculate inverse(viewMatrix)*vec4(0,0,0,1.0)
+  uniforms["viewInvW"]=[invView[12],invView[13],invView[14],invView[15]];
+ }
+ this.program.setUniforms(uniforms);
 }
 /**
  * Sets the projection matrix for this object.  The projection
@@ -1937,21 +1960,23 @@ Scene3D.prototype._setupMatrices=function(shape,program){
   var uniforms={};
   var currentMatrix=shape.getMatrix();
   var viewWorld;
-  if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
-   // view matrix is just a translation matrix, so that getting the model-view
-   // matrix amounts to simply adding the view's position
-   viewWorld=currentMatrix.slice(0,16);
-   viewWorld[13]+=this._viewMatrix[13];
-   viewWorld[14]+=this._viewMatrix[14];
-   viewWorld[15]+=this._viewMatrix[15];
-  } else {
-   viewWorld=GLMath.mat4multiply(this._viewMatrix,
-    currentMatrix);
+  if(program.get("modelViewMatrix")!=null){
+   if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
+    // view matrix is just a translation matrix, so that getting the model-view
+    // matrix amounts to simply adding the view's position
+    viewWorld=currentMatrix.slice(0,16);
+    viewWorld[13]+=this._viewMatrix[13];
+    viewWorld[14]+=this._viewMatrix[14];
+    viewWorld[15]+=this._viewMatrix[15];
+   } else {
+    viewWorld=GLMath.mat4multiply(this._viewMatrix,
+     currentMatrix);
+   }
+   uniforms["modelViewMatrix"]=viewWorld;
   }
-  var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
+  var invTrans=GLMath.mat4inverseTranspose3(currentMatrix);
   uniforms["world"]=currentMatrix;
   uniforms["modelMatrix"]=currentMatrix;
-  uniforms["modelViewMatrix"]=viewWorld;
   uniforms["worldViewInvTrans3"]=invTrans;
   uniforms["normalMatrix"]=invTrans;
   program.setUniforms(uniforms);

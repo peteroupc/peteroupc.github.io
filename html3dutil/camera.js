@@ -7,6 +7,9 @@ function Perspective(scene, fov, nearZ, farZ){
  this.currentAspect=this.scene.getAspect();
  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
 }
+/**
+ * Not documented yet.
+ */
 Perspective.prototype.update=function(){
  var aspect=this.scene.getAspect();
  if(aspect!=this.currentAspect){
@@ -86,20 +89,27 @@ Camera._moveTrans=function(vec, quat, dist, x, y, z){
  GLMath.vec3scaleInPlace(velocity,dist);
  GLMath.vec3addInPlace(vec,velocity);
 }
+/**
+ * Not documented yet.
+ *//** @private */
 Camera.prototype._distance=function(){
  var rel=GLMath.vec3sub(this.position,this.center);
  return GLMath.vec3length(rel);
 }
 /** @private */
-Camera.prototype._updateView=function(){
+Camera.prototype._getView=function(){
  var mat=GLMath.quatToMat4(this.rotation);
  var mat2=GLMath.mat4translated(-this.position[0],
   -this.position[1],-this.position[2]);
- var mat3=GLMath.mat4translated(-this.center[0],
-  -this.center[1],-this.center[2]);
  mat=GLMath.mat4multiply(mat2,mat);
- mat=GLMath.mat4multiply(mat,mat3);
- this.scene.setViewMatrix(mat);
+ mat=GLMath.mat4translate(mat,-this.center[0],
+  -this.center[1],-this.center[2]);
+ return mat;
+}
+
+/** @private */
+Camera.prototype._updateView=function(){
+ this.scene.setViewMatrix(this._getView());
  return this;
 }
 /**
@@ -169,6 +179,10 @@ Camera.prototype._moveAngleFixedVertical=function(angleDegrees){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
 Camera.prototype.moveAngleVertical=function(angleDegrees){
  if(angleDegrees!=0){
   Camera._quatRotateRelative(this.dolly,angleDegrees,1,0,0);
@@ -177,6 +191,10 @@ Camera.prototype.moveAngleVertical=function(angleDegrees){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
 Camera.prototype.moveAngleHorizontal=function(angleDegrees){
  if(angleDegrees!=0){
   Camera._quatRotateRelative(this.dolly,angleDegrees,0,1,0);
@@ -185,6 +203,10 @@ Camera.prototype.moveAngleHorizontal=function(angleDegrees){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
 Camera.prototype.turnVertical=function(angleDegrees){
  if(angleDegrees!=0){
   var curDist=this._distance();
@@ -206,6 +228,12 @@ Camera.prototype.turnHorizontal=function(angleDegrees){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} cx
+ * @param {*} cy
+ * @param {*} cz
+ */
 Camera.prototype.movePosition=function(cx,cy,cz){
  this.position[0]=cx;
  this.position[1]=cy;
@@ -213,9 +241,17 @@ Camera.prototype.movePosition=function(cx,cy,cz){
  this._updateView();
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveClose=function(dist){
  return this.setDistance(this._distance()-dist);
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveForward=function(dist){
  if(dist!=0){
   Camera._moveRelative(this.position,this.dolly,dist,0,0,-1);
@@ -223,6 +259,10 @@ Camera.prototype.moveForward=function(dist){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveCenterHorizontal=function(dist){
  if(dist!=0){
   Camera._moveTrans(this.center,this.dolly,dist,-1,0,0);
@@ -230,6 +270,10 @@ Camera.prototype.moveCenterHorizontal=function(dist){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveCenterVertical=function(dist){
  if(dist!=0){
   Camera._moveTrans(this.center,this.dolly,dist,0,1,0);
@@ -237,6 +281,10 @@ Camera.prototype.moveCenterVertical=function(dist){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveHorizontal=function(dist){
  if(dist!=0){
   Camera._moveTrans(this.position,this.dolly,dist,-1,0,0);
@@ -244,6 +292,10 @@ Camera.prototype.moveHorizontal=function(dist){
  }
  return this;
 }
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
 Camera.prototype.moveVertical=function(dist){
  if(dist!=0){
   Camera._moveTrans(this.position,this.dolly,dist,0,1,0);
@@ -256,14 +308,34 @@ Camera.prototype.moveVertical=function(dist){
  * @param {*} e
  */
 Camera.prototype.getPosition=function(){
-  return GLMath.vec3copy(this.position);
+  var view=this._getView();
+  var pos=GLMath.quatTransform(
+    GLMath.quatConjugate(this.rotation),
+    [this.position[0],this.position[1],this.position[2],1]);
+  GLMath.vec3subInPlace(pos,this.center);
+  return pos;
 }
+/**
+ * Not documented yet.
+ */
+Camera.prototype.getVectorFromCenter=function(){
+  return GLMath.vec3normInPlace(this.getPosition());
+}
+
 /** @private */
 Camera.prototype._mousewheel=function(e){
  var ticks=e.delta/120.0;
  // mousewheel up (negative) means move forward,
  // mousewheel down (positive) means move back
  this.setDistance(this._distance()-0.6*ticks)
+}
+
+/** @private
+For backward compatibility only; will be removed in next major version */
+Camera.prototype._moveLight=function(){
+ if(this.scene.lightSource.getCount()==1){
+  this.scene.setDirectionalLight(0,this.getVectorFromCenter());
+ }
 }
 
 /**
@@ -274,17 +346,22 @@ Camera.prototype.update=function(){
  if(this.input.leftButton){
   if(this.trackballMode){
    this._trackball(delta.x,delta.y,0.3);
+   this._moveLight();
   } else {
    this._orbit(delta.x,delta.y,0.3);
+   this._moveLight();
   }
  } else if(this.input.middleButton){
    this._move(delta.x,delta.y,0.3);
+   this._moveLight();
  }
  if(this.input.keys[InputTracker.W]){
   this.setDistance(this.distance+0.2)
+  this._moveLight();
  }
  if(this.input.keys[InputTracker.S]){
   this.setDistance(this.distance-0.2)
+  this._moveLight();
  }
  this.persp.update();
  return this;
