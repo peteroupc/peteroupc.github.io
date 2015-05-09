@@ -22,7 +22,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="ShapeGroup"><span style="font-weight:lighter"></span>new ShapeGroup<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2255">line 2255</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2267">line 2267</a>
      </i></small></p>
 
 <div class="description">
@@ -39,7 +39,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="addShape"><span style="font-weight:lighter"></span>addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.ShapeGroup.html">glutil.ShapeGroup</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2266">line 2266</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2278">line 2278</a>
      </i></small></p>
 
 <div class="description">
@@ -96,48 +96,62 @@ will be stored in the list of shapes.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>getMatrix<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Transform.html">glutil.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2280">line 2280</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2295">line 2295</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Gets a copy of the transformation needed to transformthis shape group's coordinates to world coordinates.
 </div>
 
 <dl class="details">
 
 </dl>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getTransform"><span style="font-weight:lighter"></span>getTransform<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+<h5>Returns:</h5>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2274">line 2274</a>
+<div class="param-desc">
+    A 4x4 matrix.
+
+     (Type:
+<span class="param-type"><a href="glutil.Transform.html">glutil.Transform</a></span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getTransform"><span style="font-weight:lighter"></span>getTransform<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Transform.html">glutil.Transform</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2287">line 2287</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Gets a reference to the transform used by this shape group object.
 </div>
 
 <dl class="details">
 
 </dl>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+<h5>Returns:</h5>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2318">line 2318</a>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2336">line 2336</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Gets the number of primitives (triangles, lines,and points) composed by all shapes in this shape group.
 </div>
 
 <dl class="details">
 
 </dl>
+
+<h5>Returns:</h5>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2357">line 2357</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2379">line 2379</a>
      </i></small></p>
 
 <div class="description">
@@ -226,7 +240,7 @@ or a 3-element position array, as specified in <a href="glutil.Transform.html#se
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setQuaternion"><span style="font-weight:lighter"></span>setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2369">line 2369</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2391">line 2391</a>
      </i></small></p>
 
 <div class="description">
@@ -284,7 +298,7 @@ rather than the transform for each shape in the group.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setScale"><span style="font-weight:lighter"></span>setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2379">line 2379</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2401">line 2401</a>
      </i></small></p>
 
 <div class="description">
@@ -355,7 +369,7 @@ rather than the transform for each shape in the group.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setTransform"><span style="font-weight:lighter"></span>setTransform<span class="signature">(transform)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2301">line 2301</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2316">line 2316</a>
      </i></small></p>
 
 <div class="description">
@@ -398,18 +412,20 @@ rather than the transform for each shape in the group.
 
 </dl>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2308">line 2308</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2324">line 2324</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Gets the number of vertices composed by this all shapes in this shape group.
 </div>
 
 <dl class="details">
 
 </dl>
+
+<h5>Returns:</h5>
 
 </article>
 

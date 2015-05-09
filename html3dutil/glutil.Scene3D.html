@@ -88,9 +88,22 @@ that returns a WebGL context.</td>
 
         <h3 class="subsection-title">Members</h3>
 
+<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".BACK"><span style="font-weight:lighter">(static, constant) </span>BACK<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1484">line 1484</a>
+     </i></small></p>
+
+<div class="description">
+    Back side of a triangle.  By default, triangles with clockwise winding are back-facing.
+</div>
+
+<dl class="details">
+
+</dl>
+
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".CCW"><span style="font-weight:lighter">(static, constant) </span>CCW<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1493">line 1493</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1501">line 1501</a>
      </i></small></p>
 
 <div class="description">
@@ -105,11 +118,50 @@ to first vertex, in window coordinates (X and Y only), runs counterclockwise.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".CW"><span style="font-weight:lighter">(static, constant) </span>CW<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1498">line 1498</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1506">line 1506</a>
      </i></small></p>
 
 <div class="description">
     Clockwise winding, the opposite of counterclockwise winding.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".FRONT"><span style="font-weight:lighter">(static, constant) </span>FRONT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1489">line 1489</a>
+     </i></small></p>
+
+<div class="description">
+    Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".FRONT_AND_BACK"><span style="font-weight:lighter">(static, constant) </span>FRONT_AND_BACK<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1494">line 1494</a>
+     </i></small></p>
+
+<div class="description">
+    Back and front sides of a triangle.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".NONE"><span style="font-weight:lighter">(static, constant) </span>NONE<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1481">line 1481</a>
+     </i></small></p>
+
+<div class="description">
+    No face culling.
 </div>
 
 <dl class="details">
@@ -133,7 +185,7 @@ to first vertex, in window coordinates (X and Y only), runs counterclockwise.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="addShape"><span style="font-weight:lighter"></span>addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1988">line 1988</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1996">line 1996</a>
      </i></small></p>
 
 <div class="description">
@@ -192,7 +244,7 @@ will be stored in the 3D scene's list of shapes.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="createBuffer"><span style="font-weight:lighter"></span>createBuffer<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {FrameBuffer}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1673">line 1673</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1681">line 1681</a>
      </i></small></p>
 
 <div class="description">
@@ -215,7 +267,7 @@ will be stored in the 3D scene's list of shapes.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="cullFace"><span style="font-weight:lighter"></span>cullFace<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1508">line 1508</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1516">line 1516</a>
      </i></small></p>
 
 <div class="description">
@@ -274,7 +326,7 @@ disables face culling.  By default, face culling is disabled.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="disableLighting"><span style="font-weight:lighter"></span>disableLighting<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1605">line 1605</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1613">line 1613</a>
      </i></small></p>
 
 <div class="description">
@@ -298,7 +350,7 @@ to a program that doesn't support lighting.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="frontFace"><span style="font-weight:lighter"></span>frontFace<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1547">line 1547</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1555">line 1555</a>
      </i></small></p>
 
 <div class="description">
@@ -357,7 +409,7 @@ set this value to Scene3D.CW.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getAspect"><span style="font-weight:lighter"></span>getAspect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1657">line 1657</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1665">line 1665</a>
      </i></small></p>
 
 <div class="description">
@@ -375,7 +427,7 @@ after each call to the render() method.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getClearColor"><span style="font-weight:lighter"></span>getClearColor<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1571">line 1571</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1579">line 1579</a>
      </i></small></p>
 
 <div class="description">
@@ -399,7 +451,7 @@ after each call to the render() method.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getClientAspect"><span style="font-weight:lighter"></span>getClientAspect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1664">line 1664</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1672">line 1672</a>
      </i></small></p>
 
 <div class="description">
@@ -428,7 +480,7 @@ as actually displayed on the screen.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getHeight"><span style="font-weight:lighter"></span>getHeight<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1647">line 1647</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1655">line 1655</a>
      </i></small></p>
 
 <div class="description">
@@ -445,7 +497,7 @@ after each call to the render() method.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getProjectionMatrix"><span style="font-weight:lighter"></span>getProjectionMatrix<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1680">line 1680</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1688">line 1688</a>
      </i></small></p>
 
 <div class="description">
@@ -458,7 +510,7 @@ after each call to the render() method.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getViewMatrix"><span style="font-weight:lighter"></span>getViewMatrix<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1686">line 1686</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1694">line 1694</a>
      </i></small></p>
 
 <div class="description">
@@ -471,7 +523,7 @@ after each call to the render() method.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getWidth"><span style="font-weight:lighter"></span>getWidth<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1638">line 1638</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1646">line 1646</a>
      </i></small></p>
 
 <div class="description">
@@ -488,7 +540,7 @@ after each call to the render() method.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadAndMapTexture"><span style="font-weight:lighter"></span>loadAndMapTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1876">line 1876</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1884">line 1884</a>
      </i></small></p>
 
 <div class="description">
@@ -552,7 +604,7 @@ object), and is rejected when an error occurs.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadAndMapTextures"><span style="font-weight:lighter"></span>loadAndMapTextures<span class="signature">(textureFiles, resolved<sub style="font-weight:lighter">opt</sub>, rejected<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1904">line 1904</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1912">line 1912</a>
      </i></small></p>
 
 <div class="description">
@@ -659,7 +711,7 @@ See <a href="glutil.GLUtil.html#.getPromiseResults">glutil.GLUtil.getPromiseResu
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadTexture"><span style="font-weight:lighter"></span>loadTexture<span class="signature">(URL)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1862">line 1862</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1870">line 1870</a>
      </i></small></p>
 
 <div class="description">
@@ -716,7 +768,7 @@ object), and is rejected when an error occurs.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="makeShape"><span style="font-weight:lighter"></span>makeShape<span class="signature">(mesh)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2000">line 2000</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2008">line 2008</a>
      </i></small></p>
 
 <div class="description">
@@ -772,22 +824,24 @@ track future changes.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2338">line 2338</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2360">line 2360</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Gets the number of primitives (triangles, lines,and points) composed by all shapes in this scene.
 </div>
 
 <dl class="details">
 
 </dl>
 
+<h5>Returns:</h5>
+
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2010">line 2010</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2018">line 2018</a>
      </i></small></p>
 
 <div class="description">
@@ -845,7 +899,7 @@ track future changes.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="render"><span style="font-weight:lighter"></span>render<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2140">line 2140</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2152">line 2152</a>
      </i></small></p>
 
 <div class="description">
@@ -877,7 +931,7 @@ matrix
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setAmbient"><span style="font-weight:lighter"></span>setAmbient<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2064">line 2064</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2076">line 2076</a>
      </i></small></p>
 
 <div class="description">
@@ -982,7 +1036,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setAutoResize"><span style="font-weight:lighter"></span>setAutoResize<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1562">line 1562</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1570">line 1570</a>
      </i></small></p>
 
 <div class="description">
@@ -1039,7 +1093,7 @@ when the render() method is called. Default is true.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setClearColor"><span style="font-weight:lighter"></span>setClearColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1851">line 1851</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1859">line 1859</a>
      </i></small></p>
 
 <div class="description">
@@ -1145,7 +1199,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setDimensions"><span style="font-weight:lighter"></span>setDimensions<span class="signature">(width, height)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1620">line 1620</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1628">line 1628</a>
      </i></small></p>
 
 <div class="description">
@@ -1207,8 +1261,12 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setDirectionalLight"><span style="font-weight:lighter"></span>setDirectionalLight<span class="signature">(index, position, diffuse, specular)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2035">line 2035</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2044">line 2044</a>
      </i></small></p>
+
+<div class="description">
+    Sets a light source in this scene to a directional light.
+</div>
 
     <h5>Parameters:</h5>
 
@@ -1237,7 +1295,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
             </td>
 
             <td class="description last">Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.</td>
+light has index 0, the second has index 1, and so on.  Will be createdif the light doesn't exist.</td>
         </tr>
 
         <tr>
@@ -1305,7 +1363,7 @@ May be null, in which case the default is (1, 1, 1).</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setFrustum"><span style="font-weight:lighter"></span>setFrustum<span class="signature">(left, right, bottom, top, near, far)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1789">line 1789</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1797">line 1797</a>
      </i></small></p>
 
 <div class="description">
@@ -1435,13 +1493,13 @@ to be seen.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setLightParams"><span style="font-weight:lighter"></span>setLightParams<span class="signature">(index, params)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setLightParams"><span style="font-weight:lighter"></span>setLightParams<span class="signature">(index, params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2046">line 2046</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2058">line 2058</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Sets parameters for a light in this scene.
 </div>
 
     <h5>Parameters:</h5>
@@ -1466,11 +1524,11 @@ to be seen.</td>
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">number</span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">Zero-based index of the light to set.  The firstlight has index 0, the second has index 1, and so on.  Will be createdif the light doesn't exist.</td>
         </tr>
 
         <tr>
@@ -1479,11 +1537,11 @@ to be seen.</td>
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">object</span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">An object as described in glutil.LightSource.setParams.</td>
         </tr>
 
     </tbody>
@@ -1493,9 +1551,19 @@ to be seen.</td>
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.Scene3D.html">glutil.Scene3D</a></span>)
+
+</div>
+
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setLookAt"><span style="font-weight:lighter"></span>setLookAt<span class="signature">(eye, center<sub style="font-weight:lighter">opt</sub>, up<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1975">line 1975</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1983">line 1983</a>
      </i></small></p>
 
 <div class="description">
@@ -1605,7 +1673,7 @@ so it points perpendicular to the camera's view direction.)</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setOrtho"><span style="font-weight:lighter"></span>setOrtho<span class="signature">(left, right, bottom, top, near, far)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1811">line 1811</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1819">line 1819</a>
      </i></small></p>
 
 <div class="description">
@@ -1733,7 +1801,7 @@ between near and far should be as small as the application can accept.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setOrtho2D"><span style="font-weight:lighter"></span>setOrtho2D<span class="signature">(left, right, bottom, top)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1826">line 1826</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1834">line 1834</a>
      </i></small></p>
 
 <div class="description">
@@ -1830,7 +1898,7 @@ The near and far clipping planes will be set to -1 and 1, respectively.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setOrtho2DAspect"><span style="font-weight:lighter"></span>setOrtho2DAspect<span class="signature">(left, right, bottom, top, aspect<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1763">line 1763</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1771">line 1771</a>
      </i></small></p>
 
 <div class="description">
@@ -1969,7 +2037,7 @@ of width to height).  If null or omitted, uses this scene's aspect ratio instead
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setOrthoAspect"><span style="font-weight:lighter"></span>setOrthoAspect<span class="signature">(left, right, bottom, top, near, far, aspect<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1740">line 1740</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1748">line 1748</a>
      </i></small></p>
 
 <div class="description">
@@ -2147,7 +2215,7 @@ of width to height).  If null or omitted, uses this scene's aspect ratio instead
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setPerspective"><span style="font-weight:lighter"></span>setPerspective<span class="signature">(fov, aspect, near, far)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1711">line 1711</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1719">line 1719</a>
      </i></small></p>
 
 <div class="description">
@@ -2257,8 +2325,12 @@ scene.setPerspective(45,scene.getClientAspect(),0.1,100);</code></pre>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setPointLight"><span style="font-weight:lighter"></span>setPointLight<span class="signature">(index, position, diffuse, specular)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2085">line 2085</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2097">line 2097</a>
      </i></small></p>
+
+<div class="description">
+    Sets a light source in this scene to a point light
+</div>
 
     <h5>Parameters:</h5>
 
@@ -2353,7 +2425,7 @@ May be null, in which case the default is (1, 1, 1).</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setProjectionMatrix"><span style="font-weight:lighter"></span>setProjectionMatrix<span class="signature">(matrix)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1941">line 1941</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1949">line 1949</a>
      </i></small></p>
 
 <div class="description">
@@ -2410,7 +2482,7 @@ matrix can also be set using the <a href="glutil.Scene3D.html#setFrustum">glutil
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setViewMatrix"><span style="font-weight:lighter"></span>setViewMatrix<span class="signature">(matrix)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1952">line 1952</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1960">line 1960</a>
      </i></small></p>
 
 <div class="description">
@@ -2466,7 +2538,7 @@ be set using the <a href="glutil.Scene3D.html#setLookAt">glutil.Scene3D#setLookA
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="useFilter"><span style="font-weight:lighter"></span>useFilter<span class="signature">(filterProgram)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2206">line 2206</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2218">line 2218</a>
      </i></small></p>
 
 <div class="description">
@@ -2537,7 +2609,7 @@ are rendered to the canvas normally.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="useProgram"><span style="font-weight:lighter"></span>useProgram<span class="signature">(program)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1594">line 1594</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1602">line 1602</a>
      </i></small></p>
 
 <div class="description">
@@ -2591,18 +2663,20 @@ and prepares this object for the new program.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2328">line 2328</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2348">line 2348</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Gets the number of vertices composed byall shapes in this scene.
 </div>
 
 <dl class="details">
 
 </dl>
+
+<h5>Returns:</h5>
 
 </article>
 
