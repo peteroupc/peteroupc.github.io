@@ -65,10 +65,10 @@ function moveStarField(group, range,frames){
    .cullFace(Scene3D.BACK);
   var fc=new FrameCounterDiv(scene)
   var timer={};
-  scene.setPerspective(45,scene.getClientAspect(),5,1000).setLookAt([0,0,500]);
   var group=starField(scene,1000)
   scene.addShape(group);
    GLUtil.renderLoop(function(time){
+    scene.setPerspective(45,scene.getClientAspect(),5,1000).setLookAt([0,0,500]);
     moveStarField(group,1000,GLUtil.newFrames(timer,time))
     fc.update()
     scene.render();

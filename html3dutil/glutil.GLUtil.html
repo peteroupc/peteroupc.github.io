@@ -490,7 +490,10 @@ True means success, and false means failure.
      </i></small></p>
 
 <div class="description">
-    Gets the position of a time value within an interval.This is useful for doing animation cycles lasting a certain numberof seconds, such as rotating a shape in a 5-second cycle.This method may be called any number of times each frame.
+    Gets the position of a time value within an interval.
+This is useful for doing animation cycles lasting a certain number
+of seconds, such as rotating a shape in a 5-second cycle.
+This method may be called any number of times each frame.
 </div>
 
     <h5>Parameters:</h5>
@@ -519,7 +522,14 @@ True means success, and false means failure.
 
             </td>
 
-            <td class="description last">An object that will hold twoproperties:<ul><li>"time" - initial time value, in milliseconds.<li>"lastTime" - last known time value, in milliseconds.Will be set to the value given in "timeInMs" before returning.</ul>The object should be initialized using the idiom <code>{}</code>or <code>new Object()</code>.</td>
+            <td class="description last">An object that will hold two
+properties:<ul>
+<li>"time" - initial time value, in milliseconds.
+<li>"lastTime" - last known time value, in milliseconds.
+Will be set to the value given in "timeInMs" before returning.
+</ul>
+The object should be initialized using the idiom <code>{}</code>
+or <code>new Object()</code>.</td>
         </tr>
 
         <tr>
@@ -532,7 +542,10 @@ True means success, and false means failure.
 
             </td>
 
-            <td class="description last">A time value, in milliseconds.This could be the parameter received in a<code>requestAnimationFrame()</code> callback method.</code>.</td>
+            <td class="description last">A time value, in milliseconds.
+This could be the parameter received in a
+<code>requestAnimationFrame()</code> callback method.
+</code>.</td>
         </tr>
 
         <tr>
@@ -545,7 +558,8 @@ True means success, and false means failure.
 
             </td>
 
-            <td class="description last">The length of the interval(animation cycle), in milliseconds.</td>
+            <td class="description last">The length of the interval
+(animation cycle), in milliseconds.</td>
         </tr>
 
     </tbody>
@@ -558,7 +572,10 @@ True means success, and false means failure.
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    A value in the range [0, 1), where closerto 0 means "timeInMs" liescloser to the start, and closer to 1 means closerto the end of the interval.  If an initial time wasn't set, returns 0.
+    A value in the range [0, 1), where closer
+to 0 means "timeInMs" lies
+closer to the start, and closer to 1 means closer
+to the end of the interval.  If an initial time wasn't set, returns 0.
 
      (Type:
 <span class="param-type">number</span>)
@@ -567,7 +584,13 @@ True means success, and false means failure.
 
     <h5>Example</h5>
 
-        <p class="code-caption">The following code sets an angle ofrotation, in degrees, such that an object rotated with theangle does a 360-degree turn in 5 seconds (5000 milliseconds).The variable <code>time</code> is assumed to be a timevalue in milliseconds, such as the parameter of a<code>requestAnimationFrame()</code> callback method.</p>
+        <p class="code-caption">The following code sets an angle of
+rotation, in degrees, such that an object rotated with the
+angle does a 360-degree turn in 5 seconds (5000 milliseconds).
+The variable <code>time</code> is assumed to be a time
+value in milliseconds, such as the parameter of a
+<code>requestAnimationFrame()</code> callback method.
+</p>
 
     <pre class="prettyprint"><code>var angle = 360 * GLUtil.getTimePosition(timer, time, 5000);</code></pre>
 
@@ -670,7 +693,9 @@ one property: "url", the URL of the file).
      </i></small></p>
 
 <div class="description">
-    Returns the number of frame-length intervals that occurred sincethe last known time, where a frame's length is 1/60 of a second.This method should be called only once each frame.
+    Returns the number of frame-length intervals that occurred since
+the last known time, where a frame's length is 1/60 of a second.
+This method should be called only once each frame.
 </div>
 
     <h5>Parameters:</h5>
@@ -699,7 +724,8 @@ one property: "url", the URL of the file).
 
             </td>
 
-            <td class="description last">An object describedin <a href="glutil.GLUtil.html#.newFrames">glutil.GLUtil.newFrames</a>.</td>
+            <td class="description last">An object described
+in <a href="glutil.GLUtil.html#.newFrames">glutil.GLUtil.newFrames</a>.</td>
         </tr>
 
         <tr>
@@ -712,7 +738,10 @@ one property: "url", the URL of the file).
 
             </td>
 
-            <td class="description last">A time value, in milliseconds.This could be the parameter received in a<code>requestAnimationFrame()</code> callback method.</code>.</td>
+            <td class="description last">A time value, in milliseconds.
+This could be the parameter received in a
+<code>requestAnimationFrame()</code> callback method.
+</code>.</td>
         </tr>
 
     </tbody>
@@ -725,7 +754,10 @@ one property: "url", the URL of the file).
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    The number of frame-length intervals relative tothe last known time held in the parameter "timer".The number can include fractional frames.  If aninitial time or last known time wasn't set, returns 0.
+    The number of frame-length intervals relative to
+the last known time held in the parameter "timer".
+The number can include fractional frames.  If an
+initial time or last known time wasn't set, returns 0.
 
      (Type:
 <span class="param-type">number</span>)
@@ -784,7 +816,7 @@ milliseconds since the page was loaded.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line515">line 515</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line513">line 513</a>
      </i></small></p>
 
 <div class="description">
