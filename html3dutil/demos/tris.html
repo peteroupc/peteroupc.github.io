@@ -1,9 +1,14 @@
 <meta charset=utf-8>
 <head>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
 <script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
-<canvas width="600" height="450" id=canvas></canvas>
+<canvas id=canvas></canvas>
 <script id="demo">
 //<!--
 /*
@@ -20,6 +25,7 @@ function TriangleParticles(scene,count){
  this.group=new ShapeGroup();
  this.width=scene.getWidth();
  this.scene=scene;
+ this.timer={};
  this.height=scene.getHeight();
  for(var i=0;i<count;i++){
   var tri=TriangleParticles.generateTri(this.width,this.height)
@@ -29,9 +35,10 @@ function TriangleParticles(scene,count){
  }
  this.scene.addShape(this.group);
 }
-TriangleParticles.prototype.update=function(){
+TriangleParticles.prototype.update=function(time){
+ var frames=GLUtil.newFrames(this.timer,time);
  for(var i=0;i<this.tris.length;i++){
-  this.tris[i].life--;
+  this.tris[i].life-=frames;
   if(this.tris[i].life<=0){
    var tri=TriangleParticles.generateTri(this.width,this.height)
    this.tris[i]=tri;
@@ -39,8 +46,8 @@ TriangleParticles.prototype.update=function(){
     TriangleParticles.makeShapeFromTri(tri,this.scene);
   } else {
    var trans=this.group.shapes[i].getTransform()
-   trans.movePosition(this.tris[i].movement)
-   trans.multOrientation(this.tris[i].rotation,0,0,1)
+   trans.movePosition(GLMath.vec3scale(this.tris[i].movement,frames))
+   trans.multOrientation(this.tris[i].rotation*frames,0,0,1)
   }
  }
 }
@@ -109,18 +116,11 @@ TriangleParticles.generateTri=function(width,height){
   scene.setOrtho(0,scene.getWidth(),scene.getHeight(),0,-2,2);
   var tris=new TriangleParticles(scene,200);
   // Set up the render loop
-  GLUtil.renderLoop(function(){
-   tris.update();
+  GLUtil.renderLoop(function(time){
+   tris.update(time);
    // Render the scene
    scene.render();
   });
 //-->
-</script>
-<script>
-window.addEventListener("load",function(){
- var e=document.createElement("pre")
- e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
- document.body.appendChild(e)
-})
 </script>
 </body>

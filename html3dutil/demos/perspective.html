@@ -1,11 +1,16 @@
 <meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
 <head>
 <script type="text/javascript" src="../glutil_min.js"></script>
 <script type="text/javascript" src="../camera.js"></script>
 <script type="text/javascript" src="frustum.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
-<canvas width="600" height="450" id=canvas></canvas>
+<canvas id=canvas></canvas>
 <script id="demo">
 //<!--
 /*
@@ -300,11 +305,4 @@ is smaller than the one that results by the scene's actual projection,
 in order to show the effect better.)  Spheres that would be clipped
 out by the wireframe volume are colored red.</p>
 
-<script>
-window.addEventListener("load",function(){
- var e=document.createElement("pre")
- e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
- document.body.appendChild(e)
-})
-</script>
 </body>

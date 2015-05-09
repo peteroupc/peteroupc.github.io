@@ -1,10 +1,15 @@
 <meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
 <head>
 <script type="text/javascript" src="../glutil_min.js"></script>
 <script type="text/javascript" src="../frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
-<canvas width="600" height="450" id=canvas></canvas>
+<canvas id=canvas></canvas>
 <p>Texture courtesy of pdtextures.blogspot.com</p>
 <script id="demo">
 //<!--
@@ -16,25 +21,15 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-var Timer=function(){
- this.time=null
-}
-Timer.prototype.getTimePosition=function(timeInMs,intervalInMs){
- if(this.time==null) {
-  this.time=timeInMs
-  return 0
- } else {
-  return ((timeInMs-this.time)%intervalInMs)/intervalInMs;
- }
-}
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
+  var scene=new Scene3D(document.getElementById("canvas"))
+    .cullFace(Scene3D.BACK);
   var fc=new FrameCounterDiv(scene)
   scene.setPerspective(45,scene.getClientAspect(),0.1,100);
   scene.setLookAt([0,0,40]);
-  var timer=new Timer()
+  var timer={}
   scene.loadAndMapTexture("461223191.jpg").then(function(tex){
    var mesh=Meshes.createBox(10,20,20);
    var shape=scene.makeShape(mesh).setTexture(tex)
@@ -42,20 +37,13 @@ Timer.prototype.getTimePosition=function(timeInMs,intervalInMs){
    var rotation=[0,0,0];
    GLUtil.renderLoop(function(time){
     fc.update();
-    rotation[0]=360*timer.getTimePosition(time,12000);
-    rotation[1]=360*timer.getTimePosition(time,6000);
+    rotation[0]=360*GLUtil.getTimePosition(timer,time,12000);
+    rotation[1]=360*GLUtil.getTimePosition(timer,time,6000);
     var q=GLMath.quatFromTaitBryan(rotation);
     shape.setQuaternion(q);
     scene.render();
    });
  })
 //-->
-</script>
-<script>
-window.addEventListener("load",function(){
- var e=document.createElement("pre")
- e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
- document.body.appendChild(e)
-})
 </script>
 </body>

@@ -68,10 +68,14 @@ texture -- a linear gradient from one color to another.</li>
   scene.addShape(shape);
   // Set the starting rotation
   var rotation=[0,0,0];
+  // Create a timer
+  var timer={};
   // Set up the render loop
-  GLUtil.renderLoop(function(){
-   rotation[0]+=.5; // Adjust x-rotation by .5 degree
-   rotation[1]+=1.0; // Adjust y-rotation by 1 degree
+  GLUtil.renderLoop(function(time){
+   // Adjust x-rotation
+   rotation[0]=360*GLUtil.getTimePosition(timer,time,6000);
+   // Adjust y-rotation
+   rotation[1]=360*GLUtil.getTimePosition(timer,time,12000);
    // Update the shape's rotation
    shape.setQuaternion(GLMath.quatFromTaitBryan(rotation));
    // Render the scene

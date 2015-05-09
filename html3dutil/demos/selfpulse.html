@@ -1,9 +1,14 @@
 <head>
 <meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
 <script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
-<canvas width="600" height="450" id=canvas></canvas>
+<canvas id=canvas></canvas>
 <script id="demo">
 //<!--
 /*
@@ -51,12 +56,5 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    scene.render();
   });
 //-->
-</script>
-<script>
-window.addEventListener("load",function(){
- var e=document.createElement("pre")
- e.innerHTML=document.getElementById("demo").textContent.replace(/</g,"&lt;")
- document.body.appendChild(e)
-})
 </script>
 </body>

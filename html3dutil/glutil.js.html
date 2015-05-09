@@ -311,6 +311,78 @@ var GLUtil={
 }
 };
 
+/**
+* Gets the position of a time value within an interval.
+* This is useful for doing animation cycles lasting a certain number
+* of seconds, such as rotating a shape in a 5-second cycle.
+* This method may be called any number of times each frame.
+* @param {object} timer An object that will hold two
+* properties:&lt;ul>
+* &lt;li>"time" - initial time value, in milliseconds.
+* &lt;li>"lastTime" - last known time value, in milliseconds.
+* Will be set to the value given in "timeInMs" before returning.
+* &lt;/ul>
+* The object should be initialized using the idiom &lt;code>{}&lt;/code>
+* or &lt;code>new Object()&lt;/code>.
+* @param {number} timeInMs A time value, in milliseconds.
+* This could be the parameter received in a
+* &lt;code>requestAnimationFrame()&lt;/code> callback method.
+* &lt;/code>.
+* @param {number} interval The length of the interval
+* (animation cycle), in milliseconds.
+* @return {number} A value in the range [0, 1), where closer
+* to 0 means "timeInMs" lies
+* closer to the start, and closer to 1 means closer
+* to the end of the interval.  If an initial time wasn't set, returns 0.
+* @example &lt;caption>The following code sets an angle of
+* rotation, in degrees, such that an object rotated with the
+* angle does a 360-degree turn in 5 seconds (5000 milliseconds).
+* The variable &lt;code>time&lt;/code> is assumed to be a time
+* value in milliseconds, such as the parameter of a
+* &lt;code>requestAnimationFrame()&lt;/code> callback method.
+* &lt;/caption>
+* var angle = 360 * GLUtil.getTimePosition(timer, time, 5000);
+*/
+GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
+ if(timer.time==null) {
+  timer.time=timeInMs;
+  timer.lastTime=timeInMs;
+  return 0;
+ } else {
+  if(timer.lastTime==null)timer.lastTime=timeInMs;
+  return (((timeInMs-timer.time)*1.0)%intervalInMs)/intervalInMs;
+ }
+};
+/**
+* Returns the number of frame-length intervals that occurred since
+* the last known time, where a frame's length is 1/60 of a second.
+* This method should be called only once each frame.
+* @param {object} timer An object described
+* in {@link glutil.GLUtil.newFrames}.
+* @param {number} timeInMs A time value, in milliseconds.
+* This could be the parameter received in a
+* &lt;code>requestAnimationFrame()&lt;/code> callback method.
+* &lt;/code>.
+* @return {number} The number of frame-length intervals relative to
+* the last known time held in the parameter "timer".
+* The number can include fractional frames.  If an
+* initial time or last known time wasn't set, returns 0.
+*/
+GLUtil.newFrames=function(timer,timeInMs){
+ if(timer.time==null) {
+  timer.time=timeInMs;
+  timer.lastTime=timeInMs;
+  return 0;
+ } else if(timer.lastTime==null){
+  timer.lastTime=timeInMs;
+  return 0;
+ } else {
+  var diff=(timeInMs-timer.lastTime);
+  timer.lastTime=timeInMs;
+  return diff*60.0/1000.0;
+ }
+};
+
 (function(exports){
 
 var hlsToRgb=function(hls) {
@@ -1464,6 +1536,7 @@ function Scene3D(canvasOrContext){
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
  this.useDevicePixelRatio=false;
+ this._pixelRatio=1;
  this.autoResize=true;
  this.lightSource=new Lights();
  this.width=Math.ceil(this.context.canvas.clientWidth*1.0);
@@ -1532,7 +1605,7 @@ Scene3D.prototype.cullFace=function(value){
  } else {
   this._cullFace=0;
  }
- return;
+ return this;
 }
 Scene3D.prototype._setFace=function(){
  if(this._cullFace==Scene3D.BACK){
@@ -1580,6 +1653,26 @@ Scene3D.prototype.frontFace=function(value){
 */
 Scene3D.prototype.setAutoResize=function(value){
  this.autoResize=!!value;
+ return this;
+}
+/**
+* Sets whether to use the device's pixel ratio (if supported by
+* the browser) in addition to the canvas's size when setting
+* the viewport's dimensions.&lt;p>
+* When this value changes, the Scene3D will automatically
+* adjust the viewport.
+* @param {boolean} value If true, use the device's pixel ratio
+* when setting the viewport's dimensions.  Default is true.
+* @return {glutil.Scene3D} This object.
+  */
+Scene3D.prototype.setUseDevicePixelRatio=function(value){
+ var oldvalue=!!this.useDevicePixelRatio;
+ this.useDevicePixelRatio=!!value;
+ this._pixelRatio=(this.useDevicePixelRatio &amp;&amp; window.devicePixelRatio) ?
+   window.devicePixelRatio : 1;
+ if(oldvalue!=this.useDevicePixelRatio){
+  this.setDimensions(this.width,this.height);
+ }
  return this;
 }
  /**
@@ -1640,9 +1733,10 @@ Scene3D.prototype.setDimensions=function(width, height){
  if(width&lt;0 || height&lt;0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
- this.context.canvas.width=this.width;
- this.context.canvas.height=this.height;
- this.context.viewport(0,0,this.width,this.height);
+ this.context.canvas.width=this.width*this._pixelRatio;
+ this.context.canvas.height=this.height*this._pixelRatio;
+ this.context.viewport(0,0,this.width*this._pixelRatio,
+   this.height*this._pixelRatio);
   if(this.fbo!="undefined" &amp;&amp; this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
@@ -2163,8 +2257,8 @@ Scene3D.prototype._setupMatrices=function(shape,program){
 Scene3D.prototype.render=function(){
   if(this.autoResize){
    var c=this.context.canvas;
-   if(c.height!=c.clientHeight ||
-       c.width!=c.clientWidth){
+   if(c.height!=Math.ceil(c.clientHeight)*this._pixelRatio ||
+       c.width!=Math.ceil(c.clientWidth)*this._pixelRatio){
     // Resize the canvas if needed
     this.setDimensions(c.clientWidth,c.clientHeight);
    }
