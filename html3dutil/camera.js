@@ -4,14 +4,14 @@ function Perspective(scene, fov, nearZ, farZ){
  this.scene=scene;
  this.near=nearZ;
  this.far=farZ;
- this.currentAspect=this.scene.getAspect();
+ this.currentAspect=this.scene.getClientAspect();
  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
 }
 /**
  * Not documented yet.
  */
 Perspective.prototype.update=function(){
- var aspect=this.scene.getAspect();
+ var aspect=this.scene.getClientAspect();
  if(aspect!=this.currentAspect){
   this.currentAspect=aspect;
   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);

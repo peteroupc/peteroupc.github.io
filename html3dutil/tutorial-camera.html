@@ -20,7 +20,7 @@ especially when using my <a href="http://peteroupc.github.io/html3dutil">HTML 3D
 <h2>The &quot;Camera&quot; and the Projection and View Transforms</h2><p>The <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html"><code>Scene3D</code></a> class of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setPerspective"><code>setPerspective()</code></a> and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setLookAt"><code>setLookAt()</code></a>, which are shown in the example below.</p>
 <pre class="prettyprint source"><code>// Set the perspective view.  Camera has a 45-degree field of view
 // and will see objects from 0.1 to 100 units away.
-scene.setPerspective(45,scene.getAspect(),0.1,100);
+scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 // Move the camera back 40 units.
 scene.setLookAt([0,0,40]);
 // Move the camera back 30 units instead, and turn it so it
@@ -76,7 +76,7 @@ methods define a perspective projection.</p>
 and sets the scene's projection matrix accordingly.</p>
 <ul>
 <li><code>fov</code> - Vertical field of view, in degrees.</li>
-<li><code>aspect</code> - Aspect ratio of the scene.  You should usually use <code>scene3d.getAspect()</code>.</li>
+<li><code>aspect</code> - Aspect ratio of the scene.  You should usually use <code>scene3d.getClientAspect()</code>.</li>
 <li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
 </ul>
 <p><strong><code>scene3d.setFrustum(left, right, bottom, top, near, far)</code></strong></p>
@@ -113,7 +113,7 @@ or squished in case the view volume's aspect ratio and the scene's aspect ratio 
 <ul>
 <li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code>, <code>near</code>, <code>far</code> - Same as in <code>setOrtho</code>.</li>
 <li><code>aspect</code> - Aspect ratio of the viewport.  May be omitted, in which case the scene's
-aspect ratio (<code>scene.getAspect()</code>) is used.</li>
+aspect ratio (<code>scene.getClientAspect()</code>) is used.</li>
 </ul>
 <h3>Other Projections</h3><p>There are other kinds of possible projections, such as oblique projections
 or isometric projections.  For these

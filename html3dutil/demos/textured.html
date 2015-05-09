@@ -18,16 +18,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 var Timer=function(){
  this.time=null
- this.hasPerformance=("performance" in window)
 }
-Timer.prototype.getTimeMod=function(mod){
- var t=(this.hasPerformance) ?
-   window.performance.now() : (new Date().getTime()*1000);
+Timer.prototype.getTimePosition=function(timeInMs,intervalInMs){
  if(this.time==null) {
-  this.time=t
+  this.time=timeInMs
   return 0
  } else {
-  return (t-this.time)%mod
+  return ((timeInMs-this.time)%intervalInMs)/intervalInMs;
  }
 }
 
@@ -35,7 +32,7 @@ Timer.prototype.getTimeMod=function(mod){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   var fc=new FrameCounterDiv(scene)
-  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  scene.setPerspective(45,scene.getClientAspect(),0.1,100);
   scene.setLookAt([0,0,40]);
   var timer=new Timer()
   scene.loadAndMapTexture("461223191.jpg").then(function(tex){
@@ -43,10 +40,10 @@ Timer.prototype.getTimeMod=function(mod){
    var shape=scene.makeShape(mesh).setTexture(tex)
    scene.addShape(shape);
    var rotation=[0,0,0];
-   GLUtil.renderLoop(function(){
+   GLUtil.renderLoop(function(time){
     fc.update();
-    rotation[0]=timer.getTimeMod(12000)*360/12000;
-    rotation[1]=timer.getTimeMod(6000)*360/6000;
+    rotation[0]=360*timer.getTimePosition(time,12000);
+    rotation[1]=360*timer.getTimePosition(time,6000);
     var q=GLMath.quatFromTaitBryan(rotation);
     shape.setQuaternion(q);
     scene.render();

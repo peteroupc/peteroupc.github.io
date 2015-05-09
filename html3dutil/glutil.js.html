@@ -13,6 +13,7 @@
 * Contains classes and methods for easing development
 * of WebGL applications.
 * @module glutil
+* @license CC0-1.0
 */
 (function (root, factory) {
 	if (typeof define === "function" &amp;&amp; define["amd"]) {
@@ -25,6 +26,30 @@
 }(this, function (exports) {
 	if (exports.GLUtil) { return; }
 
+/*
+  Polyfills
+*/
+if(!window.requestAnimationFrame){
+ window.requestAnimationFrame=window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+ if(!window.requestAnimationFrame){
+  window.requestAnimationFrame=function(func){
+   window.setTimeout(function(){
+    func(window.performance.now());
+   },17);
+  }
+ }
+}
+if(!window.performance){
+ window.performance={};
+}
+if(!window.performance.now){
+ window.performance.now=function(){
+   return (new Date().getTime()*1000)-window.performance._startTime;
+ }
+ window.performance._startTime=new Date().getTime()*1000;
+}
+
 /**
 * Contains miscellaneous utility methods.
 * @class
@@ -33,23 +58,64 @@
 var GLUtil={
 /**
 * This method will call the function once before returning,
-* and queue requests to call that function once per frame.
-* (If the browser doesn't
-* support requestAnimationFrame or an equivalent, uses
-* setTimeout to implement this method.)
-* @param {Function} func The function to call.
+* and queue requests to call that function once per frame,
+* using &lt;code>window.requestAnimationFrame&lt;/code>
+* or a "polyfill" method.
+* @param {Function} func The function to call.  The function
+* takes one parameter, "time", which is the number of
+* milliseconds since the page was loaded.
 */
 "renderLoop":function(func){
-  func();
-  var selfRefFunc=function(){
+  func(window.performance.now());
+  var selfRefFunc=function(time){
    window.requestAnimationFrame(selfRefFunc);
-   func();
+   func(time);
   };
   window.requestAnimationFrame(selfRefFunc);
 },
 /**
 * Creates an HTML canvas element, optionally appending
 * it to an existing HTML element.
+* @param {HTMLElement|null} parent If non-null, the parent
+* element of the new HTML canvas element. The element will be
+* appended as a child of this parent.
+* @param {number|null} width Width of the new canvas
+* element, or if null, the width a &lt;code>canvas&lt;/code>
+* element would ordinarily have
+* under current CSS rules. The resulting width will be rounded up.
+* This parameter can't be a negative number.
+* @param {number|null} height Height of the new canvas
+* element, or if null, the height a &lt;code>canvas&lt;/code>
+* element would ordinarily have
+* under current CSS rules. The resulting height will be rounded up.
+* This parameter can't be a negative number.
+* @return {HTMLCanvasElement} The resulting canvas element.
+*/
+"createCanvasElement":function(parent, width, height){
+ var canvas=document.createElement("canvas");
+ if(parent){
+  parent.appendChild(canvas);
+ }
+ if(width==null){
+  canvas.width=Math.ceil(canvas.clientWidth)+"";
+ } else if(width&lt;0){
+  throw new Error("width negative");
+ } else {
+  canvas.width=Math.ceil(width)+"";
+ }
+ if(height==null){
+  canvas.height=Math.ceil(canvas.clientHeight)+"";
+ } else if(height&lt;0){
+  throw new Error("height negative");
+ } else {
+  canvas.height=Math.ceil(height)+"";
+ }
+ return canvas;
+},
+/**
+* Creates an HTML canvas element, optionally appending
+* it to an existing HTML element.
+* @deprecated Use {@link glutil.GLUtil.createCanvasElement} instead.
 * @param {number|null} width Width of the new canvas
 * element, or if null, the value &lt;code>window.innerWidth&lt;/code>.
 * The resulting width will be rounded up.
@@ -64,25 +130,9 @@ var GLUtil={
 * @return {HTMLCanvasElement} The resulting canvas element.
 */
 "createCanvas":function(width, height, parent){
- var canvas=document.createElement("canvas");
- if(width==null){
-  canvas.width=Math.ceil(window.innerWidth)+"";
- } else if(width&lt;0){
-  throw new Error("width negative");
- } else {
-  canvas.width=Math.ceil(width)+"";
- }
- if(height==null){
-  canvas.height=Math.ceil(window.innerHeight)+"";
- } else if(height&lt;0){
-  throw new Error("height negative");
- } else {
-  canvas.height=Math.ceil(height)+"";
- }
- if(parent){
-  parent.appendChild(canvas);
- }
- return canvas;
+ if(width==null)width=Math.ceil(window.innerWidth);
+ if(height==null)height=Math.ceil(window.innerHeight);
+ return GLUtil.createCanvasElement(parent,width,height);
 },
 /**
 * Creates a 3D rendering context from an HTML canvas element,
@@ -260,16 +310,6 @@ var GLUtil={
  });
 }
 };
-
-if(!window.requestAnimationFrame){
- window.requestAnimationFrame=window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
- if(!window.requestAnimationFrame){
-  window.requestAnimationFrame=function(func){
-   window.setTimeout(func,17);
-  }
- }
-}
 
 (function(exports){
 
@@ -1415,20 +1455,27 @@ function Scene3D(canvasOrContext){
    this._getDefines()+ShaderProgram.getDefaultFragment());
  /** An array of shapes that are part of the scene. */
  this.shapes=[];
+ this._frontFace=Scene3D.CCW;
+ this._cullFace=0;
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
  this.textureCache={};
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
+ this.useDevicePixelRatio=false;
+ this.autoResize=true;
  this.lightSource=new Lights();
- this.width=Math.ceil(this.context.canvas.width*1.0);
- this.height=Math.ceil(this.context.canvas.height*1.0);
+ this.width=Math.ceil(this.context.canvas.clientWidth*1.0);
+ this.height=Math.ceil(this.context.canvas.clientHeight*1.0);
+ this.context.canvas.width=this.width;
+ this.context.canvas.height=this.height;
  this.context.viewport(0,0,this.width,this.height);
  this.context.enable(context.BLEND);
  this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
  this.context.enable(this.context.DEPTH_TEST);
  this.context.depthFunc(this.context.LEQUAL);
+ this.context.disable(this.context.CULL_FACE);
  this.context.clearDepth(1.0);
  this._setClearColor();
  this.context.clear(
@@ -1439,6 +1486,93 @@ function Scene3D(canvasOrContext){
 /** Returns the WebGL context associated with this scene. */
 Scene3D.prototype.getContext=function(){
  return this.context;
+}
+/** @const No face culling. */
+Scene3D.NONE = 0;
+/** @const Back side of a triangle.  By default, triangles with clockwise winding are back-facing. */
+Scene3D.BACK = 1;
+/** @const Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing. */
+Scene3D.FRONT = 2;
+/** @const Back and front sides of a triangle. */
+Scene3D.FRONT_AND_BACK = 3;
+/**
+* Counterclockwise winding. A triangle has counterclockwise winding if
+* its vertices are ordered such that the path from the first to second to third
+* to first vertex, in window coordinates (X and Y only), runs counterclockwise.
+* @const
+*/
+Scene3D.CCW = 0;
+/**
+* Clockwise winding, the opposite of counterclockwise winding.
+* @const
+*/
+Scene3D.CW = 1;
+/**
+* Specifies which kinds of triangle faces are culled (not drawn)
+* when rendering this scene.
+* @param {number} value If this is {@link Scene3D.BACK},
+* {@link Scene3D.FRONT}, or {@link Scene3D.FRONT_AND_BACK},
+* enables face culling of the specified faces.  For any other value,
+* disables face culling.  By default, face culling is disabled.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.cullFace=function(value){
+ if(value==Scene3D.BACK ||
+   value==Scene3D.FRONT ||
+   value==Scene3D.FRONT_AND_BACK){
+  this._cullFace=value;
+ } else {
+  this._cullFace=0;
+ }
+ return;
+}
+Scene3D.prototype._setFace=function(){
+ if(this._cullFace==Scene3D.BACK){
+  this.context.enable(this.context.CULL_FACE);
+  this.context.cullFace(this.context.BACK);
+ } else if(this._cullFace==Scene3D.FRONT){
+  this.context.enable(this.context.CULL_FACE);
+  this.context.cullFace(this.context.FRONT);
+ } else if(this._cullFace==Scene3D.FRONT_AND_BACK){
+  this.context.enable(this.context.CULL_FACE);
+  this.context.cullFace(this.context.FRONT_AND_BACK);
+ } else {
+  this.context.disable(this.context.CULL_FACE);
+ }
+ if(this._frontFace==Scene3D.CW){
+  this.context.frontFace(this.context.CW);
+ } else {
+  this.context.frontFace(this.context.CCW);
+ }
+ return this;
+}
+/**
+* Specifies the winding of front faces.
+* @param {number} value If this is {@link Scene3D.CW},
+* clockwise triangles are front-facing.  For any other value,
+* counterclockwise triangles are front-facing, which is the
+* default behavior.  If using a left-handed coordinate system,
+* set this value to {@link Scene3D.CW}.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.frontFace=function(value){
+ if(value==Scene3D.CW){
+  this._frontFace=value;
+ } else {
+  this._frontFace=0;
+ }
+ return this;
+}
+/**
+* Sets whether to check whether to resize the canvas
+* when the render() method is called.
+* @param {boolean} value If true, will check whether to resize the canvas
+* when the render() method is called. Default is true.
+* @return {glutil.Scene3D} This object.
+*/
+Scene3D.prototype.setAutoResize=function(value){
+ this.autoResize=!!value;
+ return this;
 }
  /**
   Gets the color used when clearing the screen each frame.
@@ -1498,31 +1632,50 @@ Scene3D.prototype.setDimensions=function(width, height){
  if(width&lt;0 || height&lt;0)throw new Error("width or height negative");
  this.width=Math.ceil(width);
  this.height=Math.ceil(height);
- this.context.canvas.width=this.width+"";
- this.context.canvas.height=this.height+"";
+ this.context.canvas.width=this.width;
+ this.context.canvas.height=this.height;
  this.context.viewport(0,0,this.width,this.height);
   if(this.fbo!="undefined" &amp;&amp; this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
   }
 }
-/** Gets the viewport width for this scene.
+/**
+* Gets the viewport width for this scene.
+* Note that if auto-resizing is enabled, this value may change
+* after each call to the render() method.
 * @return {number}
 */
 Scene3D.prototype.getWidth=function(){
  return this.width;
 }
-/** Gets the viewport height for this scene.
+/**
+* Gets the viewport height for this scene.
+* Note that if auto-resizing is enabled, this value may change
+* after each call to the render() method.
 * @return {number}
 */
 Scene3D.prototype.getHeight=function(){
  return this.height;
 }
-/** Gets the ratio of width to height for this scene.
+/**
+* Gets the ratio of width to height for this scene (getWidth()
+* divided by getHeight()).
+* Note that if auto-resizing is enabled, this value may change
+* after each call to the render() method.
 * @return {number}
 */
 Scene3D.prototype.getAspect=function(){
  return this.getWidth()/this.getHeight();
+}
+/** Gets the ratio of width to height for this scene,
+* as actually displayed on the screen.
+* @return {number}
+*/
+Scene3D.prototype.getClientAspect=function(){
+ var ch=this.context.canvas.clientHeight;
+ if(ch&lt;=0)return 1;
+ return this.context.canvas.clientWidth/ch;
 }
 /**
  * Creates a frame buffer object associated with this scene.
@@ -1553,7 +1706,7 @@ Scene3D.prototype.getViewMatrix=function(){
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.)
 * @param {number}  aspect The ratio of width to height of the viewport, usually
-*  the scene's aspect ratio (getAspect()).
+*  the scene's aspect ratio (getAspect() or getClientAspect()).
 * @param {number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen.
@@ -1564,7 +1717,7 @@ Scene3D.prototype.getViewMatrix=function(){
 * @example
 * // Set the perspective projection.  Camera has a 45-degree field of view
 * // and will see objects from 0.1 to 100 units away.
-* scene.setPerspective(45,scene.getAspect(),0.1,100);
+* scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 */
 Scene3D.prototype.setPerspective=function(fov, aspect, near, far){
  return this.setProjectionMatrix(GLMath.mat4perspective(fov,
@@ -1737,7 +1890,7 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
  if(texture.constructor==Texture){
    tex=texture.loadImage();
  } else {
-   tex=Texture.loadTexture(texture, this.context, this.textureCache)
+   tex=Texture.loadTexture(texture, this.textureCache)
  }
  return tex.then(function(textureInner){
     textureInner.loadedTexture=new LoadedTexture(textureInner,context);
@@ -1996,6 +2149,15 @@ Scene3D.prototype._setupMatrices=function(shape,program){
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.render=function(){
+  if(this.autoResize){
+   var c=this.context.canvas;
+   if(c.height!=c.clientHeight ||
+       c.width!=c.clientWidth){
+    // Resize the canvas if needed
+    this.setDimensions(c.clientWidth,c.clientHeight);
+   }
+  }
+  this._setFace();
   if(typeof this.fboFilter!="undefined" &amp;&amp; this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter

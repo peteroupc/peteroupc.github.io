@@ -20,7 +20,10 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;" id="GLUtil"><span style="font-weight:lighter"></span>new GLUtil<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="GLUtil"><span style="font-weight:lighter"></span>new GLUtil<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line47">line 47</a>
+     </i></small></p>
 
 <div class="description">
     Contains miscellaneous utility methods.
@@ -28,18 +31,16 @@
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line22">line 22</a>
-    </li></ul></dd>
-
 </dl>
 
     </div>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;" id=".createCanvas"><span style="font-weight:lighter">(static) </span>createCanvas<span class="signature">(width, height, parent)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".createCanvas"><span style="font-weight:lighter">(static) </span>createCanvas<span class="signature">(width, height, parent)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line121">line 121</a>
+     </i></small></p>
 
 <div class="description">
     Creates an HTML canvas element, optionally appending
@@ -123,10 +124,7 @@ appended as a child of this parent.</td>
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line55">line 55</a>
-    </li></ul></dd>
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul><li>Use <a href="glutil.GLUtil.html#.createCanvasElement">glutil.GLUtil.createCanvasElement</a> instead.</li></ul></dd>
 
 </dl>
 
@@ -136,13 +134,115 @@ appended as a child of this parent.</td>
     The resulting canvas element.
 
      (Type:
-<span class="param-type">HTMLCanvasElement</span>
-
-)
+<span class="param-type">HTMLCanvasElement</span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".get3DContext"><span style="font-weight:lighter">(static) </span>get3DContext<span class="signature">(canvasElement, err)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".createCanvasElement"><span style="font-weight:lighter">(static) </span>createCanvasElement<span class="signature">(parent, width, height)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line83">line 83</a>
+     </i></small></p>
+
+<div class="description">
+    Creates an HTML canvas element, optionally appending
+it to an existing HTML element.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>parent</code></td>
+
+            <td class="type">
+
+<span class="param-type">HTMLElement</span>
+|
+
+<span class="param-type">null</span>
+
+            </td>
+
+            <td class="description last">If non-null, the parent
+element of the new HTML canvas element. The element will be
+appended as a child of this parent.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>width</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">null</span>
+
+            </td>
+
+            <td class="description last">Width of the new canvas
+element, or if null, the width a <code>canvas</code>
+element would ordinarily have
+under current CSS rules. The resulting width will be rounded up.
+This parameter can't be a negative number.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>height</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">null</span>
+
+            </td>
+
+            <td class="description last">Height of the new canvas
+element, or if null, the height a <code>canvas</code>
+element would ordinarily have
+under current CSS rules. The resulting height will be rounded up.
+This parameter can't be a negative number.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting canvas element.
+
+     (Type:
+<span class="param-type">HTMLCanvasElement</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".get3DContext"><span style="font-weight:lighter">(static) </span>get3DContext<span class="signature">(canvasElement, err)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line174">line 174</a>
+     </i></small></p>
 
 <div class="description">
     Creates a 3D rendering context from an HTML canvas element.
@@ -198,11 +298,6 @@ readable error message.  If "err" is null, window.alert() will be used instead.<
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line124">line 124</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
@@ -213,13 +308,14 @@ if an error occurred in creating the context.  Returns null if "canvasElement"
 is null or not an HTML canvas element.
 
      (Type:
-<span class="param-type">WebGLRenderingContext</span>
-
-)
+<span class="param-type">WebGLRenderingContext</span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".get3DOr2DContext"><span style="font-weight:lighter">(static) </span>get3DOr2DContext<span class="signature">(canvasElement)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".get3DOr2DContext"><span style="font-weight:lighter">(static) </span>get3DOr2DContext<span class="signature">(canvasElement)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line135">line 135</a>
+     </i></small></p>
 
 <div class="description">
     Creates a 3D rendering context from an HTML canvas element,
@@ -261,11 +357,6 @@ canvas element.</td>
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line85">line 85</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
@@ -276,13 +367,14 @@ if an error occurred in creating the context. Returns null if "canvasElement"
 is null or not an HTML canvas element.
 
      (Type:
-<span class="param-type">WebGLRenderingContext</span>
-
-)
+<span class="param-type">WebGLRenderingContext</span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<span style="font-weight:lighter">opt</span>, progressReject<span style="font-weight:lighter">opt</span>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line218">line 218</a>
+     </i></small></p>
 
 <div class="description">
     Utility function that returns a promise that
@@ -370,11 +462,6 @@ its work.
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line168">line 168</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
@@ -393,13 +480,14 @@ promise, in the order in which the promises were listed.</ul>
 True means success, and false means failure.
 
      (Type:
-<span class="param-type"><a href="Promise.html">Promise</a></span>
-
-)
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".is3DContext"><span style="font-weight:lighter">(static) </span>is3DContext<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {boolean}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".is3DContext"><span style="font-weight:lighter">(static) </span>is3DContext<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {boolean}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line194">line 194</a>
+     </i></small></p>
 
 <div class="description">
     Returns whether the given object is a 3D rendering context.
@@ -407,16 +495,14 @@ True means success, and false means failure.
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line144">line 144</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
 
-    <h4 style="border-bottom: 1px solid;" id=".loadFileFromUrl"><span style="font-weight:lighter">(static) </span>loadFileFromUrl<span class="signature">(url, responseType)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".loadFileFromUrl"><span style="font-weight:lighter">(static) </span>loadFileFromUrl<span class="signature">(url, responseType)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line269">line 269</a>
+     </i></small></p>
 
 <div class="description">
     Loads a file from a URL asynchronously, using XMLHttpRequest.
@@ -474,11 +560,6 @@ If null or omitted, the default is "text".</td>
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line219">line 219</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
@@ -492,20 +573,20 @@ result may be an object with
 one property: "url", the URL of the file).
 
      (Type:
-<span class="param-type"><a href="Promise.html">Promise</a></span>
-
-)
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".renderLoop"><span style="font-weight:lighter">(static) </span>renderLoop<span class="signature">(func)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".renderLoop"><span style="font-weight:lighter">(static) </span>renderLoop<span class="signature">(func)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line57">line 57</a>
+     </i></small></p>
 
 <div class="description">
     This method will call the function once before returning,
-and queue requests to call that function once per frame.
-(If the browser doesn't
-support requestAnimationFrame or an equivalent, uses
-setTimeout to implement this method.)
+and queue requests to call that function once per frame,
+using <code>window.requestAnimationFrame</code>
+or a "polyfill" method.
 </div>
 
     <h5>Parameters:</h5>
@@ -534,7 +615,9 @@ setTimeout to implement this method.)
 
             </td>
 
-            <td class="description last">The function to call.</td>
+            <td class="description last">The function to call.  The function
+takes one parameter, "time", which is the number of
+milliseconds since the page was loaded.</td>
         </tr>
 
     </tbody>
@@ -542,14 +625,12 @@ setTimeout to implement this method.)
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line31">line 31</a>
-    </li></ul></dd>
-
 </dl>
 
-    <h4 style="border-bottom: 1px solid;" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line441">line 441</a>
+     </i></small></p>
 
 <div class="description">
     Creates a 4-element array representing a color.  Each element
@@ -675,11 +756,6 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 </table>
 
 <dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line401">line 401</a>
-    </li></ul></dd>
 
 </dl>
 

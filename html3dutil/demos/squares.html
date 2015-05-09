@@ -11,6 +11,7 @@
 <a href="javascript:link5()">Pixelate</a>,
 <a href="javascript:link6()">Waterpaint</a>,
 <a href="javascript:link7()">Mirror</a>,
+<a href="javascript:link8()">Edge detect</a>,
 <a href="javascript:linknone()">No filters</a><br>
 <a href="javascript:link1a()">Blinds</a>,
 <a href="javascript:link2a()">Platonic solids</a>
@@ -81,6 +82,22 @@ return ShaderProgram.makeEffect(context,[
 " vec4 c=texture2D(sampler,vec2(uv0,uv1));",
 " return c;",
 "}"].join("\n"));
+}
+
+function setKernelMatrix(program,matrix){
+ var weight=matrix[0]+matrix[1]+matrix[2]+
+   matrix[3]+matrix[4]+matrix[5]+matrix[6]+
+   matrix[7]+matrix[8];
+ if(weight<=0)weight=1.0;
+ var mat=[];
+ // Ensure the sum of each matrix
+ // element is 1
+ for(var i=0;i<9;i++){
+  mat[i]=matrix[i]/weight;
+ }
+ currentFilter.setUniforms({
+   "matrix":mat
+ })
 }
 
 function makeKernelMatrix(context){
@@ -185,9 +202,7 @@ function link4(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeKernelMatrix(scene);
-  currentFilter.setUniforms({
-   "matrix":[.0625,.125,.0625,.125,.25,.125,.0625,.125,.0625]
-  })
+  setKernelMatrix(currentFilter,[1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9])
   scene.useFilter(currentFilter);
  }
 }
@@ -209,6 +224,14 @@ function link7(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeMirror(scene);
+  scene.useFilter(currentFilter);
+ }
+}
+function link8(){
+ if(scene){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=makeKernelMatrix(scene);
+  setKernelMatrix(currentFilter,[0,1,0,1,-4,1,0,1,0])
   scene.useFilter(currentFilter);
  }
 }

@@ -39,6 +39,7 @@ using evaluators to generate parametric surfaces.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/stl.html">demos/stl.html</a> - Demonstrates loading 3D models.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/textured.html">demos/textured.html</a> - Demonstrates loading textures
 and applying them to 3D shapes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/triangle.html">demos/triangle.html</a> - Demonstrates drawing a triangle.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/tris.html">demos/tris.html</a> - Demonstrates a particle system.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/gradient.html">demos/gradient.html</a> - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.</li>
@@ -46,16 +47,16 @@ texture -- a linear gradient from one color to another.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html">demos/perspective.html</a> - Demonstrates a perspective projection.</li>
 </ul>
 <h2>Other Sites</h2><ul>
-<li>CodePlex: https://html3dutil.codeplex.com/</li>
-<li>Code Project: http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library</li>
-<li>SourceForge: https://sourceforge.net/p/html3dutil</li>
+<li>CodePlex: <a href="https://html3dutil.codeplex.com/">https://html3dutil.codeplex.com/</a></li>
+<li>Code Project: <a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library">http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library</a></li>
+<li>SourceForge: <a href="https://sourceforge.net/p/html3dutil">https://sourceforge.net/p/html3dutil</a></li>
 </ul>
 <h2>Examples</h2><pre class="prettyprint source lang-javascript"><code>  // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById(&quot;canvas&quot;));
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
-  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  scene.setPerspective(45,scene.getClientAspect(),0.1,100);
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
   // Create a box mesh 10 units in width, 20 units

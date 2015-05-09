@@ -257,7 +257,7 @@ function frustumMesh(frustum){
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
   var camera=new Camera(scene,45,1,1000).setDistance(10);
-  var frustum=perspectiveFrustum(45,scene.getAspect(),2,10,[0,0,10],[0,0,0]);
+  var frustum=perspectiveFrustum(45,scene.getClientAspect(),2,10,[0,0,10],[0,0,0]);
   var mesh=frustumMesh(frustum);
   var spheres=new ShapeGroup();
   var radius=0.3;

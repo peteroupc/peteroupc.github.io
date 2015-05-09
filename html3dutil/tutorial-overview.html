@@ -37,7 +37,7 @@
   var scene=new Scene3D(canvas);</code></pre><h3>The &quot;Camera&quot;</h3><p>The Scene3D class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. Scene3D has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
 <pre class="prettyprint source"><code>  // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
-  scene.setPerspective(45,scene.getAspect(),0.1,100);
+  scene.setPerspective(45,scene.getClientAspect(),0.1,100);
   // Move the camera back 40 units.
   scene.setLookAt([0,0,40]);
   // Move the camera back 30 units instead, and turn it so it
@@ -63,6 +63,7 @@
   <code>sweep</code> 360.</dd>
 </dl>
 
+<p>For more information, see the <a href="tutorial-shapes.html">shapes</a> tutorial.</p>
 <h3>Shapes</h3><p>Once a mesh is created, it needs to be added to the 3D scene in order to be rendered. Use the 3D scene's <code>makeShape()</code> method to convert the mesh to a shape. Now you can set the shape's properties such as color, size, and position. Then, call <code>addShape()</code> to add the shape to the 3D scene.</p>
 <pre class="prettyprint source"><code>  // Create a shape based on the mesh
   var shape=scene.makeShape(mesh);

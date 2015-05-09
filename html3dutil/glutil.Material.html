@@ -20,7 +20,10 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;" id="Material"><span style="font-weight:lighter"></span>new Material<span class="signature">(ambient, diffuse, specular, shininess, emission)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="Material"><span style="font-weight:lighter"></span>new Material<span class="signature">(ambient, diffuse, specular, shininess, emission)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line711">line 711</a>
+     </i></small></p>
 
 <div class="description">
     Specifies parameters for geometry materials, which describe the appearance of a
@@ -129,11 +132,6 @@ May be null or omitted; default is (0,0,0).</td>
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line671">line 671</a>
-    </li></ul></dd>
-
 </dl>
 
     </div>
@@ -162,11 +160,6 @@ colors are used for ambient reflection rather than this property.
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line699">line 699</a>
-    </li></ul></dd>
-
 </dl>
 
 <h4 style="border-bottom: 1px solid;" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
@@ -192,11 +185,6 @@ This value can have an optional fourth element giving the alpha component
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line718">line 718</a>
-    </li></ul></dd>
-
 </dl>
 
 <h4 style="border-bottom: 1px solid;" id="emission"><span style="font-weight:lighter"></span>emission<span style="font-weight:lighter"></span></h4>
@@ -216,11 +204,6 @@ while negative values subtract from it. (0,0,0) means no additive color.
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line743">line 743</a>
-    </li></ul></dd>
-
 </dl>
 
 <h4 style="border-bottom: 1px solid;" id="shininess"><span style="font-weight:lighter"></span>shininess<span style="font-weight:lighter"></span></h4>
@@ -233,11 +216,6 @@ Ranges from 0 through 128.
 </div>
 
 <dl class="details">
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line682">line 682</a>
-    </li></ul></dd>
 
 </dl>
 
@@ -258,16 +236,14 @@ and (1,1,1) means total specular reflection.<p>
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line730">line 730</a>
-    </li></ul></dd>
-
 </dl>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line857">line 857</a>
+     </i></small></p>
 
 <div class="description">
     Convenience method that returns a Material
@@ -358,11 +334,6 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line817">line 817</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
@@ -371,13 +342,14 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
     The resulting material object.
 
      (Type:
-<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>
-
-)
+<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id=".fromTexture"><span style="font-weight:lighter">(static) </span>fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter">(static) </span>fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line870">line 870</a>
+     </i></small></p>
 
 <div class="description">
     Convenience method that returns a Material
@@ -424,11 +396,6 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line830">line 830</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
@@ -437,13 +404,14 @@ URL of the texture data.  In the case of a string the texture will be loaded via
     The resulting material object.
 
      (Type:
-<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>
-
-)
+<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line793">line 793</a>
+     </i></small></p>
 
 <div class="description">
     Clones this object's parameters to a new Material
@@ -454,11 +422,6 @@ to the same object will be used.
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line753">line 753</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
@@ -467,13 +430,14 @@ to the same object will be used.
     A copy of this object.
 
      (Type:
-<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>
-
-)
+<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line818">line 818</a>
+     </i></small></p>
 
 <div class="description">
     Sets parameters for this material object.
@@ -524,11 +488,6 @@ If a value is null or undefined, it is ignored.</td>
 
 <dl class="details">
 
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul><li>
-        <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line778">line 778</a>
-    </li></ul></dd>
-
 </dl>
 
 <h5>Returns:</h5>
@@ -537,9 +496,7 @@ If a value is null or undefined, it is ignored.</td>
     This object.
 
      (Type:
-<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>
-
-)
+<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>)
 
 </div>
 
