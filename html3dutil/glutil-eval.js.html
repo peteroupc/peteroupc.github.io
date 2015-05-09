@@ -189,7 +189,7 @@ BezierCurve.prototype.evaluate=function(u){
 /**
  * A parametric evaluator for B&amp;eacute;zier surfaces.&lt;p>
  * A B&amp;eacute;zier surface is defined by a series of control points, where
- * the first and last control points on each corner define the endpoints of the surface, and
+ * the control points on each corner define the endpoints of the surface, and
  * the remaining control points define the surface's shape, though they don't
  * necessarily cross the surface.
  * @class
@@ -199,11 +199,11 @@ BezierCurve.prototype.evaluate=function(u){
  * control point is an array with the same length as the other control points.
  * It is assumed that:&lt;ul>
  * &lt;li>The length of this parameter minus 1 represents the degree of the B&amp;eacute;zier
- * curve along the V axis.  For example, a degree-3 (cubic) curve along the V axis
+ * surface along the V axis.  For example, a degree-3 (cubic) surface along the V axis
  * contains 4 control points, one in each control point array.  A degree of 1 on
  * both the U and V axes results in a flat surface.
  * &lt;li>The length of the first control point array minus 1 represents the degree of the B&amp;eacute;zier
- * curve along the U axis.
+ * surface along the U axis.
  * &lt;li>The first control point's length represents the size of all the control
  * points.
  * &lt;/ul>
@@ -638,6 +638,7 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
    var dv=0.001
    // Find the partial derivatives of u and v
    var vu=this.vertexSurface.evaluate(u+du,v);
+   var vuz=vu[2];
    var vv=this.vertexSurface.evaluate(u,v+dv);
    GLMath.vec3subInPlace(vv,vertex);
    GLMath.vec3subInPlace(vu,vertex);
@@ -648,14 +649,19 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
    GLMath.vec3normInPlace(vv);
    if(GLMath.vec3length(vu)==0){
     // partial derivative of u is degenerate
-    //console.log([vu,vv]+" u degen")
+    //console.log([vu,vv,u,v]+" u degen")
     vu=vv;
    } else if(GLMath.vec3length(vv)!=0){
     vu=GLMath.vec3cross(vu,vv);
     GLMath.vec3normInPlace(vu);
    } else {
     // partial derivative of v is degenerate
-    //console.log([vu,vv]+" v degen")
+    //console.log([vu,vv,u,v]+" v degen")
+    if(vu[2]==vertex[2]){
+      // the close evaluation returns the same
+      // z as this evaluation
+      vu=[0,0,1];
+    }
    }
    mesh.normal3(vu[0],vu[1],vu[2]);
   } else if(normal){
@@ -769,7 +775,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceEval.html">SurfaceEval</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera.html">camera</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceEval.html">SurfaceEval</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera.html">camera</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-surfaces.html">surfaces</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

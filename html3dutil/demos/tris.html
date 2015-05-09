@@ -109,8 +109,9 @@ TriangleParticles.generateTri=function(width,height){
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
-  scene.disableLighting()
+  var scene=new Scene3D(document.getElementById("canvas"))
+   .setClearColor("white")
+   .disableLighting()
   var tris=new TriangleParticles(scene,200);
   // Set up the render loop
   GLUtil.renderLoop(function(time){

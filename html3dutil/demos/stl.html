@@ -32,8 +32,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   var camera=new Camera(scene,45,1,1000).setDistance(80);
   GLUtil.loadStlFromUrl("holder.stl").then(function(mesh){
     scene.addShape(scene.makeShape(mesh).setColor("red"));
-  },function(err){
-   console.log(err)
   })
   GLUtil.renderLoop(function(){
    camera.update();
