@@ -79,7 +79,27 @@ texture -- a linear gradient from one color to another.</li>
    shape.setQuaternion(q);
    // Render the scene
    scene.render();
-  });</code></pre><h2>History</h2><p>Version 1.2.1:</p>
+  });</code></pre><h2>History</h2><p>Version 1.3:</p>
+<ul>
+<li>Camera class rewritten again, but backwards compatible with
+version 1.0</li>
+<li>Add vec3add, vec3sub, vec3copy, vec3assign, vec4assign methods
+to GLMath</li>
+<li>Fix quatInvert method and optimize mat4inverseTranspose
+method of GLMath</li>
+<li>Add reverseNormals method to GLMath</li>
+<li>Add createCanvasElement, getTimePosition, and newFrames methods to GLUtil</li>
+<li>Deprecate createCanvas method of GLUtil</li>
+<li>Improve renderLoop method of GLUtil</li>
+<li>Improved specular highlights</li>
+<li>Allow coordinate arrays in vertex2 and vertex3 methods of Mesh class</li>
+<li>Resolve some autonormal degenerate cases in SurfaceEval class</li>
+<li>Add getCount method to Lights class</li>
+<li>Add face culling, auto resize, and pixel depth methods to Scene3D class</li>
+<li>Add getClientAspect method to Scene3D class</li>
+<li>Other fixes and improvements</li>
+</ul>
+<p>Version 1.2.1:</p>
 <ul>
 <li>Fix bug that occurs when a shape derived from a mesh that defines its own
 colors is drawn before a shape derived from a mesh that doesn't define its own colors</li>
