@@ -28,7 +28,8 @@
 <div class="description">
     An evaluator of parametric functions for generating
 vertex positions, normals, colors, and texture coordinates
-of a surface.<p>See the <a href="tutorial-surfaces.html">surfaces</a> tutorial for more information.
+of a surface.<p>
+See the <a href="tutorial-surfaces.html">surfaces</a> tutorial for more information.
 </div>
 
 <dl class="details">
@@ -36,6 +37,1149 @@ of a surface.<p>See the <a href="tutorial-surfaces.html">surfaces</a> tutorial 
 </dl>
 
     </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="color"><span style="font-weight:lighter"></span>color<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line510">line 510</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating color values.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>evaluator</code></td>
+
+            <td class="type">
+
+<span class="param-type">object</span>
+
+            </td>
+
+            <td class="description last">An object that must contain a function
+named "evaluate", giving 3 values as a result.  See SurfaceEval#vertex.
+</ul></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="colorBezier"><span style="font-weight:lighter"></span>colorBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line585">line 585</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a B&eacute;zier surface used for generating color values.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;number>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Control points as specified in <a href="BezierSurface.html">BezierSurface</a>,
+where each point is a 3-element array giving the red, green, and blue
+values of a color.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point along the U axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point along the U axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point along the V axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point along the V axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evalOne"><span style="font-weight:lighter"></span>evalOne<span class="signature">(mesh, u, v)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line605">line 605</a>
+     </i></small></p>
+
+<div class="description">
+    Generates vertex positions and attributes based on a point
+in a parametric surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mesh</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
+
+            </td>
+
+            <td class="description last">Mesh where vertex positions and attributes
+will be generated.  When this method returns, the current color, normal,
+and texture coordinates will be the same as they were before the method
+started.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">U-coordinate of the curve to evaluate (for
+B&eacute;zier surfaces, generally within the range
+given in the <code>vectorBezier</code>, <code>normalBezier</code>,
+<code>colorBezier</code>, and <code>texCoordBezier</code> methods).</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">V-coordinate of the curve to evaluate.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evalSurface"><span style="font-weight:lighter"></span>evalSurface<span class="signature">(mesh, mode<sub style="font-weight:lighter">opt</sub>, un<sub style="font-weight:lighter">opt</sub>, vn<sub style="font-weight:lighter">opt</sub>, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line696">line 696</a>
+     </i></small></p>
+
+<div class="description">
+    Generates the vertex positions and attributes of a parametric
+surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mesh</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Mesh where vertex positions and attributes
+will be generated.  When this method returns, the current color, normal,
+and texture coordinates will be the same as they were before the method
+started.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>mode</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">If this value is Mesh.TRIANGLES, or is null
+or omitted, generates a series of triangles defining the surface.  If
+this value is Mesh.LINES, generates
+a series of lines defining the curve. If this value is Mesh.POINTS,
+generates a series of points along the curve.  For any other value,
+this method has no effect.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>un</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Number of subdivisions along the U-axis.
+Default is 24.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>vn</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Number of subdivisions along the V-axis.
+Default is 24.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting U-coordinate of the surface to evaluate.
+Default is 0.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending U-coordinate of the surface to evaluate.
+Default is 1.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting U-coordinate of the surface to evaluate.
+Default is 0.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending U-coordinate of the surface to evaluate.
+Default is 1.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normal"><span style="font-weight:lighter"></span>normal<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line499">line 499</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating normals.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>evaluator</code></td>
+
+            <td class="type">
+
+<span class="param-type">object</span>
+
+            </td>
+
+            <td class="description last">An object that must contain a function
+named "evaluate", giving 3 values as a result.  See SurfaceEval#vertex.
+</ul></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normalBezier"><span style="font-weight:lighter"></span>normalBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line552">line 552</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a B&eacute;zier surface used for generating normals.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;number>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Control points as specified in <a href="BezierSurface.html">BezierSurface</a>,
+where each point is a 3-element array giving the x, y, and z coordinates of a normal.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point along the U axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point along the U axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point along the V axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point along the V axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setAutoNormal"><span style="font-weight:lighter"></span>setAutoNormal<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line474">line 474</a>
+     </i></small></p>
+
+<div class="description">
+    Sets whether this object will automatically generate
+normals rather than use the parametric evaluator
+specified for normal generation, if any.
+By default, normals won't be generated automatically.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>value</code></td>
+
+            <td class="type">
+
+<span class="param-type">boolean</span>
+
+            </td>
+
+            <td class="description last">Either true or false.  True means normals
+will automatically be generated; false means they won't.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="texCoord"><span style="font-weight:lighter"></span>texCoord<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line521">line 521</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating texture coordinates.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>evaluator</code></td>
+
+            <td class="type">
+
+<span class="param-type">object</span>
+
+            </td>
+
+            <td class="description last">An object that must contain a function
+named "evaluate", giving 2 values as a result.  See SurfaceEvals#vertex.
+</ul></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="texCoordBezier"><span style="font-weight:lighter"></span>texCoordBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line568">line 568</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a B&eacute;zier surface used for generating texture coordinates.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;number>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Control points as specified in <a href="BezierSurface.html">BezierSurface</a>,
+where each point is a 1- or 2-element array giving the u and v texture coordinates.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point along the U axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point along the U axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point along the V axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point along the V axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertex"><span style="font-weight:lighter"></span>vertex<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line488">line 488</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating vertex positions.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>evaluator</code></td>
+
+            <td class="type">
+
+<span class="param-type">object</span>
+
+            </td>
+
+            <td class="description last">An object that must contain a function
+named "evaluate".  It takes the following parameters in this order:<ul>
+<li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
+<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
+</ul>
+The evaluator function returns an array of the result of the evaluation.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertexBezier"><span style="font-weight:lighter"></span>vertexBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line536">line 536</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a B&eacute;zier surface used for generating vertex positions.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;number>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Control points as specified in <a href="BezierSurface.html">BezierSurface</a>,
+where each point is a 3-element array giving the x, y, and z coordinates of a vertex
+position.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point along the U axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point along the U axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v1</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Starting point along the V axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>v2</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Ending point along the V axis; see <a href="BezierSurface.html">BezierSurface</a>.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type">SurfaceEval</span>)
+
+</div>
 
 </article>
 

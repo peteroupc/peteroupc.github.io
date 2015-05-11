@@ -403,21 +403,24 @@ function InputTracker(element){
     "clientX":e.clientX,"clientY":e.clientY});
  })
  element.addEventListener("touchstart",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":0});
+  mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":0,
+    "clientX":e.clientX,"clientY":e.clientY});
  })
  element.addEventListener("mouseup",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":e.button,
     "clientX":e.clientX,"clientY":e.clientY});
  })
  element.addEventListener("touchend",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":0});
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":0,
+    "clientX":e.clientX,"clientY":e.clientY});
  })
  element.addEventListener("mousemove",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
     "clientX":e.clientX,"clientY":e.clientY});
  })
  element.addEventListener("touchmove",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1});
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
+    "clientX":e.clientX,"clientY":e.clientY});
  })
 };
 /**
