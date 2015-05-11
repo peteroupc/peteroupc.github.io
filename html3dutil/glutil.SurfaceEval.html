@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: BezierCurve</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: SurfaceEval</title>
 <script src="mathml.js"></script>
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Class: BezierCurve</h1>
+    <h1>Class: SurfaceEval</h1>
 
 <section>
 
 <header>
 
         <h2>
-        BezierCurve
+        SurfaceEval
         </h2>
 
 </header>
@@ -20,180 +20,22 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="BezierCurve"><span style="font-weight:lighter"></span>new BezierCurve<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="SurfaceEval"><span style="font-weight:lighter"></span>new SurfaceEval<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line144">line 144</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line458">line 458</a>
      </i></small></p>
 
 <div class="description">
-    A parametric evaluator for B&eacute;zier curves.<p>
-A B&eacute;zier curve is defined by a series of control points, where
-the first and last control points define the endpoints of the curve, and
-the remaining control points define the curve's shape, though they don't
-necessarily cross the curve.
+    An evaluator of parametric functions for generating
+vertex positions, normals, colors, and texture coordinates
+of a surface.<p>See the <a href="tutorial-surfaces.html">surfaces</a> tutorial for more information.
 </div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;Array.&lt;number>></span>
-
-            </td>
-
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">An array of control points.  Each
-control point is an array with the same length as the other control points.
-It is assumed that:<ul>
-<li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
-curve.  For example, a degree-3 (cubic) curve
-contains 4 control points.  A degree of 1 results in a straight line segment.
-<li>The first control point's length represents the size of all the control
-points.
-</ul></td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>u1</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-                <td class="attributes">
-
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Starting point for the purpose of interpolation; it will correspond to 0.
-May be omitted; default is 0.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>u2</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-                <td class="attributes">
-
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Ending point for the purpose of interpolation; it will correspond to 1.
-May be omitted; default is 1.</td>
-        </tr>
-
-    </tbody>
-</table>
 
 <dl class="details">
 
 </dl>
 
     </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line173">line 173</a>
-     </i></small></p>
-
-<div class="description">
-    Evaluates the curve function based on a point
-in a B&eacute;zier curve.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>u</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Point on the curve to evaluate (generally within the range
-given in the constructor).</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    An array of the result of
-the evaluation.  Its length will be equal to the
-length of a control point, as specified in the constructor.
-
-     (Type:
-<span class="param-type">Array.&lt;number></span>)
-
-</div>
-
-    <h5>Example</h5>
-
-    <pre class="prettyprint"><code>// Generate 11 points forming the B&amp;eacute;zier curve.
-// Assumes the curve was created with u1=0 and u2=1 (the default).
-var points=[];
-for(var i=0;i&lt;=10;i++){
- points.push(curve.evaluate(i/10.0));
-}</code></pre>
 
 </article>
 
