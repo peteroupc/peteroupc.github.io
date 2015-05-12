@@ -46,21 +46,21 @@ generate vertex coordinates, texture coordinates, normals, and colors using a pa
 function.  The following helper function, <code>makeMesh</code>, generates a parametric surface mesh
 that was used to produce the pictures on this page.</p>
 <p>The comments explain how <code>makeMesh</code> works in detail.</p>
-<p>   function makeMesh(func,resolution){
-    // Default resolution is 50
-    if(resolution==null)resolution=50
-     // create a new mesh
-     var mesh=new Mesh();
-     // define a color gradient evaluator for
-     // demonstration purposes.  Instead of X, Y, and Z,
-     // generate a Red/Green/Blue color based on
-     // the same parameters U and V as the surface
-     // function for 3D points.
-     var colorGradient={
-      evaluate:function(u,v){ return [1-u,v,u]; }
-     }
-     // generate the parametric surface.</p>
-<pre class="prettyprint source"><code> var ev=new SurfaceEval()
+<pre class="prettyprint source"><code>function makeMesh(func,resolution){
+ // Default resolution is 50
+ if(resolution==null)resolution=50
+  // create a new mesh
+  var mesh=new Mesh();
+  // define a color gradient evaluator for
+  // demonstration purposes.  Instead of X, Y, and Z,
+  // generate a Red/Green/Blue color based on
+  // the same parameters U and V as the surface
+  // function for 3D points.
+  var colorGradient={
+   evaluate:function(u,v){ return [1-u,v,u]; }
+  }
+ // generate the parametric surface.
+ var ev=new SurfaceEval()
   .vertex(func)
 // Specify the color gradient evaluator defined above
   .color(colorGradient)
@@ -76,8 +76,8 @@ that was used to produce the pictures on this page.</p>
 // or Mesh.POINTS to create a point mesh.
   .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
 // Surface generated, return the mesh
-return mesh;</code></pre><p>  }</p>
-<p>In the HTML 3D Library, parametric surface objects define one method, &quot;evaluate&quot;,
+return mesh;
+}</code></pre><p>In the HTML 3D Library, parametric surface objects define one method, &quot;evaluate&quot;,
 which returns a 3D point given a U parameter and a V parameter.  (By default, U and
 V each range from 0 through 1.)</p>
 <p>The following code is a very simple surface evaluator.</p>
@@ -142,7 +142,7 @@ and the API references for the <a href="http://peteroupc.github.io/html3dutil/gl
 <ul>
 <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
 <li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a></li>
-<li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><em>The &quot;Camera&quot; and the Perspective and View Transforms</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><em>The &quot;Camera&quot; and the Projection and View Transforms</em></a></li>
 </ul>
 </article>
 

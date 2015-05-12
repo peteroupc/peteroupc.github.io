@@ -27,15 +27,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <hr>
 
-<p>Written by Peter O. in 2012/2013. <a href="http://upokecenter.dreamhosters.com/">http://upokecenter.dreamhosters.com/</a></p>
-
 <p>A color picker in JavaScript. Supports adapters for integrating other popular color pickers, and can use native color selection controls. In the public domain under CC0.</p>
-
-<h2>Donate to me</h2>
-
-<p>If you like this, consider donating to me to help pay my loans and other costs:</p>
-
-<p><a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
 
 <h2>Demo</h2>
 
@@ -47,9 +39,9 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>In general, include the scripts &quot;cbox.js&quot; and &quot;objlib.js&quot; to your HTML:</p>
 
-<script type="text/javascript" src="objlib.js"></script>
-
-<script type="text/javascript" src="cbox.js"></script>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;objlib.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;cbox.js&quot;&gt;&lt;/script&gt;
+</code></pre>
 
 <p>When the page is ready, it will convert certain textboxes into color pickers:</p>
 
@@ -122,6 +114,14 @@ successfully. The <em>input</em> parameter is the HTML element for the input tex
 <p>PDColorPicker.doColorPreview( <em>input</em>, <em>extra</em>, <em>button</em> ) - triggers the color preview event, using the current value of the color text box.
 <em>input</em> and <em>extra</em> have the same meaning as in <code>addColorPickerAdapter()</code>. <code>button</code> should be the button returned from <code>createColorPickerButton</code>.</p>
 
+<h2>History</h2>
+
+<p>Version 1.0</p>
+
+<ul>
+<li>First CodeProject release</li>
+</ul>
+
 <h2>Server-Side Processing</h2>
 
 <p>Every form sent to the server should be validated on the server side. The color boxes accept a wide variety of values for
@@ -131,6 +131,16 @@ colors, which need to be validated and converted to a common format. Use the ser
 
 <p>That project contains scripts for five popular server-side languages: PHP, Python, Ruby, C#, and Java. These scripts are
 also released to the public domain.</p>
+
+<h2>About</h2>
+
+<p>Written in 2012-2015 by Peter O.</p>
+
+<p>Any copyright is dedicated to the Public Domain.
+<a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>
+
+<p>If you like this, you should donate to Peter O.
+at: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
 <script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {

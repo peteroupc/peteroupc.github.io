@@ -395,8 +395,14 @@ function InputTracker(element){
   if(e.button==2){
    thisObj.rightButton=e.isDown;
   }
-  thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
-  thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
+  if(e.button==0 && e.touch && !e.isDown){
+   thisObj.clientX=null;
+   thisObj.clientY=null;
+   thisObj.lastClient=[];
+  } else {
+   thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
+   thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
+  }
  }
  element.addEventListener("mousedown",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":e.button,
@@ -404,7 +410,7 @@ function InputTracker(element){
  })
  element.addEventListener("touchstart",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":0,
-    "clientX":e.clientX,"clientY":e.clientY});
+    "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
  })
  element.addEventListener("mouseup",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":e.button,
@@ -412,7 +418,7 @@ function InputTracker(element){
  })
  element.addEventListener("touchend",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":0,
-    "clientX":e.clientX,"clientY":e.clientY});
+    "clientX":e.changedTouches[0].clientX,"clientY":e.changedTouches[0].clientY,"touch":true});
  })
  element.addEventListener("mousemove",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
@@ -420,7 +426,7 @@ function InputTracker(element){
  })
  element.addEventListener("touchmove",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
-    "clientX":e.clientX,"clientY":e.clientY});
+    "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
  })
 };
 /**

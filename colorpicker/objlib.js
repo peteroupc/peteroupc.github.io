@@ -1,4 +1,4 @@
-/* This file is in the public domain. Peter O., 2012-2013. http://upokecenter.dreamhosters.com
+/* This file is in the public domain. Peter O., 2012-2015. http://upokecenter.dreamhosters.com
     Public domain dedication: http://creativecommons.org/publicdomain/zero/1.0/  */
 
 // Calculates the actual style of an HTML element.
@@ -49,7 +49,6 @@ if(!elem)return null;
 function getHeight(o) {
   "use strict";
 if(!o)return 0;
-  if(document.layers)return ((o.height)?o.height:o.clip.height);
   var x=(
     (window.opera&&typeof o.style.pixelHeight!=="undefined")?
     o.style.pixelHeight:
@@ -73,7 +72,6 @@ if(!o)return 0;if(o.clip)
 function getWidth(o) {
   "use strict";
 if(!o)return 0;
-  if(document.layers)return ((o.width)?o.width:o.clip.width);
   var x=(window.opera && typeof o.style.pixelWidth!=="undefined")?
     o.style.pixelWidth:
     o.offsetWidth;
@@ -120,14 +118,10 @@ function getPageX(o) {
  "use strict";
 var x=0;
  if(!o)return 0;
- if(document.layers)
-  x=o.pageX;
- else {
-  while(o!==null && typeof o!=="undefined") {
+ while(o!==null && typeof o!=="undefined") {
    if(typeof o.offsetLeft!=="undefined")
     x+=o.offsetLeft;
    o=o.offsetParent;
-  }
  }
  return x;
 }
@@ -135,15 +129,11 @@ function getPageY(o) {
  "use strict";
 var x=0;
  if(!o)return 0;
- if(document.layers)
-  x=o.pageY;
- else {
   while(o!==null && typeof o!=="undefined") {
    if(typeof o.offsetTop!=="undefined")
     x+=o.offsetTop;
    o=o.offsetParent;
   }
- }
  return x;
 }
 
