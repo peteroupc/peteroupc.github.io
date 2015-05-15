@@ -147,6 +147,7 @@ var RevolutionSurface=function(func,minval,maxval){
 
 var KleinBottle=function(){
  this.evaluate=function(u,v){
+  var cospi;
   u*=GLMath.PiTimes2;
   v*=GLMath.PiTimes2;
   var x, y, z;
@@ -193,11 +194,10 @@ var MoebiusStrip=function(radius,width){
  this.width=width==null ? 0.5 : width;
  this.evaluate=function(u,v){
   u=-this.width+(this.width*2)*u;
-  if(v==1)v=0;
   v*=GLMath.PiTimes2;
   var x, y, z;
-  var sinv=Math.sin(v);
-  var cosv=Math.cos(v);
+  var sinv=Math.sin(v==1 ? 0 : v);
+  var cosv=Math.cos(v==1 ? 0 : v);
   var sinv2=Math.sin(v/2);
   var tmp=u*Math.cos(v/2)+this.radius;
   x=cosv*tmp;
@@ -226,7 +226,7 @@ function makeCurve(func){
      // the same parameters U and V as the surface
      // function for 3D points.
      var colorGradient={
-      evaluate:function(u,v){ return [1-u,v,u]; }
+      "evaluate":function(u,v){ return [1-u,v,u]; }
      }
      // generate the parametric surface.
 
@@ -248,15 +248,6 @@ function makeCurve(func){
     // Surface generated, return the mesh
     return mesh;
   }
-
-var evaluator={
- "evaluate":function(u,v){
-         // Extend the range of v
-         v*=Math.PI*2;
-         // Return circle coordinates.
-         return [u*Math.cos(v),u*Math.sin(v),-u];
-  }
-};
 
 function TorusKnot(p,q,outerRadius,innerRadius){
  this.p=p;
