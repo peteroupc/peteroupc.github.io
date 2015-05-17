@@ -147,7 +147,7 @@ var GLUtil={
   if(!canvasElement)return null;
   if(!canvasElement.getContext)return null;
   var context=null;
-  var options={"antialias":true};
+  var options={"antialias":true,"preserveDrawingBuffer":true};
   try { context=canvasElement.getContext("webgl", options);
   } catch(e) { context=null; }
   if(!context){

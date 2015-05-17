@@ -1,0 +1,103 @@
+<head>
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../camera.js"></script>
+<script type="text/javascript" src="../frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+function ClockShape(scene){
+ var clock=new ShapeGroup();
+ var border=Meshes.createTorus(0.1,1,16,64);
+ var frontTransform=GLMath.mat4translated(0,0,0.05);
+ var front=Meshes.createDisk(0,1,64).transform(frontTransform);
+ var hourhand=Meshes.createCapsule(0.01,0.5,6,4)
+   .transform(GLMath.mat4translated(0,0,-0.25))
+   .transform(GLMath.mat4rotated(90,1,0,0))
+   .transform(frontTransform);
+ var minutehand=Meshes.createCapsule(0.0075,0.7,6,4)
+   .transform(GLMath.mat4translated(0,0,-0.35))
+   .transform(GLMath.mat4rotated(90,1,0,0))
+   .transform(frontTransform);
+ var secondhand=Meshes.createCapsule(0.005,0.9,6,4)
+   .transform(GLMath.mat4translated(0,0,-0.30))
+   .transform(GLMath.mat4rotated(90,1,0,0))
+   .transform(frontTransform);
+ var center=Meshes.createSphere(0.03,4,4)
+   .transform(frontTransform)
+ var twelveoclock=Meshes.createSphere(0.03,4,4)
+   .transform(GLMath.mat4translated(0,0.85,0))
+   .transform(frontTransform)
+ var back=Meshes.createDisk(0,1,64).reverseWinding().reverseNormals()
+   .transform(GLMath.mat4translated(0,0,-0.05));
+ clock.addShape(scene.makeShape(border).setColor("#888888"));
+ clock.addShape(scene.makeShape(front).setColor("#f5f5f5"));
+ clock.addShape(scene.makeShape(back).setColor("#cccccc"));
+ clock.addShape(scene.makeShape(hourhand).setColor("black"));
+ clock.addShape(scene.makeShape(minutehand).setColor("black"));
+ clock.addShape(scene.makeShape(secondhand).setColor("gray"));
+ clock.addShape(scene.makeShape(center).setColor("black"));
+ clock.addShape(scene.makeShape(twelveoclock).setColor("gray"));
+ scene.addShape(clock);
+ this.shape=clock;
+ this.hour=-1;
+ this.minute=-1;
+ this.second=-1;
+ this.update=function(){
+  var time=new Date();
+  var timenum=time.getTime();
+  var hour=time.getHours();
+  var minute=time.getMinutes();
+  var second=time.getSeconds()+((timenum%1000)/1000)
+  if(this.hour!=hour || this.minute!=minute || this.second!=second){
+   this.hour=hour
+   this.minute=minute
+   this.second=second
+   var hms=(hour%12)*60+minute*60+second;
+   var hourhand=360*hms/(3600*12);
+   var minutehand=360*(hms%3600)/(3600);
+   var secondhand=360*(hms%60)/(60);
+   this.shape.shapes[3].getTransform().setOrientation(-hourhand,0,0,1)
+   this.shape.shapes[4].getTransform().setOrientation(-minutehand,0,0,1)
+   this.shape.shapes[5].getTransform().setOrientation(-secondhand,0,0,1)
+  }
+ }
+ this.update();
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white")
+   .cullFace(Scene3D.BACK)
+  var camera=new Camera(scene,45,1,1000).setDistance(5)
+  var xyz=new ShapeGroup();
+  var pc=new FrameCounterDiv(scene)
+  var shape=null;
+  scene.addShape(xyz);
+  var clock=new ClockShape(scene);
+  GLUtil.renderLoop(function(){
+   clock.update();
+   pc.update();
+   camera.update();
+   scene.render();
+  });
+//-->
+</script>
+</body>
