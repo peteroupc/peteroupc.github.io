@@ -86,7 +86,8 @@ var nextToken = function(tok) {
 
     Expression.isExpr = function(x) {
       var a, b, c, d;
-      return ((a = x !== false && x !== null) ? ((((b = (((c = ((d=false) ? d : x instanceof Operation)) !== false && c !== null) ? c : x instanceof Variable)) !== false && b !== null) ? b : x instanceof Constant)) : a);
+      if(!x)return false;
+      return (x instanceof Operation || x instanceof Variable || x instanceof Constant);
     };
 
     Expression.prototype.simplify = function() {
@@ -196,7 +197,6 @@ var nextToken = function(tok) {
     Operation.prototype.simplify = function() {
       var a, b, c, d, e, f, g, done = null, resimplify = null, origlength = null, constVals = null, constValsIndex = null, i = null, node = null, n__ = null, n = null, realnode = null, cv = null, haveNonconst = null, c = null,
         neg = null;
-
       Expression.simplifyNodes(this.nodes);
       if (((a = (((b = (((c = this.operator=="plus") !== false && c !== null) ? c : this.operator=="mul")) !== false && b !== null) ? b : this.operator=="div")))) {
         done = false;
@@ -354,18 +354,22 @@ var nextToken = function(tok) {
 
     Operation.prototype.negate = function() {
       var a, b, op = null, node__ = null, node = null;
-
       op = new Operation(this.operator);
-      op.negative=!this.negative;
-      for (var node__=0;node__<(this.nodes.length);node__++){
-      op.nodes.push(this.nodes[node__]);};
+      if(op.operation=="plus"){
+       for (var node__=0;node__<(this.nodes.length);node__++){
+        op.nodes.push(this.nodes[node__].negate());
+       }
+      } else {
+       op.negative=!this.negative;
+       for (var node__=0;node__<(this.nodes.length);node__++){
+        op.nodes.push(this.nodes[node__]);
+       };
+      }
       return op.degen();
     };
 
     Operation.prototype.subtract = function(x) {
-      var a;
-
-      return this.add((a = x instanceof Number) ? (-x) : (x.negate()));
+      return this.add((x instanceof Number) ? (-x) : (x.negate()));
     };
 
     Operation.prototype.add = function(x) {
@@ -794,7 +798,8 @@ var nextToken = function(tok) {
     } else if (a = expr.isOperation("plus")) {
       ops = new Constant(0);
       for (var i=0;i<(expr.length());i++){
-      ops = ops.add(findDerivative(expr.get(i)));};
+       ops = ops.add(findDerivative(expr.get(i)))
+      }
       return ops;
     } else if (a = expr.isOperation("sin")) {
       return Operation.func("cos", expr.get(0)).multiply(findDerivative(expr.get(0)))
