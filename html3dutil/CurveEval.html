@@ -22,13 +22,22 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="CurveEval"><span style="font-weight:lighter"></span>new CurveEval<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line500">line 500</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line509">line 509</a>
      </i></small></p>
 
 <div class="description">
     An evaluator of parametric curve functions for generating
 vertex positions, normals, colors, and texture coordinates
-of a curve.
+of a curve.<p>
+A parametric curve is a curve whose points are based on a
+parametric curve function.  A curve function takes a number
+(U) and returns a point (in 1, 2, 3 or more dimensions, but
+usually 2 or 3).  For example, in 3 dimensions, a curve
+function has the following form:<p>
+<b>F</b>(u) = [ x(u), y(u), z(u) ]
+where x(u) returns an X coordinate, y(u) a Y coordinate,
+and z(u) returns a Z coordinate.<p>
+For more information, see the <a href="tutorial-surfaces.html">surfaces</a> tutorial.
 </div>
 
 <dl class="details">
@@ -41,7 +50,7 @@ of a curve.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="color"><span style="font-weight:lighter"></span>color<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line538">line 538</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line547">line 547</a>
      </i></small></p>
 
 <div class="description">
@@ -98,7 +107,7 @@ named "evaluate", giving 3 values as a result.  See <a href="CurveEval.html#vert
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="colorBezier"><span style="font-weight:lighter"></span>colorBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line605">line 605</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line614">line 614</a>
      </i></small></p>
 
 <div class="description">
@@ -199,7 +208,7 @@ values of a color.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evalCurve"><span style="font-weight:lighter"></span>evalCurve<span class="signature">(mesh, mode<sub style="font-weight:lighter">opt</sub>, n<sub style="font-weight:lighter">opt</sub>, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line678">line 678</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line687">line 687</a>
      </i></small></p>
 
 <div class="description">
@@ -349,7 +358,7 @@ May be omitted; default is 1.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evalOne"><span style="font-weight:lighter"></span>evalOne<span class="signature">(mesh, u)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line624">line 624</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line633">line 633</a>
      </i></small></p>
 
 <div class="description">
@@ -424,7 +433,7 @@ given in the <code>vectorBezier</code>, <code>normalBezier</code>,
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normal"><span style="font-weight:lighter"></span>normal<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line527">line 527</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line536">line 536</a>
      </i></small></p>
 
 <div class="description">
@@ -481,7 +490,7 @@ named "evaluate", giving 3 values as a result.  See <a href="CurveEval.html#vert
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normalBezier"><span style="font-weight:lighter"></span>normalBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line576">line 576</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line585">line 585</a>
      </i></small></p>
 
 <div class="description">
@@ -581,7 +590,7 @@ where each point is a 3-element array giving the x, y, and z coordinates of a no
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="texCoord"><span style="font-weight:lighter"></span>texCoord<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line549">line 549</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line558">line 558</a>
      </i></small></p>
 
 <div class="description">
@@ -638,7 +647,7 @@ named "evaluate", giving 2 values as a result.  See <a href="CurveEval.html#vert
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="texCoordBezier"><span style="font-weight:lighter"></span>texCoordBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line590">line 590</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line599">line 599</a>
      </i></small></p>
 
 <div class="description">
@@ -738,7 +747,7 @@ where each point is a 1- or 2-element array giving the u and v texture coordinat
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertex"><span style="font-weight:lighter"></span>vertex<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line516">line 516</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line525">line 525</a>
      </i></small></p>
 
 <div class="description">
@@ -797,7 +806,7 @@ The evaluator function returns an array of the result of the evaluation.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertexBezier"><span style="font-weight:lighter"></span>vertexBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="CurveEval.html">CurveEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line562">line 562</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line571">line 571</a>
      </i></small></p>
 
 <div class="description">

@@ -1,0 +1,277 @@
+<head>
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../camera.js"></script>
+<script type="text/javascript" src="../frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="expressions.js"></script>
+</head>
+<body>
+<div style="position:absolute;left:0;top:1em">
+<span>X:</span> <input type=text id=xcoord value="cos(v)*cos(u)"><br>
+<span>Y:</span> <input type=text id=ycoord value="sin(v)*cos(u)"><br>
+<span>Z:</span> <input type=text id=zcoord value="sin(u)"><br>
+<span>MinU:</span> <input type=text id=minu value="-pi/2"><br>
+<span>MaxU:</span> <input type=text id=maxu value="pi/2"><br>
+<span>MinV:</span> <input type=text id=minv value="-pi"><br>
+<span>MaxV:</span> <input type=text id=maxv value="pi"><br>
+<a href="javascript:help()">Syntax help</a>
+<div id="settings"></div>
+</div>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+if(typeof Math.sign=="undefined"){
+ Math.sign=function(x){
+  return (x<0) ? -1 : (x==0 ? 0 : 1);
+ }
+};
+
+function addRange(label,min,max,step,defvalue,func){
+ var div=document.createElement("div")
+ var lbl=document.createElement("span")
+ lbl.innerHTML=label
+ var defvaluelbl=document.createElement("span")
+ defvaluelbl.innerHTML=defvalue
+ var input=document.createElement("input")
+ input.setAttribute("type","range")
+ input.setAttribute("value",""+defvalue)
+ input.setAttribute("min",""+min)
+ input.setAttribute("max",""+max)
+ input.setAttribute("step",""+step)
+ var oldvalue=[defvalue];
+ input.addEventListener("input",function(e){
+  var val=e.target.value*1.0
+  if(oldvalue[0]!=val){
+   defvaluelbl.innerHTML=val+""
+   if(func)func(val);
+   oldvalue[0]=val
+  }
+ })
+ div.appendChild(lbl)
+ div.appendChild(input)
+ div.appendChild(defvaluelbl)
+ return div
+}
+
+function setRanges(ranges){
+ var settings=document.getElementById("settings")
+ settings.innerHTML=""
+ for(var i=0;i<ranges.length;i++){
+  settings.appendChild(ranges[i]);
+ }
+}
+
+   function makeMesh(func,resolution){
+    // Default resolution is 50
+    if(resolution==null)resolution=50
+     // create a new mesh
+     var mesh=new Mesh();
+     // define a color gradient evaluator for
+     // demonstration purposes.  Instead of X, Y, and Z,
+     // generate a Red/Green/Blue color based on
+     // the same parameters U and V as the surface
+     // function for 3D points.
+     var colorGradient={
+      "evaluate":function(u,v){ return [1-u,v,u]; }
+     }
+     // generate the parametric surface.
+
+     var ev=new SurfaceEval()
+      .vertex(func)
+    // Specify the color gradient evaluator defined above
+      .color(colorGradient)
+    // Generate normals for the parametric surface,
+    // which is required for lighting to work correctly
+      .setAutoNormal(true)
+    // Evaluate the surface and generate a triangle
+    // mesh, using resolution+1 different U-coordinates ranging
+    // from 0 to 1, and resolution+1
+    // different V-coordinates ranging from 0 to 1
+    // Instead of Mesh.TRIANGLES, we could use
+    // Mesh.LINES to create a wireframe mesh,
+    // or Mesh.POINTS to create a point mesh.
+      .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
+    // Surface generated, return the mesh
+    var otherWinding=new Mesh().merge(mesh).reverseWinding().reverseNormals();
+    return mesh.merge(otherWinding);
+  }
+
+function help(){
+alert(""+
+"* The operators `+` `-` `*` `/` work as they do in "+
+"normal arithmetic.  (The symbol `*` means 'times'.)\n"+
+"* You may use `(` and `)` to group operations.\n"+
+"* The symbol `^` means 'to the power of' (exponent).\n"+
+"* Order of operations is the same as in normal "+
+"arithmetic: parentheses, exponents, multiplication "+
+"and division, addition and subtraction.\n"+
+"* The letters `a` to `z`, except `e`, stand for "+
+"variables.\n"+
+"* You may leave out the `*` if a number or closing "+
+"parenthesis is followed by a variable.  Example: "+
+"`3x` means `3*x`.\n"+
+"* You may use the symbols `pi` and `e`, which stand "+
+"for the corresponding constants.\n"+
+"* Functions:  You may use the following functions:\n"+
+ "  * `sin(angle)` - Sine (angle in radians).\n"+
+ "  * `cos(angle)` - Cosine.\n"+
+ "  * `tan(angle)` - Tangent.\n"+
+ "  * `abs(value)` - Absolute value.\n"+
+ "  * `acos(value)` - Inverse cosine.\n"+
+ "  * `asin(value)` - Inverse sine.\n"+
+ "  * `atan(value)` - Inverse tangent.\n"+
+ "  * `sqrt(value)` - Square root.\n"+
+ "  * `ln(value)` - Natural logarithm.\n")
+}
+
+var shapeGroup=new ShapeGroup();
+var allsettings={
+"current":0,
+"custom-x":"cos(v)*cos(u)",
+"custom-y":"sin(v)*cos(u)",
+"custom-z":"sin(u)",
+"custom-minu":"-pi/2",
+"custom-maxu":"pi/2",
+"custom-minv":"pi",
+"custom-maxv":"-pi"
+}
+
+function updateMesh(){
+ switch(allsettings["current"]){
+  case 0:
+   return makeMesh(
+    new CustomSurface(
+      allsettings["custom-x"],
+      allsettings["custom-y"],
+      allsettings["custom-z"],
+      allsettings["custom-minu"],
+      allsettings["custom-maxu"],
+      allsettings["custom-minv"],
+      allsettings["custom-maxv"]
+    ),100);
+    default:
+   return new Mesh();
+ }
+}
+
+function validateExpr(value){
+ try {
+  getExpression(value).toJSString();
+  return true;
+ } catch(e){
+  return false;
+ }
+}
+function validateConst(value){
+ try {
+  if(getExpression(value).constantValue()==null){
+   return false;
+  }
+  return true;
+ } catch(e){
+  return false;
+ }
+}
+
+function CustomSurface(x,y,z,minu,maxu,minv,maxv){
+ var ranges=[
+  getExpression(minu).constantValue(),
+  getExpression(maxu).constantValue(),
+  getExpression(minv).constantValue(),
+  getExpression(maxv).constantValue()]
+ if(ranges[0]==null || ranges[1]==null ||
+  ranges[2]==null || ranges[3]==null){
+  throw new Error("min/max must be a constant")
+ }
+ var code=""+
+  "u="+ranges[0]+"+u*"+(ranges[1]-ranges[0])+";"+
+  "v="+ranges[2]+"+v*"+(ranges[3]-ranges[2])+";"+
+  "return ["+
+  " "+getExpression(x).toJSString()+","+
+  " "+getExpression(y).toJSString()+","+
+  " "+getExpression(z).toJSString()+"];"
+ this.evaluate=new Function("u","v",code);
+}
+
+function updateShape(){
+  shapeGroup.shapes[0]=scene.makeShape(updateMesh()).setMaterial(
+    new Material().setParams({
+     "specular":"white",
+     "shininess":10
+    }))
+}
+
+function pushSetting(ranges,name,label,min,max,step){
+ ranges.push(addRange(label,min,max,step,allsettings[name],function(val){
+  allsettings[name]=val
+  updateShape();
+ }))
+}
+function validateListener(id,key){
+ var func=function(e){
+    var id=e.target.id
+    if(validateExpr(e.target.value)){
+     allsettings[key]=e.target.value
+     updateShape();
+    }
+   }
+   allsettings[key]=document.getElementById(id).value
+   document.getElementById(id).addEventListener("input",func)
+   document.getElementById(id).addEventListener("change",func)
+}
+function validateConstListener(id,key){
+   var func=function(e){
+    var id=e.target.id
+    if(validateConst(e.target.value)){
+     allsettings[key]=e.target.value
+     updateShape();
+    }
+   }
+   allsettings[key]=document.getElementById(id).value
+   document.getElementById(id).addEventListener("input",func)
+   document.getElementById(id).addEventListener("change",func)
+}
+function link0(){
+  var exprs=["xcoord","ycoord","zcoord"]
+  var ekeys=["custom-x","custom-y","custom-z"]
+  var consts=["minu","minv","maxu","maxv"]
+  var ckeys=["custom-minu","custom-minv","custom-maxu","custom-maxv"]
+  for(var i=0;i<exprs.length;i++){
+   validateListener(exprs[i],ekeys[i]);
+  }
+  for(var i=0;i<consts.length;i++){
+   validateConstListener(consts[i],ckeys[i]);
+  }
+  updateShape();
+}
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white")
+  scene.cullFace(Scene3D.FRONT)
+  var camera=new Camera(scene,45,1,100);
+  camera.setDistance(5);
+  var pc=new PrimitiveCounter(scene)
+  link0();
+  scene.addShape(shapeGroup);
+  GLUtil.renderLoop(function(){
+   pc.update();
+   camera.update();
+   scene.render();
+  });
+//-->
+</script>
+</body>

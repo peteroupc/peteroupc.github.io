@@ -188,7 +188,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * equal to 1, where N is the number of control points,
 * the control points describe a &lt;i>B&amp;eacute;zier&lt;/i> curve, in which the
 * first and last control points match the curve's end points.&lt;p>
-* @param {boolean|undefined} bits Bits for defining input
+* @param {boolean} [bits] Bits for defining input
 * and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
 * BSplineCurve.HOMOGENEOUS_BIT.
 * and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
@@ -387,7 +387,7 @@ BSplineCurve.prototype.evaluate=function(u){
 * @param {Array&lt;number>} knotsU Knot vector of the curve, along the U-axis.
 * For more information, see {@link glutil.BSplineCurve}.
 * @param {Array&lt;number>} knotsV Knot vector of the curve, along the V-axis.
-* @param {boolean|undefined} bits Bits for defining input
+* @param {boolean} [bits] Bits for defining input
 * and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
 * BSplineCurve.HOMOGENEOUS_BIT.
 * and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
@@ -504,7 +504,16 @@ BSplineSurface.prototype.evaluate=function(u,v){
 /**
 * An evaluator of parametric curve functions for generating
 * vertex positions, normals, colors, and texture coordinates
-* of a curve.
+* of a curve.&lt;p>
+* A parametric curve is a curve whose points are based on a
+* parametric curve function.  A curve function takes a number
+* (U) and returns a point (in 1, 2, 3 or more dimensions, but
+* usually 2 or 3).  For example, in 3 dimensions, a curve
+* function has the following form:&lt;p>
+* &lt;b>F&lt;/b>(u) = [ x(u), y(u), z(u) ]
+* where x(u) returns an X coordinate, y(u) a Y coordinate,
+* and z(u) returns a Z coordinate.&lt;p>
+* For more information, see the {@tutorial surfaces} tutorial.
 * @class
 * @alias CurveEval
 */

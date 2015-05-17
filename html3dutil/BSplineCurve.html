@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Class: BSplineCurve</title>
+<script src="mathml.js"></script>
+</head>
+<body style="margin-top:0px">
+<div style="width:75%;float:left;">
+    <h1>Class: BSplineCurve</h1>
+
+<section>
+
+<header>
+
+        <h2>
+        BSplineCurve
+        </h2>
+
+</header>
+
+<article>
+    <div class="container-overview">
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="BSplineCurve"><span style="font-weight:lighter"></span>new BSplineCurve<span class="signature">(controlPoints, knots, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line185">line 185</a>
+     </i></small></p>
+
+<div class="description">
+    A parametric evaluator for B-spline (basis spline) curves.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;number>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">An array of control points.  Each
+control point is an array with the same length as the other control points.
+It is assumed that the first control point's length represents the size of all the control
+points.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>knots</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;number></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Knot vector of the curve.
+Its size must be at least 2 plus the number of control
+points and not more than twice the number of control points.<p>
+The length of this parameter minus 1, minus the number
+of control points, represents the degree of the B-spline
+curve.  For example, a degree-3 (cubic) B-spline curve contains 4 more
+knots than the number of control points.  A degree of 1
+results in a straight line segment.<p>
+The knot vector must be a nondecreasing sequence and
+the first knot must not equal the last.<p>
+If the difference between one knot and the next isn't the same,
+the curve is considered a <i>non-uniform</i>
+B-spline curve.<p>
+If there are N times 2 knots with the first N equal to 0 and the rest
+equal to 1, where N is the number of control points,
+the control points describe a <i>B&eacute;zier</i> curve, in which the
+first and last control points match the curve's end points.<p></td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>bits</code></td>
+
+            <td class="type">
+
+<span class="param-type">boolean</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Bits for defining input
+and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
+BSplineCurve.HOMOGENEOUS_BIT.
+and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+    </div>
+
+        <h3 class="subsection-title">Members</h3>
+
+<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".DIVIDE_BIT"><span style="font-weight:lighter">(static, constant) </span>DIVIDE_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line227">line 227</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates to divide each other coordinate of the returned point
+by the last coordinate of the point and omit the last
+coordinate.  This is used with WEIGHTED_BIT to convert
+homogeneous coordinates to conventional coordinates.
+If this bit is set, the length of each control point must be at least 2.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 2</dt>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".HOMOGENEOUS_BIT"><span style="font-weight:lighter">(static, constant) </span>HOMOGENEOUS_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line236">line 236</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates that each other coordinate of each control point
+is premultiplied by the last coordinate of the point, that is,
+each control point is in homogeneous coordinates.
+Only used with WEIGHTED_BIT.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 4</dt>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".WEIGHTED_BIT"><span style="font-weight:lighter">(static, constant) </span>WEIGHTED_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line217">line 217</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates whether the last coordinate of each control point is a
+weight.  If some of the weights differ, the curve is
+considered a <i>rational</i> B-spline curve.
+If this bit is set, the length of each control point must be at least 2,
+and points returned by the curve's <code>evaluate</code>
+method will be in homogeneous coordinates.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 1</dt>
+
+</dl>
+
+<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".WEIGHTED_DIVIDE_BITS"><span style="font-weight:lighter">(static, constant) </span>WEIGHTED_DIVIDE_BITS<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line241">line 241</a>
+     </i></small></p>
+
+<div class="description">
+    Combination of WEIGHTED_BIT and DIVIDE_BIT.
+</div>
+
+<dl class="details">
+
+</dl>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line310">line 310</a>
+     </i></small></p>
+
+<div class="description">
+    Evaluates the curve function based on a point
+in a B-spline curve.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>u</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Point on the curve to evaluate (from 0 through 1).</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    An array of the result of
+the evaluation.  Its length will be equal to the
+length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor.
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>)
+
+</div>
+
+    <h5>Example</h5>
+
+    <pre class="prettyprint"><code>// Generate 11 points forming the B-spline curve.
+var points=[];
+for(var i=0;i&lt;=10;i++){
+ points.push(curve.evaluate(i/10.0));
+}</code></pre>
+
+</article>
+
+</section>
+
+</div>
+<nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera.html">camera</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-surfaces.html">surfaces</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>
