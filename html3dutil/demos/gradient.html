@@ -105,13 +105,14 @@ function link4(){
    var mesh=Meshes.createBox(10,20,20);
    var shape=scene.makeShape(mesh).setTexture(tex)
    scene.addShape(shape);
-   var rotation=[0,0,0];
    var timer={};
    GLUtil.renderLoop(function(time){
     fc.update();
-    rotation[0]=360*GLUtil.getTimePosition(timer,time,6000);
-    rotation[1]=360*GLUtil.getTimePosition(timer,time,12000);
-    var q=GLMath.quatFromTaitBryan(rotation);
+    var q=GLMath.quatFromTaitBryan([
+      360*GLUtil.getTimePosition(timer,time,6000),
+      360*GLUtil.getTimePosition(timer,time,12000),
+      0
+    ]);
     shape.setQuaternion(q);
     scene.render();
    })

@@ -10,6 +10,9 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
+<p style="position:absolute;left:0;top:1em">
+Color: <input type=color value="#FFFFFF" id=colorsetting>
+</p>
 <canvas id=canvas></canvas>
 <script id="demo">
 //<!--
@@ -46,14 +49,14 @@ function ClockShape(scene){
    .transform(frontTransform)
  var back=Meshes.createDisk(0,1,64).reverseWinding().reverseNormals()
    .transform(GLMath.mat4translated(0,0,-0.05));
- clock.addShape(scene.makeShape(border).setColor("#888888"));
- clock.addShape(scene.makeShape(front).setColor("#f5f5f5"));
- clock.addShape(scene.makeShape(back).setColor("#cccccc"));
- clock.addShape(scene.makeShape(hourhand).setColor("black"));
- clock.addShape(scene.makeShape(minutehand).setColor("black"));
- clock.addShape(scene.makeShape(secondhand).setColor("gray"));
- clock.addShape(scene.makeShape(center).setColor("black"));
- clock.addShape(scene.makeShape(twelveoclock).setColor("gray"));
+ clock.addShape(scene.makeShape(border));
+ clock.addShape(scene.makeShape(front));
+ clock.addShape(scene.makeShape(back));
+ clock.addShape(scene.makeShape(hourhand));
+ clock.addShape(scene.makeShape(minutehand));
+ clock.addShape(scene.makeShape(secondhand));
+ clock.addShape(scene.makeShape(center));
+ clock.addShape(scene.makeShape(twelveoclock));
  scene.addShape(clock);
  this.shape=clock;
  this.hour=-1;
@@ -69,7 +72,7 @@ function ClockShape(scene){
    this.hour=hour
    this.minute=minute
    this.second=second
-   var hms=(hour%12)*60+minute*60+second;
+   var hms=(hour%12)*3600+minute*60+second;
    var hourhand=360*hms/(3600*12);
    var minutehand=360*(hms%3600)/(3600);
    var secondhand=360*(hms%60)/(60);
@@ -78,20 +81,43 @@ function ClockShape(scene){
    this.shape.shapes[5].getTransform().setOrientation(-secondhand,0,0,1)
   }
  }
+ this.setColor=function(color){
+  var rgb=GLUtil.toGLColor(color);
+  if((rgb[0]+rgb[1]+rgb[2])/3>=0.5){
+   var halftoneColor=GLMath.vec3lerp(rgb.slice(0,4),[0,0,0],0.5);
+   this.shape.shapes[3].setColor("black")
+   this.shape.shapes[4].setColor("black")
+   this.shape.shapes[5].setColor(halftoneColor)
+   this.shape.shapes[6].setColor("black")
+   this.shape.shapes[7].setColor(halftoneColor)
+  } else {
+   var halftoneColor=GLMath.vec3lerp(rgb.slice(0,4),[1,1,1],0.5);
+   this.shape.shapes[3].setColor("white")
+   this.shape.shapes[4].setColor("white")
+   this.shape.shapes[5].setColor(halftoneColor)
+   this.shape.shapes[6].setColor("white")
+   this.shape.shapes[7].setColor(halftoneColor)
+  }
+  var borderColor=GLMath.vec3scaleInPlace(rgb.slice(0,4),0.5);
+  this.shape.shapes[0].setColor(borderColor);
+  var frontColor=GLMath.vec3scaleInPlace(rgb.slice(0,4),1.0);
+  this.shape.shapes[1].setColor(frontColor);
+  var backColor=GLMath.vec3scaleInPlace(rgb.slice(0,4),0.75);
+  this.shape.shapes[2].setColor(backColor);
+ }
+ this.setColor("#ffffff")
  this.update();
 }
-
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
    .cullFace(Scene3D.BACK)
   var camera=new Camera(scene,45,1,1000).setDistance(5)
-  var xyz=new ShapeGroup();
   var pc=new FrameCounterDiv(scene)
-  var shape=null;
-  scene.addShape(xyz);
   var clock=new ClockShape(scene);
+  document.getElementById("colorsetting").addEventListener("change",
+   function(e){ clock.setColor(e.target.value) });
   GLUtil.renderLoop(function(){
    clock.update();
    pc.update();

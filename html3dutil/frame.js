@@ -4,6 +4,9 @@ var FrameCounter=function(){
  this.frameGaps=[]
  this.frameCount=0;
 }
+/**
+ * Not documented yet.
+ */
 FrameCounter.prototype.update=function(){
   var now=("performance" in window) ?
    window.performance.now() : (new Date().getTime()*1000);
@@ -30,6 +33,9 @@ FrameCounter.prototype.update=function(){
     this.fps=(total<=0) ? 60 : 1000.0/total;
   }
 }
+/**
+ * Not documented yet.
+ */
 FrameCounter.prototype.getFPS=function(){
  return this.fps;
 }
@@ -50,6 +56,9 @@ FrameCounterDiv._makeDiv=function(element){
  document.body.appendChild(div)
  return div
 }
+/**
+ * Not documented yet.
+ */
 FrameCounterDiv.prototype.update=function(){
  this.fc.update();
  this.count+=1;
@@ -70,6 +79,9 @@ function PrimitiveCounter(scene){
  this.count=0;
  this.scene=scene;
 }
+/**
+ * Not documented yet.
+ */
 PrimitiveCounter.prototype.update=function(){
  var v=this.scene.vertexCount();
  var p=this.scene.primitiveCount();

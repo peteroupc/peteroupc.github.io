@@ -41,20 +41,15 @@ GLUtil.loadStlFromUrl=function(url){
      return Promise.reject(e)
    });
 }
-/** @private
- @const */
+/** @private */
 StlData.INITIAL=0;
-/** @private
- @const */
+/** @private */
 StlData.IN_SOLID=1;
-/** @private
- @const */
+/** @private */
 StlData.IN_FACET=2;
-/** @private
- @const */
+/** @private */
 StlData.IN_OUTER_LOOP=3;
-/** @private
- @const */
+/** @private */
 StlData.AFTER_SOLID=3;
 StlData._loadStl=function(str){
  var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)"
