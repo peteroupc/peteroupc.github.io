@@ -57,7 +57,7 @@ StlData._loadStl=function(str){
    +"\\s+"+number+"\\s*")
  var vertex=new RegExp("^\\s*vertex\\s+"+number+"\\s+"+number
    +"\\s+"+number+"\\s*")
- var solid=new RegExp("^\\s*solid\\s+(\\S+)\\s*")
+ var solid=new RegExp("^\\s*solid(?=\\s+(.*)|$)")
  var outerloop=new RegExp("^\\s*outer\\s+loop\\s*")
  var endfacet=new RegExp("^\\s*endfacet\\s*")
  var endloop=new RegExp("^\\s*endloop\\s*")
@@ -108,9 +108,6 @@ StlData._loadStl=function(str){
   }
   e=endsolid.exec(line)
   if(e && state==StlData.IN_SOLID){
-    if(solidName!=e[1]){
-     return {"error": new Error("unexpected solid name "+e[1])}
-    }
     state=StlData.AFTER_SOLID;
     continue;
   }
