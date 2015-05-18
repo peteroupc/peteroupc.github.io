@@ -17,9 +17,16 @@
     <h2>Introduction</h2><p>This article explains how my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
 shapes.</p>
-<p><strong>Visit the <a href="https://github.com/peteroupc/html3dutil/releases">library's Releases page</a>
-for the latest version.</strong> As of version 1.2.1, it includes
-the shapes.html and platonic.html demos mentioned in this article.</p>
+<p><strong>Download the latest version of the HTML 3D Library at the <a href="https://github.com/peteroupc/html3dutil/releases">library's Releases page</a>.</strong> As of version 1.2.1, it includes
+the shapes.html and platonic.html demos mentioned in this page.</p>
+<p>This page will discuss:</p>
+<ul>
+<li>Using the Meshes methods to make built-in shapes</li>
+<li>Making your own shapes with the Meshes constructor</li>
+<li>Building up your own shapes using the vertex methods</li>
+<li>Binding meshes to shapes</li>
+<li>Shape groups, or combinations of several shapes</li>
+</ul>
 <h2>Creating Shapes</h2><p>The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.</p>
 <p><img src="shapes.png" alt="An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
@@ -214,6 +221,40 @@ then translating (shifting) the shape in 3D space.</p>
 <p>(3) Add the shape to the 3D scene:</p>
 <pre class="prettyprint source"><code>scene3d.addShape(shape);</code></pre><p>Now, the next time <code>scene3d.render()</code> is called, the <a href="glutil.Scene3D.html"><code>Scene3D</code></a> will render the
 given shape to the scene.</p>
+<h2>Shape Groups</h2><p>The <code>ShapeGroup</code> class represents a shape that's a combination of multiple shapes.  Usually,
+they form different pieces of a combined shape that can be positioned, rotated, and scaled
+at once.  Here is an example of a clock made up of multiple shapes:</p>
+<p><img src="clock.png" alt="Clock"></p>
+<p>This clock is made up of a <strong>torus</strong> for the edge, <strong>disks</strong> for the front and back,
+<strong>capsules</strong> for the hands, and crude <strong>spheres</strong> for the center and top.  These shapes
+are added to a single ShapeGroup which represents the whole clock:</p>
+<ul>
+<li>Clock: <code>ShapeGroup</code><ul>
+<li>Edge: Torus</li>
+<li>Front face: Disk</li>
+<li>Back face: Disk</li>
+<li>Hour hand: Capsule</li>
+<li>Minute hand: Capsule</li>
+<li>Seconds hand: Capsule</li>
+<li>12 o'clock: Sphere</li>
+<li>Center: Sphere</li>
+</ul>
+</li>
+</ul>
+<p>The demo for the clock is:</p>
+<ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/shapes.html">clock.html</a> - A demo
+featuring a wall clock.</li>
+</ul>
+<p>To create a shape group, call <code>new ShapeGroup()</code>. To add a <code>Shape</code> object to the group,
+call <code>shapeGroup.addShape(shape)</code>.  Note that you can only add shapes, not meshes,
+to a shape group, just as for a 3D scene.</p>
+<h2>Other Pages</h2><p>The following pages of mine on CodeProject also discuss this library:</p>
+<ul>
+<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai"><em>Drawing parametric surfaces using the Public Domain HTML 3D Library</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><em>The &quot;Camera&quot; and the Projection and View Transforms</em></a></li>
+</ul>
 </article>
 
 </section>

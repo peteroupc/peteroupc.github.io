@@ -735,6 +735,7 @@ var nextToken = function(tok) {
     return true;
   };
 
+  var findPartialDerivative = function(expr, varyingVariable) {
     var product = function(expr, start, count) {
       var a, ret = null, i__ = null, i = null;
       if (count==(1)) {
@@ -754,34 +755,39 @@ var nextToken = function(tok) {
     ret = ret.divide(expr.get(start+(i)));};
     return ret;
   };
-  var findDerivative = function(expr) {
-    var a, deriv1 = null, deriv2 = null, cutoff = null, e0 = null, e1 = null, sq = null, ops = null, i__ = null, i = null;
+
+    var a, deriv1 = null, deriv2 = null, cutoff = null, e0 = null, e1 = null, sq = null, ops = null, i = null;
 
     if (!(a = expr.constantValue()==(null))) {
       return new Constant(0)
     } else if (a = expr.isOperation("pow")) {
       return expr.get(1).multiply(expr.get(0).combineOp("pow",
-        expr.get(1).subtract(1))).multiply(findDerivative(expr.get(0)))
+        expr.get(1).subtract(1))).multiply(findPartialDerivative(expr.get(0),varyingVariable))
     } else if (a = expr instanceof Variable) {
-      return new Constant((a = expr.negative) ? (-1) : (1))
+      if(expr.name==varyingVariable.name){
+        return new Constant((a = expr.negative) ? (-1) : (1))
+      } else {
+        // other variables are treated as constants
+        return new Constant(0)
+      }
     } else if (a = expr.isOperation("mul")) {
       if (expr.length()==(1)) {
-        return findDerivative(expr.get(0))
+        return findPartialDerivative(expr.get(0),varyingVariable)
       } else if (expr.length()==(2)) {
-        deriv1 = findDerivative(expr.get(0)).multiply(expr.get(1));
-        deriv2 = findDerivative(expr.get(1)).multiply(expr.get(0));
+        deriv1 = findPartialDerivative(expr.get(0),varyingVariable).multiply(expr.get(1));
+        deriv2 = findPartialDerivative(expr.get(1),varyingVariable).multiply(expr.get(0));
         return deriv1.add(deriv2);
         } else {
         cutoff = expr.length()/2|0;
         e0 = product(expr, 0, cutoff);
         e1 = product(expr, cutoff, expr.length()-(cutoff));
-        deriv1 = findDerivative(e0).multiply(e1);
-        deriv2 = findDerivative(e1).multiply(e0);
+        deriv1 = findPartialDerivative(e0,varyingVariable).multiply(e1);
+        deriv2 = findPartialDerivative(e1,varyingVariable).multiply(e0);
         return deriv1.add(deriv2);
       }
     } else if (a = expr.isOperation("div")) {
       if (expr.length()==(1)) {
-        return findDerivative(expr.get(0))
+        return findPartialDerivative(expr.get(0))
         } else {
         e0 = expr.get(0);
         e1 = expr.get(1);
@@ -790,23 +796,24 @@ var nextToken = function(tok) {
           e0 = quotient(expr, 0, cutoff);
           e1 = quotient(expr, cutoff, expr.length()-(cutoff))
         }
-        deriv1 = findDerivative(e0).multiply(e1);
-        deriv2 = findDerivative(e1).multiply(e0);
+        deriv1 = findPartialDerivative(e0,varyingVariable).multiply(e1);
+        deriv2 = findPartialDerivative(e1,varyingVariable).multiply(e0);
         sq = e1.multiply(e1);
         return deriv1.subtract(deriv2).divide(sq);
       }
     } else if (a = expr.isOperation("plus")) {
       ops = new Constant(0);
       for (var i=0;i<(expr.length());i++){
-       ops = ops.add(findDerivative(expr.get(i)))
+       ops = ops.add(findPartialDerivative(expr.get(i),varyingVariable))
       }
       return ops;
     } else if (a = expr.isOperation("sin")) {
-      return Operation.func("cos", expr.get(0)).multiply(findDerivative(expr.get(0)))
+      return Operation.func("cos", expr.get(0)).multiply(findPartialDerivative(expr.get(0),varyingVariable))
     } else if (a = expr.isOperation("cos")) {
-      return Operation.func("sin", expr.get(0)).negate().multiply(findDerivative(expr.get(0)))
+      return Operation.func("sin", expr.get(0)).negate().multiply(findPartialDerivative(expr.get(0),varyingVariable))
     } else if (a = expr.isOperation("tan")) {
-      return findDerivative(Operation.func("sin", expr.get(0)).divide(Operation.func("cos", expr.get(0))))
+      return findPartialDerivative(Operation.func("sin", expr.get(0))
+        .divide(Operation.func("cos", expr.get(0),varyingVariable)),varyingVariable)
     } else {
       throw new Error("unsupported function")
     };

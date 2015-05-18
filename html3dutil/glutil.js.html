@@ -2496,10 +2496,13 @@ ShapeGroup.prototype.setQuaternion=function(quat){
  return this;
 }
 /**
- * Not documented yet.
- * @param {*} x
- * @param {*} y
- * @param {*} z
+ * Sets the scale of this shape group relative to its original
+ * size. See {@link glutil.Transform#setScale}
+ * @param {number|Array&lt;number>} x Scaling factor for this object's width,
+ * or a 3-element scaling array, as specified in {@link glutil.Transform#setScale}.
+ * @param {number} y Scaling factor for this object's height.
+ * @param {number} z Scaling factor for this object's depth.
+* @return {glutil.Scene3D} This object.
  */
 ShapeGroup.prototype.setScale=function(x,y,z){
  this.transform.setScale(x,y,z);
