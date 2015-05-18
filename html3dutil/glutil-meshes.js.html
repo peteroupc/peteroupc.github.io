@@ -204,10 +204,10 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
 * unless the cylinder will be viewed from the inside.
 * @return {Mesh} The generated mesh.
 */
-Meshes.createClosedCylinder=function(base,top,height,slices,stacks,flat, inside){
- var cylinder=Meshes.createCylinder(base,top,height,slices,stacks,flat, inside);
- var base=Meshes.createDisk(0,base,slices,2,!inside).reverseWinding();
- var top=Meshes.createDisk(0,top,slices,2,inside);
+Meshes.createClosedCylinder=function(baseRad,topRad,height,slices,stacks,flat, inside){
+ var cylinder=Meshes.createCylinder(baseRad,topRad,height,slices,stacks,flat, inside);
+ var base=Meshes.createDisk(0,baseRad,slices,2,!inside).reverseWinding();
+ var top=Meshes.createDisk(0,topRad,slices,2,inside);
  // move the top disk to the top of the cylinder
  top.transform(GLMath.mat4translated(0,0,height));
  // merge the base and the top

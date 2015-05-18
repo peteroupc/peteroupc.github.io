@@ -44,7 +44,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @param {String} [fragmentShader] Source text of a fragment shader in GLSL.
 * If null, a default fragment shader is used instead.
 */
-var ShaderProgram=function(context, vertexShader, fragmentShader){
+function ShaderProgram(context, vertexShader, fragmentShader){
  context= (context.getContext) ? context.getContext() : context;
  if(vertexShader==null){
   vertexShader=ShaderProgram.getDefaultVertex();
@@ -52,35 +52,36 @@ var ShaderProgram=function(context, vertexShader, fragmentShader){
  if(fragmentShader==null){
   fragmentShader=ShaderProgram.getDefaultFragment();
  }
- this.program=ShaderProgram._compileShaders(context,vertexShader,fragmentShader);
+ var prog=ShaderProgram._compileShaders(context,vertexShader,fragmentShader);
+ this.program=prog;
  this.attributes={};
  this.context=context;
  this.actives={};
  this.uniformValues={};
  this.uniformTypes={};
  this.savedUniforms={};
- if(this.program!=null){
+ if(prog!=null){
   this.attributes=[];
   var name=null;
   var ret={}
-  var count= context.getProgramParameter(this.program, context.ACTIVE_ATTRIBUTES);
+  var count= context.getProgramParameter(prog, context.ACTIVE_ATTRIBUTES);
   for (var i = 0; i &lt; count; ++i) {
-   var attributeInfo=context.getActiveAttrib(this.program, i);
+   var attributeInfo=context.getActiveAttrib(prog, i);
    if(attributeInfo!==null){
     name=attributeInfo.name;
-    var attr=context.getAttribLocation(this.program, name);
+    var attr=context.getAttribLocation(prog, name);
     if(attr>=0){
      this.attributes.push(attr);
      ret[name]=attr;
     }
    }
   }
-  count = context.getProgramParameter(this.program, context.ACTIVE_UNIFORMS);
+  count = context.getProgramParameter(prog, context.ACTIVE_UNIFORMS);
   for (var i = 0; i &lt; count; ++i) {
-   var uniformInfo=context.getActiveUniform(this.program, i);
+   var uniformInfo=context.getActiveUniform(prog, i);
    if(uniformInfo!==null){
     name = uniformInfo.name;
-    ret[name] = context.getUniformLocation(this.program, name);
+    ret[name] = context.getUniformLocation(prog, name);
     this.uniformTypes[name] = uniformInfo.type;
    }
   }

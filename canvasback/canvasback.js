@@ -24,8 +24,8 @@ var CanvasBackground=function(color){
   this.use3d=true;
   this.count=0;
   var canvasElement=canvas.get(0);
-  this.context=GLUtil.get3DOr2DContext(canvasElement);
-  this.use3d=GLUtil.is3DContext(this.context);
+  this.context=GLUtil["get3DOr2DContext"](canvasElement);
+  this.use3d=GLUtil["is3DContext"](this.context);
   this.shapes=[]
   this["setColor"](color);
 }
@@ -153,7 +153,7 @@ CanvasBackground.hls2hex=function(n){
  CanvasBackground.component2hex(n[2]);
 };
 CanvasBackground.prototype.start=function(){
- GLUtil.renderLoop(this.animate.bind(this));
+ GLUtil["renderLoop"](this.animate.bind(this));
 }
 CanvasBackground.prototype["setColor"]=function(color){
  var rgb=GLUtil["toGLColor"](color)

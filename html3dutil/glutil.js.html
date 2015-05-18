@@ -132,7 +132,7 @@ var GLUtil={
 "createCanvas":function(width, height, parent){
  if(width==null)width=Math.ceil(window.innerWidth);
  if(height==null)height=Math.ceil(window.innerHeight);
- return GLUtil.createCanvasElement(parent,width,height);
+ return GLUtil["createCanvasElement"](parent,width,height);
 },
 /**
 * Creates a 3D rendering context from an HTML canvas element,
@@ -166,7 +166,7 @@ var GLUtil={
     try { context=canvasElement.getContext("2d", options);
     } catch(e) { context=null; }
   }
-  if(GLUtil.is3DContext(context)){
+  if(GLUtil["is3DContext"](context)){
    context.getExtension("OES_element_index_uint");
   }
   return context;
@@ -183,13 +183,13 @@ var GLUtil={
 * is null or not an HTML canvas element.
 */
 "get3DContext":function(canvasElement,err){
-  var c=GLUtil.get3DOr2DContext(canvasElement);
+  var c=GLUtil["get3DOr2DContext"](canvasElement);
   var errmsg=null;
   if(!c &amp;&amp; window.WebGLShader){
     errmsg="Failed to initialize graphics support required by this page.";
-  } else if(window.WebGLShader &amp;&amp; !GLUtil.is3DContext(c)){
+  } else if(window.WebGLShader &amp;&amp; !GLUtil["is3DContext"](c)){
     errmsg="This page requires WebGL, but it failed to start. Your computer might not support WebGL.";
-  } else if(!c || !GLUtil.is3DContext(c)){
+  } else if(!c || !GLUtil["is3DContext"](c)){
     errmsg="This page requires a WebGL-supporting browser.";
   }
   if(errmsg){
@@ -328,7 +328,7 @@ var GLUtil={
 * This could be the parameter received in a
 * &lt;code>requestAnimationFrame()&lt;/code> callback method.
 * &lt;/code>.
-* @param {number} interval The length of the interval
+* @param {number} intervalInMs The length of the interval
 * (animation cycle), in milliseconds.
 * @return {number} A value in the range [0, 1), where closer
 * to 0 means "timeInMs" lies
@@ -744,7 +744,7 @@ Lights.prototype.setParams=function(index,params){
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
- * @param {Array&lt;number>} position A 3-element vector giving the direction of the light, along the X, Y, and Z
+ * @param {Array&lt;number>} direction A 3-element vector giving the direction of the light, along the X, Y, and Z
  * axes, respectively.
  * @return {Lights} This object.
  */
@@ -1500,7 +1500,7 @@ FrameBuffer.prototype.dispose=function(){
 * ambient color and one directional light source.
 *  @class
 * @alias glutil.Scene3D
- * @param {WebGLRenderingContext|object} context
+ * @param {WebGLRenderingContext|object} canvasOrContext
  * A WebGL 3D context to associate with this scene, or an HTML
  * canvas element to create a WebGL context from, or an object, such as Scene3D, that
 * implements a no-argument &lt;code>getContext&lt;/code> method
@@ -1965,7 +1965,7 @@ Scene3D.prototype.setClearColor=function(r,g,b,a){
 }
 /**
 * Loads a texture from an image URL.
-* @param {string} URL of the image to load.
+* @param {string} name URL of the image to load.
 * @return {Promise} A promise that is resolved when
 * the image is loaded successfully (the result will be a Texture
 * object), and is rejected when an error occurs.
@@ -2001,9 +2001,9 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
 * Loads one or more textures from an image URL and uploads each of them
 * to a texture buffer object.
 * @param {Array&lt;string>} textureFiles A list of URLs of the image to load.
-* @param {Function} [resolved] Called for each URL that is loaded successfully
+* @param {Function} [resolve] Called for each URL that is loaded successfully
 * and uploaded to a texture buffer (the argument will be a Texture object.)
-* @param {Function} [rejected] Called for each URL for which an error
+* @param {Function} [reject] Called for each URL for which an error
 * occurs (the argument will be the data passed upon
 * rejection).
 * @return {Promise} A promise that is resolved when

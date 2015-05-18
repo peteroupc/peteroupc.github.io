@@ -61,7 +61,7 @@ StlData._loadStl=function(str){
  var outerloop=new RegExp("^\\s*outer\\s+loop\\s*")
  var endfacet=new RegExp("^\\s*endfacet\\s*")
  var endloop=new RegExp("^\\s*endloop\\s*")
- var endsolid=new RegExp("^\\s*endsolid\\s+(\\S+)\\s*$")
+ var endsolid=new RegExp("^\\s*endsolid(?=\\s+.*|$)")
  var lines=str.split(/\r?\n/)
  var mesh=new Mesh()
  var currentNormal=[]

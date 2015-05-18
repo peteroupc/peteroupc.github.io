@@ -339,21 +339,21 @@ Mesh.prototype.normal3=function(x,y,z){
   * May be null or omitted if a string or array is given as the "r" parameter.
   * @return {glutil.Mesh} This object.
   */
- Mesh.prototype.color3=function(x,y,z){
-  if(typeof x=="string"){
-   var c=GLUtil["toGLColor"](x);
+ Mesh.prototype.color3=function(r,g,b){
+  if(typeof r=="string"){
+   var c=GLUtil["toGLColor"](r);
    this.color[0]=c[0];
    this.color[1]=c[1];
    this.color[2]=c[2];
-  } else if(typeof x=="number" &amp;&amp; typeof y=="number" &amp;&amp;
-   typeof z=="number"){
-   this.color[0]=x;
-   this.color[1]=y;
-   this.color[2]=z;
+  } else if(typeof r=="number" &amp;&amp; typeof g=="number" &amp;&amp;
+   typeof b=="number"){
+   this.color[0]=r;
+   this.color[1]=g;
+   this.color[2]=b;
   } else {
-   this.color[0]=x[0];
-   this.color[1]=x[1];
-   this.color[2]=x[2];
+   this.color[0]=r[0];
+   this.color[1]=r[1];
+   this.color[2]=r[2];
   }
   this._elementsDefined|=Mesh.COLORS_BIT;
   return this;

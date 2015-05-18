@@ -20,7 +20,7 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="Scene3D"><span style="font-weight:lighter"></span>new Scene3D<span class="signature">(context)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="Scene3D"><span style="font-weight:lighter"></span>new Scene3D<span class="signature">(canvasOrContext)</span><span style="font-weight:lighter"></span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1498">line 1498</a>
      </i></small></p>
@@ -60,7 +60,7 @@ ambient color and one directional light source.
 
         <tr>
 
-                <td style="border-bottom: 1px solid;"><code>context</code></td>
+                <td style="border-bottom: 1px solid;"><code>canvasOrContext</code></td>
 
             <td class="type">
 
@@ -602,7 +602,7 @@ object), and is rejected when an error occurs.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadAndMapTextures"><span style="font-weight:lighter"></span>loadAndMapTextures<span class="signature">(textureFiles, resolved<sub style="font-weight:lighter">opt</sub>, rejected<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadAndMapTextures"><span style="font-weight:lighter"></span>loadAndMapTextures<span class="signature">(textureFiles, resolve<sub style="font-weight:lighter">opt</sub>, reject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2004">line 2004</a>
      </i></small></p>
@@ -649,7 +649,7 @@ to a texture buffer object.
 
         <tr>
 
-                <td style="border-bottom: 1px solid;"><code>resolved</code></td>
+                <td style="border-bottom: 1px solid;"><code>resolve</code></td>
 
             <td class="type">
 
@@ -669,7 +669,7 @@ and uploaded to a texture buffer (the argument will be a Texture object.)</td>
 
         <tr>
 
-                <td style="border-bottom: 1px solid;"><code>rejected</code></td>
+                <td style="border-bottom: 1px solid;"><code>reject</code></td>
 
             <td class="type">
 
@@ -709,7 +709,7 @@ See <a href="glutil.GLUtil.html#.getPromiseResults">glutil.GLUtil.getPromiseResu
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadTexture"><span style="font-weight:lighter"></span>loadTexture<span class="signature">(URL)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadTexture"><span style="font-weight:lighter"></span>loadTexture<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1962">line 1962</a>
      </i></small></p>
@@ -736,7 +736,7 @@ See <a href="glutil.GLUtil.html#.getPromiseResults">glutil.GLUtil.getPromiseResu
 
         <tr>
 
-                <td style="border-bottom: 1px solid;"><code>URL</code></td>
+                <td style="border-bottom: 1px solid;"><code>name</code></td>
 
             <td class="type">
 
@@ -744,7 +744,7 @@ See <a href="glutil.GLUtil.html#.getPromiseResults">glutil.GLUtil.getPromiseResu
 
             </td>
 
-            <td class="description last">of the image to load.</td>
+            <td class="description last">URL of the image to load.</td>
         </tr>
 
     </tbody>

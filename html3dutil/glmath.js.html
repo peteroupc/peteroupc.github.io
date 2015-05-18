@@ -370,7 +370,7 @@ mat4copy:function(mat){
 },
 /**
  * Returns a copy of a 3-element vector.
- * @param {Array&lt;number>} mat A 3-element vector.
+ * @param {Array&lt;number>} vec A 3-element vector.
  * @return {Array&lt;number>}
  */
 vec3copy:function(vec){
@@ -378,7 +378,7 @@ vec3copy:function(vec){
 },
 /**
  * Returns a copy of a 4-element vector.
- * @param {Array&lt;number>} mat A 4-element vector.
+ * @param {Array&lt;number>} vec A 4-element vector.
  * @return {Array&lt;number>}
  */
 vec4copy:function(vec){
@@ -1638,7 +1638,6 @@ mat[12], mat[13], mat[14], mat[15]];
 },
 /**
  * Returns a 4x4 matrix representing a rotation transformation.
- * @param {Array&lt;number>} mat A 4x4 matrix to multiply.
  * @param {Array&lt;number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
