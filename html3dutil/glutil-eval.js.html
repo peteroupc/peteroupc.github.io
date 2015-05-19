@@ -758,10 +758,46 @@ SurfaceEval.prototype.vertex=function(evaluator){
 }
 /**
 * Specifies a parametric surface function for generating normals.
+* &lt;p>
+* To generate normals for a function for a regular surface (usually
+* a continuous, unbroken surface such as a sphere, disk, or open
+* cylinder), find the &lt;a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative&lt;/a> of
+* the function used for vertex calculation (we'll call it &lt;b>F&lt;/b>) with
+* respect to u, then find the partial derivative of &lt;b>F&lt;/b> with respect to
+* v, then take their &lt;a href="http://en.wikipedia.org/wiki/Cross_product">cross
+* product&lt;/a>, then normalize the result to unit length.
+* In mathematical notation, this looks like:
+* &lt;b>c&lt;/b> = &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>u&lt;/i> &amp;times;
+* &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>v&lt;/i>; &lt;b>n&lt;/b> = &lt;b>c&lt;/b> / |&lt;b>c&lt;/b>|.&lt;p>
+* If autonormal is enabled (see setAutoNormal()), SurfaceEval uses an approximation to this approach,
+* as the SurfaceEval class doesn't know the implementation of the method used
+* for vertex calculation.
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
 * &lt;/ul>
 * @return {SurfaceEval} This object.
+* @example &lt;caption>The following example sets the normal generation
+* function for a parametric surface.  To illustrate how the method is derived
+* from the vector calculation method, that method is also given below.  To
+* derive the normal calculation, first look at the vector function:&lt;p>
+* &lt;b>F&lt;/b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))&lt;p>
+* Then, find the partial derivatives with respect to u and v:&lt;p>
+* &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202;&lt;i>u&lt;/i> = (-sin(u), cos(u), cos(u)*cos(v))&lt;br>
+* &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202;&lt;i>v&lt;/i> = (0, 0, -sin(v)*sin(u))&lt;p>
+* Next, take their cross product:&lt;p>
+* &lt;b>c&lt;/b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)&lt;br>&lt;p>
+* And finally, normalize the result:&lt;p>
+* &lt;b>n&lt;/b>(u, v) = &lt;b>c&lt;/b>(u, v)/|&lt;b>c&lt;/b>(u, v)|&lt;p>
+*&lt;/caption>
+* surfaceEval.vertex({"evaluate":function(u,v){
+*  return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+* }})
+* .normal({"evaluate":function(u,v){
+*  return GLMath.vec3normInPlace([
+*   Math.cos(u)*-Math.sin(v)*Math.sin(u),
+*   Math.sin(u)*-Math.sin(v)*Math.sin(u),
+*   0]);
+* }})
 */
 SurfaceEval.prototype.normal=function(evaluator){
  this.normalSurface=evaluator;

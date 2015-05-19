@@ -244,20 +244,35 @@ var nextToken = function(tok) {
           }
         } else if (c = (this.operator=="plus")) {
           cv = node.constantValue();
-          if (cv==(0)) {
+          if (cv===(0)) {
             this.nodes[i] = null;
             done = false;};
         } else if (c = (this.operator=="div")) {
           cv = node.constantValue();
-          if (cv==(1)) {
+          if (cv==(1) && i>0) {
             this.nodes[i] = null;
             done = false;};
+          if (cv===(0) && i==0) {
+            var found=false;
+            for (var j=i+1;j<this.nodes.length;j++){
+             if(this.nodes[j].constantValue()===0){
+              found=true;
+              break;
+             }
+            }
+            if(!found){
+             // no non-zero nodes after the first
+             this.nodes.length=1;
+             this.nodes[0]=new Constant(0);
+             return this;
+            }
+          };
         } else if (c = (this.operator=="mul")) {
           cv = node.constantValue();
           if (cv==(1)) {
             this.nodes[i] = null;
             done = false;
-          } else if (cv==(0)) {
+          } else if (cv===(0)) {
             this.nodes.length=0;
             this.nodes[0] = new Constant(0);
             return this;
@@ -295,12 +310,18 @@ var nextToken = function(tok) {
     Operation.prototype.degen = function() {
       var a, b, c, cv = null;
       this.simplify();
-      if (((a = (((b = (((c = this.operator=="plus") !== false && c !== null) ? c : this.operator=="mul")) !== false && b !== null) ? b : this.operator=="div")))) {
+      if (this.operator=="plus" || this.operator=="mul" || this.operator=="div") {
         if (this.nodes.length==(1) && !this.negative) {
           return this.nodes[0].degen()}};
       cv = this.constantValue();
       if (!(a = cv==(null))) {
         return new Constant(cv)};
+      /*  for(var i=0;i<this.nodes.length;i++){
+         if(typeof this.nodes[i]=="number"){
+          throw new Error("number in: "+this.toString()+"\n"+JSON.stringify(this))
+         }
+        }
+     */
       return this;
     };
 
@@ -344,8 +365,16 @@ var nextToken = function(tok) {
     Operation.prototype.combineOp = function(operation, x) {
       var a, op = null;
 
-      if (a = x instanceof Number) {
+      if (typeof x=="number") {
         x = new Constant(x)};
+      if (operation=="pow"){
+       var cv=x.constantValue();
+       if(cv===0){
+        return new Constant(1);
+       } else if(cv===1){
+        return this;
+       }
+      }
       op = new Operation(operation);
       op.nodes.push(this);
       op.nodes.push(x);
@@ -355,9 +384,13 @@ var nextToken = function(tok) {
     Operation.prototype.negate = function() {
       var a, b, op = null, node__ = null, node = null;
       op = new Operation(this.operator);
-      if(op.operation=="plus"){
+      if(op.operator=="plus"){
        for (var node__=0;node__<(this.nodes.length);node__++){
         op.nodes.push(this.nodes[node__].negate());
+       }
+      } else if(op.operator=="mul" || op.operator=="div"){
+       for (var node__=0;node__<(this.nodes.length);node__++){
+        op.nodes.push((node__==0) ? this.nodes[node__].negate() : this.nodes[node__]);
        }
       } else {
        op.negative=!this.negative;
@@ -369,7 +402,7 @@ var nextToken = function(tok) {
     };
 
     Operation.prototype.subtract = function(x) {
-      return this.add((x instanceof Number) ? (-x) : (x.negate()));
+      return this.add((typeof x=="number") ? (-x) : (x.negate()));
     };
 
     Operation.prototype.add = function(x) {
@@ -381,7 +414,7 @@ var nextToken = function(tok) {
       var a;
 
       if (a = (this.equals(x))) {
-        return Operation.func("pow", x, 2)};
+        return Operation.func("pow", x, new Constant(2))};
       return this.combineOp("mul", x);
     };
 
@@ -499,7 +532,7 @@ var nextToken = function(tok) {
     Variable.prototype.combineOp = function(operation, x) {
       var a, op = null, cv = null;
 
-      if (a = x instanceof Number) {
+      if (a = typeof x=="number") {
         x = new Constant(x)};
       op = new Operation(operation);
       if (operation=="mul") {
@@ -539,7 +572,7 @@ var nextToken = function(tok) {
     Variable.prototype.subtract = function(x) {
       var a;
 
-      return this.add((a = x instanceof Number) ? (-x) : (x.negate()));
+      return this.add((a = typeof x=="number") ? (-x) : (x.negate()));
     };
 
     Variable.prototype.multiply = function(x) {
@@ -613,7 +646,7 @@ var nextToken = function(tok) {
     Constant.prototype.combineOp = function(operation, x) {
       var a, op = null;
 
-      if (a = x instanceof Number) {
+      if (a = typeof x=="number") {
         x = new Constant(x)};
       op = new Operation(operation);
       op.nodes.push(this);
@@ -631,21 +664,20 @@ var nextToken = function(tok) {
     Constant.prototype.add = function(x) {
       var a;
 
-      if (a = x instanceof Number) {
+      if (a = typeof x=="number") {
         return new Constant(x+(this.constantValue()))};
       return this.combineOp("plus", x);
     };
 
     Constant.prototype.subtract = function(x) {
       var a;
-
-      return this.add((a = x instanceof Number) ? (-x) : (x.negate()));
+      return this.add((a = typeof x=="number") ? (-x) : (x.negate()));
     };
 
     Constant.prototype.multiply = function(x) {
       var a;
 
-      if (a = x instanceof Number) {
+      if (a = typeof x=="number") {
         return new Constant(x*(this.constantValue()))};
       return this.combineOp("mul", x);
     };
@@ -653,7 +685,7 @@ var nextToken = function(tok) {
     Constant.prototype.divide = function(x) {
       var a;
 
-      if (a = x instanceof Number) {
+      if (a = typeof x=="number") {
         return new Constant(x/(this.constantValue()))};
       return this.combineOp("div", x);
     };
@@ -758,11 +790,22 @@ var nextToken = function(tok) {
 
     var a, deriv1 = null, deriv2 = null, cutoff = null, e0 = null, e1 = null, sq = null, ops = null, i = null;
 
+    if(typeof varyingVariable=="string")varyingVariable=new Variable(varyingVariable)
     if (!(a = expr.constantValue()==(null))) {
       return new Constant(0)
     } else if (a = expr.isOperation("pow")) {
-      return expr.get(1).multiply(expr.get(0).combineOp("pow",
-        expr.get(1).subtract(1))).multiply(findPartialDerivative(expr.get(0),varyingVariable))
+      var ret;
+      if(expr.get(0).constantValue()==Math.E){
+       ret=expr.multiply(findPartialDerivative(expr.get(1),varyingVariable));
+      } else {
+       ret=expr.get(1).multiply(expr.get(0).combineOp("pow",expr.get(1).subtract(1)))
+       ret=ret.multiply(findPartialDerivative(expr.get(0),varyingVariable))
+      }
+      return ret;
+    } else if (a = expr.isOperation("sqrt")) {
+       // sqrt(x) = pow(x,0.5)
+       ret=new Constant(0.5).multiply(expr.get(0).combineOp("pow",new Constant(-0.5)))
+       ret=ret.multiply(findPartialDerivative(expr.get(0),varyingVariable))
     } else if (a = expr instanceof Variable) {
       if(expr.name==varyingVariable.name){
         return new Constant((a = expr.negative) ? (-1) : (1))
@@ -773,14 +816,14 @@ var nextToken = function(tok) {
     } else if (a = expr.isOperation("mul")) {
       if (expr.length()==(1)) {
         return findPartialDerivative(expr.get(0),varyingVariable)
-      } else if (expr.length()==(2)) {
-        deriv1 = findPartialDerivative(expr.get(0),varyingVariable).multiply(expr.get(1));
-        deriv2 = findPartialDerivative(expr.get(1),varyingVariable).multiply(expr.get(0));
-        return deriv1.add(deriv2);
-        } else {
-        cutoff = expr.length()/2|0;
-        e0 = product(expr, 0, cutoff);
-        e1 = product(expr, cutoff, expr.length()-(cutoff));
+      } else {
+        e0 = expr.get(0);
+        e1 = expr.get(1);
+        if (expr.length()>(2)) {
+          cutoff = expr.length()/2|0;
+          e0 = product(expr, 0, cutoff);
+          e1 = product(expr, cutoff, expr.length()-(cutoff))
+        }
         deriv1 = findPartialDerivative(e0,varyingVariable).multiply(e1);
         deriv2 = findPartialDerivative(e1,varyingVariable).multiply(e0);
         return deriv1.add(deriv2);
@@ -807,15 +850,52 @@ var nextToken = function(tok) {
        ops = ops.add(findPartialDerivative(expr.get(i),varyingVariable))
       }
       return ops;
+    } else if (a = expr.isOperation("ln")) {
+      return findPartialDerivative(expr.get(0),varyingVariable).divide(expr.get(0))
     } else if (a = expr.isOperation("sin")) {
       return Operation.func("cos", expr.get(0)).multiply(findPartialDerivative(expr.get(0),varyingVariable))
+    } else if (a = expr.isOperation("abs")) {
+      return findPartialDerivative(expr.get(0),varyingVariable)
     } else if (a = expr.isOperation("cos")) {
       return Operation.func("sin", expr.get(0)).negate().multiply(findPartialDerivative(expr.get(0),varyingVariable))
     } else if (a = expr.isOperation("tan")) {
       return findPartialDerivative(Operation.func("sin", expr.get(0))
         .divide(Operation.func("cos", expr.get(0),varyingVariable)),varyingVariable)
+    } else if (a = expr.isOperation("asin")) {
+      var ret=new Constant(1).divide(
+         new Constant(1).subtract(expr.get(0).combineOp("pow",2)).combineOp("pow",0.5));
+      return ret.multiply(findPartialDerivative(expr.get(0),varyingVariable))
+    } else if (a = expr.isOperation("acos")) {
+      var ret=new Constant(-1).divide(
+         new Constant(1).subtract(expr.get(0).combineOp("pow",2)).combineOp("pow",0.5));
+      return ret.multiply(findPartialDerivative(expr.get(0),varyingVariable))
+    } else if (a = expr.isOperation("atan")) {
+      var ret=new Constant(1).divide(
+         expr.get(0).combineOp("pow",2).add(1));
+      return ret.multiply(findPartialDerivative(expr.get(0),varyingVariable))
     } else {
       throw new Error("unsupported function")
     };
     return expr;
   };
+
+  function normalCalcExpr(vecExpr){
+   var varu=new Variable("u")
+   var varv=new Variable("v")
+   // partial derivative with respect to u
+   var derivU=[
+    findPartialDerivative(vecExpr[0],varu),
+    findPartialDerivative(vecExpr[1],varu),
+    findPartialDerivative(vecExpr[2],varu)
+   ]
+   // partial derivative with respect to v
+   var derivV=[
+    findPartialDerivative(vecExpr[0],varv),
+    findPartialDerivative(vecExpr[1],varv),
+    findPartialDerivative(vecExpr[2],varv)
+   ]
+   // cross product
+   return [derivU[1].multiply(derivV[2]).subtract(derivU[2].multiply(derivV[1])),
+    derivU[2].multiply(derivV[0]).subtract(derivU[0].multiply(derivV[2])),
+    derivU[0].multiply(derivV[1]).subtract(derivU[1].multiply(derivV[0]))];
+  }
