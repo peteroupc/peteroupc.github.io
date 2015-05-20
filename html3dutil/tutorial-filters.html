@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Tutorial: filters</title>
+<script src="mathml.js"></script>
+</head>
+<body style="margin-top:0px">
+<div style="width:75%;float:left;">
+    <h1>Tutorial: filters</h1>
+    <section>
+
+<header>
+
+    <h2>filters</h2>
+</header>
+
+<article>
+    <h2>Introduction</h2><p>This tip describes what graphics filters are and how to use them in my
+public domain <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.</p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library's Releases page</a>.</strong></p>
+<h2>Graphics Filters</h2><p>In the HTML 3D Library, graphics filters are functions used to modify the appearance
+of the screen after each frame.  They are implemented in a language called GLSL, or GL
+Shading Language.  GLSL programs are called &quot;shaders&quot;, and they are compiled into code that runs on a GPU,
+or graphics processing unit.</p>
+<p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that render one pixel at a time.  GPUs can run
+shaders very fast because fragment shaders can process each pixel in parallel, without affecting the other
+pixels, and GPUs are often much better designed for parallel processing than CPUs.</p>
+<h2>Writing Graphics Filters</h2><p>In the HTML 3D Library, use the <code>makeEffect</code> method of the ShaderProgram class to create
+graphics filters:</p>
+<ul>
+<li>The <code>ShaderProgram</code> class hold data on shader programs.  Each shader program consists
+of a <em>vertex shader</em> and a <em>fragment shader</em>.  Graphics filters are essentially part of a fragment shader
+and thus processes pixels.  (Vertex shaders, which process vertices of triangles, lines, and points,
+are not discussed on this page.)</li>
+<li>The <code>makeEffect</code> method creates a shader program and compiles it, using the graphics
+filter as part of the program's fragment shader.</li>
+</ul>
+<p>The following is an example of a graphics filter.</p>
+<pre class="prettyprint source"><code>return ShaderProgram.makeEffect(context,[
+&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
+// Read the current color from the sampler texture
+&quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
+// Convert the color to a shade of gray.  It gets
+// the current color's red, green, and blue components,
+// adds them, and divides by 3.  Thus, the gray color
+// will be an average of the red/green/blue components.
+&quot; float gray=(color.r+color.g+color.b)/3.0;&quot;,
+// Return the gray color
+&quot; return vec4(gray,gray,gray,color.a);&quot;,
+&quot;}&quot;].join(&quot;\n&quot;));</code></pre><p>Each graphics filter must have a GLSL function called <code>textureEffect()</code>, like in the example above.
+The <code>textureEffect</code> function takes these parameters:</p>
+<ul>
+<li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame.  To read from
+the texture, use the <code>texture2D</code> function, as shown in the example above.</li>
+<li><code>vec2 uvCoord</code>: Texture coordinates of the current pixel.  <code>uvCoord.x</code> ranges from 0 on the left side
+to 1 on the right side.  <code>uvCoord.y</code> ranges from 0 on the bottom side to 1 on the top side.  (Note that
+texture coordinates start from the bottom-left corner, not the top left, that is, textures are &quot;bottom up&quot;,
+not &quot;top down&quot;).</li>
+<li><code>vec2 textureSize</code>: Size of the screenshot, pointed to by <code>sampler</code>, in pixels.  <code>textureSize.x</code> is the
+width, and <code>textureSize.y</code> is the height.</li>
+</ul>
+<p>The <code>textureEffect</code> function returns a <code>vec4</code> (4-element vector) giving the color that the current pixel should
+be.  The example above reads the current pixel's color, turns it to a shade of gray, and returns a new color
+with that shade of gray.  Thus, the filter will convert the screen to grayscale tones.</p>
+<p><strong>To be written: Brief discussion of uniforms as custom parameters</strong></p>
+<p>A detailed treatment of GLSL is outside the scope of this page.  More information about GLSL can
+be found by searching the Web; note that there are many versions of GLSL and the one used
+in HTML applications is relatively basic nowadays.  Also see below for more examples of graphics filters.</p>
+<h2>Examples</h2><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html">squares.html</a> - Demonstrates graphics filters.</li>
+</ul>
+<p>The demo <a href="https://peteroupc.github.io/html3dutil/demos/squares.html">squares.html</a> includes a number
+of graphics filters implemented as shaders.</p>
+<p>Here are more details on the filters it implements.</p>
+<h3>Grayscale</h3><p>The grayscale filter, which converts the screen to black and white, was already given above.</p>
+<h3>Mirror Filter</h3><p>This filter does a horizontal flip of its pixels.  Note that the filter, given below, reads not from
+the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
+the current X coordinate).</p>
+<pre class="prettyprint source"><code>function makeMirror(context){
+return ShaderProgram.makeEffect(context,[
+&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
+&quot; vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));&quot;,
+&quot; return color;&quot;,
+&quot;}&quot;].join(&quot;\n&quot;));
+}</code></pre><h3>Matrix Filter</h3><p>This filter enables a family of image processing filters, such as blurring, sharpening,
+edge detection, and embossing, that process each pixel and its neighbors.  This filter takes
+a 3x3 <em>convolution matrix</em> or <em>kernel</em>, which gives the contribution of each pixel's color
+to the final color.  All the numbers in the matrix must add up to 1.</p>
+<p>Note that the <code>uniform</code> given below is a <code>mat3</code>, meaning a 3x3 matrix.</p>
+<h3>Pixelate Filter</h3><p>This filter pixelates the screen, in effect, by scaling it down and then scaling it up.
+This filter takes a <code>uniform</code> named <code>coarseness</code>, which indicates how many normal pixels
+each &quot;pixelated&quot; pixel takes up.</p>
+<pre class="prettyprint source"><code>function makePixelate(context){
+return ShaderProgram.makeEffect(context,[
+&quot;uniform float coarseness;&quot;, // coarseness in pixels; 1 means normal
+&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
+&quot; float g=max(coarseness,1.0);&quot;,
+&quot; float gridSizeX=textureSize.x/g;&quot;,
+&quot; float gridSizeY=textureSize.y/g;&quot;,
+&quot; float uv0=floor(uvCoord.x*gridSizeX)/gridSizeX;&quot;,
+&quot; float uv1=floor(uvCoord.y*gridSizeY)/gridSizeY;&quot;,
+&quot; vec4 c=texture2D(sampler,vec2(uv0,uv1));&quot;,
+&quot; return c;&quot;,
+&quot;}&quot;].join(&quot;\n&quot;));</code></pre><p>}</p>
+<h3>Wave Filter</h3><p>To be written.</p>
+<h3>Waterpaint Filter</h3><p>To be written.</p>
+<h2>Other Pages</h2><p>The following pages of mine on CodeProject also discuss this library:</p>
+<ul>
+<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai"><em>Drawing parametric surfaces using the Public Domain HTML 3D Library</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><em>The &quot;Camera&quot; and the Projection and View Transforms</em></a></li>
+</ul>
+</article>
+
+</section>
+
+</div>
+<nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera.html">camera</a></li><li><a href="tutorial-filters.html">filters</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-surfaces.html">surfaces</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>
