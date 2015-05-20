@@ -25,6 +25,9 @@ or graphics processing unit.</p>
 <p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that process one pixel at a time.  GPUs can run
 shaders very fast because fragment shaders can process each pixel in parallel, without affecting the other
 pixels, and GPUs are often much better designed for parallel processing than CPUs.</p>
+<p>For graphics filters to work, the 3D scene must be rendered to an off-screen buffer called
+a <em>frame buffer</em>.  The frame buffer acts like a 3D texture which will be rendered back to
+the screen with the help of the graphics filter's shader program.</p>
 <h2>Writing Graphics Filters</h2><p>In the HTML 3D Library, use the <code>makeEffect</code> method of the ShaderProgram class to create
 graphics filters:</p>
 <ul>
@@ -77,10 +80,12 @@ a filter is set, here's how it works:</p>
 to use as the depth buffer.</li>
 <li>When the <code>render()</code> method is called each frame:<ul>
 <li>The library ensures that the frame buffer is the same size as the 3D canvas.</li>
-<li>The 3D library switches drawing to use the frame buffer rather than the 3D canvas.</li>
+<li>The 3D library switches drawing to use the frame buffer rather than the 3D canvas, then
+switches the shader to the usual shaders for drawing the 3D scene.</li>
 <li>The current frame is rendered onto the frame buffer.  The frame buffer's texture will now contain a
 &quot;snapshot&quot; of the frame that can now be modified by graphics filters.</li>
-<li>The 3D library switches drawing back to the 3D canvas.</li>
+<li>The 3D library switches drawing back to the 3D canvas, then switches the shader
+to the graphics filter's shaders.</li>
 <li>A rectangle taking up the entire 3D canvas is drawn.  This is to allow each pixel of the texture to
 be passed to the graphics filter, and the filter's <code>textureEffect</code> method to be called for each pixel.
 Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.

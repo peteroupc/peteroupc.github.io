@@ -44,7 +44,8 @@ surface can be found by evaluating different UV points.  By the way, the surface
 <h2>Parametric Surfaces in the HTML 3D Library</h2><p>The HTML 3D Library supports parametric surfaces using a class named <a href="http://peteroupc.github.io/html3dutil/glutil.SurfaceEval.html"><code>SurfaceEval</code></a>.  It helps
 generate vertex coordinates, texture coordinates, normals, and colors using a parametric surface
 function.  The following helper function, <code>makeMesh</code>, generates a parametric surface mesh
-that was used to produce the pictures on this page.</p>
+that was used to produce the pictures on this page. <code>makeMesh</code> is only included in the demo, not
+in the HTML 3D Library.</p>
 <p>The comments explain how <code>makeMesh</code> works in detail.</p>
 <pre class="prettyprint source"><code>function makeMesh(func,resolution){
  // Default resolution is 50
@@ -129,7 +130,8 @@ and the API references for the <a href="http://peteroupc.github.io/html3dutil/gl
 <p>This demo contains several examples of parametric surfaces.   The source code defines several classes that create evaluators of parametric surfaces:</p>
 <ul>
 <li><code>new Superellipsoid(xRadius, yRadius, zRadius, n, m)</code><br>
- Creates a &quot;<a href="http://en.wikipedia.org/wiki/Superellipsoid">superellipsoid</a>&quot; shape, with a radius <code>xRadius</code> along the X-axis, <code>yRadius</code> along the Y-axis, and <code>zRadius</code> along the z-axis.  The parameters <code>m</code> and <code>n</code> may be omitted; the default for each is 1, which creates a normal ellipsoid.</li>
+ Creates a &quot;<a href="http://en.wikipedia.org/wiki/Superellipsoid">superellipsoid</a>&quot; shape, with a radius <code>xRadius</code> along the X-axis,
+ <code>yRadius</code> along the Y-axis, and <code>zRadius</code> along the z-axis.  The parameters <code>m</code> and <code>n</code> may be omitted; the default for each is 1, which creates a normal ellipsoid.</li>
 <li><code>new Supertoroid(xRadius, yRadius, zRadius, innerRadius, n, m)</code><br>
  Creates a &quot;<a href="http://en.wikipedia.org/wiki/Supertoroid">supertoroid</a>&quot; shape (with a hole in the middle), with a radius <code>xRadius</code> along the X-axis, <code>yRadius</code> along the Y-axis, and <code>zRadius</code> along the z-axis.  The inner radius will be <code>innerRadius</code>. The parameters <code>m</code> and <code>n</code> may be omitted; the default for each is 1, which creates a normal torus or toroid.</li>
 <li><code>new RevolutionSurface(func,minValue,maxValue)</code><br>
