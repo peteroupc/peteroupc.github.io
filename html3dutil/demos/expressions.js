@@ -266,7 +266,18 @@ var nextToken = function(tok) {
              this.nodes[0]=new Constant(0);
              return this;
             }
-          };
+          } else if(node.isOperation("mul") && i>0){
+            for (var j=0;j<node.nodes.length;j++){
+             if(node.nodes[j].equals(this.nodes[0])){
+              this.nodes[0]=new Constant(1);
+              node.nodes[j]=new Constant(1);
+              node=node.degen();
+              this.nodes[i]=node;
+              done=false;
+              break;
+             }
+           }
+          }
         } else if (c = (this.operator=="mul")) {
           cv = node.constantValue();
           if (cv==(1)) {
@@ -316,12 +327,6 @@ var nextToken = function(tok) {
       cv = this.constantValue();
       if (!(a = cv==(null))) {
         return new Constant(cv)};
-      /*  for(var i=0;i<this.nodes.length;i++){
-         if(typeof this.nodes[i]=="number"){
-          throw new Error("number in: "+this.toString()+"\n"+JSON.stringify(this))
-         }
-        }
-     */
       return this;
     };
 
@@ -381,6 +386,15 @@ var nextToken = function(tok) {
       return op.degen();
     };
 
+    Operation.prototype.copy = function() {
+     var op=new Operation(this.operator);
+     op.negative=this.negative;
+     for (var node__=0;node__<(this.nodes.length);node__++){
+        op.nodes.push(this.nodes[node__].copy());
+     };
+     return op;
+    }
+
     Operation.prototype.negate = function() {
       var a, b, op = null, node__ = null, node = null;
       op = new Operation(this.operator);
@@ -412,8 +426,17 @@ var nextToken = function(tok) {
 
     Operation.prototype.multiply = function(x) {
       var a;
-
-      if (a = (this.equals(x))) {
+      if (this.operation=="mul"){
+        var idx=-1;
+        for(var i=0;i<this.nodes.length;i++){
+           if(this.nodes[i].equals(x)){
+              var c=this.copy();
+              c.nodes[i]=Operation.func("pow", c.nodes[i], new Constant(2));
+              return c;
+           }
+        }
+      }
+      if (this.equals(x)) {
         return Operation.func("pow", x, new Constant(2))};
       return this.combineOp("mul", x);
     };
@@ -504,6 +527,10 @@ var nextToken = function(tok) {
 
       return false;
     };
+
+    Variable.prototype.copy = function(){
+      return this;
+    }
 
     Variable.prototype.constantValue = function() {
 
@@ -602,6 +629,10 @@ var nextToken = function(tok) {
         return this.value = value;
       };
     };
+
+    Constant.prototype.copy = function(){
+      return this;
+    }
 
     Constant.prototype.isOperation = function(op) {
 
@@ -859,8 +890,8 @@ var nextToken = function(tok) {
     } else if (a = expr.isOperation("cos")) {
       return Operation.func("sin", expr.get(0)).negate().multiply(findPartialDerivative(expr.get(0),varyingVariable))
     } else if (a = expr.isOperation("tan")) {
-      return findPartialDerivative(Operation.func("sin", expr.get(0))
-        .divide(Operation.func("cos", expr.get(0),varyingVariable)),varyingVariable)
+      var ret=new Constant(1).divide(Operation.func("cos",expr.get(0)).combineOp("pow",2));
+      return ret.multiply(findPartialDerivative(expr.get(0),varyingVariable))
     } else if (a = expr.isOperation("asin")) {
       var ret=new Constant(1).divide(
          new Constant(1).subtract(expr.get(0).combineOp("pow",2)).combineOp("pow",0.5));
