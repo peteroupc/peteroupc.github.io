@@ -14,25 +14,27 @@
 </header>
 
 <article>
-    <h2>Introduction</h2><p>This tip describes what graphics filters are and how to use them in my
-public domain <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.</p>
+    <h2>Introduction</h2><p>This page describes what graphics filters are and how they work in my
+public domain <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.
+It also describes several examples of graphics filters.</p>
 <p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library's Releases page</a>.</strong></p>
 <h2>Graphics Filters</h2><p>In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame.  They are implemented in a language called GLSL, or GL
 Shading Language.  GLSL programs are called &quot;shaders&quot;, and they are compiled into code that runs on a GPU,
 or graphics processing unit.</p>
-<p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that render one pixel at a time.  GPUs can run
+<p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that process one pixel at a time.  GPUs can run
 shaders very fast because fragment shaders can process each pixel in parallel, without affecting the other
 pixels, and GPUs are often much better designed for parallel processing than CPUs.</p>
 <h2>Writing Graphics Filters</h2><p>In the HTML 3D Library, use the <code>makeEffect</code> method of the ShaderProgram class to create
 graphics filters:</p>
 <ul>
-<li>The <code>ShaderProgram</code> class hold data on shader programs.  Each shader program consists
+<li>The <code>ShaderProgram</code> class holds data on shader programs.  Each shader program consists
 of a <em>vertex shader</em> and a <em>fragment shader</em>.  Graphics filters are essentially part of a fragment shader
 and thus processes pixels.  (Vertex shaders, which process vertices of triangles, lines, and points,
 are not discussed on this page.)</li>
 <li>The <code>makeEffect</code> method creates a shader program and compiles it, using the graphics
-filter as part of the program's fragment shader.</li>
+filter as part of the program's fragment shader.  Since shader programs must also have a vertex
+shader, the method also adds a very basic vertex shader for the graphics filter.</li>
 </ul>
 <p>The following is an example of a graphics filter.</p>
 <pre class="prettyprint source"><code>return ShaderProgram.makeEffect(context,[
@@ -44,7 +46,7 @@ filter as part of the program's fragment shader.</li>
 // adds them, and divides by 3.  Thus, the gray color
 // will be an average of the red/green/blue components.
 &quot; float gray=(color.r+color.g+color.b)/3.0;&quot;,
-// Return the gray color
+// Return the gray color (using the color's original alpha)
 &quot; return vec4(gray,gray,gray,color.a);&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));</code></pre><p>Each graphics filter must have a GLSL function called <code>textureEffect()</code>, like in the example above.
 The <code>textureEffect</code> function takes these parameters:</p>
@@ -61,18 +63,56 @@ width, and <code>textureSize.y</code> is the height.</li>
 <p>The <code>textureEffect</code> function returns a <code>vec4</code> (4-element vector) giving the color that the current pixel should
 be.  The example above reads the current pixel's color, turns it to a shade of gray, and returns a new color
 with that shade of gray.  Thus, the filter will convert the screen to grayscale tones.</p>
-<p><strong>To be written: Brief discussion of uniforms as custom parameters</strong></p>
+<p>The shader can also define custom parameters called &quot;uniforms&quot;.  They are declared by using a line like
+<code>uniform [type] [name];</code> at the top of the shader.  Example: <code>uniform float time;</code>  Uniforms, once declared,
+can be used in the <code>textureEffect</code> function.</p>
 <p>A detailed treatment of GLSL is outside the scope of this page.  More information about GLSL can
 be found by searching the Web; note that there are many versions of GLSL and the one used
 in HTML applications is relatively basic nowadays.  Also see below for more examples of graphics filters.</p>
+<h2>Using Graphics Filters</h2><p>After a filter is created, it's very easy to use; it's simply set with the <code>useFilter</code> method of Scene3D.  After
+a filter is set, here's how it works:</p>
+<ul>
+<li>When the <code>useFilter</code> method is called to set a new graphics filter, the HTML 3D Library creates a
+<em>frame buffer</em>.  A frame buffer consists of a texture with the same size as the 3D canvas and a <em>renderbuffer</em>
+to use as the depth buffer.</li>
+<li>When the <code>render()</code> method is called each frame:<ul>
+<li>The library ensures that the frame buffer is the same size as the 3D canvas.</li>
+<li>The 3D library switches drawing to use the frame buffer rather than the 3D canvas.</li>
+<li>The current frame is rendered onto the frame buffer.  The frame buffer's texture will now contain a
+&quot;snapshot&quot; of the frame that can now be modified by graphics filters.</li>
+<li>The 3D library switches drawing back to the 3D canvas.</li>
+<li>A rectangle taking up the entire 3D canvas is drawn.  This is to allow each pixel of the texture to
+be passed to the graphics filter, and the filter's <code>textureEffect</code> method to be called for each pixel.
+Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.
+The graphics filter can either use the current pixel's color or change it for each pixel.
+As a result, a &quot;filtered&quot; version of the current frame will be drawn.</li>
+</ul>
+</li>
+</ul>
+<p>Currently, the HTML 3D Library only supports one filter at a time, so if the HTML app needs to use more
+than one effect, say, a grayscale and blur, both effects need to be combined in the same graphics filter
+shader.</p>
 <h2>Examples</h2><ul>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html">squares.html</a> - Demonstrates graphics filters.</li>
 </ul>
 <p>The demo <a href="https://peteroupc.github.io/html3dutil/demos/squares.html">squares.html</a> includes a number
 of graphics filters implemented as shaders.</p>
-<p>Here are more details on the filters it implements.</p>
-<h3>Grayscale</h3><p>The grayscale filter, which converts the screen to black and white, was already given above.</p>
-<h3>Mirror Filter</h3><p>This filter does a horizontal flip of its pixels.  Note that the filter, given below, reads not from
+<p>Here are more details on the filters it includes.</p>
+<h3>Grayscale</h3><p><img src="filters1.png" alt="Grayscale filtered image"></p>
+<p>The grayscale filter, which converts the screen to black and white, was already given above.</p>
+<h3>Invert</h3><p><img src="filters2.png" alt="Invert filtered image"></p>
+<p>The invert filter is built-in to the HTML 3D Library.  It inverts the colors of the screen so the effect looks
+like a film negative.</p>
+<p>This filter is implemented in the method <code>ShaderProgram.getInvertEffect()</code>:</p>
+<pre class="prettyprint source"><code>ShaderProgram.getInvertEffect=function(context){
+return ShaderProgram.makeEffect(context,
+[
+&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
+&quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
+&quot; vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;&quot;,
+&quot;}&quot;].join(&quot;\n&quot;));
+}</code></pre><h3>Mirror Filter</h3><p><img src="filters7.png" alt="Mirror filtered image"></p>
+<p>This filter does a horizontal flip of its pixels.  Note that the filter, given below, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
 the current X coordinate).</p>
 <pre class="prettyprint source"><code>function makeMirror(context){
@@ -81,12 +121,24 @@ return ShaderProgram.makeEffect(context,[
 &quot; vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));&quot;,
 &quot; return color;&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
-}</code></pre><h3>Matrix Filter</h3><p>This filter enables a family of image processing filters, such as blurring, sharpening,
+}</code></pre><p>With a simple change, this filter can be modified to do a vertical flip (<code>1.0-uvCoord.y</code>) or even both flips.</p>
+<h3>Matrix Filter</h3><p><img src="filters4.png" alt="Blur filtered image">
+<img src="filters8.png" alt="Edge detect filtered image"></p>
+<p>This filter enables a family of image processing filters, such as blurring, sharpening,
 edge detection, and embossing, that process each pixel and its neighbors.  This filter takes
-a 3x3 <em>convolution matrix</em> or <em>kernel</em>, which gives the contribution of each pixel's color
+a 3x3 matrix called a <em>convolution kernel</em>, which gives the contribution of each pixel's color
 to the final color.  All the numbers in the matrix must add up to 1.</p>
 <p>Note that the <code>uniform</code> given below is a <code>mat3</code>, meaning a 3x3 matrix.</p>
-<h3>Pixelate Filter</h3><p>This filter pixelates the screen, in effect, by scaling it down and then scaling it up.
+<p>An example of a convolution kernel:</p>
+<pre class="prettyprint source"><code>[  0,  1/8, 0,
+  1/8, 1/2, 1/8,
+  0,   1/8, 0  ]</code></pre><p>This filter means that the destination pixel will have 1/2 of the original pixel's color, and 1/8 of the
+colors of its 4 adjacent pixels.  Note that this example adds up to 1.</p>
+<p>This filter is implemented in the function <code>makeKernelMatrix</code> in the demo.  It is used for
+the &quot;blur&quot; and &quot;edge detect&quot; effects.  The filter shows how it's possible for filters to read neighboring
+pixels, not just the current pixel, when implementing their effect.</p>
+<h3>Pixelate Filter</h3><p><img src="filters5.png" alt="Pixelate filtered image"></p>
+<p>This filter pixelates the screen, in effect, by scaling it down and then scaling it up.
 This filter takes a <code>uniform</code> named <code>coarseness</code>, which indicates how many normal pixels
 each &quot;pixelated&quot; pixel takes up.</p>
 <pre class="prettyprint source"><code>function makePixelate(context){
@@ -101,8 +153,16 @@ return ShaderProgram.makeEffect(context,[
 &quot; vec4 c=texture2D(sampler,vec2(uv0,uv1));&quot;,
 &quot; return c;&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));</code></pre><p>}</p>
-<h3>Wave Filter</h3><p>To be written.</p>
-<h3>Waterpaint Filter</h3><p>To be written.</p>
+<p>The demo changes the &quot;coarseness&quot; parameter with time to animate the pixelation effect.</p>
+<h3>Wave Filter</h3><p><img src="filters3.png" alt="Wave filtered image"></p>
+<p>This filter shifts the pixels in each row horizontally to cause the screen to undulate
+vertically.  This filter takes a <code>uniform</code> named <code>time</code>, which indicates the animation
+frame for the undulation effect.</p>
+<p>This filter is implemented in the function <code>makeWave</code> in the demo.</p>
+<h3>Waterpaint Filter</h3><p><img src="filters6.png" alt="Waterpaint filtered image"></p>
+<p>This is a watercoloring effect based on a public domain shader by someone
+named &quot;Themaister&quot;.</p>
+<p>This filter is implemented in the function <code>makeWaterpaint</code> in the demo.</p>
 <h2>Other Pages</h2><p>The following pages of mine on CodeProject also discuss this library:</p>
 <ul>
 <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
