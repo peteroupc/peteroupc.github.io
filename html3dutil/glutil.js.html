@@ -1286,6 +1286,7 @@ Scene3D.prototype.cullFace=function(value){
 }
 /** @private */
 Scene3D.prototype._setFace=function(){
+ if(!this._is3d)return;
  if(this._cullFace==Scene3D.BACK){
   this.context.enable(this.context.CULL_FACE);
   this.context.cullFace(this.context.BACK);
@@ -1413,6 +1414,10 @@ Scene3D.prototype.setDimensions=function(width, height){
  this.height=Math.ceil(height);
  this.context.canvas.width=this.width*this._pixelRatio;
  this.context.canvas.height=this.height*this._pixelRatio;
+ this._setDimensions3d();
+}
+/** @private */
+Scene3D.prototype._setDimensions3d=function(){
  if(this._is3d){
   this.context.viewport(0,0,this.width*this._pixelRatio,
    this.height*this._pixelRatio);
@@ -1947,7 +1952,7 @@ Scene3D.prototype.render=function(){
     this.setDimensions(c.clientWidth,c.clientHeight);
    }
   }
-  if(this._is3d)this._setFace();
+  this._setFace();
   if(typeof this.fboFilter!="undefined" &amp;&amp; this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter
