@@ -1353,8 +1353,10 @@ BufferedMesh.prototype.vertexCount=function(){
  return ret;
 }
 /**
- * Not documented yet.
- */
+ * Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this mesh.
+* @return {number}
+*/
 BufferedMesh.prototype.primitiveCount=function(){
  var ret=0;
  for(var i=0;i&lt;this.subMeshes.length;i++){
@@ -1519,13 +1521,10 @@ function Scene3D(canvasOrContext){
  this.context=context;
  this.lightingEnabled=true;
  this.specularEnabled=true;
- this.program=new ShaderProgram(context,
-   this._getDefines()+ShaderProgram.getDefaultVertex(),
-   this._getDefines()+ShaderProgram.getDefaultFragment());
  /** An array of shapes that are part of the scene. */
  this.shapes=[];
  this._frontFace=Scene3D.CCW;
- this._cullFace=0;
+ this._cullFace=Scene3D.NONE;
  this.clearColor=[0,0,0,1];
  this.fboFilter=null;
  this.textureCache={};
@@ -1540,9 +1539,19 @@ function Scene3D(canvasOrContext){
  this.height=Math.ceil(this.context.canvas.clientHeight*1.0);
  this.context.canvas.width=this.width;
  this.context.canvas.height=this.height;
+ this.program=null;
+ this._is3d=GLUtil["is3DContext"](this.context);
+ this._init3DContext();
+}
+/** @private */
+Scene3D.prototype._init3DContext=function(){
+ if(!this._is3d)return;
+ this.program=new ShaderProgram(this.context,
+   this._getDefines()+ShaderProgram.getDefaultVertex(),
+   this._getDefines()+ShaderProgram.getDefaultFragment());
  this.context.viewport(0,0,this.width,this.height);
- this.context.enable(context.BLEND);
- this.context.blendFunc(context.SRC_ALPHA,context.ONE_MINUS_SRC_ALPHA);
+ this.context.enable(this.context.BLEND);
+ this.context.blendFunc(this.context.SRC_ALPHA,this.context.ONE_MINUS_SRC_ALPHA);
  this.context.enable(this.context.DEPTH_TEST);
  this.context.depthFunc(this.context.LEQUAL);
  this.context.disable(this.context.CULL_FACE);
@@ -1733,9 +1742,11 @@ Scene3D.prototype.setDimensions=function(width, height){
  this.height=Math.ceil(height);
  this.context.canvas.width=this.width*this._pixelRatio;
  this.context.canvas.height=this.height*this._pixelRatio;
- this.context.viewport(0,0,this.width*this._pixelRatio,
+ if(this._is3d){
+  this.context.viewport(0,0,this.width*this._pixelRatio,
    this.height*this._pixelRatio);
-  if(typeof this.fbo!="undefined" &amp;&amp; this.fbo){
+ }
+ if(typeof this.fbo!="undefined" &amp;&amp; this.fbo){
    this.fbo.dispose();
    this.fbo=this.createBuffer();
    if(this.fboQuad)this.fboQuad.setMaterial(this.fbo);
@@ -1941,8 +1952,10 @@ Scene3D.prototype.setOrtho2D=function(left,right,bottom,top){
 }
 /** @private */
 Scene3D.prototype._setClearColor=function(){
-  this.context.clearColor(this.clearColor[0],this.clearColor[1],
-    this.clearColor[2],this.clearColor[3]);
+  if(this._is3d){
+   this.context.clearColor(this.clearColor[0],this.clearColor[1],
+     this.clearColor[2],this.clearColor[3]);
+  }
   return this;
 }
 
@@ -2036,12 +2049,13 @@ Scene3D.prototype._updateMatrix=function(){
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
  };
- if(this.program.get("viewInvW")!=null){
-  var invView=GLMath.mat4invert(this._viewMatrix);
-  // calculate inverse(viewMatrix)*vec4(0,0,0,1.0)
-  uniforms["viewInvW"]=[invView[12],invView[13],invView[14],invView[15]];
+ if(this.program){
+  if(this.program.get("viewInvW")!=null){
+   var invView=GLMath.mat4invert(this._viewMatrix);
+   uniforms["viewInvW"]=[invView[12],invView[13],invView[14],invView[15]];
+  }
+  this.program.setUniforms(uniforms);
  }
- this.program.setUniforms(uniforms);
 }
 /**
  * Sets the projection matrix for this object.  The projection
@@ -2223,9 +2237,9 @@ Scene3D.prototype._setupMatrices=function(shape,program){
     // view matrix is just a translation matrix, so that getting the model-view
     // matrix amounts to simply adding the view's position
     viewWorld=currentMatrix.slice(0,16);
+    viewWorld[12]+=this._viewMatrix[12];
     viewWorld[13]+=this._viewMatrix[13];
     viewWorld[14]+=this._viewMatrix[14];
-    viewWorld[15]+=this._viewMatrix[15];
    } else {
     viewWorld=GLMath.mat4multiply(this._viewMatrix,
      currentMatrix);
@@ -2262,7 +2276,7 @@ Scene3D.prototype.render=function(){
     this.setDimensions(c.clientWidth,c.clientHeight);
    }
   }
-  this._setFace();
+  if(this._is3d)this._setFace();
   if(typeof this.fboFilter!="undefined" &amp;&amp; this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter
@@ -2287,7 +2301,7 @@ Scene3D.prototype.render=function(){
   } else {
    // Render as usual
    this._renderInner();
-   this.context.flush();
+   if(this._is3d)this.context.flush();
    return this;
  }
 }
