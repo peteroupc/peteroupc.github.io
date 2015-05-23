@@ -1414,10 +1414,10 @@ Scene3D.prototype.setDimensions=function(width, height){
  this.height=Math.ceil(height);
  this.context.canvas.width=this.width*this._pixelRatio;
  this.context.canvas.height=this.height*this._pixelRatio;
- this._setDimensions3d();
+ this._setDimensions3D();
 }
 /** @private */
-Scene3D.prototype._setDimensions3d=function(){
+Scene3D.prototype._setDimensions3D=function(){
  if(this._is3d){
   this.context.viewport(0,0,this.width*this._pixelRatio,
    this.height*this._pixelRatio);
@@ -1784,7 +1784,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
-* @param {Shape|ShapeGroup} shape A 3D shape.
+* @param {Shape|glutil.ShapeGroup} shape A 3D shape.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
@@ -1806,7 +1806,7 @@ Scene3D.prototype.makeShape=function(mesh){
 
 /**
 * Removes all instances of a 3D shape from this scene.
-* @param {Shape|ShapeGroup} shape The 3D shape to remove.
+* @param {Shape|glutil.ShapeGroup} shape The 3D shape to remove.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.removeShape=function(shape){
@@ -2066,7 +2066,7 @@ function ShapeGroup(){
 /**
 * Adds a 3D shape to this shape group.  Its reference, not a copy,
 * will be stored in the list of shapes.
-* @param {Shape|ShapeGroup} shape A 3D shape.
+* @param {Shape|glutil.ShapeGroup} shape A 3D shape.
 * @return {glutil.ShapeGroup} This object.
 */
 ShapeGroup.prototype.addShape=function(shape){
@@ -2109,6 +2109,20 @@ ShapeGroup.prototype.getMatrix=function(){
  */
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
+ return this;
+}
+/**
+* Removes all instances of a 3D shape from this shape group
+* @param {Shape|glutil.ShapeGroup} shape The 3D shape to remove.
+* @return {glutil.ShapeGroup} This object.
+*/
+ShapeGroup.prototype.removeShape=function(shape){
+ for(var i=0;i&lt;this.shapes.length;i++){
+   if(this.shapes[i]==shape){
+     this.shapes.splice(i,1);
+     i--;
+   }
+ }
  return this;
 }
 /**

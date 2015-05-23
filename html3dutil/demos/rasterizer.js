@@ -264,12 +264,9 @@ Scene3D.prototype.makeShape=function(mesh){
  var buffer=mesh;
  return new Shape(buffer);
 }
-//var rendered=false
 /** @private */
 Scene3D.prototype._renderInner=function(){
   var data={}
-  //if(!rendered)console.log(this.context)
-  //  if(rendered)return;rendered=true
   data.projview=GLMath.mat4multiply(
    this._projectionMatrix,this._viewMatrix)
   var cc=[
@@ -305,6 +302,98 @@ Scene3D.prototype._renderInner=function(){
   this.context.putImageData(data.imgdata,0,0);
   return this;
 }
+Scene3D._drawPoint=function(data,depth,x,y,z,width,height,rgb){
+if(x<0 || x>=width || y<0 || y>=height)return;
+      var dep=Math.floor(z*32767.0)|0;
+      var offset=y*width+x;
+      if(dep<=depth[offset] && dep>=-32768){
+       depth[offset]=dep;
+       offset<<=2;
+       data[offset]=rgb[0];
+       data[offset+1]=rgb[1];
+       data[offset+2]=rgb[2];
+       data[offset+3]=0xFF;
+      }
+}
+Scene3D._drawPoint2=function(data,depth,x,y,z,width,height,rgb){
+if(x<0 || x>=width || y<0 || y>=height)return;
+      var dep=z>>8;
+      var offset=y*width+x;
+      if(dep<=depth[offset] && dep>=-32768){
+       depth[offset]=dep;
+       offset<<=2;
+       data[offset]=rgb[0]>>8;
+       data[offset+1]=rgb[1]>>8;
+       data[offset+2]=rgb[2]>>8;
+       data[offset+3]=0xFF;
+      }
+}
+Scene3D._drawLine=function(data,depth,x,y,z,x2,y2,z2,width,height,rgb,rgb2){
+if((x<0 && x2<0) ||
+   (x>=width && x2>=width) ||
+   (y<0 && y2<0) ||
+   (y>=height && y2>=height) ||
+   (z<-1 && z2<-1) ||
+   (z>1 && z2>1))return;
+var dx=x2-x;
+var dy=y2-y;
+var sx=1,sy=1;
+if(dx<0){
+ sx=-1;
+ dx=-dx;
+}
+if(dy<0){
+ sy=-1;
+ dy=-dy;
+}
+var depth1=(Math.floor(z*32767.0)|0)<<8;
+var depth2=(Math.floor(z2*32767.0)|0)<<8;
+var interprgb=[rgb[0]<<8,rgb[1]<<8,rgb[2]<<8];
+var dydy=dy+dy;
+var dxdx=dx+dx;
+if(dy>dx){
+      var e = dxdx - dy;
+      var ddepth=(dy==0 || depth2-depth1) ? 0 : (depth2-depth1)/dy|0;
+      var sr=(dy==0 || rgb2[0]==rgb[0]) ? 0 : ((rgb2[0]-rgb[0])<<8)/dy|0;
+      var sg=(dy==0 || rgb2[1]==rgb[1]) ? 0 : ((rgb2[1]-rgb[1])<<8)/dy|0;
+      var sb=(dy==0 || rgb2[2]==rgb[2]) ? 0 : ((rgb2[2]-rgb[2])<<8)/dy|0;
+      for(var i = 0; i < dy; i++){
+            Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
+            while(e >= 0){
+                  x += sx;
+                  e -= dydy;
+            }
+            y += sy;
+            e += dxdx;
+            depth1+=ddepth;
+            interprgb[0]+=sr;
+            interprgb[1]+=sg;
+            interprgb[2]+=sb;
+      }
+} else {
+      var e = dydy - dx;
+      var ddepth=(dx==0 || depth2-depth1) ? 0 : (depth2-depth1)/dx|0;
+      var sr=(dx==0 || rgb2[0]==rgb[0]) ? 0 : ((rgb2[0]-rgb[0])<<8)/dx|0;
+      var sg=(dx==0 || rgb2[1]==rgb[1]) ? 0 : ((rgb2[1]-rgb[1])<<8)/dx|0;
+      var sb=(dx==0 || rgb2[2]==rgb[2]) ? 0 : ((rgb2[2]-rgb[2])<<8)/dx|0;
+      for(var i = 0; i < dx; i++){
+            Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
+            while(e >= 0)
+            {
+                  y += sy;
+                  e -= dxdx;
+            }
+            x += sx;
+            e += dydy;
+            depth1+=ddepth;
+            interprgb[0]+=sr;
+            interprgb[1]+=sg;
+            interprgb[2]+=sb;
+      }
+}
+Scene3D._drawPoint(data,depth,x2,y2,z2,width,height,rgb2);
+}
+
 /** @private */
 Scene3D._perspectiveTransform=function(mat,pt){
  var x=pt[0];
@@ -384,11 +473,45 @@ Scene3D.prototype._renderShape=function(shape,data){
       }
      }
     } else if(prim==Mesh.LINES){
-     // TODO
-     throw new Error("not implemented yet");
+     var v=subMesh.vertices
+     for(var i=0;i<subMesh.indices.length;i+=2){
+      var index1=subMesh.indices[i]*stride;
+      var index2=subMesh.indices[i+1]*stride;
+      for(var j=0;j<stride;j++){
+       v1[j]=v[index1+j];
+       v2[j]=v[index2+j];
+      }
+      Scene3D._perspectiveTransform(mvpMatrix,v1);
+      Scene3D._perspectiveTransform(mvpMatrix,v2);
+      v1[0]=v1[0]*w2+w2;
+      v1[1]=v1[1]*-h2+h2;
+      v2[0]=v2[0]*w2+w2;
+      v2[1]=v2[1]*-h2+h2;
+      var x=Math.round(v1[0])|0;
+      var y=Math.round(v1[1])|0;
+      var x2=Math.round(v2[0])|0;
+      var y2=Math.round(v2[1])|0;
+       if(colorOffset>=0){
+       Scene3D._drawLine(data.imgdata.data,this._depth,
+         x,y,v1[2],x2,y2,v2[2],this.width,this.height,[
+          Math.floor(v1[colorOffset]*255)|0,
+          Math.floor(v1[colorOffset+1]*255)|0,
+          Math.floor(v1[colorOffset+2]*255)|0
+         ],[
+          Math.floor(v2[colorOffset]*255)|0,
+          Math.floor(v2[colorOffset+1]*255)|0,
+          Math.floor(v2[colorOffset+2]*255)|0
+         ]);
+        } else {
+       Scene3D._drawLine(data.imgdata.data,this._depth,
+         x,y,v1[2],x2,y2,v2[2],
+         this.width,this.height,colorValue,colorValue);
+        }
+     }
+
     } else if(prim==Mesh.POINTS){
      var v=subMesh.vertices
-     for(var i=0;i<subMesh.indices.length;i+=1){
+     for(var i=0;i<subMesh.indices.length;i++){
       var index1=subMesh.indices[i]*stride;
       for(var j=0;j<stride;j++){
        v1[j]=v[index1+j];
@@ -396,28 +519,20 @@ Scene3D.prototype._renderShape=function(shape,data){
       Scene3D._perspectiveTransform(mvpMatrix,v1);
       v1[0]=v1[0]*w2+w2;
       v1[1]=v1[1]*-h2+h2;
-      var dep=Math.floor(v1[2]*32767.0)|0;
       var x=Math.round(v1[0])|0;
       var y=Math.round(v1[1])|0;
-      var offset=y*this.width+x;
-      if(dep<=depth[offset] && dep>=-32768){
-       depth[offset]=dep;
-       offset<<=2;
        if(colorOffset>=0){
-        for(var j=colorOffset;j<colorOffset+3;j++){
-         v1[j]*=255.0;
+        if(i<20)console.log(v1[colorOffset])
+       Scene3D._drawPoint(data.imgdata.data,this._depth,
+         x,y,v1[2],this.width,this.height,[
+          Math.floor(v1[colorOffset]*255)|0,
+          Math.floor(v1[colorOffset+1]*255)|0,
+          Math.floor(v1[colorOffset+2]*255)|0
+         ]);
+        } else {
+       Scene3D._drawPoint(data.imgdata.data,this._depth,
+         x,y,v1[2],this.width,this.height,colorValue);
         }
-        data.imgdata.data[offset]=v1[colorOffset]|0;
-        data.imgdata.data[offset+1]=v1[colorOffset+1]|0;
-        data.imgdata.data[offset+2]=v1[colorOffset+2]|0;
-        data.imgdata.data[offset+3]=0xFF;
-       } else {
-        data.imgdata.data[offset]=colorValue[0]|0;
-        data.imgdata.data[offset+1]=colorValue[1]|0;
-        data.imgdata.data[offset+2]=colorValue[2]|0;
-        data.imgdata.data[offset+3]=0xFF;
-       }
-      }
      }
     }
    }
