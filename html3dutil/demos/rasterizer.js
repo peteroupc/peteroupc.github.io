@@ -328,8 +328,8 @@ Scene3D.prototype.makeShape=function(mesh){
  var buffer=mesh;
  return new Shape(buffer);
 }
-Scene3D._MIN_DEPTH = 0;
-Scene3D._DEPTH_RESOLUTION = 65535;
+Scene3D._MIN_DEPTH = -32767;
+Scene3D._DEPTH_RESOLUTION = 32767;
 
 Scene3D._Triangle.prototype.pixel=function(offset, tex, width, height, data, depth, color, colorOffset){
     var t0=Math.max(0,tex[0]);
