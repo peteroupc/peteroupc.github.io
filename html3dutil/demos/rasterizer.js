@@ -13,8 +13,8 @@ Scene3D._Triangle=function(v0,v1,v2){
     this.v1=v0
     this.v2=v1
     this.v3=v2
-    this.t1=[1,0,0];
-    this.t2=[0,1,0];
+    this.t1=[0,1,0];
+    this.t2=[1,0,0];
     this.t3=[0,0,1];
     // check if triangle is backfacing, if so, swap two vertices
     if ( ((this.v3[0]-this.v1[0])*(this.v2[1]-this.v1[1]) - (this.v3[1]-this.v1[1])*(this.v2[0]-this.v1[0])) < 0 ) {
@@ -64,27 +64,6 @@ Scene3D.vec2normInPlace=function(vec){
   vec[1]*=len;
  }
  return vec;
-}
-
-Scene3D._Triangle.prototype.pixel=function(offset, tex, width, height, data, depth, color, colorOffset){
-    var t0=Math.max(0,tex[0]);
-    var t1=Math.max(0,tex[1]);
-    var t2=Math.max(0,tex[2]);
-    var d=(t0*this.v1[2]+t1*this.v2[2]+t2*this.v3[2]);
-    var dep=Math.floor(d*32767.0)|0;
-    if(dep<=depth[offset>>2] && dep>=-32768){
-       depth[offset>>2]=dep;
-       if(color){
-        data[offset]=color[0];
-        data[offset+1]=color[1];
-        data[offset+2]=color[2];
-       } else {
-        data[offset]=((t0*this.v1[colorOffset]+t1*this.v2[colorOffset]+t2*this.v3[colorOffset]))|0;
-        data[offset+1]=((t0*this.v1[colorOffset+1]+t1*this.v2[colorOffset+1]+t2*this.v3[colorOffset+1]))|0;
-        data[offset+2]=((t0*this.v1[colorOffset+2]+t1*this.v2[colorOffset+2]+t2*this.v3[colorOffset+2]))|0;
-       }
-       data[offset+3]=255;
-      }
 }
 
 Scene3D._Triangle.prototype.draw=function(width, height, data, depth, color, colorOffset){
@@ -233,30 +212,115 @@ Scene3D._Triangle.prototype.draw=function(width, height, data, depth, color, col
 		}
   }
 
+function intersect(p1,p2,p3x,p3y,p4x,p4y){
+ y43=(p4y-p3y);
+ x43=(p4x-p3x);
+ y13=(p1[1]-p3y);
+ x13=(p1[0]-p3x);
+ x21=(p2[0]-p1[0]);
+ y21=(p2[1]-p1[1]);
+ den=y43*x21-x43*y21;
+ num1=x43*y13-y43*x13;
+ num2=x21*y13-y21*x13;
+ if(den!=0.){
+  den=1.0/den;
+  num1*=den;
+  num2*=den;
+  var ret=(num1>=0. && num1<=1. && num2>=0. && num2<=1.);
+  //if(ret)console.log([p1[0],p1[1],p1[2],"|",p2[0],p2[1],p2[2],"|",p3x,p3y,p4x,p4y])
+  return ret
+ }
+ return false;
+}
+
+function intersectBox(p1,p2,width,height){
+ return intersect(p1,p2,0,0,width,0) ||
+  intersect(p1,p2,0,0,0,height) ||
+  intersect(p1,p2,width,0,width,height) ||
+  intersect(p1,p2,0,height,width,height);
+}
+
+function isTriangleOutside(p1,p2,p3,width,height){
+ var maxx=Math.max(p1[0],p2[0],p3[0]);
+ var maxy=Math.max(p1[1],p2[1],p3[1]);
+ var minx=Math.min(p1[0],p2[0],p3[0]);
+ var miny=Math.min(p1[1],p2[1],p3[1]);
+ if(maxx==Number.POSITIVE_INFINITY ||
+     minx==Number.NEGATIVE_INFINITY ||
+     maxy==Number.POSITIVE_INFINITY ||
+     miny==Number.NEGATIVE_INFINITY){
+  // Pathological case where one or more
+  // of the coordinates is infinity
+  return true;
+ }
+ if((minx>width && maxx>width) ||
+     (minx<0 && maxx<0) ||
+     (miny>height && maxy>height) ||
+     (miny<0 && maxy<0)){
+  // All points are off the rectangle on one side
+  return true;
+ }
+ if(minx>=0 && miny>=0 && maxx<=width && maxy<=height){
+  // The entire triangle fits in the rectangle
+  return false;
+ }
+ // Now there are only these cases:
+ // 1. The triangle covers the entire box.  This will be the case
+ // if all four corners of the box are in the triangle.
+ // 2. Some but not all corners of the box are in the triangle,
+ // so it's not outside the box.
+ // 3. The triangle doesn't intersect the box's sides, so it's
+ // outside the box.
+ // 4. The triangle intersects the box's sides, so it's not outside
+ // the box.
+ //--- Point in triangle test
+ var t3 = p1[1] - height;
+ var t4 = p2[1] - height;
+ var t5 = p3[1] - height;
+ var t7 = p1[0] - width;
+ var t8 = p2[0] - width;
+ var t9 = p3[0] - width;
+ if ((((((p1[0] * p2[1]) - p1[1] * p2[0])) >= 0.0 && (((p2[0] * p3[1]) -
+      p2[1] * p3[0])) >= 0.0) && (((p3[0] * p1[1]) - p3[1] * p1[0])) >= 0.0))
+    return false;
+ if(((((p1[0] * t4) - t3 * p2[0])) >= 0.0 && (((p2[0] * t5) - t4 * p3[0])) >= 0.0) &&
+    (((p3[0] * t3) - t5 * p1[0])) >= 0.0)
+    return false;
+ if(((((t7 * p2[1]) - p1[1] * t8)) >= 0.0 && (((t8 * p3[1]) - p2[1] * t9)) >= 0.0) &&
+     (((t9 * p1[1]) - p3[1] * t7)) >= 0.0)
+    return false;
+ if(((((t7 * t4) - t3 * t8)) >= 0.0 && (((t8 * t5) - t4 * t9)) >= 0.0) &&
+    (((t9 * t3) - t5 * t7)) >= 0.0)
+    return false;
+ var ret=!intersectBox(p1,p2,width,height) &&
+    !intersectBox(p2,p3,width,height) &&
+    !intersectBox(p3,p1,width,height);
+ return ret
+}
+
 /** @private */
-// Based on public domain code by David Oberhollenzer
-// (https://github.com/AgentD/swrast)
-Scene3D.prototype._getTriangle=function(A, B, C) {
-    var A, B, C;
-    /* clipping */
-    if( A[1]>this.height && B[1]>this.height && C[1]>this.height ){
+Scene3D.prototype._getTriangle=function(p1,p2,p3) {
+    if(isTriangleOutside(p1,p2,p3,this.width,this.height)){
         return null;
     }
-    if( A[0]>this.width && B[0]>this.width && C[0]>this.width){
-        return null;
+    if(p1[2]>5 || p2[2]>5 || p3[2]>5){
+     // HACK: pathological depth
+     return null;
     }
-    if( A[1]<0 && B[1]<0 && C[1]<0 )
-        return null;
-    if( A[0]<0 && B[0]<0 && C[0]<0 )
-        return null;
-    var area = ((C[0] - A[0]) * (C[1] - B[1]) - (C[1] - A[1]) * (C[0] - B[0]));
+    if(p1[2]<-5 || p2[2]<-5 || p3[2]<-5){
+     // HACK: pathological depth
+     return null;
+    }
+    if(p1[2]<-1 && p2[2]<-1 && p3[2]<-1)return null;
+    if(p1[2]>1 && p2[2]>1 && p3[2]>1)return null;
+    var area = ((p3[0] - p1[0]) * (p3[1] - p2[1]) - (p3[1] - p1[1]) * (p3[0] - p2[0]));
     var culled=area==0 || (this._cullFace!=Scene3D.NONE &&
         ((area<0 && this._cullFace!=this._frontFace) ||
         (area>0 && this._cullFace==this._frontFace)));
     if(culled){
         return null;
     }
-    var tri=new Scene3D._Triangle(A,B,C)
+    var tri=new Scene3D._Triangle(p1,p2,p3)
     return (tri.valid) ? tri : null;
 }
 
@@ -264,6 +328,30 @@ Scene3D.prototype.makeShape=function(mesh){
  var buffer=mesh;
  return new Shape(buffer);
 }
+Scene3D._MIN_DEPTH = 0;
+Scene3D._DEPTH_RESOLUTION = 65535;
+
+Scene3D._Triangle.prototype.pixel=function(offset, tex, width, height, data, depth, color, colorOffset){
+    var t0=Math.max(0,tex[0]);
+    var t1=Math.max(0,tex[1]);
+    var t2=Math.max(0,tex[2]);
+    var d=(t0*this.v1[2]+t1*this.v2[2]+t2*this.v3[2]);
+    var dep=Math.floor(d*Scene3D._DEPTH_RESOLUTION)|0;
+    if(dep<=depth[offset>>2] && dep>=Scene3D._MIN_DEPTH){
+       depth[offset>>2]=dep;
+       if(color){
+        data[offset]=color[0];
+        data[offset+1]=color[1];
+        data[offset+2]=color[2];
+       } else {
+        data[offset]=((t0*this.v1[colorOffset]+t1*this.v2[colorOffset]+t2*this.v3[colorOffset]))|0;
+        data[offset+1]=((t0*this.v1[colorOffset+1]+t1*this.v2[colorOffset+1]+t2*this.v3[colorOffset+1]))|0;
+        data[offset+2]=((t0*this.v1[colorOffset+2]+t1*this.v2[colorOffset+2]+t2*this.v3[colorOffset+2]))|0;
+       }
+       data[offset+3]=255;
+      }
+}
+
 /** @private */
 Scene3D.prototype._renderInner=function(){
   var data={}
@@ -294,7 +382,7 @@ Scene3D.prototype._renderInner=function(){
   }
   size=this.width*this.height;
     for(var i=0;i<size;i++){
-      this._depth[i]=32767;
+      this._depth[i]=Scene3D._DEPTH_RESOLUTION;
     }
   for(var i=0;i<this.shapes.length;i++){
    this._renderShape(this.shapes[i],data);
@@ -304,9 +392,9 @@ Scene3D.prototype._renderInner=function(){
 }
 Scene3D._drawPoint=function(data,depth,x,y,z,width,height,rgb){
 if(x<0 || x>=width || y<0 || y>=height)return;
-      var dep=Math.floor(z*32767.0)|0;
+      var dep=Math.floor(z*Scene3D._DEPTH_RESOLUTION)|0;
       var offset=y*width+x;
-      if(dep<=depth[offset] && dep>=-32768){
+      if(dep<=depth[offset] && dep>=Scene3D._MIN_DEPTH){
        depth[offset]=dep;
        offset<<=2;
        data[offset]=rgb[0];
@@ -319,7 +407,7 @@ Scene3D._drawPoint2=function(data,depth,x,y,z,width,height,rgb){
 if(x<0 || x>=width || y<0 || y>=height)return;
       var dep=z>>8;
       var offset=y*width+x;
-      if(dep<=depth[offset] && dep>=-32768){
+      if(dep<=depth[offset] && dep>=Scene3D._MIN_DEPTH){
        depth[offset]=dep;
        offset<<=2;
        data[offset]=rgb[0]>>8;
@@ -346,17 +434,17 @@ if(dy<0){
  sy=-1;
  dy=-dy;
 }
-var depth1=(Math.floor(z*32767.0)|0)<<8;
-var depth2=(Math.floor(z2*32767.0)|0)<<8;
+var depth1=(Math.floor(z*Scene3D._DEPTH_RESOLUTION)|0)<<8;
+var depth2=(Math.floor(z2*Scene3D._DEPTH_RESOLUTION)|0)<<8;
 var interprgb=[rgb[0]<<8,rgb[1]<<8,rgb[2]<<8];
 var dydy=dy+dy;
 var dxdx=dx+dx;
 if(dy>dx){
       var e = dxdx - dy;
-      var ddepth=(dy==0 || depth2-depth1) ? 0 : (depth2-depth1)/dy|0;
-      var sr=(dy==0 || rgb2[0]==rgb[0]) ? 0 : ((rgb2[0]-rgb[0])<<8)/dy|0;
-      var sg=(dy==0 || rgb2[1]==rgb[1]) ? 0 : ((rgb2[1]-rgb[1])<<8)/dy|0;
-      var sb=(dy==0 || rgb2[2]==rgb[2]) ? 0 : ((rgb2[2]-rgb[2])<<8)/dy|0;
+      var ddepth=(dy==0 || depth2-depth1) ? 0 : ((depth2-depth1)/dy)|0;
+      var sr=(dy==0 || rgb2[0]==rgb[0]) ? 0 : (((rgb2[0]-rgb[0])<<8)/dy)|0;
+      var sg=(dy==0 || rgb2[1]==rgb[1]) ? 0 : (((rgb2[1]-rgb[1])<<8)/dy)|0;
+      var sb=(dy==0 || rgb2[2]==rgb[2]) ? 0 : (((rgb2[2]-rgb[2])<<8)/dy)|0;
       for(var i = 0; i < dy; i++){
             Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
             while(e >= 0){
@@ -372,10 +460,10 @@ if(dy>dx){
       }
 } else {
       var e = dydy - dx;
-      var ddepth=(dx==0 || depth2-depth1) ? 0 : (depth2-depth1)/dx|0;
-      var sr=(dx==0 || rgb2[0]==rgb[0]) ? 0 : ((rgb2[0]-rgb[0])<<8)/dx|0;
-      var sg=(dx==0 || rgb2[1]==rgb[1]) ? 0 : ((rgb2[1]-rgb[1])<<8)/dx|0;
-      var sb=(dx==0 || rgb2[2]==rgb[2]) ? 0 : ((rgb2[2]-rgb[2])<<8)/dx|0;
+      var ddepth=(dx==0 || depth2-depth1) ? 0 : ((depth2-depth1)/dx)|0;
+      var sr=(dx==0 || rgb2[0]==rgb[0]) ? 0 : (((rgb2[0]-rgb[0])<<8)/dx)|0;
+      var sg=(dx==0 || rgb2[1]==rgb[1]) ? 0 : (((rgb2[1]-rgb[1])<<8)/dx)|0;
+      var sb=(dx==0 || rgb2[2]==rgb[2]) ? 0 : (((rgb2[2]-rgb[2])<<8)/dx)|0;
       for(var i = 0; i < dx; i++){
             Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
             while(e >= 0)
@@ -399,6 +487,10 @@ Scene3D._perspectiveTransform=function(mat,pt){
  var x=pt[0];
  var y=pt[1];
  var z=pt[2];
+ // avoid pathological coordinates once transformed
+ if(Math.abs(x)<1e-9)x=0;
+ if(Math.abs(y)<1e-9)y=0;
+ if(Math.abs(z)<1e-9)z=0;
  pt[0]=x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
  pt[1]=x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
  pt[2]=x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
@@ -522,7 +614,6 @@ Scene3D.prototype._renderShape=function(shape,data){
       var x=Math.round(v1[0])|0;
       var y=Math.round(v1[1])|0;
        if(colorOffset>=0){
-        if(i<20)console.log(v1[colorOffset])
        Scene3D._drawPoint(data.imgdata.data,this._depth,
          x,y,v1[2],this.width,this.height,[
           Math.floor(v1[colorOffset]*255)|0,

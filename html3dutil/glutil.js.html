@@ -1395,10 +1395,14 @@ Scene3D.prototype.useProgram=function(program){
 */
 Scene3D.prototype.disableLighting=function(){
  this.lightingEnabled=false;
- var program=new ShaderProgram(this.context,
-   this._getDefines()+ShaderProgram.getDefaultVertex(),
-   this._getDefines()+ShaderProgram.getDefaultFragment());
- return this.useProgram(program);
+ if(this._is3d){
+  var program=new ShaderProgram(this.context,
+    this._getDefines()+ShaderProgram.getDefaultVertex(),
+    this._getDefines()+ShaderProgram.getDefaultFragment());
+  return this.useProgram(program);
+ } else {
+  return this;
+ }
 }
 /**
 * Sets the viewport width and height for this scene.

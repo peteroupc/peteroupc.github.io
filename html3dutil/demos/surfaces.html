@@ -365,11 +365,13 @@ function updateMesh(){
  }
 }
 function updateShape(){
-  shapeGroup.shapes[0]=scene.makeShape(updateMesh()).setMaterial(
+  shapeGroup.removeShape(shapeGroup.shapes[0]);
+  shapeGroup.addShape(scene.makeShape(updateMesh()).setMaterial(
     new Material().setParams({
+     "diffuse":"black",
      "specular":"white",
      "shininess":10
-    }))
+    })))
 }
 
 function pushSetting(ranges,name,label,min,max,step){

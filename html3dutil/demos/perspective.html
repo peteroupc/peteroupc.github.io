@@ -49,8 +49,8 @@ GLMath.planeIntersection=function(p1,p2,p3){
  GLMath.vec3scaleInPlace(c23,-p1[3]);
  GLMath.vec3scaleInPlace(c31,-p2[3]);
  GLMath.vec3scaleInPlace(c12,-p3[3]);
- GLMath.vec3addInPlace(c23,c31);
- GLMath.vec3addInPlace(c23,c12);
+ c23[0]+=c31[0]; c23[1]+=c31[1]; c23[2]+=c31[2];
+ c23[0]+=c12[0]; c23[1]+=c12[1]; c23[2]+=c12[2];
  GLMath.vec3scaleInPlace(c23,1.0/d);
  return c23;
 }
@@ -272,7 +272,7 @@ function frustumMesh(frustum){
    if(frustum.sphereIntersects(1,-1,i,radius)<0){
     shape.setColor("red")
    }
-   spheres.addShape(shape);
+    spheres.addShape(shape);
   }
   for(var i=-10; i<=10;i++){
    var shape=sphere.copy().setPosition(2,2,i)
@@ -281,7 +281,7 @@ function frustumMesh(frustum){
    } else {
     shape.setColor("orange")
    }
-   spheres.addShape(shape);
+    spheres.addShape(shape);
   }
   scene.addShape(scene.makeShape(mesh));
   scene.addShape(spheres);
