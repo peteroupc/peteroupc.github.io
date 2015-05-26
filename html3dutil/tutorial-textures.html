@@ -17,6 +17,10 @@
     <h2>Sample Code for Loading Textures</h2><h3>Loading a single texture</h3><p>The variable <code>textureURL</code> is the URL of the texture to load.</p>
 <pre class="prettyprint source"><code>  scene.loadAndMapTexture(textureURL).then(function(tex){
     // texture is loaded, the Texture object is in the &quot;tex&quot; parameter
+    // Now create a sphere
+    var mesh=Meshes.createSphere(1);
+    // Make a shape using the texture
+    var shape=scene.makeShape(mesh).setTexture(texture);
   }, function(error){
     // an error occurred
   });</code></pre><h3>Loading multiple textures</h3><p>The variables <code>textureURL1</code> and <code>textureURL2</code> are URL textures.</p>

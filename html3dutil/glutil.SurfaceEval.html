@@ -42,7 +42,7 @@ See the <a href="tutorial-surfaces.html">surfaces</a> tutorial for more informat
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="color"><span style="font-weight:lighter"></span>color<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line802">line 802</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line805">line 805</a>
      </i></small></p>
 
 <div class="description">
@@ -99,7 +99,7 @@ named "evaluate", giving 3 values as a result.  See SurfaceEval#vertex.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="colorBezier"><span style="font-weight:lighter"></span>colorBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line882">line 882</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line885">line 885</a>
      </i></small></p>
 
 <div class="description">
@@ -238,7 +238,7 @@ values of a color.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evalOne"><span style="font-weight:lighter"></span>evalOne<span class="signature">(mesh, u, v)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line902">line 902</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line905">line 905</a>
      </i></small></p>
 
 <div class="description">
@@ -326,7 +326,7 @@ given in the <code>vectorBezier</code>, <code>normalBezier</code>,
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evalSurface"><span style="font-weight:lighter"></span>evalSurface<span class="signature">(mesh, mode<sub style="font-weight:lighter">opt</sub>, un<sub style="font-weight:lighter">opt</sub>, vn<sub style="font-weight:lighter">opt</sub>, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line1003">line 1003</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line1006">line 1006</a>
      </i></small></p>
 
 <div class="description">
@@ -535,7 +535,7 @@ Default is 1.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normal"><span style="font-weight:lighter"></span>normal<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line791">line 791</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line794">line 794</a>
      </i></small></p>
 
 <div class="description">
@@ -553,7 +553,7 @@ In mathematical notation, this looks like:
 &#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
 If autonormal is enabled (see setAutoNormal()), SurfaceEval uses an approximation to this approach,
 as the SurfaceEval class doesn't know the implementation of the method used
-for vertex calculation.
+for vertex calculation.<p>(Note: &#x2202;<b>F</b>/&#x2202<i>u</i> is also called the <i>bitangent</i>or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>v</i> is alsocalled the <i>tangent vector</i>.)
 </div>
 
     <h5>Parameters:</h5>
@@ -632,7 +632,7 @@ And finally, normalize the result:<p>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normalBezier"><span style="font-weight:lighter"></span>normalBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line849">line 849</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line852">line 852</a>
      </i></small></p>
 
 <div class="description">
@@ -829,7 +829,7 @@ will automatically be generated; false means they won't.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="texCoord"><span style="font-weight:lighter"></span>texCoord<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line818">line 818</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line821">line 821</a>
      </i></small></p>
 
 <div class="description">
@@ -895,7 +895,7 @@ texture coordinates.</p>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="texCoordBezier"><span style="font-weight:lighter"></span>texCoordBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line865">line 865</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line868">line 868</a>
      </i></small></p>
 
 <div class="description">
@@ -1093,7 +1093,7 @@ The evaluator function returns an array of the result of the evaluation.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="vertexBezier"><span style="font-weight:lighter"></span>vertexBezier<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {SurfaceEval}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line833">line 833</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line836">line 836</a>
      </i></small></p>
 
 <div class="description">
