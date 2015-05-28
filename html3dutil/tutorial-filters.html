@@ -116,6 +116,14 @@ return ShaderProgram.makeEffect(context,
 &quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
 &quot; vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
+}</code></pre><h3>Red Tint</h3><p><img src="filters9.png" alt="Red Tint filtered image"></p>
+<p>The grayscale filter adds a hint of red to the image.</p>
+<pre class="prettyprint source"><code>function makeRedTint(context){
+return ShaderProgram.makeEffect(context,[
+&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
+&quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
+&quot; return vec4(color.r+0.3,color.g,color.b,color.a);&quot;,
+&quot;}&quot;].join(&quot;\n&quot;));
 }</code></pre><h3>Mirror Filter</h3><p><img src="filters7.png" alt="Mirror filtered image"></p>
 <p>This filter does a horizontal flip of its pixels.  Note that the filter, given below, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
