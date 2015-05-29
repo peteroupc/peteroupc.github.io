@@ -117,7 +117,7 @@ return ShaderProgram.makeEffect(context,
 &quot; vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
 }</code></pre><h3>Red Tint</h3><p><img src="filters9.png" alt="Red Tint filtered image"></p>
-<p>The grayscale filter adds a hint of red to the image.</p>
+<p>The red tint filter adds a hint of red to the image.</p>
 <pre class="prettyprint source"><code>function makeRedTint(context){
 return ShaderProgram.makeEffect(context,[
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,

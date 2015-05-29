@@ -184,7 +184,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * If the difference between one knot and the next isn't the same,
 * the curve is considered a &lt;i>non-uniform&lt;/i>
 * B-spline curve.&lt;p>
-* If there are N times 2 knots with the first N equal to 0 and the rest
+* If there are N times 2 knots with the first N knots equal to 0 and the rest
 * equal to 1, where N is the number of control points,
 * the control points describe a &lt;i>B&amp;eacute;zier&lt;/i> curve, in which the
 * first and last control points match the curve's end points.&lt;p>
@@ -771,7 +771,10 @@ SurfaceEval.prototype.vertex=function(evaluator){
 * &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>v&lt;/i>; &lt;b>n&lt;/b> = &lt;b>c&lt;/b> / |&lt;b>c&lt;/b>|.&lt;p>
 * If autonormal is enabled (see setAutoNormal()), SurfaceEval uses an approximation to this approach,
 * as the SurfaceEval class doesn't know the implementation of the method used
-* for vertex calculation.
+* for vertex calculation.&lt;p>
+* (Note: &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>u&lt;/i> is also called the &lt;i>bitangent&lt;/i>
+* or &lt;i>binormal vector&lt;/i>, and &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>v&lt;/i> is also
+* called the &lt;i>tangent vector&lt;/i>.)
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
 * &lt;/ul>

@@ -353,11 +353,11 @@ Camera.prototype.update=function(){
  } else if(this.input.middleButton){
    this._move(delta.x,delta.y,0.3);
  }
- if(this.input.keys[InputTracker.W]){
-  this.setDistance(this.distance+0.2)
+ if(this.input.keys[InputTracker.A+22]){ // letter W
+  this.setDistance(this._distance()+0.2)
  }
- if(this.input.keys[InputTracker.S]){
-  this.setDistance(this.distance-0.2)
+ if(this.input.keys[InputTracker.A+18]){ // letter S
+  this.setDistance(this._distance()-0.2)
  }
  this.persp.update();
  return this;
