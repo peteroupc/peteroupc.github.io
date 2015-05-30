@@ -18,6 +18,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:link6()">Waterpaint</a>,
 <a href="javascript:link7()">Mirror</a>,
 <a href="javascript:link8()">Edge detect</a>,
+<a href="javascript:link9()">Red Tint</a>,
 <a href="javascript:linknone()">No filters</a><br>
 <a href="javascript:link1a()">Blinds</a>,
 <a href="javascript:link2a()">Platonic solids</a>
@@ -159,6 +160,14 @@ return ShaderProgram.makeEffect(context,[
 "}"].join("\n"));
 }
 
+function makeRedTint(context){
+return ShaderProgram.makeEffect(context,[
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" vec4 color=texture2D(sampler,uvCoord);",
+" return vec4(color.r+0.3,color.g,color.b,color.a);",
+"}"].join("\n"));
+}
+
 function makeMirror(context){
 return ShaderProgram.makeEffect(context,[
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
@@ -238,6 +247,14 @@ function link8(){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeKernelMatrix(scene);
   setKernelMatrix(currentFilter,[0,1,0,1,-4,1,0,1,0])
+  scene.useFilter(currentFilter);
+ }
+}
+
+function link9(){
+ if(scene){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=makeRedTint(scene);
   scene.useFilter(currentFilter);
  }
 }

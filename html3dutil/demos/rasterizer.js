@@ -245,14 +245,6 @@ function isTriangleOutside(p1,p2,p3,width,height){
  var maxy=Math.max(p1[1],p2[1],p3[1]);
  var minx=Math.min(p1[0],p2[0],p3[0]);
  var miny=Math.min(p1[1],p2[1],p3[1]);
- if(maxx==Number.POSITIVE_INFINITY ||
-     minx==Number.NEGATIVE_INFINITY ||
-     maxy==Number.POSITIVE_INFINITY ||
-     miny==Number.NEGATIVE_INFINITY){
-  // Pathological case where one or more
-  // of the coordinates is infinity
-  return true;
- }
  if((minx>width && maxx>width) ||
      (minx<0 && maxx<0) ||
      (miny>height && maxy>height) ||
@@ -328,8 +320,8 @@ Scene3D.prototype.makeShape=function(mesh){
  var buffer=mesh;
  return new Shape(buffer);
 }
-Scene3D._MIN_DEPTH = -32767;
-Scene3D._DEPTH_RESOLUTION = 32767;
+Scene3D._MIN_DEPTH = 0;
+Scene3D._DEPTH_RESOLUTION = 65536;
 
 Scene3D._Triangle.prototype.pixel=function(offset, tex, width, height, data, depth, color, colorOffset){
     var t0=Math.max(0,tex[0]);
@@ -382,7 +374,7 @@ Scene3D.prototype._renderInner=function(){
   }
   size=this.width*this.height;
     for(var i=0;i<size;i++){
-      this._depth[i]=Scene3D._DEPTH_RESOLUTION;
+      this._depth[i]=Scene3D._DEPTH_RESOLUTION-1;
     }
   for(var i=0;i<this.shapes.length;i++){
    this._renderShape(this.shapes[i],data);
@@ -487,10 +479,6 @@ Scene3D._perspectiveTransform=function(mat,pt){
  var x=pt[0];
  var y=pt[1];
  var z=pt[2];
- // avoid pathological coordinates once transformed
- if(Math.abs(x)<1e-9)x=0;
- if(Math.abs(y)<1e-9)y=0;
- if(Math.abs(z)<1e-9)z=0;
  pt[0]=x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
  pt[1]=x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
  pt[2]=x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
@@ -501,6 +489,102 @@ Scene3D._perspectiveTransform=function(mat,pt){
   pt[1]*=w;
   pt[2]*=w;
  }
+}
+Scene3D._transformAndClipPoint=function(mat,pt){
+ var x=pt[0];
+ var y=pt[1];
+ var z=pt[2];
+ pt[0]=x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
+ pt[1]=x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
+ pt[2]=x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
+ var w=x * mat[3] + y * mat[7] + z * mat[11] + mat[15];
+ if(pt[2]<-w || pt[2]>w){
+   return false;
+ }
+ if(w!=1){
+  w=1.0/w;
+  pt[0]*=w;
+  pt[1]*=w;
+  pt[2]*=w;
+ }
+ return true;
+}
+Scene3D._transformAndClipLine=function(mat,pt,pt2,size){
+ var x=pt[0];
+ var y=pt[1];
+ var z=pt[2];
+ var x1=x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
+ var y1=x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
+ var z1=x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
+ var w1=x * mat[3] + y * mat[7] + z * mat[11] + mat[15];
+ x=pt2[0];
+ y=pt2[1];
+ z=pt2[2];
+ var x2=x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
+ var y2=x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
+ var z2=x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
+ var w2=x * mat[3] + y * mat[7] + z * mat[11] + mat[15];
+ if(Math.abs(w1)<1e-9)return false;
+ if(Math.abs(w2)<1e-9)return false;
+ if(Math.abs(x1)<1e-9)x1=0;
+ if(Math.abs(y1)<1e-9)y1=0;
+ if(Math.abs(z1)<1e-9)z1=0;
+ if(Math.abs(x2)<1e-9)x2=0;
+ if(Math.abs(y2)<1e-9)y2=0;
+ if(Math.abs(z2)<1e-9)z2=0;
+ if(w1!=1){
+  w1=1.0/w1;
+  x1*=w1;
+  y1*=w1;
+  z1*=w1;
+ }
+ if(w2!=1){
+  w2=1.0/w2;
+  x2*=w2;
+  y2*=w2;
+  z2*=w2;
+ }
+ if((z1<-1 && z2<-1) || (z2>1 && z2>1)){
+   // both vertices lie outside the same clipping
+   // plane
+   return false;
+ }
+ if(z1<-1 || z2<-1 || z1>1 || z2>1){
+   // line needs to be clipped because either
+   // or both vertices lie outside the clipping
+   // planes
+   var linediv=1.0/(z2-z1);
+   var near1=(-1-z1)*linediv;
+   var near2=(-1-z2)*linediv;
+   var far1=(1-z1)*linediv;
+   var far2=(1-z2)*linediv;
+   var startT=0;
+   if(near1>0 && near1<=1)startT=near1;
+   if(far1>0 && far1<=1)startT=far1;
+   var endT=1;
+   if(near2>=0 && near2<1)endT=near2;
+   if(far2>=0 && far2<1)endT=far2;
+   pt[0]=x1+(x2-x1)*startT;
+   pt[1]=y1+(y2-y1)*startT;
+   pt[2]=z1+(z2-z1)*startT;
+   pt2[0]=x1+(x2-x1)*endT;
+   pt2[1]=y1+(y2-y1)*endT;
+   pt2[2]=z1+(z2-z1)*endT;
+   for(var i=3;i<size;i++){
+    x1=pt[i];
+    x2=pt2[i];
+    pt[i]=x1+(x2-x1)*startT;
+    pt2[i]=x1+(x2-x1)*endT;
+   }
+ } else {
+  pt[0]=x1;
+  pt[1]=y1;
+  pt[2]=z1;
+  pt2[0]=x2;
+  pt2[1]=y2;
+  pt2[2]=z2;
+ }
+ return true;
 }
 /** @private */
 Scene3D.prototype._renderShape=function(shape,data){
@@ -517,17 +601,18 @@ Scene3D.prototype._renderShape=function(shape,data){
    var v1=[];
    var v2=[];
    var v3=[];
-   var colorValue=null;
+   var colorValueBuffer=[0,0,0];
    for(var i=0;i<mesh.subMeshes.length;i++){
     var subMesh=mesh.subMeshes[i];
     var colorOffset=Mesh.colorOffset(subMesh.attributeBits);
+    var colorValue=null;
     var stride=subMesh.getStride();
     var prim=subMesh.primitiveType();
-    if(colorOffset<0 && shape.material && shape.material.diffuse && !colorValue){
-     colorValue=[
-      Math.floor(shape.material.diffuse[0]*255.0),
-      Math.floor(shape.material.diffuse[1]*255.0),
-      Math.floor(shape.material.diffuse[2]*255.0)];
+    if(colorOffset<0 && shape.material && shape.material.diffuse){
+     colorValue=colorValueBuffer;
+     colorValueBuffer[0]=Math.floor(shape.material.diffuse[0]*255.0);
+     colorValueBuffer[1]=Math.floor(shape.material.diffuse[1]*255.0);
+     colorValueBuffer[2]=Math.floor(shape.material.diffuse[2]*255.0);
     }
     if(prim==Mesh.TRIANGLES){
      var v=subMesh.vertices
@@ -546,10 +631,13 @@ Scene3D.prototype._renderShape=function(shape,data){
       Scene3D._perspectiveTransform(mvpMatrix,v3);
       v1[0]=v1[0]*w2+w2;
       v1[1]=v1[1]*-h2+h2;
+      v1[2]=v1[2]*0.5+0.5;
       v2[0]=v2[0]*w2+w2;
       v2[1]=v2[1]*-h2+h2;
+      v2[2]=v2[2]*0.5+0.5;
       v3[0]=v3[0]*w2+w2;
       v3[1]=v3[1]*-h2+h2;
+      v3[2]=v3[2]*0.5+0.5;
       var tri=this._getTriangle(v1,v2,v3);
       if(tri){
        if(colorOffset>=0){
@@ -573,18 +661,19 @@ Scene3D.prototype._renderShape=function(shape,data){
        v1[j]=v[index1+j];
        v2[j]=v[index2+j];
       }
-      Scene3D._perspectiveTransform(mvpMatrix,v1);
-      Scene3D._perspectiveTransform(mvpMatrix,v2);
-      v1[0]=v1[0]*w2+w2;
-      v1[1]=v1[1]*-h2+h2;
-      v2[0]=v2[0]*w2+w2;
-      v2[1]=v2[1]*-h2+h2;
-      var x=Math.round(v1[0])|0;
-      var y=Math.round(v1[1])|0;
-      var x2=Math.round(v2[0])|0;
-      var y2=Math.round(v2[1])|0;
+      if(Scene3D._transformAndClipLine(mvpMatrix,v1,v2,stride)){
+       v1[0]=v1[0]*w2+w2;
+       v1[1]=v1[1]*-h2+h2;
+       v1[2]=v1[2]*0.5+0.5;
+       v2[0]=v2[0]*w2+w2;
+       v2[1]=v2[1]*-h2+h2;
+       v2[2]=v2[2]*0.5+0.5;
+       var x=Math.round(v1[0])|0;
+       var y=Math.round(v1[1])|0;
+       var x2=Math.round(v2[0])|0;
+       var y2=Math.round(v2[1])|0;
        if(colorOffset>=0){
-       Scene3D._drawLine(data.imgdata.data,this._depth,
+        Scene3D._drawLine(data.imgdata.data,this._depth,
          x,y,v1[2],x2,y2,v2[2],this.width,this.height,[
           Math.floor(v1[colorOffset]*255)|0,
           Math.floor(v1[colorOffset+1]*255)|0,
@@ -599,8 +688,8 @@ Scene3D.prototype._renderShape=function(shape,data){
          x,y,v1[2],x2,y2,v2[2],
          this.width,this.height,colorValue,colorValue);
         }
+       }
      }
-
     } else if(prim==Mesh.POINTS){
      var v=subMesh.vertices
      for(var i=0;i<subMesh.indices.length;i++){
@@ -608,22 +697,21 @@ Scene3D.prototype._renderShape=function(shape,data){
       for(var j=0;j<stride;j++){
        v1[j]=v[index1+j];
       }
-      Scene3D._perspectiveTransform(mvpMatrix,v1);
-      v1[0]=v1[0]*w2+w2;
-      v1[1]=v1[1]*-h2+h2;
-      var x=Math.round(v1[0])|0;
-      var y=Math.round(v1[1])|0;
-       if(colorOffset>=0){
-       Scene3D._drawPoint(data.imgdata.data,this._depth,
-         x,y,v1[2],this.width,this.height,[
-          Math.floor(v1[colorOffset]*255)|0,
-          Math.floor(v1[colorOffset+1]*255)|0,
-          Math.floor(v1[colorOffset+2]*255)|0
-         ]);
-        } else {
-       Scene3D._drawPoint(data.imgdata.data,this._depth,
-         x,y,v1[2],this.width,this.height,colorValue);
+      if(Scene3D._transformAndClipPoint(mvpMatrix,v1)){
+       v1[0]=v1[0]*w2+w2;
+       v1[1]=v1[1]*-h2+h2;
+       v1[2]=v1[2]*0.5+0.5;
+       var x=Math.round(v1[0])|0;
+       var y=Math.round(v1[1])|0;
+        if(colorOffset>=0){
+         colorValue=colorValueBuffer;
+         colorValue[0]=Math.floor(v1[colorOffset]*255)|0;
+         colorValue[1]=Math.floor(v1[colorOffset+1]*255)|0;
+         colorValue[2]=Math.floor(v1[colorOffset+2]*255)|0;
         }
+        Scene3D._drawPoint(data.imgdata.data,this._depth,
+          x,y,v1[2],this.width,this.height,colorValue);
+       }
      }
     }
    }
