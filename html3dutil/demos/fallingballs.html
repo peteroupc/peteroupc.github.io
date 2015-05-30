@@ -1,0 +1,123 @@
+<meta charset=utf-8>
+<head>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+/**
+* Updates the position of a particle using Euler integration.
+* @param {Array<number>} particle Information on a single particle in
+* the form of an array of nine numbers as follows:<ul>
+* <li>The first three numbers are the X, Y, and Z coordinates
+* of the particle's position.
+* <li>The next three numbers are the X, Y, and Z components
+* of the particle's velocity (change in position with respect to time).
+* <li>The last three numbers are the X, Y, and Z components
+* of the particle's acceleration (force divided by mass).
+* @param {number} timeStep Time step for integration.  This is usually
+* a fractional number of seconds.
+*/
+GLMath.integrateEuler=function(particle, timeStep){
+ // update each position
+ particle[0]+=particle[3]*timeStep;
+ particle[1]+=particle[4]*timeStep;
+ particle[2]+=particle[5]*timeStep;
+ // update each velocity
+ particle[3]+=particle[6]*timeStep;
+ particle[4]+=particle[7]*timeStep;
+ particle[5]+=particle[8]*timeStep;
+}
+/**
+* Updates the position of a particle using Verlet integration.
+* @param {Array<number>} particle Information on a single particle in
+* the form of an array of nine numbers as follows:<ul>
+* <li>The first three numbers are the X, Y, and Z coordinates
+* of the particle's position.
+* <li>The next three numbers are the X, Y, and Z components
+* of the particle's previous position.
+* <li>The last three numbers are the X, Y, and Z components
+* of the particle's acceleration (force divided by mass).
+* @param {number} timeStep Time step for integration.  This is usually
+* a fractional number of seconds.
+*/
+GLMath.integrateVerlet=function(particle, timeStep){
+ // update each position
+ var x=particle[0];
+ var y=particle[1];
+ var z=particle[2];
+ particle[0]+=particle[6]*timeStep+particle[0]-particle[3];
+ particle[1]+=particle[7]*timeStep+particle[1]-particle[4];
+ particle[2]+=particle[8]*timeStep+particle[2]-particle[5];
+ particle[3]=x;
+ particle[4]=y;
+ particle[5]=z;
+}
+
+function Particles(scene,count){
+ this.shapes=new ShapeGroup();
+ var sphere=scene.makeShape(Meshes.createSphere(1,64,64));
+ this.particles=[];
+ for(var i=0;i<count;i++){
+  var p=[];
+  var mass=Math.random()*6+1;
+  p[0]=Math.random()*scene.getWidth();
+  p[1]=Math.random()*scene.getHeight();
+  p[2]=0;
+  p[3]=p[0];
+  p[4]=p[1]-1;
+  p[5]=p[2];
+  p[6]=0;
+  p[7]=-30/mass;
+  p[8]=0;
+  p[9]=mass;
+  this.particles.push(p);
+  var scale=(scene.getWidth()/100)*mass;
+  console.log(scale)
+  var shape=sphere.copy();
+  shape.setScale(scale,scale,scale);
+  shape.setPosition(p[0],p[1],p[2]);
+  shape.setColor("blue");
+  this.shapes.addShape(shape);
+ }
+ scene.addShape(this.shapes);
+ this.timeInfo={};
+}
+Particles.prototype.update=function(time){
+ var timeStep=GLUtil.newFrames(this.timeInfo,time)/60;
+ for(var i=0;i<this.particles.length;i++){
+  var p=this.particles[i];
+  GLMath.integrateVerlet(p,timeStep);
+  this.shapes.shapes[i].setPosition(p[0],p[1],p[2]);
+ }
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"))
+   .setClearColor("white")
+  scene.setOrtho(0,scene.getWidth(),0,scene.getHeight(),-5000,5000);
+  var tris=new Particles(scene,10);
+  // Set up the render loop
+  GLUtil.renderLoop(function(time){
+   tris.update(time);
+   // Render the scene
+   scene.render();
+  });
+//-->
+</script>
+</body>
