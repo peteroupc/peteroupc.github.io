@@ -402,6 +402,11 @@ function InputTracker(element){
   } else {
    thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
    thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
+   if(e.button!=-1){
+    // update mouse position to current click position
+    thisObj.lastClient[0]=thisObj.clientX;
+    thisObj.lastClient[1]=thisObj.clientY;
+   }
   }
  }
  element.addEventListener("mousedown",function(e){
