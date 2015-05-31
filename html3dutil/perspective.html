@@ -101,39 +101,39 @@ Frustum.fromMatrix=function(matrix){
  var frustum=new Frustum();
  frustum.planes[Frustum.LEFT]=GLMath.planeNormInPlace([
   matrix[3]  + matrix[0],
-	matrix[7]  + matrix[4],
-	matrix[11] + matrix[8],
-	matrix[15] + matrix[12]
+  matrix[7]  + matrix[4],
+  matrix[11] + matrix[8],
+  matrix[15] + matrix[12]
  ])
  frustum.planes[Frustum.RIGHT]=GLMath.planeNormInPlace([
-	matrix[3]  - matrix[0],
-	matrix[7]  - matrix[4],
-	matrix[11] - matrix[8],
-	matrix[15] - matrix[12]
+  matrix[3]  - matrix[0],
+  matrix[7]  - matrix[4],
+  matrix[11] - matrix[8],
+  matrix[15] - matrix[12]
  ])
  frustum.planes[Frustum.TOP]=GLMath.planeNormInPlace([
-	matrix[3]  - matrix[1],
-	matrix[7]  - matrix[5],
-	matrix[11] - matrix[9],
-	matrix[15] - matrix[13]
+  matrix[3]  - matrix[1],
+  matrix[7]  - matrix[5],
+  matrix[11] - matrix[9],
+  matrix[15] - matrix[13]
  ])
  frustum.planes[Frustum.BOTTOM]=GLMath.planeNormInPlace([
-	matrix[3]  + matrix[1],
-	matrix[7]  + matrix[5],
-	matrix[11] + matrix[9],
-	matrix[15] + matrix[13]
+  matrix[3]  + matrix[1],
+  matrix[7]  + matrix[5],
+  matrix[11] + matrix[9],
+  matrix[15] + matrix[13]
  ])
  frustum.planes[Frustum.NEAR]=GLMath.planeNormInPlace([
-	matrix[3]  + matrix[2],
-	matrix[7]  + matrix[6],
-	matrix[11] + matrix[10],
-	matrix[15] + matrix[14]
+  matrix[3]  + matrix[2],
+  matrix[7]  + matrix[6],
+  matrix[11] + matrix[10],
+  matrix[15] + matrix[14]
  ])
  frustum.planes[Frustum.FAR]=GLMath.planeNormInPlace([
-	matrix[3]  - matrix[2],
-	matrix[7]  - matrix[6],
-	matrix[11] - matrix[10],
-	matrix[15] - matrix[14]
+  matrix[3]  - matrix[2],
+  matrix[7]  - matrix[6],
+  matrix[11] - matrix[10],
+  matrix[15] - matrix[14]
  ])
  return frustum
 }

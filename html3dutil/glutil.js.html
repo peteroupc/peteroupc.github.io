@@ -16,15 +16,15 @@
 * @license CC0-1.0
 */
 (function (root, factory) {
-	if (typeof define === "function" &amp;&amp; define["amd"]) {
-		define([ "exports" ], factory);
-	} else if (typeof exports === "object") {
-		factory(exports);
-	} else {
-		factory(root);
-	}
+  if (typeof define === "function" &amp;&amp; define["amd"]) {
+    define([ "exports" ], factory);
+  } else if (typeof exports === "object") {
+    factory(exports);
+  } else {
+    factory(root);
+  }
 }(this, function (exports) {
-	if (exports.GLUtil) { return; }
+  if (exports.GLUtil) { return; }
 
 /*
   Polyfills

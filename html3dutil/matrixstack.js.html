@@ -18,15 +18,15 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 (function (g,f) {
-	if (typeof define=="function" &amp;&amp; define.amd) {
-		define([ "exports" ], f);
-	} else if (typeof exports=="object") {
-		f(exports);
-	} else {
-		f(g);
-	}
+  if (typeof define=="function" &amp;&amp; define.amd) {
+    define([ "exports" ], f);
+  } else if (typeof exports=="object") {
+    f(exports);
+  } else {
+    f(g);
+  }
 }(this, function (exports) {
-	if (exports.MatrixStack) { return; }
+  if (exports.MatrixStack) { return; }
 /**
 MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.&lt;p>
@@ -97,12 +97,12 @@ MatrixStack.prototype.multMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i &lt; 16; i+= 4){
-		for(var j = 0; j &lt; 4; j++){
-			dst[i+j] =
-				mat[i]   * curmat[j]   +
-				mat[i+1] * curmat[j+4] +
-				mat[i+2] * curmat[j+8] +
-				mat[i+3] * curmat[j+12];
+    for(var j = 0; j &lt; 4; j++){
+      dst[i+j] =
+        mat[i]   * curmat[j]   +
+        mat[i+1] * curmat[j+4] +
+        mat[i+2] * curmat[j+8] +
+        mat[i+3] * curmat[j+12];
     }
  }
  this.stack[this.stack.length-1]=dst;
@@ -124,12 +124,12 @@ MatrixStack.prototype.multTransposeMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i &lt; 16; i+= 4){
-		for(var j = 0; j &lt; 4; j++){
-			dst[i+j] =
-				curmat[i]   * mat[j]   +
-				curmat[i+1] * mat[j+4] +
-				curmat[i+2] * mat[j+8] +
-				curmat[i+3] * mat[j+12];
+    for(var j = 0; j &lt; 4; j++){
+      dst[i+j] =
+        curmat[i]   * mat[j]   +
+        curmat[i+1] * mat[j+4] +
+        curmat[i+2] * mat[j+8] +
+        curmat[i+3] * mat[j+12];
     }
  }
  this.stack[this.stack.length-1]=dst;

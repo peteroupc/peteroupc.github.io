@@ -444,11 +444,11 @@ InputTracker.prototype.mousewheel=function(func){
   var clientY=e.clientY-InputTracker._getPageY(e.target);
   var delta=0;
   if (e.wheelDelta){
-		delta=e.wheelDelta;
+    delta=e.wheelDelta;
   } else if (e.detail){
-		delta=e.detail * -40;
-	} else if (e.originalEvent && e.originalEvent.wheelDelta){
-		delta=e.originalEvent.wheelDelta;
+    delta=e.detail * -40;
+  } else if (e.originalEvent && e.originalEvent.wheelDelta){
+    delta=e.originalEvent.wheelDelta;
   }
   // delta of 120 represents 1 tick of the mouse wheel;
   // positive values mean moving the mouse wheel up,

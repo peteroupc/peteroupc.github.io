@@ -12,15 +12,15 @@ of 4x4 transformation matrices.
 * @module matrixstack
 */
 (function (g,f) {
-	if (typeof define=="function" && define.amd) {
-		define([ "exports" ], f);
-	} else if (typeof exports=="object") {
-		f(exports);
-	} else {
-		f(g);
-	}
+  if (typeof define=="function" && define.amd) {
+    define([ "exports" ], f);
+  } else if (typeof exports=="object") {
+    f(exports);
+  } else {
+    f(g);
+  }
 }(this, function (exports) {
-	if (exports.MatrixStack) { return; }
+  if (exports.MatrixStack) { return; }
 /**
 MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.<p>
@@ -73,12 +73,12 @@ MatrixStack.prototype.multMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i < 16; i+= 4){
-		for(var j = 0; j < 4; j++){
-			dst[i+j] =
-				mat[i]   * curmat[j]   +
-				mat[i+1] * curmat[j+4] +
-				mat[i+2] * curmat[j+8] +
-				mat[i+3] * curmat[j+12];
+    for(var j = 0; j < 4; j++){
+      dst[i+j] =
+        mat[i]   * curmat[j]   +
+        mat[i+1] * curmat[j+4] +
+        mat[i+2] * curmat[j+8] +
+        mat[i+3] * curmat[j+12];
     }
  }
  this.stack[this.stack.length-1]=dst;

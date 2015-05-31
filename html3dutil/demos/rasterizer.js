@@ -18,9 +18,9 @@ Scene3D._Triangle=function(v0,v1,v2){
     this.t3=[0,0,1];
     // check if triangle is backfacing, if so, swap two vertices
     if ( ((this.v3[0]-this.v1[0])*(this.v2[1]-this.v1[1]) - (this.v3[1]-this.v1[1])*(this.v2[0]-this.v1[0])) < 0 ) {
-			var hv=this.v1; this.v1=this.v2; this.v2=hv; // swap pos
-			var ht=this.t1; this.t1=this.t2; this.t2=ht; // swap tex
-		}
+      var hv=this.v1; this.v1=this.v2; this.v2=hv; // swap pos
+      var ht=this.t1; this.t1=this.t2; this.t2=ht; // swap tex
+    }
     this.valid=this.computeDeltas();
     if(this.valid){
      //console.log([this.v1[2],this.v2[2],this.v3[2]]+"")
@@ -30,30 +30,30 @@ Scene3D._Triangle=function(v0,v1,v2){
     }
   }
 
-	/// Compute texture space deltas.
-	/// This method takes two edge vectors that form a basis, determines the
-	/// coordinates of the canonic vectors in that basis, and computes the
-	/// texture gradient that corresponds to those vectors.
-	Scene3D._Triangle.prototype.computeDeltas=function(){
+  /// Compute texture space deltas.
+  /// This method takes two edge vectors that form a basis, determines the
+  /// coordinates of the canonic vectors in that basis, and computes the
+  /// texture gradient that corresponds to those vectors.
+  Scene3D._Triangle.prototype.computeDeltas=function(){
     var e0x=this.v3[0]-this.v1[0],
       e0y=this.v3[1]-this.v1[1];
     var e1x=this.v2[0]-this.v1[0],
       e1y=this.v2[1]-this.v1[1];
-		var de0 = GLMath.vec3sub(this.t3,this.t1);
-		var de1 = GLMath.vec3sub(this.t2,this.t1);
-		var d=(e0y*e1x-e1y*e0x);
+    var de0 = GLMath.vec3sub(this.t3,this.t1);
+    var de1 = GLMath.vec3sub(this.t2,this.t1);
+    var d=(e0y*e1x-e1y*e0x);
     if (Math.abs(d)<1e-6) {
-			return false;
-		}
+      return false;
+    }
     var denom=1.0/d;
-		var lambda1 = -e1y * denom;
-		var lambda2 = e0y * denom;
-		var lambda3 = e1x * denom;
-		var lambda4 = - e0x * denom;
+    var lambda1 = -e1y * denom;
+    var lambda2 = e0y * denom;
+    var lambda3 = e1x * denom;
+    var lambda4 = - e0x * denom;
     this.dx = [((de0[0] * lambda1) + de1[0] * lambda2), ((de0[1] * lambda1) + de1[1] * lambda2), ((de0[2] * lambda1) + de1[2] * lambda2)];
     this.dy = [((de0[0] * lambda3) + de1[0] * lambda4), ((de0[1] * lambda3) + de1[1] * lambda4), ((de0[2] * lambda3) + de1[2] * lambda4)];
     return true;
-	}
+  }
 Scene3D.vec2normInPlace=function(vec){
  var x=vec[0];
  var y=vec[1];
@@ -67,149 +67,149 @@ Scene3D.vec2normInPlace=function(vec){
 }
 
 Scene3D._Triangle.prototype.draw=function(width, height, data, depth, color, colorOffset){
-		// 28.4 fixed-point coordinates
-		var Y1 = Math.round(16.0 * this.v1[1])|0;
-		var Y2 = Math.round(16.0 * this.v2[1])|0;
-		var Y3 = Math.round(16.0 * this.v3[1])|0;
+    // 28.4 fixed-point coordinates
+    var Y1 = Math.round(16.0 * this.v1[1])|0;
+    var Y2 = Math.round(16.0 * this.v2[1])|0;
+    var Y3 = Math.round(16.0 * this.v3[1])|0;
 
-		var X1 = Math.round(16.0 * this.v1[0])|0;
-		var X2 = Math.round(16.0 * this.v2[0])|0;
-		var X3 = Math.round(16.0 * this.v3[0])|0;
+    var X1 = Math.round(16.0 * this.v1[0])|0;
+    var X2 = Math.round(16.0 * this.v2[0])|0;
+    var X3 = Math.round(16.0 * this.v3[0])|0;
 
-		// Deltas
-		var DX12 = X1 - X2;
-		var DX23 = X2 - X3;
-		var DX31 = X3 - X1;
+    // Deltas
+    var DX12 = X1 - X2;
+    var DX23 = X2 - X3;
+    var DX31 = X3 - X1;
 
-		var DY12 = Y1 - Y2;
-		var DY23 = Y2 - Y3;
-		var DY31 = Y3 - Y1;
+    var DY12 = Y1 - Y2;
+    var DY23 = Y2 - Y3;
+    var DY31 = Y3 - Y1;
 
-		// Fixed-point deltas
-		var FDX12 = DX12 << 4;
-		var FDX23 = DX23 << 4;
-		var FDX31 = DX31 << 4;
+    // Fixed-point deltas
+    var FDX12 = DX12 << 4;
+    var FDX23 = DX23 << 4;
+    var FDX31 = DX31 << 4;
 
-		var FDY12 = DY12 << 4;
-		var FDY23 = DY23 << 4;
-		var FDY31 = DY31 << 4;
+    var FDY12 = DY12 << 4;
+    var FDY23 = DY23 << 4;
+    var FDY31 = DY31 << 4;
 
-		var frustumX0 =  0;
-		var frustumY0 =  0;
-		var frustumX1 =  width << 4;
-		var frustumY1 =  height << 4;
+    var frustumX0 =  0;
+    var frustumY0 =  0;
+    var frustumX1 =  width << 4;
+    var frustumY1 =  height << 4;
 
-		// Bounding rectangle
-		var minx = (Math.max(Math.min(X1, X2, X3), frustumX0) + 0xF) >> 4;
-		var miny = (Math.max(Math.min(Y1, Y2, Y3), frustumY0) + 0xF) >> 4;
-		var maxx = (Math.min(Math.max(X1, X2, X3), frustumX1) + 0xF) >> 4;
-		var maxy = (Math.min(Math.max(Y1, Y2, Y3), frustumY1) + 0xF) >> 4;
-		// Block size, standard 8x8 (must be power of two)
-		var q = 8;
+    // Bounding rectangle
+    var minx = (Math.max(Math.min(X1, X2, X3), frustumX0) + 0xF) >> 4;
+    var miny = (Math.max(Math.min(Y1, Y2, Y3), frustumY0) + 0xF) >> 4;
+    var maxx = (Math.min(Math.max(X1, X2, X3), frustumX1) + 0xF) >> 4;
+    var maxy = (Math.min(Math.max(Y1, Y2, Y3), frustumY1) + 0xF) >> 4;
+    // Block size, standard 8x8 (must be power of two)
+    var q = 8;
 
-		// Start in corner of 8x8 block
-		minx &= ~7;
-		miny &= ~7;
+    // Start in corner of 8x8 block
+    minx &= ~7;
+    miny &= ~7;
     var tex=new Float32Array([0,0,0]);
     var texRow=new Float32Array([0,0,0]);
 
-		// Half-edge constants
-		var C1 = DY12 * X1 - DX12 * Y1;
-		var C2 = DY23 * X2 - DX23 * Y2;
-		var C3 = DY31 * X3 - DX31 * Y3;
+    // Half-edge constants
+    var C1 = DY12 * X1 - DX12 * Y1;
+    var C2 = DY23 * X2 - DX23 * Y2;
+    var C3 = DY31 * X3 - DX31 * Y3;
 
-		// Correct for fill convention
-		if(DY12 < 0 || (DY12 == 0 && DX12 > 0)) C1++;
-		if(DY23 < 0 || (DY23 == 0 && DX23 > 0)) C2++;
-		if(DY31 < 0 || (DY31 == 0 && DX31 > 0)) C3++;
+    // Correct for fill convention
+    if(DY12 < 0 || (DY12 == 0 && DX12 > 0)) C1++;
+    if(DY23 < 0 || (DY23 == 0 && DX23 > 0)) C2++;
+    if(DY31 < 0 || (DY31 == 0 && DX31 > 0)) C3++;
 
-		// Loop through blocks
-		for(var y = miny; y < maxy; y += q)
-		{
-			for(var x = minx; x < maxx; x += q)
-			{
-				// Corners of block
-				var x0 = x << 4;
-				var x1 = (x + q - 1) << 4;
-				var y0 = y << 4;
-				var y1 = (y + q - 1) << 4;
+    // Loop through blocks
+    for(var y = miny; y < maxy; y += q)
+    {
+      for(var x = minx; x < maxx; x += q)
+      {
+        // Corners of block
+        var x0 = x << 4;
+        var x1 = (x + q - 1) << 4;
+        var y0 = y << 4;
+        var y1 = (y + q - 1) << 4;
 
-				// Evaluate half-space functions
-				var a00 = C1 + DX12 * y0 - DY12 * x0 > 0;
-				var a10 = C1 + DX12 * y0 - DY12 * x1 > 0;
-				var a01 = C1 + DX12 * y1 - DY12 * x0 > 0;
-				var a11 = C1 + DX12 * y1 - DY12 * x1 > 0;
-				var a = (a00 << 0) | (a10 << 1) | (a01 << 2) | (a11 << 3);
+        // Evaluate half-space functions
+        var a00 = C1 + DX12 * y0 - DY12 * x0 > 0;
+        var a10 = C1 + DX12 * y0 - DY12 * x1 > 0;
+        var a01 = C1 + DX12 * y1 - DY12 * x0 > 0;
+        var a11 = C1 + DX12 * y1 - DY12 * x1 > 0;
+        var a = (a00 << 0) | (a10 << 1) | (a01 << 2) | (a11 << 3);
         if(a==0)continue;
-				var b00 = C2 + DX23 * y0 - DY23 * x0 > 0;
-				var b10 = C2 + DX23 * y0 - DY23 * x1 > 0;
-				var b01 = C2 + DX23 * y1 - DY23 * x0 > 0;
-				var b11 = C2 + DX23 * y1 - DY23 * x1 > 0;
-				var b = (b00 << 0) | (b10 << 1) | (b01 << 2) | (b11 << 3);
+        var b00 = C2 + DX23 * y0 - DY23 * x0 > 0;
+        var b10 = C2 + DX23 * y0 - DY23 * x1 > 0;
+        var b01 = C2 + DX23 * y1 - DY23 * x0 > 0;
+        var b11 = C2 + DX23 * y1 - DY23 * x1 > 0;
+        var b = (b00 << 0) | (b10 << 1) | (b01 << 2) | (b11 << 3);
 
-				var c00 = C3 + DX31 * y0 - DY31 * x0 > 0;
-				var c10 = C3 + DX31 * y0 - DY31 * x1 > 0;
-				var c01 = C3 + DX31 * y1 - DY31 * x0 > 0;
-				var c11 = C3 + DX31 * y1 - DY31 * x1 > 0;
-				var c = (c00 << 0) | (c10 << 1) | (c01 << 2) | (c11 << 3);
+        var c00 = C3 + DX31 * y0 - DY31 * x0 > 0;
+        var c10 = C3 + DX31 * y0 - DY31 * x1 > 0;
+        var c01 = C3 + DX31 * y1 - DY31 * x0 > 0;
+        var c11 = C3 + DX31 * y1 - DY31 * x1 > 0;
+        var c = (c00 << 0) | (c10 << 1) | (c01 << 2) | (c11 << 3);
 
-				// Skip block when outside an edge
-				if(b == 0x0 || c == 0x0) continue;
+        // Skip block when outside an edge
+        if(b == 0x0 || c == 0x0) continue;
 
-				// Accept whole block when totally covered
-				if(a == 0xF && b == 0xF && c == 0xF)
-				{
-					texRow[0]=this.t1[0]+this.dy[0]*(y-this.v1[1])+this.dx[0]*(x-this.v1[0]);
+        // Accept whole block when totally covered
+        if(a == 0xF && b == 0xF && c == 0xF)
+        {
+          texRow[0]=this.t1[0]+this.dy[0]*(y-this.v1[1])+this.dx[0]*(x-this.v1[0]);
           texRow[1]=this.t1[1]+this.dy[1]*(y-this.v1[1])+this.dx[1]*(x-this.v1[0]);
           texRow[2]=this.t1[2]+this.dy[2]*(y-this.v1[1])+this.dx[2]*(x-this.v1[0]);
            var xq=Math.min(x+q,width);
-					for(var iy = y; iy < y + q; iy++)
-					{
-						tex[0]=texRow[0]; tex[1]=texRow[1]; tex[2]=texRow[2];
-						for(var ix = x; ix < xq; ix++)
-						{
+          for(var iy = y; iy < y + q; iy++)
+          {
+            tex[0]=texRow[0]; tex[1]=texRow[1]; tex[2]=texRow[2];
+            for(var ix = x; ix < xq; ix++)
+            {
                    var offset=(iy*width+ix)<<2;
                    this.pixel(offset,tex,width, height, data, depth, color, colorOffset);
-							tex[0]+=this.dx[0]; tex[1]+=this.dx[1]; tex[2]+=this.dx[2];
-						}
+              tex[0]+=this.dx[0]; tex[1]+=this.dx[1]; tex[2]+=this.dx[2];
+            }
             texRow[0]+=this.dy[0]; texRow[1]+=this.dy[1]; texRow[2]+=this.dy[2];
-					}
-				}
-				else // Partially covered block
-				{
-					var CY1 = C1 + DX12 * y0 - DY12 * x0;
-					var CY2 = C2 + DX23 * y0 - DY23 * x0;
-					var CY3 = C3 + DX31 * y0 - DY31 * x0;
-					texRow[0]=this.t1[0]+this.dy[0]*(y-this.v1[1])+this.dx[0]*(x-this.v1[0]);
+          }
+        }
+        else // Partially covered block
+        {
+          var CY1 = C1 + DX12 * y0 - DY12 * x0;
+          var CY2 = C2 + DX23 * y0 - DY23 * x0;
+          var CY3 = C3 + DX31 * y0 - DY31 * x0;
+          texRow[0]=this.t1[0]+this.dy[0]*(y-this.v1[1])+this.dx[0]*(x-this.v1[0]);
           texRow[1]=this.t1[1]+this.dy[1]*(y-this.v1[1])+this.dx[1]*(x-this.v1[0]);
           texRow[2]=this.t1[2]+this.dy[2]*(y-this.v1[1])+this.dx[2]*(x-this.v1[0]);
           var xq=Math.min(x+q,width);
-					for(var iy = y; iy < y + q; iy++)
-					{
-						var CX1 = CY1;
-						var CX2 = CY2;
-						var CX3 = CY3;
-						tex[0]=texRow[0]; tex[1]=texRow[1]; tex[2]=texRow[2];
-						for(var ix = x; ix < xq; ix++)
-						{
-							if(CX1 > 0 && CX2 > 0 && CX3 > 0)
-							{
+          for(var iy = y; iy < y + q; iy++)
+          {
+            var CX1 = CY1;
+            var CX2 = CY2;
+            var CX3 = CY3;
+            tex[0]=texRow[0]; tex[1]=texRow[1]; tex[2]=texRow[2];
+            for(var ix = x; ix < xq; ix++)
+            {
+              if(CX1 > 0 && CX2 > 0 && CX3 > 0)
+              {
                    var offset=(iy*width+ix)<<2;
                    this.pixel(offset,tex,width, height, data, depth, color, colorOffset);
-							}
-							CX1 -= FDY12;
-							CX2 -= FDY23;
-							CX3 -= FDY31;
-							tex[0]+=this.dx[0]; tex[1]+=this.dx[1]; tex[2]+=this.dx[2];
-						}
-						CY1 += FDX12;
-						CY2 += FDX23;
-						CY3 += FDX31;
-						texRow[0]+=this.dy[0]; texRow[1]+=this.dy[1]; texRow[2]+=this.dy[2];
-					}
-				}
-			}
-		}
+              }
+              CX1 -= FDY12;
+              CX2 -= FDY23;
+              CX3 -= FDY31;
+              tex[0]+=this.dx[0]; tex[1]+=this.dx[1]; tex[2]+=this.dx[2];
+            }
+            CY1 += FDX12;
+            CY2 += FDX23;
+            CY3 += FDX31;
+            texRow[0]+=this.dy[0]; texRow[1]+=this.dy[1]; texRow[2]+=this.dy[2];
+          }
+        }
+      }
+    }
   }
 
 function intersect(p1,p2,p3x,p3y,p4x,p4y){

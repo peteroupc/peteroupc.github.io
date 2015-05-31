@@ -335,10 +335,10 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
        lines[i]="/* "+(i+1)+" */   "+lines[i]
       }
       console.log(lines.join("\n"));
-	  	console.log((kind==context.VERTEX_SHADER ? "vertex: " : "fragment: ")+
+      console.log((kind==context.VERTEX_SHADER ? "vertex: " : "fragment: ")+
         context.getShaderInfoLog(shader));
-	  	return null;
-	  }
+      return null;
+    }
    return shader;
   }
   var vs=(!vertexShader || vertexShader.length==0) ? null :
@@ -350,12 +350,12 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
    program = context.createProgram();
    context.attachShader(program, vs);
    context.attachShader(program, fs);
- 	 context.linkProgram(program);
+    context.linkProgram(program);
    if (!context.getProgramParameter(program, context.LINK_STATUS)) {
-		console.log("link: "+context.getProgramInfoLog(program));
-		context.deleteProgram(program);
+    console.log("link: "+context.getProgramInfoLog(program));
+    context.deleteProgram(program);
     program=null;
-	 }
+   }
    context.detachShader(program, vs);
    context.detachShader(program, fs);
   }

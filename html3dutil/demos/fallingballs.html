@@ -56,19 +56,38 @@ GLMath.integrateVerlet=function(particle, timeStep){
  particle[3]=x;
  particle[4]=y;
  particle[5]=z;
+ console.log(particle+"");
 }
+/**
+* Initializes a particle's data for Verlet integration.
+* @param {Array<Number>} particle Array to hold
+* the data for Verlet integration.
+* @param {number} x Starting X-coordinate of the particle.
+* @param {number} y Starting Y-coordinate of the particle.
+* @param {number} z Starting Z-coordinate of the particle.
+* @param {number} vx X component of the velocity.
+* @param {number} vy Y component of the velocity.
+* @param {number} vz Z component of the velocity.
+* @param {number} ax X component of the acceleration
+* (force divided by mass).  The acceleration vector for gravity
+* is usually (0, 0, -9.806) or (0, -9.806, 0).
+* @param {number} ay Y component of the acceleration.
+* @param {number} az Z component of the acceleration.
+* @param {number} timeStep Optimal time step.
+* @return {Array<Number>} The parameter "particle".
+*/
 GLMath.initParticle=function(particle,
   x, y, z, vx, vy, vz, ax, ay, az, timeStep){
- particle[3]=x;
- particle[4]=y;
- particle[5]=z;
+ particle[0]=x;
+ particle[1]=y;
+ particle[2]=z;
  particle[6]=ax;
  particle[7]=ay;
  particle[8]=az;
  var ts=timeStep*timeStep*0.5;
- particle[0]=x+vx*timeStep+ax*ts;
- particle[1]=y+vy*timeStep+ay*ts;
- particle[2]=z+vz*timeStep+az*ts;
+ particle[3]=x-vx*timeStep+ax*ts;
+ particle[4]=y-vy*timeStep+ay*ts;
+ particle[5]=z-vz*timeStep+az*ts;
  particle[9]=timeStep;
  return particle;
 }
@@ -89,12 +108,12 @@ function CubicBody(radius, mass, x, y, z){
  this.particle=GLMath.initParticle([],
    x,y,z,
    0,0,0,
-   0,CubicBody.GRAVITY*this.divmass,0,
+   0,CubicBody.GRAVITY,0,
    1/60);
  this.radius=radius;
  this.mass=mass;
 }
-CubicBody.GRAVITY = -9.8*60;
+CubicBody.GRAVITY = -9.806;
 CubicBody.prototype.x=function(){
  return this.particle[0];
 }
@@ -122,7 +141,7 @@ function Particles(scene,count,width,height){
   p[0]=Math.random()*width;
   p[1]=Math.random()*height;
   p[2]=0;
-  var scale=(scene.getWidth()/100)*mass;
+  var scale=(width/100)*mass;
   GLMath.constrainPointToBox(p,scale,0,this.bounds);
   this.bodies.push(new CubicBody(scale,mass,p[0],p[1],p[2]));
   var shape=sphere.copy();
@@ -148,10 +167,11 @@ Particles.prototype.update=function(time){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-  scene.setOrtho(0,scene.getWidth(),0,scene.getHeight(),-5000,5000);
-  var tris=new Particles(scene,10,scene.getWidth(),scene.getHeight());
+  // 12 meters wide and 9 meters high
+  var tris=new Particles(scene,10,12,9);
   // Set up the render loop
   GLUtil.renderLoop(function(time){
+   scene.setOrthoAspect(0,12,0,9,-5000,5000);
    tris.update(time);
    // Render the scene
    scene.render();
