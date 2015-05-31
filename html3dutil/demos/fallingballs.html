@@ -19,7 +19,6 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
 /**
 * Updates the position of a particle using Verlet integration.
 * @param {Array<number>} particle Information on a single particle in
@@ -28,36 +27,51 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * of the particle's position.
 * <li>The next three numbers are the X, Y, and Z coordinates
 * of the particle's previous position.
-* <li>The last three numbers are the X, Y, and Z components
+* <li>The next three numbers are the X, Y, and Z components
 * of the particle's acceleration (force divided by mass).
+* <li>The last number is the previous time step (not strictly needed
+* for Verlet integration, but makes the integration more accurate
+* in the face of differing time steps, see http://lonesock.net/article/verlet.html ).
+* </ul>
 * @param {number} timeStep Time step for integration.  This is usually
 * a fractional number of seconds.
 */
 GLMath.integrateVerlet=function(particle, timeStep){
- // update each position
  var x=particle[0];
  var y=particle[1];
  var z=particle[2];
- particle[0]+=particle[6]*timeStep+particle[0]-particle[3];
- particle[1]+=particle[7]*timeStep+particle[1]-particle[4];
- particle[2]+=particle[8]*timeStep+particle[2]-particle[5];
+ var tssq=timeStep*timeStep;
+ var oldTime=particle[9];
+ if(oldTime==0 || timeStep==oldTime){
+  particle[0]+=particle[6]*tssq+(particle[0]-particle[3]);
+  particle[1]+=particle[7]*tssq+(particle[1]-particle[4]);
+  particle[2]+=particle[8]*tssq+(particle[2]-particle[5]);
+ } else {
+  var correction=timeStep/oldTime;
+  particle[0]+=particle[6]*tssq+(particle[0]-particle[3])*correction;
+  particle[1]+=particle[7]*tssq+(particle[1]-particle[4])*correction;
+  particle[2]+=particle[8]*tssq+(particle[2]-particle[5])*correction;
+ }
+ particle[9]=timeStep;
  particle[3]=x;
  particle[4]=y;
  particle[5]=z;
 }
-GLMath.integrateVerletWithFriction=function(particle, friction, timeStep){
- // update each position
- var x=particle[0];
- var y=particle[1];
- var z=particle[2];
- particle[0]+=particle[6]*timeStep+friction*(particle[0]-particle[3]);
- particle[1]+=particle[7]*timeStep+friction*(particle[1]-particle[4]);
- particle[2]+=particle[8]*timeStep+friction*(particle[2]-particle[5]);
+GLMath.initParticle=function(particle,
+  x, y, z, vx, vy, vz, ax, ay, az, timeStep){
  particle[3]=x;
  particle[4]=y;
  particle[5]=z;
+ particle[6]=ax;
+ particle[7]=ay;
+ particle[8]=az;
+ var ts=timeStep*timeStep*0.5;
+ particle[0]=x+vx*timeStep+ax*ts;
+ particle[1]=y+vy*timeStep+ay*ts;
+ particle[2]=z+vz*timeStep+az*ts;
+ particle[9]=timeStep;
+ return particle;
 }
-
 GLMath.constrainPointToBox=function(p, radius, pointIndex, bounds){
  var xmin=bounds[0]+radius;
  var xmax=bounds[3]-radius;
@@ -72,10 +86,15 @@ GLMath.constrainPointToBox=function(p, radius, pointIndex, bounds){
 
 function CubicBody(radius, mass, x, y, z){
  this.divmass=1.0/mass;
- this.particle=[x,y,z,x,y,z,0,-30*this.divmass,0];
+ this.particle=GLMath.initParticle([],
+   x,y,z,
+   0,0,0,
+   0,CubicBody.GRAVITY*this.divmass,0,
+   1/60);
  this.radius=radius;
  this.mass=mass;
 }
+CubicBody.GRAVITY = -9.8*60;
 CubicBody.prototype.x=function(){
  return this.particle[0];
 }
