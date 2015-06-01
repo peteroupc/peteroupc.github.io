@@ -94,7 +94,7 @@ var nextToken = function(tok) {
 
     Expression.isExpr = function(x) {
       var a, b, c, d;
-      if(!x)return false;
+      if(!x || typeof x=="undefined")return false;
       return (x instanceof Operation || x instanceof Variable || x instanceof Constant);
     };
 
@@ -133,7 +133,7 @@ var nextToken = function(tok) {
         if(i==0)throw new Error("expressions expected before operator")
         nextNode = nodes[i+(1)];
         prevNode=nodes[i-1]
-        if (!(((c = ((d = Expression.isExpr(prevNode)) !== false && d !== null) ? d : !Expression.isExpr(nextNode))))) {
+        if (!Expression.isExpr(prevNode) || !Expression.isExpr(nextNode)) {
           throw new Error("expressions expected between operator")};
         if(prevNode instanceof Expression)throw new Error("prevNode should not be Expression");
         if(prevNode instanceof Constant && prevNode.value<0){
@@ -174,7 +174,7 @@ var nextToken = function(tok) {
         continue;};
       if (c = (d = node instanceof Operator, d !== false && d !== null ?Extras.includes(pass,node.name) : d)) {
         nextNode = nodes[i+(1)];
-        if (!(((c = ((d = Expression.isExpr(prevNode)) !== false && d !== null) ? d : !Expression.isExpr(nextNode))))) {
+        if (!Expression.isExpr(prevNode) || !Expression.isExpr(nextNode)) {
           throw new Error("expressions expected between operator")};
         if(prevNode instanceof Expression)throw new Error("prevNode should not be Expression");
         if(node.name=="pow" && prevNode instanceof Constant && prevNode.value<0){
@@ -1027,3 +1027,6 @@ var nextToken = function(tok) {
     derivU[2].multiply(derivV[0]).subtract(derivU[0].multiply(derivV[2])),
     derivU[0].multiply(derivV[1]).subtract(derivU[1].multiply(derivV[0]))];
   }
+
+console.log(getExpression("sin(u)"))
+console.log(getExpression("sin(u)*"))

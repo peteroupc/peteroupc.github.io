@@ -7,6 +7,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../glutil_min.js"></script>
 <script type="text/javascript" src="../camera.js"></script>
 <script type="text/javascript" src="../frame.js"></script>
+<script type="text/javascript" src="extras.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
@@ -206,15 +207,6 @@ var MoebiusStrip=function(radius,width){
   return [x,y,z]
  }
 }
-function makeCurve(func){
- var mesh=new Mesh();
- mesh.normal3(0,0,1);
- var ev=new CurveEval()
-  .color({evaluate:function(u){ return [1-u,0,u]; }})
-  .vertex(func)
-  .evalCurve(mesh,Mesh.LINES,200);
- return mesh;
-}
    function makeMesh(func,resolution){
     // Default resolution is 50
     if(resolution==null)resolution=50
@@ -255,7 +247,7 @@ function TorusKnot(p,q,outerRadius,innerRadius){
  this.outerRadius=outerRadius==null ? 1 : outerRadius;
  this.innerRadius=innerRadius==null ? 0.25 : innerRadius;
  this.evaluate=function(u){
-  u=(u==1) ? 0 : u*Math.PI*2;
+  u=(u==1) ? 0 : u*GLMath.PiTimes2;
   var pu=p*u;
   var qu=q*u;
   var tmp=this.innerRadius*Math.cos(pu)+this.outerRadius;
@@ -265,99 +257,6 @@ function TorusKnot(p,q,outerRadius,innerRadius){
    this.innerRadius*Math.sin(pu)
   ];
  }
-}
-
-function ExtrudedTube(func, thickness){
- this.thickness=thickness==null ? 0.125 : thickness;
- this.func=func;
- this.normals=[];
- this.bitangents=[];
- var res=50;
- var nextSample=null;
- for(var i=0;i<=res;i++){
-  var t=i/res;
-  var e0=(nextSample) ? nextSample : func.evaluate(t);
-  var e01=func.evaluate(i==res ? t-0.0001 : t+0.0001);
-  nextSample=(i==res) ? e0 : func.evaluate((i+1)/res);
-  var tangent=GLMath.vec3normInPlace(
-    GLMath.vec3sub(e01,e0));
-  if(t==1){
-   GLMath.vec3scaleInPlace(tangent,-1);
-  }
-  var normal;
-  if(i>0){
-   normal=GLMath.vec3normInPlace(
-    GLMath.vec3cross(this.bitangents[i-1],tangent));
-  } else {
-   normal=ExtrudedTube._normalFromTangent(tangent);
-  }
-  var bitangent=GLMath.vec3normInPlace(
-    GLMath.vec3cross(tangent,normal));
-  this.normals[i]=normal;
-  this.bitangents[i]=bitangent;
- }
-}
-// TODO: Implement parallel transport:
-// <http://www.cs.indiana.edu/pub/techreports/TR425.pdf>
-ExtrudedTube.prototype._getNormalAndBitangent=function(u,val){
- var b,n;
- if(u>=0&& u<=1){
-  var index=u*(this.bitangents.length-1);
-  if(Math.abs(index-Math.round(index))<0.0001){
-   index=Math.round(index);
-   b=this.bitangents[index];
-   n=this.normals[index];
-  } else {
-   index=Math.floor(index);
-   var e0=this.func.evaluate(u);
-   var e01=this.func.evaluate(u+0.00001);
-   var tangent=GLMath.vec3normInPlace(
-    GLMath.vec3sub(e01,e0));
-   var normal=GLMath.vec3normInPlace(
-    GLMath.vec3cross(this.bitangents[index],tangent))
-   var bitangent=GLMath.vec3normInPlace(
-    GLMath.vec3cross(tangent,normal));
-   b=bitangent;
-   n=normal;
-  }
- } else {
-  var e0=this.func.evaluate(u);
-  var e01=this.func.evaluate(u+0.00001);
-  var tangent=GLMath.vec3normInPlace(
-    GLMath.vec3sub(e01,e0));
-  var normal=ExtrudedTube._normalFromTangent(tangent);
-  var bitangent=GLMath.vec3normInPlace(
-    GLMath.vec3cross(tangent,normal));
-  b=bitangent;
-  n=normal;
- }
- val[0]=n[0];
- val[1]=n[1];
- val[2]=n[2];
- val[3]=b[0];
- val[4]=b[1];
- val[5]=b[2];
-}
-ExtrudedTube._normalFromTangent(tangent){
- var normal=GLMath.vec3normInPlace(
-   GLMath.vec3cross(tangent,[0,0,1]));
- if(GLMath.vec3dot(normal,normal)<0.001){
-   normal=GLMath.vec3normInPlace(GLMath.vec3cross(tangent,[0,1,0]));
- }
- return normal;
-}
-ExtrudedTube.prototype.evaluate=function(u, v){
- u*=1
- var normBi=[];
- var sample=this.func.evaluate(u);
- this._getNormalAndBitangent(u,normBi);
- var vt=GLMath.PiTimes2*v;
- var t1 = Math.sin(vt);
- var t2 = Math.cos(vt);
- var sx = sample[0]+(normBi[0]*t1+normBi[3]*t2)*this.thickness;
- var sy = sample[1]+(normBi[1]*t1+normBi[4]*t2)*this.thickness;
- var sz = sample[2]+(normBi[2]*t1+normBi[5]*t2)*this.thickness;
- return [sx,sy,sz];
 }
 
 var shapeGroup=new ShapeGroup();

@@ -8,18 +8,17 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../camera.js"></script>
 <script type="text/javascript" src="../frame.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="extras.js"></script>
 <script type="text/javascript" src="expressions.js"></script>
 </head>
 <body>
 <div style="position:absolute;left:0;top:1em">
-<span>X:</span> <input type=text id=xcoord value="cos(v)*cos(u)"><br>
-<span>Y:</span> <input type=text id=ycoord value="sin(v)*cos(u)"><br>
-<span>Z:</span> <input type=text id=zcoord value="sin(u)"><br>
-<span>MinU:</span> <input type=text id=minu value="-pi/2"><br>
-<span>MaxU:</span> <input type=text id=maxu value="pi/2"><br>
-<span>MinV:</span> <input type=text id=minv value="-pi"><br>
-<span>MaxV:</span> <input type=text id=maxv value="pi"><br>
-<a href="javascript:help()">Syntax help</a><br>
+<span>X:</span> <input type=text id=xcoord value="u"><br>
+<span>Y:</span> <input type=text id=ycoord value="sin(u)"><br>
+<span>Z:</span> <input type=text id=zcoord value="0"><br>
+<span>MinU:</span> <input type=text id=minu value="-pi"><br>
+<span>MaxU:</span> <input type=text id=maxu value="pi"><br>
+<a href="javascript:help()">Syntax help</a>
 Source code for the parametric<br>
 surface object.  Use this object as<br>
 a parameter in the SurfaceEval<br>
@@ -164,8 +163,8 @@ var allsettings={
 
 function updateMesh(){
  switch(allsettings["current"]){
-  case 0:
-   var cs=new CustomSurface(
+  case 0:{
+  var cs=new CustomCurve(
       allsettings["custom-x"],
       allsettings["custom-y"],
       allsettings["custom-z"],
@@ -173,9 +172,10 @@ function updateMesh(){
       allsettings["custom-maxu"],
       allsettings["custom-minv"],
       allsettings["custom-maxv"]
-   );
-   document.getElementById("sourceCode").value=cs.getCode();
-   return makeMesh(cs,100);
+    )
+    document.getElementById("sourceCode").value=cs.getCode();
+   return makeMesh(new ExtrudedTube(cs),100);
+    }
     default:
    return new Mesh();
  }
@@ -200,27 +200,23 @@ function validateConst(value){
  }
 }
 
-function CustomSurface(x,y,z,minu,maxu,minv,maxv){
+function CustomCurve(x,y,z,minu,maxu){
  var ranges=[
   getExpression(minu).constantValue(),
-  getExpression(maxu).constantValue(),
-  getExpression(minv).constantValue(),
-  getExpression(maxv).constantValue()]
- if(ranges[0]==null || ranges[1]==null ||
-  ranges[2]==null || ranges[3]==null){
+  getExpression(maxu).constantValue()]
+ if(ranges[0]==null || ranges[1]==null){
   throw new Error("min/max must be a constant")
  }
  var code=""+
   "u="+ranges[0]+"+u*"+(ranges[1]-ranges[0])+";\n"+
-  "v="+ranges[2]+"+v*"+(ranges[3]-ranges[2])+";\n"+
   "return ["+
   " "+getExpression(x).toJSString()+","+
   " "+getExpression(y).toJSString()+","+
   " "+getExpression(z).toJSString()+"];\n"
  this.getCode=function(){
-  return "{\"evaluate\":function(u, v){\n"+code+"}}"
+  return "{\"evaluate\":function(u){\n"+code+"}}"
  }
- this.evaluate=new Function("u","v",code);
+ this.evaluate=new Function("u",code);
 }
 
 function updateShape(){
@@ -264,8 +260,8 @@ function validateConstListener(id,key){
 function link0(){
   var exprs=["xcoord","ycoord","zcoord"]
   var ekeys=["custom-x","custom-y","custom-z"]
-  var consts=["minu","minv","maxu","maxv"]
-  var ckeys=["custom-minu","custom-minv","custom-maxu","custom-maxv"]
+  var consts=["minu","maxu"]
+  var ckeys=["custom-minu","custom-maxu"]
   for(var i=0;i<exprs.length;i++){
    validateListener(exprs[i],ekeys[i]);
   }
