@@ -19,9 +19,11 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:link4()">Surface of revolution for f(x) = sin x</a>,
 <a href="javascript:link5()">Surface of revolution for f(x) = x<sup>2</sup></a>,
 <a href="javascript:link6()">Supertoroid</a>,
-<a href="javascript:link7()">M&ouml;bius strip</a>
+<a href="javascript:link7()">M&ouml;bius strip</a>,
+<a href="javascript:link8()">Flattened torus knot</a>,
+<a href="javascript:link9()">Swept torus knot</a>
 </div>
-<div id="settings" style="position:absolute;left:0;top:3em"></div>
+<div id="settings" style="position:absolute;left:0;top:4em"></div>
 <canvas id=canvas></canvas>
 <script id="demo">
 //<!--
@@ -258,7 +260,7 @@ function TorusKnot(p,q,outerRadius,innerRadius){
   ];
  }
 }
-TorusKnot.prototype.getFlatCurve(period,outerRadius,innerRadius){
+TorusKnot.getFlatCurve=function(period,outerRadius,innerRadius){
  // NOTE: This function demonstrates how curve evaluators
  // can be chained
  var knot=new TorusKnot(period,1,outerRadius,innerRadius);
@@ -303,6 +305,17 @@ function updateMesh(){
       allsettings["torusknot-p"],
       allsettings["torusknot-q"]
     )),100);
+  case 8:
+   return makeMesh(
+    new ExtrudedTube(TorusKnot.getFlatCurve(
+      allsettings["torusknot-p"]
+    )),100);
+  case 9:
+   return makeMesh(
+    new ExtrudedTube(new TorusKnot(
+      allsettings["torusknot-p"],
+      allsettings["torusknot-q"]
+    ),0.1,TorusKnot.getFlatCurve(5)),100);
   case 1:
    return makeMesh(
     new Superellipsoid(
@@ -374,6 +387,21 @@ function link0(){
  setRanges(ranges);
 }
 
+function link9(){
+ allsettings["current"]=9
+ updateShape();
+ var ranges=[]
+ pushSetting(ranges,"torusknot-p","p",1,32,1);
+ pushSetting(ranges,"torusknot-q","q",1,32,1);
+ setRanges(ranges);
+}
+function link8(){
+ allsettings["current"]=8
+ updateShape();
+ var ranges=[]
+ pushSetting(ranges,"torusknot-p","p",1,32,1);
+ setRanges(ranges);
+}
 function link1(){
  allsettings["current"]=1
  updateShape();
