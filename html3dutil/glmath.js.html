@@ -50,7 +50,7 @@ var GLMath={
  * each of two other vectors.&lt;p>
  * If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the absolute value
- * of the sine of the angle between them is equal to the length of their
+ * of the sine of the shortest angle between them is equal to the length of their
  * cross product. &lt;small>(More formally, the length of the cross
  * product equals |&lt;b>a&lt;/b>| * |&lt;b>b&lt;/b>| * |sin &amp;theta;|;
  * where |&lt;b>x&lt;/b>| is the length of vector &lt;b>x&lt;/b>.)&lt;/small>&lt;p>
@@ -74,7 +74,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * sum of the products of their components (for example, &lt;b>a&lt;/b>'s X times &lt;b>b&lt;/b>'s X).
  * &lt;p>If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the cosine
- * of the angle between them is equal to their dot product.
+ * of the shortest angle between them is equal to their dot product.
  * &lt;small>(More formally, the dot
  * product equals |&lt;b>a&lt;/b>| * |&lt;b>b&lt;/b>| * cos &amp;theta;
  * where |&lt;b>x&lt;/b>| is the length of vector &lt;b>x&lt;/b>.)&lt;/small>
@@ -873,12 +873,11 @@ quatRotate:function(quat,angle,v,vy,vz){
     GLMath.quatFromAxisAngle(angle,v,vy,vz));
 },
 /**
- * Transforms a 4-element vector using a quaternion's rotation.
+ * Transforms a 3- or 4-element vector using a quaternion's rotation.
  * @param {Array&lt;number>} q A quaternion describing
  * the rotation.
  * @param {Array&lt;number>} v A 3- or 4-element vector to
- * transform. To transform a 3D point represented as a 4-element
- * vector, set the vector's 4th element (zero-based index 3) to 1.
+ * transform. The fourth element, if any, is ignored.
  * @return {Array&lt;number>} A 4-element vector representing
 * the transformed vector.
  */
@@ -1111,6 +1110,35 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
             x * mat[1] + y * mat[5] + z * mat[9] + w * mat[13],
             x * mat[2] + y * mat[6] + z * mat[10] + w * mat[14],
             x * mat[3] + y * mat[7] + z * mat[11] + w * mat[15]];
+},
+/**
+ * Transforms a 3-element vector with a 4x4 matrix and returns
+ * the transformed vector.
+ * @param {Array&lt;number>} mat A 4x4 matrix.
+ * @param {Array&lt;number>|number} v X coordinate.
+ * If "vy", "vz", and "vw" are omitted, this value can instead
+ * be a 4-element array giving the X, Y, Z, and W coordinates.
+ * @param {number} vy Y coordinate.
+ * @param {number} vz Z coordinate.
+ * @param {number} vw W coordinate.  To transform a 2D
+ * point, set Z to 1.
+ * @return {Array&lt;number>} The transformed vector.
+ */
+mat4transformVec3:function(mat,v,vy,vz){
+  var x,y,z;
+  if(typeof vy!="undefined" &amp;&amp; typeof vz!="undefined"){
+      x=v;
+      y=vy;
+      z=vz;
+  } else {
+      x=v[0];
+      y=v[1];
+      z=v[2];
+  }
+return [x * mat[0] + y * mat[4] + z * mat[8] + mat[12],
+            x * mat[1] + y * mat[5] + z * mat[9] + mat[13],
+            x * mat[2] + y * mat[6] + z * mat[10] + mat[14],
+            x * mat[3] + y * mat[7] + z * mat[11] + mat[15]];
 },
 /**
  * Transforms a 3-element vector with a 3x3 matrix and returns
