@@ -680,7 +680,13 @@ file is loaded successfully (the result will be an object with
 two properties: "url", the URL of the file, and "data", the
 file's text or data), as given below, and is rejected when an error occurs (the
 result may be an object with
-one property: "url", the URL of the file).  If the promise resolves,the parameter will be:<ul><li>For response type "xml", an XML document object.<li>For response type "arraybuffer", an ArrayBuffer object.<li>For response type "json", the JavaScript object decodedfrom JSON.<li>For any other type, a string of the file's text.</ul>
+one property: "url", the URL of the file).  If the promise resolves,
+the parameter will be:<ul>
+<li>For response type "xml", an XML document object.
+<li>For response type "arraybuffer", an ArrayBuffer object.
+<li>For response type "json", the JavaScript object decoded
+from JSON.
+<li>For any other type, a string of the file's text.</ul>
 
      (Type:
 <span class="param-type"><a href="Promise.html">Promise</a></span>)
