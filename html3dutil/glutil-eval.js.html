@@ -909,6 +909,7 @@ SurfaceEval.prototype.colorBezier=function(controlPoints,u1,u2,v1,v2){
    throw new Error("unsupported color length")
  return this;
 }
+
 /**
  * Generates vertex positions and attributes based on a point
  * in a parametric surface.
@@ -924,26 +925,76 @@ SurfaceEval.prototype.colorBezier=function(controlPoints,u1,u2,v1,v2){
  * @return {SurfaceEval} This object.
  */
 SurfaceEval.prototype.evalOne=function(mesh,u,v){
- var color=null;
- var normal=null;
- var texcoord=null;
+ var values=[];
+ this._saveValues(mesh,values,0);
+ this._record(u,v,values,_OLD_VALUES_SIZE);
+ this._playBack(mesh,values,_OLD_VALUES_SIZE);
+ this._restoreValues(mesh,values,0);
+ return this;
+}
+/** @private */
+var _OLD_VALUES_SIZE = 8;
+/** @private */
+var _RECORDED_VALUES_SIZE = 11;
+/** @private */
+SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index){
+ this._record(u,v,buffer,index);
+ this._playBack(mesh,buffer,index);
+}
+/** @private */
+SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
  if(this.colorSurface){
-  color=this.colorSurface.evaluate(u,v);
+  buffer[index+3]=mesh.color[0];
+  buffer[index+4]=mesh.color[1];
+  buffer[index+5]=mesh.color[2];
+ }
+ if(this.normalSurface || this.autoNormal){
+  buffer[index+0]=mesh.normal[0];
+  buffer[index+1]=mesh.normal[1];
+  buffer[index+2]=mesh.normal[2];
  }
  if(this.texCoordSurface){
-  texcoord=this.texCoordSurface.evaluate(u,v);
-  if(texcoord.length==1)texcoord.push(0);
+  buffer[index+6]=mesh.texCoord[0];
+  buffer[index+7]=mesh.texCoord[1];
+ }
+}
+/** @private */
+SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
+ if(this.colorSurface){
+  mesh.color3(buffer[index+3],buffer[index+4],buffer[index+5]);
+ }
+ if(this.normalSurface || this.autoNormal){
+  mesh.normal3(buffer[index+0],buffer[index+1],buffer[index+2]);
+ }
+ if(this.texCoordSurface){
+  mesh.texCoord2(buffer[index+6],buffer[index+7]);
+ }
+}
+/** @private */
+SurfaceEval.prototype._record=function(u,v,buffer,index){
+ var normal=null;
+ if(this.colorSurface){
+  var color=this.colorSurface.evaluate(u,v);
+  buffer[index+6]=color[0];
+  buffer[index+7]=color[1];
+  buffer[index+8]=color[2];
+ }
+ if(this.texCoordSurface){
+  var texcoord=this.texCoordSurface.evaluate(u,v);
+  buffer[index+9]=texcoord[0];
+  buffer[index+10]=(texcoord.length&lt;=1) ? 0 : texcoord[1];
  }
  if(this.normalSurface &amp;&amp; !this.autoNormal){
-  normal=this.normalSurface.evaluate(u,v);
+  var normal=this.normalSurface.evaluate(u,v);
+  buffer[index+3]=normal[0];
+  buffer[index+4]=normal[1];
+  buffer[index+5]=normal[2];
  }
  if(this.vertexSurface){
-  var vertex;
-  var oldColor=(color) ? mesh.color.slice(0,3) : null;
-  var oldNormal=(normal || this.autoNormal) ? mesh.normal.slice(0,3) : null;
-  var oldTexCoord=(texcoord) ? mesh.texCoord.slice(0,3) : null;
-  if(color)mesh.color3(color[0],color[1],color[2]);
-  vertex=this.vertexSurface.evaluate(u,v);
+  var vertex=this.vertexSurface.evaluate(u,v);
+  buffer[index]=vertex[0];
+  buffer[index+1]=vertex[1];
+  buffer[index+2]=vertex[2];
   if(this.autoNormal){
    var du=0.00001
    var dv=0.00001
@@ -984,17 +1035,26 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
       vu=[0,0,1];
     }
    }
-   mesh.normal3(vu[0],vu[1],vu[2]);
-  } else if(normal){
-   mesh.normal3(normal[0],normal[1],normal[2]);
+   buffer[index+3]=vu[0];
+   buffer[index+4]=vu[1];
+   buffer[index+5]=vu[2];
   }
-  if(texcoord)mesh.texCoord2(texcoord[0],texcoord[1]);
-  mesh.vertex3(vertex[0],vertex[1],vertex[2]);
-  if(oldColor)mesh.color3(oldColor[0],oldColor[1],oldColor[2]);
-  if(oldNormal)mesh.normal3(oldNormal[0],oldNormal[1],oldNormal[2]);
-  if(oldTexCoord)mesh.texCoord2(oldTexCoord[0],oldTexCoord[1]);
  }
- return this;
+}
+/** @private */
+SurfaceEval.prototype._playBack=function(mesh,buffer,index){
+ if(this.vertexSurface){
+  if(this.colorSurface){
+   mesh.color3(buffer[index+6],buffer[index+7],buffer[index+8]);
+  }
+  if(this.normalSurface || this.autoNormal){
+   mesh.normal3(buffer[index+3],buffer[index+4],buffer[index+5]);
+  }
+  if(this.texCoordSurface){
+   mesh.texCoord2(buffer[index+9],buffer[index+10]);
+  }
+  mesh.vertex3(buffer[index+0],buffer[index+1],buffer[index+2]);
+ }
 }
 
 /**
@@ -1041,14 +1101,27 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
  var du=(u2-u1)/un;
  var dv=(v2-v1)/vn;
  if(mode==Mesh.TRIANGLES){
+  var oldValues=[];
+  var previousValues=[];
+  this._saveValues(mesh,oldValues,0);
   for(var i=0;i&lt;vn;i++){
    mesh.mode(Mesh.TRIANGLE_STRIP);
-   for(var j=0;j&lt;=un;j++){
+   for(var j=0,prevIndex=0;j&lt;=un;
+      j++,prevIndex+=_RECORDED_VALUES_SIZE){
     var jx=j*du+u1;
-    this.evalOne(mesh,jx,i*dv+v1);
-    this.evalOne(mesh,jx,(i+1)*dv+v1);
+    if(i==0){
+     this._recordAndPlayBack(mesh,jx,i*dv+v1,oldValues,_OLD_VALUES_SIZE);
+    } else {
+     this._playBack(mesh,previousValues,prevIndex);
+    }
+    if(i==vn-1){
+     this._recordAndPlayBack(mesh,jx,(i+1)*dv+v1,oldValues,_OLD_VALUES_SIZE);
+    } else {
+     this._recordAndPlayBack(mesh,jx,(i+1)*dv+v1,previousValues,prevIndex);
+    }
+   }
   }
-  }
+  this._restoreValues(mesh,oldValues,0);
  } else if(mode==Mesh.POINTS){
   mesh.mode(Mesh.POINTS);
   for(var i=0;i&lt;=vn;i++){
