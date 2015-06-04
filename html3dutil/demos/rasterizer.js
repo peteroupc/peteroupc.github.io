@@ -315,7 +315,10 @@ Scene3D.prototype._getTriangle=function(p1,p2,p3) {
     var tri=new Scene3D._Triangle(p1,p2,p3)
     return (tri.valid) ? tri : null;
 }
-
+/**
+ * Not documented yet.
+ * @param {*} mesh
+ */
 Scene3D.prototype.makeShape=function(mesh){
  var buffer=mesh;
  return new Shape(buffer);

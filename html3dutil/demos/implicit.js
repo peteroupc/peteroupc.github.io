@@ -94,8 +94,8 @@ ImplicitSurface._a2iTetrahedronsInACube=
         [0,7,4,6],
         [0,4,5,6],
 ];
-
-ImplicitSurface.prototype._getNormal=function(rfNormal, fX,fY,fZ)
+/** @private */
+ImplicitSurface.prototype._getNormal=function(rfNormal,fX,fY,fZ)
 {
     var ff=this.sampler.sample(fX, fY, fZ);
         rfNormal[0] = this.sampler.sample(fX+0.001, fY, fZ)-ff;
@@ -487,8 +487,8 @@ ImplicitSurface.prototype._isOnSurface=function(fX,fY,fZ,fScaleX,fScaleY,fScaleZ
   mx=Math.max(mx,value);
   return (mn<=0 && mx>=0);
 }
-
-ImplicitSurface.prototype._vMarchCube1=function(mesh, fX,fY,fZ,fScaleX,fScaleY,fScaleZ,tmpobj)
+/** @private */
+ImplicitSurface.prototype._vMarchCube1=function(mesh,fX,fY,fZ,fScaleX,fScaleY,fScaleZ,tmpobj)
 {
  var  iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
   var   fOffset;
@@ -596,8 +596,19 @@ ImplicitSurface.prototype._marchingTetrahedrons=function(mesh, fX,fY,fZ,fScaleX,
                 this._vMarchTetrahedron(mesh, tmpobj.asTetrahedronPosition, tmpobj.afTetrahedronValue,tmpobj);
         }
 }
-
-ImplicitSurface.prototype.findBox=function(xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax){
+/**
+ * Not documented yet.
+ * @param {*} xsize
+ * @param {*} ysize
+ * @param {*} zsize
+ * @param {*} xmin
+ * @param {*} xmax
+ * @param {*} ymin
+ * @param {*} ymax
+ * @param {*} zmin
+ * @param {*} zmax
+ */
+ImplicitSurface.prototype.findBox=function(xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax){
         var xstep=(xmax-xmin)/xsize;
         var ystep=(ymax-ymin)/ysize;
         var zstep=(zmax-zmin)/zsize;
@@ -629,8 +640,20 @@ ImplicitSurface.prototype.findBox=function(xsize, ysize, zsize, xmin, xmax, ymin
         }
         }
 }
-
-ImplicitSurface.prototype.evalSurfacePoints=function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax)
+/**
+ * Not documented yet.
+ * @param {*} mesh
+ * @param {*} xsize
+ * @param {*} ysize
+ * @param {*} zsize
+ * @param {*} xmin
+ * @param {*} xmax
+ * @param {*} ymin
+ * @param {*} ymax
+ * @param {*} zmin
+ * @param {*} zmax
+ */
+ImplicitSurface.prototype.evalSurfacePoints=function(mesh,xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax)
 {
         mesh.mode(Mesh.POINTS);
         var xstep=(xmax-xmin)/xsize;
@@ -649,8 +672,20 @@ ImplicitSurface.prototype.evalSurfacePoints=function(mesh, xsize, ysize, zsize, 
         }
         }
 }
-
-ImplicitSurface.prototype.evalSurface=function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax)
+/**
+ * Not documented yet.
+ * @param {*} mesh
+ * @param {*} xsize
+ * @param {*} ysize
+ * @param {*} zsize
+ * @param {*} xmin
+ * @param {*} xmax
+ * @param {*} ymin
+ * @param {*} ymax
+ * @param {*} zmin
+ * @param {*} zmax
+ */
+ImplicitSurface.prototype.evalSurface=function(mesh,xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax)
 {
         mesh.mode(Mesh.TRIANGLES);
         var tmpobj={

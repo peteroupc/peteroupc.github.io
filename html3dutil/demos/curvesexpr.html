@@ -18,8 +18,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <span>Z:</span> <input type=text id=zcoord value="0"><br>
 <span>MinU:</span> <input type=text id=minu value="-pi"><br>
 <span>MaxU:</span> <input type=text id=maxu value="pi"><br>
-<a href="javascript:help()">Syntax help</a>
-Source code for the parametric<br>
+<a href="javascript:help()">Syntax help</a><br>
+<small>Source code for the parametric<br>
 surface object.  Use this object as<br>
 a parameter in the CurveEval<br>
 class (the curve shown in this<br>
@@ -29,8 +29,8 @@ CurveEval will only generate<br>
 the actual lines of the curve,<br>
 not the extruded surface).<br>
 Example:<br>
-<code>var surface = new SurfaceEval()<br>
-.vector({"evaluate":...});</code>.<br>
+<code>var surface = new CurveEval()<br>
+.vector({"evaluate":...});</code>.</small><br>
 <textarea id=sourceCode rows=5 cols=25>
 </textarea>
 <div id="settings"></div>

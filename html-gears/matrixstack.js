@@ -104,7 +104,7 @@ MatrixStack.prototype.rotate=function(angle,x,y,z){
  var v1=y;
  var v2=z;
 var cost = Math.cos(ang);
-var sint = Math.sin(ang);
+var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang;
 if( 1 == v0 && 0 == v1 && 0 == v2 ) {
   return this.multMatrix([1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1])
 } else if( 0 == v0 && 1 == v1 && 0 == v2 ) {

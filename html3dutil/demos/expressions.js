@@ -81,8 +81,10 @@ var nextToken = function(tok) {
 
       this.name = name;
     };
-
-    Operator.prototype.toString = function() {
+/**
+ * Not documented yet.
+ */
+Operator.prototype.toString=function() {
 
       return this.name;
     };
@@ -97,8 +99,10 @@ var nextToken = function(tok) {
       if(!x || typeof x=="undefined")return false;
       return (x instanceof Operation || x instanceof Variable || x instanceof Constant);
     };
-
-    Expression.prototype.simplify = function() {
+/**
+ * Not documented yet.
+ */
+Expression.prototype.simplify=function() {
 
       return Expression.simplifyNodes(this.nodes);
     };
@@ -205,8 +209,10 @@ var nextToken = function(tok) {
       i = i+(1);};
       Extras.compact(nodes);};
     };
-
-    Expression.prototype.toString = function() {
+/**
+ * Not documented yet.
+ */
+Expression.prototype.toString=function() {
 
       return "["+this.nodes+"]";
     };
@@ -217,23 +223,34 @@ var nextToken = function(tok) {
       this.nodes = [];
       this.negative = false;
     };
-
-    Operation.prototype.length = function() {
+/**
+ * Not documented yet.
+ */
+Operation.prototype.length=function() {
 
       return this.nodes.length;
     };
-
-    Operation.prototype.get = function(index) {
+/**
+ * Not documented yet.
+ * @param {*} index
+ */
+Operation.prototype.get=function(index) {
 
       return this.nodes[index];
     };
-
-    Operation.prototype.isOperation = function(op) {
+/**
+ * Not documented yet.
+ * @param {*} op
+ */
+Operation.prototype.isOperation=function(op) {
 
       return this.operator==(op);
     };
-
-    Operation.prototype.equals = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Operation.prototype.equals=function(x) {
       var a, b, i__ = null, i = null;
 
       if (!(a = x instanceof Operation)) {
@@ -249,8 +266,10 @@ var nextToken = function(tok) {
         return false};};
       return true;
     };
-
-    Operation.prototype.simplify = function() {
+/**
+ * Not documented yet.
+ */
+Operation.prototype.simplify=function() {
       var a, b, c, d, e, f, g, done = null, resimplify = null, origlength = null, constVals = null, constValsIndex = null, i = null, node = null, n__ = null, n = null, realnode = null, cv = null, haveNonconst = null, c = null,
         neg = null;
       Expression.simplifyNodes(this.nodes);
@@ -373,8 +392,10 @@ var nextToken = function(tok) {
           }};};};
       return this;
     };
-
-    Operation.prototype.degen = function() {
+/**
+ * Not documented yet.
+ */
+Operation.prototype.degen=function() {
       var a, b, c, cv = null;
       this.simplify();
       if (this.operator=="plus" || this.operator=="mul" || this.operator=="div") {
@@ -385,8 +406,10 @@ var nextToken = function(tok) {
         return new Constant(cv)};
       return this;
     };
-
-    Operation.prototype.constantValue = function() {
+/**
+ * Not documented yet.
+ */
+Operation.prototype.constantValue=function() {
       var a, b, c, val = null, node__ = null, node = null, cv = null;
 
       if (((a = (((b = (((c = this.operator=="plus") !== false && c !== null) ? c : this.operator=="mul")) !== false && b !== null) ? b : this.operator=="div")))) {
@@ -430,8 +453,12 @@ var nextToken = function(tok) {
       };
       return op.degen();
     };
-
-    Operation.prototype.combineOp = function(operation, x) {
+/**
+ * Not documented yet.
+ * @param {*} operation
+ * @param {*} x
+ */
+Operation.prototype.combineOp=function(operation,x) {
       var a, op = null;
 
       if (typeof x=="number") {
@@ -449,8 +476,10 @@ var nextToken = function(tok) {
       op.nodes.push(x);
       return op.degen();
     };
-
-    Operation.prototype.copy = function() {
+/**
+ * Not documented yet.
+ */
+Operation.prototype.copy=function() {
      var op=new Operation(this.operator);
      op.negative=this.negative;
      for (var node__=0;node__<(this.nodes.length);node__++){
@@ -458,8 +487,10 @@ var nextToken = function(tok) {
      };
      return op;
     }
-
-    Operation.prototype.negate = function() {
+/**
+ * Not documented yet.
+ */
+Operation.prototype.negate=function() {
       var a, b, op = null, node__ = null, node = null;
       op = new Operation(this.operator);
       if(op.operator=="plus"){
@@ -478,17 +509,26 @@ var nextToken = function(tok) {
       }
       return op.degen();
     };
-
-    Operation.prototype.subtract = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Operation.prototype.subtract=function(x) {
       return this.add((typeof x=="number") ? (-x) : (x.negate()));
     };
-
-    Operation.prototype.add = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Operation.prototype.add=function(x) {
 
       return this.combineOp("plus", x);
     };
-
-    Operation.prototype.multiply = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Operation.prototype.multiply=function(x) {
       var a;
       if (this.operator=="div" && this.nodes.length==2){
         if(this.nodes[1].equals(x)){
@@ -509,13 +549,18 @@ var nextToken = function(tok) {
         return Operation.func("pow", x, new Constant(2))};
       return this.combineOp("mul", x);
     };
-
-    Operation.prototype.divide = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Operation.prototype.divide=function(x) {
 
       return this.combineOp("div", x);
     };
-
-    Operation.prototype.toJSString = function() {
+/**
+ * Not documented yet.
+ */
+Operation.prototype.toJSString=function() {
       var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, op = null;
 
       opArray = [];
@@ -555,8 +600,10 @@ var nextToken = function(tok) {
         return ret = ((a = this.negative) ? ("-") : (""))+("Math." + oper + "(")+(opArray.join(", "))+(")")
       };
     };
-
-    Operation.prototype.toString = function() {
+/**
+ * Not documented yet.
+ */
+Operation.prototype.toString=function() {
       var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, op = null;
 
       opArray = [];
@@ -591,22 +638,32 @@ var nextToken = function(tok) {
       this.name = name;
       this.negative = false;
     };
-
-    Variable.prototype.isOperation = function(op) {
+/**
+ * Not documented yet.
+ * @param {*} op
+ */
+Variable.prototype.isOperation=function(op) {
 
       return false;
     };
-
-    Variable.prototype.copy = function(){
+/**
+ * Not documented yet.
+ */
+Variable.prototype.copy=function(){
       return this;
     }
-
-    Variable.prototype.constantValue = function() {
+/**
+ * Not documented yet.
+ */
+Variable.prototype.constantValue=function() {
 
       return null;
     };
-
-    Variable.prototype.equals = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Variable.prototype.equals=function(x) {
       var a;
 
       if (!(a = x instanceof Variable)) {
@@ -615,17 +672,25 @@ var nextToken = function(tok) {
         return false};
       return this.name==(x.name);
     };
-
-    Variable.prototype.toJSString = function() {
+/**
+ * Not documented yet.
+ */
+Variable.prototype.toJSString=function() {
       return this.toString();
     }
-
-    Variable.prototype.toString = function() {
+/**
+ * Not documented yet.
+ */
+Variable.prototype.toString=function() {
       var a;
       return ((a = this.negative) ? ("-") : (""))+(this.name);
     };
-
-    Variable.prototype.combineOp = function(operation, x) {
+/**
+ * Not documented yet.
+ * @param {*} operation
+ * @param {*} x
+ */
+Variable.prototype.combineOp=function(operation,x) {
       var a, op = null, cv = null;
 
       if (a = typeof x=="number") {
@@ -646,37 +711,53 @@ var nextToken = function(tok) {
       };
       return op.degen();
     };
-
-    Variable.prototype.degen = function() {
+/**
+ * Not documented yet.
+ */
+Variable.prototype.degen=function() {
 
       return this;
     };
-
-    Variable.prototype.add = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Variable.prototype.add=function(x) {
 
       return this.combineOp("plus", x);
     };
-
-    Variable.prototype.negate = function() {
+/**
+ * Not documented yet.
+ */
+Variable.prototype.negate=function() {
       var a, b, v = null;
 
       v = new Variable(this.name);
       v.negative=!this.negative;
       return v;
     };
-
-    Variable.prototype.subtract = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Variable.prototype.subtract=function(x) {
       var a;
 
       return this.add((a = typeof x=="number") ? (-x) : (x.negate()));
     };
-
-    Variable.prototype.multiply = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Variable.prototype.multiply=function(x) {
 
       return this.combineOp("mul", x);
     };
-
-    Variable.prototype.divide = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Variable.prototype.divide=function(x) {
 
       return this.combineOp("div", x);
     };
@@ -698,42 +779,58 @@ var nextToken = function(tok) {
         return this.value = value;
       };
     };
-
-    Constant.prototype.copy = function(){
+/**
+ * Not documented yet.
+ */
+Constant.prototype.copy=function(){
       return this;
     }
-
-    Constant.prototype.isOperation = function(op) {
+/**
+ * Not documented yet.
+ * @param {*} op
+ */
+Constant.prototype.isOperation=function(op) {
 
       return false;
     };
-
-    Constant.prototype.equals = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Constant.prototype.equals=function(x) {
       var a;
 
       if (!(a = x instanceof Constant)) {
         return false};
       return this.value==(x.value);
     };
-
-    Constant.prototype.constantValue = function() {
+/**
+ * Not documented yet.
+ */
+Constant.prototype.constantValue=function() {
 
       return this.value;
     };
-
-    Constant.prototype.degen = function() {
+/**
+ * Not documented yet.
+ */
+Constant.prototype.degen=function() {
 
       return this;
     };
-
-    Constant.prototype.toJSString = function() {
+/**
+ * Not documented yet.
+ */
+Constant.prototype.toJSString=function() {
       var vi = this.value.toString();
       if (vi.substr(vi.length-(2),vi.length)==".0") {
         vi = vi.substr(0,vi.length-(2))};
       return vi;
     }
-
-    Constant.prototype.toString = function() {
+/**
+ * Not documented yet.
+ */
+Constant.prototype.toString=function() {
       var a, vi = null;
       if (a = this.name) {
         return this.name.toString()};
@@ -742,8 +839,12 @@ var nextToken = function(tok) {
         vi = vi.substr(0,vi.length-(2))};
       return vi;
     };
-
-    Constant.prototype.combineOp = function(operation, x) {
+/**
+ * Not documented yet.
+ * @param {*} operation
+ * @param {*} x
+ */
+Constant.prototype.combineOp=function(operation,x) {
       var a, op = null;
 
       if (a = typeof x=="number") {
@@ -755,34 +856,48 @@ var nextToken = function(tok) {
         return new Constant(op.constantValue())};
       return op.degen();
     };
-
-    Constant.prototype.negate = function() {
+/**
+ * Not documented yet.
+ */
+Constant.prototype.negate=function() {
 
       return new Constant(-this.value);
     };
-
-    Constant.prototype.add = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Constant.prototype.add=function(x) {
       var a;
 
       if (a = typeof x=="number") {
         return new Constant(x+(this.constantValue()))};
       return this.combineOp("plus", x);
     };
-
-    Constant.prototype.subtract = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Constant.prototype.subtract=function(x) {
       var a;
       return this.add((a = typeof x=="number") ? (-x) : (x.negate()));
     };
-
-    Constant.prototype.multiply = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Constant.prototype.multiply=function(x) {
       var a;
 
       if (a = typeof x=="number") {
         return new Constant(x*(this.constantValue()))};
       return this.combineOp("mul", x);
     };
-
-    Constant.prototype.divide = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Constant.prototype.divide=function(x) {
       var a;
 
       if (a = typeof x=="number") {

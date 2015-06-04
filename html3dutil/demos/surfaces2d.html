@@ -201,8 +201,8 @@ var MoebiusStrip=function(radius,width){
   u=-this.width+(this.width*2)*u;
   v*=GLMath.PiTimes2;
   var x, y, z;
-  var sinv=Math.sin(v==1 ? 0 : v);
-  var cosv=Math.cos(v==1 ? 0 : v);
+  var cosv = Math.cos(v==1 ? 0 : v);
+  var sinv = ((v==1 ? 0 : v)>=0 && (v==1 ? 0 : v)<6.283185307179586) ? ((v==1 ? 0 : v)<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v==1 ? 0 : v);
   var sinv2=Math.sin(v/2);
   var tmp=u*Math.cos(v/2)+this.radius;
   x=cosv*tmp;
@@ -282,8 +282,8 @@ function TorusKnotSurface(p,q,outerRadius,innerRadius,thickness){
   v=(v==1) ? 0 : v*Math.PI*2;
   var pu=p*u;
   var qu=q*u;
-  var sinv=Math.cos(v);
-  var cosv=Math.sin(v);
+  var sinv = Math.cos(v);
+  var cosv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-sinv*sinv) : -Math.sqrt(1.0-sinv*sinv)) : Math.sin(v);
   var tmp=this.innerRadius*Math.cos(pu)+this.outerRadius+
     this.thickness*cosv;
   return [

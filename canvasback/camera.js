@@ -54,15 +54,15 @@ Camera._vec3diff=function(a,b){
 
 Camera._quatRotateY=function(quat, angleDegrees){
  var halfRad=angleDegrees*Math.PI/360;
- var t1 = Math.sin(halfRad);
  var t2 = Math.cos(halfRad);
+ var t1 = (halfRad>=0 && halfRad<6.283185307179586) ? (halfRad<=3.141592653589793 ? Math.sqrt(1.0-t2*t2) : -Math.sqrt(1.0-t2*t2)) : Math.sin(halfRad;
  var t3 = [((quat[0] * t2) - quat[2] * t1), ((quat[3] * t1) + quat[1] * t2), ((quat[2] * t2) + quat[0] * t1), ((quat[3] * t2) - quat[1] * t1)];
  return GLMath.quatNormInPlace(t3);
 }
 Camera._quatRotateX=function(quat, angleDegrees){
  var halfRad=angleDegrees*Math.PI/360;
- var t1 = Math.sin(halfRad);
  var t2 = Math.cos(halfRad);
+ var t1 = (halfRad>=0 && halfRad<6.283185307179586) ? (halfRad<=3.141592653589793 ? Math.sqrt(1.0-t2*t2) : -Math.sqrt(1.0-t2*t2)) : Math.sin(halfRad;
  var t3 = [((quat[3] * t1) + quat[0] * t2), ((quat[1] * t2) + quat[2] * t1), ((quat[2] * t2) - quat[1] * t1), ((quat[3] * t2) - quat[0] * t1)];
  return GLMath.quatNormInPlace(t3);
 }
