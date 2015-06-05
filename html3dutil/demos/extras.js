@@ -173,6 +173,7 @@ ExtrudedTube.prototype._getBasisVectors=function(u,sample){
 ExtrudedTube._normalFromTangent=function(tangent){
  var normal=GLMath.vec3normInPlace(
    GLMath.vec3cross(tangent,[0,0,1]));
+ // if normal's length is close is 0, try another normal
  if(GLMath.vec3dot(normal,normal)<ExtrudedTube._EPSILON){
    normal=GLMath.vec3normInPlace(GLMath.vec3cross(tangent,[0,1,0]));
  }
@@ -180,8 +181,9 @@ ExtrudedTube._normalFromTangent=function(tangent){
 }
 /**
 * Generates a point on the extruded tube from the given u and v coordinates.
-* @param {number} u U coordinate.
-* @param {number} v V coordinate.
+* @param {number} u U coordinate.  This will run the length of the curve.
+* @param {number} v V coordinate.  This will sweep around the extruded
+* tube.
 * @return {Array<number>} A 3-element array specifying a 3D point.
 */
 ExtrudedTube.prototype.evaluate=function(u, v){
@@ -226,7 +228,7 @@ function FourierKnot(a,b){
   for(var i=0;i<this.a.length;i++){
    var iu=(i+1)*u;
    var c = Math.cos(iu);
-   var s = (iu>=0 && iu<6.283185307179586) ? (iu<=3.141592653589793 ? Math.sqrt(1.0-c*c) : -Math.sqrt(1.0-c*c)) : Math.sin(iu;
+   var s = (iu>=0 && iu<6.283185307179586) ? (iu<=3.141592653589793 ? Math.sqrt(1.0-c*c) : -Math.sqrt(1.0-c*c)) : Math.sin(iu);
    var ai=this.a[i];
    var bi=this.b[i];
    ret[0]+=c*ai[0]+s*bi[0];

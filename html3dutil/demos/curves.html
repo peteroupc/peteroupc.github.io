@@ -1,0 +1,299 @@
+<head>
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../camera.js"></script>
+<script type="text/javascript" src="../frame.js"></script>
+<script type="text/javascript" src="extras.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+</head>
+<body>
+<div style="position:absolute;left:0;top:1em" id=links>
+</div>
+<div id="settings" style="position:absolute;left:0;top:4em"></div>
+<canvas id=canvas>
+</canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+if(typeof Math.sign=="undefined"){
+ Math.sign=function(x){
+  return (x<0) ? -1 : (x==0 ? 0 : 1);
+ }
+};
+
+function addRange(label,min,max,step,defvalue,func){
+ var div=document.createElement("div")
+ var lbl=document.createElement("span")
+ lbl.innerHTML=label
+ var defvaluelbl=document.createElement("span")
+ defvaluelbl.innerHTML=defvalue
+ var input=document.createElement("input")
+ input.setAttribute("type","range")
+ input.setAttribute("value",""+defvalue)
+ input.setAttribute("min",""+min)
+ input.setAttribute("max",""+max)
+ input.setAttribute("step",""+step)
+ var oldvalue=[defvalue];
+ input.addEventListener("input",function(e){
+  var val=e.target.value*1.0
+  if(oldvalue[0]!=val){
+   defvaluelbl.innerHTML=val+""
+   if(func)func(val);
+   oldvalue[0]=val
+  }
+ })
+ div.appendChild(lbl)
+ div.appendChild(input)
+ div.appendChild(defvaluelbl)
+ return div
+}
+
+function setRanges(ranges){
+ var settings=document.getElementById("settings")
+ settings.innerHTML=""
+ for(var i=0;i<ranges.length;i++){
+  settings.appendChild(ranges[i]);
+ }
+}
+   function makeMesh(func,resolutionU,resolutionV){
+    // Default resolution is 50
+    if(resolutionV==null)resolutionV=resolutionU
+    if(resolutionU==null)resolutionU=50
+    if(resolutionV==null)resolutionV=50
+     // create a new mesh
+     var mesh=new Mesh();
+     // define a color gradient evaluator for
+     // demonstration purposes.  Instead of X, Y, and Z,
+     // generate a Red/Green/Blue color based on
+     // the same parameters U and V as the surface
+     // function for 3D points.
+     var colorGradient={
+      "evaluate":function(u,v){ return [1-u,v,u]; }
+     }
+     // generate the parametric surface.
+
+     var ev=new SurfaceEval()
+      .vertex(func)
+    // Specify the color gradient evaluator defined above
+      .color(colorGradient)
+    // Generate normals for the parametric surface,
+    // which is required for lighting to work correctly
+      .setAutoNormal(true)
+    // Evaluate the surface and generate a triangle
+    // mesh, using resolution+1 different U-coordinates ranging
+    // from 0 to 1, and resolution+1
+    // different V-coordinates ranging from 0 to 1
+    // Instead of Mesh.TRIANGLES, we could use
+    // Mesh.LINES to create a wireframe mesh,
+    // or Mesh.POINTS to create a point mesh.
+      .evalSurface(mesh,Mesh.TRIANGLES,resolutionU,resolutionV);
+    // Surface generated, return the mesh
+    return mesh;
+  }
+function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
+ this.outer=outerRadius;
+ this.inner=innerRadius;
+ this.distFromInner=distFromInnerCenter;
+ this.evaluate=function(u){
+  u=u*GLMath.PiTimes2;
+  var oi=(this.outer-this.inner)
+  var term=oi*u/this.inner;
+  // NOTE: prolate hypotrochoid if distFromInner>innerRadius
+  return [
+   oi*Math.cos(u)+this.distFromInner*Math.cos(term),
+   oi*Math.sin(u)-this.distFromInner*Math.sin(term),
+   0
+  ]
+ }
+}
+
+function Trochoid(radius, distFromCenter){
+ this.inner=radius;
+ this.distFromCenter=distFromCenter;
+ this.evaluate=function(u){
+  u=u*GLMath.PiTimes2;
+  var cosu = Math.cos(u);
+  var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
+  return [
+   this.inner*u-this.distFromCenter*sinu,
+   this.inner    -this.distFromCenter*cosu,
+   0
+  ]
+ }
+}
+
+function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
+ this.outer=outerRadius;
+ this.inner=innerRadius;
+ this.distFromInner=distFromInnerCenter;
+ this.evaluate=function(u){
+  u=u*GLMath.PiTimes2;
+  var oi=(this.outer+this.inner)
+  var term=oi*u/this.inner;
+  // NOTE: prolate epitrochoid if distFromInner>innerRadius
+  return [
+   oi*Math.cos(u)-this.distFromInner*Math.cos(term),
+   oi*Math.sin(u)-this.distFromInner*Math.sin(term),
+   0
+  ]
+ }
+}
+
+var HypocycloidSeal={create:function(radius,points){
+ return Hypocycloid.create(radius,radius/points);
+}}
+var Hypocycloid={create:function(outerRadius,innerRadius){
+ return new Hypotrochoid(outerRadius,innerRadius,innerRadius)
+}}
+var EpicycloidSeal={create:function(radius,points){
+ return Epicycloid.create(radius,radius/points);
+}}
+var Epicycloid={create:function(outerRadius,innerRadius){
+ return new Epitrochoid(outerRadius,innerRadius,innerRadius)
+}}
+function TorusKnot(p,q,outerRadius,innerRadius){
+ this.period=p;
+ this.revolutions=q;
+ this.outerRadius=outerRadius==null ? 1 : outerRadius;
+ this.innerRadius=innerRadius==null ? 0.25 : innerRadius;
+ this.evaluate=function(u){
+  u=u*GLMath.PiTimes2;
+  var pu=this.period*u;
+  var qu=this.revolutions*u;
+  var tmp=this.innerRadius*Math.cos(pu)+this.outerRadius;
+  return [
+   tmp*Math.cos(qu),
+   tmp*Math.sin(qu),
+   this.innerRadius*Math.sin(pu)
+  ];
+ }
+}
+TorusKnot.getFlatCurve=function(period,outerRadius,innerRadius){
+ // NOTE: This function demonstrates how curve evaluators
+ // can be chained
+ var knot=new TorusKnot(period,1,outerRadius,innerRadius);
+ return {
+  "evaluate":function(u){
+   var ret=knot.evaluate(u);
+   // set Z to 0; Z only regulates the winding of the torus knot,
+   // not its shape
+   ret[2]=0;
+   return ret;
+  }
+ }
+}
+function makeThinCurveMesh(curve){
+ return makeMesh(new ExtrudedTube(curve,0.025),150,20)
+}
+
+var shapeGroup=new ShapeGroup();
+var allsettings={}
+var link0=null;
+addLink("Torus knot",link0=function(){
+ pushSettings(function(allsettings){
+    return makeMesh(
+    new ExtrudedTube(new TorusKnot(
+      allsettings["torusknot-p"],
+      allsettings["torusknot-q"]
+    )),100);
+ },{
+  "torusknot-p":["p",7,1,32,1],
+  "torusknot-q":["q",5,1,32,1]
+  });
+})
+
+addLink("Swept torus knot",function(){
+ pushSettings(function(allsettings){
+   return makeMesh(
+    new ExtrudedTube(new TorusKnot(
+      allsettings["torusknot-p"],
+      allsettings["torusknot-q"]
+    ),0.1,TorusKnot.getFlatCurve(5)),100);
+ },{
+  "torusknot-p":["p",7,1,32,1],
+  "torusknot-q":["q",5,1,32,1]
+  });
+})
+
+addLink("Flattened torus knot",function(){
+ pushSettings(function(allsettings){
+   return makeMesh(
+    new ExtrudedTube(TorusKnot.getFlatCurve(
+      allsettings["torusknot-p"]
+    )),100);
+ },{
+  "torusknot-p":["p",7,1,32,1]
+  });
+})
+
+addLink("Hypotrochoid",function(){
+ pushSettings(function(allsettings){
+    return makeThinCurveMesh(
+    new Hypotrochoid(
+      allsettings["ht-outer"],
+      allsettings["ht-inner"],
+      allsettings["ht-dist"]
+    ));
+ },{
+ "ht-outer":["Outer circle radius",1,0,2.0,0.05],
+ "ht-inner":["Inner circle radius",0.1,-1.0,1.0,0.05],
+ "ht-dist":["Distance to pen",0.1,-1.0,1.0,0.05]
+  });
+})
+
+addLink("Epitrochoid",function(){
+ pushSettings(function(allsettings){
+    return makeThinCurveMesh(
+    new Epitrochoid(
+      allsettings["et-outer"],
+      allsettings["et-inner"],
+      allsettings["et-dist"]
+    ));
+ },{
+ "et-outer":["Outer circle radius",1,0,2.0,0.05],
+ "et-inner":["Rolling circle radius",0.1,-1.0,1.0,0.05],
+ "et-dist":["Distance to pen",0.1,-1.0,1.0,0.05]
+  });
+})
+
+addLink("Trochoid",function(){
+ pushSettings(function(allsettings){
+    return makeThinCurveMesh(
+    new Trochoid(
+      allsettings["et-inner"],
+      allsettings["et-dist"]
+    ));
+ },{
+ "et-inner":["Rolling circle radius",0.3,-1.0,1.0,0.05],
+ "et-dist":["Distance to pen",0.3,-1.0,1.0,0.05]
+  });
+})
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white")
+  var camera=new Camera(scene,45,1,100);
+  camera.setDistance(5);
+  var pc=new PrimitiveCounter(scene)
+  link0();
+  scene.addShape(shapeGroup);
+  GLUtil.renderLoop(function(){
+   pc.update();
+   camera.update();
+   scene.render();
+  });
+//-->
+</script>
+</body>

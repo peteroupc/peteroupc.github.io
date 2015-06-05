@@ -11,17 +11,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
-<div style="position:absolute;left:0;top:1em">
-<a href="javascript:link0()">Torus knot</a>,
-<a href="javascript:link1()">Superellipsoid</a>,
-<a href="javascript:link2()">Klein bottle</a>,
-<a href="javascript:link3()">M&ouml;bius-like strip</a>,
-<a href="javascript:link4()">Surface of revolution for f(x) = sin x</a>,
-<a href="javascript:link5()">Surface of revolution for f(x) = x<sup>2</sup></a>,
-<a href="javascript:link6()">Supertoroid</a>,
-<a href="javascript:link7()">M&ouml;bius strip</a>,
-<a href="javascript:link8()">Flattened torus knot</a>,
-<a href="javascript:link9()">Swept torus knot</a>
+<div style="position:absolute;left:0;top:1em" id=links>
 </div>
 <div id="settings" style="position:absolute;left:0;top:4em"></div>
 <canvas id=canvas>
@@ -136,18 +126,48 @@ Superellipsoid.cospow=function(x,n){
   var r=Math.cos(x);
   return Math.sign(r)*Math.pow(Math.abs(r),n);
  }
-var RevolutionSurface=function(func,minval,maxval){
- this.func=func
+/**
+*
+*
+* @param {Function} phi Function of a single variable:
+* y = f(x).  This determines the "radius" of the surface
+* of revolution along the y-axis.
+* @param {Function} psi Function of a single variable
+* that transforms the value x: x = f(a).  If null, uses
+* the function x = f(a) = x.
+*
+*/
+var SurfaceOfRevolution=function(phi,psi,minval,maxval){
+ this.phi=phi;
+ this.psi=psi;
  this.minval=minval
  this.maxval=maxval
  this.evaluate=function(u,v){
   v=1-v;
   v*=GLMath.PiTimes2;
   u=minval+(maxval-minval)*u;
-  var r=this.func(u);
-  return [u,r*Math.cos(v),r*Math.sin(v)];
+  var cosv = Math.cos(v);
+  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
+  var r=this.phi(u);
+  return [this.psi ? this.psi(u) : u,r*cosv,r*sinv];
  }
 }
+
+var FunctionSurface={
+create:function(func,minval,maxval){
+ return new SurfaceOfRevolution(func,null,minval,maxval);
+}
+};
+
+var Torus={
+create:function(outerRadius,innerRadius,minval,maxval){
+ return new SurfaceOfRevolution(function(v){
+  return outerRadius+innerRadius*Math.cos(v);
+ },function(v){
+  return innerRadius+Math.sin(v);
+ },minval,maxval);
+}
+};
 
 var KleinBottle=function(){
  this.evaluate=function(u,v){
@@ -155,10 +175,10 @@ var KleinBottle=function(){
   u*=GLMath.PiTimes2;
   v*=GLMath.PiTimes2;
   var x, y, z;
-  var sinu=Math.sin(u);
-  var sinv=Math.sin(v);
-  var cosu=Math.cos(u);
-  var cosv=Math.cos(v);
+  var cosu = Math.cos(u);
+  var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
+  var cosv = Math.cos(v);
+  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
   if(u<Math.PI){
    x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * cosu * cosv;
    z = -8 * sinu - 2 * (1 - cosu / 2) * sinu * cosv;
@@ -244,81 +264,13 @@ var MoebiusStrip=function(radius,width){
     return mesh;
   }
 
-function TorusKnot(p,q,outerRadius,innerRadius){
- this.period=p;
- this.revolutions=q;
- this.outerRadius=outerRadius==null ? 1 : outerRadius;
- this.innerRadius=innerRadius==null ? 0.25 : innerRadius;
- this.evaluate=function(u){
-  u=(u==1) ? 0 : u*GLMath.PiTimes2;
-  var pu=this.period*u;
-  var qu=this.revolutions*u;
-  var tmp=this.innerRadius*Math.cos(pu)+this.outerRadius;
-  return [
-   tmp*Math.cos(qu),
-   tmp*Math.sin(qu),
-   this.innerRadius*Math.sin(pu)
-  ];
- }
-}
-TorusKnot.getFlatCurve=function(period,outerRadius,innerRadius){
- // NOTE: This function demonstrates how curve evaluators
- // can be chained
- var knot=new TorusKnot(period,1,outerRadius,innerRadius);
- return {
-  "evaluate":function(u){
-   var ret=knot.evaluate(u);
-   // set Z to 0; Z only regulates the winding of the torus knot,
-   // not its shape
-   ret[2]=0;
-   return ret;
-  }
- }
-}
-
 var shapeGroup=new ShapeGroup();
-var allsettings={
-"current":0,
-"torusknot-p":7,
-"torusknot-q":5,
-"superel-x":1,
-"superel-y":1,
-"superel-z":1,
-"superel-n":1,
-"superel-m":1,
-"moeb-maj":1.25,
-"moeb-a":0.125,
-"moeb-b":0.05,
-"superto-x":1,
-"superto-y":1,
-"superto-ir":0.25,
-"superto-n":1,
-"superto-m":1,
-"moeb2-r":1,
-"moeb2-w":0.25
-}
+var allsettings={}
+var link0=null;
 
-function updateMesh(){
- switch(allsettings["current"]){
-  case 0:
-   return makeMesh(
-    new ExtrudedTube(new TorusKnot(
-      allsettings["torusknot-p"],
-      allsettings["torusknot-q"]
-    )),100);
-  case 8:
-   return makeMesh(
-    new ExtrudedTube(TorusKnot.getFlatCurve(
-      allsettings["torusknot-p"]
-    )),100);
-  case 9:
-   return makeMesh(
-    new ExtrudedTube(new TorusKnot(
-      allsettings["torusknot-p"],
-      allsettings["torusknot-q"]
-    ),0.1,TorusKnot.getFlatCurve(5)),100);
-  case 1:
-   return makeMesh(
+addLink("Superellipsoid",link0=function(){
+ pushSettings(function(allsettings){
+    return makeMesh(
     new Superellipsoid(
       allsettings["superel-x"],
       allsettings["superel-y"],
@@ -326,24 +278,55 @@ function updateMesh(){
       allsettings["superel-n"],
       allsettings["superel-m"]
     ));
-  case 2:
-   return makeMesh(new KleinBottle());
-  case 3:
+ },{
+ "superel-x":["X radius",1.2,0.05,2.0,0.05],
+ "superel-y":["Y radius",1,0.05,2.0,0.05],
+ "superel-z":["Z radius",1,0.05,2.0,0.05],
+ "superel-n":["N",1,0.05,3.0,0.05],
+ "superel-m":["M",1,0.05,3.0,0.05]
+  });
+})
+
+addLink("Klein bottle",function(){
+ pushSettings(function(allsettings){
    return makeMesh(
-    new MoebiusLikeStrip(
-      allsettings["moeb-maj"],
-      allsettings["moeb-a"],
-      allsettings["moeb-b"]
-    ));
-    case 4:
-    return makeMesh(new RevolutionSurface(function(x){
+   new KleinBottle());
+ },{
+ });
+})
+addLink("Surface of revolution for f(x) = sin x",function(){
+ pushSettings(function(allsettings){
+    return makeMesh(FunctionSurface.create(function(x){
   return Math.sin(x)
  },-Math.PI,Math.PI))
- case 5:
- return makeMesh(new RevolutionSurface(function(x){
+ },{
+ });
+})
+addLink("Surface of revolution for f(x) = x<sup>2</sup>",function(){
+ pushSettings(function(allsettings){
+ return makeMesh(FunctionSurface.create(function(x){
   return x*x
  },-1,1))
-  case 6:
+ },{
+ });
+})
+
+addLink("M&ouml;bius-like strip",function(){
+ pushSettings(function(allsettings){
+   return makeMesh(
+    new ExtrudedTube(new TorusKnot(
+      allsettings["torusknot-p"],
+      allsettings["torusknot-q"]
+    ),0.1,TorusKnot.getFlatCurve(5)),100);
+ },{
+  "moeb-maj":["Size",1.25,0.05,3.0,0.05],
+  "moeb-a":["Height",0.125,0.05,2.0,0.05],
+  "moeb-b":["Thickness",0.05,0.05,1.0,0.05]
+  });
+});
+
+addLink("Supertoroid",function(){
+ pushSettings(function(allsettings){
    return makeMesh(
     new Supertoroid(
       allsettings["superto-x"],
@@ -352,120 +335,27 @@ function updateMesh(){
       allsettings["superto-n"],
       allsettings["superto-m"]
     ));
-      case 7:
+ },{
+ "superto-x":["X radius",1,0.05,2.0,0.05],
+ "superto-y":["Y radius",1,0.05,2.0,0.05],
+ "superto-ir":["Inner radius",0.25,0.05,1.0,0.05],
+ "superto-n":["N",1,0.05,3.0,0.05],
+ "superto-m":["M",1,0.05,3.0,0.05]
+  });
+});
+
+addLink("M&ouml;bius strip",function(){
+ pushSettings(function(allsettings){
    return makeMesh(
     new MoebiusStrip(
       allsettings["moeb2-r"],
       allsettings["moeb2-w"]
     ));
-    default:
-   return new Mesh();
- }
-}
-function updateShape(){
-  shapeGroup.removeShape(shapeGroup.shapes[0]);
-  shapeGroup.addShape(scene.makeShape(updateMesh()).setMaterial(
-    new Material().setParams({
-     "diffuse":"black",
-     "specular":"white",
-     "shininess":10
-    })))
-}
-
-function pushSetting(ranges,name,label,min,max,step){
- ranges.push(addRange(label,min,max,step,allsettings[name],function(val){
-  allsettings[name]=val
-  updateShape();
- }))
-}
-
-function link0(){
- allsettings["current"]=0
- updateShape();
- var ranges=[]
- pushSetting(ranges,"torusknot-p","p",1,32,1);
- pushSetting(ranges,"torusknot-q","q",1,32,1);
- setRanges(ranges);
-}
-
-function link9(){
- allsettings["current"]=9
- updateShape();
- var ranges=[]
- pushSetting(ranges,"torusknot-p","p",1,32,1);
- pushSetting(ranges,"torusknot-q","q",1,32,1);
- setRanges(ranges);
-}
-function link8(){
- allsettings["current"]=8
- updateShape();
- var ranges=[]
- pushSetting(ranges,"torusknot-p","p",1,32,1);
- setRanges(ranges);
-}
-function link1(){
- allsettings["current"]=1
- updateShape();
- var ranges=[]
- pushSetting(ranges,"superel-x","X radius",0.05,2.0,0.05);
- pushSetting(ranges,"superel-y","Y radius",0.05,2.0,0.05);
- pushSetting(ranges,"superel-z","Z radius",0.05,2.0,0.05);
- pushSetting(ranges,"superel-n","N",0.05,3.0,0.05);
- pushSetting(ranges,"superel-m","M",0.05,3.0,0.05);
- setRanges(ranges);
-}
-
-function link2(){
- allsettings["current"]=2
- updateShape();
- var ranges=[]
- setRanges(ranges);
-}
-
-function link3(){
- allsettings["current"]=3
- updateShape();
- var ranges=[]
- pushSetting(ranges,"moeb-maj","Size",0.05,3.0,0.05);
- pushSetting(ranges,"moeb-a","Height",0.05,2.0,0.05);
- pushSetting(ranges,"moeb-b","Thickness",0.05,1.0,0.05);
- setRanges(ranges);
-}
-
-function link4(){
- allsettings["current"]=4
- updateShape();
- var ranges=[]
- setRanges(ranges);
-}
-
-function link5(){
- allsettings["current"]=5
- updateShape();
- var ranges=[]
- setRanges(ranges);
-}
-
-function link6(){
- allsettings["current"]=6
- updateShape();
- var ranges=[]
- pushSetting(ranges,"superto-x","X radius",0.05,2.0,0.05);
- pushSetting(ranges,"superto-y","Y radius",0.05,2.0,0.05);
- pushSetting(ranges,"superto-ir","Inner radius",0.05,1.0,0.05);
- pushSetting(ranges,"superto-n","N",0.05,3.0,0.05);
- pushSetting(ranges,"superto-m","M",0.05,3.0,0.05);
- setRanges(ranges);
-}
-
-function link7(){
- allsettings["current"]=7
- updateShape();
- var ranges=[]
- pushSetting(ranges,"moeb2-r","Radius",0.05,2.0,0.05);
- pushSetting(ranges,"moeb2-w","Width",0.05,2.0,0.05);
- setRanges(ranges);
-}
+ },{
+  "moeb2-r":["Radius",1,0.05,2,0.05],
+  "moeb2-w":["Width",0.25,0.05,2,0.05]
+  });
+});
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
