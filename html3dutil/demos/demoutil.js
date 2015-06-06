@@ -79,7 +79,155 @@ function setRanges(ranges){
  }
 }
 
+function meshToJson(mesh){
+ function colorToHex(x){
+  var r=Math.round(x[0]*255);
+  var g=Math.round(x[1]*255);
+  var b=Math.round(x[2]*255);
+  r=Math.min(Math.max(r,0),255);
+  g=Math.min(Math.max(g,0),255);
+  b=Math.min(Math.max(b,0),255);
+  return (r<<16)|(g<<8)|b;
+ }
+ var roundNum=function(num){
+  return Math.round(num*1000000)/1000000;
+ }
+ var faces=[];
+ var vertices=[];
+ var colors=[];
+ var normals=[];
+ var texcoords=[[]];
+ var json={
+   "metadata":{"formatVersion":3.1},
+   "materials":[{"DbgColor":0xffffff, "DbgIndex":0,
+     "DbgName":"Untitled", "colorDiffuse":[1,1,1],
+     "colorAmbient":[1,1,1],"colorSpecular":[1,1,1],
+     "specularCoef":5}]
+ }
+ json.faces=faces;
+ json.vertices=vertices;
+ json.colors=colors;
+ json.uvs=texcoords;
+ json.normals=normals;
+ function pushItemAndMaybeReuse3(obj,x,y,z){
+  var idx=obj.length;
+  var index=idx/3;
+  var endIdx=Math.max(0,idx-48);
+  for(var i=idx-3;i>=endIdx;i-=3){
+   if(obj[i]==x && obj[i+1]==y && obj[i+2]==z){
+    return i/3;
+   }
+  }
+  obj.push(x)
+  obj.push(y)
+  obj.push(z)
+  return index;
+ }
+ function pushItemAndMaybeReuse2(obj,x,y){
+  var idx=obj.length;
+  var index=idx/2;
+  var endIdx=Math.max(0,idx-48);
+  for(var i=idx-2;i>=endIdx;i-=2){
+   if(obj[i]==x && obj[i+1]==y){
+    return i/2;
+   }
+  }
+  obj.push(x)
+  obj.push(y)
+  return index;
+ }
+ function pushItemAndMaybeReuse1(obj,x){
+  var idx=obj.length;
+  var index=idx;
+  var endIdx=Math.max(0,idx-48);
+  for(var i=idx-1;i>=endIdx;i-=1){
+   if(obj[i]==x){
+    return i;
+   }
+  }
+  obj.push(x)
+  return index;
+ }
+ mesh.enumPrimitives(function(prim){
+  if(prim.length!=3)throw new Error("lines and points not supported");
+  var idx=faces.length;
+  var flags=0;
+  faces.push(0);
+  for(var j=0;j<3;j++){
+   faces.push(
+    pushItemAndMaybeReuse3(vertices,
+      roundNum(prim[j].position[0]),
+      roundNum(prim[j].position[1]),
+      roundNum(prim[j].position[2])))
+  }
+  if(prim[0].uv && prim[1].uv && prim[2].uv){
+   var tc=texcoords[0];
+   for(var j=0;j<3;j++){
+    faces.push(
+     pushItemAndMaybeReuse2(tc,
+      roundNum(prim[j].uv[0]),
+      roundNum(prim[j].uv[1])))
+   }
+   flags|=0x08;
+  }
+  if(prim[0].normal && prim[1].normal && prim[2].normal){
+   for(var j=0;j<3;j++){
+    faces.push(
+     pushItemAndMaybeReuse3(normals,
+      roundNum(prim[j].normal[0]),
+      roundNum(prim[j].normal[1]),
+      roundNum(prim[j].normal[2])))
+   }
+   flags|=0x20;
+  }
+  if(prim[0].color && prim[1].color && prim[2].color){
+   for(var j=0;j<3;j++){
+    faces.push(
+     pushItemAndMaybeReuse1(colors,
+      colorToHex(prim[j].color)))
+   }
+   flags|=0x80;
+  }
+  faces[idx]=flags;
+ })
+ return JSON.stringify(json);
+}
+
+function saveString(string,type,filename){
+ extension=".txt"
+ type=type||"text/plain"
+ if(type=="text/plain")extension=".txt"
+ else if(type=="application/json")extension=".json"
+ else if(type=="model/vnd.collada+xml")extension=".dae"
+ else if(type.indexOf("+xml")>=0)extension=".xml"
+  var a = document.createElement('a');
+  var utf8=new TextEncoder("utf-8").encode(string)
+  var blob = new Blob([utf8], {'type': type});
+  a.href = window.URL.createObjectURL(blob);
+  a.download = filename || "savefile"+extension;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 function updateShape(func){
+  var settings=document.getElementById("settings-link")
+  if(!settings){
+    settings=document.getElementById("settings")
+    if(settings){
+        var div=document.createElement("div")
+        var a = document.createElement('a');
+        a.href="javascript:void(null)"
+        a.id="settings-link"
+        a.innerHTML="Save this model (JSON)"
+        a.addEventListener("click",function(){
+           var json=meshToJson(func(allsettings));
+           saveString(json,"application/json","model.json")
+        });
+        div.appendChild(a)
+        settings.appendChild(div)
+    }
+  }
   shapeGroup.removeShape(shapeGroup.shapes[0]);
   shapeGroup.addShape(scene.makeShape(func(allsettings)).setMaterial(
     new Material().setParams({

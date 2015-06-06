@@ -26,46 +26,6 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-if(typeof Math.sign=="undefined"){
- Math.sign=function(x){
-  return (x<0) ? -1 : (x==0 ? 0 : 1);
- }
-};
-
-function addRange(label,min,max,step,defvalue,func){
- var div=document.createElement("div")
- var lbl=document.createElement("span")
- lbl.innerHTML=label
- var defvaluelbl=document.createElement("span")
- defvaluelbl.innerHTML=defvalue
- var input=document.createElement("input")
- input.setAttribute("type","range")
- input.setAttribute("value",""+defvalue)
- input.setAttribute("min",""+min)
- input.setAttribute("max",""+max)
- input.setAttribute("step",""+step)
- var oldvalue=[defvalue];
- input.addEventListener("input",function(e){
-  var val=e.target.value*1.0
-  if(oldvalue[0]!=val){
-   defvaluelbl.innerHTML=val+""
-   if(func)func(val);
-   oldvalue[0]=val
-  }
- })
- div.appendChild(lbl)
- div.appendChild(input)
- div.appendChild(defvaluelbl)
- return div
-}
-
-function setRanges(ranges){
- var settings=document.getElementById("settings")
- settings.innerHTML=""
- for(var i=0;i<ranges.length;i++){
-  settings.appendChild(ranges[i]);
- }
-}
    function makeMesh(func,resolutionU,resolutionV){
     // Default resolution is 50
     if(resolutionV==null)resolutionV=resolutionU

@@ -32,12 +32,12 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>Represents a type that a CBOR object can have.</p>
 
-<h3>Number</h3>
+<h3>Array</h3>
 
-<pre><code>public static PeterO.Cbor.CBORType Number = 0;
+<pre><code>public static PeterO.Cbor.CBORType Array = 5;
 </code></pre>
 
-<p>A number of any kind, including integers, big integers, floating point numbers, and decimal numbers. The floating-point value Not-a-Number is also included in the Number type.</p>
+<p>An array of CBOR objects.</p>
 
 <h3>Boolean</h3>
 
@@ -46,13 +46,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>The simple values true and false.</p>
 
-<h3>SimpleValue</h3>
-
-<pre><code>public static PeterO.Cbor.CBORType SimpleValue = 2;
-</code></pre>
-
-<p>A &quot;simple value&quot; other than floating point values, true, and false.</p>
-
 <h3>ByteString</h3>
 
 <pre><code>public static PeterO.Cbor.CBORType ByteString = 3;
@@ -60,26 +53,33 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>An array of bytes.</p>
 
-<h3>TextString</h3>
-
-<pre><code>public static PeterO.Cbor.CBORType TextString = 4;
-</code></pre>
-
-<p>A text string.</p>
-
-<h3>Array</h3>
-
-<pre><code>public static PeterO.Cbor.CBORType Array = 5;
-</code></pre>
-
-<p>An array of CBOR objects.</p>
-
 <h3>Map</h3>
 
 <pre><code>public static PeterO.Cbor.CBORType Map = 6;
 </code></pre>
 
 <p>A map of CBOR objects.</p>
+
+<h3>Number</h3>
+
+<pre><code>public static PeterO.Cbor.CBORType Number = 0;
+</code></pre>
+
+<p>A number of any kind, including integers, big integers, floating point numbers, and decimal numbers. The floating-point value Not-a-Number is also included in the Number type.</p>
+
+<h3>SimpleValue</h3>
+
+<pre><code>public static PeterO.Cbor.CBORType SimpleValue = 2;
+</code></pre>
+
+<p>A &quot;simple value&quot; other than floating point values, true, and false.</p>
+
+<h3>TextString</h3>
+
+<pre><code>public static PeterO.Cbor.CBORType TextString = 4;
+</code></pre>
+
+<p>A text string.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 <script>

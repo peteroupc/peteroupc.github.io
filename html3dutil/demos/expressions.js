@@ -590,10 +590,13 @@ Operation.prototype.toJSString=function() {
         return ((a = this.negative) ? ("-") : (""))+(opArray.join("*"))
       } else if (this.operator=="div") {
         return ((a = this.negative) ? ("-") : (""))+(opArray.join("/"))
+      } else if (this.operator=="sqrt") {
+        var p1=opArray[0];
+        return ((a = this.negative) ? ("-") : (""))+"((("+p1+")<0 ? -1 : 1)*Math.pow(Math.abs("+p1+"),0.5))"
       } else if (this.operator=="pow") {
         var p1=opArray[0];
         var p2=opArray[1];
-        return ((a = this.negative) ? ("-") : (""))+"(Math.sign("+p1+")*Math.pow(Math.abs("+p1+"),"+p2+"))"
+        return ((a = this.negative) ? ("-") : (""))+"((("+p1+")<0 ? -1 : 1)*Math.pow(Math.abs("+p1+"),"+p2+"))"
       } else {
         var oper=this.operator
         if(oper=="ln")oper="log"
@@ -1087,16 +1090,19 @@ Constant.prototype.divide=function(x) {
            // only works for rational exponents
            return findPartialDerivative(ex.get(1).multiply(Operation.func("ln",ex.get(0))),differential);
         }
-      } else if(ex.isOperation("abs")){
-       ex=(ex.negative) ? ex.get(0).negate() : ex.get(0);
       }
       return findPartialDerivative(expr.get(0),differential).divide(ex).multiply(expr.negative ? -1 : 1);
     } else if (a = expr.isOperation("sin")) {
       return Operation.func("cos", expr.get(0)).multiply(findPartialDerivative(expr.get(0),differential))
        .multiply(expr.negative ? -1 : 1);
     } else if (a = expr.isOperation("abs")) {
-      return findPartialDerivative(expr.get(0),differential)
+      var ex=expr.get(0);
+      var cv=ex.getConstantValue();
+      if(cv!=null && cv<0)return Constant.new(-1)
+      if(cv!=null && cv>0)return Constant.new(1)
+      var ret=ex.divide(Operation.func("abs",ex))
        .multiply(expr.negative ? -1 : 1);
+      return ret.multiply(findPartialDerivative(expr.get(0),differential))
     } else if (a = expr.isOperation("cos")) {
       return Operation.func("sin", expr.get(0)).negate().multiply(findPartialDerivative(expr.get(0),differential))
        .multiply(expr.negative ? -1 : 1);
@@ -1142,6 +1148,3 @@ Constant.prototype.divide=function(x) {
     derivU[2].multiply(derivV[0]).subtract(derivU[0].multiply(derivV[2])),
     derivU[0].multiply(derivV[1]).subtract(derivU[1].multiply(derivV[0]))];
   }
-
-console.log(getExpression("sin(u)"))
-console.log(getExpression("sin(u)*"))

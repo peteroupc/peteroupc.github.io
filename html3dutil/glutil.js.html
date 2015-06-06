@@ -294,7 +294,7 @@ var GLUtil={
      if(t.status>=200 &amp;&amp; t.status&lt;300){
       if(respType=="xml")resp=t.responseXML
       else if(respType=="json")
-        resp=(t.responseJSON||JSON.parse(t.responseText))+""
+        resp=("response" in t) ? t.response : JSON.parse(t.responseText)
       else if(respType=="arraybuffer")
         resp=t.response
       else resp=t.responseText+""

@@ -60,17 +60,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>The precision context used during the operation that triggered the trap. May be null.</p>
 
-<h3>Result</h3>
-
-<pre><code>public object Result { get; }
-</code></pre>
-
-<p>Gets the defined result of the operation that caused the trap.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The defined result of the operation that caused the trap.</p>
-
 <h3>Error</h3>
 
 <pre><code>public int Error { get; }
@@ -81,6 +70,17 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Returns:</b></p>
 
 <p>The flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
+
+<h3>Result</h3>
+
+<pre><code>public object Result { get; }
+</code></pre>
+
+<p>Gets the defined result of the operation that caused the trap.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The defined result of the operation that caused the trap.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 <script>

@@ -43,13 +43,175 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular ExtendedFloat value.</p></li>
 </ul>
 
-<h3>EqualsInternal</h3>
+<h3>NaN</h3>
 
-<pre><code>public bool EqualsInternal(
+<pre><code>public static readonly PeterO.ExtendedFloat NaN;
+</code></pre>
+
+<p>A not-a-number value.</p>
+
+<h3>NegativeInfinity</h3>
+
+<pre><code>public static readonly PeterO.ExtendedFloat NegativeInfinity;
+</code></pre>
+
+<p>Negative infinity, less than any other number.</p>
+
+<h3>NegativeZero</h3>
+
+<pre><code>public static readonly PeterO.ExtendedFloat NegativeZero;
+</code></pre>
+
+<p>Represents the number negative zero.</p>
+
+<h3>One</h3>
+
+<pre><code>public static readonly PeterO.ExtendedFloat One;
+</code></pre>
+
+<p>Represents the number 1.</p>
+
+<h3>PositiveInfinity</h3>
+
+<pre><code>public static readonly PeterO.ExtendedFloat PositiveInfinity;
+</code></pre>
+
+<p>Positive infinity, greater than any other number.</p>
+
+<h3>SignalingNaN</h3>
+
+<pre><code>public static readonly PeterO.ExtendedFloat SignalingNaN;
+</code></pre>
+
+<p>A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in ExtendedFloat.</p>
+
+<h3>Ten</h3>
+
+<pre><code>public static readonly PeterO.ExtendedFloat Ten;
+</code></pre>
+
+<p>Represents the number 10.</p>
+
+<h3>Zero</h3>
+
+<pre><code>public static readonly PeterO.ExtendedFloat Zero;
+</code></pre>
+
+<p>Represents the number 0.</p>
+
+<h3>Exponent</h3>
+
+<pre><code>public PeterO.BigInteger Exponent { get; }
+</code></pre>
+
+<p>Gets this object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
+
+<h3>IsFinite</h3>
+
+<pre><code>public bool IsFinite { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is finite (not infinity or NaN); otherwise, false.</p>
+
+<h3>IsNegative</h3>
+
+<pre><code>public bool IsNegative { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this object is negative, including negative zero.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is negative, including negative zero; otherwise, false.</p>
+
+<h3>IsZero</h3>
+
+<pre><code>public bool IsZero { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object&#39;s value equals 0; otherwise, false.</p>
+
+<h3>Mantissa</h3>
+
+<pre><code>public PeterO.BigInteger Mantissa { get; }
+</code></pre>
+
+<p>Gets this object&#39;s un-scaled value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object&#39;s un-scaled value. Will be negative if this object&#39;s value is negative (including a negative NaN).</p>
+
+<h3>Sign</h3>
+
+<pre><code>public int Sign { get; }
+</code></pre>
+
+<p>Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
+
+<h3>UnsignedMantissa</h3>
+
+<pre><code>public PeterO.BigInteger UnsignedMantissa { get; }
+</code></pre>
+
+<p>Gets the absolute value of this object&#39;s un-scaled value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The absolute value of this object&#39;s un-scaled value.</p>
+
+<h3>Abs</h3>
+
+<pre><code>public PeterO.ExtendedFloat Abs(
+    PeterO.PrecisionContext context);
+</code></pre>
+
+<p>Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>context</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The absolute value of this object.</p>
+
+<h3>Abs</h3>
+
+<pre><code>public PeterO.ExtendedFloat Abs();
+</code></pre>
+
+<p>Gets the absolute value of this object.</p>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>Add</h3>
+
+<pre><code>public PeterO.ExtendedFloat Add(
     PeterO.ExtendedFloat otherValue);
 </code></pre>
 
-<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</p>
+<p>Adds this object and another binary float and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -59,15 +221,39 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p><b>Returns:</b></p>
 
-<p>True if this object&#39;s mantissa and exponent are equal to those of another object; otherwise, false.</p>
+<p>The sum of the two objects.</p>
 
-<h3>Equals</h3>
+<h3>Add</h3>
 
-<pre><code>public sealed bool Equals(
+<pre><code>public PeterO.ExtendedFloat Add(
+    PeterO.ExtendedFloat otherValue,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Finds the sum of this object and another object. The result&#39;s exponent is set to the lower of the exponents of the two operands.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>otherValue</i>: The number to add to.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The sum of thisValue and the other object.</p>
+
+<h3>CompareTo</h3>
+
+<pre><code>public sealed int CompareTo(
     PeterO.ExtendedFloat other);
 </code></pre>
 
-<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</p>
+<p>Compares the mathematical values of this object and another object, accepting NaN values. This method is not consistent with the Equals method because two different numbers with the same mathematical value, but different exponents, will compare as equal.</p>
+
+<p>In this method, negative zero and positive zero are considered equal.</p>
+
+<p>If this object or the other object is a quiet NaN or signaling NaN, this method will not trigger an error. Instead, NaN will compare greater than any other number, including infinity. Two different NaN values will be considered equal.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -77,36 +263,101 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p><b>Returns:</b></p>
 
-<p>True if this object&#39;s mantissa and exponent are equal to those of another object; otherwise, false.</p>
+<p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if <i>other</i>
+ is null, or 0 if both values are equal.</p>
 
-<h3>Equals</h3>
+<h3>CompareToSignal</h3>
 
-<pre><code>public override bool Equals(
-    object obj);
+<pre><code>public PeterO.ExtendedFloat CompareToSignal(
+    PeterO.ExtendedFloat other,
+    PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object and that other object is a decimal fraction.</p>
+<p>Compares the mathematical values of this object and another object, treating quiet NaN as signaling. In this method, negative zero and positive zero are considered equal.</p>
+
+<p>If this object or the other object is a quiet NaN or signaling NaN, this method will return a quiet NaN and will signal a FlagInvalid flag.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: An arbitrary object.</li>
+<li><p><i>other</i>: An ExtendedFloat object.</p></li>
+<li><p><i>ctx</i>: A precision context. The precision, rounding, and exponent range are ignored. If HasFlags of the context is true, will store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>True if the objects are equal; otherwise, false.</p>
+<p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
-<h3>GetHashCode</h3>
+<h3>CompareToWithContext</h3>
 
-<pre><code>public override int GetHashCode();
+<pre><code>public PeterO.ExtendedFloat CompareToWithContext(
+    PeterO.ExtendedFloat other,
+    PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Calculates this object&#39;s hash code.</p>
+<p>Compares the mathematical values of this object and another object.In this method, negative zero and positive zero are considered equal.</p>
+
+<p>If this object or the other object is a quiet NaN or signaling NaN, this method returns a quiet NaN, and will signal a FlagInvalid flag if either is a signaling NaN.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>other</i>: An ExtendedFloat object.</p></li>
+<li><p><i>ctx</i>: A precision context. The precision, rounding, and exponent range are ignored. If HasFlags of the context is true, will store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
 
 <p><b>Returns:</b></p>
 
-<p>This object&#39;s hash code.</p>
+<p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+
+<h3>Create</h3>
+
+<pre><code>public static PeterO.ExtendedFloat Create(
+    int mantissaSmall,
+    int exponentSmall);
+</code></pre>
+
+<p>Creates a number with the value exponent*2^mantissa.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>mantissaSmall</i>: The un-scaled value.</p></li>
+<li><p><i>exponentSmall</i>: The binary exponent.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>Create</h3>
+
+<pre><code>public static PeterO.ExtendedFloat Create(
+    PeterO.BigInteger mantissa,
+    PeterO.BigInteger exponent);
+</code></pre>
+
+<p>Creates a number with the value exponent*2^mantissa.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>mantissa</i>: The un-scaled value.</p></li>
+<li><p><i>exponent</i>: The binary exponent.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>mantissa</i>
+or  <i>exponent</i>
+is null.</li>
+</ul>
 
 <h3>CreateNaN</h3>
 
@@ -172,521 +423,6 @@ The parameter  <i>diag</i>
 is less than 0.</p></li>
 </ul>
 
-<h3>Create</h3>
-
-<pre><code>public static PeterO.ExtendedFloat Create(
-    int mantissaSmall,
-    int exponentSmall);
-</code></pre>
-
-<p>Creates a number with the value exponent*2^mantissa.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>mantissaSmall</i>: The un-scaled value.</p></li>
-<li><p><i>exponentSmall</i>: The binary exponent.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>Create</h3>
-
-<pre><code>public static PeterO.ExtendedFloat Create(
-    PeterO.BigInteger mantissa,
-    PeterO.BigInteger exponent);
-</code></pre>
-
-<p>Creates a number with the value exponent*2^mantissa.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>mantissa</i>: The un-scaled value.</p></li>
-<li><p><i>exponent</i>: The binary exponent.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>mantissa</i>
-or  <i>exponent</i>
-is null.</li>
-</ul>
-
-<h3>FromString</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromString(
-    string str,
-    int offset,
-    int length,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Creates a binary float from a string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact. However, the resulting binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number (float or double). The format of the string generally consists of:</p>
-
-<ul>
-<li><p>An optional &#39;-&#39; or &#39;+&#39; character (if &#39;-&#39; , the value is negative.)</p></li>
-<li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
-<li><p>Optionally, E+ (positive exponent) or E- (negative exponent) plus one or more digits specifying the exponent.</p></li>
-</ul>
-
-<p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;qNaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
-
-<p>The format generally follows the definition in java.math.BigDecimal(), except that the digits must be ASCII digits (&#39;0&#39; through &#39;9&#39;).</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A String object.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>length</i>: A 32-bit signed integer. (2).</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
-
-<h3>FromString</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromString(
-    string str);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>str</i>: A String object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
-
-<h3>FromString</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromString(
-    string str,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A String object.</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
-
-<h3>FromString</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromString(
-    string str,
-    int offset,
-    int length);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A String object.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>length</i>: A 32-bit signed integer. (2).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
-
-<h3>ToBigInteger</h3>
-
-<pre><code>public PeterO.BigInteger ToBigInteger();
-</code></pre>
-
-<p>Converts this value to an arbitrary-precision integer. Any fractional part of this value will be discarded when converting to a big integer.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A BigInteger object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.OverflowException:
-This object&#39;s value is infinity or NaN.</li>
-</ul>
-
-<h3>ToBigIntegerExact</h3>
-
-<pre><code>public PeterO.BigInteger ToBigIntegerExact();
-</code></pre>
-
-<p>Converts this value to an arbitrary-precision integer, checking whether the value contains a fractional part.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A BigInteger object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.OverflowException:
-This object&#39;s value is infinity or NaN.</p></li>
-<li><p>System.ArithmeticException:
-This object&#39;s value is not an exact integer.</p></li>
-</ul>
-
-<h3>ToSingle</h3>
-
-<pre><code>public float ToSingle();
-</code></pre>
-
-<p>Converts this value to a 32-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The closest 32-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
-
-<h3>ToDouble</h3>
-
-<pre><code>public double ToDouble();
-</code></pre>
-
-<p>Converts this value to a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
-
-<h3>FromSingle</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromSingle(
-    float flt);
-</code></pre>
-
-<p>Creates a binary float from a 32-bit floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>flt</i>: A 32-bit floating-point number.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary float with the same value as  <i>flt</i>
-.</p>
-
-<h3>FromBigInteger</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromBigInteger(
-    PeterO.BigInteger bigint);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigint</i>: A BigInteger object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>FromInt64</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromInt64(
-    long valueSmall);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>valueSmall</i>: A 64-bit signed integer.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>FromInt32</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromInt32(
-    int valueSmaller);
-</code></pre>
-
-<p>Creates a binary float from a 32-bit signed integer.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>valueSmaller</i>: A 32-bit signed integer.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedDecimal object.</p>
-
-<h3>FromDouble</h3>
-
-<pre><code>public static PeterO.ExtendedFloat FromDouble(
-    double dbl);
-</code></pre>
-
-<p>Creates a binary float from a 64-bit floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>dbl</i>: A 64-bit floating-point number.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary float with the same value as  <i>dbl</i>
-.</p>
-
-<h3>ToExtendedDecimal</h3>
-
-<pre><code>public PeterO.ExtendedDecimal ToExtendedDecimal();
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedDecimal object.</p>
-
-<h3>ToString</h3>
-
-<pre><code>public override string ToString();
-</code></pre>
-
-<p>Converts this value to a string.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A string representation of this object.</p>
-
-<h3>ToEngineeringString</h3>
-
-<pre><code>public string ToEngineeringString();
-</code></pre>
-
-<p>Same as toString(), except that when an exponent is used it will be a multiple of 3. The format of the return value follows the format of the java.math.BigDecimal.toEngineeringString() method.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A string object.</p>
-
-<h3>ToPlainString</h3>
-
-<pre><code>public string ToPlainString();
-</code></pre>
-
-<p>Converts this value to a string, but without an exponent part. The format of the return value follows the format of the java.math.BigDecimal.toPlainString() method.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A string object.</p>
-
-<h3>One</h3>
-
-<pre><code>public static readonly PeterO.ExtendedFloat One;
-</code></pre>
-
-<p>Represents the number 1.</p>
-
-<h3>Zero</h3>
-
-<pre><code>public static readonly PeterO.ExtendedFloat Zero;
-</code></pre>
-
-<p>Represents the number 0.</p>
-
-<h3>NegativeZero</h3>
-
-<pre><code>public static readonly PeterO.ExtendedFloat NegativeZero;
-</code></pre>
-
-<p>Represents the number negative zero.</p>
-
-<h3>Ten</h3>
-
-<pre><code>public static readonly PeterO.ExtendedFloat Ten;
-</code></pre>
-
-<p>Represents the number 10.</p>
-
-<h3>NaN</h3>
-
-<pre><code>public static readonly PeterO.ExtendedFloat NaN;
-</code></pre>
-
-<p>A not-a-number value.</p>
-
-<h3>SignalingNaN</h3>
-
-<pre><code>public static readonly PeterO.ExtendedFloat SignalingNaN;
-</code></pre>
-
-<p>A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in ExtendedFloat.</p>
-
-<h3>PositiveInfinity</h3>
-
-<pre><code>public static readonly PeterO.ExtendedFloat PositiveInfinity;
-</code></pre>
-
-<p>Positive infinity, greater than any other number.</p>
-
-<h3>NegativeInfinity</h3>
-
-<pre><code>public static readonly PeterO.ExtendedFloat NegativeInfinity;
-</code></pre>
-
-<p>Negative infinity, less than any other number.</p>
-
-<h3>IsNegativeInfinity</h3>
-
-<pre><code>public bool IsNegativeInfinity();
-</code></pre>
-
-<p>Returns whether this object is negative infinity.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is negative infinity; otherwise, false.</p>
-
-<h3>IsPositiveInfinity</h3>
-
-<pre><code>public bool IsPositiveInfinity();
-</code></pre>
-
-<p>Returns whether this object is positive infinity.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is positive infinity; otherwise, false.</p>
-
-<h3>IsNaN</h3>
-
-<pre><code>public bool IsNaN();
-</code></pre>
-
-<p>Returns whether this object is a not-a-number value.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is a not-a-number value; otherwise, false.</p>
-
-<h3>IsInfinity</h3>
-
-<pre><code>public bool IsInfinity();
-</code></pre>
-
-<p>Gets a value indicating whether this object is positive or negative infinity.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is positive or negative infinity; otherwise, false.</p>
-
-<h3>IsQuietNaN</h3>
-
-<pre><code>public bool IsQuietNaN();
-</code></pre>
-
-<p>Gets a value indicating whether this object is a quiet not-a-number value.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is a quiet not-a-number value; otherwise, false.</p>
-
-<h3>IsSignalingNaN</h3>
-
-<pre><code>public bool IsSignalingNaN();
-</code></pre>
-
-<p>Gets a value indicating whether this object is a signaling not-a-number value.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is a signaling not-a-number value; otherwise, false.</p>
-
-<h3>Abs</h3>
-
-<pre><code>public PeterO.ExtendedFloat Abs();
-</code></pre>
-
-<p>Gets the absolute value of this object.</p>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>Negate</h3>
-
-<pre><code>public PeterO.ExtendedFloat Negate();
-</code></pre>
-
-<p>Gets an object with the same value as this one, but with the sign reversed.</p>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
 <h3>Divide</h3>
 
 <pre><code>public PeterO.ExtendedFloat Divide(
@@ -710,136 +446,6 @@ This object&#39;s value is not an exact integer.</p></li>
 <ul>
 <li>System.ArithmeticException:
 The result can&#39;t be exact because it would have a nonterminating binary expansion.</li>
-</ul>
-
-<h3>DivideToSameExponent</h3>
-
-<pre><code>public PeterO.ExtendedFloat DivideToSameExponent(
-    PeterO.ExtendedFloat divisor,
-    PeterO.Rounding rounding);
-</code></pre>
-
-<p>Divides this object by another binary float and returns a result with the same exponent as this object (the dividend).</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>divisor</i>: The divisor.</p></li>
-<li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The quotient of the two numbers. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
-</ul>
-
-<h3>DivideToIntegerNaturalScale</h3>
-
-<pre><code>public PeterO.ExtendedFloat DivideToIntegerNaturalScale(
-    PeterO.ExtendedFloat divisor);
-</code></pre>
-
-<p>Divides two ExtendedFloat objects, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>divisor</i>: The divisor.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The integer part of the quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0.</p>
-
-<h3>Reduce</h3>
-
-<pre><code>public PeterO.ExtendedFloat Reduce(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Removes trailing zeros from this object&#39;s mantissa. For example, 1.000 becomes 1. If this object&#39;s value is 0, changes the exponent to 0. (This is unlike the behavior in Java&#39;s BigDecimal method &quot;stripTrailingZeros&quot; in Java 7 and earlier.)</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>This value with trailing zeros removed. Note that if the result has a very high exponent and the context says to clamp high exponents, there may still be some trailing zeros in the mantissa.</p>
-
-<h3>RemainderNaturalScale</h3>
-
-<pre><code>public PeterO.ExtendedFloat RemainderNaturalScale(
-    PeterO.ExtendedFloat divisor);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>divisor</i>: An ExtendedFloat object. (2).</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>RemainderNaturalScale</h3>
-
-<pre><code>public PeterO.ExtendedFloat RemainderNaturalScale(
-    PeterO.ExtendedFloat divisor,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Calculates the remainder of a number by the formula this - ((this / divisor) * divisor). This is meant to be similar to the remainder operation in Java&#39;s BigDecimal.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>divisor</i>: An ExtendedFloat object. (2).</p></li>
-<li><p><i>ctx</i>: A precision context object to control the precision, rounding, and exponent range of the integer part of the result. This context will be used only in the division portion of the remainder calculation. Flags will be set on the given context only if the context&#39;s HasFlags is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>DivideToExponent</h3>
-
-<pre><code>public PeterO.ExtendedFloat DivideToExponent(
-    PeterO.ExtendedFloat divisor,
-    long desiredExponentSmall,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Divides two ExtendedFloat objects, and gives a particular exponent to the result.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
-<li><p><i>desiredExponentSmall</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
-<li><p><i>ctx</i>: A precision context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn&#39;t fit the given precision). If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0. Signals FlagInvalid and returns NaN if the context defines an exponent range and the desired exponent is outside that range.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -871,6 +477,73 @@ is null or  <i>ctx</i>
 &#39;s precision is 0, and the result would have a nonterminating binary expansion; or, the rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 </ul>
 
+<h3>DivideAndRemainderNaturalScale</h3>
+
+<pre><code>public PeterO.ExtendedFloat[] DivideAndRemainderNaturalScale(
+    PeterO.ExtendedFloat divisor);
+</code></pre>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>divisor</i>: The number to divide by.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 2 element array consisting of the quotient and remainder in that order.</p>
+
+<h3>DivideAndRemainderNaturalScale</h3>
+
+<pre><code>public PeterO.ExtendedFloat[] DivideAndRemainderNaturalScale(
+    PeterO.ExtendedFloat divisor,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>divisor</i>: The number to divide by.</p></li>
+<li><p><i>ctx</i>: A precision context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it&#39;s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context&#39;s HasFlags is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 2 element array consisting of the quotient and remainder in that order.</p>
+
+<h3>DivideToExponent</h3>
+
+<pre><code>public PeterO.ExtendedFloat DivideToExponent(
+    PeterO.ExtendedFloat divisor,
+    long desiredExponentSmall,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Divides two ExtendedFloat objects, and gives a particular exponent to the result.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
+<li><p><i>desiredExponentSmall</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
+<li><p><i>ctx</i>: A precision context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn&#39;t fit the given precision). If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0. Signals FlagInvalid and returns NaN if the context defines an exponent range and the desired exponent is outside that range.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
+</ul>
+
 <h3>DivideToExponent</h3>
 
 <pre><code>public PeterO.ExtendedFloat DivideToExponent(
@@ -886,6 +559,35 @@ is null or  <i>ctx</i>
 <ul>
 <li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
 <li><p><i>desiredExponentSmall</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
+<li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
+</ul>
+
+<h3>DivideToExponent</h3>
+
+<pre><code>public PeterO.ExtendedFloat DivideToExponent(
+    PeterO.ExtendedFloat divisor,
+    PeterO.BigInteger desiredExponent,
+    PeterO.Rounding rounding);
+</code></pre>
+
+<p>Divides two ExtendedFloat objects, and gives a particular exponent to the result.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
+<li><p><i>desiredExponent</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
 <li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
 </ul>
 
@@ -929,172 +631,23 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 </ul>
 
-<h3>DivideToExponent</h3>
+<h3>DivideToIntegerNaturalScale</h3>
 
-<pre><code>public PeterO.ExtendedFloat DivideToExponent(
-    PeterO.ExtendedFloat divisor,
-    PeterO.BigInteger desiredExponent,
-    PeterO.Rounding rounding);
+<pre><code>public PeterO.ExtendedFloat DivideToIntegerNaturalScale(
+    PeterO.ExtendedFloat divisor);
 </code></pre>
 
-<p>Divides two ExtendedFloat objects, and gives a particular exponent to the result.</p>
+<p>Divides two ExtendedFloat objects, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
-<li><p><i>desiredExponent</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
-<li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
+<li><i>divisor</i>: The divisor.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
-</ul>
-
-<h3>Abs</h3>
-
-<pre><code>public PeterO.ExtendedFloat Abs(
-    PeterO.PrecisionContext context);
-</code></pre>
-
-<p>Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>context</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The absolute value of this object.</p>
-
-<h3>Negate</h3>
-
-<pre><code>public PeterO.ExtendedFloat Negate(
-    PeterO.PrecisionContext context);
-</code></pre>
-
-<p>Returns a binary float with the same value as this object but with the sign reversed.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>context</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>Add</h3>
-
-<pre><code>public PeterO.ExtendedFloat Add(
-    PeterO.ExtendedFloat otherValue);
-</code></pre>
-
-<p>Adds this object and another binary float and returns the result.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: An ExtendedFloat object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The sum of the two objects.</p>
-
-<h3>Subtract</h3>
-
-<pre><code>public PeterO.ExtendedFloat Subtract(
-    PeterO.ExtendedFloat otherValue);
-</code></pre>
-
-<p>Subtracts an ExtendedFloat object from this instance and returns the result..</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: An ExtendedFloat object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The difference of the two objects.</p>
-
-<h3>Subtract</h3>
-
-<pre><code>public PeterO.ExtendedFloat Subtract(
-    PeterO.ExtendedFloat otherValue,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Subtracts an ExtendedFloat object from this instance.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>otherValue</i>: An ExtendedFloat object.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The difference of the two objects.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>otherValue</i>
-is null.</li>
-</ul>
-
-<h3>Multiply</h3>
-
-<pre><code>public PeterO.ExtendedFloat Multiply(
-    PeterO.ExtendedFloat otherValue);
-</code></pre>
-
-<p>Multiplies two binary floats. The resulting exponent will be the sum of the exponents of the two binary floats.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: Another binary float.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The product of the two binary floats.</p>
-
-<h3>MultiplyAndAdd</h3>
-
-<pre><code>public PeterO.ExtendedFloat MultiplyAndAdd(
-    PeterO.ExtendedFloat multiplicand,
-    PeterO.ExtendedFloat augend);
-</code></pre>
-
-<p>Multiplies by one binary float, and then adds another binary float.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>multiplicand</i>: The value to multiply.</p></li>
-<li><p><i>augend</i>: The value to add.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The result this * multiplicand + augend.</p>
+<p>The integer part of the quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0.</p>
 
 <h3>DivideToIntegerNaturalScale</h3>
 
@@ -1143,317 +696,58 @@ The rounding mode is Rounding.Unnecessary and the integer part of the result is 
 
 <p>The integer part of the quotient of the two objects. The exponent will be set to 0. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0, or if the result doesn&#39;t fit the given precision.</p>
 
-<h3>Remainder</h3>
+<h3>DivideToSameExponent</h3>
 
-<pre><code>public PeterO.ExtendedFloat Remainder(
+<pre><code>public PeterO.ExtendedFloat DivideToSameExponent(
     PeterO.ExtendedFloat divisor,
-    PeterO.PrecisionContext ctx);
+    PeterO.Rounding rounding);
 </code></pre>
 
-<p>Finds the remainder that results when dividing two ExtendedFloat objects.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The remainder of the two objects.</p>
-
-<h3>RemainderNear</h3>
-
-<pre><code>public PeterO.ExtendedFloat RemainderNear(
-    PeterO.ExtendedFloat divisor,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</p>
-
-<ul>
-<li><p>If this and the other object divide evenly, the result is 0.</p></li>
-<li><p>If the remainder&#39;s absolute value is less than half of the divisor&#39;s absolute value, the result has the same sign as this object and will be the distance to the closest multiple.</p></li>
-<li><p>If the remainder&#39;s absolute value is more than half of the divisor&#39; s absolute value, the result has the opposite sign of this object and will be the distance to the closest multiple.</p></li>
-<li><p>If the remainder&#39;s absolute value is exactly half of the divisor&#39;s absolute value, the result has the opposite sign of this object if the quotient, rounded down, is odd, and has the same sign as this object if the quotient, rounded down, is even, and the result&#39;s absolute value is half of the divisor&#39;s absolute value.</p></li>
-</ul>
-
-<p>This function is also known as the &quot;IEEE Remainder&quot; function.</p>
+<p>Divides this object by another binary float and returns a result with the same exponent as this object (the dividend).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The divisor.</p></li>
-<li><p><i>ctx</i>: A precision context object to control the precision. The rounding and exponent range settings of this context are ignored (the rounding mode is always treated as HalfEven). If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+<li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>The distance of the closest multiple. Signals FlagInvalid and returns NaN if the divisor is 0, or either the result of integer division (the quotient) or the remainder wouldn&#39;t fit the given precision.</p>
-
-<h3>NextMinus</h3>
-
-<pre><code>public PeterO.ExtendedFloat NextMinus(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Finds the largest value that&#39;s smaller than the given value.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>ctx</i>: A precision context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>Returns the largest value that&#39;s less than the given value. Returns negative infinity if the result is negative infinity.</p>
+<p>The quotient of the two numbers. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns NaN if the divisor and the dividend are 0.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-The parameter  <i>ctx</i>
-is null, the precision is 0, or  <i>ctx</i>
-has an unlimited exponent range.</li>
+<li>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 </ul>
 
-<h3>NextPlus</h3>
+<h3>Equals</h3>
 
-<pre><code>public PeterO.ExtendedFloat NextPlus(
-    PeterO.PrecisionContext ctx);
+<pre><code>public override bool Equals(
+    object obj);
 </code></pre>
 
-<p>Finds the smallest value that&#39;s greater than the given value.</p>
+<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object and that other object is a decimal fraction.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A precision context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</li>
+<li><i>obj</i>: An arbitrary object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>Returns the smallest value that&#39;s greater than the given value.</p>
+<p>True if the objects are equal; otherwise, false.</p>
 
-<p><b>Exceptions:</b></p>
+<h3>Equals</h3>
 
-<ul>
-<li>System.ArgumentException:
-The parameter  <i>ctx</i>
-is null, the precision is 0, or  <i>ctx</i>
-has an unlimited exponent range.</li>
-</ul>
-
-<h3>NextToward</h3>
-
-<pre><code>public PeterO.ExtendedFloat NextToward(
-    PeterO.ExtendedFloat otherValue,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Finds the next value that is closer to the other object&#39;s value than this object&#39;s value.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>otherValue</i>: An ExtendedFloat object.</p></li>
-<li><p><i>ctx</i>: A precision context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>Returns the next value that is closer to the other object&#39; s value than this object&#39;s value.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-The parameter  <i>ctx</i>
-is null, the precision is 0, or  <i>ctx</i>
-has an unlimited exponent range.</li>
-</ul>
-
-<h3>Max</h3>
-
-<pre><code>public static PeterO.ExtendedFloat Max(
-    PeterO.ExtendedFloat first,
-    PeterO.ExtendedFloat second,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Gets the greater value between two binary floats.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>first</i>: An ExtendedFloat object.</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (2).</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The larger value of the two objects.</p>
-
-<h3>Min</h3>
-
-<pre><code>public static PeterO.ExtendedFloat Min(
-    PeterO.ExtendedFloat first,
-    PeterO.ExtendedFloat second,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Gets the lesser value between two binary floats.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>first</i>: An ExtendedFloat object.</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (2).</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The smaller value of the two objects.</p>
-
-<h3>MaxMagnitude</h3>
-
-<pre><code>public static PeterO.ExtendedFloat MaxMagnitude(
-    PeterO.ExtendedFloat first,
-    PeterO.ExtendedFloat second,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Gets the greater value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Max.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>first</i>: An ExtendedFloat object. (2).</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>MinMagnitude</h3>
-
-<pre><code>public static PeterO.ExtendedFloat MinMagnitude(
-    PeterO.ExtendedFloat first,
-    PeterO.ExtendedFloat second,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Gets the lesser value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Min.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>first</i>: An ExtendedFloat object. (2).</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>Max</h3>
-
-<pre><code>public static PeterO.ExtendedFloat Max(
-    PeterO.ExtendedFloat first,
-    PeterO.ExtendedFloat second);
-</code></pre>
-
-<p>Gets the greater value between two binary floats.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>first</i>: An ExtendedFloat object.</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (2).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The larger value of the two objects.</p>
-
-<h3>Min</h3>
-
-<pre><code>public static PeterO.ExtendedFloat Min(
-    PeterO.ExtendedFloat first,
-    PeterO.ExtendedFloat second);
-</code></pre>
-
-<p>Gets the lesser value between two binary floats.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>first</i>: An ExtendedFloat object.</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (2).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The smaller value of the two objects.</p>
-
-<h3>MaxMagnitude</h3>
-
-<pre><code>public static PeterO.ExtendedFloat MaxMagnitude(
-    PeterO.ExtendedFloat first,
-    PeterO.ExtendedFloat second);
-</code></pre>
-
-<p>Gets the greater value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Max.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>first</i>: An ExtendedFloat object. (2).</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>MinMagnitude</h3>
-
-<pre><code>public static PeterO.ExtendedFloat MinMagnitude(
-    PeterO.ExtendedFloat first,
-    PeterO.ExtendedFloat second);
-</code></pre>
-
-<p>Gets the lesser value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Min.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>first</i>: An ExtendedFloat object. (2).</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedFloat object.</p>
-
-<h3>CompareTo</h3>
-
-<pre><code>public sealed int CompareTo(
+<pre><code>public sealed bool Equals(
     PeterO.ExtendedFloat other);
 </code></pre>
 
-<p>Compares the mathematical values of this object and another object, accepting NaN values. This method is not consistent with the Equals method because two different numbers with the same mathematical value, but different exponents, will compare as equal.</p>
-
-<p>In this method, negative zero and positive zero are considered equal.</p>
-
-<p>If this object or the other object is a quiet NaN or signaling NaN, this method will not trigger an error. Instead, NaN will compare greater than any other number, including infinity. Two different NaN values will be considered equal.</p>
+<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1463,404 +757,25 @@ has an unlimited exponent range.</li>
 
 <p><b>Returns:</b></p>
 
-<p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if <i>other</i>
- is null, or 0 if both values are equal.</p>
+<p>True if this object&#39;s mantissa and exponent are equal to those of another object; otherwise, false.</p>
 
-<h3>CompareToWithContext</h3>
+<h3>EqualsInternal</h3>
 
-<pre><code>public PeterO.ExtendedFloat CompareToWithContext(
-    PeterO.ExtendedFloat other,
-    PeterO.PrecisionContext ctx);
+<pre><code>public bool EqualsInternal(
+    PeterO.ExtendedFloat otherValue);
 </code></pre>
 
-<p>Compares the mathematical values of this object and another object.In this method, negative zero and positive zero are considered equal.</p>
-
-<p>If this object or the other object is a quiet NaN or signaling NaN, this method returns a quiet NaN, and will signal a FlagInvalid flag if either is a signaling NaN.</p>
+<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>other</i>: An ExtendedFloat object.</p></li>
-<li><p><i>ctx</i>: A precision context. The precision, rounding, and exponent range are ignored. If HasFlags of the context is true, will store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+<li><i>otherValue</i>: An ExtendedFloat object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
-
-<h3>CompareToSignal</h3>
-
-<pre><code>public PeterO.ExtendedFloat CompareToSignal(
-    PeterO.ExtendedFloat other,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Compares the mathematical values of this object and another object, treating quiet NaN as signaling. In this method, negative zero and positive zero are considered equal.</p>
-
-<p>If this object or the other object is a quiet NaN or signaling NaN, this method will return a quiet NaN and will signal a FlagInvalid flag.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>other</i>: An ExtendedFloat object.</p></li>
-<li><p><i>ctx</i>: A precision context. The precision, rounding, and exponent range are ignored. If HasFlags of the context is true, will store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
-
-<h3>Add</h3>
-
-<pre><code>public PeterO.ExtendedFloat Add(
-    PeterO.ExtendedFloat otherValue,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Finds the sum of this object and another object. The result&#39;s exponent is set to the lower of the exponents of the two operands.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>otherValue</i>: The number to add to.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The sum of thisValue and the other object.</p>
-
-<h3>Quantize</h3>
-
-<pre><code>public PeterO.ExtendedFloat Quantize(
-    PeterO.BigInteger desiredExponent,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary float with the same value but a new exponent.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>desiredExponent</i>: A BigInteger object.</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary float with the same value as this object but with the exponent changed. Signals FlagInvalid and returns NaN if an overflow error occurred, or the rounded result can&#39;t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
-
-<h3>Quantize</h3>
-
-<pre><code>public PeterO.ExtendedFloat Quantize(
-    int desiredExponentSmall,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary float with the same value but a new exponent.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>desiredExponentSmall</i>: A 32-bit signed integer.</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary float with the same value as this object but with the exponent changed. Signals FlagInvalid and returns NaN if an overflow error occurred, or the rounded result can&#39;t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
-
-<h3>Quantize</h3>
-
-<pre><code>public PeterO.ExtendedFloat Quantize(
-    PeterO.ExtendedFloat otherValue,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary float with the same value as this object but with the same exponent as another binary float.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>otherValue</i>: A binary float containing the desired exponent of the result. The mantissa is ignored. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision and rounding of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary float with the same value as this object but with the exponent changed. Signals FlagInvalid and returns NaN if an overflow error occurred, or the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns NaN if the new exponent is outside of the valid range of the precision context, if it defines an exponent range.</p>
-
-<h3>RoundToIntegralExact</h3>
-
-<pre><code>public PeterO.ExtendedFloat RoundToIntegralExact(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>ctx</i>: A precision context to control precision and rounding of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary number rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns NaN if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the precision context.</p>
-
-<h3>RoundToIntegralNoRoundedFlag</h3>
-
-<pre><code>public PeterO.ExtendedFloat RoundToIntegralNoRoundedFlag(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary number with the same value as this object but rounded to an integer, without adding the FlagInexact or FlagRounded flags.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>ctx</i>: A precision context to control precision and rounding of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags), except that this function will never add the FlagRounded and FlagInexact flags (the only difference between this and RoundToExponentExact). Can be null, in which case the default rounding mode is HalfEven.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary number rounded to the closest integer representable in the given precision, meaning if the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the precision context.</p>
-
-<h3>RoundToExponentExact</h3>
-
-<pre><code>public PeterO.ExtendedFloat RoundToExponentExact(
-    PeterO.BigInteger exponent,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns NaN if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
-
-<h3>RoundToExponent</h3>
-
-<pre><code>public PeterO.ExtendedFloat RoundToExponent(
-    PeterO.BigInteger exponent,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary number with the same value as this object, and rounds it to a new exponent if necessary.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary number rounded to the closest value representable in the given precision, meaning if the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
-
-<h3>RoundToExponentExact</h3>
-
-<pre><code>public PeterO.ExtendedFloat RoundToExponentExact(
-    int exponentSmall,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns NaN if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
-
-<h3>RoundToExponent</h3>
-
-<pre><code>public PeterO.ExtendedFloat RoundToExponent(
-    int exponentSmall,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Returns a binary number with the same value as this object, and rounds it to a new exponent if necessary.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A binary number rounded to the closest value representable in the given precision, meaning if the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
-
-<h3>Multiply</h3>
-
-<pre><code>public PeterO.ExtendedFloat Multiply(
-    PeterO.ExtendedFloat op,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Multiplies two binary floats. The resulting scale will be the sum of the scales of the two binary floats. The result&#39;s sign is positive if both operands have the same sign, and negative if they have different signs.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>op</i>: Another binary float.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The product of the two binary floats.</p>
-
-<h3>MultiplyAndAdd</h3>
-
-<pre><code>public PeterO.ExtendedFloat MultiplyAndAdd(
-    PeterO.ExtendedFloat op,
-    PeterO.ExtendedFloat augend,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Multiplies by one value, and then adds another value.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>op</i>: The value to multiply.</p></li>
-<li><p><i>augend</i>: The value to add.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The result thisValue * multiplicand + augend.</p>
-
-<h3>MultiplyAndSubtract</h3>
-
-<pre><code>public PeterO.ExtendedFloat MultiplyAndSubtract(
-    PeterO.ExtendedFloat op,
-    PeterO.ExtendedFloat subtrahend,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Multiplies by one value, and then subtracts another value.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>op</i>: The value to multiply.</p></li>
-<li><p><i>subtrahend</i>: The value to subtract.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The result thisValue * multiplicand - subtrahend.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter &quot;otherValue&quot; is null.</li>
-</ul>
-
-<h3>RoundToPrecision</h3>
-
-<pre><code>public PeterO.ExtendedFloat RoundToPrecision(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. Can be null.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if  <i>ctx</i>
-is null or the precision and exponent range are unlimited.</p>
-
-<h3>Plus</h3>
-
-<pre><code>public PeterO.ExtendedFloat Plus(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. Can be null.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if  <i>ctx</i>
-is null or the precision and exponent range are unlimited.</p>
-
-<h3>RoundToBinaryPrecision</h3>
-
-<pre><code>public PeterO.ExtendedFloat RoundToBinaryPrecision(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p><b>Deprecated.</b> Instead of this method use RoundToPrecision and pass a precision context with the IsPrecisionInBits property set.</p>
-
-<p>Rounds this object&#39;s value to a given maximum bit length, using the given rounding mode and range of exponent.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. The precision is interpreted as the maximum bit length of the mantissa. Can be null.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if  <i>ctx</i>
-is null or the precision and exponent range are unlimited.</p>
-
-<h3>SquareRoot</h3>
-
-<pre><code>public PeterO.ExtendedFloat SquareRoot(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Finds the square root of this object&#39;s value.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). --This parameter cannot be null, as the square root function&#39;s results are generally not exact for many inputs.--.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN).</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-The parameter  <i>ctx</i>
-is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
-</ul>
+<p>True if this object&#39;s mantissa and exponent are equal to those of another object; otherwise, false.</p>
 
 <h3>Exp</h3>
 
@@ -1887,6 +802,301 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 The parameter  <i>ctx</i>
 is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </ul>
+
+<h3>FromBigInteger</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromBigInteger(
+    PeterO.BigInteger bigint);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigint</i>: A BigInteger object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>FromDouble</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromDouble(
+    double dbl);
+</code></pre>
+
+<p>Creates a binary float from a 64-bit floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>dbl</i>: A 64-bit floating-point number.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary float with the same value as  <i>dbl</i>
+.</p>
+
+<h3>FromInt32</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromInt32(
+    int valueSmaller);
+</code></pre>
+
+<p>Creates a binary float from a 32-bit signed integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>valueSmaller</i>: A 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedDecimal object.</p>
+
+<h3>FromInt64</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromInt64(
+    long valueSmall);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>valueSmall</i>: A 64-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>FromSingle</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromSingle(
+    float flt);
+</code></pre>
+
+<p>Creates a binary float from a 32-bit floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>flt</i>: A 32-bit floating-point number.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary float with the same value as  <i>flt</i>
+.</p>
+
+<h3>FromString</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromString(
+    string str);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A String object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromString(
+    string str,
+    int offset,
+    int length);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A String object.</p></li>
+<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
+<li><p><i>length</i>: A 32-bit signed integer. (2).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromString(
+    string str,
+    int offset,
+    int length,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Creates a binary float from a string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact. However, the resulting binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number (float or double). The format of the string generally consists of:</p>
+
+<ul>
+<li><p>An optional &#39;-&#39; or &#39;+&#39; character (if &#39;-&#39; , the value is negative.)</p></li>
+<li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
+<li><p>Optionally, E+ (positive exponent) or E- (negative exponent) plus one or more digits specifying the exponent.</p></li>
+</ul>
+
+<p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;qNaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
+
+<p>The format generally follows the definition in java.math.BigDecimal(), except that the digits must be ASCII digits (&#39;0&#39; through &#39;9&#39;).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A String object.</p></li>
+<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
+<li><p><i>length</i>: A 32-bit signed integer. (2).</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>public static PeterO.ExtendedFloat FromString(
+    string str,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A String object.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<h3>GetHashCode</h3>
+
+<pre><code>public override int GetHashCode();
+</code></pre>
+
+<p>Calculates this object&#39;s hash code.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object&#39;s hash code.</p>
+
+<h3>IsInfinity</h3>
+
+<pre><code>public bool IsInfinity();
+</code></pre>
+
+<p>Gets a value indicating whether this object is positive or negative infinity.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is positive or negative infinity; otherwise, false.</p>
+
+<h3>IsNaN</h3>
+
+<pre><code>public bool IsNaN();
+</code></pre>
+
+<p>Returns whether this object is a not-a-number value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is a not-a-number value; otherwise, false.</p>
+
+<h3>IsNegativeInfinity</h3>
+
+<pre><code>public bool IsNegativeInfinity();
+</code></pre>
+
+<p>Returns whether this object is negative infinity.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is negative infinity; otherwise, false.</p>
+
+<h3>IsPositiveInfinity</h3>
+
+<pre><code>public bool IsPositiveInfinity();
+</code></pre>
+
+<p>Returns whether this object is positive infinity.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is positive infinity; otherwise, false.</p>
+
+<h3>IsQuietNaN</h3>
+
+<pre><code>public bool IsQuietNaN();
+</code></pre>
+
+<p>Gets a value indicating whether this object is a quiet not-a-number value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is a quiet not-a-number value; otherwise, false.</p>
+
+<h3>IsSignalingNaN</h3>
+
+<pre><code>public bool IsSignalingNaN();
+</code></pre>
+
+<p>Gets a value indicating whether this object is a signaling not-a-number value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is a signaling not-a-number value; otherwise, false.</p>
 
 <h3>Log</h3>
 
@@ -1933,97 +1143,173 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns NaN if this object is less than 0. Signals FlagInvalid and returns NaN if the parameter  <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
-<h3>Pow</h3>
+<h3>Max</h3>
 
-<pre><code>public PeterO.ExtendedFloat Pow(
-    PeterO.ExtendedFloat exponent,
+<pre><code>public static PeterO.ExtendedFloat Max(
+    PeterO.ExtendedFloat first,
+    PeterO.ExtendedFloat second);
+</code></pre>
+
+<p>Gets the greater value between two binary floats.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>first</i>: An ExtendedFloat object.</p></li>
+<li><p><i>second</i>: An ExtendedFloat object. (2).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The larger value of the two objects.</p>
+
+<h3>Max</h3>
+
+<pre><code>public static PeterO.ExtendedFloat Max(
+    PeterO.ExtendedFloat first,
+    PeterO.ExtendedFloat second,
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Raises this object&#39;s value to the given exponent.</p>
+<p>Gets the greater value between two binary floats.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponent</i>: An ExtendedFloat object.</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+<li><p><i>first</i>: An ExtendedFloat object.</p></li>
+<li><p><i>second</i>: An ExtendedFloat object. (2).</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>This^exponent. Signals the flag FlagInvalid and returns NaN if this object and exponent are both 0; or if this value is less than 0 and the exponent either has a fractional part or is infinity.</p>
+<p>The larger value of the two objects.</p>
 
-<p><b>Exceptions:</b></p>
+<h3>MaxMagnitude</h3>
+
+<pre><code>public static PeterO.ExtendedFloat MaxMagnitude(
+    PeterO.ExtendedFloat first,
+    PeterO.ExtendedFloat second);
+</code></pre>
+
+<p>Gets the greater value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Max.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-The parameter  <i>ctx</i>
-is null or the precision is unlimited (the context&#39;s Precision property is 0), and the exponent has a fractional part.</li>
+<li><p><i>first</i>: An ExtendedFloat object. (2).</p></li>
+<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
 </ul>
 
-<h3>Pow</h3>
+<p><b>Returns:</b></p>
 
-<pre><code>public PeterO.ExtendedFloat Pow(
-    int exponentSmall,
+<p>An ExtendedFloat object.</p>
+
+<h3>MaxMagnitude</h3>
+
+<pre><code>public static PeterO.ExtendedFloat MaxMagnitude(
+    PeterO.ExtendedFloat first,
+    PeterO.ExtendedFloat second,
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Raises this object&#39;s value to the given exponent.</p>
+<p>Gets the greater value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Max.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponentSmall</i>: A 32-bit signed integer.</p></li>
-<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</p></li>
+<li><p><i>first</i>: An ExtendedFloat object. (2).</p></li>
+<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>This^exponent. Signals the flag FlagInvalid and returns NaN if this object and exponent are both 0.</p>
+<p>An ExtendedFloat object.</p>
 
-<h3>Pow</h3>
+<h3>Min</h3>
 
-<pre><code>public PeterO.ExtendedFloat Pow(
-    int exponentSmall);
+<pre><code>public static PeterO.ExtendedFloat Min(
+    PeterO.ExtendedFloat first,
+    PeterO.ExtendedFloat second);
 </code></pre>
 
-<p>Raises this object&#39;s value to the given exponent.</p>
+<p>Gets the lesser value between two binary floats.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>exponentSmall</i>: A 32-bit signed integer.</li>
+<li><p><i>first</i>: An ExtendedFloat object.</p></li>
+<li><p><i>second</i>: An ExtendedFloat object. (2).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>This^exponent. Returns NaN if this object and exponent are both 0.</p>
+<p>The smaller value of the two objects.</p>
 
-<h3>PI</h3>
+<h3>Min</h3>
 
-<pre><code>public static PeterO.ExtendedFloat PI(
+<pre><code>public static PeterO.ExtendedFloat Min(
+    PeterO.ExtendedFloat first,
+    PeterO.ExtendedFloat second,
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Finds the constant pi.</p>
+<p>Gets the lesser value between two binary floats.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). --This parameter cannot be null, as pi can never be represented exactly.--.</li>
+<li><p><i>first</i>: An ExtendedFloat object.</p></li>
+<li><p><i>second</i>: An ExtendedFloat object. (2).</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>Pi rounded to the given precision.</p>
+<p>The smaller value of the two objects.</p>
 
-<p><b>Exceptions:</b></p>
+<h3>MinMagnitude</h3>
+
+<pre><code>public static PeterO.ExtendedFloat MinMagnitude(
+    PeterO.ExtendedFloat first,
+    PeterO.ExtendedFloat second);
+</code></pre>
+
+<p>Gets the lesser value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Min.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-The parameter  <i>ctx</i>
-is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
+<li><p><i>first</i>: An ExtendedFloat object. (2).</p></li>
+<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
 </ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>MinMagnitude</h3>
+
+<pre><code>public static PeterO.ExtendedFloat MinMagnitude(
+    PeterO.ExtendedFloat first,
+    PeterO.ExtendedFloat second,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Gets the lesser value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Min.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>first</i>: An ExtendedFloat object. (2).</p></li>
+<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
 
 <h3>MovePointLeft</h3>
 
@@ -2178,6 +1464,670 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p>A number whose scale is increased by  <i>bigPlaces</i>
  , but not to more than 0.</p>
 
+<h3>Multiply</h3>
+
+<pre><code>public PeterO.ExtendedFloat Multiply(
+    PeterO.ExtendedFloat op,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Multiplies two binary floats. The resulting scale will be the sum of the scales of the two binary floats. The result&#39;s sign is positive if both operands have the same sign, and negative if they have different signs.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>op</i>: Another binary float.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The product of the two binary floats.</p>
+
+<h3>Multiply</h3>
+
+<pre><code>public PeterO.ExtendedFloat Multiply(
+    PeterO.ExtendedFloat otherValue);
+</code></pre>
+
+<p>Multiplies two binary floats. The resulting exponent will be the sum of the exponents of the two binary floats.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: Another binary float.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The product of the two binary floats.</p>
+
+<h3>MultiplyAndAdd</h3>
+
+<pre><code>public PeterO.ExtendedFloat MultiplyAndAdd(
+    PeterO.ExtendedFloat multiplicand,
+    PeterO.ExtendedFloat augend);
+</code></pre>
+
+<p>Multiplies by one binary float, and then adds another binary float.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>multiplicand</i>: The value to multiply.</p></li>
+<li><p><i>augend</i>: The value to add.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The result this * multiplicand + augend.</p>
+
+<h3>MultiplyAndAdd</h3>
+
+<pre><code>public PeterO.ExtendedFloat MultiplyAndAdd(
+    PeterO.ExtendedFloat op,
+    PeterO.ExtendedFloat augend,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Multiplies by one value, and then adds another value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>op</i>: The value to multiply.</p></li>
+<li><p><i>augend</i>: The value to add.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The result thisValue * multiplicand + augend.</p>
+
+<h3>MultiplyAndSubtract</h3>
+
+<pre><code>public PeterO.ExtendedFloat MultiplyAndSubtract(
+    PeterO.ExtendedFloat op,
+    PeterO.ExtendedFloat subtrahend,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Multiplies by one value, and then subtracts another value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>op</i>: The value to multiply.</p></li>
+<li><p><i>subtrahend</i>: The value to subtract.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The result thisValue * multiplicand - subtrahend.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter &quot;otherValue&quot; is null.</li>
+</ul>
+
+<h3>Negate</h3>
+
+<pre><code>public PeterO.ExtendedFloat Negate(
+    PeterO.PrecisionContext context);
+</code></pre>
+
+<p>Returns a binary float with the same value as this object but with the sign reversed.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>context</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>Negate</h3>
+
+<pre><code>public PeterO.ExtendedFloat Negate();
+</code></pre>
+
+<p>Gets an object with the same value as this one, but with the sign reversed.</p>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>NextMinus</h3>
+
+<pre><code>public PeterO.ExtendedFloat NextMinus(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Finds the largest value that&#39;s smaller than the given value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>Returns the largest value that&#39;s less than the given value. Returns negative infinity if the result is negative infinity.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>ctx</i>
+is null, the precision is 0, or  <i>ctx</i>
+has an unlimited exponent range.</li>
+</ul>
+
+<h3>NextPlus</h3>
+
+<pre><code>public PeterO.ExtendedFloat NextPlus(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Finds the smallest value that&#39;s greater than the given value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>Returns the smallest value that&#39;s greater than the given value.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>ctx</i>
+is null, the precision is 0, or  <i>ctx</i>
+has an unlimited exponent range.</li>
+</ul>
+
+<h3>NextToward</h3>
+
+<pre><code>public PeterO.ExtendedFloat NextToward(
+    PeterO.ExtendedFloat otherValue,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Finds the next value that is closer to the other object&#39;s value than this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>otherValue</i>: An ExtendedFloat object.</p></li>
+<li><p><i>ctx</i>: A precision context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>Returns the next value that is closer to the other object&#39; s value than this object&#39;s value.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>ctx</i>
+is null, the precision is 0, or  <i>ctx</i>
+has an unlimited exponent range.</li>
+</ul>
+
+<h3>PI</h3>
+
+<pre><code>public static PeterO.ExtendedFloat PI(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Finds the constant pi.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). --This parameter cannot be null, as pi can never be represented exactly.--.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>Pi rounded to the given precision.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>ctx</i>
+is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
+</ul>
+
+<h3>Plus</h3>
+
+<pre><code>public PeterO.ExtendedFloat Plus(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. Can be null.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if  <i>ctx</i>
+is null or the precision and exponent range are unlimited.</p>
+
+<h3>Pow</h3>
+
+<pre><code>public PeterO.ExtendedFloat Pow(
+    int exponentSmall);
+</code></pre>
+
+<p>Raises this object&#39;s value to the given exponent.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>exponentSmall</i>: A 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This^exponent. Returns NaN if this object and exponent are both 0.</p>
+
+<h3>Pow</h3>
+
+<pre><code>public PeterO.ExtendedFloat Pow(
+    int exponentSmall,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Raises this object&#39;s value to the given exponent.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponentSmall</i>: A 32-bit signed integer.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This^exponent. Signals the flag FlagInvalid and returns NaN if this object and exponent are both 0.</p>
+
+<h3>Pow</h3>
+
+<pre><code>public PeterO.ExtendedFloat Pow(
+    PeterO.ExtendedFloat exponent,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Raises this object&#39;s value to the given exponent.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponent</i>: An ExtendedFloat object.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This^exponent. Signals the flag FlagInvalid and returns NaN if this object and exponent are both 0; or if this value is less than 0 and the exponent either has a fractional part or is infinity.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>ctx</i>
+is null or the precision is unlimited (the context&#39;s Precision property is 0), and the exponent has a fractional part.</li>
+</ul>
+
+<h3>Precision</h3>
+
+<pre><code>public PeterO.BigInteger Precision();
+</code></pre>
+
+<p>Finds the number of digits in this number&#39;s mantissa. Returns 1 if this value is 0, and 0 if this value is infinity or NaN.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<h3>Quantize</h3>
+
+<pre><code>public PeterO.ExtendedFloat Quantize(
+    int desiredExponentSmall,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary float with the same value but a new exponent.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>desiredExponentSmall</i>: A 32-bit signed integer.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary float with the same value as this object but with the exponent changed. Signals FlagInvalid and returns NaN if an overflow error occurred, or the rounded result can&#39;t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
+
+<h3>Quantize</h3>
+
+<pre><code>public PeterO.ExtendedFloat Quantize(
+    PeterO.BigInteger desiredExponent,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary float with the same value but a new exponent.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>desiredExponent</i>: A BigInteger object.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary float with the same value as this object but with the exponent changed. Signals FlagInvalid and returns NaN if an overflow error occurred, or the rounded result can&#39;t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
+
+<h3>Quantize</h3>
+
+<pre><code>public PeterO.ExtendedFloat Quantize(
+    PeterO.ExtendedFloat otherValue,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary float with the same value as this object but with the same exponent as another binary float.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>otherValue</i>: A binary float containing the desired exponent of the result. The mantissa is ignored. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision and rounding of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary float with the same value as this object but with the exponent changed. Signals FlagInvalid and returns NaN if an overflow error occurred, or the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns NaN if the new exponent is outside of the valid range of the precision context, if it defines an exponent range.</p>
+
+<h3>Reduce</h3>
+
+<pre><code>public PeterO.ExtendedFloat Reduce(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Removes trailing zeros from this object&#39;s mantissa. For example, 1.000 becomes 1. If this object&#39;s value is 0, changes the exponent to 0. (This is unlike the behavior in Java&#39;s BigDecimal method &quot;stripTrailingZeros&quot; in Java 7 and earlier.)</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This value with trailing zeros removed. Note that if the result has a very high exponent and the context says to clamp high exponents, there may still be some trailing zeros in the mantissa.</p>
+
+<h3>Remainder</h3>
+
+<pre><code>public PeterO.ExtendedFloat Remainder(
+    PeterO.ExtendedFloat divisor,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Finds the remainder that results when dividing two ExtendedFloat objects.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The remainder of the two objects.</p>
+
+<h3>RemainderNaturalScale</h3>
+
+<pre><code>public PeterO.ExtendedFloat RemainderNaturalScale(
+    PeterO.ExtendedFloat divisor);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>divisor</i>: An ExtendedFloat object. (2).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>RemainderNaturalScale</h3>
+
+<pre><code>public PeterO.ExtendedFloat RemainderNaturalScale(
+    PeterO.ExtendedFloat divisor,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Calculates the remainder of a number by the formula this - ((this / divisor) * divisor). This is meant to be similar to the remainder operation in Java&#39;s BigDecimal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>divisor</i>: An ExtendedFloat object. (2).</p></li>
+<li><p><i>ctx</i>: A precision context object to control the precision, rounding, and exponent range of the integer part of the result. This context will be used only in the division portion of the remainder calculation. Flags will be set on the given context only if the context&#39;s HasFlags is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>RemainderNear</h3>
+
+<pre><code>public PeterO.ExtendedFloat RemainderNear(
+    PeterO.ExtendedFloat divisor,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</p>
+
+<ul>
+<li><p>If this and the other object divide evenly, the result is 0.</p></li>
+<li><p>If the remainder&#39;s absolute value is less than half of the divisor&#39;s absolute value, the result has the same sign as this object and will be the distance to the closest multiple.</p></li>
+<li><p>If the remainder&#39;s absolute value is more than half of the divisor&#39; s absolute value, the result has the opposite sign of this object and will be the distance to the closest multiple.</p></li>
+<li><p>If the remainder&#39;s absolute value is exactly half of the divisor&#39;s absolute value, the result has the opposite sign of this object if the quotient, rounded down, is odd, and has the same sign as this object if the quotient, rounded down, is even, and the result&#39;s absolute value is half of the divisor&#39;s absolute value.</p></li>
+</ul>
+
+<p>This function is also known as the &quot;IEEE Remainder&quot; function.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>divisor</i>: The divisor.</p></li>
+<li><p><i>ctx</i>: A precision context object to control the precision. The rounding and exponent range settings of this context are ignored (the rounding mode is always treated as HalfEven). If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The distance of the closest multiple. Signals FlagInvalid and returns NaN if the divisor is 0, or either the result of integer division (the quotient) or the remainder wouldn&#39;t fit the given precision.</p>
+
+<h3>RoundToBinaryPrecision</h3>
+
+<pre><code>public PeterO.ExtendedFloat RoundToBinaryPrecision(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p><b>Deprecated.</b> Instead of this method use RoundToPrecision and pass a precision context with the IsPrecisionInBits property set.</p>
+
+<p>Rounds this object&#39;s value to a given maximum bit length, using the given rounding mode and range of exponent.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. The precision is interpreted as the maximum bit length of the mantissa. Can be null.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if  <i>ctx</i>
+is null or the precision and exponent range are unlimited.</p>
+
+<h3>RoundToExponent</h3>
+
+<pre><code>public PeterO.ExtendedFloat RoundToExponent(
+    int exponentSmall,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary number with the same value as this object, and rounds it to a new exponent if necessary.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary number rounded to the closest value representable in the given precision, meaning if the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
+
+<h3>RoundToExponent</h3>
+
+<pre><code>public PeterO.ExtendedFloat RoundToExponent(
+    PeterO.BigInteger exponent,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary number with the same value as this object, and rounds it to a new exponent if necessary.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary number rounded to the closest value representable in the given precision, meaning if the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
+
+<h3>RoundToExponentExact</h3>
+
+<pre><code>public PeterO.ExtendedFloat RoundToExponentExact(
+    int exponentSmall,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns NaN if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
+
+<h3>RoundToExponentExact</h3>
+
+<pre><code>public PeterO.ExtendedFloat RoundToExponentExact(
+    PeterO.BigInteger exponent,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns NaN if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
+
+<h3>RoundToIntegralExact</h3>
+
+<pre><code>public PeterO.ExtendedFloat RoundToIntegralExact(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context to control precision and rounding of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary number rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns NaN if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the precision context.</p>
+
+<h3>RoundToIntegralNoRoundedFlag</h3>
+
+<pre><code>public PeterO.ExtendedFloat RoundToIntegralNoRoundedFlag(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Returns a binary number with the same value as this object but rounded to an integer, without adding the FlagInexact or FlagRounded flags.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context to control precision and rounding of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags), except that this function will never add the FlagRounded and FlagInexact flags (the only difference between this and RoundToExponentExact). Can be null, in which case the default rounding mode is HalfEven.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary number rounded to the closest integer representable in the given precision, meaning if the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns NaN if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the precision context.</p>
+
+<h3>RoundToPrecision</h3>
+
+<pre><code>public PeterO.ExtendedFloat RoundToPrecision(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. Can be null.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if  <i>ctx</i>
+is null or the precision and exponent range are unlimited.</p>
+
 <h3>ScaleByPowerOfTwo</h3>
 
 <pre><code>public PeterO.ExtendedFloat ScaleByPowerOfTwo(
@@ -2255,16 +2205,181 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p>A number whose scale is increased by  <i>bigPlaces</i>
 .</p>
 
-<h3>Precision</h3>
+<h3>SquareRoot</h3>
 
-<pre><code>public PeterO.BigInteger Precision();
+<pre><code>public PeterO.ExtendedFloat SquareRoot(
+    PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Finds the number of digits in this number&#39;s mantissa. Returns 1 if this value is 0, and 0 if this value is infinity or NaN.</p>
+<p>Finds the square root of this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). --This parameter cannot be null, as the square root function&#39;s results are generally not exact for many inputs.--.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN).</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>ctx</i>
+is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre><code>public PeterO.ExtendedFloat Subtract(
+    PeterO.ExtendedFloat otherValue);
+</code></pre>
+
+<p>Subtracts an ExtendedFloat object from this instance and returns the result..</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An ExtendedFloat object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The difference of the two objects.</p>
+
+<h3>Subtract</h3>
+
+<pre><code>public PeterO.ExtendedFloat Subtract(
+    PeterO.ExtendedFloat otherValue,
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Subtracts an ExtendedFloat object from this instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>otherValue</i>: An ExtendedFloat object.</p></li>
+<li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The difference of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>otherValue</i>
+is null.</li>
+</ul>
+
+<h3>ToBigInteger</h3>
+
+<pre><code>public PeterO.BigInteger ToBigInteger();
+</code></pre>
+
+<p>Converts this value to an arbitrary-precision integer. Any fractional part of this value will be discarded when converting to a big integer.</p>
 
 <p><b>Returns:</b></p>
 
 <p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is infinity or NaN.</li>
+</ul>
+
+<h3>ToBigIntegerExact</h3>
+
+<pre><code>public PeterO.BigInteger ToBigIntegerExact();
+</code></pre>
+
+<p>Converts this value to an arbitrary-precision integer, checking whether the value contains a fractional part.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.OverflowException:
+This object&#39;s value is infinity or NaN.</p></li>
+<li><p>System.ArithmeticException:
+This object&#39;s value is not an exact integer.</p></li>
+</ul>
+
+<h3>ToDouble</h3>
+
+<pre><code>public double ToDouble();
+</code></pre>
+
+<p>Converts this value to a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
+
+<h3>ToEngineeringString</h3>
+
+<pre><code>public string ToEngineeringString();
+</code></pre>
+
+<p>Same as toString(), except that when an exponent is used it will be a multiple of 3. The format of the return value follows the format of the java.math.BigDecimal.toEngineeringString() method.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string object.</p>
+
+<h3>ToExtendedDecimal</h3>
+
+<pre><code>public PeterO.ExtendedDecimal ToExtendedDecimal();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedDecimal object.</p>
+
+<h3>ToPlainString</h3>
+
+<pre><code>public string ToPlainString();
+</code></pre>
+
+<p>Converts this value to a string, but without an exponent part. The format of the return value follows the format of the java.math.BigDecimal.toPlainString() method.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string object.</p>
+
+<h3>ToSingle</h3>
+
+<pre><code>public float ToSingle();
+</code></pre>
+
+<p>Converts this value to a 32-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The closest 32-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
+
+<h3>ToString</h3>
+
+<pre><code>public override string ToString();
+</code></pre>
+
+<p>Converts this value to a string.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string representation of this object.</p>
 
 <h3>Ulp</h3>
 
@@ -2276,121 +2391,6 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An ExtendedFloat object.</p>
-
-<h3>DivideAndRemainderNaturalScale</h3>
-
-<pre><code>public PeterO.ExtendedFloat[] DivideAndRemainderNaturalScale(
-    PeterO.ExtendedFloat divisor);
-</code></pre>
-
-<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>divisor</i>: The number to divide by.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A 2 element array consisting of the quotient and remainder in that order.</p>
-
-<h3>DivideAndRemainderNaturalScale</h3>
-
-<pre><code>public PeterO.ExtendedFloat[] DivideAndRemainderNaturalScale(
-    PeterO.ExtendedFloat divisor,
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>divisor</i>: The number to divide by.</p></li>
-<li><p><i>ctx</i>: A precision context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it&#39;s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context&#39;s HasFlags is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A 2 element array consisting of the quotient and remainder in that order.</p>
-
-<h3>Exponent</h3>
-
-<pre><code>public PeterO.BigInteger Exponent { get; }
-</code></pre>
-
-<p>Gets this object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
-
-<p><b>Returns:</b></p>
-
-<p>This object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
-
-<h3>UnsignedMantissa</h3>
-
-<pre><code>public PeterO.BigInteger UnsignedMantissa { get; }
-</code></pre>
-
-<p>Gets the absolute value of this object&#39;s un-scaled value.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The absolute value of this object&#39;s un-scaled value.</p>
-
-<h3>Mantissa</h3>
-
-<pre><code>public PeterO.BigInteger Mantissa { get; }
-</code></pre>
-
-<p>Gets this object&#39;s un-scaled value.</p>
-
-<p><b>Returns:</b></p>
-
-<p>This object&#39;s un-scaled value. Will be negative if this object&#39;s value is negative (including a negative NaN).</p>
-
-<h3>IsFinite</h3>
-
-<pre><code>public bool IsFinite { get; }
-</code></pre>
-
-<p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is finite (not infinity or NaN); otherwise, false.</p>
-
-<h3>IsNegative</h3>
-
-<pre><code>public bool IsNegative { get; }
-</code></pre>
-
-<p>Gets a value indicating whether this object is negative, including negative zero.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is negative, including negative zero; otherwise, false.</p>
-
-<h3>Sign</h3>
-
-<pre><code>public int Sign { get; }
-</code></pre>
-
-<p>Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
-
-<p><b>Returns:</b></p>
-
-<p>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
-
-<h3>IsZero</h3>
-
-<pre><code>public bool IsZero { get; }
-</code></pre>
-
-<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object&#39;s value equals 0; otherwise, false.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 <script>

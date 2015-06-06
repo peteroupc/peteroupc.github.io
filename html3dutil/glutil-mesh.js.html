@@ -485,7 +485,7 @@ Mesh.prototype.normalizeNormals=function(){
   for(var i=0;i&lt;this.subMeshes.length;i++){
    var stride=this.subMeshes[i].getStride();
    var vertices=this.subMeshes[i].vertices;
-   var normalOffset=Mesh.normalOffset(
+   var normalOffset=Mesh._normalOffset(
      this.subMeshes[i].attributeBits);
    if(normalOffset&lt;0)continue;
    for(var i=0;i&lt;vertices.length;i+=stride){
@@ -597,7 +597,7 @@ Mesh.prototype.setVertexNormal=function(index,x,y,z){
     var idx=index-count;
     subMesh._rebuildVertices(Mesh.NORMALS_BIT);
     idx*=subMesh.getStride();
-    idx+=Mesh.normalOffset(subMesh.attributeBits);
+    idx+=Mesh._normalOffset(subMesh.attributeBits);
     subMesh.vertices[idx]=x;
     subMesh.vertices[idx+1]=y;
     subMesh.vertices[idx+2]=z;
@@ -661,7 +661,7 @@ Mesh.prototype.getVertexNormal=function(index){
     if((subMesh.attributeBits&amp;Mesh.NORMALS_BIT)!=0){
      var idx=index-count;
      idx*=subMesh.getStride();
-     idx+=Mesh.normalOffset(subMesh.attributeBits);
+     idx+=Mesh._normalOffset(subMesh.attributeBits);
      return subMesh.vertices.slice(idx,idx+3);
     } else {
      return [0,0,0];
@@ -709,7 +709,7 @@ function SubMesh(vertices,faces,format){
   return this.vertices.length/this.getStride();
  }
  this.getStride=function(){
-  return Mesh.getStride(this.attributeBits);
+  return Mesh._getStride(this.attributeBits);
  }
  this.newPrimitive=function(m){
   this.startIndex=this.vertices.length;
@@ -951,7 +951,7 @@ SubMesh.prototype.transform=function(matrix){
   var stride=this.getStride();
   var v=this.vertices;
   var isNonTranslation=!SubMesh._isIdentityInUpperLeft(matrix);
-  var normalOffset=Mesh.normalOffset(this.attributeBits);
+  var normalOffset=Mesh._normalOffset(this.attributeBits);
   var matrixForNormals=null;
   if(normalOffset>=0 &amp;&amp; isNonTranslation){
    matrixForNormals=GLMath.mat4inverseTranspose3(matrix);
@@ -1005,6 +1005,38 @@ Mesh.prototype.reverseWinding=function(){
   return this;
 }
 
+Mesh.prototype.enumPrimitives=function(func){
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  var sm=this.subMeshes[i];
+  var prim=sm.primitiveType();
+  var normals=Mesh._normalOffset(sm.attributeBits);
+  var colors=Mesh._colorOffset(sm.attributeBits);
+  var texcoords=Mesh._texCoordOffset(sm.attributeBits);
+  var stride=sm.getStride();
+  var v=sm.vertices;
+  var primSize=3;
+  if(prim==Mesh.LINES)primSize=2;
+  if(prim==Mesh.POINTS)primSize=1;
+  for(var j=0;j&lt;sm.indices.length;j+=primSize){
+   var p=[];
+   for(var k=0;k&lt;primSize;k++){
+    var vi=sm.indices[j+k]*stride;
+    var info={};
+    info.position=[v[vi],v[vi+1],v[vi+2]];
+    if(normals>=0)
+     info.normal=[v[vi+normals],v[vi+normals+1],v[vi+normals+2]]
+    if(colors>=0)
+     info.color=[v[vi+colors],v[vi+colors+1],v[vi+colors+2]]
+    if(texcoords>=0)
+     info.uv=[v[vi+texcoords],v[vi+texcoords+1]]
+    p.push(info)
+   }
+   func(p)
+  }
+ }
+ return this;
+}
+
 /**
 * Modifies this mesh by reversing the sign of normals it defines.
 * @return {glutil.Mesh} This object.
@@ -1023,7 +1055,7 @@ Mesh.prototype.reverseNormals=function(){
   for(var i=0;i&lt;this.subMeshes.length;i++){
    var stride=this.subMeshes[i].getStride();
    var vertices=this.subMeshes[i].vertices;
-   var normalOffset=Mesh.normalOffset(
+   var normalOffset=Mesh._normalOffset(
      this.subMeshes[i].attributeBits);
    if(normalOffset&lt;0)continue;
    for(var i=0;i&lt;vertices.length;i+=stride){
@@ -1079,7 +1111,7 @@ SubMesh.prototype.recalcNormals=function(flat,inward){
 SubMesh.prototype.setColor3=function(r,g,b){
   this._rebuildVertices(Mesh.COLORS_BIT);
   var stride=this.getStride();
-  var colorOffset=Mesh.colorOffset(this.attributeBits);
+  var colorOffset=Mesh._colorOffset(this.attributeBits);
   for(var i=colorOffset;i&lt;this.vertices.length;i+=stride){
     this.vertices[i]=r;
     this.vertices[i+1]=g;
@@ -1088,19 +1120,19 @@ SubMesh.prototype.setColor3=function(r,g,b){
   return this;
 };
 /** @private */
-Mesh.getStride=function(format){
+Mesh._getStride=function(format){
   return [3,6,6,9,5,8,8,11][format&amp;Mesh.ATTRIBUTES_BITS];
  }
 /** @private */
-Mesh.normalOffset=function(format){
+Mesh._normalOffset=function(format){
   return [-1,3,-1,3,-1,3,-1,3][format&amp;Mesh.ATTRIBUTES_BITS];
  }
 /** @private */
-Mesh.colorOffset=function(format){
+Mesh._colorOffset=function(format){
   return [-1,-1,3,6,-1,-1,3,6][format&amp;Mesh.ATTRIBUTES_BITS];
  }
 /** @private */
-Mesh.texCoordOffset=function(format){
+Mesh._texCoordOffset=function(format){
   return [-1,-1,-1,-1,3,6,6,9][format&amp;Mesh.ATTRIBUTES_BITS];
 }
 /**

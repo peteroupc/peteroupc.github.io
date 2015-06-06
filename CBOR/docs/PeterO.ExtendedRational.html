@@ -30,34 +30,254 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>Arbitrary-precision rational number. This class cannot be inherited; this is a change in version 2.0 from previous versions, where the class was inadvertently left inheritable.</p>
 
-<h3>Equals</h3>
+<h3>ExtendedRational Constructor</h3>
 
-<pre><code>public override bool Equals(
-    object obj);
+<pre><code>public ExtendedRational(
+    PeterO.BigInteger numerator,
+    PeterO.BigInteger denominator);
 </code></pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Initializes a new instance of the ExtendedRational class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: An arbitrary object.</li>
+<li><p><i>numerator</i>: A BigInteger object.</p></li>
+<li><p><i>denominator</i>: A BigInteger object. (2).</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>numerator</i>
+or  <i>denominator</i>
+is null.</li>
+</ul>
+
+<h3>NaN</h3>
+
+<pre><code>public static readonly PeterO.ExtendedRational NaN;
+</code></pre>
+
+<p>A not-a-number value.</p>
+
+<h3>NegativeInfinity</h3>
+
+<pre><code>public static readonly PeterO.ExtendedRational NegativeInfinity;
+</code></pre>
+
+<p>Negative infinity, less than any other number.</p>
+
+<h3>NegativeZero</h3>
+
+<pre><code>public static readonly PeterO.ExtendedRational NegativeZero;
+</code></pre>
+
+<p>A rational number for negative zero.</p>
+
+<h3>One</h3>
+
+<pre><code>public static readonly PeterO.ExtendedRational One;
+</code></pre>
+
+<p>The rational number one.</p>
+
+<h3>PositiveInfinity</h3>
+
+<pre><code>public static readonly PeterO.ExtendedRational PositiveInfinity;
+</code></pre>
+
+<p>Positive infinity, greater than any other number.</p>
+
+<h3>SignalingNaN</h3>
+
+<pre><code>public static readonly PeterO.ExtendedRational SignalingNaN;
+</code></pre>
+
+<p>A signaling not-a-number value.</p>
+
+<h3>Ten</h3>
+
+<pre><code>public static readonly PeterO.ExtendedRational Ten;
+</code></pre>
+
+<p>The rational number ten.</p>
+
+<h3>Zero</h3>
+
+<pre><code>public static readonly PeterO.ExtendedRational Zero;
+</code></pre>
+
+<p>A rational number for zero.</p>
+
+<h3>Denominator</h3>
+
+<pre><code>public PeterO.BigInteger Denominator { get; }
+</code></pre>
+
+<p>Gets this object&#39;s denominator.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object&#39;s denominator.</p>
+
+<h3>IsFinite</h3>
+
+<pre><code>public bool IsFinite { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is finite (not infinity or NaN); otherwise, false.</p>
+
+<h3>IsNegative</h3>
+
+<pre><code>public bool IsNegative { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value is negative (including negative zero).</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object&#39;s value is negative; otherwise, false.</p>
+
+<h3>IsZero</h3>
+
+<pre><code>public bool IsZero { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object&#39;s value equals 0; otherwise, false.</p>
+
+<h3>Numerator</h3>
+
+<pre><code>public PeterO.BigInteger Numerator { get; }
+</code></pre>
+
+<p>Gets this object&#39;s numerator.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object&#39;s numerator. If this object is a not-a-number value, returns the diagnostic information (which will be negative if this object is negative).</p>
+
+<h3>Sign</h3>
+
+<pre><code>public int Sign { get; }
+</code></pre>
+
+<p>Gets the sign of this rational number.</p>
+
+<p><b>Returns:</b></p>
+
+<p>Zero if this value is zero or negative zero; -1 if this value is less than 0; and 1 if this value is greater than 0.</p>
+
+<h3>UnsignedNumerator</h3>
+
+<pre><code>public PeterO.BigInteger UnsignedNumerator { get; }
+</code></pre>
+
+<p>Gets this object&#39;s numerator with the sign removed.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object&#39;s numerator. If this object is a not-a-number value, returns the diagnostic information.</p>
+
+<h3>Abs</h3>
+
+<pre><code>public PeterO.ExtendedRational Abs();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedRational object.</p>
+
+<h3>Add</h3>
+
+<pre><code>public PeterO.ExtendedRational Add(
+    PeterO.ExtendedRational otherValue);
+</code></pre>
+
+<p>Adds two rational numbers.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An ExtendedRational object. (2).</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>True if the objects are equal; otherwise, false.</p>
+<p>The sum of the two numbers. Returns NaN if either operand is NaN.</p>
 
-<h3>GetHashCode</h3>
+<p><b>Exceptions:</b></p>
 
-<pre><code>public override int GetHashCode();
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>otherValue</i>
+is null.</li>
+</ul>
+
+<h3>CompareTo</h3>
+
+<pre><code>public sealed int CompareTo(
+    PeterO.ExtendedRational other);
 </code></pre>
 
-<p>Returns the hash code for this instance.</p>
+<p>Compares an ExtendedRational object with this instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: An ExtendedRational object.</li>
+</ul>
 
 <p><b>Returns:</b></p>
 
-<p>A 32-bit hash code.</p>
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
+
+<h3>CompareToBinary</h3>
+
+<pre><code>public int CompareToBinary(
+    PeterO.ExtendedFloat other);
+</code></pre>
+
+<p>Compares an ExtendedFloat object with this instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: An ExtendedFloat object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
+
+<h3>CompareToDecimal</h3>
+
+<pre><code>public int CompareToDecimal(
+    PeterO.ExtendedDecimal other);
+</code></pre>
+
+<p>Compares an ExtendedDecimal object with this instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: An ExtendedDecimal object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
 
 <h3>Create</h3>
 
@@ -98,109 +318,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Returns:</b></p>
 
 <p>An ExtendedRational object.</p>
-
-<h3>ExtendedRational Constructor</h3>
-
-<pre><code>public ExtendedRational(
-    PeterO.BigInteger numerator,
-    PeterO.BigInteger denominator);
-</code></pre>
-
-<p>Initializes a new instance of the ExtendedRational class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>numerator</i>: A BigInteger object.</p></li>
-<li><p><i>denominator</i>: A BigInteger object. (2).</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>numerator</i>
-or  <i>denominator</i>
-is null.</li>
-</ul>
-
-<h3>ToString</h3>
-
-<pre><code>public override string ToString();
-</code></pre>
-
-<p>Converts this object to a text string.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A string representation of this object. The result can be Infinity, NaN, or sNaN (with a minus sign before it for negative values), or a number of the following form: [-]numerator/denominator.</p>
-
-<h3>FromBigInteger</h3>
-
-<pre><code>public static PeterO.ExtendedRational FromBigInteger(
-    PeterO.BigInteger bigint);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigint</i>: A BigInteger object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedRational object.</p>
-
-<h3>ToExtendedDecimal</h3>
-
-<pre><code>public PeterO.ExtendedDecimal ToExtendedDecimal();
-</code></pre>
-
-<p>Converts this rational number to a decimal number.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The exact value of the rational number, or not-a-number (NaN) if the result can&#39;t be exact because it has a nonterminating decimal expansion.</p>
-
-<h3>FromSingle</h3>
-
-<pre><code>public static PeterO.ExtendedRational FromSingle(
-    float flt);
-</code></pre>
-
-<p>Converts a 32-bit floating-point number to a rational number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>flt</i>: A 32-bit floating-point number.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A rational number with the same value as  <i>flt</i>
-.</p>
-
-<h3>FromDouble</h3>
-
-<pre><code>public static PeterO.ExtendedRational FromDouble(
-    double flt);
-</code></pre>
-
-<p>Converts a 64-bit floating-point number to a rational number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>flt</i>: A 64-bit floating-point number.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A rational number with the same value as  <i>flt</i>
-.</p>
 
 <h3>CreateNaN</h3>
 
@@ -264,10 +381,54 @@ The parameter  <i>diag</i>
 is less than 0.</p></li>
 </ul>
 
-<h3>FromExtendedFloat</h3>
+<h3>Divide</h3>
 
-<pre><code>public static PeterO.ExtendedRational FromExtendedFloat(
-    PeterO.ExtendedFloat ef);
+<pre><code>public PeterO.ExtendedRational Divide(
+    PeterO.ExtendedRational otherValue);
+</code></pre>
+
+<p>Divides this instance by the value of an ExtendedRational object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An ExtendedRational object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The quotient of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>otherValue</i>
+is null.</li>
+</ul>
+
+<h3>Equals</h3>
+
+<pre><code>public override bool Equals(
+    object obj);
+</code></pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: An arbitrary object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if the objects are equal; otherwise, false.</p>
+
+<h3>Equals</h3>
+
+<pre><code>public sealed bool Equals(
+    PeterO.ExtendedRational other);
 </code></pre>
 
 <p>Not documented yet.</p>
@@ -275,20 +436,49 @@ is less than 0.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ef</i>: An ExtendedFloat object.</li>
+<li><i>other</i>: An ExtendedRational object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A Boolean object.</p>
+
+<h3>FromBigInteger</h3>
+
+<pre><code>public static PeterO.ExtendedRational FromBigInteger(
+    PeterO.BigInteger bigint);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigint</i>: A BigInteger object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
 <p>An ExtendedRational object.</p>
 
-<p><b>Exceptions:</b></p>
+<h3>FromDouble</h3>
+
+<pre><code>public static PeterO.ExtendedRational FromDouble(
+    double flt);
+</code></pre>
+
+<p>Converts a 64-bit floating-point number to a rational number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
-The parameter  <i>ef</i>
-is null.</li>
+<li><i>flt</i>: A 64-bit floating-point number.</li>
 </ul>
+
+<p><b>Returns:</b></p>
+
+<p>A rational number with the same value as  <i>flt</i>
+.</p>
 
 <h3>FromExtendedDecimal</h3>
 
@@ -316,88 +506,252 @@ The parameter  <i>ef</i>
 is null.</li>
 </ul>
 
-<h3>ToExtendedDecimal</h3>
+<h3>FromExtendedFloat</h3>
 
-<pre><code>public PeterO.ExtendedDecimal ToExtendedDecimal(
-    PeterO.PrecisionContext ctx);
+<pre><code>public static PeterO.ExtendedRational FromExtendedFloat(
+    PeterO.ExtendedFloat ef);
 </code></pre>
 
-<p>Converts this rational number to a decimal number and rounds the result to the given precision.</p>
+<p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A PrecisionContext object.</li>
+<li><i>ef</i>: An ExtendedFloat object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedDecimal object.</p>
+<p>An ExtendedRational object.</p>
 
-<h3>ToExtendedDecimalExactIfPossible</h3>
+<p><b>Exceptions:</b></p>
 
-<pre><code>public PeterO.ExtendedDecimal ToExtendedDecimalExactIfPossible(
-    PeterO.PrecisionContext ctx);
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>ef</i>
+is null.</li>
+</ul>
+
+<h3>FromInt32</h3>
+
+<pre><code>public static PeterO.ExtendedRational FromInt32(
+    int smallint);
 </code></pre>
 
-<p>Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</p>
+<p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A precision context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating decimal expansion. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedDecimal.</li>
+<li><i>smallint</i>: A 32-bit signed integer.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedDecimal object.</p>
+<p>An ExtendedRational object.</p>
 
-<h3>ToExtendedFloat</h3>
+<h3>FromInt64</h3>
 
-<pre><code>public PeterO.ExtendedFloat ToExtendedFloat();
+<pre><code>public static PeterO.ExtendedRational FromInt64(
+    long longInt);
 </code></pre>
 
-<p>Converts this rational number to a binary number.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The exact value of the rational number, or not-a-number (NaN) if the result can&#39;t be exact because it has a nonterminating binary expansion.</p>
-
-<h3>ToExtendedFloat</h3>
-
-<pre><code>public PeterO.ExtendedFloat ToExtendedFloat(
-    PeterO.PrecisionContext ctx);
-</code></pre>
-
-<p>Converts this rational number to a binary number and rounds the result to the given precision.</p>
+<p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A PrecisionContext object.</li>
+<li><i>longInt</i>: A 64-bit signed integer.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An ExtendedRational object.</p>
 
-<h3>ToExtendedFloatExactIfPossible</h3>
+<h3>FromSingle</h3>
 
-<pre><code>public PeterO.ExtendedFloat ToExtendedFloatExactIfPossible(
-    PeterO.PrecisionContext ctx);
+<pre><code>public static PeterO.ExtendedRational FromSingle(
+    float flt);
 </code></pre>
 
-<p>Converts this rational number to a binary number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</p>
+<p>Converts a 32-bit floating-point number to a rational number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A precision context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating binary expansion. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedFloat.</li>
+<li><i>flt</i>: A 32-bit floating-point number.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>A rational number with the same value as  <i>flt</i>
+.</p>
+
+<h3>GetHashCode</h3>
+
+<pre><code>public override int GetHashCode();
+</code></pre>
+
+<p>Returns the hash code for this instance.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit hash code.</p>
+
+<h3>IsInfinity</h3>
+
+<pre><code>public bool IsInfinity();
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value is infinity.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object&#39;s value is infinity; otherwise, false.</p>
+
+<h3>IsNaN</h3>
+
+<pre><code>public bool IsNaN();
+</code></pre>
+
+<p>Returns whether this object is a not-a-number value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is a not-a-number value; otherwise, false.</p>
+
+<h3>IsNegativeInfinity</h3>
+
+<pre><code>public bool IsNegativeInfinity();
+</code></pre>
+
+<p>Returns whether this object is negative infinity.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is negative infinity; otherwise, false.</p>
+
+<h3>IsPositiveInfinity</h3>
+
+<pre><code>public bool IsPositiveInfinity();
+</code></pre>
+
+<p>Returns whether this object is positive infinity.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is positive infinity; otherwise, false.</p>
+
+<h3>IsQuietNaN</h3>
+
+<pre><code>public bool IsQuietNaN();
+</code></pre>
+
+<p>Returns whether this object is a quiet not-a-number value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is a quiet not-a-number value; otherwise, false.</p>
+
+<h3>IsSignalingNaN</h3>
+
+<pre><code>public bool IsSignalingNaN();
+</code></pre>
+
+<p>Returns whether this object is a signaling not-a-number value (which causes an error if the value is passed to any arithmetic operation in this class).</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is a signaling not-a-number value (which causes an error if the value is passed to any arithmetic operation in this class); otherwise, false.</p>
+
+<h3>Multiply</h3>
+
+<pre><code>public PeterO.ExtendedRational Multiply(
+    PeterO.ExtendedRational otherValue);
+</code></pre>
+
+<p>Multiplies this instance by the value of an ExtendedRational object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An ExtendedRational object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The product of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>otherValue</i>
+is null.</li>
+</ul>
+
+<h3>Negate</h3>
+
+<pre><code>public PeterO.ExtendedRational Negate();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedRational object.</p>
+
+<h3>Remainder</h3>
+
+<pre><code>public PeterO.ExtendedRational Remainder(
+    PeterO.ExtendedRational otherValue);
+</code></pre>
+
+<p>Finds the remainder that results when this instance is divided by the value of a ExtendedRational object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An ExtendedRational object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The remainder of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>otherValue</i>
+is null.</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre><code>public PeterO.ExtendedRational Subtract(
+    PeterO.ExtendedRational otherValue);
+</code></pre>
+
+<p>Subtracts an ExtendedRational object from this instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An ExtendedRational object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The difference of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>otherValue</i>
+is null.</li>
+</ul>
 
 <h3>ToBigInteger</h3>
 
@@ -437,42 +791,6 @@ This object&#39;s value is infinity or NaN.</p></li>
 This object&#39;s value is not an exact integer.</p></li>
 </ul>
 
-<h3>FromInt32</h3>
-
-<pre><code>public static PeterO.ExtendedRational FromInt32(
-    int smallint);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>smallint</i>: A 32-bit signed integer.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedRational object.</p>
-
-<h3>FromInt64</h3>
-
-<pre><code>public static PeterO.ExtendedRational FromInt64(
-    long longInt);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>longInt</i>: A 64-bit signed integer.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedRational object.</p>
-
 <h3>ToDouble</h3>
 
 <pre><code>public double ToDouble();
@@ -483,6 +801,100 @@ This object&#39;s value is not an exact integer.</p></li>
 <p><b>Returns:</b></p>
 
 <p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
+
+<h3>ToExtendedDecimal</h3>
+
+<pre><code>public PeterO.ExtendedDecimal ToExtendedDecimal(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Converts this rational number to a decimal number and rounds the result to the given precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A PrecisionContext object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedDecimal object.</p>
+
+<h3>ToExtendedDecimal</h3>
+
+<pre><code>public PeterO.ExtendedDecimal ToExtendedDecimal();
+</code></pre>
+
+<p>Converts this rational number to a decimal number.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The exact value of the rational number, or not-a-number (NaN) if the result can&#39;t be exact because it has a nonterminating decimal expansion.</p>
+
+<h3>ToExtendedDecimalExactIfPossible</h3>
+
+<pre><code>public PeterO.ExtendedDecimal ToExtendedDecimalExactIfPossible(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating decimal expansion. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedDecimal.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedDecimal object.</p>
+
+<h3>ToExtendedFloat</h3>
+
+<pre><code>public PeterO.ExtendedFloat ToExtendedFloat(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Converts this rational number to a binary number and rounds the result to the given precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A PrecisionContext object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
+
+<h3>ToExtendedFloat</h3>
+
+<pre><code>public PeterO.ExtendedFloat ToExtendedFloat();
+</code></pre>
+
+<p>Converts this rational number to a binary number.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The exact value of the rational number, or not-a-number (NaN) if the result can&#39;t be exact because it has a nonterminating binary expansion.</p>
+
+<h3>ToExtendedFloatExactIfPossible</h3>
+
+<pre><code>public PeterO.ExtendedFloat ToExtendedFloatExactIfPossible(
+    PeterO.PrecisionContext ctx);
+</code></pre>
+
+<p>Converts this rational number to a binary number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating binary expansion. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedFloat.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ExtendedFloat object.</p>
 
 <h3>ToSingle</h3>
 
@@ -495,428 +907,16 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p>The closest 32-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
 
-<h3>Abs</h3>
+<h3>ToString</h3>
 
-<pre><code>public PeterO.ExtendedRational Abs();
+<pre><code>public override string ToString();
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object to a text string.</p>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedRational object.</p>
-
-<h3>Negate</h3>
-
-<pre><code>public PeterO.ExtendedRational Negate();
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Returns:</b></p>
-
-<p>An ExtendedRational object.</p>
-
-<h3>CompareTo</h3>
-
-<pre><code>public sealed int CompareTo(
-    PeterO.ExtendedRational other);
-</code></pre>
-
-<p>Compares an ExtendedRational object with this instance.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>other</i>: An ExtendedRational object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
-
-<h3>CompareToBinary</h3>
-
-<pre><code>public int CompareToBinary(
-    PeterO.ExtendedFloat other);
-</code></pre>
-
-<p>Compares an ExtendedFloat object with this instance.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>other</i>: An ExtendedFloat object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
-
-<h3>CompareToDecimal</h3>
-
-<pre><code>public int CompareToDecimal(
-    PeterO.ExtendedDecimal other);
-</code></pre>
-
-<p>Compares an ExtendedDecimal object with this instance.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>other</i>: An ExtendedDecimal object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
-
-<h3>Equals</h3>
-
-<pre><code>public sealed bool Equals(
-    PeterO.ExtendedRational other);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>other</i>: An ExtendedRational object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A Boolean object.</p>
-
-<h3>IsNegativeInfinity</h3>
-
-<pre><code>public bool IsNegativeInfinity();
-</code></pre>
-
-<p>Returns whether this object is negative infinity.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is negative infinity; otherwise, false.</p>
-
-<h3>IsPositiveInfinity</h3>
-
-<pre><code>public bool IsPositiveInfinity();
-</code></pre>
-
-<p>Returns whether this object is positive infinity.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is positive infinity; otherwise, false.</p>
-
-<h3>IsNaN</h3>
-
-<pre><code>public bool IsNaN();
-</code></pre>
-
-<p>Returns whether this object is a not-a-number value.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is a not-a-number value; otherwise, false.</p>
-
-<h3>IsInfinity</h3>
-
-<pre><code>public bool IsInfinity();
-</code></pre>
-
-<p>Gets a value indicating whether this object&#39;s value is infinity.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object&#39;s value is infinity; otherwise, false.</p>
-
-<h3>IsQuietNaN</h3>
-
-<pre><code>public bool IsQuietNaN();
-</code></pre>
-
-<p>Returns whether this object is a quiet not-a-number value.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is a quiet not-a-number value; otherwise, false.</p>
-
-<h3>IsSignalingNaN</h3>
-
-<pre><code>public bool IsSignalingNaN();
-</code></pre>
-
-<p>Returns whether this object is a signaling not-a-number value (which causes an error if the value is passed to any arithmetic operation in this class).</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is a signaling not-a-number value (which causes an error if the value is passed to any arithmetic operation in this class); otherwise, false.</p>
-
-<h3>NaN</h3>
-
-<pre><code>public static readonly PeterO.ExtendedRational NaN;
-</code></pre>
-
-<p>A not-a-number value.</p>
-
-<h3>SignalingNaN</h3>
-
-<pre><code>public static readonly PeterO.ExtendedRational SignalingNaN;
-</code></pre>
-
-<p>A signaling not-a-number value.</p>
-
-<h3>PositiveInfinity</h3>
-
-<pre><code>public static readonly PeterO.ExtendedRational PositiveInfinity;
-</code></pre>
-
-<p>Positive infinity, greater than any other number.</p>
-
-<h3>NegativeInfinity</h3>
-
-<pre><code>public static readonly PeterO.ExtendedRational NegativeInfinity;
-</code></pre>
-
-<p>Negative infinity, less than any other number.</p>
-
-<h3>Add</h3>
-
-<pre><code>public PeterO.ExtendedRational Add(
-    PeterO.ExtendedRational otherValue);
-</code></pre>
-
-<p>Adds two rational numbers.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: An ExtendedRational object. (2).</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The sum of the two numbers. Returns NaN if either operand is NaN.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>otherValue</i>
-is null.</li>
-</ul>
-
-<h3>Subtract</h3>
-
-<pre><code>public PeterO.ExtendedRational Subtract(
-    PeterO.ExtendedRational otherValue);
-</code></pre>
-
-<p>Subtracts an ExtendedRational object from this instance.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: An ExtendedRational object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The difference of the two objects.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>otherValue</i>
-is null.</li>
-</ul>
-
-<h3>Multiply</h3>
-
-<pre><code>public PeterO.ExtendedRational Multiply(
-    PeterO.ExtendedRational otherValue);
-</code></pre>
-
-<p>Multiplies this instance by the value of an ExtendedRational object.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: An ExtendedRational object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The product of the two objects.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>otherValue</i>
-is null.</li>
-</ul>
-
-<h3>Divide</h3>
-
-<pre><code>public PeterO.ExtendedRational Divide(
-    PeterO.ExtendedRational otherValue);
-</code></pre>
-
-<p>Divides this instance by the value of an ExtendedRational object.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: An ExtendedRational object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The quotient of the two objects.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>otherValue</i>
-is null.</li>
-</ul>
-
-<h3>Remainder</h3>
-
-<pre><code>public PeterO.ExtendedRational Remainder(
-    PeterO.ExtendedRational otherValue);
-</code></pre>
-
-<p>Finds the remainder that results when this instance is divided by the value of a ExtendedRational object.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: An ExtendedRational object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The remainder of the two objects.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>otherValue</i>
-is null.</li>
-</ul>
-
-<h3>Zero</h3>
-
-<pre><code>public static readonly PeterO.ExtendedRational Zero;
-</code></pre>
-
-<p>A rational number for zero.</p>
-
-<h3>NegativeZero</h3>
-
-<pre><code>public static readonly PeterO.ExtendedRational NegativeZero;
-</code></pre>
-
-<p>A rational number for negative zero.</p>
-
-<h3>One</h3>
-
-<pre><code>public static readonly PeterO.ExtendedRational One;
-</code></pre>
-
-<p>The rational number one.</p>
-
-<h3>Ten</h3>
-
-<pre><code>public static readonly PeterO.ExtendedRational Ten;
-</code></pre>
-
-<p>The rational number ten.</p>
-
-<h3>Numerator</h3>
-
-<pre><code>public PeterO.BigInteger Numerator { get; }
-</code></pre>
-
-<p>Gets this object&#39;s numerator.</p>
-
-<p><b>Returns:</b></p>
-
-<p>This object&#39;s numerator. If this object is a not-a-number value, returns the diagnostic information (which will be negative if this object is negative).</p>
-
-<h3>UnsignedNumerator</h3>
-
-<pre><code>public PeterO.BigInteger UnsignedNumerator { get; }
-</code></pre>
-
-<p>Gets this object&#39;s numerator with the sign removed.</p>
-
-<p><b>Returns:</b></p>
-
-<p>This object&#39;s numerator. If this object is a not-a-number value, returns the diagnostic information.</p>
-
-<h3>Denominator</h3>
-
-<pre><code>public PeterO.BigInteger Denominator { get; }
-</code></pre>
-
-<p>Gets this object&#39;s denominator.</p>
-
-<p><b>Returns:</b></p>
-
-<p>This object&#39;s denominator.</p>
-
-<h3>IsFinite</h3>
-
-<pre><code>public bool IsFinite { get; }
-</code></pre>
-
-<p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object is finite (not infinity or NaN); otherwise, false.</p>
-
-<h3>IsZero</h3>
-
-<pre><code>public bool IsZero { get; }
-</code></pre>
-
-<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object&#39;s value equals 0; otherwise, false.</p>
-
-<h3>Sign</h3>
-
-<pre><code>public int Sign { get; }
-</code></pre>
-
-<p>Gets the sign of this rational number.</p>
-
-<p><b>Returns:</b></p>
-
-<p>Zero if this value is zero or negative zero; -1 if this value is less than 0; and 1 if this value is greater than 0.</p>
-
-<h3>IsNegative</h3>
-
-<pre><code>public bool IsNegative { get; }
-</code></pre>
-
-<p>Gets a value indicating whether this object&#39;s value is negative (including negative zero).</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if this object&#39;s value is negative; otherwise, false.</p>
+<p>A string representation of this object. The result can be Infinity, NaN, or sNaN (with a minus sign before it for negative values), or a number of the following form: [-]numerator/denominator.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 <script>

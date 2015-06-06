@@ -1,38 +1,10 @@
-/**
-* Evaluator for a parametric surface in the form
-* of a tube extruded from a parametric curve.
-* @class
-* @alias glutil.ExtrudedTube
-* @param {Object} func An object that must contain a function
-* named "evaluate", which takes the following parameter:<ul>
-* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
-* </ul>
-* The evaluator function returns a 3-element array: the first
-* element is the X coordinate of the curve's position, the second
-* element is the Y coordinate, and the third is the Z coordinate.
-* @param {number} [thickness] Radius of the
-* extruded tube.  If this parameter is null or omitted, the default is 0.125.
-* @param {Object} [sweptCurve] Object describing
-* a curve to serve as the cross section of the extruded shape,
-* corresponding to the V coordinate of the ExtrudedTube's
-* "evaluate" method. If this parameter is null or omitted, uses a circular cross section <code>(sin(u),
-* cos(u), 0)</code> in which the V coordinate ranges from 0 through
-* 1.  The curve object must contain a function
-* named "evaluate", with the same meaning as for the "func" parameter.<p>
-* The cross section will generally have a radius of 1 unit; bigger
-* or smaller cross sections will affect the meaning of the "thickness"
-* parameter.
-*/
-ExtrudedTube._EPSILON=0.000001
-function ExtrudedTube(func, thickness, sweptCurve){
+function _FrenetFrames(func){
  function distSq(a,b){
   var dx=b[0]-a[0];
   var dy=b[1]-a[1];
   var dz=b[2]-a[2];
   return dx*dx+dy*dy+dz*dz;
  }
- this.thickness=thickness==null ? 0.125 : thickness;
- this.sweptCurve=sweptCurve;
  this.func=func;
  this.normals=[];
  this.bitangents=[];
@@ -47,13 +19,13 @@ function ExtrudedTube(func, thickness, sweptCurve){
  var totalLength=0;
  var samples=[];
  var lengths=[];
- if(distSq(func.evaluate(0),func.evaluate(1.0)) < ExtrudedTube._EPSILON){
+ if(distSq(func.evaluate(0),lastSample) < _FrenetFrames._EPSILON){
   isClosed=true;
  }
  for(var i=0;i<=res;i++){
   var t=i/res;
   var e0=(nextSample) ? nextSample : func.evaluate(t);
-  var e01=func.evaluate(i==res ? t-ExtrudedTube._EPSILON : t+ExtrudedTube._EPSILON);
+  var e01=func.evaluate(i==res ? t-_FrenetFrames._EPSILON : t+_FrenetFrames._EPSILON);
   if(isClosed && i>0){
    var len=Math.sqrt(distSq(e0,samples[i-1]))
    totalLength+=len;
@@ -72,7 +44,7 @@ function ExtrudedTube(func, thickness, sweptCurve){
    normal=GLMath.vec3normInPlace(
     GLMath.vec3cross(this.bitangents[i-1],tangent));
   } else {
-   normal=ExtrudedTube._normalFromTangent(tangent);
+   normal=_FrenetFrames.normalFromTangent(tangent);
   }
   var bitangent=GLMath.vec3normInPlace(
     GLMath.vec3cross(tangent,normal));
@@ -100,14 +72,24 @@ function ExtrudedTube(func, thickness, sweptCurve){
   }
  }
 }
-/** @private */
-ExtrudedTube.prototype._getBasisVectors=function(u,sample){
+_FrenetFrames.normalFromTangent=function(tangent){
+ var normal=GLMath.vec3normInPlace(
+   GLMath.vec3cross(tangent,[0,0,1]));
+ // if normal's length is close is 0, try another normal
+ if(GLMath.vec3dot(normal,normal)<_FrenetFrames._EPSILON){
+   normal=GLMath.vec3normInPlace(GLMath.vec3cross(tangent,[0,1,0]));
+ }
+ return normal;
+}
+_FrenetFrames._EPSILON=0.000001
+_FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
+ var sample=this.func.evaluate(u);
  var b,n,t;
  var val=[];
  var cache=false;
  if(u>=0 && u<=1){
   var index=u*(this.bitangents.length-1);
-  if(Math.abs(index-Math.round(index))<ExtrudedTube._EPSILON){
+  if(Math.abs(index-Math.round(index))<_FrenetFrames._EPSILON){
    index=Math.round(index);
    b=this.bitangents[index];
    n=this.normals[index];
@@ -122,7 +104,7 @@ ExtrudedTube.prototype._getBasisVectors=function(u,sample){
    this.cacheMisses=(this.cacheMisses||0)+1
    index=Math.floor(index);
    var e0=sample;
-   var e01=this.func.evaluate(u+ExtrudedTube._EPSILON);
+   var e01=this.func.evaluate(u+_FrenetFrames._EPSILON);
    var tangent=GLMath.vec3normInPlace(
     GLMath.vec3sub(e01,e0));
    var normal=GLMath.vec3normInPlace(
@@ -143,10 +125,10 @@ ExtrudedTube.prototype._getBasisVectors=function(u,sample){
    }
    this.cacheMisses=(this.cacheMisses||0)+1
   var e0=sample;
-  var e01=this.func.evaluate(u+ExtrudedTube._EPSILON);
+  var e01=this.func.evaluate(u+_FrenetFrames._EPSILON);
   var tangent=GLMath.vec3normInPlace(
     GLMath.vec3sub(e01,e0));
-  var normal=ExtrudedTube._normalFromTangent(tangent);
+  var normal=_FrenetFrames.normalFromTangent(tangent);
   var bitangent=GLMath.vec3normInPlace(
     GLMath.vec3cross(tangent,normal));
   b=bitangent;
@@ -163,6 +145,9 @@ ExtrudedTube.prototype._getBasisVectors=function(u,sample){
  val[6]=t[0];
  val[7]=t[1];
  val[8]=t[2];
+ val[9]=sample[0];
+ val[10]=sample[1];
+ val[11]=sample[2];
  if(cache){
   if(this.vectorsCacheIndex>=400)this.vectorsCacheIndex=0;
   this.vectorsCache[this.vectorsCacheIndex++]=u;
@@ -170,15 +155,39 @@ ExtrudedTube.prototype._getBasisVectors=function(u,sample){
  }
  return val;
 }
-ExtrudedTube._normalFromTangent=function(tangent){
- var normal=GLMath.vec3normInPlace(
-   GLMath.vec3cross(tangent,[0,0,1]));
- // if normal's length is close is 0, try another normal
- if(GLMath.vec3dot(normal,normal)<ExtrudedTube._EPSILON){
-   normal=GLMath.vec3normInPlace(GLMath.vec3cross(tangent,[0,1,0]));
- }
- return normal;
+
+/**
+* Evaluator for a parametric surface in the form
+* of a tube extruded from a parametric curve.
+* @class
+* @alias glutil.ExtrudedTube
+* @param {Object} func An object that must contain a function
+* named "evaluate", which takes the following parameter:<ul>
+* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
+* </ul>
+* The evaluator function returns a 3-element array: the first
+* element is the X coordinate of the curve's position, the second
+* element is the Y coordinate, and the third is the Z coordinate.
+* @param {number} [thickness] Radius of the
+* extruded tube.  If this parameter is null or omitted, the default is 0.125.
+* @param {Object} [sweptCurve] Object describing
+* a curve to serve as the cross section of the extruded shape,
+* corresponding to the V coordinate of the ExtrudedTube's
+* "evaluate" method. If this parameter is null or omitted, uses a circular cross section <code>(sin(u),
+* cos(u), 0)</code> in which the V coordinate ranges from 0 through
+* 1.  The curve object must contain a function
+* named "evaluate", with the same meaning as for the "func" parameter.<p>
+* The cross section will generally have a radius of 1 unit; bigger
+* or smaller cross sections will affect the meaning of the "thickness"
+* parameter.
+*/
+function ExtrudedTube(func, thickness, sweptCurve){
+ this.thickness=thickness==null ? 0.125 : thickness;
+ this.sweptCurve=sweptCurve;
+ this.func=func;
+ this.tangentFinder=new _FrenetFrames(func);
 }
+
 /**
 * Generates a point on the extruded tube from the given u and v coordinates.
 * @param {number} u U coordinate.  This will run the length of the curve.
@@ -187,24 +196,26 @@ ExtrudedTube._normalFromTangent=function(tangent){
 * @return {Array<number>} A 3-element array specifying a 3D point.
 */
 ExtrudedTube.prototype.evaluate=function(u, v){
- var sample=this.func.evaluate(u);
- var basisVectors=this._getBasisVectors(u,sample);
+ var basisVectors=this.tangentFinder.getSampleAndBasisVectors(u);
+ var sampleX=basisVectors[9];
+ var sampleY=basisVectors[10];
+ var sampleZ=basisVectors[11];
  var t1,t2,sx,sy,sz;
  if(this.sweptCurve){
   var vpos=this.sweptCurve.evaluate(v);
   t1 = vpos[0];
   t2 = vpos[1];
   var t3=vpos[2];
-  sx = sample[0]+(basisVectors[0]*t2+basisVectors[3]*t1+basisVectors[6]*t3)*this.thickness;
-  sy = sample[1]+(basisVectors[1]*t2+basisVectors[4]*t1+basisVectors[7]*t3)*this.thickness;
-  sz = sample[2]+(basisVectors[2]*t2+basisVectors[5]*t1+basisVectors[8]*t3)*this.thickness;
+  sx = sampleX+(basisVectors[0]*t2+basisVectors[3]*t1+basisVectors[6]*t3)*this.thickness;
+  sy = sampleY+(basisVectors[1]*t2+basisVectors[4]*t1+basisVectors[7]*t3)*this.thickness;
+  sz = sampleZ+(basisVectors[2]*t2+basisVectors[5]*t1+basisVectors[8]*t3)*this.thickness;
  } else {
   var vt=GLMath.PiTimes2*v;
   t1 = Math.cos(vt);
   t2 = (vt>=0 && vt<6.283185307179586) ? (vt<=3.141592653589793 ? Math.sqrt(1.0-t1*t1) : -Math.sqrt(1.0-t1*t1)) : Math.sin(vt);
-  sx = sample[0]+(basisVectors[0]*t2+basisVectors[3]*t1)*this.thickness;
-  sy = sample[1]+(basisVectors[1]*t2+basisVectors[4]*t1)*this.thickness;
-  sz = sample[2]+(basisVectors[2]*t2+basisVectors[5]*t1)*this.thickness;
+  sx = sampleX+(basisVectors[0]*t2+basisVectors[3]*t1)*this.thickness;
+  sy = sampleY+(basisVectors[1]*t2+basisVectors[4]*t1)*this.thickness;
+  sz = sampleZ+(basisVectors[2]*t2+basisVectors[5]*t1)*this.thickness;
  }
  return [sx,sy,sz];
 }

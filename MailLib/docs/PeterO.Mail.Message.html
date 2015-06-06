@@ -21,10 +21,22 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 </p>
 </div><h1>PeterO.Mail.Message</h1>
 
-<h3>RemoveHeader</h3>
+<h3>Subject</h3>
 
-<pre><code>public PeterO.Mail.Message RemoveHeader(
-    int index);
+<pre><code>public string Subject { get; set;}
+</code></pre>
+
+<p>Gets or sets this message&#39;s subject.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This message&#39;s subject.</p>
+
+<h3>AddHeader</h3>
+
+<pre><code>public PeterO.Mail.Message AddHeader(
+    string name,
+    string value);
 </code></pre>
 
 <p>Not documented yet.</p>
@@ -32,7 +44,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: A 32-bit signed integer.</li>
+<li><p><i>name</i>: A string object.</p></li>
+<li><p><i>value</i>: A string object. (2).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -57,11 +70,10 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>A Message object.</p>
 
-<h3>AddHeader</h3>
+<h3>RemoveHeader</h3>
 
-<pre><code>public PeterO.Mail.Message AddHeader(
-    string name,
-    string value);
+<pre><code>public PeterO.Mail.Message RemoveHeader(
+    int index);
 </code></pre>
 
 <p>Not documented yet.</p>
@@ -69,28 +81,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: A string object.</p></li>
-<li><p><i>value</i>: A string object. (2).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A Message object.</p>
-
-<h3>SetHeader</h3>
-
-<pre><code>public PeterO.Mail.Message SetHeader(
-    int index,
-    System.Collections.Generic.KeyValuePair header);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>index</i>: A 32-bit signed integer.</p></li>
-<li><p><i>header</i>: A KeyValuePair object.</p></li>
+<li><i>index</i>: A 32-bit signed integer.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -139,16 +130,25 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>A Message object.</p>
 
-<h3>Subject</h3>
+<h3>SetHeader</h3>
 
-<pre><code>public string Subject { get; set;}
+<pre><code>public PeterO.Mail.Message SetHeader(
+    int index,
+    System.Collections.Generic.KeyValuePair header);
 </code></pre>
 
-<p>Gets or sets this message&#39;s subject.</p>
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>index</i>: A 32-bit signed integer.</p></li>
+<li><p><i>header</i>: A KeyValuePair object.</p></li>
+</ul>
 
 <p><b>Returns:</b></p>
 
-<p>This message&#39;s subject.</p>
+<p>A Message object.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 <script>

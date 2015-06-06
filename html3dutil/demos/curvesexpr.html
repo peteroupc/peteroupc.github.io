@@ -51,42 +51,6 @@ if(typeof Math.sign=="undefined"){
   return (x<0) ? -1 : (x==0 ? 0 : 1);
  }
 };
-
-function addRange(label,min,max,step,defvalue,func){
- var div=document.createElement("div")
- var lbl=document.createElement("span")
- lbl.innerHTML=label
- var defvaluelbl=document.createElement("span")
- defvaluelbl.innerHTML=defvalue
- var input=document.createElement("input")
- input.setAttribute("type","range")
- input.setAttribute("value",""+defvalue)
- input.setAttribute("min",""+min)
- input.setAttribute("max",""+max)
- input.setAttribute("step",""+step)
- var oldvalue=[defvalue];
- input.addEventListener("input",function(e){
-  var val=e.target.value*1.0
-  if(oldvalue[0]!=val){
-   defvaluelbl.innerHTML=val+""
-   if(func)func(val);
-   oldvalue[0]=val
-  }
- })
- div.appendChild(lbl)
- div.appendChild(input)
- div.appendChild(defvaluelbl)
- return div
-}
-
-function setRanges(ranges){
- var settings=document.getElementById("settings")
- settings.innerHTML=""
- for(var i=0;i<ranges.length;i++){
-  settings.appendChild(ranges[i]);
- }
-}
-
    function makeMesh(func,resolution){
     // Default resolution is 50
     if(resolution==null)resolution=50
@@ -147,7 +111,7 @@ function updateMesh(){
       allsettings["custom-maxv"]
     )
     document.getElementById("sourceCode").value=cs.getCode();
-   return makeMesh(new ExtrudedTube(cs),100);
+   return makeMesh(new ExtrudedTube(cs),70);
     }
     default:
    return new Mesh();
@@ -192,18 +156,10 @@ function CustomCurve(x,y,z,minu,maxu){
  this.evaluate=new Function("u",code);
 }
 
-function updateShape(){
-  shapeGroup.shapes[0]=scene.makeShape(updateMesh()).setMaterial(
-    new Material().setParams({
-     "specular":"white",
-     "shininess":10
-    }))
-}
-
 function pushSetting(ranges,name,label,min,max,step){
  ranges.push(addRange(label,min,max,step,allsettings[name],function(val){
   allsettings[name]=val
-  updateShape();
+  updateShape(updateMesh);
  }))
 }
 function validateListener(id,key){
@@ -211,7 +167,7 @@ function validateListener(id,key){
     var id=e.target.id
     if(validateExpr(e.target.value)){
      allsettings[key]=e.target.value
-     updateShape();
+     updateShape(updateMesh);
     }
    }
    allsettings[key]=document.getElementById(id).value
@@ -223,7 +179,7 @@ function validateConstListener(id,key){
     var id=e.target.id
     if(validateConst(e.target.value)){
      allsettings[key]=e.target.value
-     updateShape();
+     updateShape(updateMesh);
     }
    }
    allsettings[key]=document.getElementById(id).value
@@ -241,7 +197,7 @@ function link0(){
   for(var i=0;i<consts.length;i++){
    validateConstListener(consts[i],ckeys[i]);
   }
-  updateShape();
+  updateShape(updateMesh);
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
