@@ -22,7 +22,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="BSplineSurface"><span style="font-weight:lighter"></span>new BSplineSurface<span class="signature">(controlPoints, knotsU, knotsV, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line384">line 384</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line360">line 360</a>
      </i></small></p>
 
 <div class="description">
@@ -127,7 +127,7 @@ For more information, see glutil.BSplineCurve.</td>
 
             <td class="description last">Bits for defining input
 and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
-BSplineCurve.HOMOGENEOUS_BIT.
+BSplineCurve.HOMOGENEOUS_BIT,
 and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
         </tr>
 
@@ -142,9 +142,233 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
 
         <h3 class="subsection-title">Methods</h3>
 
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".clamped"><span style="font-weight:lighter">(static) </span>clamped<span class="signature">(controlPoints, degreeU, degreeV, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="BSplineSurface.html">BSplineSurface</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line434">line 434</a>
+     </i></small></p>
+
+<div class="description">
+    Creates a B-spline surface with uniform knots, except thatthe surface's edges lie on the edges of the control point array.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;Array.&lt;number>>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Array ofcontrol point arrays as specified in the glutil.BSplineSurface constructor.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>degreeU</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Degree of the B-Splinesurface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.If null or omitted, the default is 3.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>degreeV</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Degree of the B-Splinesurface along the V-axisIf null or omitted, the default is 3.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>bits</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Bits as specified in the glutil.BSplineSurface constructor.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".uniform"><span style="font-weight:lighter">(static) </span>uniform<span class="signature">(controlPoints, degreeU, degreeV, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="BSplineSurface.html">BSplineSurface</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line452">line 452</a>
+     </i></small></p>
+
+<div class="description">
+    Creates a B-spline surface with uniform knots.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;Array.&lt;number>>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Array ofcontrol point arrays as specified in the glutil.BSplineSurface constructor.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>degreeU</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Degree of the B-Splinesurface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.If null or omitted, the default is 3.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>degreeV</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Degree of the B-Splinesurface along the V-axisIf null or omitted, the default is 3.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>bits</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Bits as specified in the glutil.BSplineSurface constructor.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u, v)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line425">line 425</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line506">line 506</a>
      </i></small></p>
 
 <div class="description">

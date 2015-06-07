@@ -22,7 +22,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="BSplineCurve"><span style="font-weight:lighter"></span>new BSplineCurve<span class="signature">(controlPoints, knots, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line185">line 185</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line161">line 161</a>
      </i></small></p>
 
 <div class="description">
@@ -88,7 +88,7 @@ The length of this parameter minus 1, minus the number
 of control points, represents the degree of the B-spline
 curve.  For example, a degree-3 (cubic) B-spline curve contains 4 more
 knots than the number of control points.  A degree of 1
-results in a straight line segment.<p>
+results in straight line segments.<p>
 The knot vector must be a nondecreasing sequence and
 the first knot must not equal the last.<p>
 If the difference between one knot and the next isn't the same,
@@ -118,7 +118,7 @@ first and last control points match the curve's end points.<p></td>
 
             <td class="description last">Bits for defining input
 and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
-BSplineCurve.HOMOGENEOUS_BIT.
+BSplineCurve.HOMOGENEOUS_BIT,
 and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</td>
         </tr>
 
@@ -135,7 +135,7 @@ and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</td>
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".DIVIDE_BIT"><span style="font-weight:lighter">(static, constant) </span>DIVIDE_BIT<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line227">line 227</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line203">line 203</a>
      </i></small></p>
 
 <div class="description">
@@ -154,7 +154,7 @@ If this bit is set, the length of each control point must be at least 2.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".HOMOGENEOUS_BIT"><span style="font-weight:lighter">(static, constant) </span>HOMOGENEOUS_BIT<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line236">line 236</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line212">line 212</a>
      </i></small></p>
 
 <div class="description">
@@ -172,7 +172,7 @@ Only used with WEIGHTED_BIT.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".WEIGHTED_BIT"><span style="font-weight:lighter">(static, constant) </span>WEIGHTED_BIT<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line217">line 217</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line193">line 193</a>
      </i></small></p>
 
 <div class="description">
@@ -192,7 +192,7 @@ method will be in homogeneous coordinates.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".WEIGHTED_DIVIDE_BITS"><span style="font-weight:lighter">(static, constant) </span>WEIGHTED_DIVIDE_BITS<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line241">line 241</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line217">line 217</a>
      </i></small></p>
 
 <div class="description">
@@ -205,9 +205,219 @@ method will be in homogeneous coordinates.
 
         <h3 class="subsection-title">Methods</h3>
 
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".clamped"><span style="font-weight:lighter">(static) </span>clamped<span class="signature">(controlPoints, degree, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="BSplineCurve.html">BSplineCurve</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line402">line 402</a>
+     </i></small></p>
+
+<div class="description">
+    Creates a B-spline curve with uniform knots, except thatthe curve will start and end at the first and last control points.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;number>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Array ofcontrol points as specified in the glutil.BSplineCurve constructor.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>degree</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Degree of the B-Splinecurve.  For example, 3 means a degree-3 (cubic) curve.If null or omitted, the default is 3.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>bits</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Bits as specified in the glutil.BSplineCurve constructor.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".clampedKnots"><span style="font-weight:lighter">(static) </span>clampedKnots<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line476">line 476</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".uniform"><span style="font-weight:lighter">(static) </span>uniform<span class="signature">(controlPoints, degree, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="BSplineCurve.html">BSplineCurve</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line416">line 416</a>
+     </i></small></p>
+
+<div class="description">
+    Creates a B-spline curve with uniform knots.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
+
+            <td class="type">
+
+<span class="param-type">Array.&lt;Array.&lt;number>></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Array ofcontrol points as specified in the glutil.BSplineCurve constructor.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>degree</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">Degree of the B-Splinecurve.  For example, 3 means a degree-3 (cubic) curve.If null or omitted, the default is 3.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>bits</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">Bits as specified in the glutil.BSplineCurve constructor.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".uniformKnots"><span style="font-weight:lighter">(static) </span>uniformKnots<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line460">line 460</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line310">line 310</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line286">line 286</a>
      </i></small></p>
 
 <div class="description">
