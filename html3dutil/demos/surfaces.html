@@ -279,10 +279,11 @@ addLink("Surface of revolution for f(x) = x<sup>2</sup>",function(){
 addLink("M&ouml;bius-like strip",function(){
  pushSettings(function(allsettings){
    return makeMesh(
-    new ExtrudedTube(new TorusKnot(
-      allsettings["torusknot-p"],
-      allsettings["torusknot-q"]
-    ),0.1,TorusKnot.getFlatCurve(5)),100);
+    new MoebiusLikeStrip(
+      allsettings["moeb-maj"],
+      allsettings["moeb-a"],
+      allsettings["moeb-b"]
+    ));
  },{
   "moeb-maj":["Size",1.25,0.05,3.0,0.05],
   "moeb-a":["Height",0.125,0.05,2.0,0.05],
@@ -321,6 +322,29 @@ addLink("M&ouml;bius strip",function(){
   "moeb2-w":["Width",0.25,0.05,2,0.05]
   });
 });
+
+var bsplineSurf=null;
+addLink("B-Spline Surface",function(){
+ pushSettings(function(allsettings){
+  var bspline=[]
+  for(var i=0;i<=5;i++){
+   var c=[]
+   for(var j=0;j<=5;j++){
+    var cp=[
+     (j*5.0/5)-2.5,
+     (i*5.0/5)-2.5,
+     Math.random()*2.5-1.25
+    ]
+    c.push(cp)
+   }
+   bspline.push(c)
+  }
+  if(!bsplineSurf)
+   bsplineSurf=BSplineSurface.clamped(bspline,3,3)
+  return makeMesh(bsplineSurf);
+ },{
+  });
+})
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));

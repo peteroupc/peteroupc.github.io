@@ -79,6 +79,58 @@ function setRanges(ranges){
  }
 }
 
+if(!BSplineCurve.uniform){
+BSplineCurve.clamped=function(controlPoints,degree,flags){
+ return new BSplineCurve(controlPoints,
+   BSplineCurve.clampedKnots(controlPoints.length,degree),flags)
+}
+BSplineCurve.uniform=function(controlPoints,degree,flags){
+ return new BSplineCurve(controlPoints,
+   BSplineCurve.uniformKnots(controlPoints.length,degree),flags)
+}
+BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,flags){
+ return new BSplineSurface(controlPoints,
+   BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
+   BSplineCurve.clampedKnots(controlPoints.length,degreeV),flags)
+}
+BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,flags){
+ return new BSplineSurface(controlPoints,
+   BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
+   BSplineCurve.uniformKnots(controlPoints.length,degreeV),flags)
+}
+BSplineCurve.uniformKnots=function(controlPoints,degree){
+  if(typeof controlPoints=="object")
+   controlPoints=controlPoints.length;
+  if(controlPoints<degree+1)
+   throw new Error("too few control points for degree "+degree+" curve")
+  var order=degree+1;
+  var ret=[]
+  for(var i=0;i<controlPoints+order;i++){
+   ret.push(i)
+  }
+  return ret;
+}
+BSplineCurve.clampedKnots=function(controlPoints,degree){
+  if(typeof controlPoints=="object")
+   controlPoints=controlPoints.length;
+  if(controlPoints<degree+1)
+   throw new Error("too few control points for degree "+degree+" curve")
+  var order=degree+1;
+  var extras=controlPoints-degree;
+  var ret=[];
+  for(var i=0;i<order;i++){
+   ret.push(0)
+  }
+  for(var i=0;i<extras;i++){
+   ret.push(i+1);
+  }
+  for(var i=0;i<order;i++){
+   ret.push(extras+1);
+  }
+  return ret;
+}
+}
+
 function meshToJson(mesh){
  function colorToHex(x){
   var r=Math.round(x[0]*255);

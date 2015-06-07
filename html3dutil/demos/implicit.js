@@ -699,42 +699,6 @@ ImplicitSurface.prototype.evalSurface=function(mesh,xsize,ysize,zsize,xmin,xmax,
         var xstep=(xmax-xmin)/xsize;
         var ystep=(ymax-ymin)/ysize;
         var zstep=(zmax-zmin)/zsize;
-        var bounds=[0,0,0,0,0,0];
-        var first=true;
-        var x,y,z;
-        for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
-        for(var iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
-        for(var iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
-           if(this._isOnSurface(x,y,z,xstep,ystep,zstep)){
-             if(first){
-               first=false;
-               bounds[0]=x;
-               bounds[1]=x+xstep;
-               bounds[2]=y;
-               bounds[3]=y+ystep;
-               bounds[4]=z;
-               bounds[5]=z+zstep;
-             } else {
-               bounds[0]=Math.min(bounds[0],x);
-               bounds[1]=Math.max(bounds[1],x+xstep);
-               bounds[2]=Math.min(bounds[2],y);
-               bounds[3]=Math.max(bounds[3],y+ystep);
-               bounds[4]=Math.min(bounds[4],z);
-               bounds[5]=Math.max(bounds[5],z+zstep);
-             }
-           }
-        }
-        }
-        }
-        xmin=bounds[0];
-        xmax=bounds[1];
-        ymin=bounds[2];
-        ymax=bounds[3];
-        zmin=bounds[4];
-        zmax=bounds[5];
-        var xstep=(xmax-xmin)/xsize;
-        var ystep=(ymax-ymin)/ysize;
-        var zstep=(zmax-zmin)/zsize;
         if(xstep!=0 && ystep!=0 && zstep!=0){
         var x,y,z;
         for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
