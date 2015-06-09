@@ -14,10 +14,11 @@
 </header>
 
 <article>
-    <h2>Introduction</h2><p>This tip describes projection and view transforms commonly used in 3D graphics,
+    <h2>Introduction <a id=Introduction></a></h2><p>This tip describes projection and view transforms commonly used in 3D graphics,
 especially when using my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.</p>
 <p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library's Releases page</a>.</strong></p>
-<h2>The &quot;Camera&quot; and the Projection and View Transforms</h2><p>The <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html"><code>Scene3D</code></a> class of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setPerspective"><code>setPerspective()</code></a> and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setLookAt"><code>setLookAt()</code></a>, which are shown in the example below.</p>
+<h2>Contents <a id=Contents></a></h2><p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#The_Camera_and_the_Projection_and_View_Transforms">The &quot;Camera&quot; and the Projection and View Transforms</a><br>&nbsp;&nbsp;<a href="#Overview_of_Transformations">Overview of Transformations</a><br><a href="#Projection_Transform">Projection Transform</a><br>&nbsp;&nbsp;<a href="#Perspective_Projection">Perspective Projection</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Demo">Demo</a><br>&nbsp;&nbsp;<a href="#Orthographic_Projection">Orthographic Projection</a><br>&nbsp;&nbsp;<a href="#Other_Projections">Other Projections</a><br><a href="#View_Transform">View Transform</a><br><a href="#Other_Pages">Other Pages</a><br></p>
+<h2>The &quot;Camera&quot; and the Projection and View Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a></h2><p>The <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html"><code>Scene3D</code></a> class of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setPerspective"><code>setPerspective()</code></a> and <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setLookAt"><code>setLookAt()</code></a>, which are shown in the example below.</p>
 <pre class="prettyprint source"><code>// Set the perspective view.  Camera has a 45-degree field of view
 // and will see objects from 0.1 to 100 units away.
 scene.setPerspective(45,scene.getClientAspect(),0.1,100);
@@ -25,7 +26,7 @@ scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 scene.setLookAt([0,0,40]);
 // Move the camera back 30 units instead, and turn it so it
 // points at (0, 2, 0), that is, up 2 units.
-scene.setLookAt([0,0,30], [0,2,0]);</code></pre><h3>Overview of Transformations</h3><p>Here is an overview of transformations used in the graphics system and
+scene.setLookAt([0,0,30], [0,2,0]);</code></pre><h3>Overview of Transformations <a id=Overview_of_Transformations></a></h3><p>Here is an overview of transformations used in the graphics system and
 the HTML 3D library.</p>
 <ul>
 <li>A <em>world matrix</em> transforms an object's own coordinates to <em>world space</em>,
@@ -37,10 +38,10 @@ is not discussed in this page.</li>
 clip space coordinates to <em>normalized device coordinates</em>, then <em>screen space</em>
 coordinates when drawing objects on the screen.</li>
 </ul>
-<h2>Projection Transform</h2><p>A <em>projection matrix</em> transforms coordinates in camera space to <em>clip space</em>.</p>
+<h2>Projection Transform <a id=Projection_Transform></a></h2><p>A <em>projection matrix</em> transforms coordinates in camera space to <em>clip space</em>.</p>
 <p>Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below.</p>
-<h3>Perspective Projection</h3><p>A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects
+<h3>Perspective Projection <a id=Perspective_Projection></a></h3><p>A perspective projection gives the 3D scene a sense of depth.  In this projection, closer objects
 look bigger than more distant objects with the same size, making the
 projection similar to how our eyes see the world.</p>
 <p><img src="persp1.png" alt="Two rows of spheres, and a drawing of a perspective view volume."></p>
@@ -88,10 +89,10 @@ bound the view volume.  Their positions are chosen so that the result is a persp
 of where they meet the near clipping plane.</li>
 <li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
 </ul>
-<h4>Demo</h4><ul>
+<h4>Demo <a id=Demo></a></h4><ul>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html">perspective.html</a> - Demonstrates a perspective projection.</li>
 </ul>
-<h3>Orthographic Projection</h3><p>An orthographic projection is one in which the left and right clipping planes are parallel to each other,
+<h3>Orthographic Projection <a id=Orthographic_Projection></a></h3><p>An orthographic projection is one in which the left and right clipping planes are parallel to each other,
 and the top and bottom clipping planes are parallel to each other.  This results in the near and far clipping
 planes having the same size, unlike in a perspective projection, and
 objects with the same size not varying in size with their depth.</p>
@@ -116,7 +117,7 @@ or squished in case the view volume's aspect ratio and the scene's aspect ratio 
 <li><code>aspect</code> - Aspect ratio of the viewport.  May be omitted, in which case the scene's
 aspect ratio (<code>scene.getClientAspect()</code>) is used.</li>
 </ul>
-<h3>Other Projections</h3><p>There are other kinds of possible projections, such as oblique projections
+<h3>Other Projections <a id=Other_Projections></a></h3><p>There are other kinds of possible projections, such as oblique projections
 or isometric projections.  For these
 and other projections, you can specify a custom projection matrix to the 3D scene using the
 <a href="http://peteroupc.github.io/html3dutil/glutil.Scene3D.html#.setProjectionMatrix"><code>setProjectionMatrix()</code></a>
@@ -126,7 +127,7 @@ method.</p>
 <ul>
 <li><code>matrix</code> - The 4x4 matrix to use.</li>
 </ul>
-<h2>View Transform</h2><p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to <em>camera space</em>
+<h2>View Transform <a id=View_Transform></a></h2><p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to <em>camera space</em>
 coordinates, in which the camera is located at the center of the coordinate system: (0, 0, 0).  A view matrix essentially rotates the camera and moves it to a given position in world space.  Specifically:</p>
 <ul>
 <li>The camera is rotated to point at a certain object or location on the scene.  This is represented by
@@ -153,7 +154,7 @@ This is optional.  The default is [0, 1, 0].</li>
 <ul>
 <li><code>matrix</code> - The 4x4 matrix to use.</li>
 </ul>
-<h2>Other Pages</h2><p>The following pages of mine on CodeProject also discuss this library:</p>
+<h2>Other Pages <a id=Other_Pages></a></h2><p>The following pages of mine on CodeProject also discuss this library:</p>
 <ul>
 <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
 <li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a></li>

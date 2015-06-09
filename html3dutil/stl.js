@@ -14,10 +14,13 @@ if(!GLUtil){
 var StlData={};
 /**
 * Loads a .STL file asynchronously.
-* To use this class, you must include the script "stl.js"; the
+* <p>This method is considered a supplementary method to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this method, you must include the script "extras/stl.js"; the
  * class is not included in the "glutil_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
- * &lt;script type="text/javascript" src="stl.js">&lt;/script></pre>
+ * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
 @alias glutil.GLUtil.loadStlFromUrl
 @param {string} url The URL to load.
 @return {Promise} A promise that:

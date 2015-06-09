@@ -21,6 +21,13 @@ MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.<p>
 When the constructor is called, it will create a stack whose
 only element is the identity matrix.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/matrixstack.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre>
  @alias MatrixStack
  @class
  */

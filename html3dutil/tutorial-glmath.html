@@ -17,7 +17,8 @@
     <p>The GLMath library, part of the HTML 3D library, is a collection
 of math functions for working with vectors, matrices, and quaternions.</p>
 <p>Here is an overview of these three data types.</p>
-<h2>Vectors</h2><p>A vector is simply a set of 3 or 4 elements that are related
+<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br><a href="#Matrix_Details">Matrix Details</a><br>&nbsp;&nbsp;<a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br></p>
+<h2>Vectors <a id=Vectors></a></h2><p>A vector is simply a set of 3 or 4 elements that are related
 to each other.  As such, a vector can symbolize a position, a direction,
 a ray, a color, or anything else.</p>
 <p>If a vector describes a position, direction,
@@ -29,32 +30,32 @@ with vectors begin with &quot;vec&quot;.</p>
 <p>If a 3D <em>position</em> (point) is used in a 4-element vector function (one beginning
 with &quot;vec4&quot;), use 1 as the fourth element of the vector.  If a 3D <em>direction</em>
 is used in a 4-element vector function, use 0 as the fourth element.</p>
-<h2>Matrices</h2><p>A matrix is a 16- or 9-element array that describes a
+<h2>Matrices <a id=Matrices></a></h2><p>A matrix is a 16- or 9-element array that describes a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with &quot;mat&quot;.</p>
-<h3>Translation</h3><p>A translation is a shifting of an object's position.</p>
+<h3>Translation <a id=Translation></a></h3><p>A translation is a shifting of an object's position.</p>
 <p>To create a translation matrix, use <a href="glmath.GLMath.html#.mat4translated">GLMath.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 <p>To multiply an existing matrix by a translation, use
 <a href="glmath.GLMath.html#.mat4translate">GLMath.mat4translate()</a>.  This will put the translation
 before the other transformations.</p>
-<h3>Scaling</h3><p>Scaling changes an object's size.</p>
+<h3>Scaling <a id=Scaling></a></h3><p>Scaling changes an object's size.</p>
 <p>To create a scaling matrix, use <a href="glmath.GLMath.html#.mat4scaled">GLMath.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
 factors to change the object's size.  For example, a Y-factor of 2 doubles an object's height.</p>
 <p>To multiply an existing matrix by a scaling, use
 <a href="glmath.GLMath.html#.mat4scale">GLMath.mat4scale()</a>.  This will put the scaling
 before the other transformations.</p>
-<h3>Rotation</h3><p>Rotation changes an object's orientation.</p>
+<h3>Rotation <a id=Rotation></a></h3><p>Rotation changes an object's orientation.</p>
 <p>To create a rotation matrix, use <a href="glmath.GLMath.html#.mat4rotated">GLMath.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the axis of rotation (a line that contains
 the origin and a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that contains the origin (0, 0, 0) and the point (0, 2, 3).</p>
 <p>To multiply an existing matrix by a rotation, use
 <a href="glmath.GLMath.html#.mat4rotate">GLMath.mat4rotate()</a>.  This will put the rotation
 before the other transformations.</p>
-<h3>Combining Transforms</h3><p>The order in which you do transforms is important.  In general, scaling then translating is
+<h3>Combining Transforms <a id=Combining_Transforms></a></h3><p>The order in which you do transforms is important.  In general, scaling then translating is
 not the same as translating then scaling.  Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:</p>
 <ul>
@@ -68,7 +69,7 @@ before the translations (shifts) take place.</p>
 <p>You can also multiply transforms using <a href="glmath.GLMath.html#.mat4multiply">GLMath.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.</p>
-<h2>Quaternions</h2><p>A quaternion is a 4-element array that describes a
+<h2>Quaternions <a id=Quaternions></a></h2><p>A quaternion is a 4-element array that describes a
 3D rotation.  The first three elements (X, Y, and Z), represent
 an axis of rotation, and the fourth element is
 the W component. Functions dealing with quaternions begin with
@@ -79,14 +80,14 @@ half the angle.  This results in the same axis of rotation as before,
 but in a different form.</li>
 <li>Set W to the cosine of half the angle.</li>
 </ul>
-<h3>Multiplying quaternions</h3><p>The methods quatMultiply and quatFromTaitBryan, among others, involve
+<h3>Multiplying quaternions <a id=Multiplying_quaternions></a></h3><p>The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
 before the first rotation.  Like matrix multiplication, quaternion
 multiplication is not commutative. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.</p>
-<h3>Tait-Bryan angles and their disadvantages</h3><p>Tait-Bryan angles (pitch, yaw, and roll angles) can also be used to describe 3D
+<h3>Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a></h3><p>Tait-Bryan angles (pitch, yaw, and roll angles) can also be used to describe 3D
 rotations, but they have disadvantages:</p>
 <ul>
 <li>In general, the order of Tait-Bryan angle rotations is important. For example, a 30-degree
@@ -109,7 +110,7 @@ Converts from Tait-Bryan angles to a quaternion</li>
 <li><a href="glmath.GLMath.html#.quatToTaitBryan">GLMath.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
-<h2>Coordinate Systems</h2><p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
+<h2>Coordinate Systems <a id=Coordinate_Systems></a></h2><p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
 <ul>
 <li>In a <em>left-handed</em> coordinate system, like in legacy Direct3D, the z-axis points <em>away from
 the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
@@ -119,7 +120,7 @@ the viewer</em> whenever the x-axis points to the right and the y-axis points up
 <p>If a GLMath method works differently in left- and right-handed coordinate systems,
 its description will note this. (In the absence of z-axis transformations, the coordinate
 system is effectively left-handed.)</p>
-<h2>Matrix Details</h2><p>This section contains more details on matrices.</p>
+<h2>Matrix Details <a id=Matrix_Details></a></h2><p>This section contains more details on matrices.</p>
 <p>All functions dealing with 4x4 matrices assume that
 the translation elements in x, y, and z are located in the
 13th, 14th, and 15th elements of the matrix array
@@ -159,7 +160,7 @@ element of the matrix is placed in columns, rather than in rows, as in the follo
 
 <p>The numbers in brackets in the matrix above are the zero-based indices
 into the matrix arrays passed to GLMath's matrix methods.</p>
-<h3>Transforming Points</h3><p>The transformation formula multiplies a matrix by a 3D point to change that point's
+<h3>Transforming Points <a id=Transforming_Points></a></h3><p>The transformation formula multiplies a matrix by a 3D point to change that point's
 position:</p>
 <ul>
 <li><strong>a&prime;</strong><sub><em>x</em></sub> = matrix[0] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[4] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[8] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[12]</li>
@@ -182,7 +183,7 @@ Transforms a 4-element vector with a 4x4 matrix</li>
 <li><a href="glmath.GLMath.html#.mat3transform">GLMath.mat3transform()</a> -
 Transforms a 3-element vector with a 3x3 matrix</li>
 </ul>
-<h3>Translation</h3><p>A translation is a shifting of an object's position.  In a transformation matrix,
+<h3>Translation <a id=Translation></a></h3><p>A translation is a shifting of an object's position.  In a transformation matrix,
 this shifting effectively happens after all other transformations such as scaling and rotation.
 It uses the 13th, 14th, and 15th elements of the matrix as seen here:</p>
 <math>
@@ -232,7 +233,7 @@ Returns a translation matrix</li>
 <li><a href="glmath.GLMath.html#.mat4translate">GLMath.mat4translate()</a> -
 Multiplies a matrix by a translation.</li>
 </ul>
-<h3>Scaling</h3><p>Scaling changes an object's size.  Scaling uses the 1st,
+<h3>Scaling <a id=Scaling></a></h3><p>Scaling changes an object's size.  Scaling uses the 1st,
 6th, and 11th elements of the matrix as seen here:</p>
 <math>
 <mfenced open="[" close="]">
@@ -291,7 +292,7 @@ Multiplies a matrix by a scaling.</li>
 <li><a href="glmath.GLMath.html#.mat4scaleInPlace">GLMath.mat4scaleInPlace()</a> -
 Multiplies a matrix in place by a scaling.</li>
 </ul>
-<h3>Rotation</h3><p>Rotation changes an object's orientation.  Rotation uses the upper-left
+<h3>Rotation <a id=Rotation></a></h3><p>Rotation changes an object's orientation.  Rotation uses the upper-left
 corner of a matrix.  Given an angle of rotation, &theta; (in radians; multiply
 degrees by &pi; and divide by 180), the transformation matrix is as follows.</p>
 <figure>
@@ -441,7 +442,7 @@ Returns a rotation matrix</li>
 <li><a href="glmath.GLMath.html#.mat4rotate">GLMath.mat4rotate()</a> -
 Multiplies a matrix by a translation.</li>
 </ul>
-<h3>Matrix Multiplication</h3><p>Two matrices can be combined into a single transformation. To do so,
+<h3>Matrix Multiplication <a id=Matrix_Multiplication></a></h3><p>Two matrices can be combined into a single transformation. To do so,
 the matrices are multiplied such that the transformations
 they describe happen in reverse order.  For example, if the first matrix
 (input matrix) describes a translation and the second
@@ -458,7 +459,7 @@ mat4rotate involve multiplying 4x4 matrices</p>
 <li><a href="glmath.GLMath.html#.mat4multiply">GLMath.mat4multiply()</a> -
 Multiplies two matrices</li>
 </ul>
-<h3>Other Transformations</h3><p>In all the transformations described above, the last row in the transformation matrix is
+<h3>Other Transformations <a id=Other_Transformations></a></h3><p>In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1).  (For that reason, they are called <em>affine transformations</em>, those that
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the GLMath library.</p>
@@ -478,7 +479,7 @@ Returns a frustum matrix</li>
 <li><a href="glmath.GLMath.html#.mat4perspective">GLMath.mat4perspective()</a> -
 Returns a field-of-view perspective matrix</li>
 </ul>
-<h3>Matrix Inversions</h3><p>An inverted matrix describes a transformation that undoes another transformation.  For
+<h3>Matrix Inversions <a id=Matrix_Inversions></a></h3><p>An inverted matrix describes a transformation that undoes another transformation.  For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
 size.</p>
 <p>To invert a <strong>translation</strong>, reverse the sign of the translation elements <code>tx</code>, <code>ty</code>, and <code>tz</code>

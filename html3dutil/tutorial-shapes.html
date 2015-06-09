@@ -14,7 +14,7 @@
 </header>
 
 <article>
-    <h2>Introduction</h2><p>This article explains how my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>
+    <h2>Introduction <a id=Introduction></a></h2><p>This article explains how my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
 shapes.</p>
 <p><strong>Download the latest version of the HTML 3D Library at the <a href="https://github.com/peteroupc/html3dutil/releases">library's Releases page</a>.</strong> As of version 1.2.1, it includes
@@ -27,7 +27,8 @@ the shapes.html and platonic.html demos mentioned in this page.</p>
 <li>Binding meshes to shapes</li>
 <li>Shape groups, or combinations of several shapes</li>
 </ul>
-<h2>Creating Shapes</h2><p>The HTML 3D library contains several methods for creating 3D shapes such
+<h2>Contents <a id=Contents></a></h2><p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Creating_Shapes">Creating Shapes</a><br>&nbsp;&nbsp;<a href="#Built_In_Shapes">Built-In Shapes</a><br>&nbsp;&nbsp;<a href="#Custom_Shapes">Custom Shapes</a><br>&nbsp;&nbsp;<a href="#The_Mesh_Constructor">The Mesh Constructor</a><br>&nbsp;&nbsp;<a href="#Vertex_Methods">Vertex Methods</a><br>&nbsp;&nbsp;<a href="#Transforming_the_Mesh">Transforming the Mesh</a><br>&nbsp;&nbsp;<a href="#Normals">Normals</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#What_Are_Normals">What Are Normals?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Normals_on_Built_in_Shapes">Normals on Built-in Shapes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#recalcNormals">recalcNormals()</a><br><a href="#Binding_Shapes">Binding Shapes</a><br><a href="#Shape_Groups">Shape Groups</a><br><a href="#Other_Pages">Other Pages</a><br></p>
+<h2>Creating Shapes <a id=Creating_Shapes></a></h2><p>The HTML 3D library contains several methods for creating 3D shapes such
 as cubes, cylinders, spheres, and custom shapes.</p>
 <p><img src="shapes.png" alt="An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
 orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
@@ -39,7 +40,7 @@ the built-in shapes.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/platonic.html">platonic.html</a> - A demo featuring the five
 platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.</li>
 </ul>
-<h3>Built-In Shapes</h3><p>The <a href="glutil.Meshes.html"><code>Meshes</code></a> class includes several handy methods for creating built-in shapes.
+<h3>Built-In Shapes <a id=Built_In_Shapes></a></h3><p>The <a href="glutil.Meshes.html"><code>Meshes</code></a> class includes several handy methods for creating built-in shapes.
 All methods described below return a <code>Mesh</code> object that describes the triangles they
 are composed of.  See &quot;Custom Shapes&quot; below for more on meshes.</p>
 <p><strong>3D Figures:</strong></p>
@@ -60,11 +61,11 @@ with a hole in the middle.</li>
 with a hole where the middle of the complete disk would be.</li>
 <li><a href="glutil.Meshes.html#.createPlane">Meshes.createPlane()</a> - Creates a rectangle.</li>
 </ul>
-<h3>Custom Shapes</h3><p>Also included is a <code>Mesh</code> class for defining shapes not given among the built-in ones.
+<h3>Custom Shapes <a id=Custom_Shapes></a></h3><p>Also included is a <code>Mesh</code> class for defining shapes not given among the built-in ones.
 Shapes can consist of triangles, lines, or points.</p>
 <p>There are two ways for specifying shapes:  through the Mesh constructor, or through
 methods that specify the mesh's data vertex by vertex.</p>
-<h3>The Mesh Constructor</h3><p>The Mesh constructor lets you define a shape from a predefined array of vertex data.
+<h3>The Mesh Constructor <a id=The_Mesh_Constructor></a></h3><p>The Mesh constructor lets you define a shape from a predefined array of vertex data.
 Here's how.</p>
 <p>(1) Create an array of numbers giving the X, Y, and Z coordinate for each vertex:</p>
 <pre class="prettyprint source"><code>var vertices = [x1, y1, z1, x2, y2, z2, ... ];</code></pre><p>If you also specify normals, colors, or texture coordinates for each vertex, you must add
@@ -105,7 +106,7 @@ array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; 
 <p>The bits may be combined as in the following example:</p>
 <pre class="prettyprint source"><code>var bits = Mesh.NORMALS_BIT | Mesh.COLORS_BIT;</code></pre><p>Alternatively, you can call the Mesh constructor with no arguments:</p>
 <pre class="prettyprint source"><code>var mesh = new Mesh();</code></pre><p>Doing so will create a mesh with no vertices.</p>
-<h3>Vertex Methods</h3><p>Alternatively, or in addition, to the method described above,
+<h3>Vertex Methods <a id=Vertex_Methods></a></h3><p>Alternatively, or in addition, to the method described above,
 you can specify the mesh's shape by calling methods that give each vertex's position and parameters:</p>
 <p>(1) Call the <code>mode()</code> method and choose a primitive mode, such as <code>Mesh.TRIANGLES</code>
 or <code>Mesh.QUAD_STRIP</code>:</p>
@@ -146,16 +147,16 @@ the same mode.  What this does is reset the state of the primitive so that futur
 won't depend on previous vertices.  For example, if you define a <code>TRIANGLE_FAN</code>, and
 you call <code>mesh.mode(Mesh.TRIANGLE_FAN)</code>, the newly defined <code>TRIANGLE_FAN</code> will be
 &quot;disconnected&quot; from the previous one as far as the mesh object is concerned.</p>
-<h3>Transforming the Mesh</h3><p>Once you've created the mesh, you can use the <code>transform()</code> method to transform
+<h3>Transforming the Mesh <a id=Transforming_the_Mesh></a></h3><p>Once you've created the mesh, you can use the <code>transform()</code> method to transform
 all the vertices in the mesh with a <a href="tutorial-glmath.html">4x4 matrix</a>.  The
 <a href="https://peteroupc.github.io/html3dutil/demos/shapes.html">shapes.html</a> demo uses
 this method to adjust some of the meshes to make them look better on the screen.
 Example:</p>
 <pre class="prettyprint source"><code>var matrix = GLMath.mat4scaled(2,2,2);
 // Use the transform to double the mesh's size
-mesh = mesh.transform(matrix);</code></pre><h3>Normals</h3><p>For lighting and shading to work correctly, you must specify normals for all the
+mesh = mesh.transform(matrix);</code></pre><h3>Normals <a id=Normals></a></h3><p>For lighting and shading to work correctly, you must specify normals for all the
 vertices in the mesh.</p>
-<h4>What Are Normals?</h4><p>A normal is a set of 3 numbers describing a particular direction.  Generally,
+<h4>What Are Normals? <a id=What_Are_Normals></a></h4><p>A normal is a set of 3 numbers describing a particular direction.  Generally,
 a normal's direction is perpendicular to a surface's edges, and points
 away from the surface.</p>
 <p>Normals are important in the lighting and shading model.  When light
@@ -163,9 +164,9 @@ hits an object's surface, the surface will shine depending on how directly the
 light points to the surface.  It will shine the most if the light
 is directly opposite to its normal, and not at all if the light is perpendicular to the
 normal or in the same direction as the normal.</p>
-<h4>Normals on Built-in Shapes</h4><p>The <code>Meshes</code> class includes built-in methods that will automatically
+<h4>Normals on Built-in Shapes <a id=Normals_on_Built_in_Shapes></a></h4><p>The <code>Meshes</code> class includes built-in methods that will automatically
 specify the proper normals.</p>
-<h4>recalcNormals()</h4><p>You can use the <code>recalcNormals()</code> method to recalculate the mesh's normals,
+<h4>recalcNormals() <a id=recalcNormals></a></h4><p>You can use the <code>recalcNormals()</code> method to recalculate the mesh's normals,
 in order to give the shape a flat or smooth appearance or to shade the shape from
 the inside or the outside.  This method takes two parameters:</p>
 <ul>
@@ -182,7 +183,7 @@ the mesh must have its vertices defined in counterclockwise order.</p>
 <pre class="prettyprint source"><code>// Use flat shading, and shape is shaded from the outside
 mesh = mesh.recalcNormals(true, false);
 // Both parameters can be omitted, setting both to false
-mesh = mesh.recalcNormals();</code></pre><h2>Binding Shapes</h2><p>Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
+mesh = mesh.recalcNormals();</code></pre><h2>Binding Shapes <a id=Binding_Shapes></a></h2><p>Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
 in order to have it drawn.  This is where the <a href="glutil.Shape.html"><code>Shape</code></a> class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:</p>
@@ -221,7 +222,7 @@ then translating (shifting) the shape in 3D space.</p>
 <p>(3) Add the shape to the 3D scene:</p>
 <pre class="prettyprint source"><code>scene3d.addShape(shape);</code></pre><p>Now, the next time <code>scene3d.render()</code> is called, the <a href="glutil.Scene3D.html"><code>Scene3D</code></a> will render the
 given shape to the scene.</p>
-<h2>Shape Groups</h2><p>The <code>ShapeGroup</code> class represents a shape that's a combination of multiple shapes.  Usually,
+<h2>Shape Groups <a id=Shape_Groups></a></h2><p>The <code>ShapeGroup</code> class represents a shape that's a combination of multiple shapes.  Usually,
 they form different pieces of a combined shape that can be positioned, rotated, and scaled
 at once.  Here is an example of a clock made up of multiple shapes:</p>
 <p><img src="clock.png" alt="Clock"></p>
@@ -250,7 +251,7 @@ featuring a wall clock.</li>
 call <code>shapeGroup.addShape(shape)</code>.  Note that you can only add shapes, not meshes,
 to a shape group, just as for a 3D scene.  A shape group, though, is perfectly allowed to contain
 other shape groups.</p>
-<h2>Other Pages</h2><p>The following pages of mine on CodeProject also discuss this library:</p>
+<h2>Other Pages <a id=Other_Pages></a></h2><p>The following pages of mine on CodeProject also discuss this library:</p>
 <ul>
 <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
 <li><a href="http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai"><em>Drawing parametric surfaces using the Public Domain HTML 3D Library</em></a></li>

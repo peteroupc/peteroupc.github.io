@@ -14,7 +14,8 @@
 </header>
 
 <article>
-    <h2>How to Use</h2><ol>
+    <h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#How_to_Use">How to Use</a><br>&nbsp;&nbsp;<a href="#List_of_Classes">List of Classes</a><br>&nbsp;&nbsp;<a href="#Scene3D">Scene3D</a><br>&nbsp;&nbsp;<a href="#The_Camera">The &quot;Camera&quot;</a><br>&nbsp;&nbsp;<a href="#3D_Models">3D Models</a><br>&nbsp;&nbsp;<a href="#Shapes">Shapes</a><br>&nbsp;&nbsp;<a href="#The_Render_Loop">The Render Loop</a><br><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a><br><a href="#Demos">Demos</a><br><a href="#Example">Example</a><br></p>
+<h2>How to Use <a id=How_to_Use></a></h2><ol>
 <li><a href="https://github.com/peteroupc/html3dutil/releases"><strong>Download the HTML 3D library</strong></a>.</li>
 <li><p>Extract the file <i>&quot;glutil_min.js&quot;</i>, and write the following code in every HTML page where you will use the library.</p>
 <pre class="prettyprint source"><code> &lt;script type=&quot;text/javascript&quot; src=&quot;glutil_min.js&quot;>&lt;/script></code></pre></li>
@@ -30,7 +31,7 @@
  &lt;/script></code></pre></li>
 </ol>
 <p>This is an overview of most of the JavaScript classes available in this library:</p>
-<h3>List of Classes</h3><ul>
+<h3>List of Classes <a id=List_of_Classes></a></h3><ul>
 <li><code>GLMath</code> - Contains math methods useful in 3D applications, such as matrices and vectors</li>
 <li><code>GLUtil</code> - Contains various utility methods in the HTML 3D Library</li>
 <li><code>Mesh</code> - Represents a 3D model</li>
@@ -47,12 +48,12 @@
 </ul>
 <p>For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the HTML 3D library</a>.</p>
 <p>The following sections detail how a 3D application using this library works.</p>
-<h3>Scene3D</h3><p>The <code>Scene3D</code> class represents a so-called &quot;scene graph&quot;. It holds every 3D object which will be drawn to the screen, as well as the camera's projection, the camera's position, and light sources to illuminate the 3D scene, among many other things.</p>
+<h3>Scene3D <a id=Scene3D></a></h3><p>The <code>Scene3D</code> class represents a so-called &quot;scene graph&quot;. It holds every 3D object which will be drawn to the screen, as well as the camera's projection, the camera's position, and light sources to illuminate the 3D scene, among many other things.</p>
 <p>To create a <code>Scene3D</code>, you first need to find the HTML canvas in your JavaScript, then you need to pass it to <code>new Scene3D()</code>. Once you do so, <code>Scene3D</code>will use that canvas to draw all 3D objects it receives. Here is an example.</p>
 <pre class="prettyprint source"><code>  // Find the HTML canvas with the ID &quot;canvas&quot;.
   var canvas=document.getElementById(&quot;canvas&quot;)
   // Create a 3D scene using that canvas.
-  var scene=new Scene3D(canvas);</code></pre><h3>The &quot;Camera&quot;</h3><p>The <code>Scene3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
+  var scene=new Scene3D(canvas);</code></pre><h3>The &quot;Camera&quot; <a id=The_Camera></a></h3><p>The <code>Scene3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
 <pre class="prettyprint source"><code>  // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
   scene.setPerspective(45,scene.getClientAspect(),0.1,100);
@@ -61,7 +62,7 @@
   // Move the camera back 30 units instead, and turn it so it
   // points at (0, 2, 0), that is, up 2 units.
   scene.setLookAt([0,0,30], [0,2,0]);</code></pre><p>For more information, see <em><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The &quot;Camera&quot; and Perspective and View Transforms</a></em>.</p>
-<h3>3D Models</h3><p>Every 3D scene is made up of &quot;meshes&quot;, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the <code>Mesh</code> class, or create a built-in geometric shape using a method in the <code>Meshes</code> class. The example below shows how you can create a box mesh:</p>
+<h3>3D Models <a id=3D_Models></a></h3><p>Every 3D scene is made up of &quot;meshes&quot;, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the <code>Mesh</code> class, or create a built-in geometric shape using a method in the <code>Meshes</code> class. The example below shows how you can create a box mesh:</p>
 <pre class="prettyprint source"><code>  // Create a box mesh 10 units in width, 20 units
   // in height, and 25 units in depth
   var mesh=Meshes.createBox(10,20,25);</code></pre><p>Here are some other built-in mesh methods. This tip doesn't explain all the features or parameters in the <code>Meshes</code> class; for that, see the <a href="http://peteroupc.github.io/html3dutil/glutil.Meshes.html">Meshes API documentation</a>.</p>
@@ -79,7 +80,7 @@
 </dl>
 
 <p>For more information on meshes, see <a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a>.</p>
-<h3>Shapes</h3><p>Once a mesh is created, it needs to be added to the 3D scene in order to be rendered. Use the 3D scene's <code>makeShape()</code> method to convert the mesh to a shape. Now you can set the shape's properties such as color, size, and position. Then, call <code>addShape()</code> to add the shape to the 3D scene.</p>
+<h3>Shapes <a id=Shapes></a></h3><p>Once a mesh is created, it needs to be added to the 3D scene in order to be rendered. Use the 3D scene's <code>makeShape()</code> method to convert the mesh to a shape. Now you can set the shape's properties such as color, size, and position. Then, call <code>addShape()</code> to add the shape to the 3D scene.</p>
 <pre class="prettyprint source"><code>  // Create a shape based on the mesh
   var shape=scene.makeShape(mesh);
   // Make it red (you can also use the HTML color string
@@ -105,14 +106,14 @@
   <dd>Creates a copy of this shape. Can be more efficient than calling <code>scene.makeShape</code> if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</dd>
 </dl>
 
-<h3>The Render Loop</h3><p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many &quot;frames&quot; a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the <code>Scene3D.render()</code> method.&nbsp; Render loops are created using the <code>GLUtil.renderLoop()</code> method. Here is an example of a render loop.</p>
+<h3>The Render Loop <a id=The_Render_Loop></a></h3><p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many &quot;frames&quot; a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the <code>Scene3D.render()</code> method.&nbsp; Render loops are created using the <code>GLUtil.renderLoop()</code> method. Here is an example of a render loop.</p>
 <pre class="prettyprint source"><code>  // Set up the render loop
   GLUtil.renderLoop(function(time){
    // This will be called once each frame.
    // Here, we render the scene
    scene.render();
   });</code></pre><p>The render loop method takes a parameter (here &quot;time&quot;), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.</p>
-<h2>A Skeleton for 3D Apps</h2><p>The following is a minimal skeleton you can use for writing HTML apps using this library.</p>
+<h2>A Skeleton for 3D Apps <a id=A_Skeleton_for_3D_Apps></a></h2><p>The following is a minimal skeleton you can use for writing HTML apps using this library.</p>
 <pre class="prettyprint source"><code>&lt;meta charset=utf-8>
 &lt;head>
 &lt;script type=&quot;text/javascript&quot; src=&quot;glutil_min.js&quot;>&lt;/script>
@@ -122,7 +123,7 @@
 &lt;script>
 // Your script goes here
 &lt;/script>
-&lt;/body></code></pre><h2>Demos</h2><p>The following are HTML Web pages showing a variety of features of the HTML 3D library. Each demo includes source code for that demo at the bottom of the page.</p>
+&lt;/body></code></pre><h2>Demos <a id=Demos></a></h2><p>The following are HTML Web pages showing a variety of features of the HTML 3D library. Each demo includes source code for that demo at the bottom of the page.</p>
 <ul>
 <li><a href="https://peteroupc.github.io/html3dutil/simple.html">simple.html</a> - A simple demo using this library</li>
 <li><a href="https://peteroupc.github.io/html3dutil/squares.html">squares.html</a> - Demonstrates shader-based filters</li>
@@ -137,7 +138,7 @@
 <li><a href="https://peteroupc.github.io/html3dutil/gradient.html">gradient.html</a> - Demonstrates generating a custom texture -- a linear gradient from one color to another.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/starfield.html">starfield.html</a> - Demo of a star field.</li>
 </ul>
-<h2>Example</h2><p>The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the <code>&lt;canvas&gt;</code> element it uses on the page.</p>
+<h2>Example <a id=Example></a></h2><p>The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the <code>&lt;canvas&gt;</code> element it uses on the page.</p>
 <pre class="prettyprint source"><code>&lt;head>
 &lt;script type=&quot;text/javascript&quot; src=&quot;glutil_min.js&quot;>&lt;/script>
 &lt;/head>
