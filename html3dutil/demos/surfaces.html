@@ -5,15 +5,17 @@ body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <script type="text/javascript" src="../glutil_min.js"></script>
-<script type="text/javascript" src="../camera.js"></script>
-<script type="text/javascript" src="../frame.js"></script>
+<script type="text/javascript" src="../extras/evaluators.js"></script>
+<script type="text/javascript" src="../extras/camera.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="extras.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
-<div style="position:absolute;left:0;top:1em" id=links>
+<div style="position:absolute;left:0;top:1em">
+<div id=links></div>
+<div id=settings></div>
 </div>
-<div id="settings" style="position:absolute;left:0;top:4em"></div>
 <canvas id=canvas>
 </canvas>
 <script id="demo">
@@ -91,48 +93,6 @@ Superellipsoid.cospow=function(x,n){
   var r=Math.cos(x);
   return Math.sign(r)*Math.pow(Math.abs(r),n);
  }
-/**
-*
-*
-* @param {Function} phi Function of a single variable:
-* y = f(x).  This determines the "radius" of the surface
-* of revolution along the y-axis.
-* @param {Function} psi Function of a single variable
-* that transforms the value x: x = f(a).  If null, uses
-* the function x = f(a) = x.
-*
-*/
-var SurfaceOfRevolution=function(phi,psi,minval,maxval){
- this.phi=phi;
- this.psi=psi;
- this.minval=minval
- this.maxval=maxval
- this.evaluate=function(u,v){
-  v=1-v;
-  v*=GLMath.PiTimes2;
-  u=minval+(maxval-minval)*u;
-  var cosv = Math.cos(v);
-  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
-  var r=this.phi(u);
-  return [this.psi ? this.psi(u) : u,r*cosv,r*sinv];
- }
-}
-
-var FunctionSurface={
-create:function(func,minval,maxval){
- return new SurfaceOfRevolution(func,null,minval,maxval);
-}
-};
-
-var Torus={
-create:function(outerRadius,innerRadius,minval,maxval){
- return new SurfaceOfRevolution(function(v){
-  return outerRadius+innerRadius*Math.cos(v);
- },function(v){
-  return innerRadius+Math.sin(v);
- },minval,maxval);
-}
-};
 
 var KleinBottle=function(){
  this.evaluate=function(u,v){
@@ -166,14 +126,16 @@ var MoebiusLikeStrip=function(maj, a, b){
   v*=GLMath.PiTimes2;
   u=-u
   var x, y, z;
-  var sinu=Math.sin(u);
-  var sinv=Math.sin(v);
-  var cosu=Math.cos(u);
-  var cosv=Math.cos(v);
+  var cosu = Math.cos(u);
+  var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
+  var cosv = Math.cos(v);
+  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
     x = this.a * cosv * cosu - this.b * sinv * sinu
     z = this.a * cosv * sinu + this.b * sinv * cosu
-    y = (this.maj + x) * Math.sin(u*2)
-    x = (this.maj + x) * Math.cos(u*2)
+    var cosu2 = Math.cos(u*2);
+    var sinu2 = ((u*2)>=0 && (u*2)<6.283185307179586) ? ((u*2)<=3.141592653589793 ? Math.sqrt(1.0-cosu2*cosu2) : -Math.sqrt(1.0-cosu2*cosu2)) : Math.sin(u*2);
+    y = (this.maj + x) * sinu2
+    x = (this.maj + x) * cosu2
   return [x,z,y]
  }
 }
@@ -187,47 +149,15 @@ var MoebiusStrip=function(radius,width){
   var x, y, z;
   var cosv = Math.cos(v==1 ? 0 : v);
   var sinv = ((v==1 ? 0 : v)>=0 && (v==1 ? 0 : v)<6.283185307179586) ? ((v==1 ? 0 : v)<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v==1 ? 0 : v);
-  var sinv2=Math.sin(v/2);
-  var tmp=u*Math.cos(v/2)+this.radius;
+  var cosv2 = Math.cos(v/2);
+  var sinv2 = ((v/2)>=0 && (v/2)<6.283185307179586) ? ((v/2)<=3.141592653589793 ? Math.sqrt(1.0-cosv2*cosv2) : -Math.sqrt(1.0-cosv2*cosv2)) : Math.sin(v/2);
+  var tmp=u*cosv2+this.radius;
   x=cosv*tmp;
   y=sinv*tmp;
   z=sinv2*u;
   return [x,y,z]
  }
 }
-   function makeMesh(func,resolution){
-    // Default resolution is 50
-    if(resolution==null)resolution=50
-     // create a new mesh
-     var mesh=new Mesh();
-     // define a color gradient evaluator for
-     // demonstration purposes.  Instead of X, Y, and Z,
-     // generate a Red/Green/Blue color based on
-     // the same parameters U and V as the surface
-     // function for 3D points.
-     var colorGradient={
-      "evaluate":function(u,v){ return [1-u,v,u]; }
-     }
-     // generate the parametric surface.
-
-     var ev=new SurfaceEval()
-      .vertex(func)
-    // Specify the color gradient evaluator defined above
-      .color(colorGradient)
-    // Generate normals for the parametric surface,
-    // which is required for lighting to work correctly
-      .setAutoNormal(true)
-    // Evaluate the surface and generate a triangle
-    // mesh, using resolution+1 different U-coordinates ranging
-    // from 0 to 1, and resolution+1
-    // different V-coordinates ranging from 0 to 1
-    // Instead of Mesh.TRIANGLES, we could use
-    // Mesh.LINES to create a wireframe mesh,
-    // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
-    // Surface generated, return the mesh
-    return mesh;
-  }
 
 var shapeGroup=new ShapeGroup();
 var allsettings={}
@@ -261,7 +191,7 @@ addLink("Klein bottle",function(){
 })
 addLink("Surface of revolution for f(x) = sin x",function(){
  pushSettings(function(allsettings){
-    return makeMesh(FunctionSurface.create(function(x){
+    return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
   return Math.sin(x)
  },-Math.PI,Math.PI))
  },{
@@ -269,7 +199,7 @@ addLink("Surface of revolution for f(x) = sin x",function(){
 })
 addLink("Surface of revolution for f(x) = x<sup>2</sup>",function(){
  pushSettings(function(allsettings){
- return makeMesh(FunctionSurface.create(function(x){
+ return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
   return x*x
  },-1,1))
  },{

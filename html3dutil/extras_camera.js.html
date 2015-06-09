@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Source: extras/camera.js</title>
+<script src="mathml.js"></script>
+</head>
+<body style="margin-top:0px">
+<div style="width:75%;float:left;">
+    <h1>Source: extras/camera.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+function Perspective(scene, fov, nearZ, farZ){
+ if(nearZ&lt;=0)throw new Error("invalid nearZ")
+ this.fov=fov;
+ this.scene=scene;
+ this.near=nearZ;
+ this.far=farZ;
+ this.currentAspect=this.scene.getClientAspect();
+ this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+}
+/**
+ * Not documented yet.
+ */
+Perspective.prototype.update=function(){
+ var aspect=this.scene.getClientAspect();
+ if(aspect!=this.currentAspect){
+  this.currentAspect=aspect;
+  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ }
+}
+
+/**
+* A class for controlling the projection and
+* view of a 3D scene, in the nature of an abstract "camera".
+* &lt;p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. &lt;p>
+* To use this class, you must include the script "extras/camera.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:&lt;pre>
+ * &amp;lt;script type="text/javascript" src="extras/camera.js">&amp;lt;/script>&lt;/pre>
+* @class
+* @alias Camera
+* @param {glutil.Scene} scene A 3D scene to associate with this
+* camera object.
+* @param {number}  fov Vertical field of view, in degrees. Should be less
+* than 180 degrees. (The smaller
+* this number, the bigger close objects appear to be.)
+* @param {number} near The distance from the camera to
+* the near clipping plane. Objects closer than this distance won't be
+* seen. This should be slightly greater than 0.
+* @param {number}  far The distance from the camera to
+* the far clipping plane. Objects beyond this distance will be too far
+* to be seen.
+*/
+function Camera(scene, fov, nearZ, farZ){
+ if(nearZ&lt;=0)throw new Error("invalid nearZ")
+ this.near=nearZ;
+ this.persp=new Perspective(scene,fov,nearZ,farZ);
+ this.rotation=GLMath.quatIdentity();
+ this.dolly=GLMath.quatIdentity();
+ this.position=[0,0,0];
+ this.center=[0,0,0];
+ this.scene=scene;
+ this.trackballMode=true;
+ if(typeof InputTracker!="undefined"){
+  this.input=new InputTracker(scene.getContext().canvas);
+ }
+ this._updateView();
+ this.input.mousewheel(this._mousewheel.bind(this));
+}
+Camera._normAsVec4=function(x,y,z){
+ var len=x*x+y*y+z*z;
+ if(len==1){
+  return [x,y,z,1];
+ } else {
+  var n=GLMath.vec3normInPlace([x,y,z]);
+  return [n[0],n[1],n[2],1];
+ }
+}
+/** @private */
+Camera._quatRotateRelative=function(quat, angle, x, y, z){
+ // Rotate quaternion about a relative axis
+ var vec=Camera._normAsVec4(x,y,z)
+ var q=GLMath.quatRotate(quat,angle,vec);
+ q=GLMath.quatMultiply(GLMath.quatFromAxisAngle(angle,vec),quat);
+ GLMath.vec4assign(quat,q);
+}
+/** @private */
+Camera._quatRotateFixed=function(quat, angle, x, y, z){
+ // Rotate quaternion about a fixed axis
+ var vec=Camera._normAsVec4(x,y,z)
+ var q=GLMath.quatRotate(quat,angle,vec);
+ q=GLMath.quatMultiply(quat,GLMath.quatFromAxisAngle(angle,vec));
+ GLMath.vec4assign(quat,q);
+}
+/** @private */
+Camera._moveRelative=function(vec, quat, dist, x, y, z){
+ var velocity=Camera._normAsVec4(x,y,z);
+ GLMath.vec3scaleInPlace(velocity,dist);
+ GLMath.vec3addInPlace(vec,velocity);
+}
+Camera._moveTrans=function(vec, quat, dist, x, y, z){
+ var velocity=Camera._normAsVec4(x,y,z);
+ velocity=GLMath.quatTransform(
+   GLMath.quatConjugate(quat),velocity);
+ GLMath.vec3scaleInPlace(velocity,dist);
+ GLMath.vec3addInPlace(vec,velocity);
+}
+/**
+ * Not documented yet.
+ *//** @private */
+Camera.prototype._distance=function(){
+ var rel=GLMath.vec3sub(this.position,this.center);
+ return GLMath.vec3length(rel);
+}
+/** @private */
+Camera.prototype._getView=function(){
+ var mat=GLMath.quatToMat4(this.rotation);
+ var mat2=GLMath.mat4translated(-this.position[0],
+  -this.position[1],-this.position[2]);
+ mat=GLMath.mat4multiply(mat2,mat);
+ mat=GLMath.mat4translate(mat,-this.center[0],
+  -this.center[1],-this.center[2]);
+ return mat;
+}
+
+/** @private */
+Camera.prototype._updateView=function(){
+ this.scene.setViewMatrix(this._getView());
+ this._moveLight();
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
+Camera.prototype.setDistance=function(dist){
+ // don't move closer than the near plane
+ dist=Math.max(this.near,dist);
+ var currentDist=this._distance();
+ var relDist=currentDist-dist;
+ this.moveForward(relDist);
+ return this;
+}
+
+/** @private */
+Camera.prototype._orbit=function(deltaMouseX,deltaMouseY,angleMultiplier){
+  var x=deltaMouseX*angleMultiplier
+  var y=deltaMouseY*angleMultiplier
+  var vec=GLMath.quatTransform(
+    GLMath.quatConjugate(this.dolly),Camera._normAsVec4(0,0,1));
+  var lat=Math.atan2(Math.sqrt(vec[2]*vec[2]+vec[0]*vec[0]),vec[1]);
+  var oldlat=lat;
+  y=y*GLMath.PiDividedBy180;
+  lat-=y;
+  var pi2=Math.PI-0.00001;
+  if(lat&lt;0.00001){
+   y-=(0.00001-lat);
+   lat=0.00001
+  } else if(lat>pi2){
+   y+=lat-pi2;
+   lat=pi2;
+  }
+  this.moveAngleVertical(y*GLMath.Num180DividedByPi)
+  this._moveAngleFixedHorizontal(x);
+}
+
+/** @private */
+Camera.prototype._trackball=function(deltaMouseX,deltaMouseY,angleMultiplier){
+  var x=deltaMouseX*angleMultiplier
+  var y=deltaMouseY*angleMultiplier
+  this.moveAngleHorizontal(x);
+  this.moveAngleVertical(y);
+}
+/** @private */
+Camera.prototype._move=function(deltaMouseX,deltaMouseY,multiplier){
+  var x=deltaMouseX*multiplier
+  var y=deltaMouseY*multiplier
+  this.moveCenterHorizontal(x);
+  this.moveCenterVertical(y);
+}
+/** @private */
+Camera.prototype._moveAngleFixedHorizontal=function(angleDegrees){
+ if(angleDegrees!=0){
+  Camera._quatRotateFixed(this.dolly,angleDegrees,0,1,0);
+  Camera._quatRotateFixed(this.rotation,angleDegrees,0,1,0);
+  this._updateView();
+ }
+ return this;
+}
+/** @private */
+Camera.prototype._moveAngleFixedVertical=function(angleDegrees){
+ if(angleDegrees!=0){
+  Camera._quatRotateFixed(this.dolly,angleDegrees,1,0,0);
+  Camera._quatRotateFixed(this.rotation,angleDegrees,1,0,0);
+  this._updateView();
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
+Camera.prototype.moveAngleVertical=function(angleDegrees){
+ if(angleDegrees!=0){
+  Camera._quatRotateRelative(this.dolly,angleDegrees,1,0,0);
+  Camera._quatRotateRelative(this.rotation,angleDegrees,1,0,0);
+  this._updateView();
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
+Camera.prototype.moveAngleHorizontal=function(angleDegrees){
+ if(angleDegrees!=0){
+  Camera._quatRotateRelative(this.dolly,angleDegrees,0,1,0);
+  Camera._quatRotateRelative(this.rotation,angleDegrees,0,1,0);
+  this._updateView();
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} angleDegrees
+ */
+Camera.prototype.turnVertical=function(angleDegrees){
+ if(angleDegrees!=0){
+  var curDist=this._distance();
+  Camera._quatRotateRelative(this.dolly,angleDegrees,1,0,0);
+  Camera._quatRotateRelative(this.rotation,angleDegrees,1,0,0);
+  GLMath.vec3assign(this.position,this.center);
+  this.moveForward(-curDist);
+ }
+ return this;
+}
+/** @deprecated */
+Camera.prototype.turnHorizontal=function(angleDegrees){
+ if(angleDegrees!=0){
+  var curDist=this._distance();
+  Camera._quatRotateRelative(this.dolly,angleDegrees,0,1,0);
+  Camera._quatRotateRelative(this.rotation,angleDegrees,0,1,0);
+  GLMath.vec3assign(this.position,this.center);
+  this.moveForward(-curDist);
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} cx
+ * @param {*} cy
+ * @param {*} cz
+ */
+Camera.prototype.movePosition=function(cx,cy,cz){
+ this.position[0]=cx;
+ this.position[1]=cy;
+ this.position[2]=cz;
+ this._updateView();
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
+Camera.prototype.moveClose=function(dist){
+ return this.setDistance(this._distance()-dist);
+}
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
+Camera.prototype.moveForward=function(dist){
+ if(dist!=0){
+  Camera._moveRelative(this.position,this.dolly,dist,0,0,-1);
+  this._updateView();
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
+Camera.prototype.moveCenterHorizontal=function(dist){
+ if(dist!=0){
+  Camera._moveTrans(this.center,this.dolly,dist,-1,0,0);
+  this._updateView();
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
+Camera.prototype.moveCenterVertical=function(dist){
+ if(dist!=0){
+  Camera._moveTrans(this.center,this.dolly,dist,0,1,0);
+  this._updateView();
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
+Camera.prototype.moveHorizontal=function(dist){
+ if(dist!=0){
+  Camera._moveTrans(this.position,this.dolly,dist,-1,0,0);
+  this._updateView();
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} dist
+ */
+Camera.prototype.moveVertical=function(dist){
+ if(dist!=0){
+  Camera._moveTrans(this.position,this.dolly,dist,0,1,0);
+  this._updateView();
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} e
+ */
+Camera.prototype.getPosition=function(){
+  var view=this._getView();
+  var pos=GLMath.quatTransform(
+    GLMath.quatConjugate(this.rotation),
+    [this.position[0],this.position[1],this.position[2],1]);
+  GLMath.vec3subInPlace(pos,this.center);
+  return pos;
+}
+/**
+ * Not documented yet.
+ */
+Camera.prototype.getVectorFromCenter=function(){
+  return GLMath.vec3normInPlace(this.getPosition());
+}
+
+/** @private */
+Camera.prototype._mousewheel=function(e){
+ var ticks=e.delta/120.0;
+ // mousewheel up (negative) means move forward,
+ // mousewheel down (positive) means move back
+ this.setDistance(this._distance()-0.6*ticks)
+}
+
+/** @private
+For backward compatibility only; will be removed in next major version */
+Camera.prototype._moveLight=function(){
+ if(this.scene.lightSource.getCount()==1){
+  this.scene.setDirectionalLight(0,this.getVectorFromCenter());
+ }
+}
+
+/**
+ * Not documented yet.
+ */
+Camera.prototype.update=function(){
+ var delta=this.input.deltaXY();
+ if(this.input.leftButton){
+  if(this.trackballMode){
+   this._trackball(delta.x,delta.y,0.3);
+  } else {
+   this._orbit(delta.x,delta.y,0.3);
+  }
+ } else if(this.input.middleButton){
+   this._move(delta.x,delta.y,0.3);
+ }
+ if(this.input.keys[InputTracker.A+22]){ // letter W
+  this.setDistance(this._distance()+0.2)
+ }
+ if(this.input.keys[InputTracker.A+18]){ // letter S
+  this.setDistance(this._distance()-0.2)
+ }
+ this.persp.update();
+ return this;
+}
+///////////////////////////////////////////////////////////////
+
+function InputTracker(element){
+ this.leftButton=false;
+ this.rightButton=false;
+ this.middleButton=false;
+ this.keys={};
+ this.lastClient=[];
+ this.clientX=null;
+ this.clientY=null;
+ this.element=element;
+ var thisObj=this;
+ window.addEventListener("blur",function(e){
+  thisObj.leftButton=false;
+  thisObj.rightButton=false;
+  thisObj.keys={};
+ })
+ document.addEventListener("keydown",function(e){
+  thisObj.keys[e.keyCode]=true;
+ })
+ document.addEventListener("keyup",function(e){
+  delete thisObj.keys[e.keyCode];
+ })
+ var mouseEvent=function(thisObj,e){
+  if(e.button==0){
+   thisObj.leftButton=e.isDown;
+  }
+  if(e.button==1){
+   thisObj.middleButton=e.isDown;
+  }
+  if(e.button==2){
+   thisObj.rightButton=e.isDown;
+  }
+  if(e.button==0 &amp;&amp; e.touch &amp;&amp; !e.isDown){
+   thisObj.clientX=null;
+   thisObj.clientY=null;
+   thisObj.lastClient=[];
+  } else {
+   thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
+   thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
+   if(e.button!=-1){
+    // update mouse position to current click position
+    thisObj.lastClient[0]=thisObj.clientX;
+    thisObj.lastClient[1]=thisObj.clientY;
+   }
+  }
+ }
+ element.addEventListener("mousedown",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":e.button,
+    "clientX":e.clientX,"clientY":e.clientY});
+ })
+ element.addEventListener("touchstart",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":0,
+    "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
+ })
+ element.addEventListener("mouseup",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":e.button,
+    "clientX":e.clientX,"clientY":e.clientY});
+ })
+ element.addEventListener("touchend",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":0,
+    "clientX":e.changedTouches[0].clientX,"clientY":e.changedTouches[0].clientY,"touch":true});
+ })
+ element.addEventListener("mousemove",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
+    "clientX":e.clientX,"clientY":e.clientY});
+ })
+ element.addEventListener("touchmove",function(e){
+  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
+    "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
+ })
+};
+/**
+ * Not documented yet.
+ * @param {*} func
+ */
+InputTracker.prototype.mousewheel=function(func){
+ var cb=function(e, click){
+  var clientX=e.clientX-InputTracker._getPageX(e.target);
+  var clientY=e.clientY-InputTracker._getPageY(e.target);
+  var delta=0;
+  if (e.wheelDelta){
+    delta=e.wheelDelta;
+  } else if (e.detail){
+    delta=e.detail * -40;
+  } else if (e.originalEvent &amp;&amp; e.originalEvent.wheelDelta){
+    delta=e.originalEvent.wheelDelta;
+  }
+  // delta of 120 represents 1 tick of the mouse wheel;
+  // positive values mean moving the mouse wheel up,
+  // negative values mean down
+  func({"target":e.target,
+     "delta":delta,
+     "click":click,
+     "x":clientX,
+     "y":clientY});
+   e.preventDefault();
+ }
+ if("onmousewheel" in this.element){
+  this.element.addEventListener("mousewheel",cb);
+ } else {
+  this.element.addEventListener("DOMMouseScroll",cb);
+ }
+}
+
+/** @private */
+InputTracker._getPageX=function(o) {
+ "use strict";
+  var x=0;
+  while(o!==null &amp;&amp; typeof o!=="undefined") {
+   if(typeof o.offsetLeft!=="undefined")
+    x+=o.offsetLeft;
+   o=o.offsetParent;
+  }
+ return x;
+}
+/** @private */
+InputTracker._getPageY=function(o) {
+ "use strict";
+  var x=0;
+  while(o!==null &amp;&amp; typeof o!=="undefined") {
+   if(typeof o.offsetTop!=="undefined")
+    x+=o.offsetTop;
+   o=o.offsetParent;
+  }
+  return x;
+}
+InputTracker.A=65;
+InputTracker.ZERO=48;
+InputTracker.RETURN=10;
+InputTracker.ENTER=13;
+InputTracker.TAB=9;
+InputTracker.SHIFT=16;
+InputTracker.CTRL=17;
+InputTracker.ALT=18;
+InputTracker.ESC=27;
+InputTracker.SPACE=32;
+InputTracker.PAGEUP=33;
+InputTracker.PAGEDOWN=34;
+InputTracker.END=35;
+InputTracker.HOME=36;
+InputTracker.LEFT=37;
+InputTracker.UP=38;
+InputTracker.RIGHT=39;
+InputTracker.DOWN=40;
+InputTracker.DELETE=46;
+InputTracker.ADD=107;
+InputTracker.SUBTRACT=109;
+/**
+ * Not documented yet.
+ */
+InputTracker.prototype.deltaXY=function(){
+ var deltaX=0;
+ var deltaY=0;
+ if(this.clientX==null || this.clientY==null){
+  return {"x":0,"y":0,"cx":0,"cy":0};
+ }
+ var deltaX=(this.lastClient.length==0) ? 0 :
+   this.clientX-this.lastClient[0];
+ var deltaY=(this.lastClient.length==0) ? 0 :
+   this.clientY-this.lastClient[1];
+ this.lastClient[0]=this.clientX;
+ this.lastClient[1]=this.clientY;
+ return {"x":deltaX,"y":deltaY,
+   "cx":this.clientX,"cy":this.clientY};
+}
+</code></pre>
+        </article>
+    </section>
+
+</div>
+<nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">camera</a></li><li><a href="tutorial-filters.html">filters</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-surfaces.html">surfaces</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

@@ -142,13 +142,14 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".clamped"><span style="font-weight:lighter">(static) </span>clamped<span class="signature">(controlPoints, degreeU, degreeV, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="BSplineSurface.html">BSplineSurface</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".clamped"><span style="font-weight:lighter">(static) </span>clamped<span class="signature">(controlPoints, degreeU<sub style="font-weight:lighter">opt</sub>, degreeV<sub style="font-weight:lighter">opt</sub>, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="BSplineSurface.html">BSplineSurface</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line434">line 434</a>
      </i></small></p>
 
 <div class="description">
-    Creates a B-spline surface with uniform knots, except thatthe surface's edges lie on the edges of the control point array.
+    Creates a B-spline surface with uniform knots, except that
+the surface's edges lie on the edges of the control point array.
 </div>
 
     <h5>Parameters:</h5>
@@ -183,7 +184,8 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
 
                 </td>
 
-            <td class="description last">Array ofcontrol point arrays as specified in the glutil.BSplineSurface constructor.</td>
+            <td class="description last">Array of
+control point arrays as specified in the glutil.BSplineSurface constructor.</td>
         </tr>
 
         <tr>
@@ -193,17 +195,18 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
             <td class="type">
 
 <span class="param-type">number</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
 
                 <td class="attributes">
 
+                    &lt;optional><br>
+
                 </td>
 
-            <td class="description last">Degree of the B-Splinesurface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.If null or omitted, the default is 3.</td>
+            <td class="description last">Degree of the B-Spline
+surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
+If null or omitted, the default is 3.</td>
         </tr>
 
         <tr>
@@ -213,17 +216,18 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
             <td class="type">
 
 <span class="param-type">number</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
 
                 <td class="attributes">
 
+                    &lt;optional><br>
+
                 </td>
 
-            <td class="description last">Degree of the B-Splinesurface along the V-axisIf null or omitted, the default is 3.</td>
+            <td class="description last">Degree of the B-Spline
+surface along the V-axis
+If null or omitted, the default is 3.</td>
         </tr>
 
         <tr>
@@ -254,7 +258,7 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
 
 <h5>Returns:</h5>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".uniform"><span style="font-weight:lighter">(static) </span>uniform<span class="signature">(controlPoints, degreeU, degreeV, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="BSplineSurface.html">BSplineSurface</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".uniform"><span style="font-weight:lighter">(static) </span>uniform<span class="signature">(controlPoints, degreeU<sub style="font-weight:lighter">opt</sub>, degreeV<sub style="font-weight:lighter">opt</sub>, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="BSplineSurface.html">BSplineSurface</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line452">line 452</a>
      </i></small></p>
@@ -295,7 +299,8 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
 
                 </td>
 
-            <td class="description last">Array ofcontrol point arrays as specified in the glutil.BSplineSurface constructor.</td>
+            <td class="description last">Array of
+control point arrays as specified in the glutil.BSplineSurface constructor.</td>
         </tr>
 
         <tr>
@@ -305,17 +310,18 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
             <td class="type">
 
 <span class="param-type">number</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
 
                 <td class="attributes">
 
+                    &lt;optional><br>
+
                 </td>
 
-            <td class="description last">Degree of the B-Splinesurface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.If null or omitted, the default is 3.</td>
+            <td class="description last">Degree of the B-Spline
+surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
+If null or omitted, the default is 3.</td>
         </tr>
 
         <tr>
@@ -325,17 +331,18 @@ and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</td>
             <td class="type">
 
 <span class="param-type">number</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
 
                 <td class="attributes">
 
+                    &lt;optional><br>
+
                 </td>
 
-            <td class="description last">Degree of the B-Splinesurface along the V-axisIf null or omitted, the default is 3.</td>
+            <td class="description last">Degree of the B-Spline
+surface along the V-axis
+If null or omitted, the default is 3.</td>
         </tr>
 
         <tr>
@@ -458,7 +465,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera.html">camera</a></li><li><a href="tutorial-filters.html">filters</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-surfaces.html">surfaces</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">camera</a></li><li><a href="tutorial-filters.html">filters</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-surfaces.html">surfaces</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

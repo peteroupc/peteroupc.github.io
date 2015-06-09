@@ -22,7 +22,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="MatrixStack"><span style="font-weight:lighter"></span>new MatrixStack<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line27">line 27</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line34">line 34</a>
      </i></small></p>
 
 <div class="description">
@@ -30,6 +30,13 @@
 of 4x4 transformation matrices.<p>
 When the constructor is called, it will create a stack whose
 only element is the identity matrix.
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library. <p>
+To use this class, you must include the script "extras/matrixstack.js"; the
+class is not included in the "glutil_min.js" file which makes up
+the HTML 3D Library.  Example:<pre>
+&lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre>
 </div>
 
 <dl class="details">
@@ -42,7 +49,7 @@ only element is the identity matrix.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="frustum"><span style="font-weight:lighter"></span>frustum<span class="signature">(l, r, b, t, n, f)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line306">line 306</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line313">line 313</a>
      </i></small></p>
 
 <div class="description">
@@ -173,7 +180,7 @@ to be seen.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="get"><span style="font-weight:lighter"></span>get<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line36">line 36</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line43">line 43</a>
      </i></small></p>
 
 <div class="description">
@@ -196,7 +203,7 @@ to be seen.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadIdentity"><span style="font-weight:lighter"></span>loadIdentity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line43">line 43</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line50">line 50</a>
      </i></small></p>
 
 <div class="description">
@@ -219,7 +226,7 @@ to be seen.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadMatrix"><span style="font-weight:lighter"></span>loadMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line52">line 52</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line59">line 59</a>
      </i></small></p>
 
 <div class="description">
@@ -274,7 +281,7 @@ to be seen.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="loadTransposeMatrix"><span style="font-weight:lighter"></span>loadTransposeMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line63">line 63</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line70">line 70</a>
      </i></small></p>
 
 <div class="description">
@@ -331,7 +338,7 @@ replace the top of the stack.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="lookAt"><span style="font-weight:lighter"></span>lookAt<span class="signature">(ex, ey, ez, cx, cy, cz, ux, uy, uz)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line348">line 348</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line355">line 355</a>
      </i></small></p>
 
 <div class="description">
@@ -496,7 +503,7 @@ the camera's view direction.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="multMatrix"><span style="font-weight:lighter"></span>multMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line85">line 85</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line92">line 92</a>
      </i></small></p>
 
 <div class="description">
@@ -556,7 +563,7 @@ the effect of scaling then translation.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="multTransposeMatrix"><span style="font-weight:lighter"></span>multTransposeMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line112">line 112</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line119">line 119</a>
      </i></small></p>
 
 <div class="description">
@@ -618,7 +625,7 @@ matrix will be multiplied by.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="ortho"><span style="font-weight:lighter"></span>ortho<span class="signature">(l, r, b, t, n, f)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line263">line 263</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line270">line 270</a>
      </i></small></p>
 
 <div class="description">
@@ -747,7 +754,7 @@ plane.  A positive value means the plane is in front of the viewer.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="ortho2d"><span style="font-weight:lighter"></span>ortho2d<span class="signature">(l, r, b, t)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line426">line 426</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line433">line 433</a>
      </i></small></p>
 
 <div class="description">
@@ -846,7 +853,7 @@ OpenGL's.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="perspective"><span style="font-weight:lighter"></span>perspective<span class="signature">(fov, aspect, n, f)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line464">line 464</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line471">line 471</a>
      </i></small></p>
 
 <div class="description">
@@ -952,7 +959,7 @@ to be seen.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="pickMatrix"><span style="font-weight:lighter"></span>pickMatrix<span class="signature">(wx, wy, ww, wh, vp)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line493">line 493</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line500">line 500</a>
      </i></small></p>
 
 <div class="description">
@@ -1062,7 +1069,7 @@ of a rectangle indicating the current viewport.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="popMatrix"><span style="font-weight:lighter"></span>popMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line238">line 238</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line245">line 245</a>
      </i></small></p>
 
 <div class="description">
@@ -1087,7 +1094,7 @@ effect if the stack has only one matrix.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="pushMatrix"><span style="font-weight:lighter"></span>pushMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line228">line 228</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line235">line 235</a>
      </i></small></p>
 
 <div class="description">
@@ -1111,7 +1118,7 @@ and puts the copy on top of the stack.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="rotate"><span style="font-weight:lighter"></span>rotate<span class="signature">(angle, x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line141">line 141</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line148">line 148</a>
      </i></small></p>
 
 <div class="description">
@@ -1211,7 +1218,7 @@ of rotation.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="scale"><span style="font-weight:lighter"></span>scale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line207">line 207</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line214">line 214</a>
      </i></small></p>
 
 <div class="description">
@@ -1293,7 +1300,7 @@ scaling transformation.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="translate"><span style="font-weight:lighter"></span>translate<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="MatrixStack.html">MatrixStack</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="matrixstack.js.html">matrixstack.js</a>, <a href="matrixstack.js.html#line186">line 186</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line193">line 193</a>
      </i></small></p>
 
 <div class="description">
@@ -1394,7 +1401,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera.html">camera</a></li><li><a href="tutorial-filters.html">filters</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-surfaces.html">surfaces</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">camera</a></li><li><a href="tutorial-filters.html">filters</a></li><li><a href="tutorial-glmath.html">glmath</a></li><li><a href="tutorial-overview.html">overview</a></li><li><a href="tutorial-shapes.html">shapes</a></li><li><a href="tutorial-surfaces.html">surfaces</a></li><li><a href="tutorial-textures.html">textures</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

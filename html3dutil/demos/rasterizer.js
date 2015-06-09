@@ -6,8 +6,14 @@
 // Rasterizer adapted by Peter O. from public domain code by
 // castanyo@yahoo.es, in the file Raster.cpp.
 */
+var __oldget3DContext=GLUtil.get3DContext;
+var __use3D=false;
 GLUtil.get3DContext=function(canvas){
- return canvas.getContext("2d");
+ if(__use3D){
+  return __oldget3DContext(canvas);
+ } else {
+  return canvas.getContext("2d");
+ }
 }
 Scene3D._Triangle=function(v0,v1,v2){
     this.v1=v0

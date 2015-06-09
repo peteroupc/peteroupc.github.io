@@ -5,15 +5,17 @@ body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <script type="text/javascript" src="../glutil_min.js"></script>
-<script type="text/javascript" src="../camera.js"></script>
-<script type="text/javascript" src="../frame.js"></script>
-<script type="text/javascript" src="extras.js"></script>
+<script type="text/javascript" src="../extras/camera.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
+<script type="text/javascript" src="../extras/evaluators.js"></script>
+<script type="text/javascript" src="../extras/curvetube.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
-<div style="position:absolute;left:0;top:1em" id=links>
+<div style="position:absolute;left:0;top:1em">
+<div id=links></div>
+<div id=settings></div>
 </div>
-<div id="settings" style="position:absolute;left:0;top:4em"></div>
 <canvas id=canvas>
 </canvas>
 <script id="demo">
@@ -26,89 +28,6 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-   function makeMesh(func,resolutionU,resolutionV){
-    // Default resolution is 50
-    if(resolutionV==null)resolutionV=resolutionU
-    if(resolutionU==null)resolutionU=50
-    if(resolutionV==null)resolutionV=50
-     // create a new mesh
-     var mesh=new Mesh();
-     // define a color gradient evaluator for
-     // demonstration purposes.  Instead of X, Y, and Z,
-     // generate a Red/Green/Blue color based on
-     // the same parameters U and V as the surface
-     // function for 3D points.
-     var colorGradient={
-      "evaluate":function(u,v){ return [1-u,v,u]; }
-     }
-     // generate the parametric surface.
-
-     var ev=new SurfaceEval()
-      .vertex(func)
-    // Specify the color gradient evaluator defined above
-      .color(colorGradient)
-    // Generate normals for the parametric surface,
-    // which is required for lighting to work correctly
-      .setAutoNormal(true)
-    // Evaluate the surface and generate a triangle
-    // mesh, using resolution+1 different U-coordinates ranging
-    // from 0 to 1, and resolution+1
-    // different V-coordinates ranging from 0 to 1
-    // Instead of Mesh.TRIANGLES, we could use
-    // Mesh.LINES to create a wireframe mesh,
-    // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,Mesh.TRIANGLES,resolutionU,resolutionV);
-    // Surface generated, return the mesh
-    return mesh;
-  }
-function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
- this.outer=outerRadius;
- this.inner=innerRadius;
- this.distFromInner=distFromInnerCenter;
- this.evaluate=function(u){
-  u=u*GLMath.PiTimes2;
-  var oi=(this.outer-this.inner)
-  var term=oi*u/this.inner;
-  // NOTE: prolate hypotrochoid if distFromInner>innerRadius
-  return [
-   oi*Math.cos(u)+this.distFromInner*Math.cos(term),
-   oi*Math.sin(u)-this.distFromInner*Math.sin(term),
-   0
-  ]
- }
-}
-
-function Trochoid(radius, distFromCenter){
- this.inner=radius;
- this.distFromCenter=distFromCenter;
- this.evaluate=function(u){
-  u=u*GLMath.PiTimes2;
-  var cosu = Math.cos(u);
-  var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
-  return [
-   this.inner*u-this.distFromCenter*sinu,
-   this.inner    -this.distFromCenter*cosu,
-   0
-  ]
- }
-}
-
-function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
- this.outer=outerRadius;
- this.inner=innerRadius;
- this.distFromInner=distFromInnerCenter;
- this.evaluate=function(u){
-  u=u*GLMath.PiTimes2;
-  var oi=(this.outer+this.inner)
-  var term=oi*u/this.inner;
-  // NOTE: prolate epitrochoid if distFromInner>innerRadius
-  return [
-   oi*Math.cos(u)-this.distFromInner*Math.cos(term),
-   oi*Math.sin(u)-this.distFromInner*Math.sin(term),
-   0
-  ]
- }
-}
 
 var HypocycloidSeal={create:function(radius,points){
  return Hypocycloid.create(radius,radius/points);
@@ -154,16 +73,18 @@ TorusKnot.getFlatCurve=function(period,outerRadius,innerRadius){
  }
 }
 function makeThinCurveMesh(curve){
- return makeMesh(new ExtrudedTube(curve,0.025),150,20)
+ var surface=new CurveTube(curve,0.025);
+ return makeMesh(surface,150,20)
 }
 
 var shapeGroup=new ShapeGroup();
 var allsettings={}
 var link0=null;
+
 addLink("Torus knot",link0=function(){
  pushSettings(function(allsettings){
     return makeMesh(
-    new ExtrudedTube(new TorusKnot(
+    new CurveTube(new TorusKnot(
       allsettings["torusknot-p"],
       allsettings["torusknot-q"]
     )),100);
@@ -176,7 +97,7 @@ addLink("Torus knot",link0=function(){
 addLink("Swept torus knot",function(){
  pushSettings(function(allsettings){
    return makeMesh(
-    new ExtrudedTube(new TorusKnot(
+    new CurveTube(new TorusKnot(
       allsettings["torusknot-p"],
       allsettings["torusknot-q"]
     ),0.1,TorusKnot.getFlatCurve(5)),100);
@@ -189,7 +110,7 @@ addLink("Swept torus knot",function(){
 addLink("Flattened torus knot",function(){
  pushSettings(function(allsettings){
    return makeMesh(
-    new ExtrudedTube(TorusKnot.getFlatCurve(
+    new CurveTube(TorusKnot.getFlatCurve(
       allsettings["torusknot-p"]
     )),100);
  },{

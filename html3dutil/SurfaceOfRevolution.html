@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: Lights</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: SurfaceOfRevolution</title>
 <script src="mathml.js"></script>
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Class: Lights</h1>
+    <h1>Class: SurfaceOfRevolution</h1>
 
 <section>
 
 <header>
 
         <h2>
-        Lights
+        SurfaceOfRevolution
         </h2>
 
 </header>
@@ -20,17 +20,91 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="Lights"><span style="font-weight:lighter"></span>new Lights<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="SurfaceOfRevolution"><span style="font-weight:lighter"></span>new SurfaceOfRevolution<span class="signature">(curve, minval, maxval)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line661">line 661</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line36">line 36</a>
      </i></small></p>
 
 <div class="description">
-    A collection of light sources.  It stores the scene's
-ambient color as well as data on one or more light sources.
-When constructed, the default lighting will have a default
-ambient color and one directional light source.
+    Parametric evaluator for a surface of revolution, which results by revolving
+an X/Y curve around an axis.
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library. <p>
+To use this class, you must include the script "extras/evaluators.js"; the
+class is not included in the "glutil_min.js" file which makes up
+the HTML 3D Library.  Example:<pre>
+&lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 </div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>curve</code></td>
+
+            <td class="type">
+
+<span class="param-type">function</span>
+
+            </td>
+
+            <td class="description last">Curve to rotate about the Z-axis.
+The curve function must contain a function
+named "evaluate", which takes the following parameter:<ul>
+<li><code>u</code> - A curve coordinate, generally from 0 to 1.
+</ul>
+The evaluator function returns an array of at least 2 elements: the first
+element is the X coordinate of the curve's position, and the second
+element is the Y coordinate.<p>
+If the curve function draws a curve that goes around the Z-axis, such
+as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must
+restrict the curve definition to half of the curve.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>minval</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Smallest V-coordinate.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>maxval</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Largest V-coordinate.   If _minval_ is greater than
+_maxval_, both values will be swapped.</td>
+        </tr>
+
+    </tbody>
+</table>
 
 <dl class="details">
 
@@ -38,69 +112,16 @@ ambient color and one directional light source.
 
     </div>
 
-        <h3 class="subsection-title">Members</h3>
-
-<h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".MAX_LIGHTS"><span style="font-weight:lighter">(static, constant) </span>MAX_LIGHTS<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line683">line 683</a>
-     </i></small></p>
-
-<div class="description">
-    Maximum number of lights supported
-   by the default shader program.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h4 style="border-bottom: 1px solid;margin-bottom:0px" id="sceneAmbient"><span style="font-weight:lighter"></span>sceneAmbient<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line677">line 677</a>
-     </i></small></p>
-
-<div class="description">
-    Ambient color for the scene.  This is the color of the light
- that shines on every part of every object equally and in
- every direction. In the absence of
- other lighting effects, all objects will be given this color.<p>
- <small>Ambient light is a simplified simulation of the
-real-world effect of light bouncing back and forth between
-many different objects in an area.  One example of this
-phenomenon is sunlight reaching an indoor room without
-directly hitting it, such that the sunlight reflects off the walls
-and so illuminates most of the room pretty much uniformly.
-Ambient lights simulate this phenomenon.</small>
-</div>
-
-<dl class="details">
-
-    <dt class="tag-default">Default Value: <pre class="prettyprint"><code>[0.2,0.2,0.2]</code></pre></dt>
-
-</dl>
-
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getCount"><span style="font-weight:lighter"></span>getCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromFunction"><span style="font-weight:lighter">(static) </span>fromFunction<span class="signature">(func, minval, maxval)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line696">line 696</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line65">line 65</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
-</div>
-
-<dl class="details">
-
-</dl>
-
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getLight"><span style="font-weight:lighter"></span>getLight<span class="signature">(index)</span><span style="font-weight:lighter"> &rarr; {LightSource}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line707">line 707</a>
-     </i></small></p>
-
-<div class="description">
-    Gets information about the light source at the given index.
+    Creates a parametric evaluator for a surface of revolution
+whose curve is the graph of a single-variable function.
 </div>
 
     <h5>Parameters:</h5>
@@ -121,7 +142,22 @@ Ambient lights simulate this phenomenon.</small>
 
         <tr>
 
-                <td style="border-bottom: 1px solid;"><code>index</code></td>
+                <td style="border-bottom: 1px solid;"><code>func</code></td>
+
+            <td class="type">
+
+<span class="param-type">function</span>
+
+            </td>
+
+            <td class="description last">Function whose graph will be
+rotated about the Z-axis.  The function takes a number
+as a single parameter and returns a number.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>minval</code></td>
 
             <td class="type">
 
@@ -129,9 +165,21 @@ Ambient lights simulate this phenomenon.</small>
 
             </td>
 
-            <td class="description last">Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.
-If the light doesn't exist at that index, it will be created.</td>
+            <td class="description last">Smallest parameter of the function.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>maxval</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+            <td class="description last">Largest parameter of the function.  If _minval_ is greater than
+_maxval_, both values will be swapped.</td>
         </tr>
 
     </tbody>
@@ -143,21 +191,13 @@ If the light doesn't exist at that index, it will be created.</td>
 
 <h5>Returns:</h5>
 
-<div class="param-desc">
-    The corresponding light source object.
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".torus"><span style="font-weight:lighter">(static) </span>torus<span class="signature">(outerRadius, innerRadius, curve)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
 
-     (Type:
-<span class="param-type">LightSource</span>)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setDirectionalLight"><span style="font-weight:lighter"></span>setDirectionalLight<span class="signature">(index, direction)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line743">line 743</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line90">line 90</a>
      </i></small></p>
 
 <div class="description">
-    Sets a directional light.
+    Parametric evaluator for a torus, a special case of a surface of revolution.
 </div>
 
     <h5>Parameters:</h5>
@@ -178,7 +218,7 @@ If the light doesn't exist at that index, it will be created.</td>
 
         <tr>
 
-                <td style="border-bottom: 1px solid;"><code>index</code></td>
+                <td style="border-bottom: 1px solid;"><code>outerRadius</code></td>
 
             <td class="type">
 
@@ -186,23 +226,48 @@ If the light doesn't exist at that index, it will be created.</td>
 
             </td>
 
-            <td class="description last">Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.
-If the light doesn't exist at that index, it will be created.</td>
+            <td class="description last">Radius from the center to the innermost
+part of the torus.</td>
         </tr>
 
         <tr>
 
-                <td style="border-bottom: 1px solid;"><code>direction</code></td>
+                <td style="border-bottom: 1px solid;"><code>innerRadius</code></td>
 
             <td class="type">
 
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">number</span>
 
             </td>
 
-            <td class="description last">A 3-element vector giving the direction of the light, along the X, Y, and Z
-axes, respectively.</td>
+            <td class="description last">Radius from the inner edge to the innermost
+part of the torus.</td>
+        </tr>
+
+        <tr>
+
+                <td style="border-bottom: 1px solid;"><code>curve</code></td>
+
+            <td class="type">
+
+<span class="param-type">function</span>
+|
+
+<span class="param-type">undefined</span>
+
+            </td>
+
+            <td class="description last">Object describing
+a curve to serve as the cross section of the torus.
+The curve need not be closed; in fact, certain special surfaces can result
+by leaving the ends open.
+The curve function must contain a function
+named "evaluate", which takes the following parameter:<ul>
+<li><code>u</code> - A curve coordinate, generally from 0 to 1.
+</ul>
+The evaluator function returns an array of at least 2 elements: the first
+element is the X coordinate of the curve's position, and the second
+element is the Y coordinate.  If null or omitted, uses a circular cross section.</td>
         </tr>
 
     </tbody>
@@ -213,155 +278,6 @@ axes, respectively.</td>
 </dl>
 
 <h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type">Lights</span>)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(index, params)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line729">line 729</a>
-     </i></small></p>
-
-<div class="description">
-    Not documented yet.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>index</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.
-If the light doesn't exist at that index, it will be created.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>params</code></td>
-
-            <td class="type">
-
-<span class="param-type">object</span>
-
-            </td>
-
-            <td class="description last">An object as described in glutil.LightSource.setParams.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type">Lights</span>)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setPointLight"><span style="font-weight:lighter"></span>setPointLight<span class="signature">(index, position)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line755">line 755</a>
-     </i></small></p>
-
-<div class="description">
-    Sets a point light.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>index</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.
-If the light doesn't exist at that index, it will be created.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>position</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;number></span>
-
-            </td>
-
-            <td class="description last">A 3-element vector giving the X, Y, and Z
-coordinates, respectively, of the light, in world coordinates.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type">Lights</span>)
-
-</div>
 
 </article>
 

@@ -1,203 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: BezierCurve</title>
+<head><meta charset="utf-8"><title>JSDoc: Source: extras/frame.js</title>
 <script src="mathml.js"></script>
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Class: BezierCurve</h1>
-
-<section>
-
-<header>
-
-        <h2>
-        BezierCurve
-        </h2>
-
-</header>
-
-<article>
-    <div class="container-overview">
-
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="BezierCurve"><span style="font-weight:lighter"></span>new BezierCurve<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line32">line 32</a>
-     </i></small></p>
-
-<div class="description">
-    A parametric evaluator for B&eacute;zier curves.<p>
-A B&eacute;zier curve is defined by a series of control points, where
-the first and last control points define the endpoints of the curve, and
-the remaining control points define the curve's shape, though they don't
-necessarily cross the curve.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>controlPoints</code></td>
-
-            <td class="type">
-
-<span class="param-type">Array.&lt;Array.&lt;number>></span>
-
-            </td>
-
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">An array of control points.  Each
-control point is an array with the same length as the other control points.
-It is assumed that:<ul>
-<li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
-curve.  For example, a degree-3 (cubic) curve
-contains 4 control points.  A degree of 1 results in a straight line segment.
-<li>The first control point's length represents the size of all the control
-points.
-</ul></td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>u1</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-                <td class="attributes">
-
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Starting point for the purpose of interpolation; it will correspond to 0.
-May be omitted; default is 0.</td>
-        </tr>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>u2</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-                <td class="attributes">
-
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Ending point for the purpose of interpolation; it will correspond to 1.
-May be omitted; default is 1.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line60">line 60</a>
-     </i></small></p>
-
-<div class="description">
-    Evaluates the curve function based on a point
-in a B&eacute;zier curve.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td style="border-bottom: 1px solid;"><code>u</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-
-            </td>
-
-            <td class="description last">Point on the curve to evaluate (generally within the range
-given in the constructor).</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    An array of the result of
-the evaluation.  Its length will be equal to the
-length of a control point, as specified in the constructor.
-
-     (Type:
-<span class="param-type">Array.&lt;number></span>)
-
-</div>
-
-    <h5>Example</h5>
-
-    <pre class="prettyprint"><code>// Generate 11 points forming the B&amp;eacute;zier curve.
-// Assumes the curve was created with u1=0 and u2=1 (the default).
-var points=[];
-for(var i=0;i&lt;=10;i++){
- points.push(curve.evaluate(i/10.0));
-}</code></pre>
-
-</article>
-
-</section>
+    <h1>Source: extras/frame.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+var FrameCounter=function(){
+ this.fps=-1;
+ this.lastFrame=-1;
+ this.frameGaps=[]
+ this.frameCount=0;
+}
+/**
+ * Not documented yet.
+ */
+FrameCounter.prototype.update=function(){
+  var now=("performance" in window) ?
+   window.performance.now() : (new Date().getTime()*1000);
+  if(this.lastFrame>=0){
+    var gap=now-this.lastFrame;
+    if(this.frameGaps.length>300)
+     this.frameGaps.shift();
+    if(gap>5000){
+     // treat as a discontinuity, so discard all the
+     // frame gaps recorded so far
+     this.frameGaps=[];
+    }
+    this.frameGaps.push(gap);
+  }
+  this.lastFrame=now;
+  this.frameCount++;
+  if(this.frameGaps.length>0 &amp;&amp; this.frameCount>=30){
+    this.frameCount=0;
+    var total=0;
+    for(var i=0;i&lt;this.frameGaps.length;i++){
+      total+=this.frameGaps[i];
+    }
+    total/=1.0*this.frameGaps.length;
+    this.fps=(total&lt;=0) ? 60 : 1000.0/total;
+  }
+}
+/**
+ * Not documented yet.
+ */
+FrameCounter.prototype.getFPS=function(){
+ return this.fps;
+}
+
+function FrameCounterDiv(scene){
+ var canvas=scene.getContext().canvas
+ this.div=FrameCounterDiv._makeDiv(canvas);
+ this.count=0;
+ this.scene=scene;
+ this.fc=new FrameCounter();
+}
+FrameCounterDiv._makeDiv=function(element){
+ var div=document.createElement("div")
+ div.style.backgroundColor="white"
+ div.style.position="absolute"
+ div.style.left=element.offsetLeft+"px"
+ div.style.top=element.offsetTop+"px"
+ document.body.appendChild(div)
+ return div
+}
+/**
+ * Not documented yet.
+ */
+FrameCounterDiv.prototype.update=function(){
+ this.fc.update();
+ this.count+=1;
+ if(this.count>=20){
+  var fps=this.fc.getFPS();
+  fps=Math.round(fps*100);
+  fps/=100;
+  if(fps>=0){
+   this.div.innerHTML=fps+" fps"
+   this.count=0;
+  }
+ }
+}
+
+function PrimitiveCounter(scene){
+ var canvas=scene.getContext().canvas
+ this.div=FrameCounterDiv._makeDiv(canvas);
+ this.count=0;
+ this.scene=scene;
+}
+/**
+ * Not documented yet.
+ */
+PrimitiveCounter.prototype.update=function(){
+ var v=this.scene.vertexCount();
+ var p=this.scene.primitiveCount();
+ this.div.innerHTML=v+" vertices, "+p+" primitives"
+}
+</code></pre>
+        </article>
+    </section>
 
 </div>
 <nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
