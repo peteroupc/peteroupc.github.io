@@ -1791,7 +1791,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
-* @param {Shape|glutil.ShapeGroup} shape A 3D shape.
+* @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.addShape=function(shape){
@@ -1813,7 +1813,7 @@ Scene3D.prototype.makeShape=function(mesh){
 
 /**
 * Removes all instances of a 3D shape from this scene.
-* @param {Shape|glutil.ShapeGroup} shape The 3D shape to remove.
+* @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.removeShape=function(shape){
@@ -2073,7 +2073,7 @@ function ShapeGroup(){
 /**
 * Adds a 3D shape to this shape group.  Its reference, not a copy,
 * will be stored in the list of shapes.
-* @param {Shape|glutil.ShapeGroup} shape A 3D shape.
+* @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
 * @return {glutil.ShapeGroup} This object.
 */
 ShapeGroup.prototype.addShape=function(shape){
@@ -2111,16 +2111,30 @@ ShapeGroup.prototype.getMatrix=function(){
   return mat;
 }
 /**
- * Not documented yet.
+ * Sets the transform used by this shape group.  Child
+ * shapes can set their own transforms, in which case, the
+ * rendering process will multiply this shape group's transform
+ * with the child shape's transform as it renders the child shape.
  * @param {glutil.Transform} transform
  */
 ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
 }
+
+/**
+ * Sets the material used by all shapes in this shape group.
+ * @param {glutil.Material} material
+ */
+ShapeGroup.prototype.setMaterial=function(material){
+ for(var i=0;i&lt;this.shapes.length;i++){
+  this.shapes[i].setMaterial(material);
+ }
+ return this;
+}
 /**
 * Removes all instances of a 3D shape from this shape group
-* @param {Shape|glutil.ShapeGroup} shape The 3D shape to remove.
+* @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
 * @return {glutil.ShapeGroup} This object.
 */
 ShapeGroup.prototype.removeShape=function(shape){

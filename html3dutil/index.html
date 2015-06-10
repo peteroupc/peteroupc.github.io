@@ -116,7 +116,36 @@ featuring a background with continuously drawn 3D shapes.</li>
    shape.setQuaternion(q);
    // Render the scene
    scene.render();
-  });</code></pre><h2>History</h2><p>Version 1.3.1:</p>
+  });</code></pre><h2>History</h2><p>Version 1.4:</p>
+<ul>
+<li>Fixed camera.js issues (thanks to the user &quot;the-sz&quot; on GitHub)</li>
+<li>Added an <em>extras</em> folder with the following new scripts: <ul>
+<li>A CurveTube class for creating tubes from 3D curves</li>
+<li>A parametric evaluator for surfaces of revolution and
+3 kinds of curves (<em>evaluators.js</em>)</li>
+<li>A frame counter (moved from the demos)</li>
+<li>A JSON converter and loader for 3D meshes (<em>meshjson.js</em>)</li>
+</ul>
+</li>
+<li>Made <em>objmtl.js</em> compatible with more MTL files</li>
+<li>Math.sin/Math.cos pairs were replaced with optimized
+versions throughout the code</li>
+<li>Add mat4transformVec3 method to GLMath</li>
+<li>Add BSplineCurve class</li>
+<li>Deprecate vertexBezier, normalBezier, colorBezier, and texCoordBezier
+methods of CurveEval and SurfaceEval</li>
+<li>Optimize SurfaceEval's evalSurface method when generating
+triangles</li>
+<li>Add primitiveCount and enumPrimitives methods to the Mesh
+class</li>
+<li>Add setMaterial and removeShape methods to the ShapeGroup class</li>
+<li>Default shader program now uses <code>modelViewMatrix</code> instead of
+separate <code>world</code> and <code>view</code> uniforms</li>
+<li>FIx JSON issues in GLUtil.loadFileFromUrl method</li>
+<li>Many new demos added</li>
+<li>Add graphics filters tutorial and expanded several other tutorials</li>
+</ul>
+<p>Version 1.3.1:</p>
 <ul>
 <li>Fixed touch events in some of the interactive demos</li>
 <li>Fixed issues with BezierCurve, BezierSurface</li>
