@@ -353,44 +353,6 @@ Scene3D._Triangle.prototype.pixel=function(offset, tex, width, height, data, dep
       }
 }
 
-/** @private */
-Scene3D.prototype._renderInner=function(){
-  var data={}
-  data.projview=GLMath.mat4multiply(
-   this._projectionMatrix,this._viewMatrix)
-  var cc=[
-   Math.floor(this.clearColor[0]*255),
-   Math.floor(this.clearColor[1]*255),
-   Math.floor(this.clearColor[2]*255),
-   Math.floor(this.clearColor[3]*255)];
-  if(Uint8Array)cc=new Uint8Array(cc);
-  if(!this.imgdata || this.imgdataWidth!=this.width || this.imgdataHeight!=this.height){
-   this.imgdata = this.context.getImageData(0, 0, this.width, this.height);
-   this.imgdataWidth=this.width;
-   this.imgdataHeight=this.height;
-  }
-  var size=this.width*this.height*4;
-  var idata=this.imgdata.data;
-  for(var i=0;i<size;i+=4){
-   idata[i]=cc[0];
-   idata[i+1]=cc[1];
-   idata[i+2]=cc[2];
-   idata[i+3]=cc[3];
-  }
-  data.imgdata=this.imgdata;
-  if(!this._depth){
-      this._depth=[]
-  }
-  size=this.width*this.height;
-    for(var i=0;i<size;i++){
-      this._depth[i]=Scene3D._DEPTH_RESOLUTION-1;
-    }
-  for(var i=0;i<this.shapes.length;i++){
-   this._renderShape(this.shapes[i],data);
-  }
-  this.context.putImageData(data.imgdata,0,0);
-  return this;
-}
 Scene3D._drawPoint=function(data,depth,x,y,z,width,height,rgb){
 if(x<0 || x>=width || y<0 || y>=height)return;
       var dep=Math.floor(z*Scene3D._DEPTH_RESOLUTION)|0;
@@ -594,6 +556,45 @@ Scene3D._transformAndClipLine=function(mat,pt,pt2,size){
   pt2[2]=z2;
  }
  return true;
+}
+
+/** @private */
+Scene3D.prototype._renderInner=function(){
+  var data={}
+  data.projview=GLMath.mat4multiply(
+   this._projectionMatrix,this._viewMatrix)
+  var cc=[
+   Math.floor(this.clearColor[0]*255),
+   Math.floor(this.clearColor[1]*255),
+   Math.floor(this.clearColor[2]*255),
+   Math.floor(this.clearColor[3]*255)];
+  if(Uint8Array)cc=new Uint8Array(cc);
+  if(!this.imgdata || this.imgdataWidth!=this.width || this.imgdataHeight!=this.height){
+   this.imgdata = this.context.getImageData(0, 0, this.width, this.height);
+   this.imgdataWidth=this.width;
+   this.imgdataHeight=this.height;
+  }
+  var size=this.width*this.height*4;
+  var idata=this.imgdata.data;
+  for(var i=0;i<size;i+=4){
+   idata[i]=cc[0];
+   idata[i+1]=cc[1];
+   idata[i+2]=cc[2];
+   idata[i+3]=cc[3];
+  }
+  data.imgdata=this.imgdata;
+  if(!this._depth){
+      this._depth=[]
+  }
+  size=this.width*this.height;
+    for(var i=0;i<size;i++){
+      this._depth[i]=Scene3D._DEPTH_RESOLUTION-1;
+    }
+  for(var i=0;i<this.shapes.length;i++){
+   this._renderShape(this.shapes[i],data);
+  }
+  this.context.putImageData(data.imgdata,0,0);
+  return this;
 }
 /** @private */
 Scene3D.prototype._renderShape=function(shape,data){

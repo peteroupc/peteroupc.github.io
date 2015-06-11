@@ -37,7 +37,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * &lt;/ul>
 * The evaluator function returns an array of at least 2 elements: the first
 * element is the X coordinate of the curve's position, and the second
-* element is the Y coordinate.&lt;p>
+* element is the Y coordinate (corresponding to
+* radius).&lt;p>
 * If the curve function draws a curve that goes around the axis of rotation, such
 * as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must
 * restrict the curve definition to no more than half of the curve.
@@ -113,7 +114,7 @@ SurfaceOfRevolution._quatTransformInPlace=function(q,v){
 * parameter need not be normalized to unit length.
 * @return {SurfaceOfRevolution}
 * @example &lt;caption>The following creates an evaluator for a cone
-* which starts as the origin and runs 10 units along the Z axis.&lt;/caption>
+* which starts at the origin and runs 10 units along the Z axis.&lt;/caption>
 * var surf=SurfaceOfRevolution.fromFunction(
 *  function(x){  return x/2; }, // use a constantly increasing function
 * 0, 10);
@@ -151,8 +152,8 @@ SurfaceOfRevolution.fromFunction=function(func,minval,maxval,axis){
 * The evaluator function returns an array of at least 2 elements: the first
 * element is the X coordinate of the curve's position, and the second
 * element is the Y coordinate.  If null or omitted, uses a circular cross section.
-* @param {Array&lt;number>|undefined} axis Axis of rotation, around which the
-* function graph will be rotated to generate the surface of revolution.
+* @param {Array&lt;number>|undefined} axis Axis of rotation, which the torus
+* will pass through.
 * If null or omitted, the positive Z-axis will be the axis of rotation.
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
