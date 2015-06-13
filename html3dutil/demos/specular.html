@@ -27,14 +27,19 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   var scene=new Scene3D(document.getElementById("canvas"))
     .cullFace(Scene3D.BACK);
   var fc=new FrameCounterDiv(scene)
-  scene.loadAndMapTexture("461223191.jpg").then(function(tex){
+  scene.loadAndMapTextures([
+   "461223191.jpg",
+   "specular.png"
+   ]).then(function(tex){
+   if(tex.successes.length!=2)return;
    var mesh=Meshes.createBox(10,20,20);
    var shape=scene.makeShape(mesh).setMaterial(new Material()
     .setParams({
      "diffuse":"white",
      "specular":"white",
      "shininess":5,
-     "texture":tex
+     "texture":tex.successes[0],
+      "specularMap":tex.successes[1]
     }))
    scene.addShape(shape);
    // Create a timer

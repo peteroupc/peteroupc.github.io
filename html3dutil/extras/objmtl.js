@@ -144,6 +144,7 @@ MtlData._getMaterial=function(mtl){
  var diffuse=null;
  var specular=null;
  var emission=null;
+ var specularName=null;
  var textureName=null;
  if(mtl.hasOwnProperty("Ns")){
   shininess=mtl["Ns"];
@@ -153,6 +154,9 @@ MtlData._getMaterial=function(mtl){
  }
  if(mtl.hasOwnProperty("map_Kd")){
   textureName=mtl["map_Kd"];
+ }
+ if(mtl.hasOwnProperty("map_Ks")){
+  specularName=mtl["map_Ks"];
  }
  if(mtl.hasOwnProperty("Ka")){
   ambient=(mtl["Ka"]);
@@ -180,6 +184,11 @@ MtlData._getMaterial=function(mtl){
  if(textureName){
   ret=ret.setParams({
    "texture":textureName
+  })
+ }
+ if(specularName){
+  ret=ret.setParams({
+   "specularMap":specularName
   })
  }
  return ret;
