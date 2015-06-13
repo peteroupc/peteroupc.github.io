@@ -50,8 +50,8 @@ factors to change the object's size.  For example, a Y-factor of 2 doubles an ob
 before the other transformations.</p>
 <h3>Rotation <a id=Rotation></a></h3><p>Rotation changes an object's orientation.</p>
 <p>To create a rotation matrix, use <a href="glmath.GLMath.html#.mat4rotated">GLMath.mat4rotated()</a>,
-and specify the angle (in degrees) to rotate, and the axis of rotation (a line that contains
-the origin and a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that contains the origin (0, 0, 0) and the point (0, 2, 3).</p>
+and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
+origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
 <p>To multiply an existing matrix by a rotation, use
 <a href="glmath.GLMath.html#.mat4rotate">GLMath.mat4rotate()</a>.  This will put the rotation
 before the other transformations.</p>
