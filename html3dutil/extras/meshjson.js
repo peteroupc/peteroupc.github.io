@@ -128,6 +128,7 @@ MeshJSON._getJsonMaterial=function(mtl){
  var specular=null;
  var emission=null;
  var textureName=null;
+ var specularName=null;
  if(mtl.hasOwnProperty("specularCoef")){
   shininess=mtl.specularCoef;
  }
@@ -139,6 +140,9 @@ MeshJSON._getJsonMaterial=function(mtl){
  }
  if(mtl.hasOwnProperty("mapDiffuse")){
   textureName=mtl.mapDiffuse
+ }
+ if(mtl.hasOwnProperty("mapSpecular")){
+  specularName=mtl.mapSpecular
  }
  if(mtl.hasOwnProperty("colorEmissive")){
   var ke=mtl.colorEmissive;
@@ -156,6 +160,11 @@ MeshJSON._getJsonMaterial=function(mtl){
  if(textureName){
   ret=ret.setParams({
    "texture":textureName
+  })
+ }
+ if(specularName){
+  ret=ret.setParams({
+   "texture":specularName
   })
  }
  return ret;

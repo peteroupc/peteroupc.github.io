@@ -15,7 +15,7 @@ function _FrenetFrames(func){
  }
  this.func=func;
  this.normals=[];
- this.bitangents=[];
+ this.binormals=[];
  this.tangents=[];
  this.vectorsCache=[];
  this.vectorsCacheIndex=0;
@@ -50,33 +50,33 @@ function _FrenetFrames(func){
   var normal;
   if(i>0){
    normal=GLMath.vec3normInPlace(
-    GLMath.vec3cross(this.bitangents[i-1],tangent));
+    GLMath.vec3cross(this.binormals[i-1],tangent));
   } else {
    normal=_FrenetFrames.normalFromTangent(tangent);
   }
-  var bitangent=GLMath.vec3normInPlace(
+  var binormal=GLMath.vec3normInPlace(
     GLMath.vec3cross(tangent,normal));
   this.normals[i]=normal;
-  this.bitangents[i]=bitangent;
+  this.binormals[i]=binormal;
   this.tangents[i]=tangent;
  }
  if(isClosed && totalLength>0){
-  // Adjust angles of bitangent and normal to prevent seams
+  // Adjust angles of binormal and normal to prevent seams
   var quat=GLMath.quatFromVectors(this.normals[res],this.normals[0]);
   var angle=GLMath.quatToAxisAngle(quat)[3];
   var runningLength=0;
   // Set basis vectors at ends to the same value
   this.normals[res]=this.normals[0];
-  this.bitangents[res]=this.bitangents[0];
+  this.binormals[res]=this.binormals[0];
   this.tangents[res]=this.tangents[0];
   for(var i=0;i<res-1;i++){
    runningLength+=lengths[i];
    var lenproportion=runningLength/totalLength;
    var newq=GLMath.quatFromAxisAngle(angle*lenproportion,this.tangents[i+1]);
-   // Rotate normal and bitangent about the tangent, to keep them orthogonal to
+   // Rotate normal and binormal about the tangent, to keep them orthogonal to
    // tangent and each other
    this.normals[i+1]=GLMath.quatTransform(newq,this.normals[i+1]);
-   this.bitangents[i+1]=GLMath.quatTransform(newq,this.bitangents[i+1]);
+   this.binormals[i+1]=GLMath.quatTransform(newq,this.binormals[i+1]);
   }
  }
 }
@@ -96,10 +96,10 @@ _FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
  var val=[];
  var cache=false;
  if(u>=0 && u<=1){
-  var index=u*(this.bitangents.length-1);
+  var index=u*(this.binormals.length-1);
   if(Math.abs(index-Math.round(index))<_FrenetFrames._EPSILON){
    index=Math.round(index);
-   b=this.bitangents[index];
+   b=this.binormals[index];
    n=this.normals[index];
    t=this.tangents[index];
   } else {
@@ -116,10 +116,10 @@ _FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
    var tangent=GLMath.vec3normInPlace(
     GLMath.vec3sub(e01,e0));
    var normal=GLMath.vec3normInPlace(
-     GLMath.vec3cross(this.bitangents[index],tangent));
-   var bitangent=GLMath.vec3normInPlace(
+     GLMath.vec3cross(this.binormals[index],tangent));
+   var binormal=GLMath.vec3normInPlace(
      GLMath.vec3cross(tangent,normal));
-   b=bitangent;
+   b=binormal;
    n=normal;
    t=tangent;
    cache=true;
@@ -137,9 +137,9 @@ _FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
   var tangent=GLMath.vec3normInPlace(
     GLMath.vec3sub(e01,e0));
   var normal=_FrenetFrames.normalFromTangent(tangent);
-  var bitangent=GLMath.vec3normInPlace(
+  var binormal=GLMath.vec3normInPlace(
     GLMath.vec3cross(tangent,normal));
-  b=bitangent;
+  b=binormal;
   n=normal;
   t=tangent;
   cache=true;

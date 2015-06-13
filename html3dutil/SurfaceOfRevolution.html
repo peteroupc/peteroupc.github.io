@@ -22,7 +22,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="SurfaceOfRevolution"><span style="font-weight:lighter"></span>new SurfaceOfRevolution<span class="signature">(curve, minval, maxval, axis)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line44">line 44</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line45">line 45</a>
      </i></small></p>
 
 <div class="description">
@@ -63,14 +63,17 @@ the HTML 3D Library.  Example:<pre>
 
             </td>
 
-            <td class="description last">Curve to rotate about the axis of rotation, asspecified in the "axis" parameter.
+            <td class="description last">Curve to rotate about the axis of rotation, as
+specified in the "axis" parameter.
 The curve function must contain a function
 named "evaluate", which takes the following parameter:<ul>
 <li><code>u</code> - A curve coordinate, generally from 0 to 1.
 </ul>
 The evaluator function returns an array of at least 2 elements: the first
-element is the X coordinate of the curve's position, and the second
-element is the Y coordinate (corresponding toradius).<p>
+element is the X coordinate of the curve's position (corresponding to
+elevation), and the second
+element is the Y coordinate (corresponding to
+radius).<p>
 If the curve function draws a curve that goes around the axis of rotation, such
 as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must
 restrict the curve definition to no more than half of the curve.</td>
@@ -116,7 +119,12 @@ _maxval_, both values will be swapped.</td>
 
             </td>
 
-            <td class="description last">Axis of rotation, around which the curvewill be rotated to generate the surface of revolution.  If null or omitted, the positiveZ-axis will be the axis of rotation.  This parameter is a 3-element array describingthe X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation willrun in the direction from the origin to the point given in this parameter.  Thisparameter need not be normalized to unit length.</td>
+            <td class="description last">Axis of rotation, around which the curve
+will be rotated to generate the surface of revolution.  If null or omitted, the positive
+Z-axis will be the axis of rotation.  This parameter is a 3-element array describing
+the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
+run in the direction from the origin to the point given in this parameter.  This
+parameter need not be normalized to unit length.</td>
         </tr>
 
     </tbody>
@@ -132,7 +140,7 @@ _maxval_, both values will be swapped.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromFunction"><span style="font-weight:lighter">(static) </span>fromFunction<span class="signature">(func, minval, maxval, axis)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line121">line 121</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line122">line 122</a>
      </i></small></p>
 
 <div class="description">
@@ -167,8 +175,11 @@ whose curve is the graph of a single-variable function.
             </td>
 
             <td class="description last">Function whose graph will be
-rotated about the axis of rotation, asspecified in the "axis" parameter.  The function takes a number
-as a single parameter and returns a number.  The returnvalue is effectively the radius of each part of the surfacefrom beginning to end.</td>
+rotated about the axis of rotation, as
+specified in the "axis" parameter.  The function takes a number
+as a single parameter and returns a number.  The return
+value is effectively the radius of each part of the surface
+from beginning to end.</td>
         </tr>
 
         <tr>
@@ -181,7 +192,8 @@ as a single parameter and returns a number.  The returnvalue is effectively the
 
             </td>
 
-            <td class="description last">Smallest parameter of the function.This is a number of units from the origin along the axis of rotation.</td>
+            <td class="description last">Smallest parameter of the function.
+This is a number of units from the origin along the axis of rotation.</td>
         </tr>
 
         <tr>
@@ -194,7 +206,9 @@ as a single parameter and returns a number.  The returnvalue is effectively the
 
             </td>
 
-            <td class="description last">Largest parameter of the function.This is a number of units from the origin along the axis of rotation.If _minval_ is greater than _maxval_, both values will be swapped.</td>
+            <td class="description last">Largest parameter of the function.
+This is a number of units from the origin along the axis of rotation.
+If _minval_ is greater than _maxval_, both values will be swapped.</td>
         </tr>
 
         <tr>
@@ -210,7 +224,13 @@ as a single parameter and returns a number.  The returnvalue is effectively the
 
             </td>
 
-            <td class="description last">Axis of rotation, around which thefunction graph will be rotated to generate the surface of revolution.If null or omitted, the positive Z-axis will be the axis of rotation.This parameter is a 3-element array describingthe X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation willrun in the direction from the origin to the point given in this parameter.  Thisparameter need not be normalized to unit length.</td>
+            <td class="description last">Axis of rotation, around which the
+function graph will be rotated to generate the surface of revolution.
+If null or omitted, the positive Z-axis will be the axis of rotation.
+This parameter is a 3-element array describing
+the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
+run in the direction from the origin to the point given in this parameter.  This
+parameter need not be normalized to unit length.</td>
         </tr>
 
     </tbody>
@@ -224,21 +244,30 @@ as a single parameter and returns a number.  The returnvalue is effectively the
 
     <h5>Examples</h5>
 
-        <p class="code-caption">The following creates an evaluator for a conewhich starts at the origin and runs 10 units along the Z axis.</p>
+        <p class="code-caption">The following creates an evaluator for a cone
+which starts at the origin and runs 10 units along the Z axis.</p>
 
-    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction( function(x){  return x/2; }, // use a constantly increasing function0, 10);</code></pre>
+    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction(
+ function(x){  return x/2; }, // use a constantly increasing function
+0, 10);</code></pre>
 
-        <p class="code-caption">This is an evaluator for the same cone, butshifted 3 units back.</p>
+        <p class="code-caption">This is an evaluator for the same cone, but
+shifted 3 units back.</p>
 
-    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction( function(x){  x+=3; return x/2; },-3,7);</code></pre>
+    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction(
+ function(x){  x+=3; return x/2; },
+-3,7);</code></pre>
 
-        <p class="code-caption">The following creates an evaluator for a cylinderwhich runs from 5 to 10 units, and with a radius of 2 units.</p>
+        <p class="code-caption">The following creates an evaluator for a cylinder
+which runs from 5 to 10 units, and with a radius of 2 units.</p>
 
-    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction( function(x){  return 2; }, // use a constant radius5, 10);</code></pre>
+    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction(
+ function(x){  return 2; }, // use a constant radius
+5, 10);</code></pre>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".torus"><span style="font-weight:lighter">(static) </span>torus<span class="signature">(outerRadius, innerRadius, curve, axis)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line153">line 153</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line154">line 154</a>
      </i></small></p>
 
 <div class="description">
@@ -328,7 +357,13 @@ element is the Y coordinate.  If null or omitted, uses a circular cross section.
 
             </td>
 
-            <td class="description last">Axis of rotation, which the toruswill pass through.If null or omitted, the positive Z-axis will be the axis of rotation.This parameter is a 3-element array describingthe X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation willrun in the direction from the origin to the point given in this parameter.  Thisparameter need not be normalized to unit length.</td>
+            <td class="description last">Axis of rotation, which the torus
+will pass through.
+If null or omitted, the positive Z-axis will be the axis of rotation.
+This parameter is a 3-element array describing
+the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
+run in the direction from the origin to the point given in this parameter.  This
+parameter need not be normalized to unit length.</td>
         </tr>
 
     </tbody>
