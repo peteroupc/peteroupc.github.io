@@ -26,7 +26,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * </ul>
 * The evaluator function returns an array of at least 2 elements: the first
 * element is the X coordinate of the curve's position (corresponding to
-* height), and the second
+* elevation), and the second
 * element is the Y coordinate (corresponding to
 * radius).<p>
 * If the curve function draws a curve that goes around the axis of rotation, such
