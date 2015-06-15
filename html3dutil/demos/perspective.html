@@ -24,11 +24,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
 /**
 * Finds the intersection point of three planes.
+* @private
 * @param {Array<number>} p1 A four-element array
 * defining the first plane. The first three elements of the array
 * are the X, Y, and Z components of the plane's normal vector, and
-* the fourth element is the negative dot product of the plane's
-* normal and any point on the plane.
+* the fourth element is the shortest distance from the plane
+* to the origin, or if negative, from the origin to the plane,
+* divided by the normal's length.
 * @param {Array<number>} p2 A four-element array
 * defining the second plane.
 * @param {Array<number>} p3 A four-element array
@@ -54,172 +56,53 @@ GLMath.planeIntersection=function(p1,p2,p3){
  GLMath.vec3scaleInPlace(c23,1.0/d);
  return c23;
 }
-/**
-* Normalizes this plane so that its normal is unit
-* length (unless all the normal's components are 0).
-* The plane's dot product will be multiplied by the
-* normal's length.
-* @param {Array<number>} plane A four-element array
-* defining the plane. The first three elements of the array
-* are the X, Y, and Z components of the plane's normal vector, and
-* the fourth element is the negative dot product of the plane's normal
-* and any point on the plane.
-* @return {Array<number>} The parameter "plane".
-*/
-GLMath.planeNormInPlace=function(plane){
- var x=plane[0];
- var y=plane[1];
- var z=plane[2];
- var w=plane[3];
- len=Math.sqrt(x*x+y*y+z*z);
- if(len!=0){
-  len=1.0/len;
-  plane[0]*=len;
-  plane[1]*=len;
-  plane[2]*=len;
-  plane[3]*=len;
- }
- return plane;
-}
-
-/**
-* Represents a view frustum.
-* A view frustum is defined by six planes which
-* together form the shape of a "chopped-off" pyramid
-* (or frustum).
-* In this model, the eye, or camera, is placed at the top
-* of the pyramid, four planes are placed at the pyramid's
-* sides, one plane (the far plane) forms its base, and a
-* final plane (the near plane) is the pyramid's chopped
-* off top.
-*/
-function Frustum(){
- this.planes=[];
-}
-Frustum.LEFT = 0;
-Frustum.RIGHT = 1;
-Frustum.BOTTOM = 2;
-Frustum.TOP = 3;
-Frustum.NEAR = 4;
-Frustum.FAR = 5;
-Frustum.fromMatrix=function(matrix){
- var frustum=new Frustum();
- frustum.planes[Frustum.LEFT]=GLMath.planeNormInPlace([
-  matrix[3]  + matrix[0],
-  matrix[7]  + matrix[4],
-  matrix[11] + matrix[8],
-  matrix[15] + matrix[12]
- ])
- frustum.planes[Frustum.RIGHT]=GLMath.planeNormInPlace([
-  matrix[3]  - matrix[0],
-  matrix[7]  - matrix[4],
-  matrix[11] - matrix[8],
-  matrix[15] - matrix[12]
- ])
- frustum.planes[Frustum.TOP]=GLMath.planeNormInPlace([
-  matrix[3]  - matrix[1],
-  matrix[7]  - matrix[5],
-  matrix[11] - matrix[9],
-  matrix[15] - matrix[13]
- ])
- frustum.planes[Frustum.BOTTOM]=GLMath.planeNormInPlace([
-  matrix[3]  + matrix[1],
-  matrix[7]  + matrix[5],
-  matrix[11] + matrix[9],
-  matrix[15] + matrix[13]
- ])
- frustum.planes[Frustum.NEAR]=GLMath.planeNormInPlace([
-  matrix[3]  + matrix[2],
-  matrix[7]  + matrix[6],
-  matrix[11] + matrix[10],
-  matrix[15] + matrix[14]
- ])
- frustum.planes[Frustum.FAR]=GLMath.planeNormInPlace([
-  matrix[3]  - matrix[2],
-  matrix[7]  - matrix[6],
-  matrix[11] - matrix[10],
-  matrix[15] - matrix[14]
- ])
- return frustum
-}
-/**
-* Determines whether a sphere is inside,
-* outside, or intersects the view frustum.
-* @param {number} x X coordinate of the sphere's center.
-* @param {number} y Y coordinate of the sphere's center.
-* @param {number} z Z coordinate of the sphere's center.
-* @param {number} radius Radius of the sphere.
-* @return {number} 0 if the sphere intersects the frustum,
-* 1 if the sphere is inside, or -1 if the sphere is outside.
-*/
-Frustum.prototype.sphereIntersects=function(x, y, z, radius){
- if(radius<0)throw new Error("radius is negative");
- for(var i=0;i<6;i++){
-  var d=this.planes[i][0]*x+this.planes[i][1]*y+
-     this.planes[i][2]*z+this.planes[i][3];
-  if(d<-radius)return -1;
-  else if(Math.abs(d)<radius)return 0;
- }
- return 1;
-}
-
-/**
-* Determines whether a point is
-* outside or inside the view frustum.
-* @param {number} x X coordinate of a point.
-* @param {number} y Y coordinate of a point.
-* @param {number} z Z coordinate of a point.
-* @return {boolean} true if the point is inside;
-* otherwise false;
-*/
-Frustum.prototype.pointInside=function(x, y, z){
- if(radius<0)throw new Error("radius is negative");
- for(var i=0;i<6;i++){
-  var d=this.planes[i][0]*x+this.planes[i][1]*y+
-     this.planes[i][2]*z+this.planes[i][3];
-  if(d<=0)return false;
- }
- return true;
-}
 
 /**
 * Finds the coordinates of the corners
-* of this frustum's near clipping plane.
+* of a view frustum's near clipping plane.
+* @private
+* @param {Array<Array<number>>} An array of six
+* 4-element arrays representing the six clipping planes of the
+* view frustum.  In order, they are the left, right, top,
+* bottom, near, and far clipping planes.
 * @return {Array<number>} A 4-element array
 * containing the 3-element points for the top-left,
 * bottom-left, top-right, and bottom-right corners,
 * respectively, of the near clipping plane.
 */
-Frustum.prototype.nearClipPlane=function(){
-
+GLMath.frustumNearPlane=function(frustum){
  var topLeft=GLMath.planeIntersection(
-  this.planes[Frustum.NEAR],this.planes[Frustum.LEFT],this.planes[Frustum.TOP]);
+  frustum[4],frustum[0],frustum[2]);
  var bottomLeft=GLMath.planeIntersection(
-  this.planes[Frustum.NEAR],this.planes[Frustum.LEFT],this.planes[Frustum.BOTTOM]);
+  frustum[4],frustum[0],frustum[3]);
  var topRight=GLMath.planeIntersection(
-  this.planes[Frustum.NEAR],this.planes[Frustum.RIGHT],this.planes[Frustum.TOP]);
+  frustum[4],frustum[1],frustum[2]);
  var bottomRight=GLMath.planeIntersection(
-  this.planes[Frustum.NEAR],this.planes[Frustum.RIGHT],this.planes[Frustum.BOTTOM]);
+  frustum[4],frustum[1],frustum[3]);
  return [topLeft,bottomLeft,topRight,bottomRight];
 }
 /**
 * Finds the coordinates of the corners
-* of this frustum's far clipping plane.
+* of a view frustum's far clipping plane.
+* @private
+* @param {Array<Array<number>>} An array of six
+* 4-element arrays representing the six clipping planes of the
+* view frustum.  In order, they are the left, right, top,
+* bottom, near, and far clipping planes.
 * @return {Array<number>} A 4-element array
 * containing the 3-element points for the top-left,
 * bottom-left, top-right, and bottom-right corners,
 * respectively, of the near clipping plane.
 */
-Frustum.prototype.farClipPlane=function(){
- var frustum=this;
- var topLeft=GLMath.planeIntersection(
-  this.planes[Frustum.FAR],this.planes[Frustum.LEFT],this.planes[Frustum.TOP]);
+GLMath.frustumFarPlane=function(frustum){
+  var topLeft=GLMath.planeIntersection(
+  frustum[5],frustum[0],frustum[2]);
  var bottomLeft=GLMath.planeIntersection(
-  this.planes[Frustum.FAR],this.planes[Frustum.LEFT],this.planes[Frustum.BOTTOM]);
+  frustum[5],frustum[0],frustum[3]);
  var topRight=GLMath.planeIntersection(
-  this.planes[Frustum.FAR],this.planes[Frustum.RIGHT],this.planes[Frustum.TOP]);
+  frustum[5],frustum[1],frustum[2]);
  var bottomRight=GLMath.planeIntersection(
-  this.planes[Frustum.FAR],this.planes[Frustum.RIGHT],this.planes[Frustum.BOTTOM]);
+  frustum[5],frustum[1],frustum[3]);
  return [topLeft,bottomLeft,topRight,bottomRight];
 }
 
@@ -227,7 +110,7 @@ function perspectiveFrustum(fov,aspect,near,far,cameraPos,lookingAt){
  var proj=GLMath.mat4perspective(fov,aspect,near,far);
  var view=GLMath.mat4lookat(cameraPos,lookingAt)
  var projview=GLMath.mat4multiply(proj,view);
- var frustum=Frustum.fromMatrix(projview);
+ var frustum=GLMath.mat4toFrustumPlanes(projview);
  return frustum;
 }
 
@@ -237,8 +120,8 @@ Mesh.prototype.vertex3v=function(x){
 
 function frustumMesh(frustum){
  var mesh=new Mesh();
- var nearRect=frustum.nearClipPlane();
- var farRect=frustum.farClipPlane();
+ var nearRect=GLMath.frustumNearPlane(frustum);
+ var farRect=GLMath.frustumFarPlane(frustum);
  mesh.color3("yellow");
  mesh.mode(Mesh.LINES);
  mesh.vertex3v(nearRect[0]).vertex3v(farRect[0]);
@@ -269,14 +152,14 @@ function frustumMesh(frustum){
   var sphere=scene.makeShape(Meshes.createSphere(radius));
   for(var i=-10; i<=10;i++){
    var shape=sphere.copy().setPosition(1,-1,i)
-   if(frustum.sphereIntersects(1,-1,i,radius)<0){
+   if(!GLMath.frustumHasSphere(frustum,1,-1,i,radius)){
     shape.setColor("red")
    }
     spheres.addShape(shape);
   }
   for(var i=-10; i<=10;i++){
    var shape=sphere.copy().setPosition(2,2,i)
-   if(frustum.sphereIntersects(2,2,i,radius)<0){
+   if(!GLMath.frustumHasSphere(frustum,2,2,i,radius)){
     shape.setColor("red")
    } else {
     shape.setColor("orange")

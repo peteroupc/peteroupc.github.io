@@ -711,7 +711,8 @@ Lights._createNewLight=function(index){
  return ret;
 }
 /**
- * Not documented yet.
+ * Gets the number of lights defined in this object.
+ * @return {number}
  */
 Lights.prototype.getCount=function(){
  return this.lights.length;
@@ -1423,7 +1424,7 @@ Scene3D.prototype.useProgram=function(program){
  this._initProgramData(this.program);
  return this;
 }
-
+/** @private */
 Scene3D.prototype._getSpecularMapShader=function(){
  if(this.__specularMapShader){
   return this.__specularMapShader;
@@ -1773,13 +1774,15 @@ Scene3D.prototype._setIdentityMatrices=function(){
 }
 /** @private */
 Scene3D.prototype._updateMatrix=function(program){
- var uniforms={
+ var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
+ this._frustum=GLMath.mat4toFrustumPlanes(projView);
+ if(program){
+  var uniforms={
    "view":this._viewMatrix,
    "projection":this._projectionMatrix,
    "viewMatrix":this._viewMatrix,
    "projectionMatrix":this._projectionMatrix
- };
- if(program){
+  };
   if(program.get("viewInvW")!=null){
    var invView=GLMath.mat4invert(this._viewMatrix);
    uniforms["viewInvW"]=[invView[12],invView[13],invView[14],invView[15]];
@@ -2043,19 +2046,21 @@ Scene3D.prototype._renderShape=function(shape,program){
    this._renderShape(shape.shapes[i],program);
   }
  } else {
-   var prog=program;
-   if(shape.material instanceof Material &amp;&amp;
+   if(!shape.isCulled(this._frustum)){
+    var prog=program;
+    if(shape.material instanceof Material &amp;&amp;
        shape.material.specularMap){
       var p=this._getSpecularMapShader();
       this.useProgram(p);
       prog=p;
-   }
-   this._setupMatrices(shape,prog);
-   Binders.getMaterialBinder(shape.material).bind(prog);
-   shape.bufferedMesh.draw(prog);
-   if(prog!=program){
+    }
+    this._setupMatrices(shape,prog);
+    Binders.getMaterialBinder(shape.material).bind(prog);
+    shape.bufferedMesh.draw(prog);
+    if(prog!=program){
       this.useProgram(program);
-   }
+    }
+  }
  }
 }
 /**
@@ -2382,6 +2387,18 @@ Shape.prototype.copy=function(){
  */
 Shape.prototype.getTransform=function(){
  return this.transform;
+}
+/** @private */
+Shape.prototype.isCulled=function(frustum){
+ if(!this.bufferedMesh)return true;
+ var bounds=this.bufferedMesh._getBounds();
+ var matrix=this.getMatrix();
+ if(!GLMath.mat4isIdentity(matrix)){
+  var mn=GLMath.mat4transformVec3(matrix,bounds[0],bounds[1],bounds[2]);
+  var mx=GLMath.mat4transformVec3(matrix,bounds[3],bounds[4],bounds[5]);
+  bounds=[mn[0],mn[1],mn[2],mx[0],mx[1],mx[2]];
+ }
+ return !GLMath.frustumHasBox(frustum,bounds);
 }
 /**
  * Not documented yet.
