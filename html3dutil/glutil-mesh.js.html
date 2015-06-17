@@ -21,7 +21,20 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 /**
 * Specifies the triangles, lines, and points that make up a geometric shape.
 * Each vertex, that is, each point, each end of a line, and each corner
-* of a triangle, can also specify a color, normal, and texture coordinates.
+* of a triangle, can also specify the following attributes:
+* &lt;ul>
+* &lt;li>A color, which is a set of 3 values each ranging from 0 to 1 (the red, green,
+* and blue components, respectively.)
+* &lt;li>A normal vector, which is a set of 3 values.
+* Normal values are required for lighting to work properly.
+* &lt;li>A tangent vector, which is a set of 3 values.
+* &lt;li>A bitangent vector, which is a set of 3 values.
+* &lt;li>Texture coordinates, which are a set of 2 values each ranging from 0 to
+* 1, where (0, 0) is the lower right corner of the texture, and (1, 1) is the upper
+* right corner.
+* &lt;/ul>
+* For bump mapping to work properly, a mesh needs to define
+* normals, tangents, bitangents, and texture coordinates.&lt;p>
 * See the "{@tutorial shapes}" tutorial.
 * @class
 * @alias glutil.Mesh
@@ -309,6 +322,46 @@ Mesh.prototype.normal3=function(x,y,z){
   this.normal[1]=y;
   this.normal[2]=z;
   this._elementsDefined|=Mesh.NORMALS_BIT;
+  return this;
+}
+
+/**
+  * Sets the current tangent vector for this mesh.  Future vertex positions
+  * defined (with vertex3()) will have this normal.  The new current
+  * tangent will apply to future vertices even if the current mode
+  * is TRIANGLE_FAN and some vertices were already given for
+  * that mode.  The tangent passed to this method will
+  * not automatically be normalized to unit length.
+  * @param {number} x X-coordinate of the tangent vector.
+  * @param {number} y Y-coordinate of the tangent vector.
+  * @param {number} z Z-coordinate of the tangent vector.
+  * @return {glutil.Mesh} This object.
+  */
+Mesh.prototype.tangent3=function(x,y,z){
+  this.tangent[0]=x;
+  this.tangent[1]=y;
+  this.tangent[2]=z;
+  this._elementsDefined|=Mesh.TANGENTS_BIT;
+  return this;
+}
+
+/**
+  * Sets the current bitangent vector for this mesh.  Future vertex positions
+  * defined (with vertex3()) will have this bitangent.  The new current
+  * bitangent will apply to future vertices even if the current mode
+  * is TRIANGLE_FAN and some vertices were already given for
+  * that mode.  The bitangent passed to this method will
+  * not automatically be normalized to unit length.
+  * @param {number} x X-coordinate of the bitangent vector.
+  * @param {number} y Y-coordinate of the bitangent vector.
+  * @param {number} z Z-coordinate of the bitangent vector.
+  * @return {glutil.Mesh} This object.
+  */
+Mesh.prototype.bitangent3=function(x,y,z){
+  this.bitangent[0]=x;
+  this.bitangent[1]=y;
+  this.bitangent[2]=z;
+  this._elementsDefined|=Mesh.BITANGENTS_BIT;
   return this;
 }
  /**
@@ -1157,10 +1210,11 @@ Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset){
   var t8 = vertices[v2+uvOffset+1] - vertices[v1+uvOffset+1];
   var t9 = vertices[v3+uvOffset] - vertices[v1+uvOffset];
   var t10 = vertices[v3+uvOffset+1] - vertices[v1+uvOffset+1];
-  var t11 = (1.0/(((t7 * t10) - t8 * t9)));
+  var t11 = ((((t7 * t10) - t8 * t9)));
   if(t11==0){
    return [0,0,0,0,0,0];
   }
+  t11=1.0/t11;
   var t12 = -t8;
   var t13 = -t9;
   var t14 = (((t10 * t1) + t12 * t4)) * t11;
@@ -1175,7 +1229,9 @@ Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset){
 Mesh._recalcTangentsInternal=function(vertices,indices,stride,
   uvOffset,normalOffset,tangentOffset){
  // NOTE: no need to specify bitangent offset, since tangent
- // and bitangent will always be contiguous
+ // and bitangent will always be contiguous (this method will
+ // always be called after the recalcTangents method ensures
+ // that both fields are present)
  var vi=[0,0,0];
  for(var i=0;i&lt;indices.length;i+=3){
   vi[0]=indices[i]*stride;

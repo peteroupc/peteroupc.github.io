@@ -31,8 +31,8 @@
 as well as a texture image to apply on that object's surface.<p>
 The full structure is only used if the shader program supports lighting, as the
 default shader program does.  If <a href="glutil.Scene3D.html#disableLighting">Scene3D.disableLighting()</a> is called,
-disabling lighting calculations in the default shader, the "ambient", "specular", "shininess",
-and "emission" properties of this object are not used.
+disabling lighting calculations in the default shader, only the "diffuse" and "texture"
+properties of this object are used.
 </div>
 
     <h5>Parameters:</h5>
@@ -140,7 +140,7 @@ May be null or omitted; default is (0,0,0).</td>
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="ambient"><span style="font-weight:lighter"></span>ambient<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line822">line 822</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line824">line 824</a>
      </i></small></p>
 
 <div class="description">
@@ -149,7 +149,9 @@ Ambient reflection indicates how much an object reflects
 ambient colors, those that color pixels the same way regardless
 of direction or distance.
 Because every part of an object will be shaded the same way by ambient
-light, an object with just ambient reflection will not look much like a 3D object.<p>
+colors, an object with just ambient reflection will not look much like a 3D object.<p>
+(Ambient reflection simulates the effect of light being reflected multiple times
+from the same surface.)</p>
 This value is a 3-element array giving the red, green, and blue
 components of the ambient reflection; the final ambient color depends
 on the ambient color of the scene.
@@ -167,7 +169,7 @@ colors are used for ambient reflection rather than this property.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line841">line 841</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line843">line 843</a>
      </i></small></p>
 
 <div class="description">
@@ -195,7 +197,7 @@ This value can have an optional fourth element giving the alpha component
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="emission"><span style="font-weight:lighter"></span>emission<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line866">line 866</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line868">line 868</a>
      </i></small></p>
 
 <div class="description">
@@ -217,11 +219,32 @@ while negative values subtract from it. (0,0,0) means no additive color.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normalMap"><span style="font-weight:lighter"></span>normalMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line878">line 878</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line904">line 904</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Normal map (bump map) texture.  Normal maps are used either to add
+a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
+appearance with fewer polygons.<p>
+In a normal map texture, each pixel is a vector in which
+ each component (which usually ranges from 0-255 in most image formats) is scaled to
+ the range [-1, 1], where:
+<ul>
+<li>The pixel's red component is the vector's X component.
+<li>The pixel's green component is the vector's Y component.
+<li>The pixel's blue component is the vector's Z component.
+<li>An unchanged normal vector will have the value (0, 0, 1), which is usually
+the value (127, 127, 255) in most image formats.
+</ul>
+Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
+to the vector given in that pixel.  This tilt adjusts the normals used for the
+purpose of calculating lighting effects at that part of the surface.
+A strong tilt indicates strong relief detail at that point.
+<p>
+For normal mapping to work, an object's mesh must include normals,
+tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>
+object only has normals and texture coordinates, the <code>recalcTangents()</code>
+method can calculate
 </div>
 
 <dl class="details">
@@ -246,7 +269,7 @@ Ranges from 0 through 128.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="specular"><span style="font-weight:lighter"></span>specular<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line853">line 853</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line855">line 855</a>
      </i></small></p>
 
 <div class="description">
@@ -268,12 +291,13 @@ and (1,1,1) means total specular reflection.<p>
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="specularMap"><span style="font-weight:lighter"></span>specularMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line876">line 876</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line879">line 879</a>
      </i></small></p>
 
 <div class="description">
-    Specular map texture, where each pixel is an additional factor to multiply the specular color by for
-each texture coordinate (note that the material must have a specular color of other than the default
+    Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
+each part of the object's surface (note that the material must have a specular color of other
+than the default
 black for this to have an effect).  See <a href="glutil.Material.html#specular">glutil.Material#specular</a>.
 </div>
 
@@ -283,7 +307,7 @@ black for this to have an effect).  See <a href="glutil.Material.html#specular">
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="texture"><span style="font-weight:lighter"></span>texture<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line870">line 870</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line872">line 872</a>
      </i></small></p>
 
 <div class="description">
@@ -298,7 +322,7 @@ black for this to have an effect).  See <a href="glutil.Material.html#specular">
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line975">line 975</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1001">line 1001</a>
      </i></small></p>
 
 <div class="description">
@@ -404,7 +428,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter">(static) </span>fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line988">line 988</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1014">line 1014</a>
      </i></small></p>
 
 <div class="description">
@@ -466,7 +490,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line887">line 887</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line913">line 913</a>
      </i></small></p>
 
 <div class="description">
@@ -492,7 +516,7 @@ to the same object will be used.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line920">line 920</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line946">line 946</a>
      </i></small></p>
 
 <div class="description">
@@ -537,7 +561,9 @@ allowed for each key.<ul>
 to use.
 <li><code>specularMap</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL, of a specular
 map texture (see <a href="glutil.Material.html#specularMap">glutil.Material#specularMap</a>).
-<li><code>normalMap</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL, of a normalmap texture (see <a href="glutil.Material.html#normalMap">glutil.Material#normalMap</a>).</ul>
+<li><code>normalMap</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL, of a normal
+map (bump map) texture (see <a href="glutil.Material.html#normalMap">glutil.Material#normalMap</a>).
+</ul>
 If a value is null or undefined, it is ignored.</td>
         </tr>
 
