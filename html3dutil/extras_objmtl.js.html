@@ -166,6 +166,7 @@ MtlData._getMaterial=function(mtl){
  if(mtl.hasOwnProperty("map_Kd")){
   textureName=mtl["map_Kd"];
  }
+ // TODO: Support map_Bump
  if(mtl.hasOwnProperty("map_Ks")){
   specularName=mtl["map_Ks"];
  }
@@ -183,9 +184,12 @@ MtlData._getMaterial=function(mtl){
  if(mtl.hasOwnProperty("Ks")){
   specular=(mtl["Ks"]);
  }
+ // NOTE: illum must be checked last
  if(mtl.hasOwnProperty("illum")){
   if(mtl["illum"]==0){
-   // no shading
+   ambient=diffuse;
+   diffuse=[0,0,0];
+   specular=[0,0,0];
   } else if(mtl["illum"]==1){
    specular=[0,0,0];
   }

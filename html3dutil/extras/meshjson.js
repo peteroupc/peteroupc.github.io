@@ -129,6 +129,7 @@ MeshJSON._getJsonMaterial=function(mtl){
  var emission=null;
  var textureName=null;
  var specularName=null;
+ var normalName=null;
  if(mtl.hasOwnProperty("specularCoef")){
   shininess=mtl.specularCoef;
  }
@@ -144,6 +145,9 @@ MeshJSON._getJsonMaterial=function(mtl){
  if(mtl.hasOwnProperty("mapSpecular")){
   specularName=mtl.mapSpecular
  }
+ if(mtl.hasOwnProperty("mapBump")){
+  normalName=mtl.mapBump
+ }
  if(mtl.hasOwnProperty("colorEmissive")){
   var ke=mtl.colorEmissive;
   if(ke.length==1){
@@ -158,13 +162,21 @@ MeshJSON._getJsonMaterial=function(mtl){
  var ret=new Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
+  // TODO: Resolve filename relative to JSON's path
   ret=ret.setParams({
    "texture":textureName
   })
  }
  if(specularName){
+  // TODO: Resolve filename relative to JSON's path
   ret=ret.setParams({
-   "texture":specularName
+   "specularMap":specularName
+  })
+ }
+ if(normalName){
+  // TODO: Resolve filename relative to JSON's path
+  ret=ret.setParams({
+   "normalMap":normalName
   })
  }
  return ret;
