@@ -31,8 +31,7 @@
 as well as a texture image to apply on that object's surface.<p>
 The full structure is only used if the shader program supports lighting, as the
 default shader program does.  If <a href="glutil.Scene3D.html#disableLighting">Scene3D.disableLighting()</a> is called,
-disabling lighting calculations in the default shader, only the "diffuse" and "texture"
-properties of this object are used.
+disabling lighting calculations in the default shader, only the "diffuse" and "texture"properties of this object are used.
 </div>
 
     <h5>Parameters:</h5>
@@ -149,9 +148,7 @@ Ambient reflection indicates how much an object reflects
 ambient colors, those that color pixels the same way regardless
 of direction or distance.
 Because every part of an object will be shaded the same way by ambient
-colors, an object with just ambient reflection will not look much like a 3D object.<p>
-(Ambient reflection simulates the effect of light being reflected multiple times
-from the same surface.)</p>
+colors, an object with just ambient reflection will not look much like a 3D object.<p>(Ambient reflection simulates the effect of light being reflected multiple timesfrom the same surface.)</p>
 This value is a 3-element array giving the red, green, and blue
 components of the ambient reflection; the final ambient color depends
 on the ambient color of the scene.
@@ -219,14 +216,11 @@ while negative values subtract from it. (0,0,0) means no additive color.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normalMap"><span style="font-weight:lighter"></span>normalMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line904">line 904</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line907">line 907</a>
      </i></small></p>
 
 <div class="description">
-    Normal map (bump map) texture.  Normal maps are used either to add
-a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
-appearance with fewer polygons.<p>
-In a normal map texture, each pixel is a vector in which
+    Normal map (bump map) texture.  Normal maps are used either to adda sense of roughness to an otherwise flat surface or to give an object a highly-detailedappearance with fewer polygons.<p>In a normal map texture, each pixel is a vector in which
  each component (which usually ranges from 0-255 in most image formats) is scaled to
  the range [-1, 1], where:
 <ul>
@@ -235,16 +229,14 @@ In a normal map texture, each pixel is a vector in which
 <li>The pixel's blue component is the vector's Z component.
 <li>An unchanged normal vector will have the value (0, 0, 1), which is usually
 the value (127, 127, 255) in most image formats.
+<li>The vector is normalized so its length is about equal to1.
+<li>The vector is expressed in tangent space, where the Z axis points outward
+and away from the surface's edges.
 </ul>
 Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
 to the vector given in that pixel.  This tilt adjusts the normals used for the
 purpose of calculating lighting effects at that part of the surface.
-A strong tilt indicates strong relief detail at that point.
-<p>
-For normal mapping to work, an object's mesh must include normals,
-tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>
-object only has normals and texture coordinates, the <code>recalcTangents()</code>
-method can calculate
+A strong tilt indicates strong relief detail at that point.<p>For normal mapping to work, an object's mesh must include normals,tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>object only has normals and texture coordinates, the <code>recalcTangents()</code>method can calculate the tangents and bitangents appropriate for normal mapping.
 </div>
 
 <dl class="details">
@@ -296,8 +288,7 @@ and (1,1,1) means total specular reflection.<p>
 
 <div class="description">
     Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
-each part of the object's surface (note that the material must have a specular color of other
-than the default
+each part of the object's surface (note that the material must have a specular color of otherthan the default
 black for this to have an effect).  See <a href="glutil.Material.html#specular">glutil.Material#specular</a>.
 </div>
 
@@ -322,7 +313,7 @@ black for this to have an effect).  See <a href="glutil.Material.html#specular">
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1001">line 1001</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1004">line 1004</a>
      </i></small></p>
 
 <div class="description">
@@ -428,7 +419,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter">(static) </span>fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1014">line 1014</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1017">line 1017</a>
      </i></small></p>
 
 <div class="description">
@@ -490,7 +481,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line913">line 913</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line916">line 916</a>
      </i></small></p>
 
 <div class="description">
@@ -516,7 +507,7 @@ to the same object will be used.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line946">line 946</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line949">line 949</a>
      </i></small></p>
 
 <div class="description">

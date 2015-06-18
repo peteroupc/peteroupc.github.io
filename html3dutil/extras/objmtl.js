@@ -145,6 +145,7 @@ MtlData._getMaterial=function(mtl){
  var specular=null;
  var emission=null;
  var specularName=null;
+ var normalName=null;
  var textureName=null;
  if(mtl.hasOwnProperty("Ns")){
   shininess=mtl["Ns"];
@@ -155,9 +156,17 @@ MtlData._getMaterial=function(mtl){
  if(mtl.hasOwnProperty("map_Kd")){
   textureName=mtl["map_Kd"];
  }
- // TODO: Support map_Bump
  if(mtl.hasOwnProperty("map_Ks")){
   specularName=mtl["map_Ks"];
+ }
+ if(mtl.hasOwnProperty("map_Bump")){
+  normalName=mtl["map_Bump"];
+ }
+ if(mtl.hasOwnProperty("map_bump")){
+  normalName=mtl["map_bump"];
+ }
+ if(mtl.hasOwnProperty("bump")){
+  normalName=mtl["bump"];
  }
  if(mtl.hasOwnProperty("Ka")){
   ambient=(mtl["Ka"]);
@@ -193,6 +202,11 @@ MtlData._getMaterial=function(mtl){
  if(specularName){
   ret=ret.setParams({
    "specularMap":specularName
+  })
+ }
+ if(specularName){
+  ret=ret.setParams({
+   "normalMap":normalName
   })
  }
  return ret;
@@ -281,7 +295,7 @@ MtlData._loadMtl=function(str){
    +"\\s+"+number+"(?:\\s+"+number+")?\\s*$")
  var threeOrFourNumLineXYZ=new RegExp("^[ \\t]*(Kd|Ka|Ks)\\s+xyz\\s+"+number+"\\s+"+number
    +"\\s+"+number+"(?:\\s+"+number+")?\\s*$")
- var mapLine=new RegExp("^[ \\t]*(map_Kd|map_bump|map_Ka|map_Ks)\\s+(.*?)\\s*$")
+ var mapLine=new RegExp("^[ \\t]*(map_Kd|bump|map_[Bb]ump|map_Ka|map_Ks)\\s+(.*?)\\s*$")
  var newmtlLine=new RegExp("^newmtl\\s+([^\\s]*)$")
  var faceStart=new RegExp("^f\\s+")
  var lines=str.split(/\r?\n/)

@@ -7,6 +7,22 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 var MeshJSON={};
+
+MeshJSON._resolvePath=function(path, name){
+ // Relatively dumb for a relative path
+ // resolver, but sufficient here, as it will
+ // only be used with relative path
+ // strings
+ var ret=path;
+ var lastSlash=ret.lastIndexOf("/")
+ if(lastSlash>=0){
+  ret=ret.substr(0,lastSlash+1)+name.replace(/\\/g,"/");
+ } else {
+  ret=name.replace(/\\/g,"/");
+ }
+ return ret;
+}
+
 MeshJSON.toJSON=function(mesh){
  function colorToHex(x){
   var r=Math.round(x[0]*255);
@@ -120,8 +136,15 @@ MeshJSON.toJSON=function(mesh){
  })
  return JSON.stringify(json);
 }
+MeshJSON._checkPath=function(path,file){
+ if((/(?![\/\\])([^\:\?\#\t\r\n]+)/).test(file)){
+  return MeshJSON._resolvePath(path,file);
+ } else {
+  return null;
+ }
+}
 
-MeshJSON._getJsonMaterial=function(mtl){
+MeshJSON._getJsonMaterial=function(mtl,path){
  var shininess=1.0;
  var ambient=null;
  var diffuse=null;
@@ -140,13 +163,13 @@ MeshJSON._getJsonMaterial=function(mtl){
   ambient=mtl.colorAmbient
  }
  if(mtl.hasOwnProperty("mapDiffuse")){
-  textureName=mtl.mapDiffuse
+  textureName=MeshJSON._checkPath(path,mtl.mapDiffuse)
  }
  if(mtl.hasOwnProperty("mapSpecular")){
-  specularName=mtl.mapSpecular
+  specularName=MeshJSON._checkPath(path,mtl.mapSpecular)
  }
  if(mtl.hasOwnProperty("mapBump")){
-  normalName=mtl.mapBump
+  normalName=MeshJSON._checkPath(path,mtl.mapBump)
  }
  if(mtl.hasOwnProperty("colorEmissive")){
   var ke=mtl.colorEmissive;
@@ -162,19 +185,16 @@ MeshJSON._getJsonMaterial=function(mtl){
  var ret=new Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
-  // TODO: Resolve filename relative to JSON's path
   ret=ret.setParams({
    "texture":textureName
   })
  }
  if(specularName){
-  // TODO: Resolve filename relative to JSON's path
   ret=ret.setParams({
    "specularMap":specularName
   })
  }
  if(normalName){
-  // TODO: Resolve filename relative to JSON's path
   ret=ret.setParams({
    "normalMap":normalName
   })
@@ -237,7 +257,7 @@ MeshJSON.loadJSON=function(url){
    var materials=[]
    if(json.materials && json.materials.length>0){
     for(var i=0;i<json.materials.length;i++){
-     materials.push(MeshJSON._getJsonMaterial(json.materials[i]))
+     materials.push(MeshJSON._getJsonMaterial(f.url,json.materials[i]))
      meshes[i]=new Mesh().mode(Mesh.TRIANGLES)
     }
    } else {
