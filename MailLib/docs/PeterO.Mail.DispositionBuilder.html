@@ -28,6 +28,188 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>Description of DispositionBuilder.</p>
 
+<h3>DispositionBuilder Constructor</h3>
+
+<pre><code>public DispositionBuilder(
+    PeterO.Mail.ContentDisposition mt);
+</code></pre>
+
+<p>Initializes a new instance of the DispositionBuilder class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>mt</i>: A ContentDisposition object.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>mt</i>
+is null.</li>
+</ul>
+
+<h3>DispositionBuilder Constructor</h3>
+
+<pre><code>public DispositionBuilder(
+    string type);
+</code></pre>
+
+<p>Initializes a new instance of the DispositionBuilder class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>type</i>: A string object.</li>
+</ul>
+
+<h3>DispositionBuilder Constructor</h3>
+
+<pre><code>public DispositionBuilder();
+</code></pre>
+
+<p>Initializes a new instance of the DispositionBuilder class.</p>
+
+<h3>DispositionType</h3>
+
+<pre><code>public string DispositionType { get; set;}
+</code></pre>
+
+<p>Gets or sets this value&#39;s disposition type, such value, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This value&#39;s disposition type, such value, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+
+<h3>IsMultipart</h3>
+
+<pre><code>public bool IsMultipart { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this is a multipart media type.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this is a multipart media type; otherwise, false..</p>
+
+<h3>IsText</h3>
+
+<pre><code>public bool IsText { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this is a text media type.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this is a text media type; otherwise, false..</p>
+
+<h3>RemoveParameter</h3>
+
+<pre><code>public PeterO.Mail.DispositionBuilder RemoveParameter(
+    string name);
+</code></pre>
+
+<p>Removes a parameter from this content disposition.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>name</i>: The parameter to remove. The name is compared case insensitively.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>name</i>
+is null.</li>
+</ul>
+
+<h3>SetDispositionType</h3>
+
+<pre><code>public PeterO.Mail.DispositionBuilder SetDispositionType(
+    string str);
+</code></pre>
+
+<p>Sets the disposition type, such as &quot;inline&quot;.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<h3>SetParameter</h3>
+
+<pre><code>public PeterO.Mail.DispositionBuilder SetParameter(
+    string name,
+    string value);
+</code></pre>
+
+<p>Sets a parameter of this content disposition.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>name</i>: Name of the parameter to set. If this name already exists (compared case-insensitively), it will be overwritten.</p></li>
+<li><p><i>value</i>: Value of the parameter to set.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+Either  <i>value</i>
+or <i>name</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>name</i>
+is empty, or it isn&#39;t a well-formed parameter name.</p></li>
+</ul>
+
+<h3>ToDisposition</h3>
+
+<pre><code>public PeterO.Mail.ContentDisposition ToDisposition();
+</code></pre>
+
+<p>Converts this object to an immutable ContentDisposition object.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A MediaType object.</p>
+
+<h3>ToString</h3>
+
+<pre><code>public override string ToString();
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string representation of this object.</p>
+
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 <script>
 if(document.location.href.indexOf("file://")!=0){

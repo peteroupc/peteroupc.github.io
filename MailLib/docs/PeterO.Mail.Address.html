@@ -28,6 +28,61 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>Represents an email address.</p>
 
+<h3>Address Constructor</h3>
+
+<pre><code>public Address(
+    string addressValue);
+</code></pre>
+
+<p>Initializes a new instance of the Address class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>addressValue</i>: An email address.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>addressValue</i>
+is null.</li>
+</ul>
+
+<h3>Domain</h3>
+
+<pre><code>public string Domain { get; }
+</code></pre>
+
+<p>Gets the domain of this email address (the part after the &quot;@&quot; sign).</p>
+
+<p><b>Returns:</b></p>
+
+<p>The domain of this email address (the part after the &quot;@&quot; sign).</p>
+
+<h3>LocalPart</h3>
+
+<pre><code>public string LocalPart { get; }
+</code></pre>
+
+<p>Gets the local part of this email address (the part before the &quot;@&quot; sign).</p>
+
+<p><b>Returns:</b></p>
+
+<p>The local part of this email address (the part before the &quot;@&quot; sign).</p>
+
+<h3>ToString</h3>
+
+<pre><code>public override string ToString();
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string representation of this object.</p>
+
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 <script>
 if(document.location.href.indexOf("file://")!=0){

@@ -21,6 +21,170 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 </p>
 </div><h1>PeterO.Mail.Message</h1>
 
+<h2>PeterO.Mail.Message</h2>
+
+<pre><code>public sealed class Message
+</code></pre>
+
+<p>Represents an email message, and contains methods and properties for accessing and modifying email message data. This class implements the Internet Message Format (RFC 5322) and Multipurpose Internet Mail Extensions (MIME; RFC 2045-2047, RFC 2049).</p>
+
+<p>Thread safety:This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
+
+<p>The following lists known deviations from the mail specifications (Internet Message Format and MIME):</p>
+
+<ul>
+<li><p>The content-transfer-encoding &quot;quoted-printable&quot; is treated as 7bit instead if it occurs in a message or body part with content type &quot;multipart/<em>&quot; or &quot;message/</em>&quot; (other than &quot;message/global&quot;, &quot;message/global-headers&quot; , &quot;message/global-disposition-notification&quot;, or &quot;message/global-delivery-status&quot;).</p></li>
+<li><p>If a message has two or more Content-Type header fields, it is treated as having a content type of &quot;application/octet-stream&quot;, unless one or more of the header fields is syntactically invalid.</p></li>
+<li><p>Non-UTF-8 bytes appearing in header field values are replaced with replacement characters. Moreover, UTF-8 is parsed everywhere in header field values, even in those parts of some structured header fields where this appears not to be allowed.</p></li>
+<li><p>The To and Cc header fields are allowed to contain only comments and whitespace, but these &quot;empty&quot; header fields will be omitted when generating.</p></li>
+<li><p>There is no line length limit imposed when parsing quoted-printable or base64 encoded bodies.</p></li>
+<li><p>In the following cases, if the transfer encoding is absent or declared as 7bit, 8-bit bytes are still allowed:</p></li>
+<li><p>(a) The preamble and epilogue of multipart messages, which will be ignored.</p></li>
+<li><p>(b) If the charset is declared to be  <code>utf-8</code> .</p></li>
+<li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to be  <code>ascii</code> ,  <code>us-ascii</code> , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte encodings).</p></li>
+<li><p>(d) In non-MIME message bodies and in text/plain message bodies. Any 8-bit bytes are replaced with the ASCII substitute character (0x1a).</p></li>
+<li><p>If the first line of the message starts with the word &quot;From&quot; followed by a space, it is skipped.</p></li>
+<li><p>The name <code>ascii</code> is treated as a synonym for  <code>us-ascii</code> , despite being a reserved name under RFC 2046. The name  <code>cp1252</code> is treated as a synonym for  <code>windows-1252</code> , even though it&#39;s not an IANA registered alias.</p></li>
+<li><p>The following deviations involve encoded words under RFC 2047:</p></li>
+<li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U + 007F, or a character less than U + 0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
+<li><p>(b) This implementation can decode an encoded word that uses ISO-2022-JP (the only supported encoding that uses code switching) even if the encoded word&#39;s payload ends in a different mode from ASCII mode. (Each encoded word still starts in ASCII mode, though.)</p></li>
+</ul>
+
+<h3>Message Constructor</h3>
+
+<pre><code>public Message(
+    System.IO.Stream stream);
+</code></pre>
+
+<p>Initializes a new instance of the Message class. Reads from the given Stream object to initialize the message.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>stream</i>: A readable data stream.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>stream</i>
+is null.</li>
+</ul>
+
+<h3>BccAddresses</h3>
+
+<pre><code>public System.Collections.Generic.IList BccAddresses { get; }
+</code></pre>
+
+<p>Gets a list of addresses found in the BCC header field or fields.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of addresses found in the BCC header field or fields.</p>
+
+<h3>BodyString</h3>
+
+<pre><code>public string BodyString { get; }
+</code></pre>
+
+<p>Gets the body of this message as a Unicode string.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The body of this message as a Unicode string.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.NotSupportedException:
+This message has no character encoding declared on it, or the character encoding is not supported.</li>
+</ul>
+
+<h3>CCAddresses</h3>
+
+<pre><code>public System.Collections.Generic.IList CCAddresses { get; }
+</code></pre>
+
+<p>Gets a list of addresses found in the CC header field or fields.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of addresses found in the CC header field or fields.</p>
+
+<h3>ContentDisposition</h3>
+
+<pre><code>public PeterO.Mail.ContentDisposition ContentDisposition { get; set;}
+</code></pre>
+
+<p>Gets or sets this message&#39;s content disposition. The content disposition specifies how a user agent should handle or otherwise display this message.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This message&#39;s content disposition, or null if none is specified.</p>
+
+<h3>ContentType</h3>
+
+<pre><code>public PeterO.Mail.MediaType ContentType { get; set;}
+</code></pre>
+
+<p>Gets or sets this message&#39;s media type.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This message&#39;s media type.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+This value is being set and &quot;value&quot; is null.</li>
+</ul>
+
+<h3>FileName</h3>
+
+<pre><code>public string FileName { get; }
+</code></pre>
+
+<p>Gets a filename suggested by this message for saving the message&#39;s body to a file. For more information on the algorithm, see ContentDisposition.MakeFilename.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A suggested name for the file, or the empty string if there is no filename suggested by the content type or content disposition.</p>
+
+<h3>FromAddresses</h3>
+
+<pre><code>public System.Collections.Generic.IList FromAddresses { get; }
+</code></pre>
+
+<p>Gets a list of addresses found in the From header field or fields.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of addresses found in the From header field or fields.</p>
+
+<h3>HeaderFields</h3>
+
+<pre><code>public System.Collections.Generic.IList HeaderFields { get; }
+</code></pre>
+
+<p>Gets a snapshot of the header fields of this message, in the order they were added. For each item in the list, the key is the header field&#39;s name and the value is its value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A snapshot of the header fields of this message.</p>
+
+<h3>Parts</h3>
+
+<pre><code>public System.Collections.Generic.IList Parts { get; }
+</code></pre>
+
+<p>Gets a list of all the parts of this message. This list is editable. This will only be used if the message is a multipart message.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of all the parts of this message. This list is editable. This will only be used if the message is a multipart message.</p>
+
 <h3>Subject</h3>
 
 <pre><code>public string Subject { get; set;}
@@ -31,6 +195,17 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Returns:</b></p>
 
 <p>This message&#39;s subject.</p>
+
+<h3>ToAddresses</h3>
+
+<pre><code>public System.Collections.Generic.IList ToAddresses { get; }
+</code></pre>
+
+<p>Gets a list of addresses found in the To header field or fields.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of addresses found in the To header field or fields.</p>
 
 <h3>AddHeader</h3>
 
@@ -70,6 +245,91 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>A Message object.</p>
 
+<h3>Generate</h3>
+
+<pre><code>public string Generate();
+</code></pre>
+
+<p>Generates this message&#39;s data in text form. The generated message will always be 7-bit ASCII, and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
+
+<p>The following applies to the From, To, Cc, and Bcc header fields. If the header field has an invalid syntax or has no addresses, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to  <code>me@[header-name]-address.invalid</code> as the address (a  <code>.invalid</code> address is a reserved address that can never belong to anyone).</p>
+
+<p><b>Returns:</b></p>
+
+<p>The generated message.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>PeterO.Mail.MessageDataException:
+The message can&#39;t be generated.</li>
+</ul>
+
+<h3>GetBody</h3>
+
+<pre><code>public byte[] GetBody();
+</code></pre>
+
+<p>Gets the byte array for this message&#39;s body.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A byte array.</p>
+
+<h3>GetBodyMessage</h3>
+
+<pre><code>public PeterO.Mail.Message GetBodyMessage();
+</code></pre>
+
+<p>Returns the mail message contained in this message&#39;s body.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A message object if this object&#39;s content type is &quot;message/rfc822&quot; , &quot;message/news&quot;, or &quot;message/global&quot;, or null otherwise.</p>
+
+<h3>GetHeader</h3>
+
+<pre><code>public string GetHeader(
+    string name);
+</code></pre>
+
+<p>Gets the first instance of the header field with the specified name, comparing the field name in an ASCII case-insensitive manner.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>name</i>: The name of a header field.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The value of the first header field with that name, or null if there is none.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+Name is null.</li>
+</ul>
+
+<h3>GetHeader</h3>
+
+<pre><code>public System.Collections.Generic.KeyValuePair GetHeader(
+    int index);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>index</i>: A 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A KeyValuePair(string, string) object.</p>
+
 <h3>RemoveHeader</h3>
 
 <pre><code>public PeterO.Mail.Message RemoveHeader(
@@ -87,6 +347,53 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Returns:</b></p>
 
 <p>A Message object.</p>
+
+<h3>RemoveHeader</h3>
+
+<pre><code>public PeterO.Mail.Message RemoveHeader(
+    string name);
+</code></pre>
+
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>name</i>: The name of the header field to remove.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>name</i>
+is null.</li>
+</ul>
+
+<h3>SetBody</h3>
+
+<pre><code>public void SetBody(
+    byte[] bytes);
+</code></pre>
+
+<p>Sets the body of this message to the given byte array.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bytes</i>: A byte array.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+Bytes is null.</li>
+</ul>
 
 <h3>SetHeader</h3>
 
@@ -149,6 +456,118 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Returns:</b></p>
 
 <p>A Message object.</p>
+
+<h3>SetHeader</h3>
+
+<pre><code>public PeterO.Mail.Message SetHeader(
+    string name,
+    string value);
+</code></pre>
+
+<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>name</i>: The name of a header field, such as &quot;from&quot; or &quot;subject&quot;.</p></li>
+<li><p><i>value</i>: The header field&#39;s value.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>name</i>
+or  <i>value</i>
+is null.</p></li>
+</ul>
+
+<h3>SetHtmlBody</h3>
+
+<pre><code>public PeterO.Mail.Message SetHtmlBody(
+    string str);
+</code></pre>
+
+<p>Sets the body of this message to the specified string in HTML format. The character sequences CR, LF, and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<h3>SetTextAndHtml</h3>
+
+<pre><code>public PeterO.Mail.Message SetTextAndHtml(
+    string text,
+    string html);
+</code></pre>
+
+<p>Sets the body of this message to a multipart body with plain text and HTML versions of the same message. The character sequences CR, LF, and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>text</i>: A string object.</p></li>
+<li><p><i>html</i>: A string object. (2).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>text</i>
+or  <i>html</i>
+is null.</li>
+</ul>
+
+<h3>SetTextBody</h3>
+
+<pre><code>public PeterO.Mail.Message SetTextBody(
+    string str);
+</code></pre>
+
+<p>Sets the body of this message to the specified plain text string. The character sequences CR, LF, and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 <script>

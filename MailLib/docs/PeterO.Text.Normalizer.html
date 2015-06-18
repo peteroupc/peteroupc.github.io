@@ -21,6 +21,41 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 </p>
 </div><h1>PeterO.Text.Normalizer</h1>
 
+<h2>PeterO.Text.Normalizer</h2>
+
+<pre><code>public sealed class Normalizer
+</code></pre>
+
+<p>Implements the Unicode normalization algorithm and contains methods and functionality to test and convert Unicode strings for Unicode normalization.</p>
+
+<p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. In case doing so is required, the permission notice for the Unicode Character Database is given here:</p>
+
+<p>COPYRIGHT AND PERMISSION NOTICE</p>
+
+<p>Copyright (c) 1991-2014 Unicode, Inc. All rights reserved. Distributed under the Terms of Use in <a href="http://www.unicode.org/copyright.html">http://www.unicode.org/copyright.html</a>.</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of the Unicode data files and any associated documentation (the &quot;Data Files&quot;) or Unicode software and any associated documentation (the &quot;Software&quot;) to deal in the Data Files or Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, and/or sell copies of the Data Files or Software, and to permit persons to whom the Data Files or Software are furnished to do so, provided that (a) this copyright and permission notice appear with all copies of the Data Files or Software, (b) this copyright and permission notice appear in associated documentation, and (c) there is clear notice in each modified Data File or in the Software as well as in the documentation associated with the Data File(s) or Software that the data or software has been modified.</p>
+
+<p>THE DATA FILES AND SOFTWARE ARE PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA FILES OR SOFTWARE.</p>
+
+<p>Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale, use or other dealings in these Data Files or Software without prior written authorization of the copyright holder.</p>
+
+<h3>Normalizer Constructor</h3>
+
+<pre><code>public Normalizer(
+    string str,
+    PeterO.Text.Normalization form);
+</code></pre>
+
+<p>Initializes a new instance of the Normalizer class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A string object.</p></li>
+<li><p><i>form</i>: A Normalization object.</p></li>
+</ul>
+
 <h3>IsNormalized</h3>
 
 <pre><code>public static bool IsNormalized(
@@ -40,6 +75,65 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Returns:</b></p>
 
 <p>A Boolean object.</p>
+
+<h3>Normalize</h3>
+
+<pre><code>public static string Normalize(
+    string str,
+    PeterO.Text.Normalization form);
+</code></pre>
+
+<p>Converts a string to the given Unicode normalization form.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: An arbitrary string.</p></li>
+<li><p><i>form</i>: The Unicode normalization form to convert to.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The parameter  <i>str</i>
+ converted to the given normalization form.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<h3>Read</h3>
+
+<pre><code>public int Read(
+    int[] chars,
+    int index,
+    int length);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>chars</i>: An array of 32-bit unsigned integers.</p></li>
+<li><p><i>index</i>: A 32-bit signed integer. (2).</p></li>
+<li><p><i>length</i>: A 32-bit signed integer. (3).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>chars</i>
+or &quot;this.buffer&quot; is null.</li>
+</ul>
 
 <h3>ReadChar</h3>
 

@@ -21,6 +21,135 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 </p>
 </div><h1>PeterO.Mail.NamedAddress</h1>
 
+<h2>PeterO.Mail.NamedAddress</h2>
+
+<pre><code>public class NamedAddress
+</code></pre>
+
+<p>Represents an email address and a name for that address.</p>
+
+<h3>NamedAddress Constructor</h3>
+
+<pre><code>public NamedAddress(
+    string address);
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>address</i>: A string object.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>address</i>
+is null.</li>
+</ul>
+
+<h3>NamedAddress Constructor</h3>
+
+<pre><code>public NamedAddress(
+    string displayName,
+    PeterO.Mail.Address address);
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>displayName</i>: A string object.</p></li>
+<li><p><i>address</i>: An email address.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>address</i>
+is null.</li>
+</ul>
+
+<h3>NamedAddress Constructor</h3>
+
+<pre><code>public NamedAddress(
+    string displayName,
+    string address);
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class using the given display name and email address.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>displayName</i>: A string object.</p></li>
+<li><p><i>address</i>: A string object. (2).</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>address</i>
+is null.</li>
+</ul>
+
+<h3>NamedAddress Constructor</h3>
+
+<pre><code>public NamedAddress(
+    string displayName,
+    string localPart,
+    string domain);
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class using the given name and an email address made up of its local part and domain.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>displayName</i>: A string object.</p></li>
+<li><p><i>localPart</i>: A string object. (2).</p></li>
+<li><p><i>domain</i>: A string object. (3).</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>localPart</i>
+or  <i>domain</i>
+is null.</li>
+</ul>
+
+<h3>NamedAddress Constructor</h3>
+
+<pre><code>public NamedAddress(
+    string groupName,
+    System.Collections.Generic.IList mailboxes);
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>groupName</i>: A string object.</p></li>
+<li><p><i>mailboxes</i>: An IList object.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>groupName</i>
+or  <i>mailboxes</i>
+is null.</li>
+</ul>
+
 <h3>Address</h3>
 
 <pre><code>public PeterO.Mail.Address Address { get; }
@@ -31,6 +160,50 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Returns:</b></p>
 
 <p>A value not documented yet.</p>
+
+<h3>GroupAddresses</h3>
+
+<pre><code>public System.Collections.Generic.IList GroupAddresses { get; }
+</code></pre>
+
+<p>Gets a list of address that make up the group, if this object represents a group, or an empty list otherwise.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of address that make up the group, if this object represents a group, or an empty list otherwise.</p>
+
+<h3>IsGroup</h3>
+
+<pre><code>public bool IsGroup { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this represents a group of addresses rather than a single address.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this represents a group of addresses; otherwise, false..</p>
+
+<h3>Name</h3>
+
+<pre><code>public string Name { get; }
+</code></pre>
+
+<p>Gets the display name for this email address.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The display name for this email address.</p>
+
+<h3>ToString</h3>
+
+<pre><code>public override string ToString();
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string representation of this object.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 <script>

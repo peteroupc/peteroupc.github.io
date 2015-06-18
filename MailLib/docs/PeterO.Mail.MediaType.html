@@ -21,6 +21,78 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 </p>
 </div><h1>PeterO.Mail.MediaType</h1>
 
+<h2>PeterO.Mail.MediaType</h2>
+
+<pre><code>public sealed class MediaType
+</code></pre>
+
+<p>Specifies what kind of data a message body is.</p>
+
+<p>A media type consists of a top-level type (the general category of the data), a subtype (the specific type), and an optional list of parameters. For example, the media type  <code>text/plain; charset = utf-8</code> is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and the parameters say that that the data uses the character set UTF-8, a form of Unicode (&quot;charset=utf-8&quot;). Other top-level types include &quot;audio&quot;, &quot;video&quot;, and &quot;application&quot;.</p>
+
+<p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s created. To create a changeable media type object, use the MediaTypeBuilder class.</p>
+
+<h3>ApplicationOctetStream</h3>
+
+<pre><code>public static readonly PeterO.Mail.MediaType ApplicationOctetStream;
+</code></pre>
+
+<p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary binary data.</p>
+
+<h3>MessageRfc822</h3>
+
+<pre><code>public static readonly PeterO.Mail.MediaType MessageRfc822;
+</code></pre>
+
+<p>Specifies the media type &quot;message/rfc822&quot; , used for Internet mail messages.</p>
+
+<h3>TextPlainAscii</h3>
+
+<pre><code>public static readonly PeterO.Mail.MediaType TextPlainAscii;
+</code></pre>
+
+<p>Specifies the media type &quot;text/plain&quot; and the charset &quot;US-ASCII&quot;, used for plain text data.</p>
+
+<h3>TextPlainUtf8</h3>
+
+<pre><code>public static readonly PeterO.Mail.MediaType TextPlainUtf8;
+</code></pre>
+
+<p>Specifies the media type &quot;text/plain&quot; and the charset &quot;utf-8&quot;, used for Unicode plain text data.</p>
+
+<h3>IsMultipart</h3>
+
+<pre><code>public bool IsMultipart { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this is a multipart media type.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this is a multipart media type; otherwise, false..</p>
+
+<h3>IsText</h3>
+
+<pre><code>public bool IsText { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this is a text media type; otherwise, false..</p>
+
+<h3>Parameters</h3>
+
+<pre><code>public System.Collections.Generic.IDictionary Parameters { get; }
+</code></pre>
+
+<p>Gets a sorted list of the parameters contained in this media type object.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of the parameters contained in this media type object, sorted by name.</p>
+
 <h3>SubType</h3>
 
 <pre><code>public string SubType { get; }
@@ -42,6 +114,141 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <p><b>Returns:</b></p>
 
 <p>A value not documented yet.</p>
+
+<h3>TypeAndSubType</h3>
+
+<pre><code>public string TypeAndSubType { get; }
+</code></pre>
+
+<p>Gets the top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;.</p>
+
+<h3>Equals</h3>
+
+<pre><code>public override bool Equals(
+    object obj);
+</code></pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: An arbitrary object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if the objects are equal; otherwise, false.</p>
+
+<h3>GetCharset</h3>
+
+<pre><code>public string GetCharset();
+</code></pre>
+
+<p>Returns the charset parameter, converted to ASCII lower-case, if it exists, or  <code>&quot;us-ascii&quot;</code> if the media type is ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t have a charset parameter (see RFC2046), or the default charset, if any, for the media type if the charset parameter is absent. Returns an empty string in all other cases.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string object.</p>
+
+<h3>GetHashCode</h3>
+
+<pre><code>public override int GetHashCode();
+</code></pre>
+
+<p>Returns the hash code for this instance.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit hash code.</p>
+
+<h3>GetParameter</h3>
+
+<pre><code>public string GetParameter(
+    string name);
+</code></pre>
+
+<p>Gets the value of a parameter in this media type, such as &quot;charset&quot;.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>name</i>: Name of the parameter to get. The name is compared case-insensitively.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The value of the parameter as a string, or null if the parameter doesn&#39;t exist.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>name</i>
+is null.</li>
+</ul>
+
+<h3>Parse</h3>
+
+<pre><code>public static PeterO.Mail.MediaType Parse(
+    string mediaTypeValue);
+</code></pre>
+
+<p>Parses a media type string and returns a media type object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>mediaTypeValue</i>: A string object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A media type object, or text/plain if  <i>mediaTypeValue</i>
+ is empty or syntactically invalid.</p>
+
+<h3>Parse</h3>
+
+<pre><code>public static PeterO.Mail.MediaType Parse(
+    string str,
+    PeterO.Mail.MediaType defaultValue);
+</code></pre>
+
+<p>Parses a media type string and returns a media type object, or the default value if the string is invalid.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A string object representing a media type.</p></li>
+<li><p><i>defaultValue</i>: The media type to return if the string is syntactically invalid. Can be null.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A MediaType object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<h3>ToString</h3>
+
+<pre><code>public override string ToString();
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string representation of this object.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 <script>

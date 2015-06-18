@@ -28,6 +28,64 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>Specifies how a message body should be displayed or handled by a mail user agent. This type is immutable; its contents can&#39;t be changed after it&#39;s created.</p>
 
+<h3>Attachment</h3>
+
+<pre><code>public static readonly PeterO.Mail.ContentDisposition Attachment;
+</code></pre>
+
+<p>The content disposition value &quot;attachment&quot;.</p>
+
+<h3>Inline</h3>
+
+<pre><code>public static readonly PeterO.Mail.ContentDisposition Inline;
+</code></pre>
+
+<p>The content disposition value &quot;inline&quot;.</p>
+
+<h3>DispositionType</h3>
+
+<pre><code>public string DispositionType { get; }
+</code></pre>
+
+<p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+
+<h3>IsAttachment</h3>
+
+<pre><code>public bool IsAttachment { get; }
+</code></pre>
+
+<p>Gets a value indicating whether the disposition type is attachment.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if the disposition type is attachment; otherwise, false..</p>
+
+<h3>IsInline</h3>
+
+<pre><code>public bool IsInline { get; }
+</code></pre>
+
+<p>Gets a value indicating whether the disposition type is inline.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if the disposition type is inline; otherwise, false..</p>
+
+<h3>Parameters</h3>
+
+<pre><code>public System.Collections.Generic.IDictionary Parameters { get; }
+</code></pre>
+
+<p>Gets a list of parameter names associated with this object and their values.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of parameter names associated with this object and their values. The names will be sorted.</p>
+
 <h3>Equals</h3>
 
 <pre><code>public override bool Equals(
@@ -57,36 +115,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <p>A 32-bit hash code.</p>
 
-<h3>ToString</h3>
-
-<pre><code>public override string ToString();
-</code></pre>
-
-<p>Converts this object to a text string.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A string representation of this object.</p>
-
-<h3>MakeFilename</h3>
-
-<pre><code>public static string MakeFilename(
-    string str);
-</code></pre>
-
-<p>Converts a filename from the Content-Disposition header to a suitable name for saving data to a file.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>str</i>: A string representing a file name.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A string with the converted version of the file name. Among other things, encoded words under RFC 2047 are decoded (since they occur so frequently in Content-Disposition filenames); the value is decoded under RFC 2231 if possible; characters unsuitable for use in a filename (including the directory separators slash and backslash) are replaced with underscores; and the filename is truncated if it would otherwise be too long. Returns an empty string if  <i>str</i>
- is null.</p>
-
 <h3>GetParameter</h3>
 
 <pre><code>public string GetParameter(
@@ -109,45 +137,31 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>name</i>
+The parameter  <i>name</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The parameter  <i>name</i>
 is empty.</p></li>
 </ul>
 
-<h3>Attachment</h3>
+<h3>MakeFilename</h3>
 
-<pre><code>public static readonly PeterO.Mail.ContentDisposition Attachment;
+<pre><code>public static string MakeFilename(
+    string str);
 </code></pre>
 
-<p>The content disposition value &quot;attachment&quot;.</p>
-
-<h3>Inline</h3>
-
-<pre><code>public static readonly PeterO.Mail.ContentDisposition Inline;
-</code></pre>
-
-<p>The content disposition value &quot;inline&quot;.</p>
-
-<h3>Parse</h3>
-
-<pre><code>public static PeterO.Mail.ContentDisposition Parse(
-    string dispoValue);
-</code></pre>
-
-<p>Parses a content disposition string and returns a content disposition object.</p>
+<p>Converts a filename from the Content-Disposition header to a suitable name for saving data to a file.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>dispoValue</i>: A string object.</li>
+<li><i>str</i>: A string representing a file name.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A content disposition object, or &quot;Attachment&quot; if  <i>dispoValue</i>
- is empty or syntactically invalid.</p>
+<p>A string with the converted version of the file name. Among other things, encoded words under RFC 2047 are decoded (since they occur so frequently in Content-Disposition filenames); the value is decoded under RFC 2231 if possible; characters unsuitable for use in a filename (including the directory separators slash and backslash) are replaced with underscores; and the filename is truncated if it would otherwise be too long. Returns an empty string if  <i>str</i>
+ is null.</p>
 
 <h3>Parse</h3>
 
@@ -173,53 +187,39 @@ is empty.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>dispositionValue</i>
+The parameter  <i>dispositionValue</i>
 is null.</li>
 </ul>
 
-<h3>DispositionType</h3>
+<h3>Parse</h3>
 
-<pre><code>public string DispositionType { get; }
+<pre><code>public static PeterO.Mail.ContentDisposition Parse(
+    string dispoValue);
 </code></pre>
 
-<p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+<p>Parses a content disposition string and returns a content disposition object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>dispoValue</i>: A string object.</li>
+</ul>
 
 <p><b>Returns:</b></p>
 
-<p>A string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+<p>A content disposition object, or &quot;Attachment&quot; if  <i>dispoValue</i>
+ is empty or syntactically invalid.</p>
 
-<h3>IsInline</h3>
+<h3>ToString</h3>
 
-<pre><code>public bool IsInline { get; }
+<pre><code>public override string ToString();
 </code></pre>
 
-<p>Gets a value indicating whether the disposition type is inline.</p>
+<p>Converts this object to a text string.</p>
 
 <p><b>Returns:</b></p>
 
-<p>True if the disposition type is inline; otherwise, false..</p>
-
-<h3>IsAttachment</h3>
-
-<pre><code>public bool IsAttachment { get; }
-</code></pre>
-
-<p>Gets a value indicating whether the disposition type is attachment.</p>
-
-<p><b>Returns:</b></p>
-
-<p>True if the disposition type is attachment; otherwise, false..</p>
-
-<h3>Parameters</h3>
-
-<pre><code>public System.Collections.Generic.IDictionary Parameters { get; }
-</code></pre>
-
-<p>Gets a list of parameter names associated with this object and their values.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A list of parameter names associated with this object and their values. The names will be sorted.</p>
+<p>A string representation of this object.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 <script>
