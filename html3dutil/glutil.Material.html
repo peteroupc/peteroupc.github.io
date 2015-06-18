@@ -31,7 +31,8 @@
 as well as a texture image to apply on that object's surface.<p>
 The full structure is only used if the shader program supports lighting, as the
 default shader program does.  If <a href="glutil.Scene3D.html#disableLighting">Scene3D.disableLighting()</a> is called,
-disabling lighting calculations in the default shader, only the "diffuse" and "texture"properties of this object are used.
+disabling lighting calculations in the default shader, only the "diffuse" and "texture"
+properties of this object are used.
 </div>
 
     <h5>Parameters:</h5>
@@ -148,7 +149,9 @@ Ambient reflection indicates how much an object reflects
 ambient colors, those that color pixels the same way regardless
 of direction or distance.
 Because every part of an object will be shaded the same way by ambient
-colors, an object with just ambient reflection will not look much like a 3D object.<p>(Ambient reflection simulates the effect of light being reflected multiple timesfrom the same surface.)</p>
+colors, an object with just ambient reflection will not look much like a 3D object.<p>
+(Ambient reflection simulates the effect of light being reflected multiple times
+from the same surface.)</p>
 This value is a 3-element array giving the red, green, and blue
 components of the ambient reflection; the final ambient color depends
 on the ambient color of the scene.
@@ -220,7 +223,10 @@ while negative values subtract from it. (0,0,0) means no additive color.
      </i></small></p>
 
 <div class="description">
-    Normal map (bump map) texture.  Normal maps are used either to adda sense of roughness to an otherwise flat surface or to give an object a highly-detailedappearance with fewer polygons.<p>In a normal map texture, each pixel is a vector in which
+    Normal map (bump map) texture.  Normal maps are used either to add
+a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
+appearance with fewer polygons.<p>
+In a normal map texture, each pixel is a vector in which
  each component (which usually ranges from 0-255 in most image formats) is scaled to
  the range [-1, 1], where:
 <ul>
@@ -236,7 +242,12 @@ and away from the surface's edges.
 Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
 to the vector given in that pixel.  This tilt adjusts the normals used for the
 purpose of calculating lighting effects at that part of the surface.
-A strong tilt indicates strong relief detail at that point.<p>For normal mapping to work, an object's mesh must include normals,tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>object only has normals and texture coordinates, the <code>recalcTangents()</code>method can calculate the tangents and bitangents appropriate for normal mapping.
+A strong tilt indicates strong relief detail at that point.
+<p>
+For normal mapping to work, an object's mesh must include normals,
+tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>
+object only has normals and texture coordinates, the <code>recalcTangents()</code>
+method can calculate the tangents and bitangents appropriate for normal mapping.
 </div>
 
 <dl class="details">
@@ -288,7 +299,8 @@ and (1,1,1) means total specular reflection.<p>
 
 <div class="description">
     Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
-each part of the object's surface (note that the material must have a specular color of otherthan the default
+each part of the object's surface (note that the material must have a specular color of other
+than the default
 black for this to have an effect).  See <a href="glutil.Material.html#specular">glutil.Material#specular</a>.
 </div>
 

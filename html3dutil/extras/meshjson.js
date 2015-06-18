@@ -168,8 +168,8 @@ MeshJSON._getJsonMaterial=function(mtl,path){
  if(mtl.hasOwnProperty("mapSpecular")){
   specularName=MeshJSON._checkPath(path,mtl.mapSpecular)
  }
- if(mtl.hasOwnProperty("mapBump")){
-  normalName=MeshJSON._checkPath(path,mtl.mapBump)
+ if(mtl.hasOwnProperty("mapNormal")){
+  normalName=MeshJSON._checkPath(path,mtl.mapNormal)
  }
  if(mtl.hasOwnProperty("colorEmissive")){
   var ke=mtl.colorEmissive;
