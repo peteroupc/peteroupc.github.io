@@ -144,14 +144,18 @@ function CustomCurve(x,y,z,minu,maxu){
  if(ranges[0]==null || ranges[1]==null){
   throw new Error("min/max must be a constant")
  }
+ var xe=getExpression(x)
+ var ye=getExpression(y)
+ var ze=getExpression(z)
  var code=""+
   "u="+ranges[0]+"+u*"+(ranges[1]-ranges[0])+";\n"+
   "return ["+
-  " "+getExpression(x).toJSString()+","+
-  " "+getExpression(y).toJSString()+","+
-  " "+getExpression(z).toJSString()+"];\n"
+  " "+xe.toJSString()+","+
+  " "+ye.toJSString()+","+
+  " "+ze.toJSString()+"];\n"
  this.getCode=function(){
-  return "{\"evaluate\":function(u){\n"+code+"}}"
+  return "var evaluator=new CurveEval().vertex({\n"+
+   "\"evaluate\":function(u){\n"+code+"}})\n"
  }
  this.evaluate=new Function("u",code);
 }

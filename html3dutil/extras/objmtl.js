@@ -389,15 +389,21 @@ MtlData._loadMtl=function(str){
  }
  return {success: mtl};
 }
+ObjData._refIndex=function(idxstr,arr){
+ var ret=parseInt(idxstr,10);
+ ret=(ret<0) ? arr.length-ret : ret-1;
+ if(ret<0 || ret>=arr.length)ret=0;
+ return ret;
+}
 ObjData._loadObj=function(str){
  var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)"
- var nonnegInteger="(\\d+)"
- var vertexOnly=new RegExp("^"+nonnegInteger+"($|\\s+)")
- var vertexNormalOnly=new RegExp("^"+nonnegInteger+"\\/\\/"+nonnegInteger+"($|\\s+)")
- var vertexUVOnly=new RegExp("^"+nonnegInteger+"\\/"+
-   nonnegInteger+"($|\\s+)")
- var vertexUVNormal=new RegExp("^"+nonnegInteger+"\\/"+nonnegInteger+
-   "\\/"+nonnegInteger+"($|\\s+)")
+ var signedInteger="(-?\\d+)"
+ var vertexOnly=new RegExp("^"+signedInteger+"($|\\s+)")
+ var vertexNormalOnly=new RegExp("^"+signedInteger+"\\/\\/"+signedInteger+"($|\\s+)")
+ var vertexUVOnly=new RegExp("^"+signedInteger+"\\/"+
+   signedInteger+"($|\\s+)")
+ var vertexUVNormal=new RegExp("^"+signedInteger+"\\/"+signedInteger+
+   "\\/"+signedInteger+"($|\\s+)")
  var vertexLine=new RegExp("^v\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*$")
  var uvLine=new RegExp("^vt\\s+"+number+"\\s+"+number+"(\\s+"+number+")?\\s*$")
  var smoothLine=new RegExp("^(s)\\s+(.*)$")
@@ -498,7 +504,7 @@ ObjData._loadObj=function(str){
       if(vertexKind!=0 || lastPrimitiveSeen!=prim){
        vertexKind=0; // position only
       }
-      var vtx=parseInt(e[1],10)-1;
+      var vtx=ObjData._refIndex(e[1],vertices);
       mesh.normal3(0,0,0).texCoord2(0,0)
         .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
         line=line.substr(e[0].length);
@@ -509,8 +515,8 @@ ObjData._loadObj=function(str){
       if(vertexKind!=1){
        vertexKind=1; // position/normal
       }
-      var vtx=parseInt(e[1],10)-1;
-      var norm=parseInt(e[2],10)-1;
+      var vtx=ObjData._refIndex(e[1],vertices);
+      var norm=ObjData._refIndex(e[2],normals);
       haveNormals=true;
       mesh.normal3(normals[norm][0],normals[norm][1],
          normals[norm][2])
@@ -524,8 +530,8 @@ ObjData._loadObj=function(str){
       if(vertexKind!=2 || lastPrimitiveSeen!=prim){
        vertexKind=2; // position/UV
       }
-      var vtx=parseInt(e[1],10)-1;
-      var uv=parseInt(e[2],10)-1;
+      var vtx=ObjData._refIndex(e[1],vertices);
+      var uv=ObjData._refIndex(e[2],normals);
       mesh.normal3(0,0,0)
         .texCoord2(uvs[uv][0],uvs[uv][1])
         .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
@@ -537,9 +543,9 @@ ObjData._loadObj=function(str){
       if(vertexKind!=3 || lastPrimitiveSeen!=prim){
        vertexKind=3; // position/UV/normal
       }
-      var vtx=parseInt(e[1],10)-1;
-      var uv=parseInt(e[2],10)-1;
-      var norm=parseInt(e[3],10)-1;
+      var vtx=ObjData._refIndex(e[1],vertices);
+      var uv=ObjData._refIndex(e[2],normals);
+      var norm=ObjData._refIndex(e[3],normals);
       haveNormals=true;
       mesh.normal3(normals[norm][0],normals[norm][1],
          normals[norm][2])

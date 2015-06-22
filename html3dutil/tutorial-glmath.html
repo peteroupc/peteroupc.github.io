@@ -75,7 +75,7 @@ an axis of rotation, and the fourth element is
 the W component. Functions dealing with quaternions begin with
 &quot;quat&quot;.  A quaternion is generated as follows:</p>
 <ul>
-<li>Set X, Y, and Z to the axis of rotation multiplied by the sine of
+<li>Set X, Y, and Z to the (normalized) axis of rotation multiplied by the sine of
 half the angle.  This results in the same axis of rotation as before,
 but in a different form.</li>
 <li>Set W to the cosine of half the angle.</li>
@@ -87,6 +87,17 @@ creates a combined rotation in which the second rotation happens
 before the first rotation.  Like matrix multiplication, the
 order in which you multiply quaternions is important. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.</p>
+<h3>Using Quaternions</h3><p>For best results when using quaternions:</p>
+<ul>
+<li>Store the orientation of each object as a single quaternion, created
+with <code>quatIdentity()</code>.</li>
+<li>As rotations happen each frame, convert the rotation (which may be
+in pitch/yaw/roll or another form, depending on the input device) to a quaternion
+and multiply that quaternion by the current orientation to get a new orientation
+for that object.</li>
+<li>Normalize the orientation quaternion (using <code>quatNorm()</code> or <code>quatNormInPlace()</code>)
+every few frames.</li>
+</ul>
 <h3>Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a></h3><p>Tait-Bryan angles (pitch, yaw, and roll angles) can also be used to describe 3D
 rotations, but they have disadvantages:</p>
 <ul>
@@ -109,6 +120,24 @@ axis), so that a rotation along that axis will do nothing.</li>
 Converts from Tait-Bryan angles to a quaternion</li>
 <li><a href="glmath.GLMath.html#.quatToTaitBryan">GLMath.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
+</ul>
+<h2>Planes</h2><p>A 4-element array can describe a 3D plane in the following manner:</p>
+<ul>
+<li>The 4 elements, labeled A, B, C, and D in that order, describe a plane
+whose points satisfy the equation:
+<blockquote>Ax + By + Cz + D = 0</blockquote>, where x, y, and z are the
+coordinates of any point lying on the plane.</li>
+<li>A, B, and C are
+the X, Y, and Z components of the plane's normal vector.</li>
+<li>D is the shortest distance in the normal's direction from the plane to the origin,
+or if negative, in the opposite direction from the origin to the plane, divided
+by the normal's length.  Alternatively, D is the negative dot product of the
+plane's normal and any point on the plane.</li>
+</ul>
+<p>There is one method that deals with planes:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.planeNormInPlace">GLMath.planeNormInPlace()</a> -
+Converts the plane to a form in which its normal is unit length.</li>
 </ul>
 <h2>Coordinate Systems <a id=Coordinate_Systems></a></h2><p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
 <ul>

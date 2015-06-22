@@ -141,6 +141,9 @@ function CustomSurface(x,y,z,minu,maxu,minv,maxv){
   ranges[2]==null || ranges[3]==null){
   throw new Error("min/max must be a constant")
  }
+ var xe=getExpression(x)
+ var ye=getExpression(y)
+ var ze=getExpression(z)
  var code=""+
   "u="+ranges[0]+"+u*"+(ranges[1]-ranges[0])+";\n"+
   "v="+ranges[2]+"+v*"+(ranges[3]-ranges[2])+";\n"+
@@ -148,9 +151,20 @@ function CustomSurface(x,y,z,minu,maxu,minv,maxv){
   " "+getExpression(x).toJSString()+","+
   " "+getExpression(y).toJSString()+","+
   " "+getExpression(z).toJSString()+"];\n"
+ var normalExpr=normalCalcExpr([xe,ye,ze]);
+ var normalCode=""+
+  "u="+ranges[0]+"+u*"+(ranges[1]-ranges[0])+";\n"+
+  "v="+ranges[2]+"+v*"+(ranges[3]-ranges[2])+";\n"+
+  "return ["+
+  " "+normalExpr[0].toJSString()+","+
+  " "+normalExpr[1].toJSString()+","+
+  " "+normalExpr[2].toJSString()+"];\n"
  this.getCode=function(){
-  return "{\"evaluate\":function(u, v){\n"+code+"}}"
- }
+  return "var evaluator=new SurfaceEval().vertex({\n"+
+    "\"evaluate\":function(u){\n"+code+"}})\n"+
+    ".normal({\n"+
+    "\"evaluate\":function(u){\n"+normalCode+"}})\n"
+  }
  this.evaluate=new Function("u","v",code);
 }
 
