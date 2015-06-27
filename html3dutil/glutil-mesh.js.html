@@ -30,8 +30,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * &lt;li>A tangent vector, which is a set of 3 values.
 * &lt;li>A bitangent vector, which is a set of 3 values.
 * &lt;li>Texture coordinates, which are a set of 2 values each ranging from 0 to
-* 1, where (0, 0) is the lower right corner of the texture, and (1, 1) is the upper
-* right corner.
+* 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
+* right corner (by default).
 * &lt;/ul>
 * For bump mapping to work properly, a mesh needs to define
 * normals, tangents, bitangents, and texture coordinates.&lt;p>
@@ -419,7 +419,10 @@ Mesh.prototype.bitangent3=function(x,y,z){
   * The new current texture coordinates will apply to future vertices
   * even if the current mode
   * is TRIANGLE_FAN and some vertices were already given for
-  * that mode.
+  * that mode.&lt;p>
+  Texture coordinates are a set of 2 values each ranging from 0 to
+* 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
+* right corner (by default).
   * @param {number} u X-coordinate of the texture, from 0-1.
   * @param {number} v Y-coordinate of the texture, from 0-1.
   * @return {glutil.Mesh} This object.

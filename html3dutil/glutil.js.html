@@ -1584,7 +1584,8 @@ Scene3D.prototype.getViewMatrix=function(){
  * see {@link glmath.GLMath.mat4perspective}.
  * @param {number}  fov Y-axis field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
-* this number, the bigger close objects appear to be.)
+* this number, the bigger close objects appear to be. As a result, zooming out
+* can be implemented by raising this value, and zooming in by lowering it.)
 * @param {number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio (getAspect() or getClientAspect()).
 * @param {number} near The distance from the camera to

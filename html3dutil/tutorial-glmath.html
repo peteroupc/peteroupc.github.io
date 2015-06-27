@@ -20,13 +20,12 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 <h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br><a href="#Matrix_Details">Matrix Details</a><br>&nbsp;&nbsp;<a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br></p>
 <h2>Vectors <a id=Vectors></a></h2><p>A vector is simply a set of 3 or 4 elements that are related
 to each other.  As such, a vector can symbolize a position, a direction,
-a ray, a color, or anything else.</p>
+a ray, a color, or anything else.  The methods in this class treat arrays
+as vectors.  Functions dealing with vectors begin with &quot;vec&quot;.</p>
 <p>If a vector describes a position, direction,
-or normal, the four elements are given as X, Y, Z, and W, in that order.
-If a vector describes a color, the four elements are given as red, green,
-blue, and alpha, in that order (where each element ranges from 0-1).
-The methods in this class treat arrays as vectors.  Functions dealing
-with vectors begin with &quot;vec&quot;.</p>
+or normal, the four elements are given as X, Y, Z, and W, in that order.</p>
+<p>If a vector describes a color, the four elements are given as red, green,
+blue, and alpha, in that order (where each element ranges from 0-1).</p>
 <p>If a 3D <em>position</em> (point) is used in a 4-element vector function (one beginning
 with &quot;vec4&quot;), use 1 as the fourth element of the vector.  If a 3D <em>direction</em>
 is used in a 4-element vector function, use 0 as the fourth element.</p>
@@ -129,7 +128,7 @@ whose points satisfy the equation:
 coordinates of any point lying on the plane.</li>
 <li>A, B, and C are
 the X, Y, and Z components of the plane's normal vector.</li>
-<li>D is the shortest distance in the normal's direction from the plane to the origin,
+<li>D is the distance in the normal's direction from the plane to the origin,
 or if negative, in the opposite direction from the origin to the plane, divided
 by the normal's length.  Alternatively, D is the negative dot product of the
 plane's normal and any point on the plane.</li>
@@ -148,7 +147,41 @@ the viewer</em> whenever the x-axis points to the right and the y-axis points up
 </ul>
 <p>If a GLMath method works differently in left- and right-handed coordinate systems,
 its description will note this. (In the absence of z-axis transformations, the coordinate
-system is effectively left-handed.)</p>
+system is effectively left-handed.)  The differences are also noted below.</p>
+<h3>Differences in Behavior</h3><p><strong>Cross product (<code>vec3cross(A, B)</code>):</strong></p>
+<ul>
+<li>If the cross product of A and B has a positive Z component, it points toward the viewer
+(outward) in a right-handed coordinate system, and away from the viewer (inward) in
+a left-handed system.  The reverse is true if the Z component is negative.</li>
+<li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
+Assume the X axis points to the right and the Y axis points up.
+If the cross product of A and B has a positive Z component, the triangle's points are
+oriented counterclockwise; otherwise, clockwise.  (If the Y axis points down, the reverse is
+true.)</li>
+</ul>
+<p><strong>Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>):</strong></p>
+<p>Returns a result for right-handed coordinate systems.  For left-handed systems,
+reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
+indices 8, 9, 10, and 11).</p>
+<p><strong>Look-at matrix (<code>mat4lookat</code>):</strong></p>
+<p>Returns a result for right-handed coordinate systems.  For left-handed systems,
+reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
+13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
+10, 12, and 14).</p>
+<p><strong>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>):</strong></p>
+<p>If the axis of rotation points toward the viewer, the angle runs:</p>
+<ul>
+<li>Right handed: Counterclockwise if the angle's value is positive, clockwise if negative.</li>
+<li>Left handed: Clockwise if the angle's value is positive, counterclockwise if positive.</li>
+</ul>
+<p><strong>Normals and triangle orientation</strong></p>
+<p>The orientation of a triangle formed by points A, B, and C can be found by applying the rules
+for the cross product of the two vectors (C minus A) and (C minus B),
+in that order.</p>
+<p>The resulting cross product is that triangle's <em>normal</em>.  For each normal
+to point outward, as it usually is, each triangle should be oriented
+counterclockwise for right-handed coordinate systems and clockwise for left-handed
+systems.</p>
 <h2>Matrix Details <a id=Matrix_Details></a></h2><p>This section contains more details on matrices.</p>
 <p>All functions dealing with 4x4 matrices assume that
 the translation elements in x, y, and z are located in the

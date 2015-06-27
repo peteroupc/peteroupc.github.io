@@ -48,18 +48,22 @@ var GLMath={
 /**
  * Finds the cross product of two 3-element vectors.
  * The cross product is the vector that is perpendicular to
- * each of two other vectors (called A and B). The following are properties of
+ * each of two other vectors (called A and B).
+ * The following are properties of
  * the cross product:&lt;ul>
- * &lt;li>There are two possible vectors perpendicular to two other
- vectors, and they each point in opposite directions.  If point A, point B, and the point
-(0,0,0), in that order, are oriented counterclockwise, and the triangle
-they form is directly in front of the viewer, then the cross product:&lt;ul>
-&lt;li>Points "toward the viewer" in a right-handed coordinate system, or
-&lt;li>Points "away from the viewer" in a left-handed system.&lt;/ul>
-The reverse is true if the points are oriented clockwise.
-&lt;p>Switching the order of the two vectors results in a cross product
-vector in the opposite direction.
-&lt;p>If A and B are unit length vectors,
+ * &lt;li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
+Assume the X axis points to the right and the Y axis points up.
+If the cross product of A and B has a positive Z component, the triangle's points are
+oriented counterclockwise; otherwise, clockwise.  (If the Y axis points down, the reverse is
+true.)&lt;/ul>
+The reverse is true if the cross product has a negative Z component.
+&lt;li>If the cross product of A and B has a positive Z component, it points toward the viewer
+  (outward) in a right-handed coordinate system, and away from the viewer (inward) in
+  a left-handed system.  The reverse is true if the Z component is negative.
+&lt;li>Switching the order of the two vectors results in a cross product
+vector in the opposite direction.  This occurs because generally, there are two different
+vectors that are perpendicular to the vectors A and B.
+&lt;li>If A and B are unit length vectors,
  * (via {@link glmath.GLMath.vec3norm}), the absolute value
  * of the sine of the shortest angle between them is equal to the length of their
  * cross product. &lt;small>(More formally, the length of the cross
@@ -82,18 +86,34 @@ return [a[1]*b[2]-a[2]*b[1],
 },
 /**
  * Finds the dot product of two 3-element vectors. It's the
- * sum of the products of their components (for example, &lt;b>a&lt;/b>'s X times &lt;b>b&lt;/b>'s X).
- * &lt;p>If both vectors are unit length
+ * sum of the products of their components (for example, &lt;b>a&lt;/b>'s X times
+ * &lt;b>b&lt;/b>'s X).&lt;p>
+ * The dot product has the following properties:
+ * &lt;ul>
+ * &lt;li>If both vectors are unit length
  * (via {@link glmath.GLMath.vec3norm}), the cosine
  * of the shortest angle between them is equal to their dot product.
  * &lt;small>(More formally, the dot
  * product equals |&lt;b>a&lt;/b>| * |&lt;b>b&lt;/b>| * cos &amp;theta;
  * where |&lt;b>x&lt;/b>| is the length of vector &lt;b>x&lt;/b>.)&lt;/small>
- * &lt;p>A dot product of 0 indicates that the two vectors
+ * However, the resulting angle (found using the &lt;code>Math.acos&lt;/code>
+ * function) will never be negative, so it can't
+ * be used to determine if one vector is "ahead of" or "behind" another
+ * vector.
+ * &lt;li>A dot product of 0 indicates that the two vectors
  * are &lt;i>orthogonal&lt;/i> (perpendicular to each other).
+ * &lt;li>If the two vectors are the same, the return value indicates
+ * the vector's length squared.  This is illustrated in the example.
+ * &lt;/ul>
  * @param {Array&lt;number>} a The first vector.
  * @param {Array&lt;number>} b The second vector.
  * @return {number} A number representing the dot product.
+ * @example &lt;caption>The following shows a fast way to compare
+ * a vector's length using the dot product.&lt;/caption>
+ * // Check if the vector's length squares is less than 20 units squared
+ * if(GLMath.vec3dot(vector, vector)&lt;20*20){
+ *  // The vector's length is shorter than 20 units
+ * }
  */
 vec3dot:function(a,b){
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
@@ -119,6 +139,29 @@ return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
  */
 vec3sub:function(a,b){
 return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
+},
+/**
+ * Negates a 3-element vector and returns a new
+ * vector with the result. Negating a vector
+ * is the same as reversing the sign of each of its components.
+ * @param {Array&lt;number>} a A 3-element vector.
+ * @return {Array&lt;number>} The resulting 3-element vector.
+ */
+vec3negate:function(a){
+return [-a[0],-a[1],-a[2]];
+},
+/**
+ * Negates a 3-element vector in place.
+Negating a vector
+ * is the same as reversing the sign of each of its components.
+ * @param {Array&lt;number>} a A 3-element vector.
+ * @return {Array&lt;number>} The parameter "a".
+ */
+vec3negateInPlace:function(a){
+a[0]=-a[0];
+a[1]=-a[1];
+a[2]=-a[2];
+return a;
 },
 /**
  * Multiplies two vectors and returns a new
@@ -1243,7 +1286,8 @@ mat4translate:function(mat,v3,v3y,v3z){
  * elements of the result (zero-based indices 8, 9, 10, and 11).
 * @param {number}  fovY Y-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
-* this number, the bigger close objects appear to be.)
+* this number, the bigger close objects appear to be.  As a result, zooming out
+* can be implemented by raising this value, and zooming in by lowering it.)
 * @param {number}  aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @param {number} near The distance from the camera to
@@ -1275,8 +1319,8 @@ mat4perspective:function(fovY,aspectRatio,near,far){
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
-* 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
-* 10, 12, and 14).
+ * 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
+ * 10, 12, and 14).
 * @param {Array&lt;number>} viewerPos A 3-element vector specifying
 * the camera position in world space.
 * @param {Array&lt;number>} [lookingAt] A 3-element vector specifying
@@ -1356,7 +1400,8 @@ mat4ortho:function(l,r,b,t,n,f){
  * elements of the result (zero-based indices 8, 9, 10, and 11).
 * @param {number}  fovX X-axis field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
-* this number, the bigger close objects appear to be.)
+* this number, the bigger close objects appear to be. As a result, zooming out
+* can be implemented by raising this value, and zooming in by lowering it.)
 * @param {number}  aspectRatio The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @param {number} near The distance from the camera to
