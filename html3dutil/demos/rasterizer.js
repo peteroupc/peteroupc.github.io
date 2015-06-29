@@ -311,10 +311,12 @@ Scene3D.prototype._getTriangle=function(p1,p2,p3) {
     }
     if(p1[2]<-1 && p2[2]<-1 && p3[2]<-1)return null;
     if(p1[2]>1 && p2[2]>1 && p3[2]>1)return null;
-    var area = ((p3[0] - p1[0]) * (p3[1] - p2[1]) - (p3[1] - p1[1]) * (p3[0] - p2[0]));
+    var area = (p1[0]*p2[1]-p2[0]*p1[1])+(p2[0]*p3[1]-p3[0]*p2[1])
+    if(this._frontFace==Scene3D.CCW)area=-area;
+    var front=(area>0) ? Scene3D.FRONT : Scene3D.BACK;
     var culled=area==0 || (this._cullFace!=Scene3D.NONE &&
-        ((area<0 && this._cullFace!=this._frontFace) ||
-        (area>0 && this._cullFace==this._frontFace)));
+        ((area<0 && front!=this._frontFace) ||
+        (area>0 && front==this._frontFace)));
     if(culled){
         return null;
     }
