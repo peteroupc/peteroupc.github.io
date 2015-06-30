@@ -148,16 +148,19 @@ the viewer</em> whenever the x-axis points to the right and the y-axis points up
 <p>If a GLMath method works differently in left- and right-handed coordinate systems,
 its description will note this. (In the absence of z-axis transformations, the coordinate
 system is effectively left-handed.)  The differences are also noted below.</p>
-<h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3><p><strong>Cross product (<code>vec3cross(A, B)</code>):</strong></p>
+<h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3><p><strong>3D Vectors</strong></p>
 <ul>
-<li>If the cross product of A and B has a positive Z component, it points toward the viewer
-(outward) in a right-handed coordinate system, and away from the viewer (inward) in
-a left-handed system.  The reverse is true if the Z component is negative.</li>
+<li>If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
+right-handed coordinate system, and away from the viewer (inward) in a left-handed
+system. The reverse is true if the Z component is negative.</li>
+</ul>
+<p><strong>Cross product (<code>vec3cross(A, B)</code>):</strong></p>
+<ul>
 <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 Assume the X axis points to the right and the Y axis points up.
 If the cross product of A and B has a positive Z component, the triangle's points are
-oriented counterclockwise; otherwise, clockwise.  (If the Y axis points down, the reverse is
-true.)</li>
+oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and
+the Y axis down, the reverse is true.)</li>
 </ul>
 <p><strong>Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>):</strong></p>
 <p>Returns a result for right-handed coordinate systems.  For left-handed systems,

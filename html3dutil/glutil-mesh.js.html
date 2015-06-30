@@ -149,7 +149,7 @@ Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,f
 
 /** @private */
 Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
-  var normDir=(inward) ? 1 : -1;
+  var normDir=(inward) ? -1 : 1;
   var uniqueVertices={};
   var len;
   Mesh._recalcNormalsStart(vertices,uniqueVertices,faces,stride,offset,flat);
@@ -157,8 +157,8 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
     var v1=faces[i]*stride
     var v2=faces[i+1]*stride
     var v3=faces[i+2]*stride
-    var n1=[vertices[v2]-vertices[v3],vertices[v2+1]-vertices[v3+1],vertices[v2+2]-vertices[v3+2]]
-    var n2=[vertices[v1]-vertices[v3],vertices[v1+1]-vertices[v3+1],vertices[v1+2]-vertices[v3+2]]
+    var n1=[vertices[v1]-vertices[v3],vertices[v1+1]-vertices[v3+1],vertices[v1+2]-vertices[v3+2]]
+    var n2=[vertices[v2]-vertices[v3],vertices[v2+1]-vertices[v3+1],vertices[v2+2]-vertices[v3+2]]
     // cross multiply n1 and n2
     var x=(n1[1]*n2[2]-n1[2]*n2[1])
     var y=(n1[2]*n2[0]-n1[0]*n2[2])

@@ -147,7 +147,12 @@ var GLUtil={
   if(!canvasElement)return null;
   if(!canvasElement.getContext)return null;
   var context=null;
-  var options={"antialias":true,"preserveDrawingBuffer":true};
+  var options={"preserveDrawingBuffer":true};
+  if(window.devicePixelRatio &amp;&amp; window.devicePixelRatio>1){
+   options.antialias=false;
+  } else {
+   options.antialias=true;
+  }
   try { context=canvasElement.getContext("webgl", options);
   } catch(e) { context=null; }
   if(!context){
@@ -1223,7 +1228,7 @@ Texture.prototype.loadImage=function(){
  * Disposes the texture data in this object.
  */
 Texture.prototype.dispose=function(){
- if(this.loadedTexture==null){
+ if(this.loadedTexture!=null){
   this.loadedTexture.dispose();
   this.loadedTexture=null;
  }
