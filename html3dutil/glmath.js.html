@@ -55,8 +55,9 @@ vector with the same length but opposite direction.
  * &lt;li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 Assume the X axis points to the right and the Y axis points up.
 If the cross product of A and B has a positive Z component, the triangle's points are
-oriented counterclockwise; otherwise, clockwise.  (If the Y axis points down, the reverse is
-true.)
+oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and the Y
+axis down, the reverse is
+true.)  The triangle's area is half of the cross product's length.
 &lt;li>If A and B are unit length vectors,
  * (via {@link glmath.GLMath.vec3norm}), the absolute value
  * of the sine of the shortest angle between them is equal to the length of their

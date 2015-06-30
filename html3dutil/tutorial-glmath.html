@@ -124,7 +124,8 @@ Converts from a quaternion to Tait-Bryan angles</li>
 <ul>
 <li>The 4 elements, labeled A, B, C, and D in that order, describe a plane
 whose points satisfy the equation:
-<blockquote>Ax + By + Cz + D = 0</blockquote>, where x, y, and z are the
+<blockquote>Ax + By + Cz + D = 0</blockquote>
+where x, y, and z are the
 coordinates of any point lying on the plane.</li>
 <li>A, B, and C are
 the X, Y, and Z components of the plane's normal vector.</li>
@@ -149,19 +150,15 @@ the viewer</em> whenever the x-axis points to the right and the y-axis points up
 its description will note this. (In the absence of z-axis transformations, the coordinate
 system is effectively left-handed.)  The differences are also noted below.</p>
 <h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3><p><strong>3D Vectors</strong></p>
-<ul>
-<li>If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
+<p>If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
 right-handed coordinate system, and away from the viewer (inward) in a left-handed
-system. The reverse is true if the Z component is negative.</li>
-</ul>
+system. The reverse is true if the Z component is negative.</p>
 <p><strong>Cross product (<code>vec3cross(A, B)</code>):</strong></p>
-<ul>
-<li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
+<p>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 Assume the X axis points to the right and the Y axis points up.
 If the cross product of A and B has a positive Z component, the triangle's points are
 oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and
-the Y axis down, the reverse is true.)</li>
-</ul>
+the Y axis down, the reverse is true.)</p>
 <p><strong>Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>):</strong></p>
 <p>Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
@@ -179,7 +176,7 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 </ul>
 <p><strong>Normals and triangle orientation</strong></p>
 <p>The orientation of a triangle formed by points A, B, and C can be found by applying the rules
-for the cross product of the two vectors (C minus A) and (C minus B),
+for the cross product of the two vectors (A minus C) and (B minus C),
 in that order.</p>
 <p>The resulting cross product is that triangle's <em>normal</em>.  For each normal
 to point outward, as it usually is, each triangle should be oriented

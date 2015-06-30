@@ -644,7 +644,7 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "float lightCosines["+Lights.MAX_LIGHTS+"];\n";
 shader+=""+
 "if(baseColor.a==0.0)discard;\n" +
-"vec3 materialAmbient=mix(ma,baseColor.rgb,sign(useColorAttr+useTexture)); /* ambient*/\n" +
+"vec3 materialAmbient=ma; /* ambient*/\n" +
 "vec3 lightedColor=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=baseColor.rgb;\n";
