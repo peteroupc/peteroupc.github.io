@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Tutorial: Matrix Details</title>
+<script src="mathml.js"></script>
+</head>
+<body style="margin-top:0px">
+<div style="width:75%;float:left;">
+    <h1>Tutorial: Matrix Details</h1>
+    <section>
+
+<header>
+
+    <h2>Matrix Details</h2>
+</header>
+
+<article>
+    <h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Matrix_Details">Matrix Details</a><br>&nbsp;&nbsp;<a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br></p>
+<h2>Matrix Details <a id=Matrix_Details></a></h2><p>A matrix is a 16- or 9-element array that describes a
+transformation from one coordinate system to another. Transformations
+include translation (shifting), scaling, and rotation.
+Functions dealing with matrices begin with &quot;mat&quot;.</p>
+<p>This section contains detailed information on matrices.</p>
+<p>All functions dealing with 4x4 matrices assume that
+the translation elements in x, y, and z are located in the
+13th, 14th, and 15th elements of the matrix array
+(zero-based indices 12, 13, and 14).</p>
+<p>In mathematical publications,
+matrices are often notated in column-major order, in which each
+element of the matrix is placed in columns, rather than in rows, as in the following example:</p>
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mi>matrix[0]</mi></mtd>
+ <mtd><mi>matrix[4]</mi></mtd>
+ <mtd><mi>matrix[8]</mi></mtd>
+ <mtd><mi>matrix[12]</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>matrix[1]</mi></mtd>
+ <mtd><mi>matrix[5]</mi></mtd>
+ <mtd><mi>matrix[9]</mi></mtd>
+ <mtd><mi>matrix[13]</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>matrix[2]</mi></mtd>
+ <mtd><mi>matrix[6]</mi></mtd>
+ <mtd><mi>matrix[10]</mi></mtd>
+ <mtd><mi>matrix[14]</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>matrix[3]</mi></mtd>
+ <mtd><mi>matrix[7]</mi></mtd>
+ <mtd><mi>matrix[11]</mi></mtd>
+ <mtd><mi>matrix[15]</mi></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+
+<p>The numbers in brackets in the matrix above are the zero-based indices
+into the matrix arrays passed to GLMath's matrix methods.</p>
+<p>For 3x3 matrices, the elements are arranged in the following order:</p>
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mi>matrix[0]</mi></mtd>
+ <mtd><mi>matrix[3]</mi></mtd>
+ <mtd><mi>matrix[6]</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>matrix[1]</mi></mtd>
+ <mtd><mi>matrix[4]</mi></mtd>
+ <mtd><mi>matrix[7]</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>matrix[2]</mi></mtd>
+ <mtd><mi>matrix[5]</mi></mtd>
+ <mtd><mi>matrix[8]</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>matrix[3]</mi></mtd>
+ <mtd><mi>matrix[7]</mi></mtd>
+ <mtd><mi>matrix[11]</mi></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+
+<h3>Transforming Points <a id=Transforming_Points></a></h3><p>The transformation formula multiplies a matrix by a 3D point to change that point's
+position:</p>
+<ul>
+<li><strong>a&prime;</strong><sub><em>x</em></sub> = matrix[0] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[4] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[8] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[12]</li>
+<li><strong>a&prime;</strong><sub><em>y</em></sub> = matrix[1] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[5] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[9] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[13]</li>
+<li><strong>a&prime;</strong><sub><em>z</em></sub> = matrix[2] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[6] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[10] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[14]</li>
+</ul>
+<p>Note that:</p>
+<ul>
+<li>For the purpose of transforming 3D points, the last row of the matrix above can be ignored,
+since it doesn't transform x, y, or z. (It would correspond to the W component of the
+output.)</li>
+<li>To make the formula equivalent to multiplying by a 4-component vector, set the input
+vector's W component to 1.</li>
+</ul>
+<p>The following sections describe different kinds of matrix transformations in more detail.</p>
+<p>Related functions:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.mat4transform">GLMath.mat4transform()</a> -
+Transforms a 4-element vector with a 4x4 matrix</li>
+<li><a href="glmath.GLMath.html#.mat3transform">GLMath.mat3transform()</a> -
+Transforms a 3-element vector with a 3x3 matrix</li>
+</ul>
+<h3>Translation <a id=Translation></a></h3><p>A translation is a shifting of an object's position.  In a transformation matrix,
+this shifting effectively happens after all other transformations such as scaling and rotation.
+It uses the 13th, 14th, and 15th elements of the matrix as seen here:</p>
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>tx</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>ty</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>tz</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mn>1</mn></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+
+<p>where <code>tx</code> is added to the x-coordinate, <code>ty</code> is added to the y-coordinate, and
+<code>tz</code> is added to the z-coordinate.  The transformation formulas would look like:</p>
+<ul>
+<li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + tx</li>
+<li><strong>a&prime;</strong><sub><em>y</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 1 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + ty</li>
+<li><strong>a&prime;</strong><sub><em>z</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 1 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + tz</li>
+</ul>
+<p>For example, we add the input x and <code>tx</code> to get the output x.  If <code>tx</code> is 0, x
+remains unchanged.  Likewise for y and z.</p>
+<p>Related functions:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.mat4translated">GLMath.mat4translated()</a> -
+Returns a translation matrix</li>
+<li><a href="glmath.GLMath.html#.mat4translate">GLMath.mat4translate()</a> -
+Multiplies a matrix by a translation.</li>
+</ul>
+<h3>Scaling <a id=Scaling></a></h3><p>Scaling changes an object's size.  Scaling uses the 1st,
+6th, and 11th elements of the matrix as seen here:</p>
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mi>sx</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mi>sy</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mi>sz</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mn>1</mn></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+
+<p>where the x-coordinate is multiplied by <code>sx</code>, the y-coordinate is multiplied by <code>sy</code>, and
+the z-coordinate is multiplied by <code>sz</code>.</p>
+<p>The scaling formula would look like:</p>
+<ul>
+<li><strong>a&prime;</strong><sub><em>x</em></sub> = sx &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a&prime;</strong><sub><em>y</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + sy &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a&prime;</strong><sub><em>z</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + sz &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+</ul>
+<p>For example, we multiply the input x by <code>sx</code> to get the output x.  If <code>sx</code> is 1, x
+remains unchanged.  Likewise for y and z.</p>
+<p>If <code>sx</code>, <code>sy</code>, or <code>sz</code> is -1, that coordinate is <em>reflected</em> along the corresponding axis.</p>
+<p>If <code>sx</code>, <code>sy</code>, and <code>sz</code> are all 1, we have an <em>identity matrix</em>, where the input vector
+is equal to the output vector.</p>
+<p>Related functions:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.mat4identity">GLMath.mat4identity()</a> -
+Returns a 4x4 identity matrix</li>
+<li><a href="glmath.GLMath.html#.mat3identity">GLMath.mat3identity()</a> -
+Returns a 3x3 identity matrix</li>
+<li><a href="glmath.GLMath.html#.mat4scaled">GLMath.mat4scaled()</a> -
+Returns a scaling matrix</li>
+<li><a href="glmath.GLMath.html#.mat4scale">GLMath.mat4scale()</a> -
+Multiplies a matrix by a scaling.</li>
+<li><a href="glmath.GLMath.html#.mat4scaleInPlace">GLMath.mat4scaleInPlace()</a> -
+Multiplies a matrix in place by a scaling.</li>
+</ul>
+<h3>Rotation <a id=Rotation></a></h3><p>Rotation changes an object's orientation.  Rotation uses the upper-left
+corner of a matrix.  Given an angle of rotation, &theta; (in radians; multiply
+degrees by &pi; and divide by 180), the transformation matrix is as follows.</p>
+<figure>
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+ <mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mi>sin</mi><mi>&theta;</mi></mtd>
+ <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mn>1</mn></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+<figcaption>Rotation about the X axis.</figcaption></figure>
+<figure>
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mi>sin</mi><mi>&theta;</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mn>1</mn></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+<figcaption>Rotation about the Y axis.</figcaption></figure>
+<figure>
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+ <mtd><mo>-</mo><mi>sin</mi><mi>&theta;</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>sin</mi><mi>&theta;</mi></mtd>
+ <mtd><mi>cos</mi><mi>&theta;</mi></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ <mtd><mn>1</mn></mtd>
+ <mtd><mn>0</mn></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mi>0</mi></mtd>
+ <mtd><mn>1</mn></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+<figcaption>Rotation about the Z axis.</figcaption></figure>
+
+<p>For conciseness, we only give the rotation formula for the X axis,
+which would look like:</p>
+<ul>
+<li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a&prime;</strong><sub><em>y</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + (cos &theta;) &#x22c5; <strong>a</strong><sub><em>y</em></sub> + -(sin &theta;) &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a&prime;</strong><sub><em>z</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + (sin &theta;) &#x22c5; <strong>a</strong><sub><em>y</em></sub> + (cos &theta;) &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+</ul>
+<p>Note that:</p>
+<ul>
+<li>When we rotate a point about the X axis, the X coordinate is unchanged
+and the Y and Z coordinates are adjusted in the rotation.  For rotations about the
+Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.</li>
+<li>If the axis of rotation points toward the viewer, positive rotations mean
+counterclockwise rotation in right-handed coordinate systems.  For example,
+60 degrees about the axis means
+60 degrees counterclockwise, and negative 60 degrees means 60 degrees
+clockwise.</li>
+</ul>
+<p>As an example, say we rotate 60 degrees about the X axis (<code>mat4rotated(60, 1, 0, 0)</code>,
+&theta; = 60).
+We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
+We plug those numbers into the rotation formula to get a formula for rotating a
+point 60 degrees about the X axis.</p>
+<ul>
+<li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0 = <strong>a</strong><sub><em>x</em></sub></li>
+<li><strong>a&prime;</strong><sub><em>y</em></sub> ~= 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0.5 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + -0.866025 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a&prime;</strong><sub><em>z</em></sub> ~= 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0.866025 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0.5 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+</ul>
+<p>If a point is located at (10, 20, 30), the rotated point would now be:</p>
+<ul>
+<li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 0</li>
+<li>= 1 &#x22c5; 10</li>
+<li>= 10</li>
+<li><strong>a&prime;</strong><sub><em>y</em></sub> ~= 0 &#x22c5; 10 + 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30 + 0</li>
+<li>~= 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30</li>
+<li>~= 10 + -25.98075</li>
+<li>~= -15.98075</li>
+<li><strong>a&prime;</strong><sub><em>z</em></sub> ~= 0 &#x22c5; 10 + 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30 + 0</li>
+<li>~= 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30</li>
+<li>~= 17.3205 + 15</li>
+<li>~= 32.3205</li>
+</ul>
+<p>So the rotated point would be at about (10, -15.98075, 32.3205).</p>
+<p>Related functions:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.mat4rotated">GLMath.mat4rotated()</a> -
+Returns a rotation matrix</li>
+<li><a href="glmath.GLMath.html#.mat4rotate">GLMath.mat4rotate()</a> -
+Multiplies a matrix by a translation.</li>
+</ul>
+<h3>Matrix Multiplication <a id=Matrix_Multiplication></a></h3><p>Two matrices can be combined into a single transformation. To do so,
+the matrices are multiplied such that the transformations
+they describe happen in reverse order.  For example, if the first matrix
+(input matrix) describes a translation and the second
+matrix describes a scaling, the multiplied matrix will
+describe the effect of scaling then translation.</p>
+<p>Matrix multiplication is not commutative; the order
+of multiplying matrices is important.  This multiplication
+behavior in GLMath follows that of OpenGL and is opposite to that in the
+D3DX and DirectXMath libraries.</p>
+<p>The methods mat4multiply, mat4scale, mat4scaleInPlace, mat4translate, and
+mat4rotate involve multiplying 4x4 matrices</p>
+<p>Related functions:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.mat4multiply">GLMath.mat4multiply()</a> -
+Multiplies two matrices</li>
+</ul>
+<h3>Other Transformations <a id=Other_Transformations></a></h3><p>In all the transformations described above, the last row in the transformation matrix is
+(0, 0, 0, 1).  (For that reason, they are called <em>affine transformations</em>, those that
+keep parallel lines parallel.) However, this is not the case for
+some transformations in the GLMath library.</p>
+<p>One example of such a transformation is the frustum matrix.  When a 4-element
+vector is transformed with this matrix, its W component is generated as follows:</p>
+<ul>
+<li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + -1 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+</ul>
+<p><small>The graphics system (outside of this JavaScript library) uses this W component
+to help achieve the perspective rendering effect.  Assuming the transformed vector
+is a device coordinate returned by a vertex shader, the system will divide the vector's
+X, Y, and Z by its W to get the vector's <em>normalized device coordinates</em>.</small></p>
+<p>Related functions:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.mat4frustum">GLMath.mat4frustum()</a> -
+Returns a frustum matrix</li>
+<li><a href="glmath.GLMath.html#.mat4perspective">GLMath.mat4perspective()</a> -
+Returns a field-of-view perspective matrix</li>
+</ul>
+<h3>Matrix Inversions <a id=Matrix_Inversions></a></h3><p>An inverted matrix describes a transformation that undoes another transformation.  For
+example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
+size.</p>
+<p>To invert a <strong>translation</strong>, reverse the sign of the translation elements <code>tx</code>, <code>ty</code>, and <code>tz</code>
+and generate a new translation matrix with the new translation elements.  For example,
+to invert the translation (5, 2, -3), use the translation (-5, -2, 3).</p>
+<p>To invert a <strong>scaling</strong>, use the reciprocal of <code>sx</code>, <code>sy</code>, and <code>sz</code>
+and generate a new scaling matrix with those elements.
+For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).</p>
+<p>To invert a <strong>rotation</strong>, swap the 2nd and 5th elements of the matrix, the 3rd and 9th
+elements, and the 7th and 10th elements of the matrix (zero-based elements 1, 4, 2, 8,
+6, and 9 respectively).  The effect is like reversing the angle of the rotation to reset an object
+to its original orientation.</p>
+<p>Matrices that use some combination of translation, scaling, and rotation
+as well as other kinds of matrices are more complicated
+to invert.  In fact, some matrices can't be inverted at all.  The formula for inverting a general
+matrix is too complicated to discuss here.</p>
+<p>Related functions:</p>
+<ul>
+<li><a href="glmath.GLMath.html#.mat4invert">GLMath.mat4invert()</a> -
+Inverts a matrix</li>
+</ul>
+</article>
+
+</section>
+
+</div>
+<nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="http://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

@@ -74,7 +74,7 @@ true.)  The triangle's area is half of the cross product's length.
  * @param {Array&lt;number>} b The second vector.
  * @return {Array&lt;number>} A 3-element vector containing the cross product.
  * @example &lt;caption>The following example uses the cross product to
- * calculate a triangle's normal vector.&lt;/caption>
+ * calculate a triangle's normal vector and its area.&lt;/caption>
  var a=triangle[0];
  var b=triangle[1];
  var c=triangle[2];
@@ -84,6 +84,8 @@ true.)  The triangle's area is half of the cross product's length.
  var db=GLMath.vec3sub(b,c);
  // The triangle's normal is the cross product of da and db
  var normal=GLMath.vec3cross(da,db);
+ // Find the triangle's area
+ var area=GLMath.vec3length(normal)*0.5;
  */
 vec3cross:function(a,b){
 return [a[1]*b[2]-a[2]*b[1],
@@ -116,7 +118,7 @@ return [a[1]*b[2]-a[2]*b[1],
  * @return {number} A number representing the dot product.
  * @example &lt;caption>The following shows a fast way to compare
  * a vector's length using the dot product.&lt;/caption>
- * // Check if the vector's length squares is less than 20 units squared
+ * // Check if the vector's length squared is less than 20 units squared
  * if(GLMath.vec3dot(vector, vector)&lt;20*20){
  *  // The vector's length is shorter than 20 units
  * }
