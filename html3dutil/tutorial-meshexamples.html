@@ -15,8 +15,13 @@
 
 <article>
     <p>This page contains source code for creating various kinds of 3D models on the fly.</p>
-<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Striped_Disk">Striped Disk</a><br></p>
-<h2>Striped Disk <a id=Striped_Disk></a></h2><p>This method creates a ring or disk striped in two colors.</p>
+<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Cone">Cone</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br></p>
+<h2>Cone <a id=Cone></a></h2><p>This method creates a cone that's closed at its base.</p>
+<p><img src="mesh1.png" alt="Image of a cone"></p>
+<pre class="prettyprint source"><code>function createClosedCone(radius,height,slices){
+  return Meshes.createClosedCylinder(radius,0,height,slices,1);
+}</code></pre><h2>Striped Disk <a id=Striped_Disk></a></h2><p>This method creates a ring or disk striped in two colors.</p>
+<p><img src="mesh2.png" alt="Image of a disk striped in red and almost-white"></p>
 <pre class="prettyprint source"><code>// inner, outer - inner and outer radius of the disk
 // color1, color2 - colors of each stripe; for example:
 //   &quot;red&quot;, &quot;#223344&quot;, &quot;rgb(255,0,0)&quot;, [0,1,0]
@@ -29,12 +34,23 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
  var sweep=360.0/sections;
  for(var i=0;i&lt;sections;i++){
   var angle=360.0*(i*1.0/sections);
-  var mesh=Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep,true)
+  var mesh=Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep)
      .setColor3(firstColor ? color1 : color2)
   firstColor=!firstColor
   ret.merge(mesh);
  }
  return ret;
+}</code></pre><h2>Washer <a id=Washer></a></h2><p>This method creates a washer-shaped 3D model.</p>
+<p><img src="mesh3.png" alt="Image of a washer"></p>
+<pre class="prettyprint source"><code>function createWasher(inner,outer,height,slices){
+  var innerCylinder=Meshes.createCylinder(inner,inner,height,slices,1,false,true);
+  var outerCylinder=Meshes.createCylinder(outer,outer,height,slices,1,false,false);
+  var base=Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
+  var top=Meshes.createDisk(inner,outer,slices,2,false);
+  // move the top disk to the top of the cylinder
+  top.transform(GLMath.mat4translated(0,0,height));
+  // merge the base and the top
+  return innerCylinder.merge(outerCylinder).merge(base).merge(top);
 }</code></pre>
 </article>
 

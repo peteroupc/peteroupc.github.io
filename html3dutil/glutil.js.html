@@ -2324,7 +2324,9 @@ ShapeGroup.prototype.setQuaternion=function(quat){
 }
 /**
  * Sets the scale of this shape group relative to its original
- * size. See {@link glutil.Transform#setScale}
+ * size. See {@link glutil.Transform#setScale}.
+ * This method will modify this shape group's transform
+ * rather than the transform for each shape in the group.
  * @param {number|Array&lt;number>} x Scaling factor for this object's width,
  * or a 3-element scaling array, as specified in {@link glutil.Transform#setScale}.
  * @param {number} y Scaling factor for this object's height.
