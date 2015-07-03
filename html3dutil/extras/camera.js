@@ -347,7 +347,7 @@ Camera.prototype._mousewheel=function(e){
 }
 
 /** @private
-For backward compatibility only; will be removed in next major version */
+@deprecated For backward compatibility only; will be removed in next major version */
 Camera.prototype._moveLight=function(){
  if(this.scene.lightSource.getCount()==1){
   this.scene.setDirectionalLight(0,this.getVectorFromCenter());
