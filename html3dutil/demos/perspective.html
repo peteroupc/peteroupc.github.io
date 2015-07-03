@@ -118,25 +118,38 @@ Mesh.prototype.vertex3v=function(x){
  return this.vertex3(x[0],x[1],x[2]);
 }
 
+function meshAddLine(mesh,point1,point2,thickness){
+ var vector=GLMath.vec3sub(point1,point2);
+ var dist=GLMath.vec3length(vector);
+ var normVector=GLMath.vec3norm(vector);
+ var midPoint=GLMath.vec3lerp(point1,point2,0.5);
+ var line=Meshes.createCapsule(thickness/2,dist,6,4);
+ var matrix=GLMath.quatToMat4(GLMath.quatFromVectors([0,0,1],normVector));
+ matrix[12]=midPoint[0]
+ matrix[13]=midPoint[1]
+ matrix[14]=midPoint[2]
+ return mesh.merge(line.transform(matrix));
+}
+function meshAddLineStrip(mesh,strip,thickness){
+ for(var i=0;i<strip.length-1;i++){
+  mesh=meshAddLine(mesh,strip[i],strip[i+1],thickness)
+ }
+ return mesh
+}
 function frustumMesh(frustum){
  var mesh=new Mesh();
  var nearRect=GLMath.frustumNearPlane(frustum);
  var farRect=GLMath.frustumFarPlane(frustum);
- mesh.color3("yellow");
- mesh.mode(Mesh.LINES);
- mesh.vertex3v(nearRect[0]).vertex3v(farRect[0]);
- mesh.vertex3v(nearRect[1]).vertex3v(farRect[1]);
- mesh.vertex3v(nearRect[2]).vertex3v(farRect[2]);
- mesh.vertex3v(nearRect[3]).vertex3v(farRect[3]);
- mesh.mode(Mesh.LINE_STRIP)
- mesh.vertex3v(nearRect[0]).vertex3v(nearRect[1])
-   .vertex3v(nearRect[3]).vertex3v(nearRect[2])
-   .vertex3v(nearRect[0]);
- mesh.mode(Mesh.LINE_STRIP)
- mesh.vertex3v(farRect[0]).vertex3v(farRect[1])
-   .vertex3v(farRect[3]).vertex3v(farRect[2])
-   .vertex3v(farRect[0]);
- return mesh;
+ var thickness=0.01
+ meshAddLine(mesh,nearRect[0],farRect[0],thickness);
+ meshAddLine(mesh,nearRect[1],farRect[1],thickness);
+ meshAddLine(mesh,nearRect[2],farRect[2],thickness);
+ meshAddLine(mesh,nearRect[3],farRect[3],thickness);
+ meshAddLineStrip(mesh,[nearRect[0],nearRect[1],
+    nearRect[3],nearRect[2],nearRect[0]],thickness);
+ meshAddLineStrip(mesh,[farRect[0],farRect[1],
+    farRect[3],farRect[2],farRect[0]],thickness);
+ return mesh.setColor3("yellow");
 }
 
   // Create the 3D scene; find the HTML canvas and pass it

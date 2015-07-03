@@ -15,8 +15,23 @@
 
 <article>
     <p>This page contains source code for creating various kinds of 3D models on the fly.</p>
-<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Cone">Cone</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br></p>
-<h2>Cone <a id=Cone></a></h2><p>This method creates a cone that's closed at its base.</p>
+<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Cone">Cone</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br></p>
+<h2>3D Line <a id=3D_Line></a></h2><p>This method creates a thin line-like 3D object.</p>
+<pre class="prettyprint source"><code>// point1, point2 - end points of the line
+// thickness - thickness of the line in units, default 1
+function create3DLine(point1,point2,thickness){
+  if(thickness==null)thickness=1
+  var vector=GLMath.vec3sub(point1,point2);
+  var dist=GLMath.vec3length(vector);
+  var normVector=GLMath.vec3norm(vector);
+  var midPoint=GLMath.vec3lerp(point1,point2,0.5);
+  var line=Meshes.createCapsule(thickness/2,dist,6,4);
+  var matrix=GLMath.quatToMat4(GLMath.quatFromVectors([0,0,1],normVector));
+  matrix[12]=midPoint[0]
+  matrix[13]=midPoint[1]
+  matrix[14]=midPoint[2]
+  return line.transform(matrix);
+}</code></pre><h2>Cone <a id=Cone></a></h2><p>This method creates a cone that's closed at its base.</p>
 <p><img src="mesh1.png" alt="Image of a cone"></p>
 <pre class="prettyprint source"><code>function createClosedCone(radius,height,slices){
   return Meshes.createClosedCylinder(radius,0,height,slices,1);
