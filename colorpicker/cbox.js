@@ -1182,11 +1182,13 @@ var useNativeColorPicker=function(thisInput,usealpha){
       else thisInput.parentNode.appendChild(infolink);
       var thisInputBlur=function(){
          if(thisInput.type==="text"){
+           // must get old value before changing type back to "color"
+           var oldvalue=rootobj.normalizeRgb(thisInput)
            infolink.style.display="inline";
            thisInput.type="color";
            thisInput.setAttribute("list",datalistid);
            thisInput.title="";
-           thisInput.value=rootobj.normalizeRgb(thisInput);
+           thisInput.value=oldvalue
            removeListener(thisInput,"blur",thisInputBlur);
          }
       };
@@ -1863,11 +1865,18 @@ documentMouseMove:function(e){
   var colorChangeEvent=new EventHandlers();
   var colorPreviewEvent=new EventHandlers();
   var colorPickerAdapters=[];
-  rootobj.doColorChange=function(input,extra,button){
-    var usealpha=extra.usealpha;
+  rootobj.triggerColorChange=function(input){
     var c=rootobj.getRgba(input);
-    coloredInput(input,button);
     colorChangeEvent.trigger(c,input);
+    if(document.createEvent){
+      var e=document.createEvent("HTMLEvents")
+      e.initEvent("change",true,true)
+      input.dispatchEvent(e)
+    }
+  }
+  rootobj.doColorChange=function(input,extra,button){
+    coloredInput(input,button);
+    rootobj.triggerColorChange(input);
   };
   rootobj.setRgba=function(thisInput,cc){
    var attr=thisInput.getAttribute("rgbahex");
@@ -1891,17 +1900,25 @@ documentMouseMove:function(e){
    else
  return rgbToColorHtml(colorToRgba(thisInput.value));
   };
-  rootobj.getRgba=function(thisInput){
+  rootobj.getRgbaOrNull=function(thisInput){
    var attr=thisInput.getAttribute("rgbahex");
-   if(attr==="1")return colorRgbaToRgba(thisInput.value)||[0,0,0,255];
-   else if(attr==="2")return colorArgbToRgba(thisInput.value)||[0,0,0,255];
-   else if(thisInput.getAttribute("usealpha")==="1")return colorToRgba(thisInput.value)||[0,0,0,255];
-   else return colorToRgb(thisInput.value)||[0,0,0,255];
+   if(attr==="1")return colorRgbaToRgba(thisInput.value);
+   else if(attr==="2")return colorArgbToRgba(thisInput.value);
+   else if(thisInput.getAttribute("usealpha")==="1")return colorToRgba(thisInput.value);
+   else return colorToRgb(thisInput.value);
+  };
+  rootobj.getRgba=function(thisInput){
+   return rootobj.getRgbaOrNull(thisInput)||[0,0,0,255];
   };
   rootobj.doColorPreview=function(input,extra,button){
     var c=rootobj.getRgba(input);
     coloredInput(input,button);
     colorPreviewEvent.trigger(c,input);
+    if(document.createEvent){
+      var e=document.createEvent("HTMLEvents")
+      e.initEvent("change",true,true)
+      input.dispatchEvent(e)
+    }
   };
   rootobj.getColorChangeEvent=function(){
     return new PublicEventHandlers(colorChangeEvent);
@@ -1951,7 +1968,10 @@ documentMouseMove:function(e){
     nobgcolordelay=(!ieversionorbelow(8));
    if(nobgcolordelay){
     try { o.style.background=val; }
-    catch(ex){ o.style.background=rgbToColorHtml(colorToRgba(val)) ; }  return;
+    catch(ex){
+     var oldval=o.style.background
+     var newval=rgbToColorHtml(colorToRgba(val))
+     o.style.background=newval; }  return;
    }
    o.setAttribute("data-currentbgcolor",val);
    setTimeout(dobgcolordelayfunc(o,val),100);
@@ -1990,8 +2010,7 @@ documentMouseMove:function(e){
        var cp=new MyColorPicker(extra.info,o,currentValue,extra.usealpha);
        cp.setChangeCallback(function(cc){
          rootobj.setRgba(thisInput,cc);
-         coloredInput(thisInput,newInput);
-         colorPreviewEvent.trigger(cc,thisInput);
+         rootobj.doColorPreview(thisInput,extra,newInput);
        });
        var checkclick=false;
        var binder=new MethodBinder({});
@@ -2001,8 +2020,7 @@ documentMouseMove:function(e){
            removeListener(document,"keydown",binder.bind(keydown));
            removeListener(document,"click",binder.bind(docclick));
            removeListener(document,"mousedown",binder.bind(docdown));
-           var cc=rootobj.getRgba(thisInput);
-           colorChangeEvent.trigger(cc,thisInput);
+           rootobj.triggerColorChange(thisInput);
        };
        var keydown=function(e){
          e=eventDetails(e);
@@ -2031,20 +2049,26 @@ documentMouseMove:function(e){
    };
   }
   rootobj.setUpColoredInputButton=function(thisInput,extra,newInput){
-     var chgfunc=function(newInput,thisInput,useAlpha){
+     var chgfunc=function(newInput,thisInput,useAlpha,change){
       return function(){
-          //console.log([thisInput.id,thisInput.value,"I"])
+         if(rootobj.getRgbaOrNull(thisInput)){
           var c=rootobj.getRgba(thisInput);
           coloredInput(thisInput,newInput);
-          colorChangeEvent.trigger(c,thisInput);
-          return true;
-     };};
-     var changefunc=chgfunc(newInput,thisInput,extra.usealpha);
+          if(!change){
+           rootobj.triggerColorChange(thisInput);
+          } else {
+           colorChangeEvent.trigger(c,thisInput);
+          }
+         }
+         return true;
+     };}
+     var inputfunc=chgfunc(newInput,thisInput,extra.usealpha,false);
+     var changefunc=chgfunc(newInput,thisInput,extra.usealpha,true);
      // because of suggestions, use "input" instead of "keyup" if
      // supported by the browser (IE9 supports input only partially;
      // backspace doesn't trigger the input event)
      addListener(thisInput,("oninput" in thisInput && !ieversionorbelow(9)) ?
-      "input" : "keyup",changefunc);
+      "input" : "keyup",inputfunc);
      addListener(thisInput,"change",changefunc);
      return newInput;
   };
