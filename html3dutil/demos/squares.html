@@ -19,6 +19,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:link7()">Mirror</a>,
 <a href="javascript:link8()">Edge detect</a>,
 <a href="javascript:link9()">Red Tint</a>,
+<a href="javascript:link10()">Warp</a>,
 <a href="javascript:linknone()">No filters</a><br>
 <a href="javascript:link1a()">Blinds</a>,
 <a href="javascript:link2a()">Platonic solids</a>
@@ -87,6 +88,39 @@ return ShaderProgram.makeEffect(context,[
 " float uv0=floor(uvCoord.x*gridSizeX)/gridSizeX;",
 " float uv1=floor(uvCoord.y*gridSizeY)/gridSizeY;",
 " vec4 c=texture2D(sampler,vec2(uv0,uv1));",
+" return c;",
+"}"].join("\n"));
+}
+
+// Public domain: http://www.dspguru.com/dsp/tricks/fixed-point-atan2-with-self-normalization
+var atan2glsl=
+"float arctan2(float y, float x){"+
+"   float abs_y = abs(y)+1e-10;"+
+"   float r, angle;"+
+"   if (x>=0.0) {"+
+"      r = (x - abs_y) / (x + abs_y);"+
+"      angle = 0.78539816339745 - 0.78539816339745 * r;"+
+"    } else {"+
+"       r = (x + abs_y) / (abs_y - x);"+
+"       angle = 2.35619449019234 - 0.78539816339745 * r;"+
+"    }"+
+"    if (y < 0.0)return -angle;"+
+"    else return angle;"+
+"}\n"
+
+function makeWarp(context){
+return ShaderProgram.makeEffect(context,[
+"uniform float coarseness;", // coarseness in pixels; 1 means normal
+atan2glsl,
+"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
+" vec2 norm=uvCoord*2.0-1.0;",
+" float r=length(norm);",
+// NOTE: GLSL 1.0 doesn't implement atan2
+" float phi=arctan2(norm.y,norm.x);",
+" r=sqrt(r);",
+" float x=((r*cos(phi))+1.0)*0.5;",
+" float y=((r*sin(phi))+1.0)*0.5;",
+" vec4 c=texture2D(sampler,vec2(x,y));",
 " return c;",
 "}"].join("\n"));
 }
@@ -255,6 +289,14 @@ function link9(){
  if(scene){
   if(currentFilter)currentFilter.dispose();
   currentFilter=makeRedTint(scene);
+  scene.useFilter(currentFilter);
+ }
+}
+
+function link10(){
+ if(scene){
+  if(currentFilter)currentFilter.dispose();
+  currentFilter=makeWarp(scene);
   scene.useFilter(currentFilter);
  }
 }
