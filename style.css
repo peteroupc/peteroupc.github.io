@@ -20,7 +20,7 @@ ul{list-style:outside disc;margin:1em 0 1.5em 1.5em;}
 ol{list-style:outside decimal;margin:1em 0 1.5em 1.5em;}
 li ul,li ol{margin-top:0em;margin-bottom:0em;}
 html{overflow-y:scroll;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
-body{margin:0 auto;text-align:center;padding:0.5% 2%;position:relative;border-color:black;color:black;background-color:#f8f8f8;}body p,body td,body li,body dt,body dd,body blockquote,body div{text-align:left;}
+body{margin:0 auto;text-align:center;padding:0.5% 2%;position:relative;border-color:black;font-size:120%;color:black;background-color:#f8f8f8;}body p,body td,body li,body dt,body dd,body blockquote,body div{text-align:left;}
 body td{color:black;}
 kbd{white-space:nowrap;background:#eeeeee;border-style:solid;padding:2px 4px;border-width:1px 3px 3px 1px;}
 abbr,acronym{border-bottom:1px dotted;cursor:help;}
@@ -31,8 +31,6 @@ table tbody>tr:last-child,table tbody>tr:last-child>td:last-child{border-bottom-
 td,th{border:1px solid;padding:0.2em 0.2em 0.2em 0.2em;border-color:#808080;text-align:left;border:0px;}
 th{background:#cccccc;background-repeat:repeat-x;background:"url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IGhlaWdodD0nMTAwJScgd2lkdGg9JzEwMCUnIGZpbGw9J3VybCgjeCknLz48bGluZWFyR3JhZGllbnQgeDI9JzAnIHkyPScxJyBpZD0neCc+PHN0b3Agc3RvcC1jb2xvcj0nI2NjY2NjYycgb2Zmc2V0PScwJy8+PHN0b3Agc3RvcC1jb2xvcj0nI2RkZGRkZCcgb2Zmc2V0PScxJy8+PC9saW5lYXJHcmFkaWVudD48L3N2Zz4=)";background:linear-gradient(top, #cccccc, #dddddd);background:-moz-linear-gradient(#cccccc, #dddddd);background:-khtml-gradient(linear, left top, left bottom, from(#cccccc), to(#dddddd));background:-webkit-gradient(linear, 0 0, 0 100%, from(#cccccc), to(#dddddd));background:-ms-linear-gradient(top, #cccccc, #dddddd);background:-o-linear-gradient(top, #cccccc, #dddddd);*zoom:1;*filter:progid:DXImageTransform.Microsoft.Gradient( StartColorStr='#cccccc', EndColorStr='#dddddd',GradientType=0);color:black;border-color:#808080;}.ie8 th{filter:progid:DXImageTransform.Microsoft.Gradient( StartColorStr='#cccccc', EndColorStr='#dddddd',GradientType=0);}
 ol{list-style-type:decimal;}ol ol{list-style-type:lower-alpha;}ol ol ol{list-style-type:lower-roman;}ol ol ol ol{list-style-type:upper-alpha;}
-div,p,li,td{font-size:120%;}
-pre,textarea,tt,input,button{font-size:120% !important;}
 dd{margin-top:0.6em;margin-bottom:0.8em;}
 img{z-index:6;}
 p{margin:0.4em 0em 0em 0em;z-index:2;}p img{margin:0;z-index:3;}
