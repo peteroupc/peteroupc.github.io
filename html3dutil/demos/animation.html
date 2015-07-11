@@ -38,13 +38,27 @@ function Animators(){
  this.list=[]
  this.curTime=0
 }
+Animators.prototype._ensure=function(shape){
+ for(var i=0;i<this.list.length;i++){
+  if(this.list[i].shape==shape)return this.list[i]
+ }
+ var anim=new Animator(shape)
+ this.list.push(anim)
+ return anim
+}
 Animators.prototype.startAt=function(time){
  this.curTime=time
  return this;
 }
+Animators.prototype.thenShow=function(shape){
+ this._ensure(shape).setVisibleAt(true,this.curTime)
+ return this;
+}
+Animators.prototype.thenShowAndMove=function(shape,x,y,z,x2,y2,z2,dur){
+ return this.thenShow(shape).thenMove(shape,x,y,z,x2,y2,z2,dur)
+}
 Animators.prototype.thenMove=function(shape,x,y,z,x2,y2,z2,dur){
- this.list.push(new Animator(shape).moveTo(x,y,z,x2,y2,z2,
-   this.curTime,dur))
+ this._ensure(shape).moveTo(x,y,z,x2,y2,z2,this.curTime,dur)
  this.curTime+=dur
  return this;
 }
@@ -61,6 +75,25 @@ Animators.prototype.update=function(time){
 function Animator(shape){
  this.shape=shape;
  this.positionAnim=[]
+ this.visibleAnim=[]
+}
+Animator._compact=function(arr){
+ var fillOffset=0
+ var newLength=arr.length
+ for(var i=0;i<arr.length;i++){
+  if(fillOffset!=i && arr[i]!=null){
+   arr[fillOffset]=arr[i]
+   fillOffset++
+  } else if(arr[i]!=null){
+   fillOffset++
+  }
+ }
+ arr.length=fillOffset
+}
+Animator.prototype.showAndMoveTo=function(
+  x,y,z,x2,y2,z2,startInMs,durationInMs){
+ return this.setVisibleAt(true,startInMs)
+   .moveTo(x,y,z,x2,y2,z2,startInMs,durationInMs)
 }
 Animator.prototype.moveTo=function(
   x,y,z,x2,y2,z2,startInMs,durationInMs){
@@ -68,21 +101,39 @@ Animator.prototype.moveTo=function(
   [x,y,z],[x2,y2,z2],startInMs,startInMs+durationInMs])
  return this;
 }
+Animator.prototype.setVisibleAt=function(vis,timeInMs){
+ this.visibleAnim.push([!!vis,timeInMs])
+ return this;
+}
 Animator.prototype.update=function(time){
+ var posChanged=false
+ var visChanged=false
  for(var i=0;i<this.positionAnim.length;i++){
   var a=this.positionAnim[i]
   if(!a)continue
   if(time<a[2])continue // hasn't begun yet
   if(time>=a[3]){
    // finished
-   this.shape.setVisible(true).setPosition(a[1])
+   this.shape.setPosition(a[1])
    this.positionAnim[i]=null
+   posChanged=true
   } else {
    // in progress
    var t=(time-a[2])/(a[3]-a[2]);
-   this.shape.setVisible(true).setPosition(GLMath.vec3lerp(a[0],a[1],t));
+   this.shape.setPosition(GLMath.vec3lerp(a[0],a[1],t));
   }
  }
+ for(var i=0;i<this.visibleAnim.length;i++){
+  var a=this.visibleAnim[i]
+  if(!a)continue
+  if(time>=a[1]){
+   this.shape.setVisible(a[0])
+   this.visibleAnim[i]=null
+   visChanged=true
+  }
+ }
+ if(posChanged)Animator._compact(this.positionAnim)
+ if(visChanged)Animator._compact(this.visibleAnim)
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
@@ -92,10 +143,15 @@ Animator.prototype.update=function(time){
   scene.setPerspective(45,scene.getClientAspect(),1,1000)
   scene.setLookAt([0,-3,1.2])
   scene.setDirectionalLight(0,[0,-3,1.2])
-  var shape=scene.makeShape(createWasher(0.5,1,0.1,32)).setVisible(false)
-  var shape2=scene.makeShape(createWasher(0.5,0.9,0.1,32)).setColor("blue").setVisible(false)
-  var shape3=scene.makeShape(createWasher(0.5,0.8,0.1,32)).setColor("red").setVisible(false)
-  scene.addShape(shape).addShape(shape2).addShape(shape3)
+  var shapes=[]
+  var shapecolors=["white","blue","red","green","brown","orange","purple"]
+  var shapesizes=[1,0.9,0.8,0.7,0.6,0.7,0.8]
+  for(var i=0;i<shapecolors.length;i++){
+   var s=scene.makeShape(createWasher(0.5,shapesizes[i],0.1,32)).setColor(shapecolors[i])
+     .setVisible(false)
+   shapes.push(s)
+   scene.addShape(s)
+  }
   var xyz=new ShapeGroup();
   var axisline=scene.makeShape(Meshes.createCapsule(0.005,10,6,4));
   var zaxis=axisline.copy().setColor("blue")
@@ -108,11 +164,10 @@ Animator.prototype.update=function(time){
   var anim=null
   GLUtil.renderLoop(function(time){
    if(!anim){
-    anim=new Animators()
-      .startAt(time+200)
-      .thenMove(shape,0,0,4,0,0,0,1000)
-      .thenMove(shape2,0,0,4,0,0,0.1,1000)
-      .thenMove(shape3,0,0,4,0,0,0.2,1000)
+    anim=new Animators().startAt(time+200)
+    for(var i=0;i<shapes.length;i++){
+      anim.thenShowAndMove(shapes[i],0,0,4,0,0,0.1*i,1000)
+    }
    } else {
     anim.update(time)
    }
