@@ -1,0 +1,123 @@
+<head>
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../extras/camera.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script src="https://peteroupc.github.io/colorpicker/cbox.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+    function createWasher(inner,outer,height,slices){
+      var innerCylinder=Meshes.createCylinder(inner,inner,height,slices,1,false,true);
+      var outerCylinder=Meshes.createCylinder(outer,outer,height,slices,1,false,false);
+      var base=Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
+      var top=Meshes.createDisk(inner,outer,slices,2,false);
+      // move the top disk to the top of the cylinder
+      top.transform(GLMath.mat4translated(0,0,height));
+      // merge the base and the top
+      console.log(innerCylinder)
+      return innerCylinder.merge(outerCylinder).merge(base).merge(top);
+    }
+function Animators(){
+ this.list=[]
+ this.curTime=0
+}
+Animators.prototype.startAt=function(time){
+ this.curTime=time
+ return this;
+}
+Animators.prototype.thenMove=function(shape,x,y,z,x2,y2,z2,dur){
+ this.list.push(new Animator(shape).moveTo(x,y,z,x2,y2,z2,
+   this.curTime,dur))
+ this.curTime+=dur
+ return this;
+}
+Animators.prototype.thenPause=function(time){
+ this.curTime+=time
+ return this;
+}
+Animators.prototype.update=function(time){
+ for(var i=0;i<this.list.length;i++){
+  this.list[i].update(time)
+ }
+}
+
+function Animator(shape){
+ this.shape=shape;
+ this.positionAnim=[]
+}
+Animator.prototype.moveTo=function(
+  x,y,z,x2,y2,z2,startInMs,durationInMs){
+ this.positionAnim.push([
+  [x,y,z],[x2,y2,z2],startInMs,startInMs+durationInMs])
+ return this;
+}
+Animator.prototype.update=function(time){
+ for(var i=0;i<this.positionAnim.length;i++){
+  var a=this.positionAnim[i]
+  if(!a)continue
+  if(time<a[2])continue // hasn't begun yet
+  if(time>=a[3]){
+   // finished
+   this.shape.setVisible(true).setPosition(a[1])
+   this.positionAnim[i]=null
+  } else {
+   // in progress
+   var t=(time-a[2])/(a[3]-a[2]);
+   this.shape.setVisible(true).setPosition(GLMath.vec3lerp(a[0],a[1],t));
+  }
+ }
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white");
+  scene.setPerspective(45,scene.getClientAspect(),1,1000)
+  scene.setLookAt([0,-3,1.2])
+  scene.setDirectionalLight(0,[0,-3,1.2])
+  var shape=scene.makeShape(createWasher(0.5,1,0.1,32)).setVisible(false)
+  var shape2=scene.makeShape(createWasher(0.5,0.9,0.1,32)).setColor("blue").setVisible(false)
+  var shape3=scene.makeShape(createWasher(0.5,0.8,0.1,32)).setColor("red").setVisible(false)
+  scene.addShape(shape).addShape(shape2).addShape(shape3)
+  var xyz=new ShapeGroup();
+  var axisline=scene.makeShape(Meshes.createCapsule(0.005,10,6,4));
+  var zaxis=axisline.copy().setColor("blue")
+  var yaxis=axisline.copy().setColor("green");
+  yaxis.getTransform().setOrientation(90,1,0,0);
+  var xaxis=axisline.copy().setColor("red");
+  xaxis.getTransform().setOrientation(90,0,1,0);
+  xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
+  scene.addShape(xyz)
+  var anim=null
+  GLUtil.renderLoop(function(time){
+   if(!anim){
+    anim=new Animators()
+      .startAt(time+200)
+      .thenMove(shape,0,0,4,0,0,0,1000)
+      .thenMove(shape2,0,0,4,0,0,0.1,1000)
+      .thenMove(shape3,0,0,4,0,0,0.2,1000)
+   } else {
+    anim.update(time)
+   }
+   scene.render();
+  });
+//-->
+</script>
+</body>

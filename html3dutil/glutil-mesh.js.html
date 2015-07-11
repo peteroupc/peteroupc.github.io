@@ -314,14 +314,25 @@ Mesh.prototype.merge=function(other){
   * that mode.  The normal passed to this method will
   * not automatically be normalized to unit length.
   * @param {number} x X-coordinate of the normal.
+   *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
   * @param {number} y Y-coordinate of the normal.
+ * If "x" is an array, this parameter may be omitted.
   * @param {number} z Z-coordinate of the normal.
+ * If "x" is an array, this parameter may be omitted.
   * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.normal3=function(x,y,z){
-  this.normal[0]=x;
-  this.normal[1]=y;
-  this.normal[2]=z;
+  if(typeof x=="number" &amp;&amp; typeof y=="number" &amp;&amp; typeof z=="number"){
+   this.normal[0]=x;
+   this.normal[1]=y;
+   this.normal[2]=z;
+  } else {
+  this.normal[0]=x[0];
+  this.normal[1]=x[1];
+  this.normal[2]=x[2];
+  }
   this._elementsDefined|=Mesh.NORMALS_BIT;
   return this;
 }
@@ -334,14 +345,25 @@ Mesh.prototype.normal3=function(x,y,z){
   * that mode.  The tangent passed to this method will
   * not automatically be normalized to unit length.
   * @param {number} x X-coordinate of the tangent vector.
+   *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
   * @param {number} y Y-coordinate of the tangent vector.
+ * If "x" is an array, this parameter may be omitted.
   * @param {number} z Z-coordinate of the tangent vector.
+ * If "x" is an array, this parameter may be omitted.
   * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.tangent3=function(x,y,z){
-  this.tangent[0]=x;
-  this.tangent[1]=y;
-  this.tangent[2]=z;
+  if(typeof x=="number" &amp;&amp; typeof y=="number" &amp;&amp; typeof z=="number"){
+   this.tangent[0]=x;
+   this.tangent[1]=y;
+   this.tangent[2]=z;
+  } else {
+  this.tangent[0]=x[0];
+  this.tangent[1]=x[1];
+  this.tangent[2]=x[2];
+  }
   this._elementsDefined|=Mesh.TANGENTS_BIT;
   return this;
 }
@@ -354,14 +376,25 @@ Mesh.prototype.tangent3=function(x,y,z){
   * that mode.  The bitangent passed to this method will
   * not automatically be normalized to unit length.
   * @param {number} x X-coordinate of the bitangent vector.
+   *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
   * @param {number} y Y-coordinate of the bitangent vector.
+ * If "x" is an array, this parameter may be omitted.
   * @param {number} z Z-coordinate of the bitangent vector.
+ * If "x" is an array, this parameter may be omitted.
   * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.bitangent3=function(x,y,z){
-  this.bitangent[0]=x;
-  this.bitangent[1]=y;
-  this.bitangent[2]=z;
+  if(typeof x=="number" &amp;&amp; typeof y=="number" &amp;&amp; typeof z=="number"){
+   this.bitangent[0]=x;
+   this.bitangent[1]=y;
+   this.bitangent[2]=z;
+  } else {
+  this.bitangent[0]=x[0];
+  this.bitangent[1]=x[1];
+  this.bitangent[2]=x[2];
+  }
   this._elementsDefined|=Mesh.BITANGENTS_BIT;
   return this;
 }
@@ -425,12 +458,21 @@ Mesh.prototype.bitangent3=function(x,y,z){
 * 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
 * right corner (by default).
   * @param {number} u X-coordinate of the texture, from 0-1.
+   *   If "v" are null or omitted, this is instead
+ *  a 3-element array giving the X and Y coordinates, or a single number
+ * giving the coordinate for all three dimensions.
   * @param {number} v Y-coordinate of the texture, from 0-1.
+  * If "u" is an array, this parameter can be omitted.
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.texCoord2=function(u,v){
+ if(typeof u=="number" &amp;&amp; typeof v=="number"){
   this.texCoord[0]=u;
   this.texCoord[1]=v;
+ } else {
+  this.texCoord[0]=u[0];
+  this.texCoord[1]=u[1];
+ }
   this._elementsDefined|=Mesh.TEXCOORDS_BIT;
   return this;
  }
