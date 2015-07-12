@@ -176,6 +176,9 @@ GraphicsPath.prototype.toString=function(){
    if(a[0]==GraphicsPath.CUBIC){
     ret+="C"+a[3]+","+a[4]+","+a[5]+","+a[6]+","+a[7]+","+a[8]
    }
+   if(a[0]==GraphicsPath.ARC){
+    ret+="A"+a[3]+","+a[4]+","+a[5]+","+(a[6] ? "1" : "0")+(a[7] ? "1" : "0")+a[8]+","+a[9]
+   }
   }
  }
  return ret
@@ -253,6 +256,8 @@ GraphicsPath.prototype.getLines=function(flatness){
   } else if(s[0]==GraphicsPath.CUBIC){
    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
      s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*4,0)
+  } else if(s[0]==GraphicsPath.ARC){
+   throw new Error("Not yet implemented")
   } else if(s[0]!=GraphicsPath.CLOSE){
    ret.push([s[1],s[2],s[3],s[4]])
   }
@@ -307,6 +312,8 @@ GraphicsPath.prototype.getPoints=function(numPoints,flatness){
     len+=flat[j+2]
    }
    flattenedCurves.push(flat)
+  } else if(s[0]==GraphicsPath.ARC){
+   throw new Error("Not yet implemented")
   } else {
    len=GraphicsPath._length(s,0)
   }
@@ -437,6 +444,25 @@ GraphicsPath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
  this.incomplete=false
  return this
 }
+/**
+ * Not documented yet.
+ * @param {*} rx
+ * @param {*} ry
+ * @param {*} rot
+ * @param {*} largeArc
+ * @param {*} sweep
+ * @param {*} x2
+ * @param {*} y2
+ * @return {GraphicsPath} This object.
+ */
+GraphicsPath.prototype.arc=function(rx,ry,rot,largeArc,sweep,x2,y2){
+ this.segments.push([GraphicsPath.ARC,
+  this.endPos[0],this.endPos[1],rx,ry,rot,!!largeArc,!!sweep,x2,y2])
+ this.endPos[0]=x2
+ this.endPos[1]=y2
+ this.incomplete=false
+ return this
+}
 GraphicsPath._nextAfterWs=function(str,index){
  while(index[0]&lt;str.length){
   var c=str.charCodeAt(index[0])
@@ -444,6 +470,25 @@ GraphicsPath._nextAfterWs=function(str,index){
   if(c==0x20 || c==0x0d || c==0x09 || c==0x0a || c==0x0c)
    continue;
   return c
+ }
+ return -1
+}
+GraphicsPath._nextAfterSepReq=function(str,index){
+ var comma=false
+ var havesep=false
+ while(index[0]&lt;str.length){
+  var c=str.charCodeAt(index[0])
+  index[0]++
+  if(c==0x20 || c==0x0d || c==0x09 || c==0x0a || c==0x0c){
+   havesep=true
+   continue;
+  }
+  if(!comma &amp;&amp; c==0x2c){
+   havesep=true
+   comma=true
+   continue;
+  }
+  return (!havesep) ? -1 : c
  }
  return -1
 }
@@ -670,6 +715,31 @@ GraphicsPath.fromString=function(str){
     }
     break;
    }
+   case 0x41:case 0x61:{ // 'A', 'a'
+    var sep=false
+    while(true){
+     var curx=(c==0x61) ? ret.endPos[0] : 0
+     var cury=(c==0x61) ? ret.endPos[1] : 0
+     var x=GraphicsPath._nextNumber(str,index,sep)
+     if(x==null){ if(!sep)failed=true;break; }
+     var y=GraphicsPath._nextNumber(str,index,true)
+     if(y==null){ failed=true;break; }
+     var rot=GraphicsPath._nextNumber(str,index,true)
+     if(rot==null){ failed=true;break; }
+     var largeArc=GraphicsPath._nextAfterSepReq(str,index)
+     var sweep=GraphicsPath._nextAfterSep(str,index)
+     if(largeArc!=0x30 &amp;&amp; largeArc!=0x31 &amp;&amp; sweep!=0x30 &amp;&amp;
+       sweep!=0x31){ failed=true;break; }
+     var x2=GraphicsPath._nextNumber(str,index,true)
+     if(x2==null){ failed=true;break; }
+     var y2=GraphicsPath._nextNumber(str,index,true)
+     if(y2==null){ failed=true;break; }
+     ret.arcTo(x+curx,y+cury,rot,largeArc==0x31,
+       sweep==0x31,x+curx,y+cury);
+     sep=true;
+    }
+    break;
+   }
    case 0x53:case 0x73:{ // 'S', 's'
     var sep=false
     while(true){
@@ -725,7 +795,8 @@ GraphicsPath.fromString=function(str){
  }
  if(failed)ret.incomplete=true
  return ret
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 
