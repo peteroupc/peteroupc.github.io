@@ -21,7 +21,7 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="SurfaceOfRevolution"><span style="font-weight:lighter"></span>new SurfaceOfRevolution<span class="signature">(curve, minval, maxval, axis)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="SurfaceOfRevolution"><span style="font-weight:lighter"></span>new SurfaceOfRevolution<span class="signature">(curve, minval, maxval, axis<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line45">line 45</a>
      </i></small></p>
@@ -48,6 +48,8 @@ the HTML 3D Library.  Example:<pre>
 
         <th>Type</th>
 
+        <th>Attributes</th>
+
         <th class="last">Description</th>
     </tr>
     </thead>
@@ -63,6 +65,10 @@ the HTML 3D Library.  Example:<pre>
 <span class="param-type">function</span>
 
             </td>
+
+                <td class="attributes">
+
+                </td>
 
             <td class="description last">Curve to rotate about the axis of rotation, as
 specified in the "axis" parameter.
@@ -90,6 +96,10 @@ restrict the curve definition to no more than half of the curve.</td>
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">Smallest V-coordinate.</td>
         </tr>
 
@@ -103,6 +113,10 @@ restrict the curve definition to no more than half of the curve.</td>
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">Largest V-coordinate.   If _minval_ is greater than
 _maxval_, both values will be swapped.</td>
         </tr>
@@ -114,11 +128,14 @@ _maxval_, both values will be swapped.</td>
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">Axis of rotation, around which the curve
 will be rotated to generate the surface of revolution.  If null or omitted, the positive
@@ -139,9 +156,9 @@ parameter need not be normalized to unit length.</td>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromFunction"><span style="font-weight:lighter">(static) </span>fromFunction<span class="signature">(func, minval, maxval, axis)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromFunction"><span style="font-weight:lighter">(static) </span>fromFunction<span class="signature">(func, minval, maxval, axis<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line122">line 122</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line121">line 121</a>
      </i></small></p>
 
 <div class="description">
@@ -159,6 +176,8 @@ whose curve is the graph of a single-variable function.
 
         <th>Type</th>
 
+        <th>Attributes</th>
+
         <th class="last">Description</th>
     </tr>
     </thead>
@@ -174,6 +193,10 @@ whose curve is the graph of a single-variable function.
 <span class="param-type">function</span>
 
             </td>
+
+                <td class="attributes">
+
+                </td>
 
             <td class="description last">Function whose graph will be
 rotated about the axis of rotation, as
@@ -193,6 +216,10 @@ from beginning to end.</td>
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">Smallest parameter of the function.
 This is a number of units from the origin along the axis of rotation.</td>
         </tr>
@@ -207,6 +234,10 @@ This is a number of units from the origin along the axis of rotation.</td>
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">Largest parameter of the function.
 This is a number of units from the origin along the axis of rotation.
 If _minval_ is greater than _maxval_, both values will be swapped.</td>
@@ -219,11 +250,14 @@ If _minval_ is greater than _maxval_, both values will be swapped.</td>
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">Axis of rotation, around which the
 function graph will be rotated to generate the surface of revolution.
@@ -243,14 +277,19 @@ parameter need not be normalized to unit length.</td>
 
 <h5>Returns:</h5>
 
-    <h5>Examples</h5>
-
-        <p class="code-caption">The following creates an evaluator for a cone
-which starts at the origin and runs 10 units along the Z axis.</p>
-
-    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction(
+<div class="param-desc">
+    Return value.* @example <caption>The following creates an evaluator for a cone
+which starts at the origin and runs 10 units along the Z axis.</caption>
+var surf=SurfaceOfRevolution.fromFunction(
  function(x){  return x/2; }, // use a constantly increasing function
-0, 10);</code></pre>
+0, 10);
+
+     (Type:
+<span class="param-type"><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></span>)
+
+</div>
+
+    <h5>Examples</h5>
 
         <p class="code-caption">This is an evaluator for the same cone, but
 shifted 3 units back.</p>
@@ -266,9 +305,9 @@ which runs from 5 to 10 units, and with a radius of 2 units.</p>
  function(x){  return 2; }, // use a constant radius
 5, 10);</code></pre>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".torus"><span style="font-weight:lighter">(static) </span>torus<span class="signature">(outerRadius, innerRadius, curve, axis)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".torus"><span style="font-weight:lighter">(static) </span>torus<span class="signature">(outerRadius, innerRadius, curve<sub style="font-weight:lighter">opt</sub>, axis<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line154">line 154</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line152">line 152</a>
      </i></small></p>
 
 <div class="description">
@@ -284,6 +323,8 @@ which runs from 5 to 10 units, and with a radius of 2 units.</p>
         <th>Name</th>
 
         <th>Type</th>
+
+        <th>Attributes</th>
 
         <th class="last">Description</th>
     </tr>
@@ -301,6 +342,10 @@ which runs from 5 to 10 units, and with a radius of 2 units.</p>
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">Radius from the center to the innermost
 part of the torus.</td>
         </tr>
@@ -315,6 +360,10 @@ part of the torus.</td>
 
             </td>
 
+                <td class="attributes">
+
+                </td>
+
             <td class="description last">Radius from the inner edge to the innermost
 part of the torus.</td>
         </tr>
@@ -326,11 +375,14 @@ part of the torus.</td>
             <td class="type">
 
 <span class="param-type">function</span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">Object describing
 a curve to serve as the cross section of the torus.
@@ -352,11 +404,14 @@ element is the Y coordinate.  If null or omitted, uses a circular cross section.
             <td class="type">
 
 <span class="param-type">Array.&lt;number></span>
-|
-
-<span class="param-type">undefined</span>
 
             </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
 
             <td class="description last">Axis of rotation, which the torus
 will pass through.
@@ -375,6 +430,14 @@ parameter need not be normalized to unit length.</td>
 </dl>
 
 <h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type"><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></span>)
+
+</div>
 
 </article>
 
@@ -397,7 +460,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GraphicsPath">GraphicsPath</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

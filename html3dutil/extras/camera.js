@@ -95,14 +95,14 @@ Camera._quatRotateFixed=function(quat, angle, x, y, z){
 Camera._moveRelative=function(vec, quat, dist, x, y, z){
  var velocity=Camera._normAsVec4(x,y,z);
  GLMath.vec3scaleInPlace(velocity,dist);
- GLMath.vec3addInPlace(vec,velocity);
+ vec[0]+=velocity[0]; vec[1]+=velocity[1]; vec[2]+=velocity[2];
 }
 Camera._moveTrans=function(vec, quat, dist, x, y, z){
  var velocity=Camera._normAsVec4(x,y,z);
  velocity=GLMath.quatTransform(
    GLMath.quatConjugate(quat),velocity);
  GLMath.vec3scaleInPlace(velocity,dist);
- GLMath.vec3addInPlace(vec,velocity);
+ vec[0]+=velocity[0]; vec[1]+=velocity[1]; vec[2]+=velocity[2];
 }
 /**
  * Not documented yet.
@@ -228,7 +228,7 @@ Camera.prototype.turnVertical=function(angleDegrees){
   var curDist=this._distance();
   Camera._quatRotateRelative(this.dolly,angleDegrees,1,0,0);
   Camera._quatRotateRelative(this.rotation,angleDegrees,1,0,0);
-  GLMath.vec3assign(this.position,this.center);
+  this.position[0]=this.center[0]; this.position[1]=this.center[1]; this.position[2]=this.center[2];
   this.moveForward(-curDist);
  }
  return this;
@@ -239,7 +239,7 @@ Camera.prototype.turnHorizontal=function(angleDegrees){
   var curDist=this._distance();
   Camera._quatRotateRelative(this.dolly,angleDegrees,0,1,0);
   Camera._quatRotateRelative(this.rotation,angleDegrees,0,1,0);
-  GLMath.vec3assign(this.position,this.center);
+  this.position[0]=this.center[0]; this.position[1]=this.center[1]; this.position[2]=this.center[2];
   this.moveForward(-curDist);
  }
  return this;
@@ -328,7 +328,7 @@ Camera.prototype.getPosition=function(){
   var pos=GLMath.quatTransform(
     GLMath.quatConjugate(this.rotation),
     [this.position[0],this.position[1],this.position[2],1]);
-  GLMath.vec3subInPlace(pos,this.center);
+  pos[0]-=this.center[0]; pos[1]-=this.center[1]; pos[2]-=this.center[2];
   return pos;
 }
 /**

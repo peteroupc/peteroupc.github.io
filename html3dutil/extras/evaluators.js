@@ -35,7 +35,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @param {number} minval Smallest V-coordinate.
 * @param {number} maxval Largest V-coordinate.   If _minval_ is greater than
 * _maxval_, both values will be swapped.
-* @param {Array<number>|undefined} axis Axis of rotation, around which the curve
+* @param {Array<number>} [axis] Axis of rotation, around which the curve
 * will be rotated to generate the surface of revolution.  If null or omitted, the positive
 * Z-axis will be the axis of rotation.  This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
@@ -54,7 +54,7 @@ var SurfaceOfRevolution=function(curve,minval,maxval, axis){
  this.evaluate=function(u,v){
   v=minval+(maxval-minval)*v;
   var curvepos=this.curve.evaluate(v);
-  u=(Math.PI*2)*u;
+  u=(GLMath.PiTimes2)*u;
   var cosu = Math.cos(u);
   var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
   var cp1=curvepos[1];
@@ -95,15 +95,14 @@ SurfaceOfRevolution._quatTransformInPlace=function(q,v){
 * @param {number} maxval Largest parameter of the function.
 * This is a number of units from the origin along the axis of rotation.
 * If _minval_ is greater than _maxval_, both values will be swapped.
-* @param {Array<number>|undefined} axis Axis of rotation, around which the
+* @param {Array<number>} [axis] Axis of rotation, around which the
 * function graph will be rotated to generate the surface of revolution.
 * If null or omitted, the positive Z-axis will be the axis of rotation.
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be normalized to unit length.
-* @return {SurfaceOfRevolution}
-* @example <caption>The following creates an evaluator for a cone
+* @return {SurfaceOfRevolution} Return value.* @example <caption>The following creates an evaluator for a cone
 * which starts at the origin and runs 10 units along the Z axis.</caption>
 * var surf=SurfaceOfRevolution.fromFunction(
 *  function(x){  return x/2; }, // use a constantly increasing function
@@ -131,7 +130,7 @@ SurfaceOfRevolution.fromFunction=function(func,minval,maxval,axis){
 * part of the torus.
 * @param {number} innerRadius Radius from the inner edge to the innermost
 * part of the torus.
-* @param {Function|undefined} curve Object describing
+* @param {Function} [curve] Object describing
 * a curve to serve as the cross section of the torus.
 * The curve need not be closed; in fact, certain special surfaces can result
 * by leaving the ends open.
@@ -142,15 +141,14 @@ SurfaceOfRevolution.fromFunction=function(func,minval,maxval,axis){
 * The evaluator function returns an array of at least 2 elements: the first
 * element is the X coordinate of the curve's position, and the second
 * element is the Y coordinate.  If null or omitted, uses a circular cross section.
-* @param {Array<number>|undefined} axis Axis of rotation, which the torus
+* @param {Array<number>} [axis] Axis of rotation, which the torus
 * will pass through.
 * If null or omitted, the positive Z-axis will be the axis of rotation.
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be normalized to unit length.
-* @return {SurfaceOfRevolution}
-*/
+* @return {SurfaceOfRevolution} Return value.*/
 SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve,axis){
   if(!curve)curve={
     "evaluate":function(u){
@@ -217,8 +215,7 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
  * fits the given radius.
  * @function
  * @param {number} radius Desired radius of the curve.
- * @return {Hypotrochoid}
- */
+ * @return {Hypotrochoid} Return value. */
  this.scaleTo=function(radius){
   var oi=(this.outer-this.inner)
   var mx=Math.abs(Math.max(
@@ -319,8 +316,7 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
  * fits the given radius.
  * @function
  * @param {number} radius Desired radius of the curve.
- * @return {Epitrochoid}
- */
+ * @return {Epitrochoid} Return value. */
  this.scaleTo=function(radius){
   var oi=(this.outer+this.inner)
   var mx=Math.abs(Math.max(
