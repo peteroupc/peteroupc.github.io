@@ -132,6 +132,7 @@ GraphicsPath._flattenQuad=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,mode,de
   var y1=(a2+a4)*0.5
   var y2=(a4+a6)*0.5
   var yc=(y1+y2)*0.5
+  var tmid=(t1+t2)*0.5
   GraphicsPath._flattenQuad(a1,a2,x1,y1,xc,yc,t1,tmid,list,flatness,mode,depth+1)
   GraphicsPath._flattenQuad(xc,yc,x2,y2,a5,a6,tmid,t2,list,flatness,mode,depth+1)
  }
@@ -177,7 +178,8 @@ GraphicsPath.prototype.toString=function(){
     ret+="C"+a[3]+","+a[4]+","+a[5]+","+a[6]+","+a[7]+","+a[8]
    }
    if(a[0]==GraphicsPath.ARC){
-    ret+="A"+a[3]+","+a[4]+","+a[5]+","+(a[6] ? "1" : "0")+(a[7] ? "1" : "0")+a[8]+","+a[9]
+    ret+="A"+a[3]+","+a[4]+","+(a[5]*180/Math.PI)+","+
+      (a[6] ? "1" : "0")+(a[7] ? "1" : "0")+a[8]+","+a[9]
    }
   }
  }
@@ -206,6 +208,12 @@ GraphicsPath._length=function(a,flatness){
     len+=flat[j+2]
    }
    return len
+ } else if(a[0]==GraphicsPath.ARC){
+  var rx=a[3]
+  var ry=a[4]
+  var theta=a[12]
+  var theta2=a[13]
+  return GraphicsPath._ellipticArcLength(rx,ry,theta,theta2)
  } else if(a[0]==GraphicsPath.CLOSE){
   return 0
  } else {
@@ -214,10 +222,11 @@ GraphicsPath._length=function(a,flatness){
 }
 /**
  * Finds the approximate length of this path.
-* @param {number} [flatness] When curves are decomposed to
+* @param {number} [flatness] When quadratic and cubic
+* curves are decomposed to
 * line segments for the purpose of calculating their length, the
-* segments will be close to the true path of the curve by this
-* value, given in units.  If null or omitted, default is 1.
+* segments will generally be close to the true path of the curve by
+* up to this value, given in units.  If null or omitted, default is 1.
  * @return {number} Approximate length of this path
  * in units.
  */
@@ -445,19 +454,198 @@ GraphicsPath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
  return this
 }
 /**
+* Estimates the integral of a function.  The integral
+* is the area between the function's graph and the X-axis,
+* where areas above the X axis add to the integral, and areas
+* below the X axis subtract from it.
+* @private
+* @param {Function} func A function that takes one number
+* and returns a number.  For best results,
+* the function should be continuous (informally, this means
+* its graph between &lt;code>xmin&lt;/code> and
+* &lt;code>xmax&lt;/code> can be drawn without lifting the pen).
+* @param {Number} xmin Smallest input to the function,
+* or the lower limit to integration.
+* @param {Number} xmax Largest input to the function,
+* or the upper limit to integration.  If xmax is less than xmin,
+* this results in a negative integral.
+* @param {Number} [maxIter] Maximum iterations.
+* If null or undefined, will iterate indefinitely.
+* @returns The approximate integral of _func_ between
+* _xmin_ and _xmax_.
+*/
+GraphicsPath._numIntegrate=function(func, xmin, xmax, maxIter){
+ var oldVal=0;
+ var first=true;
+ var res=8;
+ var integral=0;
+ var step=(xmax-xmin)/res;
+ var firstx=func(xmin);
+ // 9-point Newton-Cotes integration
+ var coeff=[989,5888,-928,10496,-4540,10496,-928,5888,989];
+ var chunk=step*0.0002821869488536155 // =step*4/14175
+ var steps=coeff.length-1
+ var count=0
+ while(true){
+  var curVal=0;
+  oldx=firstx;
+  for(var i=0;i&lt;res;i+=steps){
+   var s=0;
+   var last=0;
+   for(var j=0;j&lt;coeff.length;j++){
+    var f=(j==0) ? oldx : func(xmin+step*(i+j));
+    last=f;
+    s+=f*coeff[j];
+   }
+   curVal+=chunk*s;
+   oldx=last;
+  }
+  if(!first &amp;&amp; curVal==oldVal){
+   return curVal;
+  } else {
+   oldVal=curVal;
+   res*=2
+   step*=0.5;
+   chunk*=0.5;
+   first=false;
+  }
+  if(maxIter!=null){
+   count+=1
+   if(count>=maxIter)return curVal
+  }
+ }
+}
+GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
+ if(startAngle==endAngle || xRadius&lt;=0 || yRadius&lt;=0)return 0
+ if(xRadius==yRadius){
+  // for circular arc length this is extremely simple
+  return Math.abs((endAngle-startAngle)*xRadius);
+ }
+ var mn=Math.min(xRadius,yRadius)
+ var mx=Math.max(xRadius,yRadius)
+ var eccSq=1-(mn*mn)/(mx*mx)
+ var ellipticIntegrand=function(x){
+  var s=Math.sin(x)
+  return Math.sqrt(1-s*s*eccSq);
+ }
+ return Math.abs(mx*GraphicsPath._numIntegrate(
+   ellipticIntegrand,startAngle,endAngle,7))
+}
+GraphicsPath._vecangle=function(a,b,c,d){
+ var dot=a*c+b*d
+ var denom=Math.sqrt(a*a+b*b)*Math.sqrt(c*c+d*d)
+ dot/=denom
+ var sgn=a*d-b*c
+ var ret=Math.acos(dot)
+ if(sgn&lt;0)ret=-ret
+ return ret
+}
+GraphicsPath._arcPoint=function(rx,ry,cx,cy,theta,delta,rot,t){
+  if(t==0)return [a[1],a[2]]
+  if(t==1)return [a[8],a[9]]
+  var rx=a[3]
+  var ry=a[4]
+  var cx=a[10]
+  var cy=a[11]
+  var theta=a[12]
+  var delta=a[13]
+  var rot=a[5]
+  var angle=theta+delta*t
+  var cr = Math.cos(rot);
+  var sr = (rot>=0 &amp;&amp; rot&lt;6.283185307179586) ? (rot&lt;=3.141592653589793 ? Math.sqrt(1.0-cr*cr) : -Math.sqrt(1.0-cr*cr)) : Math.sin(rot);
+  var ca = Math.cos(angle);
+  var sa = (angle>=0 &amp;&amp; angle&lt;6.283185307179586) ? (angle&lt;=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(angle);
+  return [
+   cr*ca*rx-sr*sa*ry+cx,
+   sr*ca*rx+cr*sa*ry+cy]
+}
+
+GraphicsPath._arcToCenterParam=function(a){
+ var x1=a[1]
+ var y1=a[2]
+ var x2=a[8]
+ var y2=a[9]
+ var rx=a[3]
+ var ry=a[4]
+ var rot=a[5]
+ var xmid=(x1-x2)*0.5
+ var ymid=(y1-y2)*0.5
+ var xpmid=(x1+x2)*0.5
+ var ypmid=(y1+y2)*0.5
+ var crot = Math.cos(rot);
+ var srot = (rot>=0 &amp;&amp; rot&lt;6.283185307179586) ? (rot&lt;=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
+ var x1p=crot*xmid+srot*ymid
+ var y1p=crot*ymid-srot*xmid
+ var rxsq=rx*rx
+ var rysq=ry*ry
+ var x1psq=x1p*x1p
+ var y1psq=y1p*y1p
+ var rx_xy=rxsq*y1psq+rysq*x1psq
+ var cxsqrt=Math.sqrt((rxsq*rysq-rx_xy)/rx_xy)
+ var cxp=(rx*y1p)*cxsqrt/ry
+ var cyp=(ry*x1p)*cxsqrt/rx
+ if(a[6]==a[7]){
+  cxp=-cxp
+ } else {
+  cyp=-cyp
+ }
+ var cx=crot*cxp-srot*cyp+xpmid
+ var cy=srot*cxp+crot*cyp+ypmid
+ var vecx=(x1p-cxp)/rx
+ var vecy=(y1p-cyp)/ry
+ var nvecx=(-x1p-cxp)/rx
+ var nvecy=(-y1p-cyp)/ry
+ var theta1=GraphicsPath._vecangle(1,0,vecx,vecy)
+ var delta=GraphicsPath._vecangle(vecx,vecy,nvecx,nvecy)
+ delta=(delta&lt;0) ? GLMath.PiTimes2+delta : delta;
+ if(!a[7] &amp;&amp; delta>0){
+  delta-=GLMath.PiTimes2
+ } else if(a[7] &amp;&amp; delta&lt;0){
+  delta+=GLMath.PiTimes2
+ }
+ delta+=theta1
+ return [cx,cy,theta1,delta]
+}
+/**
  * Not documented yet.
  * @param {*} rx
  * @param {*} ry
- * @param {*} rot
+ * @param {*} rot Rotation of the ellipse in degrees.
  * @param {*} largeArc
  * @param {*} sweep
  * @param {*} x2
  * @param {*} y2
  * @return {GraphicsPath} This object.
  */
-GraphicsPath.prototype.arc=function(rx,ry,rot,largeArc,sweep,x2,y2){
- this.segments.push([GraphicsPath.ARC,
-  this.endPos[0],this.endPos[1],rx,ry,rot,!!largeArc,!!sweep,x2,y2])
+GraphicsPath.prototype.arcTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
+ if(rx==0 || ry==0){
+  return this.lineTo(x2,y2);
+ }
+ rot*=Math.PI/180;
+ rx=Math.abs(rx);
+ ry=Math.abs(ry);
+ var x1=this.endPos[0]
+ var y1=this.endPos[1]
+ var xmid=(x1-x2)*0.5
+ var ymid=(y1-y2)*0.5
+ var crot = Math.cos(rot);
+ var srot = (rot>=0 &amp;&amp; rot&lt;6.283185307179586) ? (rot&lt;=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
+ var x1p=crot*xmid+srot*ymid
+ var y1p=crot*ymid-srot*xmid
+ var lam=(x1p*x1p)/(rx*rx)+(y1p*y1p)/(ry*ry);
+ if(lam>1){
+  lam=Math.sqrt(lam)
+  rx*=lam
+  ry*=lam
+ }
+ var arc=[GraphicsPath.ARC,
+  x1,y1,rx,ry,rot,!!largeArc,!!sweep,x2,y2]
+ var cp=GraphicsPath._arcToCenterParam(arc)
+ arc[10]=cp[0]
+ arc[11]=cp[1]
+ arc[12]=cp[2]
+ arc[13]=cp[3]
+ this.segments.push(arc)
  this.endPos[0]=x2
  this.endPos[1]=y2
  this.incomplete=false
@@ -513,6 +701,10 @@ GraphicsPath._peekNextNumber=function(str,index){
  index[0]=oldindex
  return ret
 }
+GraphicsPath._notFinite=function(n){
+ return isNaN(n) || n==Number.POSITIVE_INFINITY ||
+   n==Number.NEGATIVE_INFINITY
+}
 GraphicsPath._nextNumber=function(str,index,afterSep){
  var oldindex=index[0]
  var c=(afterSep) ?
@@ -554,7 +746,7 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
    }
    index[0]--
    ret=parseFloat(str.substr(startIndex,index[0]-startIndex))
-   if(isNaN(ret)){
+   if(GraphicsPath._notFinite(ret)){
     index[0]=oldindex
     return null
    }
@@ -586,7 +778,7 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
     }
     index[0]--
     ret=parseFloat(str.substr(startIndex,index[0]-startIndex))
-    if(isNaN(ret)){
+    if(GraphicsPath._notFinite(ret)){
      index[0]=oldindex
      return null
     }
@@ -595,7 +787,7 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
   }
  }
  ret=parseFloat(str.substr(startIndex,str.length-startIndex))
- if(isNaN(ret)){
+ if(GraphicsPath._notFinite(ret)){
   index[0]=oldindex
   return null
  }
@@ -616,7 +808,6 @@ GraphicsPath.fromString=function(str){
   }
   // NOTE: Doesn't implement SVG2 meaning of Z
   // command yet because it's not yet fully specified
-  // TODO: implement arcs
   switch(c){
    case 0x5a:case 0x7a:{ // 'Z', 'z'
     ret.closePath()
@@ -728,14 +919,13 @@ GraphicsPath.fromString=function(str){
      if(rot==null){ failed=true;break; }
      var largeArc=GraphicsPath._nextAfterSepReq(str,index)
      var sweep=GraphicsPath._nextAfterSep(str,index)
-     if(largeArc!=0x30 &amp;&amp; largeArc!=0x31 &amp;&amp; sweep!=0x30 &amp;&amp;
-       sweep!=0x31){ failed=true;break; }
+     if(largeArc==-1 || sweep==-1){ failed=true;break; }
      var x2=GraphicsPath._nextNumber(str,index,true)
      if(x2==null){ failed=true;break; }
      var y2=GraphicsPath._nextNumber(str,index,true)
      if(y2==null){ failed=true;break; }
-     ret.arcTo(x+curx,y+cury,rot,largeArc==0x31,
-       sweep==0x31,x+curx,y+cury);
+     ret.arcTo(x+curx,y+cury,rot,largeArc!=0x30,
+       sweep!=0x30,x2+curx,y2+cury);
      sep=true;
     }
     break;
