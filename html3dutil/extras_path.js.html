@@ -102,7 +102,7 @@ GraphicsPath._point=function(seg,t){
   var cx=seg[10]
   var cy=seg[11]
   var theta=seg[12]
-  var delta=seg[13]
+  var delta=(seg[13]-seg[12])
   var rot=seg[5]
   var angle=theta+delta*t
   var cr = Math.cos(rot);
@@ -113,7 +113,7 @@ GraphicsPath._point=function(seg,t){
    cr*ca*rx-sr*sa*ry+cx,
    sr*ca*rx+cr*sa*ry+cy]
  } else {
-  throw new Error("not yet implemented")
+  return [0,0]
  }
 }
 
@@ -171,6 +171,42 @@ GraphicsPath._flattenQuad=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,mode,de
   GraphicsPath._flattenQuad(xc,yc,x2,y2,a5,a6,tmid,t2,list,flatness,mode,depth+1)
  }
 }
+
+GraphicsPath._flattenArc=function(a,t1,t2,list,flatness,mode,depth){
+ var rot=a[5]
+ var crot=Math.cos(rot)
+ var srot=Math.sin(rot)
+ var ellipseInfo=[a[3],a[4],a[10],a[11],crot,srot]
+ GraphicsPath._flattenArcInternal(ellipseInfo,a[1],a[2],a[8],a[9],a[12],a[13],t1,t2,list,flatness,mode,depth);
+}
+
+GraphicsPath._flattenArcInternal=function(ellipseInfo,x1,y1,x2,y2,theta1,theta2,t1,t2,list,flatness,mode,depth){
+ if(depth==null)depth=0
+ var thetaMid=(theta1+theta2)*0.5
+ var tmid=(t1+t2)*0.5
+ var ca = Math.cos(thetaMid);
+ var sa = Math.sin(thetaMid);
+ var xmid = ellipseInfo[4]*ca*ellipseInfo[0]-ellipseInfo[4]*sa*ellipseInfo[1]+ellipseInfo[2]
+ var ymid = ellipseInfo[5]*ca*ellipseInfo[0]+ellipseInfo[5]*sa*ellipseInfo[1]+ellipseInfo[3]
+ if(depth>=20 || Math.abs(x1-xmid-xmid+x2)+Math.abs(y1-ymid-ymid+y2)&lt;=flatness){
+  if(mode==0){
+   list.push([x1,y1,xmid,ymid])
+   list.push([xmid,ymid,x2,y2])
+  } else {
+   var dx=xmid-x1
+   var dy=ymid-y1
+   var length=Math.sqrt(dx*dx+dy*dy)
+   list.push(t1,tmid,length)
+   dx=x2-xmid
+   dy=y2-ymid
+   length=Math.sqrt(dx*dx+dy*dy)
+   list.push(tmid,t2,length)
+  }
+ } else {
+  GraphicsPath._flattenArcInternal(ellipseInfo,x1,y1,xmid,ymid,theta1,thetaMid,t1,tmid,list,flatness,mode,depth+1)
+  GraphicsPath._flattenArcInternal(ellipseInfo,xmid,ymid,x2,y2,thetaMid,theta2,tmid,t2,list,flatness,mode,depth+1)
+ }
+}
 /** @private */
 GraphicsPath.prototype._start=function(){
  for(var i=0;i&lt;this.segments.length;i++){
@@ -188,7 +224,8 @@ GraphicsPath.prototype._end=function(){
  return [0,0]
 }
 /**
- * Not documented yet.
+ * Returns this path in the form of a string in SVG path format.
+ * @return {string}
  */
 GraphicsPath.prototype.toString=function(){
  var oldpos=null
@@ -277,9 +314,8 @@ GraphicsPath.prototype.pathLength=function(flatness){
 /**
 * Gets an array of line segments approximating
 * the path.
-* @param {number} [flatness] When quadratic and cubic
-* curves are decomposed to
-* line segments for the purpose of calculating their length, the
+* @param {number} [flatness] When curves and arc
+* segments are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
 * @return {Array&lt;Array&lt;number>>} Array of line segments.
@@ -300,7 +336,7 @@ GraphicsPath.prototype.getLines=function(flatness){
    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
      s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*4,0)
   } else if(s[0]==GraphicsPath.ARC){
-   throw new Error("Not yet implemented")
+   GraphicsPath._flattenArc(s,0.0,1.0,ret,flatness*4,0)
   } else if(s[0]!=GraphicsPath.CLOSE){
    ret.push([s[1],s[2],s[3],s[4]])
   }
@@ -311,8 +347,9 @@ GraphicsPath.prototype.getLines=function(flatness){
 * Gets an array of points evenly spaced across the length
 * of the path.
 * @param {number} numPoints Number of points to return.
-* @param {number} [flatness] When curves are decomposed to
-* line segments for the purpose of calculating their length, the
+* @param {number} [flatness] When curves and arcs
+* are decomposed to line segments for the purpose of
+* calculating their length, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
 * @return {Array&lt;Array&lt;number>>} Array of points lying on
@@ -357,7 +394,12 @@ GraphicsPath.prototype.getPoints=function(numPoints,flatness){
    }
    flattenedCurves.push(flat)
   } else if(s[0]==GraphicsPath.ARC){
-   throw new Error("Not yet implemented")
+   var flat=[]
+   GraphicsPath._flattenArc(s,0.0,1.0,flat,flatness*4,1)
+   for(var j=0;j&lt;flat.length;j+=3){
+    len+=flat[j+2]
+   }
+   flattenedCurves.push(flat)
   } else {
    len=GraphicsPath._length(s,0)
   }
@@ -413,7 +455,8 @@ GraphicsPath.prototype.getPoints=function(numPoints,flatness){
  return ret
 }
 /**
- * Not documented yet.
+ * Makes this path closed.  Adds a line segment to the
+ * path's start position, if necessary.
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.closePath=function(){
@@ -428,7 +471,7 @@ GraphicsPath.prototype.closePath=function(){
  return this;
 }
 /**
- * Not documented yet.
+ * Moves the current start position and end position.
  * @param {*} x
  * @param {*} y
  * @return {GraphicsPath} This object.
@@ -442,9 +485,11 @@ GraphicsPath.prototype.moveTo=function(x,y){
  return this
 }
 /**
- * Not documented yet.
- * @param {*} x
- * @param {*} y
+ * Adds a line segment to the path, starting
+ * at the path's end position, then
+ * sets the end position to the end of the segment.
+ * @param {*} x X-coordinate of the end of the line segment.
+ * @param {*} y Y-coordinate of the end of the line segment.
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.lineTo=function(x,y){
@@ -460,7 +505,7 @@ GraphicsPath.prototype.lineTo=function(x,y){
  * @param {*} x
  * @param {*} y
  * @param {*} x2
- * @param {*} x2
+ * @param {*} y2
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.quadTo=function(x,y,x2,y2){
@@ -476,9 +521,9 @@ GraphicsPath.prototype.quadTo=function(x,y,x2,y2){
  * @param {*} x
  * @param {*} y
  * @param {*} x2
- * @param {*} x2
+ * @param {*} y2
  * @param {*} x3
- * @param {*} x3
+ * @param {*} y3
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){

@@ -27,7 +27,14 @@
      </i></small></p>
 
 <div class="description">
-    Represents a two-dimensional path.<p>This class is considered a supplementary class to thePublic Domain HTML 3D Library and is not considered part of thatlibrary. <p>To use this class, you must include the script "extras/path.js"; theclass is not included in the "glutil_min.js" file which makes upthe HTML 3D Library.  Example:<pre>&lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
+    Represents a two-dimensional path.
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library. <p>
+To use this class, you must include the script "extras/path.js"; the
+class is not included in the "glutil_min.js" file which makes up
+the HTML 3D Library.  Example:<pre>
+&lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
 </div>
 
 <dl class="details">
@@ -40,7 +47,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(A)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line818">line 818</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line862">line 862</a>
      </i></small></p>
 
     <h5>Parameters:</h5>
@@ -69,7 +76,8 @@
 
             </td>
 
-            <td class="description last">string, in the SVG path format, representinga two-dimensional path.</td>
+            <td class="description last">string, in the SVG path format, representing
+a two-dimensional path.</td>
         </tr>
 
     </tbody>
@@ -83,7 +91,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arcTo"><span style="font-weight:lighter"></span>arcTo<span class="signature">(rx, ry, rot, largeArc, sweep, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line627">line 627</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line671">line 671</a>
      </i></small></p>
 
 <div class="description">
@@ -216,11 +224,11 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="closePath"><span style="font-weight:lighter"></span>closePath<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line408">line 408</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line450">line 450</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Makes this path closed.  Adds a line segment to thepath's start position, if necessary.
 </div>
 
 <dl class="details">
@@ -237,9 +245,9 @@
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="cubicTo"><span style="font-weight:lighter"></span>cubicTo<span class="signature">(x, y, x2, x2, x3, x3)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="cubicTo"><span style="font-weight:lighter"></span>cubicTo<span class="signature">(x, y, x2, y2, x3, y3)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line473">line 473</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line517">line 517</a>
      </i></small></p>
 
 <div class="description">
@@ -303,7 +311,7 @@
 
         <tr>
 
-                <td><code>x2</code></td>
+                <td><code>y2</code></td>
 
             <td class="type">
 
@@ -329,7 +337,7 @@
 
         <tr>
 
-                <td><code>x3</code></td>
+                <td><code>y3</code></td>
 
             <td class="type">
 
@@ -359,7 +367,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getLines"><span style="font-weight:lighter"></span>getLines<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line279">line 279</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line314">line 314</a>
      </i></small></p>
 
 <div class="description">
@@ -401,8 +409,7 @@ the path.
 
                 </td>
 
-            <td class="description last">When quadratic and cubiccurves are decomposed to
-line segments for the purpose of calculating their length, the
+            <td class="description last">When curves and arcsegments are decomposed to line segments, the
 segments will be close to the true path of the curve by this
 value, given in units.  If null or omitted, default is 1.</td>
         </tr>
@@ -429,7 +436,7 @@ Y coordinates of the end point, respectively.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getPoints"><span style="font-weight:lighter"></span>getPoints<span class="signature">(numPoints, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line314">line 314</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line350">line 350</a>
      </i></small></p>
 
 <div class="description">
@@ -488,8 +495,7 @@ of the path.
 
                 </td>
 
-            <td class="description last">When curves are decomposed to
-line segments for the purpose of calculating their length, the
+            <td class="description last">When curves and arcsare decomposed to line segments for the purpose ofcalculating their length, the
 segments will be close to the true path of the curve by this
 value, given in units.  If null or omitted, default is 1.</td>
         </tr>
@@ -545,11 +551,11 @@ is added to the path.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="lineTo"><span style="font-weight:lighter"></span>lineTo<span class="signature">(x, y)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line439">line 439</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line483">line 483</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Adds a line segment to the path, startingat the path's end position, thensets the end position to the end of the segment.
 </div>
 
     <h5>Parameters:</h5>
@@ -578,7 +584,7 @@ is added to the path.
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">X-coordinate of the end of the line segment.</td>
         </tr>
 
         <tr>
@@ -591,7 +597,7 @@ is added to the path.
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">Y-coordinate of the end of the line segment.</td>
         </tr>
 
     </tbody>
@@ -613,11 +619,11 @@ is added to the path.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="moveTo"><span style="font-weight:lighter"></span>moveTo<span class="signature">(x, y)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line425">line 425</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line467">line 467</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Moves the current start position and end position.
 </div>
 
     <h5>Parameters:</h5>
@@ -681,7 +687,7 @@ is added to the path.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="pathLength"><span style="font-weight:lighter"></span>pathLength<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line255">line 255</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line291">line 291</a>
      </i></small></p>
 
 <div class="description">
@@ -747,9 +753,9 @@ in units.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="quadTo"><span style="font-weight:lighter"></span>quadTo<span class="signature">(x, y, x2, x2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="quadTo"><span style="font-weight:lighter"></span>quadTo<span class="signature">(x, y, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line455">line 455</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line499">line 499</a>
      </i></small></p>
 
 <div class="description">
@@ -813,7 +819,7 @@ in units.
 
         <tr>
 
-                <td><code>x2</code></td>
+                <td><code>y2</code></td>
 
             <td class="type">
 
@@ -841,18 +847,20 @@ in units.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="toString"><span style="font-weight:lighter"></span>toString<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="toString"><span style="font-weight:lighter"></span>toString<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {string}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line181">line 181</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line218">line 218</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Returns this path in the form of a string in SVG path format.
 </div>
 
 <dl class="details">
 
 </dl>
+
+<h5>Returns:</h5>
 
 </article>
 
