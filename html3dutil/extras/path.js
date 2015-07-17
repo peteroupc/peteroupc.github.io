@@ -14,7 +14,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * To use this class, you must include the script "extras/path.js"; the
  * class is not included in the "glutil_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
- * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
 * @class
 */
 function GraphicsPath(){
@@ -32,7 +32,7 @@ GraphicsPath.ARC=4
 * Returns whether the curve path is incomplete
 * because of an error in parsing the curve string.
 * This flag will be reset if a moveTo command,
-* closePath command, or another line segment
+* closePath command, or another path segment
 * is added to the path.
 * @return {boolean} Return value.*/
 GraphicsPath.prototype.isIncomplete=function(){
@@ -265,7 +265,8 @@ GraphicsPath.prototype.pathLength=function(flatness){
 /**
 * Gets an array of line segments approximating
 * the path.
-* @param {number} [flatness] When curves are decomposed to
+* @param {number} [flatness] When quadratic and cubic
+* curves are decomposed to
 * line segments for the purpose of calculating their length, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
@@ -297,6 +298,7 @@ GraphicsPath.prototype.getLines=function(flatness){
 /**
 * Gets an array of points evenly spaced across the length
 * of the path.
+* @param {number} numPoints Number of points to return.
 * @param {number} [flatness] When curves are decomposed to
 * line segments for the purpose of calculating their length, the
 * segments will be close to the true path of the curve by this
@@ -789,6 +791,15 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
     return ret
    }
   }
+  if(!digit){
+    index[0]=oldindex
+    return null
+  }
+ } else {
+  if(!digit){
+    index[0]=oldindex
+    return null
+  }
  }
  ret=parseFloat(str.substr(startIndex,str.length-startIndex))
  if(GraphicsPath._notFinite(ret)){
@@ -797,7 +808,12 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
  }
  return ret
 }
-
+/**
+*
+* @param {string} A string, in the SVG path format, representing
+* a two-dimensional path.
+* @return {GraphicsPath}
+*/
 GraphicsPath.fromString=function(str){
  var index=[0]
  var started=false

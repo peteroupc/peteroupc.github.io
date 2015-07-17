@@ -1156,12 +1156,15 @@ Texture.loadTga=function(name){
     return Promise.reject(new Error("invalid width or height"));
    }
    var pixelsize=view.getUint8(16);
-   var flags=view.getUint8(16);
-   if((pixelsize!=32 || imgtype!=2) &amp;&amp;
-        (pixelsize!=8 || imgtype!=3)){
+   if(!(pixelsize==32 &amp;&amp; imgtype==2) &amp;&amp;
+      !(pixelsize==24 &amp;&amp; imgtype==2) &amp;&amp;
+      !(pixelsize==8 &amp;&amp; imgtype==3)){
     return Promise.reject(new Error("unsupported pixelsize"));
    }
    var size=width*height;
+   if(size>buf.data.length){
+    return Promise.reject(new Error("size too big"));
+   }
    var arr=new Uint8Array(size*4);
    var offset=18;
    var io=0;
@@ -1173,6 +1176,14 @@ Texture.loadTga=function(name){
      arr[io+3]=view.getUint8(offset+3)
      offset+=4;
     }
+   } else if(pixelsize==24 &amp;&amp; imgtype==2){
+    for(var i=0,io=0;i&lt;size;i++,io+=4){
+     arr[io+2]=view.getUint8(offset)
+     arr[io+1]=view.getUint8(offset+1)
+     arr[io]=view.getUint8(offset+2)
+     arr[io+3]=0xFF
+     offset+=3;
+    }
    } else if(pixelsize==8 &amp;&amp; imgtype==3){
     for(var i=0,io=0;i&lt;size;i++,io+=4){
      var col=view.getUint8(offset);
@@ -1183,6 +1194,7 @@ Texture.loadTga=function(name){
      offset++;
     }
    }
+   buf.data=null
    return {"width":width,"height":height,"image":arr}
   })
 }
