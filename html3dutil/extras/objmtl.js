@@ -531,7 +531,7 @@ ObjData._loadObj=function(str){
        vertexKind=2; // position/UV
       }
       var vtx=ObjData._refIndex(e[1],vertices);
-      var uv=ObjData._refIndex(e[2],normals);
+      var uv=ObjData._refIndex(e[2],uvs);
       mesh.normal3(0,0,0)
         .texCoord2(uvs[uv][0],uvs[uv][1])
         .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
@@ -544,7 +544,7 @@ ObjData._loadObj=function(str){
        vertexKind=3; // position/UV/normal
       }
       var vtx=ObjData._refIndex(e[1],vertices);
-      var uv=ObjData._refIndex(e[2],normals);
+      var uv=ObjData._refIndex(e[2],uvs);
       var norm=ObjData._refIndex(e[3],normals);
       haveNormals=true;
       mesh.normal3(normals[norm][0],normals[norm][1],

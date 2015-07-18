@@ -48,6 +48,8 @@ GraphicsPath._startPoint=function(a){
 GraphicsPath._endPoint=function(a){
  if(a[0]==GraphicsPath.CLOSE){
   return [0,0]
+ } else if(a[0]==GraphicsPath.ARC){
+  return [a[8],a[9]]
  } else {
   return [a[a.length-2],a[a.length-1]]
  }
@@ -173,7 +175,7 @@ GraphicsPath._flattenArcInternal=function(ellipseInfo,x1,y1,x2,y2,theta1,theta2,
  var thetaMid=(theta1+theta2)*0.5
  var tmid=(t1+t2)*0.5
  var ca = Math.cos(thetaMid);
- var sa = Math.sin(thetaMid);
+ var sa = (thetaMid>=0 && thetaMid<6.283185307179586) ? (thetaMid<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(thetaMid);
  var xmid = ellipseInfo[4]*ca*ellipseInfo[0]-ellipseInfo[4]*sa*ellipseInfo[1]+ellipseInfo[2]
  var ymid = ellipseInfo[5]*ca*ellipseInfo[0]+ellipseInfo[5]*sa*ellipseInfo[1]+ellipseInfo[3]
  if(depth>=20 || Math.abs(x1-xmid-xmid+x2)+Math.abs(y1-ymid-ymid+y2)<=flatness){
@@ -330,6 +332,57 @@ GraphicsPath.prototype.getLines=function(flatness){
   }
  }
  return ret
+}
+
+GraphicsPath.prototype._getVertices=function(flatness){
+ var tmp=[]
+ var subpaths=[]
+ if(flatness==null)flatness=1.0
+ var lastptx=0
+ var lastpty=0
+ var first=true
+ var curPath=null
+ for(var i=0;i<this.segments.length;i++){
+  var s=this.segments[i]
+  var len=0
+  var startpt=GraphicsPath._startPoint(s)
+  var endpt=GraphicsPath._endPoint(s)
+  tmp.length=0
+  if(s[0]!=GraphicsPath.CLOSE){
+   if(first || lastptx!=startpt[0] || lastpty!=startpt[1]){
+    curPath=startpt
+    subpaths.push(curPath)
+    first=false
+   }
+   lastptx=endpt[0]
+   lastpty=endpt[1]
+  }
+  if(s[0]==GraphicsPath.QUAD){
+   GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
+     s[5],s[6],0.0,1.0,tmp,flatness*2,0)
+   for(var j=0;j<tmp.length;j+=3){
+    curPath.push(tmp[j][2])
+    curPath.push(tmp[j][3])
+   }
+  } else if(s[0]==GraphicsPath.CUBIC){
+   GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
+     s[5],s[6],s[7],s[8],0.0,1.0,tmp,flatness*4,0)
+   for(var j=0;j<tmp.length;j+=3){
+    curPath.push(tmp[j][2])
+    curPath.push(tmp[j][3])
+   }
+  } else if(s[0]==GraphicsPath.ARC){
+   GraphicsPath._flattenArc(s,0.0,1.0,tmp,flatness*4,0)
+   for(var j=0;j<tmp.length;j+=3){
+    curPath.push(tmp[j][2])
+    curPath.push(tmp[j][3])
+   }
+  } else if(s[0]!=GraphicsPath.CLOSE){
+   curPath.push(s[2])
+   curPath.push(s[3])
+  }
+ }
+ return subpaths
 }
 /**
 * Gets an array of points evenly spaced across the length
