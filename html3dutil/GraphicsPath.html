@@ -47,7 +47,7 @@ the HTML 3D Library.  Example:<pre>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(A)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line939">line 939</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line941">line 941</a>
      </i></small></p>
 
     <h5>Parameters:</h5>
@@ -97,9 +97,9 @@ a two-dimensional path.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arcTo"><span style="font-weight:lighter"></span>arcTo<span class="signature">(rx, ry, rot, largeArc, sweep, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arcSvgTo"><span style="font-weight:lighter"></span>arcSvgTo<span class="signature">(rx, ry, rot, largeArc, sweep, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line749">line 749</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line751">line 751</a>
      </i></small></p>
 
 <div class="description">
@@ -230,31 +230,7 @@ a two-dimensional path.</td>
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="closePath"><span style="font-weight:lighter"></span>closePath<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line528">line 528</a>
-     </i></small></p>
-
-<div class="description">
-    Makes this path closed.  Adds a line segment to the
-path's start position, if necessary.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
-
-</div>
-
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="cubicTo"><span style="font-weight:lighter"></span>cubicTo<span class="signature">(x, y, x2, y2, x3, y3)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="bezierCurveTo"><span style="font-weight:lighter"></span>bezierCurveTo<span class="signature">(x, y, x2, y2, x3, y3)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line595">line 595</a>
      </i></small></p>
@@ -359,6 +335,30 @@ path's start position, if necessary.
 
     </tbody>
 </table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="closePath"><span style="font-weight:lighter"></span>closePath<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line528">line 528</a>
+     </i></small></p>
+
+<div class="description">
+    Makes this path closed.  Adds a line segment to the
+path's start position, if necessary.
+</div>
 
 <dl class="details">
 
@@ -830,7 +830,7 @@ in units.
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="quadTo"><span style="font-weight:lighter"></span>quadTo<span class="signature">(x, y, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="quadraticCurveTo"><span style="font-weight:lighter"></span>quadraticCurveTo<span class="signature">(x, y, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line577">line 577</a>
      </i></small></p>

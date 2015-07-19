@@ -574,7 +574,7 @@ GraphicsPath.prototype.lineTo=function(x,y){
  * @param {*} y2
  * @return {GraphicsPath} This object.
  */
-GraphicsPath.prototype.quadTo=function(x,y,x2,y2){
+GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
  this.segments.push([GraphicsPath.QUAD,
   this.endPos[0],this.endPos[1],x,y,x2,y2])
  this.endPos[0]=x2
@@ -592,7 +592,7 @@ GraphicsPath.prototype.quadTo=function(x,y,x2,y2){
  * @param {*} y3
  * @return {GraphicsPath} This object.
  */
-GraphicsPath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
+GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
  this.segments.push([GraphicsPath.CUBIC,
   this.endPos[0],this.endPos[1],x,y,x2,y2,x3,y3])
  this.endPos[0]=x3
@@ -617,50 +617,51 @@ GraphicsPath.prototype.cubicTo=function(x,y,x2,y2,x3,y3){
 * or the upper limit to integration.  If xmax is less than xmin,
 * this results in a negative integral.
 * @param {Number} [maxIter] Maximum iterations.
-* If null or undefined, will iterate indefinitely.
+* If null or undefined, does 8 iterations.
 * @returns The approximate integral of _func_ between
 * _xmin_ and _xmax_.
 */
 GraphicsPath._numIntegrate=function(func, xmin, xmax, maxIter){
- var oldVal=0;
- var first=true;
- var res=8;
- var integral=0;
- var step=(xmax-xmin)/res;
- var firstx=func(xmin);
- // 9-point Newton-Cotes integration
- var coeff=[989,5888,-928,10496,-4540,10496,-928,5888,989];
- var chunk=step*0.0002821869488536155 // =step*4/14175
- var steps=coeff.length-1
- var count=0
- while(true){
-  var curVal=0;
-  oldx=firstx;
-  for(var i=0;i<res;i+=steps){
-   var s=0;
-   var last=0;
-   for(var j=0;j<coeff.length;j++){
-    var f=(j==0) ? oldx : func(xmin+step*(i+j));
-    last=f;
-    s+=f*coeff[j];
-   }
-   curVal+=chunk*s;
-   oldx=last;
-  }
-  if(!first && curVal==oldVal){
-   return curVal;
-  } else {
-   oldVal=curVal;
-   res*=2
-   step*=0.5;
-   chunk*=0.5;
-   first=false;
-  }
-  if(maxIter!=null){
-   count+=1
-   if(count>=maxIter)return curVal
-  }
+ if(xmax==xmin)return 0;
+ if(xmax<xmin){
+  return GraphicsPath._numIntegrate(func,xmax,xmin,maxIter)
  }
+ if(maxIter==null)maxIter=8
+ if(maxIter<=0)return 0;
+ // Romberg integration
+ var matrix=[0]
+ var hk=(xmax-xmin)
+ var lasthk=hk
+ var klimit=0
+ for(var k=1;k<=maxIter;k++){
+  if(k==1){
+   matrix[k]=hk*0.5*(func(xmin)+func(xmax))
+   klimit=1
+  } else {
+   var tmp=0
+   for(var j=1;j<=klimit;j++){
+    tmp+=func(xmin+(j-0.5)*lasthk)
+   }
+   tmp*=lasthk
+   matrix[k]=(matrix[k-1]+tmp)*0.5
+   klimit<<=1
+  }
+  lasthk=hk
+  hk*=0.5
+ }
+ var mxi=maxIter+1
+ var pj1=4
+ for(var j=2;j<=maxIter;j++){
+  var prev=matrix[j-1]
+  var recipPj1m1=1.0/(pj1-1);
+  for(var i=j;i<=maxIter;i++){
+   var cur=matrix[i]
+   matrix[i]=(cur*pj1-prev)*recipPj1m1
+   prev=cur
+  }
+  pj1*=4
+ }
+ return matrix[matrix.length-1]
 }
 GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
  if(startAngle==endAngle || xRadius<=0 || yRadius<=0)return 0
@@ -676,7 +677,7 @@ GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
   return Math.sqrt(1-s*s*eccSq);
  }
  return Math.abs(mx*GraphicsPath._numIntegrate(
-   ellipticIntegrand,startAngle,endAngle,7))
+   ellipticIntegrand,startAngle,endAngle,10))
 }
 GraphicsPath._vecangle=function(a,b,c,d){
  var dot=a*c+b*d
@@ -687,7 +688,7 @@ GraphicsPath._vecangle=function(a,b,c,d){
  if(sgn<0)ret=-ret
  return ret
 }
-GraphicsPath._arcToCenterParam=function(a){
+GraphicsPath._arcSvgToCenterParam=function(a){
  var x1=a[1]
  var y1=a[2]
  var x2=a[8]
@@ -735,6 +736,7 @@ GraphicsPath._arcToCenterParam=function(a){
  delta+=theta1
  return [cx,cy,theta1,delta]
 }
+
 /**
  * Not documented yet.
  * @param {*} rx
@@ -746,7 +748,7 @@ GraphicsPath._arcToCenterParam=function(a){
  * @param {*} y2
  * @return {GraphicsPath} This object.
  */
-GraphicsPath.prototype.arcTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
+GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  if(rx==0 || ry==0){
   return this.lineTo(x2,y2);
  }
@@ -769,7 +771,7 @@ GraphicsPath.prototype.arcTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  }
  var arc=[GraphicsPath.ARC,
   x1,y1,rx,ry,rot,!!largeArc,!!sweep,x2,y2]
- var cp=GraphicsPath._arcToCenterParam(arc)
+ var cp=GraphicsPath._arcSvgToCenterParam(arc)
  arc[10]=cp[0]
  arc[11]=cp[1]
  arc[12]=cp[2]
@@ -1024,7 +1026,7 @@ GraphicsPath.fromString=function(str){
      if(x3==null){ failed=true;break; }
      var y3=GraphicsPath._nextNumber(str,index,true)
      if(y3==null){ failed=true;break; }
-     ret.cubicTo(curx+x,cury+y,curx+x2,cury+y2,
+     ret.bezierCurveTo(curx+x,cury+y,curx+x2,cury+y2,
        curx+x3,cury+y3);
      sep=true;
     }
@@ -1043,7 +1045,7 @@ GraphicsPath.fromString=function(str){
      if(x2==null){ failed=true;break; }
      var y2=GraphicsPath._nextNumber(str,index,true)
      if(y2==null){ failed=true;break; }
-     ret.quadTo(curx+x,cury+y,curx+x2,cury+y2);
+     ret.quadraticCurveTo(curx+x,cury+y,curx+x2,cury+y2);
      sep=true;
     }
     break;
@@ -1066,7 +1068,7 @@ GraphicsPath.fromString=function(str){
      if(x2==null){ failed=true;break; }
      var y2=GraphicsPath._nextNumber(str,index,true)
      if(y2==null){ failed=true;break; }
-     ret.arcTo(x+curx,y+cury,rot,largeArc!=0x30,
+     ret.arcSvgTo(x+curx,y+cury,rot,largeArc!=0x30,
        sweep!=0x30,x2+curx,y2+cury);
      sep=true;
     }
@@ -1092,7 +1094,7 @@ GraphicsPath.fromString=function(str){
         xcp=ret.segments[ret.segments.length-1][5]
         ycp=ret.segments[ret.segments.length-1][6]
      }
-     ret.cubicTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury,x2+curx,y2+cury);
+     ret.bezierCurveTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury,x2+curx,y2+cury);
      sep=true;
     }
     break;
@@ -1115,7 +1117,7 @@ GraphicsPath.fromString=function(str){
      }
      x+=curx
      y+=cury
-     ret.quadTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury);
+     ret.quadraticCurveTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury);
      sep=true;
     }
     break;
