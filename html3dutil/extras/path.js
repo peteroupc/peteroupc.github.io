@@ -215,8 +215,7 @@ GraphicsPath.prototype._end=function(){
 }
 /**
  * Returns this path in the form of a string in SVG path format.
- * @return {string}
- */
+ * @return {string} Return value. */
 GraphicsPath.prototype.toString=function(){
  var oldpos=null
  var ret=""
@@ -333,8 +332,8 @@ GraphicsPath.prototype.getLines=function(flatness){
  }
  return ret
 }
-
-GraphicsPath.prototype._getVertices=function(flatness){
+/** @private */
+GraphicsPath.prototype._getSubpaths=function(flatness){
  var tmp=[]
  var subpaths=[]
  if(flatness==null)flatness=1.0
@@ -360,30 +359,56 @@ GraphicsPath.prototype._getVertices=function(flatness){
   if(s[0]==GraphicsPath.QUAD){
    GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
      s[5],s[6],0.0,1.0,tmp,flatness*2,0)
-   for(var j=0;j<tmp.length;j+=3){
+   for(var j=0;j<tmp.length;j++){
     curPath.push(tmp[j][2])
     curPath.push(tmp[j][3])
    }
   } else if(s[0]==GraphicsPath.CUBIC){
    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
      s[5],s[6],s[7],s[8],0.0,1.0,tmp,flatness*4,0)
-   for(var j=0;j<tmp.length;j+=3){
+   for(var j=0;j<tmp.length;j++){
     curPath.push(tmp[j][2])
     curPath.push(tmp[j][3])
    }
   } else if(s[0]==GraphicsPath.ARC){
    GraphicsPath._flattenArc(s,0.0,1.0,tmp,flatness*4,0)
-   for(var j=0;j<tmp.length;j+=3){
+   for(var j=0;j<tmp.length;j++){
     curPath.push(tmp[j][2])
     curPath.push(tmp[j][3])
    }
   } else if(s[0]!=GraphicsPath.CLOSE){
-   curPath.push(s[2])
    curPath.push(s[3])
+   curPath.push(s[4])
   }
  }
  return subpaths
 }
+
+/**
+* Converts the subpaths in this path to triangles.
+* Treats each subpath as a polygon even if it isn't closed.
+* Each subpath should currently be a simple polygon (one without
+* self-intersections, duplicate vertices, or holes), except if the
+* subpath contains duplicate vertices that appear at the start and end.
+* @param {number} [flatness] When curves and arcs
+* are decomposed to line segments, the
+* segments will be close to the true path of the curve by this
+* value, given in units.  If null or omitted, default is 1.
+* @return {Array<Array<number>>} Array of six-element
+* arrays describing a single triangle.  For each six-element
+* array, the first two, next two, and last two numbers each
+* describe a vertex position of that triangle (X and Y coordinates
+* in that order.
+*/
+GraphicsPath.prototype.getTriangles=function(flatness){
+ var subpaths=this._getSubpaths(flatness)
+ var tris=[]
+ for(var i=0;i<subpaths.length;i++){
+  Triangulate._triangulate(subpaths[i],tris)
+ }
+ return tris
+}
+
 /**
 * Gets an array of points evenly spaced across the length
 * of the path.
@@ -910,8 +935,7 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
 *
 * @param {string} A string, in the SVG path format, representing
 * a two-dimensional path.
-* @return {GraphicsPath}
-*/
+* @return {GraphicsPath} Return value.*/
 GraphicsPath.fromString=function(str){
  var index=[0]
  var started=false
@@ -1103,4 +1127,224 @@ GraphicsPath.fromString=function(str){
  }
  if(failed)ret.incomplete=true
  return ret
+}
+
+var Triangulate={}
+Triangulate._LinkedList=function(){
+ this.items=[]
+ this.firstItem=-1
+ this.lastItem=-1
+ this.lastRemovedIndex=-1
+}
+Triangulate._LinkedList.prototype.list=function(list){
+ var index=this.firstItem
+ var listidx=0
+ while(index>=0){
+  list[listidx++]=this.items[index]
+  index=this.items[index+2]
+ }
+ return listidx
+}
+Triangulate._LinkedList.prototype.contains=function(item){
+ var index=this.firstItem
+ while(index>=0){
+  if(item==this.items[index])return true
+  index=this.items[index+2]
+ }
+ return false
+}
+Triangulate._LinkedList.prototype.remove=function(item){
+ var index=this.firstItem
+ while(index>=0){
+  if(this.items[index]==item){
+   this.lastRemovedIndex=index
+   var prevItem=this.items[index+1]
+   var nextItem=this.items[index+2]
+   if(prevItem>=0){
+    this.items[prevItem+2]=nextItem
+   } else {
+    this.firstItem=nextItem
+   }
+   if(nextItem>=0){
+    this.items[nextItem+1]=prevItem
+   } else {
+    this.lastItem=prevItem
+   }
+   return
+  }
+  index=this.items[index+2]
+ }
+}
+Triangulate._LinkedList.prototype.addIfMissing=function(item){
+ if(!this.contains(item)){
+  this.add(item)
+ }
+}
+Triangulate._LinkedList.prototype.add=function(item){
+ var itemIndex=(this.lastRemovedIndex==-1) ?
+   this.items.length : this.lastRemovedIndex
+ this.lastRemovedIndex=-1
+ this.items[itemIndex]=item
+ if(this.lastItem>=0)
+  this.items[this.lastItem+2]=itemIndex // prev's next
+ this.items[itemIndex+1]=this.lastItem // current's prev
+ this.items[itemIndex+2]=-1 // current's next
+ this.lastItem=itemIndex
+ if(this.firstItem<0)this.firstItem=itemIndex
+}
+
+Triangulate._CONVEX=1
+Triangulate._EAR=2
+Triangulate._REFLEX=3
+Triangulate._PREV=2
+Triangulate._NEXT=3
+Triangulate._pointInTri=function(vertices,i1,i2,i3,pt){
+  var t1 = Math.min (vertices[i3+0], vertices[i1+0]);
+  var t2 = Math.min (vertices[i3+1], vertices[i1+1]);
+  var t=(((vertices[i1+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i3+0])) &&
+  (((vertices[pt+1] - t2) * (Math.max (vertices[i3+0], vertices[i1+0]) - t1)) < ((Math.max (vertices[i3+1], vertices[i1+1]) - t2) * (vertices[pt+0] - t1))));
+  var t4 = Math.min (vertices[i1+0], vertices[i2+0]);
+  var t5 = Math.min (vertices[i1+1], vertices[i2+1]);
+  t^=(((vertices[i2+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i1+0])) &&
+   (((vertices[pt+1] - t5) * (Math.max (vertices[i1+0], vertices[i2+0]) - t4)) < ((Math.max (vertices[i1+1], vertices[i2+1]) - t5) * (vertices[pt+0] - t4))));
+  var t7 = Math.min (vertices[i2+0], vertices[i3+0]);
+  var t8 = Math.min (vertices[i2+1], vertices[i3+1]);
+  t^=(((vertices[i3+0] < vertices[pt+0]) == (vertices[pt+0] <= vertices[i2+0])) &&
+   (((vertices[pt+1] - t8) * (Math.max (vertices[i2+0], vertices[i3+0]) - t7)) < ((Math.max (vertices[i2+1], vertices[i3+1]) - t8) * (vertices[pt+0] - t7))));
+  return t
+}
+
+Triangulate._vertClass=function(verts,index,ori){
+ var prevVert=verts[index+2]
+ var nextVert=verts[index+3]
+ var curori=Triangulate._triOrient(verts,prevVert,index,nextVert)
+ if(curori==0 || curori==-1){
+  // This is a convex vertex, find out whether this
+  // is an ear
+  var prevVert=verts[index+2]
+  var nextVert=verts[index+3]
+  for(var i=0;i<verts.length;i+=4){
+   if(i!=prevVert && i!=nextVert && i!=index){
+    if(Triangulate._pointInTri(verts,prevVert,index,nextVert,i)){
+     return Triangulate._CONVEX
+    }
+   }
+  }
+  return Triangulate._EAR
+ } else {
+  return Triangulate._REFLEX;
+ }
+}
+Triangulate._triOrient=function(vertices,i1,i2,i3){
+ var acx=vertices[i1]-vertices[i3]
+ var acy=vertices[i1+1]-vertices[i3+1]
+ var bcx=vertices[i2]-vertices[i3]
+ var bcy=vertices[i2+1]-vertices[i3+1]
+ var cross=acx*bcy-acy*bcx
+ return cross==0 ? 0 : (cross<0 ? -1 : 1)
+}
+Triangulate._triangulate=function(vertices,tris){
+ if(vertices.length<6){
+  // too few vertices for a triangulation
+  return
+ }
+ var vertLength=vertices.length
+ // For convenience, eliminate the last
+ // vertex if it matches the first vertex
+ if(vertLength>=4 &&
+    vertices[0]==vertices[vertLength-2] &&
+    vertices[1]==vertices[vertLength-1]){
+  vertLength-=2
+ }
+ if(vertLength==6){
+  // just one triangle
+  tris.push(vertices.slice(0))
+  return
+ }
+ // Find the prevailing orientation of the polygon
+ var ori=0
+ for(var i=0;i<vertices.length-2;i+=2){
+  ori+=vertices[0]*vertices[3]-vertices[1]*vertices[2];
+ }
+ ori=(ori==0) ? 0 : (ori<0 ? -1 : 1);
+ if(ori==0){
+  // Zero area or even a certain self-intersecting
+  // polygon
+  return
+ }
+ var verts=[]
+ var tmp=[]
+ var reflex=new Triangulate._LinkedList()
+ var ears=new Triangulate._LinkedList()
+ var lastX=-1
+ var lastY=-1
+ for(var i=0;i<vertLength;i+=2){
+  var x=vertices[i]
+  var y=vertices[i+1]
+  if(i>0 && x==lastX && y==lastY){
+   // skip consecutive duplicate points
+   continue;
+  }
+  lastX=x
+  lastY=y
+  verts.push(x,y,0,0)
+ }
+ for(var index=0;index<verts.length;index+=4){
+  var prevVert=(index==0) ? verts.length-4 : index-4
+  var nextVert=(index==verts.length-4) ? 0 : index+4
+  verts[index+Triangulate._PREV]=prevVert
+  verts[index+Triangulate._NEXT]=nextVert
+ }
+ for(var index=0;index<verts.length;index+=4){
+  var vertexClass=Triangulate._vertClass(verts,index,ori)
+  if(vertexClass==Triangulate._EAR)
+   ears.add(index)
+  else if(vertexClass==Triangulate._REFLEX)
+   reflex.add(index)
+ }
+ while(true){
+  var earLength=ears.list(tmp)
+  if(earLength<=0)break;
+  for(var i=0;i<earLength;i++){
+   var ear=tmp[i]
+   //console.log("processing "+[ear/4,prevVert/4,nextVert/4])
+   var prevVert=verts[ear+Triangulate._PREV]
+   var nextVert=verts[ear+Triangulate._NEXT]
+   if(ear==prevVert || ear==nextVert || prevVert==nextVert){
+    ears.remove(ear)
+    continue;
+   }
+   // remove the ear from the linked list
+   verts[prevVert+Triangulate._NEXT]=nextVert
+   verts[nextVert+Triangulate._PREV]=prevVert
+   tris.push([
+    verts[prevVert],verts[prevVert+1],
+    verts[ear],verts[ear+1],
+    verts[nextVert],verts[nextVert+1]])
+   ears.remove(ear)
+   // reclassify vertices
+   var prevClass=Triangulate._vertClass(verts,prevVert,ori)
+   var nextClass=Triangulate._vertClass(verts,nextVert,ori)
+   if(prevClass!=Triangulate._REFLEX){
+    reflex.remove(prevVert)
+   } else {
+    reflex.addIfMissing(prevVert)
+   }
+   if(prevClass!=Triangulate._EAR){
+    ears.remove(prevVert)
+   } else {
+    ears.addIfMissing(prevVert)
+   }
+   if(nextClass!=Triangulate._REFLEX){
+    reflex.remove(nextVert)
+   } else {
+    reflex.addIfMissing(nextVert)
+   }
+   if(nextClass!=Triangulate._EAR){
+    ears.remove(nextVert)
+   } else {
+    ears.addIfMissing(nextVert)
+   }
+  }
+ }
 }

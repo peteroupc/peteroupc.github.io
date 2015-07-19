@@ -47,7 +47,7 @@ the HTML 3D Library.  Example:<pre>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(A)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line915">line 915</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line939">line 939</a>
      </i></small></p>
 
     <h5>Parameters:</h5>
@@ -89,9 +89,17 @@ a two-dimensional path.</td>
 
 <h5>Returns:</h5>
 
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
+
+</div>
+
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arcTo"><span style="font-weight:lighter"></span>arcTo<span class="signature">(rx, ry, rot, largeArc, sweep, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line724">line 724</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line749">line 749</a>
      </i></small></p>
 
 <div class="description">
@@ -224,7 +232,7 @@ a two-dimensional path.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="closePath"><span style="font-weight:lighter"></span>closePath<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line503">line 503</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line528">line 528</a>
      </i></small></p>
 
 <div class="description">
@@ -248,7 +256,7 @@ path's start position, if necessary.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="cubicTo"><span style="font-weight:lighter"></span>cubicTo<span class="signature">(x, y, x2, y2, x3, y3)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line570">line 570</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line595">line 595</a>
      </i></small></p>
 
 <div class="description">
@@ -368,7 +376,7 @@ path's start position, if necessary.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getLines"><span style="font-weight:lighter"></span>getLines<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line316">line 316</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line315">line 315</a>
      </i></small></p>
 
 <div class="description">
@@ -438,7 +446,7 @@ Y coordinates of the end point, respectively.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getPoints"><span style="font-weight:lighter"></span>getPoints<span class="signature">(numPoints, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line403">line 403</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line428">line 428</a>
      </i></small></p>
 
 <div class="description">
@@ -526,6 +534,69 @@ is 1.
 
 </div>
 
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getTriangles"><span style="font-weight:lighter"></span>getTriangles<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;number>>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line403">line 403</a>
+     </i></small></p>
+
+<div class="description">
+    Converts the subpaths in this path to triangles.Treats each subpath as a polygon even if it isn't closed.Each subpath should currently be a simple polygon (one withoutself-intersections, duplicate vertices, or holes), except if thesubpath contains duplicate vertices that appear at the start and end.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td><code>flatness</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">When curves and arcsare decomposed to line segments, thesegments will be close to the true path of the curve by thisvalue, given in units.  If null or omitted, default is 1.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Array of six-elementarrays describing a single triangle.  For each six-elementarray, the first two, next two, and last two numbers eachdescribe a vertex position of that triangle (X and Y coordinatesin that order.
+
+     (Type:
+<span class="param-type">Array.&lt;Array.&lt;number>></span>)
+
+</div>
+
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="isIncomplete"><span style="font-weight:lighter"></span>isIncomplete<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {boolean}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line38">line 38</a>
@@ -555,7 +626,7 @@ is added to the path.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="lineTo"><span style="font-weight:lighter"></span>lineTo<span class="signature">(x, y)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line536">line 536</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line561">line 561</a>
      </i></small></p>
 
 <div class="description">
@@ -625,7 +696,7 @@ sets the end position to the end of the segment.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="moveTo"><span style="font-weight:lighter"></span>moveTo<span class="signature">(x, y)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line520">line 520</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line545">line 545</a>
      </i></small></p>
 
 <div class="description">
@@ -693,7 +764,7 @@ sets the end position to the end of the segment.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="pathLength"><span style="font-weight:lighter"></span>pathLength<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line293">line 293</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line292">line 292</a>
      </i></small></p>
 
 <div class="description">
@@ -761,7 +832,7 @@ in units.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="quadTo"><span style="font-weight:lighter"></span>quadTo<span class="signature">(x, y, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line552">line 552</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line577">line 577</a>
      </i></small></p>
 
 <div class="description">
@@ -855,7 +926,7 @@ in units.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="toString"><span style="font-weight:lighter"></span>toString<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {string}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line220">line 220</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line219">line 219</a>
      </i></small></p>
 
 <div class="description">
@@ -867,6 +938,14 @@ in units.
 </dl>
 
 <h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">string</span>)
+
+</div>
 
 </article>
 
