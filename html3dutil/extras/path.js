@@ -169,15 +169,14 @@ GraphicsPath._flattenArc=function(a,t1,t2,list,flatness,mode,depth){
  var ellipseInfo=[a[3],a[4],a[10],a[11],crot,srot]
  GraphicsPath._flattenArcInternal(ellipseInfo,a[1],a[2],a[8],a[9],a[12],a[13],t1,t2,list,flatness,mode,depth);
 }
-
 GraphicsPath._flattenArcInternal=function(ellipseInfo,x1,y1,x2,y2,theta1,theta2,t1,t2,list,flatness,mode,depth){
  if(depth==null)depth=0
  var thetaMid=(theta1+theta2)*0.5
  var tmid=(t1+t2)*0.5
  var ca = Math.cos(thetaMid);
  var sa = (thetaMid>=0 && thetaMid<6.283185307179586) ? (thetaMid<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(thetaMid);
- var xmid = ellipseInfo[4]*ca*ellipseInfo[0]-ellipseInfo[4]*sa*ellipseInfo[1]+ellipseInfo[2]
- var ymid = ellipseInfo[5]*ca*ellipseInfo[0]+ellipseInfo[5]*sa*ellipseInfo[1]+ellipseInfo[3]
+ var xmid = ellipseInfo[4]*ca*ellipseInfo[0]-ellipseInfo[5]*sa*ellipseInfo[1]+ellipseInfo[2]
+ var ymid = ellipseInfo[5]*ca*ellipseInfo[0]+ellipseInfo[4]*sa*ellipseInfo[1]+ellipseInfo[3]
  if(depth>=20 || Math.abs(x1-xmid-xmid+x2)+Math.abs(y1-ymid-ymid+y2)<=flatness){
   if(mode==0){
    list.push([x1,y1,xmid,ymid])
@@ -538,8 +537,8 @@ GraphicsPath.prototype.closePath=function(){
 }
 /**
  * Moves the current start position and end position.
- * @param {*} x
- * @param {*} y
+ * @param {number} x
+ * @param {number} y
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.moveTo=function(x,y){
@@ -554,8 +553,8 @@ GraphicsPath.prototype.moveTo=function(x,y){
  * Adds a line segment to the path, starting
  * at the path's end position, then
  * sets the end position to the end of the segment.
- * @param {*} x X-coordinate of the end of the line segment.
- * @param {*} y Y-coordinate of the end of the line segment.
+ * @param {number} x X-coordinate of the end of the line segment.
+ * @param {number} y Y-coordinate of the end of the line segment.
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.lineTo=function(x,y){
@@ -566,12 +565,121 @@ GraphicsPath.prototype.lineTo=function(x,y){
  this.incomplete=false
  return this
 }
+
+GraphicsPath._areCollinear=function(x0,y0,x1,y1,x2,y2){
+  var t1 = x1 - x0;
+  var t2 = y1 - y0;
+  var t3 = [x2 - x0, y2 - y0];
+  var denom=((t1 * t1) + t2 * t2);
+  if(denom==0){
+   return true; // first two points are the same
+  }
+  var t4 = (((t1 * t3[0]) + t2 * t3[1]) / denom);
+  var t5 = [(x0 + t4 * t1), (y0 + t4 * t2)];
+  var t6 = [x2 - t5[0], y2 - t5[1]];
+  return ((t6[0] * t6[0]) + t6[1] * t6[1])==0;
+}
+/**
+ * Adds path segments in the form of a circular arc to this path,
+ * using the parameterization specified in the "arcTo" method of the
+ * HTML Canvas 2D Context.
+ * @param {number} x1 X-coordinate of a point that, along with the
+ * current end point, forms a tangent line.  The point where the
+ * circle touches this tangent line is the start point of the arc, and if the
+ * point isn't the same as the current end point, this method adds
+ * a line segment connecting the two points.
+ * @param {number} y1 Y-coordinate of the point described above.
+ * @param {number} x2 X-coordinate of a point that, along with the
+ * point (x1, y1), forms a tangent line.  The point where the
+ * circle touches this tangent line is the end point of the arc.
+ * @param {number} y2 Y-coordinate of the point described above.
+ * @param {number} radius Radius of the circle the arc forms a part of.
+ * @return {GraphicsPath} This object.
+ */
+GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
+ if(radius<0){
+  throw new Error("IndexSizeError")
+ }
+ var x0=this.endPos[0]
+ var y0=this.endPos[1]
+ if(radius==0 || (x0==x1 && y0==y1) || (x1==x2 && y1==y2) ||
+   GraphicsPath._areCollinear(x0,y0,x1,y1,x2,y2)){
+  return this.lineTo(x1,y1)
+ }
+  var t1 = [x0 - x1, y0 - y1];
+  var t2 = 1.0/Math.sqrt(((t1[0] * t1[0]) + t1[1] * t1[1]));
+  var t3 = [t1[0] * t2, t1[1] * t2]; // tangent vector from p1 to p0
+  var t4 = [x2 - x1, y2 - y1];
+  var t5 = 1.0/Math.sqrt(((t4[0] * t4[0]) + t4[1] * t4[1]));
+  var t6 = [t4[0] * t5, t4[1] * t5]; // tangent vector from p2 to p1
+  var cross = t3[0] * t6[1] - t3[1] * t6[0];
+  var t7 = (((1.0 + ((t3[0] * t6[0]) + t3[1] * t6[1]))) * radius / Math.abs(cross));
+  var t8 = [t3[0] * t7, t3[1] * t7];
+  var t10 = [t6[0] * t7, t6[1] * t7];
+  var startTangent = [x1 + t8[0], y1 + t8[1]];
+  var endTangent = [x1 + t10[0], y1 + t10[1]];
+  this.lineTo(startTangent[0],startTangent[1]);
+  var sweep=(cross<0);
+  return this.arcSvgTo(radius,radius,0,false,sweep,endTangent[0],endTangent[1]);
+}
+/**
+ * Adds path segments in the form of a circular arc to this path,
+ * using the parameterization specified in the "arc" method of the
+ * HTML Canvas 2D Context.
+ * @return {GraphicsPath} This object.
+ * @param {number} x X-coordinate of the center of the circle that the arc forms a part of.
+ * @param {number} y Y-coordinate of the circle's center.
+ * @param {number} radius Radius of the circle's center.
+ * @param {number} startAngle Starting angle of the arc, in radius.
+ * @param {number} endAngle Ending angle of the arc, in radius.
+ * @param {boolean} ccw Whether the arc runs counterclockwise.
+ * @return {GraphicsPath} This object.
+ */
+GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
+ if(radius<0){
+  throw new Error("IndexSizeError")
+ }
+ var x0=this.endPos[0]
+ var y0=this.endPos[1]
+ var twopi=GLMath.PiTimes2;
+ var startX=x+radius*Math.cos(startAngle);
+ var startY=y+radius*Math.sin(startAngle);
+ var endX=x+radius*Math.cos(endAngle);
+ var endY=y+radius*Math.sin(endAngle);
+ if((startX==endX && startY==endY) || radius==0){
+    return this.lineTo(startX,startY).lineTo(endX,endY);
+ }
+ if((!ccw && (endAngle-startAngle)>=twopi) ||
+   (ccw && (startAngle-endAngle)>=twopi)){
+    return this.lineTo(startX,startY)
+       .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
+       .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
+       .lineTo(startX,startY)
+} else {
+ var delta=endAngle-startAngle;
+ if(delta>=twopi || delta<0){
+ var d=delta%twopi
+ if(d==0 && delta!=0){
+  return this.lineTo(startX,startY)
+       .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
+       .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
+       .lineTo(startX,startY)
+ }
+ delta=d
+}
+var largeArc=(Math.abs(delta)>Math.PI)^(ccw)^(startAngle>endAngle)
+var sweep=(delta>0)^(ccw)^(startAngle>endAngle)
+return this.lineTo(startX,startY)
+      .arcSvgTo(radius,radius,0,largeArc,sweep,endX,endY);
+ }
+}
+
 /**
  * Not documented yet.
- * @param {*} x
- * @param {*} y
- * @param {*} x2
- * @param {*} y2
+ * @param {number} x
+ * @param {number} y
+ * @param {number} x2
+ * @param {number} y2
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
@@ -584,12 +692,12 @@ GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
 }
 /**
  * Not documented yet.
- * @param {*} x
- * @param {*} y
- * @param {*} x2
- * @param {*} y2
- * @param {*} x3
- * @param {*} y3
+ * @param {number} x
+ * @param {number} y
+ * @param {number} x2
+ * @param {number} y2
+ * @param {number} x3
+ * @param {number} y3
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
@@ -684,6 +792,10 @@ GraphicsPath._vecangle=function(a,b,c,d){
  var denom=Math.sqrt(a*a+b*b)*Math.sqrt(c*c+d*d)
  dot/=denom
  var sgn=a*d-b*c
+ // avoid NaN when dot is just slightly out of range
+ // for acos
+ if(dot<-1)dot=-1
+ else if(dot>1)dot=1
  var ret=Math.acos(dot)
  if(sgn<0)ret=-ret
  return ret
@@ -709,7 +821,7 @@ GraphicsPath._arcSvgToCenterParam=function(a){
  var x1psq=x1p*x1p
  var y1psq=y1p*y1p
  var rx_xy=rxsq*y1psq+rysq*x1psq
- var cxsqrt=Math.sqrt((rxsq*rysq-rx_xy)/rx_xy)
+ var cxsqrt=Math.sqrt(Math.max(0,(rxsq*rysq-rx_xy)/rx_xy))
  var cxp=(rx*y1p)*cxsqrt/ry
  var cyp=(ry*x1p)*cxsqrt/rx
  if(a[6]==a[7]){
@@ -724,6 +836,10 @@ GraphicsPath._arcSvgToCenterParam=function(a){
  var nvecx=(-x1p-cxp)/rx
  var nvecy=(-y1p-cyp)/ry
  var cosTheta1=vecx/Math.sqrt(vecx*vecx+vecy*vecy)
+ // avoid NaN when cosTheta1 is just slightly out of range
+ // for acos
+ if(cosTheta1<-1)cosTheta1=-1
+ else if(cosTheta1>1)cosTheta1=1
  var theta1=Math.acos(cosTheta1)
  if(vecy<0)theta1=-theta1
  var delta=GraphicsPath._vecangle(vecx,vecy,nvecx,nvecy)
@@ -738,25 +854,29 @@ GraphicsPath._arcSvgToCenterParam=function(a){
 }
 
 /**
- * Not documented yet.
+ * Adds path segments in the form of a circular arc to this path,
+ * using the parameterization used by the SVG specification.
  * @param {*} rx
  * @param {*} ry
  * @param {*} rot Rotation of the ellipse in degrees.
  * @param {*} largeArc
  * @param {*} sweep
- * @param {*} x2
- * @param {*} y2
+ * @param {number} x2
+ * @param {number} y2
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  if(rx==0 || ry==0){
   return this.lineTo(x2,y2);
  }
+ var x1=this.endPos[0]
+ var y1=this.endPos[1]
+ if(x1==x2 && y1==y2){
+  return this;
+ }
  rot*=Math.PI/180;
  rx=Math.abs(rx);
  ry=Math.abs(ry);
- var x1=this.endPos[0]
- var y1=this.endPos[1]
  var xmid=(x1-x2)*0.5
  var ymid=(y1-y2)*0.5
  var crot = Math.cos(rot);
@@ -933,6 +1053,19 @@ GraphicsPath._nextNumber=function(str,index,afterSep){
  }
  return ret
 }
+/**
+ * Not documented yet.
+ * @param {number} x
+ * @param {number} y
+ * @param {number} width
+ * @param {number} height
+ * @return {GraphicsPath} This object.
+ */
+GraphicsPath.prototype.rect=function(x,y,w,h){
+ return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
+   .lineTo(x,y+height).closePath().moveTo(x,y)
+}
+
 /**
 *
 * @param {string} A string, in the SVG path format, representing
