@@ -626,12 +626,11 @@ GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
  * Adds path segments in the form of a circular arc to this path,
  * using the parameterization specified in the "arc" method of the
  * HTML Canvas 2D Context.
- * @return {GraphicsPath} This object.
  * @param {number} x X-coordinate of the center of the circle that the arc forms a part of.
  * @param {number} y Y-coordinate of the circle's center.
  * @param {number} radius Radius of the circle's center.
- * @param {number} startAngle Starting angle of the arc, in radius.
- * @param {number} endAngle Ending angle of the arc, in radius.
+ * @param {number} startAngle Starting angle of the arc, in radians.
+ * @param {number} endAngle Ending angle of the arc, in radians.
  * @param {boolean} ccw Whether the arc runs counterclockwise.
  * @return {GraphicsPath} This object.
  */
@@ -856,11 +855,19 @@ GraphicsPath._arcSvgToCenterParam=function(a){
 /**
  * Adds path segments in the form of a circular arc to this path,
  * using the parameterization used by the SVG specification.
- * @param {*} rx
- * @param {*} ry
- * @param {*} rot Rotation of the ellipse in degrees.
- * @param {*} largeArc
- * @param {*} sweep
+ * @param {number} rx X-axis radius of the ellipse that the arc will
+ * be formed from.
+ * @param {number} ry Y-axis radius of the ellipse that the arc will
+ * be formed from.
+ * @param {number} rot Rotation of the ellipse in degrees (clockwise
+ * assuming the X axis points right and the Y axis points
+ * down under the coordinate system).
+ * @param {boolean} largeArc In general, there are four possible solutions
+ * for arcs given the start and end points and x- and y-radii.  If true,
+ * chooses an arc solution with the larger arc length; if false, smaller.
+ * @param {boolean} sweep If true, the arc solution chosen will run
+ * clockwise (assuming the X axis points right and the Y axis points
+ * down under the coordinate system); if false, counterclockwise.
  * @param {number} x2
  * @param {number} y2
  * @return {GraphicsPath} This object.
@@ -1067,10 +1074,47 @@ GraphicsPath.prototype.rect=function(x,y,w,h){
 }
 
 /**
-*
-* @param {string} A string, in the SVG path format, representing
-* a two-dimensional path.
-* @return {GraphicsPath} Return value.*/
+* Creates a graphics path from a string whose format follows
+* the SVG specification.
+* @param {string} str A string, in the SVG path format, representing
+* a two-dimensional path.  An SVG path consists of a number of
+* path segments, starting with a single letter, as follows:
+* <ul>
+* <li>M/m (x y) - Moves the current position to (x, y). Further
+* XY pairs specify line segments.
+* <li>L/l (x y) - Specifies line segments to the given XY points.
+* <li>H/h (x) - Specifies horizontal line segments to the given X points.
+* <li>V/v (y) - Specifies vertical line segments to the given Y points.
+* <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
+* (see quadCurveTo).
+* <li>T/t (x y) - Specifies quadratic curves tangent to the previous
+* quadratic curve.
+* <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves
+* (see bezierCurveTo).
+* <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous
+* cubic curve.
+* <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo).
+* "largeArc" and "sweep" are flags, "0" for false and "1" for true.
+* "rot" is in degrees.
+* <li>Z/z - Closes the current path; similar to adding a line segment
+* to the first XY point given in the last M/m command.
+* </ul>
+* Lower-case letters mean any X and Y coordinates are relative
+* to the current position of the path.  Each group of parameters
+* can be repeated in the same path segment. Each parameter after
+* the starting letter is separated by whitespace and/or a single comma,
+* and the starting letter can be separated by whitespace.
+* This separation can be left out as long as doing so doesn't
+* introduce ambiguity.  All commands set the current point
+* to the end of the path segment (including Z/z, which adds a line
+* segment if needed).
+* @return {GraphicsPath} The resulting path.  If an error
+* occurs while parsing the path, the path's "isIncomplete() method
+* will return <code>true</code>.
+* @example <caption>The following example creates a graphics path
+* from an SVG string describing a polyline.</caption>
+* var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
+*/
 GraphicsPath.fromString=function(str){
  var index=[0]
  var started=false

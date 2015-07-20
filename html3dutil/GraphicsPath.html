@@ -45,10 +45,14 @@ the HTML 3D Library.  Example:<pre>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(A)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(str)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1074">line 1074</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1118">line 1118</a>
      </i></small></p>
+
+<div class="description">
+    Creates a graphics path from a string whose format followsthe SVG specification.
+</div>
 
     <h5>Parameters:</h5>
 
@@ -68,7 +72,7 @@ the HTML 3D Library.  Example:<pre>
 
         <tr>
 
-                <td><code>A</code></td>
+                <td><code>str</code></td>
 
             <td class="type">
 
@@ -76,8 +80,9 @@ the HTML 3D Library.  Example:<pre>
 
             </td>
 
-            <td class="description last">string, in the SVG path format, representing
-a two-dimensional path.</td>
+            <td class="description last">A string, in the SVG path format, representing
+a two-dimensional path.  An SVG path consists of a number ofpath segments, starting with a single letter, as follows:<ul><li>M/m (x y) - Moves the current position to (x, y). FurtherXY pairs specify line segments.<li>L/l (x y) - Specifies line segments to the given XY points.
+<li>H/h (x) - Specifies horizontal line segments to the given X points.<li>V/v (y) - Specifies vertical line segments to the given Y points.<li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves(see quadCurveTo).<li>T/t (x y) - Specifies quadratic curves tangent to the previousquadratic curve.<li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves(see bezierCurveTo).<li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previouscubic curve.<li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo)."largeArc" and "sweep" are flags, "0" for false and "1" for true."rot" is in degrees.<li>Z/z - Closes the current path; similar to adding a line segmentto the first XY point given in the last M/m command.</ul>Lower-case letters mean any X and Y coordinates are relativeto the current position of the path.  Each group of parameterscan be repeated in the same path segment. Each parameter afterthe starting letter is separated by whitespace and/or a single comma,and the starting letter can be separated by whitespace.This separation can be left out as long as doing so doesn'tintroduce ambiguity.  All commands set the current pointto the end of the path segment (including Z/z, which adds a linesegment if needed).</td>
         </tr>
 
     </tbody>
@@ -90,20 +95,28 @@ a two-dimensional path.</td>
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    Return value.
+    The resulting path.  If an erroroccurs while parsing the path, the path's "isIncomplete() methodwill return <code>true</code>.
 
      (Type:
 <span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
 
 </div>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arc"><span style="font-weight:lighter"></span>arc<span class="signature">(x, y, radius, startAngle, endAngle, ccw)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>|<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+    <h5>Example</h5>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line638">line 638</a>
+        <p class="code-caption">The following example creates a graphics pathfrom an SVG string describing a polyline.</p>
+
+    <pre class="prettyprint"><code>var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")</code></pre>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arc"><span style="font-weight:lighter"></span>arc<span class="signature">(x, y, radius, startAngle, endAngle, ccw)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line637">line 637</a>
      </i></small></p>
 
 <div class="description">
-    Adds path segments in the form of a circular arc to this path,using the parameterization specified in the "arc" method of theHTML Canvas 2D Context.
+    Adds path segments in the form of a circular arc to this path,
+using the parameterization specified in the "arc" method of the
+HTML Canvas 2D Context.
 </div>
 
     <h5>Parameters:</h5>
@@ -171,7 +184,7 @@ a two-dimensional path.</td>
 
             </td>
 
-            <td class="description last">Starting angle of the arc, in radius.</td>
+            <td class="description last">Starting angle of the arc, in radians.</td>
         </tr>
 
         <tr>
@@ -184,7 +197,7 @@ a two-dimensional path.</td>
 
             </td>
 
-            <td class="description last">Ending angle of the arc, in radius.</td>
+            <td class="description last">Ending angle of the arc, in radians.</td>
         </tr>
 
         <tr>
@@ -208,8 +221,7 @@ a two-dimensional path.</td>
 </dl>
 
 <h5>Returns:</h5>
-<ul>
-        <li>
+
 <div class="param-desc">
     This object.
 
@@ -217,28 +229,15 @@ a two-dimensional path.</td>
 <span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
 
 </div>
-
-</li>
-
-        <li>
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
-
-</div>
-
-</li>
-    </ul>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arcSvgTo"><span style="font-weight:lighter"></span>arcSvgTo<span class="signature">(rx, ry, rot, largeArc, sweep, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line868">line 868</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line875">line 875</a>
      </i></small></p>
 
 <div class="description">
-    Adds path segments in the form of a circular arc to this path,using the parameterization used by the SVG specification.
+    Adds path segments in the form of a circular arc to this path,
+using the parameterization used by the SVG specification.
 </div>
 
     <h5>Parameters:</h5>
@@ -263,11 +262,11 @@ a two-dimensional path.</td>
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">number</span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">X-axis radius of the ellipse that the arc willbe formed from.</td>
         </tr>
 
         <tr>
@@ -276,11 +275,11 @@ a two-dimensional path.</td>
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">number</span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">Y-axis radius of the ellipse that the arc willbe formed from.</td>
         </tr>
 
         <tr>
@@ -289,11 +288,11 @@ a two-dimensional path.</td>
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">number</span>
 
             </td>
 
-            <td class="description last">Rotation of the ellipse in degrees.</td>
+            <td class="description last">Rotation of the ellipse in degrees (clockwiseassuming the X axis points right and the Y axis pointsdown under the coordinate system).</td>
         </tr>
 
         <tr>
@@ -302,11 +301,11 @@ a two-dimensional path.</td>
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">boolean</span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">In general, there are four possible solutionsfor arcs given the start and end points and x- and y-radii.  If true,chooses an arc solution with the larger arc length; if false, smaller.</td>
         </tr>
 
         <tr>
@@ -315,11 +314,11 @@ a two-dimensional path.</td>
 
             <td class="type">
 
-<span class="param-type">*</span>
+<span class="param-type">boolean</span>
 
             </td>
 
-            <td class="description last"></td>
+            <td class="description last">If true, the arc solution chosen will runclockwise (assuming the X axis points right and the Y axis pointsdown under the coordinate system); if false, counterclockwise.</td>
         </tr>
 
         <tr>
@@ -482,7 +481,7 @@ circle touches this tangent line is the end point of the arc.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="bezierCurveTo"><span style="font-weight:lighter"></span>bezierCurveTo<span class="signature">(x, y, x2, y2, x3, y3)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line703">line 703</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line702">line 702</a>
      </i></small></p>
 
 <div class="description">
@@ -1093,7 +1092,7 @@ in units.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="quadraticCurveTo"><span style="font-weight:lighter"></span>quadraticCurveTo<span class="signature">(x, y, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line685">line 685</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line684">line 684</a>
      </i></small></p>
 
 <div class="description">
@@ -1187,7 +1186,7 @@ in units.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="rect"><span style="font-weight:lighter"></span>rect<span class="signature">(x, y, width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1064">line 1064</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1071">line 1071</a>
      </i></small></p>
 
 <div class="description">
