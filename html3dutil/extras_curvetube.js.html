@@ -93,13 +93,25 @@ function _FrenetFrames(func){
  }
 }
 _FrenetFrames.normalFromTangent=function(tangent){
- var normal=GLMath.vec3normInPlace(
-   GLMath.vec3cross(tangent,[0,0,1]));
- // if normal's length is close is 0, try another normal
- if(GLMath.vec3dot(normal,normal)&lt;_FrenetFrames._EPSILON){
-   normal=GLMath.vec3normInPlace(GLMath.vec3cross(tangent,[0,1,0]));
+ var absx=Math.abs(tangent[0])
+ var absy=Math.abs(tangent[1])
+ var absz=Math.abs(tangent[2])
+ var mx=Math.max(absx,absy,absz);
+ var normal=[0,0,0]
+ if(mx==absx){
+  normal[0]=tangent[1]
+  normal[1]=-tangent[0]
+  normal[2]=0
+ } else if(mx==absy){
+  normal[0]=0
+  normal[1]=tangent[2]
+  normal[2]=-tangent[1]
+ } else {
+  normal[0]=-tangent[2]
+  normal[1]=0
+  normal[2]=tangent[0]
  }
- return normal;
+ return GLMath.vec3normInPlace(normal);
 }
 _FrenetFrames._EPSILON=0.000001
 _FrenetFrames.prototype.getSampleAndBasisVectors=function(u){

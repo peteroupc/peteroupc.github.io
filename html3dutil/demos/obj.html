@@ -44,7 +44,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   })
   addLink("Spot",function(){
   ObjData.loadObjFromUrl("spot_quadrangulated.obj").then(function(mesh){
-    console.log(mesh)
     scene.removeShape(shape)
     scene.addShape(shape=mesh.toShape(scene).setMaterial(Material.fromTexture("spot_texture.png")));
    camera.setDistance(3)

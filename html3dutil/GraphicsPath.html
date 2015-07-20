@@ -540,7 +540,11 @@ is 1.
      </i></small></p>
 
 <div class="description">
-    Converts the subpaths in this path to triangles.Treats each subpath as a polygon even if it isn't closed.Each subpath should currently be a simple polygon (one withoutself-intersections, duplicate vertices, or holes), except if thesubpath contains duplicate vertices that appear at the start and end.
+    Converts the subpaths in this path to triangles.
+Treats each subpath as a polygon even if it isn't closed.
+Each subpath should currently be a simple polygon (one without
+self-intersections, duplicate vertices, or holes), except if the
+subpath contains duplicate vertices that appear at the start and end.
 </div>
 
     <h5>Parameters:</h5>
@@ -577,7 +581,10 @@ is 1.
 
                 </td>
 
-            <td class="description last">When curves and arcsare decomposed to line segments, thesegments will be close to the true path of the curve by thisvalue, given in units.  If null or omitted, default is 1.</td>
+            <td class="description last">When curves and arcs
+are decomposed to line segments, the
+segments will be close to the true path of the curve by this
+value, given in units.  If null or omitted, default is 1.</td>
         </tr>
 
     </tbody>
@@ -590,7 +597,11 @@ is 1.
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    Array of six-elementarrays describing a single triangle.  For each six-elementarray, the first two, next two, and last two numbers eachdescribe a vertex position of that triangle (X and Y coordinatesin that order.
+    Array of six-element
+arrays describing a single triangle.  For each six-element
+array, the first two, next two, and last two numbers each
+describe a vertex position of that triangle (X and Y coordinates
+in that order.
 
      (Type:
 <span class="param-type">Array.&lt;Array.&lt;number>></span>)
