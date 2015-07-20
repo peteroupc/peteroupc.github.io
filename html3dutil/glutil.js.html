@@ -2433,7 +2433,10 @@ Shape.prototype.setColor=function(r,g,b,a){
 }
 /**
  * Sets this shape's material to a texture with the given URL.
- * @param {string} name URL of the texture to use.
+ * @param {string} name {@link glutil.Texture} object, or a string with the
+* URL of the texture data.  In the case of a string the texture will be loaded via
+*  the JavaScript DOM's Image class.  However, this method
+*  will not load that image yet.
  * @return {glutil.Shape} This object.
  */
 Shape.prototype.setTexture=function(name){

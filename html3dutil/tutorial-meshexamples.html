@@ -16,7 +16,7 @@
 
 <article>
     <p>This page contains source code for creating various kinds of 3D models on the fly.</p>
-<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Cone">Cone</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br></p>
+<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Cone">Cone</a><br><a href="#Floor">Floor</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br></p>
 <h2>3D Line <a id=3D_Line></a></h2><p>This method creates a thin line-like 3D object.</p>
 <pre class="prettyprint source"><code>// point1, point2 - end points of the line
 // thickness - thickness of the line in units, default 1
@@ -36,6 +36,37 @@ function create3DLine(point1,point2,thickness){
 <p><img src="mesh1.png" alt="Image of a cone"></p>
 <pre class="prettyprint source"><code>function createClosedCone(radius,height,slices){
   return Meshes.createClosedCylinder(radius,0,height,slices,1);
+}</code></pre><h2>Floor <a id=Floor></a></h2><p>This method creates a flat tiled floor.</p>
+<p><img src="floor.png" alt="Image of a floor"></p>
+<pre class="prettyprint source"><code>// xStart, yStart - X and Y coordinates of the start of the floor
+// width, height - Width and height of the floor
+// tileSize - Size of each floor tile
+// z - Z-coordinate where the floor will be placed (optional,
+//  default 0)
+function makeFloor(xStart,yStart,width,height,tileSize,z){
+ if(z==null)z=0.0
+ var mesh=new Mesh()
+ var tilesX=Math.ceil(width/tileSize)
+ var tilesY=Math.ceil(height/tileSize)
+ var lastY=(height-(tilesY*tileSize))/tileSize
+ var lastX=(width-(tilesX*tileSize))/tileSize
+ if(lastY&lt;=0)lastY=1.0
+ if(lastX&lt;=0)lastX=1.0
+ mesh.normal3(0,0,1)
+ for(var y=0;y&lt;tilesY;y++){
+  var endY=(y==tilesY-1) ? 1.0-lastY : 0.0
+  var endPosY=(y==tilesY-1) ? yStart+height : yStart+(y+1)*tileSize
+  for(var x=0;x&lt;tilesX;x++){
+   var endX=(x==tilesX-1) ? lastX : 1.0
+   var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
+   mesh.mode(Mesh.TRIANGLE_STRIP)
+     .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
+     .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
+     .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
+     .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
+  }
+ }
+ return mesh
 }</code></pre><h2>Striped Disk <a id=Striped_Disk></a></h2><p>This method creates a ring or disk striped in two colors.</p>
 <p><img src="mesh2.png" alt="Image of a disk striped in red and almost-white"></p>
 <pre class="prettyprint source"><code>// inner, outer - inner and outer radius of the disk
