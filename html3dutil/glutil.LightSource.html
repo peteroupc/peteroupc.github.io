@@ -44,11 +44,11 @@
      </i></small></p>
 
 <div class="description">
-    A 3-element vector giving the color of the light when it causes a diffuse
+    A 4-element vector giving the color of the light when it causes a diffuse
 reflection, in the red, green,
 and blue components respectively.  Each component ranges from 0 to 1.
 A diffuse reflection is a reflection that scatters evenly, in every direction.
-The default is (1,1,1), or white.
+The default is (1,1,1,1), or white.
 </div>
 
 <dl class="details">
@@ -96,7 +96,7 @@ The default is (1,1,1), or white.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line648">line 648</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line653">line 653</a>
      </i></small></p>
 
 <div class="description">
@@ -140,8 +140,13 @@ of the light; the light will shine everywhere in the given direction.
 <li>If W is 1, then X, Y, and Z specify the position of the light in world
 space; the light will shine brightest, and in every direction, at the given position.</ul>
 <li><code>ambient</code> - Not used in the default shader program.
-<li><code>diffuse</code> - Diffuse color.
-<li><code>specular</code> - Specular highlight color.
+<li><code>diffuse</code> - A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
+and blue components respectively.  Each component ranges from 0 to 1.
+The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+<li><code>specular</code> - A 3- or 4-element vector giving the color of specular highlights caused by
+the light, in the red, green,
+and blue components respectively.  Each component ranges from 0 to 1.
+The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
 </ul>
 If a value is null or undefined, it is ignored.</td>
         </tr>
