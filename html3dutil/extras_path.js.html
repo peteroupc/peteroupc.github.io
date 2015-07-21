@@ -176,8 +176,8 @@ GraphicsPath._flattenQuad=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,mode,de
 
 GraphicsPath._flattenArc=function(a,t1,t2,list,flatness,mode,depth){
  var rot=a[5]
- var crot=Math.cos(rot)
- var srot=Math.sin(rot)
+ var crot = Math.cos(rot);
+ var srot = (rot>=0 &amp;&amp; rot&lt;6.283185307179586) ? (rot&lt;=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
  var ellipseInfo=[a[3],a[4],a[10],a[11],crot,srot]
  GraphicsPath._flattenArcInternal(ellipseInfo,a[1],a[2],a[8],a[9],a[12],a[13],t1,t2,list,flatness,mode,depth);
 }
@@ -600,11 +600,11 @@ GraphicsPath._areCollinear=function(x0,y0,x1,y1,x2,y2){
  * circle touches this tangent line is the start point of the arc, and if the
  * point isn't the same as the current end point, this method adds
  * a line segment connecting the two points.
- * @param {number} y1 Y-coordinate of the point described above.
+ * @param {number} y1 Y-coordinate of the point described under "x1".
  * @param {number} x2 X-coordinate of a point that, along with the
  * point (x1, y1), forms a tangent line.  The point where the
  * circle touches this tangent line is the end point of the arc.
- * @param {number} y2 Y-coordinate of the point described above.
+ * @param {number} y2 Y-coordinate of the point described under "x2".
  * @param {number} radius Radius of the circle the arc forms a part of.
  * @return {GraphicsPath} This object.
  */
@@ -642,8 +642,12 @@ GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
  * @param {number} y Y-coordinate of the circle's center.
  * @param {number} radius Radius of the circle's center.
  * @param {number} startAngle Starting angle of the arc, in radians.
+ * 0 means the positive X-axis, &amp;pi;/2 means the positive Y-axis,
+ * &amp;pi; means the negative X-axis, and &amp;pi;*1.5 means the negative Y-axis.
  * @param {number} endAngle Ending angle of the arc, in radians.
- * @param {boolean} ccw Whether the arc runs counterclockwise.
+ * @param {boolean} ccw Whether the arc runs counterclockwise
+ * (assuming the X axis points right and the Y axis points
+ * down under the coordinate system).
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
@@ -792,7 +796,7 @@ GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
  var mx=Math.max(xRadius,yRadius)
  var eccSq=1-(mn*mn)/(mx*mx)
  var ellipticIntegrand=function(x){
-  var s=Math.sin(x)
+  var s=Math.sin(x);
   return Math.sqrt(1-s*s*eccSq);
  }
  return Math.abs(mx*GraphicsPath._numIntegrate(
@@ -880,8 +884,8 @@ GraphicsPath._arcSvgToCenterParam=function(a){
  * @param {boolean} sweep If true, the arc solution chosen will run
  * clockwise (assuming the X axis points right and the Y axis points
  * down under the coordinate system); if false, counterclockwise.
- * @param {number} x2
- * @param {number} y2
+ * @param {number} x2 X-coordinate of the arc's end point.
+ * @param {number} y2 Y-coordinate of the arc's end point.
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
@@ -1538,7 +1542,8 @@ Triangulate._triangulate=function(vertices,tris){
    }
   }
  }
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 
