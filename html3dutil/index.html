@@ -131,7 +131,41 @@ illustrating a simple animation of 3D shapes.</li>
    shape.setQuaternion(q);
    // Render the scene
    scene.render();
-  });</code></pre><h2>History</h2><p>Version 1.4:</p>
+  });</code></pre><h2>History</h2><p>Version 1.5:</p>
+<ul>
+<li>Add support for specular maps and normal maps, including
+in the JSON mesh format and MTL material format.</li>
+<li>To support normal maps, extra methods for bitangents and
+tangents were added to the Mesh class.</li>
+<li>Added six new demos and modified several others</li>
+<li>Support 24-bit color versions of TGA files</li>
+<li>Scene3D now does frustum culling of its shapes</li>
+<li>Fixed vertex normal calculation in the recalcNormals()
+method of the Mesh class.</li>
+<li>Allow two-element arrays to be passed to the Mesh class's
+texCoord3() method.</li>
+<li>Add getBoundingBox method to the Mesh class.</li>
+<li>Add the setVisible method to the Shape and ShapeGroup
+classes.</li>
+<li>Allow reading OBJ files with negative reference numbers</li>
+<li>Add path.js (2D graphics paths) to extras</li>
+<li>Added an &quot;axis&quot; parameter to the SurfaceOfRevolution
+constructor and fromFunction method</li>
+<li>Add vec3negate, vec3negateInPlace, vec3mul, and plane
+and frustum methods to the GLMath class</li>
+<li>Deprecate the practice of setting shape materials directly
+to textures (calling the Shape#setMaterial method with a
+Texture object rather than a Material object).</li>
+<li>Deprecate certain properties of Transform that shouldn't
+be exposed as a public API and add corresponding methods
+for those properties</li>
+<li>Fix getPromiseResults</li>
+<li>Documentation added in many places</li>
+<li>&quot;meshexamples.md&quot; demo added and other demos edited
+or rearranged</li>
+<li>Other changes and fixes</li>
+</ul>
+<p>Version 1.4:</p>
 <ul>
 <li>Fixed camera.js issues (thanks to the user &quot;the-sz&quot; on GitHub)</li>
 <li>Added an <em>extras</em> folder with the following new scripts:<ul>

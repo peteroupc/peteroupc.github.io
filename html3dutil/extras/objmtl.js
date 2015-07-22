@@ -204,7 +204,7 @@ MtlData._getMaterial=function(mtl){
    "specularMap":specularName
   })
  }
- if(specularName){
+ if(normalName){
   ret=ret.setParams({
    "normalMap":normalName
   })
