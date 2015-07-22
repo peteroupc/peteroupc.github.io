@@ -1,34 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Module: glutil</title>
+<head><meta charset="utf-8"><title>JSDoc: Tutorial: Older Version History</title>
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Module: glutil</h1>
-
-<section>
+    <h1>Tutorial: Older Version History</h1>
+    <section>
 
 <header>
 
+    <h2>Older Version History</h2>
 </header>
 
 <article>
-    <div class="container-overview">
-
-            <div class="description">Contains classes and methods for easing development
-of WebGL applications.</div>
-
-<dl class="details">
-
-    <dt class="tag-license">License:</dt>
-    <dd class="tag-license"><ul><li>CC0-1.0</li></ul></dd>
-
-</dl>
-
-    </div>
-
+    <h2>Old Version History</h2><p>Version 1.3.1:</p>
+<ul>
+<li>Fixed touch events in some of the interactive demos</li>
+<li>Fixed issues with BezierCurve, BezierSurface</li>
+<li>Robustness improvement in autonormal feature of SurfaceEval</li>
+<li>Correctness and other fixes</li>
+</ul>
+<p>Version 1.3:</p>
+<ul>
+<li>Camera class rewritten again, but backwards compatible with
+version 1.0</li>
+<li>Add vec3add, vec3sub, vec3copy, vec3assign, vec4assign methods
+to GLMath</li>
+<li>Fix quatInvert method and optimize mat4inverseTranspose
+method of GLMath</li>
+<li>Add reverseNormals method to GLMath</li>
+<li>Add createCanvasElement, getTimePosition, and newFrames methods to GLUtil</li>
+<li>Deprecate createCanvas method of GLUtil</li>
+<li>Improve renderLoop method of GLUtil</li>
+<li>Improved specular highlights</li>
+<li>Allow coordinate arrays in vertex2 and vertex3 methods of Mesh class</li>
+<li>Resolve some autonormal degenerate cases in SurfaceEval class</li>
+<li>Add getCount method to Lights class</li>
+<li>Add face culling, auto resize, and pixel depth methods to Scene3D class</li>
+<li>Add getClientAspect method to Scene3D class</li>
+<li>Other fixes and improvements</li>
+</ul>
+<p>Version 1.2.1:</p>
+<ul>
+<li>Fix bug that occurs when a shape derived from a mesh that defines its own
+colors is drawn before a shape derived from a mesh that doesn't define its own colors</li>
+</ul>
+<p>Version 1.2:</p>
+<ul>
+<li>Support TGA textures</li>
+<li>Camera class rewritten and support added for the mouse wheel
+and middle mouse button</li>
+<li>Lines and points supported in OBJ files</li>
+<li>Support loading custom textures from byte arrays</li>
+<li>Add method to create capsule shapes in Meshes class</li>
+<li>Mesh builder (vector3 method) avoids adding degenerate triangles</li>
+<li>Optimizations and bug fixes</li>
+</ul>
+<p>Version 1.1:</p>
+<ul>
+<li>Add frame.js, a frame counter helper used in some of the demos</li>
+<li>Add quatInvert method to the GLMath class</li>
+<li>Fix texture mapping bugs</li>
+<li>Expand use of the color3 method of the Mesh class</li>
+<li>Optimize setUniforms method of the ShaderProgram class</li>
+<li>Add movePosition method of the Transform class</li>
+<li>New methods in the ShapeGroup and Scene3D classes</li>
+<li>Bug fixes</li>
+</ul>
+<p>Version 1.0:</p>
+<ul>
+<li>Adds setOrtho2DAspect and setOrthoAspect methods to Scene3D</li>
+<li>Adds mat4TransposeInPlace method and two constants to GLMath</li>
+<li>Renames fromEuler and toEuler methods in GLMath to fromTaitBryan
+and toTaitBryan</li>
+<li>Modifies the Lights class</li>
+<li>Allows alpha component in material diffuse</li>
+<li>Optimizes setting uniforms in shader programs</li>
+<li>Adds vertex2 method to Mesh class</li>
+<li>New classes: Transform and ShapeGroup</li>
+<li>Most methods that affect transforms removed, and their functionality
+now uses a new getTransform method and the Transform class</li>
+<li>Bug fixes</li>
+</ul>
+<p>Version 0.2:</p>
+<ul>
+<li>First Code Project release</li>
+</ul>
 </article>
 
 </section>

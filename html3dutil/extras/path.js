@@ -479,7 +479,7 @@ GraphicsPath._Curve.prototype.evaluate=function(u){
   if((partialLen>=segstart && partialLen<segend) ||
      (partialLen==segend && mid+1==this.segments.length)){
    var seginfo=seg[3]
-   var t=(u==1) ? segend : (partialLen-segstart)/seg[1]
+   var t=(u==1) ? 1.0 : (partialLen-segstart)/seg[1]
    if(seg[0]==GraphicsPath.LINE){
     var x=seginfo[1]+(seginfo[3]-seginfo[1])*t
     var y=seginfo[2]+(seginfo[4]-seginfo[2])*t

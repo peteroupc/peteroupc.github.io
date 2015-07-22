@@ -6,8 +6,21 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/**
+* JSON exporter of graphics meshes.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/meshjson.js"; the
+ * class is not included in the "glutil_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/meshjson.js">&lt;/script></pre>
+* @class
+*
+*/
 var MeshJSON={};
 
+/** @private */
 MeshJSON._resolvePath=function(path, name){
  // Relatively dumb for a relative path
  // resolver, but sufficient here, as it will
@@ -22,7 +35,12 @@ MeshJSON._resolvePath=function(path, name){
  }
  return ret;
 }
-
+/**
+* Converts a mesh to JSON format.
+* @param {glutil.Mesh} mesh A mesh object, as used
+* in the Public Domain HTML 3D Library.
+* @return {string} A JSON string describing the mesh.
+*/
 MeshJSON.toJSON=function(mesh){
  function colorToHex(x){
   var r=Math.round(x[0]*255);
@@ -143,7 +161,7 @@ MeshJSON._checkPath=function(path,file){
   return null;
  }
 }
-
+/** @private */
 MeshJSON._getJsonMaterial=function(mtl,path){
  var shininess=1.0;
  var ambient=null;
@@ -222,7 +240,17 @@ MeshJSON._Model=function(mesh){
   return this;
  }
 }
-
+/**
+* Loads a mesh from JSON format.
+* @param {glutil.Mesh} mesh A mesh object, as used
+* in the Public Domain HTML 3D Library.
+* @return {Promise} A promise that, when resolved, exposes an object
+* that implements the following property:
+* <ul><li><code>toShape(scene)</code> - Gets a {@link glutil.ShapeGroup}
+* describing the 3D mesh.  <code>scene</code> is a {@link glutil.Scene3D}
+* object that the shape group belongs to.
+* </ul>
+*/
 MeshJSON.loadJSON=function(url){
  function convHexColor(c){
   if(typeof c=="number"){

@@ -5,7 +5,6 @@ body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <script type="text/javascript" src="../glutil_min.js"></script>
-<script type="text/javascript" src="../extras/camera.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 <script src="https://peteroupc.github.io/colorpicker/cbox.js"></script>
@@ -76,10 +75,12 @@ function rotateVec(vec,angle){
   })
   var anim=null
   var timer={}
+  var fc=new FrameCounterDiv(scene)
   GLUtil.renderLoop(function(time){
    scene.setPerspective(45,scene.getClientAspect(),1,1000)
    var angle=360*GLUtil.getTimePosition(timer,time,6000)
    scene.setLookAt(rotateVec([0,-3,1.2],angle),[0,0,0],[0,0,1])
+   fc.update();
    scene.render();
   });
 //-->

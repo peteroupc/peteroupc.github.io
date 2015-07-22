@@ -1,0 +1,146 @@
+<head>
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../extras/camera.js"></script>
+<script type="text/javascript" src="../extras/path.js"></script>
+<script type="text/javascript" src="../extras/curvetube.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script src="https://peteroupc.github.io/colorpicker/cbox.js"></script>
+</head>
+<body>
+<p style="position:absolute;left:0;top:1em">
+<a href="javascript:sampleShape(0)">Plane</a>,
+<a href="javascript:sampleShape(1)">Extruded</a>,
+<a href="javascript:sampleShape(2)">Closed figure</a>,
+<a href="javascript:sampleShape(3)">Tube</a>
+<br>
+Color: <input type=color value="#E0E0E0" id=colorsetting>
+</p>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+var path=new GraphicsPath()
+ .moveTo(-1,1,0)
+ .lineTo(0,1)
+ .arcTo(1,1,1,0,1)
+ .lineTo(1,-1)
+ .lineTo(0,-1)
+ .arcTo(-1,-1,-1,0,1)
+ .closePath()
+
+function pathClosedFigure(path, zBottom, zTop, flatness){
+ var mesh=new Mesh()
+ mesh.merge(extrudePath(path,zBottom,zTop,flatness))
+ mesh.merge(pathFloor(path,zTop,flatness))
+ mesh.merge(pathFloor(path,zBottom,flatness).reverseWinding().reverseNormals())
+ return mesh
+}
+
+function makeTubeFromPath(path,flatness,thickness,pathSection){
+ var mesh=new Mesh()
+ var curves=path.getCurves(flatness)
+ var resolution=Math.ceil((curves.getLength()/flatness)/10)
+ var curveSection=(pathSection) ? pathSection.getCurves(flatness) : null
+ new SurfaceEval()
+    .vertex(new CurveTube(curves,thickness,curveSection))
+    .setAutoNormal(true)
+    .evalSurface(mesh,Mesh.TRIANGLES,resolution,
+      Math.ceil(2*thickness/flatness));
+  return mesh
+}
+
+function pathFloor(path, z, flatness){
+ if(z==null)z=0
+ var tris=path.getTriangles(flatness);
+ var mesh=new Mesh().mode(Mesh.TRIANGLES)
+   .normal3(0,0,1);
+ for(var i=0;i<tris.length;i++){
+  var tri=tris[i]
+  mesh.vertex3(tri[0],tri[1],z)
+   .vertex3(tri[2],tri[3],z)
+   .vertex3(tri[4],tri[5],z)
+ }
+ return mesh
+}
+function extrudePath(path, zStart, zEnd, flatness){
+ var lines=path.getLines(flatness)
+ var mesh=new Mesh().mode(Mesh.TRIANGLES)
+ var z1=Math.min(zStart,zEnd)
+ var z2=Math.max(zStart,zEnd)
+ for(var i=0;i<lines.length;i++){
+  var line=lines[i]
+  var dx=line[2]-line[0]
+  var dy=line[3]-line[1]
+  var dot=dx*dx+dy*dy
+  if(dot==0)continue;
+  mesh.vertex3(line[0],line[1],z1)
+   .vertex3(line[0],line[1],z2)
+   .vertex3(line[2],line[3],z1)
+   .vertex3(line[2],line[3],z1)
+   .vertex3(line[0],line[1],z2)
+   .vertex3(line[2],line[3],z2)
+ }
+ mesh.recalcNormals()
+ return mesh
+}
+function createSampleShape(index){
+ switch(index){
+  case 0:
+   return pathFloor(path,0,0.01);
+  case 1:
+   return extrudePath(path,-0.2,0.2,0.01);
+  case 2:
+   return pathClosedFigure(path,-0.25,0.25,0.01);
+  case 3:
+   return makeTubeFromPath(path,0.01,0.1);
+  default:
+   return new Mesh();
+ }
+}
+function sampleShape(num){
+ if(shape)scene.removeShape(shape);
+ var cs=document.getElementById("colorsetting").value
+ scene.addShape(shape=scene.makeShape(createSampleShape(num)).setColor(cs))
+}
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white");
+  var camera=new Camera(scene,45,1,1000).setDistance(5)
+   .turnVertical(-90)
+  var xyz=new ShapeGroup();
+  var pc=new FrameCounterDiv(scene)
+  var shape=null;
+  var axisline=scene.makeShape(Meshes.createCapsule(0.005,10,6,4));
+  var zaxis=axisline.copy().setColor("blue")
+  var yaxis=axisline.copy().setColor("green");
+  yaxis.getTransform().setOrientation(90,1,0,0);
+  var xaxis=axisline.copy().setColor("red");
+  xaxis.getTransform().setOrientation(90,0,1,0);
+  document.getElementById("colorsetting").addEventListener("change",
+   function(e){ if(shape)shape.setColor(e.target.value) });
+  xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
+  scene.addShape(xyz);
+  sampleShape(0);
+  GLUtil.renderLoop(function(){
+   pc.update();
+   camera.update();
+   scene.render();
+  });
+//-->
+</script>
+</body>

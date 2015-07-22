@@ -1,33 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Module: glutil</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: MeshJSON</title>
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Module: glutil</h1>
+    <h1>Class: MeshJSON</h1>
 
 <section>
 
 <header>
+
+        <h2>
+        MeshJSON
+        </h2>
 
 </header>
 
 <article>
     <div class="container-overview">
 
-            <div class="description">Contains classes and methods for easing development
-of WebGL applications.</div>
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="MeshJSON"><span style="font-weight:lighter"></span>new MeshJSON<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_meshjson.js.html">extras/meshjson.js</a>, <a href="extras_meshjson.js.html#line21">line 21</a>
+     </i></small></p>
+
+<div class="description">
+    JSON exporter of graphics meshes.
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library. <p>
+To use this class, you must include the script "extras/meshjson.js"; the
+class is not included in the "glutil_min.js" file which makes up
+the HTML 3D Library.  Example:<pre>
+&lt;script type="text/javascript" src="extras/meshjson.js">&lt;/script></pre>
+</div>
 
 <dl class="details">
-
-    <dt class="tag-license">License:</dt>
-    <dd class="tag-license"><ul><li>CC0-1.0</li></ul></dd>
 
 </dl>
 
     </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".loadJSON"><span style="font-weight:lighter">(static) </span>loadJSON<span class="signature">(mesh)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_meshjson.js.html">extras/meshjson.js</a>, <a href="extras_meshjson.js.html#line254">line 254</a>
+     </i></small></p>
+
+<div class="description">
+    Loads a mesh from JSON format.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td><code>mesh</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
+
+            </td>
+
+            <td class="description last">A mesh object, as used
+in the Public Domain HTML 3D Library.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that, when resolved, exposes an object
+that implements the following property:
+<ul><li><code>toShape(scene)</code> - Gets a <a href="glutil.ShapeGroup.html">glutil.ShapeGroup</a>
+describing the 3D mesh.  <code>scene</code> is a <a href="glutil.Scene3D.html">glutil.Scene3D</a>
+object that the shape group belongs to.
+</ul>
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".toJSON"><span style="font-weight:lighter">(static) </span>toJSON<span class="signature">(mesh)</span><span style="font-weight:lighter"> &rarr; {string}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_meshjson.js.html">extras/meshjson.js</a>, <a href="extras_meshjson.js.html#line44">line 44</a>
+     </i></small></p>
+
+<div class="description">
+    Converts a mesh to JSON format.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td><code>mesh</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
+
+            </td>
+
+            <td class="description last">A mesh object, as used
+in the Public Domain HTML 3D Library.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A JSON string describing the mesh.
+
+     (Type:
+<span class="param-type">string</span>)
+
+</div>
 
 </article>
 

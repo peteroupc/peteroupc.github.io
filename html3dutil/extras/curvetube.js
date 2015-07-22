@@ -235,7 +235,6 @@ CurveTube.prototype.evaluate=function(u, v){
   var vpos=this.sweptCurve.evaluate(v);
   t1 = vpos[0];
   t2 = vpos[1];
-  var t3=vpos[2];
   sx = sampleX+(-basisVectors[0]*t1+basisVectors[3]*t2)*this.thickness;
   sy = sampleY+(-basisVectors[1]*t1+basisVectors[4]*t2)*this.thickness;
   sz = sampleZ+(-basisVectors[2]*t1+basisVectors[5]*t2)*this.thickness;
