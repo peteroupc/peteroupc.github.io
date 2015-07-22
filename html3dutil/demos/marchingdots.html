@@ -42,17 +42,19 @@ function getPoints(curves, numPoints, offset){
  return points
 }
 
-function convexFan(path){
- var mesh=new Mesh().mode(Mesh.TRIANGLE_FAN).normal3(0,0,1)
- var lines=path.getLines(0.5)
- if(lines.length==0)return mesh
- mesh.vertex3(lines[0][0],lines[0][1],0)
- for(var i=0;i<lines.length;i++){
-  mesh.vertex3(lines[i][2],lines[i][3],0)
+function pathFloor(path, z, flatness){
+ if(z==null)z=0
+ var tris=path.getTriangles(flatness);
+ var mesh=new Mesh().mode(Mesh.TRIANGLES)
+   .normal3(0,0,1);
+ for(var i=0;i<tris.length;i++){
+  var tri=tris[i]
+  mesh.vertex3(tri[0],tri[1],z)
+   .vertex3(tri[2],tri[3],z)
+   .vertex3(tri[4],tri[5],z)
  }
  return mesh
 }
-
 function pointMarch(
   group, // shape group containing the marching points
   t // value from 0 to 1 specifying the point in time of the animation
@@ -76,8 +78,6 @@ var points=path.getPoints(50,0.2)
   var group=new ShapeGroup()
   scene.setDirectionalLight(0,[0,-3,1.2],[1,1,1])
   scene.setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
-  scene.loadAndMapTextures(["461223191.jpg"]).then(function(results){
-   if(results.failures.length>0)return
    var mesh=null
    var sphere=scene.makeShape(Meshes.createSphere(0.2,16,8)).setColor("blue")
    for(var i=0;i<50;i++){
@@ -85,9 +85,8 @@ var points=path.getPoints(50,0.2)
    }
    pointMarch(group,0)
    scene.addShape(
-    scene.makeShape(convexFan(path)).setColor("#eeeeee"))
+    scene.makeShape(pathFloor(path)).setColor("#eeeeee"))
    scene.addShape(group)
-  })
   var anim=null
   var timer={}
   GLUtil.renderLoop(function(time){

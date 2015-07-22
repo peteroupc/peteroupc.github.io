@@ -481,8 +481,8 @@ GraphicsPath._Curve.prototype.evaluate=function(u){
    var seginfo=seg[3]
    var t=(u==1) ? segend : (partialLen-segstart)/seg[1]
    if(seg[0]==GraphicsPath.LINE){
-    var x=seginfo[1]+seginfo[3]*t
-    var y=seginfo[2]+seginfo[4]*t
+    var x=seginfo[1]+(seginfo[3]-seginfo[1])*t
+    var y=seginfo[2]+(seginfo[4]-seginfo[2])*t
     return [x,y,0]
    } else {
     var cumulativeLengths=seg[5]
@@ -528,7 +528,8 @@ GraphicsPath._Curve.prototype.evaluate=function(u){
 * that lie on the path or as a parameter for one of
 * the {@link CurveEval} methods, in the
 * {@link CurveTube} class, or any other class that
-* accepts parametric curves.
+* accepts parametric curves.<p>
+* The return value doesn't track changes to the path.
 * @param {number} [flatness] When curves and arcs
 * are decomposed to line segments for the purpose of
 * calculating their length, the
@@ -671,9 +672,9 @@ GraphicsPath.prototype.closePath=function(){
  return this;
 }
 /**
- * Moves the current start position and end position.
- * @param {number} x
- * @param {number} y
+ * Moves the current start position and end position to the given position.
+ * @param {number} x X-coordinate of the position.
+ * @param {number} y Y-coordinate of the position.
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.moveTo=function(x,y){
@@ -1556,12 +1557,9 @@ Triangulate._vertClass=function(verts,index,ori){
  }
 }
 Triangulate._triOrient=function(vertices,i1,i2,i3){
- var acx=vertices[i1]-vertices[i3]
- var acy=vertices[i1+1]-vertices[i3+1]
- var bcx=vertices[i2]-vertices[i3]
- var bcy=vertices[i2+1]-vertices[i3+1]
- var cross=acx*bcy-acy*bcx
- return cross==0 ? 0 : (cross<0 ? -1 : 1)
+ var ori=vertices[i1]*vertices[i2+1]-vertices[i1+1]*vertices[i2]
+ ori+=vertices[i3]*vertices[i1+1]-vertices[i1+1]*vertices[i1]
+ return ori==0 ? 0 : (ori<0 ? -1 : 1)
 }
 Triangulate._triangulate=function(vertices,tris){
  if(vertices.length<6){
