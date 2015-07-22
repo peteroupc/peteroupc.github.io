@@ -262,7 +262,7 @@ GraphicsPath._length=function(a,flatness){
    var flat=[]
    var len=0
    GraphicsPath._flattenCubic(a[1],a[2],a[3],a[4],
-     a[5],a[6],a[7],a[8],0.0,1.0,flat,flatness*4,1)
+     a[5],a[6],a[7],a[8],0.0,1.0,flat,flatness*2,1)
    for(var j=0;j<flat.length;j+=3){
     len+=flat[j+2]
    }
@@ -322,9 +322,9 @@ GraphicsPath.prototype.getLines=function(flatness){
      s[5],s[6],0.0,1.0,ret,flatness*2,0)
   } else if(s[0]==GraphicsPath.CUBIC){
    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
-     s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*4,0)
+     s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*2,0)
   } else if(s[0]==GraphicsPath.ARC){
-   GraphicsPath._flattenArc(s,0.0,1.0,ret,flatness*4,0)
+   GraphicsPath._flattenArc(s,0.0,1.0,ret,flatness*2,0)
   } else if(s[0]!=GraphicsPath.CLOSE){
    ret.push([s[1],s[2],s[3],s[4]])
   }
@@ -364,13 +364,13 @@ GraphicsPath.prototype._getSubpaths=function(flatness){
    }
   } else if(s[0]==GraphicsPath.CUBIC){
    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
-     s[5],s[6],s[7],s[8],0.0,1.0,tmp,flatness*4,0)
+     s[5],s[6],s[7],s[8],0.0,1.0,tmp,flatness*2,0)
    for(var j=0;j<tmp.length;j++){
     curPath.push(tmp[j][2])
     curPath.push(tmp[j][3])
    }
   } else if(s[0]==GraphicsPath.ARC){
-   GraphicsPath._flattenArc(s,0.0,1.0,tmp,flatness*4,0)
+   GraphicsPath._flattenArc(s,0.0,1.0,tmp,flatness*2,0)
    for(var j=0;j<tmp.length;j++){
     curPath.push(tmp[j][2])
     curPath.push(tmp[j][3])
@@ -407,6 +407,220 @@ GraphicsPath.prototype.getTriangles=function(flatness){
  }
  return tris
 }
+GraphicsPath._CurveList=function(curves){
+ this.curves=curves
+ this.cumulativeLengths=[]
+ var totalLength=0
+ for(var i=0;i<this.curves.length;i++){
+  this.cumulativeLengths.push(totalLength)
+  totalLength+=this.curves[i].totalLength
+ }
+ this.totalLength=totalLength;
+}
+GraphicsPath._CurveList.prototype.getCurves=function(){
+ return this.curves;
+}
+GraphicsPath._CurveList.prototype.getLength=function(){
+ return this.totalLength;
+}
+GraphicsPath._CurveList.prototype.evaluate=function(u){
+ if(u<0)u=0;
+ if(u>1)u=1;
+ if(this.curves.length==0)return [0,0,0]
+ if(this.curves.length==1)return this.curves[0].evaluate(u)
+ var partialLen=u*this.totalLength;
+ var left=0
+ var right=this.segments.length;
+ while(left<=right){
+  var mid=((left+right)/2)|0
+  var seg=this.curves[mid]
+  var segstart=this.cumulativeLengths[mid]
+  var segend=segstart+seg.totalLength
+  if((partialLen>=segstart && partialLen<segend) ||
+     (partialLen==segend && mid+1==this.curves.length)){
+   var t=(partialLen-segstart)/seg.totalLength
+   return seg.evaluate(t);
+  } else if(partialLen<segstart){
+   // curve is behind
+   right=mid-1
+  } else {
+   // curve is ahead
+   left=mid+1
+  }
+ }
+ return null;
+}
+
+GraphicsPath._Curve=function(segments){
+ this.segments=segments
+ var totalLength=0
+ for(var i=0;i<this.segments.length;i++){
+  totalLength+=this.segments[i][1]
+ }
+ this.totalLength=totalLength;
+}
+GraphicsPath._Curve.prototype.getLength=function(){
+ return this.totalLength;
+}
+GraphicsPath._Curve.prototype.evaluate=function(u){
+ if(u<0)u=0;
+ if(u>1)u=1;
+ if(this.segments.length==0)return [0,0,0]
+ var partialLen=u*this.totalLength;
+ var left=0
+ var right=this.segments.length;
+ while(left<=right){
+  var mid=((left+right)/2)|0
+  var seg=this.segments[mid]
+  var segstart=seg[2]
+  var segend=segstart+seg[1]
+  if((partialLen>=segstart && partialLen<segend) ||
+     (partialLen==segend && mid+1==this.segments.length)){
+   var seginfo=seg[3]
+   var t=(u==1) ? segend : (partialLen-segstart)/seg[1]
+   if(seg[0]==GraphicsPath.LINE){
+    var x=seginfo[1]+seginfo[3]*t
+    var y=seginfo[2]+seginfo[4]*t
+    return [x,y,0]
+   } else {
+    var cumulativeLengths=seg[5]
+    var segParts=seg[4]
+    var segPartialLen=partialLen-segstart
+    var segLeft=0
+    var segRight=cumulativeLengths.length
+    while(segLeft<=segRight){
+     var segMid=((segLeft+segRight)/2)|0
+     var partStart=cumulativeLengths[segMid]
+     var partIndex=segMid*3
+     var partLength=segParts[partIndex+2]
+     var partEnd=partStart+partLength
+     if(segPartialLen>=partStart && segPartialLen<=partEnd){
+      var tStart=segParts[partIndex]
+      var tEnd=segParts[partIndex+1]
+      var partT=(u==1) ? 1.0 : tStart+((segPartialLen-partStart)/partLength)*(tEnd-tStart)
+      var point=GraphicsPath._point(seginfo,partT)
+      point[2]=0
+      return point
+     } else if(segPartialLen<partStart){
+      segRight=segMid-1
+     } else {
+      segLeft=segMid+1
+     }
+    }
+    throw new Error("not implemented yet")
+   }
+  } else if(partialLen<segstart){
+   // segment is behind
+   right=mid-1
+  } else {
+   // segment is ahead
+   left=mid+1
+  }
+ }
+ return null;
+}
+/** @private */
+GraphicsPath.prototype._makeCurves=function(flatness){
+}
+
+/**
+* Gets an object for the curve described by this path.
+* The resulting curve can be used to retrieve the points
+* that lie on the path or as a parameter for one of
+* the {@link glutil.CurveEval} methods, in the
+* {@link CurveTube} class, or any other class that
+* accepts parametric curves.
+* @param {number} [flatness] When curves and arcs
+* are decomposed to line segments for the purpose of
+* calculating their length, the
+* segments will be close to the true path of the curve by this
+* value, given in units.  If null or omitted, default is 1.  This
+is only used to make the arc-length parameterization more
+accurate if the path contains curves or arcs.
+* @return {object} An object that implements
+* the following methods:<li>
+<li><code>getCurves()</code> - Returns a list of curves described
+* by this path.  The list will contain one object for each disconnected
+portion of the path. For example, if the path contains one polygon, the list will contain
+one curve object.   And if the path is empty, the list will be empty too.
+<p>Each object will have the following methods:<ul>
+<li><code>getLength()</code> - Returns the total length of the curve,
+in units.
+<li><code>evaluate(u)</code> - Takes one parameter, "u", which
+ranges from 0 to 1, depending on how far the point is from the start or
+the end of the path (similar to arc-length parameterization).
+The function returns a 3-element array containing
+the X, Y, and Z coordinates of the point lying on the curve at the given
+"u" position (however, the z will always be 0 since paths can currently
+only be 2-dimensional).
+</ul>
+<li><code>getLength()</code> - Returns the total length of the path,
+in units.
+<li><code>evaluate(u)</code> - Has the same effect as the "evaluate"
+method for each curve, but applies to the path as a whole.
+Note that calling this "evaluate" method is only
+recommended when drawing the path as a set of points, not lines, since
+the path may contain several disconnected parts.
+</ul>
+*/
+GraphicsPath.prototype.getCurves=function(flatness){
+ var subpaths=[]
+ var curves=[]
+ if(flatness==null)flatness=1.0
+ var lastptx=0
+ var lastpty=0
+ var first=true
+ var curPath=null
+ var curLength=0
+ for(var i=0;i<this.segments.length;i++){
+  var s=this.segments[i]
+  var len=0
+  var startpt=GraphicsPath._startPoint(s)
+  var endpt=GraphicsPath._endPoint(s)
+  if(s[0]!=GraphicsPath.CLOSE){
+   if(first || lastptx!=startpt[0] || lastpty!=startpt[1]){
+    curPath=[]
+    curLength=0
+    subpaths.push(curPath)
+    first=false
+   }
+   lastptx=endpt[0]
+   lastpty=endpt[1]
+  }
+  if(s[0]==GraphicsPath.QUAD ||
+      s[0]==GraphicsPath.CUBIC ||
+      s[0]==GraphicsPath.ARC){
+   var pieces=[]
+   var cumulativeLengths=[]
+   var len=0
+   if(s[0]==GraphicsPath.QUAD){
+    GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
+      s[5],s[6],0.0,1.0,pieces,flatness*2,1)
+   } else if(s[0]==GraphicsPath.CUBIC){
+    GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
+      s[5],s[6],s[7],s[8],0.0,1.0,pieces,flatness*2,1)
+   } else if(s[0]==GraphicsPath.ARC){
+    GraphicsPath._flattenArc(s,0.0,1.0,pieces,flatness*2,1)
+   }
+   for(var j=0;j<pieces.length;j+=3){
+    cumulativeLengths.push(len)
+    len+=pieces[j+2]
+   }
+   curPath.push([s[0],len,curLength,s.slice(0),pieces,cumulativeLengths])
+   curLength+=len
+  } else if(s[0]==GraphicsPath.LINE){
+   var dx=s[3]-s[1]
+   var dy=s[4]-s[2]
+   var len=Math.sqrt(dx*dx+dy*dy)
+   curPath.push([s[0],len,curLength,s.slice(0)])
+   curLength+=len
+  }
+ }
+ for(var i=0;i<subpaths.length;i++){
+  curves.push(new GraphicsPath._Curve(subpaths[i]))
+ }
+ return new GraphicsPath._CurveList(curves)
+}
 
 /**
 * Gets an array of points evenly spaced across the length
@@ -432,92 +646,14 @@ GraphicsPath.prototype.getPoints=function(numPoints,flatness){
  if(numPoints==2){
   return [this._start(),this._end()]
  }
- if(flatness==null)flatness=1.0
- var steps=numPoints-1
- var lengths=[]
- var flattenedCurves=[]
- var curFlat=0
- var totalLength=0
- var curLength=0
- for(var i=0;i<this.segments.length;i++){
-  var s=this.segments[i]
-  var len=0
-  if(s[0]==GraphicsPath.QUAD){
-   var flat=[]
-   GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
-     s[5],s[6],0.0,1.0,flat,flatness*2,1)
-   for(var j=0;j<flat.length;j+=3){
-    len+=flat[j+2]
-   }
-   flattenedCurves.push(flat)
-  } else if(s[0]==GraphicsPath.CUBIC){
-   var flat=[]
-   GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
-     s[5],s[6],s[7],s[8],0.0,1.0,flat,flatness*4,1)
-   for(var j=0;j<flat.length;j+=3){
-    len+=flat[j+2]
-   }
-   flattenedCurves.push(flat)
-  } else if(s[0]==GraphicsPath.ARC){
-   var flat=[]
-   GraphicsPath._flattenArc(s,0.0,1.0,flat,flatness*4,1)
-   for(var j=0;j<flat.length;j+=3){
-    len+=flat[j+2]
-   }
-   flattenedCurves.push(flat)
-  } else {
-   len=GraphicsPath._length(s,0)
-  }
-  lengths.push(len)
-  totalLength+=len
+ var curves=this.getCurves(flatness)
+ var points=[]
+ for(var i=0;i<numPoints;i++){
+  var t=i/(numPoints-1)
+  var ev=curves.evaluate(t)
+  points.push([ev[0],ev[1]])
  }
- var stepLength=totalLength/(numPoints-1);
- var nextStep=stepLength
- var count=1
- var ret=[this._start()]
- for(var i=0;i<this.segments.length;i++){
-  var s=this.segments[i]
-  var segLength=lengths[i]
-  if(s[0]==GraphicsPath.QUAD || s[0]==GraphicsPath.CUBIC ||
-     s[0]==GraphicsPath.ARC){
-   var flatCurve=flattenedCurves[curFlat]
-   if(segLength>0){
-    for(var j=0;j<flatCurve.length;j+=3){
-     var flatSegLength=flatCurve[j+2]
-     if(flatSegLength>0){
-      var endLen=curLength+flatSegLength;
-      while(endLen>=nextStep && count<numPoints-1){
-       var t=(flatSegLength-(endLen-nextStep))/flatSegLength
-       t=flatCurve[j]+(flatCurve[j+1]-flatCurve[j])*t;
-       ret.push(GraphicsPath._point(s,t));
-       count++
-       nextStep+=stepLength
-       if(count>=numPoints-1)
-        break;
-      }
-     }
-     curLength+=flatSegLength
-    }
-   }
-   curFlat++;
-  } else if(s[0]==GraphicsPath.LINE && segLength>0){
-   var endLen=curLength+segLength;
-   while(endLen>=nextStep && count<numPoints-1){
-    var t=(segLength-(endLen-nextStep))/segLength
-    ret.push(GraphicsPath._point(s,t));
-    count++
-    nextStep+=stepLength
-    if(count>=numPoints-1)
-     break;
-   }
-   curLength+=segLength
-  }
- }
- while(ret.length<numPoints-1){
-  ret.push(ret[ret.length-1])
- }
- ret.push(this._end())
- return ret
+ return points
 }
 /**
  * Makes this path closed.  Adds a line segment to the
@@ -678,11 +814,12 @@ return this.lineTo(startX,startY)
 }
 
 /**
- * Not documented yet.
- * @param {number} x
- * @param {number} y
- * @param {number} x2
- * @param {number} y2
+ * Adds a quadratic B&eacute;zier curve to this path starting
+ * at this path's current position.
+ * @param {number} x X-coordinate of the curve's control point.
+ * @param {number} y Y-coordinate of the curve's control point.
+ * @param {number} x2 X-coordinate of the curve's end point.
+ * @param {number} y2 Y-coordinate of the curve's end point.
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
@@ -694,13 +831,14 @@ GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
  return this
 }
 /**
- * Not documented yet.
+ * Adds a cubic B&eacute;zier curve to this path starting
+ * at this path's current position.
  * @param {number} x
  * @param {number} y
  * @param {number} x2
  * @param {number} y2
- * @param {number} x3
- * @param {number} y3
+ * @param {number} x3 X-coordinate of the curve's end point.
+ * @param {number} y3 Y-coordinate of the curve's end point.
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
@@ -857,7 +995,7 @@ GraphicsPath._arcSvgToCenterParam=function(a){
 }
 
 /**
- * Adds path segments in the form of a circular arc to this path,
+ * Adds path segments in the form of an elliptical arc to this path,
  * using the parameterization used by the SVG specification.
  * @param {number} rx X-axis radius of the ellipse that the arc will
  * be formed from.
@@ -867,7 +1005,7 @@ GraphicsPath._arcSvgToCenterParam=function(a){
  * assuming the X axis points right and the Y axis points
  * down under the coordinate system).
  * @param {boolean} largeArc In general, there are four possible solutions
- * for arcs given the start and end points and x- and y-radii.  If true,
+ * for arcs given the start and end points, rotation, and x- and y-radii.  If true,
  * chooses an arc solution with the larger arc length; if false, smaller.
  * @param {boolean} sweep If true, the arc solution chosen will run
  * clockwise (assuming the X axis points right and the Y axis points
@@ -1401,7 +1539,7 @@ Triangulate._vertClass=function(verts,index,ori){
  var prevVert=verts[index+2]
  var nextVert=verts[index+3]
  var curori=Triangulate._triOrient(verts,prevVert,index,nextVert)
- if(curori==0 || curori==-1){
+ if(curori==0 || curori==ori){
   // This is a convex vertex, find out whether this
   // is an ear
   var prevVert=verts[index+2]
@@ -1446,8 +1584,12 @@ Triangulate._triangulate=function(vertices,tris){
  }
  // Find the prevailing orientation of the polygon
  var ori=0
- for(var i=0;i<vertices.length-2;i+=2){
-  ori+=vertices[0]*vertices[3]-vertices[1]*vertices[2];
+ for(var i=0;i<vertices.length;i+=2){
+  if(i==vertices.length-2){
+   ori+=vertices[i]*vertices[1]-vertices[i+1]*vertices[0];
+  } else {
+   ori+=vertices[i]*vertices[i+3]-vertices[i+1]*vertices[i+2];
+  }
  }
  ori=(ori==0) ? 0 : (ori<0 ? -1 : 1);
  if(ori==0){
