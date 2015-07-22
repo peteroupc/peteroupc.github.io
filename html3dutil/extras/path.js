@@ -214,7 +214,9 @@ GraphicsPath.prototype._end=function(){
 }
 /**
  * Returns this path in the form of a string in SVG path format.
- * @return {string} Return value. */
+ * See {@link GraphicsPath.fromString}.
+ * @return {string} A string describing the path in the SVG path
+  format. */
 GraphicsPath.prototype.toString=function(){
  var oldpos=null
  var ret=""
@@ -397,7 +399,7 @@ GraphicsPath.prototype._getSubpaths=function(flatness){
 * arrays describing a single triangle.  For each six-element
 * array, the first two, next two, and last two numbers each
 * describe a vertex position of that triangle (X and Y coordinates
-* in that order.
+* in that order).
 */
 GraphicsPath.prototype.getTriangles=function(flatness){
  var subpaths=this._getSubpaths(flatness)
@@ -519,15 +521,12 @@ GraphicsPath._Curve.prototype.evaluate=function(u){
  }
  return null;
 }
-/** @private */
-GraphicsPath.prototype._makeCurves=function(flatness){
-}
 
 /**
-* Gets an object for the curve described by this path.
-* The resulting curve can be used to retrieve the points
+* Gets an object for the curves described by this path.
+* The resulting object can be used to retrieve the points
 * that lie on the path or as a parameter for one of
-* the {@link glutil.CurveEval} methods, in the
+* the {@link CurveEval} methods, in the
 * {@link CurveTube} class, or any other class that
 * accepts parametric curves.
 * @param {number} [flatness] When curves and arcs
@@ -538,7 +537,7 @@ GraphicsPath.prototype._makeCurves=function(flatness){
 is only used to make the arc-length parameterization more
 accurate if the path contains curves or arcs.
 * @return {object} An object that implements
-* the following methods:<li>
+* the following methods:<ul>
 <li><code>getCurves()</code> - Returns a list of curves described
 * by this path.  The list will contain one object for each disconnected
 portion of the path. For example, if the path contains one polygon, the list will contain

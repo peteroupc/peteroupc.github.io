@@ -24,37 +24,6 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-function makeFloor(xStart,yStart,width,height,tileSize,z){
- if(z==null)z=0.0
- var mesh=new Mesh()
- var tilesX=Math.ceil(width/tileSize)
- var tilesY=Math.ceil(height/tileSize)
- var lastY=(height-(tilesY*tileSize))/tileSize
- var lastX=(width-(tilesX*tileSize))/tileSize
- if(lastY<=0)lastY=1.0
- if(lastX<=0)lastX=1.0
- mesh.normal3(0,0,1)
- for(var y=0;y<tilesY;y++){
-  var endY=(y==tilesY-1) ? 1.0-lastY : 0.0
-  var endPosY=(y==tilesY-1) ? yStart+height : yStart+(y+1)*tileSize
-  for(var x=0;x<tilesX;x++){
-   var endX=(x==tilesX-1) ? lastX : 1.0
-   var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
-   mesh.mode(Mesh.TRIANGLE_STRIP)
-     .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
-     .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
-     .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
-     .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
-  }
- }
- return mesh
-}
-
-function rotateVec(vec,angle){
- return GLMath.mat4transformVec3(
-   GLMath.mat4rotated(angle,0,0,1),vec);
-}
-
 // Path taken from a public domain SVG icon, which was
 // created by Jakub Steiner
 var path=GraphicsPath.fromString(
@@ -71,6 +40,17 @@ function getPoints(curves, numPoints, offset){
   }
  }
  return points
+}
+
+function convexFan(path){
+ var mesh=new Mesh().mode(Mesh.TRIANGLE_FAN).normal3(0,0,1)
+ var lines=path.getLines(0.5)
+ if(lines.length==0)return mesh
+ mesh.vertex3(lines[0][0],lines[0][1],0)
+ for(var i=0;i<lines.length;i++){
+  mesh.vertex3(lines[i][2],lines[i][3],0)
+ }
+ return mesh
 }
 
 function pointMarch(
@@ -105,7 +85,7 @@ var points=path.getPoints(50,0.2)
    }
    pointMarch(group,0)
    scene.addShape(
-    scene.makeShape(makeFloor(0,0,50,50,10)).setColor("#eeeeee"))
+    scene.makeShape(convexFan(path)).setColor("#eeeeee"))
    scene.addShape(group)
   })
   var anim=null
