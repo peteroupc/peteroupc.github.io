@@ -20,7 +20,7 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
   var scene=new Scene3D(document.getElementById("canvas"));
-  scene.disableLighting();
+  scene.setDirectionalLight(0,[0,0,-1])
   var mesh=new Mesh()
     .mode(Mesh.TRIANGLES)
     .color3("red")

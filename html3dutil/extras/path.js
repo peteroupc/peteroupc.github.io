@@ -426,10 +426,10 @@ GraphicsPath._CurveList.prototype.getLength=function(){
  return this.totalLength;
 }
 GraphicsPath._CurveList.prototype.evaluate=function(u){
- if(u<0)u=0;
- if(u>1)u=1;
  if(this.curves.length==0)return [0,0,0]
  if(this.curves.length==1)return this.curves[0].evaluate(u)
+ if(u<0)u=0;
+ if(u>1)u=1;
  var partialLen=u*this.totalLength;
  var left=0
  var right=this.segments.length;
@@ -456,17 +456,29 @@ GraphicsPath._CurveList.prototype.evaluate=function(u){
 GraphicsPath._Curve=function(segments){
  this.segments=segments
  var totalLength=0
+ var isClosed=false
  for(var i=0;i<this.segments.length;i++){
   totalLength+=this.segments[i][1]
  }
+ if(this.segments.length>0){
+  var startpt=GraphicsPath._startPoint(this.segments[0][3])
+  var endpt=GraphicsPath._endPoint(this.segments[this.segments.length-1][3])
+  isClosed=(startpt[0]==endpt[0] && startpt[1]==endpt[1])
+ }
+ this._isClosed=isClosed
  this.totalLength=totalLength;
 }
 GraphicsPath._Curve.prototype.getLength=function(){
  return this.totalLength;
 }
 GraphicsPath._Curve.prototype.evaluate=function(u){
- if(u<0)u=0;
- if(u>1)u=1;
+ if(this._isClosed){
+  if(u<0)u+=Math.ceil(u)
+  else if(u>1)u-=Math.floor(u)
+ } else {
+  if(u<0)u=0;
+  else if(u>1)u=1;
+ }
  if(this.segments.length==0)return [0,0,0]
  var partialLen=u*this.totalLength;
  var left=0

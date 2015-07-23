@@ -123,6 +123,7 @@ function ClockShape(scene){
    clock.update();
    pc.update();
    camera.update();
+   scene.setDirectionalLight(0,camera.getPosition());
    scene.render();
   });
 //-->

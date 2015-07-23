@@ -184,6 +184,7 @@ function frustumMesh(frustum){
   // Set up the render loop
   GLUtil.renderLoop(function(){
    camera.update();
+   scene.setDirectionalLight(0,camera.getPosition());
    // Render the scene
    scene.render();
   });

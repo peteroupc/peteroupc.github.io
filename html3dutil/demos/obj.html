@@ -52,6 +52,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   startfunc()
   GLUtil.renderLoop(function(){
    camera.update();
+   scene.setDirectionalLight(0,camera.getPosition());
    scene.render();
   });
 //-->

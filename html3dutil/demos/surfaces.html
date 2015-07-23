@@ -310,6 +310,7 @@ addLink("B-Spline Surface",function(){
   GLUtil.renderLoop(function(){
    pc.update();
    camera.update();
+   scene.setDirectionalLight(0,camera.getPosition());
    scene.render();
   });
 //-->
