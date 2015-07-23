@@ -26,37 +26,17 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @alias glutil.Transform
 */
 function Transform(){
-  /**
-  * A three-element array giving the scaling for an object's width,
-  * height, and depth, respectively.
-  * For each component, 1 means no scaling.
-  * The value given here is informational only and should not be modified directly.
-  * Use the setScale method to set this value.
-  * @deprecated Will no longer be exposed as a public API in the next
-  * major version.  Use the getScale() method instead.
-  * @default
-  */
+  /** @private */
   this.scale=[1,1,1];
-  /**
-  * A three-element array giving the X, Y, and Z coordinates of the position
-  * of an object relative to its original position.
-  * The value given here is informational only and should not be modified directly.
-  * Use the setPosition method to set this value.
-  * @deprecated Will no longer be exposed as a public API in the next
-  * major version..  Use the getPosition() method instead.
-  * @default
-  */
+  /** @private */
   this.position=[0,0,0];
-  /**
-   * The rotation of an object in the form of a [quaternion]{@tutorial glmath}.
-   * The value given here is informational only and should not be modified directly.
-   * Use the setOrientation or setQuaternion method to set this value.
-  * @deprecated Will no longer be exposed as a public API in the next
-  * major version.  Use the getQuaternion() method instead.
-   */
+  /** @private */
   this.rotation=GLMath.quatIdentity();
+  /** @private */
   this.complexMatrix=false;
+  /** @private */
   this._matrixDirty=false;
+  /** @private */
   this._isIdentity=true;
   /** @private */
   this.matrix=GLMath.mat4identity();

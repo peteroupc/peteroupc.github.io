@@ -23,7 +23,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="Material"><span style="font-weight:lighter"></span>new Material<span class="signature">(ambient, diffuse, specular, shininess, emission)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line804">line 804</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line782">line 782</a>
      </i></small></p>
 
 <div class="description">
@@ -31,7 +31,7 @@
 3D object. This includes how an object reflects or absorbs light, as well
 as well as a texture image to apply on that object's surface.<p>
 The full structure is only used if the shader program supports lighting, as the
-default shader program does.  If <a href="glutil.Scene3D.html#disableLighting">Scene3D.disableLighting()</a> is called,
+default shader program does.  If Scene3D.disableLighting() is called,
 disabling lighting calculations in the default shader, only the "diffuse" and "texture"
 properties of this object are used.
 </div>
@@ -141,7 +141,7 @@ May be null or omitted; default is (0,0,0).</td>
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="ambient"><span style="font-weight:lighter"></span>ambient<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line834">line 834</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line812">line 812</a>
      </i></small></p>
 
 <div class="description">
@@ -170,7 +170,7 @@ colors are used for ambient reflection rather than this property.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line853">line 853</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line831">line 831</a>
      </i></small></p>
 
 <div class="description">
@@ -198,7 +198,7 @@ This value can have an optional fourth element giving the alpha component
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="emission"><span style="font-weight:lighter"></span>emission<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line878">line 878</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line856">line 856</a>
      </i></small></p>
 
 <div class="description">
@@ -206,7 +206,7 @@ This value can have an optional fourth element giving the alpha component
 Used for objects that glow on their own, among other things.
 Each part of the object will be affected by the additive color the
 same way regardless of lighting (this property won't be used in the
-default shader if <a href="glutil.Scene3D.html#disableLighting">Scene3D.disableLighting()</a>
+default shader if Scene3D.disableLighting()
 is called, disabling lighting calculations).<p>
 This value is a 3-element array giving the red, green, and blue
 components.
@@ -220,7 +220,7 @@ while negative values subtract from it. (0,0,0) means no additive color.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="normalMap"><span style="font-weight:lighter"></span>normalMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line917">line 917</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line895">line 895</a>
      </i></small></p>
 
 <div class="description">
@@ -257,7 +257,7 @@ method can calculate the tangents and bitangents appropriate for normal mapping.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="shininess"><span style="font-weight:lighter"></span>shininess<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line815">line 815</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line793">line 793</a>
      </i></small></p>
 
 <div class="description">
@@ -273,7 +273,7 @@ Ranges from 0 through 128.
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="specular"><span style="font-weight:lighter"></span>specular<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line865">line 865</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line843">line 843</a>
      </i></small></p>
 
 <div class="description">
@@ -295,7 +295,7 @@ and (1,1,1) means total specular reflection.<p>
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="specularMap"><span style="font-weight:lighter"></span>specularMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line889">line 889</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line867">line 867</a>
      </i></small></p>
 
 <div class="description">
@@ -311,7 +311,7 @@ black for this to have an effect).  See <a href="glutil.Material.html#specular">
 
 <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="texture"><span style="font-weight:lighter"></span>texture<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line882">line 882</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line860">line 860</a>
      </i></small></p>
 
 <div class="description">
@@ -326,7 +326,7 @@ black for this to have an effect).  See <a href="glutil.Material.html#specular">
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1014">line 1014</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line992">line 992</a>
      </i></small></p>
 
 <div class="description">
@@ -432,7 +432,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter">(static) </span>fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1027">line 1027</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1005">line 1005</a>
      </i></small></p>
 
 <div class="description">
@@ -494,7 +494,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line926">line 926</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line904">line 904</a>
      </i></small></p>
 
 <div class="description">
@@ -520,7 +520,7 @@ to the same object will be used.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line959">line 959</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line937">line 937</a>
      </i></small></p>
 
 <div class="description">

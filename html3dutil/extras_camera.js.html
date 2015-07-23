@@ -137,7 +137,6 @@ Camera.prototype._getView=function(){
 /** @private */
 Camera.prototype._updateView=function(){
  this.scene.setViewMatrix(this._getView());
- this._moveLight();
  return this;
 }
 /**
@@ -356,14 +355,6 @@ Camera.prototype._mousewheel=function(e){
  // mousewheel up (negative) means move forward,
  // mousewheel down (positive) means move back
  this.setDistance(this._distance()-0.6*ticks)
-}
-
-/** @private
-@deprecated For backward compatibility only; will be removed in next major version */
-Camera.prototype._moveLight=function(){
- if(this.scene.lightSource.getCount()==1){
-  this.scene.setDirectionalLight(0,this.getVectorFromCenter());
- }
 }
 
 /**

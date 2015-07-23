@@ -604,15 +604,6 @@ quatInvert:function(quat){
   GLMath.quatConjugate(quat),lsq)
 },
 /**
- * @deprecated This method incorrectly calculates a quaternion's
- * inverse; use quatInvert instead.  This method will be changed to
- * be equivalent to quatInvert in a future version.
- */
-quatInverse:function(quat){
- return GLMath.quatNormInPlace(
-   GLMath.quatConjugate(quat));
-},
-/**
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 * @return {boolean} Return value.*/
 quatIsIdentity:function(quat){
@@ -2119,14 +2110,12 @@ GLMath.RollPitchYaw = 4;
 * @const
 */
 GLMath.RollYawPitch = 5;
-/** @deprecated Renamed to quatToTaitBryan.
- @function
-*/
-GLMath.quatToEuler=GLMath.quatToTaitBryan;
-/** @deprecated Renamed to quatFromTaitBryan.
-  @function
-*/
-GLMath.quatFromEuler=GLMath.quatFromTaitBryan;
+/**
+ * Inverts the rotation given in this quaternion;
+ * returns a new quaternion; same as the quatInverse method.
+ * @param {Array&lt;number>} quat A quaternion, containing four elements.
+ * @return {Array&lt;number>} Return value. */
+GLMath.quatInverse=GLMath.quatInvert;
  exports["GLMath"]=GLMath;
 }));
 </code></pre>

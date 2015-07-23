@@ -38,107 +38,6 @@
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".createCanvas"><span style="font-weight:lighter">(static) </span>createCanvas<span class="signature">(width, height, parent)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line121">line 121</a>
-     </i></small></p>
-
-        <p><b>Deprecated: Use <a href="glutil.GLUtil.html#.createCanvasElement">glutil.GLUtil.createCanvasElement</a> instead.</b><p>
-
-<div class="description">
-    Creates an HTML canvas element, optionally appending
-it to an existing HTML element.
-</div>
-
-    <h5>Parameters:</h5>
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-        <th>Type</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>width</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-|
-
-<span class="param-type">null</span>
-
-            </td>
-
-            <td class="description last">Width of the new canvas
-element, or if null, the value <code>window.innerWidth</code>.
-The resulting width will be rounded up.
-This parameter can't be a negative number.</td>
-        </tr>
-
-        <tr>
-
-                <td><code>height</code></td>
-
-            <td class="type">
-
-<span class="param-type">number</span>
-|
-
-<span class="param-type">null</span>
-
-            </td>
-
-            <td class="description last">Height of the new canvas
-element, or if null, the value <code>window.innerHeight</code>.
-The resulting height will be rounded up.
-This parameter can't be a negative number.</td>
-        </tr>
-
-        <tr>
-
-                <td><code>parent</code></td>
-
-            <td class="type">
-
-<span class="param-type">HTMLElement</span>
-|
-
-<span class="param-type">null</span>
-
-            </td>
-
-            <td class="description last">If non-null, the parent
-element of the new HTML canvas element. The element will be
-appended as a child of this parent.</td>
-        </tr>
-
-    </tbody>
-</table>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    The resulting canvas element.
-
-     (Type:
-<span class="param-type">HTMLCanvasElement</span>)
-
-</div>
-
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".createCanvasElement"><span style="font-weight:lighter">(static) </span>createCanvasElement<span class="signature">(parent, width, height)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line83">line 83</a>
@@ -242,7 +141,7 @@ This parameter can't be a negative number.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".get3DContext"><span style="font-weight:lighter">(static) </span>get3DContext<span class="signature">(canvasElement, err)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line179">line 179</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line157">line 157</a>
      </i></small></p>
 
 <div class="description">
@@ -315,7 +214,7 @@ is null or not an HTML canvas element.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".get3DOr2DContext"><span style="font-weight:lighter">(static) </span>get3DOr2DContext<span class="signature">(canvasElement)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line135">line 135</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line113">line 113</a>
      </i></small></p>
 
 <div class="description">
@@ -374,7 +273,7 @@ is null or not an HTML canvas element.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line222">line 222</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line200">line 200</a>
      </i></small></p>
 
 <div class="description">
@@ -487,7 +386,7 @@ True means success, and false means failure.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".getTimePosition"><span style="font-weight:lighter">(static) </span>getTimePosition<span class="signature">(timer, timeInMs, intervalInMs)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line351">line 351</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line329">line 329</a>
      </i></small></p>
 
 <div class="description">
@@ -597,7 +496,7 @@ value in milliseconds, such as the parameter of a
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".is3DContext"><span style="font-weight:lighter">(static) </span>is3DContext<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line198">line 198</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line176">line 176</a>
      </i></small></p>
 
 <div class="description">
@@ -620,7 +519,7 @@ value in milliseconds, such as the parameter of a
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".loadFileFromUrl"><span style="font-weight:lighter">(static) </span>loadFileFromUrl<span class="signature">(url, responseType)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line288">line 288</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line266">line 266</a>
      </i></small></p>
 
 <div class="description">
@@ -770,7 +669,7 @@ An error occurs when loading the .STL file.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".newFrames"><span style="font-weight:lighter">(static) </span>newFrames<span class="signature">(timer, timeInMs)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line376">line 376</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line354">line 354</a>
      </i></small></p>
 
 <div class="description">
@@ -897,7 +796,7 @@ milliseconds since the page was loaded.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line529">line 529</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line507">line 507</a>
      </i></small></p>
 
 <div class="description">

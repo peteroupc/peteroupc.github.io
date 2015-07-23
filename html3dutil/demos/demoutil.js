@@ -114,12 +114,7 @@ function updateShape(func){
         settings.appendChild(div)
     }
   }
-  if(!shapeGroup.removeShape){
-   // For compatibility with version 1.3.1
-   shapeGroup.shapes.length=0;
-  } else {
-   shapeGroup.removeShape(shapeGroup.shapes[0]);
-  }
+  shapeGroup.removeShape(shapeGroup.shapes[0]);
   shapeGroup.addShape(scene.makeShape(func(allsettings)).setMaterial(
     new Material().setParams({
      "diffuse":"black",
