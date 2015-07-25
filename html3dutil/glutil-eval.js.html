@@ -18,7 +18,9 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/* global GLMath, Mesh */
 (function(global){
+"use strict";
 /**
  * A parametric evaluator for B&amp;eacute;zier curves.&lt;p>
  * A B&amp;eacute;zier curve is defined by a series of control points, where
@@ -42,11 +44,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  * May be omitted; default is 1.
  */
 var BezierCurve=function(cp, u1, u2){
- if(typeof u1=="undefined" &amp;&amp; typeof u2=="undefined"){
+ if(typeof u1==="undefined" &amp;&amp; typeof u2==="undefined"){
   this.uoffset=0;
   this.umul=1;
- } else if(u1==u2){
-  throw new Error("u1 and u2 can't be equal")
+ } else if(u1===u2){
+  throw new Error("u1 and u2 can't be equal");
  } else {
   this.uoffset=u1;
   this.umul=1.0/(u2-u1);
@@ -71,7 +73,7 @@ var BezierCurve=function(cp, u1, u2){
  */
 BezierCurve.prototype.evaluate=function(u){
  return this.evaluator.evaluate((u-this.uoffset)*this.umul);
-}
+};
 /**
  * A parametric evaluator for B&amp;eacute;zier surfaces.&lt;p>
  * A B&amp;eacute;zier surface is defined by a series of control points, where
@@ -107,16 +109,16 @@ BezierCurve.prototype.evaluate=function(u){
  * May be omitted; default is 1.
  */
 var BezierSurface=function(cp, u1, u2, v1, v2){
- if(typeof u1=="undefined" &amp;&amp; typeof u2=="undefined" &amp;&amp;
-    typeof v1=="undefined" &amp;&amp; typeof v2=="undefined"){
+ if(typeof u1==="undefined" &amp;&amp; typeof u2==="undefined" &amp;&amp;
+    typeof v1==="undefined" &amp;&amp; typeof v2==="undefined"){
   this.uoffset=0;
   this.umul=1;
   this.voffset=0;
   this.vmul=1;
- } else if(u1==u2){
-  throw new Error("u1 and u2 can't be equal")
- } else if(v1==v2){
-  throw new Error("v1 and v2 can't be equal")
+ } else if(u1===u2){
+  throw new Error("u1 and u2 can't be equal");
+ } else if(v1===v2){
+  throw new Error("v1 and v2 can't be equal");
  } else {
   this.uoffset=u1;
   this.umul=1.0/(u2-u1);
@@ -124,7 +126,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
   this.vmul=1.0/(v2-v1);
  }
  this.evaluator=BSplineSurface.clamped(cp,cp[0].length-1,cp.length-1);
-}
+};
 /**
  * Evaluates the surface function based on a point
  * in a B&amp;eacute;zier surface.
@@ -138,7 +140,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
  BezierSurface.prototype.evaluate=function(u,v, output){
  return this.evaluator.evaluate((u-this.uoffset)*this.umul,
    (v-this.voffset)*this.vmul);
-}
+};
 
 /**
 * A parametric evaluator for B-spline (basis spline) curves.
@@ -180,17 +182,17 @@ var BSplineCurve=function(controlPoints, knots, bits){
  BSplineCurve._checkKnots(knots);
  this.cplen=controlPoints[0].length;
  var cplenNeeded=1;
- if((this.bits&amp;(BSplineCurve.WEIGHTED_BIT|BSplineCurve.DIVIDE_BIT))!=0){
+ if((this.bits&amp;(BSplineCurve.WEIGHTED_BIT|BSplineCurve.DIVIDE_BIT))!==0){
   cplenNeeded=2;
  }
- if((this.bits&amp;(BSplineCurve.WEIGHTED_BIT))!=0){
+ if((this.bits&amp;(BSplineCurve.WEIGHTED_BIT))!==0){
   this.cplen--;
  }
  if(this.cplen&lt;cplenNeeded)throw new Error();
  this.knots=knots;
  this.buffer=[];
  this.controlPoints=controlPoints;
-}
+};
 
 /**
 * Indicates whether the last coordinate of each control point is a
@@ -233,20 +235,20 @@ BSplineCurve._checkKnots=function(knots){
   if(knots[i]&lt;knots[i-1])
    throw new Error();
  }
- if(knots[0]==knots[knots.length-1])throw new Error();
-}
+ if(knots[0]===knots[knots.length-1])throw new Error();
+};
 BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
  var c=1;
  for(var i=0;i&lt;numPoints;i++){
    buffer[i]=0;
  }
- if(t==kn[0]){
+ if(t===kn[0]){
   buffer[0]=1;
- } else if(t==kn[kn.length-1]){
+ } else if(t===kn[kn.length-1]){
   buffer[numPoints-1]=1;
  } else {
   var k=-1;
-  for(var i=0;i&lt;=kn.length;i++){
+  for(i=0;i&lt;=kn.length;i++){
     if(kn[i]&lt;=t &amp;&amp; t&lt;kn[i+1]){
       k=i;
       break;
@@ -254,32 +256,32 @@ BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
   }
   if(k&lt;0)return;
   var tmp=[];
-  var c=k-1;
+  c=k-1;
   tmp[k]=1;
   for(var kk=2;kk&lt;=order;kk++,c--){
-   for(var i=c;i&lt;=k;i++){
+   for(i=c;i&lt;=k;i++){
     var ret=0,divisor=0;
     var prv=(i&lt;=c) ? 0 : tmp[i];
     var nxt=(i>=k) ? 0 : tmp[i+1];
-    if(prv!=0){
-     divisor=kn[i+kk-1]-kn[i]
-     ret+=divisor==0 ? 0 : prv*(t-kn[i])/divisor;
+    if(prv!==0){
+     divisor=kn[i+kk-1]-kn[i];
+     ret+=divisor===0 ? 0 : prv*(t-kn[i])/divisor;
     }
-    if(nxt!=0){
+    if(nxt!==0){
      var ikk=kn[i+kk];
-     divisor=ikk-kn[i+1]
-     ret+=divisor==0 ? 0 : nxt*(ikk-t)/divisor;
+     divisor=ikk-kn[i+1];
+     ret+=divisor===0 ? 0 : nxt*(ikk-t)/divisor;
     }
     buffer[i]=ret;
    }
    if(kk&lt;order){
-    for(var i=c;i&lt;=k;i++){
+    for(i=c;i&lt;=k;i++){
      tmp[i]=buffer[i];
     }
    }
   }
  }
-}
+};
 
 /**
  * Evaluates the curve function based on a point
@@ -298,53 +300,54 @@ BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
 BSplineCurve.prototype.evaluate=function(u){
   var numPoints=this.controlPoints.length;
   var order=this.knots.length-numPoints;
-  var oldu=u
+  var oldu=u;
   u=this.knots[order-1]+u*(this.knots[numPoints]-
     this.knots[order-1]);
   BSplineCurve._getFactors(this.knots, u, order, numPoints,
      this.buffer);
-  if((this.bits&amp;BSplineCurve.WEIGHTED_BIT)!=0){
-  // this is a weighted NURBS
   var ret=[];
+  var i,j,point;
+  if((this.bits&amp;BSplineCurve.WEIGHTED_BIT)!==0){
+  // this is a weighted NURBS
   var weight=0;
-  for(var j=0;j&lt;numPoints;j++){
+  for(j=0;j&lt;numPoints;j++){
    weight+=this.buffer[j]*this.controlPoints[j][this.cplen];
   }
-  var homogen=(this.bits&amp;BSplineCurve.HOMOGENEOUS_BIT)!=0;
-  for(var i=0;i&lt;this.cplen+1;i++){
-   var point=0;
-   for(var j=0;j&lt;numPoints;j++){
+  var homogen=(this.bits&amp;BSplineCurve.HOMOGENEOUS_BIT)!==0;
+  for(i=0;i&lt;this.cplen+1;i++){
+   point=0;
+   for(j=0;j&lt;numPoints;j++){
     var w=this.buffer[j];
     if(!homogen)w*=this.controlPoints[j][this.cplen];
     point+=this.controlPoints[j][i]*w;
    }
    ret[i]=point/weight;
   }
-  if((this.bits&amp;BSplineCurve.DIVIDE_BIT)!=0){
-   for(var i=0;i&lt;this.cplen;i++){
+  if((this.bits&amp;BSplineCurve.DIVIDE_BIT)!==0){
+   for(i=0;i&lt;this.cplen;i++){
     ret[i]/=ret[this.cplen];
    }
    ret=ret.slice(0,this.cplen);
   }
   return ret;
  } else {
-  var ret=[];
-  for(var i=0;i&lt;this.cplen;i++){
-   var point=0;
-   for(var j=0;j&lt;numPoints;j++){
+  ret=[];
+  for(i=0;i&lt;this.cplen;i++){
+   point=0;
+   for(j=0;j&lt;numPoints;j++){
     point+=this.controlPoints[j][i]*this.buffer[j];
    }
    ret[i]=point;
   }
-  if((this.bits&amp;BSplineCurve.DIVIDE_BIT)!=0){
-   for(var i=0;i&lt;this.cplen-1;i++){
+  if((this.bits&amp;BSplineCurve.DIVIDE_BIT)!==0){
+   for(i=0;i&lt;this.cplen-1;i++){
     ret[i]/=ret[this.cplen-1];
    }
    ret=ret.slice(0,this.cplen-1);
   }
   return ret;
  }
-}
+};
 
 /**
 * A parametric evaluator for B-spline (basis spline) surfaces.
@@ -377,10 +380,10 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  var cplen=controlPoints[0][0].length;
  var cplenNeeded=1;
  this.bits=bits||0;
- if((this.bits&amp;(BSplineCurve.WEIGHTED_BIT|BSplineCurve.DIVIDE_BIT))!=0){
+ if((this.bits&amp;(BSplineCurve.WEIGHTED_BIT|BSplineCurve.DIVIDE_BIT))!==0){
   cplenNeeded=2;
  }
- if((this.bits&amp;(BSplineCurve.WEIGHTED_BIT|BSplineCurve.HOMOGENEOUS_BIT))!=0){
+ if((this.bits&amp;(BSplineCurve.WEIGHTED_BIT|BSplineCurve.HOMOGENEOUS_BIT))!==0){
   cplen--;
  }
  if(cplen&lt;cplenNeeded)throw new Error();
@@ -399,7 +402,7 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
  this.bufferU=[];
  this.bufferV=[];
  this.controlPoints=controlPoints;
-}
+};
 /**
 * Creates a B-spline curve with uniform knots, except that
 * the curve will start and end at the first and last control points.
@@ -412,8 +415,8 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
 * @return {BSplineCurve} Return value.*/
 BSplineCurve.clamped=function(controlPoints,degree,bits){
  return new BSplineCurve(controlPoints,
-   BSplineCurve.clampedKnots(controlPoints.length,degree),bits)
-}
+   BSplineCurve.clampedKnots(controlPoints.length,degree),bits);
+};
 /**
 * Creates a B-spline curve with uniform knots.
 * @param {Array&lt;Array&lt;number>>} controlPoints Array of
@@ -425,8 +428,8 @@ BSplineCurve.clamped=function(controlPoints,degree,bits){
 * @return {BSplineCurve} Return value.*/
 BSplineCurve.uniform=function(controlPoints,degree,bits){
  return new BSplineCurve(controlPoints,
-   BSplineCurve.uniformKnots(controlPoints.length,degree),bits)
-}
+   BSplineCurve.uniformKnots(controlPoints.length,degree),bits);
+};
 /**
 * Creates a B-spline surface with uniform knots, except that
 * the surface's edges lie on the edges of the control point array.
@@ -443,8 +446,8 @@ BSplineCurve.uniform=function(controlPoints,degree,bits){
 BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
    BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
-   BSplineCurve.clampedKnots(controlPoints.length,degreeV),bits)
-}
+   BSplineCurve.clampedKnots(controlPoints.length,degreeV),bits);
+};
 /**
 * Creates a B-spline surface with uniform knots.
 * @param {Array&lt;Array&lt;Array&lt;number>>>} controlPoints Array of
@@ -460,47 +463,47 @@ BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
 BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
    BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
-   BSplineCurve.uniformKnots(controlPoints.length,degreeV),bits)
-}
+   BSplineCurve.uniformKnots(controlPoints.length,degreeV),bits);
+};
 /**
 * Not documented yet.
 */
 BSplineCurve.uniformKnots=function(controlPoints,degree){
-  if(typeof controlPoints=="object")
+  if(typeof controlPoints==="object")
    controlPoints=controlPoints.length;
-  if(degree==null)degree=3
+  if((degree===null || typeof degree==="undefined"))degree=3;
   if(controlPoints&lt;degree+1)
-   throw new Error("too few control points for degree "+degree+" curve")
+   throw new Error("too few control points for degree "+degree+" curve");
   var order=degree+1;
-  var ret=[]
+  var ret=[];
   for(var i=0;i&lt;controlPoints+order;i++){
-   ret.push(i)
+   ret.push(i);
   }
   return ret;
-}
+};
 /**
 * Not documented yet.
 */
 BSplineCurve.clampedKnots=function(controlPoints,degree){
-  if(typeof controlPoints=="object")
+  if(typeof controlPoints==="object")
    controlPoints=controlPoints.length;
-  if(degree==null)degree=3
+  if((degree===null || typeof degree==="undefined"))degree=3;
   if(controlPoints&lt;degree+1)
-   throw new Error("too few control points for degree "+degree+" curve")
+   throw new Error("too few control points for degree "+degree+" curve");
   var order=degree+1;
   var extras=controlPoints-order;
   var ret=[];
   for(var i=0;i&lt;order;i++){
-   ret.push(0)
+   ret.push(0);
   }
-  for(var i=0;i&lt;extras;i++){
+  for(i=0;i&lt;extras;i++){
    ret.push(i+1);
   }
-  for(var i=0;i&lt;order;i++){
+  for(i=0;i&lt;order;i++){
    ret.push(extras+1);
   }
   return ret;
-}
+};
 
 /**
  * Evaluates the surface function based on a point
@@ -518,7 +521,8 @@ BSplineSurface.prototype.evaluate=function(u,v){
     this.knotsV[this.orderV-1]);
   var bu=this.bufferU;
   var bv=this.bufferV;
-  if(this.orderU==this.orderV){
+  var tt,uu,w,i,value;
+  if(this.orderU===this.orderV){
    BSplineCurve._getFactors(this.knotsU, u, this.orderU, this.ucplen,
      this.bufferU);
    BSplineCurve._getFactors(this.knotsV, v, this.orderV, this.vcplen,
@@ -530,54 +534,54 @@ BSplineSurface.prototype.evaluate=function(u,v){
      this.bufferV);
   }
  var output=[];
-  if((this.bits&amp;BSplineCurve.WEIGHTED_BIT)!=0){
+  if((this.bits&amp;BSplineCurve.WEIGHTED_BIT)!==0){
   // this is a weighted NURBS
   var weight=0;
-  var homogen=(this.bits&amp;BSplineCurve.HOMOGENEOUS_BIT)!=0;
-  for(var tt=0;tt&lt;this.ucplen;tt++){
-    for(var uu=0;uu&lt;this.vcplen;uu++){
-     var w=bu[tt]*bv[uu]*this.controlPoints[uu][tt][this.cplen];
+  var homogen=(this.bits&amp;BSplineCurve.HOMOGENEOUS_BIT)!==0;
+  for(tt=0;tt&lt;this.ucplen;tt++){
+    for(uu=0;uu&lt;this.vcplen;uu++){
+     w=bu[tt]*bv[uu]*this.controlPoints[uu][tt][this.cplen];
      weight+=w;
     }
   }
-  for(var i=0;i&lt;this.cplen+1;i++){
-   var value=0;
-   var weight=0;
-   for(var tt=0;tt&lt;this.ucplen;tt++){
-    for(var uu=0;uu&lt;this.vcplen;uu++){
-     var w=bu[tt]*bv[uu];
+  for(i=0;i&lt;this.cplen+1;i++){
+   value=0;
+   weight=0;
+   for(tt=0;tt&lt;this.ucplen;tt++){
+    for(uu=0;uu&lt;this.vcplen;uu++){
+     w=bu[tt]*bv[uu];
      if(!homogen)w*=this.controlPoints[uu][tt][this.cplen];
      value+=this.controlPoints[uu][tt][i]*w;
     }
    }
-   output[i]=(weight==0) ? value : value/weight;
+   output[i]=(weight===0) ? value : value/weight;
   }
-  if((this.bits&amp;BSplineCurve.DIVIDE_BIT)!=0){
-   for(var i=0;i&lt;this.cplen;i++){
+  if((this.bits&amp;BSplineCurve.DIVIDE_BIT)!==0){
+   for(i=0;i&lt;this.cplen;i++){
     output[i]/=output[this.cplen];
    }
-   output=output.slice(0,this.cplen)
+   output=output.slice(0,this.cplen);
   }
   return output;
  } else {
-  for(var i=0;i&lt;this.cplen;i++){
-   var value=0;
-   for(var tt=0;tt&lt;this.ucplen;tt++){
-    for(var uu=0;uu&lt;this.vcplen;uu++){
+  for(i=0;i&lt;this.cplen;i++){
+   value=0;
+   for(tt=0;tt&lt;this.ucplen;tt++){
+    for(uu=0;uu&lt;this.vcplen;uu++){
      value+=this.controlPoints[uu][tt][i]*bu[tt]*bv[uu];
     }
    }
    output[i]=value;
   }
-  if((this.bits&amp;BSplineCurve.DIVIDE_BIT)!=0){
-   for(var i=0;i&lt;this.cplen-1;i++){
+  if((this.bits&amp;BSplineCurve.DIVIDE_BIT)!==0){
+   for(i=0;i&lt;this.cplen-1;i++){
     output[i]/=output[this.cplen-1];
    }
-   output=output.slice(0,this.cplen-1)
+   output=output.slice(0,this.cplen-1);
   }
   return output;
  }
-}
+};
 
 /**
 * An evaluator of parametric curve functions for generating
@@ -600,7 +604,7 @@ var CurveEval=function(){
  this.normalCurve=null;
  this.texCoordCurve=null;
  this.vertexCurve=null;
-}
+};
 
 /**
 * Specifies a parametric curve function for generating vertex positions.
@@ -620,7 +624,7 @@ var CurveEval=function(){
 CurveEval.prototype.vertex=function(evaluator){
  this.vertexCurve=evaluator;
  return this;
-}
+};
 /**
 * Specifies a parametric curve function for generating normals.
 * @param {object} evaluator An object that must contain a function
@@ -631,7 +635,7 @@ CurveEval.prototype.vertex=function(evaluator){
 CurveEval.prototype.normal=function(evaluator){
  this.normalCurve=evaluator;
  return this;
-}
+};
 /**
 * Specifies a parametric curve function for generating color values.
 * @param {object} evaluator An object that must contain a function
@@ -642,7 +646,7 @@ CurveEval.prototype.normal=function(evaluator){
 CurveEval.prototype.color=function(evaluator){
  this.colorCurve=evaluator;
  return this;
-}
+};
 /**
 * Specifies a parametric curve function for generating texture coordinates.
 * @param {object} evaluator An object that must contain a function
@@ -653,7 +657,7 @@ CurveEval.prototype.color=function(evaluator){
 CurveEval.prototype.texCoord=function(evaluator){
  this.texCoordCurve=evaluator;
  return this;
-}
+};
 /**
  * Generates vertex positions and attributes based on a point
  * in a parametric curve.
@@ -676,7 +680,7 @@ CurveEval.prototype.evalOne=function(mesh,u){
  }
  if(this.texCoordCurve){
   texcoord=this.texCoordCurve.evaluate(u);
-  if(texcoord.length==1)texcoord.push(0);
+  if(texcoord.length === 1)texcoord.push(0);
  }
  if(this.normalCurve){
   normal=this.normalCurve.evaluate(u);
@@ -689,7 +693,7 @@ CurveEval.prototype.evalOne=function(mesh,u){
   if(normal)mesh.normal3(normal[0],normal[1],normal[2]);
   if(texcoord)mesh.texCoord2(texcoord[0],texcoord[1]);
   var vertex=this.vertexCurve.evaluate(u);
-  if(vertex.length==2)
+  if(vertex.length === 2)
    mesh.vertex3(vertex[0],vertex[1],0.0);
   else
    mesh.vertex3(vertex[0],vertex[1],vertex[2]);
@@ -698,7 +702,7 @@ CurveEval.prototype.evalOne=function(mesh,u){
   if(oldTexCoord)mesh.texCoord2(oldTexCoord[0],oldTexCoord[1]);
  }
  return this;
-}
+};
 /**
  * Generates vertices and attribute values that follow a parametric curve
  * function.
@@ -722,24 +726,24 @@ CurveEval.prototype.evalOne=function(mesh,u){
  * @return {CurveEval} This object.
  */
 CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
- if(typeof n=="undefined")n=24;
- if(n&lt;=0)throw new Error("invalid n")
- if(typeof u1=="undefined" &amp;&amp; typeof u2=="undefined"){
+ if(typeof n==="undefined")n=24;
+ if(n&lt;=0)throw new Error("invalid n");
+ if(typeof u1==="undefined" &amp;&amp; typeof u2==="undefined"){
   u1=0.0;
   u2=1.0;
  }
- if(mode==null)mode=Mesh.LINES;
- if(mode==Mesh.POINTS)
-  mesh.mode(Mesh.POINTS)
- else if(mode==Mesh.LINES)
-  mesh.mode(Mesh.LINE_STRIP)
+ if((mode===null || typeof mode==="undefined"))mode=Mesh.LINES;
+ if(mode===Mesh.POINTS)
+  mesh.mode(Mesh.POINTS);
+ else if(mode===Mesh.LINES)
+  mesh.mode(Mesh.LINE_STRIP);
  else return this;
  var uv=(u2-u1)/n;
  for(var i=0; i&lt;=n; i++){
   this.evalOne(mesh, u1+i*uv);
  }
  return this;
-}
+};
 /**
 * An evaluator of parametric functions for generating
 * vertex positions, normals, colors, and texture coordinates
@@ -764,7 +768,7 @@ var SurfaceEval=function(){
  this.texCoordSurface=null;
  this.vertexSurface=null;
  this.autoNormal=false;
-}
+};
 /**
  * Sets whether this object will automatically generate
  * normals rather than use the parametric evaluator
@@ -777,7 +781,7 @@ var SurfaceEval=function(){
 SurfaceEval.prototype.setAutoNormal=function(value){
  this.autoNormal=!!value;
  return this;
-}
+};
 /**
 * Specifies a parametric surface function for generating vertex positions.
 * @param {object} evaluator An object that must contain a function
@@ -791,7 +795,7 @@ SurfaceEval.prototype.setAutoNormal=function(value){
 SurfaceEval.prototype.vertex=function(evaluator){
  this.vertexSurface=evaluator;
  return this;
-}
+};
 /**
 * Specifies a parametric surface function for generating normals.
 * &lt;p>
@@ -841,7 +845,7 @@ SurfaceEval.prototype.vertex=function(evaluator){
 SurfaceEval.prototype.normal=function(evaluator){
  this.normalSurface=evaluator;
  return this;
-}
+};
 /**
 * Specifies a parametric surface function for generating color values.
 * @param {object} evaluator An object that must contain a function
@@ -852,7 +856,7 @@ SurfaceEval.prototype.normal=function(evaluator){
 SurfaceEval.prototype.color=function(evaluator){
  this.colorSurface=evaluator;
  return this;
-}
+};
 /**
 * Specifies a parametric surface function for generating texture coordinates.
 * @param {object} evaluator An object that must contain a function
@@ -868,7 +872,7 @@ SurfaceEval.prototype.color=function(evaluator){
 SurfaceEval.prototype.texCoord=function(evaluator){
  this.texCoordSurface=evaluator;
  return this;
-}
+};
 /**
  * Generates vertex positions and attributes based on a point
  * in a parametric surface.
@@ -890,7 +894,7 @@ SurfaceEval.prototype.evalOne=function(mesh,u,v){
  this._playBack(mesh,values,_OLD_VALUES_SIZE);
  this._restoreValues(mesh,values,0);
  return this;
-}
+};
 /** @private
  @const
 */
@@ -903,7 +907,7 @@ var _RECORDED_VALUES_SIZE = 11;
 SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index){
  this._record(u,v,buffer,index);
  this._playBack(mesh,buffer,index);
-}
+};
 /** @private */
 SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
  if(this.colorSurface){
@@ -920,7 +924,7 @@ SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
   buffer[index+6]=mesh.texCoord[0];
   buffer[index+7]=mesh.texCoord[1];
  }
-}
+};
 /** @private */
 SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
  if(this.colorSurface){
@@ -932,7 +936,7 @@ SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
  if(this.texCoordSurface){
   mesh.texCoord2(buffer[index+6],buffer[index+7]);
  }
-}
+};
 /** @private */
 SurfaceEval.prototype._record=function(u,v,buffer,index){
  var normal=null;
@@ -948,7 +952,7 @@ SurfaceEval.prototype._record=function(u,v,buffer,index){
   buffer[index+10]=(texcoord.length&lt;=1) ? 0 : texcoord[1];
  }
  if(this.normalSurface &amp;&amp; !this.autoNormal){
-  var normal=this.normalSurface.evaluate(u,v);
+  normal=this.normalSurface.evaluate(u,v);
   buffer[index+3]=normal[0];
   buffer[index+4]=normal[1];
   buffer[index+5]=normal[2];
@@ -959,18 +963,18 @@ SurfaceEval.prototype._record=function(u,v,buffer,index){
   buffer[index+1]=vertex[1];
   buffer[index+2]=vertex[2];
   if(this.autoNormal){
-   var du=0.00001
-   var dv=0.00001
+   var du=0.00001;
+   var dv=0.00001;
    // Find the partial derivatives of u and v
    var vu=this.vertexSurface.evaluate(u+du,v);
-   if(vu[0]==0 &amp;&amp; vu[1]==0 &amp;&amp; vu[2]==0){
+   if(vu[0] === 0 &amp;&amp; vu[1] === 0 &amp;&amp; vu[2] === 0){
     // too abrupt, try the other direction
     du=-du;
     vu=this.vertexSurface.evaluate(u+du,v);
    }
    var vuz=vu[2];
    var vv=this.vertexSurface.evaluate(u,v+dv);
-   if(vv[0]==0 &amp;&amp; vv[1]==0 &amp;&amp; vv[2]==0){
+   if(vv[0] === 0 &amp;&amp; vv[1] === 0 &amp;&amp; vv[2] === 0){
     // too abrupt, try the other direction
     dv=-dv;
     vv=this.vertexSurface.evaluate(u,v+dv);
@@ -982,17 +986,17 @@ SurfaceEval.prototype._record=function(u,v,buffer,index){
    GLMath.vec3scaleInPlace(vv,1.0/dv);
    GLMath.vec3normInPlace(vu);
    GLMath.vec3normInPlace(vv);
-   if(GLMath.vec3length(vu)==0){
+   if(GLMath.vec3length(vu) === 0){
     // partial derivative of u is degenerate
     //console.log([vu,vv,u,v]+" u degen")
     vu=vv;
-   } else if(GLMath.vec3length(vv)!=0){
+   } else if(GLMath.vec3length(vv)!==0){
     vu=GLMath.vec3cross(vu,vv);
     GLMath.vec3normInPlace(vu);
    } else {
     // partial derivative of v is degenerate
     //console.log([vu,vv,u,v]+" v degen")
-    if(vu[2]==vertex[2]){
+    if(vu[2]===vertex[2]){
       // the close evaluation returns the same
       // z as this evaluation
       vu=[0,0,1];
@@ -1003,7 +1007,7 @@ SurfaceEval.prototype._record=function(u,v,buffer,index){
    buffer[index+5]=vu[2];
   }
  }
-}
+};
 /** @private */
 SurfaceEval.prototype._playBack=function(mesh,buffer,index){
  if(this.vertexSurface){
@@ -1018,7 +1022,7 @@ SurfaceEval.prototype._playBack=function(mesh,buffer,index){
   }
   mesh.vertex3(buffer[index+0],buffer[index+1],buffer[index+2]);
  }
-}
+};
 
 /**
  * Generates the vertex positions and attributes of a parametric
@@ -1048,36 +1052,37 @@ SurfaceEval.prototype._playBack=function(mesh,buffer,index){
  * @return {SurfaceEval} This object.
  */
 SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
- if(typeof un=="undefined")un=24;
- if(typeof vn=="undefined")vn=24;
- if(un&lt;=0)throw new Error("invalid un")
- if(vn&lt;=0)throw new Error("invalid vn")
- if(mode==null)mode=Mesh.TRIANGLES;
- if(typeof v1=="undefined" &amp;&amp; typeof v2=="undefined"){
+ if(typeof un==="undefined")un=24;
+ if(typeof vn==="undefined")vn=24;
+ if(un&lt;=0)throw new Error("invalid un");
+ if(vn&lt;=0)throw new Error("invalid vn");
+ if((mode===null || typeof mode==="undefined"))mode=Mesh.TRIANGLES;
+ if(typeof v1==="undefined" &amp;&amp; typeof v2==="undefined"){
   v1=0.0;
   v2=1.0;
  }
- if(typeof u1=="undefined" &amp;&amp; typeof u2=="undefined"){
+ if(typeof u1==="undefined" &amp;&amp; typeof u2==="undefined"){
   u1=0.0;
   u2=1.0;
  }
  var du=(u2-u1)/un;
  var dv=(v2-v1)/vn;
- if(mode==Mesh.TRIANGLES){
+ var i,j,jx,prevIndex;
+ if(mode===Mesh.TRIANGLES){
   var oldValues=[];
   var previousValues=[];
   this._saveValues(mesh,oldValues,0);
-  for(var i=0;i&lt;vn;i++){
+  for(i=0;i&lt;vn;i++){
    mesh.mode(Mesh.TRIANGLE_STRIP);
-   for(var j=0,prevIndex=0;j&lt;=un;
+   for(j=0,prevIndex=0;j&lt;=un;
       j++,prevIndex+=_RECORDED_VALUES_SIZE){
-    var jx=j*du+u1;
-    if(i==0){
+    jx=j*du+u1;
+    if(i === 0){
      this._recordAndPlayBack(mesh,jx,i*dv+v1,oldValues,_OLD_VALUES_SIZE);
     } else {
      this._playBack(mesh,previousValues,prevIndex);
     }
-    if(i==vn-1){
+    if(i===vn-1){
      this._recordAndPlayBack(mesh,jx,(i+1)*dv+v1,oldValues,_OLD_VALUES_SIZE);
     } else {
      this._recordAndPlayBack(mesh,jx,(i+1)*dv+v1,previousValues,prevIndex);
@@ -1085,31 +1090,31 @@ SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
    }
   }
   this._restoreValues(mesh,oldValues,0);
- } else if(mode==Mesh.POINTS){
+ } else if(mode===Mesh.POINTS){
   mesh.mode(Mesh.POINTS);
-  for(var i=0;i&lt;=vn;i++){
-   for(var j=0;j&lt;=un;j++){
-    var jx=j*du+u1;
+  for(i=0;i&lt;=vn;i++){
+   for(j=0;j&lt;=un;j++){
+    jx=j*du+u1;
     this.evalOne(mesh,jx,i*dv+v1);
    }
   }
- } else if(mode==Mesh.LINES){
-  for(var i=0;i&lt;=vn;i++){
+ } else if(mode===Mesh.LINES){
+  for(i=0;i&lt;=vn;i++){
    mesh.mode(Mesh.LINE_STRIP);
-   for(var j=0;j&lt;=un;j++){
-    var jx=j*du+u1;
+   for(j=0;j&lt;=un;j++){
+    jx=j*du+u1;
     this.evalOne(mesh,jx,i*dv+v1);
    }
   }
-  for(var i=0;i&lt;=un;i++){
+  for(i=0;i&lt;=un;i++){
    mesh.mode(Mesh.LINE_STRIP);
-   for(var j=0;j&lt;=vn;j++){
+   for(j=0;j&lt;=vn;j++){
     this.evalOne(mesh,i*du+u1,j*dv+v1);
    }
   }
  }
  return this;
-}
+};
 global.SurfaceEval=SurfaceEval;
 global.CurveEval=CurveEval;
 global.BezierCurve=BezierCurve;

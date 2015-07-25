@@ -131,7 +131,16 @@ illustrating a simple animation of 3D shapes.</li>
    shape.setQuaternion(q);
    // Render the scene
    scene.render();
-  });</code></pre><h2>History</h2><p>Version 1.5:</p>
+  });</code></pre><h2>History</h2><p>Version 1.5.1:</p>
+<ul>
+<li>Fixed bug in normal calculation</li>
+<li>Make certain changes to the demos to ensure compatibility with the
+next major version</li>
+<li>Fix curve returned by GraphicsPath#getCurves() so that closed paths
+remain smooth at their endpoints when a curve tube is generated from
+them</li>
+</ul>
+<p>Version 1.5:</p>
 <ul>
 <li>Add support for specular maps and normal maps, including
 in the JSON mesh format and MTL material format.</li>

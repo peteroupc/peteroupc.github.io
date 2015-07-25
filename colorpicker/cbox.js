@@ -1,13 +1,7 @@
 /* This file is in the public domain. Peter O., 2012-2013. http://upokecenter.dreamhosters.com
     Public domain dedication: http://creativecommons.org/publicdomain/zero/1.0/  */
 
-/* global getComputedValue, getWidth, getHeight, getPageX,
-   getPageY, setPageX, setPageY, setWidth, setHeight, rgbToColor,
-   colorToRgba, subclass, colorToRgb, rgbToColorHtml, removeListener,
-   addListener, addReadyListener, rgbaToColorRgba, rgbaToColorArgb,
-   rgbToColorDisplay, colorRgbaToRgba, colorArgbToRgba, isRgbDark,
-   MethodBinder, eventDetails,
-   rgbToColorRgba, rgbToColorArgb */
+/* global MethodBinder, addListener, addReadyListener, colorArgbToRgba, colorRgbaToRgba, colorToRgb, colorToRgba, eventDetails, getComputedValue, getHeight, getPageX, getPageY, getWidth, isRgbDark, removeListener, rgbToColor, rgbToColorArgb, rgbToColorDisplay, rgbToColorHtml, rgbToColorRgba, rgbaToColorArgb, rgbaToColorRgba, setHeight, setPageX, setPageY, setWidth, subclass */
 (function(window,rootobj){
   "use strict";
 
@@ -16,7 +10,7 @@
 // elem - An HTML element.
 // prop - A CSS property (such as 'background-color')
 function getComputedValue(elem,prop){ // expects syntax like 'background-color'
- "use strict";
+
 if(!elem)return null;
  if(!("gcs" in getComputedValue) && document.defaultView && document.defaultView.getComputedStyle){
   // expects syntax like 'background-color'
@@ -57,7 +51,7 @@ if(!elem)return null;
 }
 
 function getHeight(o) {
-  "use strict";
+
 if(!o)return 0;
   var x=(
     (window.opera&&typeof o.style.pixelHeight!=="undefined")?
@@ -71,7 +65,7 @@ if(!o)return 0;
   return x;
 }
 function setHeight(o,h) {
-  "use strict";
+
 if(!o)return 0;if(o.clip)
    o.clip.height=h;
   else if(window.opera && typeof o.style.pixelHeight !== "undefined")
@@ -80,7 +74,7 @@ if(!o)return 0;if(o.clip)
    o.style.height=h+"px";
 }
 function getWidth(o) {
-  "use strict";
+
 if(!o)return 0;
   var x=(window.opera && typeof o.style.pixelWidth!=="undefined")?
     o.style.pixelWidth:
@@ -92,7 +86,7 @@ if(!o)return 0;
   return x;
 }
 function setWidth(o,w) {
-  "use strict";
+
 if(!o)return 0;if(o.clip)
    o.clip.width=w;
   else if(window.opera && typeof o.style.pixelWidth !== "undefined")
@@ -101,7 +95,7 @@ if(!o)return 0;if(o.clip)
    o.style.width=w+"px";
 }
 function setPageX(e,x){
- "use strict";
+
 if(!e||isNaN(x))return;
  var estyle=e.style;
  if (estyle){
@@ -113,7 +107,7 @@ if(!e||isNaN(x))return;
 }
 
 function setPageY(e,x){
- "use strict";
+
 if(!e||isNaN(x))return;
  var estyle=e.style;
  if (estyle){
@@ -125,7 +119,7 @@ if(!e||isNaN(x))return;
 }
 
 function getPageX(o) {
- "use strict";
+
 var x=0;
  if(!o)return 0;
  while(o!==null && typeof o!=="undefined") {
@@ -136,7 +130,7 @@ var x=0;
  return x;
 }
 function getPageY(o) {
- "use strict";
+
 var x=0;
  if(!o)return 0;
   while(o!==null && typeof o!=="undefined") {
@@ -148,7 +142,7 @@ var x=0;
 }
 
 function addListener(o,e,f){
-  "use strict";
+
 if(!o)return;
   if(e==="mousewheel" && !("onmousewheel" in document))
    e="DOMMouseScroll";
@@ -157,10 +151,10 @@ if(!o)return;
   else if(typeof o.attachEvent!=="undefined")
    o.attachEvent("on"+e,addListener.bind(o,"on"+e,f));
 }
-addListener.bind=function(o,e,f){ "use strict";
+addListener.bind=function(o,e,f){
 return f;};
 function removeListener(o,e,f){
-  "use strict";
+
 if(!o)return;
   if(e==="mousewheel" && navigator.userAgent.indexOf("Gecko/")>=0)
    e="DOMMouseScroll";
@@ -180,7 +174,7 @@ if(!o)return;
 
 // Gets the visible rectangle of a Web page
 function getViewport(){
- "use strict";
+
  var ret={left:0, top:0, width:0, height:0};
  var d=document;
  var db=document.body||null;
@@ -224,7 +218,7 @@ function getViewport(){
  } else if(dde && "scrollHeight" in dde){
       ret.height=dde.scrollHeight;
  } else if(d.height){
-      ret.height=d.height
+      ret.height=d.height;
  }
 if(dde&&dde.scrollTop)
   ret.top=dde.scrollTop;
@@ -253,7 +247,7 @@ if(dde&&dde.scrollLeft)
 // constructor.  Members with the same name in the subclass
 // are overridden.
 function subclass(otherClass,newMembers){
- "use strict";
+
 var func=function(){
   // call the initialize method (constructor)
   this.initialize.apply(this,arguments);
@@ -296,7 +290,7 @@ function MyClass(name){
 }
 */
 function MethodBinder(obj){
- "use strict";
+
 this.methods={};
  this.obj=obj;
  // Returns a method in which the method's arguments
@@ -321,7 +315,6 @@ this.methods={};
 
 (function(window){
 
-"use strict";
 var __isMouse=function(eventType){
      return (/(click|mouse|menu|touch)/.test(eventType) || eventType==="DOMMouseScroll");
 };
@@ -454,7 +447,7 @@ window.addReadyListener=function(func){
 ////////////////////////////////
 
 function hlsToRgb(hls) {
- "use strict";
+
 var hueval=hls[0]*1.0;//[0-360)
  var lum=hls[1]*1.0;//[0-255]
  var sat=hls[2]*1.0;//[0-255]
@@ -503,7 +496,7 @@ var hueval=hls[0]*1.0;//[0-360)
 // green, blue, and alpha (each from 0-255)
 // Returns null if the color can't be converted
 function colorToRgba(x){
- "use strict";
+
  function parsePercent(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>100 ? 100 : c))*255/100; }
  function parseAlpha(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>1 ? 1 : c))*255; }
  function parseByte(x){ var c; return ((c=parseInt(x,10))<0 ? 0 : (c>255 ? 255 : c)); }
@@ -542,7 +535,7 @@ var e=null;
 }
 
 colorToRgba.setUpNamedColors=function(){
-  "use strict";
+
 if(!colorToRgba.namedColors){
     var nc=("aliceblue,f0f8ff,antiquewhite,faebd7,aqua,00ffff,aquamarine,7fffd4,azure,f0ffff,beige,f5f5dc,bisque,ffe4c4,black,000000,blanchedalmond,ffebcd,blue,0000ff,"+
 "blueviolet,8a2be2,brown,a52a2a,burlywood,deb887,cadetblue,5f9ea0,chartreuse,7fff00,chocolate,d2691e,coral,ff7f50,cornflowerblue,6495ed,cornsilk,fff8dc,"+
@@ -569,7 +562,7 @@ if(!colorToRgba.namedColors){
 
 function colorToRgb(x){
  // don't include rgba or hsla
- "use strict";
+
 if(x.indexOf("rgba")===0 || x.indexOf("hsla")===0)return null;
  var rgba=colorToRgba(x);
  if(!rgba||rgba[3]===0)return null ;// transparent
@@ -581,7 +574,7 @@ if(x.indexOf("rgba")===0 || x.indexOf("hsla")===0)return null;
 // green, and blue (each from 0-255), with optional alpha (0-255)
 function rgbToColor(x){
  // we should include the spaces
- "use strict";
+
 if((x.length>3 && (x[3]===255 || (x[3]===null || typeof x[3]==="undefined"))) || x.length===3){
   return "rgb("+Math.round(x[0])+", "+Math.round(x[1])+", "+Math.round(x[2])+")";
  } else {
@@ -591,7 +584,7 @@ if((x.length>3 && (x[3]===255 || (x[3]===null || typeof x[3]==="undefined"))) ||
 }
 
 function colorRgbaToRgba(value){
- "use strict";
+
 var e;
 if((e=(/^([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(value)))!==null){
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),parseInt(e[4],16)];
@@ -600,7 +593,7 @@ if((e=(/^([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec
 }
 
 function colorArgbToRgba(value){
- "use strict";
+
 var e;
 if((e=(/^([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(value)))!==null){
   return [parseInt(e[2],16),parseInt(e[3],16),parseInt(e[4],16),parseInt(e[1],16)];
@@ -609,7 +602,7 @@ if((e=(/^([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec
 }
 
 function rgbToColorRgba(r,g,b,a){
- "use strict";
+
 if(!rgbToColorRgba.table){
   rgbToColorRgba.table=[];
   for(var i=0;i<256;i++){
@@ -635,7 +628,7 @@ if(!rgbToColorRgba.table){
 }
 
 function rgbToColorArgb(r,g,b,a){
- "use strict";
+
 if((r!==null && typeof r!=="undefined") && (g===null || typeof g==="undefined") && (b===null || typeof b==="undefined")){
   return rgbToColorRgba(r[3],r[0],r[1],r[2]);
  } else {
@@ -644,7 +637,7 @@ if((r!==null && typeof r!=="undefined") && (g===null || typeof g==="undefined") 
 }
 
 function rgbToColorHtml(r,g,b){
- "use strict";
+
 if(!rgbToColorRgba.table){
   rgbToColorRgba.table=[];
   for(var i=0;i<256;i++){
@@ -666,12 +659,12 @@ if(!rgbToColorRgba.table){
 }
 
 function isRgbDark(rgb){
- "use strict";
+
 return((rgb[0]*299)+(rgb[1]*587)+(rgb[2]*114))/1000<=127.5;
 }
 
 colorToRgba.namedColorsPattern=function(){
- "use strict";
+
 colorToRgba.setUpNamedColors();var b=[];
  for(var o in colorToRgba.namedColors){
   var v=colorToRgba.namedColors[o];
@@ -693,7 +686,7 @@ colorToRgba.setUpNamedColors();var b=[];
 };
 
 function colorHtmlToRgba(x){
- "use strict";
+
 var arr=[];
  colorToRgba.setUpNamedColors();
  if(!x || x.length===0)return [0,0,0,255];
@@ -729,7 +722,7 @@ var arr=[];
 }
 
 function rgbToColorDisplay(rgb){
- "use strict";
+
 if(rgb.length===3 || (rgb.length>3 && ((rgb[3]===null || typeof rgb[3]==="undefined") || rgb[3]===255))){
   return rgbToColorHtml(rgb);
  } else {
@@ -1183,12 +1176,12 @@ var useNativeColorPicker=function(thisInput,usealpha){
       var thisInputBlur=function(){
          if(thisInput.type==="text"){
            // must get old value before changing type back to "color"
-           var oldvalue=rootobj.normalizeRgb(thisInput)
+           var oldvalue=rootobj.normalizeRgb(thisInput);
            infolink.style.display="inline";
            thisInput.type="color";
            thisInput.setAttribute("list",datalistid);
            thisInput.title="";
-           thisInput.value=oldvalue
+           thisInput.value=oldvalue;
            removeListener(thisInput,"blur",thisInputBlur);
          }
       };
@@ -1272,7 +1265,7 @@ var setPatternAndTitle=function(thisInput,usealpha){
          patternother+="|[A-Fa-f0-9]{8,8}";
       }
       if(usealpha){
-       patternother+="|[Tt][Rr][Aa][Nn][Ss][Pp][Aa][Rr][Ee][Nn][Tt]"
+       patternother+="|[Tt][Rr][Aa][Nn][Ss][Pp][Aa][Rr][Ee][Nn][Tt]";
       }
       pattern+=patternother;
       if(window.opera && supportsPattern()){
@@ -1869,11 +1862,11 @@ documentMouseMove:function(e){
     var c=rootobj.getRgba(input);
     colorChangeEvent.trigger(c,input);
     if(document.createEvent){
-      var e=document.createEvent("HTMLEvents")
-      e.initEvent("change",true,true)
-      input.dispatchEvent(e)
+      var e=document.createEvent("HTMLEvents");
+      e.initEvent("change",true,true);
+      input.dispatchEvent(e);
     }
-  }
+  };
   rootobj.doColorChange=function(input,extra,button){
     coloredInput(input,button);
     rootobj.triggerColorChange(input);
@@ -1915,9 +1908,9 @@ documentMouseMove:function(e){
     coloredInput(input,button);
     colorPreviewEvent.trigger(c,input);
     if(document.createEvent){
-      var e=document.createEvent("HTMLEvents")
-      e.initEvent("change",true,true)
-      input.dispatchEvent(e)
+      var e=document.createEvent("HTMLEvents");
+      e.initEvent("change",true,true);
+      input.dispatchEvent(e);
     }
   };
   rootobj.getColorChangeEvent=function(){
@@ -1969,8 +1962,8 @@ documentMouseMove:function(e){
    if(nobgcolordelay){
     try { o.style.background=val; }
     catch(ex){
-     var oldval=o.style.background
-     var newval=rgbToColorHtml(colorToRgba(val))
+     var oldval=o.style.background;
+     var newval=rgbToColorHtml(colorToRgba(val));
      o.style.background=newval; }  return;
    }
    o.setAttribute("data-currentbgcolor",val);
@@ -2061,7 +2054,7 @@ documentMouseMove:function(e){
           }
          }
          return true;
-     };}
+     };};
      var inputfunc=chgfunc(newInput,thisInput,extra.usealpha,false);
      var changefunc=chgfunc(newInput,thisInput,extra.usealpha,true);
      // because of suggestions, use "input" instead of "keyup" if

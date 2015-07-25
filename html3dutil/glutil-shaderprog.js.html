@@ -18,7 +18,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
+/* global Lights, console */
 /**
 * Represents a WebGL shader program.  A shader program in
 * WebGL consists of a vertex shader (which processes vertices),
@@ -46,11 +46,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * If null, a default fragment shader is used instead.
 */
 function ShaderProgram(context, vertexShader, fragmentShader){
- context= (context.getContext) ? context.getContext() : context;
- if(vertexShader==null){
+ "use strict";
+context= (context.getContext) ? context.getContext() : context;
+ if((vertexShader===null || typeof vertexShader==="undefined")){
   vertexShader=ShaderProgram.getDefaultVertex();
  }
- if(fragmentShader==null){
+ if((fragmentShader===null || typeof fragmentShader==="undefined")){
   fragmentShader=ShaderProgram.getDefaultFragment();
  }
  var prog=ShaderProgram._compileShaders(context,vertexShader,fragmentShader);
@@ -61,14 +62,14 @@ function ShaderProgram(context, vertexShader, fragmentShader){
  this.uniformValues={};
  this.uniformTypes={};
  this.savedUniforms={};
- if(prog!=null){
+ if((prog!==null &amp;&amp; typeof prog!=="undefined")){
   this.attributes=[];
   var name=null;
-  var ret={}
+  var ret={};
   var count= context.getProgramParameter(prog, context.ACTIVE_ATTRIBUTES);
   for (var i = 0; i &lt; count; ++i) {
    var attributeInfo=context.getActiveAttrib(prog, i);
-   if(attributeInfo!==null){
+   if((attributeInfo!==null &amp;&amp; typeof attributeInfo!=="undefined")){
     name=attributeInfo.name;
     var attr=context.getAttribLocation(prog, name);
     if(attr>=0){
@@ -78,9 +79,9 @@ function ShaderProgram(context, vertexShader, fragmentShader){
    }
   }
   count = context.getProgramParameter(prog, context.ACTIVE_UNIFORMS);
-  for (var i = 0; i &lt; count; ++i) {
+  for (i = 0; i &lt; count; ++i) {
    var uniformInfo=context.getActiveUniform(prog, i);
-   if(uniformInfo!==null){
+   if((uniformInfo!==null &amp;&amp; typeof uniformInfo!=="undefined")){
     name = uniformInfo.name;
     ret[name] = context.getUniformLocation(prog, name);
     this.uniformTypes[name] = uniformInfo.type;
@@ -92,7 +93,8 @@ function ShaderProgram(context, vertexShader, fragmentShader){
 /** Disposes resources from this shader program.
 */
 ShaderProgram.prototype.dispose=function(){
- if(this.program){
+ "use strict";
+if(this.program){
   this.context.deleteProgram(this.program);
  }
  this.context=null;
@@ -100,12 +102,13 @@ ShaderProgram.prototype.dispose=function(){
  this.actives={};
  this.attributes={};
  this.uniformTypes={};
-}
+};
 /** Gets the WebGL context associated with this shader program.
 * @return {WebGLRenderingContext} Return value.*/
 ShaderProgram.prototype.getContext=function(){
- return this.context;
-}
+ "use strict";
+return this.context;
+};
 /**
 * Gets the location of the given uniform or attribute's name in this program.
 * (Although the location may change each time the shader program
@@ -122,9 +125,10 @@ ShaderProgram.prototype.getContext=function(){
 * name, or null if it doesn't exist.
 */
 ShaderProgram.prototype.get=function(name){
- var ret=this.actives[name];
- return (ret==null) ? null : ret;
-}
+ "use strict";
+var ret=this.actives[name];
+ return ((ret===null || typeof ret==="undefined")) ? null : ret;
+};
 /**
 * Gets the value of the given uniform in this program. This method
 * may be called at any time, even if this program is not currently the
@@ -135,19 +139,20 @@ ShaderProgram.prototype.get=function(name){
 * an attribute is named, not a uniform.
 */
 ShaderProgram.prototype.getUniform=function(name){
- var loc=(typeof name=="string") ? this.get(name) : name;
+ "use strict";
+var loc=(typeof name==="string") ? this.get(name) : name;
  // If "loc" is a number that means it's an attribute, not a uniform;
  // we expect WebGLUniformLocation
- if(loc==null || typeof loc=="number")return null;
+ if(loc===null || typeof loc==="number")return null;
  // using a cache since context.getUniform can be slow with
  // repeated calls
  var uv=this.uniformValues[name];
- if(uv==null){
+ if((uv===null || typeof uv==="undefined")){
   return this.context.getUniform(this.program,loc);
  } else {
   return (uv instanceof Array) ? uv.slice(0,uv.length) : uv;
  }
-}
+};
 /**
 * Makes this program the active program for the WebGL context.
 * This method also sets uniforms that couldn't be applied by the
@@ -158,48 +163,51 @@ ShaderProgram.prototype.getUniform=function(name){
 * @return {glutil.ShaderProgram} This object.
 */
 ShaderProgram.prototype.use=function(){
- this.context.useProgram(this.program);
+ "use strict";
+this.context.useProgram(this.program);
  this.setUniforms(this.savedUniforms);
  this.savedUniforms={};
  return this;
-}
+};
 /** @private */
 ShaderProgram.prototype._log=function(i,v){
  //console.log("setting "+i+": "+v);
-}
+};
 /** @private */
 ShaderProgram.prototype._saveIfNotCurrent=function(v,i,isCurrentProgram){
-     this._log(i,v);
-     if(isCurrentProgram==null){
+     "use strict";
+this._log(i,v);
+     if((isCurrentProgram===null || typeof isCurrentProgram==="undefined")){
        isCurrentProgram=this.context.getParameter(
-         this.context.CURRENT_PROGRAM)==this.program;
+         this.context.CURRENT_PROGRAM)===this.program;
       }
       if(!isCurrentProgram){
        // Save this uniform to write later
-       this.savedUniforms[i]=(typeof v=="number") ? v : v.slice(0,v.length);
+       this.savedUniforms[i]=(typeof v==="number") ? v : v.slice(0,v.length);
        this.uniformValues[i]=null;
       }
       return isCurrentProgram;
-}
+};
 /** @private */
 ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
-  var isCurrentProgram=null;
+  "use strict";
+isCurrentProgram=null;
       var v=uniforms[i];
       var uniform=this.get(i);
-      if(uniform===null)return isCurrentProgram;
+      if((uniform===null || typeof uniform==="undefined"))return isCurrentProgram;
       var uv=this.uniformValues[i];
-      if(typeof v=="number"){
+      if(typeof v==="number"){
        var newUv=false;
-       if(uv==null){
+       if((uv===null || typeof uv==="undefined")){
         this.uniformValues[i]=uv=v;
         newUv=true;
-       } else if(uv!=v){
+       } else if(uv!==v){
         uv=v;
         this.uniformValues[i]=v;
         newUv=true;
        }
        if(newUv){
-         if(this.uniformTypes[i]==this.context.FLOAT){
+         if(this.uniformTypes[i]===this.context.FLOAT){
           if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
            return isCurrentProgram;
          this.context.uniform1f(uniform, uv);
@@ -210,45 +218,45 @@ ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
         }
        }
       }
-      else if(v.length==3){
+      else if(v.length===3){
        if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length)
+        this.uniformValues[i]=uv=v.slice(0,v.length);
          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
           return isCurrentProgram;
         this.context.uniform3fv(uniform, uv);
-       } else if(uv[0]!=v[0] || uv[1]!=v[1] || uv[2]!=v[2]){
+       } else if(uv[0]!==v[0] || uv[1]!==v[1] || uv[2]!==v[2]){
         uv[0]=v[0]; uv[1]=v[1]; uv[2]=v[2];
          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
           return isCurrentProgram;
         this.context.uniform3fv(uniform, uv);
        }
-      } else if(v.length==2){
+      } else if(v.length===2){
        if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length)
+        this.uniformValues[i]=uv=v.slice(0,v.length);
          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
           return isCurrentProgram;
         this.context.uniform2fv(uniform, uv);
-       } else if(uv[0]!=v[0] || uv[1]!=v[1]){
+       } else if(uv[0]!==v[0] || uv[1]!==v[1]){
         uv[0]=v[0]; uv[1]=v[1];
          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
           return isCurrentProgram;
         this.context.uniform2fv(uniform, uv);
        }
-      } else if(v.length==4){
+      } else if(v.length===4){
        if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length)
+        this.uniformValues[i]=uv=v.slice(0,v.length);
          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
           return isCurrentProgram;
         this.context.uniform4fv(uniform, uv);
-       } else if(uv[0]!=v[0] || uv[1]!=v[1] || uv[2]!=v[2] || uv[3]!=v[3]){
+       } else if(uv[0]!==v[0] || uv[1]!==v[1] || uv[2]!==v[2] || uv[3]!==v[3]){
         uv[0]=v[0]; uv[1]=v[1]; uv[2]=v[2]; uv[3]=v[3];
          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
           return isCurrentProgram;
         this.context.uniform4fv(uniform, uv);
        }
-      } else if(v.length==16){
+      } else if(v.length===16){
        if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length)
+        this.uniformValues[i]=uv=v.slice(0,v.length);
         if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
           return isCurrentProgram;
         this.context.uniformMatrix4fv(uniform,false,uv);
@@ -257,9 +265,9 @@ ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
           return isCurrentProgram;
         this.context.uniformMatrix4fv(uniform,false,uv);
        }
-      } else if(v.length==9){
+      } else if(v.length===9){
        if(!uv){
-        this.uniformValues[i]=uv=v.slice(0,v.length)
+        this.uniformValues[i]=uv=v.slice(0,v.length);
          if(!(isCurrentProgram=this._saveIfNotCurrent(uv,i,isCurrentProgram)))
           return isCurrentProgram;
         this.context.uniformMatrix3fv(uniform,false,uv);
@@ -270,7 +278,7 @@ ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
        }
       }
       return isCurrentProgram;
-}
+};
 /**
 * Sets uniform variables for this program.  Uniform variables
 * are called uniform because they uniformly apply to all vertices
@@ -297,21 +305,26 @@ ShaderProgram.prototype._setUniform=function(uniforms,i,isCurrentProgram){
 * @return {glutil.ShaderProgram} This object.
 */
 ShaderProgram.prototype.setUniforms=function(uniforms){
-  var isCurrentProgram=null;
+  "use strict";
+  var i;
+var isCurrentProgram=null;
   if(typeof Object.keys!=="undefined"){
-    var keys=Object.keys(uniforms);for(var ki=0;ki&lt;keys.length;ki++){var i=keys[ki];
+    var keys=Object.keys(uniforms);
+    for(var ki=0;ki&lt;keys.length;ki++){
+     i=keys[ki];
      isCurrentProgram=this._setUniform(uniforms,i,isCurrentProgram);
     }
   } else {
-    for(var i in uniforms){
+    for(i in uniforms){
      isCurrentProgram=this._setUniform(uniforms,i,isCurrentProgram);
     }
   }
   return this;
-}
+};
 ShaderProgram._copyIfDifferent=function(src,dst,len){
- for(var i=0;i&lt;len;i++){
-  if(src[i]!=dst[i]){
+ "use strict";
+for(var i=0;i&lt;len;i++){
+  if(src[i]!==dst[i]){
    // Arrays are different
    dst[i]=src[i];
    for(var j=i+1;j&lt;len;j++){
@@ -321,32 +334,33 @@ ShaderProgram._copyIfDifferent=function(src,dst,len){
   }
  }
  return false;
-}
+};
 /** @private */
 ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
-  function compileShader(context, kind, text){
+  "use strict";
+function compileShader(context, kind, text){
     var shader=context.createShader(kind);
     context.shaderSource(shader, text);
     context.compileShader(shader);
     if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
-      var lines=text.split("\n")
+      var lines=text.split("\n");
       // add line numbers
       for(var i=0;i&lt;lines.length;i++){
-       lines[i]="/* "+(i+1)+" */   "+lines[i]
+       lines[i]="/* "+(i+1)+" */   "+lines[i];
       }
       console.log(lines.join("\n"));
-      console.log((kind==context.VERTEX_SHADER ? "vertex: " : "fragment: ")+
+      console.log((kind===context.VERTEX_SHADER ? "vertex: " : "fragment: ")+
         context.getShaderInfoLog(shader));
       return null;
     }
    return shader;
   }
-  var vs=(!vertexShader || vertexShader.length==0) ? null :
+  var vs=(!vertexShader || vertexShader.length===0) ? null :
     compileShader(context,context.VERTEX_SHADER,vertexShader);
-  var fs=(!fragmentShader || fragmentShader.length==0) ? null :
+  var fs=(!fragmentShader || fragmentShader.length===0) ? null :
     compileShader(context,context.FRAGMENT_SHADER,fragmentShader);
   var program = null;
-  if(vs!==null &amp;&amp; fs!==null){
+  if((vs!==null &amp;&amp; typeof vs!=="undefined") &amp;&amp; (fs!==null &amp;&amp; typeof fs!=="undefined")){
    program = context.createProgram();
    context.attachShader(program, vs);
    context.attachShader(program, fs);
@@ -359,12 +373,13 @@ ShaderProgram._compileShaders=function(context, vertexShader, fragmentShader){
    context.detachShader(program, vs);
    context.detachShader(program, fs);
   }
-  if(vs!==null)context.deleteShader(vs);
-  if(fs!==null)context.deleteShader(fs);
+  if((vs!==null &amp;&amp; typeof vs!=="undefined"))context.deleteShader(vs);
+  if((fs!==null &amp;&amp; typeof fs!=="undefined"))context.deleteShader(fs);
   return program;
 };
 /** @private */
 ShaderProgram.fragmentShaderHeader=function(){
+"use strict";
 return "" +
 "#ifdef GL_ES\n" +
 "#ifndef GL_FRAGMENT_PRECISION_HIGH\n" +
@@ -373,7 +388,7 @@ return "" +
 "precision highp float;\n" +
 "#endif\n" +
 "#endif\n";
-}
+};
 /**
 * Generates source code for a fragment shader for applying
 * a raster effect to a texture.
@@ -381,6 +396,7 @@ return "" +
 * @return {string} The source text of the resulting fragment shader.
 */
 ShaderProgram.makeEffectFragment=function(functionCode){
+"use strict";
 var shader=ShaderProgram.fragmentShaderHeader();
 shader+=""+
 "uniform sampler2D sampler;\n" + // texture sampler
@@ -394,7 +410,7 @@ shader+="\n\nvoid main(){\n" +
 " gl_FragColor=textureEffect(sampler,uv,textureSize);\n" +
 "}";
 return shader;
-}
+};
 /**
 * Generates a shader program for applying
 * a raster effect to a texture.
@@ -417,10 +433,11 @@ return shader;
 * @return {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.makeEffect=function(context,functionCode){
- return new ShaderProgram(context,
+ "use strict";
+return new ShaderProgram(context,
    ShaderProgram.getBasicVertex(),
    ShaderProgram.makeEffectFragment(functionCode));
-}
+};
 /**
 * Generates a shader program that inverts the colors of a texture.
 * @param {WebGLRenderingContext|object} context A WebGL context associated with the
@@ -430,13 +447,14 @@ ShaderProgram.makeEffect=function(context,functionCode){
 * @return {glutil.ShaderProgram} The resulting shader program.
 */
 ShaderProgram.getInvertEffect=function(context){
+"use strict";
 return ShaderProgram.makeEffect(context,
 [
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,uvCoord);",
 " vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;",
 "}"].join("\n"));
-}
+};
 /**
 * Generates a shader program that generates a two-color texture showing
 * the source texture's edges.
@@ -449,6 +467,7 @@ return ShaderProgram.makeEffect(context,
 ShaderProgram.getEdgeDetectEffect=function(context){
 // Adapted by Peter O. from David C. Bishop's EdgeDetect.frag,
 // in the public domain
+"use strict";
 return ShaderProgram.makeEffect(context,
 ["float luma(vec3 color) {",
 " return 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;",
@@ -475,10 +494,11 @@ return ShaderProgram.makeEffect(context,
 "return back_color;",
 "}}"
 ].join("\n"));
-}
+};
 
 /** @private */
 ShaderProgram.getBasicVertex=function(){
+"use strict";
 var shader=""+
 "attribute vec3 position;\n" +
 "attribute vec3 uv;\n" +
@@ -494,13 +514,14 @@ var shader=""+
 "colorAttrVar=colorAttr;\n" +
 "gl_Position=positionVec4;\n" +
 "}\n";
-}
+};
 /**
 * Gets the text of the default vertex shader.  Putting "#define SHADING\n"
 * at the start of the return value enables the lighting model.
 * @return {string} The resulting shader text.
 */
 ShaderProgram.getDefaultVertex=function(){
+"use strict";
 var shader=[
 "attribute vec3 position;",
 "attribute vec3 normal;",
@@ -533,7 +554,7 @@ var shader=[
 "#ifdef SHADING",
 "transformedNormalVar=normalize(worldViewInvTrans3*normal);",
 "#ifdef NORMAL_MAP",
-"if(useNormalMap==0.0){",
+"if(useNormalMap ="+"= 0.0){",
 "tbnMatrixVar=mat3(1.,0.,0.,0.,1.,0.,0.,0.,1.);",
 "} else {",
 "tbnMatrixVar=mat3(normalize(vec3(world*vec4(tangent,0.0))),",
@@ -542,7 +563,7 @@ var shader=[
 "#endif",
 "worldPositionVar=world*positionVec4;",
 "#endif",
-"}"].join("\n")
+"}"].join("\n");
 return shader;
 };
 
@@ -555,6 +576,8 @@ return shader;
 * @return {string} The resulting shader text.
 */
 ShaderProgram.getDefaultFragment=function(){
+"use strict";
+var i;
 var shader=ShaderProgram.fragmentShaderHeader() +
  // if shading is disabled, this is solid color instead of material diffuse
  "uniform vec4 md;\n" +
@@ -602,13 +625,13 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "vec4 calcLightPower(light lt, vec4 vertexPosition){\n" +
 " vec3 sdir;\n" +
 " float attenuation;\n" +
-" if(lt.position.w == 0.0){ /* directional light */\n" +
+" if(lt.position.w ="+"= 0.0){ /* directional light */\n" +
 "  sdir=normalize((lt.position).xyz);\n" +
 "  attenuation=1.0;\n" +
 " } else { /* point light */\n" +
 "  vec3 vertexToLight=(lt.position-vertexPosition).xyz;\n" +
 "  float dist=length(vertexToLight);\n" +
-"  if(dist==0.0){\n" +
+"  if(dist ="+"= 0.0){\n" +
 "   sdir=vertexToLight;\n" +
 "   attenuation=1.0;\n" +
 "  } else {\n" +
@@ -644,16 +667,16 @@ var shader=ShaderProgram.fragmentShaderHeader() +
 "vec4 lightPower["+Lights.MAX_LIGHTS+"];\n" +
 "float lightCosines["+Lights.MAX_LIGHTS+"];\n";
 shader+=""+
-"if(baseColor.a==0.0)discard;\n" +
+"if(baseColor.a ="+"= 0.0)discard;\n" +
 "vec3 materialAmbient=ma; /* ambient*/\n" +
 "vec3 lightedColor=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=baseColor.rgb;\n";
-for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
+for(i=0;i&lt;Lights.MAX_LIGHTS;i++){
  shader+="SET_LIGHTPOWER("+i+");\n";
  shader+="lightCosines["+i+"]=dot(normal,lightPower["+i+"].xyz);\n";
 }
-for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
+for(i=0;i&lt;Lights.MAX_LIGHTS;i++){
  shader+="ADD_DIFFUSE("+i+");\n";
 }
 shader+="#ifdef SPECULAR\n" +
@@ -667,7 +690,7 @@ shader+="#ifdef SPECULAR\n" +
 "if(materialSpecular.x!=0. || materialSpecular.y!=0. || materialSpecular.z!=0.){\n" +
 "vec3 viewDirection=normalize((viewInvW-worldPositionVar).xyz);\n" +
 "float specular=0.0;\n";
-for(var i=0;i&lt;Lights.MAX_LIGHTS;i++){
+for(i=0;i&lt;Lights.MAX_LIGHTS;i++){
 shader+="  spectmp = lightCosines["+i+"] >= 0.0;\n" +
 "  if (spectmp) {\n" +
 "  vec3 lightSpecular=vec3(lights["+i+"].specular);\n"+

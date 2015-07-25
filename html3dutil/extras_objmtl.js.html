@@ -18,6 +18,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/* global GLUtil, Material, Mesh, Promise, ShapeGroup */
 /**
 OBJ file.&lt;p>
 * &lt;p>This class is considered a supplementary class to the
@@ -30,7 +31,8 @@ OBJ file.&lt;p>
 @class */
 function ObjData(){
   /** URL of the OBJ file */
-  this.url=null;
+  "use strict";
+this.url=null;
   /** An array of meshes.  Two or more meshes may have
 the same name (the "name" property in each mesh).  The "data"
 property holds data for each mesh. */
@@ -39,7 +41,8 @@ property holds data for each mesh. */
   this.meshes=[];
 }
 function MtlData(){
-  this.url=null;
+  "use strict";
+this.url=null;
   this.list=[];
 }
 /**
@@ -49,7 +52,8 @@ function MtlData(){
  * @return {glutil.ShapeGroup} Group of shapes.
  */
 ObjData.prototype.toShape=function(scene){
- var multi=new ShapeGroup();
+ "use strict";
+var multi=new ShapeGroup();
  for(var i=0;i&lt;this.meshes.length;i++){
   var shape=scene.makeShape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
@@ -57,7 +61,7 @@ ObjData.prototype.toShape=function(scene){
   multi.addShape(shape);
  }
  return multi;
-}
+};
 /**
  * Not documented yet.
  * @param {*} scene
@@ -65,7 +69,8 @@ ObjData.prototype.toShape=function(scene){
  * @param {*} rejected
  */
 ObjData.prototype.loadTextures=function(scene,resolved,rejected){
- var textures=[];
+ "use strict";
+var textures=[];
  if(this.mtl){
   for(var i=0;i&lt;this.mtl.list.length;i++){
     var mtl=this.mtl.list[i].data;
@@ -75,7 +80,7 @@ ObjData.prototype.loadTextures=function(scene,resolved,rejected){
   }
  }
  return scene.loadAndMapTextures(textures,resolved,rejected);
-}
+};
 /**
  * Creates one or more 3D shapes from the named portion
  * of the data in this OBJ file.
@@ -86,34 +91,37 @@ ObjData.prototype.loadTextures=function(scene,resolved,rejected){
  * will be empty if no shapes with the given name exist.
  */
 ObjData.prototype.toShapeFromName=function(scene, name){
- var multi=new ShapeGroup();
+ "use strict";
+var multi=new ShapeGroup();
  for(var i=0;i&lt;this.meshes.length;i++){
-  if(this.meshes[i].name!=name)continue;
+  if(this.meshes[i].name!==name)continue;
   var shape=scene.makeShape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.addShape(shape);
  }
  return multi;
-}
+};
 ObjData._resolvePath=function(path, name){
  // Relatively dumb for a relative path
  // resolver, but sufficient here, as it will
  // only be used with relative "mtllib"/"map_Kd"
  // strings
- var ret=path;
- var lastSlash=ret.lastIndexOf("/")
+ "use strict";
+var ret=path;
+ var lastSlash=ret.lastIndexOf("/");
  if(lastSlash>=0){
   ret=ret.substr(0,lastSlash+1)+name.replace(/\\/g,"/");
  } else {
   ret=name.replace(/\\/g,"/");
  }
  return ret;
-}
+};
 
 /** @private */
 ObjData.prototype._getMaterial=function(mesh){
- if(!this.mtl || !mesh){
+ "use strict";
+if(!this.mtl || !mesh){
   return new Material();
  } else {
   if(mesh.usemtl){
@@ -124,11 +132,12 @@ ObjData.prototype._getMaterial=function(mesh){
    return new Material();
   }
  }
-}
+};
 
 /** @private */
 MtlData.prototype._resolveTextures=function(){
-  for(var i=0;i&lt;this.list.length;i++){
+  "use strict";
+for(var i=0;i&lt;this.list.length;i++){
     var mtl=this.list[i].data;
     if(mtl.texture){
      var resolvedName=ObjData._resolvePath(
@@ -137,21 +146,23 @@ MtlData.prototype._resolveTextures=function(){
        .setParams({"texture":resolvedName});
     }
   }
-}
+};
 /**
  * Not documented yet.
  * @param {*} name
  */
 MtlData.prototype.getMaterial=function(name){
-  for(var i=0;i&lt;this.list.length;i++){
-    if(this.list[i].name==name){
-      return this.list[i].data
+  "use strict";
+for(var i=0;i&lt;this.list.length;i++){
+    if(this.list[i].name===name){
+      return this.list[i].data;
     }
   }
   return null;
-}
+};
 MtlData._getMaterial=function(mtl){
- var shininess=1.0;
+ "use strict";
+var shininess=1.0;
  var ambient=null;
  var diffuse=null;
  var specular=null;
@@ -160,47 +171,47 @@ MtlData._getMaterial=function(mtl){
  var normalName=null;
  var textureName=null;
  if(mtl.hasOwnProperty("Ns")){
-  shininess=mtl["Ns"];
+  shininess=mtl.Ns;
  }
  if(mtl.hasOwnProperty("Kd")){
-  diffuse=(mtl["Kd"]);
+  diffuse=(mtl.Kd);
  }
  if(mtl.hasOwnProperty("map_Kd")){
-  textureName=mtl["map_Kd"];
+  textureName=mtl.map_Kd;
  }
  if(mtl.hasOwnProperty("map_Ks")){
-  specularName=mtl["map_Ks"];
+  specularName=mtl.map_Ks;
  }
  if(mtl.hasOwnProperty("map_Bump")){
-  normalName=mtl["map_Bump"];
+  normalName=mtl.map_Bump;
  }
  if(mtl.hasOwnProperty("map_bump")){
-  normalName=mtl["map_bump"];
+  normalName=mtl.map_bump;
  }
  if(mtl.hasOwnProperty("bump")){
-  normalName=mtl["bump"];
+  normalName=mtl.bump;
  }
  if(mtl.hasOwnProperty("Ka")){
-  ambient=(mtl["Ka"]);
+  ambient=(mtl.Ka);
  }
  if(mtl.hasOwnProperty("Ke")){
-  var ke=mtl["Ke"];
-  if(ke.length==1){
+  var ke=mtl.Ke;
+  if(ke.length===1){
    emission=[ke,ke,ke];
   } else {
    emission=(ke);
   }
  }
  if(mtl.hasOwnProperty("Ks")){
-  specular=(mtl["Ks"]);
+  specular=(mtl.Ks);
  }
  // NOTE: illum must be checked last
  if(mtl.hasOwnProperty("illum")){
-  if(mtl["illum"]==0){
+  if(mtl.illum===0){
    ambient=diffuse;
    diffuse=[0,0,0];
    specular=[0,0,0];
-  } else if(mtl["illum"]==1){
+  } else if(mtl.illum===1){
    specular=[0,0,0];
   }
  }
@@ -209,22 +220,23 @@ MtlData._getMaterial=function(mtl){
  if(textureName){
   ret=ret.setParams({
    "texture":textureName
-  })
+  });
  }
  if(specularName){
   ret=ret.setParams({
    "specularMap":specularName
-  })
+  });
  }
  if(normalName){
   ret=ret.setParams({
    "normalMap":normalName
-  })
+  });
  }
  return ret;
-}
+};
 ObjData.loadMtlFromUrl=function(url){
- return GLUtil.loadFileFromUrl(url).then(
+ "use strict";
+return GLUtil.loadFileFromUrl(url).then(
    function(e){
      var mtl=MtlData._loadMtl(e.data);
      if(mtl.error)return Promise.reject({"url":e.url, "error": mtl.error});
@@ -234,9 +246,9 @@ ObjData.loadMtlFromUrl=function(url){
      return Promise.resolve(mtldata);
    },
    function(e){
-     return Promise.reject(e)
+     return Promise.reject(e);
    });
-}
+};
 /**
 Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available) asynchronously.
@@ -247,7 +259,8 @@ MTL is also loaded successfully (the result is an ObjData object),
 and is rejected when an error occurs when loading the OBJ file.
 */
 ObjData.loadObjFromUrl=function(url){
- return GLUtil.loadFileFromUrl(url).then(
+ "use strict";
+return GLUtil.loadFileFromUrl(url).then(
    function(e){
      var obj;
      obj=ObjData._loadObj(e.data);
@@ -272,18 +285,19 @@ ObjData.loadObjFromUrl=function(url){
      }
    },
    function(e){
-     return Promise.reject(e)
+     return Promise.reject(e);
    });
-}
+};
 MtlData._loadMtl=function(str){
- function xyzToRgb(xyz){
+ "use strict";
+function xyzToRgb(xyz){
   // convert CIE XYZ to RGB
   var x=xyz[0];
   var y=xyz[1];
   var z=xyz[2];
   var rgb=[2.2878384873407613*x-0.8333676778352163*y-0.4544707958714208*z,
     -0.5116513807438615*x+1.4227583763217775*y+0.08889300175529392*z,
-    0.005720409831409596*x-0.01590684851040362*y+1.0101864083734013*z]
+    0.005720409831409596*x-0.01590684851040362*y+1.0101864083734013*z];
   // ensure RGB value fits in 0..1
   var w=-Math.min(0,rgb[0],rgb[1],rgb[2]);
   if(w>0){
@@ -295,53 +309,53 @@ MtlData._loadMtl=function(str){
   }
   return rgb;
  }
- var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)"
- var nonnegInteger="(\\d+)"
- var oneNumLine=new RegExp("^[ \\t]*(Ns|d|Tr|Ni)\\s+"+number+"\\s*$")
- var oneIntLine=new RegExp("^[ \\t]*(illum)\\s+"+nonnegInteger+"\\s*$")
- var threeNumLine=new RegExp("^[ \\t]*(Tf)\\s+"+number+"\\s+"+number
-   +"\\s+"+number+"\\s*$")
- var oneOrThreeNumLine=new RegExp("^[ \\t]*(Ke)\\s+"+number+"(?:\\s+"+number
-   +"\\s+"+number+")?\\s*$")
- var threeOrFourNumLine=new RegExp("^[ \\t]*(Kd|Ka|Ks)\\s+"+number+"\\s+"+number
-   +"\\s+"+number+"(?:\\s+"+number+")?\\s*$")
- var threeOrFourNumLineXYZ=new RegExp("^[ \\t]*(Kd|Ka|Ks)\\s+xyz\\s+"+number+"\\s+"+number
-   +"\\s+"+number+"(?:\\s+"+number+")?\\s*$")
- var mapLine=new RegExp("^[ \\t]*(map_Kd|bump|map_[Bb]ump|map_Ka|map_Ks)\\s+(.*?)\\s*$")
- var newmtlLine=new RegExp("^newmtl\\s+([^\\s]*)$")
- var faceStart=new RegExp("^f\\s+")
- var lines=str.split(/\r?\n/)
+ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
+ var nonnegInteger="(\\d+)";
+ var oneNumLine=new RegExp("^[ \\t]*(Ns|d|Tr|Ni)\\s+"+number+"\\s*$");
+ var oneIntLine=new RegExp("^[ \\t]*(illum)\\s+"+nonnegInteger+"\\s*$");
+ var threeNumLine=new RegExp("^[ \\t]*(Tf)\\s+"+number+"\\s+"+number+
+   "\\s+"+number+"\\s*$");
+ var oneOrThreeNumLine=new RegExp("^[ \\t]*(Ke)\\s+"+number+"(?:\\s+"+number+
+   "\\s+"+number+")?\\s*$");
+ var threeOrFourNumLine=new RegExp("^[ \\t]*(Kd|Ka|Ks)\\s+"+number+"\\s+"+number+
+   "\\s+"+number+"(?:\\s+"+number+")?\\s*$");
+ var threeOrFourNumLineXYZ=new RegExp("^[ \\t]*(Kd|Ka|Ks)\\s+xyz\\s+"+number+"\\s+"+number+
+   "\\s+"+number+"(?:\\s+"+number+")?\\s*$");
+ var mapLine=new RegExp("^[ \\t]*(map_Kd|bump|map_[Bb]ump|map_Ka|map_Ks)\\s+(.*?)\\s*$");
+ var newmtlLine=new RegExp("^newmtl\\s+([^\\s]*)$");
+ var faceStart=new RegExp("^f\\s+");
+ var lines=str.split(/\r?\n/);
  var firstLine=true;
  var materials=[];
  var currentMat=null;
  for(var i=0;i&lt;lines.length;i++){
   var line=lines[i];
   // skip empty lines
-  if(line.length==0)continue;
+  if(line.length===0)continue;
   // skip comments
-  if(line.charAt(0)=="#")continue;
-  while(line.charAt(line.length-1)=="\\" &amp;&amp;
+  if(line.charAt(0)==="#")continue;
+  while(line.charAt(line.length-1)==="\\" &amp;&amp;
     i+1&lt;line.length){
     // The line continues on the next line
    line=line.substr(0,line.length-1);
    line+=" "+lines[i+1];
    i++;
   }
-  if(line.charAt(line.length-1)=="\\"){
+  if(line.charAt(line.length-1)==="\\"){
    line=line.substr(0,line.length-1);
   }
   if(firstLine &amp;&amp; !(/^newmtl\s+/)){
    return {"error": "newmtl not the first line in MTL file"};
   }
   firstLine=false;
-  var e=newmtlLine.exec(line)
+  var e=newmtlLine.exec(line);
   if(e){
     var name=e[1];
     currentMat={};
     materials.push({name:name, data: currentMat});
     continue;
   }
-  e=threeOrFourNumLine.exec(line)
+  e=threeOrFourNumLine.exec(line);
   if(e){
     if(e[5]){
       currentMat[e[1]]=[parseFloat(e[2]),parseFloat(e[3]),parseFloat(e[4]),parseFloat(e[5])];
@@ -350,7 +364,7 @@ MtlData._loadMtl=function(str){
     }
     continue;
   }
-  e=threeOrFourNumLineXYZ.exec(line)
+  e=threeOrFourNumLineXYZ.exec(line);
   if(e){
     if(e[5]){
       currentMat[e[1]]=xyzToRgb([parseFloat(e[2]),parseFloat(e[3]),parseFloat(e[4])]);
@@ -360,12 +374,12 @@ MtlData._loadMtl=function(str){
     }
     continue;
   }
-  e=threeNumLine.exec(line)
+  e=threeNumLine.exec(line);
   if(e){
     currentMat[e[1]]=[parseFloat(e[2]),parseFloat(e[3]),parseFloat(e[4])];
     continue;
   }
-  e=oneOrThreeNumLine.exec(line)
+  e=oneOrThreeNumLine.exec(line);
   if(e){
     if(e[3]){
       currentMat[e[1]]=[parseFloat(e[2]),parseFloat(e[3]),parseFloat(e[4])];
@@ -374,12 +388,12 @@ MtlData._loadMtl=function(str){
     }
     continue;
   }
-  e=oneNumLine.exec(line)
+  e=oneNumLine.exec(line);
   if(e){
     currentMat[e[1]]=parseFloat(e[2]);
     continue;
   }
-  e=mapLine.exec(line)
+  e=mapLine.exec(line);
   if(e){
      // only allow relative paths
     if((/^(?![\/\\])([^\:\?\#\s]+)$/).test(e[2])){
@@ -387,45 +401,47 @@ MtlData._loadMtl=function(str){
     }
     continue;
   }
-  e=oneIntLine.exec(line)
+  e=oneIntLine.exec(line);
   if(e){
     currentMat[e[1]]=[parseInt(e[2],10)];
     continue;
   }
-  return {"error": new Error("unsupported line: "+line)}
+  return {"error": new Error("unsupported line: "+line)};
  }
  var mtl=new MtlData();
  mtl.list=materials;
- for(var i=0;i&lt;mtl.list.length;i++){
-  mtl.list[i].data=MtlData._getMaterial(mtl.list[i].data)
+ for(i=0;i&lt;mtl.list.length;i++){
+  mtl.list[i].data=MtlData._getMaterial(mtl.list[i].data);
  }
  return {success: mtl};
-}
+};
 ObjData._refIndex=function(idxstr,arr){
- var ret=parseInt(idxstr,10);
+ "use strict";
+var ret=parseInt(idxstr,10);
  ret=(ret&lt;0) ? arr.length-ret : ret-1;
  if(ret&lt;0 || ret>=arr.length)ret=0;
  return ret;
-}
+};
 ObjData._loadObj=function(str){
- var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)"
- var signedInteger="(-?\\d+)"
- var vertexOnly=new RegExp("^"+signedInteger+"($|\\s+)")
- var vertexNormalOnly=new RegExp("^"+signedInteger+"\\/\\/"+signedInteger+"($|\\s+)")
+ "use strict";
+var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
+ var signedInteger="(-?\\d+)";
+ var vertexOnly=new RegExp("^"+signedInteger+"($|\\s+)");
+ var vertexNormalOnly=new RegExp("^"+signedInteger+"\\/\\/"+signedInteger+"($|\\s+)");
  var vertexUVOnly=new RegExp("^"+signedInteger+"\\/"+
-   signedInteger+"($|\\s+)")
+   signedInteger+"($|\\s+)");
  var vertexUVNormal=new RegExp("^"+signedInteger+"\\/"+signedInteger+
-   "\\/"+signedInteger+"($|\\s+)")
- var vertexLine=new RegExp("^v\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*$")
- var uvLine=new RegExp("^vt\\s+"+number+"\\s+"+number+"(\\s+"+number+")?\\s*$")
- var smoothLine=new RegExp("^(s)\\s+(.*)$")
- var usemtlLine=new RegExp("^(usemtl|o|g)\\s+([^\\s]*)\\s*$")
- var mtllibLine=new RegExp("^(mtllib)\\s+(?![\\/\\\\])([^\\:\\?\\#\\t\\r\\n]+)\\s*$")
- var normalLine=new RegExp("^vn\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*")
- var faceStart=new RegExp("^f\\s+")
- var lineStart=new RegExp("^l\\s+")
- var pointStart=new RegExp("^p\\s+")
- var lines=str.split(/\r?\n/)
+   "\\/"+signedInteger+"($|\\s+)");
+ var vertexLine=new RegExp("^v\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*$");
+ var uvLine=new RegExp("^vt\\s+"+number+"\\s+"+number+"(\\s+"+number+")?\\s*$");
+ var smoothLine=new RegExp("^(s)\\s+(.*)$");
+ var usemtlLine=new RegExp("^(usemtl|o|g)\\s+([^\\s]*)\\s*$");
+ var mtllibLine=new RegExp("^(mtllib)\\s+(?![\\/\\\\])([^\\:\\?\\#\\t\\r\\n]+)\\s*$");
+ var normalLine=new RegExp("^vn\\s+"+number+"\\s+"+number+"\\s+"+number+"\\s*");
+ var faceStart=new RegExp("^f\\s+");
+ var lineStart=new RegExp("^l\\s+");
+ var pointStart=new RegExp("^p\\s+");
+ var lines=str.split(/\r?\n/);
  var vertices=[];
  var currentMesh=new Mesh();
  var normals=[];
@@ -446,54 +462,55 @@ ObjData._loadObj=function(str){
  for(var i=0;i&lt;lines.length;i++){
   var line=lines[i];
   // skip empty lines
-  if(line.length==0)continue;
+  if(line.length === 0)continue;
   // skip comments
-  if(line.charAt(0)=="#")continue;
-  while(line.charAt(line.length-1)=="\\" &amp;&amp;
+  if(line.charAt(0)==="#")continue;
+  while(line.charAt(line.length-1)==="\\" &amp;&amp;
     i+1&lt;line.length){
     // The line continues on the next line
    line=line.substr(0,line.length-1);
    line+=" "+lines[i+1];
    i++;
   }
-  if(line.charAt(line.length-1)=="\\"){
+  if(line.charAt(line.length-1)==="\\"){
    line=line.substr(0,line.length-1);
   }
-  var e=vertexLine.exec(line)
+  var e=vertexLine.exec(line);
   if(e){
     vertices.push([parseFloat(e[1]),parseFloat(e[2]),parseFloat(e[3])]);
     continue;
   }
-  e=normalLine.exec(line)
+  e=normalLine.exec(line);
   if(e){
     normals.push([parseFloat(e[1]),parseFloat(e[2]),parseFloat(e[3])]);
     continue;
   }
-  e=uvLine.exec(line)
+  e=uvLine.exec(line);
   if(e){
     uvs.push([parseFloat(e[1]),parseFloat(e[2])]);
     continue;
   }
   var prim=-1;
-  e=faceStart.exec(line)
+  e=faceStart.exec(line);
   if(e){
    prim=Mesh.TRIANGLES;
   } else {
-   e=lineStart.exec(line)
+   e=lineStart.exec(line);
    if(e){
     prim=Mesh.LINES;
    } else {
-    e=pointStart.exec(line)
+    e=pointStart.exec(line);
     if(e){
      prim=Mesh.POINTS;
     }
    }
   }
-  if(e &amp;&amp; prim!=-1){
+  var vtx,uv,norm;
+  if(e &amp;&amp; prim!==-1){
     var oldline=line;
     seenFacesAfterObjName=true;
     line=line.substr(e[0].length);
-    if(lastPrimitiveSeen!=-1 &amp;&amp; lastPrimitiveSeen!=prim &amp;&amp;
+    if(lastPrimitiveSeen!==-1 &amp;&amp; lastPrimitiveSeen!==prim &amp;&amp;
         mesh.vertexCount()>0){
        if(!haveNormals){
          // No normals in this mesh, so calculate them
@@ -507,28 +524,28 @@ ObjData._loadObj=function(str){
       haveNormals=false;
       mesh=new Mesh();
     }
-    mesh.mode(prim==Mesh.TRIANGLES ?
+    mesh.mode(prim===Mesh.TRIANGLES ?
       Mesh.TRIANGLE_FAN :
-      (prim==Mesh.LINES ? Mesh.LINE_STRIP : Mesh.POINTS));
+      (prim===Mesh.LINES ? Mesh.LINE_STRIP : Mesh.POINTS));
     while(line.length>0){
-     e=vertexOnly.exec(line)
+     e=vertexOnly.exec(line);
      if(e){
-      if(vertexKind!=0 || lastPrimitiveSeen!=prim){
+      if(vertexKind!==0 || lastPrimitiveSeen!==prim){
        vertexKind=0; // position only
       }
-      var vtx=ObjData._refIndex(e[1],vertices);
+      vtx=ObjData._refIndex(e[1],vertices);
       mesh.normal3(0,0,0).texCoord2(0,0)
         .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
         line=line.substr(e[0].length);
       continue;
      }
-     e=vertexNormalOnly.exec(line)
+     e=vertexNormalOnly.exec(line);
      if(e){
-      if(vertexKind!=1){
+      if(vertexKind!==1){
        vertexKind=1; // position/normal
       }
-      var vtx=ObjData._refIndex(e[1],vertices);
-      var norm=ObjData._refIndex(e[2],normals);
+      vtx=ObjData._refIndex(e[1],vertices);
+      norm=ObjData._refIndex(e[2],normals);
       haveNormals=true;
       mesh.normal3(normals[norm][0],normals[norm][1],
          normals[norm][2])
@@ -537,27 +554,27 @@ ObjData._loadObj=function(str){
         line=line.substr(e[0].length);
       continue;
      }
-     e=vertexUVOnly.exec(line)
+     e=vertexUVOnly.exec(line);
      if(e){
-      if(vertexKind!=2 || lastPrimitiveSeen!=prim){
+      if(vertexKind!==2 || lastPrimitiveSeen!==prim){
        vertexKind=2; // position/UV
       }
-      var vtx=ObjData._refIndex(e[1],vertices);
-      var uv=ObjData._refIndex(e[2],uvs);
+      vtx=ObjData._refIndex(e[1],vertices);
+      uv=ObjData._refIndex(e[2],uvs);
       mesh.normal3(0,0,0)
         .texCoord2(uvs[uv][0],uvs[uv][1])
         .vertex3(vertices[vtx][0],vertices[vtx][1],vertices[vtx][2]);
         line=line.substr(e[0].length);
       continue;
      }
-     e=vertexUVNormal.exec(line)
+     e=vertexUVNormal.exec(line);
      if(e){
-      if(vertexKind!=3 || lastPrimitiveSeen!=prim){
+      if(vertexKind!==3 || lastPrimitiveSeen!==prim){
        vertexKind=3; // position/UV/normal
       }
-      var vtx=ObjData._refIndex(e[1],vertices);
-      var uv=ObjData._refIndex(e[2],uvs);
-      var norm=ObjData._refIndex(e[3],normals);
+      vtx=ObjData._refIndex(e[1],vertices);
+      uv=ObjData._refIndex(e[2],uvs);
+      norm=ObjData._refIndex(e[3],normals);
       haveNormals=true;
       mesh.normal3(normals[norm][0],normals[norm][1],
          normals[norm][2])
@@ -566,13 +583,13 @@ ObjData._loadObj=function(str){
         line=line.substr(e[0].length);
       continue;
      }
-     return {"error": new Error("unsupported face: "+oldline)}
+     return {"error": new Error("unsupported face: "+oldline)};
     }
     continue;
   }
-  e=usemtlLine.exec(line)
+  e=usemtlLine.exec(line);
   if(e){
-    if(e[1]=="usemtl"){
+    if(e[1]==="usemtl"){
       // Changes the material used
       if(mesh.vertexCount()>0){
         if(!haveNormals){
@@ -588,7 +605,7 @@ ObjData._loadObj=function(str){
         mesh=new Mesh();
       }
       usemtl=e[2];
-    } else if(e[1]=="g"){
+    } else if(e[1]==="g"){
       // Starts a new group
       if(mesh.vertexCount()>0){
         if(!haveNormals){
@@ -605,26 +622,26 @@ ObjData._loadObj=function(str){
         mesh=new Mesh();
       }
       meshName=e[2];
-    } else if(e[1]=="o"){
+    } else if(e[1]==="o"){
       oldObjName=objName;
       objName=e[2];
       seenFacesAfterObjName=false;
     }
     continue;
   }
-  e=mtllibLine.exec(line)
+  e=mtllibLine.exec(line);
   if(e){
-    if(e[1]=="mtllib"){
+    if(e[1]==="mtllib"){
       ret.mtllib=e[2];
     }
     continue;
   }
-  e=smoothLine.exec(line)
+  e=smoothLine.exec(line);
   if(e){
-    flat=(e[2]=="off");
+    flat=(e[2]==="off");
     continue;
   }
-  return {"error": new Error("unsupported line: "+line)}
+  return {"error": new Error("unsupported line: "+line)};
  }
  if(!haveNormals){
    // No normals in this mesh, so calculate them
@@ -634,7 +651,7 @@ ObjData._loadObj=function(str){
           "name": seenFacesAfterObjName ? objName : oldObjName,
           "usemtl": usemtl, "data": mesh});
  return {"success": ret};
-}
+};
 </code></pre>
         </article>
     </section>

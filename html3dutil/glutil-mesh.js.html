@@ -18,6 +18,12 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/* global GLMath, GLUtil */
+/** @private */
+var SubMesh=function(vertices,faces,format){
+ "use strict";
+this._initialize(vertices,faces,format);
+};
 
 /**
 * Specifies the triangles, lines, and points that make up a geometric shape.
@@ -59,7 +65,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * May be null or omitted, in which case "format" is set to 0.
 */
 function Mesh(vertices,indices,format){
- if(vertices!=null){
+ "use strict";
+if((vertices!==null &amp;&amp; typeof vertices!=="undefined")){
   this.subMeshes=[
    new SubMesh(vertices,indices,format)
   ];
@@ -76,85 +83,90 @@ function Mesh(vertices,indices,format){
 }
 /** @private */
 Mesh._primitiveType=function(mode){
- if(mode==Mesh.LINES || mode==Mesh.LINE_STRIP)
+ "use strict";
+if(mode===Mesh.LINES || mode===Mesh.LINE_STRIP)
   return Mesh.LINES;
- else if(mode==Mesh.POINTS)
+ else if(mode===Mesh.POINTS)
   return Mesh.POINTS;
  else
   return Mesh.TRIANGLES;
-}
+};
 /** @private */
 Mesh._isCompatibleMode=function(oldMode,newMode){
- if(oldMode==newMode)return true;
- if(Mesh._primitiveType(oldMode)==Mesh._primitiveType(newMode))
+ "use strict";
+if(oldMode===newMode)return true;
+ if(Mesh._primitiveType(oldMode)===Mesh._primitiveType(newMode))
    return true;
  return false;
-}
+};
 /** @private */
 Mesh._recalcNormalsStart=function(vertices,uniqueVertices,faces,stride,offset,flat){
-  for(var i=0;i&lt;vertices.length;i+=stride){
-    vertices[i+offset]=0.0
-    vertices[i+offset+1]=0.0
-    vertices[i+offset+2]=0.0
+  "use strict";
+for(var i=0;i&lt;vertices.length;i+=stride){
+    vertices[i+offset]=0.0;
+    vertices[i+offset+1]=0.0;
+    vertices[i+offset+2]=0.0;
     if(!flat){
      // If smooth shading is requested, find all vertices with
      // duplicate vertex positions
-     var uv=[vertices[i],vertices[i+1],vertices[i+2]]
+     var uv=[vertices[i],vertices[i+1],vertices[i+2]];
      if(uniqueVertices[uv])uniqueVertices[uv].push(i+offset);
      else uniqueVertices[uv]=[i+offset];
     }
   }
-}
+};
 /** @private */
 Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,flat){
- var len;
- var dupverts=[]
- var dupvertcount=0
+ "use strict";
+var len;
+ var dupverts=[];
+ var dupvertcount=0;
+ var i;
    if(!flat){
    // If smooth shading is requested, make sure
    // that every vertex with the same position has the
    // same normal
    for(var key in uniqueVertices){
-    var v=uniqueVertices[key]
-    if(v &amp;&amp; v.constructor==Array &amp;&amp; v.length>=2){
+    var v=uniqueVertices[key];
+    if(v &amp;&amp; v.constructor===Array &amp;&amp; v.length>=2){
      var v0=v[0];
-     var avgx=vertices[v0]
-     var avgy=vertices[v0+1]
-     var avgz=vertices[v0+2]
-     dupverts[0]=avgx
-     dupverts[1]=avgy
-     dupverts[2]=avgz
-     dupvertcount=3
-     for(var i=1;i&lt;v.length;i++){
-      var dupfound=false
-      var nx=vertices[v[i]]
-      var ny=vertices[v[i]+1]
-      var nz=vertices[v[i]+2]
+     var avgx=vertices[v0];
+     var avgy=vertices[v0+1];
+     var avgz=vertices[v0+2];
+     dupverts[0]=avgx;
+     dupverts[1]=avgy;
+     dupverts[2]=avgz;
+     dupvertcount=3;
+     for(i=1;i&lt;v.length;i++){
+      var dupfound=false;
+      var nx=vertices[v[i]];
+      var ny=vertices[v[i]+1];
+      var nz=vertices[v[i]+2];
       for(var j=0;j&lt;dupvertcount;j+=3){
-       if(nx==dupverts[j] &amp;&amp; ny==dupverts[j+1] &amp;&amp; nz==dupverts[j+2]){
-        dupfound=true
-        break
+       if(nx===dupverts[j] &amp;&amp; ny===dupverts[j+1] &amp;&amp; nz===dupverts[j+2]){
+        dupfound=true;
+        break;
        }
       }
       if(!dupfound){
-       dupverts[dupvertcount++]=nx
-       dupverts[dupvertcount++]=ny
-       dupverts[dupvertcount++]=nz
-       avgx+=nx
-       avgy+=ny
-       avgy+=nz
+       dupverts[dupvertcount++]=nx;
+       dupverts[dupvertcount++]=ny;
+       dupverts[dupvertcount++]=nz;
+       avgx+=nx;
+       avgy+=ny;
+       avgz+=nz;
       }
-     }
-     for(var i=0;i&lt;v.length;i++){
-      vertices[v[i]]=avgx
-      vertices[v[i]+1]=avgy
-      vertices[v[i]+2]=avgz
+    }
+    for(i=0;i&lt;v.length;i++){
+      vertices[v[i]]=avgx;
+      vertices[v[i]+1]=avgy;
+      vertices[v[i]+2]=avgz;
      }
     }
    }
   }
   // Normalize each normal of the vertex
-  for(var i=0;i&lt;vertices.length;i+=stride){
+  for(i=0;i&lt;vertices.length;i+=stride){
     var x=vertices[i+offset];
     var y=vertices[i+offset+1];
     var z=vertices[i+offset+2];
@@ -166,46 +178,47 @@ Mesh._recalcNormalsFinish=function(vertices,uniqueVertices,faces,stride,offset,f
       vertices[i+offset+2]=z*len;
     }
   }
-}
+};
 
 /** @private */
 Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
-  var normDir=(inward) ? -1 : 1;
+  "use strict";
+var normDir=(inward) ? -1 : 1;
   var uniqueVertices={};
   var len;
   Mesh._recalcNormalsStart(vertices,uniqueVertices,faces,stride,offset,flat);
   for(var i=0;i&lt;faces.length;i+=3){
-    var v1=faces[i]*stride
-    var v2=faces[i+1]*stride
-    var v3=faces[i+2]*stride
-    var n1=[vertices[v1]-vertices[v3],vertices[v1+1]-vertices[v3+1],vertices[v1+2]-vertices[v3+2]]
-    var n2=[vertices[v2]-vertices[v3],vertices[v2+1]-vertices[v3+1],vertices[v2+2]-vertices[v3+2]]
+    var v1=faces[i]*stride;
+    var v2=faces[i+1]*stride;
+    var v3=faces[i+2]*stride;
+    var n1=[vertices[v1]-vertices[v3],vertices[v1+1]-vertices[v3+1],vertices[v1+2]-vertices[v3+2]];
+    var n2=[vertices[v2]-vertices[v3],vertices[v2+1]-vertices[v3+1],vertices[v2+2]-vertices[v3+2]];
     // cross multiply n1 and n2
-    var x=(n1[1]*n2[2]-n1[2]*n2[1])
-    var y=(n1[2]*n2[0]-n1[0]*n2[2])
-    var z=(n1[0]*n2[1]-n1[1]*n2[0])
+    var x=(n1[1]*n2[2]-n1[2]*n2[1]);
+    var y=(n1[2]*n2[0]-n1[0]*n2[2]);
+    var z=(n1[0]*n2[1]-n1[1]*n2[0]);
     // normalize xyz vector
     len=Math.sqrt(x*x+y*y+z*z);
-    if(len!=0){
+    if(len!==0){
       len=1.0/len;
-      len*=normDir
+      len*=normDir;
       x*=len;
       y*=len;
       z*=len;
       // add normalized normal to each vertex of the face
-      vertices[v1+offset]+=x
-      vertices[v1+offset+1]+=y
-      vertices[v1+offset+2]+=z
-      vertices[v2+offset]+=x
-      vertices[v2+offset+1]+=y
-      vertices[v2+offset+2]+=z
-      vertices[v3+offset]+=x
-      vertices[v3+offset+1]+=y
-      vertices[v3+offset+2]+=z
+      vertices[v1+offset]+=x;
+      vertices[v1+offset+1]+=y;
+      vertices[v1+offset+2]+=z;
+      vertices[v2+offset]+=x;
+      vertices[v2+offset+1]+=y;
+      vertices[v2+offset+2]+=z;
+      vertices[v3+offset]+=x;
+      vertices[v3+offset+1]+=y;
+      vertices[v3+offset+2]+=z;
     }
   }
   Mesh._recalcNormalsFinish(vertices,uniqueVertices,faces,stride,offset,flat);
-}
+};
 
 /**
  * Changes the primitive mode for this mesh.
@@ -224,14 +237,15 @@ Mesh._recalcNormals=function(vertices,faces,stride,offset,flat,inward){
  * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.mode=function(m){
- if(m&lt;0)throw new Error("invalid mode");
- if(this.currentMode==-1 ||
+ "use strict";
+if(m&lt;0)throw new Error("invalid mode");
+ if(this.currentMode===-1 ||
    !Mesh._isCompatibleMode(this.currentMode,m)){
    var format=0;
    var primtype=Mesh._primitiveType(m);
-   if(primtype==Mesh.LINES)
+   if(primtype===Mesh.LINES)
     format|=Mesh.LINES_BIT;
-   else if(primtype==Mesh.POINTS)
+   else if(primtype===Mesh.POINTS)
     format|=Mesh.POINTS_BIT;
    this.subMeshes.push(new SubMesh([],[],format));
    this.currentMode=m;
@@ -240,7 +254,7 @@ Mesh.prototype.mode=function(m){
    this.currentMode=m;
  }
  return this;
-}
+};
 /**
  * Merges the vertices from another mesh into this one.
  * The vertices from the other mesh will be copied into this one,
@@ -256,15 +270,16 @@ Mesh.prototype.mode=function(m){
  * var copiedMesh = new Mesh().merge(meshToCopy);
  */
 Mesh.prototype.merge=function(other){
- var lastMesh=this.subMeshes[this.subMeshes.length-1]
+ "use strict";
+var lastMesh=this.subMeshes[this.subMeshes.length-1];
  var prim=lastMesh ? (lastMesh.attributeBits&amp;Mesh.PRIMITIVES_BITS) : 0;
  for(var i=0;i&lt;other.subMeshes.length;i++){
   var sm=other.subMeshes[i];
-  if(sm.indices.length==0)continue;
+  if(sm.indices.length===0)continue;
   if(!lastMesh ||
-     (sm.attributeBits&amp;Mesh.PRIMITIVES_BITS)!=prim ||
+     (sm.attributeBits&amp;Mesh.PRIMITIVES_BITS)!==prim ||
      (lastMesh.vertices.length+sm.vertices.length)>65535*3 ||
-     lastMesh.attributeBits!=sm.attributeBits){
+     lastMesh.attributeBits!==sm.attributeBits){
    // Add new submesh because its primitive type
    // differs from the last submesh or the combined
    // submesh would be too long, or the attribute bits
@@ -281,7 +296,7 @@ Mesh.prototype.merge=function(other){
    var oldIndexLength=lastMesh.indices.length;
    lastMesh.vertices.push.apply(lastMesh.vertices,sm.vertices);
    lastMesh.indices.push.apply(lastMesh.indices,sm.indices);
-   for(var i=oldIndexLength;i&lt;lastMesh.indices.length;i++){
+   for(i=oldIndexLength;i&lt;lastMesh.indices.length;i++){
     lastMesh.indices[i]+=oldVertexLength;
    }
   }
@@ -289,7 +304,7 @@ Mesh.prototype.merge=function(other){
  // Reset the primitive
  lastMesh.newPrimitive();
  return this;
-}
+};
 
  /**
   * Sets the current normal for this mesh.  Future vertex positions
@@ -309,7 +324,8 @@ Mesh.prototype.merge=function(other){
   * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.normal3=function(x,y,z){
-  if(typeof x=="number" &amp;&amp; typeof y=="number" &amp;&amp; typeof z=="number"){
+  "use strict";
+if(typeof x==="number" &amp;&amp; typeof y==="number" &amp;&amp; typeof z==="number"){
    this.normal[0]=x;
    this.normal[1]=y;
    this.normal[2]=z;
@@ -320,7 +336,7 @@ Mesh.prototype.normal3=function(x,y,z){
   }
   this._elementsDefined|=Mesh.NORMALS_BIT;
   return this;
-}
+};
 
 /**
   * Sets the current tangent vector for this mesh.  Future vertex positions
@@ -340,7 +356,8 @@ Mesh.prototype.normal3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.tangent3=function(x,y,z){
-  if(typeof x=="number" &amp;&amp; typeof y=="number" &amp;&amp; typeof z=="number"){
+  "use strict";
+if(typeof x==="number" &amp;&amp; typeof y==="number" &amp;&amp; typeof z==="number"){
    this.tangent[0]=x;
    this.tangent[1]=y;
    this.tangent[2]=z;
@@ -351,7 +368,7 @@ Mesh.prototype.tangent3=function(x,y,z){
   }
   this._elementsDefined|=Mesh.TANGENTS_BIT;
   return this;
-}
+};
 
 /**
   * Sets the current bitangent vector for this mesh.  Future vertex positions
@@ -371,7 +388,8 @@ Mesh.prototype.tangent3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.bitangent3=function(x,y,z){
-  if(typeof x=="number" &amp;&amp; typeof y=="number" &amp;&amp; typeof z=="number"){
+  "use strict";
+if(typeof x==="number" &amp;&amp; typeof y==="number" &amp;&amp; typeof z==="number"){
    this.bitangent[0]=x;
    this.bitangent[1]=y;
    this.bitangent[2]=z;
@@ -382,7 +400,7 @@ Mesh.prototype.bitangent3=function(x,y,z){
   }
   this._elementsDefined|=Mesh.BITANGENTS_BIT;
   return this;
-}
+};
  /**
   * Transforms the positions and normals of all the vertices currently
   * in this mesh, using a 4x4 matrix.  The matrix won't affect
@@ -395,11 +413,12 @@ Mesh.prototype.bitangent3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.transform=function(matrix){
-  for(var i=0;i&lt;this.subMeshes.length;i++){
+  "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
    this.subMeshes[i].transform(matrix);
   }
   return this;
- }
+ };
  /**
   * Sets the current color for this mesh.  Future vertex positions
   * defined (with vertex3()) will have this color. The new current
@@ -416,13 +435,14 @@ Mesh.prototype.bitangent3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.color3=function(r,g,b){
-  if(typeof r=="string"){
-   var c=GLUtil["toGLColor"](r);
+  "use strict";
+if(typeof r==="string"){
+   var c=GLUtil.toGLColor(r);
    this.color[0]=c[0];
    this.color[1]=c[1];
    this.color[2]=c[2];
-  } else if(typeof r=="number" &amp;&amp; typeof g=="number" &amp;&amp;
-   typeof b=="number"){
+  } else if(typeof r==="number" &amp;&amp; typeof g==="number" &amp;&amp;
+   typeof b==="number"){
    this.color[0]=r;
    this.color[1]=g;
    this.color[2]=b;
@@ -433,7 +453,7 @@ Mesh.prototype.bitangent3=function(x,y,z){
   }
   this._elementsDefined|=Mesh.COLORS_BIT;
   return this;
- }
+ };
  /**
   * Sets the current texture coordinates for this mesh.  Future vertex positions
   * defined (with vertex3()) will have these texture coordinates.
@@ -453,7 +473,8 @@ Mesh.prototype.bitangent3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.texCoord2=function(u,v){
- if(typeof u=="number" &amp;&amp; typeof v=="number"){
+ "use strict";
+if(typeof u==="number" &amp;&amp; typeof v==="number"){
   this.texCoord[0]=u;
   this.texCoord[1]=v;
  } else {
@@ -462,7 +483,7 @@ Mesh.prototype.bitangent3=function(x,y,z){
  }
   this._elementsDefined|=Mesh.TEXCOORDS_BIT;
   return this;
- }
+ };
  /**
   * Adds a new vertex to this mesh.  If appropriate, adds an
   * additional face index according to this mesh's current mode.
@@ -479,12 +500,13 @@ Mesh.prototype.bitangent3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.vertex3=function(x,y,z){
-  if(this.subMeshes.length==0){
+  "use strict";
+if(this.subMeshes.length===0){
    this.subMeshes.push(new SubMesh());
   }
   var lastSubmesh=this.subMeshes[this.subMeshes.length-1];
-  if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
-   if(typeof x!="number")
+  if((x!==null &amp;&amp; typeof x!=="undefined") &amp;&amp; (y===null || typeof y==="undefined") &amp;&amp; (z===null || typeof z==="undefined")){
+   if(typeof x!=="number")
     lastSubmesh.vertex3(x[0],x[1],x[2],this);
    else
     lastSubmesh.vertex3(x,x,x,this);
@@ -492,7 +514,7 @@ Mesh.prototype.bitangent3=function(x,y,z){
    lastSubmesh.vertex3(x,y,z,this);
   }
   return this;
- }
+ };
  /**
   * Adds a new vertex to this mesh.  The Z-coordinate will
   * be treated as 0.
@@ -505,15 +527,18 @@ Mesh.prototype.bitangent3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.vertex2=function(x,y){
-  if(x!=null &amp;&amp; y==null &amp;&amp; z==null){
-   if(typeof x!="number")
+  "use strict";
+if((x!==null &amp;&amp; typeof x!=="undefined") &amp;&amp; (y===null || typeof y==="undefined")){
+   if(typeof x!=="number")
     return this.vertex3(x[0],x[1],0.0);
    else
     return this.vertex3(x,x,0.0);
-  } else {
+  } else
+
+ {
    return this.vertex3(x,y,0.0);
   }
- }
+ };
  /**
   * Sets all the vertices in this mesh to the given color.
   * This method doesn't change this mesh's current color.
@@ -527,11 +552,12 @@ Mesh.prototype.bitangent3=function(x,y,z){
   * @return {glutil.Mesh} This object.
   */
 Mesh.prototype.setColor3=function(r,g,b){
-  var rr=r;
+  "use strict";
+var rr=r;
   var gg=g;
   var bb=b;
-  if(typeof r=="string"){
-   var c=GLUtil["toGLColor"](r);
+  if(typeof r==="string"){
+   var c=GLUtil.toGLColor(r);
    rr=c[0];
    gg=c[1];
    bb=c[2];
@@ -540,7 +566,7 @@ Mesh.prototype.setColor3=function(r,g,b){
     this.subMeshes[i].setColor3(rr,gg,bb);
   }
   return this;
-}
+};
  /**
   * Recalculates the tangent vectors for triangles
   * in this mesh.  Tangent vectors are required for
@@ -550,13 +576,14 @@ Mesh.prototype.setColor3=function(r,g,b){
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.recalcTangents=function(){
-  for(var i=0;i&lt;this.subMeshes.length;i++){
-   if(this.subMeshes[i].primitiveType()==Mesh.TRIANGLES){
+  "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
+   if(this.subMeshes[i].primitiveType()===Mesh.TRIANGLES){
     this.subMeshes[i].recalcTangents();
    }
   }
   return this;
- }
+ };
 
 /**
   * Recalculates the normal vectors for triangles
@@ -574,32 +601,34 @@ Mesh.prototype.setColor3=function(r,g,b){
   * @return {glutil.Mesh} This object.
   */
  Mesh.prototype.recalcNormals=function(flat,inward){
-  for(var i=0;i&lt;this.subMeshes.length;i++){
-   var primtype=this.subMeshes[i].primitiveType()
-   if(primtype!=Mesh.POINTS &amp;&amp; primtype!=Mesh.LINES){
+  "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
+   var primtype=this.subMeshes[i].primitiveType();
+   if(primtype!==Mesh.POINTS &amp;&amp; primtype!==Mesh.LINES){
     this.subMeshes[i].recalcNormals(flat,inward);
    }
   }
   return this;
- }
+ };
 /**
  * Modifies this mesh by normalizing the normals it defines
  * to unit length.
  * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.normalizeNormals=function(){
-  for(var i=0;i&lt;this.subMeshes.length;i++){
+  "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
    var stride=this.subMeshes[i].getStride();
    var vertices=this.subMeshes[i].vertices;
    var normalOffset=Mesh._normalOffset(
      this.subMeshes[i].attributeBits);
    if(normalOffset&lt;0)continue;
-   for(var i=0;i&lt;vertices.length;i+=stride){
+   for(i=0;i&lt;vertices.length;i+=stride){
     var x=vertices[i+normalOffset];
     var y=vertices[i+normalOffset+1];
     var z=vertices[i+normalOffset+2];
     var len=Math.sqrt(x*x+y*y+z*z);
-    if(len!=0){
+    if(len!==0){
       len=1.0/len;
       vertices[i+normalOffset]*=len;
       vertices[i+normalOffset+1]*=len;
@@ -608,7 +637,7 @@ Mesh.prototype.normalizeNormals=function(){
    }
   }
   return this;
- }
+ };
 /**
  * Converts this mesh to a new mesh with triangles converted
  * to line segments.  The new mesh will reuse the vertices
@@ -619,12 +648,13 @@ Mesh.prototype.normalizeNormals=function(){
  * to lines.
  */
 Mesh.prototype.toWireFrame=function(){
-  var mesh=new Mesh();
+  "use strict";
+var mesh=new Mesh();
   for(var i=0;i&lt;this.subMeshes.length;i++){
    mesh.subMeshes.push(this.subMeshes[i].toWireFrame());
   }
   return mesh;
-}
+};
 /**
  * Sets the X, Y, and Z coordinates of the vertex with the
  * given index.  Has no effect if the index is less than 0 or
@@ -645,8 +675,9 @@ Mesh.prototype.toWireFrame=function(){
  * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.setVertex=function(index,x,y,z){
-  if(index&lt;0)return this;
-  if(typeof y=="undefined" &amp;&amp; typeof z=="undefined"){
+  "use strict";
+if(index&lt;0)return this;
+  if(typeof y==="undefined" &amp;&amp; typeof z==="undefined"){
    y=x[1];
    z=x[2];
    x=x[0];
@@ -667,7 +698,7 @@ Mesh.prototype.setVertex=function(index,x,y,z){
    count=newcount;
   }
   return this;
-}
+};
 /**
  * Sets the normal associated with the vertex with the
  * given index.  Has no effect if the index is less than 0 or
@@ -688,9 +719,10 @@ Mesh.prototype.setVertex=function(index,x,y,z){
  * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.setVertexNormal=function(index,x,y,z){
-  if(index&lt;0)return this;
+  "use strict";
+if(index&lt;0)return this;
   var count=0;
-  if(typeof y=="undefined" &amp;&amp; typeof z=="undefined"){
+  if(typeof y==="undefined" &amp;&amp; typeof z==="undefined"){
    y=x[1];
    z=x[2];
    x=x[0];
@@ -712,7 +744,7 @@ Mesh.prototype.setVertexNormal=function(index,x,y,z){
    count=newcount;
   }
   return this;
-}
+};
 /**
  * Gets the position of the vertex with the given
  * index in this mesh.
@@ -727,7 +759,8 @@ Mesh.prototype.setVertexNormal=function(index,x,y,z){
  * equals the number of vertices in this mesh or greater.
  */
 Mesh.prototype.getVertex=function(index){
-  if(index&lt;0)return null;
+  "use strict";
+if(index&lt;0)return null;
   var count=0;
   for(var i=0;i&lt;this.subMeshes.length;i++){
    var subMesh=this.subMeshes[i];
@@ -741,7 +774,7 @@ Mesh.prototype.getVertex=function(index){
    count=newcount;
   }
   return null;
-}
+};
 /**
  * Gets the normal of the vertex with the given
  * index in this mesh.
@@ -758,13 +791,14 @@ Mesh.prototype.getVertex=function(index){
  * a normal.
  */
 Mesh.prototype.getVertexNormal=function(index){
-  var count=0;
+  "use strict";
+var count=0;
   for(var i=0;i&lt;this.subMeshes.length;i++){
    var subMesh=this.subMeshes[i];
    var c=subMesh.vertexCount();
    var newcount=count+c;
    if(index&lt;newcount){
-    if((subMesh.attributeBits&amp;Mesh.NORMALS_BIT)!=0){
+    if((subMesh.attributeBits&amp;Mesh.NORMALS_BIT)!==0){
      var idx=index-count;
      idx*=subMesh.getStride();
      idx+=Mesh._normalOffset(subMesh.attributeBits);
@@ -776,74 +810,78 @@ Mesh.prototype.getVertexNormal=function(index){
    count=newcount;
   }
   return null;
-}
+};
 /**
  * Gets the number of vertices included in this mesh.
  * @return {number} Return value. */
 Mesh.prototype.vertexCount=function(){
-  var count=0;
+  "use strict";
+var count=0;
   for(var i=0;i&lt;this.subMeshes.length;i++){
    count+=this.subMeshes[i].vertexCount();
   }
   return count;
-}
+};
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
  * @return {number} Return value. */
 Mesh.prototype.primitiveCount=function(){
-  var count=0;
+  "use strict";
+var count=0;
   for(var i=0;i&lt;this.subMeshes.length;i++){
    count+=this.subMeshes[i].primitiveCount();
   }
   return count;
-}
+};
 
 /** @private */
-function SubMesh(vertices,faces,format){
- this.vertices=vertices||[];
+SubMesh.prototype._initialize=function(vertices,faces,format){
+ "use strict";
+this.vertices=vertices||[];
  this.indices=faces||[];
  this.startIndex=0;
  var prim=(format&amp;Mesh.PRIMITIVES_BITS);
- if(prim!=0 &amp;&amp; prim!=Mesh.LINES_BIT &amp;&amp; prim!=Mesh.POINTS_BIT){
+ if(prim!==0 &amp;&amp; prim!==Mesh.LINES_BIT &amp;&amp; prim!==Mesh.POINTS_BIT){
   throw new Error("invalid format");
  }
- this.attributeBits=(format==null) ? 0 : format;
+ this.attributeBits=((format===null || typeof format==="undefined")) ? 0 : format;
  this.vertexCount=function(){
   return this.vertices.length/this.getStride();
- }
+ };
  this.getStride=function(){
   return Mesh._getStride(this.attributeBits);
- }
+ };
  this.newPrimitive=function(m){
   this.startIndex=this.vertices.length;
   return this;
- }
+ };
  this.primitiveType=function(){
   var primitive=Mesh.TRIANGLES;
-  if((this.attributeBits&amp;Mesh.LINES_BIT)!=0)primitive=Mesh.LINES;
-  if((this.attributeBits&amp;Mesh.POINTS_BIT)!=0)primitive=Mesh.POINTS;
+  if((this.attributeBits&amp;Mesh.LINES_BIT)!==0)primitive=Mesh.LINES;
+  if((this.attributeBits&amp;Mesh.POINTS_BIT)!==0)primitive=Mesh.POINTS;
   return primitive;
- }
+ };
  /** @private */
  this._rebuildVertices=function(newAttributes){
   var oldBits=this.attributeBits;
   var newBits=oldBits|(newAttributes&amp;Mesh.ATTRIBUTES_BITS);
-  if(newBits==oldBits)return;
+  if(newBits===oldBits)return;
   var currentStride=this.getStride();
+  var x,y,z;
   // Rebuild the list of vertices if a new kind of
   // attribute is added to the mesh
   var newVertices=[];
   var newStride=3;
-  if((newBits&amp;Mesh.COLORS_BIT)!=0)
+  if((newBits&amp;Mesh.COLORS_BIT)!==0)
    newStride+=3;
-  if((newBits&amp;Mesh.NORMALS_BIT)!=0)
+  if((newBits&amp;Mesh.NORMALS_BIT)!==0)
    newStride+=3;
-  if((newBits&amp;Mesh.TEXCOORDS_BIT)!=0)
+  if((newBits&amp;Mesh.TEXCOORDS_BIT)!==0)
    newStride+=2;
-  if((newBits&amp;Mesh.TANGENTS_BIT)!=0)
+  if((newBits&amp;Mesh.TANGENTS_BIT)!==0)
    newStride+=3;
-  if((newBits&amp;Mesh.BITANGENTS_BIT)!=0)
+  if((newBits&amp;Mesh.BITANGENTS_BIT)!==0)
    newStride+=3;
   for(var i=0;i&lt;this.vertices.length;i+=currentStride){
    var vx=this.vertices[i];
@@ -851,19 +889,19 @@ function SubMesh(vertices,faces,format){
    var vz=this.vertices[i+2];
    var s=i+3;
    newVertices.push(vx,vy,vz);
-   if((newBits&amp;Mesh.NORMALS_BIT)!=0){
-    if((oldBits&amp;Mesh.NORMALS_BIT)!=0){
-     var x=this.vertices[s];
-     var y=this.vertices[s+1];
-     var z=this.vertices[s+2];
+   if((newBits&amp;Mesh.NORMALS_BIT)!==0){
+    if((oldBits&amp;Mesh.NORMALS_BIT)!==0){
+     x=this.vertices[s];
+     y=this.vertices[s+1];
+     z=this.vertices[s+2];
      s+=3;
      newVertices.push(x,y,z);
     } else {
      newVertices.push(0,0,0);
     }
    }
-   if((newBits&amp;Mesh.COLORS_BIT)!=0){
-    if((oldBits&amp;Mesh.COLORS_BIT)!=0){
+   if((newBits&amp;Mesh.COLORS_BIT)!==0){
+    if((oldBits&amp;Mesh.COLORS_BIT)!==0){
      var r=this.vertices[s];
      var g=this.vertices[s+1];
      var b=this.vertices[s+2];
@@ -873,8 +911,8 @@ function SubMesh(vertices,faces,format){
      newVertices.push(0,0,0);
     }
    }
-   if((newBits&amp;Mesh.TEXCOORDS_BIT)!=0){
-    if((oldBits&amp;Mesh.TEXCOORDS_BIT)!=0){
+   if((newBits&amp;Mesh.TEXCOORDS_BIT)!==0){
+    if((oldBits&amp;Mesh.TEXCOORDS_BIT)!==0){
      var u=this.vertices[s];
      var v=this.vertices[s+1];
      s+=2;
@@ -883,22 +921,22 @@ function SubMesh(vertices,faces,format){
      newVertices.push(0,0);
     }
    }
-   if((newBits&amp;Mesh.TANGENTS_BIT)!=0){
-    if((oldBits&amp;Mesh.TANGENTS_BIT)!=0){
-     var x=this.vertices[s];
-     var y=this.vertices[s+1];
-     var z=this.vertices[s+2];
+   if((newBits&amp;Mesh.TANGENTS_BIT)!==0){
+    if((oldBits&amp;Mesh.TANGENTS_BIT)!==0){
+     x=this.vertices[s];
+     y=this.vertices[s+1];
+     z=this.vertices[s+2];
      s+=3;
      newVertices.push(x,y,z);
     } else {
      newVertices.push(0,0,0);
     }
    }
-   if((newBits&amp;Mesh.BITANGENTS_BIT)!=0){
-    if((oldBits&amp;Mesh.BITANGENTS_BIT)!=0){
-     var x=this.vertices[s];
-     var y=this.vertices[s+1];
-     var z=this.vertices[s+2];
+   if((newBits&amp;Mesh.BITANGENTS_BIT)!==0){
+    if((oldBits&amp;Mesh.BITANGENTS_BIT)!==0){
+     x=this.vertices[s];
+     y=this.vertices[s+1];
+     z=this.vertices[s+2];
      s+=3;
      newVertices.push(x,y,z);
     } else {
@@ -908,7 +946,7 @@ function SubMesh(vertices,faces,format){
   }
   this.vertices=newVertices;
   this.attributeBits=newBits;
- }
+ };
  this._setTriangle=function(vertexStartIndex,stride,i1,i2,i3){
    var v1=i1*stride;
    var v2=i2*stride;
@@ -917,102 +955,104 @@ function SubMesh(vertices,faces,format){
    var tribits=0;
    var v=this.vertices;
    for(var i=vertexStartIndex-stride;
-     i>=0 &amp;&amp; triCount&lt;16 &amp;&amp; tribits!=7;
+     i>=0 &amp;&amp; triCount&lt;16 &amp;&amp; tribits!==7;
      i-=stride,triCount++){
      var found=7;
-     for(var j=0;j&lt;stride &amp;&amp; found!=0;j++){
-        if((found&amp;1)!=0 &amp;&amp; v[v1+j]!=v[i+j]){
+     for(var j=0;j&lt;stride &amp;&amp; found!==0;j++){
+        if((found&amp;1)!==0 &amp;&amp; v[v1+j]!==v[i+j]){
          found&amp;=~1;
         }
-        if((found&amp;2)!=0 &amp;&amp; v[v2+j]!=v[i+j]){
+        if((found&amp;2)!==0 &amp;&amp; v[v2+j]!==v[i+j]){
          found&amp;=~2;
         }
-        if((found&amp;4)!=0 &amp;&amp; v[v3+j]!=v[i+j]){
+        if((found&amp;4)!==0 &amp;&amp; v[v3+j]!==v[i+j]){
          found&amp;=~4;
         }
      }
-     if((found&amp;1)!=0){ i1=i/stride; v1=i1*stride; tribits|=1; break; }
-     if((found&amp;2)!=0){ i2=i/stride; v2=i2*stride; tribits|=2; break; }
-     if((found&amp;4)!=0){ i3=i/stride; v3=i3*stride; tribits|=4; break; }
+     if((found&amp;1)!==0){ i1=i/stride; v1=i1*stride; tribits|=1; break; }
+     if((found&amp;2)!==0){ i2=i/stride; v2=i2*stride; tribits|=2; break; }
+     if((found&amp;4)!==0){ i3=i/stride; v3=i3*stride; tribits|=4; break; }
    }
    if(
-    !(v[v1]==v[v2] &amp;&amp; v[v1+1]==v[v2+1] &amp;&amp; v[v1+2]==v[v2+2]) &amp;&amp;
-    !(v[v1]==v[v3] &amp;&amp; v[v1+1]==v[v3+1] &amp;&amp; v[v1+2]==v[v3+2]) &amp;&amp;
-    !(v[v2]==v[v3] &amp;&amp; v[v2+1]==v[v3+1] &amp;&amp; v[v2+2]==v[v3+2])){
+    !(v[v1]===v[v2] &amp;&amp; v[v1+1]===v[v2+1] &amp;&amp; v[v1+2]===v[v2+2]) &amp;&amp;
+    !(v[v1]===v[v3] &amp;&amp; v[v1+1]===v[v3+1] &amp;&amp; v[v1+2]===v[v3+2]) &amp;&amp;
+    !(v[v2]===v[v3] &amp;&amp; v[v2+1]===v[v3+1] &amp;&amp; v[v2+2]===v[v3+2])){
     // avoid identical vertex positions
     this.indices.push(i1,i2,i3);
    }
- }
+ };
  this.vertex3=function(x,y,z,state){
   var currentMode=state.currentMode;
-  if(currentMode==-1)throw new Error("mode() not called");
+  if(currentMode===-1)throw new Error("mode() not called");
   this._rebuildVertices(state._elementsDefined);
    var vertexStartIndex=this.vertices.length;
   this.vertices.push(x,y,z);
-  if((this.attributeBits&amp;Mesh.NORMALS_BIT)!=0){
+  if((this.attributeBits&amp;Mesh.NORMALS_BIT)!==0){
    this.vertices.push(state.normal[0],state.normal[1],state.normal[2]);
   }
-  if((this.attributeBits&amp;Mesh.COLORS_BIT)!=0){
+  if((this.attributeBits&amp;Mesh.COLORS_BIT)!==0){
    this.vertices.push(state.color[0],state.color[1],state.color[2]);
   }
-  if((this.attributeBits&amp;Mesh.TEXCOORDS_BIT)!=0){
+  if((this.attributeBits&amp;Mesh.TEXCOORDS_BIT)!==0){
    this.vertices.push(state.texCoord[0],state.texCoord[1]);
   }
-  if((this.attributeBits&amp;Mesh.TANGENTS_BIT)!=0){
+  if((this.attributeBits&amp;Mesh.TANGENTS_BIT)!==0){
    this.vertices.push(state.tangent[0],state.tangent[1],state.tangent[2]);
   }
-  if((this.attributeBits&amp;Mesh.BITANGENTS_BIT)!=0){
+  if((this.attributeBits&amp;Mesh.BITANGENTS_BIT)!==0){
    this.vertices.push(state.bitangent[0],state.bitangent[1],state.bitangent[2]);
   }
   var stride=this.getStride();
-  if(currentMode==Mesh.QUAD_STRIP &amp;&amp;
+  var index,firstIndex;
+  if(currentMode===Mesh.QUAD_STRIP &amp;&amp;
      (this.vertices.length-this.startIndex)>=stride*4 &amp;&amp;
-     (this.vertices.length-this.startIndex)%(stride*2)==0){
-   var index=(this.vertices.length/stride)-4;
+     (this.vertices.length-this.startIndex)%(stride*2) === 0){
+   index=(this.vertices.length/stride)-4;
    this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
    this._setTriangle(vertexStartIndex,stride,index+2,index+1,index+3);
-  } else if(currentMode==Mesh.QUADS &amp;&amp;
-     (this.vertices.length-this.startIndex)%(stride*4)==0){
-   var index=(this.vertices.length/stride)-4;
+  } else if(currentMode===Mesh.QUADS &amp;&amp;
+     (this.vertices.length-this.startIndex)%(stride*4) === 0){
+   index=(this.vertices.length/stride)-4;
    this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
    this._setTriangle(vertexStartIndex,stride,index,index+2,index+3);
-  } else if(currentMode==Mesh.TRIANGLES &amp;&amp;
-     (this.vertices.length-this.startIndex)%(stride*3)==0){
-   var index=(this.vertices.length/stride)-3;
+  } else if(currentMode===Mesh.TRIANGLES &amp;&amp;
+     (this.vertices.length-this.startIndex)%(stride*3) === 0){
+   index=(this.vertices.length/stride)-3;
    this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
-  } else if(currentMode==Mesh.LINES &amp;&amp;
-     (this.vertices.length-this.startIndex)%(stride*2)==0){
-   var index=(this.vertices.length/stride)-2;
+  } else if(currentMode===Mesh.LINES &amp;&amp;
+     (this.vertices.length-this.startIndex)%(stride*2) === 0){
+   index=(this.vertices.length/stride)-2;
    this.indices.push(index,index+1);
-  } else if(currentMode==Mesh.TRIANGLE_FAN &amp;&amp;
+  } else if(currentMode===Mesh.TRIANGLE_FAN &amp;&amp;
      (this.vertices.length-this.startIndex)>=(stride*3)){
-   var index=(this.vertices.length/stride)-2;
-   var firstIndex=(this.startIndex/stride);
+   index=(this.vertices.length/stride)-2;
+   firstIndex=(this.startIndex/stride);
    this._setTriangle(vertexStartIndex,stride,firstIndex,index,index+1);
-  } else if(currentMode==Mesh.LINE_STRIP &amp;&amp;
+  } else if(currentMode===Mesh.LINE_STRIP &amp;&amp;
      (this.vertices.length-this.startIndex)>=(stride*2)){
-   var index=(this.vertices.length/stride)-2;
+   index=(this.vertices.length/stride)-2;
    this.indices.push(index,index+1);
-  } else if(currentMode==Mesh.POINTS){
-   var index=(this.vertices.length/stride)-1;
+  } else if(currentMode===Mesh.POINTS){
+   index=(this.vertices.length/stride)-1;
    this.indices.push(index);
-  } else if(currentMode==Mesh.TRIANGLE_STRIP &amp;&amp;
+  } else if(currentMode===Mesh.TRIANGLE_STRIP &amp;&amp;
      (this.vertices.length-this.startIndex)>=(stride*3)){
-   var index=(this.vertices.length/stride)-3;
-   var firstIndex=(this.startIndex/stride);
-   if(((index-firstIndex)&amp;1)==0){
+   index=(this.vertices.length/stride)-3;
+   firstIndex=(this.startIndex/stride);
+   if(((index-firstIndex)&amp;1) === 0){
      this._setTriangle(vertexStartIndex,stride,index,index+1,index+2);
    } else {
      this._setTriangle(vertexStartIndex,stride,index+1,index,index+2);
    }
   }
   return this;
- }
-}
+ };
+};
 
 /** @private */
 SubMesh.prototype.makeRedundant=function(){
-  var existingIndices=[];
+  "use strict";
+var existingIndices=[];
   var stride=this.getStride();
   var originalIndicesLength=this.indices.length;
   for(var i=0;i&lt;originalIndicesLength;i++){
@@ -1029,19 +1069,21 @@ SubMesh.prototype.makeRedundant=function(){
     existingIndices[index]=true;
   }
   return this;
-}
+};
 /**
  * @private */
 SubMesh.prototype.primitiveCount=function(){
-  if((this.attributeBits&amp;Mesh.LINES_BIT)!=0)
+  "use strict";
+if((this.attributeBits&amp;Mesh.LINES_BIT)!==0)
    return Math.floor(this.indices.length/2);
-  if((this.attributeBits&amp;Mesh.POINTS_BIT)!=0)
+  if((this.attributeBits&amp;Mesh.POINTS_BIT)!==0)
    return this.indices.length;
   return Math.floor(this.indices.length/3);
-}
+};
 /** @private */
 SubMesh.prototype.toWireFrame=function(){
-  if((this.attributeBits&amp;Mesh.PRIMITIVES_BITS)!=0){
+  "use strict";
+if((this.attributeBits&amp;Mesh.PRIMITIVES_BITS)!==0){
    // Not a triangle mesh
    return this;
   }
@@ -1074,17 +1116,19 @@ SubMesh.prototype.toWireFrame=function(){
   }
   return new SubMesh(this.vertices, lineIndices,
     this.attributeBits|Mesh.LINES_BIT);
-}
+};
 
 /** @private */
 SubMesh._isIdentityInUpperLeft=function(m){
- return (m[0]==1 &amp;&amp; m[1]==0 &amp;&amp; m[2]==0 &amp;&amp;
-    m[4]==0 &amp;&amp; m[5]==1 &amp;&amp; m[6]==0 &amp;&amp;
-    m[8]==0 &amp;&amp; m[9]==0 &amp;&amp; m[10]==1) ? true : false;
-}
+ "use strict";
+return (m[0] === 1 &amp;&amp; m[1] === 0 &amp;&amp; m[2] === 0 &amp;&amp;
+    m[4] === 0 &amp;&amp; m[5] === 1 &amp;&amp; m[6] === 0 &amp;&amp;
+    m[8] === 0 &amp;&amp; m[9] === 0 &amp;&amp; m[10] === 1) ? true : false;
+};
 /** @private */
 SubMesh.prototype.transform=function(matrix){
-  var stride=this.getStride();
+  "use strict";
+var stride=this.getStride();
   var v=this.vertices;
   var isNonTranslation=!SubMesh._isIdentityInUpperLeft(matrix);
   var normalOffset=Mesh._normalOffset(this.attributeBits);
@@ -1112,7 +1156,7 @@ SubMesh.prototype.transform=function(matrix){
   }
   this.newPrimitive();
   return this;
-}
+};
 
 /**
 * Reverses the winding order of the triangles in this mesh
@@ -1131,11 +1175,12 @@ SubMesh.prototype.transform=function(matrix){
 * );
 */
 Mesh.prototype.reverseWinding=function(){
-  for(var i=0;i&lt;this.subMeshes.length;i++){
+  "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
    this.subMeshes[i].reverseWinding();
   }
   return this;
-}
+};
 /**
  * Enumerates the primitives (lines, triangles, and points) included
  * in this mesh.
@@ -1157,7 +1202,8 @@ Mesh.prototype.reverseWinding=function(){
  * @return {glutil.Mesh} This object.
  */
 Mesh.prototype.enumPrimitives=function(func){
- for(var i=0;i&lt;this.subMeshes.length;i++){
+ "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
   var sm=this.subMeshes[i];
   var prim=sm.primitiveType();
   var normals=Mesh._normalOffset(sm.attributeBits);
@@ -1166,8 +1212,8 @@ Mesh.prototype.enumPrimitives=function(func){
   var stride=sm.getStride();
   var v=sm.vertices;
   var primSize=3;
-  if(prim==Mesh.LINES)primSize=2;
-  if(prim==Mesh.POINTS)primSize=1;
+  if(prim===Mesh.LINES)primSize=2;
+  if(prim===Mesh.POINTS)primSize=1;
   for(var j=0;j&lt;sm.indices.length;j+=primSize){
    var p=[];
    for(var k=0;k&lt;primSize;k++){
@@ -1175,18 +1221,18 @@ Mesh.prototype.enumPrimitives=function(func){
     var info={};
     info.position=[v[vi],v[vi+1],v[vi+2]];
     if(normals>=0)
-     info.normal=[v[vi+normals],v[vi+normals+1],v[vi+normals+2]]
+     info.normal=[v[vi+normals],v[vi+normals+1],v[vi+normals+2]];
     if(colors>=0)
-     info.color=[v[vi+colors],v[vi+colors+1],v[vi+colors+2]]
+     info.color=[v[vi+colors],v[vi+colors+1],v[vi+colors+2]];
     if(texcoords>=0)
-     info.uv=[v[vi+texcoords],v[vi+texcoords+1]]
-    p.push(info)
+     info.uv=[v[vi+texcoords],v[vi+texcoords+1]];
+    p.push(info);
    }
-   func(p)
+   func(p);
   }
  }
  return this;
-}
+};
 
 /**
 * Finds the tightest
@@ -1200,7 +1246,8 @@ Mesh.prototype.enumPrimitives=function(func){
 * -Inf, -Inf].
 */
 Mesh.prototype.getBoundingBox=function(){
- var empty=true;
+ "use strict";
+var empty=true;
  var inf=Number.POSITIVE_INFINITY;
  var ret=[inf,inf,inf,-inf,-inf,-inf];
  for(var i=0;i&lt;this.subMeshes.length;i++){
@@ -1225,10 +1272,11 @@ Mesh.prototype.getBoundingBox=function(){
   }
  }
  return ret;
-}
+};
 
 Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset){
-  var t1 = vertices[v2] - vertices[v1];
+  "use strict";
+var t1 = vertices[v2] - vertices[v1];
   var t2 = vertices[v2+1] - vertices[v1+1];
   var t3 = vertices[v2+2] - vertices[v1+2];
   var t4 = vertices[v3] - vertices[v1];
@@ -1239,7 +1287,7 @@ Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset){
   var t9 = vertices[v3+uvOffset] - vertices[v1+uvOffset];
   var t10 = vertices[v3+uvOffset+1] - vertices[v1+uvOffset+1];
   var t11 = ((((t7 * t10) - t8 * t9)));
-  if(t11==0){
+  if(t11 === 0){
    return [0,0,0,0,0,0];
   }
   t11=1.0/t11;
@@ -1252,7 +1300,7 @@ Mesh._findTangentAndBitangent=function(vertices,v1,v2,v3,uvOffset){
   var t18 = (((t13 * t2) + t7 * t5)) * t11;
   var t19 = (((t13 * t3) + t7 * t6)) * t11;
   return [t14,t15,t16,t17,t18,t19];
-}
+};
 
 Mesh._recalcTangentsInternal=function(vertices,indices,stride,
   uvOffset,normalOffset,tangentOffset){
@@ -1260,7 +1308,8 @@ Mesh._recalcTangentsInternal=function(vertices,indices,stride,
  // and bitangent will always be contiguous (this method will
  // always be called after the recalcTangents method ensures
  // that both fields are present)
- var vi=[0,0,0];
+ "use strict";
+var vi=[0,0,0];
  for(var i=0;i&lt;indices.length;i+=3){
   vi[0]=indices[i]*stride;
   vi[1]=indices[i+1]*stride;
@@ -1307,11 +1356,12 @@ Mesh._recalcTangentsInternal=function(vertices,indices,stride,
    vertices[vicur+tangentOffset+5]=bitangent[2];
   }
  }
-}
+};
 /** @private */
 SubMesh.prototype.recalcTangents=function(){
-  var tangentBits=Mesh.TANGENTS_BIT|Mesh.BITANGENTS_BIT;
-  var haveOtherAttributes=((this.attributeBits&amp;(Mesh.ATTRIBUTES_BITS&amp;~tangentBits))!=0);
+  "use strict";
+var tangentBits=Mesh.TANGENTS_BIT|Mesh.BITANGENTS_BIT;
+  var haveOtherAttributes=((this.attributeBits&amp;(Mesh.ATTRIBUTES_BITS&amp;~tangentBits))!==0);
   var uvOffset=Mesh._texCoordOffset(this.attributeBits);
   var normalOffset=Mesh._normalOffset(this.attributeBits);
   if(uvOffset&lt;0 || normalOffset&lt;0){
@@ -1323,7 +1373,7 @@ SubMesh.prototype.recalcTangents=function(){
   if(haveOtherAttributes){
     this.makeRedundant();
   }
-  if(this.primitiveType()==Mesh.TRIANGLES){
+  if(this.primitiveType()===Mesh.TRIANGLES){
    var tangentOffset=Mesh._tangentOffset(this.attributeBits);
    Mesh._recalcTangentsInternal(this.vertices,this.indices,
      this.getStride(),uvOffset,normalOffset,tangentOffset);
@@ -1345,13 +1395,14 @@ SubMesh.prototype.recalcTangents=function(){
 * );
 */
 Mesh.prototype.reverseNormals=function(){
-  for(var i=0;i&lt;this.subMeshes.length;i++){
+  "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
    var stride=this.subMeshes[i].getStride();
    var vertices=this.subMeshes[i].vertices;
    var normalOffset=Mesh._normalOffset(
      this.subMeshes[i].attributeBits);
    if(normalOffset&lt;0)continue;
-   for(var i=0;i&lt;vertices.length;i+=stride){
+   for(i=0;i&lt;vertices.length;i+=stride){
     var x=vertices[i+normalOffset];
     var y=vertices[i+normalOffset+1];
     var z=vertices[i+normalOffset+2];
@@ -1361,11 +1412,12 @@ Mesh.prototype.reverseNormals=function(){
    }
   }
   return this;
-}
+};
 
 /** @private */
 SubMesh.prototype.reverseWinding=function(){
-  if((this.attributeBits&amp;Mesh.PRIMITIVES_BITS)!=0){
+  "use strict";
+if((this.attributeBits&amp;Mesh.PRIMITIVES_BITS)!==0){
    // Not a triangle mesh
    return this;
   }
@@ -1376,11 +1428,12 @@ SubMesh.prototype.reverseWinding=function(){
     this.indices[i+1]=f3;
   }
   return this;
-}
+};
 
 /** @private */
 SubMesh.prototype.recalcNormals=function(flat,inward){
-  var haveOtherAttributes=((this.attributeBits&amp;(Mesh.ATTRIBUTES_BITS&amp;~Mesh.NORMALS_BIT))!=0);
+  "use strict";
+var haveOtherAttributes=((this.attributeBits&amp;(Mesh.ATTRIBUTES_BITS&amp;~Mesh.NORMALS_BIT))!==0);
   this._rebuildVertices(Mesh.NORMALS_BIT);
   // No need to duplicate vertices if there are no other attributes
   // besides normals and smooth shading is requested; the
@@ -1389,8 +1442,8 @@ SubMesh.prototype.recalcNormals=function(flat,inward){
   if(haveOtherAttributes || flat){
     this.makeRedundant();
   }
-  var primtype=this.primitiveType()
-  if(primtype!=Mesh.LINES &amp;&amp; primtype!=Mesh.POINTS){
+  var primtype=this.primitiveType();
+  if(primtype!==Mesh.LINES &amp;&amp; primtype!==Mesh.POINTS){
    Mesh._recalcNormals(this.vertices,this.indices,
      this.getStride(),3,flat,inward);
   }
@@ -1398,7 +1451,8 @@ SubMesh.prototype.recalcNormals=function(flat,inward){
 };
 /** @private */
 SubMesh.prototype.setColor3=function(r,g,b){
-  this._rebuildVertices(Mesh.COLORS_BIT);
+  "use strict";
+this._rebuildVertices(Mesh.COLORS_BIT);
   var stride=this.getStride();
   var colorOffset=Mesh._colorOffset(this.attributeBits);
   for(var i=colorOffset;i&lt;this.vertices.length;i+=stride){
@@ -1410,42 +1464,48 @@ SubMesh.prototype.setColor3=function(r,g,b){
 };
 /** @private */
 Mesh._getStride=function(format){
-  var s=[3,6,6,9,5,8,8,11][format&amp;(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
-  if((format&amp;Mesh.TANGENTS_BIT)!=0)s+=3
-  if((format&amp;Mesh.BITANGENTS_BIT)!=0)s+=3
-  return s
- }
+  "use strict";
+var s=[3,6,6,9,5,8,8,11][format&amp;(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
+  if((format&amp;Mesh.TANGENTS_BIT)!==0)s+=3;
+  if((format&amp;Mesh.BITANGENTS_BIT)!==0)s+=3;
+  return s;
+ };
 /** @private */
 Mesh._normalOffset=function(format){
-  return [-1,3,-1,3,-1,3,-1,3][format&amp;(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
- }
+  "use strict";
+return [-1,3,-1,3,-1,3,-1,3][format&amp;(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
+ };
 /** @private */
 Mesh._tangentOffset=function(format){
-  var x=3;
-  if((format&amp;Mesh.TANGENTS_BIT)==0)return -1;
-  if((format&amp;Mesh.NORMALS_BIT)!=0)x+=3
-  if((format&amp;Mesh.COLORS_BIT)!=0)x+=3
-  if((format&amp;Mesh.TEXCOORDS_BIT)!=0)x+=2
+  "use strict";
+var x=3;
+  if((format&amp;Mesh.TANGENTS_BIT) === 0)return -1;
+  if((format&amp;Mesh.NORMALS_BIT)!==0)x+=3;
+  if((format&amp;Mesh.COLORS_BIT)!==0)x+=3;
+  if((format&amp;Mesh.TEXCOORDS_BIT)!==0)x+=2;
   return x;
- }
+ };
 /** @private */
 Mesh._bitangentOffset=function(format){
-  var x=3;
-  if((format&amp;Mesh.BITANGENTS_BIT)==0)return -1;
-  if((format&amp;Mesh.NORMALS_BIT)!=0)x+=3
-  if((format&amp;Mesh.COLORS_BIT)!=0)x+=3
-  if((format&amp;Mesh.TEXCOORDS_BIT)!=0)x+=2
-  if((format&amp;Mesh.TANGENTS_BIT)!=0)x+=3
+  "use strict";
+var x=3;
+  if((format&amp;Mesh.BITANGENTS_BIT) === 0)return -1;
+  if((format&amp;Mesh.NORMALS_BIT)!==0)x+=3;
+  if((format&amp;Mesh.COLORS_BIT)!==0)x+=3;
+  if((format&amp;Mesh.TEXCOORDS_BIT)!==0)x+=2;
+  if((format&amp;Mesh.TANGENTS_BIT)!==0)x+=3;
   return x;
- }
+ };
 /** @private */
 Mesh._colorOffset=function(format){
-  return [-1,-1,3,6,-1,-1,3,6][format&amp;(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
- }
+  "use strict";
+return [-1,-1,3,6,-1,-1,3,6][format&amp;(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
+ };
 /** @private */
 Mesh._texCoordOffset=function(format){
-  return [-1,-1,-1,-1,3,6,6,9][format&amp;(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
-}
+  "use strict";
+return [-1,-1,-1,-1,3,6,6,9][format&amp;(Mesh.NORMALS_BIT|Mesh.COLORS_BIT|Mesh.TEXCOORDS_BIT)];
+};
 /**
  @private */
 Mesh.ATTRIBUTES_BITS = 255;
@@ -1561,7 +1621,7 @@ of 1 vertex each.
 */
 Mesh.POINTS = 0;
 
-this["Mesh"]=Mesh;
+this.Mesh=Mesh;
 </code></pre>
         </article>
     </section>

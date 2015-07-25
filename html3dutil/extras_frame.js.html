@@ -19,16 +19,18 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 var FrameCounter=function(){
- this.fps=-1;
+ "use strict";
+this.fps=-1;
  this.lastFrame=-1;
- this.frameGaps=[]
+ this.frameGaps=[];
  this.frameCount=0;
-}
+};
 /**
  * Not documented yet.
  */
 FrameCounter.prototype.update=function(){
-  var now=("performance" in window) ?
+  "use strict";
+var now=("performance" in window) ?
    window.performance.now() : (new Date().getTime()*1000);
   if(this.lastFrame>=0){
     var gap=now-this.lastFrame;
@@ -52,49 +54,54 @@ FrameCounter.prototype.update=function(){
     total/=1.0*this.frameGaps.length;
     this.fps=(total&lt;=0) ? 60 : 1000.0/total;
   }
-}
+};
 /**
  * Not documented yet.
  */
 FrameCounter.prototype.getFPS=function(){
- return this.fps;
-}
+ "use strict";
+return this.fps;
+};
 
 function FrameCounterDiv(scene){
- var canvas=scene.getContext().canvas
+ "use strict";
+var canvas=scene.getContext().canvas;
  this.div=FrameCounterDiv._makeDiv(canvas);
  this.count=0;
  this.scene=scene;
  this.fc=new FrameCounter();
 }
 FrameCounterDiv._makeDiv=function(element){
- var div=document.createElement("div")
- div.style.backgroundColor="white"
- div.style.position="absolute"
- div.style.left=element.offsetLeft+"px"
- div.style.top=element.offsetTop+"px"
- document.body.appendChild(div)
- return div
-}
+ "use strict";
+var div=document.createElement("div");
+ div.style.backgroundColor="white";
+ div.style.position="absolute";
+ div.style.left=element.offsetLeft+"px";
+ div.style.top=element.offsetTop+"px";
+ document.body.appendChild(div);
+ return div;
+};
 /**
  * Not documented yet.
  */
 FrameCounterDiv.prototype.update=function(){
- this.fc.update();
+ "use strict";
+this.fc.update();
  this.count+=1;
  if(this.count>=20){
   var fps=this.fc.getFPS();
   fps=Math.round(fps*100);
   fps/=100;
   if(fps>=0){
-   this.div.innerHTML=fps+" fps"
+   this.div.innerHTML=fps+" fps";
    this.count=0;
   }
  }
-}
+};
 
 function PrimitiveCounter(scene){
- var canvas=scene.getContext().canvas
+ "use strict";
+var canvas=scene.getContext().canvas;
  this.div=FrameCounterDiv._makeDiv(canvas);
  this.count=0;
  this.scene=scene;
@@ -103,10 +110,11 @@ function PrimitiveCounter(scene){
  * Not documented yet.
  */
 PrimitiveCounter.prototype.update=function(){
- var v=this.scene.vertexCount();
+ "use strict";
+var v=this.scene.vertexCount();
  var p=this.scene.primitiveCount();
- this.div.innerHTML=v+" vertices, "+p+" primitives"
-}
+ this.div.innerHTML=v+" vertices, "+p+" primitives";
+};
 </code></pre>
         </article>
     </section>

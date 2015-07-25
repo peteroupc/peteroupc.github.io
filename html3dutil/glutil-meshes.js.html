@@ -18,16 +18,14 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
+/* global GLMath, Mesh */
 /**
 * Contains methods that create meshes
 * of common geometric shapes.
 * @class
 * @alias glutil.Meshes
 */
-if(typeof Meshes=="undefined"){
- Meshes={};
-}
+var Meshes={};
 
 /**
 * Creates a mesh of a box (rectangular prism), which
@@ -43,7 +41,8 @@ if(typeof Meshes=="undefined"){
 */
 Meshes.createBox=function(xSize,ySize,zSize,inward){
  // Position X, Y, Z, normal NX, NY, NZ, texture U, V
- xSize*=0.5;
+ "use strict";
+xSize*=0.5;
  ySize*=0.5;
  zSize*=0.5;
  var vertices=[
@@ -70,18 +69,18 @@ xSize,-ySize,-zSize,0.0,0.0,-1.0,0.0,0.0,
 xSize,-ySize,zSize,0.0,0.0,1.0,1.0,0.0,
 xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 -xSize,ySize,zSize,0.0,0.0,1.0,0.0,1.0,
--xSize,-ySize,zSize,0.0,0.0,1.0,0.0,0.0]
+-xSize,-ySize,zSize,0.0,0.0,1.0,0.0,0.0];
  if(inward){
   for(var i=0;i&lt;vertices.length;i+=8){
-   vertices[i+3]=-vertices[i+3]
-   vertices[i+4]=-vertices[i+4]
-   vertices[i+5]=-vertices[i+5]
+   vertices[i+3]=-vertices[i+3];
+   vertices[i+4]=-vertices[i+4];
+   vertices[i+5]=-vertices[i+5];
   }
  }
  var faces=[0,1,2,0,2,3,4,5,6,4,6,7,8,9,10,8,10,11,12,
- 13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23]
+ 13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23];
  return new Mesh(vertices,faces,Mesh.NORMALS_BIT | Mesh.TEXCOORDS_BIT);
-}
+};
 
 /**
 * Creates a mesh of a cylinder.  The cylinder's base will
@@ -113,13 +112,14 @@ xSize,ySize,zSize,0.0,0.0,1.0,1.0,1.0,
 * @return {Mesh} The generated mesh.
 */
 Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, inside){
- var mesh=new Mesh();
- if(slices==null)slices=32;
- if(stacks==null)stacks=1;
+ "use strict";
+var mesh=new Mesh();
+ if((slices===null || typeof slices==="undefined"))slices=32;
+ if((stacks===null || typeof stacks==="undefined"))stacks=1;
  if(slices&lt;=2)throw new Error("too few slices");
  if(stacks&lt;1)throw new Error("too few stacks");
- if(height&lt;0)throw new Error("negative height")
- if((baseRad&lt;=0 &amp;&amp; topRad&lt;=0) || height==0){
+ if(height&lt;0)throw new Error("negative height");
+ if((baseRad&lt;=0 &amp;&amp; topRad&lt;=0) || height===0){
   // both baseRad and topRad are zero or negative,
   // or height is zero
   return mesh;
@@ -143,7 +143,7 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
   var lastZ=0;
   var lastRad=baseRad;
   var slopeAngle=0,sinSlopeNorm,cosSlopeNorm;
-  if(baseRad==topRad){
+  if(baseRad===topRad){
    sinSlopeNorm=0;
    cosSlopeNorm=normDir;
   } else {
@@ -153,7 +153,7 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
    sinSlopeNorm*=normDir;
    cosSlopeNorm*=normDir;
   }
-  for(var i=0;i&lt;stacks;i++){
+  for(i=0;i&lt;stacks;i++){
    var zStart=lastZ;
    var zEnd=(i+1)/stacks;
    var zStartHeight=height*zStart;
@@ -184,7 +184,7 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
   }
  }
  return flat ? mesh.recalcNormals(flat,inside) : mesh;
-}
+};
 
 /**
 * Creates a mesh of a closed cylinder.  The cylinder's base will
@@ -210,14 +210,15 @@ Meshes.createCylinder=function(baseRad, topRad, height, slices, stacks, flat, in
 * @return {Mesh} The generated mesh.
 */
 Meshes.createClosedCylinder=function(baseRad,topRad,height,slices,stacks,flat, inside){
- var cylinder=Meshes.createCylinder(baseRad,topRad,height,slices,stacks,flat, inside);
+ "use strict";
+var cylinder=Meshes.createCylinder(baseRad,topRad,height,slices,stacks,flat, inside);
  var base=Meshes.createDisk(0,baseRad,slices,2,!inside).reverseWinding();
  var top=Meshes.createDisk(0,topRad,slices,2,inside);
  // move the top disk to the top of the cylinder
  top.transform(GLMath.mat4translated(0,0,height));
  // merge the base and the top
  return cylinder.merge(base).merge(top);
-}
+};
 
 /**
 * Creates a mesh of a 2D disk.
@@ -241,8 +242,9 @@ Meshes.createClosedCylinder=function(baseRad,topRad,height,slices,stacks,flat, i
 * @return The generated mesh.
 */
 Meshes.createDisk=function(inner, outer, slices, loops, inward){
- return Meshes.createPartialDisk(inner,outer,slices,loops,0,360,inward);
-}
+ "use strict";
+return Meshes.createPartialDisk(inner,outer,slices,loops,0,360,inward);
+};
 
 /**
 * Creates a mesh of a 2D disk or an arc of a 2D disk.
@@ -266,33 +268,34 @@ Meshes.createDisk=function(inner, outer, slices, loops, inward){
 * @return The generated mesh.
 */
 Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inward){
- var mesh=new Mesh();
- if(slices==null)slices=32;
- if(loops==null)loops=1;
- if(start==null)start=0;
- if(sweep==null)sweep=360;
+ "use strict";
+var mesh=new Mesh();
+ if((slices===null || typeof slices==="undefined"))slices=32;
+ if((loops===null || typeof loops==="undefined"))loops=1;
+ if((start===null || typeof start==="undefined"))start=0;
+ if((sweep===null || typeof sweep==="undefined"))sweep=360;
  if(slices&lt;=2)throw new Error("too few slices");
  if(loops&lt;1)throw new Error("too few loops");
  if(inner>outer)throw new Error("inner greater than outer");
  if(inner&lt;0)inner=0;
  if(outer&lt;0)outer=0;
- if(outer==0 || sweep==0)return mesh;
- var fullCircle=(sweep==360 &amp;&amp; start==0);
+ if(outer===0 || sweep === 0)return mesh;
+ var fullCircle=(sweep===360 &amp;&amp; start === 0);
  var sweepDir=sweep&lt;0 ? -1 : 1;
  if(sweep&lt;0)sweep=-sweep;
  sweep%=360;
- if(sweep==0)sweep=360;
+ if(sweep===0)sweep=360;
  var sc=[];
  var tc=[];
  var twopi=GLMath.PiTimes2;
- var arcLength=(sweep==360) ? twopi : sweep*GLMath.PiDividedBy180;
+ var arcLength=(sweep===360) ? twopi : sweep*GLMath.PiDividedBy180;
  start=start*GLMath.PiDividedBy180;
  if(sweepDir&lt;0){
   arcLength=-arcLength;
  }
  for(var i=0;i&lt;=slices;i++){
   var t=i*1.0/slices;
-  var angle=(t==1 &amp;&amp; arcLength==twopi) ? start : start+arcLength*t;
+  var angle=(t===1 &amp;&amp; arcLength===twopi) ? start : start+arcLength*t;
   angle=(angle&lt;0) ? twopi-(-angle)%twopi : angle%twopi;
   var cangle = Math.cos(angle);
   var sangle = (angle>=0 &amp;&amp; angle&lt;6.283185307179586) ? (angle&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
@@ -316,7 +319,7 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
   } else {
    mesh.normal3(0,0,1);
   }
-  for(var i=0;i&lt;loops;i++){
+  for(i=0;i&lt;loops;i++){
    var zStart=lastZ;
    var zEnd=(i+1)/loops;
    var radiusStart=lastRad;
@@ -325,17 +328,17 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
    var reo=radiusEnd/outer;
    lastZ=zEnd;
    lastRad=radiusEnd;
-   var triangleFanBase=(i==0 &amp;&amp; inner==0);
+   var triangleFanBase=(i===0 &amp;&amp; inner === 0);
    mesh.mode((triangleFanBase) ?
      Mesh.TRIANGLE_FAN : Mesh.TRIANGLE_STRIP);
+   var x,y,j,k,tx;
    if(triangleFanBase){
     var jStart=slicesTimes2/2;
-    for(var k=slicesTimes2,j=jStart;k>=0;k-=2,j--){
-     var tx=tc[j];
-     var x,y;
+    for(k=slicesTimes2,j=jStart;k>=0;k-=2,j--){
+     tx=tc[j];
      x=sc[k];
      y=sc[k+1];
-     if(k==slicesTimes2){
+     if(k===slicesTimes2){
       mesh.texCoord2((1+(x*rso))*0.5,(1+(y*rso))*0.5);
       mesh.vertex3(x*radiusStart,y*radiusStart,0);
      }
@@ -343,9 +346,8 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
      mesh.vertex3(x*radiusEnd,y*radiusEnd,0);
     }
    } else {
-    for(var k=0,j=0;k&lt;=slicesTimes2;k+=2,j++){
-     var tx=tc[j];
-     var x,y;
+    for(k=0,j=0;k&lt;=slicesTimes2;k+=2,j++){
+     tx=tc[j];
      x=sc[k];
      y=sc[k+1];
      mesh.texCoord2((1+(x*reo))*0.5,(1+(y*reo))*0.5);
@@ -356,7 +358,7 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
    }
   }
   return mesh;
-}
+};
 
 /**
 * Creates a mesh of a torus (donut), centered at the origin.
@@ -376,31 +378,33 @@ Meshes.createPartialDisk=function(inner, outer, slices, loops, start, sweep, inw
 * @return {Mesh} The generated mesh.
 */
 Meshes.createTorus=function(inner, outer, lengthwise, crosswise,flat,inward){
- var mesh=new Mesh();
- if(crosswise==null)crosswise=16;
- if(lengthwise==null)lengthwise=16;
- if(crosswise&lt;3)throw new Error("crosswise is less than 3")
- if(lengthwise&lt;3)throw new Error("lengthwise is less than 3")
- if(inner&lt;0||outer&lt;0)throw new Error("inner or outer is less than 0")
- if(outer==0)return mesh;
- if(inner==0)return mesh;
+ "use strict";
+var mesh=new Mesh();
+ if((crosswise===null || typeof crosswise==="undefined"))crosswise=16;
+ if((lengthwise===null || typeof lengthwise==="undefined"))lengthwise=16;
+ if(crosswise&lt;3)throw new Error("crosswise is less than 3");
+ if(lengthwise&lt;3)throw new Error("lengthwise is less than 3");
+ if(inner&lt;0||outer&lt;0)throw new Error("inner or outer is less than 0");
+ if(outer===0)return mesh;
+ if(inner===0)return mesh;
  var tubeRadius=inner;
  var circleRad=outer;
  var twopi=GLMath.PiTimes2;
  var sci=[];
  var scj=[];
+ var cangle,sangle,u;
  for(var i = 0; i &lt; crosswise; i++){
-  var u = i*twopi/crosswise;
-  var cangle = Math.cos(u);
-  var sangle = (u>=0 &amp;&amp; u&lt;6.283185307179586) ? (u&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(u);
+  u = i*twopi/crosswise;
+  cangle = Math.cos(u);
+  sangle = (u>=0 &amp;&amp; u&lt;6.283185307179586) ? (u&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(u);
   sci.push(sangle,cangle);
  }
  sci.push(sci[0]);
  sci.push(sci[1]);
- for(var i = 0; i &lt; lengthwise; i++){
-  var u = i*twopi/lengthwise;
-  var cangle = Math.cos(u);
-  var sangle = (u>=0 &amp;&amp; u&lt;6.283185307179586) ? (u&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(u);
+ for(i = 0; i &lt; lengthwise; i++){
+  u = i*twopi/lengthwise;
+  cangle = Math.cos(u);
+  sangle = (u>=0 &amp;&amp; u&lt;6.283185307179586) ? (u&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(u);
   scj.push(sangle,cangle);
  }
  scj.push(scj[0]);
@@ -413,8 +417,8 @@ Meshes.createTorus=function(inner, outer, lengthwise, crosswise,flat,inward){
   var sinr1=scj[j*2+2];
   var cosr1=scj[j*2+3];
   mesh.mode(Mesh.TRIANGLE_STRIP);
-  for(var i = 0; i &lt;= crosswise; i++){
-   var u = i/crosswise;
+  for(i = 0; i &lt;= crosswise; i++){
+   u = i/crosswise;
    var sint=sci[i*2];
    var cost=sci[i*2+1];
    var x = (cost * (circleRad + cosr1 * tubeRadius));
@@ -438,7 +442,7 @@ Meshes.createTorus=function(inner, outer, lengthwise, crosswise,flat,inward){
   }
  }
  return flat ? mesh.recalcNormals(flat, inward) : mesh;
-}
+};
 
 /**
 * Creates a mesh of a 2D rectangle, centered at the origin.
@@ -457,15 +461,16 @@ Meshes.createTorus=function(inner, outer, lengthwise, crosswise,flat,inward){
 * @return {Mesh} The generated mesh.
 */
 Meshes.createPlane=function(width, height, widthDiv, heightDiv,inward){
- var mesh=new Mesh();
- if(width==null)width=1;
- if(height==null)height=1;
- if(widthDiv==null)widthDiv=1;
- if(heightDiv==null)heightDiv=1;
- if(width&lt;0||height&lt;0)throw new Error("width or height is less than 0")
+ "use strict";
+var mesh=new Mesh();
+ if((width===null || typeof width==="undefined"))width=1;
+ if((height===null || typeof height==="undefined"))height=1;
+ if((widthDiv===null || typeof widthDiv==="undefined"))widthDiv=1;
+ if((heightDiv===null || typeof heightDiv==="undefined"))heightDiv=1;
+ if(width&lt;0||height&lt;0)throw new Error("width or height is less than 0");
  if(heightDiv&lt;=0 || widthDiv&lt;=0)
-  throw new Error("widthDiv or heightDiv is 0 or less")
- if(width==0 || height==0)return mesh;
+  throw new Error("widthDiv or heightDiv is 0 or less");
+ if(width===0 || height === 0)return mesh;
  var xStart=-width*0.5;
  var yStart=-height*0.5;
   if(inward){
@@ -493,7 +498,7 @@ Meshes.createPlane=function(width, height, widthDiv, heightDiv,inward){
   }
  }
  return mesh;
-}
+};
 /**
 * Creates a mesh of a sphere, centered at the origin.
 * See the "{@tutorial shapes}" tutorial.
@@ -513,8 +518,9 @@ Meshes.createPlane=function(width, height, widthDiv, heightDiv,inward){
 * @return {Mesh} The generated mesh.
 */
 Meshes.createSphere=function(radius, slices, stacks, flat, inside){
- return Meshes._createCapsule(radius,0,slices,stacks,1,flat,inside);
-}
+ "use strict";
+return Meshes._createCapsule(radius,0,slices,stacks,1,flat,inside);
+};
 
 /**
 * Creates a mesh of a capsule, centered at the origin.
@@ -546,23 +552,25 @@ Meshes.createSphere=function(radius, slices, stacks, flat, inside){
 * @return {Mesh} The generated mesh.
 */
 Meshes.createCapsule=function(radius, length, slices, stacks, middleStacks, flat, inside){
- if(stacks==null)stacks=8;
+ "use strict";
+if((stacks===null || typeof stacks==="undefined"))stacks=8;
  if(stacks&lt;1)throw new Error("too few stacks");
  return Meshes._createCapsule(radius,length,slices,stacks*2,middleStacks,flat,inside);
-}
+};
 Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, flat, inside){
- var mesh=new Mesh();
- if(slices==null)slices=16;
- if(stacks==null)stacks=16;
- if(middleStacks==null)middleStacks=1;
- if(radius==null)radius=1;
- if(length==null)length=1;
+ "use strict";
+var mesh=new Mesh();
+ if((slices===null || typeof slices==="undefined"))slices=16;
+ if((stacks===null || typeof stacks==="undefined"))stacks=16;
+ if((middleStacks===null || typeof middleStacks==="undefined"))middleStacks=1;
+ if((radius===null || typeof radius==="undefined"))radius=1;
+ if((length===null || typeof length==="undefined"))length=1;
  if(stacks&lt;2)throw new Error("too few stacks");
  if(slices&lt;=2)throw new Error("too few slices");
  if(middleStacks&lt;1 &amp;&amp; length>0)throw new Error("too few middle stacks");
- if(length&lt;0)throw new Error("negative length")
- if(radius&lt;0)throw new Error("negative radius")
- if(radius==0){
+ if(length&lt;0)throw new Error("negative length");
+ if(radius&lt;0)throw new Error("negative radius");
+ if(radius===0){
   // radius is zero
   return mesh;
  }
@@ -573,11 +581,12 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
  var scStack=[];
  var texc=[];
  var tc=[0];
+ var angle,s;
  var twopi=GLMath.PiTimes2;
  var pidiv2=GLMath.HalfPi;
  for(var i=1;i&lt;slices;i++){
   var t=i*1.0/slices;
-  var angle=twopi*t;
+  angle=twopi*t;
   var cangle = Math.cos(angle);
   var sangle = (angle>=0 &amp;&amp; angle&lt;6.283185307179586) ? (angle&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
   sc.push(sangle,cangle);
@@ -587,11 +596,11 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
  tc.push(1);
  var sphereRatio=(radius*2);
  sphereRatio/=sphereRatio+length;
- var zEnd=[]
- for(var i=1;i&lt;stacks;i++){
+ var zEnd=[];
+ for(i=1;i&lt;stacks;i++){
    var origt=i*1.0/stacks;
-   var angle=Math.PI*origt;
-   var s=Math.sin(angle);
+   angle=Math.PI*origt;
+   s=Math.sin(angle);
    scStack.push(s);
    zEnd.push(-Math.cos(angle));
    var tex=origt;
@@ -606,10 +615,10 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
   var lastRadNorm=0;
   var lastTex=0;
   function normAndVertex(m,normDir,x,y,z,offset){
-   m.normal3(x*normDir,y*normDir,z*normDir)
+   m.normal3(x*normDir,y*normDir,z*normDir);
    m.vertex3(x,y,z+offset);
   }
-  for(var i=0;i&lt;stacks;i++){
+  for(i=0;i&lt;stacks;i++){
    var zsCen=lastZeCen;
    var zeCen=zEnd[i];
    var texStart=lastTex;
@@ -627,15 +636,15 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
    var txe=texEnd;
    if(length>0){
     txs=(i&lt;halfStacks) ? texStart*sphereRatio :
-     (1.0-(1.0-texStart)*sphereRatio)
+     (1.0-(1.0-texStart)*sphereRatio);
     txe=(i&lt;halfStacks) ? texEnd*sphereRatio :
-     (1.0-(1.0-texEnd)*sphereRatio)
+     (1.0-(1.0-texEnd)*sphereRatio);
    }
    lastZeCen=zeCen;
    lastTex=texEnd;
    lastRadNorm=radiusEndNorm;
    lastRad=radiusEnd;
-   if((i==stacks-1 || i==0)){
+   if((i===stacks-1 || i === 0)){
     mesh.mode(Mesh.TRIANGLES);
    } else {
     mesh.mode(Mesh.TRIANGLE_STRIP);
@@ -647,11 +656,11 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
    var lastTx=0;
    var lastX=0;
    var lastY=1;
+   var txMiddle,tx,x,y;
    for(var k=2,j=1;k&lt;=slicesTimes2;k+=2,j++){
-    var tx=tc[j];
-    var x,y;
-    if(i==stacks-1){
-     var txMiddle=lastTx+(tx-lastTx)*0.5;
+    tx=tc[j];
+    if(i===stacks-1){
+     txMiddle=lastTx+(tx-lastTx)*0.5;
      mesh.texCoord2(1-lastTx,txs);
      normAndVertex(mesh,normDir,lastX*radiusStart,lastY*radiusStart,zStartHeight,offset);
      // point at south pole
@@ -664,8 +673,8 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
      lastX=x;
      lastY=y;
      lastTx=tx;
-    } else if(i==0){
-     var txMiddle=lastTx+(tx-lastTx)*0.5;
+    } else if(i===0){
+     txMiddle=lastTx+(tx-lastTx)*0.5;
      // point at north pole
      mesh.texCoord2(1-txMiddle,txs);
      normAndVertex(mesh,normDir,0,radiusStart,zStartHeight,offset);
@@ -687,24 +696,23 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
      normAndVertex(mesh,normDir,x*radiusEnd,y*radiusEnd,zEndHeight,offset);
     }
    }
-   if(i+1==halfStacks &amp;&amp; length>0){
+   if(i+1===halfStacks &amp;&amp; length>0){
     var sr2=sphereRatio*0.5;
     var hl=halfLength*2;
     var endr2=1.0-sr2;
     var he=1.0-sphereRatio;
     for(var m=0;m&lt;middleStacks;m++){
-     var s=-halfLength+(m==0 ? 0 : (hl*m/middleStacks));
-     var e=(m==middleStacks-1) ? halfLength : (-halfLength+hl*(m+1)/middleStacks);
-     var txs=sr2+(m==0 ? 0 : (he*m/middleStacks));
-     var txe=(m==middleStacks-1) ? endr2 : (sr2+he*(m+1)/middleStacks);
+     s=-halfLength+(m===0 ? 0 : (hl*m/middleStacks));
+     var e=(m===middleStacks-1) ? halfLength : (-halfLength+hl*(m+1)/middleStacks);
+     txs=sr2+(m===0 ? 0 : (he*m/middleStacks));
+     txe=(m===middleStacks-1) ? endr2 : (sr2+he*(m+1)/middleStacks);
      mesh.mode(Mesh.TRIANGLE_STRIP);
      mesh.texCoord2(1,txs);
      normAndVertex(mesh,normDir,0,radiusEnd,zEndHeight,s);
      mesh.texCoord2(1,txe);
      normAndVertex(mesh,normDir,0,radiusEnd,zEndHeight,e);
-     for(var k=2,j=1;k&lt;=slicesTimes2;k+=2,j++){
-      var tx=tc[j];
-      var x,y;
+     for(k=2,j=1;k&lt;=slicesTimes2;k+=2,j++){
+      tx=tc[j];
       x=sc[k];
       y=sc[k+1];
       mesh.texCoord2(1-tx,txs);
@@ -716,9 +724,9 @@ Meshes._createCapsule=function(radius, length, slices, stacks, middleStacks, fla
    }
   }
  return flat ? mesh.recalcNormals(flat,inside) : mesh.normalizeNormals();
-}
+};
 
-this["Meshes"]=Meshes;
+this.Meshes=Meshes;
 </code></pre>
         </article>
     </section>

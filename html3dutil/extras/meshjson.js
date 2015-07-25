@@ -6,6 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/* global GLUtil, JSON, Material, Mesh, Promise, ShapeGroup */
 /**
 * JSON exporter of graphics meshes.
 * <p>This class is considered a supplementary class to the
@@ -26,15 +27,16 @@ MeshJSON._resolvePath=function(path, name){
  // resolver, but sufficient here, as it will
  // only be used with relative path
  // strings
- var ret=path;
- var lastSlash=ret.lastIndexOf("/")
+ "use strict";
+var ret=path;
+ var lastSlash=ret.lastIndexOf("/");
  if(lastSlash>=0){
   ret=ret.substr(0,lastSlash+1)+name.replace(/\\/g,"/");
  } else {
   ret=name.replace(/\\/g,"/");
  }
  return ret;
-}
+};
 /**
 * Converts a mesh to JSON format.
 * @param {glutil.Mesh} mesh A mesh object, as used
@@ -42,7 +44,8 @@ MeshJSON._resolvePath=function(path, name){
 * @return {string} A JSON string describing the mesh.
 */
 MeshJSON.toJSON=function(mesh){
- function colorToHex(x){
+ "use strict";
+function colorToHex(x){
   var r=Math.round(x[0]*255);
   var g=Math.round(x[1]*255);
   var b=Math.round(x[2]*255);
@@ -53,7 +56,7 @@ MeshJSON.toJSON=function(mesh){
  }
  var roundNum=function(num){
   return Math.round(num*1000000)/1000000;
- }
+ };
  var faces=[];
  var vertices=[];
  var colors=[];
@@ -65,7 +68,7 @@ MeshJSON.toJSON=function(mesh){
      "DbgName":"Untitled", "colorDiffuse":[1,1,1],
      "colorAmbient":[1,1,1],"colorSpecular":[1,1,1],
      "specularCoef":5}]
- }
+ };
  json.faces=faces;
  json.vertices=vertices;
  json.colors=colors;
@@ -76,13 +79,13 @@ MeshJSON.toJSON=function(mesh){
   var index=idx/3;
   var endIdx=Math.max(0,idx-48);
   for(var i=idx-3;i>=endIdx;i-=3){
-   if(obj[i]==x && obj[i+1]==y && obj[i+2]==z){
+   if(obj[i]===x && obj[i+1]===y && obj[i+2]===z){
     return i/3;
    }
   }
-  obj.push(x)
-  obj.push(y)
-  obj.push(z)
+  obj.push(x);
+  obj.push(y);
+  obj.push(z);
   return index;
  }
  function pushItemAndMaybeReuse2(obj,x,y){
@@ -90,12 +93,12 @@ MeshJSON.toJSON=function(mesh){
   var index=idx/2;
   var endIdx=Math.max(0,idx-48);
   for(var i=idx-2;i>=endIdx;i-=2){
-   if(obj[i]==x && obj[i+1]==y){
+   if(obj[i]===x && obj[i+1]===y){
     return i/2;
    }
   }
-  obj.push(x)
-  obj.push(y)
+  obj.push(x);
+  obj.push(y);
   return index;
  }
  function pushItemAndMaybeReuse1(obj,x){
@@ -103,15 +106,15 @@ MeshJSON.toJSON=function(mesh){
   var index=idx;
   var endIdx=Math.max(0,idx-48);
   for(var i=idx-1;i>=endIdx;i-=1){
-   if(obj[i]==x){
+   if(obj[i]===x){
     return i;
    }
   }
-  obj.push(x)
+  obj.push(x);
   return index;
  }
  mesh.enumPrimitives(function(prim){
-  if(prim.length!=3)throw new Error("lines and points not supported");
+  if(prim.length!==3)throw new Error("lines and points not supported");
   var idx=faces.length;
   var flags=0;
   faces.push(0);
@@ -120,50 +123,52 @@ MeshJSON.toJSON=function(mesh){
     pushItemAndMaybeReuse3(vertices,
       roundNum(prim[j].position[0]),
       roundNum(prim[j].position[1]),
-      roundNum(prim[j].position[2])))
+      roundNum(prim[j].position[2])));
   }
   if(prim[0].uv && prim[1].uv && prim[2].uv){
    var tc=texcoords[0];
-   for(var j=0;j<3;j++){
+   for(j=0;j<3;j++){
     faces.push(
      pushItemAndMaybeReuse2(tc,
       roundNum(prim[j].uv[0]),
-      roundNum(prim[j].uv[1])))
+      roundNum(prim[j].uv[1])));
    }
    flags|=0x08;
   }
   if(prim[0].normal && prim[1].normal && prim[2].normal){
-   for(var j=0;j<3;j++){
+   for(j=0;j<3;j++){
     faces.push(
      pushItemAndMaybeReuse3(normals,
       roundNum(prim[j].normal[0]),
       roundNum(prim[j].normal[1]),
-      roundNum(prim[j].normal[2])))
+      roundNum(prim[j].normal[2])));
    }
    flags|=0x20;
   }
   if(prim[0].color && prim[1].color && prim[2].color){
-   for(var j=0;j<3;j++){
+   for(j=0;j<3;j++){
     faces.push(
      pushItemAndMaybeReuse1(colors,
-      colorToHex(prim[j].color)))
+      colorToHex(prim[j].color)));
    }
    flags|=0x80;
   }
   faces[idx]=flags;
- })
+ });
  return JSON.stringify(json);
-}
+};
 MeshJSON._checkPath=function(path,file){
- if((/(?![\/\\])([^\:\?\#\t\r\n]+)/).test(file)){
+ "use strict";
+if((/(?![\/\\])([^\:\?\#\t\r\n]+)/).test(file)){
   return MeshJSON._resolvePath(path,file);
  } else {
   return null;
  }
-}
+};
 /** @private */
 MeshJSON._getJsonMaterial=function(mtl,path){
- var shininess=1.0;
+ "use strict";
+var shininess=1.0;
  var ambient=null;
  var diffuse=null;
  var specular=null;
@@ -178,68 +183,69 @@ MeshJSON._getJsonMaterial=function(mtl,path){
   diffuse=mtl.colorDiffuse;
  }
  if(mtl.hasOwnProperty("colorAmbient")){
-  ambient=mtl.colorAmbient
+  ambient=mtl.colorAmbient;
  }
  if(mtl.hasOwnProperty("mapDiffuse")){
-  textureName=MeshJSON._checkPath(path,mtl.mapDiffuse)
+  textureName=MeshJSON._checkPath(path,mtl.mapDiffuse);
  }
  if(mtl.hasOwnProperty("mapSpecular")){
-  specularName=MeshJSON._checkPath(path,mtl.mapSpecular)
+  specularName=MeshJSON._checkPath(path,mtl.mapSpecular);
  }
  if(mtl.hasOwnProperty("mapNormal")){
-  normalName=MeshJSON._checkPath(path,mtl.mapNormal)
+  normalName=MeshJSON._checkPath(path,mtl.mapNormal);
  }
  if(mtl.hasOwnProperty("colorEmissive")){
   var ke=mtl.colorEmissive;
-  if(ke.length==1){
+  if(ke.length===1){
    emission=[ke,ke,ke];
   } else {
    emission=(ke);
   }
  }
  if(mtl.hasOwnProperty("colorSpecular")){
-  specular=(mtl["colorSpecular"]);
+  specular=(mtl.colorSpecular);
  }
  var ret=new Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
   ret=ret.setParams({
    "texture":textureName
-  })
+  });
  }
  if(specularName){
   ret=ret.setParams({
    "specularMap":specularName
-  })
+  });
  }
  if(normalName){
   ret=ret.setParams({
    "normalMap":normalName
-  })
+  });
  }
  return ret;
-}
+};
 
 MeshJSON._Model=function(mesh){
- this.meshes=[mesh];
+ "use strict";
+this.meshes=[mesh];
  this.materials=[null];
  this.toShape=function(scene){
   var group=new ShapeGroup();
   for(var i=0;i<this.meshes.length;i++){
    var shape=scene.makeShape(this.meshes[i]);
-   if(this.materials[i])shape.setMaterial(this.materials[i])
-   group.addShape(shape)
+   if(this.materials[i])shape.setMaterial(this.materials[i]);
+   group.addShape(shape);
   }
-  return group
- }
+  return group;
+ };
  this._setMeshes=function(meshes,materials){
   for(var i=0;i<meshes.length;i++){
-   this.meshes[i]=meshes[i]
-   this.materials[i]=materials[i]
+   this.meshes[i]=meshes[i];
+   this.materials[i]=materials[i];
   }
   return this;
- }
-}
+ };
+};
 /**
 * Loads a mesh from JSON format.
 * @param {glutil.Mesh} mesh A mesh object, as used
@@ -252,21 +258,23 @@ MeshJSON._Model=function(mesh){
 * </ul>
 */
 MeshJSON.loadJSON=function(url){
- function convHexColor(c){
-  if(typeof c=="number"){
+ "use strict";
+function convHexColor(c){
+  if(typeof c==="number"){
    return [((c>>16)&0xFF)/255.0,
     ((c>>8)&0xFF)/255.0,
-     ((c)&0xFF)/255.0]
+     ((c)&0xFF)/255.0];
   }
   return GLUtil.getGLColor(c);
  }
  return GLUtil.loadFileFromUrl(url,"json").then(function(f){
-  var json=f.data
+  var json=f.data;
+  var i,ret;
   if(!json.vertices)return Promise.reject(new Error("invalid JSON: no verts"));
   if(json.indices){
    var verts=[];
    if(json.normals){
-    for(var i=0;i<json.vertices.length;i+=3){
+    for(i=0;i<json.vertices.length;i+=3){
      verts.push(json.vertices[i]);
      verts.push(json.vertices[i+1]);
      verts.push(json.vertices[i+2]);
@@ -274,28 +282,28 @@ MeshJSON.loadJSON=function(url){
      verts.push(json.normals[i+1]);
      verts.push(json.normals[i+2]);
     }
-    var ret=new MeshJSON._Model(new Mesh(verts,json.indices,Mesh.NORMALS_BIT));
+    ret=new MeshJSON._Model(new Mesh(verts,json.indices,Mesh.NORMALS_BIT));
     return ret;
    } else {
     return new MeshJSON._Model(new Mesh(json.vertices,json.indices));
    }
   } else if(json.faces){
-   var meshes=[]
+   var meshes=[];
    var mode=-1;
-   var materials=[]
+   var materials=[];
    if(json.materials && json.materials.length>0){
-    for(var i=0;i<json.materials.length;i++){
-     materials.push(MeshJSON._getJsonMaterial(f.url,json.materials[i]))
-     meshes[i]=new Mesh().mode(Mesh.TRIANGLES)
+    for(i=0;i<json.materials.length;i++){
+     materials.push(MeshJSON._getJsonMaterial(f.url,json.materials[i]));
+     meshes[i]=new Mesh().mode(Mesh.TRIANGLES);
     }
    } else {
-    meshes[0]=new Mesh().mode(Mesh.TRIANGLES)
+    meshes[0]=new Mesh().mode(Mesh.TRIANGLES);
     materials[0]=null;
    }
-   var quadIndices=[0,1,3,2,3,1]
-   for(var i=0;i<json.faces.length;){
+   var quadIndices=[0,1,3,2,3,1];
+   for(i=0;i<json.faces.length;){
     var flags=json.faces[i++];
-    var size=((flags&0x01)!=0) ? 4 : 3;
+    var size=((flags&0x01)!==0) ? 4 : 3;
     var vertPtr=i;
     var texcoord=-1;
     var normals=-1;
@@ -305,27 +313,27 @@ MeshJSON.loadJSON=function(url){
     var material=-1;
     i+=size;
     var mesh=meshes[0];
-    if((flags&0x02)!=0){
-     material=json.faces[i]
-     mesh=meshes[material]
+    if((flags&0x02)!==0){
+     material=json.faces[i];
+     mesh=meshes[material];
      i++;
     }
-    if((flags&0x04)!=0){
+    if((flags&0x04)!==0){
      i++;
     }
-    if((flags&0x08)!=0){
+    if((flags&0x08)!==0){
      texcoord=i; i+=size;
     }
-    if((flags&0x10)!=0){
+    if((flags&0x10)!==0){
      normals=i; i+=1;
     }
-    if((flags&0x20)!=0){
+    if((flags&0x20)!==0){
      vnormals=i; i+=size;
     }
-    if((flags&0x40)!=0){
+    if((flags&0x40)!==0){
      colors=i; i+=1;
     }
-    if((flags&0x80)!=0){
+    if((flags&0x80)!==0){
      vcolors=i; i+=size;
     }
     if(normals>=0){
@@ -336,33 +344,33 @@ MeshJSON.loadJSON=function(url){
     if(colors>=0){
      mesh.color3(convHexColor(json.colors[json.faces[colors]]));
     }
-    var trisize=(size==4 ? 6 : 3);
+    var trisize=(size===4 ? 6 : 3);
     for(var j=0;j<trisize;j++){
      var idx;
      if(vnormals>=0){
-      idx=json.faces[(vnormals+(size==4 ? quadIndices[j] : j))]*3
+      idx=json.faces[(vnormals+(size===4 ? quadIndices[j] : j))]*3;
       mesh.normal3(json.normals[idx],
         json.normals[idx+1],json.normals[idx+2]);
      }
      if(texcoord>=0 && material>=0){
-      idx=json.faces[(texcoord+(size==4 ? quadIndices[j] : j))]*2
+      idx=json.faces[(texcoord+(size===4 ? quadIndices[j] : j))]*2;
       mesh.texCoord2(json.uvs[material][idx],
         json.uvs[material][idx+1]);
      }
      if(vcolors>=0){
-      idx=json.faces[vcolors+(size==4 ? quadIndices[j] : j)]
+      idx=json.faces[vcolors+(size===4 ? quadIndices[j] : j)];
       mesh.color3(convHexColor(json.colors[idx]));
      }
-     idx=json.faces[(vertPtr+(size==4 ? quadIndices[j] : j))]*3
+     idx=json.faces[(vertPtr+(size===4 ? quadIndices[j] : j))]*3;
      mesh.vertex3(json.vertices[idx],
         json.vertices[idx+1],
         json.vertices[idx+2]);
     }
    }
-   var ret=new MeshJSON._Model(null)._setMeshes(meshes,materials)
+   ret=new MeshJSON._Model(null)._setMeshes(meshes,materials);
    return ret;
   } else {
    return Promise.reject(new Error("invalid JSON: no indices"));
   }
- })
-}
+ });
+};

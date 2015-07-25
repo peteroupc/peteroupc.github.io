@@ -18,6 +18,8 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+/* global GLMath */
+
 /**
 * Parametric evaluator for a surface of revolution, which results by revolving
 * an X/Y curve around an axis.
@@ -55,7 +57,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * parameter need not be normalized to unit length.
 */
 var SurfaceOfRevolution=function(curve,minval,maxval, axis){
- this.curve=curve
+ "use strict";
+this.curve=curve;
  this.minval=Math.min(minval,maxval);
  this.maxval=Math.min(minval,maxval);
  this._axis=axis;
@@ -71,19 +74,20 @@ var SurfaceOfRevolution=function(curve,minval,maxval, axis){
   var sinu = (u>=0 &amp;&amp; u&lt;6.283185307179586) ? (u&lt;=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
   var cp1=curvepos[1];
   var cp0=curvepos[0];
-  var x=cp1*cosu
-  var y=cp1*sinu
+  var x=cp1*cosu;
+  var y=cp1*sinu;
   var z=cp0;
   var ret=[x,y,z];
   if(this._axisQuat){
    SurfaceOfRevolution._quatTransformInPlace(this._axisQuat,ret);
   }
   return ret;
- }
-}
+ };
+};
 /** @private */
 SurfaceOfRevolution._quatTransformInPlace=function(q,v){
- var v1 = GLMath.vec3cross( q, v );
+ "use strict";
+var v1 = GLMath.vec3cross( q, v );
  v1[0] += v[0] * q[3];
  v1[1] += v[1] * q[3];
  v1[2] += v[2] * q[3];
@@ -131,11 +135,12 @@ SurfaceOfRevolution._quatTransformInPlace=function(q,v){
 * 5, 10);
 */
 SurfaceOfRevolution.fromFunction=function(func,minval,maxval,axis){
-  return new SurfaceOfRevolution({
+  "use strict";
+return new SurfaceOfRevolution({
     "evaluate":function(u){
       return [u,func(u),0];
     }},minval,maxval,axis);
-}
+};
 /**
 * Parametric evaluator for a torus, a special case of a surface of revolution.
 * @param {number} outerRadius Radius from the center to the innermost
@@ -162,20 +167,21 @@ SurfaceOfRevolution.fromFunction=function(func,minval,maxval,axis){
 * parameter need not be normalized to unit length.
 * @return {SurfaceOfRevolution} Return value.*/
 SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve,axis){
-  if(!curve)curve={
+  "use strict";
+if(!curve)curve={
     "evaluate":function(u){
       u*=GLMath.PiTimes2;
-      return [Math.cos(u),Math.sin(u)]
+      return [Math.cos(u),Math.sin(u)];
     }
-  }
+  };
   return new SurfaceOfRevolution({
     "evaluate":function(u){
-      var curvept=curve.evaluate(u)
+      var curvept=curve.evaluate(u);
       var x=innerRadius*curvept[1];
       var y=outerRadius+innerRadius*curvept[0];
       return [x,y,0];
     }},0,Math.PI,axis);
-}
+};
 
 /**
 * Parametric evaluator for a
@@ -197,7 +203,8 @@ SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve,axis){
 * rolling circle to the drawing pen.
 */
 function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
- this.outer=outerRadius;
+ "use strict";
+this.outer=outerRadius;
  this.inner=innerRadius;
  this.distFromInner=distFromInnerCenter;
  /**
@@ -209,7 +216,7 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
 */
  this.evaluate=function(u){
   u=u*GLMath.PiTimes2;
-  var oi=(this.outer-this.inner)
+  var oi=(this.outer-this.inner);
   var term=oi*u/this.inner;
   // NOTE: prolate hypotrochoid if distFromInner>innerRadius
   var cosu = Math.cos(u),
@@ -220,8 +227,8 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
    oi*cosu+this.distFromInner*cost,
    oi*sinu-this.distFromInner*sint,
    0
-  ]
- }
+  ];
+ };
  /**
  * Creates a modified version of this curve so that it
  * fits the given radius.
@@ -229,7 +236,7 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
  * @param {number} radius Desired radius of the curve.
  * @return {Hypotrochoid} Return value. */
  this.scaleTo=function(radius){
-  var oi=(this.outer-this.inner)
+  var oi=(this.outer-this.inner);
   var mx=Math.abs(Math.max(
    -oi-this.distFromInner,
    -oi+this.distFromInner,
@@ -240,7 +247,7 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
    this.outer*ratio,
    this.inner*ratio,
    this.distFromInner*ratio);
- }
+ };
 }
 
 /**
@@ -259,7 +266,8 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
 * rolling circle to the drawing pen.
 */
 function Trochoid(radius, distFromCenter){
- this.inner=radius;
+ "use strict";
+this.inner=radius;
  this.distFromCenter=distFromCenter;
  /**
 * Generates a point on the curve from the given u coordinate.
@@ -276,8 +284,8 @@ function Trochoid(radius, distFromCenter){
    this.inner*u-this.distFromCenter*sinu,
    this.inner    -this.distFromCenter*cosu,
    0
-  ]
- }
+  ];
+ };
 }
 
 /**
@@ -300,7 +308,8 @@ function Trochoid(radius, distFromCenter){
 * rolling circle to the drawing pen.
 */
 function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
- this.outer=outerRadius;
+ "use strict";
+this.outer=outerRadius;
  this.inner=innerRadius;
  this.distFromInner=distFromInnerCenter;
  /**
@@ -312,7 +321,7 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
 */
  this.evaluate=function(u){
   u=u*GLMath.PiTimes2;
-  var oi=(this.outer+this.inner)
+  var oi=(this.outer+this.inner);
   var term=oi*u/this.inner;
   var cosu = Math.cos(u),sinu = (u>=0 &amp;&amp; u&lt;6.283185307179586) ? (u&lt;=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
   var cost = Math.cos(term),sint = (term>=0 &amp;&amp; term&lt;6.283185307179586) ? (term&lt;=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(term);
@@ -321,8 +330,8 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
    oi*cosu-this.distFromInner*cost,
    oi*sinu-this.distFromInner*sint,
    0
-  ]
- }
+  ];
+ };
  /**
  * Creates a modified version of this curve so that it
  * fits the given radius.
@@ -330,7 +339,7 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
  * @param {number} radius Desired radius of the curve.
  * @return {Epitrochoid} Return value. */
  this.scaleTo=function(radius){
-  var oi=(this.outer+this.inner)
+  var oi=(this.outer+this.inner);
   var mx=Math.abs(Math.max(
    -oi-this.distFromInner,
    -oi+this.distFromInner,
@@ -341,7 +350,7 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
    this.outer*ratio,
    this.inner*ratio,
    this.distFromInner*ratio);
- }
+ };
 }
 </code></pre>
         </article>
