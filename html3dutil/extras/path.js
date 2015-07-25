@@ -280,8 +280,9 @@ for(var i=this.segments.length-1;i>=0;i--){
   format. */
 GraphicsPath.prototype.toString=function(){
  "use strict";
-var oldpos=null;
+ var oldpos=null;
  var ret="";
+ var lastcommand=-1;
  for(var i=0;i<this.segments.length;i++){
   var a=this.segments[i];
   if(a[0]===GraphicsPath.CLOSE){
@@ -291,6 +292,7 @@ var oldpos=null;
    if(!oldpos || oldpos[0]!==start[0] || oldpos[1]!==start[1]){
     ret+="M"+start[0]+","+start[1];
    }
+   oldpos=GraphicsPath._endPoint(a);
    if(a[0]===GraphicsPath.LINE){
     ret+="L"+a[3]+","+a[4];
    }
@@ -399,7 +401,56 @@ var ret=[];
  }
  return ret;
 };
-
+/**
+ * Not documented yet.
+ * @param {*} flatness
+ */
+GraphicsPath.prototype.toLinePath=function(flatness){
+ "use strict";
+ var ret=[];
+ var path=new GraphicsPath();
+ var last=null;
+ if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
+ for(var i=0;i<this.segments.length;i++){
+  var s=this.segments[i];
+  var len=0;
+  if(s[0]===GraphicsPath.CLOSE){
+   path.closePath();
+   continue;
+  }
+  var j;
+  var endpt=GraphicsPath._endPoint(s);
+  var startpt=GraphicsPath._startPoint(s);
+  if(!last || last[0]!==startpt[0] || last[1]!==startpt[1]){
+   path.moveTo(startpt[0],startpt[1]);
+  }
+  last=endpt;
+  ret.splice(0,ret.length);
+  if(s[0]===GraphicsPath.QUAD){
+   GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
+     s[5],s[6],0.0,1.0,ret,flatness*2,0);
+   for(j=0;j<ret.length;j++){
+    path.lineTo(ret[j][2],ret[j][3]);
+   }
+  } else if(s[0]===GraphicsPath.CUBIC){
+   GraphicsPath._flattenCubic(s[1],s[2],s[3],s[4],
+     s[5],s[6],s[7],s[8],0.0,1.0,ret,flatness*2,0);
+   for(j=0;j<ret.length;j++){
+    path.lineTo(ret[j][2],ret[j][3]);
+   }
+  } else if(s[0]===GraphicsPath.ARC){
+   GraphicsPath._flattenArc(s,0.0,1.0,ret,flatness*2,0);
+   for(j=0;j<ret.length;j++){
+    path.lineTo(ret[j][2],ret[j][3]);
+   }
+  } else if(s[0]!==GraphicsPath.CLOSE){
+   path.lineTo(s[3],s[4]);
+  } else {
+   path.closePath();
+  }
+ }
+ return path;
+};
 GraphicsPath._accBounds=function(ret,first,s,t){
  "use strict";
 if(t>=0 && t<=1){
@@ -578,7 +629,7 @@ var tmp=[];
   var len=0;
   var startpt=GraphicsPath._startPoint(s);
   var endpt=GraphicsPath._endPoint(s);
-  tmp.length=0;
+  tmp.splice(0,tmp.length);
   if(s[0]!==GraphicsPath.CLOSE){
    if(first || lastptx!==startpt[0] || lastpty!==startpt[1]){
     curPath=startpt;
@@ -1538,6 +1589,7 @@ var index=[0];
  var started=false;
  var ret=new GraphicsPath();
  var failed=false;
+ var endx,endy;
  var sep,curx,cury,x,y,curpt,x2,y2,xcp,ycp;
  while(!failed && index[0]<str.length){
   var c=GraphicsPath._nextAfterWs(str,index);
@@ -1683,14 +1735,16 @@ var index=[0];
      if((x2===null || typeof x2==="undefined")){ failed=true;break; }
      y2=GraphicsPath._nextNumber(str,index,true);
      if((y2===null || typeof y2==="undefined")){ failed=true;break; }
-     xcp=curx;
-     ycp=cury;
+     xcp=ret.endPos[0];
+     ycp=ret.endPos[1];
+     endx=ret.endPos[0];
+     endy=ret.endPos[1];
      if(ret.segments.length>0 &&
         ret.segments[ret.segments.length-1][0]===GraphicsPath.CUBIC){
         xcp=ret.segments[ret.segments.length-1][5];
         ycp=ret.segments[ret.segments.length-1][6];
      }
-     ret.bezierCurveTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury,x2+curx,y2+cury);
+     ret.bezierCurveTo(2*endx-xcp,2*endy-ycp,x+curx,y+cury,x2+curx,y2+cury);
      sep=true;
     }
     break;
@@ -1704,16 +1758,16 @@ var index=[0];
      if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
      y=GraphicsPath._nextNumber(str,index,true);
      if((y===null || typeof y==="undefined")){ failed=true;break; }
-     xcp=curx;
-     ycp=cury;
+     xcp=ret.endPos[0];
+     ycp=ret.endPos[1];
+     endx=ret.endPos[0];
+     endy=ret.endPos[1];
      if(ret.segments.length>0 &&
         ret.segments[ret.segments.length-1][0]===GraphicsPath.QUAD){
         xcp=ret.segments[ret.segments.length-1][3];
         ycp=ret.segments[ret.segments.length-1][4];
      }
-     x+=curx;
-     y+=cury;
-     ret.quadraticCurveTo(2*curx-xcp,2*cury-ycp,x+curx,y+cury);
+     ret.quadraticCurveTo(2*endx-xcp,2*endy-ycp,x+curx,y+cury);
      sep=true;
     }
     break;

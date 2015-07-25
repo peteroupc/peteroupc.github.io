@@ -99,6 +99,10 @@ var absx=Math.abs(tangent[0]);
  return GLMath.vec3normInPlace(normal);
 };
 FrenetFrames._EPSILON=0.000001;
+/**
+ * Not documented yet.
+ * @param {*} u
+ */
 FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
  "use strict";
  var sample=this.func.evaluate(u);
