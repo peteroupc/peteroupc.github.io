@@ -182,7 +182,7 @@ CanvasBackground.prototype.drawOne=function(){
   rgb[1]/=255
   rgb[2]/=255
    var angle=this.constructor.rand(160);
-   var vector=GLMath.quatFromEuler(
+   var vector=GLMath.quatFromTaitBryan(
      (this.constructor.rand(360)),
      (this.constructor.rand(360)),
      (this.constructor.rand(360)));

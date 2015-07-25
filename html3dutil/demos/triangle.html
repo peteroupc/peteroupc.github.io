@@ -20,9 +20,10 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
   var scene=new Scene3D(document.getElementById("canvas"));
-  scene.setDirectionalLight(0,[0,0,-1])
+  scene.setClearColor("white")
   var mesh=new Mesh()
     .mode(Mesh.TRIANGLES)
+    .normal3(0,0,1)
     .color3("red")
     .vertex2(0,0.5)
     .color3("green")
