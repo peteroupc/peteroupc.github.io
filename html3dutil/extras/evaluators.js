@@ -106,7 +106,8 @@ var v1 = GLMath.vec3cross( q, v );
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be normalized to unit length.
-* @return {SurfaceOfRevolution} Return value.* @example <caption>The following creates an evaluator for a cone
+* @return {SurfaceOfRevolution} Return value.
+ @example <caption>The following creates an evaluator for a cone
 * which starts at the origin and runs 10 units along the Z axis.</caption>
 * var surf=SurfaceOfRevolution.fromFunction(
 *  function(x){  return x/2; }, // use a constantly increasing function

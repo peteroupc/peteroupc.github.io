@@ -158,7 +158,7 @@ parameter need not be normalized to unit length.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromFunction"><span style="font-weight:lighter">(static) </span>fromFunction<span class="signature">(func, minval, maxval, axis<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line125">line 125</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line126">line 126</a>
      </i></small></p>
 
 <div class="description">
@@ -278,11 +278,7 @@ parameter need not be normalized to unit length.</td>
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    Return value.* @example <caption>The following creates an evaluator for a cone
-which starts at the origin and runs 10 units along the Z axis.</caption>
-var surf=SurfaceOfRevolution.fromFunction(
- function(x){  return x/2; }, // use a constantly increasing function
-0, 10);
+    Return value.
 
      (Type:
 <span class="param-type"><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></span>)
@@ -290,6 +286,13 @@ var surf=SurfaceOfRevolution.fromFunction(
 </div>
 
     <h5>Examples</h5>
+
+        <p class="code-caption">The following creates an evaluator for a cone
+which starts at the origin and runs 10 units along the Z axis.</p>
+
+    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction(
+ function(x){  return x/2; }, // use a constantly increasing function
+0, 10);</code></pre>
 
         <p class="code-caption">This is an evaluator for the same cone, but
 shifted 3 units back.</p>
@@ -307,7 +310,7 @@ which runs from 5 to 10 units, and with a radius of 2 units.</p>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".torus"><span style="font-weight:lighter">(static) </span>torus<span class="signature">(outerRadius, innerRadius, curve<sub style="font-weight:lighter">opt</sub>, axis<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line157">line 157</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line158">line 158</a>
      </i></small></p>
 
 <div class="description">

@@ -556,13 +556,13 @@ var inf=Number.POSITIVE_INFINITY;
     var sinp = (rot>=0 &amp;&amp; rot&lt;6.283185307179586) ? (rot&lt;=3.141592653589793 ? Math.sqrt(1.0-cosp*cosp) : -Math.sqrt(1.0-cosp*cosp)) : Math.sin(rot);
     var angles=[];
     var angle;
-    if(cosp!==0){
+    if(cosp!==0 &amp;&amp; sinp!==0){
      angle=Math.atan2(-ry*sinp/cosp,rx);
      angles.push(angle,angle+Math.PI);
-    }
-    if(sinp!==0){
      angle=Math.atan2(ry*cosp/sinp,rx);
      angles.push(angle,angle+Math.PI);
+    } else {
+     angles.push(0,Math.PI,Math.PI/2,Math.PI*3/2);
     }
     for(i=0;i&lt;angles.length;i++){
      if(GraphicsPath._angleInRange(angles[i],theta,delta)){
