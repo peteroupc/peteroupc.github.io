@@ -310,7 +310,34 @@ GraphicsPath.prototype.toString=function(){
  }
  return ret;
 };
-GraphicsPath._length=function(a,flatness){
+GraphicsPath._quadCurveLength=function(x1,y1,x2,y2,x3,y3){
+ "use strict";
+var integrand=function(t){
+  var tm1=t-1;
+  var x=x1*tm1-x2*tm1-x2*t+x3*t;
+  var y=y1*tm1-y2*tm1-y2*t+y3*t;
+  return Math.sqrt(4*x*x+4*y*y);
+ };
+ return GraphicsPath._numIntegrate(integrand,0,1);
+};
+GraphicsPath._cubicCurveLength=function(x1,y1,x2,y2,x3,y3,x4,y4){
+ "use strict";
+var integrand=function(t){
+  var tm1=t-1;
+  var tm1sq=tm1*tm1;
+  var c = x3-x4;
+  var b = 2*x3*tm1-2*x2*tm1;
+  var a = x1*tm1sq-x2*tm1sq;
+  var x = a+t*(b+t*c);
+  c = y3-y4;
+  b = 2*y3*tm1-2*y2*tm1;
+  a = y1*tm1sq-y2*tm1sq;
+  var y = a+t*(b+t*c);
+  return Math.sqrt(9*x*x+9*y*y);
+ };
+ return GraphicsPath._numIntegrate(integrand,0,1);
+};
+GraphicsPath._length=function(a){
  "use strict";
  var flat,len,j;
 if(a[0]===GraphicsPath.LINE){
@@ -318,23 +345,13 @@ if(a[0]===GraphicsPath.LINE){
   var dy=a[4]-a[2];
   return Math.sqrt(dx*dx+dy*dy);
  } else if(a[0]===GraphicsPath.QUAD){
-   flat=[];
-   len=0;
-   GraphicsPath._flattenQuad(a[1],a[2],a[3],a[4],
-     a[5],a[6],0.0,1.0,flat,flatness*2,1);
-   for(j=0;j<flat.length;j+=3){
-    len+=flat[j+2];
-   }
-   return len;
+   return GraphicsPath._quadCurveLength(a[1],a[2],a[3],a[4],
+     a[5],a[6]);
   } else if(a[0]===GraphicsPath.CUBIC){
    flat=[];
    len=0;
-   GraphicsPath._flattenCubic(a[1],a[2],a[3],a[4],
-     a[5],a[6],a[7],a[8],0.0,1.0,flat,flatness*2,1);
-   for(j=0;j<flat.length;j+=3){
-    len+=flat[j+2];
-   }
-   return len;
+   return GraphicsPath._cubicCurveLength(a[1],a[2],a[3],a[4],
+     a[5],a[6],a[7],a[8]);
  } else if(a[0]===GraphicsPath.ARC){
   var rx=a[3];
   var ry=a[4];
@@ -348,11 +365,7 @@ if(a[0]===GraphicsPath.LINE){
 
 /**
  * Finds the approximate length of this path.
-* @param {number} [flatness] When quadratic and cubic
-* curves are decomposed to
-* line segments for the purpose of calculating their length, the
-* segments will generally be close to the true path of the curve by
-* up to this value, given in units.  If null or omitted, default is 1.
+* @param {number} [flatness] No longer used by this method.
  * @return {number} Approximate length of this path
  * in units.
  */
@@ -363,7 +376,7 @@ if(this.segments.length === 0)return 0;
  if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i];
-  var len=GraphicsPath._length(s,flatness);
+  var len=GraphicsPath._length(s);
   totalLength+=len;
  }
  return totalLength;
@@ -371,8 +384,8 @@ if(this.segments.length === 0)return 0;
 /**
 * Gets an array of line segments approximating
 * the path.
-* @param {number} [flatness] When curves and arc
-* segments are decomposed to line segments, the
+* @param {number} [flatness] When curves and arcs
+* are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
 * @return {Array<Array<number>>} Array of line segments.
@@ -402,8 +415,14 @@ var ret=[];
  return ret;
 };
 /**
- * Not documented yet.
- * @param {*} flatness
+* Creates a path in which curves and arcs are decomposed
+* to line segments.
+* @param {number} [flatness] When curves and arcs
+* are decomposed to line segments, the
+* segments will be close to the true path of the curve by this
+* value, given in units.  If null or omitted, default is 1.
+* @return {GraphicsPath} A path consisting only of line
+* segments and close commands.
  */
 GraphicsPath.prototype.toLinePath=function(flatness){
  "use strict";
@@ -846,7 +865,7 @@ accurate if the path contains curves or arcs.
 portion of the path. For example, if the path contains one polygon, the list will contain
 one curve object.   And if the path is empty, the list will be empty too.
 <p>Each object will have the following methods:<ul>
-<li><code>getLength()</code> - Returns the total length of the curve,
+<li><code>getLength()</code> - Returns the approximate total length of the curve,
 in units.
 <li><code>evaluate(u)</code> - Takes one parameter, "u", which
 ranges from 0 to 1, depending on how far the point is from the start or
@@ -856,7 +875,7 @@ the X, Y, and Z coordinates of the point lying on the curve at the given
 "u" position (however, the z will always be 0 since paths can currently
 only be 2-dimensional).
 </ul>
-<li><code>getLength()</code> - Returns the total length of the path,
+<li><code>getLength()</code> - Returns the approximate total length of the path,
 in units.
 <li><code>evaluate(u)</code> - Has the same effect as the "evaluate"
 method for each curve, but applies to the path as a whole.
@@ -1161,6 +1180,21 @@ this.segments.push([GraphicsPath.CUBIC,
  this.incomplete=false;
  return this;
 };
+
+GraphicsPath._legendreGauss24=[
+0.12793819534675216, 0.06405689286260563,
+0.1258374563468283, 0.1911188674736163,
+0.12167047292780339, 0.3150426796961634,
+0.1155056680537256, 0.4337935076260451,
+0.10744427011596563, 0.5454214713888396,
+0.09761865210411388, 0.6480936519369755,
+0.08619016153195327, 0.7401241915785544,
+0.0733464814110803, 0.820001985973903,
+0.05929858491543678, 0.8864155270044011,
+0.04427743881741981, 0.9382745520027328,
+0.028531388628933663, 0.9747285559713095,
+0.0123412297999872, 0.9951872199970213
+];
 /**
 * Estimates the integral of a function.  The integral
 * is the area between the function's graph and the X-axis,
@@ -1177,55 +1211,28 @@ this.segments.push([GraphicsPath.CUBIC,
 * @param {Number} xmax Largest input to the function,
 * or the upper limit to integration.  If xmax is less than xmin,
 * this results in a negative integral.
-* @param {Number} [maxIter] Maximum iterations.
-* If null or undefined, does 8 iterations.
 * @returns The approximate integral of _func_ between
 * _xmin_ and _xmax_.
 */
-GraphicsPath._numIntegrate=function(func, xmin, xmax, maxIter){
+GraphicsPath._numIntegrate=function(func, xmin, xmax){
  "use strict";
 if(xmax===xmin)return 0;
  if(xmax<xmin){
-  return GraphicsPath._numIntegrate(func,xmax,xmin,maxIter);
+  return -GraphicsPath._numIntegrate(func,xmax,xmin);
  }
- if((maxIter===null || typeof maxIter==="undefined"))maxIter=8;
- if(maxIter<=0)return 0;
- // Romberg integration
- var matrix=[0];
- var j;
- var hk=(xmax-xmin);
- var lasthk=hk;
- var klimit=0;
- for(var k=1;k<=maxIter;k++){
-  if(k === 1){
-   matrix[k]=hk*0.5*(func(xmin)+func(xmax));
-   klimit=1;
-  } else {
-   var tmp=0;
-   for(j=1;j<=klimit;j++){
-    tmp+=func(xmin+(j-0.5)*lasthk);
-   }
-   tmp*=lasthk;
-   matrix[k]=(matrix[k-1]+tmp)*0.5;
-   klimit<<=1;
-  }
-  lasthk=hk;
-  hk*=0.5;
+ var bm=(xmax-xmin)*0.5;
+ var bp=(xmax+xmin)*0.5;
+ var ret=0;
+ var lg=GraphicsPath._legendreGauss24;
+ for(var i=0;i<lg.length;i+=2){
+  var weight=lg[i];
+  var abscissa=lg[i+1];
+  ret+=weight*func(bm*abscissa+bp);
+  ret+=weight*func(-bm*abscissa+bp);
  }
- var mxi=maxIter+1;
- var pj1=4;
- for(j=2;j<=maxIter;j++){
-  var prev=matrix[j-1];
-  var recipPj1m1=1.0/(pj1-1);
-  for(var i=j;i<=maxIter;i++){
-   var cur=matrix[i];
-   matrix[i]=(cur*pj1-prev)*recipPj1m1;
-   prev=cur;
-  }
-  pj1*=4;
- }
- return matrix[matrix.length-1];
+ return ret*bm;
 };
+
 GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
  "use strict";
 if(startAngle===endAngle || xRadius<=0 || yRadius<=0)return 0;
@@ -1241,7 +1248,7 @@ if(startAngle===endAngle || xRadius<=0 || yRadius<=0)return 0;
   return Math.sqrt(1-s*s*eccSq);
  };
  return Math.abs(mx*GraphicsPath._numIntegrate(
-   ellipticIntegrand,startAngle,endAngle,10));
+   ellipticIntegrand,startAngle,endAngle));
 };
 GraphicsPath._vecangle=function(a,b,c,d){
  "use strict";
@@ -1528,11 +1535,11 @@ var oldindex=index[0];
  return ret;
 };
 /**
- * Not documented yet.
- * @param {number} x
- * @param {number} y
- * @param {number} width
- * @param {number} height
+ * Adds four lines in an axis-aligned rectangle shape to the path.
+ * @param {number} x X-coordinate of a corner of the rectangle.
+ * @param {number} y Y-coordinate of a corner of the rectangle.
+ * @param {number} width X-offset (width) to another corner of the rectangle.
+ * @param {number} height Y-offset (height) to another corner of the rectangle.
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.rect=function(x,y,width,height){
