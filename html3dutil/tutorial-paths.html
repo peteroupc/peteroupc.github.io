@@ -1,138 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Source: extras/stl.js</title>
+<head><meta charset="utf-8"><title>JSDoc: Tutorial: 2-Dimensional Graphics Paths</title>
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
 </head>
 <body style="margin-top:0px">
 <div style="width:75%;float:left;">
-    <h1>Source: extras/stl.js</h1>
-
+    <h1>Tutorial: 2-Dimensional Graphics Paths</h1>
     <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
-Written by Peter O. in 2015.
 
-Any copyright is dedicated to the Public Domain.
-http://creativecommons.org/publicdomain/zero/1.0/
-If you like this, you should donate to Peter O.
-at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
-*/
-/* global GLUtil, Mesh, Promise */
-(function(GLUtil){
-"use strict";
-if(!GLUtil){ GLUtil={}; }
-var StlData={};
-/**
-* Loads a .STL file asynchronously.
-* &lt;p>This method is considered a supplementary method to the
-* Public Domain HTML 3D Library and is not considered part of that
-* library. &lt;p>
-* To use this method, you must include the script "extras/stl.js"; the
- * class is not included in the "glutil_min.js" file which makes up
- * the HTML 3D Library.  Example:&lt;pre>
- * &amp;lt;script type="text/javascript" src="extras/stl.js">&amp;lt;/script>&lt;/pre>
-@alias glutil.GLUtil.loadStlFromUrl
-@param {string} url The URL to load.
-@return {Promise} A promise that:
-- Resolves when:
-The .STL file is loaded successfully.  The result is a Mesh object.
-- Is rejected when:
-An error occurs when loading the .STL file.
-*/
-GLUtil.loadStlFromUrl=function(url){
- return GLUtil.loadFileFromUrl(url).then(
-   function(e){
-     var obj;
-     obj=StlData._loadStl(e.data);
-     if(obj.error)return Promise.reject({"url":e.url, "error":obj.error});
-     obj=obj.success;
-     obj.url=e.url;
-     // otherwise just return the object
-     return Promise.resolve(obj);
-   },
-   function(e){
-     return Promise.reject(e);
-   });
-};
-/** @private */
-StlData.INITIAL=0;
-/** @private */
-StlData.IN_SOLID=1;
-/** @private */
-StlData.IN_FACET=2;
-/** @private */
-StlData.IN_OUTER_LOOP=3;
-/** @private */
-StlData.AFTER_SOLID=3;
-StlData._loadStl=function(str){
- var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
- var facet=new RegExp("^\\s*facet\\s+normal\\s+"+number+"\\s+"+number+
-   "\\s+"+number+"\\s*");
- var vertex=new RegExp("^\\s*vertex\\s+"+number+"\\s+"+number+
-   "\\s+"+number+"\\s*");
- var solid=new RegExp("^\\s*solid(?=\\s+(.*)|$)");
- var outerloop=new RegExp("^\\s*outer\\s+loop\\s*");
- var endfacet=new RegExp("^\\s*endfacet\\s*");
- var endloop=new RegExp("^\\s*endloop\\s*");
- var endsolid=new RegExp("^\\s*endsolid(?=\\s+.*|$)");
- var lines=str.split(/\r?\n/);
- var mesh=new Mesh();
- var currentNormal=[];
- var state=StlData.INITIAL;
- var vertexCount=0;
- var solidName="";
- for(var i=0;i&lt;lines.length;i++){
-  var line=lines[i];
-  // skip empty lines
-  if(line.length===0||(/^\s*$/).test(line))continue;
-  var e=solid.exec(line);
-  if(e &amp;&amp; (state===StlData.INITIAL || state===StlData.AFTER_SOLID)){
-    solidName=e[1];
-    state=StlData.IN_SOLID;
-    continue;
-  }
-  e=facet.exec(line);
-  if(e &amp;&amp; state===StlData.IN_SOLID){
-    mesh.mode(Mesh.TRIANGLE_FAN);
-    mesh.normal3(parseFloat(e[1]),parseFloat(e[2]),parseFloat(e[3]));
-    state=StlData.IN_FACET;
-    continue;
-  }
-  e=outerloop.exec(line);
-  if(e &amp;&amp; state===StlData.IN_FACET){
-    state=StlData.IN_OUTER_LOOP;
-    vertexCount=0;
-    continue;
-  }
-  e=vertex.exec(line);
-  if(e &amp;&amp; state===StlData.IN_OUTER_LOOP){
-    mesh.vertex3(parseFloat(e[1]),parseFloat(e[2]),parseFloat(e[3]));
-    continue;
-  }
-  e=endloop.exec(line);
-  if(e &amp;&amp; state===StlData.IN_OUTER_LOOP){
-    state=StlData.IN_FACET;
-    continue;
-  }
-  e=endfacet.exec(line);
-  if(e &amp;&amp; state===StlData.IN_FACET){
-    state=StlData.IN_SOLID;
-    continue;
-  }
-  e=endsolid.exec(line);
-  if(e &amp;&amp; state===StlData.IN_SOLID){
-    state=StlData.AFTER_SOLID;
-    continue;
-  }
-  return {"error": new Error("unsupported line: "+line)};
- }
- return {success: mesh};
-};
-})(GLUtil);
-</code></pre>
-        </article>
-    </section>
+<header>
+
+    <h2>2-Dimensional Graphics Paths</h2>
+</header>
+
+<article>
+    <h2>Introduction <a id=Introduction></a></h2><p>This article describes two-dimensional paths.  This is an extra included in the HTML 3D Library.</p>
+<p><strong>Download the latest version of the Public Domain HTML 3D
+Library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library's Releases page</a>.</strong></p>
+<h2>Contents <a id=Contents></a></h2><h2>Paths</h2><p>A path is a collection of two-dimensional line segments and/or curves.  Many paths describe
+closed figures or connected strings of lines and curves. The <code>GraphicsPath</code> class
+currently supports line segments, quadratic and cubic B&eacute;zier curves, and elliptical arcs,
+as well as closed figures made from several path segments.</p>
+<h2>How to Use</h2><p>2D paths are implemented in a class called <code>GraphicsPath</code>, found in the file <em>extras/path.js</em> in
+the HTML 3D Library download.  To use this class, you must include the script &quot;extras/path.js&quot;,
+as in this example.</p>
+<pre class="prettyprint source"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;glutil_min.js&quot;>&lt;/script>
+&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;>&lt;/script></code></pre><h2>Creating Paths</h2><p>There are two ways to create paths: using an SVG path string, or by calling methods that add
+its segments.</p>
+<h3>SVG Path String</h3><p>If you've worked with SVG, you may be familiar with this format for describing 2D paths.  An
+SVG path string consists of one or more path commands that start with a single letter.
+The following are examples of SVG path strings:</p>
+<pre class="prettyprint source"><code>M50,50L100,100,100,150,150,200
+
+M50,20C230,245,233,44,22,44
+
+M50,50H80V60H50V70H50</code></pre><p>The &quot;M&quot; command moves the current position, the &quot;L&quot;, &quot;H&quot;, and &quot;V&quot; commands create
+lines, the &quot;Q&quot;, &quot;C&quot;, &quot;S&quot;, and &quot;T&quot; commands create B&eacute;zier curves, the &quot;A&quot; command
+creates elliptical arcs, and the &quot;Z&quot; command closes the path.
+If the letters are lower-cased, X and Y coordinates are relative to the current position.</p>
+<p>For more information, see the <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a> method documentation.
+That method is also how you create a 2D path from an SVG path string, as in this
+example:</p>
+<pre class="prettyprint source"><code>var path = GraphicsPath.fromString(&quot;M50,20C230,245,233,44,22,44&quot;)</code></pre><h3>Building Paths</h3><p>The other way to make paths is to call the <code>GraphicsPath</code> constructor and call methods
+to add path segments to the path.</p>
+<p>The <code>GraphicsPath</code> object stores a current position and a starting position, and many methods
+don't have you specify a starting position, to cover the common case of drawing a series
+of connected lines and curves.</p>
+<ul>
+<li><em>.moveTo(x, y)</em> - Moves the starting position and current position.</li>
+<li><em>.lineTo(x, y)</em> - Adds a line segment from the current position to a new ending position.</li>
+<li><em>.closePath()</em> - Closes the path by drawing a line to the starting point, if needed.</li>
+</ul>
+<p>To be completed.</p>
+<h3>Using Paths</h3><ul>
+<li>The <em>.getLength()</em> method finds the approximate length of a path.</li>
+<li>The <em>.getBounds()</em> method finds the axis-aligned bounding box of a path.</li>
+</ul>
+<p>To be completed.</p>
+</article>
+
+</section>
 
 </div>
 <nav style="float: right;width: 25%;border-left: 1px solid;margin-top:0px;box-sizing: border-box;padding-left: 1em;">
