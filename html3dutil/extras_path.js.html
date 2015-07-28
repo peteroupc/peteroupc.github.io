@@ -18,7 +18,20 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLMath */
+/* global GLMath, define, exports */
+
+(function (g,f) {
+ "use strict";
+if (typeof define==="function" &amp;&amp; define.amd) {
+  define([ "exports" ], f);
+ } else if (typeof exports==="object") {
+  f(exports);
+ } else {
+  f(g);
+ }
+}(this, function (exports) {
+ "use strict";
+if (exports.GraphicsPath) { return; }
 /**
 * Represents a two-dimensional path.
 * &lt;p>This class is considered a supplementary class to the
@@ -515,7 +528,7 @@ var ca = Math.cos(angle);
 };
 GraphicsPath._normAngle=function(angle){
  "use strict";
-var twopi=GLMath.PiTimes2;
+var twopi=Math.PI*2;
  var normAngle=angle;
  if(normAngle>=0){
   normAngle=(normAngle&lt;twopi) ? normAngle : normAngle%twopi;
@@ -527,7 +540,7 @@ var twopi=GLMath.PiTimes2;
 };
 GraphicsPath._angleInRange=function(angle,startAngle,endAngle){
  "use strict";
-var twopi=GLMath.PiTimes2;
+var twopi=Math.PI*2;
  var diff=endAngle-startAngle;
  if(Math.abs(diff)>=twopi)return true;
  var normAngle=GraphicsPath._normAngle(angle);
@@ -632,11 +645,11 @@ var inf=Number.POSITIVE_INFINITY;
      angle=Math.atan2(ry*cosp/sinp,rx);
      angles.push(angle,angle+Math.PI);
     } else {
-     angles.push(0,Math.PI,Math.PI/2,Math.PI*3/2);
+     angles.push(0,Math.PI,Math.PI*0.5,Math.PI*1.5);
     }
-    for(i=0;i&lt;angles.length;i++){
-     if(GraphicsPath._angleInRange(angles[i],theta,delta)){
-       GraphicsPath._accBoundsArc(ret,first,rx,ry,cosp,sinp,cx,cy,angles[i]);
+    for(var k=0;k&lt;angles.length;k++){
+     if(GraphicsPath._angleInRange(angles[k],theta,delta)){
+       GraphicsPath._accBoundsArc(ret,first,rx,ry,cosp,sinp,cx,cy,angles[k]);
      }
     }
   }
@@ -1121,7 +1134,7 @@ if(radius&lt;0){
  }
  var x0=this.endPos[0];
  var y0=this.endPos[1];
- var twopi=GLMath.PiTimes2;
+ var twopi=Math.PI*2;
  var startX=x+radius*Math.cos(startAngle);
  var startY=y+radius*Math.sin(startAngle);
  var endX=x+radius*Math.cos(endAngle);
@@ -1133,7 +1146,7 @@ if(radius&lt;0){
    (ccw &amp;&amp; (startAngle-endAngle)>=twopi)){
     return this.lineTo(startX,startY)
        .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
-       .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
+       .arc(x,y,radius,startAngle+Math.PI,startAngle+Math.PI*2,ccw)
        .lineTo(startX,startY);
 } else {
  var delta=endAngle-startAngle;
@@ -1142,7 +1155,7 @@ if(radius&lt;0){
  if(d === 0 &amp;&amp; delta!==0){
   return this.lineTo(startX,startY)
        .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
-       .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
+       .arc(x,y,radius,startAngle+Math.PI,startAngle+Math.PI*2,ccw)
        .lineTo(startX,startY);
  }
  delta=d;
@@ -1320,11 +1333,11 @@ var x1=a[1];
  var theta1=Math.acos(cosTheta1);
  if(vecy&lt;0)theta1=-theta1;
  var delta=GraphicsPath._vecangle(vecx,vecy,nvecx,nvecy);
- delta=(delta&lt;0) ? GLMath.PiTimes2+delta : delta;
+ delta=(delta&lt;0) ? Math.PI*2+delta : delta;
  if(!a[7] &amp;&amp; delta>0){
-  delta-=GLMath.PiTimes2;
+  delta-=Math.PI*2;
  } else if(a[7] &amp;&amp; delta&lt;0){
-  delta+=GLMath.PiTimes2;
+  delta+=Math.PI*2;
  }
  delta+=theta1;
  return [cx,cy,theta1,delta];
@@ -2031,6 +2044,8 @@ if(vertices.length&lt;6){
   }
  }
 };
+exports.GraphicsPath=GraphicsPath;
+}));
 </code></pre>
         </article>
     </section>
@@ -2052,7 +2067,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

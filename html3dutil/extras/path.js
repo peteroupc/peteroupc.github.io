@@ -6,7 +6,20 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLMath */
+/* global GLMath, define, exports */
+
+(function (g,f) {
+ "use strict";
+if (typeof define==="function" && define.amd) {
+  define([ "exports" ], f);
+ } else if (typeof exports==="object") {
+  f(exports);
+ } else {
+  f(g);
+ }
+}(this, function (exports) {
+ "use strict";
+if (exports.GraphicsPath) { return; }
 /**
 * Represents a two-dimensional path.
 * <p>This class is considered a supplementary class to the
@@ -503,7 +516,7 @@ var ca = Math.cos(angle);
 };
 GraphicsPath._normAngle=function(angle){
  "use strict";
-var twopi=GLMath.PiTimes2;
+var twopi=Math.PI*2;
  var normAngle=angle;
  if(normAngle>=0){
   normAngle=(normAngle<twopi) ? normAngle : normAngle%twopi;
@@ -515,7 +528,7 @@ var twopi=GLMath.PiTimes2;
 };
 GraphicsPath._angleInRange=function(angle,startAngle,endAngle){
  "use strict";
-var twopi=GLMath.PiTimes2;
+var twopi=Math.PI*2;
  var diff=endAngle-startAngle;
  if(Math.abs(diff)>=twopi)return true;
  var normAngle=GraphicsPath._normAngle(angle);
@@ -620,11 +633,11 @@ var inf=Number.POSITIVE_INFINITY;
      angle=Math.atan2(ry*cosp/sinp,rx);
      angles.push(angle,angle+Math.PI);
     } else {
-     angles.push(0,Math.PI,Math.PI/2,Math.PI*3/2);
+     angles.push(0,Math.PI,Math.PI*0.5,Math.PI*1.5);
     }
-    for(i=0;i<angles.length;i++){
-     if(GraphicsPath._angleInRange(angles[i],theta,delta)){
-       GraphicsPath._accBoundsArc(ret,first,rx,ry,cosp,sinp,cx,cy,angles[i]);
+    for(var k=0;k<angles.length;k++){
+     if(GraphicsPath._angleInRange(angles[k],theta,delta)){
+       GraphicsPath._accBoundsArc(ret,first,rx,ry,cosp,sinp,cx,cy,angles[k]);
      }
     }
   }
@@ -1109,7 +1122,7 @@ if(radius<0){
  }
  var x0=this.endPos[0];
  var y0=this.endPos[1];
- var twopi=GLMath.PiTimes2;
+ var twopi=Math.PI*2;
  var startX=x+radius*Math.cos(startAngle);
  var startY=y+radius*Math.sin(startAngle);
  var endX=x+radius*Math.cos(endAngle);
@@ -1121,7 +1134,7 @@ if(radius<0){
    (ccw && (startAngle-endAngle)>=twopi)){
     return this.lineTo(startX,startY)
        .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
-       .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
+       .arc(x,y,radius,startAngle+Math.PI,startAngle+Math.PI*2,ccw)
        .lineTo(startX,startY);
 } else {
  var delta=endAngle-startAngle;
@@ -1130,7 +1143,7 @@ if(radius<0){
  if(d === 0 && delta!==0){
   return this.lineTo(startX,startY)
        .arc(x,y,radius,startAngle,startAngle+Math.PI,ccw)
-       .arc(x,y,radius,startAngle+Math.PI,startAngle+GLMath.PiTimes2,ccw)
+       .arc(x,y,radius,startAngle+Math.PI,startAngle+Math.PI*2,ccw)
        .lineTo(startX,startY);
  }
  delta=d;
@@ -1308,11 +1321,11 @@ var x1=a[1];
  var theta1=Math.acos(cosTheta1);
  if(vecy<0)theta1=-theta1;
  var delta=GraphicsPath._vecangle(vecx,vecy,nvecx,nvecy);
- delta=(delta<0) ? GLMath.PiTimes2+delta : delta;
+ delta=(delta<0) ? Math.PI*2+delta : delta;
  if(!a[7] && delta>0){
-  delta-=GLMath.PiTimes2;
+  delta-=Math.PI*2;
  } else if(a[7] && delta<0){
-  delta+=GLMath.PiTimes2;
+  delta+=Math.PI*2;
  }
  delta+=theta1;
  return [cx,cy,theta1,delta];
@@ -2019,3 +2032,5 @@ if(vertices.length<6){
   }
  }
 };
+exports.GraphicsPath=GraphicsPath;
+}));

@@ -18,17 +18,18 @@
     <h2>Introduction <a id=Introduction></a></h2><p>This article describes two-dimensional paths.  This is an extra included in the HTML 3D Library.</p>
 <p><strong>Download the latest version of the Public Domain HTML 3D
 Library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library's Releases page</a>.</strong></p>
-<h2>Contents <a id=Contents></a></h2><h2>Paths</h2><p>A path is a collection of two-dimensional line segments and/or curves.  Many paths describe
+<h2>Contents <a id=Contents></a></h2><p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Paths">Paths</a><br><a href="#How_to_Use">How to Use</a><br><a href="#Creating_Paths">Creating Paths</a><br>&nbsp;&nbsp;<a href="#SVG_Path_String">SVG Path String</a><br>&nbsp;&nbsp;<a href="#Building_Paths">Building Paths</a><br>&nbsp;&nbsp;<a href="#Using_Paths">Using Paths</a><br><a href="#Path_Segments">Path Segments</a><br><a href="#Methods">Methods</a><br></p>
+<h2>Paths <a id=Paths></a></h2><p>A path is a collection of two-dimensional line segments and/or curves.  Many paths describe
 closed figures or connected strings of lines and curves. The <code>GraphicsPath</code> class
 currently supports line segments, quadratic and cubic B&eacute;zier curves, and elliptical arcs,
 as well as closed figures made from several path segments.</p>
-<h2>How to Use</h2><p>2D paths are implemented in a class called <code>GraphicsPath</code>, found in the file <em>extras/path.js</em> in
+<h2>How to Use <a id=How_to_Use></a></h2><p>2D paths are implemented in a class called <code>GraphicsPath</code>, found in the file <em>extras/path.js</em> in
 the HTML 3D Library download.  To use this class, you must include the script &quot;extras/path.js&quot;,
 as in this example.</p>
 <pre class="prettyprint source"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;glutil_min.js&quot;>&lt;/script>
-&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;>&lt;/script></code></pre><h2>Creating Paths</h2><p>There are two ways to create paths: using an SVG path string, or by calling methods that add
+&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;>&lt;/script></code></pre><h2>Creating Paths <a id=Creating_Paths></a></h2><p>There are two ways to create paths: using an SVG path string, or by calling methods that add
 its segments.</p>
-<h3>SVG Path String</h3><p>If you've worked with SVG, you may be familiar with this format for describing 2D paths.  An
+<h3>SVG Path String <a id=SVG_Path_String></a></h3><p>If you've worked with SVG, you may be familiar with this format for describing 2D paths.  An
 SVG path string consists of one or more path commands that start with a single letter.
 The following are examples of SVG path strings:</p>
 <pre class="prettyprint source"><code>M50,50L100,100,100,150,150,200
@@ -39,10 +40,10 @@ M50,50H80V60H50V70H50</code></pre><p>The &quot;M&quot; command moves the current
 lines, the &quot;Q&quot;, &quot;C&quot;, &quot;S&quot;, and &quot;T&quot; commands create B&eacute;zier curves, the &quot;A&quot; command
 creates elliptical arcs, and the &quot;Z&quot; command closes the path.
 If the letters are lower-cased, X and Y coordinates are relative to the current position.</p>
-<p>For more information, see the <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a> method documentation.
+<p>For more information, see the GraphicsPath.fromString method documentation.
 That method is also how you create a 2D path from an SVG path string, as in this
 example:</p>
-<pre class="prettyprint source"><code>var path = GraphicsPath.fromString(&quot;M50,20C230,245,233,44,22,44&quot;)</code></pre><h3>Building Paths</h3><p>The other way to make paths is to call the <code>GraphicsPath</code> constructor and call methods
+<pre class="prettyprint source"><code>var path = GraphicsPath.fromString(&quot;M50,20C230,245,233,44,22,44&quot;)</code></pre><h3>Building Paths <a id=Building_Paths></a></h3><p>The other way to make paths is to call the <code>GraphicsPath</code> constructor and call methods
 to add path segments to the path.</p>
 <p>The <code>GraphicsPath</code> object stores a current position and a starting position, and many methods
 don't have you specify a starting position, to cover the common case of drawing a series
@@ -53,7 +54,19 @@ of connected lines and curves.</p>
 <li><em>.closePath()</em> - Closes the path by drawing a line to the starting point, if needed.</li>
 </ul>
 <p>To be completed.</p>
-<h3>Using Paths</h3><ul>
+<h3>Using Paths <a id=Using_Paths></a></h3><h2>Path Segments <a id=Path_Segments></a></h2><p>Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
+Line segments are relatively easy to understand.  The other two kinds of segments
+deserve some discussion.</p>
+<p>A <em>B&eacute;zier curve</em> is a parametric curve based on a polynomial formula.  In this kind of
+curve the endpoints are defined as they are, but the other points, the <em>control points</em>, define
+the shape of the curve, which generally doesn't pass through the control points but still
+follows them.  A quadratic B&eacute;zier curve uses 3 points (for the three coefficients of the
+quadratic polynomial in each dimension), one of which is the control point.  A cubic B&eacute;zier
+curve uses 4 points, two of which are control points.</p>
+<p>An <em>elliptic arc</em> is a curve which forms part of an ellipse.  There are several ways to
+parameterize an elliptic arc, as seen in the <em>.arc()</em>, <em>.arcTo()</em>, and <em>.arcSvgTo()</em> methods
+of the <code>GraphicsPath</code> class.</p>
+<h2>Methods <a id=Methods></a></h2><ul>
 <li>The <em>.getLength()</em> method finds the approximate length of a path.</li>
 <li>The <em>.getBounds()</em> method finds the axis-aligned bounding box of a path.</li>
 </ul>
@@ -79,7 +92,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><g:plusone size="medium"></g:plusone></span><br/>
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){
