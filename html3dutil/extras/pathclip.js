@@ -1213,7 +1213,7 @@ var GraphicsPath=globalContext.GraphicsPath;
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
- * @alias GraphicsPath#xor
+ * @alias GraphicsPath#union
  * @param {GraphicsPath} path A path to combine with this one.
 * @param {number} [flatness] When curves and arcs
 * are decomposed to line segments, the
