@@ -32,7 +32,7 @@ if (exports.GraphicsPath) { return; }
 * @class
 */
 function GraphicsPath(){
- "use strict";
+
 this.segments=[];
  this.incomplete=false;
  this.startPos=[0,0];
@@ -53,11 +53,11 @@ GraphicsPath.ARC=4;
 * is added to the path.
 * @return {boolean} Return value.*/
 GraphicsPath.prototype.isIncomplete=function(){
- "use strict";
+
 return this.incomplete;
 };
 GraphicsPath._startPoint=function(a){
- "use strict";
+
 if(a[0]===GraphicsPath.CLOSE){
   return [0,0];
  } else {
@@ -65,7 +65,7 @@ if(a[0]===GraphicsPath.CLOSE){
  }
 };
 GraphicsPath._endPoint=function(a){
- "use strict";
+
 if(a[0]===GraphicsPath.CLOSE){
   return [0,0];
  } else if(a[0]===GraphicsPath.ARC){
@@ -75,7 +75,7 @@ if(a[0]===GraphicsPath.CLOSE){
  }
 };
 GraphicsPath._point=function(seg,t){
- "use strict";
+
  var a,b,x,y;
 if(seg[0]===GraphicsPath.CLOSE){
   return [0,0];
@@ -130,7 +130,7 @@ if(seg[0]===GraphicsPath.CLOSE){
 
 /** @private */
 GraphicsPath._subdivide2=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tcut,list,flatness,mode,depth){
-   "use strict";
+
 var x1=a1+(a3-a1)*tcut;
    var x2=a3+(a5-a3)*tcut;
    var xc1=x1+(x2-x1)*tcut;
@@ -149,7 +149,7 @@ var x1=a1+(a3-a1)*tcut;
 };
 /** @private */
 GraphicsPath._subdivide3=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tcut,tcut2,list,flatness,mode,depth){
-   "use strict";
+
 var x1=a1+(a3-a1)*tcut;
    var x2=a3+(a5-a3)*tcut;
    var xc1=x1+(x2-x1)*tcut;
@@ -169,7 +169,7 @@ var x1=a1+(a3-a1)*tcut;
 };
 
 GraphicsPath._flattenCubic=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,mode,depth){
- "use strict";
+
 if((depth===null || typeof depth==="undefined"))depth=0;
  /* if(depth<1){
   // subdivide the curve at the inflection points
@@ -208,7 +208,7 @@ if((depth===null || typeof depth==="undefined"))depth=0;
 };
 
 GraphicsPath._flattenQuad=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,mode,depth){
- "use strict";
+
 if((depth===null || typeof depth==="undefined"))depth=0;
  if(depth>=20 || Math.abs(a1-a3-a3+a5)+Math.abs(a2-a4-a4+a6)<=flatness){
   if(mode === 0){
@@ -233,7 +233,7 @@ if((depth===null || typeof depth==="undefined"))depth=0;
 };
 
 GraphicsPath._flattenArc=function(a,t1,t2,list,flatness,mode,depth){
- "use strict";
+
 var rot=a[5];
  var crot = Math.cos(rot);
  var srot = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
@@ -241,7 +241,7 @@ var rot=a[5];
  GraphicsPath._flattenArcInternal(ellipseInfo,a[1],a[2],a[8],a[9],a[12],a[13],t1,t2,list,flatness,mode,depth);
 };
 GraphicsPath._flattenArcInternal=function(ellipseInfo,x1,y1,x2,y2,theta1,theta2,t1,t2,list,flatness,mode,depth){
- "use strict";
+
 if((depth===null || typeof depth==="undefined"))depth=0;
  var thetaMid=(theta1+theta2)*0.5;
  var tmid=(t1+t2)*0.5;
@@ -270,7 +270,7 @@ if((depth===null || typeof depth==="undefined"))depth=0;
 };
 /** @private */
 GraphicsPath.prototype._start=function(){
- "use strict";
+
 for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i];
   if(s[0]!==GraphicsPath.CLOSE)return GraphicsPath._startPoint(s);
@@ -279,7 +279,7 @@ for(var i=0;i<this.segments.length;i++){
 };
 /** @private */
 GraphicsPath.prototype._end=function(){
- "use strict";
+
 for(var i=this.segments.length-1;i>=0;i--){
   var s=this.segments[i];
   if(s[0]!==GraphicsPath.CLOSE)return GraphicsPath._endPoint(s);
@@ -292,7 +292,7 @@ for(var i=this.segments.length-1;i>=0;i--){
  * @return {string} A string describing the path in the SVG path
   format. */
 GraphicsPath.prototype.toString=function(){
- "use strict";
+
  var oldpos=null;
  var ret="";
  var lastcommand=-1;
@@ -324,7 +324,7 @@ GraphicsPath.prototype.toString=function(){
  return ret;
 };
 GraphicsPath._quadCurveLength=function(x1,y1,x2,y2,x3,y3){
- "use strict";
+
 var integrand=function(t){
   var tm1=t-1;
   var x=x1*tm1-x2*tm1-x2*t+x3*t;
@@ -334,7 +334,7 @@ var integrand=function(t){
  return GraphicsPath._numIntegrate(integrand,0,1);
 };
 GraphicsPath._cubicCurveLength=function(x1,y1,x2,y2,x3,y3,x4,y4){
- "use strict";
+
 var integrand=function(t){
   var tm1=t-1;
   var tm1sq=tm1*tm1;
@@ -351,7 +351,7 @@ var integrand=function(t){
  return GraphicsPath._numIntegrate(integrand,0,1);
 };
 GraphicsPath._length=function(a){
- "use strict";
+
  var flat,len,j;
 if(a[0]===GraphicsPath.LINE){
   var dx=a[3]-a[1];
@@ -383,7 +383,7 @@ if(a[0]===GraphicsPath.LINE){
  * in units.
  */
 GraphicsPath.prototype.pathLength=function(flatness){
- "use strict";
+
 if(this.segments.length === 0)return 0;
  var totalLength=0;
  if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
@@ -407,7 +407,7 @@ if(this.segments.length === 0)return 0;
 * Y coordinates of the end point, respectively.
 */
 GraphicsPath.prototype.getLines=function(flatness){
- "use strict";
+
 var ret=[];
  if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
  for(var i=0;i<this.segments.length;i++){
@@ -438,7 +438,7 @@ var ret=[];
 * segments and close commands.
  */
 GraphicsPath.prototype.toLinePath=function(flatness){
- "use strict";
+
  var ret=[];
  var path=new GraphicsPath();
  var last=null;
@@ -484,7 +484,7 @@ GraphicsPath.prototype.toLinePath=function(flatness){
  return path;
 };
 GraphicsPath._accBounds=function(ret,first,s,t){
- "use strict";
+
 if(t>=0 && t<=1){
   var pt=GraphicsPath._point(s,t);
   if(first){
@@ -499,7 +499,7 @@ if(t>=0 && t<=1){
  }
 };
 GraphicsPath._accBoundsArc=function(ret,first,rx,ry,cphi,sphi,cx,cy,angle){
- "use strict";
+
 var ca = Math.cos(angle);
  var sa = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(angle);
  var px=cphi*ca*rx-sphi*sa*ry+cx;
@@ -515,7 +515,7 @@ var ca = Math.cos(angle);
  }
 };
 GraphicsPath._normAngle=function(angle){
- "use strict";
+
 var twopi=Math.PI*2;
  var normAngle=angle;
  if(normAngle>=0){
@@ -527,7 +527,7 @@ var twopi=Math.PI*2;
  return normAngle;
 };
 GraphicsPath._angleInRange=function(angle,startAngle,endAngle){
- "use strict";
+
 var twopi=Math.PI*2;
  var diff=endAngle-startAngle;
  if(Math.abs(diff)>=twopi)return true;
@@ -560,7 +560,7 @@ var twopi=Math.PI*2;
 * returns the array (Infinity, Infinity, -Infinity, -Infinity).
 */
 GraphicsPath.prototype.getBounds=function(){
- "use strict";
+
 var inf=Number.POSITIVE_INFINITY;
  var ret=[inf,inf,-inf,inf];
  var first=true;
@@ -647,7 +647,7 @@ var inf=Number.POSITIVE_INFINITY;
 
 /** @private */
 GraphicsPath.prototype._getSubpaths=function(flatness){
- "use strict";
+
 var tmp=[];
  var subpaths=[];
  var j;
@@ -716,7 +716,7 @@ var tmp=[];
 * in that order).
 */
 GraphicsPath.prototype.getTriangles=function(flatness){
- "use strict";
+
 var subpaths=this._getSubpaths(flatness);
  var tris=[];
  for(var i=0;i<subpaths.length;i++){
@@ -725,7 +725,7 @@ var subpaths=this._getSubpaths(flatness);
  return tris;
 };
 GraphicsPath._CurveList=function(curves){
- "use strict";
+
 this.curves=curves;
  this.cumulativeLengths=[];
  var totalLength=0;
@@ -736,15 +736,15 @@ this.curves=curves;
  this.totalLength=totalLength;
 };
 GraphicsPath._CurveList.prototype.getCurves=function(){
- "use strict";
+
 return this.curves;
 };
 GraphicsPath._CurveList.prototype.getLength=function(){
- "use strict";
+
 return this.totalLength;
 };
 GraphicsPath._CurveList.prototype.evaluate=function(u){
- "use strict";
+
 if(this.curves.length === 0)return [0,0,0];
  if(this.curves.length === 1)return this.curves[0].evaluate(u);
  if(u<0)u=0;
@@ -773,7 +773,7 @@ if(this.curves.length === 0)return [0,0,0];
 };
 
 GraphicsPath._Curve=function(segments){
- "use strict";
+
 this.segments=segments;
  var totalLength=0;
  var isClosed=false;
@@ -789,11 +789,11 @@ this.segments=segments;
  this.totalLength=totalLength;
 };
 GraphicsPath._Curve.prototype.getLength=function(){
- "use strict";
+
 return this.totalLength;
 };
 GraphicsPath._Curve.prototype.evaluate=function(u){
- "use strict";
+
 if(this._isClosed){
   if(u<0)u+=Math.ceil(u);
   else if(u>1)u-=Math.floor(u);
@@ -898,7 +898,7 @@ the path may contain several disconnected parts.
 </ul>
 */
 GraphicsPath.prototype.getCurves=function(flatness){
- "use strict";
+
 var subpaths=[];
  var curves=[];
  if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
@@ -974,7 +974,7 @@ var subpaths=[];
 * is 1.
 */
 GraphicsPath.prototype.getPoints=function(numPoints,flatness){
- "use strict";
+
 if(numPoints<1)return [];
  if(numPoints === 1){
   return [this._start()];
@@ -997,7 +997,7 @@ if(numPoints<1)return [];
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.closePath=function(){
- "use strict";
+
 if(this.startPos[0]!==this.endPos[0] ||
    this.startPos[1]!==this.endPos[1]){
   this.lineTo(this.startPos[0],this.startPos[1]);
@@ -1015,7 +1015,7 @@ if(this.startPos[0]!==this.endPos[0] ||
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.moveTo=function(x,y){
- "use strict";
+
 this.startPos[0]=x;
  this.startPos[1]=y;
  this.endPos[0]=x;
@@ -1032,7 +1032,7 @@ this.startPos[0]=x;
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.lineTo=function(x,y){
- "use strict";
+
 this.segments.push([GraphicsPath.LINE,
   this.endPos[0],this.endPos[1],x,y]);
  this.endPos[0]=x;
@@ -1042,7 +1042,7 @@ this.segments.push([GraphicsPath.LINE,
 };
 
 GraphicsPath._areCollinear=function(x0,y0,x1,y1,x2,y2){
-  "use strict";
+
 var t1 = x1 - x0;
   var t2 = y1 - y0;
   var t3 = [x2 - x0, y2 - y0];
@@ -1073,7 +1073,7 @@ var t1 = x1 - x0;
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
- "use strict";
+
 if(radius<0){
   throw new Error("IndexSizeError");
  }
@@ -1116,7 +1116,7 @@ if(radius<0){
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
- "use strict";
+
 if(radius<0){
   throw new Error("IndexSizeError");
  }
@@ -1165,7 +1165,7 @@ return this.lineTo(startX,startY)
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
- "use strict";
+
 this.segments.push([GraphicsPath.QUAD,
   this.endPos[0],this.endPos[1],x,y,x2,y2]);
  this.endPos[0]=x2;
@@ -1185,7 +1185,7 @@ this.segments.push([GraphicsPath.QUAD,
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
- "use strict";
+
 this.segments.push([GraphicsPath.CUBIC,
   this.endPos[0],this.endPos[1],x,y,x2,y2,x3,y3]);
  this.endPos[0]=x3;
@@ -1228,7 +1228,7 @@ GraphicsPath._legendreGauss24=[
 * _xmin_ and _xmax_.
 */
 GraphicsPath._numIntegrate=function(func, xmin, xmax){
- "use strict";
+
 if(xmax===xmin)return 0;
  if(xmax<xmin){
   return -GraphicsPath._numIntegrate(func,xmax,xmin);
@@ -1247,7 +1247,7 @@ if(xmax===xmin)return 0;
 };
 
 GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
- "use strict";
+
 if(startAngle===endAngle || xRadius<=0 || yRadius<=0)return 0;
  if(xRadius===yRadius){
   // for circular arc length this is extremely simple
@@ -1264,7 +1264,7 @@ if(startAngle===endAngle || xRadius<=0 || yRadius<=0)return 0;
    ellipticIntegrand,startAngle,endAngle));
 };
 GraphicsPath._vecangle=function(a,b,c,d){
- "use strict";
+
 var dot=a*c+b*d;
  var denom=Math.sqrt(a*a+b*b)*Math.sqrt(c*c+d*d);
  dot/=denom;
@@ -1278,7 +1278,7 @@ var dot=a*c+b*d;
  return ret;
 };
 GraphicsPath._arcSvgToCenterParam=function(a){
- "use strict";
+
 var x1=a[1];
  var y1=a[2];
  var x2=a[8];
@@ -1352,7 +1352,7 @@ var x1=a[1];
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
- "use strict";
+
 if(rx === 0 || ry === 0){
   return this.lineTo(x2,y2);
  }
@@ -1391,7 +1391,7 @@ if(rx === 0 || ry === 0){
  return this;
 };
 GraphicsPath._nextAfterWs=function(str,index){
- "use strict";
+
 while(index[0]<str.length){
   var c=str.charCodeAt(index[0]);
   index[0]++;
@@ -1402,7 +1402,7 @@ while(index[0]<str.length){
  return -1;
 };
 GraphicsPath._nextAfterSepReq=function(str,index){
- "use strict";
+
 var comma=false;
  var havesep=false;
  while(index[0]<str.length){
@@ -1422,7 +1422,7 @@ var comma=false;
  return -1;
 };
 GraphicsPath._nextAfterSep=function(str,index){
- "use strict";
+
 var comma=false;
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0]);
@@ -1438,19 +1438,19 @@ var comma=false;
  return -1;
 };
 GraphicsPath._peekNextNumber=function(str,index){
- "use strict";
+
 var oldindex=index[0];
  var ret=GraphicsPath._nextNumber(str,index,true)!==null;
  index[0]=oldindex;
  return ret;
 };
 GraphicsPath._notFinite=function(n){
- "use strict";
+
 return isNaN(n) || n===Number.POSITIVE_INFINITY ||
    n===Number.NEGATIVE_INFINITY;
 };
 GraphicsPath._nextNumber=function(str,index,afterSep){
- "use strict";
+
 var oldindex=index[0];
  var c=(afterSep) ?
    GraphicsPath._nextAfterSep(str,index) :
@@ -1556,7 +1556,7 @@ var oldindex=index[0];
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.rect=function(x,y,width,height){
- "use strict";
+
 return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
    .lineTo(x,y+height).closePath().moveTo(x,y);
 };
@@ -1604,7 +1604,7 @@ return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
 * var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
 */
 GraphicsPath.fromString=function(str){
- "use strict";
+
 var index=[0];
  var started=false;
  var ret=new GraphicsPath();
@@ -1802,14 +1802,14 @@ var index=[0];
 };
 
 Triangulate._LinkedList=function(){
- "use strict";
+
 this.items=[];
  this.firstItem=-1;
  this.lastItem=-1;
  this.lastRemovedIndex=-1;
 };
 Triangulate._LinkedList.prototype.list=function(list){
- "use strict";
+
 var index=this.firstItem;
  var listidx=0;
  while(index>=0){
@@ -1819,7 +1819,7 @@ var index=this.firstItem;
  return listidx;
 };
 Triangulate._LinkedList.prototype.contains=function(item){
- "use strict";
+
 var index=this.firstItem;
  while(index>=0){
   if(item===this.items[index])return true;
@@ -1828,7 +1828,7 @@ var index=this.firstItem;
  return false;
 };
 Triangulate._LinkedList.prototype.remove=function(item){
- "use strict";
+
 var index=this.firstItem;
  while(index>=0){
   if(this.items[index]===item){
@@ -1851,13 +1851,13 @@ var index=this.firstItem;
  }
 };
 Triangulate._LinkedList.prototype.addIfMissing=function(item){
- "use strict";
+
 if(!this.contains(item)){
   this.add(item);
  }
 };
 Triangulate._LinkedList.prototype.add=function(item){
- "use strict";
+
 var itemIndex=(this.lastRemovedIndex===-1) ?
    this.items.length : this.lastRemovedIndex;
  this.lastRemovedIndex=-1;
@@ -1876,7 +1876,7 @@ Triangulate._REFLEX=3;
 Triangulate._PREV=2;
 Triangulate._NEXT=3;
 Triangulate._pointInTri=function(vertices,i1,i2,i3,pt){
-  "use strict";
+
 var t1 = Math.min (vertices[i3+0], vertices[i1+0]);
   var t2 = Math.min (vertices[i3+1], vertices[i1+1]);
   var t=(((vertices[i1+0] < vertices[pt+0]) === (vertices[pt+0] <= vertices[i3+0])) &&
@@ -1893,7 +1893,7 @@ var t1 = Math.min (vertices[i3+0], vertices[i1+0]);
 };
 
 Triangulate._vertClass=function(verts,index,ori){
- "use strict";
+
 var prevVert=verts[index+2];
  var nextVert=verts[index+3];
  var curori=Triangulate._triOrient(verts,prevVert,index,nextVert);
@@ -1915,13 +1915,13 @@ var prevVert=verts[index+2];
  }
 };
 Triangulate._triOrient=function(vertices,i1,i2,i3){
- "use strict";
+
 var ori=vertices[i1]*vertices[i2+1]-vertices[i1+1]*vertices[i2];
  ori+=vertices[i3]*vertices[i1+1]-vertices[i1+1]*vertices[i1];
  return ori === 0 ? 0 : (ori<0 ? -1 : 1);
 };
 Triangulate._triangulate=function(vertices,tris){
- "use strict";
+
 if(vertices.length<6){
   // too few vertices for a triangulation
   return;
