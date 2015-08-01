@@ -29,6 +29,7 @@ if (exports.GraphicsPath) { return; }
  * class is not included in the "glutil_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
+ * @alias GraphicsPath
 * @class
 */
 function GraphicsPath(){
@@ -1228,8 +1229,7 @@ GraphicsPath._legendreGauss24=[
 * _xmin_ and _xmax_.
 */
 GraphicsPath._numIntegrate=function(func, xmin, xmax){
-
-if(xmax===xmin)return 0;
+ if(xmax===xmin)return 0;
  if(xmax<xmin){
   return -GraphicsPath._numIntegrate(func,xmax,xmin);
  }
@@ -1801,132 +1801,180 @@ var index=[0];
  return ret;
 };
 
-Triangulate._LinkedList=function(){
-
-this.items=[];
- this.firstItem=-1;
- this.lastItem=-1;
- this.lastRemovedIndex=-1;
-};
-Triangulate._LinkedList.prototype.list=function(list){
-
-var index=this.firstItem;
- var listidx=0;
- while(index>=0){
-  list[listidx++]=this.items[index];
-  index=this.items[index+2];
- }
- return listidx;
-};
-Triangulate._LinkedList.prototype.contains=function(item){
-
-var index=this.firstItem;
- while(index>=0){
-  if(item===this.items[index])return true;
-  index=this.items[index+2];
- }
- return false;
-};
-Triangulate._LinkedList.prototype.remove=function(item){
-
-var index=this.firstItem;
- while(index>=0){
-  if(this.items[index]===item){
-   this.lastRemovedIndex=index;
-   var prevItem=this.items[index+1];
-   var nextItem=this.items[index+2];
-   if(prevItem>=0){
-    this.items[prevItem+2]=nextItem;
-   } else {
-    this.firstItem=nextItem;
-   }
-   if(nextItem>=0){
-    this.items[nextItem+1]=prevItem;
-   } else {
-    this.lastItem=prevItem;
-   }
-   return;
-  }
-  index=this.items[index+2];
- }
-};
-Triangulate._LinkedList.prototype.addIfMissing=function(item){
-
-if(!this.contains(item)){
-  this.add(item);
- }
-};
-Triangulate._LinkedList.prototype.add=function(item){
-
-var itemIndex=(this.lastRemovedIndex===-1) ?
-   this.items.length : this.lastRemovedIndex;
- this.lastRemovedIndex=-1;
- this.items[itemIndex]=item;
- if(this.lastItem>=0)
-  this.items[this.lastItem+2]=itemIndex; // prev's next
- this.items[itemIndex+1]=this.lastItem; // current's prev
- this.items[itemIndex+2]=-1; // current's next
- this.lastItem=itemIndex;
- if(this.firstItem<0)this.firstItem=itemIndex;
-};
-
 Triangulate._CONVEX=1;
 Triangulate._EAR=2;
 Triangulate._REFLEX=3;
-Triangulate._PREV=2;
-Triangulate._NEXT=3;
-Triangulate._pointInTri=function(vertices,i1,i2,i3,pt){
-
-var t1 = Math.min (vertices[i3+0], vertices[i1+0]);
-  var t2 = Math.min (vertices[i3+1], vertices[i1+1]);
-  var t=(((vertices[i1+0] < vertices[pt+0]) === (vertices[pt+0] <= vertices[i3+0])) &&
-  (((vertices[pt+1] - t2) * (Math.max (vertices[i3+0], vertices[i1+0]) - t1)) < ((Math.max (vertices[i3+1], vertices[i1+1]) - t2) * (vertices[pt+0] - t1))));
-  var t4 = Math.min (vertices[i1+0], vertices[i2+0]);
-  var t5 = Math.min (vertices[i1+1], vertices[i2+1]);
-  t^=(((vertices[i2+0] < vertices[pt+0]) === (vertices[pt+0] <= vertices[i1+0])) &&
-   (((vertices[pt+1] - t5) * (Math.max (vertices[i1+0], vertices[i2+0]) - t4)) < ((Math.max (vertices[i1+1], vertices[i2+1]) - t5) * (vertices[pt+0] - t4))));
-  var t7 = Math.min (vertices[i2+0], vertices[i3+0]);
-  var t8 = Math.min (vertices[i2+1], vertices[i3+1]);
-  t^=(((vertices[i3+0] < vertices[pt+0]) === (vertices[pt+0] <= vertices[i2+0])) &&
-   (((vertices[pt+1] - t8) * (Math.max (vertices[i2+0], vertices[i3+0]) - t7)) < ((Math.max (vertices[i2+1], vertices[i3+1]) - t8) * (vertices[pt+0] - t7))));
+Triangulate._pointInTri=function(i1,i2,i3,pt){
+ var t1 = Math.min (i3[0], i1[0]);
+  var t2 = Math.min (i3[1], i1[1]);
+  var t=(((i1[0] < pt[0]) === (pt[0] <= i3[0])) &&
+  (((pt[1] - t2) * (Math.max (i3[0], i1[0]) - t1)) < ((Math.max (i3[1], i1[1]) - t2) * (pt[0] - t1))));
+  var t4 = Math.min (i1[0], i2[0]);
+  var t5 = Math.min (i1[1], i2[1]);
+  t^=(((i2[0] < pt[0]) === (pt[0] <= i1[0])) &&
+   (((pt[1] - t5) * (Math.max (i1[0], i2[0]) - t4)) < ((Math.max (i1[1], i2[1]) - t5) * (pt[0] - t4))));
+  var t7 = Math.min (i2[0], i3[0]);
+  var t8 = Math.min (i2[1], i3[1]);
+  t^=(((i3[0] < pt[0]) === (pt[0] <= i2[0])) &&
+   (((pt[1] - t8) * (Math.max (i2[0], i3[0]) - t7)) < ((Math.max (i2[1], i3[1]) - t8) * (pt[0] - t7))));
   return t;
 };
 
-Triangulate._vertClass=function(verts,index,ori){
-
-var prevVert=verts[index+2];
- var nextVert=verts[index+3];
- var curori=Triangulate._triOrient(verts,prevVert,index,nextVert);
+Triangulate._vertClass=function(v,ori){
+ var curori=Triangulate._triOrient(v.prev.data,v.data,v.next.data);
  if(curori === 0 || curori===ori){
   // This is a convex vertex, find out whether this
   // is an ear
-  prevVert=verts[index+2];
-  nextVert=verts[index+3];
-  for(var i=0;i<verts.length;i+=4){
-   if(i!==prevVert && i!==nextVert && i!==index){
-    if(Triangulate._pointInTri(verts,prevVert,index,nextVert,i)){
+  var vert=v.next.next;
+  while(true){
+   if(vert===v.prev || vert===v || vert===v.next)
+     break;
+   if(Triangulate._pointInTri(v.prev.data,v.data,v.next.data,vert.data)){
      return Triangulate._CONVEX;
-    }
    }
+   vert=vert.next;
   }
   return Triangulate._EAR;
  } else {
   return Triangulate._REFLEX;
  }
 };
-Triangulate._triOrient=function(vertices,i1,i2,i3){
-
-var ori=vertices[i1]*vertices[i2+1]-vertices[i1+1]*vertices[i2];
- ori+=vertices[i3]*vertices[i1+1]-vertices[i1+1]*vertices[i1];
+Triangulate._triOrient=function(v1,v2,v3){
+ var ori=v1[0]*v2[1]-v1[1]*v2[0];
+ ori+=v2[0]*v3[1]-v2[1]*v3[0];
+ ori+=v3[0]*v1[1]-v3[1]*v1[0];
  return ori === 0 ? 0 : (ori<0 ? -1 : 1);
 };
-Triangulate._triangulate=function(vertices,tris){
 
+var LinkedListNode=function(item){
+ this.data=item;
+ this.prev=null;
+ this.next=null;
+};
+
+var LinkedList=function(){
+ this.root=null;
+ this._last=null;
+ this.size=function(){
+  var k=this.root;
+  var ret=0;
+  while(k){
+   ret++;
+   k=k.next;
+  }
+  return ret;
+ };
+ this.first=function(){
+  return this.root;
+ };
+ this.last=function(){
+  return this._last;
+ };
+ this.front=function(){
+  return this.root ? this.root.data : null;
+ };
+ this.back=function(){
+  return this._last ? this._last.data : null;
+ };
+ this.clear=function(){
+  this.root=this._last=null;
+ };
+ this.spliceToBegin=function(list){
+  if(list.root){
+   this.root.prev=list._last;
+   list._last.next=this.root;
+   this.root=list.root;
+   list.clear();
+  }
+ };
+ this.spliceToEnd=function(list){
+  if(list.root){
+   this._last.next=list.root;
+   list.root.prev=this._last;
+   this._last=list._last;
+   list.clear();
+  }
+ };
+ this.spliceOneToEnd=function(list,listNode){
+  list.erase(listNode);
+  return this.push(listNode.data);
+ };
+ this.erase=function(node){
+  if(!node)return this;
+  if(node===this.root){
+   this.root=node.next;
+  }
+  if(node===this._last){
+   this._last=node.prev;
+  }
+  if(node.prev)
+   node.prev.next=node.next;
+  if(node.next)
+   node.next.prev=node.prev;
+  return this;
+ };
+ this.push=function(item){
+  if(!this.root){
+   this.root=this._last=new LinkedListNode(item);
+  } else {
+   var node=new LinkedListNode(item);
+   this._last.next=node;
+   node.prev=this._last;
+   this._last=node;
+  }
+  return this;
+ };
+ this.reverse=function(){
+  var s=this.root;
+  var e=this._last;
+  if(!s)return;
+  var oldlast=e;
+  var oldroot=s;
+  while(s){
+   var n=s.next;
+   var p=s.prev;
+   s.prev=n;
+   s.next=p;
+   s=n;
+  }
+  this.root=oldlast;
+  this._last=oldroot;
+  return this;
+ };
+ this.unshift=function(item){
+  if(!this.root){
+   this.root=this._last=new LinkedListNode(item);
+  } else {
+   var node=new LinkedListNode(item);
+   this.root.prev=node;
+   node.next=this.root;
+   this.root=node;
+  }
+  return this;
+ };
+ this.pop=function(item){
+  if(this._last){
+   if(this._last.prev)
+    this._last.prev.next=null;
+   this._last=this._last.prev;
+  }
+  return this;
+ };
+ this.shift=function(item){
+  if(this.root){
+   if(this.root.next)
+    this.root.next.prev=null;
+   this.root=this.root.next;
+  }
+  return this;
+ };
+};
+Triangulate._triangulate=function(vertices,tris){
 if(vertices.length<6){
   // too few vertices for a triangulation
   return;
  }
- var i;
+ var i,t1,tri;
  var vertLength=vertices.length;
  // For convenience, eliminate the last
  // vertex if it matches the first vertex
@@ -1935,33 +1983,11 @@ if(vertices.length<6){
     vertices[1]===vertices[vertLength-1]){
   vertLength-=2;
  }
- if(vertLength === 6){
-  // just one triangle
-  tris.push(vertices.slice(0));
-  return;
- }
- // Find the prevailing orientation of the polygon
- var ori=0;
- for(i=0;i<vertices.length;i+=2){
-  if(i===vertices.length-2){
-   ori+=vertices[i]*vertices[1]-vertices[i+1]*vertices[0];
-  } else {
-   ori+=vertices[i]*vertices[i+3]-vertices[i+1]*vertices[i+2];
-  }
- }
- ori=(ori === 0) ? 0 : (ori<0 ? -1 : 1);
- if(ori === 0){
-  // Zero area or even a certain self-intersecting
-  // polygon
-  return;
- }
- var verts=[];
- var tmp=[];
- var reflex=new Triangulate._LinkedList();
- var ears=new Triangulate._LinkedList();
+ var vertexList=new LinkedList();
  var lastX=-1;
  var lastY=-1;
  var prevVert,nextVert;
+ var vertexCount=0;
  for(i=0;i<vertLength;i+=2){
   var x=vertices[i];
   var y=vertices[i+1];
@@ -1971,66 +1997,67 @@ if(vertices.length<6){
   }
   lastX=x;
   lastY=y;
-  verts.push(x,y,0,0);
+  vertexList.push([x,y]);
+  vertexCount++;
  }
- for(var index=0;index<verts.length;index+=4){
-  prevVert=(index === 0) ? verts.length-4 : index-4;
-  nextVert=(index===verts.length-4) ? 0 : index+4;
-  verts[index+Triangulate._PREV]=prevVert;
-  verts[index+Triangulate._NEXT]=nextVert;
- }
- for(index=0;index<verts.length;index+=4){
-  var vertexClass=Triangulate._vertClass(verts,index,ori);
-  if(vertexClass===Triangulate._EAR)
-   ears.add(index);
-  else if(vertexClass===Triangulate._REFLEX)
-   reflex.add(index);
- }
- while(true){
-  var earLength=ears.list(tmp);
-  if(earLength<=0)break;
-  for(i=0;i<earLength;i++){
-   var ear=tmp[i];
-   //console.log("processing "+[ear/4,prevVert/4,nextVert/4])
-   prevVert=verts[ear+Triangulate._PREV];
-   nextVert=verts[ear+Triangulate._NEXT];
-   if(ear===prevVert || ear===nextVert || prevVert===nextVert){
-    ears.remove(ear);
-    continue;
-   }
-   // remove the ear from the linked list
-   verts[prevVert+Triangulate._NEXT]=nextVert;
-   verts[nextVert+Triangulate._PREV]=prevVert;
-   tris.push([
-    verts[prevVert],verts[prevVert+1],
-    verts[ear],verts[ear+1],
-    verts[nextVert],verts[nextVert+1]]);
-   ears.remove(ear);
-   // reclassify vertices
-   var prevClass=Triangulate._vertClass(verts,prevVert,ori);
-   var nextClass=Triangulate._vertClass(verts,nextVert,ori);
-   if(prevClass!==Triangulate._REFLEX){
-    reflex.remove(prevVert);
-   } else {
-    reflex.addIfMissing(prevVert);
-   }
-   if(prevClass!==Triangulate._EAR){
-    ears.remove(prevVert);
-   } else {
-    ears.addIfMissing(prevVert);
-   }
-   if(nextClass!==Triangulate._REFLEX){
-    reflex.remove(nextVert);
-   } else {
-    reflex.addIfMissing(nextVert);
-   }
-   if(nextClass!==Triangulate._EAR){
-    ears.remove(nextVert);
-   } else {
-    ears.addIfMissing(nextVert);
-   }
+ if(vertexCount<3){
+  // too few vertices
+  return;
+ } else if(vertexCount===3){
+  // just one triangle
+  t1=vertexList.first();
+  tri=[];
+  while(t1){
+   tri.push(t1.data[0],t1.data[1]);
+   t1=t1.next;
   }
+  tris.push(tri);
+  return;
  }
+ // Find the prevailing orientation of the polygon
+ var ori=0;
+ var vert=vertexList.first();
+ var firstVert=vert.data;
+ while(vert){
+  var vn=(vert.next) ? vert.next.data : firstVert;
+  ori+=vert.data[0]*vn[1]-vert.data[1]*vn[0];
+  vert=vert.next;
+ }
+ ori=(ori === 0) ? 0 : (ori<0 ? -1 : 1);
+ if(ori === 0){
+  // Zero area or even a certain self-intersecting
+  // polygon
+  return;
+ }
+ // Make the vertex list circular
+ var first=vertexList.first();
+ var last=vertexList.last();
+ if(!last)throw new Error();
+ first.prev=last;
+ last.next=first;
+ vert=vertexList.first();
+ while(vertexCount>3){
+  var vertexClass=Triangulate._vertClass(vert,ori);
+  nextVert=vert.next;
+  if(vertexClass===Triangulate._EAR){
+   tri=[vert.prev.data[0],vert.prev.data[1],
+     vert.data[0],vert.data[1],
+     vert.next.data[0],vert.next.data[1]];
+   tris.push(tri);
+   vertexList.erase(vert);
+   vertexCount--;
+  }
+  vert=nextVert;
+ }
+ t1=vertexList.first();
+ tri=[];
+ first=t1;
+ while(t1){
+   tri.push(t1.data[0],t1.data[1]);
+   t1=t1.next;
+   if(t1===first)break;
+ }
+ tris.push(tri);
 };
 exports.GraphicsPath=GraphicsPath;
 }));

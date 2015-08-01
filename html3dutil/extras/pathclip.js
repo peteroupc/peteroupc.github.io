@@ -18,7 +18,7 @@ var LinkedListNode=function(item){
 
 var LinkedList=function(){
  this.root=null;
- this.last=null;
+ this._last=null;
  this.size=function(){
   var k=this.root;
   var ret=0;
@@ -31,28 +31,31 @@ var LinkedList=function(){
  this.first=function(){
   return this.root;
  };
+ this.last=function(){
+  return this._last;
+ };
  this.front=function(){
   return this.root ? this.root.data : null;
  };
  this.back=function(){
-  return this.last ? this.last.data : null;
+  return this._last ? this._last.data : null;
  };
  this.clear=function(){
-  this.root=this.last=null;
+  this.root=this._last=null;
  };
  this.spliceToBegin=function(list){
   if(list.root){
-   this.root.prev=list.last;
-   list.last.next=this.root;
+   this.root.prev=list._last;
+   list._last.next=this.root;
    this.root=list.root;
    list.clear();
   }
  };
  this.spliceToEnd=function(list){
   if(list.root){
-   this.last.next=list.root;
-   list.root.prev=this.last;
-   this.last=list.last;
+   this._last.next=list.root;
+   list.root.prev=this._last;
+   this._last=list._last;
    list.clear();
   }
  };
@@ -63,31 +66,31 @@ var LinkedList=function(){
  this.erase=function(node){
   if(!node)return this;
   if(node===this.root){
-   this.shift();
-  } else if(node===this.last){
-   this.pop();
-  } else {
-   if(node.prev)
-    node.prev.next=node.next;
-   if(node.next)
-    node.next.prev=node.prev;
+   this.root=node.next;
   }
+  if(node===this._last){
+   this._last=node.prev;
+  }
+  if(node.prev)
+   node.prev.next=node.next;
+  if(node.next)
+   node.next.prev=node.prev;
   return this;
  };
  this.push=function(item){
   if(!this.root){
-   this.root=this.last=new LinkedListNode(item);
+   this.root=this._last=new LinkedListNode(item);
   } else {
    var node=new LinkedListNode(item);
-   this.last.next=node;
-   node.prev=this.last;
-   this.last=node;
+   this._last.next=node;
+   node.prev=this._last;
+   this._last=node;
   }
   return this;
  };
  this.reverse=function(){
   var s=this.root;
-  var e=this.last;
+  var e=this._last;
   if(!s)return;
   var oldlast=e;
   var oldroot=s;
@@ -99,12 +102,12 @@ var LinkedList=function(){
    s=n;
   }
   this.root=oldlast;
-  this.last=oldroot;
+  this._last=oldroot;
   return this;
  };
  this.unshift=function(item){
   if(!this.root){
-   this.root=this.last=new LinkedListNode(item);
+   this.root=this._last=new LinkedListNode(item);
   } else {
    var node=new LinkedListNode(item);
    this.root.prev=node;
@@ -114,10 +117,10 @@ var LinkedList=function(){
   return this;
  };
  this.pop=function(item){
-  if(this.last){
-   if(this.last.prev)
-    this.last.prev.next=null;
-   this.last=this.last.prev;
+  if(this._last){
+   if(this._last.prev)
+    this._last.prev.next=null;
+   this._last=this._last.prev;
   }
   return this;
  };
