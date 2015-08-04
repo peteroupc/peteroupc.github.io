@@ -23,7 +23,7 @@
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="GraphicsPath"><span style="font-weight:lighter"></span>new GraphicsPath<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line35">line 35</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line34">line 34</a>
      </i></small></p>
 
 <div class="description">
@@ -47,7 +47,7 @@ the HTML 3D Library.  Example:<pre>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(str)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1606">line 1606</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1622">line 1622</a>
      </i></small></p>
 
 <div class="description">
@@ -143,7 +143,7 @@ from an SVG string describing a polyline.</p>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arc"><span style="font-weight:lighter"></span>arc<span class="signature">(x, y, radius, startAngle, endAngle, ccw)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1119">line 1119</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1135">line 1135</a>
      </i></small></p>
 
 <div class="description">
@@ -269,7 +269,7 @@ down under the coordinate system).</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arcSvgTo"><span style="font-weight:lighter"></span>arcSvgTo<span class="signature">(rx, ry, rot, largeArc, sweep, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1354">line 1354</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1370">line 1370</a>
      </i></small></p>
 
 <div class="description">
@@ -411,7 +411,7 @@ down under the coordinate system); if false, counterclockwise.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="arcTo"><span style="font-weight:lighter"></span>arcTo<span class="signature">(x1, y1, x2, y2, radius)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1076">line 1076</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1092">line 1092</a>
      </i></small></p>
 
 <div class="description">
@@ -526,7 +526,7 @@ circle touches this tangent line is the end point of the arc.</td>
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="bezierCurveTo"><span style="font-weight:lighter"></span>bezierCurveTo<span class="signature">(x, y, x2, y2, x3, y3)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1188">line 1188</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1204">line 1204</a>
      </i></small></p>
 
 <div class="description">
@@ -647,7 +647,7 @@ at this path's current position.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="closePath"><span style="font-weight:lighter"></span>closePath<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1000">line 1000</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1016">line 1016</a>
      </i></small></p>
 
 <div class="description">
@@ -663,6 +663,92 @@ path's start position, if necessary.
 
 <div class="param-desc">
     This object.
+
+     (Type:
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="difference"><span style="font-weight:lighter"></span>difference<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1269">line 1269</a>
+     </i></small></p>
+
+<div class="description">
+    Computes the difference between this path's shape and another
+path's shape. The points given in the <a href="GraphicsPath.html#union">GraphicsPath#union</a> method
+apply to this method.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td><code>path</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">A path to combine with this one.</td>
+        </tr>
+
+        <tr>
+
+                <td><code>flatness</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">When curves and arcs
+are decomposed to line segments, the
+segments will be close to the true path of the curve by this
+value, given in units.  If null or omitted, default is 1.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The difference between this path
+and the other path.
 
      (Type:
 <span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
@@ -699,7 +785,7 @@ returns the array (Infinity, Infinity, -Infinity, -Infinity).
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getCurves"><span style="font-weight:lighter"></span>getCurves<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {object}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line901">line 901</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line917">line 917</a>
      </i></small></p>
 
 <div class="description">
@@ -868,7 +954,7 @@ Y coordinates of the end point, respectively.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getPoints"><span style="font-weight:lighter"></span>getPoints<span class="signature">(numPoints, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line977">line 977</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line993">line 993</a>
      </i></small></p>
 
 <div class="description">
@@ -958,15 +1044,18 @@ is 1.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="getTriangles"><span style="font-weight:lighter"></span>getTriangles<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line719">line 719</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line2186">line 2186</a>
      </i></small></p>
 
 <div class="description">
     Converts the subpaths in this path to triangles.
 Treats each subpath as a polygon even if it isn't closed.
-Each subpath should currently be a simple polygon (one without
-self-intersections, duplicate vertices, or holes), except if the
-subpath contains duplicate vertices that appear at the start and end.
+Each subpath should not contain self-intersections or
+duplicate vertices, except duplicate vertices that appear
+consecutively or at the start and end.<p>
+The path can contain holes. In this case, subpaths
+whose winding order (counterclockwise or clockwise)
+differs from the first subpath's winding order can be holes.
 </div>
 
     <h5>Parameters:</h5>
@@ -1020,7 +1109,7 @@ value, given in units.  If null or omitted, default is 1.</td>
 
 <div class="param-desc">
     Array of six-element
-arrays describing a single triangle.  For each six-element
+arrays each describing a single triangle.  For each six-element
 array, the first two, next two, and last two numbers each
 describe a vertex position of that triangle (X and Y coordinates
 in that order).
@@ -1030,9 +1119,95 @@ in that order).
 
 </div>
 
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="intersection"><span style="font-weight:lighter"></span>intersection<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1288">line 1288</a>
+     </i></small></p>
+
+<div class="description">
+    Computes the intersection of this path's shape and another
+path's shape. The points given in the <a href="GraphicsPath.html#union">GraphicsPath#union</a> method
+apply to this method.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td><code>path</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">A path to combine with this one.</td>
+        </tr>
+
+        <tr>
+
+                <td><code>flatness</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">When curves and arcs
+are decomposed to line segments, the
+segments will be close to the true path of the curve by this
+value, given in units.  If null or omitted, default is 1.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A path whose shape is contained in
+both paths.
+
+     (Type:
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
+
+</div>
+
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="isIncomplete"><span style="font-weight:lighter"></span>isIncomplete<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line56">line 56</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line55">line 55</a>
      </i></small></p>
 
 <div class="description">
@@ -1059,7 +1234,7 @@ is added to the path.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="lineTo"><span style="font-weight:lighter"></span>lineTo<span class="signature">(x, y)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1035">line 1035</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1051">line 1051</a>
      </i></small></p>
 
 <div class="description">
@@ -1129,7 +1304,7 @@ sets the end position to the end of the segment.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="moveTo"><span style="font-weight:lighter"></span>moveTo<span class="signature">(x, y)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1018">line 1018</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1034">line 1034</a>
      </i></small></p>
 
 <div class="description">
@@ -1261,7 +1436,7 @@ in units.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="quadraticCurveTo"><span style="font-weight:lighter"></span>quadraticCurveTo<span class="signature">(x, y, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1168">line 1168</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1184">line 1184</a>
      </i></small></p>
 
 <div class="description">
@@ -1356,7 +1531,7 @@ at this path's current position.
 
     <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="rect"><span style="font-weight:lighter"></span>rect<span class="signature">(x, y, width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1558">line 1558</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1574">line 1574</a>
      </i></small></p>
 
 <div class="description">
@@ -1538,6 +1713,190 @@ See <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a>.
 
      (Type:
 <span class="param-type">string</span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="union"><span style="font-weight:lighter"></span>union<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1250">line 1250</a>
+     </i></small></p>
+
+<div class="description">
+    Computes the combination of this path's shape with another
+path's shape. The following points apply to this method:<ul>
+<li>This method treats unclosed subpaths as implicitly closed
+by connecting their endpoints with their start points.
+<li>Currently, the algorithm supports only polygons made up
+of line segments, so curves and arcs are converted to line
+segments before applying the operation.
+<li>Each polygon can be concave or have self-intersections
+or holes.  Subpaths that are holes have the opposite winding
+order (clockwise or counterclockwise) from the subpath
+that contains them.
+<li>To use this method, you must include the script "extras/pathclip.js";
+this is in addition to "extras/pathclip.js".  Example:<pre>
+&lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
+&lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
+</ul>
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td><code>path</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">A path to combine with this one.</td>
+        </tr>
+
+        <tr>
+
+                <td><code>flatness</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">When curves and arcs
+are decomposed to line segments, the
+segments will be close to the true path of the curve by this
+value, given in units.  If null or omitted, default is 1.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The union of the two paths.
+
+     (Type:
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
+
+</div>
+
+    <h4 style="border-bottom: 1px solid;margin-bottom:0px" id="xor"><span style="font-weight:lighter"></span>xor<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1307">line 1307</a>
+     </i></small></p>
+
+<div class="description">
+    Computes the shape contained in either this path or another path,
+but not both. The points given in the <a href="GraphicsPath.html#union">GraphicsPath#union</a> method
+apply to this method.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th>Attributes</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td><code>path</code></td>
+
+            <td class="type">
+
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>
+
+            </td>
+
+                <td class="attributes">
+
+                </td>
+
+            <td class="description last">A path to combine with this one.</td>
+        </tr>
+
+        <tr>
+
+                <td><code>flatness</code></td>
+
+            <td class="type">
+
+<span class="param-type">number</span>
+
+            </td>
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+                </td>
+
+            <td class="description last">When curves and arcs
+are decomposed to line segments, the
+segments will be close to the true path of the curve by this
+value, given in units.  If null or omitted, default is 1.</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A path whose shape is contained in
+only one of the two paths.
+
+     (Type:
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
 
 </div>
 

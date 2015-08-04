@@ -1,8 +1,3 @@
-/*
-This is a JavaScript conversion by Peter O. of a 2009 polygon
-clipping algorithm by Francisco Martinez del Rio.
-*/
-
 (function(globalContext){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -10,6 +5,7 @@ clipping algorithm by Francisco Martinez del Rio.
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 "use strict";
+
 var LinkedListNode=function(item){
  this.data=item;
  this.prev=null;
@@ -76,6 +72,19 @@ var LinkedList=function(){
   if(node.next)
    node.next.prev=node.prev;
   return this;
+ };
+ this.insertAfter=function(item,node){
+  var newNode=new LinkedListNode(item);
+  if(node===this._last)
+   this._last=newNode;
+  var oldNext=node.next;
+  node.next=newNode;
+  newNode.prev=node;
+  newNode.next=oldNext;
+  if(oldNext){
+   oldNext.prev=newNode;
+  }
+  return newNode;
  };
  this.push=function(item){
   if(!this.root){
@@ -189,7 +198,6 @@ var PriorityQueue=function(comparer){
   return data;
  };
 };
-
 // Mostly based on Julienne Walker's
 // public domain C implementation
 var RedBlackTreeNode=function(data){
@@ -267,18 +275,28 @@ RedBlackTree._defaultCompare=function(a,b){
  if(a===b)return 0;
  return (a<b) ? -1 : 1;
 };
+/**
+ * Not documented yet.
+ */
 RedBlackTree.prototype.first=function(){
  var r=this.root;
  if((r===null || typeof r==="undefined"))return null;
  while(r.left!==null)r=r.left;
  return r;
 };
+/**
+ * Not documented yet.
+ */
 RedBlackTree.prototype.last=function(){
  var r=this.root;
  if((r===null || typeof r==="undefined"))return null;
  while(r.right!==null)r=r.right;
  return r;
 };
+/**
+ * Not documented yet.
+ * @param {*} data
+ */
 RedBlackTree.prototype.find=function(data){
   var it=this.root;
   while((it!==null && typeof it!=="undefined")){
@@ -303,6 +321,10 @@ RedBlackTree._double=function(root,dir){
   root.setLink(!dir,RedBlackTree._single ( root.link(!dir), !dir ));
   return RedBlackTree._single ( root, dir );
 };
+/**
+ * Not documented yet.
+ * @param {*} data
+ */
 RedBlackTree.prototype.erase=function(data){
   if( this.root!==null ) {
     var head = new RedBlackTreeNode(null); /* False tree root */
@@ -381,7 +403,10 @@ RedBlackTree.prototype.erase=function(data){
     --this._size;
   }
 };
-
+/**
+ * Not documented yet.
+ * @param {*} data
+ */
 RedBlackTree.prototype.insert=function(data){
   if(!data)throw new Error();
   var retval=null;
@@ -459,8 +484,6 @@ RedBlackTree.prototype.insert=function(data){
   ++this._size;
   return retval;
 };
-
-////////////////////////////////////////////////////////////////////////////////////////////////
 
 var Polygon=function(path,flatness){
  this.subpaths=[];
@@ -908,7 +931,7 @@ Clipper.prototype.compute=function(op){
        prev=prev.prev();
       else
        prev=null;
-      // Check if(the line segment belongs to the Boolean operation
+      // Check if the line segment belongs to the Boolean operation
       switch(e.type) {
         case(Clipper.NORMAL):
           switch(op) {
@@ -963,7 +986,7 @@ Clipper.prototype.compute=function(op){
  */
 Clipper.prototype.processSegment=function(s,pl)
 {
-  if(Clipper._ptEq(s[0],s[1])) // if(the two edge endpoints are equal the segment is dicarded
+  if(Clipper._ptEq(s[0],s[1])) // if the two edge endpoints are equal the segment is dicarded
     return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
   var e1 = this.storeSweepEvent(new Clipper.SweepEvent(s[0], true, pl, null));
   var e2 = this.storeSweepEvent(new Clipper.SweepEvent(s[1], true, pl, e1));
@@ -1198,6 +1221,7 @@ Clipper.prototype.divideSegment=function(e,p){
 };
 
 if(globalContext.GraphicsPath){
+/** @lends GraphicsPath */
 var GraphicsPath=globalContext.GraphicsPath;
 /**
  * Computes the combination of this path's shape with another
@@ -1212,11 +1236,10 @@ var GraphicsPath=globalContext.GraphicsPath;
  * order (clockwise or counterclockwise) from the subpath
  * that contains them.
  * <li>To use this method, you must include the script "extras/pathclip.js";
- * this is in addition to "extras/path.js".  Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+ * this is in addition to "extras/pathclip.js".  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
- * @alias GraphicsPath#union
  * @param {GraphicsPath} path A path to combine with this one.
 * @param {number} [flatness] When curves and arcs
 * are decomposed to line segments, the
@@ -1235,7 +1258,6 @@ GraphicsPath.prototype.union=function(path,flatness){
  * Computes the difference between this path's shape and another
  * path's shape. The points given in the {@link GraphicsPath#union} method
  * apply to this method.
- * @alias GraphicsPath#difference
  * @param {GraphicsPath} path A path to combine with this one.
 * @param {number} [flatness] When curves and arcs
 * are decomposed to line segments, the
@@ -1255,7 +1277,6 @@ GraphicsPath.prototype.difference=function(path,flatness){
  * Computes the intersection of this path's shape and another
  * path's shape. The points given in the {@link GraphicsPath#union} method
  * apply to this method.
- * @alias GraphicsPath#intersection
  * @param {GraphicsPath} path A path to combine with this one.
 * @param {number} [flatness] When curves and arcs
 * are decomposed to line segments, the
@@ -1275,7 +1296,6 @@ GraphicsPath.prototype.intersection=function(path,flatness){
  * Computes the shape contained in either this path or another path,
  * but not both. The points given in the {@link GraphicsPath#union} method
  * apply to this method.
- * @alias GraphicsPath#xor
  * @param {GraphicsPath} path A path to combine with this one.
 * @param {number} [flatness] When curves and arcs
 * are decomposed to line segments, the

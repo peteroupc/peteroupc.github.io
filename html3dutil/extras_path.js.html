@@ -19,7 +19,6 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global GLMath, define, exports */
-
 (function (g,f) {
  "use strict";
 if (typeof define==="function" &amp;&amp; define.amd) {
@@ -87,6 +86,7 @@ if(a[0]===GraphicsPath.CLOSE){
   return [a[a.length-2],a[a.length-1]];
  }
 };
+
 GraphicsPath._point=function(seg,t){
 
  var a,b,x,y;
@@ -658,6 +658,47 @@ var inf=Number.POSITIVE_INFINITY;
  return ret;
 };
 
+GraphicsPath.prototype.reverse=function(){
+ var lastptx=0;
+ var lastpty=0;
+ var firstOrAfterClose=true;
+ var curPath=null;
+ var lastClosed=false;
+ var ret=new GraphicsPath();
+ for(var i=this.segments.length-1;i>=0;i--){
+  var s=this.segments[i];
+  var startpt=GraphicsPath._startPoint(s);
+  var endpt=GraphicsPath._endPoint(s);
+  if(s[0]!==GraphicsPath.CLOSE){
+   if(firstOrAfterClose){
+    ret.moveTo(endpt[0],endpt[1]);
+   } else if(lastptx!==endpt[0] || lastpty!==endpt[1]){
+    if(lastClosed)
+     ret.closePath();
+    lastClosed=false;
+    ret.moveTo(endpt[0],endpt[1]);
+   }
+   lastptx=startpt[0];
+   lastpty=startpt[1];
+  }
+  if(s[0]===GraphicsPath.CLOSE){
+   if(lastClosed)
+    ret.closePath();
+   lastClosed=true;
+   firstOrAfterClose=true;
+  } else if(s[0]===GraphicsPath.QUAD){
+   ret.quadraticCurveTo(s[3],s[4],s[1],s[2]);
+  } else if(s[0]===GraphicsPath.CUBIC){
+   ret.bezierCurveTo(s[5],s[6],s[3],s[4],s[1],s[2]);
+  } else if(s[0]===GraphicsPath.ARC){
+   ret.arcSvgTo(s[3],s[4],s[5],s[6],!s[7],s[1],s[2]);
+  } else if(s[0]!==GraphicsPath.CLOSE){
+   ret.lineTo(s[1],s[2]);
+  }
+ }
+ return ret;
+};
+
 /** @private */
 GraphicsPath.prototype._getSubpaths=function(flatness){
 
@@ -712,31 +753,6 @@ var tmp=[];
  return subpaths;
 };
 
-/**
-* Converts the subpaths in this path to triangles.
-* Treats each subpath as a polygon even if it isn't closed.
-* Each subpath should currently be a simple polygon (one without
-* self-intersections, duplicate vertices, or holes), except if the
-* subpath contains duplicate vertices that appear at the start and end.
-* @param {number} [flatness] When curves and arcs
-* are decomposed to line segments, the
-* segments will be close to the true path of the curve by this
-* value, given in units.  If null or omitted, default is 1.
-* @return {Array&lt;Array&lt;number>>} Array of six-element
-* arrays describing a single triangle.  For each six-element
-* array, the first two, next two, and last two numbers each
-* describe a vertex position of that triangle (X and Y coordinates
-* in that order).
-*/
-GraphicsPath.prototype.getTriangles=function(flatness){
-
-var subpaths=this._getSubpaths(flatness);
- var tris=[];
- for(var i=0;i&lt;subpaths.length;i++){
-  Triangulate._triangulate(subpaths[i],tris);
- }
- return tris;
-};
 GraphicsPath._CurveList=function(curves){
 
 this.curves=curves;
@@ -764,7 +780,7 @@ if(this.curves.length === 0)return [0,0,0];
  if(u>1)u=1;
  var partialLen=u*this.totalLength;
  var left=0;
- var right=this.segments.length;
+ var right=this.curves.length;
  while(left&lt;=right){
   var mid=((left+right)/2)|0;
   var seg=this.curves[mid];
@@ -1925,6 +1941,19 @@ var LinkedList=function(){
    node.next.prev=node.prev;
   return this;
  };
+ this.insertAfter=function(item,node){
+  var newNode=new LinkedListNode(item);
+  if(node===this._last)
+   this._last=newNode;
+  var oldNext=node.next;
+  node.next=newNode;
+  newNode.prev=node;
+  newNode.next=oldNext;
+  if(oldNext){
+   oldNext.prev=newNode;
+  }
+  return newNode;
+ };
  this.push=function(item){
   if(!this.root){
    this.root=this._last=new LinkedListNode(item);
@@ -1981,12 +2010,9 @@ var LinkedList=function(){
   return this;
  };
 };
-Triangulate._triangulate=function(vertices,tris){
-if(vertices.length&lt;6){
-  // too few vertices for a triangulation
-  return;
- }
- var i,t1,tri;
+
+Triangulate.Contour=function(vertices){
+ this.vertexList=new LinkedList();
  var vertLength=vertices.length;
  // For convenience, eliminate the last
  // vertex if it matches the first vertex
@@ -1995,11 +2021,15 @@ if(vertices.length&lt;6){
     vertices[1]===vertices[vertLength-1]){
   vertLength-=2;
  }
- var vertexList=new LinkedList();
  var lastX=-1;
  var lastY=-1;
- var prevVert,nextVert;
- var vertexCount=0;
+ var maxXNode=null;
+ var maxX=-1;
+ var inf=Number.POSITIVE_INFINITY;
+ var bounds=[inf,inf,-inf,-inf];
+ var firstVertex=true;
+ this.vertexCount=0;
+ var i;
  for(i=0;i&lt;vertLength;i+=2){
   var x=vertices[i];
   var y=vertices[i+1];
@@ -2009,15 +2039,249 @@ if(vertices.length&lt;6){
   }
   lastX=x;
   lastY=y;
-  vertexList.push([x,y]);
-  vertexCount++;
+  this.vertexList.push([x,y]);
+  if(!maxXNode || x>maxX){
+   maxX=x;
+   maxXNode=this.vertexList.last();
+  }
+  if(firstVertex){
+   bounds[0]=bounds[2]=x;
+   bounds[1]=bounds[3]=y;
+   firstVertex=false;
+  } else {
+   bounds[0]=Math.min(bounds[0],x);
+   bounds[1]=Math.min(bounds[1],y);
+   bounds[2]=Math.max(bounds[2],x);
+   bounds[3]=Math.max(bounds[3],y);
+  }
+  this.vertexCount++;
  }
- if(vertexCount&lt;3){
-  // too few vertices
+ this.maxXNode=maxXNode;
+ this.bounds=bounds;
+ // Find the prevailing orientation of the polygon
+ var ori=0;
+ var vert=this.vertexList.first();
+ var firstVert=vert.data;
+ while(vert){
+  var vn=(vert.next) ? vert.next.data : firstVert;
+  ori+=vert.data[0]*vn[1]-vert.data[1]*vn[0];
+  vert=vert.next;
+ }
+ this.orientation=(ori === 0) ? 0 : (ori&lt;0 ? -1 : 1);
+};
+Triangulate.Contour.prototype.findVisiblePoint=function(x,y){
+  var vert=this.vertexList.first();
+  if((vert===null || typeof vert==="undefined"))return null;
+  var bounds=this.bounds;
+  if(x&lt;bounds[0] || y&lt;bounds[1] || x>bounds[2] || y>bounds[2])return null;
+  var lastVert=this.vertexList.last();
+  var firstVert=vert;
+  var closeVertices=[];
+  while(vert){
+   var vn=(vert.next) ? vert.next : firstVert;
+   var x1=vert.data[0];
+   var x2=vn.data[0];
+   var y1=vert.data[1];
+   var y2=vn.data[1];
+   var xmin=Math.min(x1,x2);
+   var xmax=Math.max(x1,x2);
+   var ymin=Math.min(y1,y2);
+   var ymax=Math.max(y1,y2);
+   if(x1===x &amp;&amp; y1===y){
+    return vert;
+   } else if(x2===x &amp;&amp; y2===y){
+    return vn;
+   }
+   if(x&lt;=xmax &amp;&amp; y>=ymin &amp;&amp; y&lt;=ymax){
+    if(y1===y2){
+     // parallel to the ray
+     closeVertices.push([
+       xmin,(xmin===vert.data[0]) ? vert : vn,true]);
+    } else {
+     var dx=(x2-x1);
+     var t=(y-y1)/(y2-y1);
+     var xi=x+dx*t;
+     if(xi>=x){
+      if(xi===x1){
+       closeVertices.push([xi,vert,true]);
+      } else if(xi===x2){
+       closeVertices.push([xi,vn,true]);
+      } else {
+       closeVertices.push([xi,vert,false]);
+      }
+     }
+    }
+   }
+   vert=vert.next;
+  }
+  if(closeVertices.length === 0){
+   // no visible vertices
+   return null;
+  } else if(closeVertices.length>1){
+   // sort by X coordinate
+   closeVertices=closeVertices.sort(function(a,b){
+    if(a[0]===b[0])return 0;
+    return (a[0]&lt;b[0]) ? -1 : 1;
+   });
+  }
+  if(closeVertices[0][2]){
+   // closest vertex is already a vertex of
+   // the contour
+   return closeVertices[0][1];
+  }
+  vert=closeVertices[0][1];
+  var nextVert=(vert.next) ? vert.next : firstVert;
+  var triangle1=[x,y];
+  var triangle2=[closeVertices[0][0],y];
+  var iterVert=firstVert;
+  var isVisible=true;
+  var innerReflexes=[];
+  while(iterVert){
+   if(iterVert!==nextVert){
+    var iterPrev=(iterVert.prev) ? iterVert.prev : lastVert;
+    var iterNext=(iterVert.next) ? iterVert.next : firstVert;
+     var orient=Triangulate._triOrient(iterPrev.data,iterVert.data,iterNext.data);
+     if(orient!==0 &amp;&amp; orient!==this.vertexList.orientation){
+      // This is a reflex vertex
+      var pointIn=Triangulate._pointInTri(
+       triangle1,triangle2,nextVert.data,iterVert.data);
+      if(pointIn){
+       // The reflex vertex is in the triangle
+       var t1 = iterVert.data[0] - triangle1[0];
+       var t2 = iterVert.data[1] - triangle1[1];
+       var distance = Math.sqrt(((t1 * t1) + t2 * t2));
+       var angle = t1/distance;
+       if(angle&lt;-1)angle=-1;
+       if(angle>1)angle=1;
+       innerReflexes.push([Math.acos(angle),distance,iterVert]);
+      }
+     }
+   }
+   iterVert=iterVert.next;
+  }
+  if(innerReflexes.length === 0){
+   // vertex after the intersected vertex is visible
+   return nextVert;
+  }
+  // sort by angle, then by distance
+  if(innerReflexes.length>1){
+   innerReflexes=innerReflexes.sort(function(a,b){
+    if(a[0]===b[0]){
+     if(a[1]===b[1])return 0;
+     return (a[1]&lt;b[1]) ? -1 : 1;
+    }
+    return (a[0]&lt;b[0]) ? -1 : 1;
+   });
+  }
+  return innerReflexes[0][2];
+ };
+
+/**
+* Converts the subpaths in this path to triangles.
+* Treats each subpath as a polygon even if it isn't closed.
+* Each subpath should not contain self-intersections or
+* duplicate vertices, except duplicate vertices that appear
+* consecutively or at the start and end.&lt;p>
+* The path can contain holes. In this case, subpaths
+* whose winding order (counterclockwise or clockwise)
+* differs from the first subpath's winding order can be holes.
+* @param {number} [flatness] When curves and arcs
+* are decomposed to line segments, the
+* segments will be close to the true path of the curve by this
+* value, given in units.  If null or omitted, default is 1.
+* @return {Array&lt;Array&lt;number>>} Array of six-element
+* arrays each describing a single triangle.  For each six-element
+* array, the first two, next two, and last two numbers each
+* describe a vertex position of that triangle (X and Y coordinates
+* in that order).
+*/
+GraphicsPath.prototype.getTriangles=function(flatness){
+ var subpaths=this._getSubpaths(flatness);
+ var contours1=[];
+ var contours2=[];
+ var firstOrient=0;
+ var tris=[];
+ var i,j;
+ for(i=0;i&lt;subpaths.length;i++){
+  var contour=new Triangulate.Contour(subpaths[i]);
+  // NOTE: Ignores contours with orientation 0
+  // (empty, zero area, sometimes self-intersecting)
+  if(contour.orientation>0){
+   if(firstOrient === 0)firstOrient=1;
+   contours1.push(contour);
+  } else if(contour.orientation&lt;0){
+   if(firstOrient === 0)firstOrient=-1;
+   contours2.push(contour);
+  }
+ }
+ if(contours2.length === 0 || contours1.length === 0){
+  // All the contours have the same winding order
+  var c=(contours2.length === 0) ? contours1 : contours2;
+  for(i=0;i&lt;c.length;i++){
+   Triangulate._triangulate(c[i],tris);
+  }
+ } else {
+  var c1=(firstOrient>0) ? contours1 : contours2;
+  var c2=(firstOrient>0) ? contours2 : contours1;
+  for(i=0;i&lt;c2.length;i++){
+   if(!c2[i])continue;
+   for(j=0;j&lt;c1.length;j++){
+    if(!c1[j])continue;
+    var maxPoint=c2[i].maxXNode;
+    // Find out if the contour is inside another contour,
+    // and if so, connect its vertices to that contour
+    var vp=c1[j].findVisiblePoint(
+      maxPoint.data[0],maxPoint.data[1]);
+    if(vp){
+     c1[j].vertexCount+=Triangulate._connectContours(
+       c2[i].vertexList,c1[j].vertexList,maxPoint,vp);
+     c2[i]=null;
+     break;
+    }
+   }
+  }
+  for(i=0;i&lt;c1.length;i++){
+   Triangulate._triangulate(c1[i],tris);
+  }
+  for(i=0;i&lt;c2.length;i++){
+   Triangulate._triangulate(c2[i],tris);
+  }
+ }
+ return tris;
+};
+
+Triangulate._connectContours=function(src,dst,maxPoint,dstNode){
+ var vpnode=dstNode;
+ var oldNext=dstNode.next;
+ var c2node=maxPoint;
+ var count=0;
+ while(c2node){
+  vpnode=dst.insertAfter(c2node.data,vpnode);
+  c2node=c2node.next;
+  count++;
+ }
+ c2node=src.first();
+ while(c2node!==maxPoint &amp;&amp; (c2node!==null &amp;&amp; typeof c2node!=="undefined")){
+  vpnode=dst.insertAfter(c2node.data,vpnode);
+  c2node=c2node.next;
+  count++;
+ }
+ vpnode=dst.insertAfter(maxPoint.data,vpnode);
+ dst.insertAfter(dstNode.data,vpnode);
+ count+=2;
+ return count;
+};
+
+Triangulate._triangulate=function(contour,tris){
+ var i,t1,tri;
+ if(!contour || contour.vertexCount&lt;3 || contour.orientation === 0){
+  // too few vertices, or the orientation
+  // suggests a zero area or even a certain
+  // self-intersecting polygon
   return;
- } else if(vertexCount===3){
+ } else if(contour.vertexCount===3){
   // just one triangle
-  t1=vertexList.first();
+  t1=contour.vertexList.first();
   tri=[];
   while(t1){
    tri.push(t1.data[0],t1.data[1]);
@@ -2026,44 +2290,33 @@ if(vertices.length&lt;6){
   tris.push(tri);
   return;
  }
- // Find the prevailing orientation of the polygon
- var ori=0;
- var vert=vertexList.first();
- var firstVert=vert.data;
- while(vert){
-  var vn=(vert.next) ? vert.next.data : firstVert;
-  ori+=vert.data[0]*vn[1]-vert.data[1]*vn[0];
-  vert=vert.next;
- }
- ori=(ori === 0) ? 0 : (ori&lt;0 ? -1 : 1);
- if(ori === 0){
-  // Zero area or even a certain self-intersecting
-  // polygon
-  return;
- }
  // Make the vertex list circular
- var first=vertexList.first();
- var last=vertexList.last();
+ var first=contour.vertexList.first();
+ var last=contour.vertexList.last();
+ var vert;
  if(!last)throw new Error();
  first.prev=last;
  last.next=first;
- vert=vertexList.first();
- while(vertexCount>3){
-  var vertexClass=Triangulate._vertClass(vert,ori);
-  nextVert=vert.next;
+ vert=contour.vertexList.first();
+ while(contour.vertexCount>3){
+  var vertexClass=Triangulate._vertClass(vert,
+    contour.orientation);
+  var nextVert=vert.next;
   if(vertexClass===Triangulate._EAR){
    tri=[vert.prev.data[0],vert.prev.data[1],
      vert.data[0],vert.data[1],
      vert.next.data[0],vert.next.data[1]];
    tris.push(tri);
-   vertexList.erase(vert);
-   vertexCount--;
+   contour.vertexList.erase(vert);
+   contour.vertexCount--;
   }
   vert=nextVert;
  }
- t1=vertexList.first();
+ t1=contour.vertexList.first();
  tri=[];
  first=t1;
+ // At this point, there will be only three
+ // vertices left
  while(t1){
    tri.push(t1.data[0],t1.data[1]);
    t1=t1.next;
