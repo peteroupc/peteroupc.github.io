@@ -1237,7 +1237,7 @@ var GraphicsPath=globalContext.GraphicsPath;
  * that contains them.
  * <li>To use this method, you must include the script "extras/pathclip.js";
  * this is in addition to "extras/pathclip.js".  Example:<pre>
- * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
  * @param {GraphicsPath} path A path to combine with this one.

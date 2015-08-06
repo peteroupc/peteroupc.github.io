@@ -7,6 +7,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../glutil_min.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="../extras/path.js"></script>
+<script type="text/javascript" src="../extras/pathclip.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
@@ -22,11 +23,17 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-// Path taken from a public domain SVG icon, which was
-// created by Jakub Steiner
-var path=GraphicsPath.fromString(
-"M 44.155643,23.75 C 44.155643,45.413332 45.663332,43.905643 24,43.905643 2.3366679,43.905643 3.8443565,45.413332 3.8443565,23.75 3.8443565,2.0866679 2.3366679,3.5943565 24,3.5943565 c 21.663332,0 20.155643,-1.5076886 20.155643,20.1556435 z"
-)
+function circle(path,x,y,radius){
+ return path.moveTo(x,y-radius)
+   .arcTo(x+radius,y-radius,x+radius,y,radius)
+   .arcTo(x+radius,y+radius,x,y+radius,radius)
+   .arcTo(x-radius,y+radius,x-radius,y,radius)
+   .arcTo(x-radius,y-radius,x,y-radius,radius)
+   .closePath()
+}
+path=circle(new GraphicsPath(),15,15,15)
+path2=circle(new GraphicsPath(),30,15,15)
+path=path.union(path2,0.2)
 var curves=path.getCurves(0.2)
 function getPoints(curves, numPoints, offset){
  var points=[]

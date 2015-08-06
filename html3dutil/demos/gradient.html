@@ -100,8 +100,6 @@ function link4(){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   var fc=new FrameCounterDiv(scene)
-  scene.setPerspective(45,scene.getClientAspect(),0.1,100);
-  scene.setLookAt([0,0,40]);
   // Generate a red-blue gradient texture
   var tex=horizontalGradient("red","blue");
    var mesh=Meshes.createBox(10,20,20);
@@ -109,6 +107,8 @@ function link4(){
    scene.addShape(shape);
    var timer={};
    GLUtil.renderLoop(function(time){
+    scene.setPerspective(45,scene.getClientAspect(),0.1,100);
+    scene.setLookAt([0,0,40]);
     fc.update();
     var q=GLMath.quatFromTaitBryan([
       360*GLUtil.getTimePosition(timer,time,6000),

@@ -1,3 +1,4 @@
+/* global GLMath */
 /**
 * Represents a knot in the form of the Fourier series<p>
 * <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) +  <b>b</b> sin(<i>iu</i>).<p>
@@ -5,10 +6,11 @@
 * @param {Array<Array<number>>} b
 */
 function FourierKnot(a,b){
- this.a=a; // Cosine coefficients
+ "use strict";
+this.a=a; // Cosine coefficien
  this.b=b; // Sine coefficients
  this.idx=0;
- if(this.a.length!=this.b.length){
+ if(this.a.length!==this.b.length){
   throw new Error("a and b must be the same length");
  }
  this.evaluate=function(u){
@@ -25,5 +27,5 @@ function FourierKnot(a,b){
    ret[2]+=c*ai[2]+s*bi[2];
   }
   return ret;
- }
+ };
 }

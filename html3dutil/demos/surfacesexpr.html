@@ -105,6 +105,7 @@ function updateMesh(){
       allsettings["custom-minv"],
       allsettings["custom-maxv"]
    );
+       if(!cs.evaluate)return new Mesh()
    document.getElementById("sourceCode").value=cs.getCode();
    return makeMesh(cs,70);
     default:
@@ -165,7 +166,10 @@ function CustomSurface(x,y,z,minu,maxu,minv,maxv){
     ".normal({\n"+
     "\"evaluate\":function(u){\n"+normalCode+"}})\n"
   }
- this.evaluate=new Function("u","v",code);
+ this.evaluate=null
+ try {
+   this.evaluate=new Function("u","v",code);
+  } catch(ex){ this.evaluate=null }
 }
 
 function pushSetting(ranges,name,label,min,max,step){

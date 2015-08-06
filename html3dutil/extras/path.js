@@ -646,6 +646,11 @@ var inf=Number.POSITIVE_INFINITY;
  return ret;
 };
 
+/**
+* Returns a path that reverses the course of this path.
+* @return {GraphicsPath} A GraphicsPath
+* object with its path segments reversed.
+*/
 GraphicsPath.prototype.reverse=function(){
  var lastptx=0;
  var lastpty=0;
@@ -1563,6 +1568,47 @@ var oldindex=index[0];
  }
  return ret;
 };
+
+GraphicsPath.prototype.transform=function(trans){
+ var ret=new GraphicsPath()
+ var a=trans[0]
+ var b=trans[1]
+ var c=trans[2]
+ var d=trans[3]
+ var e=trans[4]
+ var f=trans[5]
+ var x,y,i,j;
+ for(var i=0;i<this.segments.length;i++){
+  var s=this.segments[i].slice(0)
+  ret.segments.push(s)
+  switch(this.segments[i][0]){
+   case GraphicsPath.LINE:
+   case GraphicsPath.QUAD:
+   case GraphicsPath.CUBIC:
+    for(var j=1;j<s.length;j++){
+     x=a*s[j]+c*s[j+1]+e
+     y=b*s[j]+d*s[j+1]+f
+     s[j]=x
+     s[j+1]=y
+    }
+    break
+   case GraphicsPath.ARC:
+    if(a!=1 || b!=0 || c!=0 || d!=1){
+     throw new Error("not yet implemented")
+    } else {
+     s[8]+=e
+     s[9]+=f
+     s[10]+=e
+     s[11]+=f
+    }
+    break
+   default:
+    break
+  }
+ }
+ return ret
+}
+
 /**
  * Adds four lines in an axis-aligned rectangle shape to the path.
  * @param {number} x X-coordinate of a corner of the rectangle.

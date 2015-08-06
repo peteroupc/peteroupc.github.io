@@ -110,6 +110,7 @@ function updateMesh(){
       allsettings["custom-minv"],
       allsettings["custom-maxv"]
     )
+    if(!cs.evaluate)return new Mesh()
     document.getElementById("sourceCode").value=cs.getCode();
    return makeMesh(new CurveTube(cs),70);
     }
@@ -157,7 +158,10 @@ function CustomCurve(x,y,z,minu,maxu){
   return "var evaluator=new CurveEval().vertex({\n"+
    "\"evaluate\":function(u){\n"+code+"}})\n"
  }
- this.evaluate=new Function("u",code);
+ this.evaluate=null
+ try {
+  this.evaluate=new Function("u",code);
+ } catch(ex){ this.evaluate=null }
 }
 
 function pushSetting(ranges,name,label,min,max,step){

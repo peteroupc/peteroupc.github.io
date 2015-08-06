@@ -33,6 +33,7 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
+// Make a polygon with a hole
 var path=new GraphicsPath()
  .moveTo(-1,1,0)
  .lineTo(0,1)
@@ -40,6 +41,14 @@ var path=new GraphicsPath()
  .lineTo(1,-1)
  .lineTo(0,-1)
  .arcTo(-1,-1,-1,0,1)
+ .closePath()
+ .moveTo(-0.5,0.5,0)
+ .lineTo(-0.5,0)
+ .arcTo(-0.5,-0.5,0,-0.5,0.5)
+ .lineTo(0.5,-0.5)
+ .lineTo(0.5,0)
+ .arcTo(0.5,0.5,0,0.5,0.5)
+ .lineTo(-0.5,0.5)
  .closePath()
 
 function pathClosedFigure(path, zBottom, zTop, flatness){

@@ -4,7 +4,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
+/* global GLMath, Mesh */
 // The following was adapted by Peter O. from public-domain
 // source code by Cory Gene Bloyd.
 
@@ -25,7 +25,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * }});
 */
 function ImplicitSurface(func){
- if(typeof func!=="object")throw new Error();
+ "use strict";
+if(typeof func!=="object")throw new Error();
  this.sampler=func;
 }
 //a2fVertexOffset lists the positions, relative to vertex0, of each of the 8 vertices of a cube
@@ -38,7 +39,7 @@ ImplicitSurface._a2fEdgeDirection=[
         [1.0, 0.0, 0.0],[0.0, 1.0, 0.0],[-1.0, 0.0, 0.0],[0.0, -1.0, 0.0],
         [1.0, 0.0, 0.0],[0.0, 1.0, 0.0],[-1.0, 0.0, 0.0],[0.0, -1.0, 0.0],
         [0.0, 0.0, 1.0],[0.0, 0.0, 1.0],[ 0.0, 0.0, 1.0],[0.0,  0.0, 1.0]
-]
+];
 
 //a2iEdgeConnection lists the index of the endpoint vertices for each of the 12 edges of the cube
 ImplicitSurface._a2iEdgeConnection=
@@ -49,8 +50,8 @@ ImplicitSurface._a2iEdgeConnection=
 ];
 
 ImplicitSurface._aiTetrahedronEdgeFlags=[
-0x00, 0x0d, 0x13, 0x1e, 0x26, 0x2b, 0x35, 0x38, 0x38, 0x35, 0x2b, 0x26, 0x1e, 0x13, 0x0d, 0x00,
-]
+0x00, 0x0d, 0x13, 0x1e, 0x26, 0x2b, 0x35, 0x38, 0x38, 0x35, 0x2b, 0x26, 0x1e, 0x13, 0x0d, 0x00
+];
 
 // For each of the possible vertex states listed in aiTetrahedronEdgeFlags there is a specific triangulation
 // of the edge intersection points.  a2iTetrahedronTriangles lists all of them in the form of
@@ -74,7 +75,7 @@ ImplicitSurface._a2iTetrahedronTriangles=[
         [ 3,  4,  2,  2,  4,  1, -1],
         [ 4,  1,  0, -1, -1, -1, -1],
         [ 2,  3,  0, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1]
 ];
 
 //a2iTetrahedronEdgeConnection lists the index of the endpoint vertices for each of the 6 edges of the tetrahedron
@@ -92,28 +93,31 @@ ImplicitSurface._a2iTetrahedronsInACube=
         [0,2,3,6],
         [0,3,7,6],
         [0,7,4,6],
-        [0,4,5,6],
+        [0,4,5,6]
 ];
 /** @private */
 ImplicitSurface.prototype._getNormal=function(rfNormal,fX,fY,fZ)
 {
-    var ff=this.sampler.sample(fX, fY, fZ);
+    "use strict";
+var ff=this.sampler.sample(fX, fY, fZ);
         rfNormal[0] = this.sampler.sample(fX+0.001, fY, fZ)-ff;
         rfNormal[1] = this.sampler.sample(fX, fY+0.001, fZ)-ff;
         rfNormal[2] = this.sampler.sample(fX, fY, fZ+0.001)-ff;
         GLMath.vec3normInPlace(rfNormal);
-}
+};
 
 ImplicitSurface._fGetOffset=function(a,b,desired){
- var delta=b-a;
- return (delta==0) ? 0.5 : (desired-a)/delta;
-}
+ "use strict";
+var delta=b-a;
+ return (delta===0) ? 0.5 : (desired-a)/delta;
+};
 
 ImplicitSurface._TARGET_VALUE = 0;
 //vMarchTetrahedron performs the Marching Tetrahedrons algorithm on a single tetrahedron
 ImplicitSurface.prototype._vMarchTetrahedron=function(mesh, pasTetrahedronPosition, pafTetrahedronValue,tmpobj)
 {
-        var iEdge, iVert0, iVert1, iEdgeFlags, iTriangle, iCorner, iVertex, iFlagIndex = 0;
+        "use strict";
+var iEdge, iVert0, iVert1, iEdgeFlags, iTriangle, iCorner, iVertex, iFlagIndex = 0;
         var fOffset, fInvOffset, fValue = 0.0;
         //Find which vertices are inside of the surface and which are outside
         for(iVertex = 0; iVertex < 4; iVertex++)
@@ -124,7 +128,7 @@ ImplicitSurface.prototype._vMarchTetrahedron=function(mesh, pasTetrahedronPositi
         //Find which edges are intersected by the surface
         iEdgeFlags = ImplicitSurface._aiTetrahedronEdgeFlags[iFlagIndex];
         //If the tetrahedron is entirely inside or outside of the surface, then there will be no intersections
-        if(iEdgeFlags == 0){
+        if(iEdgeFlags === 0){
                 return;
         }
         //Find the point of intersection of the surface with each edge
@@ -160,7 +164,7 @@ ImplicitSurface.prototype._vMarchTetrahedron=function(mesh, pasTetrahedronPositi
                         mesh.vertex3(tmpobj.asEdgeVertex[iVertex][0], tmpobj.asEdgeVertex[iVertex][1], tmpobj.asEdgeVertex[iVertex][2]);
                 }
         }
-}
+};
 
 // For any edge, if one vertex is inside of the surface and the other is outside of the surface
 //  then the edge intersects the surface
@@ -186,7 +190,7 @@ ImplicitSurface._aiCubeEdgeFlags=[
         0xd30, 0xc39, 0xf33, 0xe3a, 0x936, 0x83f, 0xb35, 0xa3c, 0x53c, 0x435, 0x73f, 0x636, 0x13a, 0x033, 0x339, 0x230,
         0xe90, 0xf99, 0xc93, 0xd9a, 0xa96, 0xb9f, 0x895, 0x99c, 0x69c, 0x795, 0x49f, 0x596, 0x29a, 0x393, 0x099, 0x190,
         0xf00, 0xe09, 0xd03, 0xc0a, 0xb06, 0xa0f, 0x905, 0x80c, 0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x000
-]
+];
 
 //  For each of the possible vertex states listed in aiCubeEdgeFlags there is a specific triangulation
 //  of the edge intersection points.  a2iTriangleConnectionTable lists all of them in the form of
@@ -451,10 +455,11 @@ ImplicitSurface._a2iTriangleConnectionTable = [
     [ 9, 1, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [ 8, 0, 3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
-]
-
+];
+/** @private */
 ImplicitSurface.prototype._isOnSurface=function(fX,fY,fZ,fScaleX,fScaleY,fScaleZ){
-  var mx=0;
+  "use strict";
+var mx=0;
   var mn=0;
   var value=this.sampler.sample(fX,fY,fZ);
   mx=mn=value;
@@ -486,11 +491,12 @@ ImplicitSurface.prototype._isOnSurface=function(fX,fY,fZ,fScaleX,fScaleY,fScaleZ
   mn=Math.min(mn,value);
   mx=Math.max(mx,value);
   return (mn<=0 && mx>=0);
-}
+};
 /** @private */
 ImplicitSurface.prototype._vMarchCube1=function(mesh,fX,fY,fZ,fScaleX,fScaleY,fScaleZ,tmpobj)
 {
- var  iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
+ "use strict";
+var  iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
   var   fOffset;
 
         var mx=0;
@@ -503,8 +509,8 @@ ImplicitSurface.prototype._vMarchCube1=function(mesh,fX,fY,fZ,fScaleX,fScaleY,fS
                y = fY + ImplicitSurface._a2fVertexOffset[iVertex][1]*fScaleY;
                z = fZ + ImplicitSurface._a2fVertexOffset[iVertex][2]*fScaleZ;
                value = this.sampler.sample(x,y,z);
-                mx=(iVertex==0) ? value : Math.max(mx,value);
-                mn=(iVertex==0) ? value : Math.min(mn,value);
+                mx=(iVertex===0) ? value : Math.max(mx,value);
+                mn=(iVertex===0) ? value : Math.min(mn,value);
                 tmpobj.afCubeValue[iVertex] =value;
         }
         if(mn>0 || mx<0)return;
@@ -520,7 +526,7 @@ ImplicitSurface.prototype._vMarchCube1=function(mesh,fX,fY,fZ,fScaleX,fScaleY,fS
         iEdgeFlags = ImplicitSurface._aiCubeEdgeFlags[iFlagIndex];
 
         //If the cube is entirely inside or outside of the surface, then there will be no intersections
-        if(iEdgeFlags == 0)return;
+        if(iEdgeFlags === 0)return;
         //Find the point of intersection of the surface with each edge
         //Then find the normal to the surface at those points
         for(iEdge = 0; iEdge < 12; iEdge++)
@@ -560,12 +566,13 @@ ImplicitSurface.prototype._vMarchCube1=function(mesh,fX,fY,fZ,fScaleX,fScaleY,fS
                         mesh.vertex3(tmpobj.asEdgeVertex[iVertex][0], tmpobj.asEdgeVertex[iVertex][1], tmpobj.asEdgeVertex[iVertex][2]);
                     }
         }
-}
+};
 
 //vMarchCube2 performs the Marching Tetrahedrons algorithm on a single cube by making six calls to vMarchTetrahedron
 ImplicitSurface.prototype._marchingTetrahedrons=function(mesh, fX,fY,fZ,fScaleX,fScaleY,fScaleZ,tmpobj)
 {
-        var iVertex, iTetrahedron, iVertexInACube;
+        "use strict";
+var iVertex, iTetrahedron, iVertexInACube;
         var mx=0;
         var mn=0;
         //Make a local copy of the cube's corner positions;
@@ -576,8 +583,8 @@ ImplicitSurface.prototype._marchingTetrahedrons=function(mesh, fX,fY,fZ,fScaleX,
                y = fY + ImplicitSurface._a2fVertexOffset[iVertex][1]*fScaleY;
                z = fZ + ImplicitSurface._a2fVertexOffset[iVertex][2]*fScaleZ;
                value = this.sampler.sample(x,y,z);
-                mx=(iVertex==0) ? value : Math.max(mx,value);
-                mn=(iVertex==0) ? value : Math.min(mn,value);
+                mx=(iVertex===0) ? value : Math.max(mx,value);
+                mn=(iVertex===0) ? value : Math.min(mn,value);
                 tmpobj.asCubePosition[iVertex][0] =x;
                 tmpobj.asCubePosition[iVertex][1] =y;
                 tmpobj.asCubePosition[iVertex][2] =z;
@@ -595,7 +602,7 @@ ImplicitSurface.prototype._marchingTetrahedrons=function(mesh, fX,fY,fZ,fScaleX,
                 }
                 this._vMarchTetrahedron(mesh, tmpobj.asTetrahedronPosition, tmpobj.afTetrahedronValue,tmpobj);
         }
-}
+};
 /**
  * Not documented yet.
  * @param {*} xsize
@@ -609,15 +616,17 @@ ImplicitSurface.prototype._marchingTetrahedrons=function(mesh, fX,fY,fZ,fScaleX,
  * @param {*} zmax
  */
 ImplicitSurface.prototype.findBox=function(xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax){
-        var xstep=(xmax-xmin)/xsize;
+        "use strict";
+var xstep=(xmax-xmin)/xsize;
         var ystep=(ymax-ymin)/ysize;
         var zstep=(zmax-zmin)/zsize;
         var bounds=[0,0,0,0,0,0];
         var first=true;
         var x,y,z;
-        for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
-        for(var iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
-        for(var iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
+        var iX,iY,iZ;
+        for(iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
+        for(iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
+        for(iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
            if(this._isOnSurface(x,y,z,xstep,ystep,zstep)){
              if(first){
                first=false;
@@ -639,7 +648,7 @@ ImplicitSurface.prototype.findBox=function(xsize,ysize,zsize,xmin,xmax,ymin,ymax
         }
         }
         }
-}
+};
 /**
  * Not documented yet.
  * @param {*} mesh
@@ -655,23 +664,25 @@ ImplicitSurface.prototype.findBox=function(xsize,ysize,zsize,xmin,xmax,ymin,ymax
  */
 ImplicitSurface.prototype.evalSurfacePoints=function(mesh,xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax)
 {
-        mesh.mode(Mesh.POINTS);
+        "use strict";
+mesh.mode(Mesh.POINTS);
         var xstep=(xmax-xmin)/xsize;
         var ystep=(ymax-ymin)/ysize;
         var zstep=(zmax-zmin)/zsize;
         var bounds=[0,0,0,0,0,0];
         var first=true;
         var x,y,z;
-        for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
-        for(var iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
-        for(var iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
+        var iX,iY,iZ;
+        for(iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
+        for(iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
+        for(iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
            if(this._isOnSurface(x,y,z,xstep,ystep,zstep)){
              mesh.vertex3(x+xstep/2,y+ystep/2,z+zstep/2);
            }
         }
         }
         }
-}
+};
 /**
  * Not documented yet.
  * @param {*} mesh
@@ -687,7 +698,8 @@ ImplicitSurface.prototype.evalSurfacePoints=function(mesh,xsize,ysize,zsize,xmin
  */
 ImplicitSurface.prototype.evalSurface=function(mesh,xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax)
 {
-        mesh.mode(Mesh.TRIANGLES);
+        "use strict";
+mesh.mode(Mesh.TRIANGLES);
         var tmpobj={
            "asCubePosition":[[],[],[],[],[],[],[],[]],
            "afCubeValue":[],
@@ -695,41 +707,45 @@ ImplicitSurface.prototype.evalSurface=function(mesh,xsize,ysize,zsize,xmin,xmax,
            "afTetrahedronValue":[],
            "asEdgeVertex":[[],[],[],[],[],[],[],[],[],[],[],[]],
            "asEdgeNorm":[[],[],[],[],[],[],[],[],[],[],[],[]]
-        }
+        };
         var xstep=(xmax-xmin)/xsize;
         var ystep=(ymax-ymin)/ysize;
         var zstep=(zmax-zmin)/zsize;
-        if(xstep!=0 && ystep!=0 && zstep!=0){
+        if(xstep!==0 && ystep!==0 && zstep!==0){
         var x,y,z;
-        for(var iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
-        for(var iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
-        for(var iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
+        var iX,iY,iZ;
+        for(iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){
+        for(iY=0,y=ymin;iY < ysize; iY+=1,y+=ystep){
+        for(iZ=0,z=zmin;iZ < zsize; iZ+=1,z+=zstep){
            this._vMarchCube1(mesh, x,y,z,xstep,ystep,zstep,tmpobj);
         }
         }
         }
         }
-}
+};
 
 ImplicitSurface.union=function(a,b){
-  return {
+  "use strict";
+return {
    "sample":function(x,y,z){
      return Math.min(a.sample(x,y,z),b.sample(x,y,z));
    }
-  }
-}
+  };
+};
 ImplicitSurface.intersection=function(a,b){
-  return {
+  "use strict";
+return {
    "sample":function(x,y,z){
      return Math.max(a.sample(x,y,z),b.sample(x,y,z));
    }
-  }
-}
+  };
+};
 
 ImplicitSurface.difference=function(a,b){
-  return {
+  "use strict";
+return {
    "sample":function(x,y,z){
      return Math.max(a.sample(x,y,z),-b.sample(x,y,z));
    }
-  }
-}
+  };
+};
