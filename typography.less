@@ -1,0 +1,197 @@
+/////////////////////////////////////////////////////////////
+//
+//   LESS functions for enabling beautiful typography
+//   in Web pages.  Written by Peter O., 2013-2015.
+//
+//   Any copyright is dedicated to the Public Domain.
+//   http://creativecommons.org/publicdomain/zero/1.0/
+//
+//   If you like this, you should donate to Peter O.
+//   at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+//
+//   In most cases, use the functions ".monospacedtypography()"
+//   and ".traditionaltypography()", defined below.  But there
+//   are also other useful functions given here.
+//
+/////////////////////////////////////////////////////////////
+
+.fontFeatureSettings3(@v1, @v2, @v3){
+  font-feature-settings: @v1, @v2, @v3 !important;
+  -moz-font-feature-settings: @v1, @v2, @v3  !important;
+  -webkit-font-feature-settings: @v1, @v2, @v3  !important;
+  -ms-font-feature-settings: @v1, @v2, @v3 !important;
+}
+.fontFeatureSettings1(@v1){
+  font-feature-settings: @v1 !important;
+  -moz-font-feature-settings: @v1 !important;
+  -webkit-font-feature-settings: @v1 !important;
+  -ms-font-feature-settings: @v1 !important;
+}
+.fontFeatureSettings2(@v1, @v2){
+  font-feature-settings: @v1, @v2 !important;
+  -moz-font-feature-settings: @v1, @v2 !important;
+  -webkit-font-feature-settings: @v1, @v2 !important;
+  -ms-font-feature-settings: @v1, @v2 !important;
+}
+
+.fontFeatureSettings4(@v1, @v2, @v3, @v4){
+  font-feature-settings: @v1, @v2, @v3, @v4 !important;
+  -moz-font-feature-settings: @v1, @v2, @v3, @v4  !important;
+  -webkit-font-feature-settings: @v1, @v2, @v3, @v4  !important;
+  -ms-font-feature-settings: @v1, @v2, @v3, @v4 !important;
+}
+
+// Enables small caps
+.smallcaps() {
+  //.ie8 & {
+    font-variant: small-caps;
+ // }
+  *font-variant: small-caps; // for IE6 and IE7
+  .fontFeatureSettings3("liga" 1, "kern" 1, "smcp" 1);
+}
+
+.typographybase(){
+  text-rendering: optimizeLegibility;
+  -webkit-text-rendering: optimizeLegibility;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+.typographymono(){
+  .typographybase();
+}
+
+.hyphens(){
+  // Enable hyphenation where supported
+  word-wrap: break-word;
+  hyphens: auto;
+ -moz-hyphens: auto;
+ -webkit-hyphens: auto;
+ -ms-hyphens: auto;
+}
+
+.nohyphens(){
+  word-wrap: normal;
+  hyphens: none;
+ -moz-hyphens: none;
+ -webkit-hyphens: none;
+ -ms-hyphens: none;
+}
+
+.typography(){
+  .typographybase();
+  .hyphens();
+  .fontFeatureSettings4("onum" 1, "pnum" 1,"liga" 1, "kern" 1);
+}
+
+.typographytablecell() {
+  .typographybase();
+  .hyphens();
+  .fontFeatureSettings4("onum" 0, "pnum" 0,"liga" 1, "kern" 1);
+}
+
+// Enables all small caps, including uppercase letters
+.upperlowersmallcaps() {
+  .ie8 & {
+    font-variant: small-caps;
+  }
+  *font-variant: small-caps; // for IE6 and IE7
+  .fontFeatureSettings4("liga" 1, "kern" 1, "smcp" 1, "c2sc" 1);
+}
+
+.fractions() {
+ .fontFeatureSettings1("frac" 1);
+}
+
+// Disables small caps
+.nosmallcaps() {
+  font-variant: normal !important;
+  .fontFeatureSettings4("liga" 1, "kern" 1, "smcp" 0,"c2sc" 0);
+}
+
+.monospaced(){
+    font-family: "Source Code Pro", "Menlo", "Consolas",  "Inconsolata", "Liberation Mono", "Lucida Console",
+       "DejaVu Sans Mono",
+       "Free Mono", "Courier New", "Courier", monospaced;
+}
+
+.sansserif(){
+   font-family: "Helvetica Neue",
+       "Open Sans", "Free Sans", "Clear Sans", "Calibri", "Segoe UI",  "Roboto", "DejaVu Sans", Verdana,
+       "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+.serif(){
+   font-family: "Sitka Text", "PT Serif",
+      "Charis SIL Compact", "Charis SIL",
+      "Cambria",
+      "Palatino Linotype",
+      "Droid Serif", "Free Serif", "Georgia", "Book Antiqua", "Times New Roman", serif;
+}
+
+//
+//  Traditional font features for Web pages.
+//  Uses serif for body text, sans-serif for tables, headers,
+//  and other display text, and monospaced for code elements
+//  and input elements.
+//
+//  Example:
+//  body { .traditionaltypography(); }
+//
+.traditionaltypography(){
+  th {
+   .sansserif();
+   .typographytablecell();
+  }
+  td {
+   .serif();
+   .typographytablecell();
+  }
+  input, legend, option, button, select, h1, h2, h3, h4, h5, h6, figcaption, caption {
+   .sansserif();
+   .typography();
+  }
+  input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea,
+  pre, textarea, tt, code, samp, var, kbd {
+   .monospaced();
+   .typographymono();
+  }
+  div, p, li, dt, dd {
+   .serif();
+   .typography();
+  }
+  pre {
+   .nohyphens();
+  }
+  span.fraction {
+    .fractions();
+  }
+}
+
+//
+// Monospaced typography.  Uses a monospaced
+// font for all text.
+//
+//  Example:
+//  body { .monospacedtypography(); }
+//
+.monospacedtypography(){
+  td, th {
+   .monospaced();
+   .typographytablecell();
+  }
+  div, p, li, input, select, button, option, legend, h1, h2, h3, h4, h5, h6, dt, dd, figcaption, caption,
+  td[colspan], th[colspan] {
+   .monospaced();
+   .typography();
+  }
+  pre, textarea, tt, code, samp, var, kbd {
+   .monospaced();
+    .typographymono();
+  }
+  pre {
+   .nohyphens();
+  }
+  span.fraction {
+    .fractions();
+  }
+}

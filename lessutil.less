@@ -1,0 +1,257 @@
+//
+//   Written by Peter O. 2015.
+//
+//   Any copyright is dedicated to the Public Domain.
+//   http://creativecommons.org/publicdomain/zero/1.0/
+//
+//   If you like this, you should donate to Peter O.
+//   at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+//
+.borderRadius(@size){
+ border-radius: @size;
+ -webkit-border-radius: @size;
+ -moz-border-radius: @size;
+}
+.borderTopLeftRadius(@size){
+ border-top-left-radius: @size;
+ -webkit-border-top-left-radius: @size;
+ -moz-border-radius-topleft: @size;
+}
+.borderTopRightRadius(@size){
+ border-top-right-radius: @size;
+ -webkit-border-top-right-radius: @size;
+ -moz-border-radius-topright: @size;
+}
+.borderBottomLeftRadius(@size){
+ border-bottom-left-radius: @size;
+ -webkit-border-bottom-left-radius: @size;
+ -moz-border-radius-bottomleft: @size;
+}
+.borderBottomRightRadius(@size){
+ border-bottom-right-radius: @size;
+ -webkit-border-bottom-right-radius: @size;
+ -moz-border-radius-bottomright: @size;
+}
+
+.opacity(@o){
+ opacity:@o;
+ @o100:@o*100;
+ *filter:~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{o100})";
+}
+.boxShadow(@size,@color){
+.boxShadowEx(@size,@size,@size,@color);
+}
+.boxShadowFour(@sizea,@sizeb,@sizec,@sized,@color){
+ box-shadow: @sizea @sizeb @sizec @sized @color;
+ -moz-box-shadow: @sizea @sizeb @sizec @sized @color;
+ -ms-box-shadow: @sizea @sizeb @sizec @sized @color;
+ -o-box-shadow: @sizea @sizeb @sizec @sized @color;
+ -webkit-box-shadow: @sizea @sizeb @sizec @sized @color;
+}
+.boxShadowEx(@sizea,@sizeb,@sizec,@color){
+ box-shadow: @sizea @sizeb @sizec @color;
+ -moz-box-shadow: @sizea @sizeb @sizec @color;
+ -ms-box-shadow: @sizea @sizeb @sizec @color;
+ -o-box-shadow: @sizea @sizeb @sizec @color;
+ -webkit-box-shadow: @sizea @sizeb @sizec @color;
+}
+
+.boxShadowInset(@sizea,@sizeb,@sizec,@color){
+ box-shadow: inset @sizea @sizeb @sizec @color;
+ -moz-box-shadow: inset @sizea @sizeb @sizec @color;
+ -ms-box-shadow: inset @sizea @sizeb @sizec @color;
+ -o-box-shadow: inset @sizea @sizeb @sizec @color;
+ -webkit-box-shadow: inset @sizea @sizeb @sizec @color;
+}
+
+.columns(@value){
+ columns:@value;
+ -moz-columns:@value;
+ -webkit-columns:@value;
+ -ms-columns:@value;
+}
+
+.transition(@value){
+ transition:@value;
+ -moz-transition:@value;
+ -ms-transition:@value;
+ -o-transition:@value;
+ -webkit-transition:@value;
+}
+
+.transform(@value){
+ transform:@value;
+ -moz-transform:@value;
+ -webkit-transform:@value;
+}
+
+.noBoxShadow(){
+ box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
+ -moz-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
+ -ms-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
+ -o-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
+ -webkit-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
+ *filter:~"progid:DXImageTransform.Microsoft.shadow(Enabled=false)" !important;
+}
+
+.noTextShadow(){
+ .textShadowEx(0px,0px,0px,rgba(0,0,0,0));
+}
+.textShadow(@size,@color){
+ .textShadowEx(@size,@size,@size,@color);
+}
+
+.textShadowEx(@sizea,@sizeb,@sizec,@color){
+ text-shadow: @sizea @sizeb @sizec @color;
+ -moz-text-shadow: @sizea @sizeb @sizec @color;
+ -webkit-text-shadow: @sizea @sizeb @sizec @color;
+}
+
+.backgroundClipPadding(){
+  background-clip: padding-box;
+  -o-background-clip: padding-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+}
+
+// enables tables to have a border radius
+.tableRadii(@size){
+.borderRadius(@size);
+/* needed because of undefined behavior of 'border-radius' on table elements with 'border-collapse: collapse' */
+border-collapse: separate;
+&>tbody:first-child>tr:first-child, &>thead>tr {
+  &>th:first-child, &>td:first-child { .borderTopLeftRadius(@size);}
+  &>th:last-child, &>td:last-child { .borderTopRightRadius(@size);}
+}
+&>tbody > tr:last-child {
+  &, &>td:first-child { .borderBottomLeftRadius(@size); }
+  &, &>td:last-child { .borderBottomRightRadius(@size); }
+}
+}
+
+.stickyfooter() {
+  z-index: 100;
+  bottom: 0px;
+  margin: 0px 0px 0px -35%;
+  width:70%;
+  left:50%;
+  position: fixed;
+}
+.stickyheader() {
+  z-index: 100;
+  left: 0px;
+  top: 0px;
+  position: fixed;
+}
+
+.inputui(){
+ text-decoration: none;
+ margin: 0;
+ padding: 0.5em 1em;
+ cursor: pointer;
+ border: 1px solid;
+ .borderRadius(0.3em);
+ .boxShadowEx(0,0,3px,#999);
+ display: inline-block;
+ overflow: visible;
+ .transition(all 0.3s);
+ &:hover, &:active {
+    text-decoration: none;
+ }
+}
+
+.inputuifield(
+    @textcolor,@bg1,@bordercolor,
+    @hoverbordercolor:#b9b9b9,
+    @activebordercolor:#4d90fe
+){
+ color: @textcolor;
+ text-decoration: none;
+ margin: 0;
+ padding: 0.5em 1em;
+ border: 1px solid @bordercolor;
+ background-color:@bg1;
+ .textShadowEx(1px,1px,0,#fff);
+ .backgroundClipPadding();
+ .borderRadius(0.3em);
+ .transition(all 0.3s);
+  &:hover {
+    text-decoration: none;
+    .boxShadowEx(0,0,3px,#999);
+    border-color: @hoverbordercolor;
+    border-bottom-color: @hoverbordercolor;
+ }
+ &:focus, &.focused {
+    text-decoration: none;
+    .boxShadowEx(0,0,6px,#999);
+    border-color: @activebordercolor;
+    border-bottom-color: @activebordercolor;
+ }
+ &[disabled] {
+  cursor: not-allowed;
+  border: 1px solid @bordercolor;
+  background: #f1f1f1;
+  .transition(none);
+  &:hover {
+    .noBoxShadow();
+  }
+ }
+ &[readonly] {
+  border: 1px solid @bordercolor;
+  background: #f1f1f1;
+  .transition(none);
+  &:hover, &:focus {
+    .noBoxShadow();
+  }
+ }
+}
+
+
+.linearGradient(@startColor,@endColor, @fallbackColor: none){
+    @sc:@startColor;
+    @fbc:@fallbackColor;
+    @fbc2:~`"@{fbc}"=="none" ? "@{sc}" : "@{fbc}"`;
+    background: @fbc2;
+    background-repeat: repeat-x;
+    background: linear-gradient(top,@startColor,@endColor);
+    background: -moz-linear-gradient(@startColor,@endColor);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor));
+    background: -ms-linear-gradient(top,@startColor,@endColor);
+    background: -o-linear-gradient(top,@startColor,@endColor);
+    *zoom:1;
+    *filter: ~"progid:DXImageTransform.Microsoft.Gradient( StartColorStr='@{startColor}', EndColorStr='@{endColor}',GradientType=0)";
+    .ie8 & {
+       filter: ~"progid:DXImageTransform.Microsoft.Gradient( StartColorStr='@{startColor}', EndColorStr='@{endColor}',GradientType=0)";
+    }
+}
+
+
+.inputuibutton(
+    @textcolor,@bg1,@bg2,@bordercolor,
+    @hovertextcolor,@hoverbg1,@hoverbg2,@hoverbordercolor,
+    @activetextcolor:@hovertextcolor,
+    @activebg1:@hoverbg1,
+    @activebg2:@hoverbg2,
+    @activebordercolor:@hoverbordercolor
+) {
+ .inputui();
+ color: @textcolor !important;
+ border-color: @bordercolor;
+ .textShadowEx(0,-1px,0,rgba(0,0,0,0.5));
+ .backgroundClipPadding();
+ .linearGradient(@bg1,@bg2,@bg1);
+ &:hover {
+    color: @hovertextcolor !important;
+    .textShadowEx(0,-1px,0,rgba(0,0,0,0.5));
+    border-color: @hoverbordercolor;
+    border-bottom-color: @hoverbordercolor;
+    .linearGradient(@hoverbg2,@hoverbg1,@hoverbg1);
+ }
+ &:active {
+    color: @activetextcolor !important;
+    .textShadowEx(0,-1px,0,rgba(0,0,0,0.5));
+    border-color: @activebordercolor;
+    border-bottom-color: @activebordercolor;
+    .linearGradient(@activebg1,@activebg2,@activebg1);
+ }
+}

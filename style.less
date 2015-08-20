@@ -1,0 +1,244 @@
+//
+//   Written by Peter O. 2015.
+//
+//   Any copyright is dedicated to the Public Domain.
+//   http://creativecommons.org/publicdomain/zero/1.0/
+//
+//   If you like this, you should donate to Peter O.
+//   at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+//
+@import "typography.less";
+@import "lessutil.less";
+@import "reset.less";
+//////////////////////////////////////////////////////////////////////
+//  General styles
+//////////////////////////////////////////////////////////////////////
+
+body {
+ margin:0 auto;
+ text-align:center;
+ padding: 0.5% 2%;
+ font-size:120%;
+}
+
+kbd {
+ white-space:nowrap;
+ border-style:solid;
+ padding:2px 4px;
+ border-width:1px 3px 3px 1px;
+}
+
+hr {
+ border: 1px solid;
+}
+
+abbr,acronym {
+  border-bottom:1px dotted;
+  cursor:help;
+}
+
+table {
+ border: 1px solid;
+ .tableRadii(10px);
+ td, th {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-top: 1px solid;
+  padding: 0.2em 0.2em 0.2em 0.2em;
+ }
+ tr:first-child > th,
+ tbody:first-child > tr:first-child > td {
+  border-top: none
+ }
+}
+
+option { font-size:110%; }
+
+.bigHeader(@size) {
+ font-size:@size;
+ font-weight:lighter;
+ padding-top: 0.2em;
+ padding-bottom: 0.2em;
+ padding-left: 0.05em;
+ border-top: 1px solid;
+ border-bottom: 1px solid;
+}
+.littleHeader(@size){
+text-align:left; font-size:@size;font-weight:bolder;
+}
+
+h1 { .bigHeader(180%); }
+h2 { .bigHeader(160%); }
+h3 { .littleHeader(140%); }
+h4 { .littleHeader(130%); }
+h5 { .littleHeader(120%); }
+h6 { .littleHeader(110%); }
+
+fieldset {
+    margin: 1em 0em 1em 0em;
+    padding: 0em 1em 1em 1em;
+}
+
+pre {
+  text-align: left;
+  width: 95%;
+  overflow: auto;
+  padding: 0.1em;
+}
+
+//////////////////////////////////////////////////////////////////////
+//  Colors
+//////////////////////////////////////////////////////////////////////
+
+body {
+ color:black;
+ background-color:#fcfcfc;
+}
+kbd {
+ background:#eeeeee;
+}
+
+h1 {
+ border-color: black;
+ background: #e5e5e5;
+}
+
+h2 {
+ border-color: black;
+ background: #f5f5f5;
+}
+
+pre {
+  border-color:#909090;
+  background:#f0f0f0
+}
+
+button, input.button, input[type="button"],
+input[type="submit"], input[type="reset"],
+input[type="file"]{
+    .inputuibutton(
+      black,#e0e0e0,#f8f8f8,#808080,
+      white,#606060,#303030,#f0f0f0,
+      white,#606060,#303030,#f0f0f0);
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"]{
+ .inputuifield(black,#f8f8f8,#f0f0f0);
+}
+
+input[type="checkbox"]{
+  border:0;
+  .linearGradient(#f8f8f8,#f0f0f0);
+  color:black;
+}
+
+input[type="radio"]{
+ border: 0;
+ .linearGradient(#f8f8f8,#f0f0f0);
+ color:black;
+}
+
+hr {
+ border-color:#c0c0c0;
+ color:#c0c0c0;
+}
+
+table {
+  border-color:#808080;
+}
+/* odd-row cells */
+td{
+ border-color:black;
+ background-color:#e0e0e0;
+ color:black;
+ b{
+  color:black;
+ }
+}
+th {
+  color:black;
+  .linearGradient(#cccccc,#dddddd);
+}
+/* even-row cells */
+tr {
+  td:nth-child(even){background-color:#f0f0f0;}
+  th:nth-child(even){.linearGradient(#d0d0d0,#eeeeee);}
+}
+
+body {
+ .traditionaltypography();
+}
+@import "print.less";
+
+//////////////////////////////////////////////////////////////////////
+//  Site-specific styles
+//////////////////////////////////////////////////////////////////////
+@media screen {
+h1, h2, h3, h4, h5, h6, th {
+ .textShadowEx(3px,3px,4px,white);
+}
+}
+nav {
+    float: left;
+    width: 25%;
+    border-left: 1px solid;
+    margin-top: 0px;
+    box-sizing: border-box;
+    padding-left: 1em;
+}
+.mainarea {
+ width:75%;
+ float:left;
+}
+
+.header {
+ .stickyheader();
+ font-size:130%;
+ width:100%;
+ padding-left:1em;
+ padding-right:1em;
+ font-weight:bolder;
+ display:none;
+ .linearGradient(#d0d0d0,#fcfcfc);
+}
+
+
+div.description {
+ margin-top: 0.3em;
+ margin-bottom: 0.3em;
+}
+@media screen and (max-width:785px){
+.header {
+ display:block;
+}
+.mainarea {
+ margin-top: 3em;
+ width:100%;
+ float:none;
+}
+nav {
+    float: none;
+    width: 100%;
+    border: none;
+    margin-top: 0px;
+    box-sizing: border-box;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+}
