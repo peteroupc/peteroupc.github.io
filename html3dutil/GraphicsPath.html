@@ -51,7 +51,7 @@ the HTML 3D Library.  Example:<pre>
 
     <h4 style="margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(str)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1668">line 1668</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1696">line 1696</a>
      </i></small></p>
 
 <div class="description">
@@ -1048,7 +1048,7 @@ is 1.
 
     <h4 style="margin-bottom:0px" id="getTriangles"><span style="font-weight:lighter"></span>getTriangles<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line2232">line 2232</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line2260">line 2260</a>
      </i></small></p>
 
 <div class="description">
@@ -1129,8 +1129,8 @@ in that order).
      </i></small></p>
 
 <div class="description">
-    Computes the intersection of this path's shape and another
-path's shape. The points given in the <a href="GraphicsPath.html#union">GraphicsPath#union</a> method
+    Computes the intersection, or the area common to both this path's shape
+and another path's shape. The points given in the <a href="GraphicsPath.html#union">GraphicsPath#union</a> method
 apply to this method.
 </div>
 
@@ -1535,7 +1535,7 @@ at this path's current position.
 
     <h4 style="margin-bottom:0px" id="rect"><span style="font-weight:lighter"></span>rect<span class="signature">(x, y, width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1620">line 1620</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1648">line 1648</a>
      </i></small></p>
 
 <div class="description">
@@ -1744,6 +1744,51 @@ See <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a>.
 
 </div>
 
+    <h4 style="margin-bottom:0px" id="transform"><span style="font-weight:lighter"></span>transform<span class="signature">(trans)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1608">line 1608</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+        <th>Type</th>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+
+                <td><code>trans</code></td>
+
+            <td class="type">
+
+<span class="param-type">*</span>
+
+            </td>
+
+            <td class="description last"></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<dl class="details">
+
+</dl>
+
     <h4 style="margin-bottom:0px" id="union"><span style="font-weight:lighter"></span>union<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1250">line 1250</a>
@@ -1763,7 +1808,7 @@ order (clockwise or counterclockwise) from the subpath
 that contains them.
 <li>To use this method, you must include the script "extras/pathclip.js";
 this is in addition to "extras/pathclip.js".  Example:<pre>
-&lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+&lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
 &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
 </ul>
 </div>

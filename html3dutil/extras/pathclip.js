@@ -1237,7 +1237,7 @@ var GraphicsPath=globalContext.GraphicsPath;
  * that contains them.
  * <li>To use this method, you must include the script "extras/pathclip.js";
  * this is in addition to "extras/pathclip.js".  Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
  * @param {GraphicsPath} path A path to combine with this one.
@@ -1274,8 +1274,8 @@ GraphicsPath.prototype.difference=function(path,flatness){
  return retval.toPath();
 };
 /**
- * Computes the intersection of this path's shape and another
- * path's shape. The points given in the {@link GraphicsPath#union} method
+ * Computes the intersection, or the area common to both this path's shape
+ * and another path's shape. The points given in the {@link GraphicsPath#union} method
  * apply to this method.
  * @param {GraphicsPath} path A path to combine with this one.
 * @param {number} [flatness] When curves and arcs

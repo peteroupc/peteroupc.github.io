@@ -62,18 +62,18 @@ table {
  span.printonly, b.printonly, sup.printonly {
   display: inline;
  }
- 
-ol, ul { 
- .columns(2); 
+
+ol, ul {
+ .columns(2);
  ol, ul { .columns(1); }
 }
-nav, td, th { 
+nav, td, th {
  ol, ul { .columns(1); }
 }
   ul li, ol li, dl dt {   page-break-after: avoid;  }
   ul li:first-child, ol li:first-child, dl dt:first-child { page-break-after: auto; }
  footer {
-  border-top: 1px solid black;
+  border-top: 3px double black;
   border-left: none;
   border-right: none;
   border-bottom: none;
@@ -87,7 +87,7 @@ nav, td, th {
   filter:none;
   border: none;
  }
- 
+
  img { border: none; }
 
 p{
@@ -112,23 +112,34 @@ dd p { display: inline; text-indent: 0em; }
 dl {
  &+h4:before, &+h5:before, &+h6:before { clear:both; }
 }
-h1 { margin-top: 0.2em; }
-/* define headers after h1 */
-h2 { margin-top: 0.2em;margin-left: 0em; border-bottom: 1px solid black; .borderRadius(0px);
+/* define headers */
+h1 { margin-top: 0.2em;
+    border-bottom: 5px double black;
+    .borderRadius(0px); }
+h2 { margin-top: 0.2em;margin-left: 0em;
+   border-bottom: 1px solid black; .borderRadius(0px);
    padding:2px 2px 2px 0px;}
 h3 { margin-left: 0em; font-size: 130%; }
 h4 { margin-left: 0em; font-size: 120%; font-style:italic; }
 h5 { margin-left: 0em; font-size: 110%; font-weight: 400; font-style:italic; }
 h6 { margin-left: 0em; font-size: 100%; font-weight: 400; font-style:italic; }
 /* to make subheaders float with the text */
-h4 { float:left; margin-right: 0.3em; margin-top:-0.3em; margin-bottom:0em }
-h5 { float:left; margin-right: 0.3em; margin-top:-0.15em; margin-bottom:0em }
-h6 { float:left; margin-right: 0.3em; margin-top:0em; margin-bottom:0em }
+h4 { display: inline; padding-right: 0.5em;
+ margin-top:-0.3em; margin-bottom:0em }
+h5 { display: inline; padding-right: 0.5em;
+ margin-top:-0.15em; margin-bottom:0em }
+h6 { display: inline; padding-right: 0.5em;
+ margin-top:0em; margin-bottom:0em }
 h4, h5, h6 {
  &:after{content:"."; font-weight:bolder}
  &+ul, &+ol, &+table, &+pre, &+dl { clear:left }
- &+p, &+div { display: list-item; list-style: none; 
-  &+* { clear:left }
+ &+p, &+div {
+  display: inline;
+  &:after {
+   // there must be some content, even empty, for
+   // the pseudoelement to appear
+   display: block; content:""
+  }
  }
 }
 pre {
@@ -150,7 +161,7 @@ p, h1, h2, h3, h4, h5, h6, th, ol, ul, td, dt, pre, blockquote, div, li, dd{
  }
  a:link:after, a:visited:after {
   display: inline;
-  content:" (" attr(href) ")"; 
+  content:" (" attr(href) ")";
   font-size: 75%;
   font-style: italic;
   .nosmallcaps();
@@ -161,7 +172,7 @@ p, h1, h2, h3, h4, h5, h6, th, ol, ul, td, dt, pre, blockquote, div, li, dd{
  a[href^="javascript"],
  a[href^="#"],
  a[href^="mailto"] {
-  &:link:visited, &:visited:after { display: none; }
+  &:link:after, &:visited:after { display: none; }
  }
 a[href^="javascript"]:link,
 a[href^="javascript"]:visited {
