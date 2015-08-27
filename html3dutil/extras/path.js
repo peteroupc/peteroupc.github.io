@@ -317,8 +317,10 @@ GraphicsPath.prototype.toString=function(){
     ret+="C"+a[3]+","+a[4]+","+a[5]+","+a[6]+","+a[7]+","+a[8];
    }
    if(a[0]===GraphicsPath.ARC){
+    var delta=a[13]-a[12];
+    var largeArc=Math.abs(delta)>Math.PI
     ret+="A"+a[3]+","+a[4]+","+(a[5]*180/Math.PI)+","+
-      (a[6] ? "1" : "0")+(a[7] ? "1" : "0")+a[8]+","+a[9];
+      (largeArc ? "1" : "0")+((delta>0) ? "1" : "0")+a[8]+","+a[9];
    }
   }
  }
@@ -1285,8 +1287,7 @@ if(startAngle===endAngle || xRadius<=0 || yRadius<=0)return 0;
    ellipticIntegrand,startAngle,endAngle));
 };
 GraphicsPath._vecangle=function(a,b,c,d){
-
-var dot=a*c+b*d;
+ var dot=a*c+b*d;
  var denom=Math.sqrt(a*a+b*b)*Math.sqrt(c*c+d*d);
  dot/=denom;
  var sgn=a*d-b*c;
@@ -1299,8 +1300,7 @@ var dot=a*c+b*d;
  return ret;
 };
 GraphicsPath._arcSvgToCenterParam=function(a){
-
-var x1=a[1];
+ var x1=a[1];
  var y1=a[2];
  var x2=a[8];
  var y2=a[9];
@@ -1352,6 +1352,38 @@ var x1=a[1];
  return [cx,cy,theta1,delta];
 };
 
+GraphicsPath._arcToBezierCurves=function(cx,cy,rx,ry,rot,angle1,angle2){
+ var crot = Math.cos(rot);
+ var srot = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
+ var arcsize=Math.abs(angle2-angle1);
+ var arcs=16;
+ if(arcsize<Math.PI/8)arcs=2;
+ else if(arcsize<Math.PI/4)arcs=4;
+ else if(arcsize<Math.PI/2)arcs=6;
+ else if(arcsize<Math.PI)arcs=10;
+ var third=1/3;
+ var step=(angle2-angle1)/arcs;
+ var ret=[]
+ var t5 = Math.tan(step * 0.5);
+ var t7 = ((Math.sin(step) * third * (Math.sqrt(3.0*t5*t5+4.0) - 1.0)));
+ for(var idx=0;idx<arcs;idx++){
+  var ang1=angle1+idx*step;
+  var ang2=angle1+(idx+1)*step;
+  var t2 = Math.cos(ang1);
+  var t1 = (ang1>=0 && ang1<6.283185307179586) ? (ang1<=3.141592653589793 ? Math.sqrt(1.0-t2*t2) : -Math.sqrt(1.0-t2*t2)) : Math.sin(ang1);
+  var t4 = Math.cos(ang2);
+  var t3 = (ang2>=0 && ang2<6.283185307179586) ? (ang2<=3.141592653589793 ? Math.sqrt(1.0-t4*t4) : -Math.sqrt(1.0-t4*t4)) : Math.sin(ang2);
+  var t8=[((cx + ((rx * crot) * t2)) - ((ry * srot) * t1)), ((cy + ((rx * srot) * t2)) + ((ry * crot) * t1))];
+  var t9=[((cx + ((rx * crot) * t4)) - ((ry * srot) * t3)), ((cy + ((rx * srot) * t4)) + ((ry * crot) * t3))];
+  var t10 = [(((-rx) * crot) * t1 - ((ry * srot) * t2)), (((-rx) * srot) * t1 + ((ry * crot) * t2))];
+  var t11 = [(((-rx) * crot) * t3 - ((ry * srot) * t4)), (((-rx) * srot) * t3 + ((ry * crot) * t4))];
+  var t12 = [(t8[0] + t10[0] * t7), (t8[1] + t10[1] * t7)];
+  var t13 = [(t9[0] - t11[0] * t7), (t9[1] - t11[1] * t7)];
+  ret.push([t8[0],t8[1],t12[0],t12[1],t13[0],t13[1],t9[0],t9[1]])
+ }
+ return ret
+}
+
 /**
  * Adds path segments in the form of an elliptical arc to this path,
  * using the parameterization used by the SVG specification.
@@ -1373,8 +1405,7 @@ var x1=a[1];
  * @return {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
-
-if(rx === 0 || ry === 0){
+ if(rx === 0 || ry === 0){
   return this.lineTo(x2,y2);
  }
  var x1=this.endPos[0];
@@ -1401,37 +1432,8 @@ if(rx === 0 || ry === 0){
  var arc=[GraphicsPath.ARC,
   x1,y1,rx,ry,rot,!!largeArc,!!sweep,x2,y2];
  var cp=GraphicsPath._arcSvgToCenterParam(arc);
- var arcsize=Math.abs(cp[3]-cp[2]);
- var arcs=16;
- if(arcsize<Math.PI/8)arcs=2;
- else if(arcsize<Math.PI/4)arcs=4;
- else if(arcsize<Math.PI/2)arcs=6;
- else if(arcsize<Math.PI)arcs=10;
- var third=1/3;
- var step=(cp[3]-cp[2])/arcs;
- var cx=cp[0];
- var cy=cp[1];
- var t5 = Math.tan(step * 0.5);
- var t7 = ((Math.sin(step) * third * (Math.sqrt(3.0*t5*t5+4.0) - 1.0)));
- for(var idx=0;idx<arcs;idx++){
-  var ang1=cp[2]+idx*step;
-  var ang2=cp[2]+(idx+1)*step;
-  var t2 = Math.cos(ang1);
-  var t1 = (ang1>=0 && ang1<6.283185307179586) ? (ang1<=3.141592653589793 ? Math.sqrt(1.0-t2*t2) : -Math.sqrt(1.0-t2*t2)) : Math.sin(ang1);
-  var t4 = Math.cos(ang2);
-  var t3 = (ang2>=0 && ang2<6.283185307179586) ? (ang2<=3.141592653589793 ? Math.sqrt(1.0-t4*t4) : -Math.sqrt(1.0-t4*t4)) : Math.sin(ang2);
-  var t8 = [((cx + ((rx * crot) * t2)) - ((ry * srot) * t1)), ((cy + ((rx * srot) * t2)) + ((ry * crot) * t1))];
-  var t9=[x2,y2];
-  if(idx+1<arcs){
-   t9=[((cx + ((rx * crot) * t4)) - ((ry * srot) * t3)), ((cy + ((rx * srot) * t4)) + ((ry * crot) * t3))];
-  }
-  var t10 = [(((-rx) * crot) * t1 - ((ry * srot) * t2)), (((-rx) * srot) * t1 + ((ry * crot) * t2))];
-  var t11 = [(((-rx) * crot) * t3 - ((ry * srot) * t4)), (((-rx) * srot) * t3 + ((ry * crot) * t4))];
-  var t12 = [(t8[0] + t10[0] * t7), (t8[1] + t10[1] * t7)];
-  var t13 = [(t9[0] - t11[0] * t7), (t9[1] - t11[1] * t7)];
-  this.bezierCurveTo(t12[0],t12[1],t13[0],t13[1],t9[0],t9[1]);
- }
- /*
+ arc[6]=null // unused
+ arc[7]=null // unused
  arc[10]=cp[0];
  arc[11]=cp[1];
  arc[12]=cp[2];
@@ -1440,7 +1442,6 @@ if(rx === 0 || ry === 0){
  this.endPos[0]=x2;
  this.endPos[1]=y2;
  this.incomplete=false;
- */
  return this;
 };
 GraphicsPath._nextAfterWs=function(str,index){
@@ -1616,7 +1617,6 @@ GraphicsPath.prototype.transform=function(trans){
  var x,y,i,j;
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i].slice(0)
-  ret.segments.push(s)
   switch(this.segments[i][0]){
    case GraphicsPath.LINE:
    case GraphicsPath.QUAD:
@@ -1627,10 +1627,29 @@ GraphicsPath.prototype.transform=function(trans){
      s[j]=x
      s[j+1]=y
     }
+    ret.segments.push(s)
     break
-   case GraphicsPath.ARC:
+   case GraphicsPath.ARC: {
+    var curves=GLMath.arcToBezierCurves(s[10],s[11],s[3],s[4],s[5],s[12],s[13]);
+    curves[0][0]=s[1]
+    curves[0][1]=s[2]
+    curves[curves.length-1][6]=s[8]
+    curves[curves.length-1][7]=s[9]
+    for(var j=0;j<curves.length;j++){
+     var cs=curves[j]
+     for(var k=0;k<8;k+=2){
+      x=a*cs[j]+c*cs[j+1]+e
+      y=b*cs[j]+d*cs[j+1]+f
+      cs[j]=x
+      cs[j+1]=y
+     }
+     ret.segments.push([GraphicsPath.CUBIC,
+       cs[0],cs[1],cs[2],cs[3],cs[4],cs[5],cs[6],cs[7]])
+    }
     break
+   }
    default:
+    ret.segments.push(s)
     break
   }
  }
