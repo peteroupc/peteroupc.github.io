@@ -1646,6 +1646,17 @@ GraphicsPath.prototype.transform=function(trans){
     ret.segments.push(s)
     break
    case GraphicsPath.ARC: {
+    if(a==1 &amp;&amp; b==0 &amp;&amp; c==0 &amp;&amp; d==1){
+     // just a translation
+     s[1]+=e
+     s[2]+=f
+     s[8]+=e
+     s[9]+=f
+     s[10]+=e
+     s[11]+=f
+     ret.segments.push(s)
+     break
+    }
     var curves=GLMath.arcToBezierCurves(s[10],s[11],s[3],s[4],s[5],s[12],s[13]);
     curves[0][0]=s[1]
     curves[0][1]=s[2]
