@@ -120,8 +120,9 @@
    scene.render();
   });</code></pre><p>The render loop method takes a parameter (here &quot;time&quot;), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.</p>
 <h2>A Skeleton for 3D Apps <a id=A_Skeleton_for_3D_Apps></a></h2><p>The following is a minimal skeleton you can use for writing HTML apps using this library.</p>
-<pre class="prettyprint source"><code>&lt;meta charset=utf-8>
-&lt;head>
+<pre class="prettyprint source"><code>&lt;head>
+&lt;meta charset=utf-8>
+&lt;meta name=&quot;viewport&quot; content=&quot;user-scalable=no,initial-scale=1,maximum-scale=1&quot;>
 &lt;script type=&quot;text/javascript&quot; src=&quot;glutil_min.js&quot;>&lt;/script>
 &lt;/head>
 &lt;body style=&quot;margin:0px&quot;>

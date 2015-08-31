@@ -27,12 +27,6 @@
   -webkit-font-feature-settings: @v1 !important;
   -ms-font-feature-settings: @v1 !important;
 }
-.fontFeatureSettings2(@v1, @v2){
-  font-feature-settings: @v1, @v2 !important;
-  -moz-font-feature-settings: @v1, @v2 !important;
-  -webkit-font-feature-settings: @v1, @v2 !important;
-  -ms-font-feature-settings: @v1, @v2 !important;
-}
 
 .fontFeatureSettings4(@v1, @v2, @v3, @v4){
   font-feature-settings: @v1, @v2, @v3, @v4 !important;
@@ -43,11 +37,7 @@
 
 // Enables small caps
 .smallcaps() {
-  //.ie8 & {
-    font-variant: small-caps;
- // }
-  *font-variant: small-caps; // for IE6 and IE7
-  .fontFeatureSettings3("liga" 1, "kern" 1, "smcp" 1);
+  font-variant: small-caps;
 }
 
 .typographybase(){
@@ -55,9 +45,6 @@
   -webkit-text-rendering: optimizeLegibility;
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
-}
-.typographymono(){
-  .typographybase();
 }
 
 .hyphens(){
@@ -89,15 +76,6 @@
   .fontFeatureSettings4("onum" 0, "pnum" 0,"liga" 1, "kern" 1);
 }
 
-// Enables all small caps, including uppercase letters
-.upperlowersmallcaps() {
-  .ie8 & {
-    font-variant: small-caps;
-  }
-  *font-variant: small-caps; // for IE6 and IE7
-  .fontFeatureSettings4("liga" 1, "kern" 1, "smcp" 1, "c2sc" 1);
-}
-
 .fractions() {
  .fontFeatureSettings1("frac" 1);
 }
@@ -110,7 +88,7 @@
 
 .monospaced(){
     font-family: "Source Code Pro", "Menlo", "Consolas",  "Inconsolata", "Liberation Mono", "Lucida Console",
-       "DejaVu Sans Mono",
+       "DejaVu Sans Mono", "Droid Mono",
        "Free Mono", "Courier New", "Courier", monospaced;
 }
 
@@ -132,7 +110,7 @@
 //  Traditional font features for Web pages.
 //  Uses serif for body text, sans-serif for tables, headers,
 //  and other display text, and monospaced for code elements
-//  and input elements.
+//  and some input elements.
 //
 //  Example:
 //  body { .traditionaltypography(); }
@@ -153,7 +131,7 @@
   input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea,
   pre, textarea, tt, code, samp, var, kbd {
    .monospaced();
-   .typographymono();
+   .typographybase();
   }
   div, p, li, dt, dd {
    .serif();
@@ -186,7 +164,7 @@
   }
   pre, textarea, tt, code, samp, var, kbd {
    .monospaced();
-    .typographymono();
+    .typographybase();
   }
   pre {
    .nohyphens();
