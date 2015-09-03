@@ -52,84 +52,56 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" and "<a href="tutor
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>vertices</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>vertices</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">An array that contains data on each
+           </dt><dd>
+           An array that contains data on each
 vertex of the mesh.
 Each vertex is made up of the same number of elements, as defined in
 format. If null or omitted, creates an initially empty mesh.
-May be null or omitted, in which case an empty vertex array is used.</td>
-        </tr>
+May be null or omitted, in which case an empty vertex array is used.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>indices</code></td>
+                <code>indices</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">An array of vertex indices.  Each trio of
+           </dt><dd>
+           An array of vertex indices.  Each trio of
 indices specifies a separate triangle, or each pair of indices specifies
 a line segment.
-If null or omitted, creates an initially empty mesh.</td>
-        </tr>
+If null or omitted, creates an initially empty mesh.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>format</code></td>
+                <code>format</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">A set of bit flags depending on the kind of data
+           </dt><dd>
+           A set of bit flags depending on the kind of data
 each vertex contains.  Each vertex contains 3 elements plus:<ul>
  <li> 3 more elements if Mesh.NORMALS_BIT is set, plus
  <li> 3 more elements if Mesh.COLORS_BIT is set, plus
@@ -137,11 +109,9 @@ each vertex contains.  Each vertex contains 3 elements plus:<ul>
 If Mesh.LINES_BIT is set, each vertex index specifies a point of a line
 segment. If Mesh.POINTS_BIT is set, each vertex index specifies an
 individual point. Both bits can't be set.
-May be null or omitted, in which case "format" is set to 0.</td>
-        </tr>
+May be null or omitted, in which case "format" is set to 0.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -414,66 +384,50 @@ not automatically be normalized to unit length.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the bitangent vector.
+           </dt><dd>
+           X-coordinate of the bitangent vector.
   If "y" and "z" are null or omitted, this is instead
  a 3-element array giving the X, Y, and Z coordinates, or a single number
-giving the coordinate for all three dimensions.</td>
-        </tr>
+giving the coordinate for all three dimensions.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the bitangent vector.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the bitangent vector.
+If "x" is an array, this parameter may be omitted.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z-coordinate of the bitangent vector.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           Z-coordinate of the bitangent vector.
+If "x" is an array, this parameter may be omitted.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -504,26 +458,13 @@ that mode.  Only the red, green, and blue components will be used.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>r</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>r</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 |
 
@@ -532,43 +473,40 @@ that mode.  Only the red, green, and blue components will be used.
 
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">Array of three or
+           </dt><dd>
+           Array of three or
 four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
-        </tr>
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>g</code></td>
+                <code>g</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -596,31 +534,19 @@ in this mesh.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>func</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>func</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-            <td class="description last">A function that will be called
+           </dt><dd>
+           A function that will be called
 for each primitive in the mesh.  The function takes a single
 parameter, consisting of an array of one, two, or three vertex
 objects.  A point will have one vertex, a line two vertices and
@@ -634,11 +560,9 @@ Each component generally ranges from 0 to 1. May be absent.
 <li>"uv": A 2-element array of the vertex's texture coordinates
 (the first element is U, the second is V).
 Each component generally ranges from 0 to 1. May be absent.
-</ul></td>
-        </tr>
+</ul></dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -693,39 +617,25 @@ index in this mesh.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>index</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>index</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Zero-based index of
+           </dt><dd>
+           Zero-based index of
 the vertex to get.
 The index ranges from 0 to less than
 the number of vertices in the mesh, not the
-number of vertex indices.</td>
-        </tr>
+number of vertex indices.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -756,39 +666,25 @@ index in this mesh.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>index</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>index</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Zero-based index of
+           </dt><dd>
+           Zero-based index of
 the vertex normal to get.
 The index ranges from 0 to less than
 the number of vertices in the mesh, not the
-number of vertex indices.</td>
-        </tr>
+number of vertex indices.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -825,36 +721,22 @@ will not build upon previous vertices.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>other</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>other</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
 
-            </td>
+)
 
-            <td class="description last">A mesh to merge into this one. The mesh
-given in this parameter will remain unchanged.</td>
-        </tr>
+           </dt><dd>
+           A mesh to merge into this one. The mesh
+given in this parameter will remain unchanged.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -895,37 +777,23 @@ to that mesh.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>m</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>m</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">A primitive type.  One of the following:
+           </dt><dd>
+           A primitive type.  One of the following:
 Mesh.TRIANGLES, Mesh.LINES, Mesh.LINE_STRIP, Mesh.TRIANGLE_STRIP,
-Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.</td>
-        </tr>
+Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -957,66 +825,50 @@ not automatically be normalized to unit length.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the normal.
+           </dt><dd>
+           X-coordinate of the normal.
   If "y" and "z" are null or omitted, this is instead
  a 3-element array giving the X, Y, and Z coordinates, or a single number
-giving the coordinate for all three dimensions.</td>
-        </tr>
+giving the coordinate for all three dimensions.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the normal.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the normal.
+If "x" is an array, this parameter may be omitted.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z-coordinate of the normal.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           Z-coordinate of the normal.
+If "x" is an array, this parameter may be omitted.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1095,53 +947,38 @@ be normalized to unit length (unless the normal is (0,0,0)).
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>flat</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>flat</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">If true, each triangle in the mesh
+           </dt><dd>
+           If true, each triangle in the mesh
 will have the same normal, which usually leads to a flat
 appearance.  If false, each unique vertex in the mesh
 will have its own normal, which usually leads to a smooth
-appearance.</td>
-        </tr>
+appearance.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>inward</code></td>
+                <code>inward</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">If true, the generated normals
-will point inward; otherwise, outward.</td>
-        </tr>
+           </dt><dd>
+           If true, the generated normals
+will point inward; otherwise, outward.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1272,65 +1109,49 @@ This method doesn't change this mesh's current color.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>r</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>r</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Red component of the color (0-1).
+           </dt><dd>
+           Red component of the color (0-1).
 Can also be a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
-        </tr>
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>g</code></td>
+                <code>g</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Green component of the color (0-1).
-May be null or omitted if a string is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Green component of the color (0-1).
+May be null or omitted if a string is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Blue component of the color (0-1).
-May be null or omitted if a string is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Blue component of the color (0-1).
+May be null or omitted if a string is given as the "r" parameter.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1359,86 +1180,69 @@ equals the number of vertices in this mesh or greater.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>index</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>index</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Zero-based index of
+           </dt><dd>
+           Zero-based index of
 the vertex to set.
 The index ranges from 0 to less than
 the number of vertices in the mesh, not the
-number of vertex indices.</td>
-        </tr>
+number of vertex indices.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>x</code></td>
+                <code>x</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 |
 
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">X coordinate of the vertex position.
+           </dt><dd>
+           X coordinate of the vertex position.
 Can also be a 3-element array giving
 the X, Y, and Z coordinates, respectively, of the vertex
-position.</td>
-        </tr>
+position.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y coordinate of the vertex position.
-May be null or omitted if "x" is an array.</td>
-        </tr>
+           </dt><dd>
+           Y coordinate of the vertex position.
+May be null or omitted if "x" is an array.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z coordinate of the vertex position.
-May be null or omitted if "x" is an array.</td>
-        </tr>
+           </dt><dd>
+           Z coordinate of the vertex position.
+May be null or omitted if "x" is an array.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1467,86 +1271,69 @@ equals the number of vertices in this mesh or greater.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>index</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>index</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Zero-based index of
+           </dt><dd>
+           Zero-based index of
 the vertex to set.
 The index ranges from 0 to less than
 the number of vertices in the mesh, not the
-number of vertex indices.</td>
-        </tr>
+number of vertex indices.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>x</code></td>
+                <code>x</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 |
 
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">X coordinate of the vertex normal.
+           </dt><dd>
+           X coordinate of the vertex normal.
 Can also be a 3-element array giving
 the X, Y, and Z coordinates, respectively, of the vertex
-normal.</td>
-        </tr>
+normal.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y coordinate of the vertex normal.
-May be null or omitted if "x" is an array.</td>
-        </tr>
+           </dt><dd>
+           Y coordinate of the vertex normal.
+May be null or omitted if "x" is an array.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z coordinate of the vertex normal.
-May be null or omitted if "x" is an array.</td>
-        </tr>
+           </dt><dd>
+           Z coordinate of the vertex normal.
+May be null or omitted if "x" is an array.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1578,66 +1365,50 @@ not automatically be normalized to unit length.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the tangent vector.
+           </dt><dd>
+           X-coordinate of the tangent vector.
   If "y" and "z" are null or omitted, this is instead
  a 3-element array giving the X, Y, and Z coordinates, or a single number
-giving the coordinate for all three dimensions.</td>
-        </tr>
+giving the coordinate for all three dimensions.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the tangent vector.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the tangent vector.
+If "x" is an array, this parameter may be omitted.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z-coordinate of the tangent vector.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           Z-coordinate of the tangent vector.
+If "x" is an array, this parameter may be omitted.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1672,52 +1443,37 @@ right corner (by default).
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>u</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>u</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the texture, from 0-1.
+           </dt><dd>
+           X-coordinate of the texture, from 0-1.
   If "v" are null or omitted, this is instead
  a 3-element array giving the X and Y coordinates, or a single number
-giving the coordinate for all three dimensions.</td>
-        </tr>
+giving the coordinate for all three dimensions.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>v</code></td>
+                <code>v</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the texture, from 0-1.
-If "u" is an array, this parameter can be omitted.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the texture, from 0-1.
+If "u" is an array, this parameter can be omitted.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1777,36 +1533,22 @@ added after calling this method without calling mode() first.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>matrix</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>matrix</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A 4x4 matrix describing
-the transformation.</td>
-        </tr>
+           </dt><dd>
+           A 4x4 matrix describing
+the transformation.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1834,55 +1576,40 @@ be treated as 0.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 |
 
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The X-coordinate.
+           </dt><dd>
+           The X-coordinate.
 If "y" is null or omitted, this is instead
 a 3-element array giving the X, Y, and Z coordinates, or a single number
-giving the coordinate for all three dimensions.</td>
-        </tr>
+giving the coordinate for all three dimensions.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The Y-coordinate.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           The Y-coordinate.
+If "x" is an array, this parameter may be omitted.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1912,69 +1639,53 @@ and texture coordinates if they have been defined.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 |
 
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The X-coordinate.
+           </dt><dd>
+           The X-coordinate.
   If "y" and "z" are null or omitted, this is instead
  a 3-element array giving the X, Y, and Z coordinates, or a single number
-giving the coordinate for all three dimensions.</td>
-        </tr>
+giving the coordinate for all three dimensions.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The Y-coordinate.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           The Y-coordinate.
+If "x" is an array, this parameter may be omitted.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The Z-coordinate.
-If "x" is an array, this parameter may be omitted.</td>
-        </tr>
+           </dt><dd>
+           The Z-coordinate.
+If "x" is an array, this parameter may be omitted.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

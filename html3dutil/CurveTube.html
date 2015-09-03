@@ -44,82 +44,54 @@ the HTML 3D Library.  Example:<pre>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>func</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>func</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Object</span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">An object that must contain a function
+           </dt><dd>
+           An object that must contain a function
 named "evaluate", which takes the following parameter:<ul>
 <li><code>u</code> - A curve coordinate, generally from 0 to 1.
 </ul>
 The evaluator function returns a 3-element array: the first
 element is the X coordinate of the curve's position, the second
-element is the Y coordinate, and the third is the Z coordinate.</td>
-        </tr>
+element is the Y coordinate, and the third is the Z coordinate.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>thickness</code></td>
+                <code>thickness</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Radius of the
+extruded tube.  If this parameter is null or omitted, the default is 0.125.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Radius of the
-extruded tube.  If this parameter is null or omitted, the default is 0.125.</td>
-        </tr>
+                <code>sweptCurve</code>
 
-        <tr>
-
-                <td><code>sweptCurve</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Object</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Object describing
+           </dt><dd>
+           Object describing
 a two-dimensional curve to serve as the cross section of the extruded shape,
 corresponding to the V coordinate of the CurveTube's
 "evaluate" method.
@@ -131,11 +103,9 @@ except the third element, if any, of the return value is ignored.<p>
 The curve need not be closed.<p>
 The cross section will generally have a radius of 1 unit; bigger
 or smaller cross sections will affect the meaning of the "thickness"
-parameter.</td>
-        </tr>
+parameter.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -156,49 +126,34 @@ parameter.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>u</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>u</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">U coordinate.  This will run the length of the curve.</td>
-        </tr>
+           </dt><dd>
+           U coordinate.  This will run the length of the curve.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>v</code></td>
+                <code>v</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">V coordinate.  This will sweep around the extruded
-tube.</td>
-        </tr>
+           </dt><dd>
+           V coordinate.  This will sweep around the extruded
+tube.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

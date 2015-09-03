@@ -48,88 +48,58 @@ log is output to the JavaScript console.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>context</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>context</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">WebGLRenderingContext</span>
 |
 
 <span class="param-type">object</span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">A WebGL context associated with the
+           </dt><dd>
+           A WebGL context associated with the
 compiled shader program, or an object, such as Scene3D, that
 implements a no-argument <code>getContext</code> method
-that returns a WebGL context.</td>
-        </tr>
+that returns a WebGL context.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>vertexShader</code></td>
+                <code>vertexShader</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">String</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Source text of a vertex shader, in OpenGL
+           </dt><dd>
+           Source text of a vertex shader, in OpenGL
 ES Shading Language (GLSL).  If null, a default
-vertex shader is used instead.</td>
-        </tr>
+vertex shader is used instead.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>fragmentShader</code></td>
+                <code>fragmentShader</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">String</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Source text of a fragment shader in GLSL.
+If null, a default fragment shader is used instead.</dd>
 
-                </td>
-
-            <td class="description last">Source text of a fragment shader in GLSL.
-If null, a default fragment shader is used instead.</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -202,41 +172,27 @@ the source texture's edges.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>context</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>context</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">WebGLRenderingContext</span>
 |
 
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">A WebGL context associated with the
+           </dt><dd>
+           A WebGL context associated with the
 compiled shader program, or an object, such as Scene3D, that
 implements a no-argument <code>getContext</code> method
-that returns a WebGL context.</td>
-        </tr>
+that returns a WebGL context.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -263,41 +219,27 @@ that returns a WebGL context.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>context</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>context</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">WebGLRenderingContext</span>
 |
 
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">A WebGL context associated with the
+           </dt><dd>
+           A WebGL context associated with the
 compiled shader program, or an object, such as Scene3D, that
 implements a no-argument <code>getContext</code> method
-that returns a WebGL context.</td>
-        </tr>
+that returns a WebGL context.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -325,50 +267,37 @@ a raster effect to a texture.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>context</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>context</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">WebGLRenderingContext</span>
 |
 
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">A WebGL context associated with the
+           </dt><dd>
+           A WebGL context associated with the
 compiled shader program, or an object, such as Scene3D, that
 implements a no-argument <code>getContext</code> method
-that returns a WebGL context.</td>
-        </tr>
+that returns a WebGL context.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>functionCode</code></td>
+                <code>functionCode</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">A string giving shader code
+           </dt><dd>
+           A string giving shader code
 in OpenGL ES Shading Language (GLSL) that must contain
 a function with the following signature:
 <pre>
@@ -379,11 +308,9 @@ is the texture coordinates ranging from 0 to 1 in each component,
 <code>textureSize</code> is the dimensions of the texture in pixels,
 and the return value is the new color at the given texture coordinates.  Besides
 this requirement, the shader code is also free to define additional uniforms,
-constants, functions, and so on (but not another "main" function).</td>
-        </tr>
+constants, functions, and so on (but not another "main" function).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -411,35 +338,21 @@ a raster effect to a texture.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>functionCode</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>functionCode</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">See ShaderProgram.makeEffect().</td>
-        </tr>
+           </dt><dd>
+           See ShaderProgram.makeEffect().</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -482,41 +395,27 @@ in the case of ShaderProgram.)
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>name</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>name</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">The name of an attribute or uniform defined in either the
+           </dt><dd>
+           The name of an attribute or uniform defined in either the
 vertex or fragment shader of this shader program.  If the uniform or attribute
 is an array, each element in the array is named as in these examples:
 "unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
 "unif.member1", "unif.member2".  If it's an array of struct, each
 member is named as in these examples: "unif[0].member1",
-"unif[0].member2".</td>
-        </tr>
+"unif[0].member2".</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -575,36 +474,22 @@ active program in the WebGL context.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>name</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>name</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">The name of a uniform defined in either the
-vertex or fragment shader of this shader program.  See get().</td>
-        </tr>
+           </dt><dd>
+           The name of a uniform defined in either the
+vertex or fragment shader of this shader program.  See get().</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -642,31 +527,19 @@ in the case of the ShaderProgram class.)
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>uniforms</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>uniforms</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Object</span>
 
-            </td>
+)
 
-            <td class="description last">A hash of key/value pairs.  Each key is
+           </dt><dd>
+           A hash of key/value pairs.  Each key is
 the name of a uniform (see <a href="glutil.ShaderProgram.html#get">glutil.ShaderProgram#get</a>
 for more information), and each
 value is the value to set
@@ -676,11 +549,9 @@ that are 4x4 matrices must be 16 elements long.  Keys to
 uniforms that don't exist in this program are ignored.  See also
 the "name" parameter of the <a href="glutil.ShaderProgram.html#get">glutil.ShaderProgram#get</a>
 method for more information on
-uniform names.</td>
-        </tr>
+uniform names.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

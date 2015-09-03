@@ -89,21 +89,22 @@
 .monospaced(){
     font-family: "Source Code Pro", "Menlo", "Consolas",  "Inconsolata", "Liberation Mono", "Lucida Console",
        "DejaVu Sans Mono", "Droid Mono",
-       "Free Mono", "Courier New", "Courier", monospace;
+       "FreeMono", "Courier New", "Courier", monospace;
 }
 
 .sansserif(){
    font-family: "Helvetica Neue",
-       "Open Sans", "Free Sans", "Clear Sans", "Calibri", "Segoe UI",  "Roboto", "DejaVu Sans", Verdana,
+       "Open Sans", "FreeSans", "Clear Sans", "Calibri", "Liberation Sans",
+       "Segoe UI",  "Roboto", Verdana, "Droid Sans", "DejaVu Sans",
        "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 }
-
 .serif(){
    font-family: "Sitka Text", "PT Serif",
       "Charis SIL Compact", "Charis SIL",
       "Cambria",
       "Palatino Linotype",
-      "Droid Serif", "Free Serif", "Georgia", "Book Antiqua", "Times New Roman", serif;
+      "Droid Serif",
+      "Liberation Serif", "Georgia", "Book Antiqua", "FreeSerif", "Times New Roman", serif;
 }
 
 //
@@ -116,12 +117,8 @@
 //  body { .traditionaltypography(); }
 //
 .traditionaltypography(){
-  th {
+  th, td {
    .sansserif();
-   .typographytablecell();
-  }
-  td {
-   .serif();
    .typographytablecell();
   }
   input, legend, option, button, select, h1, h2, h3, h4, h5, h6, figcaption, caption {
@@ -135,6 +132,11 @@
   }
   div, p, li, dt, dd {
    .serif();
+   .typography();
+  }
+  aside {
+   .sansserif();
+   * { .sansserif(); }
    .typography();
   }
   pre {

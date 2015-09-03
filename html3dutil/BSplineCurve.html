@@ -36,57 +36,34 @@
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>controlPoints</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>controlPoints</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;Array.&lt;number>></span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">An array of control points.  Each
+           </dt><dd>
+           An array of control points.  Each
 control point is an array with the same length as the other control points.
 It is assumed that the first control point's length represents the size of all the control
-points.</td>
-        </tr>
+points.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>knots</code></td>
+                <code>knots</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">Knot vector of the curve.
+           </dt><dd>
+           Knot vector of the curve.
 Its size must be at least 2 plus the number of control
 points and not more than twice the number of control points.<p>
 The length of this parameter minus 1, minus the number
@@ -102,33 +79,26 @@ B-spline curve.<p>
 If there are N times 2 knots with the first N knots equal to 0 and the rest
 equal to 1, where N is the number of control points,
 the control points describe a <i>B&eacute;zier</i> curve, in which the
-first and last control points match the curve's end points.<p></td>
-        </tr>
+first and last control points match the curve's end points.<p></dd>
 
-        <tr>
+        <dt>
 
-                <td><code>bits</code></td>
+                <code>bits</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Bits for defining input
+           </dt><dd>
+           Bits for defining input
 and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
 BSplineCurve.HOMOGENEOUS_BIT,
-and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</td>
-        </tr>
+and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -222,82 +192,52 @@ the curve will start and end at the first and last control points.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>controlPoints</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>controlPoints</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;Array.&lt;number>></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Array of
+control points as specified in the glutil.BSplineCurve constructor.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Array of
-control points as specified in the glutil.BSplineCurve constructor.</td>
-        </tr>
+                <code>degree</code>
 
-        <tr>
-
-                <td><code>degree</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Degree of the B-Spline
+           </dt><dd>
+           Degree of the B-Spline
 curve.  For example, 3 means a degree-3 (cubic) curve.
-If null or omitted, the default is 3.</td>
-        </tr>
+If null or omitted, the default is 3.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>bits</code></td>
+                <code>bits</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Bits as specified in the glutil.BSplineCurve constructor.</dd>
 
-                </td>
-
-            <td class="description last">Bits as specified in the glutil.BSplineCurve constructor.</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -337,82 +277,52 @@ If null or omitted, the default is 3.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>controlPoints</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>controlPoints</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;Array.&lt;number>></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Array of
+control points as specified in the glutil.BSplineCurve constructor.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Array of
-control points as specified in the glutil.BSplineCurve constructor.</td>
-        </tr>
+                <code>degree</code>
 
-        <tr>
-
-                <td><code>degree</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Degree of the B-Spline
+           </dt><dd>
+           Degree of the B-Spline
 curve.  For example, 3 means a degree-3 (cubic) curve.
-If null or omitted, the default is 3.</td>
-        </tr>
+If null or omitted, the default is 3.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>bits</code></td>
+                <code>bits</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Bits as specified in the glutil.BSplineCurve constructor.</dd>
 
-                </td>
-
-            <td class="description last">Bits as specified in the glutil.BSplineCurve constructor.</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -453,35 +363,21 @@ in a B-spline curve.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>u</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>u</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Point on the curve to evaluate (from 0 through 1).</td>
-        </tr>
+           </dt><dd>
+           Point on the curve to evaluate (from 0 through 1).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

@@ -66,108 +66,89 @@ OpenGL's.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>l</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>l</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the point where the left
-clipping plane meets the near clipping plane.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the point where the left
+clipping plane meets the near clipping plane.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>r</code></td>
+                <code>r</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the point where the right
-clipping plane meets the near clipping plane.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the point where the right
+clipping plane meets the near clipping plane.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the point where the bottom
-clipping plane meets the near clipping plane.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the point where the bottom
+clipping plane meets the near clipping plane.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>t</code></td>
+                <code>t</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the point where the top
-clipping plane meets the near clipping plane.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the point where the top
+clipping plane meets the near clipping plane.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>n</code></td>
+                <code>n</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The distance from the camera to
+           </dt><dd>
+           The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
-seen. This should be slightly greater than 0.</td>
-        </tr>
+seen. This should be slightly greater than 0.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>f</code></td>
+                <code>f</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The distance from the camera to
+           </dt><dd>
+           The distance from the camera to
 the far clipping plane. Objects beyond this distance will be too far
-to be seen.</td>
-        </tr>
+to be seen.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -240,35 +221,21 @@ to be seen.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>mat</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>mat</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A matrix to replace the top of the stack with.</td>
-        </tr>
+           </dt><dd>
+           A matrix to replace the top of the stack with.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -296,36 +263,22 @@ transpose of the given matrix.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>mat</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>mat</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A matrix whose transpose will
-replace the top of the stack.</td>
-        </tr>
+           </dt><dd>
+           A matrix whose transpose will
+replace the top of the stack.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -355,142 +308,120 @@ OpenGL's.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>ex</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>ex</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X coordinate of the camera position in world space.</td>
-        </tr>
+           </dt><dd>
+           X coordinate of the camera position in world space.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>ey</code></td>
+                <code>ey</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y coordinate of the camera position.</td>
-        </tr>
+           </dt><dd>
+           Y coordinate of the camera position.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>ez</code></td>
+                <code>ez</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z coordinate of the camera position.</td>
-        </tr>
+           </dt><dd>
+           Z coordinate of the camera position.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>cx</code></td>
+                <code>cx</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X coordinate of the position in world space that
- the camera is looking at.</td>
-        </tr>
+           </dt><dd>
+           X coordinate of the position in world space that
+ the camera is looking at.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>cy</code></td>
+                <code>cy</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y coordinate of the position looked at.</td>
-        </tr>
+           </dt><dd>
+           Y coordinate of the position looked at.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>cz</code></td>
+                <code>cz</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z coordinate of the position looked at.</td>
-        </tr>
+           </dt><dd>
+           Z coordinate of the position looked at.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>ux</code></td>
+                <code>ux</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X coordinate of the up direction vector.
+           </dt><dd>
+           X coordinate of the up direction vector.
 This vector must not point in the same or opposite direction as
-the camera's view direction.</td>
-        </tr>
+the camera's view direction.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>uy</code></td>
+                <code>uy</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y coordinate of the up vector.</td>
-        </tr>
+           </dt><dd>
+           Y coordinate of the up vector.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>uz</code></td>
+                <code>uz</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z coordinate of the up vector.</td>
-        </tr>
+           </dt><dd>
+           Z coordinate of the up vector.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -522,35 +453,21 @@ the effect of scaling then translation.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>mat</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>mat</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A matrix to multiply the current one by.</td>
-        </tr>
+           </dt><dd>
+           A matrix to multiply the current one by.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -583,36 +500,22 @@ the effect of translation then scaling.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>mat</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>mat</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A matrix whose transpose the current
-matrix will be multiplied by.</td>
-        </tr>
+           </dt><dd>
+           A matrix whose transpose the current
+matrix will be multiplied by.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -644,104 +547,85 @@ OpenGL's.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>l</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>l</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Leftmost coordinate of the 3D view.</td>
-        </tr>
+           </dt><dd>
+           Leftmost coordinate of the 3D view.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>r</code></td>
+                <code>r</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Rightmost coordinate of the 3D view.
-(Note that r can be greater than l or vice versa.)</td>
-        </tr>
+           </dt><dd>
+           Rightmost coordinate of the 3D view.
+(Note that r can be greater than l or vice versa.)</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Bottommost coordinate of the 3D view.</td>
-        </tr>
+           </dt><dd>
+           Bottommost coordinate of the 3D view.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>t</code></td>
+                <code>t</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Topmost coordinate of the 3D view.
-(Note that t can be greater than b or vice versa.)</td>
-        </tr>
+           </dt><dd>
+           Topmost coordinate of the 3D view.
+(Note that t can be greater than b or vice versa.)</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>n</code></td>
+                <code>n</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Distance from the camera to the near clipping
-plane.  A positive value means the plane is in front of the viewer.</td>
-        </tr>
+           </dt><dd>
+           Distance from the camera to the near clipping
+plane.  A positive value means the plane is in front of the viewer.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>f</code></td>
+                <code>f</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Distance from the camera to the far clipping
-plane.  A positive value means the plane is in front of the viewer.</td>
-        </tr>
+           </dt><dd>
+           Distance from the camera to the far clipping
+plane.  A positive value means the plane is in front of the viewer.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -771,76 +655,59 @@ OpenGL's.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>l</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>l</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Leftmost coordinate of the 2D view.</td>
-        </tr>
+           </dt><dd>
+           Leftmost coordinate of the 2D view.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>r</code></td>
+                <code>r</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Rightmost coordinate of the 2D view.
-(Note that r can be greater than l or vice versa.)</td>
-        </tr>
+           </dt><dd>
+           Rightmost coordinate of the 2D view.
+(Note that r can be greater than l or vice versa.)</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Bottommost coordinate of the 2D view.</td>
-        </tr>
+           </dt><dd>
+           Bottommost coordinate of the 2D view.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>t</code></td>
+                <code>t</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Topmost coordinate of the 2D view.
-(Note that t can be greater than b or vice versa.)</td>
-        </tr>
+           </dt><dd>
+           Topmost coordinate of the 2D view.
+(Note that t can be greater than b or vice versa.)</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -870,83 +737,66 @@ OpenGL's.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>fov</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>fov</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Vertical field of view, in degrees. Should be less
+           </dt><dd>
+           Vertical field of view, in degrees. Should be less
 than 180 degrees.  (The smaller
 this number, the bigger close objects appear to be.  As a result,
 zoom can be implemented by multiplying field of view by an
-additional factor.)</td>
-        </tr>
+additional factor.)</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>aspect</code></td>
+                <code>aspect</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The ratio of width to height of the viewport, usually
- the scene's aspect ratio.</td>
-        </tr>
+           </dt><dd>
+           The ratio of width to height of the viewport, usually
+ the scene's aspect ratio.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>n</code></td>
+                <code>n</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The distance from the camera to
+           </dt><dd>
+           The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
-seen. This should be slightly greater than 0.</td>
-        </tr>
+seen. This should be slightly greater than 0.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>f</code></td>
+                <code>f</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The distance from the camera to
+           </dt><dd>
+           The distance from the camera to
 the far clipping plane. Objects beyond this distance will be too far
-to be seen.</td>
-        </tr>
+to be seen.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -974,89 +824,71 @@ a matrix that transforms the view to a portion of the viewport.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>wx</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>wx</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the center of the desired viewport portion.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the center of the desired viewport portion.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>wy</code></td>
+                <code>wy</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the center of the desired viewport portion.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the center of the desired viewport portion.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>ww</code></td>
+                <code>ww</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Width of the desired viewport portion.</td>
-        </tr>
+           </dt><dd>
+           Width of the desired viewport portion.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>wh</code></td>
+                <code>wh</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Height of the desired viewport portion.</td>
-        </tr>
+           </dt><dd>
+           Height of the desired viewport portion.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>vp</code></td>
+                <code>vp</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A 4-element array giving the X and Y coordinates
+           </dt><dd>
+           A 4-element array giving the X and Y coordinates
 of the lower left corner followed by the width and height
-of a rectangle indicating the current viewport.</td>
-        </tr>
+of a rectangle indicating the current viewport.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1132,80 +964,63 @@ and puts the copy on top of the stack.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>angle</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>angle</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The desired angle
+           </dt><dd>
+           The desired angle
 to rotate in degrees. If the axis of rotation
 points toward the viewer, the angle's value is increasing in
-a counterclockwise direction.</td>
-        </tr>
+a counterclockwise direction.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>x</code></td>
+                <code>x</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-component of the axis
-of rotation.</td>
-        </tr>
+           </dt><dd>
+           X-component of the axis
+of rotation.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-component of the axis
-of rotation.</td>
-        </tr>
+           </dt><dd>
+           Y-component of the axis
+of rotation.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z-component of the axis
-of rotation.</td>
-        </tr>
+           </dt><dd>
+           Z-component of the axis
+of rotation.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1233,61 +1048,45 @@ scaling transformation.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Scale factor along the X axis.</td>
-        </tr>
+           </dt><dd>
+           Scale factor along the X axis.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Scale factor along the Y axis.</td>
-        </tr>
+           </dt><dd>
+           Scale factor along the Y axis.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Scale factor along the Z axis.</td>
-        </tr>
+           </dt><dd>
+           Scale factor along the Z axis.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1315,61 +1114,45 @@ translation transformation.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Translation along the X axis.</td>
-        </tr>
+           </dt><dd>
+           Translation along the X axis.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Translation along the Y axis.</td>
-        </tr>
+           </dt><dd>
+           Translation along the Y axis.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Translation along the Z axis.</td>
-        </tr>
+           </dt><dd>
+           Translation along the Z axis.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

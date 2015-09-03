@@ -41,37 +41,23 @@ to (1,1) at the upper right corner.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>name</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>name</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">URL of the texture data.  It will be loaded via
+           </dt><dd>
+           URL of the texture data.  It will be loaded via
  the JavaScript DOM's Image class.  However, this constructor
- will not load that image yet.</td>
-        </tr>
+ will not load that image yet.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -92,64 +78,48 @@ to (1,1) at the upper right corner.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>array</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>array</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Uint8Array</span>
 
-            </td>
+)
 
-            <td class="description last">A byte array containing the texture data,
+           </dt><dd>
+           A byte array containing the texture data,
 with the pixels arranged in left-to-right rows from top to bottom.
 Each pixel takes 4 bytes, where the bytes are the red, green, blue,
-and alpha components, in that order.</td>
-        </tr>
+and alpha components, in that order.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>width</code></td>
+                <code>width</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Uint8Array</span>
 
-            </td>
+)
 
-            <td class="description last">Width, in pixels, of the texture.</td>
-        </tr>
+           </dt><dd>
+           Width, in pixels, of the texture.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>height</code></td>
+                <code>height</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Uint8Array</span>
 
-            </td>
+)
 
-            <td class="description last">Height, in pixels, of the texture.</td>
-        </tr>
+           </dt><dd>
+           Height, in pixels, of the texture.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -176,66 +146,41 @@ and alpha components, in that order.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>name</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>name</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">URL of the texture data.  Images with a TGA
+           </dt><dd>
+           URL of the texture data.  Images with a TGA
 extension that use the RGBA or grayscale format are supported.
 Images supported by the browser will be loaded via
-the JavaScript DOM's Image class.</td>
-        </tr>
+the JavaScript DOM's Image class.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>textureCache</code></td>
+                <code>textureCache</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Object</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">An object whose keys
+           </dt><dd>
+           An object whose keys
 are the names of textures already loaded.  This will help avoid loading
 the same texture more than once.  This parameter is optional
-and may be omitted.</td>
-        </tr>
+and may be omitted.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -281,39 +226,25 @@ always clamped.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>clamp</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>clamp</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">If true, the image's texture
+           </dt><dd>
+           If true, the image's texture
 coordinates will be clamped to the range [0, 1].  If false,
 the image's texture coordinates' fractional parts will
 be used as the coordinates (causing wraparound).
-The default is false.</td>
-        </tr>
+The default is false.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

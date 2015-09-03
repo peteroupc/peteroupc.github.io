@@ -61,31 +61,19 @@ the SVG specification.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>str</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>str</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">A string, in the SVG path format, representing
+           </dt><dd>
+           A string, in the SVG path format, representing
 a two-dimensional path.  An SVG path consists of a number of
 path segments, starting with a single letter, as follows:
 <ul>
@@ -116,11 +104,9 @@ and the starting letter can be separated by whitespace.
 This separation can be left out as long as doing so doesn't
 introduce ambiguity.  All commands set the current point
 to the end of the path segment (including Z/z, which adds a line
-segment if needed).</td>
-        </tr>
+segment if needed).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -158,104 +144,85 @@ HTML Canvas 2D Context.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the center of the circle that the arc forms a part of.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the center of the circle that the arc forms a part of.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the circle's center.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the circle's center.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>radius</code></td>
+                <code>radius</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Radius of the circle's center.</td>
-        </tr>
+           </dt><dd>
+           Radius of the circle's center.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>startAngle</code></td>
+                <code>startAngle</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Starting angle of the arc, in radians.
+           </dt><dd>
+           Starting angle of the arc, in radians.
 0 means the positive X-axis, &pi;/2 means the positive Y-axis,
-&pi; means the negative X-axis, and &pi;*1.5 means the negative Y-axis.</td>
-        </tr>
+&pi; means the negative X-axis, and &pi;*1.5 means the negative Y-axis.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>endAngle</code></td>
+                <code>endAngle</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Ending angle of the arc, in radians.</td>
-        </tr>
+           </dt><dd>
+           Ending angle of the arc, in radians.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>ccw</code></td>
+                <code>ccw</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">Whether the arc runs counterclockwise
+           </dt><dd>
+           Whether the arc runs counterclockwise
 (assuming the X axis points right and the Y axis points
-down under the coordinate system).</td>
-        </tr>
+down under the coordinate system).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -283,121 +250,101 @@ using the parameterization used by the SVG specification.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>rx</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>rx</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-axis radius of the ellipse that the arc will
-be formed from.</td>
-        </tr>
+           </dt><dd>
+           X-axis radius of the ellipse that the arc will
+be formed from.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>ry</code></td>
+                <code>ry</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-axis radius of the ellipse that the arc will
-be formed from.</td>
-        </tr>
+           </dt><dd>
+           Y-axis radius of the ellipse that the arc will
+be formed from.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>rot</code></td>
+                <code>rot</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Rotation of the ellipse in degrees (clockwise
+           </dt><dd>
+           Rotation of the ellipse in degrees (clockwise
 assuming the X axis points right and the Y axis points
-down under the coordinate system).</td>
-        </tr>
+down under the coordinate system).</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>largeArc</code></td>
+                <code>largeArc</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">In general, there are four possible solutions
+           </dt><dd>
+           In general, there are four possible solutions
 for arcs given the start and end points, rotation, and x- and y-radii.  If true,
-chooses an arc solution with the larger arc length; if false, smaller.</td>
-        </tr>
+chooses an arc solution with the larger arc length; if false, smaller.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>sweep</code></td>
+                <code>sweep</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">If true, the arc solution chosen will run
+           </dt><dd>
+           If true, the arc solution chosen will run
 clockwise (assuming the X axis points right and the Y axis points
-down under the coordinate system); if false, counterclockwise.</td>
-        </tr>
+down under the coordinate system); if false, counterclockwise.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>x2</code></td>
+                <code>x2</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the arc's end point.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the arc's end point.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y2</code></td>
+                <code>y2</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the arc's end point.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the arc's end point.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -426,93 +373,75 @@ HTML Canvas 2D Context.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x1</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x1</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of a point that, along with the
+           </dt><dd>
+           X-coordinate of a point that, along with the
 current end point, forms a tangent line.  The point where the
 circle touches this tangent line is the start point of the arc, and if the
 point isn't the same as the current end point, this method adds
-a line segment connecting the two points.</td>
-        </tr>
+a line segment connecting the two points.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y1</code></td>
+                <code>y1</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the point described under "x1".</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the point described under "x1".</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>x2</code></td>
+                <code>x2</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of a point that, along with the
+           </dt><dd>
+           X-coordinate of a point that, along with the
 point (x1, y1), forms a tangent line.  The point where the
-circle touches this tangent line is the end point of the arc.</td>
-        </tr>
+circle touches this tangent line is the end point of the arc.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y2</code></td>
+                <code>y2</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the point described under "x2".</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the point described under "x2".</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>radius</code></td>
+                <code>radius</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Radius of the circle the arc forms a part of.</td>
-        </tr>
+           </dt><dd>
+           Radius of the circle the arc forms a part of.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -540,100 +469,81 @@ at this path's current position.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last"></td>
-        </tr>
+           </dt><dd>
+           </dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last"></td>
-        </tr>
+           </dt><dd>
+           </dd>
 
-        <tr>
+        <dt>
 
-                <td><code>x2</code></td>
+                <code>x2</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last"></td>
-        </tr>
+           </dt><dd>
+           </dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y2</code></td>
+                <code>y2</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last"></td>
-        </tr>
+           </dt><dd>
+           </dd>
 
-        <tr>
+        <dt>
 
-                <td><code>x3</code></td>
+                <code>x3</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the curve's end point.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the curve's end point.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y3</code></td>
+                <code>y3</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the curve's end point.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the curve's end point.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -686,63 +596,38 @@ apply to this method.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>path</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>path</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           A path to combine with this one.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">A path to combine with this one.</td>
-        </tr>
+                <code>flatness</code>
 
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments, the
 segments will be close to the true path of the curve by this
-value, given in units.  If null or omitted, default is 1.</td>
-        </tr>
+value, given in units.  If null or omitted, default is 1.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -804,49 +689,29 @@ The return value doesn't track changes to the path.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>flatness</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments for the purpose of
 calculating their length, the
 segments will be close to the true path of the curve by this
 value, given in units.  If null or omitted, default is 1.  This
 is only used to make the arc-length parameterization more
-accurate if the path contains curves or arcs.</td>
-        </tr>
+accurate if the path contains curves or arcs.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -898,46 +763,26 @@ the path.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>flatness</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments, the
 segments will be close to the true path of the curve by this
-value, given in units.  If null or omitted, default is 1.</td>
-        </tr>
+value, given in units.  If null or omitted, default is 1.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -968,64 +813,39 @@ of the path.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>numPoints</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>numPoints</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Number of points to return.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Number of points to return.</td>
-        </tr>
+                <code>flatness</code>
 
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments for the purpose of
 calculating their length, the
 segments will be close to the true path of the curve by this
-value, given in units.  If null or omitted, default is 1.</td>
-        </tr>
+value, given in units.  If null or omitted, default is 1.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1064,46 +884,26 @@ differs from the first subpath's winding order can be holes.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>flatness</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments, the
 segments will be close to the true path of the curve by this
-value, given in units.  If null or omitted, default is 1.</td>
-        </tr>
+value, given in units.  If null or omitted, default is 1.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1136,63 +936,38 @@ apply to this method.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>path</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>path</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           A path to combine with this one.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">A path to combine with this one.</td>
-        </tr>
+                <code>flatness</code>
 
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments, the
 segments will be close to the true path of the curve by this
-value, given in units.  If null or omitted, default is 1.</td>
-        </tr>
+value, given in units.  If null or omitted, default is 1.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1249,48 +1024,33 @@ sets the end position to the end of the segment.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the end of the line segment.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the end of the line segment.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the end of the line segment.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the end of the line segment.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1317,48 +1077,33 @@ sets the end position to the end of the segment.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the position.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the position.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the position.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the position.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1385,43 +1130,23 @@ sets the end position to the end of the segment.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>flatness</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           No longer used by this method.</dd>
 
-                </td>
-
-            <td class="description last">No longer used by this method.</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1450,74 +1175,57 @@ at this path's current position.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the curve's control point.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the curve's control point.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the curve's control point.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the curve's control point.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>x2</code></td>
+                <code>x2</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the curve's end point.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the curve's end point.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y2</code></td>
+                <code>y2</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the curve's end point.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the curve's end point.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1544,74 +1252,57 @@ at this path's current position.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of a corner of the rectangle.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of a corner of the rectangle.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of a corner of the rectangle.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of a corner of the rectangle.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>width</code></td>
+                <code>width</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-offset (width) to another corner of the rectangle.</td>
-        </tr>
+           </dt><dd>
+           X-offset (width) to another corner of the rectangle.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>height</code></td>
+                <code>height</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-offset (height) to another corner of the rectangle.</td>
-        </tr>
+           </dt><dd>
+           Y-offset (height) to another corner of the rectangle.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1663,46 +1354,26 @@ to line segments.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>flatness</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments, the
 segments will be close to the true path of the curve by this
-value, given in units.  If null or omitted, default is 1.</td>
-        </tr>
+value, given in units.  If null or omitted, default is 1.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1755,35 +1426,21 @@ See <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a>.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>trans</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>trans</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">*</span>
 
-            </td>
+)
 
-            <td class="description last"></td>
-        </tr>
+           </dt><dd>
+           </dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1815,63 +1472,38 @@ this is in addition to "extras/pathclip.js".  Example:<pre>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>path</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>path</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           A path to combine with this one.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">A path to combine with this one.</td>
-        </tr>
+                <code>flatness</code>
 
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments, the
 segments will be close to the true path of the curve by this
-value, given in units.  If null or omitted, default is 1.</td>
-        </tr>
+value, given in units.  If null or omitted, default is 1.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1900,63 +1532,38 @@ apply to this method.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>path</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>path</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           A path to combine with this one.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">A path to combine with this one.</td>
-        </tr>
+                <code>flatness</code>
 
-        <tr>
-
-                <td><code>flatness</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">When curves and arcs
+           </dt><dd>
+           When curves and arcs
 are decomposed to line segments, the
 segments will be close to the true path of the curve by this
-value, given in units.  If null or omitted, default is 1.</td>
-        </tr>
+value, given in units.  If null or omitted, default is 1.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

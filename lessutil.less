@@ -85,6 +85,27 @@
  -webkit-transform:@value;
 }
 
+.italic(){
+ font-style: italic;
+ cite, i, em {
+  font-style: normal;
+  cite, i, em { font-style: italic; }
+ }
+}
+.roman(){
+ font-style: normal;
+ cite, i, em {
+  font-style: italic;
+  cite, i, em { font-style: normal; }
+ }
+}
+.lighter(){
+ font-weight: lighter;
+ b, strong {
+  font-weight: 600;
+  b, strong { font-weight: bolder }
+ }
+}
 .noBoxShadow(){
  box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
  -moz-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;

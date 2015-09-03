@@ -39,37 +39,23 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>mesh</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>mesh</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">BufferedMesh</span>
 
-            </td>
+)
 
-            <td class="description last">A mesh in the form of a vertex buffer object.
+           </dt><dd>
+           A mesh in the form of a vertex buffer object.
 For <a href="glutil.Mesh.html">glutil.Mesh</a> objects, use the <a href="glutil.Scene3D.html#makeShape">glutil.Scene3D#makeShape</a>
-method instead.</td>
-        </tr>
+method instead.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -193,26 +179,13 @@ precedence over the color given in this method.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>r</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>r</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 |
 
@@ -221,57 +194,53 @@ precedence over the color given in this method.
 
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">Array of three or
+           </dt><dd>
+           Array of three or
 four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
-        </tr>
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>g</code></td>
+                <code>g</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>a</code></td>
+                <code>a</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Alpha color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Alpha color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -298,35 +267,21 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>material</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>material</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Material</span>
 
-            </td>
+)
 
-            <td class="description last"></td>
-        </tr>
+           </dt><dd>
+           </dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -354,65 +309,49 @@ position.  See <a href="glutil.Transform.html#setPosition">glutil.Transform#setP
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 |
 
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">X coordinate
-or a 3-element position array, as specified in <a href="glutil.Transform.html#setScale">glutil.Transform#setScale</a>.</td>
-        </tr>
+           </dt><dd>
+           X coordinate
+or a 3-element position array, as specified in <a href="glutil.Transform.html#setScale">glutil.Transform#setScale</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Z-coordinate.</td>
-        </tr>
+           </dt><dd>
+           Z-coordinate.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -440,35 +379,21 @@ See <a href="glutil.Transform.html#setQuaternion">glutil.Transform#setQuaternion
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>quat</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>quat</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A four-element array describing the rotation.</td>
-        </tr>
+           </dt><dd>
+           A four-element array describing the rotation.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -496,65 +421,49 @@ size. See <a href="glutil.Transform.html#setScale">glutil.Transform#setScale</a>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>x</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>x</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 |
 
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">Scaling factor for this object's width,
-or a 3-element scaling array, as specified in <a href="glutil.Transform.html#setScale">glutil.Transform#setScale</a>.</td>
-        </tr>
+           </dt><dd>
+           Scaling factor for this object's width,
+or a 3-element scaling array, as specified in <a href="glutil.Transform.html#setScale">glutil.Transform#setScale</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>y</code></td>
+                <code>y</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Scaling factor for this object's height.</td>
-        </tr>
+           </dt><dd>
+           Scaling factor for this object's height.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>z</code></td>
+                <code>z</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Scaling factor for this object's depth.</td>
-        </tr>
+           </dt><dd>
+           Scaling factor for this object's depth.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -581,38 +490,24 @@ or a 3-element scaling array, as specified in <a href="glutil.Transform.html#set
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>name</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>name</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last"><a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the
+           </dt><dd>
+           <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the
 URL of the texture data.  In the case of a string the texture will be loaded via
  the JavaScript DOM's Image class.  However, this method
- will not load that image yet.</td>
-        </tr>
+ will not load that image yet.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -639,35 +534,21 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>transform</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>transform</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">*</span>
 
-            </td>
+)
 
-            <td class="description last"></td>
-        </tr>
+           </dt><dd>
+           </dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -684,35 +565,21 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>value</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>value</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">*</span>
 
-            </td>
+)
 
-            <td class="description last"></td>
-        </tr>
+           </dt><dd>
+           </dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

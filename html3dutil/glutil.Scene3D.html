@@ -49,41 +49,27 @@ ambient color and one directional light source.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>canvasOrContext</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>canvasOrContext</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">WebGLRenderingContext</span>
 |
 
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">A WebGL 3D context to associate with this scene, or an HTML
+           </dt><dd>
+           A WebGL 3D context to associate with this scene, or an HTML
 canvas element to create a WebGL context from, or an object, such as Scene3D, that
 implements a no-argument <code>getContext</code> method
-that returns a WebGL context.</td>
-        </tr>
+that returns a WebGL context.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -201,38 +187,24 @@ Its parent will be set to no parent.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>shape</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>shape</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
 |
 
 <span class="param-type"><a href="glutil.ShapeGroup.html">glutil.ShapeGroup</a></span>
 
-            </td>
+)
 
-            <td class="description last">A 3D shape.</td>
-        </tr>
+           </dt><dd>
+           A 3D shape.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -283,38 +255,24 @@ when rendering this scene.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>value</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>value</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">If this is Scene3D.BACK,
+           </dt><dd>
+           If this is Scene3D.BACK,
 {@link Scene3D.FRONT}, or Scene3D.FRONT_AND_BACK,
 enables face culling of the specified faces.  For any other value,
-disables face culling.  By default, face culling is disabled.</td>
-        </tr>
+disables face culling.  By default, face culling is disabled.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -341,39 +299,25 @@ disables face culling.  By default, face culling is disabled.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>value</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>value</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">If this is Scene3D.CW,
+           </dt><dd>
+           If this is Scene3D.CW,
 clockwise triangles are front-facing.  For any other value,
 counterclockwise triangles are front-facing, which is the
 default behavior.  If using a left-handed coordinate system,
-set this value to Scene3D.CW.</td>
-        </tr>
+set this value to Scene3D.CW.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -564,40 +508,26 @@ to a texture buffer object.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>texture</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>texture</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 |
 
 <span class="param-type"><a href="glutil.Texture.html">glutil.Texture</a></span>
 
-            </td>
+)
 
-            <td class="description last">String giving the
+           </dt><dd>
+           String giving the
 URL of the image to load, or
-a Texture object whose data may or may not be loaded.</td>
-        </tr>
+a Texture object whose data may or may not be loaded.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -628,82 +558,52 @@ to a texture buffer object.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>textureFiles</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>textureFiles</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;string></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           A list of URLs of the image to load.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">A list of URLs of the image to load.</td>
-        </tr>
+                <code>resolve</code>
 
-        <tr>
-
-                <td><code>resolve</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Called for each URL that is loaded successfully
+and uploaded to a texture buffer (the argument will be a Texture object.)</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Called for each URL that is loaded successfully
-and uploaded to a texture buffer (the argument will be a Texture object.)</td>
-        </tr>
+                <code>reject</code>
 
-        <tr>
-
-                <td><code>reject</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Called for each URL for which an error
+           </dt><dd>
+           Called for each URL for which an error
 occurs (the argument will be the data passed upon
-rejection).</td>
-        </tr>
+rejection).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -734,35 +634,21 @@ See <a href="glutil.GLUtil.html#.getPromiseResults">glutil.GLUtil.getPromiseResu
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>name</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>name</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">URL of the image to load.</td>
-        </tr>
+           </dt><dd>
+           URL of the image to load.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -792,37 +678,23 @@ returns a shape object.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>mesh</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>mesh</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
 
-            </td>
+)
 
-            <td class="description last">A geometric mesh object.  The shape
+           </dt><dd>
+           A geometric mesh object.  The shape
 created will use the mesh in its current state and won't
-track future changes.</td>
-        </tr>
+track future changes.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -873,38 +745,24 @@ and points) composed by all shapes in this scene.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>shape</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>shape</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="glutil.Shape.html">glutil.Shape</a></span>
 |
 
 <span class="param-type"><a href="glutil.ShapeGroup.html">glutil.ShapeGroup</a></span>
 
-            </td>
+)
 
-            <td class="description last">The 3D shape to remove.</td>
-        </tr>
+           </dt><dd>
+           The 3D shape to remove.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -963,26 +821,13 @@ matrix
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>r</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>r</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 |
 
@@ -991,57 +836,53 @@ matrix
 
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">Array of three or
+           </dt><dd>
+           Array of three or
 four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
-        </tr>
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>g</code></td>
+                <code>g</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>a</code></td>
+                <code>a</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Alpha color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Alpha color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1069,36 +910,22 @@ when the render() method is called.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>value</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>value</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">If true, will check whether to resize the canvas
-when the render() method is called. Default is true.</td>
-        </tr>
+           </dt><dd>
+           If true, will check whether to resize the canvas
+when the render() method is called. Default is true.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1126,26 +953,13 @@ This color is black by default.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>r</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>r</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 |
 
@@ -1154,57 +968,53 @@ This color is black by default.
 
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">Array of three or
+           </dt><dd>
+           Array of three or
 four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
-        </tr>
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>g</code></td>
+                <code>g</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>a</code></td>
+                <code>a</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Alpha color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Alpha color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1231,50 +1041,35 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>width</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>width</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Width of the scene, in pixels.
- Will be rounded up.</td>
-        </tr>
+           </dt><dd>
+           Width of the scene, in pixels.
+ Will be rounded up.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>height</code></td>
+                <code>height</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Height of the scene, in pixels.
- Will be rounded up.</td>
-        </tr>
+           </dt><dd>
+           Height of the scene, in pixels.
+ Will be rounded up.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1301,105 +1096,70 @@ May be null or omitted if a string or array is given as the "r" parameter.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>index</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>index</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">Zero-based index of the light to set.  The first
+           </dt><dd>
+           Zero-based index of the light to set.  The first
 light has index 0, the second has index 1, and so on.  Will be created
-if the light doesn't exist.</td>
-        </tr>
+if the light doesn't exist.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>position</code></td>
+                <code>position</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">A 3-element vector giving the direction of the light, along the X, Y, and Z
+           </dt><dd>
+           A 3-element vector giving the direction of the light, along the X, Y, and Z
 axes, respectively.  May be null, in which case the default
-is (0, 0, 1).</td>
-        </tr>
+is (0, 0, 1).</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>diffuse</code></td>
+                <code>diffuse</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
+           </dt><dd>
+           A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
 and blue components respectively.  Each component ranges from 0 to 1.
-If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</td>
-        </tr>
+If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>specular</code></td>
+                <code>specular</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">A 3- or 4-element vector giving the color of specular highlights caused by
+           </dt><dd>
+           A 3- or 4-element vector giving the color of specular highlights caused by
 the light, in the red, green,
 and blue components respectively.  Each component ranges from 0 to 1.
-If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</td>
-        </tr>
+If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1430,108 +1190,89 @@ see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective<
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>left</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>left</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the point where the left
-clipping plane meets the near clipping plane.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the point where the left
+clipping plane meets the near clipping plane.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>right</code></td>
+                <code>right</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">X-coordinate of the point where the right
-clipping plane meets the near clipping plane.</td>
-        </tr>
+           </dt><dd>
+           X-coordinate of the point where the right
+clipping plane meets the near clipping plane.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>bottom</code></td>
+                <code>bottom</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the point where the bottom
-clipping plane meets the near clipping plane.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the point where the bottom
+clipping plane meets the near clipping plane.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>top</code></td>
+                <code>top</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-coordinate of the point where the top
-clipping plane meets the near clipping plane.</td>
-        </tr>
+           </dt><dd>
+           Y-coordinate of the point where the top
+clipping plane meets the near clipping plane.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>near</code></td>
+                <code>near</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The distance from the camera to
+           </dt><dd>
+           The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
-seen.</td>
-        </tr>
+seen.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>far</code></td>
+                <code>far</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The distance from the camera to
+           </dt><dd>
+           The distance from the camera to
 the far clipping plane. Objects beyond this distance will be too far
-to be seen.</td>
-        </tr>
+to be seen.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1558,50 +1299,35 @@ to be seen.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>index</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>index</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Zero-based index of the light to set.  The first
+           </dt><dd>
+           Zero-based index of the light to set.  The first
 light has index 0, the second has index 1, and so on.  Will be created
-if the light doesn't exist.</td>
-        </tr>
+if the light doesn't exist.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>params</code></td>
+                <code>params</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">An object as described in glutil.LightSource.setParams.</td>
-        </tr>
+           </dt><dd>
+           An object as described in glutil.LightSource.setParams.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1630,88 +1356,58 @@ This method takes a camera's position (<code>eye</code>), and the point the came
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>eye</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>eye</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           A 3-element vector specifying
+the camera position in world space.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">A 3-element vector specifying
-the camera position in world space.</td>
-        </tr>
+                <code>center</code>
 
-        <tr>
-
-                <td><code>center</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">A 3-element vector specifying
+           </dt><dd>
+           A 3-element vector specifying
 the point in world space that the camera is looking at. May be null or omitted,
-in which case the default is the coordinates (0,0,0).</td>
-        </tr>
+in which case the default is the coordinates (0,0,0).</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>up</code></td>
+                <code>up</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">A 3-element vector specifying
+           </dt><dd>
+           A 3-element vector specifying
 the direction from the center of the camera to its top. This parameter may
 be null or omitted, in which case the default is the vector (0, 1, 0),
 the vector that results when the camera is held upright.  This
 vector must not point in the same or opposite direction as
 the camera's view direction. (For best results, rotate the vector (0, 1, 0)
-so it points perpendicular to the camera's view direction.)</td>
-        </tr>
+so it points perpendicular to the camera's view direction.)</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1740,106 +1436,87 @@ plane and the top to the bottom.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>left</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>left</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Leftmost coordinate of the 3D view.</td>
-        </tr>
+           </dt><dd>
+           Leftmost coordinate of the 3D view.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>right</code></td>
+                <code>right</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Rightmost coordinate of the 3D view.
-(Note that right can be greater than left or vice versa.)</td>
-        </tr>
+           </dt><dd>
+           Rightmost coordinate of the 3D view.
+(Note that right can be greater than left or vice versa.)</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>bottom</code></td>
+                <code>bottom</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Bottommost coordinate of the 3D view.</td>
-        </tr>
+           </dt><dd>
+           Bottommost coordinate of the 3D view.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>top</code></td>
+                <code>top</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Topmost coordinate of the 3D view.
-(Note that top can be greater than bottom or vice versa.)</td>
-        </tr>
+           </dt><dd>
+           Topmost coordinate of the 3D view.
+(Note that top can be greater than bottom or vice versa.)</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>near</code></td>
+                <code>near</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Distance from the camera to the near clipping
-plane.  A positive value means the plane is in front of the viewer.</td>
-        </tr>
+           </dt><dd>
+           Distance from the camera to the near clipping
+plane.  A positive value means the plane is in front of the viewer.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>far</code></td>
+                <code>far</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Distance from the camera to the far clipping
+           </dt><dd>
+           Distance from the camera to the far clipping
 plane.  A positive value means the plane is in front of the viewer.
 (Note that near can be greater than far or vice versa.)  The absolute difference
-between near and far should be as small as the application can accept.</td>
-        </tr>
+between near and far should be as small as the application can accept.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1867,76 +1544,59 @@ The near and far clipping planes will be set to -1 and 1, respectively.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>left</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>left</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Leftmost coordinate of the 2D view.</td>
-        </tr>
+           </dt><dd>
+           Leftmost coordinate of the 2D view.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>right</code></td>
+                <code>right</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Rightmost coordinate of the 2D view.
-(Note that right can be greater than left or vice versa.)</td>
-        </tr>
+           </dt><dd>
+           Rightmost coordinate of the 2D view.
+(Note that right can be greater than left or vice versa.)</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>bottom</code></td>
+                <code>bottom</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Bottommost coordinate of the 2D view.</td>
-        </tr>
+           </dt><dd>
+           Bottommost coordinate of the 2D view.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>top</code></td>
+                <code>top</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Topmost coordinate of the 2D view.
-(Note that top can be greater than bottom or vice versa.)</td>
-        </tr>
+           </dt><dd>
+           Topmost coordinate of the 2D view.
+(Note that top can be greater than bottom or vice versa.)</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -1968,114 +1628,74 @@ or squishing it.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>left</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>left</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Leftmost coordinate of the view rectangle.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Leftmost coordinate of the view rectangle.</td>
-        </tr>
+                <code>right</code>
 
-        <tr>
-
-                <td><code>right</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Rightmost coordinate of the view rectangle.
+(Note that right can be greater than left or vice versa.)</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Rightmost coordinate of the view rectangle.
-(Note that right can be greater than left or vice versa.)</td>
-        </tr>
+                <code>bottom</code>
 
-        <tr>
-
-                <td><code>bottom</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Bottommost coordinate of the view rectangle.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Bottommost coordinate of the view rectangle.</td>
-        </tr>
+                <code>top</code>
 
-        <tr>
-
-                <td><code>top</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Topmost coordinate of the view rectangle.
+(Note that top can be greater than bottom or vice versa.)</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Topmost coordinate of the view rectangle.
-(Note that top can be greater than bottom or vice versa.)</td>
-        </tr>
+                <code>aspect</code>
 
-        <tr>
-
-                <td><code>aspect</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Desired aspect ratio of the viewport (ratio
+of width to height).  If null or omitted, uses this scene's aspect ratio instead.</dd>
 
-                </td>
-
-            <td class="description last">Desired aspect ratio of the viewport (ratio
-of width to height).  If null or omitted, uses this scene's aspect ratio instead.</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -2108,152 +1728,102 @@ or squishing it.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>left</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>left</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Leftmost coordinate of the view rectangle.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Leftmost coordinate of the view rectangle.</td>
-        </tr>
+                <code>right</code>
 
-        <tr>
-
-                <td><code>right</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Rightmost coordinate of the view rectangle.
+(Note that right can be greater than left or vice versa.)</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Rightmost coordinate of the view rectangle.
-(Note that right can be greater than left or vice versa.)</td>
-        </tr>
+                <code>bottom</code>
 
-        <tr>
-
-                <td><code>bottom</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Bottommost coordinate of the view rectangle.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Bottommost coordinate of the view rectangle.</td>
-        </tr>
+                <code>top</code>
 
-        <tr>
-
-                <td><code>top</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Topmost coordinate of the view rectangle.
+(Note that top can be greater than bottom or vice versa.)</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Topmost coordinate of the view rectangle.
-(Note that top can be greater than bottom or vice versa.)</td>
-        </tr>
+                <code>near</code>
 
-        <tr>
-
-                <td><code>near</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Distance from the camera to the near clipping
+plane.  A positive value means the plane is in front of the viewer.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Distance from the camera to the near clipping
-plane.  A positive value means the plane is in front of the viewer.</td>
-        </tr>
+                <code>far</code>
 
-        <tr>
-
-                <td><code>far</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">Distance from the camera to the far clipping
+           </dt><dd>
+           Distance from the camera to the far clipping
 plane.  A positive value means the plane is in front of the viewer.
 (Note that near can be greater than far or vice versa.)  The absolute difference
-between near and far should be as small as the application can accept.</td>
-        </tr>
+between near and far should be as small as the application can accept.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>aspect</code></td>
+                <code>aspect</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Desired aspect ratio of the viewport (ratio
+of width to height).  If null or omitted, uses this scene's aspect ratio instead.</dd>
 
-                </td>
-
-            <td class="description last">Desired aspect ratio of the viewport (ratio
-of width to height).  If null or omitted, uses this scene's aspect ratio instead.</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -2283,82 +1853,65 @@ see <a href="glmath.GLMath.html#.mat4perspective">glmath.GLMath.mat4perspective<
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>fov</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>fov</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Y-axis field of view, in degrees. Should be less
+           </dt><dd>
+           Y-axis field of view, in degrees. Should be less
 than 180 degrees. (The smaller
 this number, the bigger close objects appear to be. As a result, zooming out
-can be implemented by raising this value, and zooming in by lowering it.)</td>
-        </tr>
+can be implemented by raising this value, and zooming in by lowering it.)</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>aspect</code></td>
+                <code>aspect</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The ratio of width to height of the viewport, usually
- the scene's aspect ratio (getAspect() or getClientAspect()).</td>
-        </tr>
+           </dt><dd>
+           The ratio of width to height of the viewport, usually
+ the scene's aspect ratio (getAspect() or getClientAspect()).</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>near</code></td>
+                <code>near</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The distance from the camera to
+           </dt><dd>
+           The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
-seen.</td>
-        </tr>
+seen.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>far</code></td>
+                <code>far</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The distance from the camera to
+           </dt><dd>
+           The distance from the camera to
 the far clipping plane. Objects beyond this distance will be too far
-to be seen.</td>
-        </tr>
+to be seen.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -2391,102 +1944,67 @@ scene.setPerspective(45,scene.getClientAspect(),0.1,100);</code></pre>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>index</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>index</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Zero-based index of the light to set.  The first
+light has index 0, the second has index 1, and so on.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.</td>
-        </tr>
+                <code>position</code>
 
-        <tr>
-
-                <td><code>position</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           </dd>
 
-                </td>
+        <dt>
 
-            <td class="description last"></td>
-        </tr>
+                <code>diffuse</code>
 
-        <tr>
-
-                <td><code>diffuse</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
+           </dt><dd>
+           A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
 and blue components respectively.  Each component ranges from 0 to 1.
-If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</td>
-        </tr>
+If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>specular</code></td>
+                <code>specular</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">A 3- or 4-element vector giving the color of specular highlights caused by
+           </dt><dd>
+           A 3- or 4-element vector giving the color of specular highlights caused by
 the light, in the red, green,
 and blue components respectively.  Each component ranges from 0 to 1.
-If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</td>
-        </tr>
+If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -2515,35 +2033,21 @@ matrix can also be set using the <a href="glutil.Scene3D.html#setFrustum">glutil
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>matrix</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>matrix</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A 16-element matrix (4x4).</td>
-        </tr>
+           </dt><dd>
+           A 16-element matrix (4x4).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -2574,36 +2078,22 @@ adjust the viewport.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>value</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>value</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">If true, use the device's pixel ratio
-when setting the viewport's dimensions.  Default is true.</td>
-        </tr>
+           </dt><dd>
+           If true, use the device's pixel ratio
+when setting the viewport's dimensions.  Default is true.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -2631,35 +2121,21 @@ be set using the <a href="glutil.Scene3D.html#setLookAt">glutil.Scene3D#setLookA
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>matrix</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>matrix</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">A 16-element matrix (4x4).</td>
-        </tr>
+           </dt><dd>
+           A 16-element matrix (4x4).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -2690,26 +2166,13 @@ frame buffer to the canvas.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>filterProgram</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>filterProgram</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">ShaderProgram</span>
 |
 
@@ -2718,19 +2181,18 @@ frame buffer to the canvas.
 
 <span class="param-type">null</span>
 
-            </td>
+)
 
-            <td class="description last">A shader
+           </dt><dd>
+           A shader
 program that implements a texture filter.  The program
 could be created using the <a href="glutil.ShaderProgram.html#.makeEffect">glutil.ShaderProgram.makeEffect</a> method.
 This parameter can also be a string that could be a parameter
 to the ShaderProgram.makeEffect() method.
 If this value is null, texture filtering is disabled and shapes
-are rendered to the canvas normally.</td>
-        </tr>
+are rendered to the canvas normally.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -2758,35 +2220,21 @@ and prepares this object for the new program.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>program</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>program</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="glutil.ShaderProgram.html">glutil.ShaderProgram</a></span>
 
-            </td>
+)
 
-            <td class="description last">The shader program to use.</td>
-        </tr>
+           </dt><dd>
+           The shader program to use.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

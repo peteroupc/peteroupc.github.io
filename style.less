@@ -75,6 +75,36 @@ h4 { .littleHeader(130%); }
 h5 { .littleHeader(120%); }
 h6 { .littleHeader(110%); }
 
+blockquote {
+ padding-top: 0.4em;
+ padding-bottom: 0.4em;
+ padding-left: 0.2em;
+ margin-top: 0.4em;
+ margin-bottom: 0.4em;
+ margin-right: 2.5em;
+ margin-left: 2.5em;
+ border-top: 1px solid;
+ border-bottom: 1px solid;
+ border-left: none;
+ border-right: none;
+ .lighter();
+ .italic();
+}
+
+.citation {
+ margin-top: 0;
+ text-align: right;
+ .roman();
+}
+aside {
+ border: 1px solid #c0c0c0;
+ margin-left: 1em;
+ margin-right: 1em;
+ margin-top: 0.4em;
+ margin-bottom: 0.4em;
+ padding: 1em;
+}
+
 fieldset {
     margin: 1em 0em 1em 0em;
     padding: 0em 1em 1em 1em;
@@ -152,6 +182,10 @@ input[type="radio"]{
  border: 0;
  .linearGradient(#f8f8f8,#f0f0f0);
  color:black;
+}
+
+blockquote {
+ border-color:#c0c0c0;
 }
 
 hr {

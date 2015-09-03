@@ -40,37 +40,19 @@ necessarily cross the curve.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>controlPoints</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>controlPoints</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;Array.&lt;number>></span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">An array of control points.  Each
+           </dt><dd>
+           An array of control points.  Each
 control point is an array with the same length as the other control points.
 It is assumed that:<ul>
 <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
@@ -78,51 +60,39 @@ curve.  For example, a degree-3 (cubic) curve
 contains 4 control points.  A degree of 1 results in a straight line segment.
 <li>The first control point's length represents the size of all the control
 points.
-</ul></td>
-        </tr>
+</ul></dd>
 
-        <tr>
+        <dt>
 
-                <td><code>u1</code></td>
+                <code>u1</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Starting point for the purpose of interpolation; it will correspond to 0.
+May be omitted; default is 0.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Starting point for the purpose of interpolation; it will correspond to 0.
-May be omitted; default is 0.</td>
-        </tr>
+                <code>u2</code>
 
-        <tr>
-
-                <td><code>u2</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Ending point for the purpose of interpolation; it will correspond to 1.
+May be omitted; default is 1.</dd>
 
-                </td>
-
-            <td class="description last">Ending point for the purpose of interpolation; it will correspond to 1.
-May be omitted; default is 1.</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -144,36 +114,22 @@ in a B&eacute;zier curve.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>u</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>u</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Point on the curve to evaluate (generally within the range
-given in the constructor).</td>
-        </tr>
+           </dt><dd>
+           Point on the curve to evaluate (generally within the range
+given in the constructor).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

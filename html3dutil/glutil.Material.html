@@ -42,98 +42,80 @@ properties of this object are used.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>ambient</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>ambient</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">Ambient reflection.
+           </dt><dd>
+           Ambient reflection.
 Can be an array of three numbers,
 ranging from 0 to 1 and giving the red, green, and blue components, respectively,
 or can be a string representing an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.
-May be null or omitted; default is (0.2, 0.2, 0.2).</td>
-        </tr>
+May be null or omitted; default is (0.2, 0.2, 0.2).</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>diffuse</code></td>
+                <code>diffuse</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">Diffuse reflection.  A color with the same format
-as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).</td>
-        </tr>
+           </dt><dd>
+           Diffuse reflection.  A color with the same format
+as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>specular</code></td>
+                <code>specular</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">Specular highlight reflection.
+           </dt><dd>
+           Specular highlight reflection.
 A color with the same format as for "ambient".
-May be null or omitted; default is (0,0,0), meaning no specular highlights.</td>
-        </tr>
+May be null or omitted; default is (0,0,0), meaning no specular highlights.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>shininess</code></td>
+                <code>shininess</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">Specular highlight exponent of this material.
-Ranges from 0 through 128. May be null or omitted; default is 0.</td>
-        </tr>
+           </dt><dd>
+           Specular highlight exponent of this material.
+Ranges from 0 through 128. May be null or omitted; default is 0.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>emission</code></td>
+                <code>emission</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-            <td class="description last">Additive color emitted by an object.
+           </dt><dd>
+           Additive color emitted by an object.
 A color with the same format as for "ambient", except the array's numbers
 range from -1 to 1.
-May be null or omitted; default is (0,0,0).</td>
-        </tr>
+May be null or omitted; default is (0,0,0).</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -340,26 +322,13 @@ object from an RGBA color.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>r</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>r</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 |
 
@@ -368,57 +337,53 @@ object from an RGBA color.
 
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">Array of three or
+           </dt><dd>
+           Array of three or
 four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</td>
-        </tr>
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>g</code></td>
+                <code>g</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>a</code></td>
+                <code>a</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Alpha color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Alpha color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -446,41 +411,27 @@ object from a texture to apply to a 3D object's surface.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>texture</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>texture</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="glutil.Texture.html">glutil.Texture</a></span>
 |
 
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last"><a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the
+           </dt><dd>
+           <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the
 URL of the texture data.  In the case of a string the texture will be loaded via
  the JavaScript DOM's Image class.  However, this constructor
- will not load that image yet.</td>
-        </tr>
+ will not load that image yet.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -533,31 +484,19 @@ to the same object will be used.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>params</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>params</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">An object whose keys have
+           </dt><dd>
+           An object whose keys have
 the possibilities given below, and whose values are those
 allowed for each key.<ul>
 <li><code>ambient</code> - Ambient reflection (see <a href="glutil.Material.html">glutil.Material</a> constructor).
@@ -572,11 +511,9 @@ map texture (see <a href="glutil.Material.html#specularMap">glutil.Material#spec
 <li><code>normalMap</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL, of a normal
 map (bump map) texture (see <a href="glutil.Material.html#normalMap">glutil.Material#normalMap</a>).
 </ul>
-If a value is null or undefined, it is ignored.</td>
-        </tr>
+If a value is null or undefined, it is ignored.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

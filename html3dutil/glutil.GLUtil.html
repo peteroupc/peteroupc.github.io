@@ -54,80 +54,64 @@ it to an existing HTML element.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>parent</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>parent</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">HTMLElement</span>
 |
 
 <span class="param-type">null</span>
 
-            </td>
+)
 
-            <td class="description last">If non-null, the parent
+           </dt><dd>
+           If non-null, the parent
 element of the new HTML canvas element. The element will be
-appended as a child of this parent.</td>
-        </tr>
+appended as a child of this parent.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>width</code></td>
+                <code>width</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 |
 
 <span class="param-type">null</span>
 
-            </td>
+)
 
-            <td class="description last">Width of the new canvas
+           </dt><dd>
+           Width of the new canvas
 element, or if null, the width a <code>canvas</code>
 element would ordinarily have
 under current CSS rules. The resulting width will be rounded up.
-This parameter can't be a negative number.</td>
-        </tr>
+This parameter can't be a negative number.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>height</code></td>
+                <code>height</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 |
 
 <span class="param-type">null</span>
 
-            </td>
+)
 
-            <td class="description last">Height of the new canvas
+           </dt><dd>
+           Height of the new canvas
 element, or if null, the height a <code>canvas</code>
 element would ordinarily have
 under current CSS rules. The resulting height will be rounded up.
-This parameter can't be a negative number.</td>
-        </tr>
+This parameter can't be a negative number.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -154,51 +138,36 @@ This parameter can't be a negative number.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>canvasElement</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>canvasElement</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">HTMLCanvasElement</span>
 
-            </td>
+)
 
-            <td class="description last">An HTML
-canvas element.</td>
-        </tr>
+           </dt><dd>
+           An HTML
+canvas element.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>err</code></td>
+                <code>err</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-            <td class="description last">A function to call if an error occurs in creating
+           </dt><dd>
+           A function to call if an error occurs in creating
 the context.  The function takes one parameter consisting of a human-
-readable error message.  If "err" is null, window.alert() will be used instead.</td>
-        </tr>
+readable error message.  If "err" is null, window.alert() will be used instead.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -228,36 +197,22 @@ falling back to a 2D context if that fails.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>canvasElement</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>canvasElement</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">HTMLCanvasElement</span>
 
-            </td>
+)
 
-            <td class="description last">An HTML
-canvas element.</td>
-        </tr>
+           </dt><dd>
+           An HTML
+canvas element.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -288,81 +243,51 @@ its work.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>promises</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>promises</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;<a href="Promise.html">Promise</a>></span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           an array containing promise objects</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">an array containing promise objects</td>
-        </tr>
+                <code>progressResolve</code>
 
-        <tr>
-
-                <td><code>progressResolve</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           a function called as each
+  individual promise is resolved; optional</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">a function called as each
-  individual promise is resolved; optional</td>
-        </tr>
+                <code>progressReject</code>
 
-        <tr>
-
-                <td><code>progressReject</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           a function called as each
+  individual promise is rejected; optional</dd>
 
-                </td>
-
-            <td class="description last">a function called as each
-  individual promise is rejected; optional</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -402,72 +327,56 @@ This method may be called any number of times each frame.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>timer</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>timer</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">An object that will hold two
+           </dt><dd>
+           An object that will hold two
 properties:<ul>
 <li>"time" - initial time value, in milliseconds.
 <li>"lastTime" - last known time value, in milliseconds.
 Will be set to the value given in "timeInMs" before returning.
 </ul>
 The object should be initialized using the idiom <code>{}</code>
-or <code>new Object()</code>.</td>
-        </tr>
+or <code>new Object()</code>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>timeInMs</code></td>
+                <code>timeInMs</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">A time value, in milliseconds.
+           </dt><dd>
+           A time value, in milliseconds.
 This could be the parameter received in a
 <code>requestAnimationFrame()</code> callback method.
-</code>.</td>
-        </tr>
+</code>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>intervalInMs</code></td>
+                <code>intervalInMs</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">The length of the interval
-(animation cycle), in milliseconds.</td>
-        </tr>
+           </dt><dd>
+           The length of the interval
+(animation cycle), in milliseconds.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -532,53 +441,38 @@ value in milliseconds, such as the parameter of a
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>url</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>url</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">URL of the file to load.</td>
-        </tr>
+           </dt><dd>
+           URL of the file to load.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>responseType</code></td>
+                <code>responseType</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">string</span>
 |
 
 <span class="param-type">null</span>
 
-            </td>
+)
 
-            <td class="description last">Expected data type of
+           </dt><dd>
+           Expected data type of
 the file.  Can be "json", "xml", "text", or "arraybuffer".
-If null or omitted, the default is "text".</td>
-        </tr>
+If null or omitted, the default is "text".</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -618,52 +512,37 @@ This method should be called only once each frame.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>timer</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>timer</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">An object described
-in <a href="glutil.GLUtil.html#.newFrames">glutil.GLUtil.newFrames</a>.</td>
-        </tr>
+           </dt><dd>
+           An object described
+in <a href="glutil.GLUtil.html#.newFrames">glutil.GLUtil.newFrames</a>.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>timeInMs</code></td>
+                <code>timeInMs</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">A time value, in milliseconds.
+           </dt><dd>
+           A time value, in milliseconds.
 This could be the parameter received in a
 <code>requestAnimationFrame()</code> callback method.
-</code>.</td>
-        </tr>
+</code>.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -696,37 +575,23 @@ or a "polyfill" method.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>func</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>func</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-            <td class="description last">The function to call.  The function
+           </dt><dd>
+           The function to call.  The function
 takes one parameter, "time", which is the number of
-milliseconds since the page was loaded.</td>
-        </tr>
+milliseconds since the page was loaded.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -780,26 +645,13 @@ For more information:
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>r</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>r</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 |
 
@@ -808,57 +660,53 @@ For more information:
 
 <span class="param-type">string</span>
 
-            </td>
+)
 
-            <td class="description last">Array of three or
+           </dt><dd>
+           Array of three or
 four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.  Returns (0,0,0,0) if this value is null.</td>
-        </tr>
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.  Returns (0,0,0,0) if this value is null.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>g</code></td>
+                <code>g</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>b</code></td>
+                <code>b</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>a</code></td>
+                <code>a</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">Alpha color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</td>
-        </tr>
+           </dt><dd>
+           Alpha color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

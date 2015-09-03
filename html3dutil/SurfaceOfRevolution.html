@@ -44,37 +44,19 @@ the HTML 3D Library.  Example:<pre>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>curve</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>curve</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">Curve to rotate about the axis of rotation, as
+           </dt><dd>
+           Curve to rotate about the axis of rotation, as
 specified in the "axis" parameter.
 The curve function must contain a function
 named "evaluate", which takes the following parameter:<ul>
@@ -87,70 +69,53 @@ element is the Y coordinate (corresponding to
 radius).<p>
 If the curve function draws a curve that goes around the axis of rotation, such
 as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must
-restrict the curve definition to no more than half of the curve.</td>
-        </tr>
+restrict the curve definition to no more than half of the curve.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>minval</code></td>
+                <code>minval</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Smallest V-coordinate.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Smallest V-coordinate.</td>
-        </tr>
+                <code>maxval</code>
 
-        <tr>
-
-                <td><code>maxval</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Largest V-coordinate.   If _minval_ is greater than
+_maxval_, both values will be swapped.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Largest V-coordinate.   If _minval_ is greater than
-_maxval_, both values will be swapped.</td>
-        </tr>
+                <code>axis</code>
 
-        <tr>
-
-                <td><code>axis</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Axis of rotation, around which the curve
+           </dt><dd>
+           Axis of rotation, around which the curve
 will be rotated to generate the surface of revolution.  If null or omitted, the positive
 Z-axis will be the axis of rotation.  This parameter is a 3-element array describing
 the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 run in the direction from the origin to the point given in this parameter.  This
-parameter need not be normalized to unit length.</td>
-        </tr>
+parameter need not be normalized to unit length.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -172,108 +137,73 @@ whose curve is the graph of a single-variable function.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>func</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>func</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">Function whose graph will be
+           </dt><dd>
+           Function whose graph will be
 rotated about the axis of rotation, as
 specified in the "axis" parameter.  The function takes a number
 as a single parameter and returns a number.  The return
 value is effectively the radius of each part of the surface
-from beginning to end.</td>
-        </tr>
+from beginning to end.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>minval</code></td>
+                <code>minval</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Smallest parameter of the function.
+This is a number of units from the origin along the axis of rotation.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Smallest parameter of the function.
-This is a number of units from the origin along the axis of rotation.</td>
-        </tr>
+                <code>maxval</code>
 
-        <tr>
-
-                <td><code>maxval</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">Largest parameter of the function.
+           </dt><dd>
+           Largest parameter of the function.
 This is a number of units from the origin along the axis of rotation.
-If _minval_ is greater than _maxval_, both values will be swapped.</td>
-        </tr>
+If _minval_ is greater than _maxval_, both values will be swapped.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>axis</code></td>
+                <code>axis</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Axis of rotation, around which the
+           </dt><dd>
+           Axis of rotation, around which the
 function graph will be rotated to generate the surface of revolution.
 If null or omitted, the positive Z-axis will be the axis of rotation.
 This parameter is a 3-element array describing
 the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 run in the direction from the origin to the point given in this parameter.  This
-parameter need not be normalized to unit length.</td>
-        </tr>
+parameter need not be normalized to unit length.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -323,75 +253,47 @@ which runs from 5 to 10 units, and with a radius of 2 units.</p>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>outerRadius</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>outerRadius</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Radius from the center to the innermost
+part of the torus.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Radius from the center to the innermost
-part of the torus.</td>
-        </tr>
+                <code>innerRadius</code>
 
-        <tr>
-
-                <td><code>innerRadius</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+           </dt><dd>
+           Radius from the inner edge to the innermost
+part of the torus.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Radius from the inner edge to the innermost
-part of the torus.</td>
-        </tr>
+                <code>curve</code>
 
-        <tr>
-
-                <td><code>curve</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">function</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Object describing
+           </dt><dd>
+           Object describing
 a curve to serve as the cross section of the torus.
 The curve need not be closed; in fact, certain special surfaces can result
 by leaving the ends open.
@@ -401,36 +303,29 @@ named "evaluate", which takes the following parameter:<ul>
 </ul>
 The evaluator function returns an array of at least 2 elements: the first
 element is the X coordinate of the curve's position, and the second
-element is the Y coordinate.  If null or omitted, uses a circular cross section.</td>
-        </tr>
+element is the Y coordinate.  If null or omitted, uses a circular cross section.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>axis</code></td>
+                <code>axis</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">Array.&lt;number></span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">Axis of rotation, which the torus
+           </dt><dd>
+           Axis of rotation, which the torus
 will pass through.
 If null or omitted, the positive Z-axis will be the axis of rotation.
 This parameter is a 3-element array describing
 the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 run in the direction from the origin to the point given in this parameter.  This
-parameter need not be normalized to unit length.</td>
-        </tr>
+parameter need not be normalized to unit length.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 

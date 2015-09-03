@@ -68,37 +68,23 @@ For more information, see the <a href="tutorial-surfaces.html">Parametric Curves
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>evaluator</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>evaluator</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">An object that must contain a function
+           </dt><dd>
+           An object that must contain a function
 named "evaluate", giving 3 values as a result.  See SurfaceEval#vertex.
-</ul></td>
-        </tr>
+</ul></dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -126,64 +112,48 @@ in a parametric surface.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>mesh</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>mesh</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
 
-            </td>
+)
 
-            <td class="description last">Mesh where vertex positions and attributes
+           </dt><dd>
+           Mesh where vertex positions and attributes
 will be generated.  When this method returns, the current color, normal,
 and texture coordinates will be the same as they were before the method
-started.</td>
-        </tr>
+started.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>u</code></td>
+                <code>u</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">U-coordinate of the curve to evaluate</td>
-        </tr>
+           </dt><dd>
+           U-coordinate of the curve to evaluate</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>v</code></td>
+                <code>v</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-            <td class="description last">V-coordinate of the curve to evaluate.</td>
-        </tr>
+           </dt><dd>
+           V-coordinate of the curve to evaluate.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -211,188 +181,133 @@ surface.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>mesh</code>
 
-        <th>Attributes</th>
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>mesh</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>
 
-            </td>
+)
 
-                <td class="attributes">
-
-                </td>
-
-            <td class="description last">Mesh where vertex positions and attributes
+           </dt><dd>
+           Mesh where vertex positions and attributes
 will be generated.  When this method returns, the current color, normal,
 and texture coordinates will be the same as they were before the method
-started.</td>
-        </tr>
+started.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>mode</code></td>
+                <code>mode</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
-
-                </td>
-
-            <td class="description last">If this value is Mesh.TRIANGLES, or is null
+           </dt><dd>
+           If this value is Mesh.TRIANGLES, or is null
 or omitted, generates a series of triangles defining the surface.  If
 this value is Mesh.LINES, generates
 a series of lines defining the curve. If this value is Mesh.POINTS,
 generates a series of points along the curve.  For any other value,
-this method has no effect.</td>
-        </tr>
+this method has no effect.</dd>
 
-        <tr>
+        <dt>
 
-                <td><code>un</code></td>
+                <code>un</code>
 
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Number of subdivisions along the U-axis.
+Default is 24.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Number of subdivisions along the U-axis.
-Default is 24.</td>
-        </tr>
+                <code>vn</code>
 
-        <tr>
-
-                <td><code>vn</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Number of subdivisions along the V-axis.
+Default is 24.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Number of subdivisions along the V-axis.
-Default is 24.</td>
-        </tr>
+                <code>u1</code>
 
-        <tr>
-
-                <td><code>u1</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Starting U-coordinate of the surface to evaluate.
+Default is 0.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Starting U-coordinate of the surface to evaluate.
-Default is 0.</td>
-        </tr>
+                <code>u2</code>
 
-        <tr>
-
-                <td><code>u2</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Ending U-coordinate of the surface to evaluate.
+Default is 1.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Ending U-coordinate of the surface to evaluate.
-Default is 1.</td>
-        </tr>
+                <code>v1</code>
 
-        <tr>
-
-                <td><code>v1</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Starting U-coordinate of the surface to evaluate.
+Default is 0.</dd>
 
-                </td>
+        <dt>
 
-            <td class="description last">Starting U-coordinate of the surface to evaluate.
-Default is 0.</td>
-        </tr>
+                <code>v2</code>
 
-        <tr>
-
-                <td><code>v2</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">number</span>
 
-            </td>
+)
 
-                <td class="attributes">
+                    &lt;optional>
 
-                    &lt;optional><br>
+           </dt><dd>
+           Ending U-coordinate of the surface to evaluate.
+Default is 1.</dd>
 
-                </td>
-
-            <td class="description last">Ending U-coordinate of the surface to evaluate.
-Default is 1.</td>
-        </tr>
-
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -436,37 +351,23 @@ called the <i>tangent vector</i>.)
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>evaluator</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>evaluator</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">An object that must contain a function
+           </dt><dd>
+           An object that must contain a function
 named "evaluate", giving 3 values as a result.  See SurfaceEval#vertex.
-</ul></td>
-        </tr>
+</ul></dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -522,36 +423,22 @@ By default, normals won't be generated automatically.
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>value</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>value</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">boolean</span>
 
-            </td>
+)
 
-            <td class="description last">Either true or false.  True means normals
-will automatically be generated; false means they won't.</td>
-        </tr>
+           </dt><dd>
+           Either true or false.  True means normals
+will automatically be generated; false means they won't.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -578,37 +465,23 @@ will automatically be generated; false means they won't.</td>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>evaluator</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>evaluator</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">An object that must contain a function
+           </dt><dd>
+           An object that must contain a function
 named "evaluate", giving 2 values as a result.  See SurfaceEval#vertex.
-</ul></td>
-        </tr>
+</ul></dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
@@ -644,40 +517,26 @@ texture coordinates.</p>
 
     <h5>Parameters:</h5>
 
-<table class="params">
-    <thead>
-    <tr>
+<dl>
 
-        <th>Name</th>
+        <dt>
 
-        <th>Type</th>
+                <code>evaluator</code>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-        <tr>
-
-                <td><code>evaluator</code></td>
-
-            <td class="type">
-
+                (
 <span class="param-type">object</span>
 
-            </td>
+)
 
-            <td class="description last">An object that must contain a function
+           </dt><dd>
+           An object that must contain a function
 named "evaluate".  It takes the following parameters in this order:<ul>
 <li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
 <li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
 </ul>
-The evaluator function returns an array of the result of the evaluation.</td>
-        </tr>
+The evaluator function returns an array of the result of the evaluation.</dd>
 
-    </tbody>
-</table>
+    </dl>
 
 <dl class="details">
 
