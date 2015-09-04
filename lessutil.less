@@ -230,8 +230,8 @@ border-collapse: separate;
 .linearGradient(@startColor,@endColor, @fallbackColor: none){
     @sc:@startColor;
     @fbc:@fallbackColor;
-    @fbc2:~`"@{fbc}"=="none" ? "@{sc}" : "@{fbc}"`;
-    background: @fbc2;
+    & when not (@fbc = 'none') { background: @fbc; }
+    & when (@fbc = 'none') { background: @sc; }
     background-repeat: repeat-x;
     background: linear-gradient(top,@startColor,@endColor);
     background: -moz-linear-gradient(@startColor,@endColor);
