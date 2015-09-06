@@ -10,11 +10,12 @@
  body {
   color: black !important;
   background: transparent !important;
-  font-size:80%;
+  font-size:85%;
   margin: 0;
   padding: 0;
   width: 100% !important;
   min-width: 0 !important;
+  font-style: normal;
  }
  input, textarea {
   .noBoxShadow();
@@ -45,7 +46,7 @@ table {
  }
  th { text-align: center; }
  tbody tr:last-child {
-  & tr, th {
+  tr, th {
    border: 2px solid;
   }
  }
@@ -67,11 +68,11 @@ ol, ul {
  .columns(2);
  ol, ul { .columns(1); }
 }
-nav, td, th {
+nav, td, th, dd {
  ol, ul { .columns(1); }
 }
-  ul li, ol li, dl dt {   page-break-after: avoid;  }
-  ul li:first-child, ol li:first-child, dl dt:first-child { page-break-after: auto; }
+ul li, ol li, dl dt {   page-break-after: avoid;  }
+ul li:first-child, ol li:first-child, dl dt:first-child { page-break-after: auto; }
  footer {
   border-top: 3px double black;
   border-left: none;
@@ -80,12 +81,13 @@ nav, td, th {
  }
 
  h1, h2, h3, h4, h5, h6 {
-  font-weight:bolder;
   color:black;
   .noBoxShadow();
   .textShadow(0,black);
+  .boldweight();
   filter:none;
   border: none;
+  page-break-after: avoid;
  }
 
  img { border: none; }
@@ -101,9 +103,16 @@ margin-bottom: 0.1em;
 ul, ol { margin-left: 0.2em; }
 }
 /* following four rules make definition lists more compact
-  (font-weight not strictly needed)*/
-dt { font-weight:bolder; float:left; margin-right: 0.3em }
-dt:after {content:":"; font-weight:bolder}
+  (boldweight not strictly needed)*/
+dt { 
+ .boldweight();
+ float:left; 
+ margin-right: 0.3em
+}
+dt:after {
+ content:":";
+ .boldweight();
+}
 dt:last-child { float: none; }
 dt:last-child:after {content:""}
 
@@ -112,6 +121,8 @@ dd p { display: inline; text-indent: 0em; }
 dl {
  &+h4:before, &+h5:before, &+h6:before { clear:both; }
 }
+h1, h2, h3, h4 { &, &:after { .boldweight(); } }
+h5, h6 { &, &:after { .regularweight(); } }
 /* define headers */
 h1 { margin-top: 0.2em;
     border-bottom: 5px double black;
@@ -120,9 +131,9 @@ h2 { margin-top: 0.2em;margin-left: 0em;
    border-bottom: 1px solid black; .borderRadius(0px);
    padding:2px 2px 2px 0px;}
 h3 { margin-left: 0em; font-size: 130%; }
-h4 { margin-left: 0em; font-size: 120%; font-style:italic; }
-h5 { margin-left: 0em; font-size: 110%; font-weight: 400; font-style:italic; }
-h6 { margin-left: 0em; font-size: 100%; font-weight: 400; font-style:italic; }
+h4 { margin-left: 0em; font-size: 120%; .italic(); }
+h5 { margin-left: 0em; font-size: 110%; .italic(); }
+h6 { margin-left: 0em; font-size: 100%; .italic(); }
 /* to make subheaders float with the text */
 h4 { display: inline; padding-right: 0.5em;
  margin-top:-0.3em; margin-bottom:0em }
@@ -131,7 +142,7 @@ h5 { display: inline; padding-right: 0.5em;
 h6 { display: inline; padding-right: 0.5em;
  margin-top:0em; margin-bottom:0em }
 h4, h5, h6 {
- &:after{content:"."; font-weight:bolder}
+ &:after{content:"."; }
  &+ul, &+ol, &+table, &+pre, &+dl { clear:left }
  &+p, &+div {
   display: inline;
@@ -168,10 +179,15 @@ p, h1, h2, h3, h4, h5, h6, th, ol, ul, td, dt, pre, blockquote, div, li, dd{
   text-decoration: none !important;
   color: black !important;
  }
+ abbr[title]:after {
+  display: inline;
+  content:" (" attr(title) ")";
+  .nosmallcaps();
+  color: black !important;
+ }
  nav a,
  a[href^="javascript"],
- a[href^="#"],
- a[href^="mailto"] {
+ a[href^="#"]{
   &:link:after, &:visited:after { display: none; }
  }
 a[href^="javascript"]:link,

@@ -19,6 +19,7 @@ body {
  text-align:center;
  padding: 0.5% 2%;
  font-size:120%;
+ .regularweight();
 }
 
 kbd {
@@ -58,7 +59,7 @@ option { font-size:110%; }
 
 .bigHeader(@size) {
  font-size:@size;
- font-weight:lighter;
+ .lightweight();
  padding-top: 0.2em;
  padding-bottom: 0.2em;
  padding-left: 0.05em;
@@ -66,7 +67,8 @@ option { font-size:110%; }
  border-bottom: 1px solid;
 }
 .littleHeader(@size){
-text-align:left; font-size:@size;font-weight:bolder;
+ text-align:left; font-size:@size;
+ .boldweight();
 }
 
 h1 { .bigHeader(180%); }
@@ -88,7 +90,7 @@ blockquote {
  border-bottom: 1px solid;
  border-left: none;
  border-right: none;
- .lighter();
+ .lightweight();
  .italic();
 }
 
@@ -99,11 +101,13 @@ blockquote {
 }
 aside {
  border: 1px solid #c0c0c0;
+ font-size: 85%;
  margin-left: 1em;
  margin-right: 1em;
  margin-top: 0.4em;
  margin-bottom: 0.4em;
  padding: 1em;
+ .lightweight();
 }
 
 fieldset {

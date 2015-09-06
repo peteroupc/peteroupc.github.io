@@ -85,6 +85,25 @@
  -webkit-transform:@value;
 }
 
+.boldweight(){
+ font-weight: 700;
+ b, strong, th {
+  font-weight: 900;
+ }
+}
+.lightweight(){
+ font-weight: 200;
+ b, strong, th {
+  font-weight: 600;
+  b.strong, th { font-weight: 800; }
+ }
+}
+.regularweight(){
+ font-weight: 400;
+ b, strong, th {
+  .boldweight();
+ }
+}
 .italic(){
  font-style: italic;
  cite, i, em {
@@ -97,13 +116,6 @@
  cite, i, em {
   font-style: italic;
   cite, i, em { font-style: normal; }
- }
-}
-.lighter(){
- font-weight: lighter;
- b, strong {
-  font-weight: 600;
-  b, strong { font-weight: bolder }
  }
 }
 .noBoxShadow(){
