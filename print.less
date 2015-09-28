@@ -33,7 +33,7 @@ hr {
 table {
  border: none;
  .tableRadii(0px);
-}
+ caption { .smallcaps(); }
  td, th {
   border: 1px solid;
   border-left: none;
@@ -50,6 +50,7 @@ table {
    border: 2px solid;
   }
  }
+}
  // .noprint prevents content from appearing
  // in the print version
  .noprint {
@@ -71,15 +72,15 @@ ol, ul {
 nav, td, th, dd {
  ol, ul { .columns(1); }
 }
-ul li, ol li, dl dt {   page-break-after: avoid;  }
+ul li, ol li, dl dt, thead, thead tr, tbody tr:first-child {   page-break-after: avoid;  }
 ul li:first-child, ol li:first-child, dl dt:first-child { page-break-after: auto; }
  footer {
   border-top: 3px double black;
   border-left: none;
   border-right: none;
   border-bottom: none;
- }
-
+}
+blockquote footer { border: none; }
  h1, h2, h3, h4, h5, h6 {
   color:black;
   .noBoxShadow();
@@ -88,6 +89,14 @@ ul li:first-child, ol li:first-child, dl dt:first-child { page-break-after: auto
   filter:none;
   border: none;
   page-break-after: avoid;
+ }
+img {
+ padding: 6px;
+}
+ p, li, dt, dd {
+  img {
+    padding: 0px;
+  }
  }
 
  img { border: none; }
@@ -117,7 +126,7 @@ dt:last-child { float: none; }
 dt:last-child:after {content:""}
 
 dd { display: list-item; list-style: none; margin-left: 0.6em; }
-dd p { display: inline; text-indent: 0em; }
+dd p:first-child { display: inline; text-indent: 0em; }
 dl {
  &+h4:before, &+h5:before, &+h6:before { clear:both; }
 }
@@ -142,6 +151,7 @@ h5 { display: inline; padding-right: 0.5em;
 h6 { display: inline; padding-right: 0.5em;
  margin-top:0em; margin-bottom:0em }
 h4, h5, h6 {
+ &:before{display:block; content:""; }
  &:after{content:"."; }
  &+ul, &+ol, &+table, &+pre, &+dl { clear:left }
  &+p, &+div {
@@ -176,6 +186,7 @@ p, h1, h2, h3, h4, h5, h6, th, ol, ul, td, dt, pre, blockquote, div, li, dd{
   font-size: 75%;
   font-style: italic;
   .nosmallcaps();
+  font-stretch: condensed;
   text-decoration: none !important;
   color: black !important;
  }
@@ -183,6 +194,7 @@ p, h1, h2, h3, h4, h5, h6, th, ol, ul, td, dt, pre, blockquote, div, li, dd{
   display: inline;
   content:" (" attr(title) ")";
   .nosmallcaps();
+  font-stretch: condensed;
   color: black !important;
  }
  nav a,

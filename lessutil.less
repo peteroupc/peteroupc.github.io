@@ -90,6 +90,9 @@
  b, strong, th {
   font-weight: 900;
  }
+ dfn {
+  font-weight: 700;
+ }
 }
 .lightweight(){
  font-weight: 200;
@@ -97,25 +100,31 @@
   font-weight: 600;
   b.strong, th { font-weight: 800; }
  }
+ dfn {
+  font-weight: 200;
+ }
 }
 .regularweight(){
  font-weight: 400;
  b, strong, th {
   .boldweight();
  }
+ dfn {
+  font-weight: 400;
+ }
 }
 .italic(){
  font-style: italic;
- cite, i, em {
+ cite, i, em, dfn {
   font-style: normal;
-  cite, i, em { font-style: italic; }
+  cite, i, em, dfn { font-style: italic; }
  }
 }
 .roman(){
  font-style: normal;
- cite, i, em {
+ cite, i, em, dfn {
   font-style: italic;
-  cite, i, em { font-style: normal; }
+  cite, i, em, dfn { font-style: normal; }
  }
 }
 .noBoxShadow(){

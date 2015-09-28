@@ -29,6 +29,10 @@ kbd {
  border-width:1px 3px 3px 1px;
 }
 
+dfn {
+  .regularweight();
+}
+
 hr {
  border: 1px solid;
 }
@@ -41,6 +45,7 @@ abbr,acronym {
 table {
  border: 1px solid;
  .tableRadii(10px);
+ caption { .smallcaps(); }
  td, th {
   border-left: none;
   border-right: none;
@@ -94,9 +99,10 @@ blockquote {
  .italic();
 }
 
-.citation {
+.citation, blockquote footer {
  margin-top: 0;
  text-align: right;
+ .smallcaps();
  .roman();
 }
 aside {
@@ -265,6 +271,12 @@ div.description {
 img {
  padding: 6px;
 }
+ p, li, dt, dd {
+  img {
+    padding: 0px;
+  }
+ }
+
 @media screen and (max-width:785px){
 .header {
  display:block;
