@@ -105,8 +105,9 @@ blockquote {
  .smallcaps();
  .roman();
 }
+
 aside {
- border: 1px solid #c0c0c0;
+ border: 1px solid;
  font-size: 85%;
  margin-left: 1em;
  margin-right: 1em;
@@ -114,6 +115,12 @@ aside {
  margin-bottom: 0.4em;
  padding: 1em;
  .lightweight();
+ &.example, &.caution, &.warning, &.note {
+  border: 2px solid;
+ }
+ &.warning {
+  .regularweight();
+ }
 }
 
 fieldset {
@@ -225,6 +232,25 @@ tr {
   td:nth-child(even){background-color:#f0f0f0;}
   th:nth-child(even){.linearGradient(#d0d0d0,#eeeeee);}
 }
+aside {
+ border-color:  #c0c0c0;
+ &.example {
+  border-color: #0022c0;
+  background-color: #f8fcff;
+ }
+ &.caution {
+  border-color: #ff8000;
+  background-color: #fffcf8;
+ }
+ &.warning {
+  border-color: #ff0000;
+  background-color: #fff8f8;
+ }
+ &.note {
+  border-color: #00c022;
+  background-color: #f8fffc;
+ }
+}
 
 body {
  .traditionaltypography();
@@ -271,7 +297,7 @@ div.description {
 img {
  padding: 6px;
 }
- p, li, dt, dd {
+ p, li, dt, dd, aside {
   img {
     padding: 0px;
   }

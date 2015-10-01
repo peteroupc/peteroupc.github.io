@@ -20,6 +20,14 @@
  input, textarea {
   .noBoxShadow();
   border: 1px solid black !important;
+  background: transparent !important;
+  padding: 1px !important;
+ }
+ button {
+  .noBoxShadow();
+  border: 1px solid black !important;
+  background: transparent !important;
+  .borderRadius(3px);
   padding: 1px !important;
  }
 .menu {
@@ -93,10 +101,19 @@ blockquote footer { border: none; }
 img {
  padding: 6px;
 }
- p, li, dt, dd {
+ p, li, dt, dd, aside {
   img {
     padding: 0px;
   }
+ }
+ aside.note, aside.example {
+  border: 2px solid black;
+ }
+ aside.caution {
+  border: 3px solid black;
+ }
+ aside.warning {
+  border: 4px solid black;
  }
 
  img { border: none; }
@@ -113,9 +130,9 @@ ul, ol { margin-left: 0.2em; }
 }
 /* following four rules make definition lists more compact
   (boldweight not strictly needed)*/
-dt { 
+dt {
  .boldweight();
- float:left; 
+ float:left;
  margin-right: 0.3em
 }
 dt:after {
@@ -168,7 +185,7 @@ pre {
   white-space: pre-wrap;
   padding: 1em 0;
 }
-p, h1, h2, h3, h4, h5, h6, th, ol, ul, td, dt, pre, blockquote, div, li, dd{
+p, h1, h2, h3, h4, h5, h6, th, ol, ul, td, dt, pre, blockquote, div, li, dd, aside {
  background: transparent !important;
 }
  a, a:link, a:hover, a:visited {
@@ -197,7 +214,7 @@ p, h1, h2, h3, h4, h5, h6, th, ol, ul, td, dt, pre, blockquote, div, li, dd{
   font-stretch: condensed;
   color: black !important;
  }
- nav a,
+ nav a, th a,
  a[href^="javascript"],
  a[href^="#"]{
   &:link:after, &:visited:after { display: none; }
