@@ -101,7 +101,8 @@
        "Segoe UI",  "Roboto", Verdana, "Droid Sans", "DejaVu Sans",
        "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 }
-    .serif(){
+
+.serif(){
    font-family: "Merriweather","Sitka Text", "PT Serif",
       "Charis SIL Compact", "Charis SIL",
       "Cambria",
@@ -120,14 +121,12 @@
 //  body { .traditionaltypography(); }
 //
 .traditionaltypography(){
+  .serif();
   input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea,
   pre, textarea, tt, code, samp, var, kbd {
    .monospaced();
+   * { .monospaced(); }
    .typographybase();
-  }
-  div, p, li, dt, dd, span, a {
-   .serif();
-   .typography();
   }
   pre {
    .nohyphens();
@@ -137,7 +136,9 @@
   }
   input, legend, option, button, select, h1, h2, h3, h4, h5, h6, figcaption, caption, aside, th, td {
    .sansserif();
-   * { .sansserif(); }
+   div, p, li, dt, dd, a {
+    .sansserif();
+   }
    .typography();
   }
   th, td {
