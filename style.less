@@ -14,12 +14,13 @@
 //  General styles
 //////////////////////////////////////////////////////////////////////
 
+ .traditionaltypography();
+
 body {
  margin:0 auto;
  text-align:center;
  padding: 0.5% 2%;
  font-size:120%;
- .regularweight();
 }
 
 kbd {
@@ -30,7 +31,7 @@ kbd {
 }
 
 dfn {
-  .regularweight();
+  .italic();
 }
 
 hr {
@@ -73,7 +74,6 @@ option { font-size:110%; }
 }
 .littleHeader(@size){
  text-align:left; font-size:@size;
- .boldweight();
 }
 
 h1 { .bigHeader(180%); }
@@ -250,10 +250,6 @@ aside {
   border-color: #00c022;
   background-color: #f8fffc;
  }
-}
-
-body {
- .traditionaltypography();
 }
 @import "print.less";
 

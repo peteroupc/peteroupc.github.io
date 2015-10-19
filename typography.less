@@ -15,6 +15,20 @@
 //
 /////////////////////////////////////////////////////////////
 
+@monospaced_font: "Source Code Pro", "Menlo", "Consolas",  "Inconsolata", "Liberation Mono", "Lucida Console",
+       "DejaVu Sans Mono", "Droid Mono",
+       "FreeMono", "Courier New", "Courier", monospace;
+@serif_font: "Merriweather","Sitka Text", "PT Serif",
+      "Charis SIL Compact", "Charis SIL",
+      "Cambria",
+      "Palatino Linotype",
+      "Droid Serif",
+      "Liberation Serif", "Georgia", "Book Antiqua", "FreeSerif", "Times New Roman", serif;
+@sans_serif_font: "Fira Sans", "Source Sans Pro", "Helvetica Neue",
+       "Open Sans", "FreeSans", "Clear Sans", "Calibri", "Liberation Sans",
+       "Segoe UI",  "Roboto", "Meiryo UI", Verdana, "Droid Sans", "DejaVu Sans",
+       "Lucida Grande", "Lucida Sans Unicode", "Arial Unicode MS", Arial, sans-serif;
+
 .fontFeatureSettings3(@v1, @v2, @v3){
   font-feature-settings: @v1, @v2, @v3 !important;
   -moz-font-feature-settings: @v1, @v2, @v3  !important;
@@ -85,30 +99,58 @@
   font-variant: normal !important;
   .fontFeatureSettings4("liga" 1, "kern" 1, "smcp" 0,"c2sc" 0);
 }
-@import url(https://fonts.googleapis.com/css?family=Merriweather:300,400,700,800,300italic,400italic,700italic,800italic);
-@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic);
-@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic);
 
 .monospaced(){
-    font-family: "Source Code Pro", "Menlo", "Consolas",  "Inconsolata", "Liberation Mono", "Lucida Console",
-       "DejaVu Sans Mono", "Droid Mono",
-       "FreeMono", "Courier New", "Courier", monospace;
+  font-family: @monospaced_font;
 }
-
 .sansserif(){
-   font-family: "Fira Sans", "Source Sans Pro", "Helvetica Neue",
-       "Open Sans", "FreeSans", "Clear Sans", "Calibri", "Liberation Sans",
-       "Segoe UI",  "Roboto", Verdana, "Droid Sans", "DejaVu Sans",
-       "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+   font-family: @sans_serif_font;
+}
+.serif(){
+   font-family: @serif_font;
 }
 
-.serif(){
-   font-family: "Merriweather","Sitka Text", "PT Serif",
-      "Charis SIL Compact", "Charis SIL",
-      "Cambria",
-      "Palatino Linotype",
-      "Droid Serif",
-      "Liberation Serif", "Georgia", "Book Antiqua", "FreeSerif", "Times New Roman", serif;
+.boldweight(){
+ font-weight: 700;
+ b, strong, th {
+  font-weight: 900;
+ }
+ dfn {
+  font-weight: 700;
+ }
+}
+.lightweight(){
+ font-weight: 200;
+ b, strong, th {
+  font-weight: 600;
+  b.strong, th { font-weight: 800; }
+ }
+ dfn {
+  font-weight: 200;
+ }
+}
+.regularweight(){
+ font-weight: 400;
+ b, strong, th {
+  .boldweight();
+ }
+ dfn {
+  font-weight: 400;
+ }
+}
+.italic(){
+ font-style: italic;
+ cite, i, em, dfn {
+  font-style: normal;
+  cite, i, em, dfn { font-style: italic; }
+ }
+}
+.roman(){
+ font-style: normal;
+ cite, i, em, dfn {
+  font-style: italic;
+  cite, i, em, dfn { font-style: normal; }
+ }
 }
 
 //
@@ -118,10 +160,14 @@
 //  and some input elements.
 //
 //  Example:
-//  body { .traditionaltypography(); }
+//  .traditionaltypography(); // Use outside of any CSS rule
 //
 .traditionaltypography(){
-  .serif();
+  body {
+   .serif();
+   .regularweight();
+  }
+  h1, h2, h3, h4, h5, h6 { .boldweight(); }
   input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea,
   pre, textarea, tt, code, samp, var, kbd {
    .monospaced();
@@ -136,7 +182,7 @@
   }
   input, legend, option, button, select, h1, h2, h3, h4, h5, h6, figcaption, caption, aside, th, td {
    .sansserif();
-   div, p, li, dt, dd, a {
+   div, p, li, dt, dd, a, small, big {
     .sansserif();
    }
    .typography();
@@ -151,15 +197,20 @@
 // font for all text.
 //
 //  Example:
-//  body { .monospacedtypography(); }
+//  .monospacedtypography(); // Use outside of any CSS rule
 //
 .monospacedtypography(){
+  body {
+   .regularweight();
+   .monospaced();
+  }
+  h1, h2, h3, h4, h5, h6 { .boldweight(); }
   input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea,
   pre, textarea, tt, code, samp, var, kbd {
    .monospaced();
    .typographybase();
   }
-  div, p, li, dt, dd, span, a {
+  div, p, li, dt, dd, span, a, small, big {
    .monospaced();
    .typography();
   }
@@ -178,3 +229,10 @@
    .typographytabfigures();
   }
 }
+
+////////////
+// Font imports
+
+@import url(https://fonts.googleapis.com/css?family=Merriweather:300,400,700,800,300italic,400italic,700italic,800italic);
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic);
