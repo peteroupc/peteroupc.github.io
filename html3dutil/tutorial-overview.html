@@ -19,7 +19,11 @@
 </header>
 
 <article>
-    <h2>Example <a id=Example></a></h2><p><img src="html3d.png" alt=""></p>
+    <h2>Public-Domain HTML 3D Library</h2><p>This page will introduce a new open-source JavaScript library that I wrote, called the <a href="https://github.com/peteroupc/html3dutil/releases"><strong>HTML 3D Library</strong></a>.</p>
+<p>This library contains classes and utility methods to ease the development of HTML 3D applications, such as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.</p>
+<p>The library differs from many others because this one is in the public domain, so no license is required to use it.</p>
+<p>This tip will include information on how to use the HTML 3D library, an overview of its features, and an example of a simple 3D-enabled Web page.</p>
+<h2>Example <a id=Example></a></h2><p><img src="https://peteroupc.github.io/html3dutil/html3d.png" alt=""></p>
 <h2>Contents <a id=Contents></a></h2><p><a href="#Example">Example</a><br><a href="#Contents">Contents</a><br><a href="#How_to_Use">How to Use</a><br>&nbsp;&nbsp;<a href="#List_of_Classes">List of Classes</a><br>&nbsp;&nbsp;<a href="#Scene3D">Scene3D</a><br>&nbsp;&nbsp;<a href="#The_Camera">The &quot;Camera&quot;</a><br>&nbsp;&nbsp;<a href="#3D_Models">3D Models</a><br>&nbsp;&nbsp;<a href="#Shapes">Shapes</a><br>&nbsp;&nbsp;<a href="#The_Render_Loop">The Render Loop</a><br><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a><br><a href="#Demos">Demos</a><br><a href="#Example">Example</a><br></p>
 <h2>How to Use <a id=How_to_Use></a></h2><ol>
 <li><a href="https://github.com/peteroupc/html3dutil/releases"><strong>Download the HTML 3D library</strong></a>.</li>
@@ -56,69 +60,68 @@
 <p>The following sections detail how a 3D application using this library works.</p>
 <h3>Scene3D <a id=Scene3D></a></h3><p>The <code>Scene3D</code> class represents a so-called &quot;scene graph&quot;. It holds every 3D object which will be drawn to the screen, as well as the camera's projection, the camera's position, and light sources to illuminate the 3D scene, among many other things.</p>
 <p>To create a <code>Scene3D</code>, you first need to find the HTML canvas in your JavaScript, then you need to pass it to <code>new Scene3D()</code>. Once you do so, <code>Scene3D</code>will use that canvas to draw all 3D objects it receives. Here is an example.</p>
-<pre class="prettyprint source"><code>  // Find the HTML canvas with the ID &quot;canvas&quot;.
-  var canvas=document.getElementById(&quot;canvas&quot;)
-  // Create a 3D scene using that canvas.
-  var scene=new Scene3D(canvas);</code></pre><h3>The &quot;Camera&quot; <a id=The_Camera></a></h3><p>The <code>Scene3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
-<pre class="prettyprint source"><code>  // Set the perspective view.  Camera has a 45-degree field of view
-  // and will see objects from 0.1 to 100 units away.
-  scene.setPerspective(45,scene.getClientAspect(),0.1,100);
-  // Move the camera back 40 units.
-  scene.setLookAt([0,0,40]);
-  // Move the camera back 30 units instead, and turn it so it
-  // points at (0, 2, 0), that is, up 2 units.
-  scene.setLookAt([0,0,30], [0,2,0]);</code></pre><p>For more information, see <em><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The &quot;Camera&quot; and Perspective and View Transforms</a></em>.</p>
+<pre class="prettyprint source"><code>// Find the HTML canvas with the ID &quot;canvas&quot;.
+var canvas=document.getElementById(&quot;canvas&quot;)
+// Create a 3D scene using that canvas.
+var scene=new Scene3D(canvas);</code></pre><h3>The &quot;Camera&quot; <a id=The_Camera></a></h3><p>The <code>Scene3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Scene3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>setPerspective()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
+<pre class="prettyprint source"><code>// Set the perspective view.  Camera has a 45-degree field of view
+// and will see objects from 0.1 to 100 units away.
+scene.setPerspective(45,scene.getClientAspect(),0.1,100);
+// Move the camera back 40 units.
+scene.setLookAt([0,0,40]);
+// Move the camera back 30 units instead, and turn it so it
+// points at (0, 2, 0), that is, up 2 units.
+scene.setLookAt([0,0,30], [0,2,0]);</code></pre><p>For more information, see <em><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The &quot;Camera&quot; and Perspective and View Transforms</a></em>.</p>
 <h3>3D Models <a id=3D_Models></a></h3><p>Every 3D scene is made up of &quot;meshes&quot;, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the <code>Mesh</code> class, or create a built-in geometric shape using a method in the <code>Meshes</code> class. The example below shows how you can create a box mesh:</p>
-<pre class="prettyprint source"><code>  // Create a box mesh 10 units in width, 20 units
-  // in height, and 25 units in depth
-  var mesh=Meshes.createBox(10,20,25);</code></pre><p>Here are some other built-in mesh methods. This tip doesn't explain all the features or parameters in the <code>Meshes</code> class; for that, see the <a href="http://peteroupc.github.io/html3dutil/glutil.Meshes.html">Meshes API documentation</a>.</p>
-<dl>
-  <dt><code>Meshes.createSphere(radius)</code></dt>
-  <dd>Creates a sphere with the given <code>radius</code>.</dd>
-  <dt><code>Meshes.createCylinder(base, top, height)</code></dt>
-  <dd>Creates a cylinder with the given <code>base</code> radius, <code>top</code> radius, and <code>height</code>. Can be used to create a cone if <code>base</code> or <code>top</code> is <code>0</code>.</dd>
-  <dt><code>Meshes.createClosedCylinder(base, top, height)</code></dt>
-  <dd>Like <code>createCylinder</code>, except it also covers the base and top.</dd>
-  <dt><code>Meshes.createPartialDisk(inner, outer, start, sweep)</code></dt>
-  <dd>Creates a circular ring, of radius <code>outer</code> with a hole of radius <code>inner</code>, starting at <code>start</code> degrees and sweeping <code>sweep</code> degrees.</dd>
-  <dt><code>Meshes.createDisk(inner, outer)</code></dt>
-  <dd>Same as calling <code>createPartialDisk</code> with <code>start</code> 0 and <code>sweep</code> 360.</dd>
-</dl>
-
+<pre class="prettyprint source"><code>// Create a box mesh 10 units in width, 20 units
+// in height, and 25 units in depth
+var mesh=Meshes.createBox(10,20,25);</code></pre><p>Here are some other built-in mesh methods. This tip doesn't explain all the features or parameters in the <code>Meshes</code> class; for that, see the <a href="http://peteroupc.github.io/html3dutil/glutil.Meshes.html">Meshes API documentation</a>.</p>
+<ul>
+<li><dfn><code>Meshes.createSphere(radius)</code></dfn>
+<br>Creates a sphere with the given <code>radius</code>.</li>
+<li><dfn><code>Meshes.createCylinder(base, top, height)</code></dfn>
+<br>Creates a cylinder with the given <code>base</code> radius, <code>top</code> radius, and <code>height</code>. Can be used to create a cone if <code>base</code> or <code>top</code> is <code>0</code>.</li>
+<li><dfn><code>Meshes.createClosedCylinder(base, top, height)</code></dfn>
+<br>Like <code>createCylinder</code>, except it also covers the base and top.</li>
+<li><dfn><code>Meshes.createPartialDisk(inner, outer, start, sweep)</code></dfn>
+<br>Creates a circular ring, of radius <code>outer</code> with a hole of radius <code>inner</code>, starting at <code>start</code> degrees and sweeping <code>sweep</code> degrees.</li>
+<li><dfn><code>Meshes.createDisk(inner, outer)</code></dfn>
+<br>Same as calling <code>createPartialDisk</code> with <code>start</code> 0 and <code>sweep</code> 360.</li>
+</ul>
 <p>For more information on meshes, see <a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a>.</p>
 <h3>Shapes <a id=Shapes></a></h3><p>Once a mesh is created, it needs to be added to the 3D scene in order to be rendered. Use the 3D scene's <code>makeShape()</code> method to convert the mesh to a shape. Now you can set the shape's properties such as color, size, and position. Then, call <code>addShape()</code> to add the shape to the 3D scene.</p>
-<pre class="prettyprint source"><code>  // Create a shape based on the mesh
-  var shape=scene.makeShape(mesh);
-  // Make it red (you can also use the HTML color string
-  // &quot;#FF0000&quot; instead)
-  shape.setColor(&quot;red&quot;);
-  // Move it 1 unit along the X axis
-  shape.setPosition(1,0,0);
-  // Add the shape to the scene
-  scene.addShape(shape);</code></pre><p>The appearance of a 3D shape is known in the 3D graphics world as a &quot;material&quot;. It includes textures (images), colors, and light reflection parameters. The <a href="http://peteroupc.github.io/html3dutil/glutil.Material.html"><code>Material</code></a> class holds data on some of these parameters, and is part of the definition of a shape.</p>
+<pre class="prettyprint source"><code>// Create a shape based on the mesh
+var shape=scene.makeShape(mesh);
+// Make it red (you can also use the HTML color string
+// &quot;#FF0000&quot; instead)
+shape.setColor(&quot;red&quot;);
+// Move it 1 unit along the X axis
+shape.setPosition(1,0,0);
+// Add the shape to the scene
+scene.addShape(shape);</code></pre><p>The appearance of a 3D shape is known in the 3D graphics world as a &quot;material&quot;. It includes textures (images), colors, and light reflection parameters. The <a href="http://peteroupc.github.io/html3dutil/glutil.Material.html"><code>Material</code></a> class holds data on some of these parameters, and is part of the definition of a shape.</p>
 <p>Here are details on some of the <code>Shape</code> class's methods.</p>
-<dl>
-  <dt><code>&lt;i&gt;shape&lt;/i&gt;.setPosition(x, y, z)</code></dt>
-  <dd>Sets the shape's position to the given coordinates.</dd>
-  <dt><code>&lt;i&gt;shape&lt;/i&gt;.setScale(x, y, z)</code></dt>
-  <dd>Sets the shape's scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.</dd>
-  <dt><code>&lt;i&gt;shape&lt;/i&gt;.getTransform().setOrientation(angle, x, y, z)</code></dt>
-  <dd>Sets the shape's rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).</dd>
-  <dt><code>&lt;i&gt;shape&lt;/i&gt;.setColor(color)</code></dt>
-  <dd>Gives the shape a particular color. <code>color</code> can be an HTML color (&quot;#ff0000&quot;), CSS color (&quot;red&quot;), RGB color(&quot;rgb(20, 30, 40)&quot;) or HSL color(&quot;hsl(20, 50%, 50%)&quot;), or a set of values from 0 to 1 (example: <code>[1.0,0.5,0.0]</code>).</dd>
-  <dt><code>&lt;i&gt;shape&lt;/i&gt;.setTexture(name)</code></dt>
-  <dd>Gives the shape a particular texture, with the URL <code>name</code>. The texture should be in the same origin as the Web page (which usually means the same directory).</dd>
-  <dt><code>&lt;i&gt;shape&lt;/i&gt;.copy()</code></dt>
-  <dd>Creates a copy of this shape. Can be more efficient than calling <code>scene.makeShape</code> if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</dd>
-</dl>
-
+<ul>
+<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setPosition(x, y, z)</code></dfn>
+<br>Sets the shape's position to the given coordinates.</li>
+<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setScale(x, y, z)</code></dfn>
+<br>Sets the shape's scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.</li>
+<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.getTransform().setOrientation(angle, x, y, z)</code></dfn>
+<br>Sets the shape's rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).</li>
+<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setColor(color)</code></dfn>
+<br>Gives the shape a particular color. <code>color</code> can be an HTML color (&quot;#ff0000&quot;), CSS color (&quot;red&quot;), RGB color(&quot;rgb(20, 30, 40)&quot;) or HSL color(&quot;hsl(20, 50%, 50%)&quot;), or a set of values from 0 to 1 (example: <code>[1.0,0.5,0.0]</code>).</li>
+<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setTexture(name)</code></dfn>
+<br>Gives the shape a particular texture, with the URL <code>name</code>. The texture should be in the same origin as the Web page (which usually means the same directory).</li>
+<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.copy()</code></dfn>
+<br>Creates a copy of this shape. Can be more efficient than calling <code>scene.makeShape</code> if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</li>
+</ul>
 <h3>The Render Loop <a id=The_Render_Loop></a></h3><p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many &quot;frames&quot; a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the <code>Scene3D.render()</code> method.&nbsp; Render loops are created using the <code>GLUtil.renderLoop()</code> method. Here is an example of a render loop.</p>
-<pre class="prettyprint source"><code>  // Set up the render loop
-  GLUtil.renderLoop(function(time){
-   // This will be called once each frame.
-   // Here, we render the scene
-   scene.render();
-  });</code></pre><p>The render loop method takes a parameter (here &quot;time&quot;), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.</p>
+<p>   // Set up the render loop
+   GLUtil.renderLoop(function(time){
+    // This will be called once each frame.
+    // Here, we render the scene
+    scene.render();
+   });</p>
+<p>The render loop method takes a parameter (here &quot;time&quot;), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.</p>
 <h2>A Skeleton for 3D Apps <a id=A_Skeleton_for_3D_Apps></a></h2><p>The following is a minimal skeleton you can use for writing HTML apps using this library.</p>
 <pre class="prettyprint source"><code>&lt;head>
 &lt;meta charset=utf-8>
@@ -180,7 +183,137 @@
   });
 //-->
 &lt;/script>
-&lt;/body></code></pre>
+&lt;/body></code></pre><h2>History</h2>
+
+<h3>Version 1.5.1</h3>
+
+<ul>
+<li>Fixed bug in normal calculation</li>
+<li>Make certain changes to the demos to ensure compatibility with the next major version</li>
+<li>Fix curve returned by <code>GraphicsPath#getCurves() </code>so that closed paths remain smooth at their endpoints when a curve tube is generated from them</li>
+</ul>
+<h3>Version 1.5</h3>
+
+<ul>
+<li>Add support for specular maps and normal maps, including in the JSON mesh format and MTL material format.</li>
+<li>To support normal maps, extra methods for bitangents and tangents were added to the <code>Mesh</code> class.</li>
+<li>Added six new demos and modified several others</li>
+<li>Support 24-bit color versions of TGA files</li>
+<li><code>Scene3D </code>now does frustum culling of its shapes</li>
+<li>Fixed vertex normal calculation in the <code>recalcNormals() </code>method of the <code>Mesh</code> class.</li>
+<li>Allow two-element arrays to be passed to the <code>Mesh</code> class's <code>texCoord3() </code>method.</li>
+<li>Add <code>getBoundingBox </code>method to the <code>Mesh </code>class.</li>
+<li>Add the <code>setVisible </code>method to the <code>Shape </code>and <code>ShapeGroup </code>classes.</li>
+<li>Allow reading <em>OBJ</em> files with negative reference numbers</li>
+<li>Add <em>path.js </em>(2D graphics paths) to extras</li>
+<li>Added an &quot;<code>axis</code>&quot; parameter to the <code>SurfaceOfRevolution </code>constructor and <code>fromFunction </code>method</li>
+<li>Add <code>vec3negate</code>, <code>vec3negateInPlace</code>, <code>vec3mul</code>, and <code>plane</code> and <code>frustum</code> methods to the <code>GLMath</code> class</li>
+<li>Deprecate the practice of setting shape materials directly to textures (calling the Shape#setMaterial method with a <code>Texture</code> object rather than a <code>Material</code> object).</li>
+<li>Deprecate certain properties of <code>Transform </code>that shouldn't be exposed as a <code>public </code>API and add corresponding methods for those properties</li>
+<li>Fix <code>getPromiseResults</code></li>
+<li>Documentation added in many places</li>
+<li>&quot;<em>meshexamples.md</em>&quot; demo added and other demos edited or rearranged</li>
+<li>Other changes and fixes</li>
+</ul>
+<h3>Version 1.4</h3>
+
+<ul>
+<li>Fixed <em>camera.js </em>issues (thanks to the user &quot;<code>the-sz</code>&quot; on GitHub)</li>
+<li><p>Added an <em>extras</em> folder with the following new scripts:</p>
+<ul>
+<li>A <code>CurveTube </code>class for creating tubes from 3D curves</li>
+<li>A parametric evaluator for surfaces of revolution and 3 kinds of curves (<em>evaluators.js</em>)</li>
+<li>A frame counter (moved from the demos)</li>
+<li>A JSON converter and loader for 3D meshes (<em>meshjson.js</em>)</li>
+</ul>
+</li>
+<li><p>Made <em>objmtl.js</em> compatible with more MTL files</p>
+</li>
+<li><code>Math.sin</code>/<code>Math.cos </code>pairs were replaced with optimized versions throughout the code</li>
+<li>Add <code>mat4transformVec3 </code>method to <code>GLMath</code></li>
+<li>Add <code>BSplineCurve </code>class</li>
+<li>Deprecate <code>vertexBezier</code>, <code>normalBezier</code>, <code>colorBezier</code>, and <code>texCoordBezier </code>methods of <code>CurveEval </code>and <code>SurfaceEval</code></li>
+<li>Optimize <code>SurfaceEval</code>'s <code>evalSurface </code>method when generating triangles</li>
+<li>Add <code>primitiveCount </code>and <code>enumPrimitives </code>methods to the <code>Mesh </code>class</li>
+<li>Add <code>setMaterial </code>and <code>removeShape </code>methods to the <code>ShapeGroup </code>class</li>
+<li>Default shader program now uses <code>modelViewMatrix</code> instead of separate <code>world</code> and <code>view</code> uniforms</li>
+<li>FIx JSON issues in <code>GLUtil.loadFileFromUrl </code>method</li>
+<li>Many new demos added</li>
+<li>Add graphics filters tutorial and expanded several other tutorials</li>
+</ul>
+<h3>Version 1.3.1</h3>
+
+<ul>
+<li>Fixed touch events in some of the interactive demos</li>
+<li>Fixed issues with <code>BezierCurve</code>, <code>BezierSurface</code></li>
+<li>Robustness improvement in autonormal feature of <code>SurfaceEval</code></li>
+<li>Correctness and other fixes</li>
+</ul>
+<h3>Version 1.3</h3>
+
+<ul>
+<li><code>Camera</code> class rewritten again, but backwards compatible with version 1.0</li>
+<li>Adds <code>vec3add</code>, <code>vec3sub</code>, <code>vec3copy</code>, <code>vec3assign</code>, <code>vec4assign </code>methods to <code>GLMath</code></li>
+<li>Fixes <code>quatInvert </code>method and optimized <code>mat4inverseTranspose </code>method of <code>GLMath</code></li>
+<li>Adds <code>reverseNormals </code>method to <code>GLMath</code></li>
+<li>Adds <code>createCanvasElement</code>, <code>getTimePosition</code>, and <code>newFrames </code>methods to <code>GLUtil</code></li>
+<li>Deprecates <code>createCanvas </code>method of <code>GLUtil</code></li>
+<li>Improves <code>renderLoop </code>method of <code>GLUtil</code></li>
+<li>Improves specular highlights</li>
+<li>Allows coordinate arrays in <code>vertex2 </code>and <code>vertex3 </code>methods of <code>Mesh </code>class</li>
+<li>Resolves some autonormal degenerate cases in <code>SurfaceEval</code> class</li>
+<li>Adds <code>getCount</code> method to <code>Lights</code> class</li>
+<li>Adds face culling, auto resize, and pixel depth methods to <code>Scene3D </code>class</li>
+<li>Adds <code>getClientAspect </code>method to <code>Scene3D </code>class</li>
+<li>Other fixes and improvements</li>
+</ul>
+<h3>Version 1.2.1</h3>
+
+<ul>
+<li>Fixes bug that occurs when a shape derived from a mesh that defines its own colors is drawn before a shape derived from a mesh that doesn't define its own colors</li>
+</ul>
+<h3>Version 1.2</h3>
+
+<ul>
+<li>Supports TGA textures</li>
+<li><code>Camera </code>class rewritten and support added for the mouse wheel and middle mouse button</li>
+<li>Lines and points supported in OBJ files</li>
+<li>Supports loading custom textures from byte arrays</li>
+<li>Adds method to create capsule shapes in <code>Meshes </code>class</li>
+<li>Mesh builder (<code>vector3 </code>method) avoids adding degenerate triangles</li>
+<li>Optimizations and bug fixes</li>
+</ul>
+<h3>Version 1.1</h3>
+
+<ul>
+<li>Adds <em>frame.js</em>, a frame counter helper used in some of the demos</li>
+<li>Adds <code>quatInvert </code>method to the <code>GLMath </code>class</li>
+<li>Fixes texture mapping bugs</li>
+<li>Expands use of the <code>color3</code> method of the <code>Mesh</code> class</li>
+<li>Optimizes <code>setUniforms</code> method of the <code>ShaderProgram </code>class</li>
+<li>Adds <code>movePosition </code>method of the <code>Transform </code>class</li>
+<li>New methods in the <code>ShapeGroup </code>and <code>Scene3D </code>classes</li>
+<li>Bug fixes</li>
+</ul>
+<h3>Version 1.0</h3>
+
+<ul>
+<li>Adds <code>setOrtho2DAspect </code>and <code>setOrthoAspect </code>methods to <code>Scene3D</code></li>
+<li>Adds <code>mat4TransposeInPlace </code>method and two constants to <code>GLMath</code></li>
+<li>Renames <code>fromEuler</code> and <code>toEuler</code> methods in <code>GLMath</code> to <code>fromTaitBryan</code> and <code>toTaitBryan</code></li>
+<li>Modifies the <code>Lights</code> class</li>
+<li>Allows alpha component in material diffuse</li>
+<li>Optimizes setting uniforms in shader programs</li>
+<li>Adds <code>vertex2</code> method to <code>Mesh</code> class</li>
+<li>New classes: <code>Transform</code> and <code>ShapeGroup</code></li>
+<li>Most methods that affect transforms removed, and their functionality now uses a new <code>getTransform</code> method and the <code>Transform</code> class</li>
+<li>Bug fixes</li>
+</ul>
+<h3>Version 0.2</h3>
+
+<ul>
+<li>First CodeProject release</li>
+</ul>
 </article>
 
 </section>
