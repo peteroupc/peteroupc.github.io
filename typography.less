@@ -104,10 +104,10 @@
   font-family: @monospaced_font;
 }
 .sansserif(){
-   font-family: @sans_serif_font;
+  font-family: @sans_serif_font;
 }
 .serif(){
-   font-family: @serif_font;
+  font-family: @serif_font;
 }
 
 .boldweight(){
@@ -165,8 +165,10 @@
 .traditionaltypography(){
   body {
    .serif();
+   .typography();
    .regularweight();
   }
+  cite, i, em, dfn { .italic(); }
   h1, h2, h3, h4, h5, h6 { .boldweight(); }
   input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea,
   pre, textarea, tt, code, samp, var, kbd {
@@ -201,9 +203,11 @@
 //
 .monospacedtypography(){
   body {
+   .typography();
    .regularweight();
    .monospaced();
   }
+  cite, i, em, dfn { .italic(); }
   h1, h2, h3, h4, h5, h6 { .boldweight(); }
   input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea,
   pre, textarea, tt, code, samp, var, kbd {

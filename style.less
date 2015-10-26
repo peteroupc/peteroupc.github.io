@@ -106,7 +106,7 @@ blockquote {
  .roman();
 }
 
-aside {
+.aside() {
  border: 1px solid;
  font-size: 85%;
  margin-left: 1em;
@@ -115,6 +115,9 @@ aside {
  margin-bottom: 0.4em;
  padding: 1em;
  .lightweight();
+}
+aside { .aside(); }
+aside, div {
  &.example, &.caution, &.warning, &.note {
   border: 2px solid;
  }
