@@ -1,5 +1,4 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.BigInteger</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
-</head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.BigInteger</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
@@ -151,7 +150,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigintAugend</i>: A BigInteger object.</li>
+<li><i>bigintAugend</i>: Another BigInteger object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -175,7 +174,9 @@ is null.</li>
 
 <p>Does an AND operation between two BigInteger values.</p>
 
-<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.<b>Parameters:</b></p>
+<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>a</i>: A BigInteger instance.</p></li>
@@ -246,7 +247,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigintDivisor</i>: A BigInteger object.</li>
+<li><i>bigintDivisor</i>: Another BigInteger object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -276,7 +277,7 @@ Attempted to divide by zero.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>divisor</i>: The divisor.</li>
+<li><i>divisor</i>: A BigInteger object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -310,7 +311,7 @@ Attempted to divide by zero.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>True if the objects are equal; otherwise, false.</p>
+<p>True if this object and another object are equal; otherwise, false.</p>
 
 <h3>Equals</h3>
 
@@ -337,12 +338,42 @@ Attempted to divide by zero.</p></li>
     bool littleEndian);
 </code></pre>
 
+<p><b>Deprecated.</b> Renamed to &#39;fromBytes&#39;.</p>
+
 <p>Initializes a BigInteger object from an array of bytes.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array. Can be empty, in which case the return value is 0.</p></li>
+<li><p><i>bytes</i>: A byte array.</p></li>
+<li><p><i>littleEndian</i>: A Boolean object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A BigInteger object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</li>
+</ul>
+
+<h3>fromBytes</h3>
+
+<pre><code>public static PeterO.BigInteger fromBytes(
+    byte[] bytes,
+    bool littleEndian);
+</code></pre>
+
+<p>Initializes a BigInteger object from an array of bytes.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A byte array.</p></li>
 <li><p><i>littleEndian</i>: A Boolean object.</p></li>
 </ul>
 
@@ -563,7 +594,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A 32-bit hash code.</p>
+<p>A 32-bit signed integer.</p>
 
 <h3>getLowestSetBit</h3>
 
@@ -620,7 +651,9 @@ is null.</li>
 <pre><code>public int intValue();
 </code></pre>
 
-<p>Converts this object&#39;s value to a 32-bit signed integer. To make the conversion intention clearer, use the  <code>intValueChecked</code> and <code>intValueUnchecked</code> methods instead.</p>
+<p><b>Deprecated.</b> To make the conversion intention clearer use the &#39;intValueChecked&#39; and &#39;intValueUnchecked&#39; methods instead. Replace &#39;intValue&#39; with &#39;intValueChecked&#39; in your code.</p>
+
+<p>Converts this object&#39;s value to a 32-bit signed integer.</p>
 
 <p><b>Returns:</b></p>
 
@@ -667,7 +700,9 @@ This object&#39;s value is too big to fit a 32-bit signed integer.</li>
 <pre><code>public long longValue();
 </code></pre>
 
-<p>Converts this object&#39;s value to a 64-bit signed integer. To make the conversion intention clearer, use the  <code>longValueChecked</code> and <code>longValueUnchecked</code> methods instead.</p>
+<p><b>Deprecated.</b> To make the conversion intention clearer use the &#39;longValueChecked&#39; and &#39;longValueUnchecked&#39; methods instead. Replace &#39;longValue&#39; with &#39;longValueChecked&#39; in your code.</p>
+
+<p>Converts this object&#39;s value to a 64-bit signed integer.</p>
 
 <p><b>Returns:</b></p>
 
@@ -763,6 +798,7 @@ is null.</p></li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter  <i>pow</i>
+or  <i>mod</i>
 is null.</li>
 </ul>
 
@@ -810,7 +846,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigintMult</i>: A BigInteger object.</li>
+<li><i>bigintMult</i>: Another BigInteger object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1099,7 +1135,9 @@ is null.</li>
 
 <p>Shifts the bits of a BigInteger instance to the right.</p>
 
-<p>For this operation, the BigInteger is treated as a two&#39;s complement representation. Thus, for negative values, the BigInteger is sign-extended.<b>Parameters:</b></p>
+<p>For this operation, the BigInteger is treated as a two&#39;s complement representation. Thus, for negative values, the BigInteger is sign-extended.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bthis</i>: Another BigInteger object.</p></li>
@@ -1181,7 +1219,9 @@ is null.</li>
 
 <p>Does an OR operation between two BigInteger instances.</p>
 
-<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.<b>Parameters:</b></p>
+<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: Another BigInteger object.</p></li>
@@ -1313,7 +1353,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>divisor</i>: A BigInteger object.</li>
+<li><i>divisor</i>: Another BigInteger object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1399,7 +1439,7 @@ Attempted to divide by zero.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>subtrahend</i>: A BigInteger object.</li>
+<li><i>subtrahend</i>: Another BigInteger object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1430,13 +1470,15 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if the specified bit is set; otherwise, false.</p>
+<p>True if a bit is set in the two&#39;s-complement representation of this object&#39;s value; otherwise, false.</p>
 
 <h3>toByteArray</h3>
 
 <pre><code>public byte[] toByteArray(
     bool littleEndian);
 </code></pre>
+
+<p><b>Deprecated.</b> Renamed to &#39;toBytes&#39;.</p>
 
 <p>Returns a byte array of this object&#39;s value.</p>
 
@@ -1448,14 +1490,34 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A byte array that represents the value of this object.</p>
+<p>A byte array.</p>
 
 <h3>ToByteArray</h3>
 
 <pre><code>public byte[] ToByteArray();
 </code></pre>
 
+<p><b>Deprecated.</b> Use &#39;toBytes(true)&#39; instead.</p>
+
 <p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A byte array.</p>
+
+<h3>toBytes</h3>
+
+<pre><code>public byte[] toBytes(
+    bool littleEndian);
+</code></pre>
+
+<p>Returns a byte array of this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>littleEndian</i>: A Boolean object.</li>
+</ul>
 
 <p><b>Returns:</b></p>
 
@@ -1524,7 +1586,9 @@ The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less tha
 
 <p>Finds the exclusive &quot;or&quot; of two BigInteger objects.</p>
 
-<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.<b>Parameters:</b></p>
+<p>Each BigInteger instance is treated as a two&#39;s complement representation for the purposes of this operator.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>a</i>: A BigInteger instance.</p></li>

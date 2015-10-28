@@ -15,6 +15,10 @@ on several of my programming projects on GitHub:
 
 ### C-sharp
 
+* [Fuzzer](./Fuzzer): This is a program that generates slightly altered versions
+of data files, for testing algorithms that parse file formats.
+* [colorvalidator](./colorvalidator): This is a library for parsing and generating HTML and CSS colors.
+* [petero-csharp](./petero-csharp): Library containing utility methods and classes.
 * [CBOR](./CBOR): A C# implementation of Concise Binary Object Representation (RFC 7049).
 * [Enriched](./Enriched): C# program that converts text/enriched files to HTML
 * [MailLib](./MailLib): A portable library in C# and Java for parsing Internet mail messages

@@ -1,5 +1,4 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>CBOR</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
-</head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>CBOR</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
@@ -95,6 +94,20 @@ file I/O; the portable class library doesn&#39;t make that assumption.</p>
     } else {
       // The end of the stream was reached.
     }
+ }
+</code></pre>
+
+<p>If a byte array contains multiple CBOR objects, the byte array should
+be wrapped in a MemoryStream and the stream used to read the objects,
+as DecodeFromBytes assumes the array contains only one CBOR object.
+Here is an example.</p>
+
+<pre lang="c#"><code> // C#
+ // Create a memory stream with a view of the byte array
+ using (var stream = new MemoryStream(byteArray)) {
+    // Read the CBOR object from the stream
+    var cbor = CBORObject.Read(stream);
+    // The rest of the example follows the one given above.
  }
 </code></pre>
 

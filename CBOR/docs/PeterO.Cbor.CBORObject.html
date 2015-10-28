@@ -1,5 +1,4 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBORObject</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
-</head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBORObject</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
@@ -47,6 +46,10 @@
 <p>One kind of CBOR object is called a map, or a list of key-value pairs. Keys can be any kind of CBOR object, including numbers, strings, arrays, and maps. However, text strings are the most suitable to use as keys; other kinds of CBOR object are much better used as map values instead, keeping in mind that some of them are not thread safe without synchronizing reads and writes to them.</p>
 
 <p>To find the type of a CBOR object, call its Type property (or &quot;getType()&quot; in Java). The return value can be Number, Boolean, SimpleValue, or TextString for immutable CBOR objects, and Array, Map, or ByteString for mutable CBOR objects.</p>
+
+<p>Nesting Depth:</p>
+
+<p>The DecodeFromBytes method can only read objects with a limited maximum depth of arrays and maps nested within other arrays and maps. The code sets this maximum depth to 500 (allowing more than enough nesting for most purposes), but it&#39;s possible that stack overflows in some runtimes might lower the effective maximum nesting depth. When the nesting depth goes above 500, the DecodeFromBytes method throws a CBORException.</p>
 
 <h3>False</h3>
 

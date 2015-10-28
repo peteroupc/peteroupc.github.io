@@ -1,0 +1,705 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.BinaryIO</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>PeterO.BinaryIO</h1>
+
+<h2>PeterO.BinaryIO</h2>
+
+<pre><code>public sealed class BinaryIO
+</code></pre>
+
+<p>Reads and writes data types in little endian or big endian.</p>
+
+<h3>BinaryIO Constructor</h3>
+
+<pre><code>public BinaryIO(
+    System.IO.Stream stream);
+</code></pre>
+
+<p>Initializes a new instance of the BinaryIO class. Initializes a new BinaryIO instance.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>stream</i>: A Stream object.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>stream</i>
+is null.</li>
+</ul>
+
+<h3>CanRead</h3>
+
+<pre><code>public bool CanRead { get; }
+</code></pre>
+
+<p>Gets a value indicating whether the underlying stream can be read.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if the underlying stream can be read; otherwise, false.</p>
+
+<h3>CanSeek</h3>
+
+<pre><code>public bool CanSeek { get; }
+</code></pre>
+
+<p>Gets a value indicating whether the underlying stream supports seeking.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if the underlying stream supports seeking; otherwise, false.</p>
+
+<h3>CanWrite</h3>
+
+<pre><code>public bool CanWrite { get; }
+</code></pre>
+
+<p>Gets a value indicating whether the underlying stream supports writing.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if the underlying stream supports writing; otherwise, false.</p>
+
+<h3>Length</h3>
+
+<pre><code>public long Length { get; }
+</code></pre>
+
+<p>Gets the length of the underlying stream.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The length of the underlying stream.</p>
+
+<h3>Position</h3>
+
+<pre><code>public long Position { get; set;}
+</code></pre>
+
+<p>Gets or sets the position of the underlying stream.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The position of the underlying stream.</p>
+
+<h3>Read</h3>
+
+<pre><code>public int Read(
+    byte[] data,
+    int offset,
+    int length);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>data</i>: A byte array.</p></li>
+<li><p><i>offset</i>: Another 32-bit signed integer.</p></li>
+<li><p><i>length</i>: A 32-bit signed integer. (3).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>data</i>
+is null.</li>
+</ul>
+
+<h3>Read7BitEncodedInt32BE</h3>
+
+<pre><code>public int Read7BitEncodedInt32BE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>Read7BitEncodedInt32LE</h3>
+
+<pre><code>public int Read7BitEncodedInt32LE();
+</code></pre>
+
+<p>Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</p>
+
+<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 32 bits long. If bit 32 is 1, the return value is negative; otherwise positive.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>Read7BitEncodedInt64BE</h3>
+
+<pre><code>public long Read7BitEncodedInt64BE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<h3>Read7BitEncodedInt64LE</h3>
+
+<pre><code>public long Read7BitEncodedInt64LE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<h3>Read7BitEncodedUInt32BE</h3>
+
+<pre><code>public int Read7BitEncodedUInt32BE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>Read7BitEncodedUInt32LE</h3>
+
+<pre><code>public int Read7BitEncodedUInt32LE();
+</code></pre>
+
+<p>Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</p>
+
+<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 31 bits long and is positive.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>ReadByte</h3>
+
+<pre><code>public byte ReadByte();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A Byte object.</p>
+
+<h3>ReadBytes</h3>
+
+<pre><code>public byte[] ReadBytes(
+    int size);
+</code></pre>
+
+<p>Reads data from a stream into a byte array.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>size</i>: A 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A byte array containing the data read.</p>
+
+<h3>ReadDoubleBE</h3>
+
+<pre><code>public double ReadDoubleBE();
+</code></pre>
+
+<p>Reads a 64-bit floating-point number in big-endian byte order.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit floating-point number.</p>
+
+<h3>ReadDoubleLE</h3>
+
+<pre><code>public double ReadDoubleLE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit floating-point number.</p>
+
+<h3>ReadInt16BE</h3>
+
+<pre><code>public short ReadInt16BE();
+</code></pre>
+
+<p>Reads a 16-bit signed integer in big-endian byte order (2 bytes).</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 16-bit signed integer.</p>
+
+<h3>ReadInt16LE</h3>
+
+<pre><code>public short ReadInt16LE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 16-bit signed integer.</p>
+
+<h3>ReadInt32BE</h3>
+
+<pre><code>public int ReadInt32BE();
+</code></pre>
+
+<p>Reads a 32-bit signed integer in big-endian byte order (4 bytes).</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>ReadInt32LE</h3>
+
+<pre><code>public int ReadInt32LE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>ReadInt64BE</h3>
+
+<pre><code>public long ReadInt64BE();
+</code></pre>
+
+<p>Reads a 64-bit signed integer in big-endian byte order (8 bytes).</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<h3>ReadInt64LE</h3>
+
+<pre><code>public long ReadInt64LE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<h3>ReadSingleBE</h3>
+
+<pre><code>public float ReadSingleBE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit floating-point number.</p>
+
+<h3>ReadSingleLE</h3>
+
+<pre><code>public float ReadSingleLE();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit floating-point number.</p>
+
+<h3>Write</h3>
+
+<pre><code>public void Write(
+    byte value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A Byte object.</li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public void Write(
+    byte[] data);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>data</i>: A byte array to write to the stream.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>data</i>
+is null.</li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public void Write(
+    byte[] data,
+    int offset,
+    int length);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>data</i>: A byte array. (2).</p></li>
+<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
+<li><p><i>length</i>: Another 32-bit signed integer.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>data</i>
+is null.</li>
+</ul>
+
+<h3>Write7BitEncodedInt32BE</h3>
+
+<pre><code>public int Write7BitEncodedInt32BE(
+    int value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: Another 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>Write7BitEncodedInt32LE</h3>
+
+<pre><code>public int Write7BitEncodedInt32LE(
+    int value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: Another 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>Write7BitEncodedInt64BE</h3>
+
+<pre><code>public int Write7BitEncodedInt64BE(
+    long value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 64-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>Write7BitEncodedInt64LE</h3>
+
+<pre><code>public int Write7BitEncodedInt64LE(
+    long value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 64-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>Write7BitEncodedUInt32BE</h3>
+
+<pre><code>public int Write7BitEncodedUInt32BE(
+    int value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: Another 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>Write7BitEncodedUInt32LE</h3>
+
+<pre><code>public int Write7BitEncodedUInt32LE(
+    int value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: Another 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>WriteBE</h3>
+
+<pre><code>public void WriteBE(
+    byte value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A Byte object.</li>
+</ul>
+
+<h3>WriteBE</h3>
+
+<pre><code>public void WriteBE(
+    double value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 64-bit floating-point number.</li>
+</ul>
+
+<h3>WriteBE</h3>
+
+<pre><code>public void WriteBE(
+    float value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 32-bit floating-point number.</li>
+</ul>
+
+<h3>WriteBE</h3>
+
+<pre><code>public void WriteBE(
+    int value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 32-bit signed integer.</li>
+</ul>
+
+<h3>WriteBE</h3>
+
+<pre><code>public void WriteBE(
+    long value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 64-bit signed integer.</li>
+</ul>
+
+<h3>WriteBE</h3>
+
+<pre><code>public void WriteBE(
+    short value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 16-bit signed integer.</li>
+</ul>
+
+<h3>WriteLE</h3>
+
+<pre><code>public void WriteLE(
+    byte value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A Byte object.</li>
+</ul>
+
+<h3>WriteLE</h3>
+
+<pre><code>public void WriteLE(
+    double value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 64-bit floating-point number.</li>
+</ul>
+
+<h3>WriteLE</h3>
+
+<pre><code>public void WriteLE(
+    float value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 32-bit floating-point number.</li>
+</ul>
+
+<h3>WriteLE</h3>
+
+<pre><code>public void WriteLE(
+    int value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 32-bit signed integer.</li>
+</ul>
+
+<h3>WriteLE</h3>
+
+<pre><code>public void WriteLE(
+    long value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 64-bit signed integer.</li>
+</ul>
+
+<h3>WriteLE</h3>
+
+<pre><code>public void WriteLE(
+    short value);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 16-bit signed integer.</li>
+</ul>
+
+<p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHfwYJKoZIhvcNAQcEoIIHcDCCB2wCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBTEjVSqAfM9cTLwXVwxBqNI8r1Il0SJNqahKnIJrEIZOdmziEnZsYS8kifxxbWCBrNGl1S/eO5kcMG6WO50eBSxFlNpweevNYIs0dIdfQZtiWcRD2yYzaWHBkHu3PmCCLmc3pPT5QaOc949w2dPcg+syabMOSwN94Mk67Wh//7pTELMAkGBSsOAwIaBQAwgfwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIm7w2yVS0zOeAgdhYAX/keBkbLTGS2k5QcVstRROvRVuMlDL7sy/YUie0YlEJKDFTFE7n6LP15AFfODDattjmqKJ7UZ+6hY9sqJhayUNqdl/rA/RYgPVKGWTM1l68+KFdz2SO3IHvBUJIAwnHFX1JVyNUAofSxWj+3eoN5MnQzskA4cKe/RFWB04oXxZS7/WCOHL3q3mlwFDSK83C3Wcqro7S18YnVxfJ4XGUQ7nlx1C9K0Xq+JbCGEC4D8yjQHzm9w3LqUOogiI3l9VVlXxuqcAdq+iBkAGIt3y4TXABMtXEFG2gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MTAxMzA4NDBaMCMGCSqGSIb3DQEJBDEWBBQImRl0rdSM38l1aTcRhxgiKb7ipTANBgkqhkiG9w0BAQEFAASBgE0IsEWvN+n6QuwDFkBMQO9C4z5uf7wAvoMDgifDKBCyGFmpYZPsKawkYVcS/kASDtyq6aWU3lqP+KweyA+0xfpAyE3R8/7p80uqGGs8bHGicxkl2pEkX95R23HGRa1pEDHFF1XQNkhns558WioFipI2RvmAAEaMgZQ1p+SV/cdu-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

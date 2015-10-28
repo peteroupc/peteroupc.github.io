@@ -44,6 +44,27 @@ group ID (<code>com.upokecenter</code>), artifact ID (<code>maillib</code>), and
 
 <p>Source code is available in the <a href="https://github.com/peteroupc/MailLib">project page</a>.</p>
 
+<h2>Example</h2>
+
+<p>An example of reading an email message from a file:</p>
+
+<pre><code>// Create a file stream from the email message file
+using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMode.Read)){
+  // Read the email message
+  var message = new Message(file);
+  // Output each address in the From header
+  foreach(var addr in message.FromAddresses){
+     Console.WriteLine(&quot;From: &quot;+addr);
+  }
+  // Output each address in the To header
+  foreach(var addr in message.ToAddresses){
+     Console.WriteLine(&quot;To: &quot;+addr);
+  }
+  // Output the message&#39;s text
+  Console.WriteLine(message.BodyString);
+}
+</code></pre>
+
 <h2>Release Notes</h2>
 
 <p>Version 0.7.0:</p>
