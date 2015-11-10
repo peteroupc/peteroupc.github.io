@@ -1,0 +1,199 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Introduction</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h2>Introduction</h2>
+
+<p>This article includes information on how a calculator program is implemented
+using <a href="http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar">my CBOR library for C#</a>.
+(CBOR stands for Concise Binary Object Representation.)</p>
+
+<p><img src="calc.png" alt="Calculator"></p>
+
+<p>While it looks relatively simple, the <a href="https://github.com/peteroupc/Calculator">calculator program</a> demonstrates two features of that library:</p>
+
+<ul>
+<li>Its support for arbitrary precision arithmetic.</li>
+<li>Reading and writing data in CBOR.</li>
+</ul>
+
+<p>These two features will be discussed in turn.</p>
+
+<h2>Arbitrary-Precision Arithmetic</h2>
+
+<p>The main purpose of the program, of course, is to do calculations.  This calculator program
+is powered by my CBOR library&#39;s support for arbitrary-precision decimal arithmetic.  While
+<code>double</code>, a 64-bit binary floating point number type, is appropriate for most purposes, it can
+sometimes provide unintuitive results, due to using a binary rather than a
+decimal system.</p>
+
+<p>The CBOR library supports arbitrary precision numbers (both binary and decimal)
+mostly because several CBOR tags (two in the RFC and two in supplementary specification)
+support these kinds of numbers, and it was seen useful to perform arithmetic
+and other useful operations on these kinds of numbers.</p>
+
+<p>TODO: Discuss CalculatorState</p>
+
+<h2>Storing Application Settings</h2>
+
+<p>CBOR&#39;s compact data format suits it well for storing things such as user settings.</p>
+
+<p>The calculator program demonstrates this; when the program exits, it gets the window&#39;s current
+position and size, stores them in a user settings object, and converts the user settings
+object to a CBOR file.</p>
+
+<p>The <code>ProgramConfig</code> class is used to store user settings.  It has these methods:</p>
+
+<pre><code>public ProgramConfig(string configName);
+public ProgramConfig SetObject(string name, object obj);
+public string GetString(string name);
+public int GetInt32OrDefault(string name, int defaultValue);
+public double GetDouble(string name);
+</code></pre>
+
+<p>In case the program is installed in what can be a read-only location, such as the Program
+Files folder, the calculator stores user settings in per-user application storage.  This is
+possible with the <code>System.IO.IsolatedStorage</code> namespace supported in .NET 4. (Windows
+Store apps use a separate concept for application storage, which isn&#39;t supported in the
+demo, but which can be easily added due to the nature of the implementation, as
+discussed below.)</p>
+
+<h3>Loading and Saving</h3>
+
+<p>The ProgramConfig constructor opens a named file from per-user storage (with the &quot;.cbor&quot;
+extension, since it loads and saves CBOR files), and generates blank user data if the
+file doesn&#39;t exist (which is usually the case when the program is first run) or the file contains
+invalid data.  The calculator creates a ProgramConfig constructor on load of the form
+(see <code>MainForm.cs</code>):</p>
+
+<pre><code>private void MainForm_Load(object sender, EventArgs e) {
+  // Initialize config here, rather than in the constructor;
+  // the system may automatically move the window in between
+  this.config = this.InitializeConfig();
+}
+
+private ProgramConfig InitializeConfig() {
+  return new ProgramConfig(&quot;config&quot;).FormPosFromConfig(this);
+}
+</code></pre>
+
+<p>On the first run, the ProgramConfig is generated and populated with default values
+for the window&#39;s current position as it&#39;s loaded for the first time (due to the
+<code>FormPosFromConfig</code> method).</p>
+
+<p>As the program is closing, it retrieves the window&#39;s current position and saves
+the user data to per-user storage:</p>
+
+<pre><code>private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+  this.SaveConfig();
+}
+
+private void SaveConfig() {
+  if (this.config != null) {
+    this.config.FormPosToConfig(this).Save();
+  }
+}
+</code></pre>
+
+<p>As a result, the last used window position and size are restored if the user runs
+the program again.</p>
+
+<p>It&#39;s also possible to save user data while the program is running (for instance, after
+the user changes a program setting) or to access settings at runtime, but these
+possibilities are currently not demonstrated in the calculator program.</p>
+
+<h3>Reading and Writing Settings</h3>
+
+<p>The <code>ProgramConfig</code> class creates a CBOR key-value map.  Three
+of its methods, <code>GetString</code>, <code>GetInt32OrDefault</code>, and <code>GetDouble</code>,
+retrieve a value by its key.  The method <code>SetObject</code> converts many kinds
+of objects (not just strings and numbers) to an appropriate format for
+the CBOR key-value map.  </p>
+
+<p>The calculator demo, though, uses only integers (for the window position
+and size), so it calls <code>GetInt32OrDefault</code> and sets the default value for
+each parameter to the current position and size of the window as its
+generated.  (<code>GetInt32OrDefault</code> uses the default if the key doesn&#39;t
+exist or if the existing value has the wrong type or can&#39;t be converted.)</p>
+
+<p>To be more specific, the calculator demo uses the following keys
+in the <code>ProgramConfig</code> map:</p>
+
+<ul>
+<li><code>&quot;x&quot;</code> - X coordinate of the calculator window&#39;s top-left corner.</li>
+<li><code>&quot;y&quot;</code> - Y coordinate of the window&#39;s top-left corner.</li>
+<li><code>&quot;width&quot;</code> - Width, in pixels, of the window&#39;s top-left corner.</li>
+<li><code>&quot;height&quot;</code> - Height, in pixels, of the window&#39;s top-left corner.</li>
+</ul>
+
+<p>There are currently only three kinds of data that <code>ProgramConfig</code> can &quot;get&quot;:
+strings, <code>double</code>s, and 32-bit unsigned integers (<code>int</code>s).  This is often adequate
+for most kinds of user settings (for example, boolean values -- either
+true or false -- can be expressed using integers or strings), but of
+course, CBOR can store many other kinds of data types, such as
+nested arrays, nested maps, byte sequences, the undefined-value,
+and numbers of arbitrary precision.  But for user settings, especially for the calculator
+demo, the three data types string, <code>double</code>, and <code>int</code> are often sufficient.</p>
+
+<h3>ProgramConfig implementation</h3>
+
+<p>I&#39;ve made the <code>ProgramConfig</code> class general enough that it can be used in many different
+kinds of programs; for instance, it&#39;s also used in <a href="https://github.com/peteroupc/Calculator/JSONCBOR">another demo program of
+mine</a> that converts JSON
+to CBOR and back.  In this program, too, saves the last known window position
+and size in the same way as the calculator demo.  Since it&#39;s specific to Windows
+Forms programs, certain &quot;methods&quot; of ProgramConfig were designed as extension
+methods and placed in a separate class, <code>FormConfig</code>.</p>
+
+<p>However, while <code>ProgramConfig</code> is very general, it relies on isolated storage, which
+unfortunately isn&#39;t supported in Windows Store apps, which use a very different
+concept for per-user storage.  This is why ProgramConfig contains a nested
+class called <code>IsolatedStream</code>, which is designed to wrap the details of the per-user
+storage implementation.  If a version for Windows Store apps is needed,
+<code>IsolatedStream</code> can be updated to provide or call a Windows-Store-specific
+implementation of per-user storage.  This isn&#39;t done here, since the main purpose
+is to demonstate the features of my CBOR library.</p>
+
+<h2>Conclusion</h2>
+
+<p>That concludes my discussion on how a <a href="https://github.com/peteroupc/Calculator">calculator program</a> is implemented
+using <a href="http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar">my CBOR library for C#</a>,
+including how its features fit into the program&#39;s design as well as tips on storing per-user
+settings in an application program.</p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>
