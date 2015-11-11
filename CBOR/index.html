@@ -49,6 +49,11 @@ Framework, but also Silverlight 5 and Windows Phone 8.</p>
 
 <h2>Examples</h2>
 
+<p><em>For more examples, see <a href="https://github.com/peteroupc/CBOR/tree/master/examples.md">examples.md</a>.</em></p>
+
+<p>Creating a map and converting that map to CBOR bytes
+and a JSON string:</p>
+
 <pre lang="c#"><code>// The following creates a CBOR map and adds
 // several kinds of objects to it
 var cbor = CBORObject.NewMap()
@@ -225,6 +230,13 @@ IRI are like URIs except that they also allow non-ASCII characters.</li>
 <ul>
 <li>Portable Class Library compatibility expanded</li>
 <li>Add option to always use definite length string encoding when generating CBOR objects</li>
+</ul>
+
+<p>Known issue in version 2.2:</p>
+
+<ul>
+<li>Setting <code>lenientLineBreaks</code> to <code>true</code> in the <code>PeterO.Cbor.DataUtilities.WriteUtf8</code> method
+doesn&#39;t correctly write CR/LF line breaks.  This will be fixed in a future version of the library.</li>
 </ul>
 
 <p>In version 2.1:</p>
