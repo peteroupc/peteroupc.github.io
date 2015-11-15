@@ -9,7 +9,7 @@
 <pre><code>public class ContentDisposition
 </code></pre>
 
-<p>Specifies how a message body should be displayed or handled by a mail user agent. This type is immutable; its contents can&#39;t be changed after it&#39;s created.</p>
+<p>Specifies how a message body should be displayed or handled by a mail user agent. This type is immutable; its contents can&#39;t be changed after it&#39;s created. To create a changeable disposition object, use the DispositionBuilder class.</p>
 
 <h3>Attachment</h3>
 
@@ -67,7 +67,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>A list of parameter names associated with this object and their values. The names will be sorted.</p>
+<p>A read-only list of parameter names associated with this object and their values. The names will be sorted.</p>
 
 <h3>Equals</h3>
 

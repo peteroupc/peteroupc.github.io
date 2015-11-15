@@ -932,8 +932,8 @@ is not a correctly formatted number string.</p></li>
 
 <ul>
 <li><p><i>str</i>: A string object, a portion of which represents a number.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>length</i>: A 32-bit signed integer. (2).</p></li>
+<li><p><i>offset</i>: A zero-based index that identifies the start of the number.</p></li>
+<li><p><i>length</i>: The length of the number within the string.</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 

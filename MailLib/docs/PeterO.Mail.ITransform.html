@@ -1,124 +1,26 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Text.Normalizer</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Mail.ITransform</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>PeterO.Text.Normalizer</h1>
+<h1>PeterO.Mail.ITransform</h1>
 
-<h2>PeterO.Text.Normalizer</h2>
+<h2>PeterO.Mail.ITransform</h2>
 
-<pre><code>public sealed class Normalizer
+<pre><code>public interface ITransform
 </code></pre>
 
-<p><b>Deprecated.</b> Use NormalizingCharacterInput instead; that class is much more flexible than Normalizer.</p>
+<p>A generic interface for reading data one byte at a time.</p>
 
-<p>Implements the Unicode normalization algorithm and contains methods and functionality to test and convert Unicode strings for Unicode normalization.</p>
+<h3>ReadByte</h3>
 
-<p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. See the documentation for the NormalizingCharacterInput class for the permission notice for the Unicode Character Database.</p>
-
-<h3>Normalizer Constructor</h3>
-
-<pre><code>public Normalizer(
-    string str,
-    PeterO.Text.Normalization form);
+<pre><code>int ReadByte();
 </code></pre>
 
-<p>Initializes a new instance of the Normalizer class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A string object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
-</ul>
-
-<h3>IsNormalized</h3>
-
-<pre><code>public static bool IsNormalized(
-    string str,
-    PeterO.Text.Normalization form);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>str</i>: Not documented yet.</li>
-</ul>
+<p>Reads a byte from the data source.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A Boolean object.</p>
-
-<h3>Normalize</h3>
-
-<pre><code>public static string Normalize(
-    string str,
-    PeterO.Text.Normalization form);
-</code></pre>
-
-<p>Converts a string to the given Unicode normalization form.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: An arbitrary string.</p></li>
-<li><p><i>form</i>: The Unicode normalization form to convert to.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The parameter  <i>str</i>
- converted to the given normalization form.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
-
-<h3>Read</h3>
-
-<pre><code>public int Read(
-    int[] chars,
-    int index,
-    int length);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>chars</i>: An array of 32-bit unsigned integers.</p></li>
-<li><p><i>index</i>: A 32-bit signed integer. (2).</p></li>
-<li><p><i>length</i>: A 32-bit signed integer. (3).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A 32-bit signed integer.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>chars</i>
-or &quot;this.buffer&quot; is null.</li>
-</ul>
-
-<h3>ReadChar</h3>
-
-<pre><code>public int ReadChar();
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A 32-bit signed integer.</p>
+<p>The byte read, or -1 if the end of the source is reached.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div>

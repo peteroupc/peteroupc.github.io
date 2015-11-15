@@ -416,7 +416,8 @@ is null.</li>
 The parameter  <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2 or greater than 36.</p></li>
+The parameter  <i>radix</i>
+is less than 2 or greater than 36.</p></li>
 <li><p>System.FormatException:
 The string portion is empty or in an invalid format.</p></li>
 </ul>
@@ -1511,17 +1512,17 @@ is null.</li>
     bool littleEndian);
 </code></pre>
 
-<p>Returns a byte array of this object&#39;s value.</p>
+<p>Returns a byte array of this object&#39;s value. The byte array will take the form of the number&#39;s two&#39; s-complement representation, using the fewest bytes necessary to represent its value unambiguously. If this value is negative, the bits that appear &quot;before&quot; the most significant bit of the number will be all ones.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>littleEndian</i>: A Boolean object.</li>
+<li><i>littleEndian</i>: If true, the least significant bits will appear first.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A byte array.</p>
+<p>A byte array. If this value is 0, returns a byte array with the single element 0.</p>
 
 <h3>toRadixString</h3>
 
