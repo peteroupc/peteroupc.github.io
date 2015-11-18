@@ -229,7 +229,8 @@
 <pre><code>public int Flags { get; set;}
 </code></pre>
 
-<p>Gets or sets the flags that are set from converting numbers according to this precision context. If HasFlags is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example: <code>(this.Flags &amp; PrecisionContext.FlagInexact) != 0</code> returns TRUE if the Inexact flag is set.</p>
+<p>Gets or sets the flags that are set from converting numbers according to this precision context. If HasFlags is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example:  <code>(this.Flags &amp;
+            PrecisionContext.FlagInexact) != 0</code>  returns TRUE if the Inexact flag is set.</p>
 
 <p><b>Returns:</b></p>
 
@@ -277,14 +278,14 @@
 
 <p><b>Returns:</b></p>
 
-<p>True if this context&#39;s Precision property is in bits, rather than digits; otherwise, false.. The default is false.</p>
+<p>True if this context&#39;s Precision property is in bits, rather than digits; otherwise, false. The default is false.</p>
 
 <h3>IsSimplified</h3>
 
 <pre><code>public bool IsSimplified { get; }
 </code></pre>
 
-<p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see  <code>http://speleotrove.com/decimal/dax3274.html</code></p>
+<p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see <code>http://speleotrove.com/decimal/dax3274.html</code></p>
 
 <p><b>Returns:</b></p>
 
@@ -317,7 +318,7 @@
 <pre><code>public int Traps { get; }
 </code></pre>
 
-<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if HasFlags is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException. For example, if Traps equals FlagInexact and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal).</p>
+<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if HasFlags is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException.For example, if Traps equals FlagInexact and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal).</p>
 
 <p><b>Returns:</b></p>
 

@@ -29,7 +29,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>The Unicode code point at the given position. Returns -1 if <i>index</i>
+<p>The Unicode code point at the given position. Returns -1 if  <i>index</i>
  is less than 0, or is the string&#39;s length or greater. Returns the replacement character (U + FFFD) if the current character is an unpaired surrogate code point.</p>
 
 <p><b>Exceptions:</b></p>
@@ -60,7 +60,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>The Unicode code point at the current position. Returns -1 if <i>index</i>
+<p>The Unicode code point at the current position. Returns -1 if  <i>index</i>
  is less than 0, or is the string&#39;s length or greater. Returns a value as specified under  <i>surrogateBehavior</i>
  if the previous character is an unpaired surrogate code point.</p>
 
@@ -90,7 +90,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>The Unicode code point at the previous position. Returns -1 if <i>index</i>
+<p>The Unicode code point at the previous position. Returns -1 if  <i>index</i>
  is 0 or less, or is greater than the string&#39;s length. Returns the replacement character (U + FFFD) if the previous character is an unpaired surrogate code point.</p>
 
 <p><b>Exceptions:</b></p>
@@ -121,7 +121,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>The Unicode code point at the previous position. Returns -1 if <i>index</i>
+<p>The Unicode code point at the previous position. Returns -1 if  <i>index</i>
  is 0 or less, or is greater than the string&#39;s length. Returns a value as specified under  <i>surrogateBehavior</i>
  if the previous character is an unpaired surrogate code point.</p>
 
@@ -182,8 +182,38 @@ is null.</p></li>
 <li><p>System.ArgumentException:
 The string contains an unpaired surrogate code point and  <i>replace</i>
 is false, or an internal error occurred.</p></li>
+</ul>
+
+<h3>GetUtf8Bytes</h3>
+
+<pre><code>public static byte[] GetUtf8Bytes(
+    string str,
+    bool replace,
+    bool lenientLineBreaks);
+</code></pre>
+
+<p>Encodes a string in UTF-8 as a byte array.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A text string.</p></li>
+<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U + FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The string encoded in UTF-8.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter &quot;offset&quot; is less than 0, &quot;bytesCount&quot; is less than 0, or offset plus bytesCount is greater than the length of &quot;data&quot; .</p></li>
+The string contains an unpaired surrogate code point and  <i>replace</i>
+is false, or an internal error occurred.</p></li>
 </ul>
 
 <h3>GetUtf8Length</h3>
@@ -242,7 +272,7 @@ is null.</li>
 The parameter  <i>bytes</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The string is not valid UTF-8 and <i>replace</i>
+The string is not valid UTF-8 and  <i>replace</i>
 is false.</p></li>
 </ul>
 
@@ -467,7 +497,7 @@ is null.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>0 if the entire string portion was written; or -1 if the string portion contains an unpaired surrogate code point and  <i>replace</i>
+<p>0 if the entire string portion was written; or -1 if the string portion contains an unpaired surrogate code point and <i>replace</i>
  is false.</p>
 
 <p><b>Exceptions:</b></p>
@@ -513,7 +543,7 @@ An I/O error occurred.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>0 if the entire string portion was written; or -1 if the string portion contains an unpaired surrogate code point and  <i>replace</i>
+<p>0 if the entire string portion was written; or -1 if the string portion contains an unpaired surrogate code point and <i>replace</i>
  is false.</p>
 
 <p><b>Exceptions:</b></p>

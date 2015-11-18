@@ -11,7 +11,7 @@
 
 <p>Specifies what kind of data a message body is.</p>
 
-<p>A media type consists of a top-level type (the general category of the data), a subtype (the specific type), and an optional list of parameters. For example, the media type  <code>text/plain; charset = utf-8</code> is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and the parameters say that that the data uses the character set UTF-8, a form of Unicode (&quot;charset=utf-8&quot;). Other top-level types include &quot;audio&quot;, &quot;video&quot;, and &quot;application&quot;.</p>
+<p>A media type consists of a top-level type (the general category of the data), a subtype (the specific type), and an optional list of parameters. For example, the media type <code>text/plain; charset = utf-8</code>  is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and the parameters say that that the data uses the character set UTF-8, a form of Unicode (&quot;charset=utf-8&quot;). Other top-level types include &quot;audio&quot;, &quot;video&quot;, and &quot;application&quot;.</p>
 
 <p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s created. To create a changeable media type object, use the MediaTypeBuilder class.</p>
 
@@ -132,7 +132,7 @@
 <pre><code>public string GetCharset();
 </code></pre>
 
-<p>Returns the charset parameter, converted to ASCII lower-case, if it exists, or  <code>&quot;us-ascii&quot;</code> if the media type is ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t have a charset parameter (see RFC2046), or the default charset, if any, for the media type if the charset parameter is absent. Returns an empty string in all other cases.</p>
+<p>Returns the charset parameter, converted to ASCII lower-case, if it exists, or  <code>&quot;us-ascii&quot;</code>  if the media type is ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t have a charset parameter (see RFC2046), or the default charset, if any, for the media type if the charset parameter is absent. Returns an empty string in all other cases.</p>
 
 <p><b>Returns:</b></p>
 

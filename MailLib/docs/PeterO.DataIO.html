@@ -1,32 +1,151 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>APIDocs</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.DataIO</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>APIDocs</h1>
+<h1>PeterO.DataIO</h1>
+
+<h2>PeterO.DataIO</h2>
+
+<pre><code>public static class DataIO
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<h3>ToTransform</h3>
+
+<pre><code>public static PeterO.ITransform ToTransform(
+    this byte[] bytes);
+</code></pre>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToTransform()</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><a href="PeterO.BigInteger.html">PeterO.BigInteger</a> - An arbitrary-precision integer.
-
-<ul>
-<li><a href="PeterO.Cbor.CBORDataUtilities.html">PeterO.Cbor.CBORDataUtilities</a> - Contains methods useful for reading and writing data, with             a focus on CBOR.</li>
-<li><a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> - Specifies options for encoding CBOR objects to             bytes.</li>
-<li><a href="PeterO.Cbor.CBORException.html">PeterO.Cbor.CBORException</a> - Exception thrown for errors involving CBOR data.</li>
-<li><a href="PeterO.Cbor.CBORObject.html">PeterO.Cbor.CBORObject</a> - Represents an object in Concise Binary Object             Representation (CBOR) and contains methods for reading and writing             CBOR data.</li>
-<li><a href="PeterO.Cbor.CBORType.html">PeterO.Cbor.CBORType</a> - Represents a type that a CBOR object can have.</li>
-<li><a href="PeterO.Cbor.CBORTypeFilter.html">PeterO.Cbor.CBORTypeFilter</a> - Specifies what kinds of CBOR objects a tag can be.</li>
-<li><a href="PeterO.Cbor.ICBORConverter-T.html">PeterO.Cbor.ICBORConverter&lt;T&gt;</a> - Interface implemented by classes that convert objects of             arbitrary types to CBOR objects.</li>
-<li><a href="PeterO.Cbor.ICBORTag.html">PeterO.Cbor.ICBORTag</a> - Implemented by classes that validate CBOR objects             belonging to a specific tag.</li>
-<li><a href="PeterO.DataUtilities.html">PeterO.DataUtilities</a> - Contains methods useful for reading and writing strings.</li>
-<li><a href="PeterO.ExtendedDecimal.html">PeterO.ExtendedDecimal</a> - Represents an arbitrary-precision decimal floating-point             number.</li>
-<li><a href="PeterO.ExtendedFloat.html">PeterO.ExtendedFloat</a> - Represents an arbitrary-precision binary floating-point             number.</li>
-<li><a href="PeterO.ExtendedRational.html">PeterO.ExtendedRational</a> - Arbitrary-precision rational number.</li>
-<li><a href="PeterO.PrecisionContext.html">PeterO.PrecisionContext</a> - Contains parameters for controlling the precision,             rounding, and exponent range of arbitrary-precision numbers.</li>
-<li><a href="PeterO.Rounding.html">PeterO.Rounding</a> - Specifies the mode to use when &quot;shortening&quot;             numbers that otherwise can&#39;t fit a given number of digits, so             that the shortened number has about the same value.</li>
-<li><a href="PeterO.TrapException.html">PeterO.TrapException</a> - Exception thrown for arithmetic trap errors.</li>
-</ul></li>
+<li><i>bytes</i>: Not documented yet.</li>
 </ul>
 
-<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+<p><b>Returns:</b></p>
+
+<p>An ITransform object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</li>
+</ul>
+
+<h3>ToTransform</h3>
+
+<pre><code>public static PeterO.ITransform ToTransform(
+    this byte[] bytes,
+    int offset,
+    int length);
+</code></pre>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToTransform(offset, length)</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: Not documented yet.</p></li>
+<li><p><i>offset</i>: Not documented yet.</p></li>
+<li><p><i>length</i>: Not documented yet. (3).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ITransform object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</li>
+</ul>
+
+<h3>ToTransform</h3>
+
+<pre><code>public static PeterO.ITransform ToTransform(
+    this System.IO.Stream input);
+</code></pre>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToTransform()</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>input</i>: Not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ITransform object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</li>
+</ul>
+
+<h3>ToWriter</h3>
+
+<pre><code>public static PeterO.IWriter ToWriter(
+    this PeterO.IByteWriter output);
+</code></pre>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IByteWriter and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>output</i>: Not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An IWriter object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>output</i>
+is null.</li>
+</ul>
+
+<h3>ToWriter</h3>
+
+<pre><code>public static PeterO.IWriter ToWriter(
+    this System.IO.Stream output);
+</code></pre>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>output</i>: Not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An IWriter object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>output</i>
+is null.</li>
+</ul>
+
+<p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div>
 <nav id="navigation">
 <p>

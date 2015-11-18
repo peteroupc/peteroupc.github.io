@@ -11,7 +11,7 @@
     System.IEquatable
 </code></pre>
 
-<p>An arbitrary-precision integer. Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, so they should not be compared using the &quot;==&quot; operator (which only checks if each side of the operator is the same instance).</p>
+<p>An arbitrary-precision integer.Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, so they should not be compared using the &quot;==&quot; operator (which only checks if each side of the operator is the same instance).</p>
 
 <p>An arbitrary-precision integer.</p>
 
@@ -396,18 +396,18 @@ is null.</li>
     int radix);
 </code></pre>
 
-<p>Converts a portion of a string to an arbitrary-precision integer. The string portion can begin with a minus sign (&#39;-&#39;) to indicate that it&#39;s negative.</p>
+<p>Converts a string to an arbitrary-precision integer. The string portion can begin with a minus sign (&#39;-&#39;) to indicate that it&#39;s negative.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string object.</p></li>
-<li><p><i>radix</i>: A 32-bit signed integer.</p></li>
+<li><p><i>radix</i>: A base from 2 to 36. The possible digits start from 0 to 9, then from A to Z in base 36, and the possible digits start from 0 to 9, then from A to F in base 16.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A BigInteger object with the same value as given in the string portion.</p>
+<p>A BigInteger object with the same value as given in the string.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -419,7 +419,7 @@ is null.</p></li>
 The parameter  <i>radix</i>
 is less than 2 or greater than 36.</p></li>
 <li><p>System.FormatException:
-The string portion is empty or in an invalid format.</p></li>
+The string is empty or in an invalid format.</p></li>
 </ul>
 
 <h3>fromRadixSubstring</h3>
@@ -825,8 +825,8 @@ is null.</li>
 
 <p>The value (  <i>bigintValue</i>
  ^  <i>pow</i>
-)%  <i>mod</i>
- .</p>
+ )%  <i>mod</i>
+.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -974,7 +974,7 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>True if  <i>thisValue</i>
- is greater than  <i>otherValue</i>
+ is greater than <i>otherValue</i>
  ; otherwise, false.</p>
 
 <h3>Operator <code>&gt;=</code></h3>
@@ -1046,7 +1046,7 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>True if  <i>thisValue</i>
- is less than  <i>otherValue</i>
+ is less than <i>otherValue</i>
  ; otherwise, false.</p>
 
 <h3>Operator <code>&lt;=</code></h3>

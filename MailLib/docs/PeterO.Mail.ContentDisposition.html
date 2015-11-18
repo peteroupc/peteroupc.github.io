@@ -133,7 +133,17 @@ is empty.</p></li>
     string str);
 </code></pre>
 
-<p>Converts a filename from the Content-Disposition header to a suitable name for saving data to a file.</p>
+<p>Converts a filename from the Content-Disposition header to a suitable name for saving data to a file.Examples:</p>
+
+<p>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot; (RFC 2047 encoding)</p>
+
+<p>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot; (RFC 2047 encoding)</p>
+
+<p>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot; (RFC 2231 encoding)</p>
+
+<p>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot; (Reserved name)</p>
+
+<p>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot; (Directory separators)</p>
 
 <p><b>Parameters:</b></p>
 

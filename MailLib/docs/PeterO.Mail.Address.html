@@ -28,9 +28,11 @@
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>addressValue</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The email address contains invalid syntax. For example, it doesn&#39;t contain an &#39;@&#39; sign or either side of the &#39;@&#39; contains invalid characters, the address is too long, or the address contains comments (text within parentheses).</p></li>
 </ul>
 
 <h3>Domain</h3>
@@ -60,7 +62,7 @@ is null.</li>
 <pre><code>public override string ToString();
 </code></pre>
 
-<p>Converts this object to a text string.</p>
+<p>Converts this address object to a text string.</p>
 
 <p><b>Returns:</b></p>
 
