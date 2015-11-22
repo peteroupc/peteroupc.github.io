@@ -25,13 +25,23 @@
 
 <ul>
 <li><p><i>chars</i>: Output buffer.</p></li>
-<li><p><i>index</i>: Index in the output buffer to start writing to.</p></li>
-<li><p><i>length</i>: Maximum number of code points to write.</p></li>
+<li><p><i>index</i>: A zero-based index showing where the desired portion of  <i>chars</i>
+begins.</p></li>
+<li><p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
+(but not more than  <i>chars</i>
+&#39;s length).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
 <p>The number of Unicode code points read, or 0 if the end of the source is reached.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+Should be thrown if &quot;chars&quot; is null.</li>
+</ul>
 
 <h3>ReadChar</h3>
 

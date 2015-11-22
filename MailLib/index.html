@@ -67,6 +67,28 @@ using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMo
 
 <h2>Release Notes</h2>
 
+<p>Version 0.8.0:</p>
+
+<ul>
+<li>New helper classes added:</li>
+<li>- ArrayWriter</li>
+<li>-  Data abstraction interfaces IByteWriter, IReader, IWriter</li>
+<li>-  Encoding namespace, to access character encodings</li>
+<li>Normalizer class deprecated; use NormalizingCharacterInput
+instead</li>
+<li>Updated normalization and IDNA data to Unicode 8.0</li>
+<li>Fixed wrongly generated data that can make normalization form NFKC
+behave incorrectly</li>
+<li>Parses three new structured header fields</li>
+<li>ContentDisposition.MakeFilename decodes RFC2047 words
+in more cases and avoids returning unsuitable filenames in more cases</li>
+<li>Adds byte[] constructor to Message class</li>
+<li>Be more lenient for some &quot;message/rfc822&quot; bodies</li>
+<li>Fix bug in header parsing if a header field ends in folding whitespace</li>
+<li>Some parts of the code were rewritten, such as the Quoted-Printable
+encoder</li>
+</ul>
+
 <p>Version 0.7.0:</p>
 
 <ul>

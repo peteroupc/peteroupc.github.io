@@ -199,7 +199,7 @@ is false, or an internal error occurred.</p></li>
 <ul>
 <li><p><i>str</i>: A text string.</p></li>
 <li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U + FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
-<li><p><i>lenientLineBreaks</i>: A Boolean object.</p></li>
+<li><p><i>lenientLineBreaks</i>: If true, replaces carriage return (CR) not followed by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>

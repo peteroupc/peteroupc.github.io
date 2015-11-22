@@ -132,11 +132,11 @@
 <pre><code>public string GetCharset();
 </code></pre>
 
-<p>Returns the charset parameter, converted to ASCII lower-case, if it exists, or  <code>&quot;us-ascii&quot;</code>  if the media type is ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t have a charset parameter (see RFC2046), or the default charset, if any, for the media type if the charset parameter is absent. Returns an empty string in all other cases.</p>
+<p>Gets this media type&#39;s charset parameter.</p>
 
 <p><b>Returns:</b></p>
 
-<p>Not documented yet.</p>
+<p>Returns the charset parameter, converted to ASCII lower-case, if it exists, or &quot;us-ascii&quot; if the media type is ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t have a charset parameter (see RFC2046), or the default charset, if any, for the media type if the charset parameter is absent. Returns an empty string in all other cases.</p>
 
 <h3>GetHashCode</h3>
 
@@ -186,7 +186,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>mediaTypeValue</i>: A string object.</li>
+<li><i>mediaTypeValue</i>: A string object representing a media type. This media type can include parameters.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -206,7 +206,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string object representing a media type.</p></li>
+<li><p><i>str</i>: A string object representing a media type. This media type can include parameters.</p></li>
 <li><p><i>defaultValue</i>: The media type to return if the string is syntactically invalid. Can be null.</p></li>
 </ul>
 

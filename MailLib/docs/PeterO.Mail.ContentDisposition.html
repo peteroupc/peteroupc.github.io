@@ -148,7 +148,7 @@ is empty.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string representing a file name.</li>
+<li><i>str</i>: A string representing a file name. Can be null.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -202,6 +202,14 @@ is null.</li>
 
 <p>A content disposition object, or &quot;Attachment&quot; if  <i>dispoValue</i>
  is empty or syntactically invalid.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>dispoValue</i>
+is null.</li>
+</ul>
 
 <h3>ToString</h3>
 

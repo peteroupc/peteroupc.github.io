@@ -9,7 +9,7 @@
 <pre><code>public class NamedAddress
 </code></pre>
 
-<p>Represents an email address and a name for that address.</p>
+<p>Represents an email address and a name for that address. Can represent a group of email addresses instead.</p>
 
 <h3>NamedAddress Constructor</h3>
 
@@ -17,20 +17,34 @@
     string address);
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class.</p>
+<p>Initializes a new instance of the NamedAddress class. Examples:</p>
+
+<ul>
+<li><p><code>john@example.com</code></p></li>
+<li><p><code>&quot;John Doe&quot; &lt;john@example.com&gt;</code></p></li>
+<li><p><code>=?utf-8?q?John</code>  <code>=</code>  <code>27s_Office?=
+        &lt;john@example.com&gt;</code></p></li>
+<li><p><code>John &lt;john@example.com&gt;</code></p></li>
+<li><p><code>&quot;Group&quot; : Tom &lt;tom@example.com&gt;, Jane
+        &lt;jane@example.com&gt;;</code></p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>address</i>: A string object.</li>
+<li><i>address</i>: A string object identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded.An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, such as  <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in the character encoding, further encoded using B or Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot; , and most bytes other than ASCII letters and digits are changed to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s maximum length is 75 characters. See the second example.</li>
 </ul>
+
+<p>.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>address</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The named address has an invalid syntax.</p></li>
 </ul>
 
 <h3>NamedAddress Constructor</h3>
@@ -45,7 +59,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: A string object.</p></li>
+<li><p><i>displayName</i>: A string object. If this value is null or empty, uses the email address as the display name. Encoded words under RFC 2047 will not be decoded.</p></li>
 <li><p><i>address</i>: An email address.</p></li>
 </ul>
 
@@ -69,16 +83,18 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: A string object.</p></li>
-<li><p><i>address</i>: Another string object.</p></li>
+<li><p><i>displayName</i>: The address&#39;s display name. Can be null or empty, in which case the email address is used instead. Encoded words under RFC 2047 will not be decoded.</p></li>
+<li><p><i>address</i>: An email address.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>address</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The display name or address has an invalid syntax.</p></li>
 </ul>
 
 <h3>NamedAddress Constructor</h3>
@@ -94,9 +110,9 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: A string object.</p></li>
-<li><p><i>localPart</i>: Another string object.</p></li>
-<li><p><i>domain</i>: A string object. (3).</p></li>
+<li><p><i>displayName</i>: A string object. If this value is null or empty, uses the email address as the display name.</p></li>
+<li><p><i>localPart</i>: The local part of the email address (before the &quot;@&quot;).</p></li>
+<li><p><i>domain</i>: The domain of the email address (before the &quot;@&quot;).</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -115,22 +131,25 @@ is null.</li>
     System.Collections.Generic.IList mailboxes);
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class.</p>
+<p>Initializes a new instance of the NamedAddress class. Takes a group name and several named email addresses as parameters, and forms a group with them.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>groupName</i>: A string object.</p></li>
-<li><p><i>mailboxes</i>: An IList object.</p></li>
+<li><p><i>groupName</i>: The group&#39;s name.</p></li>
+<li><p><i>mailboxes</i>: A list of named addresses that make up the group.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>groupName</i>
 or  <i>mailboxes</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>groupName</i>
+is empty, or an item in the list is itself a group.</p></li>
 </ul>
 
 <h3>Address</h3>
@@ -138,11 +157,11 @@ is null.</li>
 <pre><code>public PeterO.Mail.Address Address { get; }
 </code></pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets the email address associated with this object.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value not documented yet.</p>
+<p>The email address associated with this object.</p>
 
 <h3>GroupAddresses</h3>
 
@@ -153,7 +172,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A list of address that make up the group, if this object represents a group, or an empty list otherwise.</p>
+<p>A list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</p>
 
 <h3>IsGroup</h3>
 
@@ -171,7 +190,7 @@ is null.</li>
 <pre><code>public string Name { get; }
 </code></pre>
 
-<p>Gets the display name for this email address.</p>
+<p>Gets the display name for this email address (or the email address&#39;s value if the display name is absent).</p>
 
 <p><b>Returns:</b></p>
 

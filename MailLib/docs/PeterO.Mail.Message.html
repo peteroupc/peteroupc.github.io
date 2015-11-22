@@ -21,6 +21,7 @@
 <li><p>Non-UTF-8 bytes appearing in header field values are replaced with replacement characters. Moreover, UTF-8 is parsed everywhere in header field values, even in those parts of some structured header fields where this appears not to be allowed.</p></li>
 <li><p>The To and Cc header fields are allowed to contain only comments and whitespace, but these &quot;empty&quot; header fields will be omitted when generating.</p></li>
 <li><p>There is no line length limit imposed when parsing quoted-printable or base64 encoded bodies.</p></li>
+<li><p>If the transfer encoding is absent and the content type is &quot;message/rfc822&quot;, 8-bit bytes are still allowed, despite the default value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</p></li>
 <li><p>In the following cases, if the transfer encoding is absent or declared as 7bit, 8-bit bytes are still allowed:</p></li>
 <li><p>(a) The preamble and epilogue of multipart messages, which will be ignored.</p></li>
 <li><p>(b) If the charset is declared to be  <code>utf-8</code> .</p></li>
@@ -219,18 +220,27 @@ This value is being set and &quot;value&quot; is null.</li>
     string value);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Adds a header field to the end of the message&#39;s header.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: A string object.</p></li>
-<li><p><i>value</i>: Another string object.</p></li>
+<li><p><i>name</i>: Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot;.</p></li>
+<li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A Message object.</p>
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>name</i>
+or  <i>value</i>
+is null.</li>
+</ul>
 
 <h3>AddHeader</h3>
 
@@ -238,17 +248,25 @@ This value is being set and &quot;value&quot; is null.</li>
     System.Collections.Generic.KeyValuePair header);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Adds a header field to the end of the message&#39;s header.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>header</i>: A KeyValuePair object.</li>
+<li><i>header</i>: A KeyValuePair object. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A Message object.</p>
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The key or value of <i>header</i>
+is null.</li>
+</ul>
 
 <h3>Generate</h3>
 
@@ -323,17 +341,25 @@ Name is null.</li>
     int index);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets the name and value of a header field by index.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: A 32-bit signed integer.</li>
+<li><i>index</i>: Zero-based index of the header field to get.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A KeyValuePair(string, string) object.</p>
+<p>A KeyValuePair object. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>index</i>
+is 0 or at least as high as the number of header fields.</li>
+</ul>
 
 <h3>RemoveHeader</h3>
 
@@ -341,17 +367,25 @@ Name is null.</li>
     int index);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Removes a header field by index.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: A 32-bit signed integer.</li>
+<li><i>index</i>: Zero-based index of the header field to set.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A Message object.</p>
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>index</i>
+is 0 or at least as high as the number of header fields.</li>
+</ul>
 
 <h3>RemoveHeader</h3>
 
@@ -397,7 +431,8 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-&quot;bytes&quot; is null.</li>
+The parameter  <i>bytes</i>
+is null.</li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -408,19 +443,31 @@ is null.</li>
     string value);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Sets the name and value of a header field by index.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: A 32-bit signed integer.</p></li>
-<li><p><i>name</i>: A string object.</p></li>
-<li><p><i>value</i>: Another string object.</p></li>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>name</i>: Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot;.</p></li>
+<li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A Message object.</p>
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is 0 or at least as high as the number of header fields.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>name</i>
+or  <i>value</i>
+is null.</p></li>
+</ul>
 
 <h3>SetHeader</h3>
 
@@ -429,18 +476,29 @@ is null.</li>
     string value);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Sets the value of a header field by index without changing its name.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: A 32-bit signed integer.</p></li>
-<li><p><i>value</i>: A string object.</p></li>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A Message object.</p>
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is 0 or at least as high as the number of header fields.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>value</i>
+is null.</p></li>
+</ul>
 
 <h3>SetHeader</h3>
 
@@ -449,18 +507,32 @@ is null.</li>
     System.Collections.Generic.KeyValuePair header);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Sets the name and value of a header field by index.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: A 32-bit signed integer.</p></li>
-<li><p><i>header</i>: A KeyValuePair object.</p></li>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>header</i>: A KeyValuePair object. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
 <p>A Message object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is 0 or at least as high as the number of header fields.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is 0 or at least as high as the number of header fields.</p></li>
+<li><p>System.ArgumentNullException:
+The key or value of <i>header</i>
+is null.</p></li>
+</ul>
 
 <h3>SetHeader</h3>
 
@@ -504,7 +576,7 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string object.</li>
+<li><i>str</i>: A string consisting of the message in HTML format.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -531,8 +603,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>text</i>: A string object.</p></li>
-<li><p><i>html</i>: Another string object.</p></li>
+<li><p><i>text</i>: A string consisting of the plain text version of the message.</p></li>
+<li><p><i>html</i>: A string consisting of the HTML version of the message.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -559,7 +631,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string object.</li>
+<li><i>str</i>: A string consisting of the message in plain text format.</li>
 </ul>
 
 <p><b>Returns:</b></p>

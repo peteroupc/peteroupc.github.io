@@ -51,7 +51,7 @@
 
 <ul>
 <li><p><i>stream</i>: An ICharacterInput object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -73,7 +73,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string object.</li>
+<li><i>str</i>: A string specifying the text to normalize.</li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -93,7 +93,7 @@ is null.</li>
 <li><p><i>str</i>: A string object.</p></li>
 <li><p><i>index</i>: A 32-bit signed integer.</p></li>
 <li><p><i>length</i>: A 32-bit signed integer. (2).</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -109,7 +109,7 @@ is null.</li>
 
 <ul>
 <li><p><i>str</i>: A string object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -123,7 +123,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>characterList</i>: An IList object.</li>
+<li><i>characterList</i>: A list of Unicode code points specifying the text to normalize.</li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -139,7 +139,7 @@ is null.</li>
 
 <ul>
 <li><p><i>characterList</i>: An IList object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -157,18 +157,18 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets a list of normalized code points after reading from a character stream.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: An ICharacterInput object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>str</i>: An object that implements a stream of Unicode characters.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A list of Unicode characters.</p>
+<p>A list of the normalized Unicode characters.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -185,18 +185,18 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets a list of normalized code points after reading from a string.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A list of Unicode characters.</p>
+<p>A list of the normalized Unicode characters.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -213,18 +213,26 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether the text provided by a character input is normalized.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>chars</i>: An ICharacterInput object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>chars</i>: A object that implements a streamable character input.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A Boolean object.</p>
+<p>True if the text is normalized; otherwise, false.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>chars</i>
+is null.</li>
+</ul>
 
 <h3>IsNormalized</h3>
 
@@ -239,12 +247,20 @@ is null.</li>
 
 <ul>
 <li><p><i>str</i>: An arbitrary string.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
 <p>True if the given string is in the given Unicode normalization form; otherwise, false.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
 
 <h3>IsNormalized</h3>
 
@@ -258,8 +274,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>charList</i>: An IList object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>charList</i>: A list of Unicode code points.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -311,26 +327,37 @@ is null.</li>
     int length);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Reads a sequence of Unicode code points from a data source.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>chars</i>: An array of 32-bit unsigned integers.</p></li>
-<li><p><i>index</i>: A 32-bit signed integer. (2).</p></li>
-<li><p><i>length</i>: A 32-bit signed integer. (3).</p></li>
+<li><p><i>chars</i>: Output buffer.</p></li>
+<li><p><i>index</i>: A zero-based index showing where the desired portion of  <i>chars</i>
+begins.</p></li>
+<li><p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
+(but not more than  <i>chars</i>
+&#39;s length).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A 32-bit signed integer.</p>
+<p>The number of Unicode code points read, or 0 if the end of the source is reached.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>chars</i>
-or &quot;this.buffer&quot; is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>index</i>
+or  <i>length</i>
+is less than 0 or greater than <i>chars</i>
+&#39;s length, or  <i>chars</i>
+&#39;s length minus  <i>index</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <h3>ReadChar</h3>
@@ -338,11 +365,11 @@ or &quot;this.buffer&quot; is null.</li>
 <pre><code>public sealed int ReadChar();
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Reads a Unicode character from a data source.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A 32-bit signed integer.</p>
+<p>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to 0x10ffff), or the value -1 indicating the end of the source.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div>

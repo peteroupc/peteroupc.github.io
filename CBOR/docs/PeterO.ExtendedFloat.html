@@ -884,7 +884,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     string str);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Creates a binary float from a string that represents a number. See the four-parameter FromString method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -894,15 +894,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
+<p>The parsed number, converted to ExtendedFloat.</p>
 
 <h3>FromString</h3>
 
@@ -918,8 +910,8 @@ is null.</li>
 
 <ul>
 <li><p><i>str</i>: A String object.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>length</i>: A 32-bit signed integer. (2).</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;str&quot; begins.</p></li>
+<li><p><i>length</i>: The length, in code units, of the desired portion of &quot;str&quot; (but not more than &quot;str&quot; &#39;s length).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -929,9 +921,17 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>offset</i>
+is less than <i>length</i>
+.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -959,21 +959,29 @@ is null.</li>
 
 <ul>
 <li><p><i>str</i>: A String object.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>length</i>: A 32-bit signed integer. (2).</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;str&quot; begins.</p></li>
+<li><p><i>length</i>: The length, in code units, of the desired portion of &quot;str&quot; (but not more than &quot;str&quot; &#39;s length).</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>The parsed number, converted to ExtendedFloat.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>offset</i>
+is less than <i>length</i>
+.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -989,12 +997,12 @@ is null.</li>
 
 <ul>
 <li><p><i>str</i>: A String object.</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>The parsed number, converted to ExtendedFloat.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2316,7 +2324,7 @@ This object&#39;s value is not an exact integer.</p></li>
 <pre><code>public string ToEngineeringString();
 </code></pre>
 
-<p>Same as toString(), except that when an exponent is used it will be a multiple of 3. The format of the return value follows the format of the java.math.BigDecimal.toEngineeringString() method.</p>
+<p>Converts this value to an extended decimal, then returns the value of that decimal&#39;s ToEngineeringString method.</p>
 
 <p><b>Returns:</b></p>
 
@@ -2364,7 +2372,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>A string representation of this object.</p>
+<p>A string representation of this object. The value is converted to decimal and the decimal form of this number&#39;s value is returned.</p>
 
 <h3>Ulp</h3>
 

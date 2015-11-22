@@ -9,25 +9,25 @@
 <pre><code>public static class DataIO
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Convenience class that contains static methods for wrapping byte arrays and streams into byte readers and byte writers.</p>
 
 <h3>ToTransform</h3>
 
-<pre><code>public static PeterO.ITransform ToTransform(
+<pre><code>public static PeterO.IByteReader ToTransform(
     this byte[] bytes);
 </code></pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToTransform()</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps a byte array into a byte reader. The reader will start at the beginning of the byte array.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToTransform()</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bytes</i>: Not documented yet.</li>
+<li><i>bytes</i>: The byte array to wrap.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ITransform object.</p>
+<p>A byte reader wrapping the byte array.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -39,51 +39,59 @@ is null.</li>
 
 <h3>ToTransform</h3>
 
-<pre><code>public static PeterO.ITransform ToTransform(
+<pre><code>public static PeterO.IByteReader ToTransform(
     this byte[] bytes,
     int offset,
     int length);
 </code></pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToTransform(offset, length)</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps a portion of a byte array into a byte reader object.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToTransform(offset, length)</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: Not documented yet.</p></li>
-<li><p><i>offset</i>: Not documented yet.</p></li>
-<li><p><i>length</i>: Not documented yet. (3).</p></li>
+<li><p><i>bytes</i>: The byte array to wrap.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;bytes&quot; begins.</p></li>
+<li><p><i>length</i>: The length, in bytes, of the desired portion of &quot;bytes&quot; (but not more than &quot;bytes&quot; &#39;s length).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ITransform object.</p>
+<p>A byte reader wrapping the byte array.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>bytes</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <h3>ToTransform</h3>
 
-<pre><code>public static PeterO.ITransform ToTransform(
+<pre><code>public static PeterO.IByteReader ToTransform(
     this System.IO.Stream input);
 </code></pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToTransform()</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps an input stream into a reader object. If an IOException is thrown by the input stream, the reader object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToTransform()</code> . If the object&#39;s class already has a ToTransform method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>input</i>: Not documented yet.</li>
+<li><i>input</i>: The input stream to wrap.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ITransform object.</p>
+<p>A byte reader wrapping the input stream.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -99,17 +107,17 @@ is null.</li>
     this PeterO.IByteWriter output);
 </code></pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IByteWriter and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps a byte writer (one that only implements a ReadByte method) to a writer (one that also implements a three-parameter Read method.)In the .NET implementation, this method is implemented as an extension method to any object implementing IByteWriter and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>output</i>: Not documented yet.</li>
+<li><i>output</i>: A byte stream.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An IWriter object.</p>
+<p>A writer that wraps the given stream.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -125,17 +133,17 @@ is null.</li>
     this System.IO.Stream output);
 </code></pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps an output stream into a writer object. If an IOException is thrown by the input stream, the writer object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>output</i>: Not documented yet.</li>
+<li><i>output</i>: Output stream to wrap.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An IWriter object.</p>
+<p>A byte writer that wraps the given output stream.</p>
 
 <p><b>Exceptions:</b></p>
 

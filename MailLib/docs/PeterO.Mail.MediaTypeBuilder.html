@@ -106,7 +106,7 @@ is null.</li>
     string name);
 </code></pre>
 
-<p>Removes a parameter from this builder object.</p>
+<p>Removes a parameter from this builder object. Does nothing if the parameter&#39;s name doesn&#39;t exist.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -133,13 +133,13 @@ is null.</li>
     string value);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Sets a parameter&#39;s name and value for this media type.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: Name of the parameter to set. The name is compared case-insensitively.</p></li>
-<li><p><i>value</i>: A string object.</p></li>
+<li><p><i>name</i>: Name of the parameter to set, such as &quot;charset&quot;. The name is compared case-insensitively.</p></li>
+<li><p><i>value</i>: A string object giving the parameter&#39;s value.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -149,10 +149,13 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>value</i>
 or  <i>name</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>name</i>
+is empty or syntactically invalid.</p></li>
 </ul>
 
 <h3>SetSubType</h3>
@@ -161,12 +164,12 @@ is null.</li>
     string str);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string object.</li>
+<li><i>str</i>: A string object naming a media subtype.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -176,9 +179,12 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>str</i>
+is empty or syntactically invalid.</p></li>
 </ul>
 
 <h3>SetTopLevelType</h3>
@@ -187,12 +193,12 @@ is null.</li>
     string str);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Sets this media type&#39;s top-level type.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string object.</li>
+<li><i>str</i>: A string object naming a top-level type, such as &quot;text&quot; or &quot;audio&quot;.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -202,9 +208,12 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>str</i>
+is syntactically invalid for a top-level type.</p></li>
 </ul>
 
 <h3>ToMediaType</h3>

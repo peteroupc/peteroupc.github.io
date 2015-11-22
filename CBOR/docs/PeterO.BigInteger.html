@@ -597,16 +597,29 @@ is null.</li>
 
 <p>A 32-bit signed integer.</p>
 
+<h3>getLowBit</h3>
+
+<pre><code>public int getLowBit();
+</code></pre>
+
+<p>Gets the lowest set bit in this number&#39;s absolute value.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The lowest bit set in the number, starting at 0. Returns 0 if this value is 0 or odd. (NOTE: In future versions, may return -1 instead if this value is 0.).</p>
+
 <h3>getLowestSetBit</h3>
 
 <pre><code>public int getLowestSetBit();
 </code></pre>
 
-<p>Not documented yet.</p>
+<p><b>Deprecated.</b> Renamed to getLowBit.</p>
+
+<p>See  <code>getLowBit()</code></p>
 
 <p><b>Returns:</b></p>
 
-<p>A 32-bit signed integer.</p>
+<p>See getLowBit().</p>
 
 <h3>getUnsignedBitLength</h3>
 
@@ -1248,17 +1261,26 @@ is null.</li>
     int powerSmall);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Raises a big integer to a power.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>powerSmall</i>: A 32-bit signed integer.</li>
+<li><i>powerSmall</i>: The exponent to raise to.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A BigInteger object.</p>
+<p>The result. Returns 1 if  <i>powerSmall</i>
+ is 0.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>powerSmall</i>
+is less than 0.</li>
+</ul>
 
 <h3>Pow</h3>
 
@@ -1323,24 +1345,28 @@ is null.</li>
     PeterO.BigInteger power);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Raises a big integer to a power, which is given as another big integer.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>power</i>: Another BigInteger object.</li>
+<li><i>power</i>: The exponent to raise to.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A BigInteger object.</p>
+<p>The result. Returns 1 if  <i>power</i>
+ is 0.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>power</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>power</i>
+is less than 0.</p></li>
 </ul>
 
 <h3>remainder</h3>
