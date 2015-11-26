@@ -415,9 +415,17 @@ The parameter &quot;array&quot; is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>list</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>index</i>
+or  <i>count</i>
+is less than 0 or greater than <i>list</i>
+&#39;s length, or  <i>list</i>
+&#39;s length minus  <i>index</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <h3>Shuffle</h3>
@@ -482,16 +490,24 @@ is null.</li>
 
 <ul>
 <li><p><i>array</i>: An array of 32-bit unsigned integers.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>count</i>: Another 32-bit signed integer.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;array&quot; begins.</p></li>
+<li><p><i>count</i>: The number of elements in the desired portion of &quot;array&quot; (but not more than &quot;array&quot; &#39;s length).</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>array</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>array</i>
+&#39;s length, or  <i>array</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <h3>Sort</h3>
@@ -559,17 +575,25 @@ is null.</li>
 
 <ul>
 <li><p><i>list</i>: An IList object.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>count</i>: Another 32-bit signed integer.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;list&quot; begins.</p></li>
+<li><p><i>count</i>: The number of elements in the desired portion of &quot;list&quot; (but not more than &quot;list&quot; &#39;s length).</p></li>
 <li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>list</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>list</i>
+&#39;s length, or  <i>list</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <h3>Sort</h3>
@@ -587,8 +611,8 @@ is null.</li>
 
 <ul>
 <li><p><i>list</i>: An IList object.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>count</i>: Another 32-bit signed integer.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;list&quot; begins.</p></li>
+<li><p><i>count</i>: The number of elements in the desired portion of &quot;list&quot; (but not more than &quot;list&quot; &#39;s length).</p></li>
 <li><p><i>comparer</i>: An IComparer object.</p></li>
 <li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
 </ul>
@@ -596,10 +620,18 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>list</i>
 or  <i>comparer</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>list</i>
+&#39;s length, or  <i>list</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <h3>StableSort</h3>
@@ -641,17 +673,25 @@ is null.</li>
 
 <ul>
 <li><p><i>list</i>: An IList object.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>count</i>: Another 32-bit signed integer.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;list&quot; begins.</p></li>
+<li><p><i>count</i>: The number of elements in the desired portion of &quot;list&quot; (but not more than &quot;list&quot; &#39;s length).</p></li>
 <li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>list</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>list</i>
+&#39;s length, or  <i>list</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <h3>StableSort</h3>
@@ -669,8 +709,8 @@ is null.</li>
 
 <ul>
 <li><p><i>list</i>: An IList object.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>count</i>: Another 32-bit signed integer.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;list&quot; begins.</p></li>
+<li><p><i>count</i>: The number of elements in the desired portion of &quot;list&quot; (but not more than &quot;list&quot; &#39;s length).</p></li>
 <li><p><i>comparer</i>: An IComparer object.</p></li>
 <li><p>&lt;T&gt;: Any object type.</p></li>
 </ul>
@@ -678,10 +718,18 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>list</i>
 or  <i>comparer</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>list</i>
+&#39;s length, or  <i>list</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <h3>StableSort</h3>

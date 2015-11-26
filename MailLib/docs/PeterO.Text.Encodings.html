@@ -363,7 +363,29 @@ is null.</li>
 
 <ul>
 <li><p><i>name</i>: A string naming a character encoding. See the ResolveAlias method. Can be null.</p></li>
+<li><p><i>forEmail</i>: A Boolean object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An ICharacterEncoding object.</p>
+
+<h3>GetEncoding</h3>
+
+<pre><code>public static PeterO.Text.ICharacterEncoding GetEncoding(
+    string name,
+    bool forEmail,
+    bool allowReplacement);
+</code></pre>
+
+<p>Returns a character encoding from the given name.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>name</i>: A string naming a character encoding. See the ResolveAlias method. Can be null.</p></li>
 <li><p><i>forEmail</i>: If false, uses the encoding resolution rules in the Encoding Standard. If true, uses modified rules as described in the ResolveAliasForEmail method.</p></li>
+<li><p><i>allowReplacement</i>: If true, allows the label <code>replacement</code>  to return the replacement encoding.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -403,7 +425,8 @@ is null.</li>
 <li><p><code>utf-8</code>  - UTF-8 (8-bit universal character set, the encoding recommended by the Encoding Standard for new data formats)</p></li>
 <li><p><code>utf-16le</code>  - UTF-16 little-endian (16-bit UCS)</p></li>
 <li><p><code>utf-16be</code>  - UTF-16 big-endian (16-bit UCS)</p></li>
-<li><p>Two special purpose encodings:  <code>x-user-defined</code>  and <code>replacement</code></p></li>
+<li><p>The special-purpose encoding  <code>x-user-defined</code></p></li>
+<li><p>The special-purpose encoding  <code>replacement</code> , which this function returns only if one of several aliases are passed to it, as defined in the Encoding Standard.</p></li>
 <li><p>28 legacy single-byte encodings:</p></li>
 <li><p><code>windows-1252</code>  - Western Europe (Note: The Encoding Standard aliases the names  <code>us-ascii</code>  and  <code>iso-8859-1</code>  to <code>windows-1252</code> , which specifies a different character set from either; it differs from  <code>iso-8859-1</code>  by assigning different characters to some bytes from 0x80 to 0x9F. The Encoding Standard does this for compatibility with existing Web pages.)</p></li>
 <li><p><code>iso-8859-2</code> ,  <code>windows-1250</code>  : Central Europe</p></li>

@@ -2088,7 +2088,7 @@ There was an error in reading or parsing the data.</p></li>
     System.IO.Stream stream);
 </code></pre>
 
-<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte order mark (U + FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte order mark or an ASCII character. (In previous versions, only UTF-8 was allowed.)If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte order mark (U + FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte order mark or a nonzero ASCII character. (In previous versions, only UTF-8 was allowed.)If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2109,7 +2109,7 @@ is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 <li><p>PeterO.Cbor.CBORException:
-The data stream contains invalid UTF-8 or is not in JSON format.</p></li>
+The data stream contains invalid encoding or is not in JSON format.</p></li>
 </ul>
 
 <h3>Remainder</h3>

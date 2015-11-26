@@ -102,8 +102,8 @@ is null.</li>
 
 <ul>
 <li><p><i>data</i>: A byte array.</p></li>
-<li><p><i>offset</i>: Another 32-bit signed integer.</p></li>
-<li><p><i>length</i>: A 32-bit signed integer. (3).</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;data&quot; begins.</p></li>
+<li><p><i>length</i>: The number of elements in the desired portion of &quot;data&quot; (but not more than &quot;data&quot; &#39;s length).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -113,9 +113,17 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>data</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>data</i>
+&#39;s length, or  <i>data</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <h3>Read7BitEncodedInt32BE</h3>
@@ -377,16 +385,24 @@ is null.</li>
 
 <ul>
 <li><p><i>data</i>: A byte array. (2).</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>length</i>: Another 32-bit signed integer.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;data&quot; begins.</p></li>
+<li><p><i>length</i>: The number of elements in the desired portion of &quot;data&quot; (but not more than &quot;data&quot; &#39;s length).</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>data</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>data</i>
+&#39;s length, or  <i>data</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <h3>Write7BitEncodedInt32BE</h3>

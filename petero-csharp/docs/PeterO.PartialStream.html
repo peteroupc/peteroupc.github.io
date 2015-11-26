@@ -11,7 +11,7 @@
     System.IDisposable
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Represents a portion of another data stream. For this to work, the underlying stream must be seekable and have a known length.</p>
 
 <h3>PartialStream Constructor</h3>
 
@@ -46,18 +46,21 @@
 
 <ul>
 <li><p><i>stream</i>: A Stream object.</p></li>
-<li><p><i>start</i>: A 64-bit signed integer.</p></li>
-<li><p><i>length</i>: A 64-bit signed integer. (2).</p></li>
-<li><p><i>closeOnDispose</i>: A Boolean object.</p></li>
+<li><p><i>start</i>: The start of the partial stream from the underlying stream.</p></li>
+<li><p><i>length</i>: The length of the partial stream in bytes.</p></li>
+<li><p><i>closeOnDispose</i>: If true, closes the underlying stream when disposing the partial stream.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>stream</i>
 or  <i>stream</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>stream</i>
+doesn&#39;t support seeking, the length or start is less than 0 or greater than the underlying stream&#39;s length, or the partial stream would go beyond the underlying stream.</p></li>
 </ul>
 
 <h3>CanRead</h3>
@@ -65,55 +68,55 @@ is null.</li>
 <pre><code>public override bool CanRead { get; }
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether the underlying stream supports reading.</p>
 
 <p><b>Returns:</b></p>
 
-<p>Value not documented yet.</p>
+<p>True if the underlying stream supports reading; otherwise, false.</p>
 
 <h3>CanSeek</h3>
 
 <pre><code>public override bool CanSeek { get; }
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether the underlying stream supports seeking.</p>
 
 <p><b>Returns:</b></p>
 
-<p>Value not documented yet.</p>
+<p>True if the underlying stream supports seeking; otherwise, false.</p>
 
 <h3>CanWrite</h3>
 
 <pre><code>public override bool CanWrite { get; }
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether the underlying stream supports writing.</p>
 
 <p><b>Returns:</b></p>
 
-<p>Value not documented yet.</p>
+<p>True if the underlying stream supports writing; otherwise, false.</p>
 
 <h3>Length</h3>
 
 <pre><code>public override long Length { get; }
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets the partial stream&#39;s length in bytes.</p>
 
 <p><b>Returns:</b></p>
 
-<p>Value not documented yet.</p>
+<p>The partial stream&#39;s length in bytes.</p>
 
 <h3>Position</h3>
 
 <pre><code>public override long Position { get; set;}
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets the partial stream&#39;s current byte position.</p>
 
 <p><b>Returns:</b></p>
 
-<p>Value not documented yet.</p>
+<p>The partial stream&#39;s current byte position.</p>
 
 <h3>Dispose</h3>
 
@@ -150,8 +153,8 @@ is null.</li>
 
 <ul>
 <li><p><i>buffer</i>: A byte array.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer. (2).</p></li>
-<li><p><i>count</i>: A 32-bit signed integer. (3).</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;buffer&quot; begins.</p></li>
+<li><p><i>count</i>: The number of elements in the desired portion of &quot;buffer&quot; (but not more than &quot;buffer&quot; &#39;s length).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -161,9 +164,17 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>buffer</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>buffer</i>
+&#39;s length, or  <i>buffer</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <h3>Seek</h3>
@@ -214,16 +225,24 @@ is null.</li>
 
 <ul>
 <li><p><i>buffer</i>: A byte array.</p></li>
-<li><p><i>offset</i>: A 32-bit signed integer.</p></li>
-<li><p><i>count</i>: A 32-bit signed integer. (2).</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;buffer&quot; begins.</p></li>
+<li><p><i>count</i>: The number of elements in the desired portion of &quot;buffer&quot; (but not more than &quot;buffer&quot; &#39;s length).</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>buffer</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>buffer</i>
+&#39;s length, or  <i>buffer</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>
