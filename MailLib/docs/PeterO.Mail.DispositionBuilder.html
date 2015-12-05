@@ -47,6 +47,14 @@ is null.</li>
 <li><i>type</i>: A string object.</li>
 </ul>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>type</i>
+is null.</li>
+</ul>
+
 <h3>DispositionBuilder Constructor</h3>
 
 <pre><code>public DispositionBuilder();
@@ -70,6 +78,8 @@ is null.</li>
 <pre><code>public bool IsMultipart { get; }
 </code></pre>
 
+<p><b>Deprecated.</b> Irrelevant for content dispositions; will be removed in the future.</p>
+
 <p>Gets a value indicating whether this is a multipart media type.</p>
 
 <p><b>Returns:</b></p>
@@ -80,6 +90,8 @@ is null.</li>
 
 <pre><code>public bool IsText { get; }
 </code></pre>
+
+<p><b>Deprecated.</b> Irrelevant for content dispositions; will be removed in the future.</p>
 
 <p>Gets a value indicating whether this is a text media type.</p>
 

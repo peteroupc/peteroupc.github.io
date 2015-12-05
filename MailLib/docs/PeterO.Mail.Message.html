@@ -236,10 +236,12 @@ This value is being set and &quot;value&quot; is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>name</i>
 or  <i>value</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 </ul>
 
 <h3>AddHeader</h3>
@@ -263,9 +265,11 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The key or value of <i>header</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 </ul>
 
 <h3>Generate</h3>
@@ -293,7 +297,7 @@ The message can&#39;t be generated.</li>
 <pre><code>public byte[] GetBody();
 </code></pre>
 
-<p>Gets the byte array for this message&#39;s body.</p>
+<p>Gets the byte array for this message&#39;s body. This method doesn&#39;t make a copy of that byte array.</p>
 
 <p><b>Returns:</b></p>
 
@@ -419,7 +423,7 @@ is null.</li>
     byte[] bytes);
 </code></pre>
 
-<p>Sets the body of this message to the given byte array.</p>
+<p>Sets the body of this message to the given byte array. This method doesn&#39;t make a copy of that byte array.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -462,7 +466,7 @@ is null.</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields.</p></li>
+is 0 or at least as high as the number of header fieldss; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>name</i>
 or  <i>value</i>
@@ -494,7 +498,7 @@ is null.</p></li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields.</p></li>
+is 0 or at least as high as the number of header fieldss; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>value</i>
 is null.</p></li>
@@ -525,10 +529,7 @@ is null.</p></li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields.</p></li>
-<li><p>System.ArgumentException:
-The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields.</p></li>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
 The key or value of <i>header</i>
 is null.</p></li>
@@ -541,7 +542,7 @@ is null.</p></li>
     string value);
 </code></pre>
 
-<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced.</p>
+<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced.</p>
 
 <p><b>Parameters:</b></p>
 

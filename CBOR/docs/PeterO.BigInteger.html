@@ -398,11 +398,22 @@ is null.</li>
 
 <p>Converts a string to an arbitrary-precision integer. The string portion can begin with a minus sign (&#39;-&#39;) to indicate that it&#39;s negative.</p>
 
+<p>The following example (C#) converts a number in the orm of a hex string to a big integer.    public static BigInteger HexToBigInteger(string hexString) {
+      // Parse the hexadecimal string as a big integer.  Will
+      // throw a FormatException if the parsing fails
+      var bigInteger = BigInteger.fromRadixString(hexString, 16);
+      // Optional: Check if the parsed integer is negative
+      if (bigInteger.Sign &lt; 0) {
+        throw new FormatException(&quot;negative hex string&quot;);
+      }
+      return bigInteger;
+    }</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string object.</p></li>
-<li><p><i>radix</i>: A base from 2 to 36. The possible digits start from 0 to 9, then from A to Z in base 36, and the possible digits start from 0 to 9, then from A to F in base 16.</p></li>
+<li><p><i>radix</i>: A base from 2 to 36. The possible ASCII digits start from 0 to 9, then from A to Z in base 36, and the possible ASCII digits start from 0 to 9, then from A to F in base 16.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -473,7 +484,7 @@ The string portion is empty or in an invalid format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string containing only digits, except that it may start with a minus sign.</li>
+<li><i>str</i>: A string containing only ASCII digits, except that it may start with a minus sign.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1566,7 +1577,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A string object.</p>
+<p>A string representing the value of this object. If this value is 0, returns &quot;0&quot;. If negative, the string will begin with a hyphen/minus (&quot;-&quot;). Depending on the radix, the string will use ASCII characters ranging from 0 to 9 and then from A to Z. as the digits.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1584,7 +1595,7 @@ The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less tha
 
 <p><b>Returns:</b></p>
 
-<p>A string representation of this object.</p>
+<p>A string representation of this object. If negative, the string will begin with a hyphen/minus (&quot;-&quot;). The string will use the ASCII digits from 0 to 9.</p>
 
 <h3>valueOf</h3>
 
