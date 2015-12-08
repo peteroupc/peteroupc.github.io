@@ -4,11 +4,12 @@
 <div class="mainarea" id="top">
 <h2>Introduction</h2>
 
-<p>This article includes information on how a calculator program is implemented
+<p>This page includes information on how a calculator program is implemented
 using <a href="http://www.codeproject.com/Tips/897294/Concise-Binary-Object-Representation-CBOR-in-Cshar">my CBOR library for C#</a>.
-(CBOR stands for Concise Binary Object Representation.)</p>
+(CBOR stands for Concise Binary Object Representation.)  This page shows a Windows Forms
+and a Windows Presentation Foundation (WPF) version of the same program, demonstrating how my library works well in both kinds of programs.</p>
 
-<p><img src="calc.png" alt="Calculator"></p>
+<p><img src="calc.png" alt="Windows Forms Calculator">   <img src="wpfcalc.png" alt="WPF Calculator"></p>
 
 <p>While it looks relatively simple, the <a href="https://github.com/peteroupc/Calculator">calculator program</a> demonstrates two features of that library:</p>
 
@@ -66,6 +67,12 @@ calculator user interface, and can be considered part of the &quot;model&quot; i
 pattern.  Because of this abstraction, this class can be used in other programs, besides Windows Forms
 programs, that need the functionality of a calculator.</p>
 
+<p>A second abstraction is the &quot;controller&quot;: the <code>CalculatorController</code> class uses an interface to the
+program&#39;s main window (<code>IWindowInfo</code>) and contains similar methods to the <code>CalculatorState</code> class,
+except it acts more like a controller than a data model (each form implementation calls into
+<code>CalculatorController</code> rather than <code>CalculatorState</code>.)  The Windows Forms and WPF versions of the
+calculator have different <code>IWindowInfo</code> implementations</p>
+
 <h2>Storing Application Settings</h2>
 
 <p>CBOR&#39;s compact data format suits it well for storing things such as user settings.</p>
@@ -80,6 +87,7 @@ object to a CBOR file.</p>
 public ProgramConfig SetObject(string name, object obj);
 public string GetString(string name);
 public int GetInt32OrDefault(string name, int defaultValue);
+public double GetDoubleOrDefault(string name, double defaultValue);
 public double GetDouble(string name);
 </code></pre>
 
@@ -95,8 +103,8 @@ discussed below.)</p>
 <p>The ProgramConfig constructor opens a named file from per-user storage (with the &quot;.cbor&quot;
 extension, since it loads and saves CBOR files), and generates blank user data if the
 file doesn&#39;t exist (which is usually the case when the program is first run) or the file contains
-invalid data.  The calculator creates a ProgramConfig constructor on load of the form
-(see <code>MainForm.cs</code>):</p>
+invalid data.  The calculator creates a <code>ProgramConfig</code> constructor on load of the form
+(see <em>MainForm.cs</em>):</p>
 
 <pre><code>private void MainForm_Load(object sender, EventArgs e) {
   // Initialize config here, rather than in the constructor;
@@ -109,7 +117,7 @@ private ProgramConfig InitializeConfig() {
 }
 </code></pre>
 
-<p>On the first run, the ProgramConfig is generated and populated with default values
+<p>On the first run, the <code>ProgramConfig</code> is generated and populated with default values
 for the window&#39;s current position as it&#39;s loaded for the first time (due to the
 <code>FormPosFromConfig</code> method).</p>
 
@@ -142,10 +150,10 @@ retrieve a value by its key.  The method <code>SetObject</code> converts many ki
 of objects (not just strings and numbers) to an appropriate format for
 the CBOR key-value map.</p>
 
-<p>The calculator demo, though, uses only integers (for the window position
-and size), so it calls <code>GetInt32OrDefault</code> and sets the default value for
+<p>The calculator demo, though, uses only numbers (for the window position
+and size), so it calls <code>GetDoubleOrDefault</code> and sets the default value for
 each parameter to the current position and size of the window as its
-generated.  (<code>GetInt32OrDefault</code> uses the default if the key doesn&#39;t
+generated.  (<code>GetDoubleOrDefault</code> uses the default if the key doesn&#39;t
 exist or if the existing value has the wrong type or can&#39;t be converted.)</p>
 
 <p>To be more specific, the calculator demo uses the following keys
@@ -161,7 +169,7 @@ in the <code>ProgramConfig</code> map:</p>
 <p>There are currently only three kinds of data that <code>ProgramConfig</code> can &quot;get&quot;:
 strings, <code>double</code>s, and 32-bit unsigned integers (<code>int</code>s).  This is often adequate
 for most kinds of user settings (for example, boolean values -- either
-true or false -- can be expressed using integers or strings), but of
+<code>true</code> or <code>false</code> -- can be expressed using integers or strings), but of
 course, CBOR can store many other kinds of data types, such as
 nested arrays, nested maps, byte sequences, the undefined-value,
 and numbers of arbitrary precision.  But for user settings, especially for the calculator
@@ -173,22 +181,25 @@ demo, the three data types string, <code>double</code>, and <code>int</code> are
 kinds of programs; for instance, it&#39;s also used in <a href="https://github.com/peteroupc/Calculator/JSONCBOR">another demo program of
 mine</a> that converts JSON
 to CBOR and back.  This program, too, saves the last known window position
-and size in the same way as the calculator demo.  Since they&#39;re specific to Windows
-Forms programs, certain &quot;methods&quot; of ProgramConfig were designed as extension
-methods and placed in a separate class, <code>FormConfig</code>.</p>
+and size in the same way as the calculator demo.  Certain &quot;methods&quot; of ProgramConfig
+were designed as extension methods and placed in a separate class, <code>FormConfig</code>.
+(FormConfig takes an abstract object that implements the IWindowInfo interface and
+retrieves and sets the window position.  There is a separate IWindowInfo implementation
+for the Windows Forms and WPF versions.)</p>
 
 <p>However, while <code>ProgramConfig</code> is very general, it relies on isolated storage, which
 unfortunately isn&#39;t supported in Windows Store apps, which use a very different
-concept for per-user storage.  This is why ProgramConfig contains a nested
-class called <code>IsolatedStream</code>, which is designed to wrap the details of the per-user
-storage implementation.</p>
+concept for per-user storage.  (Isolated storage can be used in Windows Forms and
+WPF apps, as is done in this demo.) This is why ProgramConfig contains a nested class
+called <code>IsolatedStream</code>, which is designed to wrap the details of the per-user storage
+implementation.</p>
 
 <p>If a version of per-user storage for Windows Store apps is needed,
 <code>IsolatedStream</code> can be updated to provide or call a Windows-Store-specific
 implementation of per-user storage.  This isn&#39;t done here, since the main purpose
 is to demonstate the features of my CBOR library.</p>
 
-<p>I should note that the CBOR library contains no methods to directly read and
+<p>I should note that the CBOR library itself contains no methods to directly read and
 write to files; it instead reads and writes data to streams (such as the <code>Read</code> and
 <code>WriteTo</code> methods for CBOR data and <code>ReadJSON</code> and <code>WriteJSONTo</code> methods
 for JavaScript Object Notation).</p>
