@@ -953,14 +953,14 @@ is less than <i>length</i>
 <p>Creates a binary float from a string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact. However, the resulting binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number (float or double).The format of the string generally consists of:</p>
 
 <ul>
-<li><p>An optional &#39;-&#39; or &#39;+&#39; character (if &#39;-&#39; , the value is negative.)</p></li>
+<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
 <li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
-<li><p>Optionally, E+ (positive exponent) or E- (negative exponent) plus one or more digits specifying the exponent.</p></li>
+<li><p>Optionally, &quot;E+&quot; (positive exponent) or &quot;E-&quot; (negative exponent) plus one or more digits specifying the exponent.</p></li>
 </ul>
 
 <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot; , &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;qNaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
-<p>The format generally follows the definition in java.math.BigDecimal(), except that the digits must be ASCII digits (&#39;0&#39; through &#39;9&#39;).</p>
+<p>The format generally follows the definition in java.math.BigDecimal(), except that the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039).</p>
 
 <p><b>Parameters:</b></p>
 

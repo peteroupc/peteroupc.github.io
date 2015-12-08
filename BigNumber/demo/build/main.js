@@ -1,7 +1,9 @@
+"use strict";
+
 var OperandSelect = React.createClass({
   displayName: "OperandSelect",
 
-  render: function () {
+  render: function render() {
     var propItems = [];
     var parent = this.parent;
     for (var i = 0; i < this.props.values.length; i++) {
@@ -24,7 +26,7 @@ var OperandSelect = React.createClass({
 var Operand = React.createClass({
   displayName: "Operand",
 
-  render: function () {
+  render: function render() {
     return React.createElement("input", { type: "text", onChange: this.props.onChange });
   }
 });
@@ -32,19 +34,10 @@ var Operand = React.createClass({
 var Calculator = React.createClass({
   displayName: "Calculator",
 
-  getInitialState: function () {
+  getInitialState: function getInitialState() {
     return { op1: "", op: "+", op2: "", value: "" };
   },
-  chgOp1: function (e) {
-    this.setState({ op1: e.target.value });
-  },
-  chgOp2: function (e) {
-    this.setState({ op2: e.target.value });
-  },
-  chgOp: function (e) {
-    this.setState({ op: e.target.value });
-  },
-  calc: function () {
+  calc: function calc() {
     if (this.state.op1.length == 0 || this.state.op2.length == 0) {
       return;
     }
@@ -65,19 +58,29 @@ var Calculator = React.createClass({
     } else if (this.state.op == "*") {
       result = ed1.Multiply(ed2);
     } else if (this.state.op == "/") {
-      result = ed1.Divide(ed2);
+      result = ed1.Divide(ed2, PrecisionContext.Decimal64);
     }
     this.setState({ "value": result.toString() });
   },
-  render: function () {
+  render: function render() {
+    var _this = this;
+
     return React.createElement(
       "div",
       null,
-      React.createElement(Operand, { onChange: this.chgOp1 }),
+      React.createElement(Operand, { onChange: function onChange(e) {
+          _this.setState({ op1: e.target.value });
+        } }),
       " ",
-      React.createElement(OperandSelect, { values: "+-*/", onChange: this.chgOp }),
+      React.createElement(OperandSelect, {
+        values: "+-*/",
+        onChange: function onChange(e) {
+          _this.setState({ op: e.target.value });
+        } }),
       " ",
-      React.createElement(Operand, { onChange: this.chgOp2 }),
+      React.createElement(Operand, { onChange: function onChange(e) {
+          _this.setState({ op2: e.target.value });
+        } }),
       " ",
       React.createElement("input", { type: "button", value: "=", onClick: this.calc }),
       " ",
