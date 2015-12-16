@@ -4,6 +4,9 @@
 <div class="mainarea" id="top">
 <h1>MailLib</h1>
 
+<p><a href="https://www.nuget.org/packages/PeterO.MailLib"><img src="http://img.shields.io/nuget/v/PeterO.MailLib.svg?style=flat" alt="NuGet Status"></a>
+<a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.upokecenter%22%20AND%20a%3A%22maillib%22"><img src="https://img.shields.io/maven-central/v/com.upokecenter/maillib.svg?style=plastic" alt="Maven Central"></a></p>
+
 <p><strong>Download source code: <a href="https://github.com/peteroupc/MailLib/archive/master.zip">ZIP file</a></strong></p>
 
 <p>If you like this software, consider donating to me at this link: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
@@ -33,9 +36,11 @@ project, add the following to the <code>dependencies</code> section in your <cod
 <pre><code>&lt;dependency&gt;
   &lt;groupId&gt;com.upokecenter&lt;/groupId&gt;
   &lt;artifactId&gt;maillib&lt;/artifactId&gt;
-  &lt;version&gt;0.8.1&lt;/version&gt;
+  &lt;version&gt;0.9.0&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
+
+<p>(The .NET version is currently version 0.9.1.)</p>
 
 <p>In other Java-based environments, the library can be referred to by its
 group ID (<code>com.upokecenter</code>), artifact ID (<code>maillib</code>), and version, as given above.</p>
@@ -66,6 +71,28 @@ using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMo
 </code></pre>
 
 <h2>Release Notes</h2>
+
+<p>Version 0.9.1:</p>
+
+<ul>
+<li>Removed a reference to OpenCover that was apparently left in version 0.9 (.NET version)</li>
+</ul>
+
+<p>Version 0.9:</p>
+
+<ul>
+<li>The C# version of the library now also targets &quot;dotnet&quot;, which should make it compatible with platform .NET runtime
+environments such as the upcoming cross-platform &quot;coreclr&quot; runtime.</li>
+<li>Bug fixes to ensure number-format independence in some cases</li>
+<li>ContentDisposition.MakeFilename implementation was improved</li>
+<li>Another overload for GetEncoding was added</li>
+<li>Additional fixes in character encodings</li>
+<li>Known issue: The library implements character encodings based on the Encoding Standard
+candidate recommendation.  But several issues have emerged with that spec in the meantime.
+For example, GB18030 currently uses a problematic range table, so that for certain code points designed
+for that table, round-tripping is not possible.  As a result, tests on GB18030 are disabled
+for now.</li>
+</ul>
 
 <p>Version 0.8.1:</p>
 
@@ -116,10 +143,11 @@ contains details on code changes in previous versions.</p>
 <p>Written in 2013-2014 by Peter O.</p>
 
 <p>Any copyright is dedicated to the Public Domain.
-<a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>
+<a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a>
+(For exceptions, see  <a href="https://github.com/peteroupc/MailLib/blob/master/LICENSE.md">LICENSE.md</a>.)</p>
 
 <p>If you like this, you should donate to Peter O.
-at: <a href="http://peteroupc.github.io/MailLib/">http://peteroupc.github.io/MailLib/</a></p>
+at: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
 </div>
 <nav id="navigation">
 <p>
