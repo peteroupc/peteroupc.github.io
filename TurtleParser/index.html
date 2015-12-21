@@ -1,57 +1,24 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBORDataUtilities</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>TurtleParser</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>PeterO.Cbor.CBORDataUtilities</h1>
+<h2>TurtleParser</h2>
 
-<h2>PeterO.Cbor.CBORDataUtilities</h2>
+<p>A Turtle RDF parser for C# and Java.</p>
 
-<pre><code>public static class CBORDataUtilities
-</code></pre>
+<h2>Donate to me</h2>
 
-<p>Contains methods useful for reading and writing data, with a focus on CBOR.</p>
+<p>If you like this, consider donating to me to help pay my loans and other costs:</p>
 
-<h3>ParseJSONNumber</h3>
+<p><a href="http://www.upokecenter.com/d">http://www.upokecenter.com/d</a></p>
 
-<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
-    string str);
-</code></pre>
+<hr>
 
-<p>Parses a number whose format follows the JSON specification. See #ParseJSONNumber(String, integersOnly, parseOnly) for more information.</p>
+<p>Written in 2013 by Peter Occil (<a href="http://www.upokecenter.com">www.upokecenter.com</a>)</p>
 
-<p><b>Parameters:</b></p>
+<p>Dedicated to the public domain under CC0:</p>
 
-<ul>
-<li><i>str</i>: A string to parse.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A CBOR object that represents the parsed number. Returns null if the parsing fails.</p>
-
-<h3>ParseJSONNumber</h3>
-
-<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
-    string str,
-    bool integersOnly,
-    bool positiveOnly);
-</code></pre>
-
-<p>Parses a number whose format follows the JSON specification (RFC 7159). Roughly speaking, a valid number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless the only digit is 0), an optional decimal point (&quot;.&quot; , full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent).</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A string to parse.</p></li>
-<li><p><i>integersOnly</i>: If true, no decimal points or exponents are allowed in the string.</p></li>
-<li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is disallowed).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A CBOR object that represents the parsed number. Returns null if the parsing fails.</p>
-
-<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+<p><a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>
 </div>
 <nav id="navigation">
 <p>
@@ -72,7 +39,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-</nav><script>
+<p style='font-size:150%;font-weight:bold'><a href='https://github.com/peteroupc/TurtleParser/archive/master.zip'>Download Source</a><br><a href='https://github.com/peteroupc/TurtleParser/releases'>Released Versions</a><br><a href='https://github.com/peteroupc/TurtleParser'>Browse Source Code</a></p></nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;

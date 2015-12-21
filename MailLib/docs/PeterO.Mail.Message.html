@@ -123,7 +123,7 @@ This message has no character encoding declared on it, or the character encoding
 <pre><code>public PeterO.Mail.ContentDisposition ContentDisposition { get; set;}
 </code></pre>
 
-<p>Gets or sets this message&#39;s content disposition. The content disposition specifies how a user agent should handle or otherwise display this message.</p>
+<p>Gets or sets this message&#39;s content disposition. The content disposition specifies how a user agent should handle or otherwise display this message. Can be set to null.</p>
 
 <p><b>Returns:</b></p>
 
@@ -174,7 +174,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre><code>public System.Collections.Generic.IList HeaderFields { get; }
 </code></pre>
 
-<p>Gets a snapshot of the header fields of this message, in the order they were added. For each item in the list, the key is the header field&#39;s name and the value is its value.</p>
+<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U + 0041 to U + 005A] are converted to lower case) and the value is the header field&#39;s value.</p>
 
 <p><b>Returns:</b></p>
 
@@ -220,7 +220,7 @@ This value is being set and &quot;value&quot; is null.</li>
     string value);
 </code></pre>
 
-<p>Adds a header field to the end of the message&#39;s header.</p>
+<p>Adds a header field to the end of the message&#39;s header.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -250,7 +250,7 @@ The header field name is too long or contains an invalid character, or the heade
     System.Collections.Generic.KeyValuePair header);
 </code></pre>
 
-<p>Adds a header field to the end of the message&#39;s header.</p>
+<p>Adds a header field to the end of the message&#39;s header.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -280,6 +280,10 @@ The header field name is too long or contains an invalid character, or the heade
 <p>Generates this message&#39;s data in text form.The generated message will have only Basic Latin code points (U + 0000 to U + 007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
 <p>The following applies to the From, To, Cc, and Bcc header fields. If the header field exists, but has an invalid syntax or has no addresses, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to <code>me@[header-name]-address.invalid</code>  as the address (a <code>.invalid</code>  address is a reserved address that can never belong to anyone). The generated message should always have a From header field.</p>
+
+<p>If a Date and/or Message-ID header field doesn&#39;t exist, a field with that name will be generated (using the current local time for the Date field).</p>
+
+<p>When encoding the message&#39;s body, if the message has a text content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or LF alone. If the message has any other content type, only CR followed by LF is considered a line break.</p>
 
 <p><b>Returns:</b></p>
 
@@ -365,13 +369,38 @@ The parameter  <i>index</i>
 is 0 or at least as high as the number of header fields.</li>
 </ul>
 
+<h3>GetHeaderArray</h3>
+
+<pre><code>public string[] GetHeaderArray(
+    string name);
+</code></pre>
+
+<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>name</i>: The name of a header field.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An array containing the values of all header fields with the given name, in the order they appear in the message. The array will be empty if no header field has that name.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+Name is null.</li>
+</ul>
+
 <h3>RemoveHeader</h3>
 
 <pre><code>public PeterO.Mail.Message RemoveHeader(
     int index);
 </code></pre>
 
-<p>Removes a header field by index.</p>
+<p>Removes a header field by index.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -397,7 +426,9 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </code></pre>
 
-<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+
+<p>s.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -439,6 +470,17 @@ The parameter  <i>bytes</i>
 is null.</li>
 </ul>
 
+<h3>SetCurrentDate</h3>
+
+<pre><code>public PeterO.Mail.Message SetCurrentDate();
+</code></pre>
+
+<p>Sets this message&#39;s Date header field to the current time as its value.This method can be used when the message is considered complete and ready to be generated, for example, using the &quot;Generate()&quot; method.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object.</p>
+
 <h3>SetHeader</h3>
 
 <pre><code>public PeterO.Mail.Message SetHeader(
@@ -447,7 +489,7 @@ is null.</li>
     string value);
 </code></pre>
 
-<p>Sets the name and value of a header field by index.</p>
+<p>Sets the name and value of a header field by index.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -466,7 +508,7 @@ is null.</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>index</i>
-is 0 or at least as high as the number of header fieldss; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>name</i>
 or  <i>value</i>
@@ -480,7 +522,7 @@ is null.</p></li>
     string value);
 </code></pre>
 
-<p>Sets the value of a header field by index without changing its name.</p>
+<p>Sets the value of a header field by index without changing its name.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -498,7 +540,7 @@ is null.</p></li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>index</i>
-is 0 or at least as high as the number of header fieldss; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>value</i>
 is null.</p></li>
@@ -511,7 +553,7 @@ is null.</p></li>
     System.Collections.Generic.KeyValuePair header);
 </code></pre>
 
-<p>Sets the name and value of a header field by index.</p>
+<p>Sets the name and value of a header field by index.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -542,7 +584,7 @@ is null.</p></li>
     string value);
 </code></pre>
 
-<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced.</p>
+<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -572,7 +614,7 @@ is null.</p></li>
     string str);
 </code></pre>
 
-<p>Sets the body of this message to the specified string in HTML format. The character sequences CR, LF, and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+<p>Sets the body of this message to the specified string in HTML format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot; , U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -599,7 +641,7 @@ is null.</li>
     string html);
 </code></pre>
 
-<p>Sets the body of this message to a multipart body with plain text and HTML versions of the same message. The character sequences CR, LF, and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+<p>Sets the body of this message to a multipart body with plain text and HTML versions of the same message. The character sequences CR (carriage return, &quot;\r&quot; , U+000D), LF (line feed, &quot;\n&quot;, U + 000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -627,7 +669,7 @@ is null.</li>
     string str);
 </code></pre>
 
-<p>Sets the body of this message to the specified plain text string. The character sequences CR, LF, and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+<p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot; , U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.</p>
 
 <p><b>Parameters:</b></p>
 

@@ -22,6 +22,8 @@ of data files, for testing algorithms that parse file formats.
 * [CBOR](./CBOR): A C# implementation of Concise Binary Object Representation (RFC 7049).
 * [Enriched](./Enriched): C# program that converts text/enriched files to HTML
 * [MailLib](./MailLib): A portable library in C# and Java for parsing Internet mail messages
+* [Encoding](./Encoding): A portable library in C# and Java for character encodings
+* [TurtleParser](./TurtleParser): A portable library in C# and Java for parsing the Turtle RDF format
 * [Calculator](./Calculator): A calculator for .NET, intended to demonstrate
 two features of the [CBOR library](./CBOR): its arbitrary-precision arithmetic capabilities, and its data serialization possibilities.
 

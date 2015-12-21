@@ -4,6 +4,8 @@
 <div class="mainarea" id="top">
 <h1>CBOR</h1>
 
+<p><a href="https://www.nuget.org/packages/PeterO.Cbor"><img src="http://img.shields.io/nuget/v/PeterO.Cbor.svg?style=flat" alt="NuGet Status"></a></p>
+
 <p><strong>Download source code: <a href="https://github.com/peteroupc/CBOR/archive/master.zip">ZIP file</a></strong></p>
 
 <p>If you like this software, consider donating to me at this link: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
@@ -224,6 +226,25 @@ IRI are like URIs except that they also allow non-ASCII characters.</li>
 </ul>
 
 <h2>Release Notes</h2>
+
+<p>In version 2.3.1:</p>
+
+<ul>
+<li>Fixed NuGet package</li>
+<li>No changes of note in the Java version</li>
+</ul>
+
+<p>In version 2.3:</p>
+
+<ul>
+<li>The C# version of the library now also targets &quot;dotnet&quot;, which should make it compatible with platform .NET runtime
+environments such as the upcoming cross-platform &quot;coreclr&quot; runtime.</li>
+<li>Added GetUtf8Bytes overload to DataUtilities</li>
+<li>Fixed line break bug when setting lenientLineBreaks to true in the PeterO.Cbor.DataUtilities.WriteUtf8 method</li>
+<li>In BigInteger, fixed divideAndRemainder method, added certain methods and made other methods obsolete</li>
+<li>Many additions to the documentation</li>
+<li>Other bug fixes</li>
+</ul>
 
 <p>In version 2.2:</p>
 

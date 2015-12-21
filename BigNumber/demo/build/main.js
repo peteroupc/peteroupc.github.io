@@ -4,15 +4,10 @@ var OperandSelect = React.createClass({
   displayName: "OperandSelect",
 
   render: function render() {
-    var propItems = [];
-    var parent = this.parent;
-    for (var i = 0; i < this.props.values.length; i++) {
-      propItems.push(this.props.values.charAt(i));
-    }
     return React.createElement(
       "select",
       { onChange: this.props.onChange },
-      propItems.map(function (item) {
+      this.props.values.split(",").map(function (item) {
         return React.createElement(
           "option",
           { key: item, value: item },
@@ -73,7 +68,7 @@ var Calculator = React.createClass({
         } }),
       " ",
       React.createElement(OperandSelect, {
-        values: "+-*/",
+        values: "+,-,*,/",
         onChange: function onChange(e) {
           _this.setState({ op: e.target.value });
         } }),

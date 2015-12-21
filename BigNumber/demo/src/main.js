@@ -1,12 +1,7 @@
 var OperandSelect=React.createClass({
  render:function(){
-   var propItems=[];
-   var parent=this.parent;
-   for(var i=0;i<this.props.values.length;i++){
-    propItems.push(this.props.values.charAt(i));
-   }
    return (<select onChange={this.props.onChange}>
-   {propItems.map(function(item){
+   {this.props.values.split(",").map(function(item){
      return <option key={item} value={item}>{item}</option>;
    })}
    </select>);
@@ -51,7 +46,7 @@ var Calculator=React.createClass({
    return <div>
     <Operand onChange={e=>{this.setState({op1:e.target.value})}}/>&nbsp;
     <OperandSelect
-      values="+-*/"
+      values="+,-,*,/"
       onChange={e=>{this.setState({op:e.target.value})}}/>&nbsp;
     <Operand onChange={e=>{this.setState({op2:e.target.value})}}/>&nbsp;
     <input type="button" value="=" onClick={this.calc}/>&nbsp;

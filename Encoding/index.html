@@ -1,57 +1,80 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBORDataUtilities</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Encoding</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>PeterO.Cbor.CBORDataUtilities</h1>
+<h1>Encoding</h1>
 
-<h2>PeterO.Cbor.CBORDataUtilities</h2>
+<p><a href="https://www.nuget.org/packages/PeterO.Encoding"><img src="http://img.shields.io/nuget/v/PeterO.Encoding.svg?style=flat" alt="NuGet Status"></a>
+<a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.peteroupc%22%20AND%20a%3A%22encoding%22"><img src="https://img.shields.io/maven-central/v/com.github.peteroupc/encoding.svg?style=plastic" alt="Maven Central"></a></p>
 
-<pre><code>public static class CBORDataUtilities
+<p><strong>Download source code: <a href="https://github.com/peteroupc/MailLib/archive/master.zip">ZIP file</a></strong></p>
+
+<p>If you like this software, consider donating to me at this link: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
+
+<hr>
+
+<p>A portable library in C# and Java that implements character encodings used in Web pages and email.</p>
+
+<p>It implements the Encoding Standard, which is currently a candidate recommendation at the time of this writing.</p>
+
+<h2>How to Install</h2>
+
+<p>The C# implementation is available in the
+NuGet Package Gallery under the name
+<a href="https://www.nuget.org/packages/PeterO.Encoding">PeterO.Encoding</a>. To install
+this library as a NuGet package, enter <code>Install-Package PeterO.Encoding</code> in the
+NuGet Package Manager Console.</p>
+
+<p>The Java implementation is available
+as an <a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.peteroupc%22%20AND%20a%3A%22encoding%22">artifact</a> in the Central Repository. To add this library to a Maven
+project, add the following to the <code>dependencies</code> section in your <code>pom.xml</code> file:</p>
+
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.github.peteroupc&lt;/groupId&gt;
+  &lt;artifactId&gt;encoding&lt;/artifactId&gt;
+  &lt;version&gt;0.1.0&lt;/version&gt;
+&lt;/dependency&gt;
 </code></pre>
 
-<p>Contains methods useful for reading and writing data, with a focus on CBOR.</p>
+<p>In other Java-based environments, the library can be referred to by its
+group ID (<code>com.github.peteroupc</code>), artifact ID (<code>encoding</code>), and version, as given above.</p>
 
-<h3>ParseJSONNumber</h3>
+<h2>Examples</h2>
 
-<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
-    string str);
+<p>In C#.</p>
+
+<pre><code>    // Reads text from a UTF-8/UTF-16/UTF-32 file
+    public static string ReadTextFromFile(string filename) {
+      using (var stream = new FileStream(filename, FileMode.Open)) {
+        return new CharacterReader(stream, 2).InputToString();
+      }
+    }
 </code></pre>
 
-<p>Parses a number whose format follows the JSON specification. See #ParseJSONNumber(String, integersOnly, parseOnly) for more information.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>str</i>: A string to parse.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A CBOR object that represents the parsed number. Returns null if the parsing fails.</p>
-
-<h3>ParseJSONNumber</h3>
-
-<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
-    string str,
-    bool integersOnly,
-    bool positiveOnly);
+<pre><code>    // Reads text from a SHIFT-JIS stream, but uses UTF-8/UTF-16
+    // instead if it detects byte order marks
+      using (var stream = new FileStream(filename, FileMode.Open)) {
+        return Encodings.GetEncoding(&quot;shift-jis&quot;)
+           .GetDecoderInputSkipBom(stream).InputToString();
+      }
 </code></pre>
 
-<p>Parses a number whose format follows the JSON specification (RFC 7159). Roughly speaking, a valid number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless the only digit is 0), an optional decimal point (&quot;.&quot; , full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent).</p>
+<pre><code>    // Writes text in UTF-8 to a file
+      using (var stream = new FileStream(filename, FileMode.Create)) {
+        var str=&quot;Hello world!&quot;
+        str.EncodeToWriter(Encodings.UTF8,stream);
+      }
+</code></pre>
 
-<p><b>Parameters:</b></p>
+<h2>About</h2>
 
-<ul>
-<li><p><i>str</i>: A string to parse.</p></li>
-<li><p><i>integersOnly</i>: If true, no decimal points or exponents are allowed in the string.</p></li>
-<li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is disallowed).</p></li>
-</ul>
+<p>Written in 2015 by Peter O.</p>
 
-<p><b>Returns:</b></p>
+<p>Any copyright is dedicated to the Public Domain.
+<a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>
 
-<p>A CBOR object that represents the parsed number. Returns null if the parsing fails.</p>
-
-<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+<p>If you like this, you should donate to Peter O.
+at: <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">http://upokecenter.dreamhosters.com/articles/donate-now-2/</a></p>
 </div>
 <nav id="navigation">
 <p>
@@ -72,7 +95,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-</nav><script>
+<p style='font-size:150%;font-weight:bold'><a href='https://github.com/peteroupc/Encoding/archive/master.zip'>Download Source</a><br><a href='https://github.com/peteroupc/Encoding/releases'>Released Versions</a><br><a href='https://github.com/peteroupc/Encoding'>Browse Source Code</a></p></nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
