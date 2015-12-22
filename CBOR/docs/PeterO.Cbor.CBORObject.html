@@ -984,6 +984,37 @@ The parameter  <i>data</i>
 is null.</p></li>
 </ul>
 
+<h3>DecodeFromBytes</h3>
+
+<pre><code>public static PeterO.Cbor.CBORObject DecodeFromBytes(
+    byte[] data,
+    PeterO.Cbor.CBOREncodeOptions options);
+</code></pre>
+
+<p>Generates a CBOR object from an array of CBOR-encoded bytes.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>data</i>: A byte array.</p></li>
+<li><p><i>options</i>: A CBOREncodeOptions object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A CBOR object corresponding to the data.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>PeterO.Cbor.CBORException:
+There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
+is empty.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>data</i>
+is null.</p></li>
+</ul>
+
 <h3>Divide</h3>
 
 <pre><code>public static PeterO.Cbor.CBORObject Divide(
@@ -2068,6 +2099,36 @@ This object&#39;s type is not a number type.</li>
 
 <ul>
 <li><i>stream</i>: A readable data stream.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A CBOR object that was read.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>stream</i>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+There was an error in reading or parsing the data.</p></li>
+</ul>
+
+<h3>Read</h3>
+
+<pre><code>public static PeterO.Cbor.CBORObject Read(
+    System.IO.Stream stream,
+    PeterO.Cbor.CBOREncodeOptions options);
+</code></pre>
+
+<p>Reads an object in CBOR format from a data stream. This method will read from the stream until the end of the CBOR object is reached or an error occurs, whichever happens first.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A readable data stream.</p></li>
+<li><p><i>options</i>: A CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>

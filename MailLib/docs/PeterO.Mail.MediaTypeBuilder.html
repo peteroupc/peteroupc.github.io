@@ -17,7 +17,7 @@
     PeterO.Mail.MediaType mt);
 </code></pre>
 
-<p>Initializes a new instance of the MediaTypeBuilder class.</p>
+<p>Initializes a new instance of the MediaTypeBuilder class using the data from another media type.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -45,8 +45,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>type</i>: A string object.</p></li>
-<li><p><i>subtype</i>: Another string object.</p></li>
+<li><p><i>type</i>: The media type&#39;s top-level type.</p></li>
+<li><p><i>subtype</i>: The media type&#39;s subtype.</p></li>
 </ul>
 
 <h3>MediaTypeBuilder Constructor</h3>
@@ -54,7 +54,7 @@ is null.</li>
 <pre><code>public MediaTypeBuilder();
 </code></pre>
 
-<p>Initializes a new instance of the MediaTypeBuilder class.</p>
+<p>Initializes a new instance of the MediaTypeBuilder class, using the type &quot;application/octet-stream&quot;.</p>
 
 <h3>IsMultipart</h3>
 

@@ -9,21 +9,28 @@
 <pre><code>public sealed class CBOREncodeOptions
 </code></pre>
 
-<p>Specifies options for encoding CBOR objects to bytes.</p>
+<p>Specifies options for encoding and decoding CBOR objects.</p>
+
+<h3>NoDuplicateKeys</h3>
+
+<pre><code>public static readonly PeterO.Cbor.CBOREncodeOptions NoDuplicateKeys;
+</code></pre>
+
+<p>Disallow duplicate keys when reading CBOR objects from a data stream. Used only when decoding CBOR objects. Value: 2.</p>
 
 <h3>NoIndefLengthStrings</h3>
 
 <pre><code>public static readonly PeterO.Cbor.CBOREncodeOptions NoIndefLengthStrings;
 </code></pre>
 
-<p>Always encode strings with a definite-length encoding. Value: 1.</p>
+<p>Always encode strings with a definite-length encoding. Used only when encoding CBOR objects. Value: 1.</p>
 
 <h3>None</h3>
 
 <pre><code>public static readonly PeterO.Cbor.CBOREncodeOptions None;
 </code></pre>
 
-<p>No special options for encoding. Value: 0.</p>
+<p>No special options for encoding/decoding. Value: 0.</p>
 
 <h3>Value</h3>
 
