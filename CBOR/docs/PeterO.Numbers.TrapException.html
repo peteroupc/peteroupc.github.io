@@ -1,30 +1,69 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>APIDocs</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Numbers.TrapException</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>APIDocs</h1>
+<h1>PeterO.Numbers.TrapException</h1>
+
+<h2>PeterO.Numbers.TrapException</h2>
+
+<pre><code>public class TrapException :
+    System.ArithmeticException,
+    System.Runtime.Serialization.ISerializable,
+    System.Runtime.InteropServices._Exception
+</code></pre>
+
+<p>Exception thrown for arithmetic trap errors.</p>
+
+<h3>TrapException Constructor</h3>
+
+<pre><code>public TrapException(
+    int flag,
+    PeterO.Numbers.EContext ctx,
+    object result);
+</code></pre>
+
+<p>Initializes a new instance of the TrapException class.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><a href="PeterO.BigInteger.html">PeterO.BigInteger</a> -
-
-<ul>
-<li><a href="PeterO.Cbor.CBORDataUtilities.html">PeterO.Cbor.CBORDataUtilities</a> -</li>
-<li><a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> -</li>
-<li><a href="PeterO.Cbor.CBORException.html">PeterO.Cbor.CBORException</a> -</li>
-<li><a href="PeterO.Cbor.CBORObject.html">PeterO.Cbor.CBORObject</a> -</li>
-<li><a href="PeterO.Cbor.CBORType.html">PeterO.Cbor.CBORType</a> -</li>
-<li><a href="PeterO.Cbor.CBORTypeFilter.html">PeterO.Cbor.CBORTypeFilter</a> -</li>
-<li><a href="PeterO.Cbor.ICBORConverter-T.html">PeterO.Cbor.ICBORConverter&lt;T&gt;</a> -</li>
-<li><a href="PeterO.Cbor.ICBORTag.html">PeterO.Cbor.ICBORTag</a> -</li>
-<li><a href="PeterO.DataUtilities.html">PeterO.DataUtilities</a> -</li>
-<li><a href="PeterO.ExtendedDecimal.html">PeterO.ExtendedDecimal</a> -</li>
-<li><a href="PeterO.ExtendedFloat.html">PeterO.ExtendedFloat</a> -</li>
-<li><a href="PeterO.ExtendedRational.html">PeterO.ExtendedRational</a> -</li>
-<li><a href="PeterO.PrecisionContext.html">PeterO.PrecisionContext</a> -</li>
-<li><a href="PeterO.Rounding.html">PeterO.Rounding</a> -</li>
-<li><a href="PeterO.TrapException.html">PeterO.TrapException</a> -</li>
-</ul></li>
+<li><p><i>flag</i>: A 32-bit signed integer.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object.</p></li>
+<li><p><i>result</i>: An arbitrary object.</p></li>
 </ul>
+
+<h3>Context</h3>
+
+<pre><code>public PeterO.Numbers.EContext Context { get; }
+</code></pre>
+
+<p>Gets the precision context used during the operation that triggered the trap. May be null.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The precision context used during the operation that triggered the trap. May be null.</p>
+
+<h3>Error</h3>
+
+<pre><code>public int Error { get; }
+</code></pre>
+
+<p>Gets the flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
+
+<h3>Result</h3>
+
+<pre><code>public object Result { get; }
+</code></pre>
+
+<p>Gets the defined result of the operation that caused the trap.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The defined result of the operation that caused the trap.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div>

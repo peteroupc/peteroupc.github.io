@@ -15,15 +15,15 @@
 
 <p>Passing a quiet NaN to any arithmetic operation shown here will return a quiet NaN, unless noted otherwise.</p>
 
-<p>Unless noted otherwise, passing a null ExtendedFloat argument to any method here will throw an exception.</p>
+<p>Unless noted otherwise, passing a null arbitrary-precision binary float argument to any method here will throw an exception.</p>
 
 <p>When an arithmetic operation signals the flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw an exception too, unless the operation&#39;s trap is enabled in the precision context (see PrecisionContext&#39;s Traps property).</p>
 
-<p>An ExtendedFloat value can be serialized in one of the following ways:</p>
+<p>An arbitrary-precision binary float value can be serialized in one of the following ways:</p>
 
 <ul>
-<li><p>By calling the toString() method. However, not all strings can be converted back to an ExtendedFloat without loss, especially if the string has a fractional part.</p></li>
-<li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular ExtendedFloat value.</p></li>
+<li><p>By calling the toString() method. However, not all strings can be converted back to an arbitrary-precision binary float without loss, especially if the string has a fractional part.</p></li>
+<li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular arbitrary-precision binary float value.</p></li>
 </ul>
 
 <h3>NaN</h3>
@@ -66,7 +66,7 @@
 <pre><code>public static readonly PeterO.ExtendedFloat SignalingNaN;
 </code></pre>
 
-<p>A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in ExtendedFloat.</p>
+<p>A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision binary float.</p>
 
 <h3>Ten</h3>
 
@@ -186,7 +186,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>Add</h3>
 
@@ -199,7 +199,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>otherValue</i>: An ExtendedFloat object.</li>
+<li><i>otherValue</i>: An arbitrary-precision binary float.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -241,7 +241,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: An ExtendedFloat object.</li>
+<li><i>other</i>: An arbitrary-precision binary float.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -263,7 +263,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>other</i>: An ExtendedFloat object.</p></li>
+<li><p><i>other</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A precision context. The precision, rounding, and exponent range are ignored. If HasFlags of the context is true, will store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
@@ -285,7 +285,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>other</i>: An ExtendedFloat object.</p></li>
+<li><p><i>other</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A precision context. The precision, rounding, and exponent range are ignored. If HasFlags of the context is true, will store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
@@ -311,7 +311,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>Create</h3>
 
@@ -331,7 +331,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -348,7 +348,7 @@ is null.</li>
     PeterO.BigInteger diag);
 </code></pre>
 
-<p>Creates a not-a-number ExtendedFloat object.</p>
+<p>Creates a not-a-number arbitrary-precision binary float.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -358,7 +358,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A quiet not-a-number object.</p>
+<p>A quiet not-a-number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -380,7 +380,7 @@ is less than 0.</p></li>
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Creates a not-a-number ExtendedFloat object.</p>
+<p>Creates a not-a-number arbitrary-precision binary float.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -393,7 +393,7 @@ is less than 0.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -438,7 +438,7 @@ The result can&#39;t be exact because it would have a nonterminating binary expa
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Divides this ExtendedFloat object by another ExtendedFloat object. The preferred exponent for the result is this object&#39;s exponent minus the divisor&#39;s exponent.</p>
+<p>Divides this arbitrary-precision binary float by another arbitrary-precision binary float object. The preferred exponent for the result is this object&#39;s exponent minus the divisor&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -506,12 +506,12 @@ is null or  <i>ctx</i>
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Divides two ExtendedFloat objects, and gives a particular exponent to the result.</p>
+<p>Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
+<li><p><i>divisor</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>desiredExponentSmall</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
 <li><p><i>ctx</i>: A precision context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn&#39;t fit the given precision). If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
@@ -535,12 +535,12 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
     PeterO.Rounding rounding);
 </code></pre>
 
-<p>Divides two ExtendedFloat objects, and gives a particular exponent to the result.</p>
+<p>Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
+<li><p><i>divisor</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>desiredExponentSmall</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
 <li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
 </ul>
@@ -564,12 +564,12 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
     PeterO.Rounding rounding);
 </code></pre>
 
-<p>Divides two ExtendedFloat objects, and gives a particular exponent to the result.</p>
+<p>Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
+<li><p><i>divisor</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>desiredExponent</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
 <li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
 </ul>
@@ -593,12 +593,12 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Divides two ExtendedFloat objects, and gives a particular exponent to the result.</p>
+<p>Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
+<li><p><i>divisor</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>exponent</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point. A positive number places the cutoff point to the left of the usual decimal point.</p></li>
 <li><p><i>ctx</i>: A precision context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn&#39;t fit the given precision). If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
@@ -620,7 +620,7 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
     PeterO.ExtendedFloat divisor);
 </code></pre>
 
-<p>Divides two ExtendedFloat objects, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</p>
+<p>Divides two arbitrary-precision binary floats, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -735,7 +735,7 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: An ExtendedFloat object.</li>
+<li><i>other</i>: An arbitrary-precision binary float.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -753,7 +753,7 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>otherValue</i>: An ExtendedFloat object.</li>
+<li><i>otherValue</i>: An arbitrary-precision binary float.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -797,12 +797,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigint</i>: A BigInteger object.</li>
+<li><i>bigint</i>: An arbitrary-precision integer object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>FromDouble</h3>
 
@@ -839,7 +839,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedDecimal object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>FromInt64</h3>
 
@@ -857,7 +857,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>FromSingle</h3>
 
@@ -887,18 +887,18 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p>Creates a binary float from a string that represents a number. See the four-parameter FromString method.</p>
 
 <p>The following example converts a number in the form of string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
-     return ExtendedFloat.FromString(str).ToDouble();
+     return arbitrary-precision binary float.FromString(str).ToDouble();
     }</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A String object.</li>
+<li><i>str</i>: Not documented yet.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>The parsed number, converted to ExtendedFloat.</p>
+<p>The parsed number, converted to arbitrary-precision binary float.</p>
 
 <h3>FromString</h3>
 
@@ -907,8 +907,6 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     int offset,
     int length);
 </code></pre>
-
-<p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -923,7 +921,7 @@ begins.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -958,9 +956,9 @@ is less than <i>length</i>
 <li><p>Optionally, &quot;E+&quot; (positive exponent) or &quot;E-&quot; (negative exponent) plus one or more digits specifying the exponent.</p></li>
 </ul>
 
-<p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot; , &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;qNaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
+<p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot; , &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
-<p>The format generally follows the definition in java.math.BigDecimal(), except that the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039).</p>
+<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space characters, including spaces.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -976,7 +974,7 @@ begins.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>The parsed number, converted to ExtendedFloat.</p>
+<p>The parsed number, converted to arbitrary-precision binary float.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1001,8 +999,6 @@ is less than <i>length</i>
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -1012,7 +1008,7 @@ is less than <i>length</i>
 
 <p><b>Returns:</b></p>
 
-<p>The parsed number, converted to ExtendedFloat.</p>
+<p>The parsed number, converted to arbitrary-precision binary float.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1156,8 +1152,8 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: An ExtendedFloat object.</p></li>
-<li><p><i>second</i>: Another ExtendedFloat object.</p></li>
+<li><p><i>first</i>: An arbitrary-precision binary float.</p></li>
+<li><p><i>second</i>: Another arbitrary-precision binary float.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1177,8 +1173,8 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: An ExtendedFloat object.</p></li>
-<li><p><i>second</i>: Another ExtendedFloat object.</p></li>
+<li><p><i>first</i>: An arbitrary-precision binary float.</p></li>
+<li><p><i>second</i>: Another arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
@@ -1198,13 +1194,13 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: Another ExtendedFloat object.</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
+<li><p><i>first</i>: Another arbitrary-precision binary float.</p></li>
+<li><p><i>second</i>: An arbitrary-precision binary float. (3).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MaxMagnitude</h3>
 
@@ -1219,14 +1215,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: Another ExtendedFloat object.</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
+<li><p><i>first</i>: Another arbitrary-precision binary float.</p></li>
+<li><p><i>second</i>: An arbitrary-precision binary float. (3).</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>Min</h3>
 
@@ -1240,8 +1236,8 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: An ExtendedFloat object.</p></li>
-<li><p><i>second</i>: Another ExtendedFloat object.</p></li>
+<li><p><i>first</i>: An arbitrary-precision binary float.</p></li>
+<li><p><i>second</i>: Another arbitrary-precision binary float.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1261,8 +1257,8 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: An ExtendedFloat object.</p></li>
-<li><p><i>second</i>: Another ExtendedFloat object.</p></li>
+<li><p><i>first</i>: An arbitrary-precision binary float.</p></li>
+<li><p><i>second</i>: Another arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
@@ -1282,13 +1278,13 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: Another ExtendedFloat object.</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
+<li><p><i>first</i>: Another arbitrary-precision binary float.</p></li>
+<li><p><i>second</i>: An arbitrary-precision binary float. (3).</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MinMagnitude</h3>
 
@@ -1303,14 +1299,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: Another ExtendedFloat object.</p></li>
-<li><p><i>second</i>: An ExtendedFloat object. (3).</p></li>
+<li><p><i>first</i>: Another arbitrary-precision binary float.</p></li>
+<li><p><i>second</i>: An arbitrary-precision binary float. (3).</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MovePointLeft</h3>
 
@@ -1328,7 +1324,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MovePointLeft</h3>
 
@@ -1348,7 +1344,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MovePointLeft</h3>
 
@@ -1361,12 +1357,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigPlaces</i>: A BigInteger object.</li>
+<li><i>bigPlaces</i>: An arbitrary-precision integer object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MovePointLeft</h3>
 
@@ -1380,13 +1376,13 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigPlaces</i>: A BigInteger object.</p></li>
+<li><p><i>bigPlaces</i>: An arbitrary-precision integer object.</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MovePointRight</h3>
 
@@ -1404,7 +1400,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MovePointRight</h3>
 
@@ -1424,7 +1420,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MovePointRight</h3>
 
@@ -1437,12 +1433,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigPlaces</i>: A BigInteger object.</li>
+<li><i>bigPlaces</i>: An arbitrary-precision integer object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>MovePointRight</h3>
 
@@ -1456,7 +1452,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigPlaces</i>: A BigInteger object.</p></li>
+<li><p><i>bigPlaces</i>: An arbitrary-precision integer object.</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
@@ -1592,7 +1588,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>Negate</h3>
 
@@ -1603,7 +1599,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>NextMinus</h3>
 
@@ -1671,7 +1667,7 @@ has an unlimited exponent range.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>otherValue</i>: An ExtendedFloat object.</p></li>
+<li><p><i>otherValue</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A precision context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</p></li>
 </ul>
 
@@ -1783,7 +1779,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponent</i>: An ExtendedFloat object.</p></li>
+<li><p><i>exponent</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A PrecisionContext object.</p></li>
 </ul>
 
@@ -1808,7 +1804,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>A BigInteger object.</p>
+<p>An arbitrary-precision integer.</p>
 
 <h3>Quantize</h3>
 
@@ -1842,7 +1838,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>desiredExponent</i>: A BigInteger object.</p></li>
+<li><p><i>desiredExponent</i>: An arbitrary-precision integer object.</p></li>
 <li><p><i>ctx</i>: A PrecisionContext object.</p></li>
 </ul>
 
@@ -1895,12 +1891,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Finds the remainder that results when dividing two ExtendedFloat objects.</p>
+<p>Finds the remainder that results when dividing two arbitrary-precision binary floats.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: An ExtendedFloat object.</p></li>
+<li><p><i>divisor</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A PrecisionContext object.</p></li>
 </ul>
 
@@ -1914,17 +1910,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     PeterO.ExtendedFloat divisor);
 </code></pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>divisor</i>: Another ExtendedFloat object.</li>
+<li><i>divisor</i>: Another arbitrary-precision binary float.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>RemainderNaturalScale</h3>
 
@@ -1938,13 +1932,13 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: Another ExtendedFloat object.</p></li>
+<li><p><i>divisor</i>: Another arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A precision context object to control the precision, rounding, and exponent range of the integer part of the result. This context will be used only in the division portion of the remainder calculation. Flags will be set on the given context only if the context&#39;s HasFlags is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>RemainderNear</h3>
 
@@ -2147,7 +2141,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedDecimal object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>ScaleByPowerOfTwo</h3>
 
@@ -2167,7 +2161,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedDecimal object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>ScaleByPowerOfTwo</h3>
 
@@ -2180,12 +2174,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigPlaces</i>: A BigInteger object.</li>
+<li><i>bigPlaces</i>: An arbitrary-precision integer object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedDecimal object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <h3>ScaleByPowerOfTwo</h3>
 
@@ -2199,7 +2193,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigPlaces</i>: A BigInteger object.</p></li>
+<li><p><i>bigPlaces</i>: An arbitrary-precision integer object.</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
@@ -2240,12 +2234,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     PeterO.ExtendedFloat otherValue);
 </code></pre>
 
-<p>Subtracts an ExtendedFloat object from this instance and returns the result..</p>
+<p>Subtracts an arbitrary-precision binary float from this instance and returns the result..</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>otherValue</i>: An ExtendedFloat object.</li>
+<li><i>otherValue</i>: An arbitrary-precision binary float.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -2259,12 +2253,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Subtracts an ExtendedFloat object from this instance.</p>
+<p>Subtracts an arbitrary-precision binary float from this instance.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>otherValue</i>: An ExtendedFloat object.</p></li>
+<li><p><i>otherValue</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
@@ -2289,7 +2283,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A BigInteger object.</p>
+<p>An arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2307,7 +2301,7 @@ This object&#39;s value is infinity or NaN.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A BigInteger object.</p>
+<p>An arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2326,11 +2320,11 @@ This object&#39;s value is not an exact integer.</p></li>
 <p>Converts this value to a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
 <p>The following example converts a number in the form of string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
-     return ExtendedFloat.FromString(str).ToDouble();
+     return arbitrary-precision binary float.FromString(str).ToDouble();
     }</p>
 
-<p>The following example converts a big integer to a <code>double</code> , or a 64-bit floating point number.    public static double BigIntegerToDouble(BigInteger bigInteger) {
-     return ExtendedFloat.FromBigInteger(bigInteger).ToDouble();
+<p>The following example converts a big integer to a <code>double</code> , or a 64-bit floating point number.    public static double arbitrary-precision integerToDouble(BigInteger bigInteger) {
+     return arbitrary-precision binary float.FromBigInteger(bigInteger).ToDouble();
     }</p>
 
 <p><b>Returns:</b></p>
@@ -2353,18 +2347,18 @@ This object&#39;s value is not an exact integer.</p></li>
 <pre><code>public PeterO.ExtendedDecimal ToExtendedDecimal();
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Converts this value to an extended decimal.</p>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedDecimal object.</p>
+<p>An extended decimal with the same value as this extended float.</p>
 
 <h3>ToPlainString</h3>
 
 <pre><code>public string ToPlainString();
 </code></pre>
 
-<p>Converts this value to a string, but without an exponent part. The format of the return value follows the format of the java.math.BigDecimal.toPlainString() method.</p>
+<p>Converts this value to a string, but without exponential notation.</p>
 
 <p><b>Returns:</b></p>
 
@@ -2401,7 +2395,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>An arbitrary-precision binary float.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div>

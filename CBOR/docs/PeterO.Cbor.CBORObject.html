@@ -435,7 +435,7 @@ is null.</li>
     PeterO.Cbor.CBORObject second);
 </code></pre>
 
-<p>Finds the sum of two CBOR number objects.</p>
+<p>Finds the sum of two CBOR numbers.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -467,7 +467,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigintTag</i>: A BigInteger object.</p></li>
+<li><p><i>bigintTag</i>: An arbitrary-precision integer object.</p></li>
 <li><p><i>handler</i>: An ICBORTag object.</p></li>
 </ul>
 
@@ -599,7 +599,7 @@ This object&#39;s type is not a number type, including if this object is CBORObj
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary floating point number for this object&#39;s value. Note that if this object is a decimal number with a fractional part, the conversion may lose information depending on the number. If this object is a rational number with a nonterminating binary expansion, returns a decimal number rounded to 113 digits.</p>
+<p>An arbitrary-precision binary floating point number for this object&#39;s value. Note that if this object is a decimal number with a fractional part, the conversion may lose information depending on the number. If this object is a rational number with a nonterminating binary expansion, returns a binary floating-point number rounded to 113 bits.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1106,7 +1106,7 @@ is null.</p></li>
     string str);
 </code></pre>
 
-<p>Generates a CBOR object from a string in JavaScript Object Notation (JSON) format.If a JSON object has the same key, only the last given value will be used for each duplicated key. The JSON string may not begin with a byte order mark (U + FEFF).</p>
+<p>Generates a CBOR object from a string in JavaScript Object Notation (JSON) format.If a JSON object has the same key, only the last given value will be used for each duplicated key. The JSON string may not begin with a byte order mark (U+FEFF).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1322,7 +1322,7 @@ is a surrogate code point.</li>
     object obj);
 </code></pre>
 
-<p>Generates a CBORObject from an arbitrary object. The following types are specially handled by this method: null , primitive types, strings, CBORObject , ExtendedDecimal , ExtendedFloat , ExtendedRational, the custom BigInteger , lists, arrays, enumerations (  <code>Enum</code>  objects), and maps.In the .NET version, if the object is a type not specially handled by this method, returns a CBOR map with the values of each of its read/write properties (or all properties in the case of an anonymous type). Properties are converted to their camel-case names (meaning if a name starts with A to Z, that letter is lower-cased). If the property name begins with the word &quot;Is&quot;, that word is deleted from the name. Also, .NET  <code>Enum</code>  objects will be converted to their integer values, and a multidimensional array is converted to an array of arrays.</p>
+<p>Generates a CBORObject from an arbitrary object. The following types are specially handled by this method: null , primitive types, strings, CBORObject , arbitrary-precision decimal , arbitrary-precision binary float , arbitrary-precision rational number, the custom arbitrary-precision integer , lists, arrays, enumerations (  <code>Enum</code>  objects), and maps.In the .NET version, if the object is a type not specially handled by this method, returns a CBOR map with the values of each of its read/write properties (or all properties in the case of an anonymous type). Properties are converted to their camel-case names (meaning if a name starts with A to Z, that letter is lower-cased). If the property name begins with the word &quot;Is&quot;, that word is deleted from the name. Also, .NET  <code>Enum</code>  objects will be converted to their integer values, and a multidimensional array is converted to an array of arrays.</p>
 
 <p>In the Java version, if the object is a type not specially handled by this method, this method checks the CBOR object for methods starting with the word &quot;get&quot; or &quot;is&quot; that take no parameters, and returns a CBOR map with one entry for each such method found. For each method found, the starting word &quot;get&quot; or &quot;is&quot; is deleted from its name, and the name is converted to camel case (meaning if a name starts with A to Z, that letter is lower-cased). Also, Java  <code>Enum</code>  objects will be converted to the result of their name method.</p>
 
@@ -1354,7 +1354,7 @@ is a surrogate code point.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A CBOR number object.</p>
+<p>A CBOR number.</p>
 
 <h3>FromObject</h3>
 
@@ -1408,7 +1408,7 @@ is a surrogate code point.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A CBOR number object.</p>
+<p>A CBOR number.</p>
 
 <h3>FromObject</h3>
 
@@ -1426,7 +1426,7 @@ is a surrogate code point.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A CBOR number object.</p>
+<p>A CBOR number.</p>
 
 <h3>FromObject</h3>
 
@@ -1444,7 +1444,7 @@ is a surrogate code point.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A CBOR number object.</p>
+<p>A CBOR number.</p>
 
 <h3>FromObject</h3>
 
@@ -1927,7 +1927,7 @@ is not a valid index into this array.</p></li>
     PeterO.Cbor.CBORObject second);
 </code></pre>
 
-<p>Multiplies two CBOR number objects.</p>
+<p>Multiplies two CBOR numbers.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2151,7 +2151,7 @@ There was an error in reading or parsing the data.</p></li>
     System.IO.Stream stream);
 </code></pre>
 
-<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte order mark (U + FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte order mark or a nonzero basic character (U + 0001 to U + 007F). (In previous versions, only UTF-8 was allowed.)If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.)If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2291,7 +2291,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 <ul>
 <li><p>If this object contains maps with non-string keys, the keys are converted to JSON strings before writing the map as a JSON string.</p></li>
 <li><p>If a number in the form of a big float has a very high binary exponent, it will be converted to a double before being converted to a JSON string. (The resulting double could overflow to infinity, in which case the big float is converted to null.)</p></li>
-<li><p>The string will not begin with a byte-order mark (U + FEFF); RFC 7159 (the JSON specification) forbids placing a byte-order mark at the beginning of a JSON string.</p></li>
+<li><p>The string will not begin with a byte-order mark (U+FEFF); RFC 7159 (the JSON specification) forbids placing a byte-order mark at the beginning of a JSON string.</p></li>
 <li><p>Byte strings are converted to Base64 URL by default.</p></li>
 <li><p>Rational numbers will be converted to their exact form, if possible, otherwise to a high-precision approximation. (The resulting approximation could overflow to infinity, in which case the rational number is converted to null.)</p></li>
 <li><p>Simple values other than true and false will be converted to null. (This doesn&#39;t include floating-point numbers.)</p></li>
@@ -2534,6 +2534,8 @@ An I/O error occurred.</p></li>
 <li><p>Lists of CBORObject.</p></li>
 <li><p>Maps of CBORObject.</p></li>
 <li><p>Null.</p></li>
+<li><p>Byte arrays, which will always be written as definite-length byte strings.</p></li>
+<li><p>String objects, which will be written as indefinite-length text strings if their size exceeds a certain threshold (this behavior may change in future versions of this library).</p></li>
 <li><p>Any object accepted by the FromObject static methods.</p></li>
 </ul>
 
@@ -2674,7 +2676,7 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bignum</i>: An ExtendedFloat object.</p></li>
+<li><p><i>bignum</i>: An arbitrary-precision binary float.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
@@ -2700,7 +2702,7 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>rational</i>: An ExtendedRational object.</p></li>
+<li><p><i>rational</i>: An arbitrary-precision rational number.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
@@ -2763,7 +2765,7 @@ An I/O error occurred.</p></li>
     System.IO.Stream stream);
 </code></pre>
 
-<p>Writes a string in CBOR format to a data stream.</p>
+<p>Writes a string in CBOR format to a data stream. The string will be encoded using indefinite-length encoding if its length exceeds a certain threshold (this behavior may change in future versions of this library).</p>
 
 <p><b>Parameters:</b></p>
 

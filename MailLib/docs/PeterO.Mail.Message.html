@@ -321,6 +321,28 @@ The message can&#39;t be generated.</li>
 
 <p>A message object if this object&#39;s content type is &quot;message/rfc822&quot; , &quot;message/news&quot;, or &quot;message/global&quot;, or null otherwise.</p>
 
+<h3>GetDate</h3>
+
+<pre><code>public int[] GetDate();
+</code></pre>
+
+<p>Gets the date and time extracted from this message&#39;s Date header field (as though GetHeader(&quot;date&quot;) were called). Each element of the array (starting from 0) is as follows:</p>
+
+<ul>
+<li><p>0 - The year. For example, the value 2000 means 2000 C.E.</p></li>
+<li><p>1 - Month of the year, from 1 (January) through 12 (December).</p></li>
+<li><p>2 - Day of the month, from 1 through 31.</p></li>
+<li><p>3 - Hour of the day, from 0 through 23.</p></li>
+<li><p>4 - Minute of the hour, from 0 through 59.</p></li>
+<li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
+<li><p>6 - Milliseconds of the second, from 0 through 999. Will always be 0.</p></li>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An array containing eight elements. Returns null if the Date header doesn&#39;t exist, if the Date field is syntactically or semantically invalid, or if the field&#39;s year would overflow a 32-bit signed integer.</p>
+
 <h3>GetHeader</h3>
 
 <pre><code>public string GetHeader(
@@ -451,7 +473,7 @@ is null.</li>
 
 <h3>SetBody</h3>
 
-<pre><code>public void SetBody(
+<pre><code>public PeterO.Mail.Message SetBody(
     byte[] bytes);
 </code></pre>
 
@@ -462,6 +484,10 @@ is null.</li>
 <ul>
 <li><i>bytes</i>: A byte array.</li>
 </ul>
+
+<p><b>Returns:</b></p>
+
+<p>This object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -481,6 +507,45 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>This object.</p>
+
+<h3>SetDate</h3>
+
+<pre><code>public PeterO.Mail.Message SetDate(
+    int[] dateTime);
+</code></pre>
+
+<p>Sets this message&#39;s Date header field to the given date and time.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>dateTime</i>: An array containing eight elements. Each element of the array (starting from 0) is as follows:</p></li>
+<li><p>0 - The year. For example, the value 2000 means 2000 C.E.</p></li>
+<li><p>1 - Month of the year, from 1 (January) through 12 (December).</p></li>
+<li><p>2 - Day of the month, from 1 through 31.</p></li>
+<li><p>3 - Hour of the day, from 0 through 23.</p></li>
+<li><p>4 - Minute of the hour, from 0 through 59.</p></li>
+<li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
+<li><p>6 - Milliseconds of the second, from 0 through 999. This value is not used to generate the date string, but must still be valid.</p></li>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
+</ul>
+
+<p>.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>dateTime</i>
+contains fewer than eight elements, contains invalid values, or contains a year less than 0.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>dateTime</i>
+is null.</p></li>
+</ul>
 
 <h3>SetHeader</h3>
 

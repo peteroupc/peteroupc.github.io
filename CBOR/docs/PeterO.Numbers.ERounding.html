@@ -1,30 +1,96 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>APIDocs</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Numbers.ERounding</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>APIDocs</h1>
+<h1>PeterO.Numbers.ERounding</h1>
 
-<ul>
-<li><a href="PeterO.BigInteger.html">PeterO.BigInteger</a> -
+<h2>PeterO.Numbers.ERounding</h2>
 
-<ul>
-<li><a href="PeterO.Cbor.CBORDataUtilities.html">PeterO.Cbor.CBORDataUtilities</a> -</li>
-<li><a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> -</li>
-<li><a href="PeterO.Cbor.CBORException.html">PeterO.Cbor.CBORException</a> -</li>
-<li><a href="PeterO.Cbor.CBORObject.html">PeterO.Cbor.CBORObject</a> -</li>
-<li><a href="PeterO.Cbor.CBORType.html">PeterO.Cbor.CBORType</a> -</li>
-<li><a href="PeterO.Cbor.CBORTypeFilter.html">PeterO.Cbor.CBORTypeFilter</a> -</li>
-<li><a href="PeterO.Cbor.ICBORConverter-T.html">PeterO.Cbor.ICBORConverter&lt;T&gt;</a> -</li>
-<li><a href="PeterO.Cbor.ICBORTag.html">PeterO.Cbor.ICBORTag</a> -</li>
-<li><a href="PeterO.DataUtilities.html">PeterO.DataUtilities</a> -</li>
-<li><a href="PeterO.ExtendedDecimal.html">PeterO.ExtendedDecimal</a> -</li>
-<li><a href="PeterO.ExtendedFloat.html">PeterO.ExtendedFloat</a> -</li>
-<li><a href="PeterO.ExtendedRational.html">PeterO.ExtendedRational</a> -</li>
-<li><a href="PeterO.PrecisionContext.html">PeterO.PrecisionContext</a> -</li>
-<li><a href="PeterO.Rounding.html">PeterO.Rounding</a> -</li>
-<li><a href="PeterO.TrapException.html">PeterO.TrapException</a> -</li>
-</ul></li>
-</ul>
+<pre><code>public sealed struct ERounding :
+    System.Enum,
+    System.IComparable,
+    System.IFormattable,
+    System.IConvertible
+</code></pre>
+
+<p>Specifies the mode to use when &quot;shortening&quot; numbers that otherwise can&#39;t fit a given number of digits, so that the shortened number has about the same value. This &quot;shortening&quot; is known as rounding.</p>
+
+<h3>Ceiling</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding Ceiling = 6;
+</code></pre>
+
+<p>If there is a fractional part, the number is rounded to the highest representable number that&#39;s closest to it.</p>
+
+<h3>Down</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding Down = 2;
+</code></pre>
+
+<p>The fractional part is discarded (the number is truncated).</p>
+
+<h3>Floor</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding Floor = 7;
+</code></pre>
+
+<p>If there is a fractional part, the number is rounded to the lowest representable number that&#39;s closest to it.</p>
+
+<h3>HalfDown</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding HalfDown = 4;
+</code></pre>
+
+<p>Rounded to the nearest number; if the fractional part is exactly half, it is discarded.</p>
+
+<h3>HalfEven</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding HalfEven = 5;
+</code></pre>
+
+<p>Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number that is even. This is sometimes also known as &quot;banker&#39;s rounding&quot;.</p>
+
+<h3>HalfUp</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding HalfUp = 3;
+</code></pre>
+
+<p>Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number away from zero. This is the most familiar rounding mode for many people.</p>
+
+<h3>None</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding None = 0;
+</code></pre>
+
+<p>Indicates that rounding will not be used. If rounding is required, the rounding operation will report an error.</p>
+
+<h3>Odd</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding Odd = 8;
+</code></pre>
+
+<p>If there is a fractional part and the whole number part is even, the number is rounded to the closest representable odd number away from zero.</p>
+
+<h3>OddOrZeroFiveUp</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding OddOrZeroFiveUp = 10;
+</code></pre>
+
+<p>For binary floating point numbers, this is the same as Odd. For other bases (including decimal numbers), this is the same as ZeroFiveUp. This rounding mode is useful for rounding intermediate results at a slightly higher precision (at least 2 bits more for binary) than the final precision.</p>
+
+<h3>Up</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding Up = 1;
+</code></pre>
+
+<p>If there is a fractional part, the number is rounded to the closest representable number away from zero.</p>
+
+<h3>ZeroFiveUp</h3>
+
+<pre><code>public static PeterO.Numbers.ERounding ZeroFiveUp = 9;
+</code></pre>
+
+<p>If there is a fractional part and if the last digit before rounding is 0 or half the radix, the number is rounded to the closest representable number away from zero; otherwise the fractional part is discarded. In overflow, the fractional part is always discarded.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div>

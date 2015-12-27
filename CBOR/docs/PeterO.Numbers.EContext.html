@@ -1,21 +1,21 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.PrecisionContext</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Numbers.EContext</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>PeterO.PrecisionContext</h1>
+<h1>PeterO.Numbers.EContext</h1>
 
-<h2>PeterO.PrecisionContext</h2>
+<h2>PeterO.Numbers.EContext</h2>
 
-<pre><code>public class PrecisionContext
+<pre><code>public sealed class EContext
 </code></pre>
 
 <p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers.</p>
 
-<h3>PrecisionContext Constructor</h3>
+<h3>EContext Constructor</h3>
 
-<pre><code>public PrecisionContext(
+<pre><code>public EContext(
     int precision,
-    PeterO.Rounding rounding,
+    PeterO.Numbers.ERounding rounding,
     int exponentMinSmall,
     int exponentMaxSmall,
     bool clampNormalExponents);
@@ -35,70 +35,70 @@
 
 <h3>Basic</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Basic;
+<pre><code>public static readonly PeterO.Numbers.EContext Basic;
 </code></pre>
 
 <p>Basic precision context, 9 digits precision, rounding mode half-up, unlimited exponent range. The default rounding mode is HalfUp.</p>
 
 <h3>BigDecimalJava</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext BigDecimalJava;
+<pre><code>public static readonly PeterO.Numbers.EContext BigDecimalJava;
 </code></pre>
 
 <p>Precision context for Java&#39;s BigDecimal format. The default rounding mode is HalfUp.</p>
 
 <h3>Binary128</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Binary128;
+<pre><code>public static readonly PeterO.Numbers.EContext Binary128;
 </code></pre>
 
 <p>Precision context for the IEEE-754-2008 binary128 format, 113 bits precision. The default rounding mode is HalfEven.</p>
 
 <h3>Binary16</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Binary16;
+<pre><code>public static readonly PeterO.Numbers.EContext Binary16;
 </code></pre>
 
 <p>Precision context for the IEEE-754-2008 binary16 format, 11 bits precision. The default rounding mode is HalfEven.</p>
 
 <h3>Binary32</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Binary32;
+<pre><code>public static readonly PeterO.Numbers.EContext Binary32;
 </code></pre>
 
 <p>Precision context for the IEEE-754-2008 binary32 format, 24 bits precision. The default rounding mode is HalfEven.</p>
 
 <h3>Binary64</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Binary64;
+<pre><code>public static readonly PeterO.Numbers.EContext Binary64;
 </code></pre>
 
 <p>Precision context for the IEEE-754-2008 binary64 format, 53 bits precision. The default rounding mode is HalfEven.</p>
 
 <h3>CliDecimal</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext CliDecimal;
+<pre><code>public static readonly PeterO.Numbers.EContext CliDecimal;
 </code></pre>
 
 <p>Precision context for the Common Language Infrastructure (.NET Framework) decimal format, 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven.</p>
 
 <h3>Decimal128</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Decimal128;
+<pre><code>public static readonly PeterO.Numbers.EContext Decimal128;
 </code></pre>
 
 <p>Precision context for the IEEE-754-2008 decimal128 format. The default rounding mode is HalfEven.</p>
 
 <h3>Decimal32</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Decimal32;
+<pre><code>public static readonly PeterO.Numbers.EContext Decimal32;
 </code></pre>
 
 <p>Precision context for the IEEE-754-2008 decimal32 format. The default rounding mode is HalfEven.</p>
 
 <h3>Decimal64</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Decimal64;
+<pre><code>public static readonly PeterO.Numbers.EContext Decimal64;
 </code></pre>
 
 <p>Precision context for the IEEE-754-2008 decimal64 format. The default rounding mode is HalfEven.</p>
@@ -166,16 +166,9 @@
 
 <p>Signals that the result&#39;s exponent, before rounding, is lower than the lowest exponent allowed, and the result was rounded to a different mathematical value, but as close as possible to the original.</p>
 
-<h3>JavaBigDecimal</h3>
-
-<pre><code>public static readonly PeterO.PrecisionContext JavaBigDecimal;
-</code></pre>
-
-<p>Precision context for Java&#39;s BigDecimal format. The default rounding mode is HalfUp.</p>
-
 <h3>Unlimited</h3>
 
-<pre><code>public static readonly PeterO.PrecisionContext Unlimited;
+<pre><code>public static readonly PeterO.Numbers.EContext Unlimited;
 </code></pre>
 
 <p>No specific limit on precision. Rounding mode HalfUp.</p>
@@ -204,7 +197,7 @@
 
 <h3>EMax</h3>
 
-<pre><code>public PeterO.BigInteger EMax { get; }
+<pre><code>public PeterO.Numbers.EInteger EMax { get; }
 </code></pre>
 
 <p>Gets the highest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
@@ -215,7 +208,7 @@
 
 <h3>EMin</h3>
 
-<pre><code>public PeterO.BigInteger EMin { get; }
+<pre><code>public PeterO.Numbers.EInteger EMin { get; }
 </code></pre>
 
 <p>Gets the lowest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
@@ -293,7 +286,7 @@
 
 <h3>Precision</h3>
 
-<pre><code>public PeterO.BigInteger Precision { get; }
+<pre><code>public PeterO.Numbers.EInteger Precision { get; }
 </code></pre>
 
 <p>Gets the maximum length of a converted number in digits, ignoring the decimal point and exponent. For example, if precision is 3, a converted number&#39;s mantissa can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.</p>
@@ -304,7 +297,7 @@
 
 <h3>Rounding</h3>
 
-<pre><code>public PeterO.Rounding Rounding { get; }
+<pre><code>public PeterO.Numbers.ERounding Rounding { get; }
 </code></pre>
 
 <p>Gets the desired rounding mode when converting numbers that can&#39;t be represented in the given precision and exponent range.</p>
@@ -326,7 +319,7 @@
 
 <h3>Copy</h3>
 
-<pre><code>public PeterO.PrecisionContext Copy();
+<pre><code>public PeterO.Numbers.EContext Copy();
 </code></pre>
 
 <p>Initializes a new PrecisionContext that is a copy of another PrecisionContext.</p>
@@ -338,7 +331,7 @@
 <h3>ExponentWithinRange</h3>
 
 <pre><code>public bool ExponentWithinRange(
-    PeterO.BigInteger exponent);
+    PeterO.Numbers.EInteger exponent);
 </code></pre>
 
 <p>Determines whether a number can have the given Exponent property under this precision context.</p>
@@ -346,7 +339,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>exponent</i>: An arbitrary-precision integer object indicating the desired exponent.</li>
+<li><i>exponent</i>: A BigInteger object indicating the desired exponent.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -363,7 +356,7 @@ is null.</li>
 
 <h3>ForPrecision</h3>
 
-<pre><code>public static PeterO.PrecisionContext ForPrecision(
+<pre><code>public static PeterO.Numbers.EContext ForPrecision(
     int precision);
 </code></pre>
 
@@ -381,9 +374,9 @@ is null.</li>
 
 <h3>ForPrecisionAndRounding</h3>
 
-<pre><code>public static PeterO.PrecisionContext ForPrecisionAndRounding(
+<pre><code>public static PeterO.Numbers.EContext ForPrecisionAndRounding(
     int precision,
-    PeterO.Rounding rounding);
+    PeterO.Numbers.ERounding rounding);
 </code></pre>
 
 <p>Creates a new PrecisionContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</p>
@@ -401,8 +394,8 @@ is null.</li>
 
 <h3>ForRounding</h3>
 
-<pre><code>public static PeterO.PrecisionContext ForRounding(
-    PeterO.Rounding rounding);
+<pre><code>public static PeterO.Numbers.EContext ForRounding(
+    PeterO.Numbers.ERounding rounding);
 </code></pre>
 
 <p>Creates a new PrecisionContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</p>
@@ -430,7 +423,7 @@ is null.</li>
 
 <h3>WithAdjustExponent</h3>
 
-<pre><code>public PeterO.PrecisionContext WithAdjustExponent(
+<pre><code>public PeterO.Numbers.EContext WithAdjustExponent(
     bool adjustExponent);
 </code></pre>
 
@@ -448,9 +441,9 @@ is null.</li>
 
 <h3>WithBigExponentRange</h3>
 
-<pre><code>public PeterO.PrecisionContext WithBigExponentRange(
-    PeterO.BigInteger exponentMin,
-    PeterO.BigInteger exponentMax);
+<pre><code>public PeterO.Numbers.EContext WithBigExponentRange(
+    PeterO.Numbers.EInteger exponentMin,
+    PeterO.Numbers.EInteger exponentMax);
 </code></pre>
 
 <p>Copies this precision context and sets the copy&#39;s exponent range.</p>
@@ -479,8 +472,8 @@ is null.</p></li>
 
 <h3>WithBigPrecision</h3>
 
-<pre><code>public PeterO.PrecisionContext WithBigPrecision(
-    PeterO.BigInteger bigintPrecision);
+<pre><code>public PeterO.Numbers.EContext WithBigPrecision(
+    PeterO.Numbers.EInteger bigintPrecision);
 </code></pre>
 
 <p>Copies this PrecisionContext and gives it a particular precision value.</p>
@@ -505,7 +498,7 @@ is null.</li>
 
 <h3>WithBlankFlags</h3>
 
-<pre><code>public PeterO.PrecisionContext WithBlankFlags();
+<pre><code>public PeterO.Numbers.EContext WithBlankFlags();
 </code></pre>
 
 <p>Copies this PrecisionContext with HasFlags set to true and a Flags value of 0.</p>
@@ -516,7 +509,7 @@ is null.</li>
 
 <h3>WithExponentClamp</h3>
 
-<pre><code>public PeterO.PrecisionContext WithExponentClamp(
+<pre><code>public PeterO.Numbers.EContext WithExponentClamp(
     bool clamp);
 </code></pre>
 
@@ -534,7 +527,7 @@ is null.</li>
 
 <h3>WithExponentRange</h3>
 
-<pre><code>public PeterO.PrecisionContext WithExponentRange(
+<pre><code>public PeterO.Numbers.EContext WithExponentRange(
     int exponentMinSmall,
     int exponentMaxSmall);
 </code></pre>
@@ -554,7 +547,7 @@ is null.</li>
 
 <h3>WithNoFlags</h3>
 
-<pre><code>public PeterO.PrecisionContext WithNoFlags();
+<pre><code>public PeterO.Numbers.EContext WithNoFlags();
 </code></pre>
 
 <p>Copies this PrecisionContext with HasFlags set to false and a Flags value of 0.</p>
@@ -565,7 +558,7 @@ is null.</li>
 
 <h3>WithPrecision</h3>
 
-<pre><code>public PeterO.PrecisionContext WithPrecision(
+<pre><code>public PeterO.Numbers.EContext WithPrecision(
     int precision);
 </code></pre>
 
@@ -583,7 +576,7 @@ is null.</li>
 
 <h3>WithPrecisionInBits</h3>
 
-<pre><code>public PeterO.PrecisionContext WithPrecisionInBits(
+<pre><code>public PeterO.Numbers.EContext WithPrecisionInBits(
     bool isPrecisionBits);
 </code></pre>
 
@@ -601,8 +594,8 @@ is null.</li>
 
 <h3>WithRounding</h3>
 
-<pre><code>public PeterO.PrecisionContext WithRounding(
-    PeterO.Rounding rounding);
+<pre><code>public PeterO.Numbers.EContext WithRounding(
+    PeterO.Numbers.ERounding rounding);
 </code></pre>
 
 <p>Copies this PrecisionContext with the specified rounding mode.</p>
@@ -619,7 +612,7 @@ is null.</li>
 
 <h3>WithSimplified</h3>
 
-<pre><code>public PeterO.PrecisionContext WithSimplified(
+<pre><code>public PeterO.Numbers.EContext WithSimplified(
     bool simplified);
 </code></pre>
 
@@ -637,7 +630,7 @@ is null.</li>
 
 <h3>WithTraps</h3>
 
-<pre><code>public PeterO.PrecisionContext WithTraps(
+<pre><code>public PeterO.Numbers.EContext WithTraps(
     int traps);
 </code></pre>
 
@@ -655,7 +648,7 @@ is null.</li>
 
 <h3>WithUnlimitedExponents</h3>
 
-<pre><code>public PeterO.PrecisionContext WithUnlimitedExponents();
+<pre><code>public PeterO.Numbers.EContext WithUnlimitedExponents();
 </code></pre>
 
 <p>Copies this PrecisionContext with an unlimited exponent range.</p>
