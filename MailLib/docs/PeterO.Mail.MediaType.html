@@ -43,7 +43,7 @@
 <pre><code>public static readonly PeterO.Mail.MediaType TextPlainUtf8;
 </code></pre>
 
-<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;, used for Unicode plain text data.</p>
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;, used for plain text data that may contain characters outside the basic Latin range (U+0000 to U+007F).</p>
 
 <h3>IsMultipart</h3>
 
@@ -138,7 +138,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>If the &quot;charset&quot; parameter exists, returns that parameter with the basic upper-case letters A to Z (U + 0041 to U + 005A) converted to lower case. Returns &quot;us-ascii&quot; instead if the media type is ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t have a &quot;charset&quot; parameter (see RFC2046), or the default value for that parameter, if any, for the media type if the &quot;charset&quot; parameter is absent. Returns an empty string in all other cases.</p>
+<p>If the &quot;charset&quot; parameter exists, returns that parameter with the basic upper-case letters A to Z (U+0041 to U+005A) converted to lower case. Returns &quot;us-ascii&quot; instead if the media type is ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t have a &quot;charset&quot; parameter (see RFC2046), or the default value for that parameter, if any, for the media type if the &quot;charset&quot; parameter is absent. Returns an empty string in all other cases.</p>
 
 <h3>GetHashCode</h3>
 

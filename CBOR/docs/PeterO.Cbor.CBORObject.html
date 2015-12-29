@@ -333,7 +333,7 @@ This object&#39;s type is not a number type.</li>
 
 <p><b>Returns:</b></p>
 
-<p>This object.</p>
+<p>This instance.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -365,7 +365,7 @@ has an unsupported type.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>This object.</p>
+<p>This instance.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -393,7 +393,7 @@ is not supported.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>This object.</p>
+<p>This instance.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -467,7 +467,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigintTag</i>: An arbitrary-precision integer object.</p></li>
+<li><p><i>bigintTag</i>: An arbitrary-precision integer.</p></li>
 <li><p><i>handler</i>: An ICBORTag object.</p></li>
 </ul>
 
@@ -1106,12 +1106,41 @@ is null.</p></li>
     string str);
 </code></pre>
 
-<p>Generates a CBOR object from a string in JavaScript Object Notation (JSON) format.If a JSON object has the same key, only the last given value will be used for each duplicated key. The JSON string may not begin with a byte order mark (U+FEFF).</p>
+<p>Generates a CBOR object from a string in JavaScript Object Notation (JSON) format.If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string in JSON format.</li>
+<li><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The string is not in JSON format.</p></li>
+</ul>
+
+<h3>FromJSONString</h3>
+
+<pre><code>public static PeterO.Cbor.CBORObject FromJSONString(
+    string str,
+    PeterO.Cbor.CBOREncodeOptions options);
+</code></pre>
+
+<p>Generates a CBOR object from a string in JavaScript Object Notation (JSON) format.By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1863,7 +1892,7 @@ BigTagValue is less than 0.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>This object.</p>
+<p>This instance.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2151,12 +2180,43 @@ There was an error in reading or parsing the data.</p></li>
     System.IO.Stream stream);
 </code></pre>
 
-<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.)If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.)If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>stream</i>: A readable data stream.</li>
+<li><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The data stream contains invalid encoding or is not in JSON format.</p></li>
+</ul>
+
+<h3>ReadJSON</h3>
+
+<pre><code>public static PeterO.Cbor.CBORObject ReadJSON(
+    System.IO.Stream stream,
+    PeterO.Cbor.CBOREncodeOptions options);
+</code></pre>
+
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.)By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -2241,7 +2301,7 @@ The object is not an array or map.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>This object.</p>
+<p>This instance.</p>
 
 <p><b>Exceptions:</b></p>
 

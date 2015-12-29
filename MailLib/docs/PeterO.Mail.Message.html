@@ -31,7 +31,7 @@
 <li><p>If the first line of the message starts with the word &quot;From&quot; followed by a space, it is skipped.</p></li>
 <li><p>The name  <code>ascii</code>  is treated as a synonym for <code>us-ascii</code> , despite being a reserved name under RFC 2046. The name  <code>cp1252</code>  is treated as a synonym for  <code>windows-1252</code> , even though it&#39;s not an IANA registered alias.</p></li>
 <li><p>The following deviations involve encoded words under RFC 2047:</p></li>
-<li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U + 007F, or a character less than U + 0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
+<li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U+007F, or a character less than U+0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
 <li><p>(b) This implementation can decode an encoded word that uses ISO-2022-JP (the only supported encoding that uses code switching) even if the encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still starts in that mode, though.)</p>
 
 <p>---.</p></li>
@@ -177,7 +177,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre><code>public System.Collections.Generic.IList HeaderFields { get; }
 </code></pre>
 
-<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U + 0041 to U + 005A] are converted to lower case) and the value is the header field&#39;s value.</p>
+<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U+0041 to U+005A] are converted to lower case) and the value is the header field&#39;s value.</p>
 
 <p><b>Returns:</b></p>
 
@@ -253,34 +253,12 @@ The header field name is too long or contains an invalid character, or the heade
     System.Collections.Generic.KeyValuePair header);
 </code></pre>
 
-<p>Adds a header field to the end of the message&#39;s header.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>header</i>: A KeyValuePair object. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>This instance.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The key or value of <i>header</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
-</ul>
-
 <h3>Generate</h3>
 
 <pre><code>public string Generate();
 </code></pre>
 
-<p>Generates this message&#39;s data in text form.The generated message will have only Basic Latin code points (U + 0000 to U + 007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
+<p>Generates this message&#39;s data in text form.The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
 <p>The following applies to the From, To, Cc, and Bcc header fields. If the header field exists, but has an invalid syntax or has no addresses, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to <code>me@[header-name]-address.invalid</code>  as the address (a <code>.invalid</code>  address is a reserved address that can never belong to anyone). The generated message should always have a From header field.</p>
 
@@ -349,7 +327,7 @@ The message can&#39;t be generated.</li>
     string name);
 </code></pre>
 
-<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
+<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U + 005A) in both strings to lower case.).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -384,7 +362,7 @@ Name is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A KeyValuePair object. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p>
+<p>A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -400,7 +378,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </code></pre>
 
-<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
+<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U + 005A) in both strings to lower case.).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -451,7 +429,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </code></pre>
 
-<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U+005A) in both strings to lower case.).Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -619,30 +597,6 @@ is null.</p></li>
     System.Collections.Generic.KeyValuePair header);
 </code></pre>
 
-<p>Sets the name and value of a header field by index.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
-<li><p><i>header</i>: A KeyValuePair object. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A Message object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentException:
-The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
-<li><p>System.ArgumentNullException:
-The key or value of <i>header</i>
-is null.</p></li>
-</ul>
-
 <h3>SetHeader</h3>
 
 <pre><code>public PeterO.Mail.Message SetHeader(
@@ -707,7 +661,7 @@ is null.</li>
     string html);
 </code></pre>
 
-<p>Sets the body of this message to a multipart body with plain text and HTML versions of the same message. The character sequences CR (carriage return, &quot;\r&quot; , U+000D), LF (line feed, &quot;\n&quot;, U + 000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+<p>Sets the body of this message to a multipart body with plain text and HTML versions of the same message. The character sequences CR (carriage return, &quot;\r&quot; , U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
 <p><b>Parameters:</b></p>
 
