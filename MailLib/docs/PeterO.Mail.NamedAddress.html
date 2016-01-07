@@ -17,7 +17,7 @@
     string address);
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class. Examples:</p>
+<p>Initializes a new instance of the  class. Examples:</p>
 
 <ul>
 <li><p><code>john@example.com</code></p></li>
@@ -32,7 +32,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>address</i>: A string object identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded.An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, such as  <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in the character encoding, further encoded using B or Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot; , and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s maximum length is 75 characters. See the second example.</li>
+<li><i>address</i>: A text string identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded.An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, such as  <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in the character encoding, further encoded using B or Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s maximum length is 75 characters. See the second example.</li>
 </ul>
 
 <p>.</p>
@@ -41,7 +41,7 @@
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>address</i>
+The parameter <i>address</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The named address has an invalid syntax.</p></li>
@@ -54,12 +54,12 @@ The named address has an invalid syntax.</p></li>
     PeterO.Mail.Address address);
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class.</p>
+<p>Initializes a new instance of the  class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: A string object. If this value is null or empty, uses the email address as the display name. Encoded words under RFC 2047 will not be decoded.</p></li>
+<li><p><i>displayName</i>: A text string. If this value is null or empty, uses the email address as the display name. Encoded words under RFC 2047 will not be decoded.</p></li>
 <li><p><i>address</i>: An email address.</p></li>
 </ul>
 
@@ -67,7 +67,7 @@ The named address has an invalid syntax.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>address</i>
+The parameter <i>address</i>
 is null.</li>
 </ul>
 
@@ -78,7 +78,7 @@ is null.</li>
     string address);
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class using the given display name and email address.</p>
+<p>Initializes a new instance of the  class using the given display name and email address.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -91,7 +91,7 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>address</i>
+The parameter <i>address</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The display name or address has an invalid syntax.</p></li>
@@ -105,12 +105,12 @@ The display name or address has an invalid syntax.</p></li>
     string domain);
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class using the given name and an email address made up of its local part and domain.</p>
+<p>Initializes a new instance of the  class using the given name and an email address made up of its local part and domain.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: A string object. If this value is null or empty, uses the email address as the display name.</p></li>
+<li><p><i>displayName</i>: A text string. If this value is null or empty, uses the email address as the display name.</p></li>
 <li><p><i>localPart</i>: The local part of the email address (before the &quot;@&quot;).</p></li>
 <li><p><i>domain</i>: The domain of the email address (before the &quot;@&quot;).</p></li>
 </ul>
@@ -119,7 +119,7 @@ The display name or address has an invalid syntax.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>localPart</i>
+The parameter <i>localPart</i>
 or  <i>domain</i>
 is null.</li>
 </ul>

@@ -26,6 +26,10 @@
 <li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular arbitrary-precision binary float value.</p></li>
 </ul>
 
+<p>If an operation requires creating an intermediate value that might be too big to fit in memory (or might require more than 2 gigabytes of memory to store -- due to the current use of a 32-bit integer internally as a length), the operation may signal an invalid-operation flag and return not-a-number (NaN). In certain rare cases, the CompareTo method may throw OutOfMemoryException (called OutOfMemoryError in Java) in the same circumstances.</p>
+
+<p>Thread safety:Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same properties are interchangeable, so they should not be compared using the &quot;==&quot; operator (which only checks if each side of the operator is the same instance).</p>
+
 <h3>NaN</h3>
 
 <pre><code>public static readonly PeterO.ExtendedFloat NaN;
@@ -206,6 +210,14 @@
 
 <p>The sum of the two objects.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>otherValue</i>
+is null.</li>
+</ul>
+
 <h3>Add</h3>
 
 <pre><code>public PeterO.ExtendedFloat Add(
@@ -225,6 +237,14 @@
 <p><b>Returns:</b></p>
 
 <p>The sum of thisValue and the other object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>otherValue</i>
+is null.</li>
+</ul>
 
 <h3>CompareTo</h3>
 
@@ -249,6 +269,14 @@
 <p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if  <i>other</i>
  is null, or 0 if both values are equal.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>other</i>
+is null.</li>
+</ul>
+
 <h3>CompareToSignal</h3>
 
 <pre><code>public PeterO.ExtendedFloat CompareToSignal(
@@ -271,6 +299,14 @@
 
 <p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>other</i>
+is null.</li>
+</ul>
+
 <h3>CompareToWithContext</h3>
 
 <pre><code>public PeterO.ExtendedFloat CompareToWithContext(
@@ -292,6 +328,14 @@
 <p><b>Returns:</b></p>
 
 <p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>other</i>
+is null.</li>
+</ul>
 
 <h3>Create</h3>
 
@@ -337,7 +381,7 @@
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>mantissa</i>
+The parameter <i>mantissa</i>
 or  <i>exponent</i>
 is null.</li>
 </ul>
@@ -364,10 +408,10 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>diag</i>
+The parameter <i>diag</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>diag</i>
+The parameter <i>diag</i>
 is less than 0.</p></li>
 </ul>
 
@@ -399,10 +443,10 @@ is less than 0.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>diag</i>
+The parameter <i>diag</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>diag</i>
+The parameter <i>diag</i>
 is less than 0.</p></li>
 </ul>
 
@@ -427,8 +471,11 @@ is less than 0.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArithmeticException:
-The result can&#39;t be exact because it would have a nonterminating binary expansion.</li>
+<li><p>System.ArithmeticException:
+The result can&#39;t be exact because it would have a nonterminating binary expansion.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</p></li>
 </ul>
 
 <h3>Divide</h3>
@@ -454,10 +501,13 @@ The result can&#39;t be exact because it would have a nonterminating binary expa
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArithmeticException:
+<li><p>System.ArithmeticException:
 Either  <i>ctx</i>
 is null or  <i>ctx</i>
-&#39;s precision is 0, and the result would have a nonterminating binary expansion; or, the rounding mode is Rounding.Unnecessary and the result is not exact.</li>
+&#39;s precision is 0, and the result would have a nonterminating binary expansion; or, the rounding mode is Rounding.Unnecessary and the result is not exact.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</p></li>
 </ul>
 
 <h3>DivideAndRemainderNaturalScale</h3>
@@ -466,7 +516,7 @@ is null or  <i>ctx</i>
     PeterO.ExtendedFloat divisor);
 </code></pre>
 
-<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -485,7 +535,7 @@ is null or  <i>ctx</i>
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -523,8 +573,11 @@ is null or  <i>ctx</i>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
+<li><p>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the result is not exact.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</p></li>
 </ul>
 
 <h3>DivideToExponent</h3>
@@ -552,8 +605,11 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
+<li><p>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the result is not exact.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</p></li>
 </ul>
 
 <h3>DivideToExponent</h3>
@@ -581,8 +637,12 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
+<li><p>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the result is not exact.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>divisor</i>
+or  <i>desiredExponent</i>
+is null.</p></li>
 </ul>
 
 <h3>DivideToExponent</h3>
@@ -610,8 +670,12 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
+<li><p>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the result is not exact.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>divisor</i>
+or  <i>exponent</i>
+is null.</p></li>
 </ul>
 
 <h3>DivideToIntegerNaturalScale</h3>
@@ -631,6 +695,14 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 <p><b>Returns:</b></p>
 
 <p>The integer part of the quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</li>
+</ul>
 
 <h3>DivideToIntegerNaturalScale</h3>
 
@@ -655,8 +727,11 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the integer part of the result is not exact.</li>
+<li><p>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the integer part of the result is not exact.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</p></li>
 </ul>
 
 <h3>DivideToIntegerZeroScale</h3>
@@ -678,6 +753,14 @@ The rounding mode is Rounding.Unnecessary and the integer part of the result is 
 <p><b>Returns:</b></p>
 
 <p>The integer part of the quotient of the two objects. The exponent will be set to 0. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0, or if the result doesn&#39;t fit the given precision.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</li>
+</ul>
 
 <h3>DivideToSameExponent</h3>
 
@@ -702,8 +785,11 @@ The rounding mode is Rounding.Unnecessary and the integer part of the result is 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArithmeticException:
-The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
+<li><p>System.ArithmeticException:
+The rounding mode is Rounding.Unnecessary and the result is not exact.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</p></li>
 </ul>
 
 <h3>Equals</h3>
@@ -712,7 +798,7 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
     object obj);
 </code></pre>
 
-<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object and that other object is a decimal fraction.</p>
+<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object and that other object is an arbitrary-precision decimal number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -742,6 +828,14 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 
 <p>True if this object&#39;s mantissa and exponent are equal to those of another object; otherwise, false.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>other</i>
+is null.</li>
+</ul>
+
 <h3>EqualsInternal</h3>
 
 <pre><code>public bool EqualsInternal(
@@ -759,6 +853,14 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 <p><b>Returns:</b></p>
 
 <p>True if this object&#39;s mantissa and exponent are equal to those of another object; otherwise, false.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>otherValue</i>
+is null.</li>
+</ul>
 
 <h3>Exp</h3>
 
@@ -782,7 +884,7 @@ The rounding mode is Rounding.Unnecessary and the result is not exact.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>ctx</i>
+The parameter <i>ctx</i>
 is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </ul>
 
@@ -803,6 +905,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bigint</i>
+is null.</li>
+</ul>
 
 <h3>FromDouble</h3>
 
@@ -839,7 +949,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary float.</p>
+<p>An arbitrary-precision binary float with the exponent set to 0.</p>
 
 <h3>FromInt64</h3>
 
@@ -857,7 +967,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary float.</p>
+<p>An arbitrary-precision binary float with the exponent set to 0.</p>
 
 <h3>FromSingle</h3>
 
@@ -887,13 +997,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p>Creates a binary float from a string that represents a number. See the four-parameter FromString method.</p>
 
 <p>The following example converts a number in the form of string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
-     return arbitrary-precision binary float.FromString(str).ToDouble();
+    return arbitrary-precision binary float.FromString(str).ToDouble();
     }</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: Not documented yet.</li>
+<li><i>str</i>: The parameter  <i>str</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -908,10 +1019,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     int length);
 </code></pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A String object.</p></li>
+<li><p><i>str</i>: A text string.</p></li>
 <li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
@@ -927,15 +1040,15 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>length</i>
 is less than 0 or greater than  <i>str</i>
 &#39;s length, or  <i>str</i>
-&#39;s length minus  <i>offset</i>
-is less than <i>length</i>
+&#39; s length minus  <i>offset</i>
+is less than  <i>length</i>
 .</p></li>
 </ul>
 
@@ -953,17 +1066,17 @@ is less than <i>length</i>
 <ul>
 <li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
 <li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
-<li><p>Optionally, &quot;E+&quot; (positive exponent) or &quot;E-&quot; (negative exponent) plus one or more digits specifying the exponent.</p></li>
+<li><p>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus one or more digits specifying the exponent.</p></li>
 </ul>
 
-<p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot; , &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
+<p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
 <p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space characters, including spaces.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A String object.</p></li>
+<li><p><i>str</i>: A text string.</p></li>
 <li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
@@ -980,15 +1093,15 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>length</i>
 is less than 0 or greater than  <i>str</i>
 &#39;s length, or  <i>str</i>
-&#39;s length minus  <i>offset</i>
-is less than <i>length</i>
+&#39; s length minus  <i>offset</i>
+is less than  <i>length</i>
 .</p></li>
 </ul>
 
@@ -999,10 +1112,12 @@ is less than <i>length</i>
     PeterO.PrecisionContext ctx);
 </code></pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A String object.</p></li>
+<li><p><i>str</i>: A text string.</p></li>
 <li><p><i>ctx</i>: A PrecisionContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
@@ -1014,7 +1129,7 @@ is less than <i>length</i>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -1117,7 +1232,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>ctx</i>
+The parameter <i>ctx</i>
 is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </ul>
 
@@ -1137,7 +1252,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
+<p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
 <h3>Max</h3>
@@ -1160,6 +1275,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>The larger value of the two objects.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
 <h3>Max</h3>
 
 <pre><code>public static PeterO.ExtendedFloat Max(
@@ -1182,6 +1306,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>The larger value of the two objects.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
 <h3>MaxMagnitude</h3>
 
 <pre><code>public static PeterO.ExtendedFloat MaxMagnitude(
@@ -1201,6 +1334,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
 
 <h3>MaxMagnitude</h3>
 
@@ -1223,6 +1365,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
 
 <h3>Min</h3>
 
@@ -1244,6 +1395,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>The smaller value of the two objects.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
 <h3>Min</h3>
 
 <pre><code>public static PeterO.ExtendedFloat Min(
@@ -1266,6 +1426,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>The smaller value of the two objects.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
 <h3>MinMagnitude</h3>
 
 <pre><code>public static PeterO.ExtendedFloat MinMagnitude(
@@ -1285,6 +1454,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
 
 <h3>MinMagnitude</h3>
 
@@ -1307,6 +1485,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
 
 <h3>MovePointLeft</h3>
 
@@ -1363,6 +1550,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bigPlaces</i>
+is null.</li>
+</ul>
 
 <h3>MovePointLeft</h3>
 
@@ -1384,6 +1579,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>An arbitrary-precision binary float.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bigPlaces</i>
+is null.</li>
+</ul>
+
 <h3>MovePointRight</h3>
 
 <pre><code>public PeterO.ExtendedFloat MovePointRight(
@@ -1439,6 +1642,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bigPlaces</i>
+is null.</li>
+</ul>
 
 <h3>MovePointRight</h3>
 
@@ -1461,6 +1672,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p>A number whose scale is increased by  <i>bigPlaces</i>
 , but not to more than 0.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bigPlaces</i>
+is null.</li>
+</ul>
+
 <h3>Multiply</h3>
 
 <pre><code>public PeterO.ExtendedFloat Multiply(
@@ -1481,6 +1700,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>The product of the two binary floats.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>op</i>
+is null.</li>
+</ul>
+
 <h3>Multiply</h3>
 
 <pre><code>public PeterO.ExtendedFloat Multiply(
@@ -1498,6 +1725,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>The product of the two binary floats.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>otherValue</i>
+is null.</li>
+</ul>
 
 <h3>MultiplyAndAdd</h3>
 
@@ -1518,6 +1753,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>The result this * multiplicand + augend.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>multiplicand</i>
+or  <i>augend</i>
+is null.</li>
+</ul>
 
 <h3>MultiplyAndAdd</h3>
 
@@ -1540,6 +1784,15 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>The result thisValue * multiplicand + augend.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>op</i>
+or  <i>augend</i>
+is null.</li>
+</ul>
 
 <h3>MultiplyAndSubtract</h3>
 
@@ -1567,7 +1820,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>op</i>
+The parameter <i>op</i>
 or  <i>subtrahend</i>
 is null.</li>
 </ul>
@@ -1588,7 +1841,15 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary float.</p>
+<p>An arbitrary-precision binary float. If this value is positive zero, returns positive zero.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>context</i>
+is null.</li>
+</ul>
 
 <h3>Negate</h3>
 
@@ -1599,7 +1860,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary float.</p>
+<p>An arbitrary-precision binary float. If this value is positive zero, returns positive zero.</p>
 
 <h3>NextMinus</h3>
 
@@ -1623,7 +1884,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>ctx</i>
+The parameter <i>ctx</i>
 is null, the precision is 0, or  <i>ctx</i>
 has an unlimited exponent range.</li>
 </ul>
@@ -1650,7 +1911,7 @@ has an unlimited exponent range.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>ctx</i>
+The parameter <i>ctx</i>
 is null, the precision is 0, or  <i>ctx</i>
 has an unlimited exponent range.</li>
 </ul>
@@ -1678,10 +1939,13 @@ has an unlimited exponent range.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-The parameter  <i>ctx</i>
+<li><p>System.ArgumentException:
+The parameter <i>ctx</i>
 is null, the precision is 0, or  <i>ctx</i>
-has an unlimited exponent range.</li>
+has an unlimited exponent range.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>otherValue</i>
+is null.</p></li>
 </ul>
 
 <h3>PI</h3>
@@ -1706,7 +1970,7 @@ has an unlimited exponent range.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>ctx</i>
+The parameter <i>ctx</i>
 is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </ul>
 
@@ -1745,7 +2009,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>This^exponent. returns not-a-number (NaN) if this object and exponent are both 0.</p>
+<p>This^exponent. Returns not-a-number (NaN) if this object and exponent are both 0.</p>
 
 <h3>Pow</h3>
 
@@ -1790,9 +2054,12 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-The parameter  <i>ctx</i>
-is null or the precision is unlimited (the context&#39;s Precision property is 0), and the exponent has a fractional part.</li>
+<li><p>System.ArgumentException:
+The parameter <i>ctx</i>
+is null or the precision is unlimited (the context&#39;s Precision property is 0), and the exponent has a fractional part.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>exponent</i>
+is null.</p></li>
 </ul>
 
 <h3>Precision</h3>
@@ -1846,6 +2113,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>A binary float with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if an overflow error occurred, or the rounded result can&#39;t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>desiredExponent</i>
+is null.</li>
+</ul>
+
 <h3>Quantize</h3>
 
 <pre><code>public PeterO.ExtendedFloat Quantize(
@@ -1865,6 +2140,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>A binary float with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if an overflow error occurred, or the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the new exponent is outside of the valid range of the precision context, if it defines an exponent range.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>otherValue</i>
+is null.</li>
+</ul>
 
 <h3>Reduce</h3>
 
@@ -1904,11 +2187,21 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>The remainder of the two objects.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</li>
+</ul>
+
 <h3>RemainderNaturalScale</h3>
 
 <pre><code>public PeterO.ExtendedFloat RemainderNaturalScale(
     PeterO.ExtendedFloat divisor);
 </code></pre>
+
+<p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1919,6 +2212,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</li>
+</ul>
 
 <h3>RemainderNaturalScale</h3>
 
@@ -1939,6 +2240,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</li>
+</ul>
 
 <h3>RemainderNear</h3>
 
@@ -1969,6 +2278,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>The distance of the closest multiple. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or either the result of integer division (the quotient) or the remainder wouldn&#39;t fit the given precision.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>divisor</i>
+is null.</li>
+</ul>
+
 <h3>RoundToBinaryPrecision</h3>
 
 <pre><code>public PeterO.ExtendedFloat RoundToBinaryPrecision(
@@ -1997,7 +2314,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Returns a binary number with the same value as this object, and rounds it to a new exponent if necessary.</p>
+<p>Returns a binary number with the same value as this object but rounded to a new exponent if necessary.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2017,7 +2334,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Returns a binary number with the same value as this object, and rounds it to a new exponent if necessary.</p>
+<p>Returns a binary number with the same value as this object but rounded to a new exponent if necessary.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2030,6 +2347,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>A binary number rounded to the closest value representable in the given precision, meaning if the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>exponent</i>
+is null.</li>
+</ul>
+
 <h3>RoundToExponentExact</h3>
 
 <pre><code>public PeterO.ExtendedFloat RoundToExponentExact(
@@ -2037,7 +2362,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
+<p>Returns a binary number with the same value as this object but rounded to the given exponent, and signals an invalid operation if the result would be inexact.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2057,7 +2382,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
     PeterO.PrecisionContext ctx);
 </code></pre>
 
-<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
+<p>Returns a binary number with the same value as this object but rounded to the given exponent, and signals an invalid operation if the result would be inexact.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2069,6 +2394,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>A binary number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>exponent</i>
+is null.</li>
+</ul>
 
 <h3>RoundToIntegralExact</h3>
 
@@ -2181,6 +2514,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>An arbitrary-precision binary float.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bigPlaces</i>
+is null.</li>
+</ul>
+
 <h3>ScaleByPowerOfTwo</h3>
 
 <pre><code>public PeterO.ExtendedFloat ScaleByPowerOfTwo(
@@ -2201,6 +2542,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>A number whose scale is increased by  <i>bigPlaces</i>
 .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bigPlaces</i>
+is null.</li>
+</ul>
 
 <h3>SquareRoot</h3>
 
@@ -2224,7 +2573,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>ctx</i>
+The parameter <i>ctx</i>
 is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </ul>
 
@@ -2245,6 +2594,14 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Returns:</b></p>
 
 <p>The difference of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>otherValue</i>
+is null.</li>
+</ul>
 
 <h3>Subtract</h3>
 
@@ -2270,7 +2627,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>otherValue</i>
+The parameter <i>otherValue</i>
 is null.</li>
 </ul>
 
@@ -2320,11 +2677,13 @@ This object&#39;s value is not an exact integer.</p></li>
 <p>Converts this value to a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
 <p>The following example converts a number in the form of string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
-     return arbitrary-precision binary float.FromString(str).ToDouble();
+    return arbitrary-precision binary float.FromString(str).ToDouble();
     }</p>
 
-<p>The following example converts a big integer to a <code>double</code> , or a 64-bit floating point number.    public static double arbitrary-precision integerToDouble(BigInteger bigInteger) {
-     return arbitrary-precision binary float.FromBigInteger(bigInteger).ToDouble();
+<p>The following example converts a big integer to a <code>double</code> , or a 64-bit floating point number.    public static double arbitrary-precision integerToDouble(BigInteger
+    bigInteger) {
+    return arbitrary-precision binary
+    float.FromBigInteger(bigInteger).ToDouble();
     }</p>
 
 <p><b>Returns:</b></p>
@@ -2340,7 +2699,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>A string object.</p>
+<p>A text string.</p>
 
 <h3>ToExtendedDecimal</h3>
 
@@ -2362,7 +2721,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>A string object.</p>
+<p>A text string.</p>
 
 <h3>ToSingle</h3>
 

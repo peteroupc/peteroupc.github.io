@@ -22,7 +22,7 @@
 <li><p>The To and Cc header fields are allowed to contain only comments and whitespace, but these &quot;empty&quot; header fields will be omitted when generating.</p></li>
 <li><p>There is no line length limit imposed when parsing header fields, except header field names.</p></li>
 <li><p>There is no line length limit imposed when parsing quoted-printable or base64 encoded bodies.</p></li>
-<li><p>If the transfer encoding is absent and the content type is &quot;message/rfc822&quot; , bytes with values greater than 127 (called &quot;8-bit bytes&quot; in the rest of this summary) are still allowed, despite the default value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</p></li>
+<li><p>If the transfer encoding is absent and the content type is &quot;message/rfc822&quot;, bytes with values greater than 127 (called &quot;8-bit bytes&quot; in the rest of this summary) are still allowed, despite the default value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</p></li>
 <li><p>In the following cases, if the transfer encoding is absent or declared as 7bit, 8-bit bytes are still allowed:</p></li>
 <li><p>(a) The preamble and epilogue of multipart messages, which will be ignored.</p></li>
 <li><p>(b) If the charset is declared to be  <code>utf-8</code> .</p></li>
@@ -43,7 +43,7 @@
     byte[] bytes);
 </code></pre>
 
-<p>Initializes a new instance of the Message class. Reads from the given byte array to initialize the message.</p>
+<p>Initializes a new instance of the  class. Reads from the given byte array to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -55,7 +55,7 @@
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bytes</i>
+The parameter <i>bytes</i>
 is null.</li>
 </ul>
 
@@ -65,7 +65,7 @@ is null.</li>
     System.IO.Stream stream);
 </code></pre>
 
-<p>Initializes a new instance of the Message class. Reads from the given Stream object to initialize the message.</p>
+<p>Initializes a new instance of the  class. Reads from the given Stream object to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -77,7 +77,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</li>
 </ul>
 
@@ -240,7 +240,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>name</i>
+The parameter <i>name</i>
 or  <i>value</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
@@ -297,7 +297,7 @@ The message can&#39;t be generated.</li>
 
 <p><b>Returns:</b></p>
 
-<p>A message object if this object&#39;s content type is &quot;message/rfc822&quot; , &quot;message/news&quot;, or &quot;message/global&quot;, or null otherwise.</p>
+<p>A message object if this object&#39;s content type is &quot;message/rfc822&quot;, &quot;message/news&quot;, or &quot;message/global&quot;, or null otherwise.</p>
 
 <h3>GetDate</h3>
 
@@ -327,7 +327,7 @@ The message can&#39;t be generated.</li>
     string name);
 </code></pre>
 
-<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U + 005A) in both strings to lower case.).</p>
+<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -368,7 +368,7 @@ Name is null.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>index</i>
+The parameter <i>index</i>
 is 0 or at least as high as the number of header fields.</li>
 </ul>
 
@@ -378,7 +378,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </code></pre>
 
-<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U + 005A) in both strings to lower case.).</p>
+<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -419,7 +419,7 @@ Name is null.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>index</i>
+The parameter <i>index</i>
 is 0 or at least as high as the number of header fields.</li>
 </ul>
 
@@ -429,7 +429,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </code></pre>
 
-<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U+005A) in both strings to lower case.).Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -445,7 +445,7 @@ is 0 or at least as high as the number of header fields.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>name</i>
+The parameter <i>name</i>
 is null.</li>
 </ul>
 
@@ -471,7 +471,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bytes</i>
+The parameter <i>bytes</i>
 is null.</li>
 </ul>
 
@@ -518,10 +518,10 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentException:
-The parameter  <i>dateTime</i>
+The parameter <i>dateTime</i>
 contains fewer than eight elements, contains invalid values, or contains a year less than 0.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>dateTime</i>
+The parameter <i>dateTime</i>
 is null.</p></li>
 </ul>
 
@@ -551,10 +551,10 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentException:
-The parameter  <i>index</i>
+The parameter <i>index</i>
 is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>name</i>
+The parameter <i>name</i>
 or  <i>value</i>
 is null.</p></li>
 </ul>
@@ -583,10 +583,10 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentException:
-The parameter  <i>index</i>
+The parameter <i>index</i>
 is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>value</i>
+The parameter <i>value</i>
 is null.</p></li>
 </ul>
 
@@ -623,7 +623,7 @@ is null.</p></li>
 <li><p>System.ArgumentException:
 The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>name</i>
+The parameter <i>name</i>
 or  <i>value</i>
 is null.</p></li>
 </ul>
@@ -634,7 +634,7 @@ is null.</p></li>
     string str);
 </code></pre>
 
-<p>Sets the body of this message to the specified string in HTML format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot; , U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+<p>Sets the body of this message to the specified string in HTML format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -650,7 +650,7 @@ is null.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -678,7 +678,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>text</i>
+The parameter <i>text</i>
 or  <i>html</i>
 is null.</li>
 </ul>
@@ -689,7 +689,7 @@ is null.</li>
     string str);
 </code></pre>
 
-<p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot; , U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.</p>
+<p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -705,7 +705,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 

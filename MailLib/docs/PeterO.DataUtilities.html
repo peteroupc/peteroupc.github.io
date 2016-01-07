@@ -9,7 +9,9 @@
 <pre><code>public static class DataUtilities
 </code></pre>
 
-<p>Contains methods useful for reading and writing strings. It is designed to have no dependencies other than the basic runtime class library.In C# and Java, text strings are represented as sequences of 16-bit values called  <code>char</code> s. These sequences are well-formed under the UTF-16 encoding form of Unicode, except if they contain unpaired surrogate code points. (A surrogate code point is used to encode supplementary characters, those with code points U+10000 or higher, in UTF-16. A surrogate pair is a high surrogate [U+D800 to U+DBFF] followed by a low surrogate [U+DC00 to U+DFFF]. An unpaired surrogate code point is a surrogate not appearing in a surrogate pair.) Many of the methods in this class allow setting the behavior to follow when unpaired surrogate code points are found in text strings, such as throwing an error or treating the unpaired surrogate as a replacement character (U+FFFD).</p>
+<p>Contains methods useful for reading and writing strings. It is designed to have no dependencies other than the basic runtime class library.Many of these methods work with text encoded in UTF-8, an encoding form of the Unicode Standard which uses one byte to encode the most basic characters and two to four bytes to encode other characters. For example, the  <code>GetUtf8</code>  method converts a text string to an array of bytes in UTF-8.</p>
+
+<p>In C# and Java, text strings are represented as sequences of 16-bit values called  <code>char</code>  s. These sequences are well-formed under UTF-16, a 16-bit encoding form of Unicode, except if they contain unpaired surrogate code points. (A surrogate code point is used to encode supplementary characters, those with code points U+10000 or higher, in UTF-16. A surrogate pair is a high surrogate [U+D800 to U+DBFF] followed by a low surrogate [U+DC00 to U+DFFF]. An unpaired surrogate code point is a surrogate not appearing in a surrogate pair.) Many of the methods in this class allow setting the behavior to follow when unpaired surrogate code points are found in text strings, such as throwing an error or treating the unpaired surrogate as a replacement character (U+FFFD).</p>
 
 <h3>CodePointAt</h3>
 
@@ -23,7 +25,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string.</p></li>
+<li><p><i>str</i>: A text string.</p></li>
 <li><p><i>index</i>: Index of the current position into the string.</p></li>
 </ul>
 
@@ -36,7 +38,7 @@
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -53,7 +55,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string.</p></li>
+<li><p><i>str</i>: A text string.</p></li>
 <li><p><i>index</i>: Index of the current position into the string.</p></li>
 <li><p><i>surrogateBehavior</i>: Specifies what kind of value to return if the previous character is an unpaired surrogate code point: if 0, return the replacement character (U+FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
@@ -68,7 +70,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -84,7 +86,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string.</p></li>
+<li><p><i>str</i>: A text string.</p></li>
 <li><p><i>index</i>: Index of the current position into the string.</p></li>
 </ul>
 
@@ -97,7 +99,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -114,7 +116,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string.</p></li>
+<li><p><i>str</i>: A text string.</p></li>
 <li><p><i>index</i>: Index of the current position into the string.</p></li>
 <li><p><i>surrogateBehavior</i>: Specifies what kind of value to return if the previous character is an unpaired surrogate code point: if 0, return the replacement character (U+FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
@@ -129,7 +131,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -177,7 +179,7 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The string contains an unpaired surrogate code point and  <i>replace</i>
@@ -210,7 +212,7 @@ is false, or an internal error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The string contains an unpaired surrogate code point and  <i>replace</i>
@@ -229,7 +231,7 @@ is false, or an internal error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A String object.</p></li>
+<li><p><i>str</i>: A text string.</p></li>
 <li><p><i>replace</i>: If true, treats unpaired surrogate code points as having 3 UTF-8 bytes (the UTF-8 length of the replacement character U+FFFD).</p></li>
 </ul>
 
@@ -242,7 +244,7 @@ is false, or an internal error occurred.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -270,7 +272,7 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>bytes</i>
+The parameter <i>bytes</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The string is not valid UTF-8 and  <i>replace</i>
@@ -305,13 +307,13 @@ is false.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>bytes</i>
+The parameter <i>bytes</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The portion of the byte array is not valid UTF-8 and  <i>replace</i>
 is false.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>offset</i>
+The parameter <i>offset</i>
 is less than 0,  <i>bytesCount</i>
 is less than 0, or offset plus bytesCount is greater than the length of &quot;data&quot; .</p></li>
 </ul>
@@ -348,7 +350,7 @@ is less than 0, or offset plus bytesCount is greater than the length of &quot;da
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null or  <i>builder</i>
 is null.</p></li>
 </ul>
@@ -384,11 +386,11 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>data</i>
+The parameter <i>data</i>
 is null or  <i>builder</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>offset</i>
+The parameter <i>offset</i>
 is less than 0,  <i>bytesCount</i>
 is less than 0, or offset plus bytesCount is greater than the length of  <i>data</i>
 .</p></li>
@@ -418,7 +420,7 @@ is less than 0, or offset plus bytesCount is greater than the length of  <i>data
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 </ul>
 
@@ -451,7 +453,7 @@ is null.</p></li>
 An I/O error occurred; or, the string is not valid UTF-8 and  <i>replace</i>
 is false.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 </ul>
 
@@ -466,7 +468,7 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string.</li>
+<li><i>str</i>: A text string.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -505,11 +507,11 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null or  <i>stream</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>offset</i>
+The parameter <i>offset</i>
 is less than 0,  <i>length</i>
 is less than 0, or  <i>offset</i>
 plus  <i>length</i>
@@ -551,11 +553,11 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null or  <i>stream</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>offset</i>
+The parameter <i>offset</i>
 is less than 0,  <i>length</i>
 is less than 0, or  <i>offset</i>
 plus  <i>length</i>
@@ -591,7 +593,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null or  <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:

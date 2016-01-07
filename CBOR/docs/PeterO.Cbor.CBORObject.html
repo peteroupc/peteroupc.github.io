@@ -29,7 +29,7 @@
 
 <p>Instances of CBORObject should not be compared for equality using the &quot;==&quot; operator; it&#39;s possible to create two CBOR objects with the same value but not the same reference. (The &quot;==&quot; operator only checks if each side of the operator is the same instance.)</p>
 
-<p>This class&#39;s natural ordering (under the CompareTo method) is not consistent with the Equals method. This means that two values that compare as equal under the CompareTo method might not be equal under the Equals method. This is important to consider especially if an application wants to compare numbers, since the CBOR number type supports numbers of different formats, such as big integers, rational numbers, and decimal fractions.</p>
+<p>This class&#39;s natural ordering (under the CompareTo method) is not consistent with the Equals method. This means that two values that compare as equal under the CompareTo method might not be equal under the Equals method. This is important to consider especially if an application wants to compare numbers, since the CBOR number type supports numbers of different formats, such as big integers, rational numbers, and arbitrary-precision decimal numbers.</p>
 
 <p>Another consideration is that two values that are otherwise equal may have different tags. To strip the tags from a CBOR object before comparing, use the  <code>Untag</code>  method.</p>
 
@@ -49,7 +49,9 @@
 
 <p>Nesting Depth:</p>
 
-<p>The DecodeFromBytes method can only read objects with a limited maximum depth of arrays and maps nested within other arrays and maps. The code sets this maximum depth to 500 (allowing more than enough nesting for most purposes), but it&#39;s possible that stack overflows in some runtimes might lower the effective maximum nesting depth. When the nesting depth goes above 500, the DecodeFromBytes method throws a CBORException.</p>
+<p>The DecodeFromBytes and Read methods can only read objects with a limited maximum depth of arrays and maps nested within other arrays and maps. The code sets this maximum depth to 500 (allowing more than enough nesting for most purposes), but it&#39;s possible that stack overflows in some runtimes might lower the effective maximum nesting depth. When the nesting depth goes above 500, the DecodeFromBytes and Read methods throw a CBORException.</p>
+
+<p>The ReadJSON and FromJSONString methods currently have nesting depths of 1000.</p>
 
 <h3>False</h3>
 
@@ -339,12 +341,12 @@ This object&#39;s type is not a number type.</li>
 
 <ul>
 <li><p>System.ArgumentException:
-The parameter  <i>key</i>
+The parameter <i>key</i>
 already exists in this map.</p></li>
 <li><p>System.InvalidOperationException:
 This object is not a map.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>key</i>
+The parameter <i>key</i>
 or  <i>valueOb</i>
 has an unsupported type.</p></li>
 </ul>
@@ -423,7 +425,7 @@ This object is not an array.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>type</i>
+The parameter <i>type</i>
 or  <i>converter</i>
 is null.</li>
 </ul>
@@ -475,11 +477,11 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>bigintTag</i>
+The parameter <i>bigintTag</i>
 or  <i>handler</i>
 is null.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>bigintTag</i>
+The parameter <i>bigintTag</i>
 is less than 0 or greater than (2^64-1).</p></li>
 </ul>
 
@@ -720,7 +722,7 @@ This object&#39;s type is not a number type.</li>
 <pre><code>public string AsString();
 </code></pre>
 
-<p>Gets the value of this object as a string object.</p>
+<p>Gets the value of this object as a text string.</p>
 
 <p><b>Returns:</b></p>
 
@@ -980,7 +982,7 @@ Key is null.</li>
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
 is empty.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>data</i>
+The parameter <i>data</i>
 is null.</p></li>
 </ul>
 
@@ -1011,7 +1013,7 @@ is null.</p></li>
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
 is empty.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>data</i>
+The parameter <i>data</i>
 is null.</p></li>
 </ul>
 
@@ -1052,6 +1054,14 @@ is null.</p></li>
 <p><b>Returns:</b></p>
 
 <p>A byte array in CBOR format.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>options</i>
+is null.</li>
+</ul>
 
 <h3>EncodeToBytes</h3>
 
@@ -1122,7 +1132,7 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The string is not in JSON format.</p></li>
@@ -1140,7 +1150,8 @@ The string is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</li>
+<li><p><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</p></li>
+<li><p><i>options</i>: A CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1151,7 +1162,7 @@ The string is not in JSON format.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The string is not in JSON format.</p></li>
@@ -1233,7 +1244,7 @@ The string is not in JSON format.</p></li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>value</i>
+The parameter <i>value</i>
 is a surrogate code point.</li>
 </ul>
 
@@ -1715,11 +1726,11 @@ is converted to a CBOR object and given the tag  <i>bigintTag</i>
 
 <ul>
 <li><p>System.ArgumentException:
-The parameter  <i>bigintTag</i>
-is less than 0 or greater than 2^64-1, or <i>valueOb</i>
+The parameter <i>bigintTag</i>
+is less than 0 or greater than 2^64-1, or  <i>valueOb</i>
 &#39;s type is unsupported.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>bigintTag</i>
+The parameter <i>bigintTag</i>
 is null.</p></li>
 </ul>
 
@@ -1749,7 +1760,7 @@ is null.</p></li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>smallTag</i>
+The parameter <i>smallTag</i>
 is less than 0 or  <i>valueObValue</i>
 &#39;s type is unsupported.</li>
 </ul>
@@ -1776,7 +1787,7 @@ is less than 0 or  <i>valueObValue</i>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>simpleValue</i>
+The parameter <i>simpleValue</i>
 is less than 0, greater than 255, or from 24 through 31.</li>
 </ul>
 
@@ -1900,7 +1911,7 @@ BigTagValue is less than 0.</p></li>
 <li><p>System.InvalidOperationException:
 This object is not an array.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>valueOb</i>
+The parameter <i>valueOb</i>
 has an unsupported type; or  <i>index</i>
 is not a valid index into this array.</p></li>
 </ul>
@@ -1967,7 +1978,7 @@ is not a valid index into this array.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>The product of the two objects.</p>
+<p>The product of the two numbers.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2094,7 +2105,7 @@ This object&#39;s type is not a number type.</li>
 
 <p><b>Returns:</b></p>
 
-<p>The product of the two objects.</p>
+<p>The product of the two numbers.</p>
 
 <h3>Operator <code>-</code></h3>
 
@@ -2138,7 +2149,7 @@ This object&#39;s type is not a number type.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data.</p></li>
@@ -2168,7 +2179,7 @@ There was an error in reading or parsing the data.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data.</p></li>
@@ -2196,7 +2207,7 @@ There was an error in reading or parsing the data.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2216,7 +2227,8 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</li>
+<li><p><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</p></li>
+<li><p><i>options</i>: A CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -2227,7 +2239,7 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2277,7 +2289,7 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>obj</i>
+The parameter <i>obj</i>
 is null (as opposed to CBORObject.Null).</p></li>
 <li><p>System.InvalidOperationException:
 The object is not an array or map.</p></li>
@@ -2309,7 +2321,7 @@ The object is not an array or map.</p></li>
 <li><p>System.InvalidOperationException:
 This object is not a map.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>key</i>
+The parameter <i>key</i>
 or  <i>valueOb</i>
 has an unsupported type.</p></li>
 </ul>
@@ -2350,7 +2362,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p>If this object contains maps with non-string keys, the keys are converted to JSON strings before writing the map as a JSON string.</p></li>
-<li><p>If a number in the form of a big float has a very high binary exponent, it will be converted to a double before being converted to a JSON string. (The resulting double could overflow to infinity, in which case the big float is converted to null.)</p></li>
+<li><p>If a number in the form of an arbitrary-precision binary float has a very high binary exponent, it will be converted to a double before being converted to a JSON string. (The resulting double could overflow to infinity, in which case the arbitrary-precision binary float is converted to null.)</p></li>
 <li><p>The string will not begin with a byte-order mark (U+FEFF); RFC 7159 (the JSON specification) forbids placing a byte-order mark at the beginning of a JSON string.</p></li>
 <li><p>Byte strings are converted to Base64 URL by default.</p></li>
 <li><p>Rational numbers will be converted to their exact form, if possible, otherwise to a high-precision approximation. (The resulting approximation could overflow to infinity, in which case the rational number is converted to null.)</p></li>
@@ -2360,7 +2372,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <p><b>Returns:</b></p>
 
-<p>A string object containing the converted object.</p>
+<p>A text string containing the converted object.</p>
 
 <h3>ToString</h3>
 
@@ -2415,7 +2427,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2441,7 +2453,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2467,10 +2479,10 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>value</i>
+The parameter <i>value</i>
 is a surrogate code point.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2496,7 +2508,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2522,7 +2534,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>s</i>
+The parameter <i>s</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2548,7 +2560,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2574,7 +2586,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2613,7 +2625,7 @@ An I/O error occurred.</p></li>
 <li><p>System.ArgumentException:
 The object&#39;s type is not supported.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>options</i>
+The parameter <i>options</i>
 or  <i>output</i>
 is null.</p></li>
 </ul>
@@ -2654,7 +2666,7 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2680,7 +2692,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</li>
 </ul>
 
@@ -2703,7 +2715,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bignum</i>: Decimal fraction to write. Can be null.</p></li>
+<li><p><i>bignum</i>: The arbitrary-precision decimal number to write. Can be null.</p></li>
 <li><p><i>stream</i>: Stream to write to.</p></li>
 </ul>
 
@@ -2711,7 +2723,7 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2744,7 +2756,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2770,7 +2782,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2812,7 +2824,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2838,7 +2850,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2866,7 +2878,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -2908,7 +2920,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</li>
 </ul>
 
@@ -2964,7 +2976,7 @@ is null.</li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>outputStream</i>
+The parameter <i>outputStream</i>
 is null.</p></li>
 </ul>
 
@@ -2986,7 +2998,7 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
@@ -3012,7 +3024,7 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
