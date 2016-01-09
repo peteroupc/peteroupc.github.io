@@ -1,0 +1,708 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Numbers.EContext</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>PeterO.Numbers.EContext</h1>
+
+<h2>PeterO.Numbers.EContext</h2>
+
+<pre><code>public sealed class EContext
+</code></pre>
+
+<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers.</p>
+
+<h3>EContext Constructor</h3>
+
+<pre><code>public EContext(
+    int precision,
+    PeterO.Numbers.ERounding rounding,
+    int exponentMinSmall,
+    int exponentMaxSmall,
+    bool clampNormalExponents);
+</code></pre>
+
+<p>Initializes a new instance of the  class. HasFlags will be set to false.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>precision</i>: The parameter  <i>precision</i>
+is not documented yet.</p></li>
+<li><p><i>rounding</i>: The parameter  <i>rounding</i>
+is not documented yet.</p></li>
+<li><p><i>exponentMinSmall</i>: The parameter  <i>exponentMinSmall</i>
+is not documented yet.</p></li>
+<li><p><i>exponentMaxSmall</i>: The parameter  <i>exponentMaxSmall</i>
+is not documented yet.</p></li>
+<li><p><i>clampNormalExponents</i>: The parameter  <i>clampNormalExponents</i>
+is not documented yet.</p></li>
+</ul>
+
+<h3>Basic</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Basic;
+</code></pre>
+
+<p>Basic precision context, 9 digits precision, rounding mode half-up, unlimited exponent range. The default rounding mode is HalfUp.</p>
+
+<h3>BigDecimalJava</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext BigDecimalJava;
+</code></pre>
+
+<p>Precision context for Java&#39;s BigDecimal format. The default rounding mode is HalfUp.</p>
+
+<h3>Binary128</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Binary128;
+</code></pre>
+
+<p>Precision context for the IEEE-754-2008 binary128 format, 113 bits precision. The default rounding mode is HalfEven.</p>
+
+<h3>Binary16</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Binary16;
+</code></pre>
+
+<p>Precision context for the IEEE-754-2008 binary16 format, 11 bits precision. The default rounding mode is HalfEven.</p>
+
+<h3>Binary32</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Binary32;
+</code></pre>
+
+<p>Precision context for the IEEE-754-2008 binary32 format, 24 bits precision. The default rounding mode is HalfEven.</p>
+
+<h3>Binary64</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Binary64;
+</code></pre>
+
+<p>Precision context for the IEEE-754-2008 binary64 format, 53 bits precision. The default rounding mode is HalfEven.</p>
+
+<h3>CliDecimal</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext CliDecimal;
+</code></pre>
+
+<p>Precision context for the Common Language Infrastructure (.NET Framework) decimal format, 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven.</p>
+
+<h3>Decimal128</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Decimal128;
+</code></pre>
+
+<p>Precision context for the IEEE-754-2008 decimal128 format. The default rounding mode is HalfEven.</p>
+
+<h3>Decimal32</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Decimal32;
+</code></pre>
+
+<p>Precision context for the IEEE-754-2008 decimal32 format. The default rounding mode is HalfEven.</p>
+
+<h3>Decimal64</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Decimal64;
+</code></pre>
+
+<p>Precision context for the IEEE-754-2008 decimal64 format. The default rounding mode is HalfEven.</p>
+
+<h3>FlagClamped</h3>
+
+<pre><code>public static int FlagClamped = 32;
+</code></pre>
+
+<p>Signals that the exponent was adjusted to fit the exponent range.</p>
+
+<h3>FlagDivideByZero</h3>
+
+<pre><code>public static int FlagDivideByZero = 128;
+</code></pre>
+
+<p>Signals a division of a nonzero number by zero.</p>
+
+<h3>FlagInexact</h3>
+
+<pre><code>public static int FlagInexact = 1;
+</code></pre>
+
+<p>Signals that the result was rounded to a different mathematical value, but as close as possible to the original.</p>
+
+<h3>FlagInvalid</h3>
+
+<pre><code>public static int FlagInvalid = 64;
+</code></pre>
+
+<p>Signals an invalid operation.</p>
+
+<h3>FlagLostDigits</h3>
+
+<pre><code>public static int FlagLostDigits = 256;
+</code></pre>
+
+<p>Signals that an operand was rounded to a different mathematical value before an operation.</p>
+
+<h3>FlagOverflow</h3>
+
+<pre><code>public static int FlagOverflow = 16;
+</code></pre>
+
+<p>Signals that the result is non-zero and the exponent is higher than the highest exponent allowed.</p>
+
+<h3>FlagRounded</h3>
+
+<pre><code>public static int FlagRounded = 2;
+</code></pre>
+
+<p>Signals that the result was rounded to fit the precision; either the value or the exponent may have changed from the original.</p>
+
+<h3>FlagSubnormal</h3>
+
+<pre><code>public static int FlagSubnormal = 4;
+</code></pre>
+
+<p>Signals that the result&#39;s exponent, before rounding, is lower than the lowest exponent allowed.</p>
+
+<h3>FlagUnderflow</h3>
+
+<pre><code>public static int FlagUnderflow = 8;
+</code></pre>
+
+<p>Signals that the result&#39;s exponent, before rounding, is lower than the lowest exponent allowed, and the result was rounded to a different mathematical value, but as close as possible to the original.</p>
+
+<h3>Unlimited</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext Unlimited;
+</code></pre>
+
+<p>No specific limit on precision. Rounding mode HalfUp.</p>
+
+<h3>AdjustExponent</h3>
+
+<pre><code>public bool AdjustExponent { get; }
+</code></pre>
+
+<p>Gets a value indicating whether the EMax and EMin properties refer to the number&#39;s Exponent property adjusted to the number&#39;s precision, or just the number&#39;s Exponent property. The default value is true, meaning that EMax and EMin refer to the adjusted exponent. Setting this value to false (using WithAdjustExponent) is useful for modeling floating point representations with an integer mantissa and an integer exponent, such as Java&#39;s BigDecimal.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if the EMax and EMin properties refer to the number&#39;s Exponent property adjusted to the number&#39;s precision, or false if they refer to just the number&#39;s Exponent property.</p>
+
+<h3>ClampNormalExponents</h3>
+
+<pre><code>public bool ClampNormalExponents { get; }
+</code></pre>
+
+<p>Gets a value indicating whether a converted number&#39;s Exponent property will not be higher than EMax + 1 - Precision. If a number&#39;s exponent is higher than that value, but not high enough to cause overflow, the exponent is clamped to that value and enough zeros are added to the number&#39;s mantissa to account for the adjustment. If HasExponentRange is false, this value is always false.</p>
+
+<p><b>Returns:</b></p>
+
+<p>If true, a converted number&#39;s Exponent property will not be higher than EMax + 1 - Precision.</p>
+
+<h3>EMax</h3>
+
+<pre><code>public PeterO.Numbers.EInteger EMax { get; }
+</code></pre>
+
+<p>Gets the highest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The highest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
+
+<h3>EMin</h3>
+
+<pre><code>public PeterO.Numbers.EInteger EMin { get; }
+</code></pre>
+
+<p>Gets the lowest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The lowest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point.</p>
+
+<h3>Flags</h3>
+
+<pre><code>public int Flags { get; set;}
+</code></pre>
+
+<p>Gets or sets the flags that are set from converting numbers according to this precision context. If HasFlags is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example:  <code>(this.Flags &amp;
+            PrecisionContext.FlagInexact) != 0</code>  returns TRUE if the Inexact flag is set.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The flags that are set from converting numbers according to this precision context. If HasFlags is false, this value will be 0.</p>
+
+<h3>HasExponentRange</h3>
+
+<pre><code>public bool HasExponentRange { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this context defines a minimum and maximum exponent. If false, converted exponents can have any exponent and operations can&#39;t cause overflow or underflow.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this context defines a minimum and maximum exponent; otherwise, false.</p>
+
+<h3>HasFlags</h3>
+
+<pre><code>public bool HasFlags { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this context has a mutable Flags field.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this context has a mutable Flags field; otherwise, false.</p>
+
+<h3>HasMaxPrecision</h3>
+
+<pre><code>public bool HasMaxPrecision { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this context defines a maximum precision.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this context defines a maximum precision; otherwise, false.</p>
+
+<h3>IsPrecisionInBits</h3>
+
+<pre><code>public bool IsPrecisionInBits { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this context&#39;s Precision property is in bits, rather than digits. The default is false.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this context&#39;s Precision property is in bits, rather than digits; otherwise, false. The default is false.</p>
+
+<h3>IsSimplified</h3>
+
+<pre><code>public bool IsSimplified { get; }
+</code></pre>
+
+<p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see <code>http://speleotrove.com/decimal/dax3274.html</code></p>
+
+<p><b>Returns:</b></p>
+
+<p>True if a &quot;simplified&quot; arithmetic will be used; otherwise, false.</p>
+
+<h3>Precision</h3>
+
+<pre><code>public PeterO.Numbers.EInteger Precision { get; }
+</code></pre>
+
+<p>Gets the maximum length of a converted number in digits, ignoring the decimal point and exponent. For example, if precision is 3, a converted number&#39;s mantissa can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The maximum length of a converted number in digits, ignoring the decimal point and exponent.</p>
+
+<h3>Rounding</h3>
+
+<pre><code>public PeterO.Numbers.ERounding Rounding { get; }
+</code></pre>
+
+<p>Gets the desired rounding mode when converting numbers that can&#39;t be represented in the given precision and exponent range.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The desired rounding mode when converting numbers that can&#39;t be represented in the given precision and exponent range.</p>
+
+<h3>Traps</h3>
+
+<pre><code>public int Traps { get; }
+</code></pre>
+
+<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if HasFlags is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException.For example, if Traps equals FlagInexact and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal).</p>
+
+<p><b>Returns:</b></p>
+
+<p>The traps that are set for each flag in the context.</p>
+
+<h3>Copy</h3>
+
+<pre><code>public PeterO.Numbers.EContext Copy();
+</code></pre>
+
+<p>Initializes a new PrecisionContext that is a copy of another PrecisionContext.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>ExponentWithinRange</h3>
+
+<pre><code>public bool ExponentWithinRange(
+    PeterO.Numbers.EInteger exponent);
+</code></pre>
+
+<p>Determines whether a number can have the given Exponent property under this precision context.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>exponent</i>: An arbitrary-precision integer indicating the desired exponent.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if a number can have the given Exponent property under this precision context; otherwise, false. If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>exponent</i>
+is null.</li>
+</ul>
+
+<h3>ForPrecision</h3>
+
+<pre><code>public static PeterO.Numbers.EContext ForPrecision(
+    int precision);
+</code></pre>
+
+<p>Creates a new precision context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>precision</i>: Maximum number of digits (precision).</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>ForPrecisionAndRounding</h3>
+
+<pre><code>public static PeterO.Numbers.EContext ForPrecisionAndRounding(
+    int precision,
+    PeterO.Numbers.ERounding rounding);
+</code></pre>
+
+<p>Creates a new PrecisionContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>precision</i>: Maximum number of digits (precision).</p></li>
+<li><p><i>rounding</i>: An ERounding object.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>ForRounding</h3>
+
+<pre><code>public static PeterO.Numbers.EContext ForRounding(
+    PeterO.Numbers.ERounding rounding);
+</code></pre>
+
+<p>Creates a new PrecisionContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>rounding</i>: The rounding mode for the new precision context.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>ToString</h3>
+
+<pre><code>public override string ToString();
+</code></pre>
+
+<p>Gets a string representation of this object. Note that the format is not intended to be parsed and may change at any time.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A string representation of this object.</p>
+
+<h3>WithAdjustExponent</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithAdjustExponent(
+    bool adjustExponent);
+</code></pre>
+
+<p>Copies this PrecisionContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the given value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>adjustExponent</i>: The parameter  <i>adjustExponent</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithBigExponentRange</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithBigExponentRange(
+    PeterO.Numbers.EInteger exponentMin,
+    PeterO.Numbers.EInteger exponentMax);
+</code></pre>
+
+<p>Copies this precision context and sets the copy&#39;s exponent range.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponentMin</i>: Desired minimum exponent (EMin).</p></li>
+<li><p><i>exponentMax</i>: Desired maximum exponent (EMax).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>exponentMin</i>
+is null.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>exponentMax</i>
+is null.</p></li>
+</ul>
+
+<h3>WithBigPrecision</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithBigPrecision(
+    PeterO.Numbers.EInteger bigintPrecision);
+</code></pre>
+
+<p>Copies this PrecisionContext and gives it a particular precision value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigintPrecision</i>: The parameter  <i>bigintPrecision</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bigintPrecision</i>
+is null.</li>
+</ul>
+
+<h3>WithBlankFlags</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithBlankFlags();
+</code></pre>
+
+<p>Copies this PrecisionContext with HasFlags set to true and a Flags value of 0.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithExponentClamp</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithExponentClamp(
+    bool clamp);
+</code></pre>
+
+<p>Copies this precision context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the given value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>clamp</i>: The parameter  <i>clamp</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithExponentRange</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithExponentRange(
+    int exponentMinSmall,
+    int exponentMaxSmall);
+</code></pre>
+
+<p>Copies this precision context and sets the copy&#39;s exponent range.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponentMinSmall</i>: Desired minimum exponent (EMin).</p></li>
+<li><p><i>exponentMaxSmall</i>: Desired maximum exponent (EMax).</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithNoFlags</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithNoFlags();
+</code></pre>
+
+<p>Copies this PrecisionContext with HasFlags set to false and a Flags value of 0.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithPrecision</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithPrecision(
+    int precision);
+</code></pre>
+
+<p>Copies this PrecisionContext and gives it a particular precision value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>precision</i>: Desired precision. 0 means unlimited precision.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithPrecisionInBits</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithPrecisionInBits(
+    bool isPrecisionBits);
+</code></pre>
+
+<p>Copies this PrecisionContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the given value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>isPrecisionBits</i>: The parameter  <i>isPrecisionBits</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithRounding</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithRounding(
+    PeterO.Numbers.ERounding rounding);
+</code></pre>
+
+<p>Copies this PrecisionContext with the specified rounding mode.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>rounding</i>: The parameter  <i>rounding</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithSimplified</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithSimplified(
+    bool simplified);
+</code></pre>
+
+<p>Copies this PrecisionContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the given value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>simplified</i>: The parameter  <i>simplified</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithTraps</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithTraps(
+    int traps);
+</code></pre>
+
+<p>Copies this PrecisionContext with Traps set to the given value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>traps</i>: Flags representing the traps to enable. See the property &quot;Traps&quot;.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<h3>WithUnlimitedExponents</h3>
+
+<pre><code>public PeterO.Numbers.EContext WithUnlimitedExponents();
+</code></pre>
+
+<p>Copies this PrecisionContext with an unlimited exponent range.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
+
+<p><a href="/Numbers/">Back to Numbers start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

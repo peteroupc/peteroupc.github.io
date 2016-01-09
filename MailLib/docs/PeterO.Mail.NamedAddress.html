@@ -131,6 +131,27 @@ is null.</li>
     System.Collections.Generic.IList mailboxes);
 </code></pre>
 
+<p>Initializes a new instance of the  class. Takes a group name and several named email addresses as parameters, and forms a group with them.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>groupName</i>: The group&#39;s name.</p></li>
+<li><p><i>mailboxes</i>: A list of named addresses that make up the group.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>groupName</i>
+or  <i>mailboxes</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>groupName</i>
+is empty, or an item in the list is itself a group.</p></li>
+</ul>
+
 <h3>Address</h3>
 
 <pre><code>public PeterO.Mail.Address Address { get; }

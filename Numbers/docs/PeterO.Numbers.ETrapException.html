@@ -1,35 +1,71 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>APIDocs</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Numbers.ETrapException</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>APIDocs</h1>
+<h1>PeterO.Numbers.ETrapException</h1>
+
+<h2>PeterO.Numbers.ETrapException</h2>
+
+<pre><code>public class ETrapException :
+    System.ArithmeticException,
+    System.Runtime.Serialization.ISerializable,
+    System.Runtime.InteropServices._Exception
+</code></pre>
+
+<p>Exception thrown for arithmetic trap errors.</p>
+
+<h3>ETrapException Constructor</h3>
+
+<pre><code>public ETrapException(
+    int flag,
+    PeterO.Numbers.EContext ctx,
+    object result);
+</code></pre>
+
+<p>Initializes a new instance of the  class.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><a href="PeterO.DataUtilities.html">PeterO.DataUtilities</a> - Contains methods useful for reading and writing strings.
-
-<ul>
-<li><a href="PeterO.Mail.Address.html">PeterO.Mail.Address</a> - Represents an email address.</li>
-<li><a href="PeterO.Mail.ContentDisposition.html">PeterO.Mail.ContentDisposition</a> - Specifies how a message body should be displayed or             handled by a mail user agent.</li>
-<li><a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> - Description of DispositionBuilder.</li>
-<li><a href="PeterO.Mail.MediaType.html">PeterO.Mail.MediaType</a> -
-Specifies what kind of data a message body is.</li>
-<li><a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> - A mutable media type object.</li>
-<li><a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> -
-Represents an email message, and contains methods and             properties for accessing and modifying email message data.</li>
-<li><a href="PeterO.Mail.MessageDataException.html">PeterO.Mail.MessageDataException</a> - Exception thrown when a message has invalid             syntax.</li>
-<li><a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> - Represents an email address and a name for that address.</li>
-<li><a href="PeterO.SortedMap-T1-T2.html">PeterO.SortedMap&lt;T1, T2&gt;</a> - A dictionary sorted by key.</li>
-<li><a href="PeterO.Text.Idna.html">PeterO.Text.Idna</a> -
-Contains methods that implement Internationalized Domain             Names in Applications (IDNA).</li>
-<li><a href="PeterO.Text.Normalization.html">PeterO.Text.Normalization</a> - Represents a Unicode normalization form.</li>
-<li><a href="PeterO.Text.Normalizer.html">PeterO.Text.Normalizer</a> -
-Implements the Unicode normalization algorithm and contains             methods and functionality to test and convert Unicode strings for             Unicode normalization.</li>
-<li><a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> -
-A character input class that implements the Unicode             normalization algorithm and contains methods and functionality to             test and convert text strings for normalization.</li>
-</ul></li>
+<li><p><i>flag</i>: A flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p></li>
+<li><p><i>ctx</i>: A context object for arbitrary-precision arithmetic settings.</p></li>
+<li><p><i>result</i>: An arbitrary object.</p></li>
 </ul>
 
-<p><a href="/MailLib/">Back to MailLib start page.</a></p>
+<h3>Context</h3>
+
+<pre><code>public PeterO.Numbers.EContext Context { get; }
+</code></pre>
+
+<p>Gets the precision context used during the operation that triggered the trap. May be null.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The precision context used during the operation that triggered the trap. May be null.</p>
+
+<h3>Error</h3>
+
+<pre><code>public int Error { get; }
+</code></pre>
+
+<p>Gets the flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
+
+<h3>Result</h3>
+
+<pre><code>public object Result { get; }
+</code></pre>
+
+<p>Gets the defined result of the operation that caused the trap.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The defined result of the operation that caused the trap.</p>
+
+<p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div>
 <nav id="navigation">
 <p>

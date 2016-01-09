@@ -253,6 +253,28 @@ The header field name is too long or contains an invalid character, or the heade
     System.Collections.Generic.KeyValuePair header);
 </code></pre>
 
+<p>Adds a header field to the end of the message&#39;s header.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The key or value of <i>header</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+</ul>
+
 <h3>Generate</h3>
 
 <pre><code>public string Generate();
@@ -596,6 +618,30 @@ is null.</p></li>
     int index,
     System.Collections.Generic.KeyValuePair header);
 </code></pre>
+
+<p>Sets the name and value of a header field by index.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A Message object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+<li><p>System.ArgumentNullException:
+The key or value of <i>header</i>
+is null.</p></li>
+</ul>
 
 <h3>SetHeader</h3>
 
