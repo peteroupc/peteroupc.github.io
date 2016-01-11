@@ -75,7 +75,7 @@
 <pre><code>public static PeterO.Numbers.EInteger Ten { get; }
 </code></pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets the number 10 as an arbitrary-precision integer.</p>
 
 <p><b>Returns:</b></p>
 
@@ -218,17 +218,6 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <p>A 64-bit signed integer.</p>
 
-<h3>bitLength</h3>
-
-<pre><code>public int bitLength();
-</code></pre>
-
-<p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign. If the value is negative, finds the number of bits in a value equal to this object&#39;s absolute value minus 1.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The number of bits in this object&#39;s value. Returns 0 if this object&#39;s value is 0 or negative 1.</p>
-
 <h3>CanFitInInt32</h3>
 
 <pre><code>public bool CanFitInInt32();
@@ -295,7 +284,7 @@ Attempted to divide by zero.</p></li>
     PeterO.Numbers.EInteger divisor);
 </code></pre>
 
-<p>Divides this object by another big integer and returns the quotient and remainder.</p>
+<p>Divides this object by another arbitrary-precision integer and returns the quotient and remainder.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -306,7 +295,7 @@ is not documented yet.</li>
 
 <p><b>Returns:</b></p>
 
-<p>An array with two big integers: the first is the quotient, and the second is the remainder.</p>
+<p>An array with two arbitrary-precision integers: the first is the quotient, and the second is the remainder.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -368,8 +357,16 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement integer representation of the arbitrary-precision integer to create. The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, XOR each byte, and if the most-significant bit of the first byte isn&#39;t set, add an additional byte at the start with the value 255. For little-endian, the byte order is reversed from the byte order just discussed.</p></li>
-<li><p><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</p></li>
+<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement integer representation of the arbitrary-precision integer to create. The byte array is encoded using the following rules:</p></li>
+<li><p>Positive numbers have the first byte&#39;s highest bit cleared, and negative numbers have the bit set.</p></li>
+<li><p>The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. For example, the number 300 can be encoded as  <code>0x01, 0x2C</code>  and 200 as  <code>0x00, 0xC8</code> . (Note that the second example contains a set high bit in  <code>0xC8</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted as positive.)</p></li>
+<li><p>To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, and toggle each bit of each byte. Any further bits that appear beyond the most significant bit of the number will be all ones. For example, the number -450 can be encoded as <code>0xFE, 0x70</code>  and -52869 as  <code>0xFF, 0x31, 0x7B</code> . (Note that the second example contains a cleared high bit in  <code>0x31, 0x7B</code> , so an additional 0xFF is added at the start to ensure it&#39;s interpreted as negative.)</p></li>
+</ul>
+
+<p>For little-endian, the byte order is reversed from the byte order just discussed.</p>
+
+<ul>
+<li><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -507,9 +504,9 @@ is less than <i>index</i>
 The string portion is empty or in an invalid format.</p></li>
 </ul>
 
-<h3>fromString</h3>
+<h3>FromString</h3>
 
-<pre><code>public static PeterO.Numbers.EInteger fromString(
+<pre><code>public static PeterO.Numbers.EInteger FromString(
     string str);
 </code></pre>
 
@@ -574,31 +571,11 @@ is less than <i>index</i>
 The string portion is empty or in an invalid format.</p></li>
 </ul>
 
-<h3>gcd</h3>
+<h3>Gcd</h3>
 
-<pre><code>public PeterO.Numbers.EInteger gcd(
+<pre><code>public PeterO.Numbers.EInteger Gcd(
     PeterO.Numbers.EInteger bigintSecond);
 </code></pre>
-
-<p>Returns the greatest common divisor of two integers. The greatest common divisor (GCD) is also known as the greatest common factor (GCF).</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigintSecond</i>: Another arbitrary-precision integer.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An arbitrary-precision integer.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>bigintSecond</i>
-is null.</li>
-</ul>
 
 <h3>GetBits</h3>
 
@@ -622,16 +599,10 @@ is not documented yet.</p></li>
 
 <p>A 64-bit signed integer.</p>
 
-<h3>getDigitCount</h3>
+<h3>GetDigitCount</h3>
 
-<pre><code>public int getDigitCount();
+<pre><code>public int GetDigitCount();
 </code></pre>
-
-<p>Finds the number of decimal digits this number has.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The number of decimal digits. Returns 1 if this object&#39; s value is 0.</p>
 
 <h3>GetHashCode</h3>
 
@@ -644,20 +615,67 @@ is not documented yet.</p></li>
 
 <p>A 32-bit signed integer.</p>
 
-<h3>getLowBit</h3>
+<h3>GetLowBit</h3>
 
-<pre><code>public int getLowBit();
+<pre><code>public int GetLowBit();
 </code></pre>
 
-<p>Gets the lowest set bit in this number&#39;s absolute value.</p>
+<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also be the lowest set bit in the number&#39;s two&#39;s-complement representation.)</p>
 
 <p><b>Returns:</b></p>
 
-<p>The lowest bit set in the number, starting at 0. Returns 0 if this value is 0 or odd. (NOTE: In future versions, may return -1 instead if this value is 0.).</p>
+<p>The lowest bit set in the number, starting at 0. Returns -1 if this value is 0 or odd.</p>
 
-<h3>getUnsignedBitLength</h3>
+<h3>GetSignedBit</h3>
 
-<pre><code>public int getUnsignedBitLength();
+<pre><code>public bool GetSignedBit(
+    int index);
+</code></pre>
+
+<p>Returns whether a bit is set in the two&#39;s-complement representation of this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>index</i>: Zero based index of the bit to test. 0 means the least significant bit.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>True if a bit is set in the two&#39;s-complement representation of this object&#39;s value; otherwise, false.</p>
+
+<h3>GetSignedBitLength</h3>
+
+<pre><code>public int GetSignedBitLength();
+</code></pre>
+
+<p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign. If the value is negative, finds the number of bits in a value equal to this object&#39;s absolute value minus 1.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The number of bits in this object&#39;s value. Returns 0 if this object&#39;s value is 0 or negative 1.</p>
+
+<h3>GetUnsignedBit</h3>
+
+<pre><code>public bool GetUnsignedBit(
+    int n);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>n</i>: A 32-bit signed integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A Boolean object.</p>
+
+<h3>GetUnsignedBitLength</h3>
+
+<pre><code>public int GetUnsignedBitLength();
 </code></pre>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s absolute value.</p>
@@ -666,37 +684,9 @@ is not documented yet.</p></li>
 
 <p>The number of bits in this object&#39;s value. Returns 0 if this object&#39;s value is 0, and returns 1 if the value is negative 1.</p>
 
-<h3>GreatestCommonDivisor</h3>
+<h3>Mod</h3>
 
-<pre><code>public static PeterO.Numbers.EInteger GreatestCommonDivisor(
-    PeterO.Numbers.EInteger bigintFirst,
-    PeterO.Numbers.EInteger bigintSecond);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>bigintFirst</i>: Another arbitrary-precision integer.</p></li>
-<li><p><i>bigintSecond</i>: An arbitrary-precision integer. (3).</p></li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An arbitrary-precision integer.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>bigintFirst</i>
-is null.</li>
-</ul>
-
-<h3>mod</h3>
-
-<pre><code>public PeterO.Numbers.EInteger mod(
+<pre><code>public PeterO.Numbers.EInteger Mod(
     PeterO.Numbers.EInteger divisor);
 </code></pre>
 
@@ -1202,9 +1192,9 @@ or  <i>second</i>
 is null.</li>
 </ul>
 
-<h3>pow</h3>
+<h3>Pow</h3>
 
-<pre><code>public PeterO.Numbers.EInteger pow(
+<pre><code>public PeterO.Numbers.EInteger Pow(
     int powerSmall);
 </code></pre>
 
@@ -1235,7 +1225,7 @@ is less than 0.</li>
     PeterO.Numbers.EInteger power);
 </code></pre>
 
-<p>Raises an arbitrary-precision integer to a power, which is given as another big integer.</p>
+<p>Raises an arbitrary-precision integer to a power, which is given as another arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1311,7 +1301,7 @@ Attempted to divide by zero.</p></li>
     int numberBits);
 </code></pre>
 
-<p>Returns an arbitrary-precision integer with the bits shifted to the right. For this operation, the big integer is treated as a two&#39;s complement representation. Thus, for negative values, the arbitrary-precision integer is sign-extended.</p>
+<p>Returns an arbitrary-precision integer with the bits shifted to the right. For this operation, the arbitrary-precision integer is treated as a two&#39;s complement representation. Thus, for negative values, the arbitrary-precision integer is sign-extended.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1343,7 +1333,7 @@ Attempted to divide by zero.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>An array of two big integers: the first integer is the square root, and the second is the difference between this value and the square of the first integer. Returns two zeros if this value is 0 or less, or one and zero if this value equals 1.</p>
+<p>An array of two arbitrary-precision integers: the first integer is the square root, and the second is the difference between this value and the square of the first integer. Returns two zeros if this value is 0 or less, or one and zero if this value equals 1.</p>
 
 <h3>Subtract</h3>
 
@@ -1371,36 +1361,18 @@ The parameter <i>subtrahend</i>
 is null.</li>
 </ul>
 
-<h3>testBit</h3>
-
-<pre><code>public bool testBit(
-    int index);
-</code></pre>
-
-<p>Returns whether a bit is set in the two&#39;s-complement representation of this object&#39;s value.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>index</i>: Zero based index of the bit to test. 0 means the least significant bit.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>True if a bit is set in the two&#39;s-complement representation of this object&#39;s value; otherwise, false.</p>
-
 <h3>ToBytes</h3>
 
 <pre><code>public byte[] ToBytes(
     bool littleEndian);
 </code></pre>
 
-<p>Returns a byte array of this object&#39;s value. The byte array will take the form of the number&#39;s two&#39; s-complement representation, using the fewest bytes necessary to represent its value unambiguously. If this value is negative, the bits that appear &quot;before&quot; the most significant bit of the number will be all ones.</p>
+<p>Returns a byte array of this integer&#39;s value. The byte array will take the form of the number&#39;s two&#39;s-complement representation, using the fewest bytes necessary to store its value unambiguously. If this value is negative, the bits that appear beyond the most significant bit of the number will be all ones. The resulting byte array can be passed to the  <code>FromBytes()</code> method (with the same byte order) to reconstruct this integer&#39;s value.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>littleEndian</i>: If true, the least significant bits will appear first.</li>
+<li><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</li>
 </ul>
 
 <p><b>Returns:</b></p>
