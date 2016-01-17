@@ -1001,27 +1001,9 @@ is null or  <i>ctx</i>
 <p>A decimal number with the same value as  <i>dbl</i>
 .</p>
 
-<h3>FromEInteger</h3>
+<h3>FromEFloat</h3>
 
-<pre><code>public static PeterO.Numbers.EDecimal FromEInteger(
-    PeterO.Numbers.EInteger bigint);
-</code></pre>
-
-<p>Converts an arbitrary-precision integer to an arbitrary precision decimal.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigint</i>: An arbitrary-precision integer.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>An arbitrary-precision decimal number with the exponent set to 0.</p>
-
-<h3>FromExtendedFloat</h3>
-
-<pre><code>public static PeterO.Numbers.EDecimal FromExtendedFloat(
+<pre><code>public static PeterO.Numbers.EDecimal FromEFloat(
     PeterO.Numbers.EFloat bigfloat);
 </code></pre>
 
@@ -1044,6 +1026,24 @@ is null or  <i>ctx</i>
 The parameter <i>bigfloat</i>
 is null.</li>
 </ul>
+
+<h3>FromEInteger</h3>
+
+<pre><code>public static PeterO.Numbers.EDecimal FromEInteger(
+    PeterO.Numbers.EInteger bigint);
+</code></pre>
+
+<p>Converts an arbitrary-precision integer to an arbitrary precision decimal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigint</i>: An arbitrary-precision integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An arbitrary-precision decimal number with the exponent set to 0.</p>
 
 <h3>FromInt32</h3>
 
@@ -2185,8 +2185,8 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <pre><code>// After performing arithmetic operations, adjust
 // the number to 5 digits after the decimal point
 number = number.Quantize(
-  -5, // five digits after the decimal point
-  PrecisionContext.ForPrecision(25) // 25-digit precision
+-5, // five digits after the decimal point
+PrecisionContext.ForPrecision(25) // 25-digit precision
 );
 </code></pre>
 
@@ -2259,8 +2259,8 @@ number = number.Quantize(
 <pre><code>// After performing arithmetic operations, adjust
 // the number to 5 digits after the decimal point
 number = number.Quantize(
-  EInteger.FromInt32(-5), // five digits after the decimal point
-  PrecisionContext.ForPrecision(25) // 25-digit precision
+EInteger.FromInt32(-5), // five digits after the decimal point
+PrecisionContext.ForPrecision(25) // 25-digit precision
 );
 </code></pre>
 

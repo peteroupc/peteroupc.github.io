@@ -15,6 +15,8 @@
 
 <p>An arbitrary-precision integer.Thread safety:Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
+<p>An arbitrary-precision integer.Thread safety: Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
+
 <h3>ONE</h3>
 
 <pre><code>public static readonly PeterO.BigInteger ONE;
@@ -41,6 +43,8 @@
 <pre><code>public bool IsEven { get; }
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Gets a value indicating whether this value is even.</p>
 
 <p><b>Returns:</b></p>
@@ -51,6 +55,8 @@
 
 <pre><code>public bool IsPowerOfTwo { get; }
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Gets a value indicating whether this object&#39;s value is a power of two. (NOTE: This version allows negative numbers to be powers of two. In the EInteger version, only positive numbers will be considered powers of two.)</p>
 
@@ -63,6 +69,8 @@
 <pre><code>public bool IsZero { get; }
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Gets a value indicating whether this value is 0.</p>
 
 <p><b>Returns:</b></p>
@@ -73,6 +81,8 @@
 
 <pre><code>public static PeterO.BigInteger One { get; }
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Gets the arbitrary-precision integer for one.</p>
 
@@ -85,6 +95,8 @@
 <pre><code>public int Sign { get; }
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Gets the sign of this object&#39;s value.</p>
 
 <p><b>Returns:</b></p>
@@ -95,6 +107,8 @@
 
 <pre><code>public static PeterO.BigInteger Zero { get; }
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Gets the arbitrary-precision integer for zero.</p>
 
@@ -107,6 +121,8 @@
 <pre><code>public PeterO.BigInteger abs();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Returns the absolute value of this object&#39;s value.</p>
 
 <p><b>Returns:</b></p>
@@ -118,6 +134,8 @@
 <pre><code>public static PeterO.BigInteger Abs(
     PeterO.BigInteger thisValue);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Not documented yet.</p>
 
@@ -145,6 +163,8 @@ is null.</li>
     PeterO.BigInteger bigintAugend);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Adds this object and another object.</p>
 
 <p><b>Parameters:</b></p>
@@ -171,6 +191,8 @@ is null.</li>
     PeterO.BigInteger a,
     PeterO.BigInteger b);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Does an AND operation between two arbitrary-precision integer values.</p>
 
@@ -201,6 +223,8 @@ is null.</li>
 <pre><code>public int bitLength();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign. If the value is negative, finds the number of bits in a value equal to this object&#39;s absolute value minus 1.</p>
 
 <p><b>Returns:</b></p>
@@ -211,6 +235,8 @@ is null.</li>
 
 <pre><code>public bool canFitInInt();
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Returns whether this object&#39;s value can fit in a 32-bit signed integer.</p>
 
@@ -223,6 +249,8 @@ is null.</li>
 <pre><code>public sealed int CompareTo(
     PeterO.BigInteger other);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Compares an arbitrary-precision integer with this instance.</p>
 
@@ -242,6 +270,8 @@ is not documented yet.</li>
 <pre><code>public PeterO.BigInteger divide(
     PeterO.BigInteger bigintDivisor);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Divides this instance by the value of an arbitrary-precision integer. The result is rounded down (the fractional part is discarded). Except if the result is 0, it will be negative if this object is positive and the other is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
 
@@ -272,6 +302,8 @@ Attempted to divide by zero.</p></li>
 <pre><code>public PeterO.BigInteger[] divideAndRemainder(
     PeterO.BigInteger divisor);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Divides this object by another big integer and returns the quotient and remainder.</p>
 
@@ -341,7 +373,7 @@ Attempted to divide by zero.</p></li>
     bool littleEndian);
 </code></pre>
 
-<p><b>Deprecated.</b> Renamed to &#39;fromBytes&#39;.</p>
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Initializes an arbitrary-precision integer from an array of bytes.</p>
 
@@ -399,9 +431,11 @@ is null.</li>
     int radix);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Converts a string to an arbitrary-precision integer.</p>
 
-<p>The following example (C#) converts a number in the orm of a hex string to a big integer.    public static arbitrary-precision integer HexToBigInteger(string
+<p>The following example (C#) converts a number in the form of a hex string to a big integer.    public static arbitrary-precision integer HexToBigInteger(string
     hexString) {
     // Parse the hexadecimal string as a big integer. Will
     // throw a FormatException if the parsing fails
@@ -447,6 +481,8 @@ The string is empty or in an invalid format.</p></li>
     int endIndex);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Converts a portion of a string to an arbitrary-precision integer in a given radix.</p>
 
 <p><b>Parameters:</b></p>
@@ -484,6 +520,8 @@ The string portion is empty or in an invalid format.</p></li>
     string str);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Converts a string to an arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -514,6 +552,8 @@ is in an invalid format.</p></li>
     int index,
     int endIndex);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Converts a portion of a string to an arbitrary-precision integer.</p>
 
@@ -551,6 +591,8 @@ The string portion is empty or in an invalid format.</p></li>
     PeterO.BigInteger bigintSecond);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Returns the greatest common divisor of two integers. The greatest common divisor (GCD) is also known as the greatest common factor (GCF).</p>
 
 <p><b>Parameters:</b></p>
@@ -578,6 +620,8 @@ is null.</li>
     int numberBits);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
@@ -595,6 +639,8 @@ is null.</li>
 
 <pre><code>public int getDigitCount();
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Finds the number of decimal digits this number has.</p>
 
@@ -618,6 +664,8 @@ is null.</li>
 <pre><code>public int getLowBit();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Gets the lowest set bit in this number&#39;s absolute value.</p>
 
 <p><b>Returns:</b></p>
@@ -629,7 +677,7 @@ is null.</li>
 <pre><code>public int getLowestSetBit();
 </code></pre>
 
-<p><b>Deprecated.</b> Renamed to getLowBit.</p>
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>See  <code>getLowBit()</code></p>
 
@@ -641,6 +689,8 @@ is null.</li>
 
 <pre><code>public int getUnsignedBitLength();
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s absolute value.</p>
 
@@ -654,6 +704,8 @@ is null.</li>
     PeterO.BigInteger bigintFirst,
     PeterO.BigInteger bigintSecond);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Not documented yet.</p>
 
@@ -681,7 +733,7 @@ is null.</li>
 <pre><code>public int intValue();
 </code></pre>
 
-<p><b>Deprecated.</b> To make the conversion intention clearer use the &#39;intValueChecked&#39; and &#39;intValueUnchecked&#39; methods instead.</p>
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Converts this object&#39;s value to a 32-bit signed integer.</p>
 
@@ -701,6 +753,8 @@ This object&#39;s value is too big to fit a 32-bit signed integer.</li>
 <pre><code>public int intValueChecked();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Converts this object&#39;s value to a 32-bit signed integer.</p>
 
 <p><b>Returns:</b></p>
@@ -719,6 +773,8 @@ This object&#39;s value is too big to fit a 32-bit signed integer.</li>
 <pre><code>public int intValueUnchecked();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Converts this object&#39;s value to a 32-bit signed integer. If the value can&#39;t fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s two&#39;s complement representation (in which case the return value might have a different sign than this object&#39;s value).</p>
 
 <p><b>Returns:</b></p>
@@ -730,7 +786,7 @@ This object&#39;s value is too big to fit a 32-bit signed integer.</li>
 <pre><code>public long longValue();
 </code></pre>
 
-<p><b>Deprecated.</b> To make the conversion intention clearer use the &#39;longValueChecked&#39; and &#39;longValueUnchecked&#39; methods instead.</p>
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Converts this object&#39;s value to a 64-bit signed integer.</p>
 
@@ -750,6 +806,8 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 <pre><code>public long longValueChecked();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Converts this object&#39;s value to a 64-bit signed integer, throwing an exception if it can&#39;t fit.</p>
 
 <p><b>Returns:</b></p>
@@ -768,6 +826,8 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 <pre><code>public long longValueUnchecked();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Converts this object&#39;s value to a 64-bit signed integer. If the value can&#39;t fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s two&#39;s complement representation (in which case the return value might have a different sign than this object&#39;s value).</p>
 
 <p><b>Returns:</b></p>
@@ -779,6 +839,8 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 <pre><code>public PeterO.BigInteger mod(
     PeterO.BigInteger divisor);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Finds the modulus remainder that results when this instance is divided by the value of an arbitrary-precision integer. The modulus remainder is the same as the normal remainder if the normal remainder is positive, and equals divisor plus normal remainder if the normal remainder is negative.</p>
 
@@ -810,6 +872,8 @@ is null.</p></li>
     PeterO.BigInteger mod);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Calculates the remainder when an arbitrary-precision integer raised to a certain power is divided by another arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -839,6 +903,8 @@ is null.</li>
     PeterO.BigInteger pow,
     PeterO.BigInteger mod);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Calculates the remainder when an arbitrary-precision integer raised to a certain power is divided by another arbitrary-precision integer.</p>
 
@@ -874,6 +940,8 @@ is null.</li>
     PeterO.BigInteger bigintMult);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Multiplies this instance by the value of an arbitrary-precision integer object.</p>
 
 <p><b>Parameters:</b></p>
@@ -899,6 +967,8 @@ is null.</li>
 <pre><code>public PeterO.BigInteger negate();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Gets the value of this object with the sign reversed.</p>
 
 <p><b>Returns:</b></p>
@@ -910,6 +980,8 @@ is null.</li>
 <pre><code>public static PeterO.BigInteger Not(
     PeterO.BigInteger valueA);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Returns an arbitrary-precision integer with every bit flipped.</p>
 
@@ -937,6 +1009,8 @@ is null.</li>
     PeterO.BigInteger bthis,
     PeterO.BigInteger augend);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Adds an arbitrary-precision integer and an arbitrary-precision integer object.</p>
 
@@ -968,6 +1042,8 @@ is null.</li>
     PeterO.BigInteger divisor);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Divides an arbitrary-precision integer by the value of an arbitrary-precision integer object.</p>
 
 <p><b>Parameters:</b></p>
@@ -998,6 +1074,8 @@ is null.</li>
     PeterO.BigInteger otherValue);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Determines whether an arbitrary-precision integer is greater than another arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -1020,6 +1098,8 @@ is null.</li>
     PeterO.BigInteger otherValue);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Determines whether an arbitrary-precision integer value is greater than another arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -1041,6 +1121,8 @@ is null.</li>
     PeterO.BigInteger bthis,
     int bitCount);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Not documented yet.</p>
 
@@ -1070,6 +1152,8 @@ is null.</li>
     PeterO.BigInteger otherValue);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Determines whether an arbitrary-precision integer is less than another arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -1092,6 +1176,8 @@ is null.</li>
     PeterO.BigInteger otherValue);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Determines whether an arbitrary-precision integer is less than or equal to another arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -1113,6 +1199,8 @@ is null.</li>
     PeterO.BigInteger dividend,
     PeterO.BigInteger divisor);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Finds the remainder that results when an arbitrary-precision integer is divided by the value of an arbitrary-precision integer.</p>
 
@@ -1144,6 +1232,8 @@ is null.</li>
     PeterO.BigInteger operand2);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Multiplies an arbitrary-precision integer by the value of an arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -1173,6 +1263,8 @@ is null.</li>
     PeterO.BigInteger bthis,
     int smallValue);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Shifts the bits of an arbitrary-precision integer to the right.</p>
 
@@ -1204,6 +1296,8 @@ is null.</li>
     PeterO.BigInteger subtrahend);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Subtracts two arbitrary-precision integer values.</p>
 
 <p><b>Parameters:</b></p>
@@ -1231,6 +1325,8 @@ is null.</li>
     PeterO.BigInteger bigValue);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Negates an arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -1257,6 +1353,8 @@ is null.</li>
     PeterO.BigInteger first,
     PeterO.BigInteger second);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Does an OR operation between two arbitrary-precision integer instances.</p>
 
@@ -1288,6 +1386,8 @@ is null.</li>
     int powerSmall);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Raises a big integer to a power.</p>
 
 <p><b>Parameters:</b></p>
@@ -1316,6 +1416,8 @@ is less than 0.</li>
     int power);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
@@ -1338,6 +1440,8 @@ is not documented yet.</p></li>
     PeterO.BigInteger power);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
@@ -1358,6 +1462,8 @@ is not documented yet.</p></li>
 <pre><code>public PeterO.BigInteger PowBigIntVar(
     PeterO.BigInteger power);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Raises a big integer to a power, which is given as another big integer.</p>
 
@@ -1389,6 +1495,8 @@ is less than 0.</p></li>
     PeterO.BigInteger divisor);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Finds the remainder that results when this instance is divided by the value of an arbitrary-precision integer. The remainder is the value that remains when the absolute value of this object is divided by the absolute value of the other object; the remainder has the same sign (positive or negative) as this object.</p>
 
 <p><b>Parameters:</b></p>
@@ -1417,6 +1525,8 @@ Attempted to divide by zero.</p></li>
     int numberBits);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Returns a big integer with the bits shifted to the left by a number of bits. A value of 1 doubles this value, a value of 2 multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.</p>
 
 <p><b>Parameters:</b></p>
@@ -1435,6 +1545,8 @@ Attempted to divide by zero.</p></li>
     int numberBits);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Returns a big integer with the bits shifted to the right. For this operation, the arbitrary-precision integer is treated as a two&#39;s complement representation. Thus, for negative values, the arbitrary-precision integer is sign-extended.</p>
 
 <p><b>Parameters:</b></p>
@@ -1452,6 +1564,8 @@ Attempted to divide by zero.</p></li>
 <pre><code>public PeterO.BigInteger sqrt();
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Finds the square root of this instance&#39;s value, rounded down.</p>
 
 <p><b>Returns:</b></p>
@@ -1462,6 +1576,8 @@ Attempted to divide by zero.</p></li>
 
 <pre><code>public PeterO.BigInteger[] sqrtWithRemainder();
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Calculates the square root and the remainder.</p>
 
@@ -1474,6 +1590,8 @@ Attempted to divide by zero.</p></li>
 <pre><code>public PeterO.BigInteger subtract(
     PeterO.BigInteger subtrahend);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Subtracts an arbitrary-precision integer from this arbitrary-precision integer.</p>
 
@@ -1501,6 +1619,8 @@ is null.</li>
     int index);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Returns whether a bit is set in the two&#39;s-complement representation of this object&#39;s value.</p>
 
 <p><b>Parameters:</b></p>
@@ -1519,7 +1639,7 @@ is null.</li>
     bool littleEndian);
 </code></pre>
 
-<p><b>Deprecated.</b> Renamed to &#39;toBytes&#39;.</p>
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Returns a byte array of this object&#39;s value.</p>
 
@@ -1538,7 +1658,7 @@ is null.</li>
 <pre><code>public byte[] ToByteArray();
 </code></pre>
 
-<p><b>Deprecated.</b> Use &#39;toBytes(true)&#39; instead.</p>
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Not documented yet.</p>
 
@@ -1569,6 +1689,8 @@ is null.</li>
 <pre><code>public string toRadixString(
     int radix);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Generates a string representing the value of this object, in the given radix.</p>
 
@@ -1606,6 +1728,8 @@ The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less tha
     long longerValue);
 </code></pre>
 
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <p>Converts a 64-bit signed integer to a big integer.</p>
 
 <p><b>Parameters:</b></p>
@@ -1624,6 +1748,8 @@ The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less tha
     PeterO.BigInteger a,
     PeterO.BigInteger b);
 </code></pre>
+
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.Each arbitrary-precision integer is treated as a two&#39;s complement representation for the purposes of this operator.</p>
 

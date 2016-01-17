@@ -1025,7 +1025,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>Creates a binary float from a string that represents a number. See the four-parameter FromString method.</p>
 
-<p>The following example converts a number in the form of string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
+<p>The following example converts a number in the form of a string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
     return arbitrary-precision binary float.FromString(str).ToDouble();
     }</p>
 
@@ -2649,7 +2649,7 @@ is null.</li>
 
 <p>Converts this value to a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
-<p>The following example converts a number in the form of string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
+<p>The following example converts a number in the form of a string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
     return arbitrary-precision binary float.FromString(str).ToDouble();
     }</p>
 
@@ -2661,6 +2661,17 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
+
+<h3>ToEDecimal</h3>
+
+<pre><code>public PeterO.Numbers.EDecimal ToEDecimal();
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>An EDecimal object.</p>
 
 <h3>ToEInteger</h3>
 
@@ -2715,6 +2726,8 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <pre><code>public PeterO.Numbers.EDecimal ToExtendedDecimal();
 </code></pre>
+
+<p><b>Deprecated.</b> Renamed to ToEDecimal.</p>
 
 <p>Not documented yet.</p>
 

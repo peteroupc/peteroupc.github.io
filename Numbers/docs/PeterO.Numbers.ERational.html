@@ -473,27 +473,9 @@ is not documented yet.</li>
 <p>A rational number with the same value as  <i>flt</i>
 .</p>
 
-<h3>FromEInteger</h3>
+<h3>FromEDecimal</h3>
 
-<pre><code>public static PeterO.Numbers.ERational FromEInteger(
-    PeterO.Numbers.EInteger bigint);
-</code></pre>
-
-<p>Converts an arbitrary-precision integer to a rational number.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigint</i>: An arbitrary-precision integer.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>The exact value of the integer as a rational number.</p>
-
-<h3>FromExtendedDecimal</h3>
-
-<pre><code>public static PeterO.Numbers.ERational FromExtendedDecimal(
+<pre><code>public static PeterO.Numbers.ERational FromEDecimal(
     PeterO.Numbers.EDecimal ef);
 </code></pre>
 
@@ -517,9 +499,9 @@ The parameter <i>ef</i>
 is null.</li>
 </ul>
 
-<h3>FromExtendedFloat</h3>
+<h3>FromEFloat</h3>
 
-<pre><code>public static PeterO.Numbers.ERational FromExtendedFloat(
+<pre><code>public static PeterO.Numbers.ERational FromEFloat(
     PeterO.Numbers.EFloat ef);
 </code></pre>
 
@@ -542,6 +524,24 @@ is null.</li>
 The parameter <i>ef</i>
 is null.</li>
 </ul>
+
+<h3>FromEInteger</h3>
+
+<pre><code>public static PeterO.Numbers.ERational FromEInteger(
+    PeterO.Numbers.EInteger bigint);
+</code></pre>
+
+<p>Converts an arbitrary-precision integer to a rational number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigint</i>: An arbitrary-precision integer.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The exact value of the integer as a rational number.</p>
 
 <h3>FromInt32</h3>
 
