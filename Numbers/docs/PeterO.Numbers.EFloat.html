@@ -185,7 +185,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>The absolute value of this object.</p>
+<p>The absolute value of this object. Signals FlagInvalid and returns quiet NaN if this value is signaling NaN.</p>
 
 <h3>Abs</h3>
 
@@ -196,7 +196,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary float.</p>
+<p>An arbitrary-precision binary float. Returns signaling NaN if this value is signaling NaN.</p>
 
 <h3>Add</h3>
 
@@ -281,6 +281,66 @@
 
 <p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<h3>CompareToTotal</h3>
+
+<pre><code>public int CompareToTotal(
+    PeterO.Numbers.EFloat other);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: The parameter  <i>other</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>CompareToTotal</h3>
+
+<pre><code>public int CompareToTotal(
+    PeterO.Numbers.EFloat other,
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>other</i>: The parameter  <i>other</i>
+is not documented yet.</p></li>
+<li><p><i>ctx</i>: The parameter  <i>ctx</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>CompareToTotalMagnitude</h3>
+
+<pre><code>public int CompareToTotalMagnitude(
+    PeterO.Numbers.EFloat other);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: The parameter  <i>other</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
 <h3>CompareToWithContext</h3>
 
 <pre><code>public PeterO.Numbers.EFloat CompareToWithContext(
@@ -302,6 +362,33 @@
 <p><b>Returns:</b></p>
 
 <p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+
+<h3>CopySign</h3>
+
+<pre><code>public PeterO.Numbers.EFloat CopySign(
+    PeterO.Numbers.EFloat other);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: The parameter  <i>other</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An EFloat object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>other</i>
+is null.</li>
+</ul>
 
 <h3>Create</h3>
 
@@ -476,12 +563,14 @@ is null or  <i>ctx</i>
     PeterO.Numbers.EFloat divisor);
 </code></pre>
 
-<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
+<p><b>Deprecated.</b> Renamed to DivRemNaturalScale.</p>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>divisor</i>: The number to divide by.</li>
+<li><i>divisor</i>: An arbitrary-precision decimal number to divide by.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -495,13 +584,15 @@ is null or  <i>ctx</i>
     PeterO.Numbers.EContext ctx);
 </code></pre>
 
-<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
+<p><b>Deprecated.</b> Renamed to DivRemNaturalScale.</p>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: The number to divide by.</p></li>
-<li><p><i>ctx</i>: A precision context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it&#39;s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context&#39;s HasFlags is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
+<li><p><i>divisor</i>: An arbitrary-precision decimal number to divide by.</p></li>
+<li><p><i>ctx</i>: A precision context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it&#39;s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context&#39;s HasFlags is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -715,6 +806,44 @@ The rounding mode is ERounding.None and the integer part of the result is not ex
 <li>System.ArithmeticException:
 The rounding mode is ERounding.None and the result is not exact.</li>
 </ul>
+
+<h3>DivRemNaturalScale</h3>
+
+<pre><code>public PeterO.Numbers.EFloat[] DivRemNaturalScale(
+    PeterO.Numbers.EFloat divisor);
+</code></pre>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>divisor</i>: The number to divide by.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 2 element array consisting of the quotient and remainder in that order.</p>
+
+<h3>DivRemNaturalScale</h3>
+
+<pre><code>public PeterO.Numbers.EFloat[] DivRemNaturalScale(
+    PeterO.Numbers.EFloat divisor,
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale. This is meant to be similar to the divideAndRemainder method in Java&#39;s BigDecimal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>divisor</i>: The number to divide by.</p></li>
+<li><p><i>ctx</i>: A precision context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it&#39;s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context&#39;s HasFlags is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A 2 element array consisting of the quotient and remainder in that order.</p>
 
 <h3>Equals</h3>
 
@@ -1603,7 +1732,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary float. If this value is positive zero, returns positive zero.</p>
+<p>An arbitrary-precision binary float. If this value is positive zero, returns positive zero. Signals FlagInvalid and returns quiet NaN if this value is signaling NaN.</p>
 
 <h3>Negate</h3>
 
@@ -1614,7 +1743,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary float. If this value is positive zero, returns positive zero.</p>
+<p>An arbitrary-precision binary float. If this value is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
 
 <h3>NextMinus</h3>
 
@@ -2243,11 +2372,49 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>A binary number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the precision context.</p>
 
+<h3>RoundToIntegerExact</h3>
+
+<pre><code>public PeterO.Numbers.EFloat RoundToIntegerExact(
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context to control precision and rounding of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary number rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the precision context.</p>
+
+<h3>RoundToIntegerNoRoundedFlag</h3>
+
+<pre><code>public PeterO.Numbers.EFloat RoundToIntegerNoRoundedFlag(
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Returns a binary number with the same value as this object but rounded to an integer, without adding the FlagInexact or FlagRounded flags.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context to control precision and rounding of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags), except that this function will never add the FlagRounded and FlagInexact flags (the only difference between this and RoundToExponentExact). Can be null, in which case the default rounding mode is HalfEven.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>A binary number rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the precision context.</p>
+
 <h3>RoundToIntegralExact</h3>
 
 <pre><code>public PeterO.Numbers.EFloat RoundToIntegralExact(
     PeterO.Numbers.EContext ctx);
 </code></pre>
+
+<p><b>Deprecated.</b> Renamed to RoundToIntegerExact.</p>
 
 <p>Returns a binary number with the same value as this object but rounded to an integer, and signals an invalid operation if the result would be inexact.</p>
 
@@ -2266,6 +2433,8 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <pre><code>public PeterO.Numbers.EFloat RoundToIntegralNoRoundedFlag(
     PeterO.Numbers.EContext ctx);
 </code></pre>
+
+<p><b>Deprecated.</b> Renamed to RoundToIntegerNoRoundedFlag.</p>
 
 <p>Returns a binary number with the same value as this object but rounded to an integer, without adding the FlagInexact or FlagRounded flags.</p>
 
@@ -2374,6 +2543,32 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p>A number whose scale is increased by  <i>bigPlaces</i>
 .</p>
+
+<h3>Sqrt</h3>
+
+<pre><code>public PeterO.Numbers.EFloat Sqrt(
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Finds the square root of this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: A precision context to control precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).This parameter cannot be null, as the square root function&#39;s results are generally not exact for many inputs.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN).</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter <i>ctx</i>
+is null or the precision is unlimited (the context&#39;s Precision property is 0).</li>
+</ul>
 
 <h3>SquareRoot</h3>
 
@@ -2526,6 +2721,42 @@ This object&#39;s value is not an exact integer.</p></li>
 <p><b>Returns:</b></p>
 
 <p>An EDecimal object.</p>
+
+<h3>ToInt32Checked</h3>
+
+<pre><code>public int ToInt32Checked();
+</code></pre>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>ToInt32Unchecked</h3>
+
+<pre><code>public int ToInt32Unchecked();
+</code></pre>
+
+<p><b>Returns:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>ToInt64Checked</h3>
+
+<pre><code>public long ToInt64Checked();
+</code></pre>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
+
+<h3>ToInt64Unchecked</h3>
+
+<pre><code>public long ToInt64Unchecked();
+</code></pre>
+
+<p><b>Returns:</b></p>
+
+<p>A 64-bit signed integer.</p>
 
 <h3>ToPlainString</h3>
 
