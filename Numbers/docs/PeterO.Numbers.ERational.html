@@ -268,18 +268,17 @@ is null.</li>
     PeterO.Numbers.ERational other);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: The parameter  <i>other</i>
-is not documented yet.</li>
+<li><i>other</i>: A number whose sign will be copied.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An ERational object.</p>
+<p>An arbitrary-precision rational number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -543,6 +542,62 @@ is null.</li>
 
 <p>The exact value of the integer as a rational number.</p>
 
+<h3>FromExtendedDecimal</h3>
+
+<pre><code>public static PeterO.Numbers.ERational FromExtendedDecimal(
+    PeterO.Numbers.EDecimal ef);
+</code></pre>
+
+<p><b>Deprecated.</b> Renamed to FromEDecimal.</p>
+
+<p>Converts an arbitrary-precision decimal number to a rational number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ef</i>: An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An arbitrary-precision rational number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>ef</i>
+is null.</li>
+</ul>
+
+<h3>FromExtendedFloat</h3>
+
+<pre><code>public static PeterO.Numbers.ERational FromExtendedFloat(
+    PeterO.Numbers.EFloat ef);
+</code></pre>
+
+<p><b>Deprecated.</b> Renamed to FromEFloat.</p>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ef</i>: An arbitrary-precision binary float.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An arbitrary-precision rational number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>ef</i>
+is null.</li>
+</ul>
+
 <h3>FromInt32</h3>
 
 <pre><code>public static PeterO.Numbers.ERational FromInt32(
@@ -777,6 +832,100 @@ is null.</li>
 
 <p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
 
+<h3>ToEDecimal</h3>
+
+<pre><code>public PeterO.Numbers.EDecimal ToEDecimal(
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Converts this rational number to a decimal number and rounds the result to the given precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: An EContext object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An arbitrary-precision decimal.</p>
+
+<h3>ToEDecimal</h3>
+
+<pre><code>public PeterO.Numbers.EDecimal ToEDecimal();
+</code></pre>
+
+<p>Converts this rational number to a decimal number.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The exact value of the rational number, or not-a-number (NaN) if the result can&#39;t be exact because it has a nonterminating decimal expansion.</p>
+
+<h3>ToEDecimalExactIfPossible</h3>
+
+<pre><code>public PeterO.Numbers.EDecimal ToEDecimalExactIfPossible(
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: An arithmetic context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating decimal expansion. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedDecimal.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An arbitrary-precision decimal.</p>
+
+<h3>ToEFloat</h3>
+
+<pre><code>public PeterO.Numbers.EFloat ToEFloat(
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Converts this rational number to a binary number and rounds the result to the given precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: An EContext object.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An arbitrary-precision binary float.</p>
+
+<h3>ToEFloat</h3>
+
+<pre><code>public PeterO.Numbers.EFloat ToEFloat();
+</code></pre>
+
+<p>Converts this rational number to a binary number.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The exact value of the rational number, or not-a-number (NaN) if the result can&#39;t be exact because it has a nonterminating binary expansion.</p>
+
+<h3>ToEFloatExactIfPossible</h3>
+
+<pre><code>public PeterO.Numbers.EFloat ToEFloatExactIfPossible(
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Converts this rational number to a binary number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: An arithmetic context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating binary expansion. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedFloat.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An arbitrary-precision binary float.</p>
+
 <h3>ToEInteger</h3>
 
 <pre><code>public PeterO.Numbers.EInteger ToEInteger();
@@ -821,12 +970,14 @@ This object&#39;s value is not an exact integer.</p></li>
     PeterO.Numbers.EContext ctx);
 </code></pre>
 
+<p><b>Deprecated.</b> Renamed to ToEDecimal.</p>
+
 <p>Converts this rational number to a decimal number and rounds the result to the given precision.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A PrecisionContext object.</li>
+<li><i>ctx</i>: An EContext object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -837,6 +988,8 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <pre><code>public PeterO.Numbers.EDecimal ToExtendedDecimal();
 </code></pre>
+
+<p><b>Deprecated.</b> Renamed to ToEDecimal.</p>
 
 <p>Converts this rational number to a decimal number.</p>
 
@@ -850,12 +1003,14 @@ This object&#39;s value is not an exact integer.</p></li>
     PeterO.Numbers.EContext ctx);
 </code></pre>
 
+<p><b>Deprecated.</b> Renamed to ToEDecimalExactIfPossible.</p>
+
 <p>Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A precision context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating decimal expansion. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedDecimal.</li>
+<li><i>ctx</i>: An arithmetic context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating decimal expansion. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedDecimal.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -868,12 +1023,14 @@ This object&#39;s value is not an exact integer.</p></li>
     PeterO.Numbers.EContext ctx);
 </code></pre>
 
+<p><b>Deprecated.</b> Renamed to ToEFloat.</p>
+
 <p>Converts this rational number to a binary number and rounds the result to the given precision.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A PrecisionContext object.</li>
+<li><i>ctx</i>: An EContext object.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -884,6 +1041,8 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <pre><code>public PeterO.Numbers.EFloat ToExtendedFloat();
 </code></pre>
+
+<p><b>Deprecated.</b> Renamed to ToEFloat.</p>
 
 <p>Converts this rational number to a binary number.</p>
 
@@ -897,12 +1056,14 @@ This object&#39;s value is not an exact integer.</p></li>
     PeterO.Numbers.EContext ctx);
 </code></pre>
 
+<p><b>Deprecated.</b> Renamed to ToEFloatExactIfPossible.</p>
+
 <p>Converts this rational number to a binary number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A precision context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating binary expansion. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedFloat.</li>
+<li><i>ctx</i>: An arithmetic context object to control the precision. The rounding and exponent range settings of this context are ignored. This context will be used only if the exact result would have a nonterminating binary expansion. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case this method is the same as ToExtendedFloat.</li>
 </ul>
 
 <p><b>Returns:</b></p>

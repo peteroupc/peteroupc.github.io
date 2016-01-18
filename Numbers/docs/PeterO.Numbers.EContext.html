@@ -21,7 +21,7 @@
     bool clampNormalExponents);
 </code></pre>
 
-<p>Initializes a new instance of the  class. HasFlags will be set to false.</p>
+<p>Initializes a new instance of the  class.  <code>HasFlags</code>  will be set to false.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -43,70 +43,70 @@ is not documented yet.</p></li>
 <pre><code>public static readonly PeterO.Numbers.EContext Basic;
 </code></pre>
 
-<p>Basic precision context, 9 digits precision, rounding mode half-up, unlimited exponent range. The default rounding mode is HalfUp.</p>
+<p>A basic arithmetic context, 9 digits precision, rounding mode half-up, unlimited exponent range. The default rounding mode is HalfUp.</p>
 
 <h3>BigDecimalJava</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext BigDecimalJava;
 </code></pre>
 
-<p>Precision context for Java&#39;s BigDecimal format. The default rounding mode is HalfUp.</p>
+<p>An arithmetic context for Java&#39;s BigDecimal format. The default rounding mode is HalfUp.</p>
 
 <h3>Binary128</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext Binary128;
 </code></pre>
 
-<p>Precision context for the IEEE-754-2008 binary128 format, 113 bits precision. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the IEEE-754-2008 binary128 format, 113 bits precision. The default rounding mode is HalfEven.</p>
 
 <h3>Binary16</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext Binary16;
 </code></pre>
 
-<p>Precision context for the IEEE-754-2008 binary16 format, 11 bits precision. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the IEEE-754-2008 binary16 format, 11 bits precision. The default rounding mode is HalfEven.</p>
 
 <h3>Binary32</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext Binary32;
 </code></pre>
 
-<p>Precision context for the IEEE-754-2008 binary32 format, 24 bits precision. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the IEEE-754-2008 binary32 format, 24 bits precision. The default rounding mode is HalfEven.</p>
 
 <h3>Binary64</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext Binary64;
 </code></pre>
 
-<p>Precision context for the IEEE-754-2008 binary64 format, 53 bits precision. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits precision. The default rounding mode is HalfEven.</p>
 
 <h3>CliDecimal</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext CliDecimal;
 </code></pre>
 
-<p>Precision context for the Common Language Infrastructure (.NET Framework) decimal format, 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the Common Language Infrastructure (.NET Framework) decimal format, 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven.</p>
 
 <h3>Decimal128</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext Decimal128;
 </code></pre>
 
-<p>Precision context for the IEEE-754-2008 decimal128 format. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the IEEE-754-2008 decimal128 format. The default rounding mode is HalfEven.</p>
 
 <h3>Decimal32</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext Decimal32;
 </code></pre>
 
-<p>Precision context for the IEEE-754-2008 decimal32 format. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the IEEE-754-2008 decimal32 format. The default rounding mode is HalfEven.</p>
 
 <h3>Decimal64</h3>
 
 <pre><code>public static readonly PeterO.Numbers.EContext Decimal64;
 </code></pre>
 
-<p>Precision context for the IEEE-754-2008 decimal64 format. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the IEEE-754-2008 decimal64 format. The default rounding mode is HalfEven.</p>
 
 <h3>FlagClamped</h3>
 
@@ -227,12 +227,12 @@ is not documented yet.</p></li>
 <pre><code>public int Flags { get; set;}
 </code></pre>
 
-<p>Gets or sets the flags that are set from converting numbers according to this precision context. If HasFlags is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example:  <code>(this.Flags &amp;
-            PrecisionContext.FlagInexact) != 0</code>  returns TRUE if the Inexact flag is set.</p>
+<p>Gets or sets the flags that are set from converting numbers according to this arithmetic context. If  <code>HasFlags</code>  is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example:  <code>(this.Flags &amp;
+            EContext.FlagInexact) != 0</code>  returns TRUE if the Inexact flag is set.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The flags that are set from converting numbers according to this precision context. If HasFlags is false, this value will be 0.</p>
+<p>The flags that are set from converting numbers according to this arithmetic context. If  <code>HasFlags</code>  is false, this value will be 0.</p>
 
 <h3>HasExponentRange</h3>
 
@@ -316,7 +316,7 @@ is not documented yet.</p></li>
 <pre><code>public int Traps { get; }
 </code></pre>
 
-<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if HasFlags is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException.For example, if Traps equals FlagInexact and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal).</p>
+<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if  <code>HasFlags</code>  is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException.For example, if Traps equals FlagInexact and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal).</p>
 
 <p><b>Returns:</b></p>
 
@@ -327,7 +327,7 @@ is not documented yet.</p></li>
 <pre><code>public PeterO.Numbers.EContext Copy();
 </code></pre>
 
-<p>Initializes a new PrecisionContext that is a copy of another PrecisionContext.</p>
+<p>Initializes a new EContext that is a copy of another EContext.</p>
 
 <p><b>Returns:</b></p>
 
@@ -339,7 +339,7 @@ is not documented yet.</p></li>
     PeterO.Numbers.EInteger exponent);
 </code></pre>
 
-<p>Determines whether a number can have the given Exponent property under this precision context.</p>
+<p>Determines whether a number can have the given Exponent property under this arithmetic context.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -349,7 +349,7 @@ is not documented yet.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>True if a number can have the given Exponent property under this precision context; otherwise, false. If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
+<p>True if a number can have the given Exponent property under this arithmetic context; otherwise, false. If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -365,7 +365,7 @@ is null.</li>
     int precision);
 </code></pre>
 
-<p>Creates a new precision context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</p>
+<p>Creates a new arithmetic context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -384,7 +384,7 @@ is null.</li>
     PeterO.Numbers.ERounding rounding);
 </code></pre>
 
-<p>Creates a new PrecisionContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</p>
+<p>Creates a new EContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -403,7 +403,7 @@ is null.</li>
     PeterO.Numbers.ERounding rounding);
 </code></pre>
 
-<p>Creates a new PrecisionContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</p>
+<p>Creates a new EContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -432,7 +432,7 @@ is null.</li>
     bool adjustExponent);
 </code></pre>
 
-<p>Copies this PrecisionContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the given value.</p>
+<p>Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the given value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -452,7 +452,7 @@ is not documented yet.</li>
     PeterO.Numbers.EInteger exponentMax);
 </code></pre>
 
-<p>Copies this precision context and sets the copy&#39;s exponent range.</p>
+<p>Copies this arithmetic context and sets the copy&#39;s exponent range.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -482,7 +482,7 @@ is null.</p></li>
     PeterO.Numbers.EInteger bigintPrecision);
 </code></pre>
 
-<p>Copies this PrecisionContext and gives it a particular precision value.</p>
+<p>Copies this EContext and gives it a particular precision value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -508,7 +508,7 @@ is null.</li>
 <pre><code>public PeterO.Numbers.EContext WithBlankFlags();
 </code></pre>
 
-<p>Copies this PrecisionContext with HasFlags set to true and a Flags value of 0.</p>
+<p>Copies this EContext with  <code>HasFlags</code>  set to true and a Flags value of 0.</p>
 
 <p><b>Returns:</b></p>
 
@@ -520,7 +520,7 @@ is null.</li>
     bool clamp);
 </code></pre>
 
-<p>Copies this precision context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the given value.</p>
+<p>Copies this arithmetic context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the given value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -540,7 +540,7 @@ is not documented yet.</li>
     int exponentMaxSmall);
 </code></pre>
 
-<p>Copies this precision context and sets the copy&#39;s exponent range.</p>
+<p>Copies this arithmetic context and sets the copy&#39;s exponent range.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -558,7 +558,7 @@ is not documented yet.</li>
 <pre><code>public PeterO.Numbers.EContext WithNoFlags();
 </code></pre>
 
-<p>Copies this PrecisionContext with HasFlags set to false and a Flags value of 0.</p>
+<p>Copies this EContext with  <code>HasFlags</code>  set to false and a Flags value of 0.</p>
 
 <p><b>Returns:</b></p>
 
@@ -570,7 +570,7 @@ is not documented yet.</li>
     int precision);
 </code></pre>
 
-<p>Copies this PrecisionContext and gives it a particular precision value.</p>
+<p>Copies this EContext and gives it a particular precision value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -588,7 +588,7 @@ is not documented yet.</li>
     bool isPrecisionBits);
 </code></pre>
 
-<p>Copies this PrecisionContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the given value.</p>
+<p>Copies this EContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the given value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -607,7 +607,7 @@ is not documented yet.</li>
     PeterO.Numbers.ERounding rounding);
 </code></pre>
 
-<p>Copies this PrecisionContext with the specified rounding mode.</p>
+<p>Copies this EContext with the specified rounding mode.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -626,7 +626,7 @@ is not documented yet.</li>
     bool simplified);
 </code></pre>
 
-<p>Copies this PrecisionContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the given value.</p>
+<p>Copies this EContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the given value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -645,7 +645,7 @@ is not documented yet.</li>
     int traps);
 </code></pre>
 
-<p>Copies this PrecisionContext with Traps set to the given value.</p>
+<p>Copies this EContext with Traps set to the given value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -662,7 +662,7 @@ is not documented yet.</li>
 <pre><code>public PeterO.Numbers.EContext WithUnlimitedExponents();
 </code></pre>
 
-<p>Copies this PrecisionContext with an unlimited exponent range.</p>
+<p>Copies this EContext with an unlimited exponent range.</p>
 
 <p><b>Returns:</b></p>
 

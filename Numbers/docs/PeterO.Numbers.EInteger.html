@@ -53,11 +53,11 @@
 <pre><code>public static PeterO.Numbers.EInteger One { get; }
 </code></pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets the number 1 as an arbitrary-precision integer.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value not documented yet.</p>
+<p>The number 1 as an arbitrary-precision integer.</p>
 
 <h3>Sign</h3>
 
@@ -395,18 +395,17 @@ is null.</li>
     int intValue);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Converts a 32-bit signed integer to an arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intValue</i>: The parameter  <i>intValue</i>
-is not documented yet.</li>
+<li><i>intValue</i>: A 32-bit signed integer.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An EInteger object.</p>
+<p>An arbitrary-precision integer with the same value as the 64-bit number.</p>
 
 <h3>FromInt64</h3>
 
@@ -414,13 +413,12 @@ is not documented yet.</li>
     long longerValue);
 </code></pre>
 
-<p>Converts a 64-bit signed integer to a big integer.</p>
+<p>Converts a 64-bit signed integer to an arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>longerValue</i>: The parameter  <i>longerValue</i>
-is not documented yet.</li>
+<li><i>longerValue</i>: A 64-bit signed integer.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -436,13 +434,13 @@ is not documented yet.</li>
 
 <p>Converts a string to an arbitrary-precision integer.</p>
 
-<p>The following example (C#) converts a number in the form of a hex string to an arbitrary-precision integer.    public static arbitrary-precision integer HexToEInteger(string
+<p>The following example (C#) converts a number in the form of a hex string to an arbitrary-precision integer.    public static EInteger HexToEInteger(string
     hexString) {
     // Parse the hexadecimal string as an arbitrary-precision integer. Will
     // throw a FormatException if the parsing fails
     var bigInteger = EInteger.fromRadixString(hexString, 16);
     // Optional: Check if the parsed integer is negative
-    if (EInteger.Sign &lt; 0) {
+    if (bigInteger.Sign &lt; 0) {
     throw new FormatException(&quot;negative hex string&quot;);
     }
     return bigInteger;
@@ -903,6 +901,42 @@ The parameter <i>bthis</i>
 is null.</li>
 </ul>
 
+<h3>Operator <code>&amp;</code></h3>
+
+<pre><code>public static PeterO.Numbers.EInteger operator &amp;(
+    PeterO.Numbers.EInteger thisValue,
+    PeterO.Numbers.EInteger otherValue);
+</code></pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>thisValue</i>: Not documented yet.</p></li>
+<li><p><i>otherValue</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An EInteger object.</p>
+
+<h3>Operator <code>|</code></h3>
+
+<pre><code>public static PeterO.Numbers.EInteger operator |(
+    PeterO.Numbers.EInteger thisValue,
+    PeterO.Numbers.EInteger otherValue);
+</code></pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>thisValue</i>: Not documented yet.</p></li>
+<li><p><i>otherValue</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An EInteger object.</p>
+
 <h3>Operator <code>/</code></h3>
 
 <pre><code>public static PeterO.Numbers.EInteger operator /(
@@ -932,6 +966,24 @@ is not documented yet.</p></li>
 The parameter <i>dividend</i>
 is null.</li>
 </ul>
+
+<h3>Operator <code>^</code></h3>
+
+<pre><code>public static PeterO.Numbers.EInteger operator ^(
+    PeterO.Numbers.EInteger thisValue,
+    PeterO.Numbers.EInteger otherValue);
+</code></pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>thisValue</i>: Not documented yet.</p></li>
+<li><p><i>otherValue</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An EInteger object.</p>
 
 <h3>Operator <code>&gt;</code></h3>
 
@@ -1108,6 +1160,22 @@ is not documented yet.</p></li>
 The parameter <i>operand1</i>
 is null.</li>
 </ul>
+
+<h3>Operator <code>~</code></h3>
+
+<pre><code>public static PeterO.Numbers.EInteger operator ~(
+    PeterO.Numbers.EInteger thisValue);
+</code></pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>thisValue</i>: Not documented yet.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An EInteger object.</p>
 
 <h3>Operator <code>&gt;&gt;</code></h3>
 

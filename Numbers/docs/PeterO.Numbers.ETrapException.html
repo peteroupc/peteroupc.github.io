@@ -37,22 +37,22 @@
 <pre><code>public PeterO.Numbers.EContext Context { get; }
 </code></pre>
 
-<p>Gets the precision context used during the operation that triggered the trap. May be null.</p>
+<p>Gets the arithmetic context used during the operation that triggered the trap. May be null.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The precision context used during the operation that triggered the trap. May be null.</p>
+<p>The arithmetic context used during the operation that triggered the trap. May be null.</p>
 
 <h3>Error</h3>
 
 <pre><code>public int Error { get; }
 </code></pre>
 
-<p>Gets the flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
+<p>Gets the flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
+<p>The flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
 
 <h3>Result</h3>
 
