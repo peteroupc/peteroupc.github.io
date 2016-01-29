@@ -11,6 +11,8 @@
     System.IEquatable
 </code></pre>
 
+<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EDecimal</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EDecimal</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method, among other things, but for method, among other things (by including the new library in your code), but for this versionof the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EDecimal</code>  as a parameter or return value.</p>
+
 <p>Represents an arbitrary-precision decimal floating-point number.About decimal arithmetic</p>
 
 <p>Decimal (base-10) arithmetic, such as that provided by this class, is appropriate for calculations involving such real-world data as prices and other sums of money, tax rates, and measurements. These calculations often involve multiplying or dividing one decimal with another decimal, or performing other operations on decimal numbers. Many of these calculations also rely on rounding behavior in which the result after rounding is a decimal number (for example, multiplying a price by a premium rate, then rounding, should result in a decimal amount of money).</p>
@@ -2911,7 +2913,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact. However, the resulting binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number (float or double).</p>
+<p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value. (NOTE: This documentation previously said the binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number. Due to double rounding, this will generally not be the case for certain numbers converted from decimal to ExtendedFloat via this method and in turn converted to  <code>double</code>  or  <code>float</code> .)</p>
 
 <p><b>Returns:</b></p>
 

@@ -11,7 +11,11 @@
     System.IEquatable
 </code></pre>
 
-<p>Represents an arbitrary-precision binary floating-point number. Consists of an integer mantissa and an integer exponent, both arbitrary-precision. The value of the number equals mantissa * 2^exponent. This class also supports values for negative zero, not-a-number (NaN) values, and infinity.Passing a signaling NaN to any arithmetic operation shown here will signal the flag FlagInvalid and return a quiet NaN, even if another operand to that operation is a quiet NaN, unless noted otherwise.</p>
+<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EFloat</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EFloat</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method, among other things, but for method, among other things (by including the new library in your code), but for this versionof the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EFloat</code>  as a parameter or return value.</p>
+
+<p>Represents an arbitrary-precision binary floating-point number. Consists of an integer mantissa and an integer exponent, both arbitrary-precision. The value of the number equals mantissa * 2^exponent. This class also supports values for negative zero, not-a-number (NaN) values, and infinity.</p>
+
+<p>Passing a signaling NaN to any arithmetic operation shown here will signal the flag FlagInvalid and return a quiet NaN, even if another operand to that operation is a quiet NaN, unless noted otherwise.</p>
 
 <p>Passing a quiet NaN to any arithmetic operation shown here will return a quiet NaN, unless noted otherwise.</p>
 
@@ -1141,7 +1145,7 @@ is less than  <i>length</i>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Creates a binary float from a string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact. However, the resulting binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number (float or double).The format of the string generally consists of:</p>
+<p>Creates a binary float from a string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value. (NOTE: This documentation previously said the binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number. Due to double rounding, this will generally not be the case for certain numbers converted from decimal to ExtendedFloat via this method and in turn converted to  <code>double</code>  or  <code>float</code> .)The format of the string generally consists of:</p>
 
 <ul>
 <li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
