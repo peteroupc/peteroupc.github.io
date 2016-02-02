@@ -506,7 +506,7 @@ is less than 0.</p></li>
 <li><p><i>diag</i>: A number to use as diagnostic information associated with this object. If none is needed, should be zero.</p></li>
 <li><p><i>signaling</i>: Whether the return value will be signaling (true) or quiet (false).</p></li>
 <li><p><i>negative</i>: Whether the return value is negative.</p></li>
-<li><p><i>ctx</i>: An EContext object.</p></li>
+<li><p><i>ctx</i>: An arithmetic context to control the precision (in bits) of the diagnostic information. The rounding and exponent range of this context will be ignored. Can be null. The only flag that can be signaled in this context is FlagInvalid, which happens if diagnostic information needs to be truncated and too much memory is required to do so.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1047,7 +1047,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p>Creates a binary float from a string that represents a number. See the four-parameter FromString method.</p>
 
 <p>The following example converts a number in the form of a string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
-    return arbitrary-precision binary float.FromString(str).ToDouble();
+    return EFloat.FromString(str).ToDouble();
     }</p>
 
 <p><b>Parameters:</b></p>
@@ -1132,7 +1132,7 @@ begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
 (but not more than  <i>str</i>
 &#39;s length).</p></li>
-<li><p><i>ctx</i>: An EContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
+<li><p><i>ctx</i>: An EContext object specifying the precision, rounding, and exponent range (in bits) to apply to the parsed number. Can be null.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1623,7 +1623,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>A number whose scale is increased by  <i>bigPlaces</i>
+<p>A number whose exponent is increased by  <i>bigPlaces</i>
 , but not to more than 0.</p>
 
 <h3>Multiply</h3>
@@ -2480,7 +2480,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. Can be null.</li>
+<li><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -2542,7 +2542,8 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision binary float.</p>
+<p>A number whose exponent is increased by  <i>bigPlaces</i>
+.</p>
 
 <h3>ScaleByPowerOfTwo</h3>
 
@@ -2562,7 +2563,7 @@ is null or the precision is unlimited (the context&#39;s Precision property is 0
 
 <p><b>Returns:</b></p>
 
-<p>A number whose scale is increased by  <i>bigPlaces</i>
+<p>A number whose exponent is increased by  <i>bigPlaces</i>
 .</p>
 
 <h3>Sqrt</h3>
@@ -2668,7 +2669,7 @@ is null.</li>
 <pre><code>public double ToDouble();
 </code></pre>
 
-<p>Converts this value to a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
+<p>Converts this value to its closest equivalent as a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
 <p>The following example converts a number in the form of a string to a <code>double</code> , or a 64-bit floating point number.    public static double StringToDouble(String str) {
     return arbitrary-precision binary float.FromString(str).ToDouble();
@@ -2688,11 +2689,11 @@ is null.</li>
 <pre><code>public PeterO.Numbers.EDecimal ToEDecimal();
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Converts this value to an arbitrary-precision decimal number.</p>
 
 <p><b>Returns:</b></p>
 
-<p>An EDecimal object.</p>
+<p>An arbitrary-precision decimal number.</p>
 
 <h3>ToEInteger</h3>
 
@@ -2737,7 +2738,7 @@ This object&#39;s value is not an exact integer.</p></li>
 <pre><code>public string ToEngineeringString();
 </code></pre>
 
-<p>Converts this value to an extended decimal, then returns the value of that decimal&#39;s ToEngineeringString method.</p>
+<p>Converts this value to an arbitrary-precision decimal number, then returns the value of that decimal&#39;s ToEngineeringString method.</p>
 
 <p><b>Returns:</b></p>
 
@@ -2750,11 +2751,11 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p><b>Deprecated.</b> Renamed to ToEDecimal.</p>
 
-<p>Not documented yet.</p>
+<p>Converts this value to an arbitrary-precision decimal number.</p>
 
 <p><b>Returns:</b></p>
 
-<p>An EDecimal object.</p>
+<p>An arbitrary-precision decimal number.</p>
 
 <h3>ToInt32Checked</h3>
 
@@ -2811,12 +2812,30 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p>A text string.</p>
 
+<h3>ToShortestString</h3>
+
+<pre><code>public string ToShortestString(
+    PeterO.Numbers.EContext ctx);
+</code></pre>
+
+<p>Returns a string representation of this number&#39;s value after rounding to the given precision. If the number after rounding is neither infinity nor not-a-number (NaN), returns the shortest decimal form (in terms of nonzero decimal digits) of this number&#39;s value that results in the rounded number after the decimal form is converted to binary floating-point format.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: An arithmetic context to control precision (in bits), rounding, and exponent range of the rounded number. If <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null. If this parameter is null or defines no maximum precision, returns the same value as the ToString() method.</li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>Shortest decimal form of this number&#39;s value for the given arithmetic context. The text string will be in exponential notation if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point, or if the number&#39;s exponent is greater than 0 and its value is 10, 000, 000 or greater.</p>
+
 <h3>ToSingle</h3>
 
 <pre><code>public float ToSingle();
 </code></pre>
 
-<p>Converts this value to a 32-bit floating-point number. The half-even rounding mode is used.If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
+<p>Converts this value to its closest equivalent as 32-bit floating-point number. The half-even rounding mode is used.If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
 <p><b>Returns:</b></p>
 
@@ -2827,11 +2846,11 @@ This object&#39;s value is not an exact integer.</p></li>
 <pre><code>public override string ToString();
 </code></pre>
 
-<p>Converts this value to a string.</p>
+<p>Converts this number&#39;s value to a text string.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A string representation of this object. The value is converted to decimal and the decimal form of this number&#39;s value is returned.</p>
+<p>A string representation of this object. The value is converted to decimal and the decimal form of this number&#39;s value is returned. The text string will be in exponential notation if the converted number&#39;s scale is positive or if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point.</p>
 
 <h3>Ulp</h3>
 
