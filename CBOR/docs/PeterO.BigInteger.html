@@ -11,19 +11,11 @@
     System.IEquatable
 </code></pre>
 
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method, among other things, but for method, among other things (by including the new library in your code), but for this versionof the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EInteger</code>  as a parameter or return value.</p>
+<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method (by including the new library in your code, among other things), but this version of the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EInteger</code>  as a parameter or return value.</p>
 
 <p>An arbitrary-precision integer.Thread safety:Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method, among other things, but for method, among other things (by including the new library in your code), but for this versionof the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EInteger</code>  as a parameter or return value.</p>
-
-<p>An arbitrary-precision integer.Thread safety:Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
-
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method, among other things, but for method, among other things (by including the new library in your code), but for this versionof the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EInteger</code>  as a parameter or return value.</p>
-
-<p>An arbitrary-precision integer.Thread safety:Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
-
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method, among other things, but for method, among other things (by including the new library in your code), but for this versionof the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EInteger</code>  as a parameter or return value.</p>
+<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method (by including the new library in your code, among other things), but this version of the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EInteger</code>  as a parameter or return value.</p>
 
 <p>An arbitrary-precision integer.Thread safety:Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
@@ -92,8 +84,6 @@
 <pre><code>public static PeterO.BigInteger One { get; }
 </code></pre>
 
-<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Gets the arbitrary-precision integer for one.</p>
 
 <p><b>Returns:</b></p>
@@ -117,8 +107,6 @@
 
 <pre><code>public static PeterO.BigInteger Zero { get; }
 </code></pre>
-
-<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Gets the arbitrary-precision integer for zero.</p>
 
@@ -147,7 +135,7 @@
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Not documented yet.</p>
+<p>Gets this integer&#39;s absolute value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -232,8 +220,6 @@ is null.</li>
 
 <pre><code>public int bitLength();
 </code></pre>
-
-<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign. If the value is negative, finds the number of bits in a value equal to this object&#39;s absolute value minus 1.</p>
 
@@ -440,8 +426,6 @@ is null.</li>
     string str,
     int radix);
 </code></pre>
-
-<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Converts a string to an arbitrary-precision integer.</p>
 
@@ -1698,8 +1682,6 @@ is null.</li>
     int radix);
 </code></pre>
 
-<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Generates a string representing the value of this object, in the given radix.</p>
 
 <p><b>Parameters:</b></p>
@@ -1735,8 +1717,6 @@ The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less tha
 <pre><code>public static PeterO.BigInteger valueOf(
     long longerValue);
 </code></pre>
-
-<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Converts a 64-bit signed integer to a big integer.</p>
 

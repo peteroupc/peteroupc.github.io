@@ -9,7 +9,7 @@
 <pre><code>public sealed class EContext
 </code></pre>
 
-<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers.</p>
+<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.)</p>
 
 <h3>EContext Constructor</h3>
 
@@ -177,6 +177,13 @@ is not documented yet.</p></li>
 </code></pre>
 
 <p>No specific (theoretical) limit on precision. Rounding mode HalfUp.</p>
+
+<h3>UnlimitedHalfEven</h3>
+
+<pre><code>public static readonly PeterO.Numbers.EContext UnlimitedHalfEven;
+</code></pre>
+
+<p>No specific (theoretical) limit on precision. Rounding mode HalfEven.</p>
 
 <h3>AdjustExponent</h3>
 

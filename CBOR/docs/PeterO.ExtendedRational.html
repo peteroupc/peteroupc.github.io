@@ -11,7 +11,7 @@
     System.IEquatable
 </code></pre>
 
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.ERational</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.ERational</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method, among other things, but for method, among other things (by including the new library in your code), but for this versionof the CBOR library doesn&#39;t include any methods that explicitly take an  <code>ERational</code>  as a parameter or return value.</p>
+<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.ERational</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.ERational</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method (by including the new library in your code, among other things), but this version of the CBOR library doesn&#39;t include any methods that explicitly take an  <code>ERational</code>  as a parameter or return value.</p>
 
 <p>Arbitrary-precision rational number. This class cannot be inherited; this is a change in version 2.0 from previous versions, where the class was inadvertently left inheritable.Thread safety:Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same properties are interchangeable, so they should not be compared using the &quot;==&quot; operator (which only checks if each side of the operator is the same instance).</p>
 
@@ -21,8 +21,6 @@
     PeterO.BigInteger numerator,
     PeterO.BigInteger denominator);
 </code></pre>
-
-<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Initializes a new instance of the  class.</p>
 
@@ -103,8 +101,6 @@ is null.</li>
 <pre><code>public PeterO.BigInteger Denominator { get; }
 </code></pre>
 
-<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Gets this object&#39;s denominator.</p>
 
 <p><b>Returns:</b></p>
@@ -128,8 +124,6 @@ is null.</li>
 
 <pre><code>public bool IsNegative { get; }
 </code></pre>
-
-<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Gets a value indicating whether this object&#39;s value is negative (including negative zero).</p>
 
@@ -155,8 +149,6 @@ is null.</li>
 <pre><code>public PeterO.BigInteger Numerator { get; }
 </code></pre>
 
-<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Gets this object&#39;s numerator.</p>
 
 <p><b>Returns:</b></p>
@@ -180,8 +172,6 @@ is null.</li>
 
 <pre><code>public PeterO.BigInteger UnsignedNumerator { get; }
 </code></pre>
-
-<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Gets this object&#39;s numerator with the sign removed.</p>
 
@@ -321,8 +311,6 @@ is null.</li>
     int denominatorSmall);
 </code></pre>
 
-<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Creates a rational number with the given numerator and denominator.</p>
 
 <p><b>Parameters:</b></p>
@@ -342,8 +330,6 @@ is null.</li>
     PeterO.BigInteger numerator,
     PeterO.BigInteger denominator);
 </code></pre>
-
-<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Creates a rational number with the given numerator and denominator.</p>
 
@@ -693,8 +679,6 @@ is null.</li>
 
 <pre><code>public bool IsNaN();
 </code></pre>
-
-<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Returns whether this object is a not-a-number value.</p>
 

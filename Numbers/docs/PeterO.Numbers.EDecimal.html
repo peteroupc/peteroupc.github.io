@@ -11,7 +11,7 @@
     System.IEquatable
 </code></pre>
 
-<p>Represents an arbitrary-precision decimal floating-point number.About decimal arithmetic</p>
+<p>Represents an arbitrary-precision decimal floating-point number. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of this class can be values other than numbers proper, such as infinity and not-a-number.)About decimal arithmetic</p>
 
 <p>Decimal (base-10) arithmetic, such as that provided by this class, is appropriate for calculations involving such real-world data as prices and other sums of money, tax rates, and measurements. These calculations often involve multiplying or dividing one decimal with another decimal, or performing other operations on decimal numbers. Many of these calculations also rely on rounding behavior in which the result after rounding is a decimal number (for example, multiplying a price by a premium rate, then rounding, should result in a decimal amount of money).</p>
 
@@ -2566,6 +2566,28 @@ is not documented yet.</p></li>
 <h3>RoundToExponentExact</h3>
 
 <pre><code>public PeterO.Numbers.EDecimal RoundToExponentExact(
+    int exponentSmall,
+    PeterO.Numbers.ERounding rounding);
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>exponentSmall</i>: The parameter  <i>exponentSmall</i>
+is not documented yet.</p></li>
+<li><p><i>rounding</i>: The parameter  <i>rounding</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Returns:</b></p>
+
+<p>An EDecimal object.</p>
+
+<h3>RoundToExponentExact</h3>
+
+<pre><code>public PeterO.Numbers.EDecimal RoundToExponentExact(
     PeterO.Numbers.EInteger exponent,
     PeterO.Numbers.EContext ctx);
 </code></pre>
@@ -2779,6 +2801,8 @@ is not documented yet.</p></li>
 <pre><code>public PeterO.Numbers.EDecimal SquareRoot(
     PeterO.Numbers.EContext ctx);
 </code></pre>
+
+<p><b>Deprecated.</b> Renamed to Sqrt.</p>
 
 <p>Finds the square root of this object&#39;s value.</p>
 

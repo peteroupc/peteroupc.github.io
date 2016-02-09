@@ -102,6 +102,13 @@
 
 <p>Represents the value undefined.</p>
 
+<h3>Zero</h3>
+
+<pre><code>public static readonly PeterO.Cbor.CBORObject Zero;
+</code></pre>
+
+<p>Gets a CBOR object for the number zero.</p>
+
 <h3>Count</h3>
 
 <pre><code>public int Count { get; }
@@ -156,6 +163,17 @@
 <p><b>Returns:</b></p>
 
 <p>True if this object represents an integral number, that is, a number without a fractional part; otherwise, false.</p>
+
+<h3>IsNegative</h3>
+
+<pre><code>public bool IsNegative { get; }
+</code></pre>
+
+<p>Gets a value indicating whether this object is a negative number.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True if this object is a negative number; otherwise, false.</p>
 
 <h3>IsNull</h3>
 

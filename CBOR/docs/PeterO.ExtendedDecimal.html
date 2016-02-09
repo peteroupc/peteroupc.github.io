@@ -11,7 +11,7 @@
     System.IEquatable
 </code></pre>
 
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EDecimal</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EDecimal</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method, among other things, but for method, among other things (by including the new library in your code), but for this versionof the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EDecimal</code>  as a parameter or return value.</p>
+<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EDecimal</code>  in the  <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EDecimal</code>  in the  <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(Object)</code> method (by including the new library in your code, among other things), but this version of the CBOR library doesn&#39;t include any methods that explicitly take an  <code>EDecimal</code>  as a parameter or return value.</p>
 
 <p>Represents an arbitrary-precision decimal floating-point number.About decimal arithmetic</p>
 
@@ -121,8 +121,6 @@
 <pre><code>public PeterO.BigInteger Exponent { get; }
 </code></pre>
 
-<p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Gets this object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
 
 <p><b>Returns:</b></p>
@@ -173,8 +171,6 @@
 <pre><code>public PeterO.BigInteger Mantissa { get; }
 </code></pre>
 
-<p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Gets this object&#39;s un-scaled value.</p>
 
 <p><b>Returns:</b></p>
@@ -198,8 +194,6 @@
 
 <pre><code>public PeterO.BigInteger UnsignedMantissa { get; }
 </code></pre>
-
-<p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Gets the absolute value of this object&#39;s un-scaled value.</p>
 
@@ -443,8 +437,6 @@ is null.</li>
     PeterO.BigInteger mantissa,
     PeterO.BigInteger exponent);
 </code></pre>
-
-<p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Creates a number with the value exponent*10^mantissa.</p>
 
@@ -1242,8 +1234,6 @@ is not a correctly formatted number string.</p></li>
 <pre><code>public bool IsInfinity();
 </code></pre>
 
-<p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Gets a value indicating whether this object is positive or negative infinity.</p>
 
 <p><b>Returns:</b></p>
@@ -1254,8 +1244,6 @@ is not a correctly formatted number string.</p></li>
 
 <pre><code>public bool IsNaN();
 </code></pre>
-
-<p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Gets a value indicating whether this object is not a number (NaN).</p>
 
@@ -2885,8 +2873,6 @@ This object&#39;s value is not an exact integer.</p></li>
 <pre><code>public double ToDouble();
 </code></pre>
 
-<p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
-
 <p>Converts this value to a 64-bit floating-point number. The half-even rounding mode is used.If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
 <p><b>Returns:</b></p>
@@ -2936,8 +2922,6 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <pre><code>public float ToSingle();
 </code></pre>
-
-<p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p>Converts this value to a 32-bit floating-point number. The half-even rounding mode is used.If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
