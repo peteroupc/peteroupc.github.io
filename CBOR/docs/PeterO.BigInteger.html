@@ -51,7 +51,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>True if this value is even; otherwise, false.</p>
+<p><code>true</code>  if this value is even; otherwise,  <code>false</code> .</p>
 
 <h3>IsPowerOfTwo</h3>
 
@@ -60,11 +60,11 @@
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Gets a value indicating whether this object&#39;s value is a power of two. (NOTE: This version allows negative numbers to be powers of two. In the EInteger version, only positive numbers will be considered powers of two.)</p>
+<p>Gets a value indicating whether this object&#39;s value is a power of two. (NOTE: This version allows negative numbers to be powers of two. In the EInteger version, only positive numbers will be considered powers of two.).</p>
 
 <p><b>Returns:</b></p>
 
-<p>True if this object&#39;s value is a power of two; otherwise, false.</p>
+<p><code>true</code>  if this object&#39;s value is a power of two; otherwise,  <code>false</code> .</p>
 
 <h3>IsZero</h3>
 
@@ -77,7 +77,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>True if this value is 0; otherwise, false.</p>
+<p><code>true</code>  if this value is 0; otherwise,  <code>false</code> .</p>
 
 <h3>One</h3>
 
@@ -238,7 +238,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if this object&#39;s value is MinValue or greater, and MaxValue or less; otherwise, false.</p>
+<p><code>true</code>  if this object&#39;s value is MinValue or greater, and MaxValue or less; otherwise,  <code>false</code> .</p>
 
 <h3>CompareTo</h3>
 
@@ -342,7 +342,7 @@ Attempted to divide by zero.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>True if this object and another object are equal; otherwise, false.</p>
+<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <h3>Equals</h3>
 
@@ -350,7 +350,7 @@ Attempted to divide by zero.</p></li>
     PeterO.BigInteger other);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this number&#39;s value is equal to another number&#39;s value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -360,7 +360,7 @@ Attempted to divide by zero.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>A Boolean object.</p>
+<p><code>true</code>  if this number&#39;s value is equal to another number&#39;s value; otherwise,  <code>false</code> .</p>
 
 <h3>fromByteArray</h3>
 
@@ -614,18 +614,26 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Not documented yet.</p>
+<p>Gets a series of bits from the two&#39;s complement representation of this number&#39;s value.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: A 32-bit signed integer.</p></li>
-<li><p><i>numberBits</i>: A 32-bit signed integer. (2).</p></li>
+<li><p><i>index</i>: Zero-based index of the first bit to retrieve.</p></li>
+<li><p><i>numberBits</i>: The number of bits to retrieve, from 0 to 64.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A 64-bit signed integer.</p>
+<p>A 64-bit signed integer containing the bits retrieved. The least significant bit is first.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter <i>numberBits</i>
+is less than 0 or greater than 64.</li>
+</ul>
 
 <h3>getDigitCount</h3>
 
@@ -699,18 +707,18 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Not documented yet.</p>
+<p>Finds the greatest common divisor/greatest common factor (GCD/GCF) of two big integers.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigintFirst</i>: Another arbitrary-precision integer.</p></li>
-<li><p><i>bigintSecond</i>: An arbitrary-precision integer. (3).</p></li>
+<li><p><i>bigintFirst</i>: The first operand.</p></li>
+<li><p><i>bigintSecond</i>: The second operand.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>An arbitrary-precision integer.</p>
+<p>The greatest common divisor.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -903,12 +911,9 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigintValue</i>: The parameter  <i>bigintValue</i>
-is not documented yet.</p></li>
-<li><p><i>pow</i>: The parameter  <i>pow</i>
-is not documented yet.</p></li>
-<li><p><i>mod</i>: The parameter  <i>mod</i>
-is not documented yet.</p></li>
+<li><p><i>bigintValue</i>: The number to raise to a power.</p></li>
+<li><p><i>pow</i>: The exponent to raise the number to.</p></li>
+<li><p><i>mod</i>: The modulus.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1041,10 +1046,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dividend</i>: The parameter  <i>dividend</i>
-is not documented yet.</p></li>
-<li><p><i>divisor</i>: The parameter  <i>divisor</i>
-is not documented yet.</p></li>
+<li><p><i>dividend</i>: The number that will be divided by the divisor.</p></li>
+<li><p><i>divisor</i>: The number to divide by.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1079,9 +1082,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if  <i>thisValue</i>
+<p><code>true</code>  if  <i>thisValue</i>
  is greater than <i>otherValue</i>
- ; otherwise, false.</p>
+ ; otherwise,  <code>false</code> .</p>
 
 <h3>Operator <code>&gt;=</code></h3>
 
@@ -1103,9 +1106,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if  <i>thisValue</i>
+<p><code>true</code>  if  <i>thisValue</i>
  is at least  <i>otherValue</i>
- ; otherwise, false.</p>
+ ; otherwise,  <code>false</code> .</p>
 
 <h3>Operator <code>&lt;&lt;</code></h3>
 
@@ -1116,13 +1119,13 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision integer with the bits shifted to the left.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bthis</i>: Another arbitrary-precision integer.</p></li>
-<li><p><i>bitCount</i>: A 32-bit signed integer.</p></li>
+<li><p><i>bthis</i>: An arbitrary-precision integer whose value will be shifted.</p></li>
+<li><p><i>bitCount</i>: The number of bits to shift left. If this number is negative, shifts right instead.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1157,9 +1160,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if  <i>thisValue</i>
+<p><code>true</code>  if  <i>thisValue</i>
  is less than <i>otherValue</i>
- ; otherwise, false.</p>
+ ; otherwise,  <code>false</code> .</p>
 
 <h3>Operator <code>&lt;=</code></h3>
 
@@ -1181,9 +1184,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if  <i>thisValue</i>
+<p><code>true</code>  if  <i>thisValue</i>
  is up to  <i>otherValue</i>
- ; otherwise, false.</p>
+ ; otherwise,  <code>false</code> .</p>
 
 <h3>Operator <code>%</code></h3>
 
@@ -1199,10 +1202,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dividend</i>: The parameter  <i>dividend</i>
-is not documented yet.</p></li>
-<li><p><i>divisor</i>: The parameter  <i>divisor</i>
-is not documented yet.</p></li>
+<li><p><i>dividend</i>: The number that will be divided by the divisor.</p></li>
+<li><p><i>divisor</i>: The number to divide by.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1231,10 +1232,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>operand1</i>: The parameter  <i>operand1</i>
-is not documented yet.</p></li>
-<li><p><i>operand2</i>: The parameter  <i>operand2</i>
-is not documented yet.</p></li>
+<li><p><i>operand1</i>: The first operand.</p></li>
+<li><p><i>operand2</i>: The second operand.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
@@ -1410,20 +1409,19 @@ is less than 0.</li>
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Not documented yet.</p>
+<p>Returns this number raised to a power.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigValue</i>: The parameter  <i>bigValue</i>
-is not documented yet.</p></li>
-<li><p><i>power</i>: The parameter  <i>power</i>
-is not documented yet.</p></li>
+<li><p><i>bigValue</i>: The value to raise to an exponent.</p></li>
+<li><p><i>power</i>: The exponent.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A BigInteger object.</p>
+<p>The result. Returns 1 if  <i>power</i>
+ is 0.</p>
 
 <h3>Pow</h3>
 
@@ -1434,20 +1432,19 @@ is not documented yet.</p></li>
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Not documented yet.</p>
+<p>Returns this number raised to a power.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigValue</i>: The parameter  <i>bigValue</i>
-is not documented yet.</p></li>
-<li><p><i>power</i>: The parameter  <i>power</i>
-is not documented yet.</p></li>
+<li><p><i>bigValue</i>: The value to raise to an exponent.</p></li>
+<li><p><i>power</i>: The exponent.</p></li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A BigInteger object.</p>
+<p>The result. Returns 1 if  <i>power</i>
+ is 0.</p>
 
 <h3>PowBigIntVar</h3>
 
@@ -1623,7 +1620,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if a bit is set in the two&#39;s-complement representation of this object&#39;s value; otherwise, false.</p>
+<p><code>true</code>  if a bit is set in the two&#39;s-complement representation of this object&#39;s value; otherwise,  <code>false</code> .</p>
 
 <h3>toByteArray</h3>
 
@@ -1652,11 +1649,11 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Not documented yet.</p>
+<p>Returns a byte array of this integer&#39;s value. The byte array will take the form of the number&#39;s two&#39;s-complement representation, using the fewest bytes necessary to store its value unambiguously. If this value is negative, the bits that appear beyond the most significant bit of the number will be all ones. The resulting byte array can be passed to the  <code>FromBytes()</code> method (with the same byte order) to reconstruct this integer&#39;s value. The byte order used will be little-endian.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A byte array.</p>
+<p>A byte array. If this value is 0, returns a byte array with the single element 0.</p>
 
 <h3>toBytes</h3>
 

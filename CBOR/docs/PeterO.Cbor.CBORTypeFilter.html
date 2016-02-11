@@ -69,7 +69,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>True if this type filter allows CBOR arrays and the given array index is allowed under this type filter; otherwise, false.</p>
+<p><code>true</code>  if this type filter allows CBOR arrays and the given array index is allowed under this type filter; otherwise,  <code>false</code> .</p>
 
 <h3>ArrayLengthMatches</h3>
 
@@ -87,7 +87,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>True if this filter allows CBOR arrays and an array&#39;s length is allowed under this filter; otherwise, false.</p>
+<p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under this filter; otherwise,  <code>false</code> .</p>
 
 <h3>ArrayLengthMatches</h3>
 
@@ -105,7 +105,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>True if this filter allows CBOR arrays and an array&#39;s length is allowed under a filter; otherwise, false.</p>
+<p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under a filter; otherwise,  <code>false</code> .</p>
 
 <h3>ArrayLengthMatches</h3>
 
@@ -123,7 +123,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>True if this filter allows CBOR arrays and an array&#39;s length is allowed under a filter; otherwise, false.</p>
+<p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under a filter; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -139,17 +139,17 @@ is null.</li>
     int index);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets the type filter for this array filter by its index.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: A 32-bit signed integer.</li>
+<li><i>index</i>: A zero-based index of the filter to retrieve.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A CBORTypeFilter object.</p>
+<p>Returns None if the index is out of range, or Any if this filter doesn&#39;t filter an array. Returns the appropriate filter for the array index otherwise.</p>
 
 <h3>GetSubFilter</h3>
 
@@ -157,17 +157,17 @@ is null.</li>
     long index);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Gets the type filter for this array filter by its index.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: A 64-bit signed integer.</li>
+<li><i>index</i>: A zero-based index of the filter to retrieve.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A CBORTypeFilter object.</p>
+<p>Returns None if the index is out of range, or Any if this filter doesn&#39;t filter an array. Returns the appropriate filter for the array index otherwise.</p>
 
 <h3>MajorTypeMatches</h3>
 
@@ -175,17 +175,17 @@ is null.</li>
     int type);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given CBOR major type matches a major type allowed by this filter.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>type</i>: A 32-bit signed integer.</li>
+<li><i>type</i>: A CBOR major type from 0 to 7.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A Boolean object.</p>
+<p><code>true</code>  if the given CBOR major type matches a major type allowed by this filter; otherwise,  <code>false</code> .</p>
 
 <h3>NonFPSimpleValueAllowed</h3>
 
@@ -196,7 +196,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if this filter allows simple values that are not floating-point numbers; otherwise, false.</p>
+<p><code>true</code>  if this filter allows simple values that are not floating-point numbers; otherwise,  <code>false</code> .</p>
 
 <h3>TagAllowed</h3>
 
@@ -214,7 +214,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if CBOR objects can have the given tag number; otherwise, false.</p>
+<p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
 <h3>TagAllowed</h3>
 
@@ -232,7 +232,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if CBOR objects can have the given tag number; otherwise, false.</p>
+<p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
 <h3>TagAllowed</h3>
 
@@ -250,7 +250,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>True if CBOR objects can have the given tag number; otherwise, false.</p>
+<p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -383,42 +383,17 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
     params int[] tags);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Copies this filter and includes a set of valid CBOR tags in the new filter.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>tags</i>: An integer array of tags allowed.</li>
+<li><i>tags</i>: An array of the CBOR tags to add to the new filter.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
 <p>A CBORTypeFilter object.</p>
-
-<h3>WithTags</h3>
-
-<pre><code>public PeterO.Cbor.CBORTypeFilter WithTags(
-    params PeterO.Numbers.EInteger[] tags);
-</code></pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>tags</i>: An arbitrary-precision integer[] object.</li>
-</ul>
-
-<p><b>Returns:</b></p>
-
-<p>A CBORTypeFilter object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter &quot;tags[i]&quot; is null.</li>
-</ul>
 
 <h3>WithTextString</h3>
 
