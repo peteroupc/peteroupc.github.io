@@ -9,7 +9,7 @@
 <pre><code>public sealed class CBORTypeFilter
 </code></pre>
 
-<p>Specifies what kinds of CBOR objects a tag can be. This class is used when a CBOR object is being read from a data stream. This class cannot be inherited; this is a change in version 2.0 from previous versions, where the class was inadvertently left inheritable.</p>
+<p>Specifies what kinds of CBOR objects a tag can be. This class is used when a CBOR object is being read from a data stream. This class can&#39;t be inherited; this is a change in version 2.0 from previous versions, where the class was inadvertently left inheritable.</p>
 
 <h3>Any</h3>
 
@@ -69,7 +69,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this type filter allows CBOR arrays and the given array index is allowed under this type filter; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this type filter allows CBOR arrays and the given array index is allowed under this type filter; otherwise, false .</p>
 
 <h3>ArrayLengthMatches</h3>
 

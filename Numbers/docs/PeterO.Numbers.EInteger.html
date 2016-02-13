@@ -24,7 +24,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this value is even, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this value is even; otherwise,  <code>false</code> .</p>
 
 <h3>IsPowerOfTwo</h3>
 
@@ -35,7 +35,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object&#39;s value is a power of two, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value is a power of two; otherwise,  <code>false</code> .</p>
 
 <h3>IsZero</h3>
 
@@ -46,7 +46,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this value is 0, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this value is 0; otherwise,  <code>false</code> .</p>
 
 <h3>One</h3>
 
@@ -79,7 +79,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>A value not documented yet.</p>
+<p>The number 10 as an arbitrary-precision integer.</p>
 
 <h3>Zero</h3>
 
@@ -235,7 +235,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object&#39;s value is  <code>Int32.MinValue</code>  or greater, and <code>Int32.MaxValue</code>  or less, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value is Int32.MinValue or greater, and Int32.MaxValue or less; otherwise, false .</p>
 
 <h3>CanFitInInt64</h3>
 
@@ -246,7 +246,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object&#39;s value is  <code>Int64.MinValue</code>  or greater, and <code>Int64.MaxValue</code>  or less, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value is Int64.MinValue or greater, and Int64.MaxValue or less; otherwise, false .</p>
 
 <h3>CompareTo</h3>
 
@@ -289,12 +289,11 @@ is not documented yet.</li>
 
 <ul>
 <li><p>System.DivideByZeroException:
-The divisor is zero.</p></li>
+The parameter <i>bigintDivisor</i>
+is zero.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter <i>bigintDivisor</i>
 is null.</p></li>
-<li><p>System.DivideByZeroException:
-Attempted to divide by zero.</p></li>
 </ul>
 
 <h3>DivRem</h3>
@@ -342,7 +341,7 @@ Attempted to divide by zero.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object and another object are equal, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object and another object are equal; otherwise, false .</p>
 
 <h3>Equals</h3>
 
@@ -350,18 +349,17 @@ Attempted to divide by zero.</p></li>
     PeterO.Numbers.EInteger other);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether this object and another object are equal.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: The parameter  <i>other</i>
-is not documented yet.</li>
+<li><i>other</i>: Another arbitrary-precision integer.</li>
 </ul>
 
 <p><b>Returns:</b></p>
 
-<p>A Boolean object.</p>
+<p><code>true</code>  if this object and another object are equal; otherwise, false .</p>
 
 <h3>FromBytes</h3>
 
@@ -377,11 +375,14 @@ is not documented yet.</li>
 <ul>
 <li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement integer representation of the arbitrary-precision integer to create. The byte array is encoded using the following rules:</p></li>
 <li><p>Positive numbers have the first byte&#39;s highest bit cleared, and negative numbers have the bit set.</p></li>
-<li><p>The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. For example, the number 300 can be encoded as  <code>0x01, 0x2C</code>  and 200 as  <code>0x00, 0xC8</code> . (Note that the second example contains a set high bit in  <code>0xC8</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted as positive.)</p></li>
-<li><p>To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, and toggle each bit of each byte. Any further bits that appear beyond the most significant bit of the number will be all ones. For example, the number -450 can be encoded as <code>0xFE, 0x70</code>  and -52869 as  <code>0xFF, 0x31, 0x7B</code> . (Note that the second example contains a cleared high bit in  <code>0x31, 0x7B</code> , so an additional 0xFF is added at the start to ensure it&#39;s interpreted as negative.)</p></li>
+<li><p>The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. For example, the number 300 can be encoded as  <code>0x01, 0x2C</code>  and 200 as  <code>0x00,
+        0xC8</code> . (Note that the second example contains a set high bit in <code>0xC8</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted as positive.)</p></li>
+<li><p>To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, and toggle each bit of each byte. Any further bits that appear beyond the most significant bit of the number will be all ones. For example, the number -450 can be encoded as  <code>0xfe, 0x70</code>  and -52869 as <code>0xff, 0x31, 0x7B</code> . (Note that the second example contains a cleared high bit in  <code>0x31, 0x7B</code> , so an additional 0xFF is added at the start to ensure it&#39;s interpreted as negative.)</p></li>
 </ul>
 
 <p>For little-endian, the byte order is reversed from the byte order just discussed.</p>
+
+<p>.</p>
 
 <ul>
 <li><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</li>
@@ -444,17 +445,12 @@ is null.</li>
 
 <p>Converts a string to an arbitrary-precision integer.</p>
 
-<p>The following example (C#) converts a number in the form of a hex string to an arbitrary-precision integer.    public static EInteger HexToEInteger(string
-    hexString) {
-    // Parse the hexadecimal string as an arbitrary-precision integer. Will
-    // throw a FormatException if the parsing fails
-    var bigInteger = EInteger.fromRadixString(hexString, 16);
-    // Optional: Check if the parsed integer is negative
-    if (bigInteger.Sign &lt; 0) {
-    throw new FormatException(&quot;negative hex string&quot;);
-    }
-    return bigInteger;
-    }</p>
+<p>The following example (C#) converts a number in the orm of a hex string to an arbitrary-precision integer.     public static EInteger HexToEInteger(string hexString) { /<em>Parse the
+    hexadecimal string as an arbitrary-precision integer. Will   throw a
+    FormatException if the parsing fails</em>/ var bigInteger =
+    EInteger.fromRadixString(hexString, 16);  /<em>Optional: Check if the
+    parsed integer is negative</em>/ if (bigInteger.Sign &lt; 0) { throw new
+    FormatException(&quot;negative hex string&quot;); } return bigInteger; }</p>
 
 <p><b>Parameters:</b></p>
 
@@ -695,7 +691,7 @@ is not documented yet.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if a bit is set in the two&#39;s-complement representation of this object&#39;s value, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if a bit is set in the two&#39;s-complement representation of this object&#39;s value; otherwise, false .</p>
 
 <h3>GetSignedBitLength</h3>
 
@@ -1049,7 +1045,7 @@ is not documented yet.</p></li>
 
 <p><code>true</code>  if  <i>thisValue</i>
  is greater than <i>otherValue</i>
- , otherwise,  <code>false</code> .</p>
+ ; otherwise, false .</p>
 
 <h3>Operator <code>&gt;=</code></h3>
 
@@ -1071,7 +1067,7 @@ is not documented yet.</p></li>
 
 <p><code>true</code>  if  <i>thisValue</i>
  is at least  <i>otherValue</i>
- , otherwise,  <code>false</code> .</p>
+ ; otherwise, false .</p>
 
 <h3>Operator <code>&lt;&lt;</code></h3>
 
@@ -1121,7 +1117,7 @@ is null.</li>
 
 <p><code>true</code>  if  <i>thisValue</i>
  is less than <i>otherValue</i>
- , otherwise,  <code>false</code> .</p>
+ ; otherwise, false .</p>
 
 <h3>Operator <code>&lt;=</code></h3>
 
@@ -1143,7 +1139,7 @@ is null.</li>
 
 <p><code>true</code>  if  <i>thisValue</i>
  is up to  <i>otherValue</i>
- , otherwise,  <code>false</code> .</p>
+ ; otherwise, false .</p>
 
 <h3>Operator <code>%</code></h3>
 
@@ -1163,7 +1159,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p>The remainder of the two objects.</p>
+<p>The remainder of the two numbers.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1209,9 +1205,16 @@ is null.</li>
 
 <p>Not documented yet.</p>
 
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>thisValue</i>: The parameter  <i>thisValue</i>
+is not documented yet.</li>
+</ul>
+
 <p><b>Returns:</b></p>
 
-<p>Not documented yet.</p>
+<p>An EInteger object.</p>
 
 <h3>Operator <code>&gt;&gt;</code></h3>
 
@@ -1401,7 +1404,7 @@ is less than 0.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>The remainder of the two objects.</p>
+<p>The remainder of the two numbers.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1503,7 +1506,7 @@ is null.</li>
     bool littleEndian);
 </code></pre>
 
-<p>Returns a byte array of this integer&#39;s value. The byte array will take the form of the number&#39;s two&#39;s-complement representation, using the fewest bytes necessary to store its value unambiguously. If this value is negative, the bits that appear beyond the most significant bit of the number will be all ones. The resulting byte array can be passed to the  <code>FromBytes()</code> method (with the same byte order) to reconstruct this integer&#39;s value.</p>
+<p>Returns a byte array of this integer&#39;s value. The byte array will take the form of the number&#39;s two&#39;s-complement representation, using the fewest bytes necessary to store its value unambiguously. If this value is negative, the bits that appear beyond the most significant bit of the number will be all ones. The resulting byte array can be passed to the  <code>FromBytes()</code>  method (with the same byte order) to reconstruct this integer&#39;s value.</p>
 
 <p><b>Parameters:</b></p>
 

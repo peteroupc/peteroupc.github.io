@@ -185,7 +185,7 @@
 <pre><code>public bool AdjustExponent { get; }
 </code></pre>
 
-<p>Gets a value indicating whether the EMax and EMin properties refer to the number&#39;s Exponent property adjusted to the number&#39;s precision, or just the number&#39;s Exponent property. The default value is true, meaning that EMax and EMin refer to the adjusted exponent. Setting this value to false (using WithAdjustExponent) is useful for modeling floating point representations with an integer mantissa and an integer exponent, such as Java&#39;s BigDecimal.</p>
+<p>Gets a value indicating whether the EMax and EMin properties refer to the number&#39;s Exponent property adjusted to the number&#39;s precision, or just the number&#39;s Exponent property. The default value is true, meaning that EMax and EMin refer to the adjusted exponent. Setting this value to false (using WithAdjustExponent) is useful for modeling floating point representations with an integer mantissa (significand) and an integer exponent, such as Java&#39;s BigDecimal.</p>
 
 <p><b>Returns:</b></p>
 
@@ -196,7 +196,7 @@
 <pre><code>public bool ClampNormalExponents { get; }
 </code></pre>
 
-<p>Gets a value indicating whether a converted number&#39;s Exponent property will not be higher than EMax + 1 - Precision. If a number&#39;s exponent is higher than that value, but not high enough to cause overflow, the exponent is clamped to that value and enough zeros are added to the number&#39;s mantissa to account for the adjustment. If HasExponentRange is false, this value is always false.</p>
+<p>Gets a value indicating whether a converted number&#39;s Exponent property will not be higher than EMax + 1 - Precision. If a number&#39;s exponent is higher than that value, but not high enough to cause overflow, the exponent is clamped to that value and enough zeros are added to the number&#39;s mantissa (significand) to account for the adjustment. If HasExponentRange is false, this value is always false.</p>
 
 <p><b>Returns:</b></p>
 
@@ -234,7 +234,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>The flags that are set from converting numbers according to this arithmetic context. If  <code>HasFlags</code>  is false, this value will be 0.</p>
+<p>The flags that are set from converting numbers according to this arithmetic context. If.  <code>HasFlags</code>  is false, this value will be 0.</p>
 
 <h3>HasExponentRange</h3>
 
@@ -245,7 +245,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this context defines a minimum and maximum exponent, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this context defines a minimum and maximum exponent; otherwise,  <code>false</code> .</p>
 
 <h3>HasFlags</h3>
 
@@ -256,7 +256,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this context has a mutable Flags field, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this context has a mutable Flags field; otherwise,  <code>false</code> .</p>
 
 <h3>HasMaxPrecision</h3>
 
@@ -267,7 +267,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this context defines a maximum precision, otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this context defines a maximum precision; otherwise,  <code>false</code> .</p>
 
 <h3>IsPrecisionInBits</h3>
 
@@ -278,7 +278,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this context&#39;s Precision property is in bits, rather than digits, otherwise,  <code>false</code> . The default is false.</p>
+<p><code>true</code>  if this context&#39;s Precision property is in bits, rather than digits; otherwise,  <code>false</code> . The default is false.</p>
 
 <h3>IsSimplified</h3>
 
@@ -289,14 +289,14 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if a &quot;simplified&quot; arithmetic will be used, otherwise,  <code>false</code> .</p>
+<p><code>true</code> if a &quot;simplified&quot; arithmetic will be used; otherwise, <code>false</code> .</p>
 
 <h3>Precision</h3>
 
 <pre><code>public PeterO.Numbers.EInteger Precision { get; }
 </code></pre>
 
-<p>Gets the maximum length of a converted number in digits, ignoring the decimal point and exponent. For example, if precision is 3, a converted number&#39;s mantissa can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.</p>
+<p>Gets the maximum length of a converted number in digits, ignoring the decimal point and exponent. For example, if precision is 3, a converted number&#39;s mantissa (significand) can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.</p>
 
 <p><b>Returns:</b></p>
 
@@ -318,7 +318,7 @@
 <pre><code>public int Traps { get; }
 </code></pre>
 
-<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if  <code>HasFlags</code>  is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException.For example, if Traps equals FlagInexact and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal).</p>
+<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if  <code>HasFlags</code>  is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException.For example, if Traps equals  <code>FlagInexact</code>  and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal).</p>
 
 <p><b>Returns:</b></p>
 
@@ -351,7 +351,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if a number can have the given Exponent property under this arithmetic context, otherwise,  <code>false</code> . If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
+<p><code>true</code>  if a number can have the given Exponent property under this arithmetic context; otherwise, false . If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
 
 <p><b>Exceptions:</b></p>
 
