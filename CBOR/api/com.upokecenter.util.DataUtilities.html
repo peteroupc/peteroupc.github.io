@@ -1,0 +1,715 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.util.DataUtilities</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.util.DataUtilities</h1>
+
+<h1>com.upokecenter.util.DataUtilities</h1>
+
+<pre><code>public final class DataUtilities extends Object
+</code></pre>
+
+<p>Contains methods useful for reading and writing strings. It is designed to
+ have no dependencies other than the basic runtime class library.
+ <p>Many of these methods work with text encoded in UTF-8, an encoding
+ form of the Unicode Standard which uses one byte to encode the most
+ basic characters and two to four bytes to encode other characters.
+ For example, the <code>GetUtf8</code> method converts a text string to an
+ array of bytes in UTF-8.</p> <p>In C# and Java, text strings are
+ represented as sequences of 16-bit values called <code>char</code> s. These
+ sequences are well-formed under UTF-16, a 16-bit encoding form of
+ Unicode, except if they contain unpaired surrogate code points. (A
+ surrogate code point is used to encode supplementary characters,
+ those with code points U + 10000 or higher, in UTF-16. A surrogate pair
+ is a high surrogate [U + D800 to U + DBFF] followed by a low surrogate
+ [U + DC00 to U + DFFF]. An unpaired surrogate code point is a surrogate
+ not appearing in a surrogate pair.) Many of the methods in this class
+ allow setting the behavior to follow when unpaired surrogate code
+ points are found in text strings, such as throwing an error or
+ treating the unpaired surrogate as a replacement character
+ (U + FFFD).</p></p>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>static int CodePointAt(String str,
+       int index)</code><br>
+Gets the Unicode code point at the given index of the string.</li>
+<li><code>static int CodePointAt(String str,
+       int index,
+       int surrogateBehavior)</code><br>
+Gets the Unicode code point at the given index of the string.</li>
+<li><code>static int CodePointBefore(String str,
+           int index)</code><br>
+Gets the Unicode code point just before the given index of the string.</li>
+<li><code>static int CodePointBefore(String str,
+           int index,
+           int surrogateBehavior)</code><br>
+Gets the Unicode code point just before the given index of the string.</li>
+<li><code>static int CodePointCompare(String strA,
+            String strB)</code><br>
+Compares two strings in Unicode code point order.</li>
+<li><code>static byte[] GetUtf8Bytes(String str,
+        boolean replace)</code><br>
+Encodes a string in UTF-8 as a byte array.</li>
+<li><code>static byte[] GetUtf8Bytes(String str,
+        boolean replace,
+        boolean lenientLineBreaks)</code><br>
+Encodes a string in UTF-8 as a byte array.</li>
+<li><code>static long GetUtf8Length(String str,
+         boolean replace)</code><br>
+Calculates the number of bytes needed to encode a string in UTF-8.</li>
+<li><code>static String GetUtf8String(byte[] bytes,
+         boolean replace)</code><br>
+Generates a text string from a UTF-8 byte array.</li>
+<li><code>static String GetUtf8String(byte[] bytes,
+         int offset,
+         int bytesCount,
+         boolean replace)</code><br>
+Generates a text string from a portion of a UTF-8 byte array.</li>
+<li><code>static int ReadUtf8(InputStream stream,
+    int bytesCount,
+    StringBuilder builder,
+    boolean replace)</code><br>
+Reads a string in UTF-8 encoding from a data stream.</li>
+<li><code>static int ReadUtf8FromBytes(byte[] data,
+             int offset,
+             int bytesCount,
+             StringBuilder builder,
+             boolean replace)</code><br>
+Reads a string in UTF-8 encoding from a byte array.</li>
+<li><code>static String ReadUtf8ToString(InputStream stream)</code><br>
+Reads a string in UTF-8 encoding from a data stream in full and returns that
+string.</li>
+<li><code>static String ReadUtf8ToString(InputStream stream,
+            int bytesCount,
+            boolean replace)</code><br>
+Reads a string in UTF-8 encoding from a data stream and returns that string.</li>
+<li><code>static String ToLowerCaseAscii(String str)</code><br>
+Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A)
+converted to lower-case.</li>
+<li><code>static int WriteUtf8(String str,
+     int offset,
+     int length,
+     OutputStream stream,
+     boolean replace)</code><br>
+Writes a portion of a string in UTF-8 encoding to a data stream.</li>
+<li><code>static int WriteUtf8(String str,
+     int offset,
+     int length,
+     OutputStream stream,
+     boolean replace,
+     boolean lenientLineBreaks)</code><br>
+Writes a portion of a string in UTF-8 encoding to a data stream.</li>
+<li><code>static int WriteUtf8(String str,
+     OutputStream stream,
+     boolean replace)</code><br>
+Writes a string in UTF-8 encoding to a data stream.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>GetUtf8String</h3>
+
+<pre><code>public static String GetUtf8String(byte[] bytes, boolean replace)
+</code></pre>
+
+<p>Generates a text string from a UTF-8 byte array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A byte array containing text encoded in UTF-8.</p></li>
+<li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
+character (U + FFFD). If false, stops processing when invalid UTF-8 is
+seen.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string represented by the UTF-8 byte array.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The string is not valid UTF-8 and <code>replace</code> is false.</p></li>
+</ul>
+
+<h3>GetUtf8String</h3>
+
+<pre><code>public static String GetUtf8String(byte[] bytes, int offset, int bytesCount, boolean replace)
+</code></pre>
+
+<p>Generates a text string from a portion of a UTF-8 byte array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A byte array containing text encoded in UTF-8.</p></li>
+<li><p><code>offset</code> - Offset into the byte array to start reading.</p></li>
+<li><p><code>bytesCount</code> - Length, in bytes, of the UTF-8 string.</p></li>
+<li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
+character (U + FFFD). If false, stops processing when invalid UTF-8 is
+seen.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string represented by the UTF-8 byte array.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The portion of the byte array is not valid
+UTF-8 and <code>replace</code> is false.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>offset</code> is less than
+0, <code>bytesCount</code> is less than 0, or offset plus bytesCount is
+greater than the length of &quot;data&quot; .</p></li>
+</ul>
+
+<h3>GetUtf8Bytes</h3>
+
+<pre><code>public static byte[] GetUtf8Bytes(String str, boolean replace)
+</code></pre>
+
+<p>Encodes a string in UTF-8 as a byte array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
+replacement character (U + FFFD). If false, stops processing when an
+unpaired surrogate code point is seen.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The string encoded in UTF-8.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The string contains an unpaired surrogate
+code point and <code>replace</code> is false, or an internal error
+occurred.</p></li>
+</ul>
+
+<h3>GetUtf8Bytes</h3>
+
+<pre><code>public static byte[] GetUtf8Bytes(String str, boolean replace, boolean lenientLineBreaks)
+</code></pre>
+
+<p>Encodes a string in UTF-8 as a byte array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
+replacement character (U + FFFD). If false, stops processing when an
+unpaired surrogate code point is seen.</p></li>
+<li><p><code>lenientLineBreaks</code> - If true, replaces carriage return (CR) not followed
+by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The string encoded in UTF-8.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The string contains an unpaired surrogate
+code point and <code>replace</code> is false, or an internal error
+occurred.</p></li>
+</ul>
+
+<h3>GetUtf8Length</h3>
+
+<pre><code>public static long GetUtf8Length(String str, boolean replace)
+</code></pre>
+
+<p>Calculates the number of bytes needed to encode a string in UTF-8.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>replace</code> - If true, treats unpaired surrogate code points as having 3
+UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bytes needed to encode the given string in UTF-8, or
+-1 if the string contains an unpaired surrogate code point and <code>replace</code> is false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>CodePointBefore</h3>
+
+<pre><code>public static int CodePointBefore(String str, int index)
+</code></pre>
+
+<p>Gets the Unicode code point just before the given index of the string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>index</code> - Index of the current position into the string.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The Unicode code point at the previous position. Returns -1 if
+<code>index</code> is 0 or less, or is greater than the string&#39;s length.
+Returns the replacement character (U + FFFD) if the previous character
+is an unpaired surrogate code point.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>CodePointBefore</h3>
+
+<pre><code>public static int CodePointBefore(String str, int index, int surrogateBehavior)
+</code></pre>
+
+<p>Gets the Unicode code point just before the given index of the string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>index</code> - Index of the current position into the string.</p></li>
+<li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the
+previous character is an unpaired surrogate code point: if 0, return
+the replacement character (U + FFFD); if 1, return the value of the
+surrogate code point; if neither 0 nor 1, return -1.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The Unicode code point at the previous position. Returns -1 if
+<code>index</code> is 0 or less, or is greater than the string&#39;s length.
+Returns a value as specified under <code>surrogateBehavior</code> if the
+previous character is an unpaired surrogate code point.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>CodePointAt</h3>
+
+<pre><code>public static int CodePointAt(String str, int index)
+</code></pre>
+
+<p>Gets the Unicode code point at the given index of the string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>index</code> - Index of the current position into the string.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The Unicode code point at the given position. Returns -1 if <code>index</code> is less than 0, or is the string&#39;s length or greater. Returns
+the replacement character (U + FFFD) if the current character is an
+unpaired surrogate code point.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>CodePointAt</h3>
+
+<pre><code>public static int CodePointAt(String str, int index, int surrogateBehavior)
+</code></pre>
+
+<p>Gets the Unicode code point at the given index of the string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>index</code> - Index of the current position into the string.</p></li>
+<li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the
+previous character is an unpaired surrogate code point: if 0, return
+the replacement character (U + FFFD); if 1, return the value of the
+surrogate code point; if neither 0 nor 1, return -1.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The Unicode code point at the current position. Returns -1 if <code>index</code> is less than 0, or is the string&#39;s length or greater. Returns
+a value as specified under <code>surrogateBehavior</code> if the previous
+character is an unpaired surrogate code point.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>ToLowerCaseAscii</h3>
+
+<pre><code>public static String ToLowerCaseAscii(String str)
+</code></pre>
+
+<p>Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A)
+ converted to lower-case. Other characters remain unchanged.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A text string.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The converted string, or null if <code>str</code> is null.</li>
+</ul>
+
+<h3>CodePointCompare</h3>
+
+<pre><code>public static int CodePointCompare(String strA, String strB)
+</code></pre>
+
+<p>Compares two strings in Unicode code point order. Unpaired surrogates are
+ treated as individual code points.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>strA</code> - The first string. Can be null.</p></li>
+<li><p><code>strB</code> - The second string. Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value indicating which string is &quot; less&quot; or &quot; greater&quot; . 0: Both
+strings are equal or null. Less than 0: a is null and b isn&#39;t; or the
+first code point that&#39;s different is less in A than in B; or b starts
+with a and is longer than a. Greater than 0: b is null and a isn&#39;t;
+or the first code point that&#39;s different is greater in A than in B;
+or a starts with b and is longer than b.</li>
+</ul>
+
+<h3>WriteUtf8</h3>
+
+<pre><code>public static int WriteUtf8(String str, int offset, int length, OutputStream stream, boolean replace) throws IOException
+</code></pre>
+
+<p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A string to write.</p></li>
+<li><p><code>offset</code> - The zero-based index where the string portion to write begins.</p></li>
+<li><p><code>length</code> - The length of the string portion to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+<li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
+replacement character (U + FFFD). If false, stops processing when an
+unpaired surrogate code point is seen.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>0 if the entire string portion was written; or -1 if the string
+portion contains an unpaired surrogate code point and <code>replace</code>
+is false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null or
+<code>stream</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>offset</code> is less than
+0, <code>length</code> is less than 0, or <code>offset</code> plus <code>length</code> is greater than the string&#39;s length.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>WriteUtf8</h3>
+
+<pre><code>public static int WriteUtf8(String str, int offset, int length, OutputStream stream, boolean replace, boolean lenientLineBreaks) throws IOException
+</code></pre>
+
+<p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A string to write.</p></li>
+<li><p><code>offset</code> - The zero-based index where the string portion to write begins.</p></li>
+<li><p><code>length</code> - The length of the string portion to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+<li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
+replacement character (U + FFFD). If false, stops processing when an
+unpaired surrogate code point is seen.</p></li>
+<li><p><code>lenientLineBreaks</code> - If true, replaces carriage return (CR) not followed
+by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>0 if the entire string portion was written; or -1 if the string
+portion contains an unpaired surrogate code point and <code>replace</code>
+is false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null or
+<code>stream</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>offset</code> is less than
+0, <code>length</code> is less than 0, or <code>offset</code> plus <code>length</code> is greater than the string&#39;s length.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>WriteUtf8</h3>
+
+<pre><code>public static int WriteUtf8(String str, OutputStream stream, boolean replace) throws IOException
+</code></pre>
+
+<p>Writes a string in UTF-8 encoding to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A string to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+<li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
+replacement character (U + FFFD). If false, stops processing when an
+unpaired surrogate code point is seen.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>0 if the entire string was written; or -1 if the string contains an
+unpaired surrogate code point and <code>replace</code> is false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null or
+<code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>ReadUtf8FromBytes</h3>
+
+<pre><code>public static int ReadUtf8FromBytes(byte[] data, int offset, int bytesCount, StringBuilder builder, boolean replace)
+</code></pre>
+
+<p>Reads a string in UTF-8 encoding from a byte array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>data</code> - A byte array containing a UTF-8 string.</p></li>
+<li><p><code>offset</code> - Offset into the byte array to start reading.</p></li>
+<li><p><code>bytesCount</code> - Length, in bytes, of the UTF-8 string.</p></li>
+<li><p><code>builder</code> - A string builder object where the resulting string will be
+stored.</p></li>
+<li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
+character (U + FFFD). If false, stops processing when invalid UTF-8 is
+seen.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>0 if the entire string was read without errors, or -1 if the string
+is not valid UTF-8 and <code>replace</code> is false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>data</code> is null or
+<code>builder</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>offset</code> is less than
+0, <code>bytesCount</code> is less than 0, or offset plus bytesCount is
+greater than the length of <code>data</code>.</p></li>
+</ul>
+
+<h3>ReadUtf8ToString</h3>
+
+<pre><code>public static String ReadUtf8ToString(InputStream stream) throws IOException
+</code></pre>
+
+<p>Reads a string in UTF-8 encoding from a data stream in full and returns that
+ string. Replaces invalid encoding with the replacement character
+ (U + FFFD).</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>stream</code> - A readable data stream.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The string read.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+</ul>
+
+<h3>ReadUtf8ToString</h3>
+
+<pre><code>public static String ReadUtf8ToString(InputStream stream, int bytesCount, boolean replace) throws IOException
+</code></pre>
+
+<p>Reads a string in UTF-8 encoding from a data stream and returns that string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>stream</code> - A readable data stream.</p></li>
+<li><p><code>bytesCount</code> - The length, in bytes, of the string. If this is less than
+0, this function will read until the end of the stream.</p></li>
+<li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
+character (U + FFFD). If false, throws an error if an unpaired
+surrogate code point is seen.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The string read.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IOException</code> - An I/O error occurred; or, the string is not
+valid UTF-8 and <code>replace</code> is false.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+</ul>
+
+<h3>ReadUtf8</h3>
+
+<pre><code>public static int ReadUtf8(InputStream stream, int bytesCount, StringBuilder builder, boolean replace) throws IOException
+</code></pre>
+
+<p>Reads a string in UTF-8 encoding from a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>stream</code> - A readable data stream.</p></li>
+<li><p><code>bytesCount</code> - The length, in bytes, of the string. If this is less than
+0, this function will read until the end of the stream.</p></li>
+<li><p><code>builder</code> - A string builder object where the resulting string will be
+stored.</p></li>
+<li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
+character (U + FFFD). If false, stops processing when an unpaired
+surrogate code point is seen.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>0 if the entire string was read without errors, -1 if the string is
+not valid UTF-8 and <code>replace</code> is false, or -2 if the end of the
+stream was reached before the last character was read completely
+(which is only the case if <code>bytesCount</code> is 0 or greater).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null or
+<code>builder</code> is null.</p></li>
+</ul>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

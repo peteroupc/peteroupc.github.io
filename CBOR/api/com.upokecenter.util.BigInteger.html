@@ -1,0 +1,409 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.util.BigInteger</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.util.BigInteger</h1>
+
+<h1>com.upokecenter.util.BigInteger</h1>
+
+<pre><code>public final class BigInteger extends Object implements Comparable&lt;BigInteger&gt;
+</code></pre>
+
+<p><b>This class is largely obsolete. It will be replaced by a new version
+ of this class in a different namespace/package and library, called
+ <code>PeterO.Numbers.EInteger</code> in the <code>PeterO.Numbers</code>
+ library (in .NET), or <code>com.upokecenter.numbers.EInteger</code> in the
+ <code>com.github.peteroupc/numbers</code>
+ artifact (in Java). This new class can be used in the
+ <code>CBORObject.FromObject(object)</code> method (by including the new
+ library in your code, among other things), but this version of the
+ CBOR library doesn't include any methods that explicitly take an
+ <code>EInteger</code> as a parameter or return value.</b></p> An
+ arbitrary-precision integer. <p><b>Thread safety:</b> Instances of
+ this class are immutable, so they are inherently safe for use by
+ multiple threads. Multiple instances of this object with the same
+ value are interchangeable, but they should be compared using the
+ "Equals" method rather than the "==" operator.</p>
+
+<h2>Fields</h2>
+
+<ul>
+<li><code>static BigInteger ONE</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>int bitLength()</code><br>
+Finds the minimum number of bits needed to represent this object&#39;s
+value, except for its sign.</li>
+<li><code>int compareTo(BigInteger other)</code><br>
+Not documented yet.</li>
+<li><code>boolean equals(Object obj)</code><br>
+Determines whether this object and another object are equal.</li>
+<li><code>static BigInteger fromBytes(byte[] bytes,
+     boolean littleEndian)</code><br>
+Initializes an arbitrary-precision integer from an array of bytes.</li>
+<li><code>static BigInteger fromRadixString(String str,
+           int radix)</code><br>
+Converts a string to an arbitrary-precision integer.</li>
+<li><code>static BigInteger fromString(String str)</code><br>
+Converts a string to an arbitrary-precision integer.</li>
+<li><code>int hashCode()</code><br>
+Returns the hash code for this instance.</li>
+<li><code>byte[] toBytes(boolean littleEndian)</code><br>
+Returns a byte array of this object&#39;s value.</li>
+<li><code>String toRadixString(int radix)</code><br>
+Generates a string representing the value of this object, in the given
+radix.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string in base 10.</li>
+<li><code>static BigInteger valueOf(long longerValue)</code><br>
+Converts a 64-bit signed integer to a big integer.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>ONE</h3>
+
+<pre><code>@Deprecated public static final BigInteger ONE
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<h2>Method Details</h2>
+
+<h3>fromBytes</h3>
+
+<pre><code>public static BigInteger fromBytes(byte[] bytes, boolean littleEndian)
+</code></pre>
+
+<p>Initializes an arbitrary-precision integer from an array of bytes.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A byte array consisting of the two&#39;s-complement integer
+representation of the arbitrary-precision integer to create. The last
+byte contains the lowest 8-bits, the next-to-last contains the next
+lowest 8 bits, and so on. To encode negative numbers, take the
+absolute value of the number, subtract by 1, encode the number into
+bytes, XOR each byte, and if the most-significant bit of the first
+byte isn&#39;t set, add an additional byte at the start with the value</p>
+
+<ol>
+<li>For little-endian, the byte order is reversed from the byte
+order just discussed.</li>
+</ol></li>
+<li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
+least-significant-byte first. If false, the byte order is big-endian,
+or most-significant-byte first.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer. Returns 0 if the byte array&#39;s length
+is 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+</ul>
+
+<h3>fromRadixString</h3>
+
+<pre><code>public static BigInteger fromRadixString(String str, int radix)
+</code></pre>
+
+<p>Converts a string to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string. The string must contain only characters allowed by
+the given radix, except that it may start with a minus sign (&quot;-&quot;,
+U + 002D) to indicate a negative number. The string is not allowed to
+contain white space characters, including spaces.</p></li>
+<li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
+the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
+A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
+then A-F in radix 16.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>radix</code> is less than 2
+or greater than 36.</p></li>
+<li><p><code>NumberFormatException</code> - The string is empty or in an invalid format.</p></li>
+</ul>
+
+<h3>fromString</h3>
+
+<pre><code>public static BigInteger fromString(String str)
+</code></pre>
+
+<p>Converts a string to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A text string. The string must contain only basic digits 0 to 9
+(U+0030 to U+0039), except that it may start with a minus sign (&quot;-&quot;,
+U + 002D) to indicate a negative number. The string is not allowed to
+contain white space characters, including spaces.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NumberFormatException</code> - The parameter <code>str</code> is in an invalid
+format.</p></li>
+</ul>
+
+<h3>valueOf</h3>
+
+<pre><code>public static BigInteger valueOf(long longerValue)
+</code></pre>
+
+<p>Converts a 64-bit signed integer to a big integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>longerValue</code> - A 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as the 64-bit
+number.</li>
+</ul>
+
+<h3>bitLength</h3>
+
+<pre><code>public int bitLength()
+</code></pre>
+
+<p>Finds the minimum number of bits needed to represent this object&#x27;s
+ value, except for its sign. If the value is negative, finds the
+ number of bits in a value equal to this object&#39;s absolute value minus
+ 1.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bits in this object&#39;s value. Returns 0 if this
+object&#39;s value is 0 or negative 1.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(Object obj)
+</code></pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - An arbitrary object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object and another object are equal; otherwise, false.</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre><code>public int hashCode()
+</code></pre>
+
+<p>Returns the hash code for this instance.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>toBytes</h3>
+
+<pre><code>public byte[] toBytes(boolean littleEndian)
+</code></pre>
+
+<p>Returns a byte array of this object&#x27;s value. The byte array will take
+ the form of the number&#39;s two&#39; s-complement representation, using the
+ fewest bytes necessary to represent its value unambiguously. If this
+ value is negative, the bits that appear &quot;before&quot; the most significant
+ bit of the number will be all ones.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>littleEndian</code> - If true, the least significant bits will appear first.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A byte array. If this value is 0, returns a byte array with the
+single element 0.</li>
+</ul>
+
+<h3>toRadixString</h3>
+
+<pre><code>public String toRadixString(int radix)
+</code></pre>
+
+<p>Generates a string representing the value of this object, in the given
+ radix.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>radix</code> - A radix from 2 through 36. For example, to generate a
+hexadecimal (base-16) string, specify 16. To generate a decimal
+(base-10) string, specify 10.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representing the value of this object. If this value is 0,
+returns &quot;0&quot;. If negative, the string will begin with a hyphen/minus
+(&quot;-&quot;). Depending on the radix, the string will use the basic digits 0
+to 9 (U + 0030 to U + 0039) and then the basic letters A to Z (U + 0041 to
+U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter &quot;index&quot; is less than 0,
+&quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s
+length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2
+or greater than 36.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre><code>public String toString()
+</code></pre>
+
+<p>Converts this object to a text string in base 10.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object. If negative, the string will
+begin with a minus sign (&quot;-&quot;, U+002D). The string will use the basic
+digits 0 to 9 (U + 0030 to U + 0039).</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre><code>public int compareTo(BigInteger other)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;BigInteger&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - A BigInteger object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

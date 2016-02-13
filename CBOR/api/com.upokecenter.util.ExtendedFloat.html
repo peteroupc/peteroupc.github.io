@@ -1,0 +1,653 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.util.ExtendedFloat</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.util.ExtendedFloat</h1>
+
+<h1>com.upokecenter.util.ExtendedFloat</h1>
+
+<pre><code>public final class ExtendedFloat extends Object implements Comparable&lt;ExtendedFloat&gt;
+</code></pre>
+
+<p><b>This class is largely obsolete. It will be replaced by a new version
+ of this class in a different namespace/package and library, called
+ <code>PeterO.Numbers.EFloat</code> in the <code>PeterO.Numbers</code>
+ library (in .NET), or <code>com.upokecenter.numbers.EFloat</code> in the <code>com.github.peteroupc/numbers</code>
+ artifact (in Java). This new class can be used in the
+ <code>CBORObject.FromObject(object)</code> method (by including the new
+ library in your code, among other things), but this version of the
+ CBOR library doesn't include any methods that explicitly take an
+ <code>EFloat</code> as a parameter or return value.</b></p> <p>Represents
+ an arbitrary-precision binary floating-point number. Consists of an
+ integer mantissa and an integer exponent, both arbitrary-precision.
+ The value of the number equals mantissa * 2^exponent. This class also
+ supports values for negative zero, not-a-number (NaN) values, and
+ infinity.</p> <p>Passing a signaling NaN to any arithmetic operation
+ shown here will signal the flag FlagInvalid and return a quiet NaN,
+ even if another operand to that operation is a quiet NaN, unless
+ noted otherwise.</p> <p>Passing a quiet NaN to any arithmetic
+ operation shown here will return a quiet NaN, unless noted
+ otherwise.</p> <p>Unless noted otherwise, passing a null
+ arbitrary-precision binary float argument to any method here will
+ throw an exception.</p> <p>When an arithmetic operation signals the
+ flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not
+ throw an exception too, unless the operation's trap is enabled in the
+ precision context (see PrecisionContext's Traps property).</p> <p>An
+ arbitrary-precision binary float value can be serialized in one of
+ the following ways:</p> <ul> <li>By calling the toString() method.
+ However, not all strings can be converted back to an
+ arbitrary-precision binary float without loss, especially if the
+ string has a fractional part.</li> <li>By calling the
+ UnsignedMantissa, Exponent, and IsNegative properties, and calling
+ the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return
+ values combined will uniquely identify a particular
+ arbitrary-precision binary float value.</li></ul> <p>If an operation
+ requires creating an intermediate value that might be too big to fit
+ in memory (or might require more than 2 gigabytes of memory to store
+ -- due to the current use of a 32-bit integer internally as a
+ length), the operation may signal an invalid-operation flag and
+ return not-a-number (NaN). In certain rare cases, the compareTo
+ method may throw OutOfMemoryError (called OutOfMemoryError in
+ Java) in the same circumstances.</p> <p><b>Thread safety:</b>
+ Instances of this class are immutable, so they are inherently safe
+ for use by multiple threads. Multiple instances of this object with
+ the same properties are interchangeable, so they should not be
+ compared using the "==" operator (which only checks if each side of
+ the operator is the same instance).</p>
+
+<h2>Fields</h2>
+
+<ul>
+<li><code>static ExtendedFloat NaN</code><br>
+A not-a-number value.</li>
+<li><code>static ExtendedFloat NegativeInfinity</code><br>
+Negative infinity, less than any other number.</li>
+<li><code>static ExtendedFloat NegativeZero</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat One</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat PositiveInfinity</code><br>
+Positive infinity, greater than any other number.</li>
+<li><code>static ExtendedFloat SignalingNaN</code><br>
+A not-a-number value that signals an invalid operation flag when it&#39;s
+passed as an argument to any arithmetic operation in
+arbitrary-precision binary float.</li>
+<li><code>static ExtendedFloat Ten</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat Zero</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>int compareTo(ExtendedFloat other)</code><br>
+Not documented yet.</li>
+<li><code>static ExtendedFloat Create(BigInteger mantissa,
+  BigInteger exponent)</code><br>
+Creates a number with the value exponent*2^mantissa.</li>
+<li><code>static ExtendedFloat Create(int mantissaSmall,
+  int exponentSmall)</code><br>
+Creates a number with the value exponent*2^mantissa.</li>
+<li><code>boolean equals(ExtendedFloat other)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean equals(Object obj)</code><br>
+Determines whether this object&#39;s mantissa and exponent are equal to
+those of another object and that other object is an
+arbitrary-precision decimal number.</li>
+<li><code>boolean EqualsInternal(ExtendedFloat otherValue)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat FromString(String str)</code><br>
+Not documented yet.</li>
+<li><code>static ExtendedFloat FromString(String str,
+      int offset,
+      int length,
+      PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger getExponent()</code><br>
+Gets this object&#39;s exponent.</li>
+<li><code>BigInteger getMantissa()</code><br>
+Gets this object&#39;s un-scaled value.</li>
+<li><code>BigInteger getUnsignedMantissa()</code><br>
+Gets the absolute value of this object&#39;s un-scaled value.</li>
+<li><code>int hashCode()</code><br>
+Calculates this object&#39;s hash code.</li>
+<li><code>boolean IsInfinity()</code><br>
+Gets a value indicating whether this object is positive or negative
+infinity.</li>
+<li><code>boolean IsNaN()</code><br>
+Returns whether this object is a not-a-number value.</li>
+<li><code>boolean isNegative()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean IsNegativeInfinity()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean IsPositiveInfinity()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean IsQuietNaN()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean IsSignalingNaN()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int signum()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>String toString()</code><br>
+Converts this value to a string.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>One</h3>
+
+<pre><code>@Deprecated public static final ExtendedFloat One
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<h3>Zero</h3>
+
+<pre><code>@Deprecated public static final ExtendedFloat Zero
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<h3>NegativeZero</h3>
+
+<pre><code>@Deprecated public static final ExtendedFloat NegativeZero
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<h3>Ten</h3>
+
+<pre><code>@Deprecated public static final ExtendedFloat Ten
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<h3>NaN</h3>
+
+<pre><code>public static final ExtendedFloat NaN
+</code></pre>
+
+<p>A not-a-number value.</p>
+
+<h3>SignalingNaN</h3>
+
+<pre><code>public static final ExtendedFloat SignalingNaN
+</code></pre>
+
+<p>A not-a-number value that signals an invalid operation flag when it&#x27;s
+ passed as an argument to any arithmetic operation in
+ arbitrary-precision binary float.</p>
+
+<h3>PositiveInfinity</h3>
+
+<pre><code>public static final ExtendedFloat PositiveInfinity
+</code></pre>
+
+<p>Positive infinity, greater than any other number.</p>
+
+<h3>NegativeInfinity</h3>
+
+<pre><code>public static final ExtendedFloat NegativeInfinity
+</code></pre>
+
+<p>Negative infinity, less than any other number.</p>
+
+<h2>Method Details</h2>
+
+<h3>getExponent</h3>
+
+<pre><code>public final BigInteger getExponent()
+</code></pre>
+
+<p>Gets this object&#x27;s exponent. This object&#x27;s value will be an
+ integer if the exponent is positive or zero.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s exponent. This object&#39;s value will be an integer if
+the exponent is positive or zero.</li>
+</ul>
+
+<h3>getUnsignedMantissa</h3>
+
+<pre><code>public final BigInteger getUnsignedMantissa()
+</code></pre>
+
+<p>Gets the absolute value of this object&#x27;s un-scaled value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The absolute value of this object&#39;s un-scaled value.</li>
+</ul>
+
+<h3>getMantissa</h3>
+
+<pre><code>public final BigInteger getMantissa()
+</code></pre>
+
+<p>Gets this object&#x27;s un-scaled value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s un-scaled value. Will be negative if this object&#39;s
+value is negative (including a negative NaN).</li>
+</ul>
+
+<h3>EqualsInternal</h3>
+
+<pre><code>@Deprecated public boolean EqualsInternal(ExtendedFloat otherValue)
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object&#39;s mantissa and exponent are equal to those of
+another object; otherwise, false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>@Deprecated public boolean equals(ExtendedFloat other)
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object&#39;s mantissa and exponent are equal to those of
+another object; otherwise, false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(Object obj)
+</code></pre>
+
+<p>Determines whether this object&#x27;s mantissa and exponent are equal to
+ those of another object and that other object is an
+ arbitrary-precision decimal number.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - An arbitrary object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if the objects are equal; otherwise, false .</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre><code>public int hashCode()
+</code></pre>
+
+<p>Calculates this object&#x27;s hash code.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s hash code.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre><code>public static ExtendedFloat Create(int mantissaSmall, int exponentSmall)
+</code></pre>
+
+<p>Creates a number with the value exponent*2^mantissa.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissaSmall</code> - The un-scaled value.</p></li>
+<li><p><code>exponentSmall</code> - The binary exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre><code>public static ExtendedFloat Create(BigInteger mantissa, BigInteger exponent)
+</code></pre>
+
+<p>Creates a number with the value exponent*2^mantissa.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissa</code> - The un-scaled value.</p></li>
+<li><p><code>exponent</code> - The binary exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>mantissa</code> or
+<code>exponent</code> is null.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat FromString(String str, int offset, int length, PrecisionContext ctx)
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>str</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>str</code> (but not more than <code>str</code> &#39;s length).</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object specifying the precision, rounding, and
+exponent range to apply to the parsed number. Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parsed number, converted to arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>public static ExtendedFloat FromString(String str)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An ExtendedFloat object.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre><code>public String toString()
+</code></pre>
+
+<p>Converts this value to a string.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object. The value is converted to
+decimal and the decimal form of this number&#39;s value is returned.</li>
+</ul>
+
+<h3>IsNegativeInfinity</h3>
+
+<pre><code>@Deprecated public boolean IsNegativeInfinity()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object is negative infinity; otherwise, false .</li>
+</ul>
+
+<h3>IsPositiveInfinity</h3>
+
+<pre><code>@Deprecated public boolean IsPositiveInfinity()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object is positive infinity; otherwise, false .</li>
+</ul>
+
+<h3>IsNaN</h3>
+
+<pre><code>public boolean IsNaN()
+</code></pre>
+
+<p>Returns whether this object is a not-a-number value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object is a not-a-number value; otherwise, false .</li>
+</ul>
+
+<h3>IsInfinity</h3>
+
+<pre><code>public boolean IsInfinity()
+</code></pre>
+
+<p>Gets a value indicating whether this object is positive or negative
+ infinity.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object is positive or negative infinity; otherwise,
+false.</li>
+</ul>
+
+<h3>isNegative</h3>
+
+<pre><code>@Deprecated public final boolean isNegative()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object is negative, including negative zero; otherwise,
+false.</li>
+</ul>
+
+<h3>IsQuietNaN</h3>
+
+<pre><code>@Deprecated public boolean IsQuietNaN()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object is a quiet not-a-number value; otherwise, false.</li>
+</ul>
+
+<h3>IsSignalingNaN</h3>
+
+<pre><code>@Deprecated public boolean IsSignalingNaN()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object is a signaling not-a-number value; otherwise,
+false.</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre><code>public int compareTo(ExtendedFloat other)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;ExtendedFloat&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>signum</h3>
+
+<pre><code>@Deprecated public final int signum()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
+</ul>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

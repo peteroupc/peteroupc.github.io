@@ -83,7 +83,7 @@
 <li><i>obj</i>: An arbitrary object.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the objects are equal, otherwise, false .</p>
 
@@ -94,7 +94,7 @@
 
 <p>Returns the hash code for this instance.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 32-bit hash code.</p>
 
@@ -112,7 +112,7 @@
 <li><i>name</i>: The name of the parameter to get. The name will be matched case-insensitively. Can&#39;t be null.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The value of the parameter, or null if the parameter does not exist.</p>
 
@@ -151,7 +151,7 @@ is empty.</p></li>
 <li><i>str</i>: A string representing a file name. Can be null.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A string with the converted version of the file name. Among other things, encoded words under RFC 2047 are decoded (since they occur so frequently in Content-Disposition filenames); the value is decoded under RFC 2231 if possible; characters unsuitable for use in a filename (including the directory separators slash and backslash) are replaced with underscores; spaces and tabs are collapsed to a single space; leading and trailing spaces and tabs are removed; and the filename is truncated if it would otherwise be too long. The returned string will be in normalization form C. Returns an empty string if  <i>str</i>
  is null.</p>
@@ -180,7 +180,7 @@ is null.</li>
 <li><p><i>defaultValue</i>: The value to return in case the disposition value is syntactically invalid. Can be null.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A ContentDisposition object.</p>
 
@@ -206,7 +206,7 @@ is null.</li>
 <li><i>dispoValue</i>: A text string.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A content disposition object, or &quot;Attachment&quot; if  <i>dispoValue</i>
  is empty or syntactically invalid.</p>
@@ -226,7 +226,7 @@ is null.</li>
 
 <p>Converts this object to a text string.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A string representation of this object.</p>
 

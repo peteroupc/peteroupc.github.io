@@ -193,7 +193,7 @@ is null.</li>
 <li><i>other</i>: An ExtendedRational object.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
@@ -213,7 +213,7 @@ is null.</li>
 <li><p><i>denominatorSmall</i>: A 32-bit signed integer. (2).</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision rational number.</p>
 
@@ -233,7 +233,7 @@ is null.</li>
 <li><p><i>denominator</i>: Another arbitrary-precision integer.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision rational number.</p>
 
@@ -245,6 +245,20 @@ The parameter <i>numerator</i>
 or  <i>denominator</i>
 is null.</li>
 </ul>
+
+<h3>Equals</h3>
+
+<pre><code>public override bool Equals(
+    object obj);
+</code></pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>:</li>
+</ul>
+
+<p><b>Return Value:</b></p>
 
 <h3>Equals</h3>
 
@@ -260,9 +274,16 @@ is null.</li>
 <li><i>other</i>: An ExtendedRational object.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A Boolean object.</p>
+
+<h3>GetHashCode</h3>
+
+<pre><code>public override int GetHashCode();
+</code></pre>
+
+<p><b>Return Value:</b></p>
 
 <h3>ToString</h3>
 
@@ -271,7 +292,7 @@ is null.</li>
 
 <p>Converts this object to a text string.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A string representation of this object. The result can be Infinity, NaN, or sNaN (with a minus sign before it for negative values), or a number of the following form: [-]numerator/denominator.</p>
 

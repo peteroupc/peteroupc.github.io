@@ -1,0 +1,357 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.ContentDisposition</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.mail.ContentDisposition</h1>
+
+<h1>com.upokecenter.mail.ContentDisposition</h1>
+
+<pre><code>public class ContentDisposition extends Object
+</code></pre>
+
+<p>Specifies how a message body should be displayed or handled by a mail user
+ agent. This type is immutable; its contents can&#39;t be changed after
+ it&#39;s created. To create a changeable disposition object, use the
+ DispositionBuilder class.</p>
+
+<h2>Fields</h2>
+
+<ul>
+<li><code>static ContentDisposition Attachment</code><br>
+The content disposition value &quot;attachment&quot;.</li>
+<li><code>static ContentDisposition Inline</code><br>
+The content disposition value &quot;inline&quot;.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>boolean equals(Object obj)</code><br>
+Determines whether this object and another object are equal.</li>
+<li><code>String getDispositionType()</code><br>
+Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
+&quot;attachment&quot;.</li>
+<li><code>String GetParameter(String name)</code><br>
+Gets a parameter from this disposition object.</li>
+<li><code>Map&lt;String,String&gt; getParameters()</code><br>
+Gets a list of parameter names associated with this object and their values.</li>
+<li><code>int hashCode()</code><br>
+Returns the hash code for this instance.</li>
+<li><code>boolean isAttachment()</code><br>
+Gets a value indicating whether the disposition type is attachment.</li>
+<li><code>boolean isInline()</code><br>
+Gets a value indicating whether the disposition type is inline.</li>
+<li><code>static String MakeFilename(String str)</code><br>
+Converts a file name from the Content-Disposition header to a suitable name
+for saving data to a file.</li>
+<li><code>static ContentDisposition Parse(String dispoValue)</code><br>
+Parses a content disposition string and returns a content disposition
+object.</li>
+<li><code>static ContentDisposition Parse(String dispositionValue,
+ ContentDisposition defaultValue)</code><br>
+Creates a new content disposition object from the value of a
+Content-Disposition header field.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>Attachment</h3>
+
+<pre><code>public static final ContentDisposition Attachment
+</code></pre>
+
+<p>The content disposition value &quot;attachment&quot;.</p>
+
+<h3>Inline</h3>
+
+<pre><code>public static final ContentDisposition Inline
+</code></pre>
+
+<p>The content disposition value &quot;inline&quot;.</p>
+
+<h2>Method Details</h2>
+
+<h3>getDispositionType</h3>
+
+<pre><code>public final String getDispositionType()
+</code></pre>
+
+<p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
+ &quot;attachment&quot;.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string containing this object&#39;s disposition type, such as &quot;inline&quot;
+or &quot;attachment&quot;.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(Object obj)
+</code></pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - An arbitrary object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if the objects are equal; otherwise, false.</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre><code>public int hashCode()
+</code></pre>
+
+<p>Returns the hash code for this instance.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit hash code.</li>
+</ul>
+
+<h3>isInline</h3>
+
+<pre><code>public final boolean isInline()
+</code></pre>
+
+<p>Gets a value indicating whether the disposition type is inline.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if the disposition type is inline; otherwise, false.</li>
+</ul>
+
+<h3>isAttachment</h3>
+
+<pre><code>public final boolean isAttachment()
+</code></pre>
+
+<p>Gets a value indicating whether the disposition type is attachment.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if the disposition type is attachment; otherwise, false.</li>
+</ul>
+
+<h3>getParameters</h3>
+
+<pre><code>public final Map&lt;String,String&gt; getParameters()
+</code></pre>
+
+<p>Gets a list of parameter names associated with this object and their values.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A read-only list of parameter names associated with this object and
+their values. The names will be sorted.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre><code>public String toString()
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object.</li>
+</ul>
+
+<h3>MakeFilename</h3>
+
+<pre><code>public static String MakeFilename(String str)
+</code></pre>
+
+<p>Converts a file name from the Content-Disposition header to a suitable name
+ for saving data to a file. <p>Examples:</p>
+ <p>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot; (RFC 2047
+ encoding)</p> <p>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;
+ (RFC 2047 encoding)</p> <p>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;
+ (RFC 2231 encoding)</p> <p>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot; (Reserved
+ name)</p> <p>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot; (Directory
+ separators)</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A string representing a file name. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string with the converted version of the file name. Among other
+things, encoded words under RFC 2047 are decoded (since they occur so
+frequently in Content-Disposition filenames); the value is decoded
+under RFC 2231 if possible; characters unsuitable for use in a
+filename (including the directory separators slash and backslash) are
+replaced with underscores; spaces and tabs are collapsed to a single
+space; leading and trailing spaces and tabs are removed; and the
+filename is truncated if it would otherwise be too long. The returned
+string will be in normalization form C. Returns an empty string if
+<code>str</code> is null.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter &quot;name&quot; or <code>str</code> or
+&quot;dispoValue&quot; or &quot;dispositionValue&quot; is null.</li>
+</ul>
+
+<h3>GetParameter</h3>
+
+<pre><code>public String GetParameter(String name)
+</code></pre>
+
+<p>Gets a parameter from this disposition object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>name</code> - The name of the parameter to get. The name will be matched
+case-insensitively. Can&#39;t be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The value of the parameter, or null if the parameter does not exist.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty.</p></li>
+</ul>
+
+<h3>Parse</h3>
+
+<pre><code>public static ContentDisposition Parse(String dispoValue)
+</code></pre>
+
+<p>Parses a content disposition string and returns a content disposition
+ object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>dispoValue</code> - A string object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A content disposition object, or &quot;Attachment&quot; if <code>dispoValue</code>
+is empty or syntactically invalid.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>dispoValue</code> is null.</li>
+</ul>
+
+<h3>Parse</h3>
+
+<pre><code>public static ContentDisposition Parse(String dispositionValue, ContentDisposition defaultValue)
+</code></pre>
+
+<p>Creates a new content disposition object from the value of a
+ Content-Disposition header field.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>dispositionValue</code> - A string object that should be the value of a
+Content-Disposition header field.</p></li>
+<li><p><code>defaultValue</code> - The value to return in case the disposition value is
+syntactically invalid. Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A ContentDisposition object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>dispositionValue</code> is
+null.</li>
+</ul>
+
+<p><a href="/MailLib/">Back to MailLib start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

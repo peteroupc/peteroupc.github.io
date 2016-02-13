@@ -67,7 +67,7 @@
 <li><i>index</i>: An array index, starting from 0.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this type filter allows CBOR arrays and the given array index is allowed under this type filter; otherwise, false .</p>
 
@@ -85,7 +85,7 @@
 <li><i>length</i>: The length of a CBOR array.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under this filter; otherwise,  <code>false</code> .</p>
 
@@ -103,7 +103,7 @@
 <li><i>length</i>: The length of a CBOR array.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under a filter; otherwise,  <code>false</code> .</p>
 
@@ -121,7 +121,7 @@
 <li><i>bigLength</i>: An arbitrary-precision integer.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under a filter; otherwise,  <code>false</code> .</p>
 
@@ -147,7 +147,7 @@ is null.</li>
 <li><i>index</i>: A zero-based index of the filter to retrieve.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Returns None if the index is out of range, or Any if this filter doesn&#39;t filter an array. Returns the appropriate filter for the array index otherwise.</p>
 
@@ -165,7 +165,7 @@ is null.</li>
 <li><i>index</i>: A zero-based index of the filter to retrieve.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Returns None if the index is out of range, or Any if this filter doesn&#39;t filter an array. Returns the appropriate filter for the array index otherwise.</p>
 
@@ -183,7 +183,7 @@ is null.</li>
 <li><i>type</i>: A CBOR major type from 0 to 7.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the given CBOR major type matches a major type allowed by this filter; otherwise,  <code>false</code> .</p>
 
@@ -194,7 +194,7 @@ is null.</li>
 
 <p>Returns whether this filter allows simple values that are not floating-point numbers.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this filter allows simple values that are not floating-point numbers; otherwise,  <code>false</code> .</p>
 
@@ -212,7 +212,7 @@ is null.</li>
 <li><i>tag</i>: A tag number. Returns false if this is less than 0.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
@@ -230,7 +230,7 @@ is null.</li>
 <li><i>longTag</i>: A tag number. Returns false if this is less than 0.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
@@ -248,7 +248,7 @@ is null.</li>
 <li><i>bigTag</i>: A tag number. Returns false if this is less than 0.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
@@ -267,7 +267,7 @@ is null.</li>
 
 <p>Copies this filter and includes arrays of any length in the new filter.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -287,7 +287,7 @@ is null.</li>
 <li><p><i>elements</i>: An array containing the allowed types for each element in the array. There must be at least as many elements here as given in the arrayLength parameter.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -318,7 +318,7 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 <li><p><i>elements</i>: An array containing the allowed types for each element in the array. There must be at least as many elements here as given in the arrayLength parameter.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -340,7 +340,7 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>Copies this filter and includes byte strings in the new filter.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -351,7 +351,7 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>Copies this filter and includes floating-point numbers in the new filter.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -362,7 +362,7 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>Copies this filter and includes maps in the new filter.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -373,7 +373,7 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>Copies this filter and includes negative integers in the new filter.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -391,7 +391,7 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 <li><i>tags</i>: An array of the CBOR tags to add to the new filter.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -402,7 +402,7 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>Copies this filter and includes text strings in the new filter.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 
@@ -413,7 +413,7 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>Copies this filter and includes unsigned integers in the new filter.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
 

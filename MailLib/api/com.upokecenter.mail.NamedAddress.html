@@ -1,0 +1,319 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.NamedAddress</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.mail.NamedAddress</h1>
+
+<h1>com.upokecenter.mail.NamedAddress</h1>
+
+<pre><code>public class NamedAddress extends Object
+</code></pre>
+
+<p>Represents an email address and a name for that address. Can represent a
+ group of email addresses instead.</p>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>NamedAddress(String address)</code><br>
+Initializes a new instance of the NamedAddress class.</li>
+<li><code>NamedAddress(String displayName,
+        Address address)</code><br>
+Initializes a new instance of the NamedAddress class.</li>
+<li><code>NamedAddress(String groupName,
+        List&lt;NamedAddress&gt; mailboxes)</code><br>
+Initializes a new instance of the NamedAddress class.</li>
+<li><code>NamedAddress(String displayName,
+        String address)</code><br>
+Initializes a new instance of the NamedAddress class using the given display
+name and email address.</li>
+<li><code>NamedAddress(String displayName,
+        String localPart,
+        String domain)</code><br>
+Initializes a new instance of the NamedAddress class using the given name
+and an email address made up of its local part and domain.</li>
+<li><code>Address getAddress()</code><br>
+Gets the email address associated with this object.</li>
+<li><code>List&lt;NamedAddress&gt; getGroupAddresses()</code><br>
+Gets a read-only list of addresses that make up the group, if this object
+represents a group, or an empty list otherwise.</li>
+<li><code>String getName()</code><br>
+Gets the display name for this email address (or the email address&#39;s value
+if the display name is absent).</li>
+<li><code>boolean isGroup()</code><br>
+Gets a value indicating whether this represents a group of addresses rather
+than a single address.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>NamedAddress(String address)</code><br>
+Initializes a new instance of the NamedAddress class.</li>
+<li><code>NamedAddress(String displayName,
+        Address address)</code><br>
+Initializes a new instance of the NamedAddress class.</li>
+<li><code>NamedAddress(String groupName,
+        List&lt;NamedAddress&gt; mailboxes)</code><br>
+Initializes a new instance of the NamedAddress class.</li>
+<li><code>NamedAddress(String displayName,
+        String address)</code><br>
+Initializes a new instance of the NamedAddress class using the given display
+name and email address.</li>
+<li><code>NamedAddress(String displayName,
+        String localPart,
+        String domain)</code><br>
+Initializes a new instance of the NamedAddress class using the given name
+and an email address made up of its local part and domain.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>NamedAddress</h3>
+
+<pre><code>public NamedAddress(String address)
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class. Examples: <ul>
+ <li><code><a href="mailto:john@example.com">john@example.com</a></code></li> <li><code>&quot;John Doe&quot;
+ &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li>
+ <li><code>=?utf-8?q?John</code><code>=</code><code>27s_Office?=
+ &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li> <li><code>John
+ &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li> <li><code>&quot;Group&quot; : Tom
+ &lt;<a href="mailto:tom@example.com">tom@example.com</a>&gt;, Jane &lt;<a href="mailto:jane@example.com">jane@example.com</a>&gt;;</code></li></ul></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>address</code> - A string object identifying a single email address or a group
+of email addresses. Comments, or text within parentheses, can appear.
+Multiple email addresses are not allowed unless they appear in the
+group syntax given above. Encoded words under RFC 2047 that appear
+within comments or display names will be decoded. <p>An RFC 2047
+encoded word consists of &quot;=?&quot;, a character encoding name, such as
+<code>utf-8</code>, either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a
+series of bytes in the character encoding, further encoded using B or
+Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q
+encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;,
+and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and
+the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed
+to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s
+maximum length is 75 characters. See the second example.</p>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>address</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The named address has an invalid syntax.</p></li>
+</ul>
+
+<h3>NamedAddress</h3>
+
+<pre><code>public NamedAddress(String displayName, String address)
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class using the given display
+ name and email address.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>displayName</code> - The address&#39;s display name. Can be null or empty, in
+which case the email address is used instead. Encoded words under RFC
+2047 will not be decoded.</p></li>
+<li><p><code>address</code> - An email address.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>address</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The display name or address has an invalid syntax.</p></li>
+</ul>
+
+<h3>NamedAddress</h3>
+
+<pre><code>public NamedAddress(String displayName, Address address)
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>displayName</code> - A string object. If this value is null or empty, uses the
+email address as the display name. Encoded words under RFC 2047 will
+not be decoded.</p></li>
+<li><p><code>address</code> - An email address.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>address</code> is null.</li>
+</ul>
+
+<h3>NamedAddress</h3>
+
+<pre><code>public NamedAddress(String displayName, String localPart, String domain)
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class using the given name
+ and an email address made up of its local part and domain.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>displayName</code> - A string object. If this value is null or empty, uses the
+email address as the display name.</p></li>
+<li><p><code>localPart</code> - The local part of the email address (before the &quot;@&quot;).</p></li>
+<li><p><code>domain</code> - The domain of the email address (before the &quot;@&quot;).</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>localPart</code> or <code>domain</code> is null.</li>
+</ul>
+
+<h3>NamedAddress</h3>
+
+<pre><code>public NamedAddress(String groupName, List&lt;NamedAddress&gt; mailboxes)
+</code></pre>
+
+<p>Initializes a new instance of the NamedAddress class. Takes a group name and
+ several named email addresses as parameters, and forms a group with
+ them.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>groupName</code> - The group&#39;s name.</p></li>
+<li><p><code>mailboxes</code> - A list of named addresses that make up the group.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>groupName</code> or <code>mailboxes</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>groupName</code> is empty, or an
+item in the list is itself a group.</p></li>
+</ul>
+
+<h3>getName</h3>
+
+<pre><code>public final String getName()
+</code></pre>
+
+<p>Gets the display name for this email address (or the email address&#39;s value
+ if the display name is absent).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The display name for this email address.</li>
+</ul>
+
+<h3>getAddress</h3>
+
+<pre><code>public final Address getAddress()
+</code></pre>
+
+<p>Gets the email address associated with this object.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The email address associated with this object. This value is null if
+this object represents a group of addresses instead.</li>
+</ul>
+
+<h3>isGroup</h3>
+
+<pre><code>public final boolean isGroup()
+</code></pre>
+
+<p>Gets a value indicating whether this represents a group of addresses rather
+ than a single address.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if this represents a group of addresses; otherwise, false.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre><code>public String toString()
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object.</li>
+</ul>
+
+<h3>getGroupAddresses</h3>
+
+<pre><code>public final List&lt;NamedAddress&gt; getGroupAddresses()
+</code></pre>
+
+<p>Gets a read-only list of addresses that make up the group, if this object
+ represents a group, or an empty list otherwise.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of addresses that make up the group, if this object
+represents a group, or an empty list otherwise.</li>
+</ul>
+
+<p><a href="/MailLib/">Back to MailLib start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.DataIO</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>PeterO.DataIO</h1>
+
+<h2>PeterO.DataIO</h2>
+
+<pre><code>public static class DataIO
+</code></pre>
+
+<p>Convenience class that contains static methods for wrapping byte arrays and streams into byte readers and byte writers.</p>
+
+<h3>ToByteReader</h3>
+
+<pre><code>public static PeterO.IByteReader ToByteReader(
+    this byte[] bytes);
+</code></pre>
+
+<p><b>Deprecated.</b> Use ToReader instead.</p>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bytes</i>: The parameter  <i>bytes</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An IByteReader object.</p>
+
+<h3>ToByteReader</h3>
+
+<pre><code>public static PeterO.IByteReader ToByteReader(
+    this byte[] bytes,
+    int offset,
+    int length);
+</code></pre>
+
+<p><b>Deprecated.</b> Use ToReader instead.</p>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: The parameter  <i>bytes</i>
+is not documented yet.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>bytes</i>
+begins.</p></li>
+<li><p><i>length</i>: The length, in bytes, of the desired portion of  <i>bytes</i>
+(but not more than  <i>bytes</i>
+&#39;s length).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An IByteReader object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39; s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>bytes</i>
+is null.</p></li>
+</ul>
+
+<h3>ToByteReader</h3>
+
+<pre><code>public static PeterO.IByteReader ToByteReader(
+    this System.IO.Stream input);
+</code></pre>
+
+<p><b>Deprecated.</b> Use ToReader instead.</p>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>input</i>: The parameter  <i>input</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An IByteReader object.</p>
+
+<h3>ToReader</h3>
+
+<pre><code>public static PeterO.IReader ToReader(
+    this byte[] bytes);
+</code></pre>
+
+<p>Wraps a byte array into a byte reader. The reader will start at the beginning of the byte array.In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bytes</i>: The byte array to wrap.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A byte reader wrapping the byte array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bytes</i>
+is null.</li>
+</ul>
+
+<h3>ToReader</h3>
+
+<pre><code>public static PeterO.IReader ToReader(
+    this byte[] bytes,
+    int offset,
+    int length);
+</code></pre>
+
+<p>Wraps a portion of a byte array into a byte reader object.In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: The byte array to wrap.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of &quot;bytes&quot; begins.</p></li>
+<li><p><i>length</i>: The length, in bytes, of the desired portion of &quot;bytes&quot; (but not more than &quot;bytes&quot; &#39;s length).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A byte reader wrapping the byte array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>bytes</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39; s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+</ul>
+
+<h3>ToReader</h3>
+
+<pre><code>public static PeterO.IReader ToReader(
+    this System.IO.Stream input);
+</code></pre>
+
+<p>Wraps an input stream into a reader object. If an IOException is thrown by the input stream, the reader object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>input</i>: The input stream to wrap.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A byte reader wrapping the input stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>input</i>
+is null.</li>
+</ul>
+
+<h3>ToWriter</h3>
+
+<pre><code>public static PeterO.IWriter ToWriter(
+    this PeterO.IByteWriter output);
+</code></pre>
+
+<p>Wraps a byte writer (one that only implements a ReadByte method) to a writer (one that also implements a three-parameter Read method.)In the .NET implementation, this method is implemented as an extension method to any object implementing IByteWriter and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>output</i>: A byte stream.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A writer that wraps the given stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>output</i>
+is null.</li>
+</ul>
+
+<h3>ToWriter</h3>
+
+<pre><code>public static PeterO.IWriter ToWriter(
+    this System.IO.Stream output);
+</code></pre>
+
+<p>Wraps an output stream into a writer object. If an IOException is thrown by the input stream, the writer object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>output</i>: Output stream to wrap.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A byte writer that wraps the given output stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>output</i>
+is null.</li>
+</ul>
+
+<p><a href="/Encoding/">Back to Encoding start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

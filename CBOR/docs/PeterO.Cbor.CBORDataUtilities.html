@@ -25,7 +25,7 @@
 <li><i>str</i>: A string to parse. The string is not allowed to contain white space characters, including spaces.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
 
@@ -47,7 +47,7 @@
 <li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is disallowed).</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
 
@@ -71,7 +71,7 @@
 <li><p><i>preserveNegativeZero</i>: If true, returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Otherwise, returns negative zero in this case.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the string is null or empty.</p>
 

@@ -1,0 +1,400 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.MediaType</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.mail.MediaType</h1>
+
+<h1>com.upokecenter.mail.MediaType</h1>
+
+<pre><code>public final class MediaType extends Object
+</code></pre>
+
+<p>Specifies what kind of data a message body is.</p> <p>A media type
+ consists of a top-level type (the general category of the data), a
+ subtype (the specific type), and an optional list of parameters. For
+ example, the media type <code>text/plain; charset = utf-8</code> is a text
+ media type ("text"), namely, a plain text type ("plain"), and the
+ parameters say that the data uses UTF-8, a Unicode character encoding
+ ("charset=utf-8"). Other top-level types include "audio", "video",
+ and "application".</p> <p>A media type is sometimes known as a "MIME
+ type", for Multipurpose Internet Mail Extensions, the standard that
+ introduced media types.</p> <p>This type is immutable, meaning its
+ values can't be changed once it' s created. To create a changeable
+ media type object, use the MediaTypeBuilder class.</p>
+
+<h2>Fields</h2>
+
+<ul>
+<li><code>static MediaType ApplicationOctetStream</code><br>
+Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary
+binary data.</li>
+<li><code>static MediaType MessageRfc822</code><br>
+Specifies the media type &quot;message/rfc822&quot; , used for Internet mail messages.</li>
+<li><code>static MediaType TextPlainAscii</code><br>
+Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
+&quot;US-ASCII&quot;, used for plain text data.</li>
+<li><code>static MediaType TextPlainUtf8</code><br>
+Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
+used for Unicode plain text data.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>boolean equals(Object obj)</code><br>
+Determines whether this object and another object are equal.</li>
+<li><code>String GetCharset()</code><br>
+Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
+to represent text in the data that uses this media type.</li>
+<li><code>String GetParameter(String name)</code><br>
+Gets the value of a parameter in this media type, such as &quot;charset&quot; or
+&quot;format&quot;.</li>
+<li><code>Map&lt;String,String&gt; getParameters()</code><br>
+Gets a sorted list of the parameters contained in this media type object.</li>
+<li><code>String getSubType()</code><br>
+Gets this media type&#39;s subtype.</li>
+<li><code>String getTopLevelType()</code><br>
+Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or
+&quot;audio&quot;).</li>
+<li><code>String getTypeAndSubType()</code><br>
+Gets the top level type and subtype of this media type, separated by a
+slash; for example, &quot;text/plain&quot;.</li>
+<li><code>int hashCode()</code><br>
+Returns the hash code for this instance.</li>
+<li><code>boolean isMultipart()</code><br>
+Gets a value indicating whether this is a multipart media type.</li>
+<li><code>boolean isText()</code><br>
+Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</li>
+<li><code>static MediaType Parse(String mediaTypeValue)</code><br>
+Parses a media type string and returns a media type object.</li>
+<li><code>static MediaType Parse(String str,
+ MediaType defaultValue)</code><br>
+Parses a media type string and returns a media type object, or the default
+value if the string is invalid.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>TextPlainAscii</h3>
+
+<pre><code>public static final MediaType TextPlainAscii
+</code></pre>
+
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
+ &quot;US-ASCII&quot;, used for plain text data.</p>
+
+<h3>TextPlainUtf8</h3>
+
+<pre><code>public static final MediaType TextPlainUtf8
+</code></pre>
+
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
+ used for Unicode plain text data.</p>
+
+<h3>MessageRfc822</h3>
+
+<pre><code>public static final MediaType MessageRfc822
+</code></pre>
+
+<p>Specifies the media type &quot;message/rfc822&quot; , used for Internet mail messages.</p>
+
+<h3>ApplicationOctetStream</h3>
+
+<pre><code>public static final MediaType ApplicationOctetStream
+</code></pre>
+
+<p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary
+ binary data.</p>
+
+<h2>Method Details</h2>
+
+<h3>getTopLevelType</h3>
+
+<pre><code>public final String getTopLevelType()
+</code></pre>
+
+<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or
+ &quot;audio&quot;).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The name of this media type&#39;s top-level type (such as &quot;text&quot; or
+&quot;audio&quot;.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(Object obj)
+</code></pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - An arbitrary object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if this object and another object are equal; otherwise, false.</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre><code>public int hashCode()
+</code></pre>
+
+<p>Returns the hash code for this instance.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>getSubType</h3>
+
+<pre><code>public final String getSubType()
+</code></pre>
+
+<p>Gets this media type&#39;s subtype.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This media type&#39;s subtype.</li>
+</ul>
+
+<h3>isText</h3>
+
+<pre><code>public final boolean isText()
+</code></pre>
+
+<p>Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if this is a text media type; otherwise, false.</li>
+</ul>
+
+<h3>isMultipart</h3>
+
+<pre><code>public final boolean isMultipart()
+</code></pre>
+
+<p>Gets a value indicating whether this is a multipart media type.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if this is a multipart media type; otherwise, false.</li>
+</ul>
+
+<h3>getParameters</h3>
+
+<pre><code>public final Map&lt;String,String&gt; getParameters()
+</code></pre>
+
+<p>Gets a sorted list of the parameters contained in this media type object.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of the parameters contained in this media type object, sorted
+by name.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre><code>public String toString()
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object.</li>
+</ul>
+
+<h3>GetCharset</h3>
+
+<pre><code>public String GetCharset()
+</code></pre>
+
+<p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
+ to represent text in the data that uses this media type.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>If the &quot;charset&quot; parameter exists, returns that parameter with the
+basic upper-case letters A to Z (U + 0041 to U + 005A) converted to lower
+case. Returns &quot;us-ascii&quot; instead if the media type is ill-formed
+(RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t
+have a &quot;charset&quot; parameter (see RFC2046), or the default value for
+that parameter, if any, for the media type if the &quot;charset&quot; parameter
+is absent. Returns an empty string in all other cases.</li>
+</ul>
+
+<h3>GetParameter</h3>
+
+<pre><code>public String GetParameter(String name)
+</code></pre>
+
+<p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or
+ &quot;format&quot;.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>name</code> - Name of the parameter to get. The name is compared
+case-insensitively.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The value of the parameter as a string, or null if the parameter
+doesn&#39;t exist.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+</ul>
+
+<h3>getTypeAndSubType</h3>
+
+<pre><code>public final String getTypeAndSubType()
+</code></pre>
+
+<p>Gets the top level type and subtype of this media type, separated by a
+ slash; for example, &quot;text/plain&quot;.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The top level type and subtype of this media type, separated by a
+slash; for example, &quot;text/plain&quot;.</li>
+</ul>
+
+<h3>Parse</h3>
+
+<pre><code>public static MediaType Parse(String mediaTypeValue)
+</code></pre>
+
+<p>Parses a media type string and returns a media type object. This method
+ checks the syntactic validity of the string, but not whether it has
+ all parameters it&#39;s required to have or whether the parameters
+ themselves are set to valid values for the parameter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>mediaTypeValue</code> - A string object representing a media type. This media
+type can include parameters.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A media type object, or text/plain if <code>mediaTypeValue</code> is
+empty or syntactically invalid.</li>
+</ul>
+
+<h3>Parse</h3>
+
+<pre><code>public static MediaType Parse(String str, MediaType defaultValue)
+</code></pre>
+
+<p>Parses a media type string and returns a media type object, or the default
+ value if the string is invalid. This method checks the syntactic
+ validity of the string, but not whether it has all parameters it&#39;s
+ required to have or whether the parameters themselves are set to
+ valid values for the parameter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A string object representing a media type. This media type can
+include parameters.</p></li>
+<li><p><code>defaultValue</code> - The media type to return if the string is syntactically
+invalid. Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A MediaType object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<p><a href="/MailLib/">Back to MailLib start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

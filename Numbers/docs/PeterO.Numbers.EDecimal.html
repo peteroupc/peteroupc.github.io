@@ -205,7 +205,7 @@
 <li><i>context</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The absolute value of this object. Signals FlagInvalid and returns quiet NaN if this value is signaling NaN.</p>
 
@@ -216,7 +216,7 @@
 
 <p>Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number. Returns signaling NaN if this value is signaling NaN.</p>
 
@@ -234,7 +234,7 @@
 <li><i>otherValue</i>: An arbitrary-precision decimal number.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The sum of the two objects.</p>
 
@@ -254,7 +254,7 @@
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The sum of thisValue and the other object.</p>
 
@@ -276,7 +276,7 @@
 <li><i>other</i>: An arbitrary-precision decimal number.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if  <i>other</i>
  is null, or 0 if both values are equal.</p>
@@ -295,7 +295,7 @@
 <li><i>other</i>: The other object to compare. Can be null.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater. Returns 0 if both values are NaN (even signaling NaN) and 1 if this value is NaN (even signaling NaN) and the other isn&#39;t, or if the other value is null.</p>
 
@@ -317,7 +317,7 @@
 <li><p><i>ctx</i>: An arithmetic context. The precision, rounding, and exponent range are ignored. If  <code>HasFlags</code>  of the context is true, will store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
@@ -344,7 +344,7 @@
 <li><i>other</i>: An arbitrary-precision decimal number to compare with this one.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
@@ -373,7 +373,7 @@
 <li><p><i>ctx</i>: An arithmetic context. Flags will be set in this context only if  <code>HasFlags</code>  and  <code>IsSimplified</code>  of the context are true and only if an operand needed to be rounded before carrying out the operation. Can be null.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater. Does not signal flags if either value is signaling NaN.</p>
 
@@ -399,7 +399,7 @@
 <li><i>other</i>: An arbitrary-precision decimal number to compare with this one.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
@@ -421,7 +421,7 @@
 <li><p><i>ctx</i>: An arithmetic context. The precision, rounding, and exponent range are ignored. If  <code>HasFlags</code>  of the context is true, will store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
@@ -439,7 +439,7 @@
 <li><i>other</i>: A number whose sign will be copied.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -460,7 +460,7 @@ is null.</li>
 
 <p>Creates a number with the value  <code>exponent*10^mantissa</code> .</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -473,7 +473,7 @@ is null.</li>
 
 <p>Creates a number with the value  <code>exponent*10^mantissa</code> .</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -500,7 +500,7 @@ is null.</li>
 <li><i>diag</i>: A number to use as diagnostic information associated with this object. If none is needed, should be zero.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A quiet not-a-number.</p>
 
@@ -532,7 +532,7 @@ is null or is less than 0.</li>
 <li><p><i>ctx</i>: An arithmetic context to control the precision (in decimal digits) of the diagnostic information. The rounding and exponent range of this context will be ignored. Can be null. The only flag that can be signaled in this context is FlagInvalid, which happens if diagnostic information needs to be truncated and too much memory is required to do so.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -558,7 +558,7 @@ is null or is less than 0.</li>
 <li><i>divisor</i>: An arbitrary-precision decimal number to divide by.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two numbers. Returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating decimal expansion.</p>
 
@@ -578,7 +578,7 @@ is null or is less than 0.</li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0; or, either  <i>ctx</i>
 is null or  <i>ctx</i>
@@ -600,7 +600,7 @@ is null or  <i>ctx</i>
 <li><i>divisor</i>: An arbitrary-precision decimal number to divide by.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 2 element array consisting of the quotient and remainder in that order.</p>
 
@@ -622,7 +622,7 @@ is null or  <i>ctx</i>
 <li><p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it&#39;s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context&#39;s  <code>HasFlags</code>  is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 2 element array consisting of the quotient and remainder in that order.</p>
 
@@ -642,7 +642,7 @@ is null or  <i>ctx</i>
 <li><p><i>desiredExponentInt</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point (so a negative number means the number of decimal places to round to). A positive number places the cutoff point to the left of the usual decimal point.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0.</p>
 
@@ -664,7 +664,7 @@ is null or  <i>ctx</i>
 <li><p><i>ctx</i>: An arithmetic context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn&#39;t fit the given precision). If <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context defines an exponent range and the desired exponent is outside that range. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -686,7 +686,7 @@ is null or  <i>ctx</i>
 <li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -706,7 +706,7 @@ is null or  <i>ctx</i>
 <li><p><i>desiredExponentSmall</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point (so a negative number means the number of decimal places to round to). A positive number places the cutoff point to the left of the usual decimal point.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0.</p>
 
@@ -728,7 +728,7 @@ is null or  <i>ctx</i>
 <li><p><i>ctx</i>: An arithmetic context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn&#39;t fit the given precision). If <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context defines an exponent range and the desired exponent is outside that range. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -750,7 +750,7 @@ is null or  <i>ctx</i>
 <li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -772,7 +772,7 @@ is null or  <i>ctx</i>
 <li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -792,7 +792,7 @@ is null or  <i>ctx</i>
 <li><p><i>exponent</i>: The desired exponent. A negative number places the cutoff point to the right of the usual decimal point (so a negative number means the number of decimal places to round to). A positive number places the cutoff point to the left of the usual decimal point.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0.</p>
 
@@ -814,7 +814,7 @@ is null or  <i>ctx</i>
 <li><p><i>ctx</i>: An arithmetic context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn&#39;t fit the given precision). If <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context defines an exponent range and the desired exponent is outside that range. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -832,7 +832,7 @@ is null or  <i>ctx</i>
 <li><i>divisor</i>: An arbitrary-precision decimal number to divide by.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The integer part of the quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0.</p>
 
@@ -852,7 +852,7 @@ is null or  <i>ctx</i>
 <li><p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the integer part of the result. Flags will be set on the given context only if the context&#39;s  <code>HasFlags</code>  is true and the integer part of the result doesn&#39;t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The integer part of the quotient of the two objects. Signals FlagInvalid and returns not-a-number (NaN) if the return value would overflow the exponent range. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -872,7 +872,7 @@ is null or  <i>ctx</i>
 <li><p><i>ctx</i>: An arithmetic context object to control the precision. The rounding and exponent range settings of this context are ignored. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The integer part of the quotient of the two objects. The exponent will be set to 0. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0, or if the result doesn&#39;t fit the given precision.</p>
 
@@ -892,7 +892,7 @@ is null or  <i>ctx</i>
 <li><p><i>rounding</i>: The rounding mode to use if the result must be scaled down to have the same exponent as this value.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The quotient of the two numbers. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -910,7 +910,7 @@ is null or  <i>ctx</i>
 <li><i>divisor</i>: An arbitrary-precision decimal number to divide by.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 2 element array consisting of the quotient and remainder in that order.</p>
 
@@ -930,7 +930,7 @@ is null or  <i>ctx</i>
 <li><p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it&#39;s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context&#39;s  <code>HasFlags</code>  is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 2 element array consisting of the quotient and remainder in that order.</p>
 
@@ -948,7 +948,7 @@ is null or  <i>ctx</i>
 <li><i>obj</i>: An arbitrary object.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the objects are equal; otherwise, false .</p>
 
@@ -966,7 +966,7 @@ is null or  <i>ctx</i>
 <li><i>other</i>: An arbitrary-precision decimal number.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object&#39;s mantissa (significand) and exponent are equal to those of another object; otherwise, false .</p>
 
@@ -984,7 +984,7 @@ is null or  <i>ctx</i>
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).This parameter can&#39;t be null, as the exponential function&#39;s results are generally not exact. (Unlike in the General Decimal Arithmetic Specification, any rounding mode is allowed.).</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Exponential of this object. If this object&#39;s value is 1, returns an approximation to &quot; e&quot; within the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
@@ -1004,7 +1004,7 @@ is null or  <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
 
@@ -1022,7 +1022,7 @@ is not documented yet.</li>
 <li><i>dbl</i>: A 64-bit floating-point number.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number with the same value as  <i>dbl</i>
 .</p>
@@ -1041,7 +1041,7 @@ is not documented yet.</li>
 <li><i>bigfloat</i>: An arbitrary-precision binary floating-point number.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -1067,7 +1067,7 @@ is null.</li>
 <li><i>bigint</i>: An arbitrary-precision integer.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number with the exponent set to 0.</p>
 
@@ -1088,7 +1088,7 @@ is null.</li>
 is not documented yet.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
 
@@ -1106,7 +1106,7 @@ is not documented yet.</li>
 <li><i>valueSmaller</i>: A 32-bit signed integer.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number with the exponent set to 0.</p>
 
@@ -1124,7 +1124,7 @@ is not documented yet.</li>
 <li><i>valueSmall</i>: A 64-bit signed integer.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number with the exponent set to 0.</p>
 
@@ -1142,7 +1142,7 @@ is not documented yet.</li>
 <li><i>flt</i>: A 32-bit floating-point number.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number with the same value as  <i>flt</i>
 .</p>
@@ -1162,7 +1162,7 @@ is not documented yet.</li>
 <li><i>str</i>: A string that represents a number.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number with the same value as the given string.</p>
 
@@ -1199,7 +1199,7 @@ begins.</p></li>
 &#39;s length).</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number with the same value as the given string.</p>
 
@@ -1246,7 +1246,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number with the same value as the given string.</p>
 
@@ -1278,7 +1278,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number with the same value as the given string.</p>
 
@@ -1300,7 +1300,7 @@ is not a correctly formatted number string.</p></li>
 
 <p>Calculates this object&#39;s hash code.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This object&#39;s hash code.</p>
 
@@ -1311,7 +1311,7 @@ is not a correctly formatted number string.</p></li>
 
 <p>Gets a value indicating whether this object is positive or negative infinity.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is positive or negative infinity; otherwise, false .</p>
 
@@ -1322,7 +1322,7 @@ is not a correctly formatted number string.</p></li>
 
 <p>Gets a value indicating whether this object is not a number (NaN).</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is not a number (NaN); otherwise, false .</p>
 
@@ -1333,7 +1333,7 @@ is not a correctly formatted number string.</p></li>
 
 <p>Returns whether this object is negative infinity.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is negative infinity; otherwise, false .</p>
 
@@ -1344,7 +1344,7 @@ is not a correctly formatted number string.</p></li>
 
 <p>Returns whether this object is positive infinity.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is positive infinity; otherwise, false .</p>
 
@@ -1355,7 +1355,7 @@ is not a correctly formatted number string.</p></li>
 
 <p>Gets a value indicating whether this object is a quiet not-a-number value.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is a quiet not-a-number value; otherwise, false .</p>
 
@@ -1366,7 +1366,7 @@ is not a correctly formatted number string.</p></li>
 
 <p>Gets a value indicating whether this object is a signaling not-a-number value.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is a signaling not-a-number value; otherwise, false .</p>
 
@@ -1384,7 +1384,7 @@ is not a correctly formatted number string.</p></li>
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).This parameter can&#39;t be null, as the ln function&#39;s results are generally not exact. (Unlike in the General Decimal Arithmetic Specification, any rounding mode is allowed.).</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Ln(this object). Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the result would be a complex number with a real part equal to Ln of this object&#39;s absolute value and an imaginary part equal to pi, but the return value is still NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0). Signals no flags and returns negative infinity if this object&#39;s value is 0.</p>
@@ -1403,7 +1403,7 @@ is not a correctly formatted number string.</p></li>
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).This parameter can&#39;t be null, as the ln function&#39;s results are generally not exact. (Unlike in the General Decimal Arithmetic Specification, any rounding mode is allowed.).</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
@@ -1424,7 +1424,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>second</i>: Another arbitrary-precision decimal number.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The larger value of the two numbers.</p>
 
@@ -1446,7 +1446,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The larger value of the two numbers.</p>
 
@@ -1466,7 +1466,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>second</i>: The second value to compare.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -1488,7 +1488,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -1508,7 +1508,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>second</i>: The second value to compare.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The smaller value of the two numbers.</p>
 
@@ -1530,7 +1530,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The smaller value of the two numbers.</p>
 
@@ -1550,7 +1550,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>second</i>: The second value to compare.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -1572,7 +1572,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -1590,7 +1590,7 @@ is not a correctly formatted number string.</p></li>
 <li><i>places</i>: The number of decimal places to move the decimal point to the left. If this number is negative, instead moves the decimal point to the right by this number&#39;s absolute value.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is decreased by  <i>places</i>
 , but not to more than 0.</p>
@@ -1611,7 +1611,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is decreased by  <i>places</i>
 , but not to more than 0.</p>
@@ -1630,7 +1630,7 @@ is not a correctly formatted number string.</p></li>
 <li><i>bigPlaces</i>: The number of decimal places to move the decimal point to the left. If this number is negative, instead moves the decimal point to the right by this number&#39;s absolute value.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is decreased by  <i>bigPlaces</i>
 , but not to more than 0.</p>
@@ -1651,7 +1651,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is decreased by  <i>bigPlaces</i>
 , but not to more than 0.</p>
@@ -1670,7 +1670,7 @@ is not a correctly formatted number string.</p></li>
 <li><i>places</i>: The number of decimal places to move the decimal point to the right. If this number is negative, instead moves the decimal point to the left by this number&#39;s absolute value.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is increased by  <i>places</i>
 , but not to more than 0.</p>
@@ -1691,7 +1691,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is increased by  <i>places</i>
 , but not to more than 0.</p>
@@ -1710,7 +1710,7 @@ is not a correctly formatted number string.</p></li>
 <li><i>bigPlaces</i>: The number of decimal places to move the decimal point to the right. If this number is negative, instead moves the decimal point to the left by this number&#39;s absolute value.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is increased by  <i>bigPlaces</i>
 , but not to more than 0.</p>
@@ -1731,7 +1731,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is increased by  <i>bigPlaces</i>
 , but not to more than 0.</p>
@@ -1752,7 +1752,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The product of the two decimal numbers.</p>
 
@@ -1770,7 +1770,7 @@ is not a correctly formatted number string.</p></li>
 <li><i>otherValue</i>: Another decimal number.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The product of the two decimal numbers.</p>
 
@@ -1790,7 +1790,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>augend</i>: The value to add.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The result this *  <i>multiplicand</i></p>
 
@@ -1817,7 +1817,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed. If the precision doesn&#39;t indicate a simplified arithmetic, rounding and precision/exponent adjustment is done only once, namely, after multiplying and adding.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The result thisValue * multiplicand + augend.</p>
 
@@ -1839,7 +1839,7 @@ is not a correctly formatted number string.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed. If the precision doesn&#39;t indicate a simplified arithmetic, rounding and precision/exponent adjustment is done only once, namely, after multiplying and subtracting.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The result thisValue * multiplicand - subtrahend.</p>
 
@@ -1866,7 +1866,7 @@ is null.</li>
 <li><i>context</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number. If this value is positive zero, returns positive zero. Signals FlagInvalid and returns quiet NaN if this value is signaling NaN.</p>
 
@@ -1877,7 +1877,7 @@ is null.</li>
 
 <p>Gets an object with the same value as this one, but with the sign reversed.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number. If this value is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
 
@@ -1895,7 +1895,7 @@ is null.</li>
 <li><i>ctx</i>: An arithmetic context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Returns the largest value that&#39;s less than the given value. Returns negative infinity if the result is negative infinity. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null, the precision is 0, or <i>ctx</i>
@@ -1915,7 +1915,7 @@ is null.</li>
 <li><i>ctx</i>: An arithmetic context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Returns the smallest value that&#39;s greater than the given value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null, the precision is 0, or <i>ctx</i>
@@ -1937,7 +1937,7 @@ is null.</li>
 <li><p><i>ctx</i>: An arithmetic context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Returns the next value that is closer to the other object&#39; s value than this object&#39;s value. Signals FlagInvalid and returns NaN if the parameter  <i>ctx</i>
  is null, the precision is 0, or  <i>ctx</i>
@@ -1961,7 +1961,7 @@ is not documented yet.</p></li>
 is not documented yet.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
 
@@ -1989,7 +1989,7 @@ is null.</li>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
 
@@ -2017,7 +2017,7 @@ is null.</li>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
 
@@ -2045,7 +2045,7 @@ is null.</li>
 <li><p><i>operand2</i>: The second operand.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
 
@@ -2075,7 +2075,7 @@ is not documented yet.</p></li>
 is not documented yet.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
 
@@ -2102,7 +2102,7 @@ is null.</li>
 is not documented yet.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number. If this value is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
 
@@ -2128,7 +2128,7 @@ is null.</li>
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).This parameter can&#39;t be null, as π can never be represented exactly..</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The constant π rounded to the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
@@ -2147,7 +2147,7 @@ is null.</li>
 <li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if <i>ctx</i>
  is null or the precision and exponent range are unlimited.</p>
@@ -2166,7 +2166,7 @@ is null.</li>
 <li><i>exponentSmall</i>: The exponent to raise this object&#39;s value to.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This^exponent. Returns not-a-number (NaN) if this object and exponent are both 0.</p>
 
@@ -2186,7 +2186,7 @@ is null.</li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This^exponent. Signals the flag FlagInvalid and returns NaN if this object and exponent are both 0.</p>
 
@@ -2206,7 +2206,7 @@ is null.</li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This^exponent. Signals the flag FlagInvalid and returns NaN if this object and exponent are both 0; or if this value is less than 0 and the exponent either has a fractional part or is infinity. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0), and the exponent has a fractional part.</p>
@@ -2218,7 +2218,7 @@ is null.</li>
 
 <p>Finds the number of digits in this number&#39;s mantissa (significand). Returns 1 if this value is 0, and 0 if this value is infinity or not-a-number (NaN).</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer.</p>
 
@@ -2248,7 +2248,7 @@ precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code> of the context is true, ill also store the flags resulting from the operation (the flags re in addition to the pre-existing flags). Can be null, in which ase the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if this object is infinity, if the rounded result can&#39;t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
 
@@ -2268,7 +2268,7 @@ precision);
 <li><p><i>rounding</i>: A rounding mode to use in case the result needs to be rounded to fit the given exponent.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number with the same value as this object but with the exponent changed. Returns not-a-number (NaN) if this object is infinity, or if the rounding mode is ERounding.None and the result is not exact.</p>
 
@@ -2290,7 +2290,7 @@ precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding, or if the arithmetic context defines an exponent range and the given exponent is outside that range.</p>
 
@@ -2320,7 +2320,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code> of the context is true, ill also store the flags resulting from the operation (the flags re in addition to the pre-existing flags). Can be null, in which ase the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if this object is infinity, if the rounded result can&#39;t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
 
@@ -2338,7 +2338,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This value with trailing zeros removed. Note that if the result has a very high exponent and the context says to clamp high exponents, there may still be some trailing zeros in the mantissa (significand).</p>
 
@@ -2358,7 +2358,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used both in the division portion and in the remainder portion of the remainder calculation. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no additional rounding (other than the rounding from integer division) is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The remainder of the two numbers. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or if the result doesn&#39;t fit the given precision.</p>
 
@@ -2376,7 +2376,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>divisor</i>: The number to divide by.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -2396,7 +2396,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it&#39;s possible for the return value to have a higher precision than given in this context. Flags will be set on the given context only if the context&#39;s  <code>HasFlags</code>  is true and the integer part of the division result doesn&#39;t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -2425,7 +2425,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context object to control the precision. The rounding and exponent range settings of this context are ignored (the rounding mode is always treated as HalfEven). If <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which the precision is unlimited.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The distance of the closest multiple. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or either the result of integer division (the quotient) or the remainder wouldn&#39;t fit the given precision.</p>
 
@@ -2443,7 +2443,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest value representable for the given exponent.</p>
 
@@ -2463,7 +2463,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest value representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the arithmetic context.</p>
 
@@ -2483,7 +2483,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>rounding</i>: The desired mode to use to round the given number to the given exponent.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the given negative number of decimal places.</p>
 
@@ -2501,7 +2501,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest value representable for the given exponent.</p>
 
@@ -2521,7 +2521,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest value representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the arithmetic context.</p>
 
@@ -2541,7 +2541,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>rounding</i>: Desired mode for rounding this number&#39;s value.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest value representable for the given exponent.</p>
 
@@ -2561,7 +2561,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the arithmetic context.</p>
 
@@ -2581,7 +2581,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>rounding</i>: Desired mode for rounding this object&#39;s value.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest value representable using the given exponent.</p>
 
@@ -2601,7 +2601,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the arithmetic context.</p>
 
@@ -2619,7 +2619,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
@@ -2637,7 +2637,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags), except that this function will never add the FlagRounded and  <code>FlagInexact</code> flags (the only difference between this and RoundToExponentExact). Can be null, in which case the default rounding mode is HalfEven.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
@@ -2657,7 +2657,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
@@ -2677,7 +2677,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags), except that this function will never add the FlagRounded and  <code>FlagInexact</code> flags (the only difference between this and RoundToExponentExact). Can be null, in which case the default rounding mode is HalfEven.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A decimal number rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
@@ -2695,7 +2695,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if <i>ctx</i>
  is null or the precision and exponent range are unlimited.</p>
@@ -2714,7 +2714,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>places</i>: The power of 10 to scale by.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -2734,7 +2734,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -2752,7 +2752,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>bigPlaces</i>: The power of 10 to scale by.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 
@@ -2772,7 +2772,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A number whose exponent is increased by  <i>bigPlaces</i>
 .</p>
@@ -2791,7 +2791,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).This parameter can&#39;t be null, as the square root function&#39;s results are generally not exact for many inputs. (Unlike in the General Decimal Arithmetic Specification, any rounding mode is allowed.).</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN). Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
@@ -2812,7 +2812,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).This parameter can&#39;t be null, as the square root function&#39;s results are generally not exact for many inputs. (Unlike in the General Decimal Arithmetic Specification, any rounding mode is allowed.).</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN). Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
@@ -2831,7 +2831,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><i>otherValue</i>: The number to subtract from this instance&#39;s value.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The difference of the two objects.</p>
 
@@ -2851,7 +2851,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The difference of the two objects.</p>
 
@@ -2870,7 +2870,7 @@ is null.</li>
 
 <p>Converts this value to its closest equivalent as a 64-bit floating-point number. The half-even rounding mode is used.If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa (significand) for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa (significand) is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa (significand) are set to the lowest bits of this object&#39;s unsigned mantissa (significand).</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
 
@@ -2889,7 +2889,7 @@ is null.</li>
 is not documented yet.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An EFloat object.</p>
 
@@ -2900,7 +2900,7 @@ is not documented yet.</li>
 
 <p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
 
@@ -2911,7 +2911,7 @@ is not documented yet.</li>
 
 <p>Converts this value to an arbitrary-precision integer. Any fractional part in this value will be discarded when converting to an arbitrary-precision integer.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer.</p>
 
@@ -2929,7 +2929,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 
 <p>Converts this value to an arbitrary-precision integer, checking whether the fractional part of the integer would be lost.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer.</p>
 
@@ -2949,7 +2949,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p>Same as ToString(), except that when an exponent is used it will be a multiple of 3.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
@@ -2962,7 +2962,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
 
@@ -2973,7 +2973,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p>Converts this number to a 32-bit signed integer, if possible, without truncating or rounding it.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
@@ -2991,7 +2991,7 @@ This number&#39;s value is infinity, not-a-number, or doesn&#39;t fit into a 32-
 
 <p>Not documented yet.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
@@ -3002,7 +3002,7 @@ This number&#39;s value is infinity, not-a-number, or doesn&#39;t fit into a 32-
 
 <p>Converts this number to a 64-bit signed integer, if possible, without truncating or rounding it.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
 
@@ -3020,7 +3020,7 @@ This number&#39;s value is infinity, not-a-number, or doesn&#39;t fit into a 64-
 
 <p>Not documented yet.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
 
@@ -3031,7 +3031,7 @@ This number&#39;s value is infinity, not-a-number, or doesn&#39;t fit into a 64-
 
 <p>Converts this value to a string, but without using exponential notation.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A text string.</p>
 
@@ -3042,7 +3042,7 @@ This number&#39;s value is infinity, not-a-number, or doesn&#39;t fit into a 64-
 
 <p>Converts this value to its closest equivalent as a 32-bit floating-point number. The half-even rounding mode is used.If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s mantissa (significand) for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa (significand) is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa (significand) are set to the lowest bits of this object&#39;s unsigned mantissa (significand).</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The closest 32-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
 
@@ -3053,7 +3053,7 @@ This number&#39;s value is infinity, not-a-number, or doesn&#39;t fit into a 64-
 
 <p>Converts this value to a string. Returns a value compatible with this class&#39;s FromString method.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A string representation of this object. The text string will be in exponential notation if the exponent is greater than 0 or if the number&#39;s first nonzero digit is more than five digits after the decimal point.</p>
 
@@ -3064,7 +3064,7 @@ This number&#39;s value is infinity, not-a-number, or doesn&#39;t fit into a 64-
 
 <p>Returns the unit in the last place. The mantissa (significand) will be 1 and the exponent will be this number&#39;s exponent. Returns 1 with an exponent of 0 if this number is infinity or not-a-number (NaN).</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision decimal number.</p>
 

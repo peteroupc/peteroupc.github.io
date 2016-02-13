@@ -1,0 +1,440 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.util.ExtendedRational</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.util.ExtendedRational</h1>
+
+<h1>com.upokecenter.util.ExtendedRational</h1>
+
+<pre><code>public final class ExtendedRational extends Object implements Comparable&lt;ExtendedRational&gt;
+</code></pre>
+
+<p><b>This class is largely obsolete. It will be replaced by a new version
+ of this class in a different namespace/package and library, called
+ <code>PeterO.Numbers.ERational</code> in the <code>PeterO.Numbers</code>
+ library (in .NET), or <code>com.upokecenter.numbers.ERational</code> in the
+ <code>com.github.peteroupc/numbers</code>
+ artifact (in Java). This new class can be used in the
+ <code>CBORObject.FromObject(object)</code> method (by including the new
+ library in your code, among other things), but this version of the
+ CBOR library doesn't include any methods that explicitly take an
+ <code>ERational</code> as a parameter or return value.</b></p>
+
+<p>Arbitrary-precision rational number. This class can&#39;t be inherited;
+ this is a change in version 2.0 from previous versions, where the
+ class was inadvertently left inheritable. <p><b>Thread safety:</b>
+ Instances of this class are immutable, so they are inherently safe
+ for use by multiple threads. Multiple instances of this object with
+ the same properties are interchangeable, so they should not be
+ compared using the &quot;==&quot; operator (which only checks if each side of
+ the operator is the same instance).</p></p>
+
+<h2>Fields</h2>
+
+<ul>
+<li><code>static ExtendedRational NaN</code><br>
+Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedRational NegativeInfinity</code><br>
+Negative infinity, less than any other number.</li>
+<li><code>static ExtendedRational NegativeZero</code><br>
+A rational number for negative zero.</li>
+<li><code>static ExtendedRational One</code><br>
+The rational number one.</li>
+<li><code>static ExtendedRational PositiveInfinity</code><br>
+Positive infinity, greater than any other number.</li>
+<li><code>static ExtendedRational SignalingNaN</code><br>
+Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedRational Ten</code><br>
+The rational number ten.</li>
+<li><code>static ExtendedRational Zero</code><br>
+A rational number for zero.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>ExtendedRational(BigInteger numerator,
+            BigInteger denominator)</code><br>
+Initializes a new instance of the
+class.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>int compareTo(ExtendedRational other)</code><br>
+Not documented yet.</li>
+<li><code>static ExtendedRational Create(BigInteger numerator,
+  BigInteger denominator)</code><br>
+Creates a rational number with the given numerator and denominator.</li>
+<li><code>static ExtendedRational Create(int numeratorSmall,
+  int denominatorSmall)</code><br>
+Creates a rational number with the given numerator and denominator.</li>
+<li><code>boolean equals(ExtendedRational other)</code><br>
+Not documented yet.</li>
+<li><code>boolean equals(Object obj)</code><br></li>
+<li><code>BigInteger getDenominator()</code><br>
+Gets this object&#39;s denominator.</li>
+<li><code>BigInteger getNumerator()</code><br>
+Gets this object&#39;s numerator.</li>
+<li><code>BigInteger getUnsignedNumerator()</code><br>
+Gets this object&#39;s numerator with the sign removed.</li>
+<li><code>int hashCode()</code><br></li>
+<li><code>boolean isFinite()</code><br>
+Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean isNegative()</code><br>
+Gets a value indicating whether this object&#39;s value is negative (including
+negative zero).</li>
+<li><code>boolean isZero()</code><br>
+Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int signum()</code><br>
+Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>NaN</h3>
+
+<pre><code>@Deprecated public static final ExtendedRational NaN
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<h3>NegativeInfinity</h3>
+
+<pre><code>public static final ExtendedRational NegativeInfinity
+</code></pre>
+
+<p>Negative infinity, less than any other number.</p>
+
+<h3>NegativeZero</h3>
+
+<pre><code>public static final ExtendedRational NegativeZero
+</code></pre>
+
+<p>A rational number for negative zero.</p>
+
+<h3>One</h3>
+
+<pre><code>public static final ExtendedRational One
+</code></pre>
+
+<p>The rational number one.</p>
+
+<h3>PositiveInfinity</h3>
+
+<pre><code>public static final ExtendedRational PositiveInfinity
+</code></pre>
+
+<p>Positive infinity, greater than any other number.</p>
+
+<h3>SignalingNaN</h3>
+
+<pre><code>@Deprecated public static final ExtendedRational SignalingNaN
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<h3>Ten</h3>
+
+<pre><code>public static final ExtendedRational Ten
+</code></pre>
+
+<p>The rational number ten.</p>
+
+<h3>Zero</h3>
+
+<pre><code>public static final ExtendedRational Zero
+</code></pre>
+
+<p>A rational number for zero.</p>
+
+<h2>Method Details</h2>
+
+<h3>getDenominator</h3>
+
+<pre><code>public final BigInteger getDenominator()
+</code></pre>
+
+<p>Gets this object&#39;s denominator.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s denominator.</li>
+</ul>
+
+<h3>isFinite</h3>
+
+<pre><code>@Deprecated public final boolean isFinite()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object is finite (not infinity or NaN); otherwise,
+false.</li>
+</ul>
+
+<h3>isNegative</h3>
+
+<pre><code>public final boolean isNegative()
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value is negative (including
+ negative zero).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object&#39;s value is negative; otherwise, false.</li>
+</ul>
+
+<h3>isZero</h3>
+
+<pre><code>@Deprecated public final boolean isZero()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>true if this object&#39;s value equals 0; otherwise, false.</li>
+</ul>
+
+<h3>getNumerator</h3>
+
+<pre><code>public final BigInteger getNumerator()
+</code></pre>
+
+<p>Gets this object&#39;s numerator.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s numerator. If this object is a not-a-number value,
+returns the diagnostic information (which will be negative if this
+object is negative).</li>
+</ul>
+
+<h3>signum</h3>
+
+<pre><code>@Deprecated public final int signum()
+</code></pre>
+
+<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Zero if this value is zero or negative zero; -1 if this value is
+less than 0; and 1 if this value is greater than 0.</li>
+</ul>
+
+<h3>getUnsignedNumerator</h3>
+
+<pre><code>public final BigInteger getUnsignedNumerator()
+</code></pre>
+
+<p>Gets this object&#39;s numerator with the sign removed.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s numerator. If this object is a not-a-number value,
+returns the diagnostic information.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre><code>public static ExtendedRational Create(int numeratorSmall, int denominatorSmall)
+</code></pre>
+
+<p>Creates a rational number with the given numerator and denominator.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>numeratorSmall</code> - A 32-bit signed integer.</p></li>
+<li><p><code>denominatorSmall</code> - A 32-bit signed integer. (2).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre><code>public static ExtendedRational Create(BigInteger numerator, BigInteger denominator)
+</code></pre>
+
+<p>Creates a rational number with the given numerator and denominator.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>numerator</code> - An arbitrary-precision integer.</p></li>
+<li><p><code>denominator</code> - Another arbitrary-precision integer.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>numerator</code> or
+<code>denominator</code> is null.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre><code>public String toString()
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object. The result can be Infinity,
+NaN, or sNaN (with a minus sign before it for negative values), or a
+number of the following form: [-]numerator/denominator.</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre><code>public int compareTo(ExtendedRational other)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;ExtendedRational&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An ExtendedRational object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(ExtendedRational other)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An ExtendedRational object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Boolean object.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(Object obj)
+</code></pre>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> -</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre><code>public int hashCode()
+</code></pre>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>
