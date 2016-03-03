@@ -43,7 +43,7 @@ A filter that allows unsigned integers.</li>
 <li><code>boolean ArrayIndexAllowed(int index)</code><br>
 Determines whether this type filter allows CBOR arrays and the given array
 index is allowed under this type filter.</li>
-<li><code>boolean ArrayLengthMatches(EInteger bigLength)</code><br>
+<li><code>boolean ArrayLengthMatches(com.upokecenter.numbers.EInteger bigLength)</code><br>
 Returns whether an array&#39;s length is allowed under a filter.</li>
 <li><code>boolean ArrayLengthMatches(int length)</code><br>
 Returns whether an array&#39;s length is allowed under this filter.</li>
@@ -59,7 +59,7 @@ this filter.</li>
 <li><code>boolean NonFPSimpleValueAllowed()</code><br>
 Returns whether this filter allows simple values that are not floating-point
 numbers.</li>
-<li><code>boolean TagAllowed(EInteger bigTag)</code><br>
+<li><code>boolean TagAllowed(com.upokecenter.numbers.EInteger bigTag)</code><br>
 Gets a value indicating whether CBOR objects can have the given tag number.</li>
 <li><code>boolean TagAllowed(int tag)</code><br>
 Gets a value indicating whether CBOR objects can have the given tag number.</li>
@@ -154,8 +154,8 @@ Copies this filter and includes unsigned integers in the new filter.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this type filter allows CBOR arrays and the given array
-index is allowed under this type filter; otherwise, false .</li>
+<li><code>true</code> if this type filter allows CBOR arrays and the given
+array index is allowed under this type filter; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>ArrayLengthMatches</h3>
@@ -174,8 +174,8 @@ index is allowed under this type filter; otherwise, false .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this filter allows CBOR arrays and an array&#39;s length is
-allowed under this filter; otherwise, false.</li>
+<li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
+is allowed under this filter; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>ArrayLengthMatches</h3>
@@ -194,13 +194,13 @@ allowed under this filter; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this filter allows CBOR arrays and an array&#39;s length is
-allowed under a filter; otherwise, false.</li>
+<li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
+is allowed under a filter; otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>ArrayLengthMatches</h3>
 
-<pre><code>public boolean ArrayLengthMatches(EInteger bigLength)
+<pre><code>public boolean ArrayLengthMatches(com.upokecenter.numbers.EInteger bigLength)
 </code></pre>
 
 <p>Returns whether an array&#39;s length is allowed under a filter.</p>
@@ -214,8 +214,8 @@ allowed under a filter; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this filter allows CBOR arrays and an array&#39;s length is
-allowed under a filter; otherwise, false.</li>
+<li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
+is allowed under a filter; otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -284,8 +284,8 @@ index otherwise.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if the given CBOR major type matches a major type allowed by
-this filter; otherwise, false.</li>
+<li><code>true</code> if the given CBOR major type matches a major type
+allowed by this filter; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>NonFPSimpleValueAllowed</h3>
@@ -299,8 +299,8 @@ this filter; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this filter allows simple values that are not floating-point
-numbers; otherwise, false.</li>
+<li><code>true</code> if this filter allows simple values that are not
+floating-point numbers; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>TagAllowed</h3>
@@ -319,8 +319,8 @@ numbers; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if CBOR objects can have the given tag number; otherwise,
-false.</li>
+<li><code>true</code> if CBOR objects can have the given tag number;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>TagAllowed</h3>
@@ -339,13 +339,13 @@ false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if CBOR objects can have the given tag number; otherwise,
-false.</li>
+<li><code>true</code> if CBOR objects can have the given tag number;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>TagAllowed</h3>
 
-<pre><code>public boolean TagAllowed(EInteger bigTag)
+<pre><code>public boolean TagAllowed(com.upokecenter.numbers.EInteger bigTag)
 </code></pre>
 
 <p>Gets a value indicating whether CBOR objects can have the given tag number.</p>
@@ -359,8 +359,8 @@ false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if CBOR objects can have the given tag number; otherwise,
-false.</li>
+<li><code>true</code> if CBOR objects can have the given tag number;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

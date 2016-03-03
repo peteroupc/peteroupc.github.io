@@ -6,62 +6,21 @@
 
 <h1>com.upokecenter.util.ExtendedFloat</h1>
 
-<pre><code>public final class ExtendedFloat extends Object implements Comparable&lt;ExtendedFloat&gt;
+<pre><code>@Deprecated public final class ExtendedFloat extends Object implements Comparable&lt;ExtendedFloat&gt;
 </code></pre>
 
-<p><b>This class is largely obsolete. It will be replaced by a new version
- of this class in a different namespace/package and library, called
- <code>PeterO.Numbers.EFloat</code> in the <code>PeterO.Numbers</code>
- library (in .NET), or <code>com.upokecenter.numbers.EFloat</code> in the <code>com.github.peteroupc/numbers</code>
- artifact (in Java). This new class can be used in the
- <code>CBORObject.FromObject(object)</code> method (by including the new
- library in your code, among other things), but this version of the
- CBOR library doesn't include any methods that explicitly take an
- <code>EFloat</code> as a parameter or return value.</b></p> <p>Represents
- an arbitrary-precision binary floating-point number. Consists of an
- integer mantissa and an integer exponent, both arbitrary-precision.
- The value of the number equals mantissa * 2^exponent. This class also
- supports values for negative zero, not-a-number (NaN) values, and
- infinity.</p> <p>Passing a signaling NaN to any arithmetic operation
- shown here will signal the flag FlagInvalid and return a quiet NaN,
- even if another operand to that operation is a quiet NaN, unless
- noted otherwise.</p> <p>Passing a quiet NaN to any arithmetic
- operation shown here will return a quiet NaN, unless noted
- otherwise.</p> <p>Unless noted otherwise, passing a null
- arbitrary-precision binary float argument to any method here will
- throw an exception.</p> <p>When an arithmetic operation signals the
- flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not
- throw an exception too, unless the operation's trap is enabled in the
- precision context (see PrecisionContext's Traps property).</p> <p>An
- arbitrary-precision binary float value can be serialized in one of
- the following ways:</p> <ul> <li>By calling the toString() method.
- However, not all strings can be converted back to an
- arbitrary-precision binary float without loss, especially if the
- string has a fractional part.</li> <li>By calling the
- UnsignedMantissa, Exponent, and IsNegative properties, and calling
- the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return
- values combined will uniquely identify a particular
- arbitrary-precision binary float value.</li></ul> <p>If an operation
- requires creating an intermediate value that might be too big to fit
- in memory (or might require more than 2 gigabytes of memory to store
- -- due to the current use of a 32-bit integer internally as a
- length), the operation may signal an invalid-operation flag and
- return not-a-number (NaN). In certain rare cases, the compareTo
- method may throw OutOfMemoryError (called OutOfMemoryError in
- Java) in the same circumstances.</p> <p><b>Thread safety:</b>
- Instances of this class are immutable, so they are inherently safe
- for use by multiple threads. Multiple instances of this object with
- the same properties are interchangeable, so they should not be
- compared using the "==" operator (which only checks if each side of
- the operator is the same instance).</p>
+<p><strong>Deprecated.</strong>&nbsp;</p>
+
+<div class='block'><i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers and the output of
+this class's toString method.</i></div>
 
 <h2>Fields</h2>
 
 <ul>
 <li><code>static ExtendedFloat NaN</code><br>
-A not-a-number value.</li>
+Deprecated.  A not-a-number value.</li>
 <li><code>static ExtendedFloat NegativeInfinity</code><br>
-Negative infinity, less than any other number.</li>
+Deprecated.  Negative infinity, less than any other number.</li>
 <li><code>static ExtendedFloat NegativeZero</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
@@ -71,9 +30,9 @@ Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedFloat PositiveInfinity</code><br>
-Positive infinity, greater than any other number.</li>
+Deprecated.  Positive infinity, greater than any other number.</li>
 <li><code>static ExtendedFloat SignalingNaN</code><br>
-A not-a-number value that signals an invalid operation flag when it&#39;s
+Deprecated.  A not-a-number value that signals an invalid operation flag when it&#39;s
 passed as an argument to any arithmetic operation in
 arbitrary-precision binary float.</li>
 <li><code>static ExtendedFloat Ten</code><br>
@@ -90,19 +49,19 @@ Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 
 <ul>
 <li><code>int compareTo(ExtendedFloat other)</code><br>
-Not documented yet.</li>
+Deprecated.  Not documented yet.</li>
 <li><code>static ExtendedFloat Create(BigInteger mantissa,
   BigInteger exponent)</code><br>
-Creates a number with the value exponent*2^mantissa.</li>
+Deprecated.  Creates a number with the value exponent*2^mantissa.</li>
 <li><code>static ExtendedFloat Create(int mantissaSmall,
   int exponentSmall)</code><br>
-Creates a number with the value exponent*2^mantissa.</li>
+Deprecated.  Creates a number with the value exponent*2^mantissa.</li>
 <li><code>boolean equals(ExtendedFloat other)</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Determines whether this object&#39;s mantissa and exponent are equal to
+Deprecated.  Determines whether this object&#39;s mantissa and exponent are equal to
 those of another object and that other object is an
 arbitrary-precision decimal number.</li>
 <li><code>boolean EqualsInternal(ExtendedFloat otherValue)</code><br>
@@ -110,7 +69,7 @@ Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedFloat FromString(String str)</code><br>
-Not documented yet.</li>
+Deprecated.  Not documented yet.</li>
 <li><code>static ExtendedFloat FromString(String str,
       int offset,
       int length,
@@ -119,18 +78,18 @@ Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>BigInteger getExponent()</code><br>
-Gets this object&#39;s exponent.</li>
+Deprecated.  Gets this object&#39;s exponent.</li>
 <li><code>BigInteger getMantissa()</code><br>
-Gets this object&#39;s un-scaled value.</li>
+Deprecated.  Gets this object&#39;s un-scaled value.</li>
 <li><code>BigInteger getUnsignedMantissa()</code><br>
-Gets the absolute value of this object&#39;s un-scaled value.</li>
+Deprecated.  Gets the absolute value of this object&#39;s un-scaled value.</li>
 <li><code>int hashCode()</code><br>
-Calculates this object&#39;s hash code.</li>
+Deprecated.  Calculates this object&#39;s hash code.</li>
 <li><code>boolean IsInfinity()</code><br>
-Gets a value indicating whether this object is positive or negative
+Deprecated.  Gets a value indicating whether this object is positive or negative
 infinity.</li>
 <li><code>boolean IsNaN()</code><br>
-Returns whether this object is a not-a-number value.</li>
+Deprecated.  Returns whether this object is a not-a-number value.</li>
 <li><code>boolean isNegative()</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
@@ -156,7 +115,7 @@ Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>String toString()</code><br>
-Converts this value to a string.</li>
+Deprecated.  Converts this value to a string.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -166,58 +125,56 @@ Converts this value to a string.</li>
 <pre><code>@Deprecated public static final ExtendedFloat One
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <h3>Zero</h3>
 
 <pre><code>@Deprecated public static final ExtendedFloat Zero
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <h3>NegativeZero</h3>
 
 <pre><code>@Deprecated public static final ExtendedFloat NegativeZero
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <h3>Ten</h3>
 
 <pre><code>@Deprecated public static final ExtendedFloat Ten
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <h3>NaN</h3>
 
 <pre><code>public static final ExtendedFloat NaN
 </code></pre>
 
-<p>A not-a-number value.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h3>SignalingNaN</h3>
 
 <pre><code>public static final ExtendedFloat SignalingNaN
 </code></pre>
 
-<p>A not-a-number value that signals an invalid operation flag when it&#x27;s
- passed as an argument to any arithmetic operation in
- arbitrary-precision binary float.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h3>PositiveInfinity</h3>
 
 <pre><code>public static final ExtendedFloat PositiveInfinity
 </code></pre>
 
-<p>Positive infinity, greater than any other number.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h3>NegativeInfinity</h3>
 
 <pre><code>public static final ExtendedFloat NegativeInfinity
 </code></pre>
 
-<p>Negative infinity, less than any other number.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h2>Method Details</h2>
 
@@ -226,8 +183,7 @@ Converts this value to a string.</li>
 <pre><code>public final BigInteger getExponent()
 </code></pre>
 
-<p>Gets this object&#x27;s exponent. This object&#x27;s value will be an
- integer if the exponent is positive or zero.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -241,7 +197,7 @@ the exponent is positive or zero.</li>
 <pre><code>public final BigInteger getUnsignedMantissa()
 </code></pre>
 
-<p>Gets the absolute value of this object&#x27;s un-scaled value.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -254,7 +210,7 @@ the exponent is positive or zero.</li>
 <pre><code>public final BigInteger getMantissa()
 </code></pre>
 
-<p>Gets this object&#x27;s un-scaled value.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -268,7 +224,7 @@ value is negative (including a negative NaN).</li>
 <pre><code>@Deprecated public boolean EqualsInternal(ExtendedFloat otherValue)
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -279,8 +235,8 @@ value is negative (including a negative NaN).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object&#39;s mantissa and exponent are equal to those of
-another object; otherwise, false.</li>
+<li><code>true</code> if this object&#39;s mantissa and exponent are equal to
+those of another object; otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -295,7 +251,7 @@ null.</li>
 <pre><code>@Deprecated public boolean equals(ExtendedFloat other)
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -306,8 +262,8 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object&#39;s mantissa and exponent are equal to those of
-another object; otherwise, false.</li>
+<li><code>true</code> if this object&#39;s mantissa and exponent are equal to
+those of another object; otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -321,9 +277,7 @@ another object; otherwise, false.</li>
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Determines whether this object&#x27;s mantissa and exponent are equal to
- those of another object and that other object is an
- arbitrary-precision decimal number.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -340,7 +294,7 @@ another object; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if the objects are equal; otherwise, false .</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -348,7 +302,7 @@ another object; otherwise, false.</li>
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Calculates this object&#x27;s hash code.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -367,7 +321,7 @@ another object; otherwise, false.</li>
 <pre><code>public static ExtendedFloat Create(int mantissaSmall, int exponentSmall)
 </code></pre>
 
-<p>Creates a number with the value exponent*2^mantissa.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -387,7 +341,7 @@ another object; otherwise, false.</li>
 <pre><code>public static ExtendedFloat Create(BigInteger mantissa, BigInteger exponent)
 </code></pre>
 
-<p>Creates a number with the value exponent*2^mantissa.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -414,7 +368,7 @@ another object; otherwise, false.</li>
 <pre><code>@Deprecated public static ExtendedFloat FromString(String str, int offset, int length, PrecisionContext ctx)
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -446,7 +400,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <pre><code>public static ExtendedFloat FromString(String str)
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -465,7 +419,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <pre><code>public String toString()
 </code></pre>
 
-<p>Converts this value to a string.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -485,12 +439,12 @@ decimal and the decimal form of this number&#39;s value is returned.</li>
 <pre><code>@Deprecated public boolean IsNegativeInfinity()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object is negative infinity; otherwise, false .</li>
+<li><code>true</code> if this object is negative infinity; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsPositiveInfinity</h3>
@@ -498,12 +452,12 @@ decimal and the decimal form of this number&#39;s value is returned.</li>
 <pre><code>@Deprecated public boolean IsPositiveInfinity()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object is positive infinity; otherwise, false .</li>
+<li><code>true</code> if this object is positive infinity; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsNaN</h3>
@@ -511,12 +465,13 @@ decimal and the decimal form of this number&#39;s value is returned.</li>
 <pre><code>public boolean IsNaN()
 </code></pre>
 
-<p>Returns whether this object is a not-a-number value.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object is a not-a-number value; otherwise, false .</li>
+<li><code>true</code> if this object is a not-a-number value; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>IsInfinity</h3>
@@ -524,14 +479,13 @@ decimal and the decimal form of this number&#39;s value is returned.</li>
 <pre><code>public boolean IsInfinity()
 </code></pre>
 
-<p>Gets a value indicating whether this object is positive or negative
- infinity.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object is positive or negative infinity; otherwise,
-false.</li>
+<li><code>true</code> if this object is positive or negative infinity;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isNegative</h3>
@@ -539,13 +493,13 @@ false.</li>
 <pre><code>@Deprecated public final boolean isNegative()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object is negative, including negative zero; otherwise,
-false.</li>
+<li><code>true</code> If this object is negative, including negative zero;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsQuietNaN</h3>
@@ -553,12 +507,13 @@ false.</li>
 <pre><code>@Deprecated public boolean IsQuietNaN()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object is a quiet not-a-number value; otherwise, false.</li>
+<li><code>true</code> if this object is a quiet not-a-number value;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsSignalingNaN</h3>
@@ -566,13 +521,13 @@ false.</li>
 <pre><code>@Deprecated public boolean IsSignalingNaN()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object is a signaling not-a-number value; otherwise,
-false.</li>
+<li><code>true</code> if this object is a signaling not-a-number value;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -580,7 +535,7 @@ false.</li>
 <pre><code>public int compareTo(ExtendedFloat other)
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -605,7 +560,7 @@ false.</li>
 <pre><code>@Deprecated public final int signum()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <p><strong>Returns:</strong></p>
 

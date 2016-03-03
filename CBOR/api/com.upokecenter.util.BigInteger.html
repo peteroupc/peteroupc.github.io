@@ -6,24 +6,13 @@
 
 <h1>com.upokecenter.util.BigInteger</h1>
 
-<pre><code>public final class BigInteger extends Object implements Comparable&lt;BigInteger&gt;
+<pre><code>@Deprecated public final class BigInteger extends Object implements Comparable&lt;BigInteger&gt;
 </code></pre>
 
-<p><b>This class is largely obsolete. It will be replaced by a new version
- of this class in a different namespace/package and library, called
- <code>PeterO.Numbers.EInteger</code> in the <code>PeterO.Numbers</code>
- library (in .NET), or <code>com.upokecenter.numbers.EInteger</code> in the
- <code>com.github.peteroupc/numbers</code>
- artifact (in Java). This new class can be used in the
- <code>CBORObject.FromObject(object)</code> method (by including the new
- library in your code, among other things), but this version of the
- CBOR library doesn't include any methods that explicitly take an
- <code>EInteger</code> as a parameter or return value.</b></p> An
- arbitrary-precision integer. <p><b>Thread safety:</b> Instances of
- this class are immutable, so they are inherently safe for use by
- multiple threads. Multiple instances of this object with the same
- value are interchangeable, but they should be compared using the
- "Equals" method rather than the "==" operator.</p>
+<p><strong>Deprecated.</strong>&nbsp;</p>
+
+<div class='block'><i>Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the output of
+this class's toString method.</i></div>
 
 <h2>Fields</h2>
 
@@ -38,31 +27,31 @@ Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 
 <ul>
 <li><code>int bitLength()</code><br>
-Finds the minimum number of bits needed to represent this object&#39;s
+Deprecated.  Finds the minimum number of bits needed to represent this object&#39;s
 value, except for its sign.</li>
 <li><code>int compareTo(BigInteger other)</code><br>
-Not documented yet.</li>
+Deprecated.  Not documented yet.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Determines whether this object and another object are equal.</li>
+Deprecated.  Determines whether this object and another object are equal.</li>
 <li><code>static BigInteger fromBytes(byte[] bytes,
      boolean littleEndian)</code><br>
-Initializes an arbitrary-precision integer from an array of bytes.</li>
+Deprecated.  Initializes an arbitrary-precision integer from an array of bytes.</li>
 <li><code>static BigInteger fromRadixString(String str,
            int radix)</code><br>
-Converts a string to an arbitrary-precision integer.</li>
+Deprecated.  Converts a string to an arbitrary-precision integer.</li>
 <li><code>static BigInteger fromString(String str)</code><br>
-Converts a string to an arbitrary-precision integer.</li>
+Deprecated.  Converts a string to an arbitrary-precision integer.</li>
 <li><code>int hashCode()</code><br>
-Returns the hash code for this instance.</li>
+Deprecated.  Returns the hash code for this instance.</li>
 <li><code>byte[] toBytes(boolean littleEndian)</code><br>
-Returns a byte array of this object&#39;s value.</li>
+Deprecated.  Returns a byte array of this object&#39;s value.</li>
 <li><code>String toRadixString(int radix)</code><br>
-Generates a string representing the value of this object, in the given
+Deprecated.  Generates a string representing the value of this object, in the given
 radix.</li>
 <li><code>String toString()</code><br>
-Converts this object to a text string in base 10.</li>
+Deprecated.  Converts this object to a text string in base 10.</li>
 <li><code>static BigInteger valueOf(long longerValue)</code><br>
-Converts a 64-bit signed integer to a big integer.</li>
+Deprecated.  Converts a 64-bit signed integer to a big integer.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -72,7 +61,7 @@ Converts a 64-bit signed integer to a big integer.</li>
 <pre><code>@Deprecated public static final BigInteger ONE
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</span></p>
+<p>Deprecated.&nbsp;<i>Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</i></p>
 
 <h2>Method Details</h2>
 
@@ -81,23 +70,19 @@ Converts a 64-bit signed integer to a big integer.</li>
 <pre><code>public static BigInteger fromBytes(byte[] bytes, boolean littleEndian)
 </code></pre>
 
-<p>Initializes an arbitrary-precision integer from an array of bytes.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bytes</code> - A byte array consisting of the two&#39;s-complement integer
-representation of the arbitrary-precision integer to create. The last
-byte contains the lowest 8-bits, the next-to-last contains the next
-lowest 8 bits, and so on. To encode negative numbers, take the
-absolute value of the number, subtract by 1, encode the number into
-bytes, XOR each byte, and if the most-significant bit of the first
-byte isn&#39;t set, add an additional byte at the start with the value</p>
-
-<ol>
-<li>For little-endian, the byte order is reversed from the byte
-order just discussed.</li>
-</ol></li>
+<li><p><code>bytes</code> - A byte array consisting of the two&#39;s-complement form of the
+arbitrary-precision integer to create. The last byte contains the
+lowest 8-bits, the next-to-last contains the next lowest 8 bits, and
+so on. To encode negative numbers, take the absolute value of the
+number, subtract by 1, encode the number into bytes, XOR each byte,
+and if the most-significant bit of the first byte isn&#39;t set, add an
+additional byte at the start with the value 255. For little-endian,
+the byte order is reversed from the byte order just discussed.</p></li>
 <li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
 least-significant-byte first. If false, the byte order is big-endian,
 or most-significant-byte first.</p></li>
@@ -121,7 +106,7 @@ is 0.</li>
 <pre><code>public static BigInteger fromRadixString(String str, int radix)
 </code></pre>
 
-<p>Converts a string to an arbitrary-precision integer.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -157,7 +142,7 @@ or greater than 36.</p></li>
 <pre><code>public static BigInteger fromString(String str)
 </code></pre>
 
-<p>Converts a string to an arbitrary-precision integer.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -188,7 +173,7 @@ format.</p></li>
 <pre><code>public static BigInteger valueOf(long longerValue)
 </code></pre>
 
-<p>Converts a 64-bit signed integer to a big integer.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -208,10 +193,7 @@ number.</li>
 <pre><code>public int bitLength()
 </code></pre>
 
-<p>Finds the minimum number of bits needed to represent this object&#x27;s
- value, except for its sign. If the value is negative, finds the
- number of bits in a value equal to this object&#39;s absolute value minus
- 1.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -225,7 +207,7 @@ object&#39;s value is 0 or negative 1.</li>
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -242,7 +224,8 @@ object&#39;s value is 0 or negative 1.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object and another object are equal; otherwise, false.</li>
+<li><code>true</code> if this object and another object are equal;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -250,7 +233,7 @@ object&#39;s value is 0 or negative 1.</li>
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Returns the hash code for this instance.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -269,11 +252,7 @@ object&#39;s value is 0 or negative 1.</li>
 <pre><code>public byte[] toBytes(boolean littleEndian)
 </code></pre>
 
-<p>Returns a byte array of this object&#x27;s value. The byte array will take
- the form of the number&#39;s two&#39; s-complement representation, using the
- fewest bytes necessary to represent its value unambiguously. If this
- value is negative, the bits that appear &quot;before&quot; the most significant
- bit of the number will be all ones.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -293,8 +272,7 @@ single element 0.</li>
 <pre><code>public String toRadixString(int radix)
 </code></pre>
 
-<p>Generates a string representing the value of this object, in the given
- radix.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -328,7 +306,7 @@ or greater than 36.</li>
 <pre><code>public String toString()
 </code></pre>
 
-<p>Converts this object to a text string in base 10.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -349,7 +327,7 @@ digits 0 to 9 (U + 0030 to U + 0039).</li>
 <pre><code>public int compareTo(BigInteger other)
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Specified by:</strong></p>
 

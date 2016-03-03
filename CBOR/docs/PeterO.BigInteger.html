@@ -11,13 +11,15 @@
     System.IEquatable
 </code></pre>
 
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code>  method (by including the new library in your code, among other things), but this version of the CBOR library doesn&#39;t include any methods that explicitly take an <code>EInteger</code>  as a parameter or return value.</p>
+<p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p>An arbitrary-precision integer.Thread safety: Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
+<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code>  method (by including the new library in your code, among other things).</b></p>
 
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code>  method (by including the new library in your code, among other things), but this version of the CBOR library doesn&#39;t include any methods that explicitly take an <code>EInteger</code>  as a parameter or return value.</p>
+<p>An arbitrary-precision integer.<b>Thread safety:</b> Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
-<p>An arbitrary-precision integer.Thread safety: Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
+<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EInteger</code>  in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or  <code>com.upokecenter.numbers.EInteger</code>  in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code>  method (by including the new library in your code, among other things).</b></p>
+
+<p>An arbitrary-precision integer.<b>Thread safety:</b> Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
 <h3>ONE</h3>
 
@@ -125,7 +127,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement integer representation of the arbitrary-precision integer to create. The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, XOR each byte, and if the most-significant bit of the first byte isn&#39;t set, add an additional byte at the start with the value 255. For little-endian, the byte order is reversed from the byte order just discussed.</p></li>
+<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement form of the arbitrary-precision integer to create. The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, XOR each byte, and if the most-significant bit of the first byte isn&#39;t set, add an additional byte at the start with the value 255. For little-endian, the byte order is reversed from the byte order just discussed.</p></li>
 <li><p><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</p></li>
 </ul>
 
@@ -150,7 +152,7 @@ is null.</li>
 
 <p>Converts a string to an arbitrary-precision integer.</p>
 
-<p>The following example (C#) converts a number in the form of a hex string to a big integer.    public static arbitrary-precision integer HexToBigInteger(string
+<p>The following example (C#) converts a number in the orm of a hex string to a big integer.    public static arbitrary-precision integer HexToBigInteger(string
     hexString) {  // Parse the hexadecimal string as a big integer. Will  //
     throw a FormatException if the parsing fails var bigInteger =
     arbitrary-precision integer.fromRadixString(hexString, 16);  // Optional:

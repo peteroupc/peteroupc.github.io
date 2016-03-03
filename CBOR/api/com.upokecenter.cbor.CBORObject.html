@@ -36,14 +36,14 @@
  <p><b>Comparison Considerations:</b></p> <p>Instances of CBORObject
  should not be compared for equality using the &quot;==&quot; operator; it&#39;s
  possible to create two CBOR objects with the same value but not the
- same reference. (The &quot;==&quot; operator only checks if each side of the
- operator is the same instance.)</p> <p>This class&#39;s natural ordering
- (under the compareTo method) is not consistent with the Equals
- method. This means that two values that compare as equal under the
- compareTo method might not be equal under the Equals method. This is
- important to consider especially if an application wants to compare
- numbers, since the CBOR number type supports numbers of different
- formats, such as big integers, rational numbers, and
+ same reference. (The &quot;==&quot; operator might only check if each side of
+ the operator is the same instance.)</p> <p>This class&#39;s natural
+ ordering (under the compareTo method) is not consistent with the
+ Equals method. This means that two values that compare as equal under
+ the compareTo method might not be equal under the Equals method. This
+ is important to consider especially if an application wants to
+ compare numbers, since the CBOR number type supports numbers of
+ different formats, such as big integers, rational numbers, and
  arbitrary-precision decimal numbers.</p> <p>Another consideration is
  that two values that are otherwise equal may have different tags. To
  strip the tags from a CBOR object before comparing, use the
@@ -129,7 +129,7 @@ Finds the sum of two CBOR numbers.</li>
 Deprecated.
 Use the EInteger version of this method.
 Use the EInteger version of this method.</li>
-<li><code>static void AddTagHandler(EInteger bigintTag,
+<li><code>static void AddTagHandler(com.upokecenter.numbers.EInteger bigintTag,
          ICBORTag handler)</code><br>
 Registers an object that validates CBOR objects with new tags.</li>
 <li><code>BigInteger AsBigInteger()</code><br>
@@ -142,10 +142,14 @@ Returns false if this object is False, Null, or Undefined; otherwise, true.</li>
 Converts this object to a byte (0 to 255).</li>
 <li><code>double AsDouble()</code><br>
 Converts this object to a 64-bit floating point number.</li>
-<li><code>EDecimal AsEDecimal()</code><br></li>
-<li><code>EFloat AsEFloat()</code><br></li>
-<li><code>EInteger AsEInteger()</code><br></li>
-<li><code>ERational AsERational()</code><br></li>
+<li><code>com.upokecenter.numbers.EDecimal AsEDecimal()</code><br>
+Converts this object to a decimal number.</li>
+<li><code>com.upokecenter.numbers.EFloat AsEFloat()</code><br>
+Converts this object to an arbitrary-precision binary floating point number.</li>
+<li><code>com.upokecenter.numbers.EInteger AsEInteger()</code><br>
+Converts this object to an arbitrary-precision integer.</li>
+<li><code>com.upokecenter.numbers.ERational AsERational()</code><br>
+Converts this object to a rational number.</li>
 <li><code>ExtendedDecimal AsExtendedDecimal()</code><br>
 Deprecated.
 Use AsEDecimal instead.
@@ -222,19 +226,69 @@ Generates a CBOR object from a text string in JavaScript Object Notation
 Deprecated.
 Use the EInteger version of this method.
 Use the EInteger version of this method.</li>
+<li><code>static CBORObject FromObject(boolean value)</code><br>
+Returns the CBOR true value or false value, depending on &quot;value&quot;.</li>
+<li><code>static CBORObject FromObject(byte value)</code><br>
+Generates a CBOR object from a byte (0 to 255).</li>
+<li><code>static CBORObject FromObject(byte[] bytes)</code><br>
+Generates a CBOR object from a byte array.</li>
 <li><code>static CBORObject FromObject(CBORObject value)</code><br>
 Generates a CBOR object from a CBOR object.</li>
-<li><code>static CBORObject FromObject(EInteger bigintValue)</code><br>
-Not documented yet.</li>
+<li><code>static CBORObject FromObject(CBORObject[] array)</code><br>
+Generates a CBOR object from an array of CBOR objects.</li>
+<li><code>static CBORObject FromObject(char value)</code><br>
+Generates a CBOR string object from a Unicode character.</li>
+<li><code>static CBORObject FromObject(double value)</code><br>
+Generates a CBOR object from a 64-bit floating-point number.</li>
+<li><code>static CBORObject FromObject(com.upokecenter.numbers.EInteger bigintValue)</code><br>
+Generates a CBOR object from an arbitrary-precision integer.</li>
+<li><code>static CBORObject FromObject(ExtendedDecimal otherValue)</code><br>
+Deprecated.
+Use the EDecimal version of this method instead.
+Use the EDecimal version of this method instead.</li>
+<li><code>static CBORObject FromObject(ExtendedFloat bigValue)</code><br>
+Deprecated.
+Use the EFloat version of this method instead.
+Use the EFloat version of this method instead.</li>
+<li><code>static CBORObject FromObject(ExtendedRational bigValue)</code><br>
+Deprecated.
+Use the ERational version of this method instead.
+Use the ERational version of this method instead.</li>
+<li><code>static CBORObject FromObject(float value)</code><br>
+Generates a CBOR object from a 32-bit floating-point number.</li>
+<li><code>static CBORObject FromObject(int value)</code><br>
+Generates a CBOR object from a 32-bit signed integer.</li>
+<li><code>static CBORObject FromObject(int[] array)</code><br>
+Generates a CBOR object from an array of 32-bit integers.</li>
+<li><code>static &lt;T&gt; CBORObject FromObject(Iterable&lt;T&gt; value)</code><br>
+Generates a CBOR object from an enumerable set of objects.</li>
+<li><code>static &lt;T&gt; CBORObject FromObject(List&lt;T&gt; value)</code><br>
+Generates a CBOR object from a list of objects.</li>
 <li><code>static CBORObject FromObject(long value)</code><br>
 Generates a CBOR object from a 64-bit signed integer.</li>
+<li><code>static CBORObject FromObject(long[] array)</code><br>
+Generates a CBOR object from an array of 64-bit integers.</li>
+<li><code>static &lt;TKey,TValue&gt; CBORObject FromObject(Map&lt;TKey,TValue&gt; dic)</code><br>
+Generates a CBOR object from a map of objects.</li>
+<li><code>static CBORObject FromObject(Object obj)</code><br>
+Generates a CBORObject from an arbitrary object.</li>
+<li><code>static CBORObject FromObject(short value)</code><br>
+Generates a CBOR object from a 16-bit signed integer.</li>
+<li><code>static CBORObject FromObject(String strValue)</code><br>
+Generates a CBOR object from a text string.</li>
 <li><code>static CBORObject FromObjectAndTag(Object valueOb,
             BigInteger bigintTag)</code><br>
 Deprecated.
 Use the EInteger version instead.
 Use the EInteger version instead.</li>
 <li><code>static CBORObject FromObjectAndTag(Object valueOb,
-            EInteger tagEInt)</code><br></li>
+            com.upokecenter.numbers.EInteger bigintTag)</code><br>
+Generates a CBOR object from an arbitrary object and gives the resulting
+object a tag.</li>
+<li><code>static CBORObject FromObjectAndTag(Object valueObValue,
+            int smallTag)</code><br>
+Generates a CBOR object from an arbitrary object and gives the resulting
+object a tag.</li>
 <li><code>static CBORObject FromSimpleValue(int simpleValue)</code><br>
 Creates a CBOR object from a simple value number.</li>
 <li><code>CBORObject get(CBORObject key)</code><br>
@@ -243,30 +297,34 @@ Gets the value of a CBOR object in this map, using a CBOR object as the key.</li
 Gets the value of a CBOR object by integer index in this array.</li>
 <li><code>CBORObject get(String key)</code><br>
 Gets the value of a CBOR object in this map, using a string as the key.</li>
+<li><code>com.upokecenter.numbers.EInteger[] GetAllTags()</code><br>
+Gets a list of all tags, from outermost to innermost.</li>
 <li><code>byte[] GetByteString()</code><br>
 Gets the byte array used in this object, if this object is a byte string,
 without copying the data to a new one.</li>
-<li><code>EInteger getEInnermostTag()</code><br>
-Gets the last defined tag for this CBOR data item, or -1 if the item is
-untagged.</li>
-<li><code>EInteger getEOutermostTag()</code><br>
-Gets the outermost tag for this CBOR data item, or -1 if the item is
-untagged.</li>
 <li><code>BigInteger getInnermostTag()</code><br>
 Deprecated.
-Use the EInteger version of this method.
-Use the EInteger version of this method.</li>
+Use MostInnerTag instead.
+Use MostInnerTag instead.</li>
 <li><code>Collection&lt;CBORObject&gt; getKeys()</code><br>
 Gets a collection of the keys of this CBOR object in an undefined order.</li>
+<li><code>com.upokecenter.numbers.EInteger getMostInnerTag()</code><br>
+Gets the last defined tag for this CBOR data item, or -1 if the item is
+untagged.</li>
+<li><code>com.upokecenter.numbers.EInteger getMostOuterTag()</code><br>
+Gets the outermost tag for this CBOR data item, or -1 if the item is
+untagged.</li>
 <li><code>BigInteger getOutermostTag()</code><br>
 Deprecated.
-Use the EInteger version of this method.
-Use the EInteger version of this method.</li>
+Use MostOuterTag instead.
+Use MostOuterTag instead.</li>
 <li><code>int getSimpleValue()</code><br>
 Gets the simple value ID of this object, or -1 if this object is not a
 simple value (including if the value is a floating-point number).</li>
 <li><code>BigInteger[] GetTags()</code><br>
-Gets a list of all tags, from outermost to innermost.</li>
+Deprecated.
+Use the GetAllTags method instead.
+Use the GetAllTags method instead.</li>
 <li><code>CBORType getType()</code><br>
 Gets the general data type of this CBOR object.</li>
 <li><code>Collection&lt;CBORObject&gt; getValues()</code><br>
@@ -277,7 +335,8 @@ Calculates the hash code of this object.</li>
 Deprecated.
 Use the EInteger version of this method.
 Use the EInteger version of this method.</li>
-<li><code>boolean HasTag(EInteger bigTagValue)</code><br></li>
+<li><code>boolean HasTag(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
+Returns whether this object has a tag of the given number.</li>
 <li><code>boolean HasTag(int tagValue)</code><br>
 Returns whether this object has a tag of the given number.</li>
 <li><code>CBORObject Insert(int index,
@@ -371,22 +430,78 @@ if any.</li>
 <li><code>CBORObject UntagOne()</code><br>
 Gets an object with the same value as this one but without this object&#39;s
 outermost tag, if any.</li>
-<li><code>static void Write(EDecimal bignum,
+<li><code>static void Write(BigInteger bigint,
+ OutputStream stream)</code><br>
+Deprecated.
+Pass an EInteger to this method instead.
+Pass an EInteger to this method instead.</li>
+<li><code>static void Write(boolean value,
+ OutputStream stream)</code><br>
+Writes a Boolean value in CBOR format to a data stream.</li>
+<li><code>static void Write(byte value,
+ OutputStream stream)</code><br>
+Writes a byte (0 to 255) in CBOR format to a data stream.</li>
+<li><code>static void Write(CBORObject value,
+ OutputStream stream)</code><br>
+Writes a CBOR object to a CBOR data stream.</li>
+<li><code>static void Write(char value,
+ OutputStream stream)</code><br>
+Writes a Unicode character as a string in CBOR format to a data stream.</li>
+<li><code>static void Write(double value,
+ OutputStream stream)</code><br>
+Writes a 64-bit floating-point number in CBOR format to a data stream.</li>
+<li><code>static void Write(com.upokecenter.numbers.EDecimal bignum,
  OutputStream stream) double double</code><br>
 Writes a decimal floating-point number in CBOR format to a data stream, as
 follows:  If the value is null, writes the byte 0xF6.
 If the value is negative zero, infinity, or NaN, converts the
 number to a double and writes that double.</li>
-<li><code>static void Write(ExtendedFloat bignum,
+<li><code>static void Write(com.upokecenter.numbers.EFloat bignum,
  OutputStream stream) double double</code><br>
 Writes a binary floating-point number in CBOR format to a data stream as
 follows:  If the value is null, writes the byte 0xF6.
 If the value is negative zero, infinity, or NaN, converts the
 number to a double and writes that double.</li>
+<li><code>static void Write(com.upokecenter.numbers.EInteger bigint,
+ OutputStream stream)</code><br>
+Writes a big integer in CBOR format to a data stream.</li>
+<li><code>static void Write(com.upokecenter.numbers.ERational rational,
+ OutputStream stream)</code><br>
+Writes a rational number in CBOR format to a data stream.</li>
+<li><code>static void Write(ExtendedDecimal bignum,
+ OutputStream stream)</code><br>
+Deprecated.
+Pass an EDecimal to the Write method instead.
+Pass an EDecimal to the Write method instead.</li>
+<li><code>static void Write(ExtendedFloat bignum,
+ OutputStream stream)</code><br>
+Deprecated.
+Pass an EFloat to the Write method instead.
+Pass an EFloat to the Write method instead.</li>
+<li><code>static void Write(ExtendedRational rational,
+ OutputStream stream)</code><br>
+Deprecated.
+Pass an ERational to the Write method instead.
+Pass an ERational to the Write method instead.</li>
+<li><code>static void Write(float value,
+ OutputStream s)</code><br>
+Writes a 32-bit floating-point number in CBOR format to a data stream.</li>
+<li><code>static void Write(int value,
+ OutputStream stream)</code><br>
+Writes a 32-bit signed integer in CBOR format to a data stream.</li>
+<li><code>static void Write(long value,
+ OutputStream stream)</code><br>
+Writes a 64-bit signed integer in CBOR format to a data stream.</li>
+<li><code>static void Write(Object objValue,
+ OutputStream stream)</code><br>
+Writes a CBOR object to a CBOR data stream.</li>
 <li><code>static void Write(Object objValue,
  OutputStream output,
  CBOREncodeOptions options)</code><br>
 Writes an arbitrary object to a CBOR data stream.</li>
+<li><code>static void Write(short value,
+ OutputStream stream)</code><br>
+Writes a 16-bit signed integer in CBOR format to a data stream.</li>
 <li><code>static void Write(String str,
  OutputStream stream)</code><br>
 Writes a string in CBOR format to a data stream.</li>
@@ -490,18 +605,32 @@ array, or 0 if this item is neither an array nor a map.</li>
 <pre><code>@Deprecated public final BigInteger getInnermostTag()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use the EInteger version of this method.</span></p>
+<p>Deprecated.&nbsp;<i>Use MostInnerTag instead.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The last defined tag for this CBOR data item, or -1 if the item is
+untagged.</li>
+</ul>
 
 <h3>getOutermostTag</h3>
 
 <pre><code>@Deprecated public final BigInteger getOutermostTag()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use the EInteger version of this method.</span></p>
+<p>Deprecated.&nbsp;<i>Use MostOuterTag instead.</i></p>
 
-<h3>getEInnermostTag</h3>
+<p><strong>Returns:</strong></p>
 
-<pre><code>public final EInteger getEInnermostTag()
+<ul>
+<li>The outermost tag for this CBOR data item, or -1 if the item is
+untagged.</li>
+</ul>
+
+<h3>getMostInnerTag</h3>
+
+<pre><code>public final com.upokecenter.numbers.EInteger getMostInnerTag()
 </code></pre>
 
 <p>Gets the last defined tag for this CBOR data item, or -1 if the item is
@@ -524,7 +653,8 @@ untagged.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this value is a CBOR false value; otherwise, false.</li>
+<li><code>true</code> If this value is a CBOR false value; otherwise, .
+<code>false</code>.</li>
 </ul>
 
 <h3>isFinite</h3>
@@ -537,8 +667,8 @@ untagged.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this CBOR object represents a finite number; otherwise,
-false.</li>
+<li><code>true</code> If this CBOR object represents a finite number;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isIntegral</h3>
@@ -553,8 +683,8 @@ false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object represents an integral number, that is, a number
-without a fractional part; otherwise, false.</li>
+<li><code>true</code> If this object represents an integral number, that is,
+a number without a fractional part; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isNull</h3>
@@ -567,7 +697,7 @@ without a fractional part; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this value is a CBOR null value; otherwise, false.</li>
+<li><code>true</code> If this value is a CBOR null value; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isTagged</h3>
@@ -580,7 +710,8 @@ without a fractional part; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this data item has at least one tag; otherwise, false.</li>
+<li><code>true</code> If this data item has at least one tag; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>isTrue</h3>
@@ -593,7 +724,7 @@ without a fractional part; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this value is a CBOR true value; otherwise, false.</li>
+<li><code>true</code> If this value is a CBOR true value; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isUndefined</h3>
@@ -606,7 +737,8 @@ without a fractional part; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this value is a CBOR undefined value; otherwise, false.</li>
+<li><code>true</code> If this value is a CBOR undefined value; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>isZero</h3>
@@ -619,7 +751,7 @@ without a fractional part; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object&#39;s value equals 0; otherwise, false.</li>
+<li><code>true</code> If this object&#39;s value equals 0; otherwise, . <code>false</code>.</li>
 </ul>
 
 <h3>getKeys</h3>
@@ -651,12 +783,13 @@ without a fractional part; otherwise, false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object is a negative number; otherwise, false.</li>
+<li><code>true</code> If this object is a negative number; otherwise, .
+<code>false</code>.</li>
 </ul>
 
-<h3>getEOutermostTag</h3>
+<h3>getMostOuterTag</h3>
 
-<pre><code>public final EInteger getEOutermostTag()
+<pre><code>public final com.upokecenter.numbers.EInteger getMostOuterTag()
 </code></pre>
 
 <p>Gets the outermost tag for this CBOR data item, or -1 if the item is
@@ -894,7 +1027,7 @@ opposed to Not-a-Number, NaN).</li>
 <pre><code>@Deprecated public static void AddTagHandler(BigInteger bigintTag, ICBORTag handler)
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use the EInteger version of this method.</span></p>
+<p>Deprecated.&nbsp;<i>Use the EInteger version of this method.</i></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -914,7 +1047,7 @@ than 0 or greater than (2^64-1).</p></li>
 
 <h3>AddTagHandler</h3>
 
-<pre><code>public static void AddTagHandler(EInteger bigintTag, ICBORTag handler)
+<pre><code>public static void AddTagHandler(com.upokecenter.numbers.EInteger bigintTag, ICBORTag handler)
 </code></pre>
 
 <p>Registers an object that validates CBOR objects with new tags.</p>
@@ -1118,7 +1251,7 @@ byte-order mark (U + FEFF).</p></li>
 <pre><code>@Deprecated public static CBORObject FromObject(BigInteger bigintValue)
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use the EInteger version of this method.</span></p>
+<p>Deprecated.&nbsp;<i>Use the EInteger version of this method.</i></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1134,15 +1267,118 @@ byte-order mark (U + FEFF).</p></li>
 
 <h3>FromObject</h3>
 
-<pre><code>public static CBORObject FromObject(EInteger bigintValue)
+<pre><code>public static CBORObject FromObject(com.upokecenter.numbers.EInteger bigintValue)
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Generates a CBOR object from an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigintValue</code> - Not documented yet.</li>
+<li><code>bigintValue</code> - An arbitrary-precision value.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>@Deprecated public static CBORObject FromObject(ExtendedFloat bigValue)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Use the EFloat version of this method instead.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigValue</code> - An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>@Deprecated public static CBORObject FromObject(ExtendedRational bigValue)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Use the ERational version of this method instead.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigValue</code> - An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>@Deprecated public static CBORObject FromObject(ExtendedDecimal otherValue)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Use the EDecimal version of this method instead.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(String strValue)
+</code></pre>
+
+<p>Generates a CBOR object from a text string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>strValue</code> - A string value. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object representing the string, or CBORObject.Null if
+stringValue is null.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The string contains an unpaired surrogate
+code point.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(int value)
+</code></pre>
+
+<p>Generates a CBOR object from a 32-bit signed integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1151,12 +1387,346 @@ byte-order mark (U + FEFF).</p></li>
 <li>A CBORObject object.</li>
 </ul>
 
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(short value)
+</code></pre>
+
+<p>Generates a CBOR object from a 16-bit signed integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A 16-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORObject object.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(char value)
+</code></pre>
+
+<p>Generates a CBOR string object from a Unicode character.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A char object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORObject object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>value</code> is a surrogate
+code point.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(boolean value)
+</code></pre>
+
+<p>Returns the CBOR true value or false value, depending on &#x22;value&#x22;.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - Either True or False.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>CBORObject.True if value is true; otherwise CBORObject.False.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(byte value)
+</code></pre>
+
+<p>Generates a CBOR object from a byte (0 to 255).</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A Byte object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORObject object.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(float value)
+</code></pre>
+
+<p>Generates a CBOR object from a 32-bit floating-point number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A 32-bit floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORObject object.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(double value)
+</code></pre>
+
+<p>Generates a CBOR object from a 64-bit floating-point number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A 64-bit floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORObject object.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(byte[] bytes)
+</code></pre>
+
+<p>Generates a CBOR object from a byte array. The byte array is copied to a new
+ byte array. (This method can&#39;t be used to decode CBOR data from a
+ byte array; for that, use the DecodeFromBytes method instead.).</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bytes</code> - A byte array. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR byte string object where each byte of the given byte array is
+copied to a new array, or CBORObject.Null if the value is null.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(CBORObject[] array)
+</code></pre>
+
+<p>Generates a CBOR object from an array of CBOR objects.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>array</code> - An array of CBOR objects.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object where each element of the given array is copied to a
+new array, or CBORObject.Null if the value is null.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(int[] array)
+</code></pre>
+
+<p>Generates a CBOR object from an array of 32-bit integers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>array</code> - An array of 32-bit integers.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR array object where each element of the given array is copied
+to a new array, or CBORObject.Null if the value is null.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(long[] array)
+</code></pre>
+
+<p>Generates a CBOR object from an array of 64-bit integers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>array</code> - An array of 64-bit integers.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR array object where each element of the given array is copied
+to a new array, or CBORObject.Null if the value is null.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static &lt;T&gt; CBORObject FromObject(List&lt;T&gt; value)
+</code></pre>
+
+<p>Generates a CBOR object from a list of objects.</p>
+
+<p><strong>Type Parameters:</strong></p>
+
+<ul>
+<li><code>T</code> - A type convertible to CBORObject.</li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - An array of CBOR objects. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object where each element of the given array is converted to
+a CBOR object and copied to a new array, or CBORObject.Null if the
+value is null.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static &lt;T&gt; CBORObject FromObject(Iterable&lt;T&gt; value)
+</code></pre>
+
+<p>Generates a CBOR object from an enumerable set of objects.</p>
+
+<p><strong>Type Parameters:</strong></p>
+
+<ul>
+<li><code>T</code> - A type convertible to CBORObject.</li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - An object that implements the IEnumerable interface. In the
+.NET version, this can be the return value of an iterator or the
+result of a LINQ query.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object where each element of the given enumerable object is
+converted to a CBOR object and copied to a new array, or
+CBORObject.Null if the value is null.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static &lt;TKey,TValue&gt; CBORObject FromObject(Map&lt;TKey,TValue&gt; dic)
+</code></pre>
+
+<p>Generates a CBOR object from a map of objects.</p>
+
+<p><strong>Type Parameters:</strong></p>
+
+<ul>
+<li><p><code>TKey</code> - A type convertible to CBORObject; the type of the keys.</p></li>
+<li><p><code>TValue</code> - A type convertible to CBORObject; the type of the values.</p></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>dic</code> - A map of CBOR objects.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object where each key and value of the given map is converted
+to a CBOR object and copied to a new map, or CBORObject.Null if
+<code>dic</code> is null.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(Object obj)
+</code></pre>
+
+<p>Generates a CBORObject from an arbitrary object. The following types are
+ specially handled by this method: null; primitive types; string;
+ CBORObject; the <code>EDecimal</code>, <code>EFloat</code>, <code>EInteger</code>, and
+ <code>ERational</code> classes in the new <code>PeterO.Numbers</code>
+ library (in .NET) or the <code>com.github.peteroupc/numbers</code>
+ artifact (in Java); the legacy <code>ExtendedDecimal</code>,
+ <code>ExtendedFloat</code>, <code>ExtendedInteger</code>, and
+ <code>ExtendedRational</code> classes in this library; arrays; enumerations
+ (<code>Enum</code> objects); and maps. <p>In the .NET version, if the
+ object is a type not specially handled by this method, returns a CBOR
+ map with the values of each of its read/write properties (or all
+ properties in the case of an anonymous type). Properties are
+ converted to their camel-case names (meaning if a name starts with A
+ to Z, that letter is lower-cased). If the property name begins with
+ the word &quot;Is&quot;, that word is deleted from the name. Also, .NET
+ <code>Enum</code> objects will be converted to their integer values, and a
+ multidimensional array is converted to an array of arrays.</p> <p>In
+ the Java version, if the object is a type not specially handled by
+ this method, this method checks the CBOR object for methods starting
+ with the word &quot;get&quot; or &quot;is&quot; that take no parameters, and returns a
+ CBOR map with one entry for each such method found. For each method
+ found, the starting word &quot;get&quot; or &quot;is&quot; is deleted from its name, and
+ the name is converted to camel case (meaning if a name starts with A
+ to Z, that letter is lower-cased). Also, Java <code>Enum</code> objects
+ will be converted to the result of their name method.</p> <p>If the
+ input is a byte array, the byte array is copied to a new byte array.
+ (This method can&#39;t be used to decode CBOR data from a byte array; for
+ that, use the DecodeFromBytes method instead.).</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - An arbitrary object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object corresponding to the given object. Returns
+CBORObject.Null if the object is null.</li>
+</ul>
+
 <h3>FromObjectAndTag</h3>
 
 <pre><code>@Deprecated public static CBORObject FromObjectAndTag(Object valueOb, BigInteger bigintTag)
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use the EInteger version instead.</span></p>
+<p>Deprecated.&nbsp;<i>Use the EInteger version instead.</i></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1190,8 +1760,77 @@ null.</p></li>
 
 <h3>FromObjectAndTag</h3>
 
-<pre><code>public static CBORObject FromObjectAndTag(Object valueOb, EInteger tagEInt)
+<pre><code>public static CBORObject FromObjectAndTag(Object valueOb, com.upokecenter.numbers.EInteger bigintTag)
 </code></pre>
+
+<p>Generates a CBOR object from an arbitrary object and gives the resulting
+ object a tag.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>valueOb</code> - An arbitrary object. If the tag number is 2 or 3, this must
+be a byte string whose bytes represent an integer in little-endian
+byte order, and the value of the number is 1 minus the integer&#39;s
+value for tag 3. If the tag number is 4 or 5, this must be an array
+with two elements: the first must be an integer representing the
+exponent, and the second must be an integer representing a mantissa.</p></li>
+<li><p><code>bigintTag</code> - Tag number. The tag number 55799 can be used to mark a
+&quot;self-described CBOR&quot; object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object where the object <code>valueOb</code> is converted to a
+CBOR object and given the tag <code>bigintTag</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less
+than 0 or greater than 2^64-1, or <code>valueOb</code> &#39;s type is
+unsupported.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintTag</code> is
+null.</p></li>
+</ul>
+
+<h3>FromObjectAndTag</h3>
+
+<pre><code>public static CBORObject FromObjectAndTag(Object valueObValue, int smallTag)
+</code></pre>
+
+<p>Generates a CBOR object from an arbitrary object and gives the resulting
+ object a tag.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>valueObValue</code> - An arbitrary object. If the tag number is 2 or 3, this
+must be a byte string whose bytes represent an integer in
+little-endian byte order, and the value of the number is 1 minus the
+integer&#39;s value for tag 3. If the tag number is 4 or 5, this must be
+an array with two elements: the first must be an integer representing
+the exponent, and the second must be an integer representing a
+mantissa.</p></li>
+<li><p><code>smallTag</code> - A 32-bit integer that specifies a tag number. The tag number
+55799 can be used to mark a &quot;self-described CBOR&quot; object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object where the object <code>valueObValue</code> is converted to
+a CBOR object and given the tag <code>smallTag</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>smallTag</code> is less than
+0 or <code>valueObValue</code> &#39;s type is unsupported.</li>
+</ul>
 
 <h3>FromSimpleValue</h3>
 
@@ -1502,7 +2141,28 @@ opposed to Not-a-Number, NaN).</li>
 
 <h3>Write</h3>
 
-<pre><code>public static void Write(ExtendedFloat bignum, OutputStream stream) throws IOException
+<pre><code>@Deprecated public static void Write(ExtendedFloat bignum, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Pass an EFloat to the Write method instead.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bignum</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(com.upokecenter.numbers.EFloat bignum, OutputStream stream) throws IOException
 </code></pre>
 
 <p>Writes a binary floating-point number in CBOR format to a data stream as
@@ -1531,7 +2191,70 @@ opposed to Not-a-Number, NaN).</li>
 
 <h3>Write</h3>
 
-<pre><code>public static void Write(EDecimal bignum, OutputStream stream) throws IOException
+<pre><code>@Deprecated public static void Write(ExtendedRational rational, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Pass an ERational to the Write method instead.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>rational</code> - An arbitrary-precision rational number.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(com.upokecenter.numbers.ERational rational, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a rational number in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>rational</code> - An arbitrary-precision rational number.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>@Deprecated public static void Write(ExtendedDecimal bignum, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Pass an EDecimal to the Write method instead.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bignum</code> - The arbitrary-precision decimal number to write. Can be null.</p></li>
+<li><p><code>stream</code> - InputStream to write to.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(com.upokecenter.numbers.EDecimal bignum, OutputStream stream) throws IOException
 </code></pre>
 
 <p>Writes a decimal floating-point number in CBOR format to a data stream, as
@@ -1556,6 +2279,262 @@ opposed to Not-a-Number, NaN).</li>
 <ul>
 <li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
 <li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>@Deprecated public static void Write(BigInteger bigint, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Pass an EInteger to this method instead.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bigint</code> - Big integer to write. Can be null.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(com.upokecenter.numbers.EInteger bigint, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a big integer in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bigint</code> - Big integer to write. Can be null.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(long value, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a 64-bit signed integer in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(int value, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a 32-bit signed integer in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(short value, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a 16-bit signed integer in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(char value, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a Unicode character as a string in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>value</code> is a surrogate
+code point.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(boolean value, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a Boolean value in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(byte value, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a byte (0 to 255) in CBOR format to a data stream. If the value is
+ less than 24, writes that byte. If the value is 25 to 255, writes the
+ byte 24, then this byte&#39;s value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(float value, OutputStream s) throws IOException
+</code></pre>
+
+<p>Writes a 32-bit floating-point number in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write.</p></li>
+<li><p><code>s</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>s</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(double value, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a 64-bit floating-point number in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(CBORObject value, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a CBOR object to a CBOR data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>value</code> - The value to write. Can be null.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre><code>public static void Write(Object objValue, OutputStream stream) throws IOException
+</code></pre>
+
+<p>Writes a CBOR object to a CBOR data stream. See the three-parameter Write
+ method that takes a CBOREncodeOptions.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>objValue</code> - An arbitrary object.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IOException</code></li>
 </ul>
 
 <h3>Write</h3>
@@ -1722,7 +2701,7 @@ this map.</p></li>
 <pre><code>@Deprecated public BigInteger AsBigInteger()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use the AsEInteger method instead.</span></p>
+<p>Deprecated.&nbsp;<i>Use the AsEInteger method instead.</i></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1741,8 +2720,26 @@ not-a-number (NaN).</p></li>
 
 <h3>AsEInteger</h3>
 
-<pre><code>public EInteger AsEInteger()
+<pre><code>public com.upokecenter.numbers.EInteger AsEInteger()
 </code></pre>
+
+<p>Converts this object to an arbitrary-precision integer. Fractional values
+ are truncated to an integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest big integer to this object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalStateException</code> - This object&#39;s type is not a number type,
+including if this object is CBORObject.Null.</p></li>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is infinity or
+not-a-number (NaN).</p></li>
+</ul>
 
 <h3>AsBoolean</h3>
 
@@ -1806,7 +2803,7 @@ exceeds the range of a 64-bit floating point number.</li>
 <pre><code>@Deprecated public ExtendedDecimal AsExtendedDecimal()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use AsEDecimal instead.</span></p>
+<p>Deprecated.&nbsp;<i>Use AsEDecimal instead.</i></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1825,15 +2822,32 @@ including if this object is CBORObject.Null.</li>
 
 <h3>AsEDecimal</h3>
 
-<pre><code>public EDecimal AsEDecimal()
+<pre><code>public com.upokecenter.numbers.EDecimal AsEDecimal()
 </code></pre>
+
+<p>Converts this object to a decimal number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A decimal number for this object&#39;s value. If this object is a
+rational number with a nonterminating decimal expansion, returns a
+decimal number rounded to 34 digits.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
+including if this object is CBORObject.Null.</li>
+</ul>
 
 <h3>AsExtendedFloat</h3>
 
 <pre><code>@Deprecated public ExtendedFloat AsExtendedFloat()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use AsEFloat instead.</span></p>
+<p>Deprecated.&nbsp;<i>Use AsEFloat instead.</i></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1855,15 +2869,35 @@ including if this object is CBORObject.Null.</li>
 
 <h3>AsEFloat</h3>
 
-<pre><code>public EFloat AsEFloat()
+<pre><code>public com.upokecenter.numbers.EFloat AsEFloat()
 </code></pre>
+
+<p>Converts this object to an arbitrary-precision binary floating point number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating point number for this
+object&#39;s value. Note that if this object is a decimal number with a
+fractional part, the conversion may lose information depending on the
+number. If this object is a rational number with a nonterminating
+binary expansion, returns a binary floating-point number rounded to
+113 bits.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
+including if this object is CBORObject.Null.</li>
+</ul>
 
 <h3>AsExtendedRational</h3>
 
 <pre><code>@Deprecated public ExtendedRational AsExtendedRational()
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use AsERational instead.</span></p>
+<p>Deprecated.&nbsp;<i>Use AsERational instead.</i></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1880,8 +2914,23 @@ including if this object is CBORObject.Null.</li>
 
 <h3>AsERational</h3>
 
-<pre><code>public ERational AsERational()
+<pre><code>public com.upokecenter.numbers.ERational AsERational()
 </code></pre>
+
+<p>Converts this object to a rational number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A rational number for this object&#39;s value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
+including if this object is CBORObject.Null.</li>
+</ul>
 
 <h3>AsInt16</h3>
 
@@ -2018,8 +3067,8 @@ information can&#39; t fit in a 64-bit floating point number.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object&#39;s value is an integral value, is -(2^31) or
-greater, and is less than 2^31; otherwise, false .</li>
+<li><code>true</code> if this object&#39;s value is an integral value, is -(2^31)
+or greater, and is less than 2^31; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanFitInInt64</h3>
@@ -2033,8 +3082,8 @@ greater, and is less than 2^31; otherwise, false .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object&#39;s value is an integral value, is -(2^63) or
-greater, and is less than 2^63; otherwise, false .</li>
+<li><code>true</code> if this object&#39;s value is an integral value, is -(2^63)
+or greater, and is less than 2^63; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanFitInSingle</h3>
@@ -2065,8 +3114,8 @@ information can&#39; t fit in a 32-bit floating point number.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object&#39;s value, truncated to an integer, would be
--(2^31) or greater, and less than 2^31; otherwise, false .</li>
+<li><code>true</code> if this object&#39;s value, truncated to an integer, would
+be -(2^31) or greater, and less than 2^31; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanTruncatedIntFitInInt64</h3>
@@ -2080,8 +3129,8 @@ information can&#39; t fit in a 32-bit floating point number.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object&#39;s value, truncated to an integer, would be
--(2^63) or greater, and less than 2^63; otherwise, false .</li>
+<li><code>true</code> if this object&#39;s value, truncated to an integer, would
+be -(2^63) or greater, and less than 2^63; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -2176,8 +3225,8 @@ the other object or if the other object is null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if the given key is found, or false if the given key is not
-found or this object is not a map.</li>
+<li><code>true</code> if the given key is found, or false if the given key is
+not found or this object is not a map.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2203,8 +3252,8 @@ CBORObject.Null).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if the given key (as a CBOR object) is found, or false if the
-given key is not found or this object is not a map.</li>
+<li><code>true</code> if the given key (as a CBOR object) is found, or false
+if the given key is not found or this object is not a map.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2273,7 +3322,7 @@ given key is not found or this object is not a map.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if the objects are equal; otherwise, false .</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>equals</h3>
@@ -2292,7 +3341,7 @@ given key is not found or this object is not a map.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if the objects are equal; otherwise, false .</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>GetByteString</h3>
@@ -2338,7 +3387,20 @@ given key is not found or this object is not a map.</li>
 
 <h3>GetTags</h3>
 
-<pre><code>public BigInteger[] GetTags()
+<pre><code>@Deprecated public BigInteger[] GetTags()
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Use the GetAllTags method instead.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of tags, or the empty string if this object is untagged.</li>
+</ul>
+
+<h3>GetAllTags</h3>
+
+<pre><code>public com.upokecenter.numbers.EInteger[] GetAllTags()
 </code></pre>
 
 <p>Gets a list of all tags, from outermost to innermost.</p>
@@ -2365,7 +3427,8 @@ given key is not found or this object is not a map.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object has a tag of the given number; otherwise, false.</li>
+<li><code>true</code> if this object has a tag of the given number;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2380,7 +3443,7 @@ given key is not found or this object is not a map.</li>
 <pre><code>@Deprecated public boolean HasTag(BigInteger bigTagValue)
 </code></pre>
 
-<p><span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Use the EInteger version of this method.</span></p>
+<p>Deprecated.&nbsp;<i>Use the EInteger version of this method.</i></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2391,7 +3454,8 @@ given key is not found or this object is not a map.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this object has a tag of the given number; otherwise, false.</li>
+<li><code>true</code> if this object has a tag of the given number;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2403,8 +3467,30 @@ given key is not found or this object is not a map.</li>
 
 <h3>HasTag</h3>
 
-<pre><code>public boolean HasTag(EInteger bigTagValue)
+<pre><code>public boolean HasTag(com.upokecenter.numbers.EInteger bigTagValue)
 </code></pre>
+
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigTagValue</code> - The tag value to search for.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object has a tag of the given number;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - BigTagValue is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - BigTagValue is less than 0.</p></li>
+</ul>
 
 <h3>Insert</h3>
 
@@ -2447,7 +3533,8 @@ array.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this CBOR object represents infinity; otherwise, false .</li>
+<li><code>true</code> if this CBOR object represents infinity; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>IsNaN</h3>
@@ -2462,9 +3549,9 @@ array.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this CBOR object represents a not-a-number value (as opposed
-to whether this object&#39;s type is not a number type); otherwise,
-false.</li>
+<li><code>true</code> if this CBOR object represents a not-a-number value (as
+opposed to whether this object&#39;s type is not a number type);
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsNegativeInfinity</h3>
@@ -2478,8 +3565,8 @@ false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this CBOR object represents negative infinity; otherwise,
-false.</li>
+<li><code>true</code> if this CBOR object represents negative infinity;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsPositiveInfinity</h3>
@@ -2493,8 +3580,8 @@ false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if this CBOR object represents positive infinity; otherwise,
-false.</li>
+<li><code>true</code> if this CBOR object represents positive infinity;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>Negate</h3>
@@ -2534,7 +3621,7 @@ false.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>true if the item was removed; otherwise, false.</li>
+<li><code>true</code> if the item was removed; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

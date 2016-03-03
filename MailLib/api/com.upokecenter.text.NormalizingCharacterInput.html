@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.text.NormalizingCharacterInput</h1>
 
-<pre><code>public final class NormalizingCharacterInput extends Object
+<pre><code>public final class NormalizingCharacterInput extends Object implements com.upokecenter.text.ICharacterInput
 </code></pre>
 
 <p>A character input class that implements the Unicode normalization
@@ -77,10 +77,10 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>NormalizingCharacterInput(ICharacterInput input)</code><br>
+<li><code>NormalizingCharacterInput(com.upokecenter.text.ICharacterInput input)</code><br>
 Initializes a new instance of the NormalizingCharacterInput class using
 Normalization Form C.</li>
-<li><code>NormalizingCharacterInput(ICharacterInput stream,
+<li><code>NormalizingCharacterInput(com.upokecenter.text.ICharacterInput stream,
                      Normalization form)</code><br>
 Initializes a new instance of the NormalizingCharacterInput class.</li>
 <li><code>NormalizingCharacterInput(List&lt;Integer&gt; characterList)</code><br>
@@ -101,15 +101,27 @@ Initializes a new instance of the NormalizingCharacterInput class.</li>
 <li><code>NormalizingCharacterInput(String str,
                      Normalization form)</code><br>
 Initializes a new instance of the NormalizingCharacterInput class.</li>
-<li><code>static List&lt;Integer&gt; GetChars(ICharacterInput str,
+<li><code>static List&lt;Integer&gt; GetChars(com.upokecenter.text.ICharacterInput str,
     Normalization form)</code><br>
 Gets a list of normalized code points after reading from a character stream.</li>
 <li><code>static List&lt;Integer&gt; GetChars(String str,
     Normalization form)</code><br>
 Gets a list of normalized code points after reading from a string.</li>
-<li><code>static boolean IsNormalized(ICharacterInput chars,
+<li><code>static boolean IsNormalized(com.upokecenter.text.ICharacterInput chars,
         Normalization form)</code><br>
 Determines whether the text provided by a character input is normalized.</li>
+<li><code>static boolean IsNormalized(int[] charArray,
+        Normalization form)</code><br>
+Determines whether the given array of characters is in the given Unicode
+normalization form.</li>
+<li><code>static boolean IsNormalized(List&lt;Integer&gt; charList,
+        Normalization form)</code><br>
+Determines whether the given list of characters is in the given Unicode
+normalization form.</li>
+<li><code>static boolean IsNormalized(String str,
+        Normalization form)</code><br>
+Determines whether the given string is in the given Unicode normalization
+form.</li>
 <li><code>static String Normalize(String str,
      Normalization form)</code><br>
 Converts a string to the given Unicode normalization form.</li>
@@ -124,10 +136,10 @@ Reads a Unicode character from a data source.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>NormalizingCharacterInput(ICharacterInput input)</code><br>
+<li><code>NormalizingCharacterInput(com.upokecenter.text.ICharacterInput input)</code><br>
 Initializes a new instance of the NormalizingCharacterInput class using
 Normalization Form C.</li>
-<li><code>NormalizingCharacterInput(ICharacterInput stream,
+<li><code>NormalizingCharacterInput(com.upokecenter.text.ICharacterInput stream,
                      Normalization form)</code><br>
 Initializes a new instance of the NormalizingCharacterInput class.</li>
 <li><code>NormalizingCharacterInput(List&lt;Integer&gt; characterList)</code><br>
@@ -183,7 +195,7 @@ normalize.</li>
 
 <h3>NormalizingCharacterInput</h3>
 
-<pre><code>public NormalizingCharacterInput(ICharacterInput input)
+<pre><code>public NormalizingCharacterInput(com.upokecenter.text.ICharacterInput input)
 </code></pre>
 
 <p>Initializes a new instance of the NormalizingCharacterInput class using
@@ -252,7 +264,7 @@ text.</p></li>
 
 <h3>NormalizingCharacterInput</h3>
 
-<pre><code>public NormalizingCharacterInput(ICharacterInput stream, Normalization form)
+<pre><code>public NormalizingCharacterInput(com.upokecenter.text.ICharacterInput stream, Normalization form)
 </code></pre>
 
 <p>Initializes a new instance of the NormalizingCharacterInput class.</p>
@@ -300,7 +312,7 @@ text.</p></li>
 
 <h3>GetChars</h3>
 
-<pre><code>public static List&lt;Integer&gt; GetChars(ICharacterInput str, Normalization form)
+<pre><code>public static List&lt;Integer&gt; GetChars(com.upokecenter.text.ICharacterInput str, Normalization form)
 </code></pre>
 
 <p>Gets a list of normalized code points after reading from a character stream.</p>
@@ -327,7 +339,7 @@ text.</p></li>
 
 <h3>IsNormalized</h3>
 
-<pre><code>public static boolean IsNormalized(ICharacterInput chars, Normalization form)
+<pre><code>public static boolean IsNormalized(com.upokecenter.text.ICharacterInput chars, Normalization form)
 </code></pre>
 
 <p>Determines whether the text provided by a character input is normalized.</p>
@@ -377,12 +389,105 @@ text.</p></li>
 <li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
+<h3>IsNormalized</h3>
+
+<pre><code>public static boolean IsNormalized(String str, Normalization form)
+</code></pre>
+
+<p>Determines whether the given string is in the given Unicode normalization
+ form.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - An arbitrary string.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if the given string is in the given Unicode normalization form;
+otherwise, false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>IsNormalized</h3>
+
+<pre><code>public static boolean IsNormalized(int[] charArray, Normalization form)
+</code></pre>
+
+<p>Determines whether the given array of characters is in the given Unicode
+ normalization form.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>charArray</code> - An array of Unicode code points.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if the given list of characters is in the given Unicode
+normalization form; otherwise, false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter &quot;charList&quot; is null.</li>
+</ul>
+
+<h3>IsNormalized</h3>
+
+<pre><code>public static boolean IsNormalized(List&lt;Integer&gt; charList, Normalization form)
+</code></pre>
+
+<p>Determines whether the given list of characters is in the given Unicode
+ normalization form.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>charList</code> - A list of Unicode code points.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if the given list of characters is in the given Unicode
+normalization form; otherwise, false.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>charList</code> is null.</li>
+</ul>
+
 <h3>ReadChar</h3>
 
 <pre><code>public int ReadChar()
 </code></pre>
 
 <p>Reads a Unicode character from a data source.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>ReadChar</code>&nbsp;in interface&nbsp;<code>com.upokecenter.text.ICharacterInput</code></li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
@@ -397,6 +502,12 @@ text.</p></li>
 </code></pre>
 
 <p>Reads a sequence of Unicode code points from a data source.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>Read</code>&nbsp;in interface&nbsp;<code>com.upokecenter.text.ICharacterInput</code></li>
+</ul>
 
 <p><strong>Parameters:</strong></p>
 

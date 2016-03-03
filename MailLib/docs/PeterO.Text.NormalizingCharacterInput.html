@@ -12,18 +12,18 @@
 
 <p>A character input class that implements the Unicode normalization algorithm and contains methods and functionality to test and convert text strings for normalization. This is similar to the Normalizer class, except it implements the ICharacterInput interface.</p>
 
-<p>The Unicode Standard includes characters, such as an acute accent, that can be combined with other characters to make new characters. For example, the letter E combines with an acute accent to make E-acute (É). In some cases, the combined form (E-acute) should be treated as equivalent to the uncombined form (E plus acute). For this reason, the standard defines fournormalization forms that convert strings to a single equivalent form:</p>
+<p>The Unicode Standard includes characters, such as an acute accent, that can be combined with other characters to make new characters. For example, the letter E combines with an acute accent to make E-acute (É). In some cases, the combined form (E-acute) should be treated as equivalent to the uncombined form (E plus acute). For this reason, the standard defines four<i>normalization forms</i> that convert strings to a single equivalent form:</p>
 
 <ul>
-<li><p>NFD (Normalization Form D) decomposes combined forms to their constituent characters (E plus acute, for example). This is called canonical decomposition.</p></li>
-<li><p>NFC does canonical decomposition, then combines certain constituent characters to their composites (E-acute, for example). This is called canonical composition.</p></li>
-<li><p>Two normalization forms, NFKC and NFKD, are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p></li>
+<li><p><b>NFD</b> (Normalization Form D) decomposes combined forms to their constituent characters (E plus acute, for example). This is called canonical decomposition.</p></li>
+<li><p><b>NFC</b> does canonical decomposition, then combines certain constituent characters to their composites (E-acute, for example). This is called canonical composition.</p></li>
+<li><p>Two normalization forms, <b>NFKC</b> and <b>NFKD</b>, are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p></li>
 <li><p>The four normalization forms also enforce a standardized order for combining marks, since they can otherwise appear in an arbitrary order.</p></li>
 </ul>
 
-<p>For more information, see Standard Annex 15 at <a href="http://www.unicode.org/reports/tr15/">http://www.unicode.org/reports/tr15/</a> .</p>
+<p>For more information, see Standard Annex 15 at <code>http://www.unicode.org/reports/tr15/</code> .</p>
 
-<p>Thread safety: This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
+<p><b>Thread safety:</b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
 
 <p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. In case doing so is required, the permission notice for the Unicode Character Database is given here:</p>
 
@@ -43,7 +43,7 @@
     PeterO.Text.ICharacterInput input);
 </code></pre>
 
-<p>Initializes a new instance of the  class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -58,7 +58,7 @@
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the  class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -81,7 +81,7 @@ is null.</li>
     string str);
 </code></pre>
 
-<p>Initializes a new instance of the  class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -98,7 +98,7 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the  class. Uses a portion of a string as the input.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class. Uses a portion of a string as the input.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -119,7 +119,7 @@ begins.</p></li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the  class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -134,7 +134,7 @@ begins.</p></li>
     System.Collections.Generic.IList characterList);
 </code></pre>
 
-<p>Initializes a new instance of the  class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -149,7 +149,7 @@ begins.</p></li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the  class using the given normalization form.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using the given normalization form.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -398,7 +398,7 @@ Either  <i>index</i>
 or  <i>length</i>
 is less than 0 or greater than  <i>chars</i>
 &#39;s length, or  <i>chars</i>
-&#39;s length minus  <i>index</i>
+&#39; s length minus  <i>index</i>
 is less than  <i>length</i>
 .</p></li>
 </ul>

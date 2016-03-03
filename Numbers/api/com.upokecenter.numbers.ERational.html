@@ -1,0 +1,1980 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.numbers.ERational</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.numbers.ERational</h1>
+
+<h1>com.upokecenter.numbers.ERational</h1>
+
+<pre><code>public final class ERational extends Object implements Comparable&lt;ERational&gt;
+</code></pre>
+
+<p>Represents an arbitrary-precision rational number. This class can&#39;t be
+ inherited. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of
+ this class can be values other than numbers proper, such as infinity
+ and not-a-number.) <p><b>Thread safety:</b> Instances of this class
+ are immutable, so they are inherently safe for use by multiple
+ threads. Multiple instances of this object with the same properties
+ are interchangeable, so they should not be compared using the &quot;==&quot;
+ operator (which might only check if each side of the operator is the
+ same instance).</p></p>
+
+<h2>Fields</h2>
+
+<ul>
+<li><code>static ERational NaN</code><br>
+A not-a-number value.</li>
+<li><code>static ERational NegativeInfinity</code><br>
+Negative infinity, less than any other number.</li>
+<li><code>static ERational NegativeZero</code><br>
+A rational number for negative zero.</li>
+<li><code>static ERational One</code><br>
+The rational number one.</li>
+<li><code>static ERational PositiveInfinity</code><br>
+Positive infinity, greater than any other number.</li>
+<li><code>static ERational SignalingNaN</code><br>
+A signaling not-a-number value.</li>
+<li><code>static ERational Ten</code><br>
+The rational number ten.</li>
+<li><code>static ERational Zero</code><br>
+A rational number for zero.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>ERational(EInteger numerator,
+     EInteger denominator) ERational</code><br>
+Initializes a new instance of the ERational
+class.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>ERational Abs()</code><br>
+Not documented yet.</li>
+<li><code>ERational Add(ERational otherValue)</code><br>
+Adds two rational numbers.</li>
+<li><code>int compareTo(ERational other)</code><br>
+Compares an arbitrary-precision rational number with this instance.</li>
+<li><code>int CompareToBinary(EFloat other)</code><br>
+Compares an arbitrary-precision binary float with this instance.</li>
+<li><code>int CompareToDecimal(EDecimal other)</code><br>
+Compares an arbitrary-precision decimal number with this instance.</li>
+<li><code>int CompareToTotal(ERational other)</code><br>
+Compares the values of this object and another object, imposing a total
+ordering on all possible values.</li>
+<li><code>int CompareToTotalMagnitude(ERational other)</code><br>
+Compares the absolute values of this object and another object, imposing a
+total ordering on all possible values (ignoring their signs).</li>
+<li><code>ERational CopySign(ERational other)</code><br>
+Returns a number with the same value as this one, but copying the sign
+(positive or negative) of another number.</li>
+<li><code>static ERational Create(EInteger numerator,
+  EInteger denominator)</code><br>
+Creates a rational number with the given numerator and denominator.</li>
+<li><code>static ERational Create(int numeratorSmall,
+  int denominatorSmall)</code><br>
+Creates a rational number with the given numerator and denominator.</li>
+<li><code>static ERational CreateNaN(EInteger diag)</code><br>
+Creates a not-a-number arbitrary-precision rational number.</li>
+<li><code>static ERational CreateNaN(EInteger diag,
+     boolean signaling,
+     boolean negative)</code><br>
+Creates a not-a-number arbitrary-precision rational number.</li>
+<li><code>ERational Divide(ERational otherValue)</code><br>
+Divides this instance by the value of an arbitrary-precision rational number
+object.</li>
+<li><code>boolean equals(ERational other)</code><br>
+Not documented yet.</li>
+<li><code>boolean equals(Object obj)</code><br>
+Determines whether this object and another object are equal.</li>
+<li><code>static ERational FromByte(byte inputByte)</code><br>
+Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
+<li><code>static ERational FromDouble(double flt)</code><br>
+Converts a 64-bit floating-point number to a rational number.</li>
+<li><code>static ERational FromEDecimal(EDecimal ef)</code><br>
+Converts an arbitrary-precision decimal number to a rational number.</li>
+<li><code>static ERational FromEFloat(EFloat ef)</code><br>
+Not documented yet.</li>
+<li><code>static ERational FromEInteger(EInteger bigint)</code><br>
+Converts an arbitrary-precision integer to a rational number.</li>
+<li><code>static ERational FromExtendedDecimal(EDecimal ef)</code><br>
+Deprecated.
+Renamed to FromEDecimal.
+Renamed to FromEDecimal.</li>
+<li><code>static ERational FromExtendedFloat(EFloat ef)</code><br>
+Deprecated.
+Renamed to FromEFloat.
+Renamed to FromEFloat.</li>
+<li><code>static ERational FromInt16(short inputInt16)</code><br>
+Converts a 16-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code>static ERational FromInt32(int inputInt32)</code><br>
+Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code>static ERational FromInt64(long inputInt64)</code><br>
+Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code>static ERational FromSingle(float flt)</code><br>
+Converts a 32-bit floating-point number to a rational number.</li>
+<li><code>static ERational FromString(String str)</code><br>
+Creates a rational number from a text string that represents a number.</li>
+<li><code>static ERational FromString(String str,
+      int offset,
+      int length)</code><br>
+Creates a rational number from a text string that represents a
+number.</li>
+<li><code>EInteger getDenominator()</code><br>
+Gets this object&#39;s denominator.</li>
+<li><code>EInteger getNumerator()</code><br>
+Gets this object&#39;s numerator.</li>
+<li><code>EInteger getUnsignedNumerator()</code><br>
+Gets this object&#39;s numerator with the sign removed.</li>
+<li><code>int hashCode()</code><br>
+Returns the hash code for this instance.</li>
+<li><code>boolean isFinite()</code><br>
+Gets a value indicating whether this object is finite (not infinity or NaN).</li>
+<li><code>boolean IsInfinity()</code><br>
+Gets a value indicating whether this object&#39;s value is infinity.</li>
+<li><code>boolean IsNaN()</code><br>
+Returns whether this object is a not-a-number value.</li>
+<li><code>boolean isNegative()</code><br>
+Gets a value indicating whether this object&#39;s value is negative (including
+negative zero).</li>
+<li><code>boolean IsNegativeInfinity()</code><br>
+Returns whether this object is negative infinity.</li>
+<li><code>boolean IsPositiveInfinity()</code><br>
+Returns whether this object is positive infinity.</li>
+<li><code>boolean IsQuietNaN()</code><br>
+Returns whether this object is a quiet not-a-number value.</li>
+<li><code>boolean IsSignalingNaN()</code><br>
+Returns whether this object is a signaling not-a-number value (which causes
+an error if the value is passed to any arithmetic operation in this
+class).</li>
+<li><code>boolean isZero()</code><br>
+Gets a value indicating whether this object&#39;s value equals 0.</li>
+<li><code>ERational Multiply(ERational otherValue)</code><br>
+Multiplies this instance by the value of an arbitrary-precision rational
+number.</li>
+<li><code>ERational Negate()</code><br>
+Returns a rational number with the sign reversed.</li>
+<li><code>ERational Remainder(ERational otherValue)</code><br>
+Finds the remainder that results when this instance is divided by the value
+of an arbitrary-precision rational number.</li>
+<li><code>int signum()</code><br>
+Gets the sign of this rational number.</li>
+<li><code>ERational Subtract(ERational otherValue)</code><br>
+Subtracts an arbitrary-precision rational number from this instance.</li>
+<li><code>byte ToByteChecked()</code><br>
+Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
+byte (from 0 to 255) after truncating to an integer.</li>
+<li><code>byte ToByteIfExact()</code><br>
+Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
+byte (from 0 to 255) without rounding to a different numerical value.</li>
+<li><code>byte ToByteUnchecked()</code><br>
+Truncates this number&#39;s value to an integer and returns the
+least-significant bits of its two&#39;s-complement form as a byte (from 0
+to 255).</li>
+<li><code>double ToDouble()</code><br>
+Converts this value to a 64-bit floating-point number.</li>
+<li><code>EDecimal ToEDecimal()</code><br>
+Converts this rational number to a decimal number.</li>
+<li><code>EDecimal ToEDecimal(EContext ctx)</code><br>
+Converts this rational number to a decimal number and rounds the result to
+the given precision.</li>
+<li><code>EDecimal ToEDecimalExactIfPossible(EContext ctx)</code><br>
+Converts this rational number to a decimal number, but if the result would
+have a nonterminating decimal expansion, rounds that result to the
+given precision.</li>
+<li><code>EFloat ToEFloat()</code><br>
+Converts this rational number to a binary float.</li>
+<li><code>EFloat ToEFloat(EContext ctx)</code><br>
+Converts this rational number to a binary float and rounds that result to
+the given precision.</li>
+<li><code>EFloat ToEFloatExactIfPossible(EContext ctx)</code><br>
+Converts this rational number to a binary float, but if the result would
+have a nonterminating binary expansion, rounds that result to the
+given precision.</li>
+<li><code>EInteger ToEInteger()</code><br>
+Converts this value to an arbitrary-precision integer.</li>
+<li><code>EInteger ToEIntegerExact()</code><br>
+Deprecated.
+Renamed to ToEIntegerIfExact.
+Renamed to ToEIntegerIfExact.</li>
+<li><code>EInteger ToEIntegerIfExact()</code><br>
+Converts this value to an arbitrary-precision integer, checking whether the
+value is an exact integer.</li>
+<li><code>EDecimal ToExtendedDecimal()</code><br>
+Deprecated.
+Renamed to ToEDecimal.
+Renamed to ToEDecimal.</li>
+<li><code>EDecimal ToExtendedDecimal(EContext ctx)</code><br>
+Deprecated.
+Renamed to ToEDecimal.
+Renamed to ToEDecimal.</li>
+<li><code>EDecimal ToExtendedDecimalExactIfPossible(EContext ctx)</code><br>
+Deprecated.
+Renamed to ToEDecimalExactIfPossible.
+Renamed to ToEDecimalExactIfPossible.</li>
+<li><code>EFloat ToExtendedFloat()</code><br>
+Deprecated.
+Renamed to ToEFloat.
+Renamed to ToEFloat.</li>
+<li><code>EFloat ToExtendedFloat(EContext ctx)</code><br>
+Deprecated.
+Renamed to ToEFloat.
+Renamed to ToEFloat.</li>
+<li><code>EFloat ToExtendedFloatExactIfPossible(EContext ctx)</code><br>
+Deprecated.
+Renamed to ToEFloatExactIfPossible.
+Renamed to ToEFloatExactIfPossible.</li>
+<li><code>short ToInt16Checked()</code><br>
+Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
+16-bit signed integer after truncating to an integer.</li>
+<li><code>short ToInt16IfExact()</code><br>
+Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
+16-bit signed integer without rounding to a different numerical
+value.</li>
+<li><code>short ToInt16Unchecked()</code><br>
+Truncates this number&#39;s value to an integer and returns the
+least-significant bits of its two&#39;s-complement form as a 16-bit
+signed integer.</li>
+<li><code>int ToInt32Checked()</code><br>
+Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
+32-bit signed integer after truncating to an integer.</li>
+<li><code>int ToInt32IfExact()</code><br>
+Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
+32-bit signed integer without rounding to a different numerical
+value.</li>
+<li><code>int ToInt32Unchecked()</code><br>
+Truncates this number&#39;s value to an integer and returns the
+least-significant bits of its two&#39;s-complement form as a 32-bit
+signed integer.</li>
+<li><code>long ToInt64Checked()</code><br>
+Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
+64-bit signed integer after truncating to an integer.</li>
+<li><code>long ToInt64IfExact()</code><br>
+Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
+64-bit signed integer without rounding to a different numerical
+value.</li>
+<li><code>long ToInt64Unchecked()</code><br>
+Truncates this number&#39;s value to an integer and returns the
+least-significant bits of its two&#39;s-complement form as a 64-bit
+signed integer.</li>
+<li><code>float ToSingle()</code><br>
+Converts this value to a 32-bit floating-point number.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>NaN</h3>
+
+<pre><code>public static final ERational NaN
+</code></pre>
+
+<p>A not-a-number value.</p>
+
+<h3>NegativeInfinity</h3>
+
+<pre><code>public static final ERational NegativeInfinity
+</code></pre>
+
+<p>Negative infinity, less than any other number.</p>
+
+<h3>NegativeZero</h3>
+
+<pre><code>public static final ERational NegativeZero
+</code></pre>
+
+<p>A rational number for negative zero.</p>
+
+<h3>One</h3>
+
+<pre><code>public static final ERational One
+</code></pre>
+
+<p>The rational number one.</p>
+
+<h3>PositiveInfinity</h3>
+
+<pre><code>public static final ERational PositiveInfinity
+</code></pre>
+
+<p>Positive infinity, greater than any other number.</p>
+
+<h3>SignalingNaN</h3>
+
+<pre><code>public static final ERational SignalingNaN
+</code></pre>
+
+<p>A signaling not-a-number value.</p>
+
+<h3>Ten</h3>
+
+<pre><code>public static final ERational Ten
+</code></pre>
+
+<p>The rational number ten.</p>
+
+<h3>Zero</h3>
+
+<pre><code>public static final ERational Zero
+</code></pre>
+
+<p>A rational number for zero.</p>
+
+<h2>Method Details</h2>
+
+<h3>getDenominator</h3>
+
+<pre><code>public final EInteger getDenominator()
+</code></pre>
+
+<p>Gets this object&#39;s denominator.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s denominator.</li>
+</ul>
+
+<h3>isFinite</h3>
+
+<pre><code>public final boolean isFinite()
+</code></pre>
+
+<p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object is finite (not infinity or not-a-number
+(NaN)); otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>isNegative</h3>
+
+<pre><code>public final boolean isNegative()
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value is negative (including
+ negative zero).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value is negative; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>isZero</h3>
+
+<pre><code>public final boolean isZero()
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value equals 0; otherwise, . <code>false</code>.</li>
+</ul>
+
+<h3>getNumerator</h3>
+
+<pre><code>public final EInteger getNumerator()
+</code></pre>
+
+<p>Gets this object&#39;s numerator.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s numerator. If this object is a not-a-number value,
+returns the diagnostic information (which will be negative if this
+object is negative).</li>
+</ul>
+
+<h3>signum</h3>
+
+<pre><code>public final int signum()
+</code></pre>
+
+<p>Gets the sign of this rational number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Zero if this value is zero or negative zero; -1 if this value is
+less than 0; and 1 if this value is greater than 0.</li>
+</ul>
+
+<h3>getUnsignedNumerator</h3>
+
+<pre><code>public final EInteger getUnsignedNumerator()
+</code></pre>
+
+<p>Gets this object&#39;s numerator with the sign removed.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s numerator. If this object is a not-a-number value,
+returns the diagnostic information.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre><code>public static ERational Create(int numeratorSmall, int denominatorSmall)
+</code></pre>
+
+<p>Creates a rational number with the given numerator and denominator.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>numeratorSmall</code> - The numerator.</p></li>
+<li><p><code>denominatorSmall</code> - The denominator.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The denominator is zero.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre><code>public static ERational Create(EInteger numerator, EInteger denominator)
+</code></pre>
+
+<p>Creates a rational number with the given numerator and denominator.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>numerator</code> - The numerator.</p></li>
+<li><p><code>denominator</code> - The denominator.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The denominator is zero.</li>
+</ul>
+
+<h3>CreateNaN</h3>
+
+<pre><code>public static ERational CreateNaN(EInteger diag)
+</code></pre>
+
+<p>Creates a not-a-number arbitrary-precision rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>diag</code> - A number to use as diagnostic information associated with this
+object. If none is needed, should be zero.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>diag</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</p></li>
+</ul>
+
+<h3>CreateNaN</h3>
+
+<pre><code>public static ERational CreateNaN(EInteger diag, boolean signaling, boolean negative)
+</code></pre>
+
+<p>Creates a not-a-number arbitrary-precision rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>diag</code> - A number to use as diagnostic information associated with this
+object. If none is needed, should be zero.</p></li>
+<li><p><code>signaling</code> - Whether the return value will be signaling (true) or quiet
+(false).</p></li>
+<li><p><code>negative</code> - Whether the return value is negative.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>diag</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</p></li>
+</ul>
+
+<h3>FromDouble</h3>
+
+<pre><code>public static ERational FromDouble(double flt)
+</code></pre>
+
+<p>Converts a 64-bit floating-point number to a rational number. This method
+ computes the exact value of the floating point number, not an
+ approximation, as is often the case by converting the number to a
+ string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>flt</code> - A 64-bit floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A rational number with the same value as <code>flt</code>.</li>
+</ul>
+
+<h3>FromExtendedDecimal</h3>
+
+<pre><code>@Deprecated public static ERational FromExtendedDecimal(EDecimal ef)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to FromEDecimal.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ef</code> - An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>ef</code> is null.</li>
+</ul>
+
+<h3>FromExtendedFloat</h3>
+
+<pre><code>@Deprecated public static ERational FromExtendedFloat(EFloat ef)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to FromEFloat.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ef</code> - An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>ef</code> is null.</li>
+</ul>
+
+<h3>FromEDecimal</h3>
+
+<pre><code>public static ERational FromEDecimal(EDecimal ef)
+</code></pre>
+
+<p>Converts an arbitrary-precision decimal number to a rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ef</code> - An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>ef</code> is null.</li>
+</ul>
+
+<h3>FromEFloat</h3>
+
+<pre><code>public static ERational FromEFloat(EFloat ef)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ef</code> - An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>ef</code> is null.</li>
+</ul>
+
+<h3>FromEInteger</h3>
+
+<pre><code>public static ERational FromEInteger(EInteger bigint)
+</code></pre>
+
+<p>Converts an arbitrary-precision integer to a rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigint</code> - An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the integer as a rational number.</li>
+</ul>
+
+<h3>FromSingle</h3>
+
+<pre><code>public static ERational FromSingle(float flt)
+</code></pre>
+
+<p>Converts a 32-bit floating-point number to a rational number. This method
+ computes the exact value of the floating point number, not an
+ approximation, as is often the case by converting the number to a
+ string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>flt</code> - A 32-bit floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A rational number with the same value as <code>flt</code>.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>public static ERational FromString(String str)
+</code></pre>
+
+<p>Creates a rational number from a text string that represents a number. See
+ <code>FromString(String, int, int)</code> for more information.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A string that represents a number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number with the same value as the
+given string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NumberFormatException</code> - The parameter <code>str</code> is not a correctly
+formatted number string.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>public static ERational FromString(String str, int offset, int length)
+</code></pre>
+
+<p>Creates a rational number from a text string that represents a
+ number.</p> <p>The format of the string generally consists of:</p>
+
+<p><ul> <li>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;,
+ U+002D) (if &#39;-&#39; , the value is negative.)</li> <li>The numerator in
+ the form of one or more digits.</li> <li>Optionally, &quot;/&quot; followed by
+ the denominator in the form of one or more digits. If a denominator
+ is not given, it&#39;s equal to 1.</li></ul> <p>The string can also be
+ &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot; /&quot;-NaN&quot;)
+ followed by any number of digits, or signaling NaN (&quot;sNaN&quot; /&quot;-sNaN&quot;)
+ followed by any number of digits, all in any combination of upper and
+ lower case.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular, the
+ digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
+ is not allowed to contain white space characters, including
+ spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string, a portion of which represents a number.</p></li>
+<li><p><code>offset</code> - A zero-based index that identifies the start of the number.</p></li>
+<li><p><code>length</code> - The length of the number within the string.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NumberFormatException</code> - The parameter <code>str</code> is not a correctly
+formatted number string.</p></li>
+</ul>
+
+<h3>CompareToTotalMagnitude</h3>
+
+<pre><code>public int CompareToTotalMagnitude(ERational other)
+</code></pre>
+
+<p>Compares the absolute values of this object and another object, imposing a
+ total ordering on all possible values (ignoring their signs). In this
+ method: <ul> <li>For objects with the same value, the one with the
+ higher denominator has a greater &quot;absolute value&quot;.</li> <li>Negative
+ zero and positive zero are considered equal.</li> <li>Quiet NaN has a
+ higher &quot;absolute value&quot; than signaling NaN. If both objects are quiet
+ NaN or both are signaling NaN, the one with the higher diagnostic
+ information has a greater &quot;absolute value&quot;.</li> <li>NaN has a higher
+ &quot;absolute value&quot; than infinity.</li> <li>Infinity has a higher
+ &quot;absolute value&quot; than any finite number.</li></ul></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An arbitrary-precision rational number to compare with this
+one.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number 0 if both objects have the same value, or -1 if this
+object is less than the other value, or 1 if this object is greater.</li>
+</ul>
+
+<h3>CompareToTotal</h3>
+
+<pre><code>public int CompareToTotal(ERational other)
+</code></pre>
+
+<p>Compares the values of this object and another object, imposing a total
+ ordering on all possible values. In this method: <ul> <li>For objects
+ with the same value, the one with the higher denominator has a
+ greater &quot;absolute value&quot;.</li> <li>Negative zero is less than
+ positive zero.</li> <li>Quiet NaN has a higher &quot;absolute value&quot; than
+ signaling NaN. If both objects are quiet NaN or both are signaling
+ NaN, the one with the higher diagnostic information has a greater
+ &quot;absolute value&quot;.</li> <li>NaN has a higher &quot;absolute value&quot; than
+ infinity.</li> <li>Infinity has a higher &quot;absolute value&quot; than any
+ finite number.</li> <li>Negative numbers are less than positive
+ numbers.</li></ul></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An arbitrary-precision rational number to compare with this
+one.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number 0 if both objects have the same value, or -1 if this
+object is less than the other value, or 1 if this object is greater.</li>
+</ul>
+
+<h3>Abs</h3>
+
+<pre><code>public ERational Abs()
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<h3>Add</h3>
+
+<pre><code>public ERational Add(ERational otherValue)
+</code></pre>
+
+<p>Adds two rational numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - Another arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The sum of the two numbers. Returns not-a-number (NaN) if either
+operand is NaN.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre><code>public int compareTo(ERational other)
+</code></pre>
+
+<p>Compares an arbitrary-precision rational number with this instance.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;ERational&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
+</ul>
+
+<h3>CompareToBinary</h3>
+
+<pre><code>public int CompareToBinary(EFloat other)
+</code></pre>
+
+<p>Compares an arbitrary-precision binary float with this instance.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
+</ul>
+
+<h3>CompareToDecimal</h3>
+
+<pre><code>public int CompareToDecimal(EDecimal other)
+</code></pre>
+
+<p>Compares an arbitrary-precision decimal number with this instance.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
+</ul>
+
+<h3>CopySign</h3>
+
+<pre><code>public ERational CopySign(ERational other)
+</code></pre>
+
+<p>Returns a number with the same value as this one, but copying the sign
+ (positive or negative) of another number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - A number whose sign will be copied.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
+</ul>
+
+<h3>Divide</h3>
+
+<pre><code>public ERational Divide(ERational otherValue)
+</code></pre>
+
+<p>Divides this instance by the value of an arbitrary-precision rational number
+ object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(Object obj)
+</code></pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - An arbitrary object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(ERational other)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Boolean object.</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre><code>public int hashCode()
+</code></pre>
+
+<p>Returns the hash code for this instance.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit hash code.</li>
+</ul>
+
+<h3>IsInfinity</h3>
+
+<pre><code>public boolean IsInfinity()
+</code></pre>
+
+<p>Gets a value indicating whether this object&#39;s value is infinity.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value is infinity; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>IsNaN</h3>
+
+<pre><code>public boolean IsNaN()
+</code></pre>
+
+<p>Returns whether this object is a not-a-number value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object is a not-a-number value; otherwise,
+<code>false</code>.</li>
+</ul>
+
+<h3>IsNegativeInfinity</h3>
+
+<pre><code>public boolean IsNegativeInfinity()
+</code></pre>
+
+<p>Returns whether this object is negative infinity.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object is negative infinity; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>IsPositiveInfinity</h3>
+
+<pre><code>public boolean IsPositiveInfinity()
+</code></pre>
+
+<p>Returns whether this object is positive infinity.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object is positive infinity; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>IsQuietNaN</h3>
+
+<pre><code>public boolean IsQuietNaN()
+</code></pre>
+
+<p>Returns whether this object is a quiet not-a-number value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object is a quiet not-a-number value;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>IsSignalingNaN</h3>
+
+<pre><code>public boolean IsSignalingNaN()
+</code></pre>
+
+<p>Returns whether this object is a signaling not-a-number value (which causes
+ an error if the value is passed to any arithmetic operation in this
+ class).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object is a signaling not-a-number value (which
+causes an error if the value is passed to any arithmetic operation in
+this class); otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>Multiply</h3>
+
+<pre><code>public ERational Multiply(ERational otherValue)
+</code></pre>
+
+<p>Multiplies this instance by the value of an arbitrary-precision rational
+ number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The product of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>Negate</h3>
+
+<pre><code>public ERational Negate()
+</code></pre>
+
+<p>Returns a rational number with the sign reversed.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<h3>Remainder</h3>
+
+<pre><code>public ERational Remainder(ERational otherValue)
+</code></pre>
+
+<p>Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The remainder of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre><code>public ERational Subtract(ERational otherValue)
+</code></pre>
+
+<p>Subtracts an arbitrary-precision rational number from this instance.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The difference of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>ToDouble</h3>
+
+<pre><code>public double ToDouble()
+</code></pre>
+
+<p>Converts this value to a 64-bit floating-point number. The half-even
+ rounding mode is used.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 64-bit floating-point number to this value. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 64-bit floating point number.</li>
+</ul>
+
+<h3>ToEInteger</h3>
+
+<pre><code>public EInteger ToEInteger()
+</code></pre>
+
+<p>Converts this value to an arbitrary-precision integer. Any fractional part
+ in this value will be discarded when converting to an
+ arbitrary-precision integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+not-a-number (NaN).</li>
+</ul>
+
+<h3>ToEIntegerExact</h3>
+
+<pre><code>@Deprecated public EInteger ToEIntegerExact()
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToEIntegerIfExact.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is infinity or
+not-a-number (NaN).</p></li>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is not an exact integer.</p></li>
+</ul>
+
+<h3>ToEIntegerIfExact</h3>
+
+<pre><code>public EInteger ToEIntegerIfExact()
+</code></pre>
+
+<p>Converts this value to an arbitrary-precision integer, checking whether the
+ value is an exact integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is infinity or
+not-a-number (NaN).</p></li>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is not an exact integer.</p></li>
+</ul>
+
+<h3>ToEDecimal</h3>
+
+<pre><code>public EDecimal ToEDecimal()
+</code></pre>
+
+<p>Converts this rational number to a decimal number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the rational number, or not-a-number (NaN) if the
+result can&#39;t be exact because it has a nonterminating decimal
+expansion.</li>
+</ul>
+
+<h3>ToEDecimal</h3>
+
+<pre><code>public EDecimal ToEDecimal(EContext ctx)
+</code></pre>
+
+<p>Converts this rational number to a decimal number and rounds the result to
+ the given precision.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the precision is unlimited and no rounding is needed.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The value of the rational number, rounded to the given precision.
+Returns not-a-number (NaN) if the context is null and the result
+can&#39;t be exact because it has a nonterminating decimal expansion.</li>
+</ul>
+
+<h3>ToEDecimalExactIfPossible</h3>
+
+<pre><code>public EDecimal ToEDecimalExactIfPossible(EContext ctx)
+</code></pre>
+
+<p>Converts this rational number to a decimal number, but if the result would
+ have a nonterminating decimal expansion, rounds that result to the
+ given precision.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. This context will be used only if
+the exact result would have a nonterminating decimal expansion. If
+HasFlags of the context is true, will also store the flags resulting
+from the operation (the flags are in addition to the pre-existing
+flags). Can be null, in which case the precision is unlimited and no
+rounding is needed.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the rational number if possible; otherwise, the
+rounded version of the result if a context is given. Returns
+not-a-number (NaN) if the context is null and the result can&#39;t be
+exact because it has a nonterminating decimal expansion.</li>
+</ul>
+
+<h3>ToExtendedDecimal</h3>
+
+<pre><code>@Deprecated public EDecimal ToExtendedDecimal()
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the rational number, or not-a-number (NaN) if the
+result can&#39;t be exact because it has a nonterminating decimal
+expansion.</li>
+</ul>
+
+<h3>ToExtendedDecimal</h3>
+
+<pre><code>@Deprecated public EDecimal ToExtendedDecimal(EContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the precision is unlimited and no rounding is needed.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The value of the rational number, rounded to the given precision.
+Returns not-a-number (NaN) if the context is null and the result
+can&#39;t be exact because it has a nonterminating decimal expansion.</li>
+</ul>
+
+<h3>ToExtendedDecimalExactIfPossible</h3>
+
+<pre><code>@Deprecated public EDecimal ToExtendedDecimalExactIfPossible(EContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToEDecimalExactIfPossible.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. This context will be used only if
+the exact result would have a nonterminating decimal expansion. If
+HasFlags of the context is true, will also store the flags resulting
+from the operation (the flags are in addition to the pre-existing
+flags). Can be null, in which case the precision is unlimited and no
+rounding is needed.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the rational number if possible; otherwise, the
+rounded version of the result if a context is given. Returns
+not-a-number (NaN) if the context is null and the result can&#39;t be
+exact because it has a nonterminating decimal expansion.</li>
+</ul>
+
+<h3>ToEFloat</h3>
+
+<pre><code>public EFloat ToEFloat()
+</code></pre>
+
+<p>Converts this rational number to a binary float.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the rational number, or not-a-number (NaN) if the
+result can&#39;t be exact because it has a nonterminating binary
+expansion.</li>
+</ul>
+
+<h3>ToEFloat</h3>
+
+<pre><code>public EFloat ToEFloat(EContext ctx)
+</code></pre>
+
+<p>Converts this rational number to a binary float and rounds that result to
+ the given precision.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the precision is unlimited and no rounding is needed.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The value of the rational number, rounded to the given precision.
+Returns not-a-number (NaN) if the context is null and the result
+can&#39;t be exact because it has a nonterminating binary expansion.</li>
+</ul>
+
+<h3>ToEFloatExactIfPossible</h3>
+
+<pre><code>public EFloat ToEFloatExactIfPossible(EContext ctx)
+</code></pre>
+
+<p>Converts this rational number to a binary float, but if the result would
+ have a nonterminating binary expansion, rounds that result to the
+ given precision.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. This context will be used only if
+the exact result would have a nonterminating binary expansion. If
+HasFlags of the context is true, will also store the flags resulting
+from the operation (the flags are in addition to the pre-existing
+flags). Can be null, in which case the precision is unlimited and no
+rounding is needed.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the rational number if possible; otherwise, the
+rounded version of the result if a context is given. Returns
+not-a-number (NaN) if the context is null and the result can&#39;t be
+exact because it has a nonterminating binary expansion.</li>
+</ul>
+
+<h3>ToExtendedFloat</h3>
+
+<pre><code>@Deprecated public EFloat ToExtendedFloat()
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToEFloat.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the rational number, or not-a-number (NaN) if the
+result can&#39;t be exact because it has a nonterminating binary
+expansion.</li>
+</ul>
+
+<h3>ToExtendedFloat</h3>
+
+<pre><code>@Deprecated public EFloat ToExtendedFloat(EContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToEFloat.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the precision is unlimited and no rounding is needed.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The value of the rational number, rounded to the given precision.
+Returns not-a-number (NaN) if the context is null and the result
+can&#39;t be exact because it has a nonterminating binary expansion.</li>
+</ul>
+
+<h3>ToExtendedFloatExactIfPossible</h3>
+
+<pre><code>@Deprecated public EFloat ToExtendedFloatExactIfPossible(EContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToEFloatExactIfPossible.</i></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. This context will be used only if
+the exact result would have a nonterminating binary expansion. If
+HasFlags of the context is true, will also store the flags resulting
+from the operation (the flags are in addition to the pre-existing
+flags). Can be null, in which case the precision is unlimited and no
+rounding is needed.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The exact value of the rational number if possible; otherwise, the
+rounded version of the result if a context is given. Returns
+not-a-number (NaN) if the context is null and the result can&#39;t be
+exact because it has a nonterminating binary expansion.</li>
+</ul>
+
+<h3>ToSingle</h3>
+
+<pre><code>public float ToSingle()
+</code></pre>
+
+<p>Converts this value to a 32-bit floating-point number. The half-even
+ rounding mode is used.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 32-bit floating-point number to this value. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 32-bit floating point number.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre><code>public String toString()
+</code></pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object. If this object&#39;s value is
+infinity or not-a-number, the result is the analogous return value of
+the <code>EDecimal.toString</code> method. Otherwise, the return value has
+the following form: <code>[-]numerator/denominator</code>.</li>
+</ul>
+
+<h3>ToByteChecked</h3>
+
+<pre><code>public byte ToByteChecked()
+</code></pre>
+
+<p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) after truncating to an integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value, truncated to a byte (from 0 to 255).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+the truncated integer is less than 0 or greater than 255.</li>
+</ul>
+
+<h3>ToByteUnchecked</h3>
+
+<pre><code>public byte ToByteUnchecked()
+</code></pre>
+
+<p>Truncates this number&#39;s value to an integer and returns the
+ least-significant bits of its two&#39;s-complement form as a byte (from 0
+ to 255).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number, converted to a byte (from 0 to 255). Returns 0 if this
+value is infinity or not-a-number.</li>
+</ul>
+
+<h3>ToByteIfExact</h3>
+
+<pre><code>public byte ToByteIfExact()
+</code></pre>
+
+<p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) without rounding to a different numerical value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as a byte (from 0 to 255).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+an exact integer, or is less than 0 or greater than 255.</li>
+</ul>
+
+<h3>FromByte</h3>
+
+<pre><code>public static ERational FromByte(byte inputByte)
+</code></pre>
+
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>inputByte</code> - The number to convert as a byte (from 0 to 255).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as an arbitrary-precision rational number.</li>
+</ul>
+
+<h3>ToInt16Checked</h3>
+
+<pre><code>public short ToInt16Checked()
+</code></pre>
+
+<p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer after truncating to an integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value, truncated to a 16-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+the truncated integer is less than -32768 or greater than 32767.</li>
+</ul>
+
+<h3>ToInt16Unchecked</h3>
+
+<pre><code>public short ToInt16Unchecked()
+</code></pre>
+
+<p>Truncates this number&#39;s value to an integer and returns the
+ least-significant bits of its two&#39;s-complement form as a 16-bit
+ signed integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number, converted to a 16-bit signed integer. Returns 0 if this
+value is infinity or not-a-number.</li>
+</ul>
+
+<h3>ToInt16IfExact</h3>
+
+<pre><code>public short ToInt16IfExact()
+</code></pre>
+
+<p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer without rounding to a different numerical
+ value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as a 16-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+an exact integer, or is less than -32768 or greater than 32767.</li>
+</ul>
+
+<h3>FromInt16</h3>
+
+<pre><code>public static ERational FromInt16(short inputInt16)
+</code></pre>
+
+<p>Converts a 16-bit signed integer to an arbitrary-precision rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>inputInt16</code> - The number to convert as a 16-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as an arbitrary-precision rational number.</li>
+</ul>
+
+<h3>ToInt32Checked</h3>
+
+<pre><code>public int ToInt32Checked()
+</code></pre>
+
+<p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer after truncating to an integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value, truncated to a 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+the truncated integer is less than -2147483648 or greater than
+2147483647.</li>
+</ul>
+
+<h3>ToInt32Unchecked</h3>
+
+<pre><code>public int ToInt32Unchecked()
+</code></pre>
+
+<p>Truncates this number&#39;s value to an integer and returns the
+ least-significant bits of its two&#39;s-complement form as a 32-bit
+ signed integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number, converted to a 32-bit signed integer. Returns 0 if this
+value is infinity or not-a-number.</li>
+</ul>
+
+<h3>ToInt32IfExact</h3>
+
+<pre><code>public int ToInt32IfExact()
+</code></pre>
+
+<p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer without rounding to a different numerical
+ value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as a 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+an exact integer, or is less than -2147483648 or greater than
+2147483647.</li>
+</ul>
+
+<h3>FromInt32</h3>
+
+<pre><code>public static ERational FromInt32(int inputInt32)
+</code></pre>
+
+<p>Converts a 32-bit signed integer to an arbitrary-precision rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>inputInt32</code> - The number to convert as a 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as an arbitrary-precision rational number.</li>
+</ul>
+
+<h3>ToInt64Checked</h3>
+
+<pre><code>public long ToInt64Checked()
+</code></pre>
+
+<p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer after truncating to an integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value, truncated to a 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+the truncated integer is less than -9223372036854775808 or greater
+than 9223372036854775807.</li>
+</ul>
+
+<h3>ToInt64Unchecked</h3>
+
+<pre><code>public long ToInt64Unchecked()
+</code></pre>
+
+<p>Truncates this number&#39;s value to an integer and returns the
+ least-significant bits of its two&#39;s-complement form as a 64-bit
+ signed integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number, converted to a 64-bit signed integer. Returns 0 if this
+value is infinity or not-a-number.</li>
+</ul>
+
+<h3>ToInt64IfExact</h3>
+
+<pre><code>public long ToInt64IfExact()
+</code></pre>
+
+<p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer without rounding to a different numerical
+ value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as a 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+an exact integer, or is less than -9223372036854775808 or greater
+than 9223372036854775807.</li>
+</ul>
+
+<h3>FromInt64</h3>
+
+<pre><code>public static ERational FromInt64(long inputInt64)
+</code></pre>
+
+<p>Converts a 64-bit signed integer to an arbitrary-precision rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>inputInt64</code> - The number to convert as a 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as an arbitrary-precision rational number.</li>
+</ul>
+
+<p><a href="/Numbers/">Back to Numbers start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

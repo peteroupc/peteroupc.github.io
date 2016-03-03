@@ -17,52 +17,52 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>CharacterReader(InputStream stream)</code><br>
-Initializes a new instance of the  class; will read the stream as
+<li><code>CharacterReader(InputStream stream) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class; will read the stream as
 UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
 stream, and replace invalid byte sequences with replacement
 characters (U + FFFD).</li>
 <li><code>CharacterReader(InputStream stream,
-           int mode)</code><br>
-Initializes a new instance of the  class; will skip the
-byte-order mark (U + FEFF) if it appears first in the stream and
-replace invalid byte sequences with replacement characters (U + FFFD).</li>
+           int mode) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class; will skip the byte-order
+mark (U + FEFF) if it appears first in the stream and replace invalid
+byte sequences with replacement characters (U + FFFD).</li>
 <li><code>CharacterReader(InputStream stream,
            int mode,
-           boolean errorThrow)</code><br>
-Initializes a new instance of the  class; will skip the
-byte-order mark (U + FEFF) if it appears first in the stream.</li>
+           boolean errorThrow) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class; will skip the byte-order
+mark (U + FEFF) if it appears first in the stream.</li>
 <li><code>CharacterReader(InputStream stream,
            int mode,
            boolean errorThrow,
-           boolean dontSkipUtf8Bom)</code><br>
-Initializes a new instance of the  class.</li>
-<li><code>CharacterReader(String str)</code><br>
-Initializes a new instance of the  class using a Unicode 16-bit
+           boolean dontSkipUtf8Bom) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class.</li>
+<li><code>CharacterReader(String str) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string; if the string begins with a byte-order mark (U + FEFF), it
 won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to
 U + DFFF) in the string are replaced with replacement characters
 (U + FFFD).</li>
 <li><code>CharacterReader(String str,
-           boolean skipByteOrderMark)</code><br>
-Initializes a new instance of the  class using a Unicode 16-bit
+           boolean skipByteOrderMark) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string; any unpaired surrogate code points (U + D800 to U + DFFF) in the
 string are replaced with replacement characters (U + FFFD).</li>
 <li><code>CharacterReader(String str,
            boolean skipByteOrderMark,
-           boolean errorThrow)</code><br>
-Initializes a new instance of the  class using a Unicode 16-bit
+           boolean errorThrow) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string.</li>
 <li><code>CharacterReader(String str,
            int offset,
-           int length)</code><br>
-Initializes a new instance of the  class.</li>
+           int length) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class.</li>
 <li><code>CharacterReader(String str,
            int offset,
            int length,
            boolean skipByteOrderMark,
-           boolean errorThrow)</code><br>
-Initializes a new instance of the  class.</li>
+           boolean errorThrow) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class.</li>
 <li><code>int Read(int[] chars,
 int index,
 int length)</code><br>
@@ -74,52 +74,52 @@ Reads the next character from a Unicode stream or a string.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>CharacterReader(InputStream stream)</code><br>
-Initializes a new instance of the  class; will read the stream as
+<li><code>CharacterReader(InputStream stream) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class; will read the stream as
 UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
 stream, and replace invalid byte sequences with replacement
 characters (U + FFFD).</li>
 <li><code>CharacterReader(InputStream stream,
-           int mode)</code><br>
-Initializes a new instance of the  class; will skip the
-byte-order mark (U + FEFF) if it appears first in the stream and
-replace invalid byte sequences with replacement characters (U + FFFD).</li>
+           int mode) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class; will skip the byte-order
+mark (U + FEFF) if it appears first in the stream and replace invalid
+byte sequences with replacement characters (U + FFFD).</li>
 <li><code>CharacterReader(InputStream stream,
            int mode,
-           boolean errorThrow)</code><br>
-Initializes a new instance of the  class; will skip the
-byte-order mark (U + FEFF) if it appears first in the stream.</li>
+           boolean errorThrow) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class; will skip the byte-order
+mark (U + FEFF) if it appears first in the stream.</li>
 <li><code>CharacterReader(InputStream stream,
            int mode,
            boolean errorThrow,
-           boolean dontSkipUtf8Bom)</code><br>
-Initializes a new instance of the  class.</li>
-<li><code>CharacterReader(String str)</code><br>
-Initializes a new instance of the  class using a Unicode 16-bit
+           boolean dontSkipUtf8Bom) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class.</li>
+<li><code>CharacterReader(String str) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string; if the string begins with a byte-order mark (U + FEFF), it
 won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to
 U + DFFF) in the string are replaced with replacement characters
 (U + FFFD).</li>
 <li><code>CharacterReader(String str,
-           boolean skipByteOrderMark)</code><br>
-Initializes a new instance of the  class using a Unicode 16-bit
+           boolean skipByteOrderMark) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string; any unpaired surrogate code points (U + D800 to U + DFFF) in the
 string are replaced with replacement characters (U + FFFD).</li>
 <li><code>CharacterReader(String str,
            boolean skipByteOrderMark,
-           boolean errorThrow)</code><br>
-Initializes a new instance of the  class using a Unicode 16-bit
+           boolean errorThrow) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string.</li>
 <li><code>CharacterReader(String str,
            int offset,
-           int length)</code><br>
-Initializes a new instance of the  class.</li>
+           int length) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class.</li>
 <li><code>CharacterReader(String str,
            int offset,
            int length,
            boolean skipByteOrderMark,
-           boolean errorThrow)</code><br>
-Initializes a new instance of the  class.</li>
+           boolean errorThrow) CharacterReader</code><br>
+Initializes a new instance of the CharacterReader class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -129,7 +129,7 @@ Initializes a new instance of the  class.</li>
 <pre><code>public CharacterReader(String str)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class using a Unicode 16-bit
+<p>Initializes a new instance of the <code>CharacterReader</code> class using a Unicode 16-bit
  string; if the string begins with a byte-order mark (U + FEFF), it
  won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to
  U + DFFF) in the string are replaced with replacement characters
@@ -152,7 +152,7 @@ Initializes a new instance of the  class.</li>
 <pre><code>public CharacterReader(String str, boolean skipByteOrderMark)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class using a Unicode 16-bit
+<p>Initializes a new instance of the <code>CharacterReader</code> class using a Unicode 16-bit
  string; any unpaired surrogate code points (U + D800 to U + DFFF) in the
  string are replaced with replacement characters (U + FFFD).</p>
 
@@ -175,7 +175,7 @@ mark (U + FEFF), will skip that code point as it reads the string.</p></li>
 <pre><code>public CharacterReader(String str, boolean skipByteOrderMark, boolean errorThrow)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class using a Unicode 16-bit
+<p>Initializes a new instance of the <code>CharacterReader</code> class using a Unicode 16-bit
  string.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -201,7 +201,7 @@ the stream is read.</p></li>
 <pre><code>public CharacterReader(String str, int offset, int length)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class.</p>
+<p>Initializes a new instance of the <code>CharacterReader</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -217,7 +217,7 @@ the stream is read.</p></li>
 <pre><code>public CharacterReader(String str, int offset, int length, boolean skipByteOrderMark, boolean errorThrow)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class.</p>
+<p>Initializes a new instance of the <code>CharacterReader</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -245,7 +245,7 @@ the stream is read.</p></li>
 <pre><code>public CharacterReader(InputStream stream)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class; will read the stream as
+<p>Initializes a new instance of the <code>CharacterReader</code> class; will read the stream as
  UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
  stream, and replace invalid byte sequences with replacement
  characters (U + FFFD).</p>
@@ -267,8 +267,8 @@ the stream is read.</p></li>
 <pre><code>public CharacterReader(InputStream stream, int mode, boolean errorThrow)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class; will skip the
- byte-order mark (U + FEFF) if it appears first in the stream.</p>
+<p>Initializes a new instance of the <code>CharacterReader</code> class; will skip the byte-order
+ mark (U + FEFF) if it appears first in the stream.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -301,9 +301,9 @@ the stream is read.</p></li>
 <pre><code>public CharacterReader(InputStream stream, int mode)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class; will skip the
- byte-order mark (U + FEFF) if it appears first in the stream and
- replace invalid byte sequences with replacement characters (U + FFFD).</p>
+<p>Initializes a new instance of the <code>CharacterReader</code> class; will skip the byte-order
+ mark (U + FEFF) if it appears first in the stream and replace invalid
+ byte sequences with replacement characters (U + FFFD).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -332,7 +332,7 @@ UTF-8.</li> <li>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8.
 <pre><code>public CharacterReader(InputStream stream, int mode, boolean errorThrow, boolean dontSkipUtf8Bom)
 </code></pre>
 
-<p>Initializes a new instance of the <see cref='T:PeterO.Text.CharacterReader'/> class.</p>
+<p>Initializes a new instance of the <code>CharacterReader</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 

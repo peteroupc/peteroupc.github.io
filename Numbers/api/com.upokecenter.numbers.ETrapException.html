@@ -1,130 +1,119 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.IniEntry</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.numbers.ETrapException</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>PeterO.IniEntry</h1>
+<h1>com.upokecenter.numbers.ETrapException</h1>
 
-<h2>PeterO.IniEntry</h2>
+<h1>com.upokecenter.numbers.ETrapException</h1>
 
-<pre><code>public sealed class IniEntry
+<pre><code>public final class ETrapException extends ArithmeticException
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Exception thrown for arithmetic trap errors. (The &quot;E&quot; stands for &quot;extended&quot;,
+ and has this prefix to group it with the other classes common to this
+ library, particularly EDecimal, EFloat, and ERational.).</p>
 
-<h3>IniEntry Constructor</h3>
-
-<pre><code>public IniEntry(
-    PeterO.IniEntry entry);
-</code></pre>
-
-<p>Initializes a new instance of the<a href="PeterO.IniEntry.html">PeterO.IniEntry</a> class.</p>
-
-<p><b>Parameters:</b></p>
+<h2>Methods</h2>
 
 <ul>
-<li><i>entry</i>: An IniEntry object.</li>
+<li><code>ETrapException(int flag,
+          EContext ctx,
+          Object result) ETrapException</code><br>
+Initializes a new instance of the ETrapException class.</li>
+<li><code>EContext getContext()</code><br>
+Gets the arithmetic context used during the operation that triggered the
+trap.</li>
+<li><code>int getError()</code><br>
+Gets the flag that specifies the kind of error (EContext.FlagXXX).</li>
+<li><code>Object getResult()</code><br>
+Gets the defined result of the operation that caused the trap.</li>
 </ul>
 
-<p><b>Exceptions:</b></p>
+<h2>Constructors</h2>
 
 <ul>
-<li>System.ArgumentNullException:
-The parameter <i>entry</i>
-is null.</li>
+<li><code>ETrapException(int flag,
+          EContext ctx,
+          Object result) ETrapException</code><br>
+Initializes a new instance of the ETrapException class.</li>
 </ul>
 
-<h3>IniEntry Constructor</h3>
+<h2>Method Details</h2>
 
-<pre><code>public IniEntry(
-    string comment);
+<h3>ETrapException</h3>
+
+<pre><code>public ETrapException(int flag, EContext ctx, Object result)
 </code></pre>
 
-<p>Initializes a new instance of the<a href="PeterO.IniEntry.html">PeterO.IniEntry</a> class.</p>
+<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
 
-<p><b>Parameters:</b></p>
+<p><strong>Parameters:</strong></p>
 
 <ul>
-<li><i>comment</i>: A text string.</li>
+<li><p><code>flag</code> - A flag that specifies the kind of error (<code>EContext.FlagXXYY</code>). This will only be one flag, such as <code>FlagInexact</code> or FlagSubnormal.</p></li>
+<li><p><code>ctx</code> - A context object for arbitrary-precision arithmetic settings.</p></li>
+<li><p><code>result</code> - An arbitrary object.</p></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
+<h3>ETrapException</h3>
+
+<pre><code>public ETrapException(int flag, EContext ctx, Object result)
+</code></pre>
+
+<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
+
+<p><strong>Parameters:</strong></p>
 
 <ul>
-<li>System.ArgumentNullException:
-The parameter <i>comment</i>
-is null.</li>
+<li><p><code>flag</code> - A flag that specifies the kind of error (<code>EContext.FlagXXYY</code>). This will only be one flag, such as <code>FlagInexact</code> or FlagSubnormal.</p></li>
+<li><p><code>ctx</code> - A context object for arbitrary-precision arithmetic settings.</p></li>
+<li><p><code>result</code> - An arbitrary object.</p></li>
 </ul>
 
-<h3>IniEntry Constructor</h3>
+<h3>getContext</h3>
 
-<pre><code>public IniEntry(
-    string key,
-    string value);
+<pre><code>public final EContext getContext()
 </code></pre>
 
-<p>Initializes a new instance of the<a href="PeterO.IniEntry.html">PeterO.IniEntry</a> class.</p>
+<p>Gets the arithmetic context used during the operation that triggered the
+ trap. May be null.</p>
 
-<p><b>Parameters:</b></p>
+<p><strong>Returns:</strong></p>
 
 <ul>
-<li><p><i>key</i>: A text string.</p></li>
-<li><p><i>value</i>: Another string object.</p></li>
+<li>The arithmetic context used during the operation that triggered the
+trap. May be null.</li>
 </ul>
 
-<p><b>Exceptions:</b></p>
+<h3>getResult</h3>
+
+<pre><code>public final Object getResult()
+</code></pre>
+
+<p>Gets the defined result of the operation that caused the trap.</p>
+
+<p><strong>Returns:</strong></p>
 
 <ul>
-<li>System.ArgumentNullException:
-The parameter <i>key</i>
-or  <i>value</i>
-is null.</li>
+<li>The defined result of the operation that caused the trap.</li>
 </ul>
 
-<h3>IsComment</h3>
+<h3>getError</h3>
 
-<pre><code>public bool IsComment { get; }
+<pre><code>public final int getError()
 </code></pre>
 
-<p>Gets a value indicating whether this entry is a comment line.</p>
+<p>Gets the flag that specifies the kind of error (EContext.FlagXXX). This will
+ only be one flag, such as <code>FlagInexact</code> or FlagSubnormal.</p>
 
-<p><b>Returns:</b></p>
+<p><strong>Returns:</strong></p>
 
-<p><code>true</code>  If this entry is a comment line; otherwise,. <code>false</code> .</p>
+<ul>
+<li>The flag that specifies the kind of error (EContext.FlagXXX). This
+will only be one flag, such as. <code>FlagInexact</code> or FlagSubnormal.</li>
+</ul>
 
-<h3>Key</h3>
-
-<pre><code>public string Key { get; }
-</code></pre>
-
-<p>Gets a value not documented yet.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A value not documented yet.</p>
-
-<h3>Value</h3>
-
-<pre><code>public string Value { get; }
-</code></pre>
-
-<p>Gets a value not documented yet.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A value not documented yet.</p>
-
-<h3>ToString</h3>
-
-<pre><code>public override string ToString();
-</code></pre>
-
-<p>Converts this object to a text string.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>A text string.</p>
-
-<p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>
+<p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div>
 <nav id="navigation">
 <p>

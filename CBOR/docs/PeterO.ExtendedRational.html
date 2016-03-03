@@ -11,9 +11,11 @@
     System.IEquatable
 </code></pre>
 
-<p>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.ERational</code>  in the <code>PeterO.Numbers</code> library (in .NET), or  <code>com.upokecenter.numbers.ERational</code>  in the <code>com.github.peteroupc/numbers</code> artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code>  method (by including the new library in your code, among other things), but this version of the CBOR library doesn&#39;t include any methods that explicitly take an <code>ERational</code>  as a parameter or return value.</p>
+<p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p>Arbitrary-precision rational number. This class can&#39;t be inherited; this is a change in version 2.0 from previous versions, where the class was inadvertently left inheritable.Thread safety: Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same properties are interchangeable, so they should not be compared using the &quot;==&quot; operator (which only checks if each side of the operator is the same instance).</p>
+<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.ERational</code>  in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or  <code>com.upokecenter.numbers.ERational</code>  in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code>  method (by including the new library in your code, among other things).</b></p>
+
+<p>Arbitrary-precision rational number. This class can&#39;t be inherited; this is a change in version 2.0 from previous versions, where the class was inadvertently left inheritable.<b>Thread safety:</b> Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same properties are interchangeable, so they should not be compared using the &quot;==&quot; operator (which might only check if each side of the operator is the same instance).</p>
 
 <h3>ExtendedRational Constructor</h3>
 
@@ -22,7 +24,7 @@
     PeterO.BigInteger denominator);
 </code></pre>
 
-<p>Initializes a new instance of the  class.</p>
+<p>Initializes a new instance of the <a href="PeterO.ExtendedRational.html">PeterO.ExtendedRational</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -118,7 +120,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> if this object is finite (not infinity or NaN); otherwise, <code>false</code> .</p>
+<p><code>true</code>  If this object is finite (not infinity or NaN); otherwise,  <code>false</code> .</p>
 
 <h3>IsNegative</h3>
 
@@ -129,7 +131,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object&#39;s value is negative; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  If this object&#39;s value is negative; otherwise,  <code>false</code> .</p>
 
 <h3>IsZero</h3>
 
@@ -142,7 +144,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  If this object&#39;s value equals 0; otherwise, .  <code>false</code> .</p>
 
 <h3>Numerator</h3>
 
@@ -252,13 +254,17 @@ is null.</li>
     object obj);
 </code></pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>:</li>
+<li><i>obj</i>: An arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
+
+<p>A Boolean object.</p>
 
 <h3>Equals</h3>
 
@@ -283,7 +289,11 @@ is null.</li>
 <pre><code>public override int GetHashCode();
 </code></pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Return Value:</b></p>
+
+<p>A 32-bit signed integer.</p>
 
 <h3>ToString</h3>
 

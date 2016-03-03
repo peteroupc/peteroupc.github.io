@@ -9,7 +9,7 @@
 <pre><code>public sealed class EContext
 </code></pre>
 
-<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.).</p>
+<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.). <b>Thread safety:</b> With one exception, instances of this class are immutable and are safe to use among multiple threads. The one exception involves the  <code>Flags</code>  property. If the context&#39;s  <code>HasFlags</code> property (a read-only property) is  <code>true</code> , the  <code>Flags</code>  property is mutable, thus making the context mutable. This class doesn&#39;t synchronize access to such mutable contexts, so applications should provide their own synchronization if a context with the  <code>HasFlags</code> property set to  <code>true</code>  will be shared among multiple threads and those threads need to read or write the  <code>Flags</code>  property (which can happen, for example, by passing the context to most methods of  <code>EDecimal</code>  such as  <code>Add</code> ).</p>
 
 <h3>EContext Constructor</h3>
 
@@ -21,7 +21,7 @@
     bool clampNormalExponents);
 </code></pre>
 
-<p>Initializes a new instance of the  class.  <code>HasFlags</code>  will be set to false.</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class.  <code>HasFlags</code>  will be set to false.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -80,7 +80,7 @@
 <pre><code>public static readonly PeterO.Numbers.EContext CliDecimal;
 </code></pre>
 
-<p>An arithmetic context for the Common Language Infrastructure (.NET Framework) decimal format, 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven.</p>
+<p>An arithmetic context for the .NET Framework decimal format (see<a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a> ), 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven. (The  <code>&quot;Cli&quot;</code>  stands for &quot;Common Language Infrastructure&quot;, which defined this format as the .NET Framework decimal format in version 1, but leaves it unspecified in later versions.).</p>
 
 <h3>Decimal128</h3>
 
@@ -207,7 +207,7 @@
 <pre><code>public PeterO.Numbers.EInteger EMax { get; }
 </code></pre>
 
-<p>Gets the highest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
+<p>Gets the highest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
 
 <p><b>Returns:</b></p>
 
@@ -218,7 +218,7 @@
 <pre><code>public PeterO.Numbers.EInteger EMin { get; }
 </code></pre>
 
-<p>Gets the lowest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
+<p>Gets the lowest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
 
 <p><b>Returns:</b></p>
 
@@ -285,22 +285,22 @@
 <pre><code>public bool IsSimplified { get; }
 </code></pre>
 
-<p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, seehttp://speleotrove.com/decimal/dax3274.html</p>
+<p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see<a href="http://speleotrove.com/decimal/dax3274.html"> <code>http://speleotrove.com/decimal/dax3274.html</code> </a></p>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> if a &quot;simplified&quot; arithmetic will be used; otherwise, <code>false</code> .</p>
+<p><code>true</code>  if a &quot;simplified&quot; arithmetic will be used; otherwise,  <code>false</code> .</p>
 
 <h3>Precision</h3>
 
 <pre><code>public PeterO.Numbers.EInteger Precision { get; }
 </code></pre>
 
-<p>Gets the maximum length of a converted number in digits, ignoring the decimal point and exponent. For example, if precision is 3, a converted number&#39;s mantissa (significand) can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.</p>
+<p>Gets the maximum length of a converted number in digits, ignoring the radix point and exponent. For example, if precision is 3, a converted number&#39;s mantissa (significand) can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The maximum length of a converted number in digits, ignoring the decimal point and exponent.</p>
+<p>The maximum length of a converted number in digits, ignoring the radix point and exponent.</p>
 
 <h3>Rounding</h3>
 
@@ -351,7 +351,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if a number can have the given Exponent property under this arithmetic context; otherwise, false . If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
+<p><code>true</code>  if a number can have the given Exponent property under this arithmetic context; otherwise,  <code>false</code> . If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
 
 <p><b>Exceptions:</b></p>
 

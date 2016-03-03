@@ -11,7 +11,7 @@
 
 <p>Represents an email message, and contains methods and properties for accessing and modifying email message data. This class implements the Internet Message Format (RFC 5322) and Multipurpose Internet Mail Extensions (MIME; RFC 2045-2047, RFC 2049).</p>
 
-<p>Thread safety: This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
+<p><b>Thread safety:</b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
 
 <p>The following lists known deviations from the mail specifications (Internet Message Format and MIME):</p>
 
@@ -43,7 +43,7 @@
     byte[] bytes);
 </code></pre>
 
-<p>Initializes a new instance of the  class. Reads from the given byte array to initialize the message.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -65,7 +65,7 @@ is null.</li>
     System.IO.Stream stream);
 </code></pre>
 
-<p>Initializes a new instance of the  class. Reads from the given Stream object to initialize the message.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 

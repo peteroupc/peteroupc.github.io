@@ -1,0 +1,1514 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.numbers.EInteger</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.numbers.EInteger</h1>
+
+<h1>com.upokecenter.numbers.EInteger</h1>
+
+<pre><code>public final class EInteger extends Object implements Comparable&lt;EInteger&gt;
+</code></pre>
+
+<p>Represents an arbitrary-precision integer. (The &quot;E&quot; stands for &quot;extended&quot;,
+ and has this prefix to group it with the other classes common to this
+ library, particularly EDecimal, EFloat, and ERational.) <p>Instances
+ of this class are immutable, so they are inherently safe for use by
+ multiple threads. Multiple instances of this object with the same
+ value are interchangeable, but they should be compared using the
+ &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p></p>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>EInteger Abs()</code><br>
+Returns the absolute value of this object&#39;s value.</li>
+<li><code>EInteger Add(EInteger bigintAugend)</code><br>
+Adds this object and another object.</li>
+<li><code>int AsInt32Checked()</code><br>
+Deprecated.
+Renamed to ToInt32Checked.
+Renamed to ToInt32Checked.</li>
+<li><code>int AsInt32Unchecked()</code><br>
+Deprecated.
+Renamed to ToInt32Unchecked.
+Renamed to ToInt32Unchecked.</li>
+<li><code>long AsInt64Checked()</code><br>
+Deprecated.
+Renamed to ToInt64Checked.
+Renamed to ToInt64Checked.</li>
+<li><code>long AsInt64Unchecked()</code><br>
+Deprecated.
+Renamed to ToInt64Unchecked.
+Renamed to ToInt64Unchecked.</li>
+<li><code>boolean CanFitInInt32()</code><br>
+Returns whether this object&#39;s value can fit in a 32-bit signed integer.</li>
+<li><code>boolean CanFitInInt64()</code><br>
+Returns whether this object&#39;s value can fit in a 64-bit signed integer.</li>
+<li><code>int compareTo(EInteger other)</code><br>
+Compares an arbitrary-precision integer with this instance.</li>
+<li><code>EInteger Divide(EInteger bigintDivisor)</code><br>
+Divides this instance by the value of an arbitrary-precision integer.</li>
+<li><code>EInteger[] DivRem(EInteger divisor)</code><br>
+Divides this object by another arbitrary-precision integer and returns the
+quotient and remainder.</li>
+<li><code>boolean equals(Object obj)</code><br>
+Determines whether this object and another object are equal.</li>
+<li><code>static EInteger FromByte(byte inputByte)</code><br>
+Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromBytes(byte[] bytes,
+     boolean littleEndian)</code><br>
+Initializes an arbitrary-precision integer from an array of bytes.</li>
+<li><code>static EInteger FromInt16(short inputInt16)</code><br>
+Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromInt32(int intValue)</code><br>
+Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromInt64(long longerValue)</code><br>
+Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromRadixString(String str,
+           int radix)</code><br>
+Not documented yet.</li>
+<li><code>static EInteger FromRadixSubstring(String str,
+              int radix,
+              int index,
+              int endIndex)</code><br>
+Converts a portion of a string to an arbitrary-precision integer in a given
+radix.</li>
+<li><code>static EInteger FromString(String str)</code><br>
+Converts a string to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromSubstring(String str,
+         int index,
+         int endIndex)</code><br>
+Converts a portion of a string to an arbitrary-precision integer.</li>
+<li><code>EInteger Gcd(EInteger bigintSecond)</code><br>
+Returns the greatest common divisor of two integers.</li>
+<li><code>int GetDigitCount()</code><br>
+Not documented yet.</li>
+<li><code>int GetLowBit()</code><br>
+Gets the lowest set bit in this number&#39;s absolute value.</li>
+<li><code>EInteger GetLowBitAsEInteger()</code><br>
+Gets the lowest set bit in this number&#39;s absolute value.</li>
+<li><code>static EInteger getOne()</code><br>
+Gets the number 1 as an arbitrary-precision integer.</li>
+<li><code>boolean GetSignedBit(int index) &quot;Forms of numbers&quot;</code><br>
+Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
+object&#39; s value.</li>
+<li><code>int GetSignedBitLength()</code><br>
+Finds the minimum number of bits needed to represent this object&#39;s
+value, except for its sign.</li>
+<li><code>static EInteger getTen()</code><br>
+Gets the number 10 as an arbitrary-precision integer.</li>
+<li><code>boolean GetUnsignedBit(int index)</code><br>
+Returns whether a bit is set in this number&#39;s absolute value.</li>
+<li><code>int GetUnsignedBitLength()</code><br>
+Finds the minimum number of bits needed to represent this number&#39;s
+absolute value.</li>
+<li><code>EInteger GetUnsignedBitLengthAsEInteger()</code><br>
+Finds the minimum number of bits needed to represent this number&#39;s
+absolute value.</li>
+<li><code>static EInteger getZero()</code><br>
+Gets a value not documented yet.</li>
+<li><code>int hashCode()</code><br>
+Returns the hash code for this instance.</li>
+<li><code>boolean isEven()</code><br>
+Gets a value indicating whether this value is even.</li>
+<li><code>boolean isPowerOfTwo()</code><br>
+Gets a value indicating whether this object&#39;s value is a power of two.</li>
+<li><code>boolean isZero()</code><br>
+Gets a value indicating whether this value is 0.</li>
+<li><code>EInteger Mod(EInteger divisor)</code><br>
+Finds the modulus remainder that results when this instance is divided by
+the value of an arbitrary-precision integer.</li>
+<li><code>EInteger ModPow(EInteger pow,
+  EInteger mod)</code><br>
+Calculates the remainder when an arbitrary-precision integer raised to a
+certain power is divided by another arbitrary-precision integer.</li>
+<li><code>EInteger Multiply(EInteger bigintMult)</code><br>
+Multiplies this instance by the value of an arbitrary-precision integer
+object.</li>
+<li><code>EInteger Negate()</code><br>
+Gets the value of this object with the sign reversed.</li>
+<li><code>EInteger Pow(int powerSmall)</code><br>
+Raises an arbitrary-precision integer to a power.</li>
+<li><code>EInteger PowBigIntVar(EInteger power)</code><br>
+Raises an arbitrary-precision integer to a power, which is given as another
+arbitrary-precision integer.</li>
+<li><code>EInteger Remainder(EInteger divisor)</code><br>
+Finds the remainder that results when this instance is divided by the value
+of an arbitrary-precision integer.</li>
+<li><code>EInteger ShiftLeft(int numberBits)</code><br>
+Returns an arbitrary-precision integer with the bits shifted to the left by
+a number of bits.</li>
+<li><code>EInteger ShiftRight(int numberBits)</code><br>
+Returns an arbitrary-precision integer with the bits shifted to the right.</li>
+<li><code>int signum()</code><br>
+Gets the sign of this object&#39;s value.</li>
+<li><code>EInteger Sqrt()</code><br>
+Finds the square root of this instance&#39;s value, rounded down.</li>
+<li><code>EInteger[] SqrtRem()</code><br>
+Calculates the square root and the remainder.</li>
+<li><code>EInteger Subtract(EInteger subtrahend)</code><br>
+Subtracts an arbitrary-precision integer from this arbitrary-precision
+integer.</li>
+<li><code>byte ToByteChecked()</code><br>
+Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
+byte (from 0 to 255).</li>
+<li><code>byte[] ToBytes(boolean littleEndian)</code><br>
+Returns a byte array of this integer&#39;s value.</li>
+<li><code>byte ToByteUnchecked()</code><br>
+Converts this number to a byte (from 0 to 255), returning the
+least-significant bits of this number&#39;s two&#39; s-complement form.</li>
+<li><code>short ToInt16Checked()</code><br>
+Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
+16-bit signed integer.</li>
+<li><code>short ToInt16Unchecked()</code><br>
+Converts this number to a 16-bit signed integer, returning the
+least-significant bits of this number&#39;s two&#39; s-complement form.</li>
+<li><code>int ToInt32Checked()</code><br>
+Converts this object&#39;s value to a 32-bit signed integer, throwing an
+exception if it can&#39;t fit.</li>
+<li><code>int ToInt32Unchecked()</code><br>
+Converts this object&#39;s value to a 32-bit signed integer.</li>
+<li><code>long ToInt64Checked()</code><br>
+Converts this object&#39;s value to a 64-bit signed integer, throwing an
+exception if it can&#39;t fit.</li>
+<li><code>long ToInt64Unchecked()</code><br>
+Converts this object&#39;s value to a 64-bit signed integer.</li>
+<li><code>String ToRadixString(int radix)</code><br>
+Generates a string representing the value of this object, in the given
+radix.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string in base 10.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>getOne</h3>
+
+<pre><code>public static EInteger getOne()
+</code></pre>
+
+<p>Gets the number 1 as an arbitrary-precision integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number 1 as an arbitrary-precision integer.</li>
+</ul>
+
+<h3>getTen</h3>
+
+<pre><code>public static EInteger getTen()
+</code></pre>
+
+<p>Gets the number 10 as an arbitrary-precision integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number 10 as an arbitrary-precision integer.</li>
+</ul>
+
+<h3>getZero</h3>
+
+<pre><code>public static EInteger getZero()
+</code></pre>
+
+<p>Gets a value not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value not documented yet.</li>
+</ul>
+
+<h3>isEven</h3>
+
+<pre><code>public final boolean isEven()
+</code></pre>
+
+<p>Gets a value indicating whether this value is even.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this value is even; otherwise, <code>false</code> .</li>
+</ul>
+
+<h3>isPowerOfTwo</h3>
+
+<pre><code>public final boolean isPowerOfTwo()
+</code></pre>
+
+<p>Gets a value indicating whether this object&#x27;s value is a power of two.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this object&#39;s value is a power of two; otherwise,
+<code>false</code>.</li>
+</ul>
+
+<h3>isZero</h3>
+
+<pre><code>public final boolean isZero()
+</code></pre>
+
+<p>Gets a value indicating whether this value is 0.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this value is 0; otherwise, <code>false</code> .</li>
+</ul>
+
+<h3>signum</h3>
+
+<pre><code>public final int signum()
+</code></pre>
+
+<p>Gets the sign of this object&#39;s value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>0 if this value is zero; -1 if this value is negative, or 1 if this
+value is positive.</li>
+</ul>
+
+<h3>FromBytes</h3>
+
+<pre><code>public static EInteger FromBytes(byte[] bytes, boolean littleEndian)
+</code></pre>
+
+<p>Initializes an arbitrary-precision integer from an array of bytes.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A byte array consisting of the two&#39;s-complement form (see
+<code>&quot;Forms of numbers&quot;</code>) of the
+arbitrary-precision integer to create. The byte array is encoded
+using the following rules: <ul> <li>Positive numbers have the first
+byte&#39;s highest bit cleared, and negative numbers have the bit
+set.</li> <li>The last byte contains the lowest 8-bits, the
+next-to-last contains the next lowest 8 bits, and so on. For example,
+the number 300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00, 0xc8</code>. (Note that the second example contains a set high bit in
+<code>0xC8</code>, so an additional 0 is added at the start to ensure it&#39;s
+interpreted as positive.)</li> <li>To encode negative numbers, take
+the absolute value of the number, subtract by 1, encode the number
+into bytes, and toggle each bit of each byte. Any further bits that
+appear beyond the most significant bit of the number will be all
+ones. For example, the number -450 can be encoded as <code>0xfe,
+0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code>. (Note that the second
+example contains a cleared high bit in <code>0x31, 0x7b</code>, so an
+additional 0xff is added at the start to ensure it&#39;s interpreted as
+negative.)</li></ul> <p>For little-endian, the byte order is reversed
+from the byte order just discussed.</p>.</p></li>
+<li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
+least-significant-byte first. If false, the byte order is big-endian,
+or most-significant-byte first.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer. Returns 0 if the byte array&#39;s length
+is 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+</ul>
+
+<h3>FromInt32</h3>
+
+<pre><code>public static EInteger FromInt32(int intValue)
+</code></pre>
+
+<p>Converts a 32-bit signed integer to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as the 64-bit
+number.</li>
+</ul>
+
+<h3>FromInt64</h3>
+
+<pre><code>public static EInteger FromInt64(long longerValue)
+</code></pre>
+
+<p>Converts a 64-bit signed integer to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>longerValue</code> - A 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as the 64-bit
+number.</li>
+</ul>
+
+<h3>FromRadixString</h3>
+
+<pre><code>public static EInteger FromRadixString(String str, int radix)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
+<li><p><code>radix</code> - The parameter <code>radix</code> is not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>FromRadixSubstring</h3>
+
+<pre><code>public static EInteger FromRadixSubstring(String str, int radix, int index, int endIndex)
+</code></pre>
+
+<p>Converts a portion of a string to an arbitrary-precision integer in a given
+ radix.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string. The desired portion of the string must contain
+only characters allowed by the given radix, except that it may start
+with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The
+desired portion is not allowed to contain white space characters,
+including spaces.</p></li>
+<li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
+the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
+A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
+then A-F in radix 16.</p></li>
+<li><p><code>index</code> - The index of the string that starts the string portion.</p></li>
+<li><p><code>endIndex</code> - The index of the string that ends the string portion. The
+length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+string portion.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
+<code>endIndex</code> is less than 0, or either is greater than the
+string&#39;s length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
+<li><p><code>NumberFormatException</code> - The string portion is empty or in an invalid
+format.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>public static EInteger FromString(String str)
+</code></pre>
+
+<p>Converts a string to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A text string. The string must contain only basic digits 0 to 9
+(U+0030 to U+0039), except that it may start with a minus sign (&quot;-&quot;,
+U + 002D) to indicate a negative number. The string is not allowed to
+contain white space characters, including spaces.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NumberFormatException</code> - The parameter <code>str</code> is in an invalid
+format.</p></li>
+</ul>
+
+<h3>FromSubstring</h3>
+
+<pre><code>public static EInteger FromSubstring(String str, int index, int endIndex)
+</code></pre>
+
+<p>Converts a portion of a string to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string. The desired portion of the string must contain
+only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may start
+with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The
+desired portion is not allowed to contain white space characters,
+including spaces.</p></li>
+<li><p><code>index</code> - The index of the string that starts the string portion.</p></li>
+<li><p><code>endIndex</code> - The index of the string that ends the string portion. The
+length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+string portion.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
+<code>endIndex</code> is less than 0, or either is greater than the
+string&#39;s length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
+<li><p><code>NumberFormatException</code> - The string portion is empty or in an invalid
+format.</p></li>
+</ul>
+
+<h3>Abs</h3>
+
+<pre><code>public EInteger Abs()
+</code></pre>
+
+<p>Returns the absolute value of this object&#39;s value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s value with the sign removed.</li>
+</ul>
+
+<h3>Add</h3>
+
+<pre><code>public EInteger Add(EInteger bigintAugend)
+</code></pre>
+
+<p>Adds this object and another object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintAugend</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The sum of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
+null.</li>
+</ul>
+
+<h3>AsInt32Checked</h3>
+
+<pre><code>@Deprecated public int AsInt32Checked()
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToInt32Checked.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+32-bit signed integer.</li>
+</ul>
+
+<h3>AsInt32Unchecked</h3>
+
+<pre><code>@Deprecated public int AsInt32Unchecked()
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToInt32Unchecked.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>AsInt64Checked</h3>
+
+<pre><code>@Deprecated public long AsInt64Checked()
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToInt64Checked.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+64-bit signed integer.</li>
+</ul>
+
+<h3>AsInt64Unchecked</h3>
+
+<pre><code>@Deprecated public long AsInt64Unchecked()
+</code></pre>
+
+<p>Deprecated.&nbsp;<i>Renamed to ToInt64Unchecked.</i></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit signed integer.</li>
+</ul>
+
+<h3>CanFitInInt32</h3>
+
+<pre><code>public boolean CanFitInInt32()
+</code></pre>
+
+<p>Returns whether this object&#39;s value can fit in a 32-bit signed integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value is Integer.MIN_VALUE or greater,
+and Integer.MAX_VALUE or less; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>CanFitInInt64</h3>
+
+<pre><code>public boolean CanFitInInt64()
+</code></pre>
+
+<p>Returns whether this object&#39;s value can fit in a 64-bit signed integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value is Long.MIN_VALUE or greater,
+and Long.MAX_VALUE or less; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre><code>public int compareTo(EInteger other)
+</code></pre>
+
+<p>Compares an arbitrary-precision integer with this instance.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;EInteger&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
+</ul>
+
+<h3>Divide</h3>
+
+<pre><code>public EInteger Divide(EInteger bigintDivisor)
+</code></pre>
+
+<p>Divides this instance by the value of an arbitrary-precision integer. The
+ result is rounded down (the fractional part is discarded). Except if
+ the result is 0, it will be negative if this object is positive and
+ the other is negative, or vice versa, and will be positive if both
+ are positive or both are negative.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintDivisor</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The parameter <code>bigintDivisor</code> is
+zero.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+null.</p></li>
+</ul>
+
+<h3>DivRem</h3>
+
+<pre><code>public EInteger[] DivRem(EInteger divisor)
+</code></pre>
+
+<p>Divides this object by another arbitrary-precision integer and returns the
+ quotient and remainder.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - The number to divide by.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array with two arbitrary-precision integers: the first is the
+quotient, and the second is the remainder.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter divisor is null.</p></li>
+<li><p><code>ArithmeticException</code> - The parameter divisor is 0.</p></li>
+<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+</ul>
+
+<h3>equals</h3>
+
+<pre><code>public boolean equals(Object obj)
+</code></pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - An arbitrary object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object and another object are equal; otherwise,
+<code>false</code>.</li>
+</ul>
+
+<h3>Gcd</h3>
+
+<pre><code>public EInteger Gcd(EInteger bigintSecond)
+</code></pre>
+
+<p>Returns the greatest common divisor of two integers. The greatest common
+ divisor (GCD) is also known as the greatest common factor (GCF).</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintSecond</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintSecond</code> is
+null.</li>
+</ul>
+
+<h3>GetDigitCount</h3>
+
+<pre><code>public int GetDigitCount()
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre><code>public int hashCode()
+</code></pre>
+
+<p>Returns the hash code for this instance.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>GetLowBit</h3>
+
+<pre><code>public int GetLowBit()
+</code></pre>
+
+<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also be
+ the lowest set bit in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>).).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The lowest bit set in the number, starting at 0. Returns -1 if this
+value is 0 or odd.</li>
+</ul>
+
+<h3>GetLowBitAsEInteger</h3>
+
+<pre><code>public EInteger GetLowBitAsEInteger()
+</code></pre>
+
+<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also be
+ the lowest set bit in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>).).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The lowest bit set in the number, starting at 0. Returns -1 if this
+value is 0 or odd.</li>
+</ul>
+
+<h3>GetSignedBit</h3>
+
+<pre><code>public boolean GetSignedBit(int index)
+</code></pre>
+
+<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
+ object&#39; s value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>index</code> - Zero based index of the bit to test. 0 means the least
+significant bit.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if a bit is set in the two&#39;s-complement form (see
+<code>EDecimal</code>) of this object&#39; s value;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>GetSignedBitLength</h3>
+
+<pre><code>public int GetSignedBitLength()
+</code></pre>
+
+<p>Finds the minimum number of bits needed to represent this object&#x27;s
+ value, except for its sign. If the value is negative, finds the
+ number of bits in the value equal to this object&#39;s absolute value
+ minus 1.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bits in this object&#39;s value. Returns 0 if this
+object&#39;s value is 0 or negative 1.</li>
+</ul>
+
+<h3>GetUnsignedBit</h3>
+
+<pre><code>public boolean GetUnsignedBit(int index)
+</code></pre>
+
+<p>Returns whether a bit is set in this number&#39;s absolute value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>index</code> - Zero based index of the bit to test. 0 means the least
+significant bit.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if a bit is set in this number&#39;s absolute value.</li>
+</ul>
+
+<h3>GetUnsignedBitLengthAsEInteger</h3>
+
+<pre><code>public EInteger GetUnsignedBitLengthAsEInteger()
+</code></pre>
+
+<p>Finds the minimum number of bits needed to represent this number&#x27;s
+ absolute value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bits in this object&#39;s value. Returns 0 if this
+object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
+</ul>
+
+<h3>GetUnsignedBitLength</h3>
+
+<pre><code>public int GetUnsignedBitLength()
+</code></pre>
+
+<p>Finds the minimum number of bits needed to represent this number&#x27;s
+ absolute value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bits in this object&#39;s value. Returns 0 if this
+object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
+</ul>
+
+<h3>Mod</h3>
+
+<pre><code>public EInteger Mod(EInteger divisor)
+</code></pre>
+
+<p>Finds the modulus remainder that results when this instance is divided by
+ the value of an arbitrary-precision integer. The modulus remainder is
+ the same as the normal remainder if the normal remainder is positive,
+ and equals divisor plus normal remainder if the normal remainder is
+ negative.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - A divisor greater than 0 (the modulus).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The parameter <code>divisor</code> is negative.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>ModPow</h3>
+
+<pre><code>public EInteger ModPow(EInteger pow, EInteger mod)
+</code></pre>
+
+<p>Calculates the remainder when an arbitrary-precision integer raised to a
+ certain power is divided by another arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>pow</code> - Another arbitrary-precision integer.</p></li>
+<li><p><code>mod</code> - An arbitrary-precision integer. (3).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>pow</code> or <code>mod</code> is null.</li>
+</ul>
+
+<h3>Multiply</h3>
+
+<pre><code>public EInteger Multiply(EInteger bigintMult)
+</code></pre>
+
+<p>Multiplies this instance by the value of an arbitrary-precision integer
+ object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintMult</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The product of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintMult</code> is
+null.</li>
+</ul>
+
+<h3>Negate</h3>
+
+<pre><code>public EInteger Negate()
+</code></pre>
+
+<p>Gets the value of this object with the sign reversed.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s value with the sign reversed.</li>
+</ul>
+
+<h3>Pow</h3>
+
+<pre><code>public EInteger Pow(int powerSmall)
+</code></pre>
+
+<p>Raises an arbitrary-precision integer to a power.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>powerSmall</code> - The exponent to raise to.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The result. Returns 1 if <code>powerSmall</code> is 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>powerSmall</code> is less
+than 0.</li>
+</ul>
+
+<h3>PowBigIntVar</h3>
+
+<pre><code>public EInteger PowBigIntVar(EInteger power)
+</code></pre>
+
+<p>Raises an arbitrary-precision integer to a power, which is given as another
+ arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>power</code> - The exponent to raise to.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The result. Returns 1 if <code>power</code> is 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>power</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>power</code> is less than 0.</p></li>
+</ul>
+
+<h3>Remainder</h3>
+
+<pre><code>public EInteger Remainder(EInteger divisor)
+</code></pre>
+
+<p>Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision integer. The remainder is the value that
+ remains when the absolute value of this object is divided by the
+ absolute value of the other object; the remainder has the same sign
+ (positive or negative) as this object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The remainder of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+</ul>
+
+<h3>ShiftLeft</h3>
+
+<pre><code>public EInteger ShiftLeft(int numberBits)
+</code></pre>
+
+<p>Returns an arbitrary-precision integer with the bits shifted to the left by
+ a number of bits. A value of 1 doubles this value, a value of 2
+ multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>numberBits</code> - The number of bits to shift. Can be negative, in which
+case this is the same as shiftRight with the absolute value of
+numberBits.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<h3>ShiftRight</h3>
+
+<pre><code>public EInteger ShiftRight(int numberBits)
+</code></pre>
+
+<p>Returns an arbitrary-precision integer with the bits shifted to the right.
+ For this operation, the arbitrary-precision integer is treated as a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>). Thus, for negative values, the
+ arbitrary-precision integer is sign-extended.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>numberBits</code> - Number of bits to shift right.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<h3>Sqrt</h3>
+
+<pre><code>public EInteger Sqrt()
+</code></pre>
+
+<p>Finds the square root of this instance&#x27;s value, rounded down.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The square root of this object&#39;s value. Returns 0 if this value is 0
+or less.</li>
+</ul>
+
+<h3>SqrtRem</h3>
+
+<pre><code>public EInteger[] SqrtRem()
+</code></pre>
+
+<p>Calculates the square root and the remainder.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of two arbitrary-precision integers: the first integer is
+the square root, and the second is the difference between this value
+and the square of the first integer. Returns two zeros if this value
+is 0 or less, or one and zero if this value equals 1.</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre><code>public EInteger Subtract(EInteger subtrahend)
+</code></pre>
+
+<p>Subtracts an arbitrary-precision integer from this arbitrary-precision
+ integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>subtrahend</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The difference of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>subtrahend</code> is
+null.</li>
+</ul>
+
+<h3>ToBytes</h3>
+
+<pre><code>public byte[] ToBytes(boolean littleEndian)
+</code></pre>
+
+<p>Returns a byte array of this integer&#x27;s value. The byte array will take
+ the number&#39;s two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>), using the
+ fewest bytes necessary to store its value unambiguously. If this
+ value is negative, the bits that appear beyond the most significant
+ bit of the number will be all ones. The resulting byte array can be
+ passed to the <code>FromBytes()</code> method (with the same byte order) to
+ reconstruct this integer&#39;s value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>littleEndian</code> - If true, the byte order is little-endian, or
+least-significant-byte first. If false, the byte order is big-endian,
+or most-significant-byte first.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A byte array. If this value is 0, returns a byte array with the
+single element 0.</li>
+</ul>
+
+<h3>ToInt32Checked</h3>
+
+<pre><code>public int ToInt32Checked()
+</code></pre>
+
+<p>Converts this object&#39;s value to a 32-bit signed integer, throwing an
+ exception if it can&#39;t fit.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+32-bit signed integer.</li>
+</ul>
+
+<h3>ToInt32Unchecked</h3>
+
+<pre><code>public int ToInt32Unchecked()
+</code></pre>
+
+<p>Converts this object&#39;s value to a 32-bit signed integer. If the value can&#39;t
+ fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s
+ two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
+ different sign than this object&#39;s value).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>ToInt64Checked</h3>
+
+<pre><code>public long ToInt64Checked()
+</code></pre>
+
+<p>Converts this object&#39;s value to a 64-bit signed integer, throwing an
+ exception if it can&#39;t fit.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+64-bit signed integer.</li>
+</ul>
+
+<h3>ToInt64Unchecked</h3>
+
+<pre><code>public long ToInt64Unchecked()
+</code></pre>
+
+<p>Converts this object&#39;s value to a 64-bit signed integer. If the value can&#39;t
+ fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s
+ two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
+ different sign than this object&#39;s value).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit signed integer.</li>
+</ul>
+
+<h3>ToRadixString</h3>
+
+<pre><code>public String ToRadixString(int radix)
+</code></pre>
+
+<p>Generates a string representing the value of this object, in the given
+ radix.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>radix</code> - A radix from 2 through 36. For example, to generate a
+hexadecimal (base-16) string, specify 16. To generate a decimal
+(base-10) string, specify 10.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representing the value of this object. If this value is 0,
+returns &quot;0&quot;. If negative, the string will begin with a minus sign
+(&quot;-&quot;, U+002D). Depending on the radix, the string will use the basic
+digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters A to Z
+(U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F
+in radix 16.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter &quot;index&quot; is less than 0,
+&quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s
+length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2
+or greater than 36.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre><code>public String toString()
+</code></pre>
+
+<p>Converts this object to a text string in base 10.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object. If negative, the string will
+begin with a minus sign (&quot;-&quot;, U+002D). The string will use the basic
+digits 0 to 9 (U + 0030 to U + 0039).</li>
+</ul>
+
+<h3>ToByteChecked</h3>
+
+<pre><code>public byte ToByteChecked()
+</code></pre>
+
+<p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as a byte (from 0 to 255).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is less than 0 or greater than
+255.</li>
+</ul>
+
+<h3>ToByteUnchecked</h3>
+
+<pre><code>public byte ToByteUnchecked()
+</code></pre>
+
+<p>Converts this number to a byte (from 0 to 255), returning the
+ least-significant bits of this number&#39;s two&#39; s-complement form.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number, converted to a byte (from 0 to 255).</li>
+</ul>
+
+<h3>FromByte</h3>
+
+<pre><code>public static EInteger FromByte(byte inputByte)
+</code></pre>
+
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>inputByte</code> - The number to convert as a byte (from 0 to 255).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as an arbitrary-precision integer.</li>
+</ul>
+
+<h3>ToInt16Checked</h3>
+
+<pre><code>public short ToInt16Checked()
+</code></pre>
+
+<p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as a 16-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is less than -32768 or greater
+than 32767.</li>
+</ul>
+
+<h3>ToInt16Unchecked</h3>
+
+<pre><code>public short ToInt16Unchecked()
+</code></pre>
+
+<p>Converts this number to a 16-bit signed integer, returning the
+ least-significant bits of this number&#39;s two&#39; s-complement form.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number, converted to a 16-bit signed integer.</li>
+</ul>
+
+<h3>FromInt16</h3>
+
+<pre><code>public static EInteger FromInt16(short inputInt16)
+</code></pre>
+
+<p>Converts a 16-bit signed integer to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>inputInt16</code> - The number to convert as a 16-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number&#39;s value as an arbitrary-precision integer.</li>
+</ul>
+
+<p><a href="/Numbers/">Back to Numbers start page.</a></p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>
