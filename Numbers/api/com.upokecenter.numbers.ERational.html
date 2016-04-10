@@ -87,9 +87,12 @@ Creates a not-a-number arbitrary-precision rational number.</li>
 Divides this instance by the value of an arbitrary-precision rational number
 object.</li>
 <li><code>boolean equals(ERational other)</code><br>
-Not documented yet.</li>
+Determines whether this object&#39;s numerator, denominator, and properties
+are equal to those of another object.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Determines whether this object and another object are equal.</li>
+Determines whether this object&#39;s numerator, denominator, and properties
+are equal to those of another object and that other object is an
+arbitrary-precision rational number.</li>
 <li><code>static ERational FromByte(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromDouble(double flt)</code><br>
@@ -993,7 +996,10 @@ null.</li>
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Determines whether this object&#x27;s numerator, denominator, and properties
+ are equal to those of another object and that other object is an
+ arbitrary-precision rational number. Not-a-number values are
+ considered equal if the rest of their properties are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -1018,7 +1024,9 @@ null.</li>
 <pre><code>public boolean equals(ERational other)
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether this object&#x27;s numerator, denominator, and properties
+ are equal to those of another object. Not-a-number values are
+ considered equal if the rest of their properties are equal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1037,7 +1045,8 @@ null.</li>
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Returns the hash code for this instance.</p>
+<p>Returns the hash code for this instance. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 

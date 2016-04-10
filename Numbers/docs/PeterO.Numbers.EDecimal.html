@@ -1021,7 +1021,7 @@ is null or  <i>ctx</i>
     object obj);
 </code></pre>
 
-<p>Determines whether this object&#39;s mantissa (significand) and exponent are equal to those of another object and that other object is an arbitrary-precision decimal number.</p>
+<p>Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object and that other object is an arbitrary-precision decimal number. Not-a-number values are considered equal if the rest of their properties are equal.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1039,7 +1039,7 @@ is null or  <i>ctx</i>
     PeterO.Numbers.EDecimal other);
 </code></pre>
 
-<p>Determines whether this object&#39;s mantissa (significand) and exponent are equal to those of another object.</p>
+<p>Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object. Not-a-number values are considered equal if the rest of their properties are equal.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1486,7 +1486,7 @@ is not a correctly formatted number string.</p></li>
 <pre><code>public override int GetHashCode();
 </code></pre>
 
-<p>Calculates this object&#39;s hash code.</p>
+<p>Calculates this object&#39;s hash code. No application or process IDs are used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 

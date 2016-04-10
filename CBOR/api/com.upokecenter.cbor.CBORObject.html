@@ -214,7 +214,8 @@ Gets the binary representation of this data item.</li>
 <li><code>boolean equals(CBORObject other)</code><br>
 Compares the equality of two CBOR objects.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Determines whether this object and another object are equal.</li>
+Determines whether this object and another object are equal and have the
+same type.</li>
 <li><code>static CBORObject FromJSONString(String str)</code><br>
 Generates a CBOR object from a text string in JavaScript Object Notation
 (JSON) format.</li>
@@ -242,6 +243,8 @@ Generates a CBOR string object from a Unicode character.</li>
 Generates a CBOR object from a 64-bit floating-point number.</li>
 <li><code>static CBORObject FromObject(com.upokecenter.numbers.EInteger bigintValue)</code><br>
 Generates a CBOR object from an arbitrary-precision integer.</li>
+<li><code>static CBORObject FromObject(com.upokecenter.numbers.ERational bigValue)</code><br>
+Generates a CBOR object from a rational number.</li>
 <li><code>static CBORObject FromObject(ExtendedDecimal otherValue)</code><br>
 Deprecated.
 Use the EDecimal version of this method instead.
@@ -1314,6 +1317,25 @@ byte-order mark (U + FEFF).</p></li>
 
 <ul>
 <li><code>bigValue</code> - An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre><code>public static CBORObject FromObject(com.upokecenter.numbers.ERational bigValue)
+</code></pre>
+
+<p>Generates a CBOR object from a rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigValue</code> - A rational number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3305,7 +3327,9 @@ if the given key is not found or this object is not a map.</li>
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Determines whether this object and another object are equal and have the
+ same type. Not-a-number values can be considered equal by this
+ method.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -3330,7 +3354,8 @@ if the given key is not found or this object is not a map.</li>
 <pre><code>public boolean equals(CBORObject other)
 </code></pre>
 
-<p>Compares the equality of two CBOR objects.</p>
+<p>Compares the equality of two CBOR objects. Not-a-number values can be
+ considered equal by this method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3371,7 +3396,8 @@ if the given key is not found or this object is not a map.</li>
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Calculates the hash code of this object.</p>
+<p>Calculates the hash code of this object. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 

@@ -52,7 +52,8 @@ Divides this instance by the value of an arbitrary-precision integer.</li>
 Divides this object by another arbitrary-precision integer and returns the
 quotient and remainder.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Determines whether this object and another object are equal.</li>
+Determines whether this object and another object are equal and have the
+same type.</li>
 <li><code>static EInteger FromByte(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromBytes(byte[] bytes,
@@ -156,13 +157,13 @@ byte (from 0 to 255).</li>
 Returns a byte array of this integer&#39;s value.</li>
 <li><code>byte ToByteUnchecked()</code><br>
 Converts this number to a byte (from 0 to 255), returning the
-least-significant bits of this number&#39;s two&#39; s-complement form.</li>
+least-significant bits of this number&#39;s two&#39;s-complement form.</li>
 <li><code>short ToInt16Checked()</code><br>
 Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
 16-bit signed integer.</li>
 <li><code>short ToInt16Unchecked()</code><br>
 Converts this number to a 16-bit signed integer, returning the
-least-significant bits of this number&#39;s two&#39; s-complement form.</li>
+least-significant bits of this number&#39;s two&#39;s-complement form.</li>
 <li><code>int ToInt32Checked()</code><br>
 Converts this object&#39;s value to a 32-bit signed integer, throwing an
 exception if it can&#39;t fit.</li>
@@ -231,7 +232,7 @@ Converts this object to a text string in base 10.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this value is even; otherwise, <code>false</code> .</li>
+<li><code>true</code> if this value is even; otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>isPowerOfTwo</h3>
@@ -244,7 +245,7 @@ Converts this object to a text string in base 10.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this object&#39;s value is a power of two; otherwise,
+<li><code>true</code> if this object&#39;s value is a power of two; otherwise,
 <code>false</code>.</li>
 </ul>
 
@@ -258,7 +259,7 @@ Converts this object to a text string in base 10.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this value is 0; otherwise, <code>false</code> .</li>
+<li><code>true</code> if this value is 0; otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>signum</h3>
@@ -615,8 +616,8 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object&#39;s value is Integer.MIN_VALUE or greater,
-and Integer.MAX_VALUE or less; otherwise, <code>false</code>.</li>
+<li><code>true</code> if this object&#39;s value is from -2147483648 through
+2147483647; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanFitInInt64</h3>
@@ -629,8 +630,8 @@ and Integer.MAX_VALUE or less; otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object&#39;s value is Long.MIN_VALUE or greater,
-and Long.MAX_VALUE or less; otherwise, <code>false</code>.</li>
+<li><code>true</code> if this object&#39;s value is from -9223372036854775808
+through 9223372036854775807; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -725,7 +726,8 @@ quotient, and the second is the remainder.</li>
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Determines whether this object and another object are equal and have the
+ same type.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -791,7 +793,8 @@ null.</li>
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Returns the hash code for this instance.</p>
+<p>Returns the hash code for this instance. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -1393,7 +1396,7 @@ digits 0 to 9 (U + 0030 to U + 0039).</li>
 </code></pre>
 
 <p>Converts this number to a byte (from 0 to 255), returning the
- least-significant bits of this number&#39;s two&#39; s-complement form.</p>
+ least-significant bits of this number&#39;s two&#39;s-complement form.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1447,7 +1450,7 @@ than 32767.</li>
 </code></pre>
 
 <p>Converts this number to a 16-bit signed integer, returning the
- least-significant bits of this number&#39;s two&#39; s-complement form.</p>
+ least-significant bits of this number&#39;s two&#39;s-complement form.</p>
 
 <p><strong>Returns:</strong></p>
 

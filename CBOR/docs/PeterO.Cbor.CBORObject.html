@@ -1236,7 +1236,7 @@ is null.</li>
     object obj);
 </code></pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Determines whether this object and another object are equal and have the same type. Not-a-number values can be considered equal by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1254,7 +1254,7 @@ is null.</li>
     PeterO.Cbor.CBORObject other);
 </code></pre>
 
-<p>Compares the equality of two CBOR objects.</p>
+<p>Compares the equality of two CBOR objects. Not-a-number values can be considered equal by this method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1671,6 +1671,24 @@ is a surrogate code point.</li>
 <h3>FromObject</h3>
 
 <pre><code>public static PeterO.Cbor.CBORObject FromObject(
+    PeterO.Numbers.ERational bigValue);
+</code></pre>
+
+<p>Generates a CBOR object from a rational number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigValue</i>: A rational number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
+
+<h3>FromObject</h3>
+
+<pre><code>public static PeterO.Cbor.CBORObject FromObject(
     sbyte value);
 </code></pre>
 
@@ -2043,7 +2061,7 @@ This object is not a byte string.</li>
 <pre><code>public override int GetHashCode();
 </code></pre>
 
-<p>Calculates the hash code of this object.</p>
+<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 

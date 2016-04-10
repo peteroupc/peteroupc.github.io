@@ -189,12 +189,12 @@ and the formula in RemainderNaturalScale.</li>
 Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 and the formula in RemainderNaturalScale.</li>
 <li><code>boolean equals(EFloat other)</code><br>
-Determines whether this object&#39;s mantissa (significand) and exponent
-are equal to those of another object.</li>
+Determines whether this object&#39;s mantissa (significand), exponent, and
+properties are equal to those of another object.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Determines whether this object&#39;s mantissa (significand) and exponent
-are equal to those of another object and that other object is an
-arbitrary-precision binary float.</li>
+Determines whether this object&#39;s mantissa (significand), exponent, and
+properties are equal to those of another object and that other object
+is an arbitrary-precision binary float.</li>
 <li><code>boolean EqualsInternal(EFloat otherValue)</code><br>
 Determines whether this object&#39;s mantissa (significand) and exponent
 are equal to those of another object.</li>
@@ -1928,8 +1928,9 @@ order.</li>
 <pre><code>public boolean equals(EFloat other)
 </code></pre>
 
-<p>Determines whether this object&#x27;s mantissa (significand) and exponent
- are equal to those of another object.</p>
+<p>Determines whether this object&#x27;s mantissa (significand), exponent, and
+ properties are equal to those of another object. Not-a-number values
+ are considered equal if the rest of their properties are equal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1949,9 +1950,10 @@ are equal to those of another object; otherwise, <code>false</code>.</li>
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Determines whether this object&#x27;s mantissa (significand) and exponent
- are equal to those of another object and that other object is an
- arbitrary-precision binary float.</p>
+<p>Determines whether this object&#x27;s mantissa (significand), exponent, and
+ properties are equal to those of another object and that other object
+ is an arbitrary-precision binary float. Not-a-number values are
+ considered equal if the rest of their properties are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -2027,7 +2029,8 @@ or the precision is unlimited (the context&#39;s Precision property is
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Calculates this object&#x27;s hash code.</p>
+<p>Calculates this object&#x27;s hash code. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 

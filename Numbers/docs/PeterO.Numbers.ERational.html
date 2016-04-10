@@ -489,7 +489,7 @@ is null.</li>
     object obj);
 </code></pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object and that other object is an arbitrary-precision rational number. Not-a-number values are considered equal if the rest of their properties are equal.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -507,7 +507,7 @@ is null.</li>
     PeterO.Numbers.ERational other);
 </code></pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object. Not-a-number values are considered equal if the rest of their properties are equal.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -925,7 +925,7 @@ is not a correctly formatted number string.</p></li>
 <pre><code>public override int GetHashCode();
 </code></pre>
 
-<p>Returns the hash code for this instance.</p>
+<p>Returns the hash code for this instance. No application or process IDs are used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 
