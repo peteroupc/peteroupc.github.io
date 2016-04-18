@@ -1630,7 +1630,7 @@ GraphicsPath.prototype.transform=function(trans){
     ret.segments.push(s)
     break
    case GraphicsPath.ARC: {
-    if(a==1 && b==0 && c==0 && d==1){
+    if(a === 1 && b === 0 && c === 0 && d === 1){
      // just a translation
      s[1]+=e
      s[2]+=f
