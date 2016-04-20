@@ -91,6 +91,7 @@ TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
  }
  return group;
 }
+/** @private */
 TextRenderer.prototype._loadPages=function(font){
  var textures=[]
  for(var i=0;i<font.pages.length;i++){
@@ -106,6 +107,10 @@ TextRenderer.prototype._loadPages=function(font){
   return Promise.resolve(font);
  })
 }
+/**
+ * Not documented yet.
+ * @param {*} fontFileName
+ */
 TextRenderer.prototype.loadFont=function(fontFileName){
  var thisObject=this;
  return TextFont.load(fontFileName).then(function(f){
@@ -144,7 +149,14 @@ TextFont._toArray=function(str,minLength){
  }
  return spl
 }
-TextFont.prototype.makeShapeMeshes=function(str, xPos, yPos, height){
+/**
+ * Not documented yet.
+ * @param {*} str
+ * @param {*} xPos
+ * @param {*} yPos
+ * @param {*} height
+ */
+TextFont.prototype.makeShapeMeshes=function(str,xPos,yPos,height){
  var meshesForPage=[];
  var scale=height/this.common.lineHeight;
  var recipPageWidth=1.0/this.common.scaleW;

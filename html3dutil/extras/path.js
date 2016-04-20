@@ -1129,7 +1129,7 @@ if(radius<0){
  * HTML Canvas 2D Context.
  * @param {number} x X-coordinate of the center of the circle that the arc forms a part of.
  * @param {number} y Y-coordinate of the circle's center.
- * @param {number} radius Radius of the circle's center.
+ * @param {number} radius Radius of the circle.
  * @param {number} startAngle Starting angle of the arc, in radians.
  * 0 means the positive X-axis, &pi;/2 means the positive Y-axis,
  * &pi; means the negative X-axis, and &pi;*1.5 means the negative Y-axis.
@@ -1147,10 +1147,14 @@ if(radius<0){
  var x0=this.endPos[0];
  var y0=this.endPos[1];
  var twopi=Math.PI*2;
- var startX=x+radius*Math.cos(startAngle);
- var startY=y+radius*Math.sin(startAngle);
- var endX=x+radius*Math.cos(endAngle);
- var endY=y+radius*Math.sin(endAngle);
+ var cosStart = Math.cos(startAngle);
+ var sinStart = (startAngle>=0 && startAngle<6.283185307179586) ? (startAngle<=3.141592653589793 ? Math.sqrt(1.0-cosStart*cosStart) : -Math.sqrt(1.0-cosStart*cosStart)) : Math.sin(startAngle);
+ var cosEnd = Math.cos(endAngle);
+ var sinEnd = (endAngle>=0 && endAngle<6.283185307179586) ? (endAngle<=3.141592653589793 ? Math.sqrt(1.0-cosEnd*cosEnd) : -Math.sqrt(1.0-cosEnd*cosEnd)) : Math.sin(endAngle);
+ var startX=x+radius*cosStart;
+ var startY=y+radius*sinStart;
+ var endX=x+radius*cosEnd;
+ var endY=y+radius*sinEnd;
  if((startX===endX && startY===endY) || radius === 0){
     return this.lineTo(startX,startY).lineTo(endX,endY);
  }
