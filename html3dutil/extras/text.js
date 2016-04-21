@@ -14,6 +14,10 @@ if(!GLUtil){ GLUtil={}; }
 /**
 * Renderer for bitmap fonts.  This class supports traditional bitmap
 * fonts and signed distance field fonts.<p>
+* Bitmap fonts consist of a font definition file (".fnt" or ".xml") and one
+* or more bitmaps containing the shape of each font glyphs.  The glyphs
+* are packed so they take as little space as possible and the glyphs don't
+* overlap each other.<p>
 * In a signed distance field font, each pixel's alpha value depends on the
 * distance from that location to the edge of the glyph.  A pixel alpha less
 * than 0.5 (127 in most image formats) means the pixel is outside the
@@ -108,9 +112,17 @@ TextRenderer.prototype._loadPages=function(font){
  })
 }
 /**
- * Not documented yet.
- * @param {*} fontFileName
- */
+* Loads a bitmap font definition from a text file or an XML file,
+* as well as the bitmaps used by that font, and maps them
+* to WebGL textures.  See {@link TextFont.load} for
+* more information.
+* @param {string} fontFileName The URL of the font data text file
+* to load.  If the string ends in ".xml", the font data is assumed to
+* be in XML; otherwise, in text.
+* @return {Promise<TextFont>} A promise that is resolved
+* when the font data is loaded successfully (the result will be
+* a TextFont object), and is rejected when an error occurs.
+*/
 TextRenderer.prototype.loadFont=function(fontFileName){
  var thisObject=this;
  return TextFont.load(fontFileName).then(function(f){
@@ -326,7 +338,21 @@ TextFont._loadTextFontInner=function(data){
   }
   return new TextFont(fontinfo,chars,pages,kernings,common,data.url)
 }
-
+/**
+* Loads a bitmap font definition from a text file or an XML file.
+* The text file format is specified at
+* <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
+* page</a> (note that this method doesn't currently support the binary
+* version described in that page).  The XML format is very similar to the text file format.
+* Note that this method only loads the font data and not the bitmaps
+* used to represent the font.
+* @param {string} fontFileName The URL of the font data text file
+* to load.  If the string ends in ".xml", the font data is assumed to
+* be in XML; otherwise, in text.
+* @return {Promise<TextFont>} A promise that is resolved
+* when the font data is loaded successfully (the result will be
+* a TextFont object), and is rejected when an error occurs.
+*/
 TextFont.load=function(fontFileName){
  if((/\.xml$/i.exec(fontFileName))){
   return GLUtil.loadFileFromUrl(fontFileName,"xml").then(
