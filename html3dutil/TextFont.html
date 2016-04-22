@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: Epitrochoid</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: TextFont</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,14 +10,14 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: Epitrochoid</h1>
+    <h1>Class: TextFont</h1>
 
 <section>
 
 <header>
 
         <h2>
-        Epitrochoid
+        TextFont
         </h2>
 
 </header>
@@ -25,69 +25,14 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="margin-bottom:0px" id="Epitrochoid"><span style="font-weight:lighter"></span>new Epitrochoid<span class="signature">(outerRadius, innerRadius, distFromInnerCenter)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="TextFont"><span style="font-weight:lighter"></span>new TextFont<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line303">line 303</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line137">line 137</a>
      </i></small></p>
 
 <div class="description">
-    Parametric evaluator for a
-curve drawn by a circle that rolls along the outside
-of another circle, whose position is fixed, with a center of (0,0).
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library. <p>
-To use this class, you must include the script "extras/evaluators.js"; the
-class is not included in the "glutil_min.js" file which makes up
-the HTML 3D Library.  Example:<pre>
-&lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
+    Represents a bitmap font.
 </div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>outerRadius</code>
-
-                (
-<span class="param-type">number</span>
-
-)
-
-           </dt><dd>
-           Radius of the circle whose position
-is fixed.</dd>
-
-        <dt>
-
-                <code>innerRadius</code>
-
-                (
-<span class="param-type">number</span>
-
-)
-
-           </dt><dd>
-           Radius of the rolling circle.
-An epicycloid results when outerRadius=innerRadius.</dd>
-
-        <dt>
-
-                <code>distFromInnerCenter</code>
-
-                (
-<span class="param-type">number</span>
-
-)
-
-           </dt><dd>
-           Distance from the center of the
-rolling circle to the drawing pen. A prolate epitrochoid results when
-distFromInnerCenter is greater than innerRadius.</dd>
-
-    </dl>
 
 <dl class="details">
 
@@ -97,13 +42,19 @@ distFromInnerCenter is greater than innerRadius.</dd>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+    <h4 style="margin-bottom:0px" id=".load"><span style="font-weight:lighter">(static) </span>load<span class="signature">(fontFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="TextFont.html">TextFont</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line315">line 315</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line361">line 361</a>
      </i></small></p>
 
 <div class="description">
-    Generates a point on the curve from the given u coordinate.
+    Loads a bitmap font definition from a text file or an XML file.
+The text file format is specified at
+<a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
+page</a> (note that this method doesn't currently support the binary
+version described in that page).  The XML format is very similar to the text file format.
+Note that this method only loads the font data and not the bitmaps
+used to represent the font.
 </div>
 
     <h5>Parameters:</h5>
@@ -112,15 +63,17 @@ distFromInnerCenter is greater than innerRadius.</dd>
 
         <dt>
 
-                <code>u</code>
+                <code>fontFileName</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 )
 
            </dt><dd>
-           U coordinate.</dd>
+           The URL of the font data text file
+to load.  If the string ends in ".xml", the font data is assumed to
+be in XML; otherwise, in text.</dd>
 
     </dl>
 
@@ -131,22 +84,22 @@ distFromInnerCenter is greater than innerRadius.</dd>
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    A 3-element array specifying a 3D point.
-Only the X and Y coordinates will be other than 0.
+    A promise that is resolved
+when the font data is loaded successfully (the result will be
+a TextFont object), and is rejected when an error occurs.
 
      (Type:
-<span class="param-type">Array.&lt;number></span>)
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="TextFont.html">TextFont</a>></span>)
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="scaleTo"><span style="font-weight:lighter"></span>scaleTo<span class="signature">(radius)</span><span style="font-weight:lighter"> &rarr; {<a href="Epitrochoid.html">Epitrochoid</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id="makeShapeMeshes"><span style="font-weight:lighter"></span>makeShapeMeshes<span class="signature">(str, xPos, yPos, height)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line333">line 333</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line176">line 176</a>
      </i></small></p>
 
 <div class="description">
-    Creates a modified version of this curve so that it
-fits the given radius.
+    Not documented yet.
 </div>
 
     <h5>Parameters:</h5>
@@ -155,31 +108,57 @@ fits the given radius.
 
         <dt>
 
-                <code>radius</code>
+                <code>str</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">*</span>
 
 )
 
            </dt><dd>
-           Desired radius of the curve.</dd>
+           </dd>
+
+        <dt>
+
+                <code>xPos</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>yPos</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>height</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
 
     </dl>
 
 <dl class="details">
 
 </dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type"><a href="Epitrochoid.html">Epitrochoid</a></span>)
-
-</div>
 
 </article>
 

@@ -90,12 +90,12 @@ var GLUtil={
 * @param {number|null} width Width of the new canvas
 * element, or if null, the width a &lt;code>canvas&lt;/code>
 * element would ordinarily have
-* under current CSS rules. The resulting width will be rounded up.
+* under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up.
 * This parameter can't be a negative number.
 * @param {number|null} height Height of the new canvas
 * element, or if null, the height a &lt;code>canvas&lt;/code>
 * element would ordinarily have
-* under current CSS rules. The resulting height will be rounded up.
+* under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up.
 * This parameter can't be a negative number.
 * @return {HTMLCanvasElement} The resulting canvas element.
 */
@@ -213,8 +213,8 @@ var GLUtil={
  *  &lt;li>"failures" - contains a list of results from the
  *  promises that failed, in the order in which those promises were listed.
  *  &lt;li>"results" - contains a list of boolean values for each
- * promise, in the order in which the promises were listed.&lt;/ul>
- * True means success, and false means failure.
+ * promise, in the order in which the promises were listed.
+ * True means success, and false means failure.&lt;/ul>
  */
 "getPromiseResults":function(promises,
    progressResolve, progressReject){
@@ -361,7 +361,7 @@ GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
 * the last known time, where a frame's length is 1/60 of a second.
 * This method should be called only once each frame.
 * @param {object} timer An object described
-* in {@link glutil.GLUtil.newFrames}.
+* in {@link glutil.GLUtil.getTimePosition}.
 * @param {number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a
 * &lt;code>requestAnimationFrame()&lt;/code> callback method.
@@ -606,10 +606,11 @@ function LightSource(position, ambient, diffuse, specular) {
  this.position=position ? [position[0],position[1],position[2],1.0] :
    [0, 0, 1, 0];
  /**
- * A 4-element vector giving the color of the light when it causes a diffuse
- * reflection, in the red, green,
- * and blue components respectively.  Each component ranges from 0 to 1.
- * A diffuse reflection is a reflection that scatters evenly, in every direction.
+ * A 4-element vector giving an additional color to multiply with the diffusion
+ * color of each object (which is also called "albedo"), in the red, green,
+ * and blue components respectively. Diffuse color is the color
+ * seen when light passes through a material and bounces back (diffusion).  Each component ranges from 0 to 1.
+ * The simulated diffusion scatters evenly, in every direction.
  * The default is (1,1,1,1), or white.
  */
  this.diffuse=diffuse||[1,1,1,1];
@@ -637,7 +638,8 @@ function LightSource(position, ambient, diffuse, specular) {
 * &lt;li>If W is 1, then X, Y, and Z specify the position of the light in world
 * space; the light will shine brightest, and in every direction, at the given position.&lt;/ul>
 * &lt;li>&lt;code>ambient&lt;/code> - Not used in the default shader program.
-* &lt;li>&lt;code>diffuse&lt;/code> - A 3- or 4-element vector giving the diffuse color of the light, in the red, green,
+* &lt;li>&lt;code>diffuse&lt;/code> - A 3- or 4-element vector giving an additional color to multiply with the diffusion
+ * color of each object (which is also called "albedo"), in the red, green,
  * and blue components respectively.  Each component ranges from 0 to 1.
  * The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
 * &lt;li>&lt;code>specular&lt;/code> - A 3- or 4-element vector giving the color of specular highlights caused by
@@ -685,7 +687,7 @@ function Lights(){
  * real-world effect of light bouncing back and forth between
  * many different objects in an area.  One example of this
  * phenomenon is sunlight reaching an indoor room without
- * directly hitting it, such that the sunlight reflects off the walls
+ * directly hitting it, such that the sunlight bounces off the walls
  * and so illuminates most of the room pretty much uniformly.
  * Ambient lights simulate this phenomenon.&lt;/small>
  *  @default
@@ -774,7 +776,7 @@ Lights.prototype.setPointLight=function(index,position){
 
 /**
 * Specifies parameters for geometry materials, which describe the appearance of a
-* 3D object. This includes how an object reflects or absorbs light, as well
+* 3D object. This includes how an object scatters, reflects, or absorbs light, as well
 * as well as a texture image to apply on that object's surface.&lt;p>
 * The full structure is only used if the shader program supports lighting, as the
 * default shader program does.  If [Scene3D.disableLighting()]{@link glutil.Scene3D#disableLighting} is called,
@@ -782,12 +784,12 @@ Lights.prototype.setPointLight=function(index,position){
 * properties of this object are used.
 * @class
 * @alias glutil.Material
-* @param {Array&lt;number>} ambient Ambient reflection.
+* @param {Array&lt;number>} ambient Ambient color.
 * Can be an array of three numbers,
 * ranging from 0 to 1 and giving the red, green, and blue components, respectively,
 * or can be a string representing an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
 * May be null or omitted; default is (0.2, 0.2, 0.2).
-* @param {Array&lt;number>} diffuse Diffuse reflection.  A color with the same format
+* @param {Array&lt;number>} diffuse Diffusion color (also called "albedo").  A color with the same format
 * as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).
 * @param {Array&lt;number>} specular Specular highlight reflection.
 * A color with the same format as for "ambient".
@@ -807,49 +809,52 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  if((emission!==null &amp;&amp; typeof emission!=="undefined"))emission=GLUtil.toGLColor(emission);
  /** Specular highlight exponent of this material.
 * The greater the number, the more concentrated the specular
-* highlights are.  The lower the number, the more extended the highlights are.
+* highlights are (and the smoother the material behaves).
+* The lower the number, the more extended the highlights are (and the rougher the material behaves).
 * Ranges from 0 through 128.
 */
  this.shininess=((shininess===null || typeof shininess==="undefined")) ? 0 : Math.min(Math.max(0,shininess),128);
- /** Ambient reflection of this material.&lt;p>
- * Ambient reflection indicates how much an object reflects
- * ambient colors, those that color pixels the same way regardless
+ /** Ambient color of this material.&lt;p>
+ * Ambient color indicates how much an object's color is affected by ambient
+ * lights, those that color pixels the same way regardless
  * of direction or distance.
  * Because every part of an object will be shaded the same way by ambient
- * colors, an object with just ambient reflection will not look much like a 3D object.&lt;p>
- * (Ambient reflection simulates the effect of light being reflected multiple times
+ * colors, an object with just ambient color will not look much like a 3D object.&lt;p>
+ * (Ambient color simulates the effect of light being scattered multiple times
  * from the same surface.)&lt;/p>
  * This value is a 3-element array giving the red, green, and blue
- * components of the ambient reflection; the final ambient color depends
+ * components of the ambient color; the final ambient color depends
  * on the ambient color of the scene.
- * (0,0,0) means no ambient reflection,
- * and (1,1,1) means total ambient reflection.&lt;p>
- * Setting ambient and diffuse reflection to the same value usually defines an object's
+ * (0,0,0) means no ambient color,
+ * and (1,1,1) means total ambient color.&lt;p>
+ * Setting ambient color and diffusion color to the same value usually defines an object's
  * color.&lt;p>
  * In the default shader program, if a mesh defines its own colors, those
- * colors are used for ambient reflection rather than this property.
+ * colors are used for ambient color rather than this property.
  */
  this.ambient=ambient ? ambient.slice(0,3) : [0.2,0.2,0.2];
  /**
- * Diffuse reflection of this material. Diffuse reflection is the color that a material
- * reflects equally in all directions. Because different parts of an object are shaded
+ * Diffusion color of this material (also called "albedo"). This is the color seen when light passes through this material
+ * and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
  * differently depending
- * on how directly they face diffuse lights, diffuse reflection can contribute
+ * on how directly they face diffuse lights, diffusion can contribute
  * much of the 3D effect of that object.&lt;p>
  * This value is a 4-element array giving the red, green, blue, and
- * alpha components of the diffuse reflection; the final diffuse color depends
- * on the reflected colors of lights that shine on the material.
- * (0,0,0,1) means no diffuse reflection,
- * and (1,1,1,1) means total diffuse reflection.&lt;p>
- * Setting ambient and diffuse reflection to the same value usually defines an object's
+ * alpha components of the diffusion; the final diffusion color depends
+ * on the diffusion colors of lights that shine on the material.
+ * (0,0,0,1) means no diffusion,
+ * and (1,1,1,1) means total diffusion.&lt;p>
+ * Setting ambient and diffusion to the same value usually defines an object's
  * color.&lt;p>
  * In the default shader program, if a mesh defines its own colors, those
- * colors are used for diffuse reflection rather than this property.&lt;p>
+ * colors are used for diffusion rather than this property.&lt;p>
  * This value can have an optional fourth element giving the alpha component
  * (0-1).  If this element is omitted, the default is 1.&lt;p>
  */
  this.diffuse=diffuse ? diffuse.slice(0,diffuse.length) : [0.8,0.8,0.8,1.0];
- /** Specular highlight reflection of this material.
+ // TODO: Consider changing default value of specular to 1
+ /**
+ * Specular highlight reflection of this material.
  * Specular reflection is a reflection in the same angle as
  * the light reaches the material, similar to a mirror.  As a result, depending
  * on the viewing angle, specular reflection can give off
@@ -857,8 +862,10 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  * This value is a 3-element array giving the red, green, and blue
  * components of the specular reflection; the final specular color depends
  * on the specular color of lights that shine on the material.
- * (0,0,0) means no specular reflection,
- * and (1,1,1) means total specular reflection.&lt;p>
+ * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
+ * The specular color is usually grayscale
+ * (all three components are the same), but can be colored if the material represents an
+* uncoated metal of some sort. If this element is omitted, the default is (0,0,0).&lt;p>
 */
  this.specular=specular ? specular.slice(0,3) : [0,0,0];
  /**
@@ -871,18 +878,21 @@ function Material(ambient, diffuse, specular,shininess,emission) {
 * This value is a 3-element array giving the red, green, and blue
 * components.
 * For each of the three color components, positive values add to that component,
-* while negative values subtract from it. (0,0,0) means no additive color.
+* while negative values subtract from it. (0,0,0), the default, means no additive color.
  */
  this.emission=emission ? emission.slice(0,3) : [0,0,0];
 /**
-* Texture map for this material.
+* Texture map for this material.  Each color sets the diffusion (also called "albedo")
+* of each part of the material.
 */
  this.texture=null;
 /**
 * Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
 * each part of the object's surface (note that the material must have a specular color of other
-* than the default
-* black for this to have an effect).  See {@link glutil.Material#specular}.
+* than the default black for this to have an effect).
+* The specular map is usually grayscale (all three components are the same in each pixel),
+* but can be colored if the material represents an uncoated metal of some sort (in which case the specular
+* color property should be (1,1,1) or another grayscale color). See {@link glutil.Material#specular}.
 */
  this.specularMap=null;
  /**
@@ -913,6 +923,8 @@ A strong tilt indicates strong relief detail at that point.
 * method can calculate the tangents and bitangents appropriate for normal mapping.
 */
  this.normalMap=null;
+ this.basic=false;
+ this.shader=null;
 }
 /**
 * Clones this object's parameters to a new Material
@@ -931,7 +943,9 @@ Material.prototype.copy=function(){
  ).setParams({
    "texture":this.texture,
    "specularMap":this.specularMap,
-   "normalMap":this.normalMap
+   "normalMap":this.normalMap,
+   "basic":this.basic,
+   "shader":this.shader
  });
 };
 /**
@@ -939,8 +953,10 @@ Material.prototype.copy=function(){
 * @param {object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.&lt;ul>
-* &lt;li>&lt;code>ambient&lt;/code> - Ambient reflection (see {@link glutil.Material} constructor).
-* &lt;li>&lt;code>diffuse&lt;/code> - Diffuse reflection (see {@link glutil.Material} constructor).
+* &lt;li>&lt;code>basic&lt;/code> - If set to true, only the "diffuse" and "texture" properties
+* of this material are used.
+* &lt;li>&lt;code>ambient&lt;/code> - Ambient color (see {@link glutil.Material} constructor).
+* &lt;li>&lt;code>diffuse&lt;/code> - Diffusion (see {@link glutil.Material} constructor).
 * &lt;li>&lt;code>specular&lt;/code> - Specular reflection (see {@link glutil.Material} constructor).
 * &lt;li>&lt;code>shininess&lt;/code> - Specular reflection exponent (see {@link glutil.Material} constructor).
 * &lt;li>&lt;code>emission&lt;/code> - Additive color (see {@link glutil.Material} constructor).
@@ -950,6 +966,7 @@ Material.prototype.copy=function(){
 * map texture (see {@link glutil.Material#specularMap}).
 * &lt;li>&lt;code>normalMap&lt;/code> - {@link glutil.Texture} object, or a string with the URL, of a normal
 * map (bump map) texture (see {@link glutil.Material#normalMap}).
+* &lt;li>&lt;code>shader&lt;/code> - {@link glutil.ShaderProgram} object for a WebGL shader program.
 * &lt;/ul>
 * If a value is null or undefined, it is ignored.
 * @return {glutil.Material} This object.
@@ -958,15 +975,19 @@ Material.prototype.setParams=function(params){
  var param;
  if(((typeof params.ambient!=="undefined" &amp;&amp; ((typeof params.ambient!=="undefined" &amp;&amp; ((typeof params.ambient!=="undefined" &amp;&amp; params.ambient!==null))))))){
   this.ambient=GLUtil.toGLColor(params.ambient);
+  if(this.ambient.length>3)this.ambient=this.ambient.slice(0,3)
  }
  if(((typeof params.diffuse!=="undefined" &amp;&amp; ((typeof params.diffuse!=="undefined" &amp;&amp; ((typeof params.diffuse!=="undefined" &amp;&amp; params.diffuse!==null))))))){
   this.diffuse=GLUtil.toGLColor(params.diffuse);
+  if(this.diffuse.length>4)this.diffuse=this.diffuse.slice(0,4)
  }
  if(((typeof params.specular!=="undefined" &amp;&amp; ((typeof params.specular!=="undefined" &amp;&amp; ((typeof params.specular!=="undefined" &amp;&amp; params.specular!==null))))))){
   this.specular=GLUtil.toGLColor(params.specular);
+  if(this.specular.length>3)this.specular=this.specular.slice(0,3)
  }
  if(((typeof params.emission!=="undefined" &amp;&amp; ((typeof params.emission!=="undefined" &amp;&amp; ((typeof params.emission!=="undefined" &amp;&amp; params.emission!==null))))))){
   this.emission=GLUtil.toGLColor(params.emission);
+  if(this.emission.length>3)this.emission=this.emission.slice(0,3)
  }
  if(((typeof params.shininess!=="undefined" &amp;&amp; ((typeof params.shininess!=="undefined" &amp;&amp; ((typeof params.shininess!=="undefined" &amp;&amp; params.shininess!==null))))))){
   this.shininess=params.shininess;
@@ -994,6 +1015,12 @@ Material.prototype.setParams=function(params){
    } else {
     this.normalMap=param;
    }
+ }
+ if(typeof params.basic!="undefined"){
+  this.basic=params.basic;
+ }
+ if(typeof params.shader!="undefined"){
+  this.shader=params.shader;
  }
  return this;
 };
@@ -1027,13 +1054,17 @@ Material.fromTexture=function(texture){
  return new Material().setParams({"texture":texture});
 };
 
+Material.forShader=function(shader){
+ return new Material().setParams({"shader":shader});
+}
+
 ////////////////////
 
 /**
 *  Specifies a texture, which can serve as image data applied to
 *  the surface of a shape, or even a 2-dimensional array of pixels
 *  used for some other purpose, such as a depth map, a height map,
-*  a bump map, a reflection map, and so on.&lt;p>
+*  a bump map, a specular map, and so on.&lt;p>
 * By default, texture coordinates go from (0,0) at the lower left corner
 * to (1,1) at the upper right corner.
 * @class
@@ -1240,6 +1271,13 @@ Texture.prototype.dispose=function(){
  }
 };
 
+/**
+* Gets the name of this texture.
+*/
+Texture.prototype.getName=function(){
+ return name;
+}
+
 ////////////////////////////////////////
 
 /**
@@ -1276,8 +1314,6 @@ function Scene3D(canvasOrContext){
   }
  }
  this.context=context;
- this.lightingEnabled=true;
- this.specularEnabled=true;
  /** An array of shapes that are part of the scene. */
  this.shapes=[];
  this._frontFace=Scene3D.CCW;
@@ -1288,6 +1324,7 @@ function Scene3D(canvasOrContext){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this._invView=null;
+ this._programs=[]
  this.useDevicePixelRatio=false;
  this._pixelRatio=1;
  this.autoResize=true;
@@ -1296,16 +1333,17 @@ function Scene3D(canvasOrContext){
  this.height=Math.ceil(this.context.canvas.clientHeight*1.0);
  this.context.canvas.width=this.width;
  this.context.canvas.height=this.height;
- this.program=null;
  this._is3d=GLUtil.is3DContext(this.context);
  this._init3DContext();
 }
 /** @private */
 Scene3D.prototype._init3DContext=function(){
  if(!this._is3d)return;
- this.program=new ShaderProgram(this.context,
-   this._getDefines()+ShaderProgram.getDefaultVertex(),
-   this._getDefines()+ShaderProgram.getDefaultFragment());
+ var params={};
+ var flags=Scene3D.LIGHTING_ENABLED |
+  Scene3D.SPECULAR_ENABLED |
+  Scene3D.SPECULAR_MAP_ENABLED;
+ this._getProgram(flags);
  this.context.viewport(0,0,this.width,this.height);
  this.context.enable(this.context.BLEND);
  this.context.blendFunc(this.context.SRC_ALPHA,this.context.ONE_MINUS_SRC_ALPHA);
@@ -1317,8 +1355,27 @@ Scene3D.prototype._init3DContext=function(){
  this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
- this.useProgram(this.program);
 };
+/** @private */
+Scene3D.prototype._getProgram=function(flags){
+ if(this._programs[flags]){
+  return this._programs[flags];
+ }
+ var defines=""
+ if((flags&amp;Scene3D.LIGHTING_ENABLED)!=0)
+   defines+="#define SHADING\n";
+ if((flags&amp;Scene3D.SPECULAR_ENABLED)!=0)
+   defines+="#define SPECULAR\n";
+ if((flags&amp;Scene3D.NORMAL_ENABLED)!=0)
+   defines+="#define NORMAL_MAP\n";
+ if((flags&amp;Scene3D.SPECULAR_MAP_ENABLED)!=0)
+   defines+="#define SPECULAR_MAP\n#define SPECULAR\n";
+ var prog=new ShaderProgram(this.context,
+   defines+ShaderProgram.getDefaultVertex(),
+   defines+ShaderProgram.getDefaultFragment());
+ this._programs[flags]=prog;
+ return prog;
+}
 /** Returns the WebGL context associated with this scene. */
 Scene3D.prototype.getContext=function(){
  return this.context;
@@ -1448,47 +1505,19 @@ Scene3D.prototype.setUseDevicePixelRatio=function(value){
 Scene3D.prototype.getClearColor=function(){
  return this.clearColor.slice(0,4);
 };
-/** @private */
-Scene3D.prototype._getDefines=function(){
- var ret="";
-  // TODO: Don't enable normal mapping by default, but
-  // compile normal map on demand
- if(this.lightingEnabled)
-  ret+="#define SHADING\n#define NORMAL_MAP\n";
- if(this.specularEnabled)
-  ret+="#define SPECULAR\n";
- return ret;
-};
-/** @private */
-Scene3D.prototype._initProgramData=function(program){
- new LightsBinder(this.lightSource).bind(program);
- this._updateMatrix(program);
-};
 /**
-* Changes the active shader program for this scene
-* and prepares this object for the new program.
+* Has no effect. (In previous versions, this method changed
+* the active shader program for this scene
+* and prepares this object for the new program.)
+* @deprecated Instead of this method, use the "setShader" program of individual shapes
+* to set the shader programs they use.
 * @param {glutil.ShaderProgram} program The shader program to use.
 * @return {glutil.Scene3D} This object.
 */
 Scene3D.prototype.useProgram=function(program){
- if(!program)throw new Error("invalid program");
- program.use();
- this.program=program;
- this._initProgramData(this.program);
- return this;
-};
-/** @private */
-Scene3D.prototype._getSpecularMapShader=function(){
- if(this.__specularMapShader){
-  return this.__specularMapShader;
- }
- var defines=this._getDefines();
- defines+="#define SPECULAR_MAP\n";
- this.__specularMapShader=new ShaderProgram(this.context,
-    defines+ShaderProgram.getDefaultVertex(),
-    defines+ShaderProgram.getDefaultFragment());
- return this.__specularMapShader;
-};
+ console.warn("The 'useProgram' method is obsolete.  Instead of this method, "+
+   "use the 'setShader' program of individual shapes to set the shader programs they use.");
+}
 /**
 * Sets the viewport width and height for this scene.
 * @param {number} width Width of the scene, in pixels.
@@ -1558,13 +1587,13 @@ Scene3D.prototype.createBuffer=function(){
    this.getWidth(),this.getHeight());
 };
 /**
- * Not documented yet.
+ * Gets the current projection matrix for this scene.
  */
 Scene3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
 };
 /**
- * Not documented yet.
+ * Gets the current view matrix for this scene.
  */
 Scene3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
@@ -1800,26 +1829,12 @@ Scene3D.prototype.loadAndMapTextures=function(textureFiles, resolve, reject){
 Scene3D.prototype._setIdentityMatrices=function(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this._updateMatrix(this.program);
+ this._updateFrustum();
 };
 /** @private */
-Scene3D.prototype._updateMatrix=function(program){
+Scene3D.prototype._updateFrustum=function(){
  var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
  this._frustum=GLMath.mat4toFrustumPlanes(projView);
- if(program){
-  var uniforms={
-   "view":this._viewMatrix,
-   "projection":this._projectionMatrix,
-   "viewMatrix":this._viewMatrix,
-   "projectionMatrix":this._projectionMatrix
-  };
-  var viewInvW=program.get("viewInvW");
-  if(viewInvW!==null &amp;&amp; typeof viewInvW!=="undefined"){
-   var invView=GLMath.mat4invert(this._viewMatrix);
-   uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
-  }
-  program.setUniforms(uniforms);
- }
 };
 /**
  * Sets the projection matrix for this object.  The projection
@@ -1830,7 +1845,7 @@ Scene3D.prototype._updateMatrix=function(program){
  */
 Scene3D.prototype.setProjectionMatrix=function(matrix){
  this._projectionMatrix=GLMath.mat4copy(matrix);
- this._updateMatrix(this.program);
+ this._updateFrustum();
  return this;
 };
 /**
@@ -1841,7 +1856,7 @@ Scene3D.prototype.setProjectionMatrix=function(matrix){
 */
 Scene3D.prototype.setViewMatrix=function(matrix){
  this._viewMatrix=GLMath.mat4copy(matrix);
- this._updateMatrix(this.program);
+ this._updateFrustum();
  return this;
 };
 /**
@@ -1866,7 +1881,7 @@ Scene3D.prototype.setLookAt=function(eye, center, up){
  up = up || [0,1,0];
  center = center || [0,0,0];
  this._viewMatrix=GLMath.mat4lookat(eye, center, up);
- this._updateMatrix(this.program);
+ this._updateFrustum();
  return this;
 };
 /**
@@ -1928,7 +1943,6 @@ Scene3D.prototype.removeShape=function(shape){
 Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  this.lightSource.setDirectionalLight(index,position)
   .setParams(index,{"diffuse":diffuse,"specular":specular});
- new LightsBinder(this.lightSource).bind(this.program);
  return this;
 };
 /**
@@ -1941,7 +1955,6 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
  */
 Scene3D.prototype.setLightParams=function(index,params){
  this.lightSource.setParams(index,params);
- new LightsBinder(this.lightSource).bind(this.program);
  return this;
 };
 /**
@@ -1960,7 +1973,6 @@ Scene3D.prototype.setLightParams=function(index,params){
 Scene3D.prototype.setAmbient=function(r,g,b,a){
  this.lightSource.sceneAmbient=GLUtil.toGLColor(r,g,b,a);
  this.lightSource.sceneAmbient=this.lightSource.sceneAmbient.slice(0,4);
- new LightsBinder(this.lightSource).bind(this.program);
  return this;
 };
 
@@ -1981,7 +1993,6 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
 Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
  this.lightSource.setPointLight(index,position)
    .setParams(index,{"diffuse":diffuse,"specular":specular});
- new LightsBinder(this.lightSource).bind(this.program);
  return this;
 };
 /** @private */
@@ -1994,10 +2005,21 @@ return (
  );
 };
 /** @private */
-Scene3D.prototype._setupMatrices=function(shape,program){
+Scene3D.prototype._setupMatrices=function(shape,program,projAndView){
   var uniforms={};
-  var currentMatrix=shape.getMatrix();
   var viewWorld;
+  if(projAndView){
+   uniforms.view=this._viewMatrix;
+   uniforms.projection=this._projectionMatrix;
+   uniforms.viewMatrix=this._viewMatrix;
+   uniforms.projectionMatrix=this._projectionMatrix;
+   var viewInvW=program.get("viewInvW");
+   if(viewInvW!==null &amp;&amp; typeof viewInvW!=="undefined"){
+    var invView=GLMath.mat4invert(this._viewMatrix);
+    uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
+   }
+  }
+  var currentMatrix=shape.getMatrix();
   var mvm=program.get("modelViewMatrix");
   if((mvm!==null &amp;&amp; typeof mvm!=="undefined")){
    if(Scene3D._isIdentityExceptTranslate(this._viewMatrix)){
@@ -2047,22 +2069,19 @@ Scene3D.prototype.render=function(){
   if(typeof this.fboFilter!=="undefined" &amp;&amp; this.fboFilter){
    // Render to the framebuffer, then to the main buffer via
    // a filter
-   var oldProgram=this.program;
    var oldProj=this.getProjectionMatrix();
    var oldView=this.getViewMatrix();
-   this.fbo.bind(this.program);
    this._renderInner();
-   this.fbo.unbind();
-   this.useProgram(this.fboFilter);
+   this.fboFilter.use();
    this.context.clear(
     this.context.COLOR_BUFFER_BIT|this.context.DEPTH_BUFFER_BIT);
    this._setIdentityMatrices();
    // Do the rendering to main buffer
-   this._renderShape(this.fboQuad,this.fboFilter);
-   // Restore old matrices and program
+   this.fboQuad.setShader(this.fboFilter);
+   this._renderShape(this.fboQuad);
+   // Restore old matrices
    this.setProjectionMatrix(oldProj);
    this.setViewMatrix(oldView);
-   this.useProgram(oldProgram);
    this.context.flush();
    return this;
   } else {
@@ -2073,28 +2092,45 @@ Scene3D.prototype.render=function(){
  }
 };
 
+Scene3D.LIGHTING_ENABLED = 1;
+Scene3D.SPECULAR_MAP_ENABLED = 2;
+Scene3D.NORMAL_ENABLED = 4;
+Scene3D.SPECULAR_ENABLED = 2;
+
 /** @private */
-Scene3D.prototype._renderShape=function(shape,program){
+Scene3D.prototype._renderShape=function(shape, renderContext){
  if(shape.constructor===ShapeGroup){
   if(!shape.visible)return;
   for(var i=0;i&lt;shape.shapes.length;i++){
-   this._renderShape(shape.shapes[i],program);
+   this._renderShape(shape.shapes[i], renderContext);
   }
  } else {
    if(!shape.isCulled(this._frustum)){
-    var prog=program;
-    if(shape.material instanceof Material &amp;&amp;
-       shape.material.specularMap){
-      var p=this._getSpecularMapShader();
-      this.useProgram(p);
-      prog=p;
+    var prog=null;
+    var params={};
+    var flags=0;
+    if(shape.material instanceof Material){
+     flags|=(!shape.material.basic) ? Scene3D.LIGHTING_ENABLED : 0;
+     flags|=(shape.material.specular[0]!=0 ||
+        shape.material.specular[1]!=0 ||
+        shape.material.specular[2]!=0) ? Scene3D.SPECULAR_ENABLED : 0;
+     flags|=(!!shape.material.specularMap) ? Scene3D.SPECULAR_MAP_ENABLED : 0;
+     flags|=(!!shape.material.normalMap) ? Scene3D.NORMAL_ENABLED : 0;
+     prog=shape.material.shader ?
+       shape.material.shader : this._getProgram(flags);
+    } else {
+     prog=this._getProgram(flags);
     }
-    this._setupMatrices(shape,prog);
+    var projAndView=false;
+    if(renderContext.prog!=prog){
+     prog.use();
+     projAndView=true;
+     new LightsBinder(this.lightSource).bind(prog);
+     renderContext.prog=prog;
+    }
+    this._setupMatrices(shape,prog,projAndView);
     Binders.getMaterialBinder(shape.material).bind(prog);
     shape.bufferedMesh.draw(prog);
-    if(prog!==program){
-      this.useProgram(program);
-    }
   }
  }
 };
@@ -2147,12 +2183,12 @@ Scene3D.prototype.useFilter=function(filterProgram){
 };
 /** @private */
 Scene3D.prototype._renderInner=function(){
-  this._updateMatrix(this.program);
   this.context.clear(
     this.context.COLOR_BUFFER_BIT |
     this.context.DEPTH_BUFFER_BIT);
+  var rc={};
   for(var i=0;i&lt;this.shapes.length;i++){
-   this._renderShape(this.shapes[i],this.program);
+   this._renderShape(this.shapes[i],rc);
   }
   return this;
 };
@@ -2250,6 +2286,16 @@ ShapeGroup.prototype.setMaterial=function(material){
  return this;
 };
 /**
+ * Sets the shader program used by all shapes in this shape group.
+ * @param {glutil.Material} material
+ */
+ShapeGroup.prototype.setShader=function(material){
+ for(var i=0;i&lt;this.shapes.length;i++){
+  this.shapes[i].setShader(material);
+ }
+ return this;
+};
+/**
 * Removes all instances of a 3D shape from this shape group
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
 * @return {glutil.ShapeGroup} This object.
@@ -2263,8 +2309,39 @@ ShapeGroup.prototype.removeShape=function(shape){
  }
  return this;
 };
+ShapeGroup.prototype.getBounds=function(){
+ var ret=[0,0,0,0,0,0];
+ var first=true;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  var b=this.shapes[i].getBounds();
+  if(!GLMath.boxIsEmpty(b)){
+   if(first){
+    ret[0]=b[0];
+    ret[1]=b[1];
+    ret[2]=b[2];
+    ret[3]=b[3];
+    ret[4]=b[4];
+    ret[5]=b[5];
+    first=false;
+   } else {
+    ret[0]=Math.min(b[0],ret[0]);
+    ret[1]=Math.min(b[1],ret[1]);
+    ret[2]=Math.min(b[2],ret[2]);
+    ret[3]=Math.max(b[3],ret[3]);
+    ret[4]=Math.max(b[4],ret[4]);
+    ret[5]=Math.max(b[5],ret[5]);
+   }
+  }
+ }
+ if(first){
+  return [0,0,0,-1,-1,-1];
+ } else {
+  return ret;
+ }
+};
+
 /**
- * Gets the number of vertices composed by this all shapes in this shape group.
+ * Gets the number of vertices composed by all shapes in this shape group.
  * @return {number} Return value. */
 ShapeGroup.prototype.vertexCount=function(){
  var c=0;
@@ -2398,6 +2475,8 @@ Shape.prototype.getVisible=function(){
 };
 /**
 * Sets material parameters that give the shape a certain color.
+* (If a material is already defined, sets its ambient and diffusion
+* colors.)
 * However, if the mesh defines its own colors, those colors will take
 * precedence over the color given in this method.
 * @param {Array&lt;number>|number|string} r Array of three or
@@ -2412,19 +2491,62 @@ Shape.prototype.getVisible=function(){
  * @return {glutil.Shape} This object.
 */
 Shape.prototype.setColor=function(r,g,b,a){
- this.material=Material.fromColor(r,g,b,a);
- return this;
+ if(this.material){
+   var c=GLUtil.toGLColor(r,g,b,a);
+   this.material.setParams({"ambient":c,"diffuse":c})
+  } else {
+   this.material=Material.fromColor(r,g,b,a);
+  }
+  return this;
 };
 /**
- * Sets this shape's material to a texture with the given URL.
+ * Sets material parameters that give the shape a texture with the given URL.
  * @param {string} name {@link glutil.Texture} object, or a string with the
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this method
-*  will not load that image yet.
+*  will not load that image if it hasn't been loaded yet.
  * @return {glutil.Shape} This object.
  */
 Shape.prototype.setTexture=function(name){
- this.material=Material.fromTexture(name);
+ if(this.material){
+   this.material.setParams({"texture":name})
+ } else {
+   this.material=Material.fromTexture(name);
+ }
+ return this;
+};
+/**
+ * Sets this shape's material to a shader with the given URL.
+ * @param {glutil.ShaderProgram} shader
+ * @return {glutil.Shape} This object.
+ */
+Shape.prototype.setShader=function(shader){
+ if(this.material){
+   this.material.setParams({"shader":shader})
+ } else {
+   this.material=Material.forShader(shader);
+ }
+ return this;
+};
+/**
+* Sets this shape's material to the given texture and color.
+ * @param {string} name {@link glutil.Texture} object, or a string with the
+* URL of the texture data.  In the case of a string the texture will be loaded via
+*  the JavaScript DOM's Image class.  However, this method
+*  will not load that image if it hasn't been loaded yet.
+* @param {Array&lt;number>|number|string} r Array of three or
+* four color components; or the red color component (0-1); or a string
+* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* @param {number} g Green color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} b Blue color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+* @param {number} a Alpha color component (0-1).
+* May be null or omitted if a string or array is given as the "r" parameter.
+ * @return {glutil.Shape} This object.
+*/
+Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
+ this.material=Material.fromColor(r,g,b,a).setParams({"texture":name});
  return this;
 };
 /**
@@ -2456,6 +2578,20 @@ Shape.prototype.copy=function(){
 Shape.prototype.getTransform=function(){
  return this.transform;
 };
+Shape.prototype.getBounds=function(){
+ if(!this.bufferedMesh){
+  return [0,0,0,-1,-1,-1];
+ }
+ var bounds=this.bufferedMesh._getBounds();
+ var matrix=this.getMatrix();
+ if(!GLMath.mat4isIdentity(matrix)){
+  var mn=GLMath.mat4transformVec3(matrix,bounds[0],bounds[1],bounds[2]);
+  var mx=GLMath.mat4transformVec3(matrix,bounds[3],bounds[4],bounds[5]);
+  bounds=[mn[0],mn[1],mn[2],mx[0],mx[1],mx[2]];
+ } else {
+  return bounds.slice(0,6);
+ }
+}
 /** @private */
 Shape.prototype.isCulled=function(frustum){
  if(!this.bufferedMesh||!this.visible)return true;
@@ -2569,7 +2705,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

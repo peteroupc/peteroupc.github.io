@@ -27,12 +27,12 @@
 
     <h4 style="margin-bottom:0px" id="Material"><span style="font-weight:lighter"></span>new Material<span class="signature">(ambient, diffuse, specular, shininess, emission)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line786">line 786</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line788">line 788</a>
      </i></small></p>
 
 <div class="description">
     Specifies parameters for geometry materials, which describe the appearance of a
-3D object. This includes how an object reflects or absorbs light, as well
+3D object. This includes how an object scatters, reflects, or absorbs light, as well
 as well as a texture image to apply on that object's surface.<p>
 The full structure is only used if the shader program supports lighting, as the
 default shader program does.  If Scene3D.disableLighting() is called,
@@ -54,7 +54,7 @@ properties of this object are used.
 )
 
            </dt><dd>
-           Ambient reflection.
+           Ambient color.
 Can be an array of three numbers,
 ranging from 0 to 1 and giving the red, green, and blue components, respectively,
 or can be a string representing an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.
@@ -70,7 +70,7 @@ May be null or omitted; default is (0.2, 0.2, 0.2).</dd>
 )
 
            </dt><dd>
-           Diffuse reflection.  A color with the same format
+           Diffusion color (also called "albedo").  A color with the same format
 as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).</dd>
 
         <dt>
@@ -127,27 +127,27 @@ May be null or omitted; default is (0,0,0).</dd>
 
 <h4 style="margin-bottom:0px" id="ambient"><span style="font-weight:lighter"></span>ambient<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line816">line 816</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line819">line 819</a>
      </i></small></p>
 
 <div class="description">
-    Ambient reflection of this material.<p>
-Ambient reflection indicates how much an object reflects
-ambient colors, those that color pixels the same way regardless
+    Ambient color of this material.<p>
+Ambient color indicates how much an object's color is affected by ambient
+lights, those that color pixels the same way regardless
 of direction or distance.
 Because every part of an object will be shaded the same way by ambient
-colors, an object with just ambient reflection will not look much like a 3D object.<p>
-(Ambient reflection simulates the effect of light being reflected multiple times
+colors, an object with just ambient color will not look much like a 3D object.<p>
+(Ambient color simulates the effect of light being scattered multiple times
 from the same surface.)</p>
 This value is a 3-element array giving the red, green, and blue
-components of the ambient reflection; the final ambient color depends
+components of the ambient color; the final ambient color depends
 on the ambient color of the scene.
-(0,0,0) means no ambient reflection,
-and (1,1,1) means total ambient reflection.<p>
-Setting ambient and diffuse reflection to the same value usually defines an object's
+(0,0,0) means no ambient color,
+and (1,1,1) means total ambient color.<p>
+Setting ambient color and diffusion color to the same value usually defines an object's
 color.<p>
 In the default shader program, if a mesh defines its own colors, those
-colors are used for ambient reflection rather than this property.
+colors are used for ambient color rather than this property.
 </div>
 
 <dl class="details">
@@ -156,24 +156,24 @@ colors are used for ambient reflection rather than this property.
 
 <h4 style="margin-bottom:0px" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line835">line 835</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line838">line 838</a>
      </i></small></p>
 
 <div class="description">
-    Diffuse reflection of this material. Diffuse reflection is the color that a material
-reflects equally in all directions. Because different parts of an object are shaded
+    Diffusion color of this material (also called "albedo"). This is the color seen when light passes through this material
+and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
 differently depending
-on how directly they face diffuse lights, diffuse reflection can contribute
+on how directly they face diffuse lights, diffusion can contribute
 much of the 3D effect of that object.<p>
 This value is a 4-element array giving the red, green, blue, and
-alpha components of the diffuse reflection; the final diffuse color depends
-on the reflected colors of lights that shine on the material.
-(0,0,0,1) means no diffuse reflection,
-and (1,1,1,1) means total diffuse reflection.<p>
-Setting ambient and diffuse reflection to the same value usually defines an object's
+alpha components of the diffusion; the final diffusion color depends
+on the diffusion colors of lights that shine on the material.
+(0,0,0,1) means no diffusion,
+and (1,1,1,1) means total diffusion.<p>
+Setting ambient and diffusion to the same value usually defines an object's
 color.<p>
 In the default shader program, if a mesh defines its own colors, those
-colors are used for diffuse reflection rather than this property.<p>
+colors are used for diffusion rather than this property.<p>
 This value can have an optional fourth element giving the alpha component
 (0-1).  If this element is omitted, the default is 1.<p>
 </div>
@@ -184,7 +184,7 @@ This value can have an optional fourth element giving the alpha component
 
 <h4 style="margin-bottom:0px" id="emission"><span style="font-weight:lighter"></span>emission<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line860">line 860</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line867">line 867</a>
      </i></small></p>
 
 <div class="description">
@@ -197,7 +197,7 @@ is called, disabling lighting calculations).<p>
 This value is a 3-element array giving the red, green, and blue
 components.
 For each of the three color components, positive values add to that component,
-while negative values subtract from it. (0,0,0) means no additive color.
+while negative values subtract from it. (0,0,0), the default, means no additive color.
 </div>
 
 <dl class="details">
@@ -206,7 +206,7 @@ while negative values subtract from it. (0,0,0) means no additive color.
 
 <h4 style="margin-bottom:0px" id="normalMap"><span style="font-weight:lighter"></span>normalMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line899">line 899</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line909">line 909</a>
      </i></small></p>
 
 <div class="description">
@@ -243,13 +243,14 @@ method can calculate the tangents and bitangents appropriate for normal mapping.
 
 <h4 style="margin-bottom:0px" id="shininess"><span style="font-weight:lighter"></span>shininess<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line797">line 797</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line800">line 800</a>
      </i></small></p>
 
 <div class="description">
     Specular highlight exponent of this material.
 The greater the number, the more concentrated the specular
-highlights are.  The lower the number, the more extended the highlights are.
+highlights are (and the smoother the material behaves).
+The lower the number, the more extended the highlights are (and the rougher the material behaves).
 Ranges from 0 through 128.
 </div>
 
@@ -259,7 +260,7 @@ Ranges from 0 through 128.
 
 <h4 style="margin-bottom:0px" id="specular"><span style="font-weight:lighter"></span>specular<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line847">line 847</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line854">line 854</a>
      </i></small></p>
 
 <div class="description">
@@ -271,8 +272,10 @@ shiny highlights on the material.<p>
 This value is a 3-element array giving the red, green, and blue
 components of the specular reflection; the final specular color depends
 on the specular color of lights that shine on the material.
-(0,0,0) means no specular reflection,
-and (1,1,1) means total specular reflection.<p>
+(0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
+The specular color is usually grayscale
+(all three components are the same), but can be colored if the material represents an
+uncoated metal of some sort. If this element is omitted, the default is (0,0,0).<p>
 </div>
 
 <dl class="details">
@@ -281,14 +284,16 @@ and (1,1,1) means total specular reflection.<p>
 
 <h4 style="margin-bottom:0px" id="specularMap"><span style="font-weight:lighter"></span>specularMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line871">line 871</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line881">line 881</a>
      </i></small></p>
 
 <div class="description">
     Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
 each part of the object's surface (note that the material must have a specular color of other
-than the default
-black for this to have an effect).  See <a href="glutil.Material.html#specular">glutil.Material#specular</a>.
+than the default black for this to have an effect).
+The specular map is usually grayscale (all three components are the same in each pixel),
+but can be colored if the material represents an uncoated metal of some sort (in which case the specular
+color property should be (1,1,1) or another grayscale color). See <a href="glutil.Material.html#specular">glutil.Material#specular</a>.
 </div>
 
 <dl class="details">
@@ -297,11 +302,12 @@ black for this to have an effect).  See <a href="glutil.Material.html#specular">
 
 <h4 style="margin-bottom:0px" id="texture"><span style="font-weight:lighter"></span>texture<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line864">line 864</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line872">line 872</a>
      </i></small></p>
 
 <div class="description">
-    Texture map for this material.
+    Texture map for this material.  Each color sets the diffusion (also called "albedo")
+of each part of the material.
 </div>
 
 <dl class="details">
@@ -312,7 +318,7 @@ black for this to have an effect).  See <a href="glutil.Material.html#specular">
 
     <h4 style="margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line997">line 997</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1024">line 1024</a>
      </i></small></p>
 
 <div class="description">
@@ -401,7 +407,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
     <h4 style="margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter">(static) </span>fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1010">line 1010</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1037">line 1037</a>
      </i></small></p>
 
 <div class="description">
@@ -449,7 +455,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line908">line 908</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line920">line 920</a>
      </i></small></p>
 
 <div class="description">
@@ -475,7 +481,7 @@ to the same object will be used.
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line941">line 941</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line958">line 958</a>
      </i></small></p>
 
 <div class="description">
@@ -499,8 +505,10 @@ to the same object will be used.
            An object whose keys have
 the possibilities given below, and whose values are those
 allowed for each key.<ul>
-<li><code>ambient</code> - Ambient reflection (see <a href="glutil.Material.html">glutil.Material</a> constructor).
-<li><code>diffuse</code> - Diffuse reflection (see <a href="glutil.Material.html">glutil.Material</a> constructor).
+<li><code>basic</code> - If set to true, only the "diffuse" and "texture" properties
+of this material are used.
+<li><code>ambient</code> - Ambient color (see <a href="glutil.Material.html">glutil.Material</a> constructor).
+<li><code>diffuse</code> - Diffusion (see <a href="glutil.Material.html">glutil.Material</a> constructor).
 <li><code>specular</code> - Specular reflection (see <a href="glutil.Material.html">glutil.Material</a> constructor).
 <li><code>shininess</code> - Specular reflection exponent (see <a href="glutil.Material.html">glutil.Material</a> constructor).
 <li><code>emission</code> - Additive color (see <a href="glutil.Material.html">glutil.Material</a> constructor).
@@ -510,6 +518,7 @@ to use.
 map texture (see <a href="glutil.Material.html#specularMap">glutil.Material#specularMap</a>).
 <li><code>normalMap</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL, of a normal
 map (bump map) texture (see <a href="glutil.Material.html#normalMap">glutil.Material#normalMap</a>).
+<li><code>shader</code> - <a href="glutil.ShaderProgram.html">glutil.ShaderProgram</a> object for a WebGL shader program.
 </ul>
 If a value is null or undefined, it is ignored.</dd>
 
@@ -553,7 +562,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

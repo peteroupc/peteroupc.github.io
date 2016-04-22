@@ -1,4 +1,20 @@
-/*
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Source: extras/text.js</title>
+<meta name="viewport" content="width=device-width">
+<script src="mathml.js"></script>
+<link rel=stylesheet type="text/css" href="/style.css">
+</head>
+<body style="margin-top:0px">
+<div class="header">
+<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+    <h1>Source: extras/text.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
 Written by Peter O. in 2015.
 
 Any copyright is dedicated to the Public Domain.
@@ -13,24 +29,24 @@ if(!GLUtil){ GLUtil={}; }
 
 /**
 * Renderer for bitmap fonts.  This class supports traditional bitmap
-* fonts and signed distance field fonts.<p>
+* fonts and signed distance field fonts.&lt;p>
 * Bitmap fonts consist of a font definition file (".fnt" or ".xml") and one
 * or more bitmaps containing the shape of each font glyphs.  The glyphs
 * are packed so they take as little space as possible and the glyphs don't
-* overlap each other.<p>
+* overlap each other.&lt;p>
 * In a signed distance field font, each pixel's alpha value depends on the
 * distance from that location to the edge of the glyph.  A pixel alpha less
 * than 0.5 (127 in most image formats) means the pixel is outside the
 * glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
 * outside the glyph) and 1 (for outside the glyph) means the pixel is
 * outside a buffer zone formed by the glyph's outline.
-* <p>This class is considered a supplementary class to the
+* &lt;p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
-* library. <p>
+* library. &lt;p>
 * To use this class, you must include the script "extras/text.js"; the
  * class is not included in the "glutil_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
- * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
+ * the HTML 3D Library.  Example:&lt;pre>
+ * &amp;lt;script type="text/javascript" src="extras/text.js">&amp;lt;/script>&lt;/pre>
 * @class
 * @alias TextRenderer
 * @param {glutil.Scene3D} scene 3D scene to load font textures with.
@@ -42,7 +58,7 @@ function TextRenderer(scene){
 }
 /** @private */
 TextRenderer.prototype._getFontTextures=function(tf){
- for(var i=0;i<this.fontTextures.length;i++){
+ for(var i=0;i&lt;this.fontTextures.length;i++){
   if(this.fontTextures[i][0]==tf){
    return this.fontTextures[i][1]
   }
@@ -51,7 +67,7 @@ TextRenderer.prototype._getFontTextures=function(tf){
 }
 /** @private */
 TextRenderer.prototype._setFontTextures=function(tf,ft){
- for(var i=0;i<this.fontTextures.length;i++){
+ for(var i=0;i&lt;this.fontTextures.length;i++){
   if(this.fontTextures[i][0]==tf){
    this.fontTextures[i][1]=ft;
    return;
@@ -68,7 +84,7 @@ TextRenderer.prototype._setFontTextures=function(tf,ft){
 * @param {Number} xPos X-coordinate of the top left corner of the text.
 * @param {Number} yPos Y-coordinate of the top left corner of the text.
 * @param {Number} height Size of the text in units.
-* @param {string|Array<number>} [color] The color to draw the text with.
+* @param {string|Array&lt;number>} [color] The color to draw the text with.
 * An array of three or
 * four color components; or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
@@ -79,7 +95,7 @@ TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
  var group=new ShapeGroup();
  var fontTextures=this._getFontTextures(font);
  var meshesForPage=font.makeShapeMeshes(str,xPos,yPos,height);
- for(var i=0;i<meshesForPage.length;i++){
+ for(var i=0;i&lt;meshesForPage.length;i++){
   var mfp=meshesForPage[i];
   if(!mfp || !fontTextures[i])continue;
   var sh=this.scene.makeShape(mfp);
@@ -98,7 +114,7 @@ TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
 /** @private */
 TextRenderer.prototype._loadPages=function(font){
  var textures=[]
- for(var i=0;i<font.pages.length;i++){
+ for(var i=0;i&lt;font.pages.length;i++){
   if(!font.pages[i])continue
   textures.push(font.pages[i])
  }
@@ -119,7 +135,7 @@ TextRenderer.prototype._loadPages=function(font){
 * @param {string} fontFileName The URL of the font data text file
 * to load.  If the string ends in ".xml", the font data is assumed to
 * be in XML; otherwise, in text.
-* @return {Promise<TextFont>} A promise that is resolved
+* @return {Promise&lt;TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
 */
@@ -145,7 +161,7 @@ function TextFont(fontinfo,chars,pages,kernings,common,fileUrl){
  this.chars=chars
  this.pages=pages
  this.kern=[];
- for(var i=0;i<kernings.length;i++){
+ for(var i=0;i&lt;kernings.length;i++){
   var k=kernings[i]
   if(!this.kern[k.first])this.kern[k.first]=[]
   this.kern[k.first][k.second]=k
@@ -155,13 +171,13 @@ TextFont._toArray=function(str,minLength){
  var spl
  if(typeof str==="string"){
   spl=str.split(",")
-  for(var i=0;i<spl.length;i++){
+  for(var i=0;i&lt;spl.length;i++){
    spl[i]=parseInt(spl[i])
   }
  } else {
   spl=[]
  }
- for(var i=spl.length;i<minLength;i++){
+ for(var i=spl.length;i&lt;minLength;i++){
   spl.push(0)
  }
  return spl
@@ -180,13 +196,13 @@ TextFont.prototype.makeShapeMeshes=function(str,xPos,yPos,height){
  var recipPageHeight=1.0/this.common.scaleH;
  var startXPos=xPos;
  var lastChar=-1;
- for(var i=0;i<str.length;i++){
+ for(var i=0;i&lt;str.length;i++){
   var c=str.charCodeAt(i);
-  if(c>=0xd800 && c<0xdc00 && i+1<str.length){
-   c = 0x10000 + ((c - 0xd800) << 10) + (str.charCodeAt(i+1) -
+  if(c>=0xd800 &amp;&amp; c&lt;0xdc00 &amp;&amp; i+1&lt;str.length){
+   c = 0x10000 + ((c - 0xd800) &lt;&lt; 10) + (str.charCodeAt(i+1) -
           0xdc00);
    i++;
-  } else if(c>=0xd800 && c<0xe000){
+  } else if(c>=0xd800 &amp;&amp; c&lt;0xe000){
    c=0xfffd
   }
   if(c === 0x0a){
@@ -222,7 +238,7 @@ TextFont.prototype.makeShapeMeshes=function(str,xPos,yPos,height){
      .texCoord2(sx2,1-sy2)
      .vertex2(vx2,vy2);
    if(lastChar!=-1){
-    if(this.kern[lastChar] && this.kern[lastChar][c]){
+    if(this.kern[lastChar] &amp;&amp; this.kern[lastChar][c]){
      xPos+=this.kern[lastChar][c].amount*scale;
     }
    }
@@ -249,7 +265,7 @@ var ret=path;
 TextFont._elementToObject=function(element){
  var attrs=element.getAttributeNames();
  var x={};
- for(var i=0;i<attrs.length;i++){
+ for(var i=0;i&lt;attrs.length;i++){
   var n=attrs[i];
   if(n=="face" || n=="charset" || n=="file" || n=="padding" ||
      n=="spacing"){
@@ -277,15 +293,15 @@ TextFont._loadXmlFontInner=function(data){
  var xkernings=[]
  var xcommons=TextFont._elementToObject(commons[0])
  var xinfos=TextFont._elementToObject(infos[0])
- for(var i=0;i<pages.length;i++){
+ for(var i=0;i&lt;pages.length;i++){
   var p=TextFont._elementToObject(pages[i])
   xpages[p.id]=TextFont._resolvePath(data.url,p.file);
  }
- for(var i=0;i<chars.length;i++){
+ for(var i=0;i&lt;chars.length;i++){
   var p=TextFont._elementToObject(chars[i])
   xchars[p.id]=p
  }
- for(var i=0;i<kernings.length;i++){
+ for(var i=0;i&lt;kernings.length;i++){
   var p=TextFont._elementToObject(kernings[i])
   xkernings.push(p)
  }
@@ -301,7 +317,7 @@ TextFont._loadTextFontInner=function(data){
   var common=null;
   var fontinfo=null;
   var firstline=true;
-  for(var i=0;i<lines.length;i++){
+  for(var i=0;i&lt;lines.length;i++){
    var e=(/^(\w+)\s+(.*)/).exec(lines[i]);
    if(!e)continue;
    var word=e[1];
@@ -323,17 +339,17 @@ TextFont._loadTextFontInner=function(data){
    if(word=="page"){
     pages[hash.id|0]=TextFont._resolvePath(data.url,hash.file);
    }
-   if(word=="char" && hash.id!=null){
+   if(word=="char" &amp;&amp; hash.id!=null){
     chars[hash.id|0]=hash;
    }
    if(word=="common"){
     if(common)return null;
     common=hash
    }
-   if(word=="kerning" && hash.first!=null){
+   if(word=="kerning" &amp;&amp; hash.first!=null){
     kernings.push(hash)
    }
-   if(word=="info" && hash.face!=null){
+   if(word=="info" &amp;&amp; hash.face!=null){
     if(fontinfo)return null;
     fontinfo=hash
    }
@@ -346,15 +362,15 @@ TextFont._loadTextFontInner=function(data){
 /**
 * Loads a bitmap font definition from a text file or an XML file.
 * The text file format is specified at
-* <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
-* page</a> (note that this method doesn't currently support the binary
+* &lt;a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
+* page&lt;/a> (note that this method doesn't currently support the binary
 * version described in that page).  The XML format is very similar to the text file format.
 * Note that this method only loads the font data and not the bitmaps
 * used to represent the font.
 * @param {string} fontFileName The URL of the font data text file
 * to load.  If the string ends in ".xml", the font data is assumed to
 * be in XML; otherwise, in text.
-* @return {Promise<TextFont>} A promise that is resolved
+* @return {Promise&lt;TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
 */
@@ -394,3 +410,47 @@ GLUtil.TextFont=TextFont;
 GLUtil.TextRenderer=TextRenderer;
 
 })(GLUtil);
+</code></pre>
+        </article>
+    </section>
+
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class=noprint>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHfwYJKoZIhvcNAQcEoIIHcDCCB2wCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBTEjVSqAfM9cTLwXVwxBqNI8r1Il0SJNqahKnIJrEIZOdmziEnZsYS8kifxxbWCBrNGl1S/eO5kcMG6WO50eBSxFlNpweevNYIs0dIdfQZtiWcRD2yYzaWHBkHu3PmCCLmc3pPT5QaOc949w2dPcg+syabMOSwN94Mk67Wh//7pTELMAkGBSsOAwIaBQAwgfwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIm7w2yVS0zOeAgdhYAX/keBkbLTGS2k5QcVstRROvRVuMlDL7sy/YUie0YlEJKDFTFE7n6LP15AFfODDattjmqKJ7UZ+6hY9sqJhayUNqdl/rA/RYgPVKGWTM1l68+KFdz2SO3IHvBUJIAwnHFX1JVyNUAofSxWj+3eoN5MnQzskA4cKe/RFWB04oXxZS7/WCOHL3q3mlwFDSK83C3Wcqro7S18YnVxfJ4XGUQ7nlx1C9K0Xq+JbCGEC4D8yjQHzm9w3LqUOogiI3l9VVlXxuqcAdq+iBkAGIt3y4TXABMtXEFG2gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MTAxMzA4NDBaMCMGCSqGSIb3DQEJBDEWBBQImRl0rdSM38l1aTcRhxgiKb7ipTANBgkqhkiG9w0BAQEFAASBgE0IsEWvN+n6QuwDFkBMQO9C4z5uf7wAvoMDgifDKBCyGFmpYZPsKawkYVcS/kASDtyq6aWU3lqP+KweyA+0xfpAyE3R8/7p80uqGGs8bHGicxkl2pEkX95R23HGRa1pEDHFF1XQNkhns558WioFipI2RvmAAEaMgZQ1p+SV/cdu-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>
