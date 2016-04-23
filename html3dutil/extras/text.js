@@ -23,7 +23,12 @@ if(!GLUtil){ GLUtil={}; }
 * than 0.5 (127 in most image formats) means the pixel is outside the
 * glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
 * outside the glyph) and 1 (for outside the glyph) means the pixel is
-* outside a buffer zone formed by the glyph's outline.
+* outside a buffer zone formed by the glyph's outline.<p>
+* The font definition file formats supported are text (".fnt") and XML (".xml").
+* The text file format is specified at
+* <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
+* page</a> (note that this method doesn't currently support the binary
+* version described in that page).  The XML format is very similar to the text file format.
 * <p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
@@ -114,7 +119,7 @@ TextRenderer.prototype._loadPages=function(font){
 /**
 * Loads a bitmap font definition from a text file or an XML file,
 * as well as the bitmaps used by that font, and maps them
-* to WebGL textures.  See {@link TextFont.load} for
+* to WebGL textures.  See {@link TextRenderer} for
 * more information.
 * @param {string} fontFileName The URL of the font data text file
 * to load.  If the string ends in ".xml", the font data is assumed to
@@ -345,10 +350,6 @@ TextFont._loadTextFontInner=function(data){
 }
 /**
 * Loads a bitmap font definition from a text file or an XML file.
-* The text file format is specified at
-* <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
-* page</a> (note that this method doesn't currently support the binary
-* version described in that page).  The XML format is very similar to the text file format.
 * Note that this method only loads the font data and not the bitmaps
 * used to represent the font.
 * @param {string} fontFileName The URL of the font data text file
