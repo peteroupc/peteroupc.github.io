@@ -39,25 +39,25 @@ transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with &quot;mat&quot;.</p>
 <h3>Translation <a id=Translation></a></h3><p>A translation is a shifting of an object's position.</p>
-<p>To create a translation matrix, use GLMath.mat4translated(),
+<p>To create a translation matrix, use <a href="glmath.GLMath.html#.mat4translated">GLMath.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 <p>To multiply an existing matrix by a translation, use
-GLMath.mat4translate().  This will put the translation
+<a href="glmath.GLMath.html#.mat4translate">GLMath.mat4translate()</a>.  This will put the translation
 before the other transformations.</p>
 <h3>Scaling <a id=Scaling></a></h3><p>Scaling changes an object's size.</p>
-<p>To create a scaling matrix, use GLMath.mat4scaled(),
+<p>To create a scaling matrix, use <a href="glmath.GLMath.html#.mat4scaled">GLMath.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
 factors to change the object's size.  For example, a Y-factor of 2 doubles an object's height.</p>
 <p>To multiply an existing matrix by a scaling, use
-GLMath.mat4scale().  This will put the scaling
+<a href="glmath.GLMath.html#.mat4scale">GLMath.mat4scale()</a>.  This will put the scaling
 before the other transformations.</p>
 <h3>Rotation <a id=Rotation></a></h3><p>Rotation changes an object's orientation.</p>
-<p>To create a rotation matrix, use GLMath.mat4rotated(),
+<p>To create a rotation matrix, use <a href="glmath.GLMath.html#.mat4rotated">GLMath.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
 origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
 <p>To multiply an existing matrix by a rotation, use
-GLMath.mat4rotate().  This will put the rotation
+<a href="glmath.GLMath.html#.mat4rotate">GLMath.mat4rotate()</a>.  This will put the rotation
 before the other transformations.</p>
 <h3>Combining Transforms <a id=Combining_Transforms></a></h3><p>The order in which you do transforms is important.  In general, scaling then translating is
 not the same as translating then scaling.  Assuming your geometry is centered at the origin
@@ -70,7 +70,7 @@ not the same as translating then scaling.  Assuming your geometry is centered at
 </ul>
 <p>This way, the scalings and rotations will affect the object while it's still centered, and
 before the translations (shifts) take place.</p>
-<p>You can also multiply transforms using GLMath.mat4multiply().
+<p>You can also multiply transforms using <a href="glmath.GLMath.html#.mat4multiply">GLMath.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.</p>
 <h2>Quaternions <a id=Quaternions></a></h2><p>A quaternion is a 4-element array that describes a
@@ -120,9 +120,9 @@ axis), so that a rotation along that axis will do nothing.</li>
 </ul>
 <p>Related functions:</p>
 <ul>
-<li>GLMath.quatFromTaitBryan() -
+<li><a href="glmath.GLMath.html#.quatFromTaitBryan">GLMath.quatFromTaitBryan()</a> -
 Converts from Tait-Bryan angles to a quaternion</li>
-<li>GLMath.quatToTaitBryan() -
+<li><a href="glmath.GLMath.html#.quatToTaitBryan">GLMath.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 <h2>Planes <a id=Planes></a></h2><p>A 4-element array can describe a 3D plane in the following manner:</p>
@@ -141,7 +141,7 @@ plane's normal and any point on the plane.</li>
 </ul>
 <p>There is one method that deals with planes:</p>
 <ul>
-<li>GLMath.planeNormInPlace() -
+<li><a href="glmath.GLMath.html#.planeNormInPlace">GLMath.planeNormInPlace()</a> -
 Converts the plane to a form in which its normal is unit length.</li>
 </ul>
 <h2>Coordinate Systems <a id=Coordinate_Systems></a></h2><p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
@@ -211,7 +211,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

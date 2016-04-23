@@ -30,7 +30,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   //
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  scene.setOrtho2DAspect(0,640,480,0);
   var textrnd=new GLUtil.TextRenderer(scene);
   GLUtil.getPromiseResults([
    textrnd.loadFont("black-chancery.fnt"),
@@ -39,10 +38,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    if(results.failures.length>0)return;
    var shape=textrnd.textShape(results.successes[0],"This is...\na test.",0,50,100,"blue");
    scene.addShape(shape);
-   shape=textrnd.textShape(results.successes[1],"This is...\nanother test.",0,250,100);
+   shape=textrnd.textShape(results.successes[1],"Example text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \n",0,0,20);
    scene.addShape(shape);
   });
   GLUtil.renderLoop(function(){
+   scene.setOrtho2DAspect(0,640,480,0);
    scene.render();
   });
 //-->
