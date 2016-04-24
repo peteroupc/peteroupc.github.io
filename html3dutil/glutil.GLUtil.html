@@ -129,7 +129,7 @@ This parameter can't be a negative number.</dd>
 
     <h4 style="margin-bottom:0px" id=".get3DContext"><span style="font-weight:lighter">(static) </span>get3DContext<span class="signature">(canvasElement, err)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line160">line 160</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line161">line 161</a>
      </i></small></p>
 
 <div class="description">
@@ -232,7 +232,7 @@ is null or not an HTML canvas element.
 
     <h4 style="margin-bottom:0px" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line203">line 203</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line204">line 204</a>
      </i></small></p>
 
 <div class="description">
@@ -315,7 +315,7 @@ True means success, and false means failure.</ul>
 
     <h4 style="margin-bottom:0px" id=".getTimePosition"><span style="font-weight:lighter">(static) </span>getTimePosition<span class="signature">(timer, timeInMs, intervalInMs)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line333">line 333</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line334">line 334</a>
      </i></small></p>
 
 <div class="description">
@@ -409,7 +409,7 @@ value in milliseconds, such as the parameter of a
 
     <h4 style="margin-bottom:0px" id=".is3DContext"><span style="font-weight:lighter">(static) </span>is3DContext<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line179">line 179</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line180">line 180</a>
      </i></small></p>
 
 <div class="description">
@@ -432,7 +432,7 @@ value in milliseconds, such as the parameter of a
 
     <h4 style="margin-bottom:0px" id=".loadFileFromUrl"><span style="font-weight:lighter">(static) </span>loadFileFromUrl<span class="signature">(url, responseType)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line269">line 269</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line270">line 270</a>
      </i></small></p>
 
 <div class="description">
@@ -501,7 +501,7 @@ from JSON.
 
     <h4 style="margin-bottom:0px" id=".newFrames"><span style="font-weight:lighter">(static) </span>newFrames<span class="signature">(timer, timeInMs)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line358">line 358</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line359">line 359</a>
      </i></small></p>
 
 <div class="description">
@@ -567,7 +567,7 @@ initial time or last known time wasn't set, returns 0.
      </i></small></p>
 
 <div class="description">
-    This method will call the function once before returning,
+    This method will call a function once before returning,
 and queue requests to call that function once per frame,
 using <code>window.requestAnimationFrame</code>
 or a "polyfill" method.
@@ -597,9 +597,9 @@ milliseconds since the page was loaded.</dd>
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line511">line 511</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line521">line 521</a>
      </i></small></p>
 
 <div class="description">
@@ -663,9 +663,9 @@ For more information:
 )
 
            </dt><dd>
-           Array of three or
-four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.  Returns (0,0,0,0) if this value is null.</dd>
+           One of the following:<ul><li>A <b>color vector or string</b>, which can be:<ul><li>An array of three color components, each of which ranges from 0 to 1.
+The three components are red, green, and blue in that order.</li><li>An array of four color components, each of which ranges from 0 to 1.
+The three components are red, green, blue, and alpha in that order.</li><li>A string specifying an HTML or CSS color, in one of the formats mentionedabove in the method description.</li></ul></li><li>A number specifying the red component.  Must range from 0 to 1.</li></ul>Returns (0,0,0,0) if this value is null.</dd>
 
         <dt>
 
@@ -702,9 +702,10 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           Alpha color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
+           Alpha color component (0-1).If the "r" parameter is given and this parameter is null or omitted,this value is treated as 1.0.</dd>
 
     </dl>
 
@@ -744,7 +745,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

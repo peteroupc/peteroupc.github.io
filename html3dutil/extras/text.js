@@ -42,7 +42,7 @@ if(!GLUtil){ GLUtil={}; }
 */
 function TextRenderer(scene){
  this.scene=scene;
- this.shader=new ShaderProgram(scene,null,TextRenderer._textShader());
+ this.shader=new ShaderProgram(scene,null,TextRenderer._textShader(scene));
  this.fontTextures=[]
 }
 /** @private */
@@ -375,18 +375,28 @@ TextFont.load=function(fontFileName){
  }
 }
 
-TextRenderer._textShader=function(){
+TextRenderer._textShader=function(scene){
 "use strict";
 var i;
-var shader=ShaderProgram.fragmentShaderHeader() +
+
+var shader=""
+var derivs=ShaderProgram.supportsDerivatives(scene);
+if(derivs){
+ shader+="#extension GL_OES_standard_derivatives : enable\n"
+}
+shader+=ShaderProgram.fragmentShaderHeader() +
 "uniform vec4 md;\n" +
 "uniform sampler2D sampler;\n" +
 "varying vec2 uvVar;\n"+
 "varying vec3 colorAttrVar;\n" +
-"const float smooth = 0.06;\n" +
 "void main(){\n" +
-" float d=texture2D(sampler, uvVar).a;\n"+
-" gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-smooth,0.5+smooth,d));\n" +
+" float d=texture2D(sampler, uvVar).a;\n"
+if(derivs){
+shader+=" float dsmooth=fwidth(d);\n";
+} else {
+shader+=" float dsmooth=0.06;\n";
+}
+shader+=" gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-dsmooth,0.5+dsmooth,d));\n" +
 "}";
 return shader;
 };

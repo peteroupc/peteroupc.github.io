@@ -7,7 +7,7 @@
 */
 function FourierKnot(a,b){
  "use strict";
-this.a=a; // Cosine coefficien
+this.a=a; // Cosine coefficients
  this.b=b; // Sine coefficients
  this.idx=0;
  if(this.a.length!==this.b.length){
