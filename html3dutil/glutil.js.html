@@ -473,6 +473,14 @@ var e=null;
   return null;
  }
 };
+
+var clampRgba=function(x){
+ x[0]=(x[0]&lt;0 ? 0 : Math.min(x[0],1));
+ x[1]=(x[1]&lt;0 ? 0 : Math.min(x[1],1));
+ x[2]=(x[2]&lt;0 ? 0 : Math.min(x[2],1));
+ x[3]=(x[3]&lt;0 ? 0 : Math.min(x[3],1));
+ return x
+}
 /**
 * Creates a 4-element array representing a color.  Each element
 * can range from 0 to 1 and specifies the red, green, blue or alpha
@@ -514,7 +522,7 @@ var e=null;
 * [Colors in HTML and How to Enter Them]{@link http://upokecenter.dreamhosters.com/articles/miscellaneous/how-to-enter-colors/}.
 * @alias glutil.GLUtil.toGLColor
 * @param {Array&lt;number>|number|string} r One of the following:&lt;ul>
-* &lt;li>A &lt;b>color vector or string&lt;/b>, which can be:&lt;ul>
+* &lt;li>A &lt;b>color vector or string&lt;/b>, which can be one of these:&lt;ul>
 * &lt;li>An array of three color components, each of which ranges from 0 to 1.
 The three components are red, green, and blue in that order.&lt;/li>
 * &lt;li>An array of four color components, each of which ranges from 0 to 1.
@@ -532,7 +540,9 @@ The three components are red, green, blue, and alpha in that order.&lt;/li>
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
 * @return the color as a 4-element array; if the color is
-* invalid, returns [0,0,0,0] (transparent black).
+* invalid, returns [0,0,0,0] (transparent black). Numbers less
+* than 0 are clamped to 0, and numbers greater than 1 are
+* clamped to 1.
 */
 exports.toGLColor=function(r,g,b,a){
  if((r===null || typeof r==="undefined"))return [0,0,0,0];
@@ -543,16 +553,16 @@ exports.toGLColor=function(r,g,b,a){
    rgba[1]*=mul;
    rgba[2]*=mul;
    rgba[3]*=mul;
-   return rgba;
+   return clampRgba(rgba);
  }
  if(typeof r==="number" &amp;&amp;
      typeof g==="number" &amp;&amp; typeof b==="number"){
    return [r,g,b,(typeof a!=="number") ? 1.0 : a];
  } else if(r.constructor===Array){
-   return [r[0]||0,r[1]||0,r[2]||0,
-     (typeof r[3]!=="number") ? 1.0 : r[3]];
+   return clampRgba([r[0]||0,r[1]||0,r[2]||0,
+     (typeof r[3]!=="number") ? 1.0 : r[3]]);
  } else {
-   return r || [0,0,0,0];
+   return clampRgba(r || [0,0,0,0]);
  }
 };
 
@@ -1078,7 +1088,6 @@ function Scene3D(canvasOrContext){
  this.fboFilter=null;
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this._invView=null;
  this._programs=new Scene3D.ProgramCache(context);
  this.useDevicePixelRatio=false;
  this._pixelRatio=1;
@@ -2460,7 +2469,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

@@ -25,19 +25,17 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="margin-bottom:0px" id="Material"><span style="font-weight:lighter"></span>new Material<span class="signature">(ambient, diffuse, specular, shininess, emission)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="Material"><span style="font-weight:lighter"></span>new Material<span class="signature">(ambient<sub style="font-weight:lighter">opt</sub>, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>, shininess<sub style="font-weight:lighter">opt</sub>, emission<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line789">line 789</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line23">line 23</a>
      </i></small></p>
 
 <div class="description">
     Specifies parameters for geometry materials, which describe the appearance of a
 3D object. This includes how an object scatters, reflects, or absorbs light, as well
 as well as a texture image to apply on that object's surface.<p>
-The full structure is only used if the shader program supports lighting, as the
-default shader program does.  If Scene3D.disableLighting() is called,
-disabling lighting calculations in the default shader, only the "diffuse" and "texture"
-properties of this object are used.
+<i>For more information on this constructor's parameters,
+see the <a href="glutil.Material.html#setParams">glutil.Material#setParams</a> method.</i>
 </div>
 
     <h5>Parameters:</h5>
@@ -53,12 +51,10 @@ properties of this object are used.
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           Ambient color.
-Can be an array of three numbers,
-ranging from 0 to 1 and giving the red, green, and blue components, respectively,
-or can be a string representing an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.
-May be null or omitted; default is (0.2, 0.2, 0.2).</dd>
+           Ambient color.</dd>
 
         <dt>
 
@@ -69,9 +65,10 @@ May be null or omitted; default is (0.2, 0.2, 0.2).</dd>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           Diffusion color (also called "albedo").  A color with the same format
-as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).</dd>
+           Diffusion color (also called "albedo").</dd>
 
         <dt>
 
@@ -82,10 +79,10 @@ as for "ambient". May be null or omitted; default is (0.8, 0.8, 0.8).</dd>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           Specular highlight reflection.
-A color with the same format as for "ambient".
-May be null or omitted; default is (0,0,0), meaning no specular highlights.</dd>
+           Specular highlight reflection.</dd>
 
         <dt>
 
@@ -96,9 +93,10 @@ May be null or omitted; default is (0,0,0), meaning no specular highlights.</dd>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           Specular highlight exponent of this material.
-Ranges from 0 through 128. May be null or omitted; default is 0.</dd>
+           Specular highlight exponent of this material.</dd>
 
         <dt>
 
@@ -109,11 +107,10 @@ Ranges from 0 through 128. May be null or omitted; default is 0.</dd>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           Additive color emitted by an object.
-A color with the same format as for "ambient", except the array's numbers
-range from -1 to 1.
-May be null or omitted; default is (0,0,0).</dd>
+           Additive color emitted by an object.</dd>
 
     </dl>
 
@@ -127,7 +124,7 @@ May be null or omitted; default is (0,0,0).</dd>
 
 <h4 style="margin-bottom:0px" id="ambient"><span style="font-weight:lighter"></span>ambient<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line820">line 820</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line54">line 54</a>
      </i></small></p>
 
 <div class="description">
@@ -154,9 +151,23 @@ colors are used for ambient color rather than this property.
 
 </dl>
 
+<h4 style="margin-bottom:0px" id="basic"><span style="font-weight:lighter"></span>basic<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line159">line 159</a>
+     </i></small></p>
+
+<div class="description">
+    If true, only the "diffuse" and "texture" properties of this object are used
+when processing objects that use this material.
+</div>
+
+<dl class="details">
+
+</dl>
+
 <h4 style="margin-bottom:0px" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line839">line 839</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line73">line 73</a>
      </i></small></p>
 
 <div class="description">
@@ -184,7 +195,7 @@ This value can have an optional fourth element giving the alpha component
 
 <h4 style="margin-bottom:0px" id="emission"><span style="font-weight:lighter"></span>emission<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line868">line 868</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line102">line 102</a>
      </i></small></p>
 
 <div class="description">
@@ -206,7 +217,7 @@ while negative values subtract from it. (0,0,0), the default, means no additive 
 
 <h4 style="margin-bottom:0px" id="normalMap"><span style="font-weight:lighter"></span>normalMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line916">line 916</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line153">line 153</a>
      </i></small></p>
 
 <div class="description">
@@ -229,7 +240,10 @@ and away from the surface's edges.
 Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
 to the vector given in that pixel.  This tilt adjusts the normals used for the
 purpose of calculating lighting effects at that part of the surface.
-A strong tilt indicates strong relief detail at that point.<p>Any image used for normal maps should not be in JPEG format or any otherformat that uses lossy compression, as compression artifacts can result in inaccuratenormals in certain areas.
+A strong tilt indicates strong relief detail at that point.<p>
+Any texture used for normal maps should not be in JPEG format or any other
+format that uses lossy compression, as compression artifacts can result in inaccurate
+normals in certain areas.
 <p>
 For normal mapping to work, an object's mesh must include normals,
 tangents, bitangents, and texture coordinates, though if a <code>Mesh</code>
@@ -241,9 +255,22 @@ method can calculate the tangents and bitangents appropriate for normal mapping.
 
 </dl>
 
+<h4 style="margin-bottom:0px" id="shader"><span style="font-weight:lighter"></span>shader<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line164">line 164</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
 <h4 style="margin-bottom:0px" id="shininess"><span style="font-weight:lighter"></span>shininess<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line801">line 801</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line35">line 35</a>
      </i></small></p>
 
 <div class="description">
@@ -260,7 +287,7 @@ Ranges from 0 through 128.
 
 <h4 style="margin-bottom:0px" id="specular"><span style="font-weight:lighter"></span>specular<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line855">line 855</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line89">line 89</a>
      </i></small></p>
 
 <div class="description">
@@ -284,7 +311,7 @@ uncoated metal of some sort. If this element is omitted, the default is (0,0,0).
 
 <h4 style="margin-bottom:0px" id="specularMap"><span style="font-weight:lighter"></span>specularMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line885">line 885</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line121">line 121</a>
      </i></small></p>
 
 <div class="description">
@@ -293,7 +320,10 @@ each part of the object's surface (note that the material must have a specular c
 than the default black for this to have an effect).<p>
 The specular map is usually grayscale (all three components are the same in each pixel),
 but can be colored if the material represents an uncoated metal of some sort (in which case the specular
-color property should be (1,1,1) or another grayscale color). See <a href="glutil.Material.html#specular">glutil.Material#specular</a>.<p>Any image used for specular maps should not be in JPEG format or any otherformat that uses lossy compression, as compression artifacts can result in inaccuratespecular factors in certain areas.
+color property should be (1,1,1) or another grayscale color). See <a href="glutil.Material.html#specular">glutil.Material#specular</a>.<p>
+Any texture used for specular maps should not be in JPEG format or any other
+format that uses lossy compression, as compression artifacts can result in inaccurate
+specular factors in certain areas.
 </div>
 
 <dl class="details">
@@ -302,7 +332,7 @@ color property should be (1,1,1) or another grayscale color). See <a href="gluti
 
 <h4 style="margin-bottom:0px" id="texture"><span style="font-weight:lighter"></span>texture<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line873">line 873</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line108">line 108</a>
      </i></small></p>
 
 <div class="description">
@@ -316,9 +346,22 @@ of each part of the material.
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id=".forShader"><span style="font-weight:lighter">(static) </span>forShader<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1031">line 1031</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line303">line 303</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line283">line 283</a>
      </i></small></p>
 
 <div class="description">
@@ -346,9 +389,8 @@ object from an RGBA color.
 )
 
            </dt><dd>
-           Array of three or
-four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
+           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>,
+or the red color component (0-1).</dd>
 
         <dt>
 
@@ -385,9 +427,12 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
            Alpha color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
+If the "r" parameter is given and this parameter is null or omitted,
+this value is treated as 1.0.</dd>
 
     </dl>
 
@@ -407,7 +452,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
     <h4 style="margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter">(static) </span>fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line1044">line 1044</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line296">line 296</a>
      </i></small></p>
 
 <div class="description">
@@ -455,13 +500,13 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line927">line 927</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line173">line 173</a>
      </i></small></p>
 
 <div class="description">
     Clones this object's parameters to a new Material
 object and returns that object. The material's texture
-maps, if any, won't be cloned, but rather, a reference
+maps and shader program, if any, won't be cloned, but rather, a reference
 to the same object will be used.
 </div>
 
@@ -481,7 +526,7 @@ to the same object will be used.
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line965">line 965</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line217">line 217</a>
      </i></small></p>
 
 <div class="description">
@@ -507,11 +552,17 @@ the possibilities given below, and whose values are those
 allowed for each key.<ul>
 <li><code>basic</code> - If set to true, only the "diffuse" and "texture" properties
 of this material are used.
-<li><code>ambient</code> - Ambient color (see <a href="glutil.Material.html">glutil.Material</a> constructor).
-<li><code>diffuse</code> - Diffusion (see <a href="glutil.Material.html">glutil.Material</a> constructor).
-<li><code>specular</code> - Specular reflection (see <a href="glutil.Material.html">glutil.Material</a> constructor).
-<li><code>shininess</code> - Specular reflection exponent (see <a href="glutil.Material.html">glutil.Material</a> constructor).
-<li><code>emission</code> - Additive color (see <a href="glutil.Material.html">glutil.Material</a> constructor).
+<li><code>ambient</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving the ambient color. (See <a href="glutil.Material.html#ambient">glutil.Material#ambient</a>.)
+The default is (0.2, 0.2, 0.2).
+<li><code>diffuse</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving
+the diffusion color (also called "albedo"). (See <a href="glutil.Material.html#diffuse">glutil.Material#diffuse</a>.) The default is (0.8, 0.8, 0.8).
+<li><code>specular</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving
+the specular reflection.  (See <a href="glutil.Material.html#specular">glutil.Material#specular</a>.) The default is (0,0,0), meaning no specular highlights.
+<li><code>shininess</code> - Specular reflection exponent.  (See <a href="glutil.Material.html#shininess">glutil.Material#shininess</a>).
+Ranges from 0 through 128. The default is 0.
+<li><code>emission</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving
+the additive color.  (See <a href="glutil.Material.html#emission">glutil.Material#emission</a>.) If this is an array, its numbers can
+range from -1 to 1. The default is (0,0,0).
 <li><code>texture</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL of the texture
 to use.
 <li><code>specularMap</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL, of a specular
@@ -520,7 +571,7 @@ map texture (see <a href="glutil.Material.html#specularMap">glutil.Material#spec
 map (bump map) texture (see <a href="glutil.Material.html#normalMap">glutil.Material#normalMap</a>).
 <li><code>shader</code> - <a href="glutil.ShaderProgram.html">glutil.ShaderProgram</a> object for a WebGL shader program.
 </ul>
-If a value is null or undefined, it is ignored.</dd>
+Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.</dd>
 
     </dl>
 
