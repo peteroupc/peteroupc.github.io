@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: TextRenderer</title>
+<head><meta charset="utf-8"><title>JSDoc: Source: glutil-subscene3d.js</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,233 +10,185 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: TextRenderer</h1>
-
-<section>
-
-<header>
-
-        <h2>
-        TextRenderer
-        </h2>
-
-</header>
-
-<article>
-    <div class="container-overview">
-
-    <h4 style="margin-bottom:0px" id="TextRenderer"><span style="font-weight:lighter"></span>new TextRenderer<span class="signature">(scene)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line43">line 43</a>
-     </i></small></p>
-
-<div class="description">
-    Renderer for bitmap fonts.  This class supports traditional bitmap
-fonts and signed distance field fonts.<p>
-Bitmap fonts consist of a font definition file (".fnt" or ".xml") and one
-or more bitmaps containing the shape of each font glyph.  The glyphs
-are packed so they take as little space as possible and the glyphs don't
-overlap each other.<p>
-In a signed distance field font, each pixel's alpha value depends on the
-distance from that location to the edge of the glyph.  A pixel alpha less
-than 0.5 (127 in most image formats) means the pixel is outside the
-glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
-outside the glyph) and 1 (for outside the glyph) means the pixel is
-outside a buffer zone formed by the glyph's outline.<p>
-The font definition file formats supported are text (".fnt") and XML (".xml").
-The text file format is specified at
-<a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
-page</a> (note that this method doesn't currently support the binary
-version described in that page).  The XML format is very similar to the text file format.
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library. <p>
-To use this class, you must include the script "extras/text.js"; the
-class is not included in the "glutil_min.js" file which makes up
-the HTML 3D Library.  Example:<pre>
-&lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>scene</code>
-
-                (
-<span class="param-type"><a href="glutil.Scene3D.html">glutil.Scene3D</a></span>
-
-)
-
-           </dt><dd>
-           3D scene to load font textures with.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="margin-bottom:0px" id="loadFont"><span style="font-weight:lighter"></span>loadFont<span class="signature">(fontFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="TextFont.html">TextFont</a>>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line131">line 131</a>
-     </i></small></p>
-
-<div class="description">
-    Loads a bitmap font definition from a text file or an XML file,
-as well as the bitmaps used by that font, and maps them
-to WebGL textures.  See <a href="TextRenderer.html">TextRenderer</a> for
-more information.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>fontFileName</code>
-
-                (
-<span class="param-type">string</span>
-
-)
-
-           </dt><dd>
-           The URL of the font data text file
-to load.  If the string ends in ".xml", the font data is assumed to
-be in XML; otherwise, in text.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A promise that is resolved
-when the font data is loaded successfully (the result will be
-a TextFont object), and is rejected when an error occurs.
-
-     (Type:
-<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="TextFont.html">TextFont</a>></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="textShape"><span style="font-weight:lighter"></span>textShape<span class="signature">(font, string, xPos, yPos, height, color<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line83">line 83</a>
-     </i></small></p>
-
-<div class="description">
-    Creates a 3D shape containing the primitives needed to
-draw text in the given position, size, and color.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>font</code>
-
-                (
-<span class="param-type"><a href="TextFont.html">TextFont</a></span>
-
-)
-
-           </dt><dd>
-           The bitmap font to use when drawing the text.</dd>
-
-        <dt>
-
-                <code>string</code>
-
-                (
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           The text to draw.  Line breaks ("\n") are recognized
-by this method.</dd>
-
-        <dt>
-
-                <code>xPos</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           X-coordinate of the top left corner of the text.</dd>
-
-        <dt>
-
-                <code>yPos</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Y-coordinate of the top left corner of the text.</dd>
-
-        <dt>
-
-                <code>height</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Size of the text in units.</dd>
-
-        <dt>
-
-                <code>color</code>
-
-                (
-<span class="param-type">string</span>
-|
-
-<span class="param-type">Array.&lt;number></span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           The color to draw the text with.
-An array of three or
-four color components; or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.
-If null or omitted, the bitmap font is assumed to be a signed distance field
-font.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-</article>
-
-</section>
+    <h1>Source: glutil-subscene3d.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+
+function Subscene3D(scene){
+ this.parent=scene;
+ this._projectionMatrix=GLMath.mat4identity();
+ this._viewMatrix=GLMath.mat4identity();
+ this.lightSource=new Lights();
+ this._frustum=null;
+ this.shapes=[];
+}
+
+/** @private */
+Subscene3D._setupMatrices=function(
+  program,
+  projMatrix,
+  viewMatrix,
+  worldMatrix,
+  projAndView){
+  var uniforms={};
+  var viewWorld;
+  if(projAndView){
+   uniforms.view=viewMatrix;
+   uniforms.projection=projMatrix;
+   uniforms.viewMatrix=viewMatrix;
+   uniforms.projectionMatrix=projMatrix;
+   var viewInvW=program.get("viewInvW");
+   if(viewInvW!==null &amp;&amp; typeof viewInvW!=="undefined"){
+    var invView=GLMath.mat4invert(viewMatrix);
+    uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
+   }
+  }
+  var mvm=program.get("modelViewMatrix");
+  if((mvm!==null &amp;&amp; typeof mvm!=="undefined")){
+   if(GLUtil._isIdentityExceptTranslate(viewMatrix)){
+    // view matrix is just a translation matrix, so that getting the model-view
+    // matrix amounts to simply adding the view's position
+    viewWorld=worldMatrix.slice(0,16);
+    viewWorld[12]+=viewMatrix[12];
+    viewWorld[13]+=viewMatrix[13];
+    viewWorld[14]+=viewMatrix[14];
+   } else {
+    viewWorld=GLMath.mat4multiply(viewMatrix,
+     worldMatrix);
+   }
+   uniforms.modelViewMatrix=viewWorld;
+  }
+  var invTrans=GLMath.mat4inverseTranspose3(worldMatrix);
+  uniforms.world=worldMatrix;
+  uniforms.modelMatrix=worldMatrix;
+  uniforms.worldViewInvTrans3=invTrans;
+  uniforms.normalMatrix=invTrans;
+  program.setUniforms(uniforms);
+};
+
+/**
+ * Gets the current projection matrix for this scene.
+ * @return {Array&lt;number>}
+ */
+Subscene3D.prototype.setProjectionMatrix=function(mat){
+ this._projectionMatrix=mat.slice(0,16)
+};
+/**
+ * Gets the current view matrix for this scene.
+ * @return {Array&lt;number>}
+ */
+Subscene3D.prototype.setViewMatrix=function(mat){
+ this._viewMatrix=mat.slice(0,16)
+};
+/**
+ * Gets the current projection matrix for this scene.
+ * @return {Array&lt;number>}
+ */
+Subscene3D.prototype.getProjectionMatrix=function(){
+ return this._projectionMatrix.slice(0,16);
+};
+/**
+ * Gets the current view matrix for this scene.
+ * @return {Array&lt;number>}
+ */
+Subscene3D.prototype.getViewMatrix=function(){
+ return this._viewMatrix.slice(0,16);
+};
+
+Subscene3D.prototype._getFrustum=function(){
+ if(this._frustum==null){
+  var projView=GLMath.mat4multiply(this._projectionMatrix,this._viewMatrix);
+  this._frustum=GLMath.mat4toFrustumPlanes(projView);
+ }
+ return this._frustum;
+}
+
+Subscene3D.prototype.getLightSource=function(){
+ return this.lightSource;
+};
+/**
+* Adds a 3D shape to this scene.  Its reference, not a copy,
+* will be stored in the 3D scene's list of shapes.
+* Its parent will be set to no parent.
+* @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
+* @return {glutil.Subscene3D} This object.
+*/
+Subscene3D.prototype.addShape=function(shape){
+ shape.parent=null;
+ this.shapes.push(shape);
+ return this;
+};
+/**
+* Removes all instances of a 3D shape from this scene.
+* @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
+* @return {glutil.Subscene3D} This object.
+*/
+Subscene3D.prototype.removeShape=function(shape){
+ for(var i=0;i&lt;this.shapes.length;i++){
+   if(this.shapes[i]===shape){
+     this.shapes.splice(i,1);
+     i--;
+   }
+ }
+ return this;
+};
+
+/** @private */
+Subscene3D.prototype._renderShape=function(shape, renderContext){
+ if(shape.constructor===ShapeGroup){
+  if(!shape.visible)return;
+  for(var i=0;i&lt;shape.shapes.length;i++){
+   this._renderShape(shape.shapes[i], renderContext);
+  }
+ } else {
+   if(!shape.isCulled(this._getFrustum())){
+    var prog=null;
+    var params={};
+    var flags=0;
+    if(shape.material instanceof Material){
+     prog=shape.material.shader ?
+       shape.material.shader :
+       this.parent._programs.getProgram(Scene3D._materialToFlags(shape.material));
+    } else {
+     prog=this.parent._programs.getProgram(0);
+    }
+    var projAndView=false;
+    if(renderContext.prog!=prog){
+     prog.use();
+     projAndView=true;
+     new LightsBinder(this.lightSource).bind(prog);
+     renderContext.prog=prog;
+    }
+    Subscene3D._setupMatrices(prog,
+      this._projectionMatrix,
+      this._viewMatrix,
+      shape.getMatrix(),
+      projAndView);
+    Binders.getMaterialBinder(shape.material).bind(prog);
+    shape.bufferedMesh.draw(prog);
+  }
+ }
+};
+
+Subscene3D.prototype.render=function(){
+  var rc={};
+  for(var i=0;i&lt;this.shapes.length;i++){
+   this._renderShape(this.shapes[i],rc);
+  }
+  return this;
+};
+</code></pre>
+        </article>
+    </section>
 
 </div>
 <nav id="navigation">

@@ -27,7 +27,7 @@
 
     <h4 style="margin-bottom:0px" id="Lights"><span style="font-weight:lighter"></span>new Lights<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line678">line 678</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line687">line 687</a>
      </i></small></p>
 
 <div class="description">
@@ -47,7 +47,7 @@ ambient color and one directional light source.
 
 <h4 style="margin-bottom:0px" id=".MAX_LIGHTS"><span style="font-weight:lighter">(static, constant) </span>MAX_LIGHTS<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line700">line 700</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line709">line 709</a>
      </i></small></p>
 
 <div class="description">
@@ -61,7 +61,7 @@ ambient color and one directional light source.
 
 <h4 style="margin-bottom:0px" id="sceneAmbient"><span style="font-weight:lighter"></span>sceneAmbient<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line694">line 694</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line703">line 703</a>
      </i></small></p>
 
 <div class="description">
@@ -88,7 +88,7 @@ Ambient lights simulate this phenomenon.</small>
 
     <h4 style="margin-bottom:0px" id="getCount"><span style="font-weight:lighter"></span>getCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line713">line 713</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line722">line 722</a>
      </i></small></p>
 
 <div class="description">
@@ -111,7 +111,7 @@ Ambient lights simulate this phenomenon.</small>
 
     <h4 style="margin-bottom:0px" id="getLight"><span style="font-weight:lighter"></span>getLight<span class="signature">(index)</span><span style="font-weight:lighter"> &rarr; {LightSource}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line724">line 724</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line733">line 733</a>
      </i></small></p>
 
 <div class="description">
@@ -154,7 +154,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 
     <h4 style="margin-bottom:0px" id="setAmbient"><span style="font-weight:lighter"></span>setAmbient<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line807">line 807</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line816">line 816</a>
      </i></small></p>
 
 <div class="description">
@@ -181,7 +181,9 @@ If the light doesn't exist at that index, it will be created.</dd>
 )
 
            </dt><dd>
-           Array of three orfour color components; or the red color component (0-1); or a stringspecifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
+           Array of three or
+four color components; or the red color component (0-1); or a string
+specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
 
         <dt>
 
@@ -193,7 +195,8 @@ If the light doesn't exist at that index, it will be created.</dd>
 )
 
            </dt><dd>
-           Green color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
         <dt>
 
@@ -205,7 +208,8 @@ If the light doesn't exist at that index, it will be created.</dd>
 )
 
            </dt><dd>
-           Blue color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
         <dt>
 
@@ -219,7 +223,8 @@ If the light doesn't exist at that index, it will be created.</dd>
                     &lt;optional>
 
            </dt><dd>
-           Alpha color component (0-1).Currently not used.</dd>
+           Alpha color component (0-1).
+Currently not used.</dd>
 
     </dl>
 
@@ -239,7 +244,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 
     <h4 style="margin-bottom:0px" id="setDirectionalLight"><span style="font-weight:lighter"></span>setDirectionalLight<span class="signature">(index, direction, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line766">line 766</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line775">line 775</a>
      </i></small></p>
 
 <div class="description">
@@ -289,7 +294,8 @@ axes, respectively.</dd>
                     &lt;optional>
 
            </dt><dd>
-           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>  giving the diffuse color of the light.If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
+           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>  giving the diffuse color of the light.
+If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
 
         <dt>
 
@@ -303,7 +309,10 @@ axes, respectively.</dd>
                     &lt;optional>
 
            </dt><dd>
-           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>  giving the color of specular highlights caused bythe light.If null or omitted, the specular highlight color willremain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
+           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>  giving the color of specular highlights caused by
+the light.
+If null or omitted, the specular highlight color will
+remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
 
     </dl>
 
@@ -323,7 +332,7 @@ axes, respectively.</dd>
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(index, params)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line746">line 746</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line755">line 755</a>
      </i></small></p>
 
 <div class="description">
@@ -378,7 +387,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 
     <h4 style="margin-bottom:0px" id="setPointLight"><span style="font-weight:lighter"></span>setPointLight<span class="signature">(index, position, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line785">line 785</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line794">line 794</a>
      </i></small></p>
 
 <div class="description">

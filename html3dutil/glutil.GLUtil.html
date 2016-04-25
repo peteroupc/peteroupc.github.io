@@ -663,9 +663,17 @@ For more information:
 )
 
            </dt><dd>
-           One of the following:<ul><li>A <b>color vector or string</b>, which can be one of these:<ul><li>An array of three color components, each of which ranges from 0 to 1.
-The three components are red, green, and blue in that order.</li><li>An array of four color components, each of which ranges from 0 to 1.
-The three components are red, green, blue, and alpha in that order.</li><li>A string specifying an HTML or CSS color, in one of the formats mentionedabove in the method description.</li></ul></li><li>A number specifying the red component.  Must range from 0 to 1.</li></ul>Returns (0,0,0,0) if this value is null.</dd>
+           One of the following:<ul>
+<li>A <b>color vector or string</b>, which can be one of these:<ul>
+<li>An array of three color components, each of which ranges from 0 to 1.
+The three components are red, green, and blue in that order.</li>
+<li>An array of four color components, each of which ranges from 0 to 1.
+The three components are red, green, blue, and alpha in that order.</li>
+<li>A string specifying an HTML or CSS color, in one of the formats mentioned
+above in the method description.</li></ul></li>
+<li>A number specifying the red component.  Must range from 0 to 1.</li>
+</ul>
+Returns (0,0,0,0) if this value is null.</dd>
 
         <dt>
 
@@ -705,7 +713,9 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
                     &lt;optional>
 
            </dt><dd>
-           Alpha color component (0-1).If the "r" parameter is given and this parameter is null or omitted,this value is treated as 1.0.</dd>
+           Alpha color component (0-1).
+If the "r" parameter is given and this parameter is null or omitted,
+this value is treated as 1.0.</dd>
 
     </dl>
 
@@ -717,7 +727,9 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
 <div class="param-desc">
     the color as a 4-element array; if the color is
-invalid, returns [0,0,0,0] (transparent black). Numbers lessthan 0 are clamped to 0, and numbers greater than 1 areclamped to 1.
+invalid, returns [0,0,0,0] (transparent black). Numbers less
+than 0 are clamped to 0, and numbers greater than 1 are
+clamped to 1.
 
 </div>
 

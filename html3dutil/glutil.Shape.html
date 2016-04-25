@@ -27,7 +27,7 @@
 
     <h4 style="margin-bottom:0px" id="Shape"><span style="font-weight:lighter"></span>new Shape<span class="signature">(mesh)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2186">line 2186</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2148">line 2148</a>
      </i></small></p>
 
 <div class="description">
@@ -51,7 +51,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 )
 
            </dt><dd>
-           A mesh in the form of a vertex buffer object.
+           A mesh in the form of a buffer object.
 For <a href="glutil.Mesh.html">glutil.Mesh</a> objects, use the <a href="glutil.Scene3D.html#makeShape">glutil.Scene3D#makeShape</a>
 method instead.</dd>
 
@@ -67,14 +67,14 @@ method instead.</dd>
 
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2316">line 2316</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2278">line 2278</a>
      </i></small></p>
 
 <div class="description">
     Makes a copy of this object.  The copied object
 will have its own version of the transform and
 material data, but any texture
-image data and vertex buffers will not be duplicated,
+image data and buffered meshes will not be duplicated,
 but rather just references to them will be used.
 </div>
 
@@ -94,7 +94,7 @@ but rather just references to them will be used.
 
     <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>getBounds<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2331">line 2331</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2293">line 2293</a>
      </i></small></p>
 
 <div class="description">
@@ -107,7 +107,7 @@ but rather just references to them will be used.
 
     <h4 style="margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2406">line 2406</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2368">line 2368</a>
      </i></small></p>
 
 <div class="description">
@@ -131,7 +131,7 @@ See <a href="glutil.Transform.html#getMatrix">glutil.Transform#getMatrix</a>.
 
     <h4 style="margin-bottom:0px" id="getTransform"><span style="font-weight:lighter"></span>getTransform<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2325">line 2325</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2287">line 2287</a>
      </i></small></p>
 
 <div class="description">
@@ -144,7 +144,7 @@ See <a href="glutil.Transform.html#getMatrix">glutil.Transform#getMatrix</a>.
 
     <h4 style="margin-bottom:0px" id="getVisible"><span style="font-weight:lighter"></span>getVisible<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2219">line 2219</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2181">line 2181</a>
      </i></small></p>
 
 <div class="description">
@@ -157,7 +157,7 @@ See <a href="glutil.Transform.html#getMatrix">glutil.Transform#getMatrix</a>.
 
     <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2205">line 2205</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2167">line 2167</a>
      </i></small></p>
 
 <div class="description">
@@ -181,7 +181,7 @@ and points) composed by all shapes in this scene.
 
     <h4 style="margin-bottom:0px" id="setColor"><span style="font-weight:lighter"></span>setColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2239">line 2239</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2201">line 2201</a>
      </i></small></p>
 
 <div class="description">
@@ -212,7 +212,8 @@ precedence over the color given in this method.
 )
 
            </dt><dd>
-           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>,or the red color component (0-1).</dd>
+           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>,
+or the red color component (0-1).</dd>
 
         <dt>
 
@@ -252,7 +253,9 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
                     &lt;optional>
 
            </dt><dd>
-           Alpha color component (0-1).If the "r" parameter is given and this parameter is null or omitted,this value is treated as 1.0.</dd>
+           Alpha color component (0-1).
+If the "r" parameter is given and this parameter is null or omitted,
+this value is treated as 1.0.</dd>
 
     </dl>
 
@@ -272,7 +275,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
     <h4 style="margin-bottom:0px" id="setMaterial"><span style="font-weight:lighter"></span>setMaterial<span class="signature">(material)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2304">line 2304</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2266">line 2266</a>
      </i></small></p>
 
 <div class="description">
@@ -313,7 +316,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
     <h4 style="margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2387">line 2387</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2349">line 2349</a>
      </i></small></p>
 
 <div class="description">
@@ -383,7 +386,7 @@ or a 3-element position array, as specified in <a href="glutil.Transform.html#se
 
     <h4 style="margin-bottom:0px" id="setQuaternion"><span style="font-weight:lighter"></span>setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2397">line 2397</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2359">line 2359</a>
      </i></small></p>
 
 <div class="description">
@@ -425,7 +428,7 @@ See <a href="glutil.Transform.html#setQuaternion">glutil.Transform#setQuaternion
 
     <h4 style="margin-bottom:0px" id="setScale"><span style="font-weight:lighter"></span>setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2374">line 2374</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2336">line 2336</a>
      </i></small></p>
 
 <div class="description">
@@ -495,7 +498,7 @@ or a 3-element scaling array, as specified in <a href="glutil.Transform.html#set
 
     <h4 style="margin-bottom:0px" id="setShader"><span style="font-weight:lighter"></span>setShader<span class="signature">(shader)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2269">line 2269</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2231">line 2231</a>
      </i></small></p>
 
 <div class="description">
@@ -536,7 +539,7 @@ or a 3-element scaling array, as specified in <a href="glutil.Transform.html#set
 
     <h4 style="margin-bottom:0px" id="setTexture"><span style="font-weight:lighter"></span>setTexture<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2256">line 2256</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2218">line 2218</a>
      </i></small></p>
 
 <div class="description">
@@ -580,7 +583,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h4 style="margin-bottom:0px" id="setTextureAndColor"><span style="font-weight:lighter"></span>setTextureAndColor<span class="signature">(name, r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2295">line 2295</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2257">line 2257</a>
      </i></small></p>
 
 <div class="description">
@@ -664,7 +667,9 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
                     &lt;optional>
 
            </dt><dd>
-           Alpha color component (0-1).If the "r" parameter is given and this parameter is null or omitted,this value is treated as 1.0.</dd>
+           Alpha color component (0-1).
+If the "r" parameter is given and this parameter is null or omitted,
+this value is treated as 1.0.</dd>
 
     </dl>
 
@@ -684,7 +689,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
     <h4 style="margin-bottom:0px" id="setTransform"><span style="font-weight:lighter"></span>setTransform<span class="signature">(transform)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2361">line 2361</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2323">line 2323</a>
      </i></small></p>
 
 <div class="description">
@@ -715,7 +720,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
     <h4 style="margin-bottom:0px" id="setVisible"><span style="font-weight:lighter"></span>setVisible<span class="signature">(value)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2212">line 2212</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2174">line 2174</a>
      </i></small></p>
 
 <div class="description">
@@ -746,7 +751,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
     <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2198">line 2198</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line2160">line 2160</a>
      </i></small></p>
 
 <div class="description">

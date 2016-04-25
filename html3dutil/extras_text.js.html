@@ -31,7 +31,7 @@ if(!GLUtil){ GLUtil={}; }
 * Renderer for bitmap fonts.  This class supports traditional bitmap
 * fonts and signed distance field fonts.&lt;p>
 * Bitmap fonts consist of a font definition file (".fnt" or ".xml") and one
-* or more bitmaps containing the shape of each font glyphs.  The glyphs
+* or more bitmaps containing the shape of each font glyph.  The glyphs
 * are packed so they take as little space as possible and the glyphs don't
 * overlap each other.&lt;p>
 * In a signed distance field font, each pixel's alpha value depends on the
@@ -408,7 +408,7 @@ shader+=ShaderProgram.fragmentShaderHeader() +
 "void main(){\n" +
 " float d=texture2D(sampler, uvVar).a;\n"
 if(derivs){
-shader+=" float dsmooth=fwidth(d);\n";
+shader+=" float dsmooth=length(vec2(dFdx(d),dFdy(d)))*0.75;\n";
 } else {
 shader+=" float dsmooth=0.06;\n";
 }
