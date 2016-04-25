@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Source: extras/frame.js</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: RenderPass3D</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,118 +10,69 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Source: extras/frame.js</h1>
+    <h1>Class: RenderPass3D</h1>
 
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
-Written by Peter O. in 2015.
+<section>
 
-Any copyright is dedicated to the Public Domain.
-http://creativecommons.org/publicdomain/zero/1.0/
-If you like this, you should donate to Peter O.
-at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
-*/
-var FrameCounter=function(){
- "use strict";
-this.fps=-1;
- this.lastFrame=-1;
- this.frameGaps=[];
- this.frameCount=0;
-};
-/**
- * Not documented yet.
- */
-FrameCounter.prototype.update=function(){
-  "use strict";
-var now=("performance" in window) ?
-   window.performance.now() : (new Date().getTime()*1000);
-  if(this.lastFrame>=0){
-    var gap=now-this.lastFrame;
-    if(this.frameGaps.length>300)
-     this.frameGaps.shift();
-    if(gap>5000){
-     // treat as a discontinuity, so discard all the
-     // frame gaps recorded so far
-     this.frameGaps=[];
-    }
-    this.frameGaps.push(gap);
-  }
-  this.lastFrame=now;
-  this.frameCount++;
-  if(this.frameGaps.length>0 &amp;&amp; this.frameCount>=30){
-    this.frameCount=0;
-    var total=0;
-    for(var i=0;i&lt;this.frameGaps.length;i++){
-      total+=this.frameGaps[i];
-    }
-    total/=1.0*this.frameGaps.length;
-    this.fps=(total&lt;=0) ? 60 : 1000.0/total;
-  }
-};
-/**
- * Not documented yet.
- */
-FrameCounter.prototype.getFPS=function(){
- "use strict";
-return this.fps;
-};
+<header>
 
-function FrameCounterDiv(scene){
- "use strict";
-var canvas=scene.getContext().canvas;
- this.div=FrameCounterDiv._makeDiv(canvas);
- this.count=0;
- this.scene=scene;
- this.fc=new FrameCounter();
-}
-FrameCounterDiv._makeDiv=function(element){
- "use strict";
-var div=document.createElement("div");
- div.style.backgroundColor="white";
- div.style.position="absolute";
- div.style.left=element.offsetLeft+"px";
- div.style.top=element.offsetTop+"px";
- document.body.appendChild(div);
- return div;
-};
-/**
- * Not documented yet.
- */
-FrameCounterDiv.prototype.update=function(){
- "use strict";
-this.fc.update();
- this.count+=1;
- if(this.count>=20){
-  var fps=this.fc.getFPS();
-  fps=Math.round(fps*100);
-  fps/=100;
-  if(fps>=0){
-   this.div.innerHTML=fps+" fps";
-   this.count=0;
-  }
- }
-};
+        <h2>
+        RenderPass3D
+        </h2>
 
-function PrimitiveCounter(scene){
- "use strict";
-var canvas=scene.getContext().canvas;
- this.div=FrameCounterDiv._makeDiv(canvas);
- this.count=0;
- this.scene=scene;
-}
-/**
- * Not documented yet.
- */
-PrimitiveCounter.prototype.update=function(){
- "use strict";
-var v=this.scene.vertexCount();
- var p=this.scene.primitiveCount();
- this.div.innerHTML=v+" vertices, "+p+" primitives";
-};
-</code></pre>
-        </article>
-    </section>
+</header>
+
+<article>
+    <div class="container-overview">
+
+    <h4 style="margin-bottom:0px" id="RenderPass3D"><span style="font-weight:lighter"></span>new RenderPass3D<span class="signature">(subScene, parameters)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-renderpass3d.js.html">glutil-renderpass3d.js</a>, <a href="glutil-renderpass3d.js.html#line2">line 2</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>subScene</code>
+
+                (
+<span class="param-type"><a href="Subscene3D.html">Subscene3D</a></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>parameters</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    </div>
+
+</article>
+
+</section>
 
 </div>
 <nav id="navigation">

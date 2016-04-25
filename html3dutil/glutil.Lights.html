@@ -27,14 +27,11 @@
 
     <h4 style="margin-bottom:0px" id="Lights"><span style="font-weight:lighter"></span>new Lights<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line687">line 687</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line10">line 10</a>
      </i></small></p>
 
 <div class="description">
-    A collection of light sources.  It stores the scene's
-ambient color as well as data on one or more light sources.
-When constructed, the default lighting will have a default
-ambient color and one directional light source.
+    A collection of light sources.  It stores the scene'sambient color as well as data on one or more light sources.When constructed, the default lighting will have a defaultambient color and one directional light source.
 </div>
 
 <dl class="details">
@@ -47,7 +44,7 @@ ambient color and one directional light source.
 
 <h4 style="margin-bottom:0px" id=".MAX_LIGHTS"><span style="font-weight:lighter">(static, constant) </span>MAX_LIGHTS<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line709">line 709</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line32">line 32</a>
      </i></small></p>
 
 <div class="description">
@@ -61,21 +58,11 @@ ambient color and one directional light source.
 
 <h4 style="margin-bottom:0px" id="sceneAmbient"><span style="font-weight:lighter"></span>sceneAmbient<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line703">line 703</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line26">line 26</a>
      </i></small></p>
 
 <div class="description">
-    Ambient color for the scene.  This is the color of the light
- that shines on every part of every object equally and in
- every direction. In the absence of
- other lighting effects, all objects will be given this color.<p>
- <small>Ambient light is a simplified simulation of the
-real-world effect of light bouncing back and forth between
-many different objects in an area.  One example of this
-phenomenon is sunlight reaching an indoor room without
-directly hitting it, such that the sunlight bounces off the walls
-and so illuminates most of the room pretty much uniformly.
-Ambient lights simulate this phenomenon.</small>
+    Ambient color for the scene.  This is the color of the light that shines on every part of every object equally and in every direction. In the absence of other lighting effects, all objects will be given this color.<p> <small>Ambient light is a simplified simulation of thereal-world effect of light bouncing back and forth betweenmany different objects in an area.  One example of thisphenomenon is sunlight reaching an indoor room withoutdirectly hitting it, such that the sunlight bounces off the wallsand so illuminates most of the room pretty much uniformly.Ambient lights simulate this phenomenon.</small>
 </div>
 
 <dl class="details">
@@ -88,7 +75,7 @@ Ambient lights simulate this phenomenon.</small>
 
     <h4 style="margin-bottom:0px" id="getCount"><span style="font-weight:lighter"></span>getCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line722">line 722</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line45">line 45</a>
      </i></small></p>
 
 <div class="description">
@@ -111,7 +98,7 @@ Ambient lights simulate this phenomenon.</small>
 
     <h4 style="margin-bottom:0px" id="getLight"><span style="font-weight:lighter"></span>getLight<span class="signature">(index)</span><span style="font-weight:lighter"> &rarr; {LightSource}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line733">line 733</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line56">line 56</a>
      </i></small></p>
 
 <div class="description">
@@ -132,9 +119,7 @@ Ambient lights simulate this phenomenon.</small>
 )
 
            </dt><dd>
-           Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.
-If the light doesn't exist at that index, it will be created.</dd>
+           Zero-based index of the light to set.  The firstlight has index 0, the second has index 1, and so on.If the light doesn't exist at that index, it will be created.</dd>
 
     </dl>
 
@@ -154,7 +139,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 
     <h4 style="margin-bottom:0px" id="setAmbient"><span style="font-weight:lighter"></span>setAmbient<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line816">line 816</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line139">line 139</a>
      </i></small></p>
 
 <div class="description">
@@ -181,9 +166,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 )
 
            </dt><dd>
-           Array of three or
-four color components; or the red color component (0-1); or a string
-specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
+           Array of three orfour color components; or the red color component (0-1); or a stringspecifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd>
 
         <dt>
 
@@ -195,8 +178,7 @@ specifying an <a href="glutil.GLUtil.html#.toGLColor">HTML or CSS color</a>.</dd
 )
 
            </dt><dd>
-           Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
+           Green color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
         <dt>
 
@@ -208,8 +190,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
 )
 
            </dt><dd>
-           Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
+           Blue color component (0-1).May be null or omitted if a string or array is given as the "r" parameter.</dd>
 
         <dt>
 
@@ -223,8 +204,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
                     &lt;optional>
 
            </dt><dd>
-           Alpha color component (0-1).
-Currently not used.</dd>
+           Alpha color component (0-1).Currently not used.</dd>
 
     </dl>
 
@@ -244,7 +224,7 @@ Currently not used.</dd>
 
     <h4 style="margin-bottom:0px" id="setDirectionalLight"><span style="font-weight:lighter"></span>setDirectionalLight<span class="signature">(index, direction, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line775">line 775</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line98">line 98</a>
      </i></small></p>
 
 <div class="description">
@@ -265,9 +245,7 @@ Currently not used.</dd>
 )
 
            </dt><dd>
-           Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.
-If the light doesn't exist at that index, it will be created.</dd>
+           Zero-based index of the light to set.  The firstlight has index 0, the second has index 1, and so on.If the light doesn't exist at that index, it will be created.</dd>
 
         <dt>
 
@@ -279,8 +257,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 )
 
            </dt><dd>
-           A 3-element vector giving the direction of the light, along the X, Y, and Z
-axes, respectively.</dd>
+           A 3-element vector giving the direction of the light, along the X, Y, and Zaxes, respectively.</dd>
 
         <dt>
 
@@ -294,8 +271,7 @@ axes, respectively.</dd>
                     &lt;optional>
 
            </dt><dd>
-           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>  giving the diffuse color of the light.
-If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
+           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>  giving the diffuse color of the light.If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
 
         <dt>
 
@@ -309,10 +285,7 @@ If null or omitted, the diffuse color will remain unchanged. The default is (1, 
                     &lt;optional>
 
            </dt><dd>
-           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>  giving the color of specular highlights caused by
-the light.
-If null or omitted, the specular highlight color will
-remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
+           A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a>  giving the color of specular highlights caused bythe light.If null or omitted, the specular highlight color willremain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
 
     </dl>
 
@@ -332,7 +305,7 @@ remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) othe
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(index, params)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line755">line 755</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line78">line 78</a>
      </i></small></p>
 
 <div class="description">
@@ -353,9 +326,7 @@ remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) othe
 )
 
            </dt><dd>
-           Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.
-If the light doesn't exist at that index, it will be created.</dd>
+           Zero-based index of the light to set.  The firstlight has index 0, the second has index 1, and so on.If the light doesn't exist at that index, it will be created.</dd>
 
         <dt>
 
@@ -387,7 +358,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 
     <h4 style="margin-bottom:0px" id="setPointLight"><span style="font-weight:lighter"></span>setPointLight<span class="signature">(index, position, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Lights}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line794">line 794</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lights.js.html">glutil-lights.js</a>, <a href="glutil-lights.js.html#line117">line 117</a>
      </i></small></p>
 
 <div class="description">
@@ -408,9 +379,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 )
 
            </dt><dd>
-           Zero-based index of the light to set.  The first
-light has index 0, the second has index 1, and so on.
-If the light doesn't exist at that index, it will be created.</dd>
+           Zero-based index of the light to set.  The firstlight has index 0, the second has index 1, and so on.If the light doesn't exist at that index, it will be created.</dd>
 
         <dt>
 
@@ -422,8 +391,7 @@ If the light doesn't exist at that index, it will be created.</dd>
 )
 
            </dt><dd>
-           A 3-element vector giving the X, Y, and Z
-coordinates, respectively, of the light, in world coordinates.</dd>
+           A 3-element vector giving the X, Y, and Zcoordinates, respectively, of the light, in world coordinates.</dd>
 
         <dt>
 
@@ -493,7 +461,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

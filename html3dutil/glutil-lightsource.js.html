@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Source: extras/frame.js</title>
+<head><meta charset="utf-8"><title>JSDoc: Source: glutil-lightsource.js</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,116 +10,85 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Source: extras/frame.js</h1>
+    <h1>Source: glutil-lightsource.js</h1>
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/*
-Written by Peter O. in 2015.
-
-Any copyright is dedicated to the Public Domain.
-http://creativecommons.org/publicdomain/zero/1.0/
-If you like this, you should donate to Peter O.
-at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+            <pre class="prettyprint source linenums"><code>
+/**
+* Specifies parameters for light sources.
+* @class
+* @alias glutil.LightSource
 */
-var FrameCounter=function(){
- "use strict";
-this.fps=-1;
- this.lastFrame=-1;
- this.frameGaps=[];
- this.frameCount=0;
-};
-/**
- * Not documented yet.
+function LightSource(position, ambient, diffuse, specular) {
+ /**
+ * A 4-element vector giving an additional color to multiply with the ambient
+ * color of each object, in the red, green,
+ * and blue components respectively.
+ * The default is (0,0,0,1), or black. Not used in the default shader program.
  */
-FrameCounter.prototype.update=function(){
-  "use strict";
-var now=("performance" in window) ?
-   window.performance.now() : (new Date().getTime()*1000);
-  if(this.lastFrame>=0){
-    var gap=now-this.lastFrame;
-    if(this.frameGaps.length>300)
-     this.frameGaps.shift();
-    if(gap>5000){
-     // treat as a discontinuity, so discard all the
-     // frame gaps recorded so far
-     this.frameGaps=[];
-    }
-    this.frameGaps.push(gap);
-  }
-  this.lastFrame=now;
-  this.frameCount++;
-  if(this.frameGaps.length>0 &amp;&amp; this.frameCount>=30){
-    this.frameCount=0;
-    var total=0;
-    for(var i=0;i&lt;this.frameGaps.length;i++){
-      total+=this.frameGaps[i];
-    }
-    total/=1.0*this.frameGaps.length;
-    this.fps=(total&lt;=0) ? 60 : 1000.0/total;
-  }
-};
-/**
- * Not documented yet.
+ this.ambient=ambient || [0,0,0,1.0];
+ /**
+ * Light position.  An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.&lt;ul>
+&lt;li>    If W is 0, then X, Y, and Z specify a 3-element vector giving the direction of the light; the light will shine everywhere in the given direction.
+ &lt;li>   If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.&lt;/ul>
+*/
+ this.position=position ? [position[0],position[1],position[2],1.0] :
+   [0, 0, 1, 0];
+ /**
+ * A 4-element vector giving an additional color to multiply with the diffusion
+ * color of each object (which is also called "albedo"), in the red, green,
+ * and blue components respectively. Diffuse color is the color
+ * seen when light passes through a material and bounces back (diffusion).  Each component ranges from 0 to 1.
+ * The simulated diffusion scatters evenly, in every direction.
+ * The default is (1,1,1,1), or white.
  */
-FrameCounter.prototype.getFPS=function(){
- "use strict";
-return this.fps;
-};
-
-function FrameCounterDiv(scene){
- "use strict";
-var canvas=scene.getContext().canvas;
- this.div=FrameCounterDiv._makeDiv(canvas);
- this.count=0;
- this.scene=scene;
- this.fc=new FrameCounter();
+ this.diffuse=diffuse||[1,1,1,1];
+ /**
+ * A 3-element vector giving the color of the light when it causes a specular
+ * reflection, in the red, green,
+ * and blue components respectively.  Each component ranges from 0 to 1.
+ * A specular reflection is a reflection in the same angle as the light reaches
+ * an object, like a mirror.  Specular reflections can cause shiny
+ * highlights depending on the viewing angle.
+ * The default is (1,1,1), or white.
+ */
+ this.specular=specular||[1,1,1];
 }
-FrameCounterDiv._makeDiv=function(element){
- "use strict";
-var div=document.createElement("div");
- div.style.backgroundColor="white";
- div.style.position="absolute";
- div.style.left=element.offsetLeft+"px";
- div.style.top=element.offsetTop+"px";
- document.body.appendChild(div);
- return div;
-};
 /**
- * Not documented yet.
- */
-FrameCounterDiv.prototype.update=function(){
- "use strict";
-this.fc.update();
- this.count+=1;
- if(this.count>=20){
-  var fps=this.fc.getFPS();
-  fps=Math.round(fps*100);
-  fps/=100;
-  if(fps>=0){
-   this.div.innerHTML=fps+" fps";
-   this.count=0;
-  }
+* Sets parameters for this material object.
+* @param {object} params An object whose keys have
+* the possibilities given below, and whose values are those
+* allowed for each key.&lt;ul>
+* &lt;li>&lt;code>position&lt;/code> - Light position.  (See {@link glutil.LightSource#position}.)
+* &lt;li>&lt;code>ambient&lt;/code> - Not used in the default shader program.
+* &lt;li>&lt;code>diffuse&lt;/code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving an additional color to multiply with the diffusion
+ * color of each object (which is also called "albedo").
+ * The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+* &lt;li>&lt;code>specular&lt;/code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the color of specular highlights caused by the light.
+ * The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+* &lt;/ul>
+* If a value is null or undefined, it is ignored.
+* @return {glutil.Material} This object.
+*/
+LightSource.prototype.setParams=function(params){
+ if(((typeof params.ambient!=="undefined" &amp;&amp; ((typeof params.ambient!=="undefined" &amp;&amp; ((typeof params.ambient!=="undefined" &amp;&amp; params.ambient!==null))))))){
+  this.ambient=GLUtil.toGLColor(params.ambient);
+  this.ambient=this.ambient.slice(0,4);
  }
-};
-
-function PrimitiveCounter(scene){
- "use strict";
-var canvas=scene.getContext().canvas;
- this.div=FrameCounterDiv._makeDiv(canvas);
- this.count=0;
- this.scene=scene;
-}
-/**
- * Not documented yet.
- */
-PrimitiveCounter.prototype.update=function(){
- "use strict";
-var v=this.scene.vertexCount();
- var p=this.scene.primitiveCount();
- this.div.innerHTML=v+" vertices, "+p+" primitives";
-};
-</code></pre>
+ if(((typeof params.position!=="undefined" &amp;&amp; ((typeof params.position!=="undefined" &amp;&amp; ((typeof params.position!=="undefined" &amp;&amp; params.position!==null))))))){
+  var position=params.position;
+  this.position=[position[0],position[1],position[2],
+    (position[3]===null) ? 0.0 : position[3]];
+ }
+ if(((typeof params.specular!=="undefined" &amp;&amp; ((typeof params.specular!=="undefined" &amp;&amp; ((typeof params.specular!=="undefined" &amp;&amp; params.specular!==null))))))){
+  this.specular=GLUtil.toGLColor(params.specular);
+ }
+ if(((typeof params.diffuse!=="undefined" &amp;&amp; ((typeof params.diffuse!=="undefined" &amp;&amp; ((typeof params.diffuse!=="undefined" &amp;&amp; params.diffuse!==null))))))){
+  this.diffuse=GLUtil.toGLColor(params.diffuse);
+ }
+ return this;
+};</code></pre>
         </article>
     </section>
 

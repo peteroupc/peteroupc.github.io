@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Source: extras/frame.js</title>
+<head><meta charset="utf-8"><title>JSDoc: Source: glutil-shapegroup.js</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,116 +10,225 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Source: extras/frame.js</h1>
+    <h1>Source: glutil-shapegroup.js</h1>
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/*
-Written by Peter O. in 2015.
-
-Any copyright is dedicated to the Public Domain.
-http://creativecommons.org/publicdomain/zero/1.0/
-If you like this, you should donate to Peter O.
-at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+            <pre class="prettyprint source linenums"><code>
+/**
+* Represents a grouping of shapes.
+* @class
+* @alias glutil.ShapeGroup
 */
-var FrameCounter=function(){
- "use strict";
-this.fps=-1;
- this.lastFrame=-1;
- this.frameGaps=[];
- this.frameCount=0;
-};
-/**
- * Not documented yet.
+function ShapeGroup(){
+ /** List of shapes contained in this group.
+ * This property should only be used to access properties
+ * and call methods on each shape, and not to add, remove
+ * or replace shapes directly.
+ * @readonly
  */
-FrameCounter.prototype.update=function(){
-  "use strict";
-var now=("performance" in window) ?
-   window.performance.now() : (new Date().getTime()*1000);
-  if(this.lastFrame>=0){
-    var gap=now-this.lastFrame;
-    if(this.frameGaps.length>300)
-     this.frameGaps.shift();
-    if(gap>5000){
-     // treat as a discontinuity, so discard all the
-     // frame gaps recorded so far
-     this.frameGaps=[];
-    }
-    this.frameGaps.push(gap);
-  }
-  this.lastFrame=now;
-  this.frameCount++;
-  if(this.frameGaps.length>0 &amp;&amp; this.frameCount>=30){
-    this.frameCount=0;
-    var total=0;
-    for(var i=0;i&lt;this.frameGaps.length;i++){
-      total+=this.frameGaps[i];
-    }
-    total/=1.0*this.frameGaps.length;
-    this.fps=(total&lt;=0) ? 60 : 1000.0/total;
-  }
-};
-/**
- * Not documented yet.
- */
-FrameCounter.prototype.getFPS=function(){
- "use strict";
-return this.fps;
-};
-
-function FrameCounterDiv(scene){
- "use strict";
-var canvas=scene.getContext().canvas;
- this.div=FrameCounterDiv._makeDiv(canvas);
- this.count=0;
- this.scene=scene;
- this.fc=new FrameCounter();
+ this.shapes=[];
+ this.parent=null;
+ this.visible=true;
+ this.transform=new Transform();
 }
-FrameCounterDiv._makeDiv=function(element){
- "use strict";
-var div=document.createElement("div");
- div.style.backgroundColor="white";
- div.style.position="absolute";
- div.style.left=element.offsetLeft+"px";
- div.style.top=element.offsetTop+"px";
- document.body.appendChild(div);
- return div;
+/**
+* Adds a 3D shape to this shape group.  Its reference, not a copy,
+* will be stored in the list of shapes.
+* @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
+* @return {glutil.ShapeGroup} This object.
+*/
+ShapeGroup.prototype.addShape=function(shape){
+ shape.parent=this;
+ this.shapes.push(shape);
+ return this;
+};
+/**
+ * Not documented yet.
+ * @param {*} value
+ */
+ShapeGroup.prototype.setVisible=function(value){
+ this.visible=!!value;
+ return this;
 };
 /**
  * Not documented yet.
  */
-FrameCounterDiv.prototype.update=function(){
- "use strict";
-this.fc.update();
- this.count+=1;
- if(this.count>=20){
-  var fps=this.fc.getFPS();
-  fps=Math.round(fps*100);
-  fps/=100;
-  if(fps>=0){
-   this.div.innerHTML=fps+" fps";
-   this.count=0;
+ShapeGroup.prototype.getVisible=function(){
+ return this.visible;
+};
+/**
+ * Gets a reference to the transform used by this shape group object.
+ * @return {glutil.Transform} Return value. */
+ShapeGroup.prototype.getTransform=function(){
+ return this.transform;
+};
+/**
+ * Gets a copy of the transformation needed to transform
+ * this shape group's coordinates to world coordinates.
+ * @return {glutil.Transform} A 4x4 matrix.
+ */
+ShapeGroup.prototype.getMatrix=function(){
+  var xform=this.getTransform();
+  var thisIdentity=xform.isIdentity();
+  var mat;
+  if(this.parent!==null){
+   var pmat=this.parent.getMatrix();
+   if(thisIdentity){
+    mat=GLMath.mat4multiply(pmat,xform.getMatrix());
+   } else if(GLMath.mat4isIdentity(pmat)){
+    mat=xform.getMatrix();
+   } else {
+    mat=pmat;
+   }
+  } else {
+   mat=xform.getMatrix();
   }
+  return mat;
+};
+/**
+ * Sets the transform used by this shape group.  Child
+ * shapes can set their own transforms, in which case, the
+ * rendering process will multiply this shape group's transform
+ * with the child shape's transform as it renders the child shape.
+ * @param {glutil.Transform} transform
+ */
+ShapeGroup.prototype.setTransform=function(transform){
+ this.transform=transform.copy();
+ return this;
+};
+/**
+ * Sets the material used by all shapes in this shape group.
+ * @param {glutil.Material} material
+ */
+ShapeGroup.prototype.setMaterial=function(material){
+ for(var i=0;i&lt;this.shapes.length;i++){
+  this.shapes[i].setMaterial(material);
+ }
+ return this;
+};
+/**
+ * Sets the shader program used by all shapes in this shape group.
+ * @param {glutil.Material} material
+ */
+ShapeGroup.prototype.setShader=function(material){
+ for(var i=0;i&lt;this.shapes.length;i++){
+  this.shapes[i].setShader(material);
+ }
+ return this;
+};
+/**
+* Removes all instances of a 3D shape from this shape group
+* @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
+* @return {glutil.ShapeGroup} This object.
+*/
+ShapeGroup.prototype.removeShape=function(shape){
+ for(var i=0;i&lt;this.shapes.length;i++){
+   if(this.shapes[i]===shape){
+     this.shapes.splice(i,1);
+     i--;
+   }
+ }
+ return this;
+};
+/**
+ * Not documented yet.
+ */
+ShapeGroup.prototype.getBounds=function(){
+ var ret=[0,0,0,0,0,0];
+ var first=true;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  var b=this.shapes[i].getBounds();
+  if(!GLMath.boxIsEmpty(b)){
+   if(first){
+    ret[0]=b[0];
+    ret[1]=b[1];
+    ret[2]=b[2];
+    ret[3]=b[3];
+    ret[4]=b[4];
+    ret[5]=b[5];
+    first=false;
+   } else {
+    ret[0]=Math.min(b[0],ret[0]);
+    ret[1]=Math.min(b[1],ret[1]);
+    ret[2]=Math.min(b[2],ret[2]);
+    ret[3]=Math.max(b[3],ret[3]);
+    ret[4]=Math.max(b[4],ret[4]);
+    ret[5]=Math.max(b[5],ret[5]);
+   }
+  }
+ }
+ if(first){
+  return [0,0,0,-1,-1,-1];
+ } else {
+  return ret;
  }
 };
 
-function PrimitiveCounter(scene){
- "use strict";
-var canvas=scene.getContext().canvas;
- this.div=FrameCounterDiv._makeDiv(canvas);
- this.count=0;
- this.scene=scene;
-}
 /**
- * Not documented yet.
- */
-PrimitiveCounter.prototype.update=function(){
- "use strict";
-var v=this.scene.vertexCount();
- var p=this.scene.primitiveCount();
- this.div.innerHTML=v+" vertices, "+p+" primitives";
+ * Gets the number of vertices composed by all shapes in this shape group.
+ * @return {number} Return value. */
+ShapeGroup.prototype.vertexCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].vertexCount();
+ }
+ return c;
 };
-</code></pre>
+/**
+ * Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this shape group.
+ * @return {number} Return value. */
+ShapeGroup.prototype.primitiveCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].primitiveCount();
+ }
+ return c;
+};
+/**
+ * Sets the relative position of the shapes in this group
+ * from their original position.
+ * See {@link glutil.Transform#setPosition}
+ * This method will modify this shape group's transform
+ * rather than the transform for each shape in the group.
+ * @param {number|Array&lt;number>} x X coordinate
+ * or a 3-element position array, as specified in {@link glutil.Transform#setScale}.
+ * @param {number} y Y-coordinate.
+ * @param {number} z Z-coordinate.
+* @return {glutil.Scene3D} This object.
+ */
+ShapeGroup.prototype.setPosition=function(x,y,z){
+ this.transform.setPosition(x,y,z);
+ return this;
+};
+/**
+ * Sets this shape group's orientation in the form of a [quaternion]{@tutorial glmath}.
+ * See {@link glutil.Transform#setQuaternion}.
+ * This method will modify this shape group's transform
+ * rather than the transform for each shape in the group.
+ * @param {Array&lt;number>} quat A four-element array describing the rotation.
+ * @return {glutil.Shape} This object.
+ */
+ShapeGroup.prototype.setQuaternion=function(quat){
+ this.transform.setQuaternion(quat);
+ return this;
+};
+/**
+ * Sets the scale of this shape group relative to its original
+ * size. See {@link glutil.Transform#setScale}.
+ * This method will modify this shape group's transform
+ * rather than the transform for each shape in the group.
+ * @param {number|Array&lt;number>} x Scaling factor for this object's width,
+ * or a 3-element scaling array, as specified in {@link glutil.Transform#setScale}.
+ * @param {number} y Scaling factor for this object's height.
+ * @param {number} z Scaling factor for this object's depth.
+* @return {glutil.Scene3D} This object.
+ */
+ShapeGroup.prototype.setScale=function(x,y,z){
+ this.transform.setScale(x,y,z);
+ return this;
+};</code></pre>
         </article>
     </section>
 
