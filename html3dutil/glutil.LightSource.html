@@ -27,7 +27,7 @@
 
     <h4 style="margin-bottom:0px" id="LightSource"><span style="font-weight:lighter"></span>new LightSource<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line7">line 7</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line6">line 6</a>
      </i></small></p>
 
 <div class="description">
@@ -44,11 +44,14 @@
 
 <h4 style="margin-bottom:0px" id="ambient"><span style="font-weight:lighter"></span>ambient<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line14">line 14</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line13">line 13</a>
      </i></small></p>
 
 <div class="description">
-    A 4-element vector giving an additional color to multiply with the ambientcolor of each object, in the red, green,and blue components respectively.The default is (0,0,0,1), or black. Not used in the default shader program.
+    A 4-element vector giving an additional color to multiply with the ambient
+color of each object, in the red, green,
+and blue components respectively.
+The default is (0,0,0,1), or black. Not used in the default shader program.
 </div>
 
 <dl class="details">
@@ -57,11 +60,16 @@
 
 <h4 style="margin-bottom:0px" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line30">line 30</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line29">line 29</a>
      </i></small></p>
 
 <div class="description">
-    A 4-element vector giving an additional color to multiply with the diffusioncolor of each object (which is also called "albedo"), in the red, green,and blue components respectively. Diffuse color is the colorseen when light passes through a material and bounces back (diffusion).  Each component ranges from 0 to 1.The simulated diffusion scatters evenly, in every direction.The default is (1,1,1,1), or white.
+    A 4-element vector giving an additional color to multiply with the diffusion
+color of each object (which is also called "albedo"), in the red, green,
+and blue components respectively. Diffuse color is the color
+seen when light passes through a material and bounces back (diffusion).  Each component ranges from 0 to 1.
+The simulated diffusion scatters evenly, in every direction.
+The default is (1,1,1,1), or white.
 </div>
 
 <dl class="details">
@@ -70,7 +78,7 @@
 
 <h4 style="margin-bottom:0px" id="position"><span style="font-weight:lighter"></span>position<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line20">line 20</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line19">line 19</a>
      </i></small></p>
 
 <div class="description">
@@ -85,11 +93,17 @@
 
 <h4 style="margin-bottom:0px" id="specular"><span style="font-weight:lighter"></span>specular<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line40">line 40</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line39">line 39</a>
      </i></small></p>
 
 <div class="description">
-    A 3-element vector giving the color of the light when it causes a specularreflection, in the red, green,and blue components respectively.  Each component ranges from 0 to 1.A specular reflection is a reflection in the same angle as the light reachesan object, like a mirror.  Specular reflections can cause shinyhighlights depending on the viewing angle.The default is (1,1,1), or white.
+    A 3-element vector giving the color of the light when it causes a specular
+reflection, in the red, green,
+and blue components respectively.  Each component ranges from 0 to 1.
+A specular reflection is a reflection in the same angle as the light reaches
+an object, like a mirror.  Specular reflections can cause shiny
+highlights depending on the viewing angle.
+The default is (1,1,1), or white.
 </div>
 
 <dl class="details">
@@ -100,7 +114,7 @@
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line58">line 58</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line57">line 57</a>
      </i></small></p>
 
 <div class="description">
@@ -121,7 +135,18 @@
 )
 
            </dt><dd>
-           An object whose keys havethe possibilities given below, and whose values are thoseallowed for each key.<ul><li><code>position</code> - Light position.  (See <a href="glutil.LightSource.html#position">glutil.LightSource#position</a>.)<li><code>ambient</code> - Not used in the default shader program.<li><code>diffuse</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusioncolor of each object (which is also called "albedo").The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.<li><code>specular</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light.The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</ul>If a value is null or undefined, it is ignored.</dd>
+           An object whose keys have
+the possibilities given below, and whose values are those
+allowed for each key.<ul>
+<li><code>position</code> - Light position.  (See <a href="glutil.LightSource.html#position">glutil.LightSource#position</a>.)
+<li><code>ambient</code> - Not used in the default shader program.
+<li><code>diffuse</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion
+color of each object (which is also called "albedo").
+The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+<li><code>specular</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light.
+The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+</ul>
+If a value is null or undefined, it is ignored.</dd>
 
     </dl>
 

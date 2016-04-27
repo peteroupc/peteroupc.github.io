@@ -136,7 +136,7 @@ function setKernelMatrix(program,matrix){
  for(var i=0;i<9;i++){
   mat[i]=matrix[i]/weight;
  }
- currentFilter.setUniforms({
+ program.setUniforms({
    "matrix":mat
  })
 }
@@ -219,16 +219,16 @@ function link1(){
 }
 function link1a(){
  if(scene){
-  scene.setOrtho(-1,1,-1,1,-10,10);
-  scene.removeShape(platonic);
-  scene.addShape(blinds);
+  subScene.setProjectionMatrix(GLMath.mat4ortho(-1,1,-1,1,-10,10));
+  subScene.removeShape(platonic);
+  subScene.addShape(blinds);
  }
 }
 function link2a(){
  if(scene){
-  scene.setOrthoAspect(-20,20,-10,10,-20,20);
-  scene.removeShape(blinds);
-  scene.addShape(platonic);
+  subScene.orthoAspect(-20,20,-10,10,-20,20);
+  subScene.removeShape(blinds);
+  subScene.addShape(platonic);
  }
 }
 function link2(){
@@ -444,8 +444,11 @@ function blindsGroup(scene){
   var scene=new Scene3D((document.getElementById("canvas")));
   var fbo=new FrameBuffer(scene,scene.getWidth(),scene.getHeight());
   scene.setClearColor("white")
-  var subScene=new SubScene3D(scene)
-  var renders=[new RenderPass3D(subScene,{"frameBuffer":fbo})]
+  var subScene=new Subscene3D(scene)
+  var renders=[
+    new RenderPass3D(subScene,{"frameBuffer":fbo}),
+    new RenderPass3D(Subscene3D.forFilter(scene,fbo));
+  ]
   var fc=new FrameCounterDiv(scene)
   var blinds=blindsGroup(subScene)
   var platonic=platonicGroup(subScene)

@@ -430,6 +430,21 @@ shader+="\n\nvoid main(){\n" +
 "}";
 return shader;
 };
+
+ShaderProgram.makeCopyEffect=function(context){
+"use strict";
+var shader=ShaderProgram.fragmentShaderHeader();
+shader+=""+
+"uniform sampler2D sampler;\n" + // texture sampler
+"varying vec2 uvVar;\n"+
+"varying vec3 colorAttrVar;\n";
+shader+="\n\nvoid main(){\n" +
+" gl_FragColor=texture2D(sampler,uvVar);\n" +
+"}";
+return new ShaderProgram(context,
+   ShaderProgram.getBasicVertex(),shader);
+};
+
 /**
 * Generates a shader program for applying
 * a raster effect to a texture.

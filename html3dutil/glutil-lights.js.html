@@ -14,8 +14,7 @@
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
-/**
+            <pre class="prettyprint source linenums"><code>/**
 * A collection of light sources.  It stores the scene's
 * ambient color as well as data on one or more light sources.
 * When constructed, the default lighting will have a default
@@ -84,7 +83,7 @@ Lights.prototype.getLight=function(index){
  return this.lights[index];
 };
 /**
- * Not documented yet.
+ * Sets parameters for the light source at the given index.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * If the light doesn't exist at that index, it will be created.
@@ -155,7 +154,8 @@ Lights.prototype.setPointLight=function(index,position){
 Lights.prototype.setAmbient=function(r,g,b,a){
  this.sceneAmbient=GLUtil.toGLColor(r,g,b,a);
  return this;
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 

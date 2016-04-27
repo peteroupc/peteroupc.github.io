@@ -34,7 +34,8 @@
 */
 function FrameBuffer(context, width, height){
  "use strict";
-if(width&lt;0 || height&lt;0)throw new Error("width or height negative");
+ if(width&lt;0 || height&lt;0)throw new Error("width or height negative");
+ context= (context.getContext) ? context.getContext() : context;
  this.context=context;
  // give the framebuffer its own texture unit, since the
  // shader program may bind samplers to other texture

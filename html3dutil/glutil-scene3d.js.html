@@ -14,8 +14,7 @@
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
-/**
+            <pre class="prettyprint source linenums"><code>/**
  * A holder object representing a 3D scene.&lt;/li>
  *&lt;/ul>
  * When a Scene3D object is created, it sets the projection and view matrices to identity.
@@ -825,11 +824,14 @@ Scene3D.prototype._clearForPass=function(pass){
  *  as {@link glutil.GLUtil.renderLoop}.&lt;p>
  * NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
  * buffer and depth buffer. This compatibility option may be dropped in the future.
- * @param {Array&lt;RenderPass3D>} An array of scenes
- * to draw. Can be null.
+ * @param {Array&lt;glutil.RenderPass3D>|glutil.Subscene3D} An array of scenes
+ * to draw, or a single subscene to render. Can be null.
  * @return {glutil.Scene3D} This object.
  */
 Scene3D.prototype.render=function(renderPasses){
+  if(renderPasses instanceof Subscene3D){
+    return this.render([new RenderPass3D(renderPasses)])
+  }
   if(this.autoResize){
    var c=this.context.canvas;
    if(c.height!==Math.ceil(c.clientHeight)*this._pixelRatio ||
@@ -849,10 +851,10 @@ Scene3D.prototype.render=function(renderPasses){
     this._renderedOutsideScene=true;
     for(var i=0;i&lt;renderPasses.length;i++){
       var pass=renderPasses[i];
-      if(pass.frameBuffer)frameBuffer.bind();
+      if(pass.frameBuffer)pass.frameBuffer.bind();
       this._clearForPass(pass);
       renderPasses[i].subScene.render();
-      if(pass.frameBuffer)frameBuffer.unbind();
+      if(pass.frameBuffer)pass.frameBuffer.unbind();
     }
   }
   if(this._is3d)this.context.flush();
@@ -870,7 +872,8 @@ Scene3D.prototype.render=function(renderPasses){
 Scene3D.prototype.useFilter=function(filterProgram){
   console.warn("Has no effect.");
   return this;
-};</code></pre>
+};
+</code></pre>
         </article>
     </section>
 

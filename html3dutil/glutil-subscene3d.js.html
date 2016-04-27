@@ -253,7 +253,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
     if(renderContext.prog!=prog){
      prog.use();
      projAndView=true;
-     new LightsBinder(this.lightSource).bind(prog);
+     new GLUtil._LightsBinder(this.lightSource).bind(prog);
      renderContext.prog=prog;
     }
     Subscene3D._setupMatrices(prog,
@@ -261,7 +261,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
       this._viewMatrix,
       shape.getMatrix(),
       projAndView);
-    Binders.getMaterialBinder(shape.material).bind(prog);
+    Subscene3D._getMaterialBinder(shape.material).bind(prog);
     shape.bufferedMesh.draw(prog);
   }
  }
@@ -297,6 +297,9 @@ Subscene3D.prototype.render=function(){
 };
 
 Subscene3D.forFilter=function(scene, fbo, shader){
+  if(shader==null){
+    shader=ShaderProgram.makeCopyEffect(scene);
+  }
   var ret=new Subscene3D(scene);
   var mesh=new Mesh(
      [-1,1,0,0,1,
@@ -305,12 +308,26 @@ Subscene3D.forFilter=function(scene, fbo, shader){
       1,-1,0,1,0],
      [0,1,2,2,1,3],
      Mesh.TEXCOORDS_BIT);
-  ret.addShape(ret.makeShape(mesh).setParams({
-     "texture":fbo,
-     "shader":shader
-   }));
+  var shape=ret.makeShape(mesh)
+  shape.setTexture(fbo);
+  shape.setShader(shader);
+  ret.addShape(shape);
    return ret;
-}</code></pre>
+}
+
+Subscene3D._getMaterialBinder=function(material){
+ "use strict";
+if(material){
+ if(material instanceof Material){
+  return new GLUtil._MaterialBinder(material);
+ }
+ }
+ // Return an empty binding object
+ return {
+/** @private */
+bind:function(program){}};
+};
+</code></pre>
         </article>
     </section>
 
