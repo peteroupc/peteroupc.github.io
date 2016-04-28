@@ -143,12 +143,12 @@ pre {
 //  Colors
 //////////////////////////////////////////////////////////////////////
 
-@primary: #00b1e7;
 
 @primarybackground: #e0f6fc;
 @primary100: #b3e8f8;
 @primary200: #8dd8f3;
 @primarylight: #4dc8ee;
+@primary: #00b1e7;
 @primarydark: #0095da;
 
 @secondary: #e040db;
@@ -190,7 +190,10 @@ kbd {
 
 nav {
  border-color: @dividerblack;
- border-color: @dividerblack;
+}
+
+caption, figcaption {
+ color: @textblacksecondary;
 }
 
 h1 {
@@ -210,63 +213,11 @@ pre {
   background:@primary100;
 }
 
-
-.inputuimodern(){
- text-decoration: none;
- margin: 0;
- padding: 0.5em 1em;
- cursor: pointer;
- border: 1px solid;
- .borderRadius(3px);
- display: inline-block;
- overflow: visible;
- &:hover, &:active {
-    text-decoration: none;
- }
-}
-
-.inputuifieldmodern(
-  @textcolor,@bordercolor
-){
- color: @textcolor;
- text-decoration: none;
- margin: 0;
- padding: 0.3em 0.6em;
- border: 1px solid @bordercolor;
- background-color:#ffffff;
- .backgroundClipPadding();
- .borderRadius(3px);
-  &:hover {
-    text-decoration: none;
-    .boxShadowEx(0,0,3px,@textblackhint);
- }
- &:focus, &.focused {
-    text-decoration: none;
-    .boxShadowEx(0,0,6px,@textblackhint);
- }
- &[disabled] {
-  cursor: not-allowed;
-  border: 1px solid @bordercolor;
-  color: @textblackhint;
-  .transition(none);
-  &:hover {
-    .noBoxShadow();
-  }
- }
- &[readonly] {
-  border: 1px solid @bordercolor;
-  color: @textblackhint;
-  .transition(none);
-  &:hover, &:focus {
-    .noBoxShadow();
-  }
- }
-}
-
 button, input.button, input[type="button"],
 input[type="submit"], input[type="reset"],
 input[type="file"]{
-  .inputuimodern();
+  .inputuibuttonmodern(@textwhiteprimary,@secondary,
+    @dividerwhite,@secondarydark);
 }
 
 select,
@@ -285,7 +236,7 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"]{
-  .inputuifieldmodern(@textblacksecondary,@secondary);
+  .inputuifieldmodern(@textblackprimary,@secondary);
 }
 
 input[type="checkbox"],
@@ -323,7 +274,7 @@ th {
 }
 /* even-row cells */
 tr {
-  td:nth-child(even){background-color:@primary100;}
+  td:nth-child(even){background-color:@primary200;}
 }
 aside {
  border-color:  @dividerblack;

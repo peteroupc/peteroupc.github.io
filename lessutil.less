@@ -144,53 +144,43 @@ border-collapse: separate;
   position: fixed;
 }
 
-.inputui(){
+.inputuimodern(){
  text-decoration: none;
  margin: 0;
  padding: 0.5em 1em;
  cursor: pointer;
  border: 1px solid;
- .borderRadius(0.3em);
- .boxShadowEx(0,0,3px,#999);
+ .borderRadius(3px);
  display: inline-block;
  overflow: visible;
- .transition(all 0.3s);
  &:hover, &:active {
     text-decoration: none;
  }
 }
 
-.inputuifield(
-    @textcolor,@bg1,@bordercolor,
-    @hoverbordercolor:#b9b9b9,
-    @activebordercolor:#4d90fe
+.inputuifieldmodern(
+  @textcolor,@bordercolor
 ){
  color: @textcolor;
  text-decoration: none;
  margin: 0;
  padding: 0.3em 0.6em;
  border: 1px solid @bordercolor;
- background-color:@bg1;
- .textShadowEx(1px,1px,0,#fff);
+ background-color:#ffffff;
  .backgroundClipPadding();
- .borderRadius(0.3em);
- .transition(all 0.3s);
+ .borderRadius(3px);
   &:hover {
     text-decoration: none;
-    .boxShadowEx(0,0,3px,#999);
-    border-color: @hoverbordercolor;
-    border-bottom-color: @hoverbordercolor;
+    .boxShadowEx(0,0,3px,@textblackhint);
  }
  &:focus, &.focused {
     text-decoration: none;
-    .boxShadowEx(0,0,6px,#999);
-    border-color: @activebordercolor;
-    border-bottom-color: @activebordercolor;
+    .boxShadowEx(0,0,6px,@textblackhint);
  }
  &[disabled] {
   cursor: not-allowed;
   border: 1px solid @bordercolor;
-  background: #f1f1f1;
+  color: @textblackhint;
   .transition(none);
   &:hover {
     .noBoxShadow();
@@ -198,8 +188,46 @@ border-collapse: separate;
  }
  &[readonly] {
   border: 1px solid @bordercolor;
-  background: #f1f1f1;
+  color: @textblackhint;
   .transition(none);
+  &:hover, &:focus {
+    .noBoxShadow();
+  }
+ }
+}
+
+
+.inputuibuttonmodern(
+  @textcolor,@backgroundcolor,@bordercolor,@presscolor
+){
+ color: @textcolor;
+ text-decoration: none;
+ margin: 0;
+ padding: 0.3em 0.6em;
+ border: 1px solid @bordercolor;
+ background-color:@backgroundcolor;
+ .backgroundClipPadding();
+ .borderRadius(3px);
+  &:hover {
+    text-decoration: none;
+    .boxShadowEx(0,0,3px,@textblackhint);
+ }
+ &:focus, &.focused {
+    text-decoration: none;
+    background-color:@presscolor;
+    .boxShadowEx(0,0,6px,@textblackhint);
+ }
+ &[disabled] {
+  cursor: not-allowed;
+  border: 1px solid @bordercolor;
+  color: @textwhitehint;
+  &:hover {
+    .noBoxShadow();
+  }
+ }
+ &[readonly] {
+  border: 1px solid @bordercolor;
+  color: @textwhitehint;
   &:hover, &:focus {
     .noBoxShadow();
   }
@@ -222,36 +250,4 @@ border-collapse: separate;
     .ie8 & {
        filter: ~"progid:DXImageTransform.Microsoft.Gradient( StartColorStr='@{startColor}', EndColorStr='@{endColor}',GradientType=0)";
     }
-}
-
-.inputuibutton(
-    @textcolor,@bg1,@bg2,@bordercolor,
-    @hovertextcolor,@hoverbg1,@hoverbg2,@hoverbordercolor,
-    @activetextcolor:@hovertextcolor,
-    @activebg1:@hoverbg1,
-    @activebg2:@hoverbg2,
-    @activebordercolor:@hoverbordercolor
-) {
- .inputui();
- padding: 0.3em 0.6em;
- font-size: 100%;
- color: @textcolor !important;
- border-color: @bordercolor;
- .textShadowEx(0,-1px,0,rgba(0,0,0,0.5));
- .backgroundClipPadding();
- .linearGradient(@bg1,@bg2,@bg1);
- &:hover {
-    color: @hovertextcolor !important;
-    .textShadowEx(0,-1px,0,rgba(0,0,0,0.5));
-    border-color: @hoverbordercolor;
-    border-bottom-color: @hoverbordercolor;
-    .linearGradient(@hoverbg2,@hoverbg1,@hoverbg1);
- }
- &:active {
-    color: @activetextcolor !important;
-    .textShadowEx(0,-1px,0,rgba(0,0,0,0.5));
-    border-color: @activebordercolor;
-    border-bottom-color: @activebordercolor;
-    .linearGradient(@activebg1,@activebg2,@activebg1);
- }
 }
