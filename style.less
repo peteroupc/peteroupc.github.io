@@ -143,7 +143,6 @@ pre {
 //  Colors
 //////////////////////////////////////////////////////////////////////
 
-
 @primarybackground: #e0f6fc;
 @primary100: #b3e8f8;
 @primary200: #8dd8f3;
@@ -151,8 +150,9 @@ pre {
 @primary: #00b1e7;
 @primarydark: #0095da;
 
-@secondary: #e040db;
+@secondaryverylight: #f9d9fe;
 @secondarylight: #ea80fc;
+@secondary: #e040db;
 @secondarydark: #d500f9;
 
 // Recommended by Material Design
@@ -165,7 +165,6 @@ pre {
 @textwhitesecondary: rgba(255,255,255,70%);
 @textwhitehint: rgba(255,255,255,50%);
 @dividerwhite: rgba(255,255,255,12%);
-
 
 body {
  color:@textblackprimary;
@@ -185,7 +184,10 @@ kbd {
 
 .header {
  border-bottom-color: @dividerblack;
- background: @primary; 
+ background: @primary;
+ a:link,a:hover,a:visited {
+  color:@secondaryverylight;
+ }
 }
 
 nav {

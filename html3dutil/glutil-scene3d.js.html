@@ -554,7 +554,7 @@ Scene3D.prototype.loadAndMapTexture=function(texture){
    tex=Texture.loadTexture(texture, this.textureCache);
  }
  return tex.then(function(textureInner){
-    textureInner.loadedTexture=new LoadedTexture(textureInner,context);
+    textureInner.loadedTexture=new GLUtil._LoadedTexture(textureInner,context);
     return textureInner;
   });
 };

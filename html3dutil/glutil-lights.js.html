@@ -113,9 +113,9 @@ Lights.prototype.setParams=function(index,params){
 Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  var ret=this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
  if(diffuse!=null)
-   ret=ret.setParams({"diffuse":diffuse});
+   ret=ret.setParams(index,{"diffuse":diffuse});
  if(specular!=null)
-   ret=ret.setParams({"specular":specular});
+   ret=ret.setParams(index,{"specular":specular});
  return ret;
 };
 /**
@@ -132,9 +132,9 @@ Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
 Lights.prototype.setPointLight=function(index,position){
  var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]});
  if(diffuse!=null)
-   ret=ret.setParams({"diffuse":diffuse});
+   ret=ret.setParams(index,{"diffuse":diffuse});
  if(specular!=null)
-   ret=ret.setParams({"specular":specular});
+   ret=ret.setParams(index,{"specular":specular});
  return ret;
 };
 

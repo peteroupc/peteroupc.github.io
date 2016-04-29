@@ -27,11 +27,14 @@
 
     <h4 style="margin-bottom:0px" id="TextFont"><span style="font-weight:lighter"></span>new TextFont<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line142">line 142</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line158">line 158</a>
      </i></small></p>
 
 <div class="description">
     Represents a bitmap font.
+NOTE: The constructor should not be called directly by applications.
+Use the <a href="TextFont.html#.load">TextFont.load</a> method to get a TextFont object.  This
+constructor's parameters are undocumented and are subject to change.
 </div>
 
 <dl class="details">
@@ -44,11 +47,11 @@
 
     <h4 style="margin-bottom:0px" id=".load"><span style="font-weight:lighter">(static) </span>load<span class="signature">(fontFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="TextFont.html">TextFont</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line362">line 362</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line640">line 640</a>
      </i></small></p>
 
 <div class="description">
-    Loads a bitmap font definition from a text file or an XML file.
+    Loads a bitmap font definition from a file.
 Note that this method only loads the font data and not the bitmaps
 used to represent the font.
 </div>
@@ -67,9 +70,13 @@ used to represent the font.
 )
 
            </dt><dd>
-           The URL of the font data text file
-to load.  If the string ends in ".xml", the font data is assumed to
-be in XML; otherwise, in text.</dd>
+           The URL of the font data file
+to load.  The following file extensions are read as the following formats:<ul>
+<li>".xml": XML</li>
+<li>".json": JSON</li>
+<li>".bin": Binary</li>
+<li>".fnt": Text or binary</li>
+<li>All others: Text</li></ul></dd>
 
     </dl>
 
@@ -91,7 +98,7 @@ a TextFont object), and is rejected when an error occurs.
 
     <h4 style="margin-bottom:0px" id="makeShapeMeshes"><span style="font-weight:lighter"></span>makeShapeMeshes<span class="signature">(str, xPos, yPos, height)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line181">line 181</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line253">line 253</a>
      </i></small></p>
 
 <div class="description">
@@ -155,6 +162,64 @@ a TextFont object), and is rejected when an error occurs.
 <dl class="details">
 
 </dl>
+
+    <h4 style="margin-bottom:0px" id="measure"><span style="font-weight:lighter"></span>measure<span class="signature">(str, height)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line205">line 205</a>
+     </i></small></p>
+
+<div class="description">
+    Calculates the width and height of a text string when
+drawn using this font.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>str</code>
+
+                (
+<span class="param-type">String</span>
+
+)
+
+           </dt><dd>
+           A text string.</dd>
+
+        <dt>
+
+                <code>height</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The line height to use when
+measuring the text.  Cannot be less than 0.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    An array of two numbers;
+the first is the width of the string, and the second is the
+height of the string (taking into account line feed characters,
+U+000A, that break lines).
+
+     (Type:
+<span class="param-type">Array.&lt;number></span>)
+
+</div>
 
 </article>
 

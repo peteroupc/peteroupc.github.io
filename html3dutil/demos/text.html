@@ -30,7 +30,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   //
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var textrnd=new GLUtil.TextRenderer(scene);
+  var textrnd=new TextRenderer(scene);
   GLUtil.getPromiseResults([
    textrnd.loadFont("black-chancery.fnt"),
    textrnd.loadFont("aileron-bold-red.fnt")
@@ -40,6 +40,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    scene.addShape(shape);
    shape=textrnd.textShape(results.successes[1],"Example text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \nExample text. Example text. Example text. Example text. Example text. \n",0,250,20);
    scene.addShape(shape);
+  },function(e){
+   console.log(e)
   });
   GLUtil.renderLoop(function(){
    scene.setOrtho2DAspect(0,640,480,0);

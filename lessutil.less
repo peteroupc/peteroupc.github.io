@@ -196,7 +196,6 @@ border-collapse: separate;
  }
 }
 
-
 .inputuibuttonmodern(
   @textcolor,@backgroundcolor,@bordercolor,@presscolor
 ){
@@ -207,6 +206,7 @@ border-collapse: separate;
  border: 1px solid @bordercolor;
  background-color:@backgroundcolor;
  .backgroundClipPadding();
+ .boldweight();
  .borderRadius(3px);
   &:hover {
     text-decoration: none;

@@ -447,7 +447,7 @@ function blindsGroup(scene){
   var subScene=new Subscene3D(scene)
   var renders=[
     new RenderPass3D(subScene,{"frameBuffer":fbo}),
-    new RenderPass3D(Subscene3D.forFilter(scene,fbo));
+    new RenderPass3D(Subscene3D.forFilter(scene,fbo))
   ]
   var fc=new FrameCounterDiv(scene)
   var blinds=blindsGroup(subScene)
