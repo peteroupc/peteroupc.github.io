@@ -129,7 +129,7 @@ Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
  * @param {Array&lt;number>} [specular] Specular color, as described in {@link glutil.Lights.setDirectionalLight}.
  * @return {Lights} This object.
  */
-Lights.prototype.setPointLight=function(index,position){
+Lights.prototype.setPointLight=function(index,position,diffuse,specular){
  var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]});
  if(diffuse!=null)
    ret=ret.setParams(index,{"diffuse":diffuse});

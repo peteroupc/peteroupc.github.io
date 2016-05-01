@@ -46,7 +46,7 @@ if(!GLUtil){ GLUtil={}; }
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
 * @class
 * @alias TextRenderer
-* @param {glutil.Scene3D} scene 3D scene to load font textures with.
+* @param {glutil.Scene3D|glutil.Subscene3D} scene 3D scene to load font textures with.
 */
 function TextRenderer(scene){
  this.scene=scene;
@@ -563,6 +563,7 @@ TextFont._loadBinaryFontInner=function(data){
      ch.amount=view.getInt16(offset+8,true)
      kernings.push(ch)
     }
+    break;
   }
   offset=newOffset;
  }

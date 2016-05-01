@@ -45,13 +45,15 @@ of common geometric shapes.
 
     <h4 style="margin-bottom:0px" id=".createBox"><span style="font-weight:lighter">(static) </span>createBox<span class="signature">(xSize, ySize, xSize, inward)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line30">line 30</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line32">line 32</a>
      </i></small></p>
 
 <div class="description">
     Creates a mesh of a box (rectangular prism), which
 will be centered at the origin.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
+Will create texture coordinates such that the same texture
+is used on each face of the box.
 </div>
 
     <h5>Parameters:</h5>
@@ -126,7 +128,7 @@ unless the box will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createCapsule"><span style="font-weight:lighter">(static) </span>createCapsule<span class="signature">(radius, length, slices, stacks, middleStacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line542">line 542</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line547">line 547</a>
      </i></small></p>
 
 <div class="description">
@@ -257,7 +259,7 @@ unless the capsule will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createClosedCylinder"><span style="font-weight:lighter">(static) </span>createClosedCylinder<span class="signature">(baseRad, topRad, height, slices, stacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line200">line 200</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line202">line 202</a>
      </i></small></p>
 
 <div class="description">
@@ -382,7 +384,7 @@ unless the cylinder will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createCylinder"><span style="font-weight:lighter">(static) </span>createCylinder<span class="signature">(baseRad, topRad, height, slices, stacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line102">line 102</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line104">line 104</a>
      </i></small></p>
 
 <div class="description">
@@ -513,7 +515,7 @@ unless the cylinder will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createDisk"><span style="font-weight:lighter">(static) </span>createDisk<span class="signature">(inner, outer, slices, loops, inward)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line232">line 232</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line234">line 234</a>
      </i></small></p>
 
 <div class="description">
@@ -611,7 +613,7 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".createPartialDisk"><span style="font-weight:lighter">(static) </span>createPartialDisk<span class="signature">(inner, outer, slices, loops, start, sweep, inward)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line258">line 258</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line263">line 263</a>
      </i></small></p>
 
 <div class="description">
@@ -687,7 +689,10 @@ May be null or omitted; default is 1.</dd>
            Starting angle of the partial disk, in degrees.
 May be null or omitted; default is 0.
 0 degrees is at the positive y-axis,
-and 90 degrees at the positive x-axis.</dd>
+and 90 degrees at the positive x-axis.
+Assuming the Y axis points up, the X axis right,
+and the Z axis toward the viewer, 0 degrees is at the 12 o'clock position,
+and 90 degrees at the 3 o'clock position.</dd>
 
         <dt>
 
@@ -731,7 +736,7 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".createPlane"><span style="font-weight:lighter">(static) </span>createPlane<span class="signature">(width, height, widthDiv, heightDiv, inward)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line451">line 451</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line456">line 456</a>
      </i></small></p>
 
 <div class="description">
@@ -825,9 +830,93 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
 </div>
 
+    <h4 style="margin-bottom:0px" id=".createPointedStar"><span style="font-weight:lighter">(static) </span>createPointedStar<span class="signature">(points, firstRadius, secondRadius, inward)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Mesh.html">glutil.Mesh</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line738">line 738</a>
+     </i></small></p>
+
+<div class="description">
+    Creates a mesh in the form of a 2D n-pointed star.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>points</code>
+
+                (
+<span class="param-type">number</span>
+
+)
+
+           </dt><dd>
+           Number of points in the star.
+Must be 2 or greater.</dd>
+
+        <dt>
+
+                <code>firstRadius</code>
+
+                (
+<span class="param-type">number</span>
+
+)
+
+           </dt><dd>
+           First radius of the star.
+Must be 0 or greater; this parameter and secondRadius
+can't both be 0.</dd>
+
+        <dt>
+
+                <code>secondRadius</code>
+
+                (
+<span class="param-type">number</span>
+
+)
+
+           </dt><dd>
+           Second radius of the star.
+Must be 0 or greater; this parameter and firstRadius
+can't both be 0.</dd>
+
+        <dt>
+
+                <code>inward</code>
+
+                (
+<span class="param-type">boolean</span>
+
+)
+
+           </dt><dd>
+           If true, the normals generated by this
+method will point in the opposite direction of the positive z-axis; otherwise,
+in the same direction of the positive z-axis.  Default is false.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The generated mesh.
+
+     (Type:
+<span class="param-type"><a href="glutil.Mesh.html">glutil.Mesh</a></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id=".createSphere"><span style="font-weight:lighter">(static) </span>createSphere<span class="signature">(radius, slices, stacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line508">line 508</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line513">line 513</a>
      </i></small></p>
 
 <div class="description">
@@ -925,7 +1014,7 @@ unless the sphere will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createTorus"><span style="font-weight:lighter">(static) </span>createTorus<span class="signature">(inner, outer, lengthwise, crosswise, flat, inward)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line368">line 368</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line373">line 373</a>
      </i></small></p>
 
 <div class="description">

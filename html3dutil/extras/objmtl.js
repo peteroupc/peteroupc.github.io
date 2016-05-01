@@ -196,7 +196,7 @@ var shininess=1.0;
  // NOTE: illum must be checked last
  if(mtl.hasOwnProperty("illum")){
   if(mtl.illum===0){
-   ambient=diffuse;
+   ambient=diffuse ? diffuse.slice(0,3) : [0,0,0];
    diffuse=[0,0,0];
    specular=[0,0,0];
   } else if(mtl.illum===1){

@@ -719,15 +719,15 @@ Scene3D.prototype.removeShape=function(shape){
  return this;
 };
 /** @private */
-Scene3D.prototype.getLightSource=function(){
+Scene3D.prototype.getLights=function(){
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
- return this._subScene.getLightSource();
+ return this._subScene.getLights();
 };
 /**
  * Sets a light source in this scene to a directional light.
-* @deprecated Use the LightSource method setDirectionalLight instead and the Subscene3D method getLightSource.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the LightSource method setDirectionalLight instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
@@ -745,12 +745,12 @@ Scene3D.prototype.setDirectionalLight=function(index,position,diffuse,specular){
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
- this.getLightSource().setDirectionalLight(index,position,diffuse,specular);
+ this.getLights().setDirectionalLight(index,position,diffuse,specular);
  return this;
 };
 /**
  * Sets parameters for a light in this scene.
-* @deprecated Use the LightSource method setLightParams instead and the Subscene3D method getLightSource.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the LightSource method setLightParams instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.  Will be created
  * if the light doesn't exist.
@@ -761,13 +761,13 @@ Scene3D.prototype.setLightParams=function(index,params){
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
- this.getLightSource().setParams(index,params);
+ this.getLights().setParams(index,params);
  return this;
 };
 
 /**
  * Sets the color of the scene's ambient light.
-* @deprecated Use the LightSource method setAmbient instead and the Subscene3D method getLightSource.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use the LightSource method setAmbient instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
 * @param {Array&lt;number>|number|string} r Array of three or
 * four color components; or the red color component (0-1); or a string
 * specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
@@ -783,13 +783,13 @@ Scene3D.prototype.setAmbient=function(r,g,b,a){
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
- this.getLightSource().setAmbient(r,g,b,a);
+ this.getLights().setAmbient(r,g,b,a);
  return this;
 };
 
 /**
  * Sets a light source in this scene to a point light.
- * @deprecated Use the LightSource method setPointLight instead and the Subscene3D method getLightSource.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
+ * @deprecated Use the LightSource method setPointLight instead and the Subscene3D method getLights.  For compatibility, existing code that doesn't use Subscene3D can still call this method until it renders a custom Subscene3D.  This compatibility behavior may be dropped in the future.
  * @param {number} index Zero-based index of the light to set.  The first
  * light has index 0, the second has index 1, and so on.
  * @param {Array&lt;number>} position
@@ -804,7 +804,7 @@ Scene3D.prototype.setPointLight=function(index,position,diffuse,specular){
 if(this._renderedOutsideScene){
  throw new Error("A non-default scene has been rendered, so this method is disabled.");
 }
- this.getLightSource().setPointLight(index,position,diffuse,specular);
+ this.getLights().setPointLight(index,position,diffuse,specular);
  return this;
 };
 /** @private */

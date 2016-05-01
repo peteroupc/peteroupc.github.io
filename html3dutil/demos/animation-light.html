@@ -169,6 +169,9 @@ function rotateVec(vec,angle){
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
   scene.getLights().setDirectionalLight(0,[0,-3,1.2])
+  scene.getLights().setParams(0,{"diffuse":"black"});
+  scene.getLights().setPointLight(1,[0,0,1])
+  scene.getLights().setParams(1,{"diffuse":"white","specular":"white","radius":3.2});
   var shapes=[]
   var shapecolors=["white","blue","red","green","brown","orange","purple"]
   // Outer radius of each washer

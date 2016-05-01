@@ -83,8 +83,22 @@ The default is (1,1,1,1), or white.
 
 <div class="description">
     Light position.  An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
-<li>    If W is 0, then X, Y, and Z specify a 3-element vector giving the direction of the light; the light will shine everywhere in the given direction.
+<li>    If W is 0, then X, Y, and Z specify a 3-element vector giving the direction from the origin toward the light; the light will shine everywhere in the given direction.
  <li>   If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul>
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id="radius"><span style="font-weight:lighter"></span>radius<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line44">line 44</a>
+     </i></small></p>
+
+<div class="description">
+    Radius of the light source.  If 0, the light's intensity doesn't change
+ with distance.
 </div>
 
 <dl class="details">
@@ -100,8 +114,8 @@ The default is (1,1,1,1), or white.
     A 3-element vector giving the color of the light when it causes a specular
 reflection, in the red, green,
 and blue components respectively.  Each component ranges from 0 to 1.
-A specular reflection is a reflection in the same angle as the light reaches
-an object, like a mirror.  Specular reflections can cause shiny
+A specular reflection is a reflection in the opposite direction from the direction
+the light reaches the object in, like a mirror.  Specular reflections can cause shiny
 highlights depending on the viewing angle.
 The default is (1,1,1), or white.
 </div>
@@ -114,7 +128,7 @@ The default is (1,1,1), or white.
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line57">line 57</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-lightsource.js.html">glutil-lightsource.js</a>, <a href="glutil-lightsource.js.html#line62">line 62</a>
      </i></small></p>
 
 <div class="description">

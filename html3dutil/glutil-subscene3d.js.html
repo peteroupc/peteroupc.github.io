@@ -27,7 +27,7 @@ function Subscene3D(scene){
  this.parent=scene;
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
- this.lightSource=new Lights();
+ this.lights=new Lights();
  this._projectionUpdater=null;
  this._frustum=null;
  this.shapes=[];
@@ -87,7 +87,16 @@ Subscene3D._setupMatrices=function(
     var invView=GLMath.mat4invert(viewMatrix);
     uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
    }
+   viewInvW=program.get("projView");
+   if(viewInvW!==null &amp;&amp; typeof viewInvW!=="undefined"){
+    var projView=GLMath.mat4multiply(projMatrix,viewMatrix);
+    uniforms.projView=projView;
+   }
   }
+  var invTrans=GLMath.mat4inverseTranspose3(worldMatrix);
+  uniforms.world=worldMatrix;
+  uniforms.modelMatrix=worldMatrix;
+  uniforms.normalMatrix=invTrans;
   var mvm=program.get("modelViewMatrix");
   if((mvm!==null &amp;&amp; typeof mvm!=="undefined")){
    if(GLUtil._isIdentityExceptTranslate(viewMatrix)){
@@ -102,12 +111,13 @@ Subscene3D._setupMatrices=function(
      worldMatrix);
    }
    uniforms.modelViewMatrix=viewWorld;
-  }
-  var invTrans=GLMath.mat4inverseTranspose3(worldMatrix);
-  uniforms.world=worldMatrix;
-  uniforms.modelMatrix=worldMatrix;
-  uniforms.worldViewInvTrans3=invTrans;
+
+  var invTrans=GLMath.mat4inverseTranspose3(viewWorld);
+  uniforms.world=viewWorld;
+  uniforms.modelMatrix=viewWorld;
   uniforms.normalMatrix=invTrans;
+
+  }
   program.setUniforms(uniforms);
 };
 /**
@@ -200,8 +210,8 @@ Subscene3D.prototype._getFrustum=function(){
 /**
  * Not documented yet.
  */
-Subscene3D.prototype.getLightSource=function(){
- return this.lightSource;
+Subscene3D.prototype.getLights=function(){
+ return this.lights;
 };
 /**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
@@ -253,7 +263,7 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
     if(renderContext.prog!=prog){
      prog.use();
      projAndView=true;
-     new GLUtil._LightsBinder(this.lightSource).bind(prog);
+     new GLUtil._LightsBinder(this.lights).bind(prog,this._viewMatrix);
      renderContext.prog=prog;
     }
     Subscene3D._setupMatrices(prog,

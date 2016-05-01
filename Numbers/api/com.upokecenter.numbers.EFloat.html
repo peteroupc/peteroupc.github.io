@@ -527,7 +527,7 @@ signed integer.</li>
 Converts this value to a string, but without exponential notation.</li>
 <li><code>String ToShortestString(EContext ctx)</code><br>
 Returns a string representation of this number&#39;s value after rounding to the
-given precision.</li>
+given precision (using the given arithmetic context).</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to its closest equivalent as 32-bit floating-point
 number.</li>
@@ -3703,11 +3703,12 @@ not-a-number (NaN).</p></li>
 </code></pre>
 
 <p>Returns a string representation of this number&#39;s value after rounding to the
- given precision. If the number after rounding is neither infinity nor
- not-a-number (NaN), returns the shortest decimal form (in terms of
- nonzero decimal digits) of this number&#39;s value that results in the
- rounded number after the decimal form is converted to binary
- floating-point format.</p>
+ given precision (using the given arithmetic context). If the number
+ after rounding is neither infinity nor not-a-number (NaN), returns
+ the shortest decimal form (in terms of nonzero decimal digits) of
+ this number&#39;s value that results in the rounded number after the
+ decimal form is converted to binary floating-point format (using the
+ given arithmetic context).</p>
 
 <p><strong>Parameters:</strong></p>
 

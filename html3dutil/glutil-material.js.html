@@ -90,8 +90,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  // TODO: Consider changing default value of specular to 1
  /**
  * Specular highlight reflection of this material.
- * Specular reflection is a reflection in the same angle as
- * the light reaches the material, similar to a mirror.  As a result, depending
+ * Specular reflection is a reflection in the opposite direction from the direction
+ * the light reaches the material in, similar to a mirror.  As a result, depending
  * on the viewing angle, specular reflection can give off
  * shiny highlights on the material.&lt;p>
  * This value is a 3-element array giving the red, green, and blue
@@ -117,7 +117,8 @@ function Material(ambient, diffuse, specular,shininess,emission) {
  */
  this.emission=emission ? emission.slice(0,3) : [0,0,0];
 /**
-* Texture map for this material.  Each color sets the diffusion (also called "albedo")
+* Texture for this material.  Each color in the texture
+* sets the diffusion (also called "albedo")
 * of each part of the material.
 * @default
 */
