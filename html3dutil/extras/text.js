@@ -172,6 +172,7 @@ function TextFont(fontinfo,chars,pages,kernings,common,fileUrl){
   this.kern[k.first][k.second]=k
  }
 }
+/** @private */
 TextFont._toArray=function(str,minLength){
  var spl;
  if(typeof str==="string"){
@@ -309,7 +310,8 @@ TextFont.prototype.makeShapeMeshes=function(str,xPos,yPos,height){
  }
  return meshesForPage;
 }
-TextFont._resolvePath=function(path, name){
+/** @private */
+TextFont._resolvePath=function(path,name){
  // Relatively dumb for a relative path
  // resolver, but sufficient for TextFont's purposes
  "use strict";
@@ -322,7 +324,7 @@ var ret=path;
  }
  return ret;
 };
-
+/** @private */
 TextFont._elementToObject=function(element){
  var attrs=element.getAttributeNames();
  var x={};
@@ -338,7 +340,7 @@ TextFont._elementToObject=function(element){
  }
  return x;
 }
-
+/** @private */
 TextFont._loadJsonFontInner=function(data){
  var xchars=[]
  var xpages=[]
@@ -361,7 +363,7 @@ TextFont._loadJsonFontInner=function(data){
  return new TextFont(json.info,xchars,xpages,xkernings,
    json.common,data.url)
 }
-
+/** @private */
 TextFont._loadXmlFontInner=function(data){
  var doc=data.data
  var commons=doc.getElementsByTagName("common")
@@ -391,7 +393,7 @@ TextFont._loadXmlFontInner=function(data){
  }
  return new TextFont(xinfos,xchars,xpages,xkernings,xcommons,data.url)
 }
-
+/** @private */
 TextFont._decodeUtf8=function(data,offset,endOffset){
 var ret=[];
 var cp,bytesSeen;
@@ -407,7 +409,7 @@ var upper=0xbf;
             return ret.join("");
           }
           var b = data.getUint8(offset++);
-          if (bytesNeeded == 0) {
+          if (bytesNeeded === 0) {
             if ((b & 0x7f) == b) {
               ret.push(String.fromCharCode(b));
               continue;
@@ -415,13 +417,13 @@ var upper=0xbf;
               bytesNeeded = 1;
               cp = (b - 0xc0) << 6;
             } else if (b >= 0xe0 && b <= 0xef) {
-              lower = (b == 0xe0) ? 0xa0 : 0x80;
-              upper = (b == 0xed) ? 0x9f : 0xbf;
+              lower = (b === 0xe0) ? 0xa0 : 0x80;
+              upper = (b === 0xed) ? 0x9f : 0xbf;
               bytesNeeded = 2;
               cp = (b - 0xe0) << 12;
             } else if (b >= 0xf0 && b <= 0xf4) {
-              lower = (b == 0xf0) ? 0x90 : 0x80;
-              upper = (b == 0xf4) ? 0x8f : 0xbf;
+              lower = (b === 0xf0) ? 0x90 : 0x80;
+              upper = (b === 0xf4) ? 0x8f : 0xbf;
               bytesNeeded = 3;
               cp = (b - 0xf0) << 18;
             } else {
@@ -452,7 +454,7 @@ var upper=0xbf;
           }
         }
 }
-
+/** @private */
 TextFont._loadBinaryFontInner=function(data){
  var view=new DataView(data.data)
  var offset=4;
@@ -471,7 +473,7 @@ TextFont._loadBinaryFontInner=function(data){
  var havetype=[false,false,false,false,false,false]
  function utf8stringsize(view,startIndex,endIndex){
    for(var i=startIndex;i<endIndex;i++){
-     if(view.getUint8(i)==0){
+     if(view.getUint8(i) === 0){
       return (i-startIndex)
      }
    }
@@ -479,7 +481,7 @@ TextFont._loadBinaryFontInner=function(data){
  }
  function utf8string(view,startIndex,endIndex){
    for(var i=startIndex;i<endIndex;i++){
-     if(view.getUint8(i)==0){
+     if(view.getUint8(i) === 0){
       return TextFont._decodeUtf8(view,startIndex,i);
      }
    }
@@ -571,7 +573,7 @@ if(!havetype[1] || !havetype[2] || !havetype[3]){
   return null;}
  return new TextFont(info,chars,pages,kernings,commons,data.url)
 }
-
+/** @private */
 TextFont._loadTextFontInner=function(data){
   var text=data.data
   var lines=text.split(/\r?\n/)
@@ -658,7 +660,7 @@ TextFont.load=function(fontFileName){
    function(data){
     var view=new DataView(data.data)
     var ret=null;
-    if(view.getUint8(0)==66 && view.getUint8(1)==77 && view.getUint8(2)==70) {
+    if(view.getUint8(0) === 66 && view.getUint8(1) === 77 && view.getUint8(2) === 70) {
      ret=TextFont._loadBinaryFontInner(data)
     } else {
      var view=new DataView(data.data)
@@ -681,7 +683,7 @@ TextFont.load=function(fontFileName){
    })
  }
 }
-
+/** @private */
 TextRenderer._textShader=function(scene){
 "use strict";
 var i;

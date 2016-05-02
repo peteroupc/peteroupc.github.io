@@ -32,13 +32,17 @@ function Subscene3D(scene){
  this._frustum=null;
  this.shapes=[];
 }
+/** @private */
 Subscene3D._PerspectiveView=function(scene,fov,near,far){
  this.fov=fov;
  this.near=near;
  this.far=far;
  this.scene=scene;
  this.lastAspect=null;
- this.update=function(){
+/**
+ * Not documented yet.
+ */
+this.update=function(){
   var aspect=this.scene.parent.getClientAspect();
   if(aspect!=this.lastAspect){
    this.lastAspect=aspect;
@@ -48,6 +52,7 @@ Subscene3D._PerspectiveView=function(scene,fov,near,far){
  }
  this.update();
 }
+/** @private */
 Subscene3D._OrthoView=function(scene,a,b,c,d,e,f){
  this.a=a;
  this.b=b;
@@ -57,7 +62,10 @@ Subscene3D._OrthoView=function(scene,a,b,c,d,e,f){
  this.f=f;
  this.scene=scene;
  this.lastAspect=null;
- this.update=function(){
+/**
+ * Not documented yet.
+ */
+this.update=function(){
   var aspect=this.scene.parent.getClientAspect();
   if(aspect!=this.lastAspect){
    this.lastAspect=aspect;
@@ -120,13 +128,24 @@ Subscene3D._setupMatrices=function(
   }
   program.setUniforms(uniforms);
 };
+/** @private */
+Subscene3D._isSameMatrix=function(a,b){
+ return (a[0]==b[0] &amp;&amp; a[1]==b[1] &amp;&amp; a[2]==b[2] &amp;&amp;
+   a[3]==b[3] &amp;&amp; a[4]==b[4] &amp;&amp; a[5]==b[5] &amp;&amp;
+   a[6]==b[6] &amp;&amp; a[7]==b[7] &amp;&amp; a[8]==b[8] &amp;&amp;
+   a[9]==b[9] &amp;&amp; a[10]==b[10] &amp;&amp; a[11]==b[11] &amp;&amp;
+   a[12]==b[12] &amp;&amp; a[13]==b[13] &amp;&amp; a[14]==b[14] &amp;&amp;
+   a[15]==b[15]);
+}
 /**
  * Not documented yet.
  * @param {*} mat
  */
 Subscene3D.prototype.setProjectionMatrix=function(mat){
- this._projectionMatrix=mat.slice(0,16)
- this._frustum=null
+ if(!Subscene3D._isSameMatrix(this._projectionMatrix)){
+  this._projectionMatrix=mat.slice(0,16)
+  this._frustum=null
+ }
  return this;
 };
 /**
@@ -183,8 +202,10 @@ Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
  * @param {*} mat
  */
 Subscene3D.prototype.setViewMatrix=function(mat){
- this._viewMatrix=mat.slice(0,16)
- this._frustum=null
+ if(!Subscene3D._isSameMatrix(this._viewMatrix)){
+  this._viewMatrix=mat.slice(0,16)
+  this._frustum=null
+ }
  return this;
 };
 /**
@@ -271,7 +292,8 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
       this._viewMatrix,
       shape.getMatrix(),
       projAndView);
-    Subscene3D._getMaterialBinder(shape.material).bind(prog);
+    Subscene3D._getMaterialBinder(shape.material).bind(prog,
+      this.parent._textureLoader);
     shape.bufferedMesh.draw(prog);
   }
  }
@@ -305,8 +327,13 @@ Subscene3D.prototype.render=function(){
   }
   return this;
 };
-
-Subscene3D.forFilter=function(scene, fbo, shader){
+/**
+ * Not documented yet.
+ * @param {*} scene
+ * @param {*} fbo
+ * @param {*} shader
+ */
+Subscene3D.forFilter=function(scene,fbo,shader){
   if(shader==null){
     shader=ShaderProgram.makeCopyEffect(scene);
   }
@@ -324,7 +351,7 @@ Subscene3D.forFilter=function(scene, fbo, shader){
   ret.addShape(shape);
    return ret;
 }
-
+/** @private */
 Subscene3D._getMaterialBinder=function(material){
  "use strict";
 if(material){
@@ -361,7 +388,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

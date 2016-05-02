@@ -271,6 +271,7 @@ var RedBlackTree=function(comparer){
    return this._size;
   };
 };
+/** @private */
 RedBlackTree._defaultCompare=function(a,b){
  if(a===b)return 0;
  return (a<b) ? -1 : 1;
@@ -306,9 +307,11 @@ RedBlackTree.prototype.find=function(data){
   }
   return ((it===null || typeof it==="undefined")) ? null : it.data;
 };
+/** @private */
 RedBlackTree._red=function(node){
  return (node!==null && typeof node!=="undefined") && node.red === 1;
 };
+/** @private */
 RedBlackTree._single=function(root,dir){
   var save = root.link(!dir);
   root.setLink(!dir,save.link(dir));
@@ -317,6 +320,7 @@ RedBlackTree._single=function(root,dir){
   save.red = false;
   return save;
 };
+/** @private */
 RedBlackTree._double=function(root,dir){
   root.setLink(!dir,RedBlackTree._single ( root.link(!dir), !dir ));
   return RedBlackTree._single ( root, dir );
@@ -491,7 +495,7 @@ var Polygon=function(path,flatness){
  if((path!==null && typeof path!=="undefined")){
   this.subpaths=path._getSubpaths(flatness);
   for(var i=0;i<this.subpaths.length;i++){
-   this.contours[i]=new Polygon.Contour(this.subpaths[i]);
+   this.contours[i]=new Polygon._Contour(this.subpaths[i]);
   }
  }
  this.path=path;
@@ -524,8 +528,8 @@ var Polygon=function(path,flatness){
   return p;
  };
 };
-
-Polygon.Contour=function(subpath){
+/** private */
+Polygon._Contour=function(subpath){
  var vertLength=subpath.length;
   /*
  // For convenience, eliminate the last
@@ -560,7 +564,9 @@ function Connector(){
   return this.closedPolygons.size();
  };
 }
-
+/**
+ * Not documented yet.
+ */
 Polygon.PointChain=function(){
  this.l=new LinkedList();
  this._closed=false;
@@ -674,13 +680,13 @@ Connector.prototype.toPolygon=function(){
  var polygon=new Polygon(null);
  var j=this.closedPolygons.first();
  while(j){
-  var contour=new Polygon.Contour([]);
+  var contour=new Polygon._Contour([]);
   var k=j.data.first();
   while(k){
    contour.vertices.push(k.data[0],k.data[1]);
    k=k.next;
   }
-  polygon.contours.push(contour);
+  Polygon._Contours.push(contour);
   j=j.next;
  }
  return polygon;
@@ -703,6 +709,14 @@ Clipper.XOR=3;
 Clipper.NON_CONTRIBUTING=1;
 Clipper.SAME_TRANSITION=2;
 Clipper.DIFFERENT_TRANSITION=3;
+/**
+ * Not documented yet.
+ * @param {*} pp
+ * @param {*} b
+ * @param {*} apl
+ * @param {*} o
+ * @param {*} t
+ */
 Clipper.SweepEvent=function(pp,b,apl,o,t){
  this.p=pp;
  this.id=-1;
@@ -729,6 +743,12 @@ Clipper.SweepEvent=function(pp,b,apl,o,t){
 Clipper.SweepEvent.prototype.toString=function(){
  return Clipper._print(this);
 };
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} c
+ */
 Clipper.signedArea=function(a,b,c){
  var xa=a[0]-c[0];
  var ya=a[1]-c[1];
@@ -736,6 +756,7 @@ Clipper.signedArea=function(a,b,c){
  var yb=b[1]-c[1];
  return 0.5*(xa*yb-xb*ya);
 };
+/** @private */
 Clipper._ptEq=function(a,b){
  return a[0]===b[0] && a[1]===b[1];
 };
@@ -753,6 +774,11 @@ Clipper.sweepEventComp=function(e1,e2) {
   // Same point, both events are left endpoints or both are right endpoints. The event associate to the bottom segment is processed first
   return e1.above(e2.other.p);
 };
+/**
+ * Not documented yet.
+ * @param {*} e1
+ * @param {*} e2
+ */
 Clipper.sweepEventCompNum=function(e1,e2) {
  if(e1===e2)return 0;
  return Clipper.sweepEventComp(e1,e2) ? -1 : 1;
@@ -780,6 +806,11 @@ Clipper.segmentComp=function(e1,e2) {
   }
   return Clipper.sweepEventComp(e1, e2);
 };
+/**
+ * Not documented yet.
+ * @param {*} e1
+ * @param {*} e2
+ */
 Clipper.segmentCompNum=function(e1,e2) {
  if(e1===e2)return 0;
  return Clipper.segmentComp(e1,e2) ? -1 : 1;
@@ -793,7 +824,7 @@ Clipper.prototype.storeSweepEvent=function(e){
  this.eventHolder.push(e);
  return e;
 };
-
+/** @private */
 Clipper._print=function(e)
 {
   if(!e)return "null";
@@ -1003,7 +1034,13 @@ Clipper.prototype.processSegment=function(s,pl)
   this.eq.push(e1);
   this.eq.push(e2);
 };
-
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} e
+ * @param {*} f
+ */
 Clipper.findIntersection=function(a,b,e,f){
  var ret=Clipper._findIntersectionInternal(a[0][0],a[0][1],a[1][0],a[1][1],
   b[0][0],b[0][1],b[1][0],b[1][1]);
@@ -1017,7 +1054,7 @@ Clipper.findIntersection=function(a,b,e,f){
  }
  return ret.length;
 };
-
+/** @private */
 Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
   var dpdeltad0;
   var t2 = a2x - a1x;

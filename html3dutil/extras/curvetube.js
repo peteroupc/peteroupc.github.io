@@ -76,6 +76,10 @@ function FrenetFrames(func){
   }
  }
 }
+/**
+ * Not documented yet.
+ * @param {*} tangent
+ */
 FrenetFrames.normalFromTangent=function(tangent){
  "use strict";
 var absx=Math.abs(tangent[0]);
@@ -178,6 +182,7 @@ FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
  }
  return val;
 };
+/** @private */
 FrenetFrames._distSq=function(a,b){
   "use strict";
 var dx=b[0]-a[0];

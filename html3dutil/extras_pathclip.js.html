@@ -287,6 +287,7 @@ var RedBlackTree=function(comparer){
    return this._size;
   };
 };
+/** @private */
 RedBlackTree._defaultCompare=function(a,b){
  if(a===b)return 0;
  return (a&lt;b) ? -1 : 1;
@@ -322,9 +323,11 @@ RedBlackTree.prototype.find=function(data){
   }
   return ((it===null || typeof it==="undefined")) ? null : it.data;
 };
+/** @private */
 RedBlackTree._red=function(node){
  return (node!==null &amp;&amp; typeof node!=="undefined") &amp;&amp; node.red === 1;
 };
+/** @private */
 RedBlackTree._single=function(root,dir){
   var save = root.link(!dir);
   root.setLink(!dir,save.link(dir));
@@ -333,6 +336,7 @@ RedBlackTree._single=function(root,dir){
   save.red = false;
   return save;
 };
+/** @private */
 RedBlackTree._double=function(root,dir){
   root.setLink(!dir,RedBlackTree._single ( root.link(!dir), !dir ));
   return RedBlackTree._single ( root, dir );
@@ -507,7 +511,7 @@ var Polygon=function(path,flatness){
  if((path!==null &amp;&amp; typeof path!=="undefined")){
   this.subpaths=path._getSubpaths(flatness);
   for(var i=0;i&lt;this.subpaths.length;i++){
-   this.contours[i]=new Polygon.Contour(this.subpaths[i]);
+   this.contours[i]=new Polygon._Contour(this.subpaths[i]);
   }
  }
  this.path=path;
@@ -540,8 +544,8 @@ var Polygon=function(path,flatness){
   return p;
  };
 };
-
-Polygon.Contour=function(subpath){
+/** private */
+Polygon._Contour=function(subpath){
  var vertLength=subpath.length;
   /*
  // For convenience, eliminate the last
@@ -576,7 +580,9 @@ function Connector(){
   return this.closedPolygons.size();
  };
 }
-
+/**
+ * Not documented yet.
+ */
 Polygon.PointChain=function(){
  this.l=new LinkedList();
  this._closed=false;
@@ -690,13 +696,13 @@ Connector.prototype.toPolygon=function(){
  var polygon=new Polygon(null);
  var j=this.closedPolygons.first();
  while(j){
-  var contour=new Polygon.Contour([]);
+  var contour=new Polygon._Contour([]);
   var k=j.data.first();
   while(k){
    contour.vertices.push(k.data[0],k.data[1]);
    k=k.next;
   }
-  polygon.contours.push(contour);
+  Polygon._Contours.push(contour);
   j=j.next;
  }
  return polygon;
@@ -719,6 +725,14 @@ Clipper.XOR=3;
 Clipper.NON_CONTRIBUTING=1;
 Clipper.SAME_TRANSITION=2;
 Clipper.DIFFERENT_TRANSITION=3;
+/**
+ * Not documented yet.
+ * @param {*} pp
+ * @param {*} b
+ * @param {*} apl
+ * @param {*} o
+ * @param {*} t
+ */
 Clipper.SweepEvent=function(pp,b,apl,o,t){
  this.p=pp;
  this.id=-1;
@@ -745,6 +759,12 @@ Clipper.SweepEvent=function(pp,b,apl,o,t){
 Clipper.SweepEvent.prototype.toString=function(){
  return Clipper._print(this);
 };
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} c
+ */
 Clipper.signedArea=function(a,b,c){
  var xa=a[0]-c[0];
  var ya=a[1]-c[1];
@@ -752,6 +772,7 @@ Clipper.signedArea=function(a,b,c){
  var yb=b[1]-c[1];
  return 0.5*(xa*yb-xb*ya);
 };
+/** @private */
 Clipper._ptEq=function(a,b){
  return a[0]===b[0] &amp;&amp; a[1]===b[1];
 };
@@ -769,6 +790,11 @@ Clipper.sweepEventComp=function(e1,e2) {
   // Same point, both events are left endpoints or both are right endpoints. The event associate to the bottom segment is processed first
   return e1.above(e2.other.p);
 };
+/**
+ * Not documented yet.
+ * @param {*} e1
+ * @param {*} e2
+ */
 Clipper.sweepEventCompNum=function(e1,e2) {
  if(e1===e2)return 0;
  return Clipper.sweepEventComp(e1,e2) ? -1 : 1;
@@ -796,6 +822,11 @@ Clipper.segmentComp=function(e1,e2) {
   }
   return Clipper.sweepEventComp(e1, e2);
 };
+/**
+ * Not documented yet.
+ * @param {*} e1
+ * @param {*} e2
+ */
 Clipper.segmentCompNum=function(e1,e2) {
  if(e1===e2)return 0;
  return Clipper.segmentComp(e1,e2) ? -1 : 1;
@@ -809,7 +840,7 @@ Clipper.prototype.storeSweepEvent=function(e){
  this.eventHolder.push(e);
  return e;
 };
-
+/** @private */
 Clipper._print=function(e)
 {
   if(!e)return "null";
@@ -1019,7 +1050,13 @@ Clipper.prototype.processSegment=function(s,pl)
   this.eq.push(e1);
   this.eq.push(e2);
 };
-
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} e
+ * @param {*} f
+ */
 Clipper.findIntersection=function(a,b,e,f){
  var ret=Clipper._findIntersectionInternal(a[0][0],a[0][1],a[1][0],a[1][1],
   b[0][0],b[0][1],b[1][0],b[1][1]);
@@ -1033,7 +1070,7 @@ Clipper.findIntersection=function(a,b,e,f){
  }
  return ret.length;
 };
-
+/** @private */
 Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
   var dpdeltad0;
   var t2 = a2x - a1x;
@@ -1355,7 +1392,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

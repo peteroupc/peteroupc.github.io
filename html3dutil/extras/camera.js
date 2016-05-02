@@ -242,6 +242,7 @@ if(nearZ<=0)throw new Error("invalid nearZ");
  this._updateView();
  this.input.mousewheel(this._mousewheel.bind(this));
 }
+/** @private */
 Camera._normAsVec4=function(x,y,z){
  "use strict";
 var len=x*x+y*y+z*z;
@@ -277,7 +278,8 @@ var velocity=Camera._normAsVec4(x,y,z);
  GLMath.vec3scaleInPlace(velocity,dist);
  vec[0]+=velocity[0]; vec[1]+=velocity[1]; vec[2]+=velocity[2];
 };
-Camera._moveTrans=function(vec, quat, dist, x, y, z){
+/** @private */
+Camera._moveTrans=function(vec,quat,dist,x,y,z){
  "use strict";
 var velocity=Camera._normAsVec4(x,y,z);
  velocity=GLMath.quatTransform(

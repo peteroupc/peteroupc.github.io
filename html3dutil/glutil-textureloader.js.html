@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Global</title>
+<head><meta charset="utf-8"><title>JSDoc: Source: glutil-textureloader.js</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,119 +10,113 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Global</h1>
+    <h1>Source: glutil-textureloader.js</h1>
 
-<section>
-
-<header>
-
-        <h2>
-
-        </h2>
-
-</header>
-
-<article>
-    <div class="container-overview">
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Members</h3>
-
-<h4 style="margin-bottom:0px" id="clearColor"><span style="font-weight:lighter"></span>clearColor<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-renderpass3d.js.html">glutil-renderpass3d.js</a>, <a href="glutil-renderpass3d.js.html#line12">line 12</a>
-     </i></small></p>
-
-<div class="description">
-    Whether to clear the color buffer before rendering the scene.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-default">Default Value: true</dt>
-
-</dl>
-
-<h4 style="margin-bottom:0px" id="clearDepth"><span style="font-weight:lighter"></span>clearDepth<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-renderpass3d.js.html">glutil-renderpass3d.js</a>, <a href="glutil-renderpass3d.js.html#line15">line 15</a>
-     </i></small></p>
-
-<div class="description">
-    Whether to clear the depth buffer before rendering the scene.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-default">Default Value: true</dt>
-
-</dl>
-
-<h4 style="margin-bottom:0px" id="clearStencil"><span style="font-weight:lighter"></span>clearStencil<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-renderpass3d.js.html">glutil-renderpass3d.js</a>, <a href="glutil-renderpass3d.js.html#line18">line 18</a>
-     </i></small></p>
-
-<div class="description">
-    Whether to clear the stencil buffer before rendering the scene.
-</div>
-
-<dl class="details">
-
-    <dt class="tag-default">Default Value: true</dt>
-
-</dl>
-
-<h4 style="margin-bottom:0px" id="frameBuffer"><span style="font-weight:lighter"></span>frameBuffer<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-renderpass3d.js.html">glutil-renderpass3d.js</a>, <a href="glutil-renderpass3d.js.html#line20">line 20</a>
-     </i></small></p>
-
-<div class="description">
-    Framebuffer to render to.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h4 style="margin-bottom:0px" id="subScene"><span style="font-weight:lighter"></span>subScene<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-renderpass3d.js.html">glutil-renderpass3d.js</a>, <a href="glutil-renderpass3d.js.html#line9">line 9</a>
-     </i></small></p>
-
-<div class="description">
-    The scene to render.
-</div>
-
-<dl class="details">
-
-</dl>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="margin-bottom:0px" id="TextureLoader"><span style="font-weight:lighter"></span>TextureLoader<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-textureloader.js.html">glutil-textureloader.js</a>, <a href="glutil-textureloader.js.html#line5">line 5</a>
-     </i></small></p>
-
-<div class="description">
-    An object that caches loaded textures and uploads them
-to WebGL contexts.
-</div>
-
-<dl class="details">
-
-</dl>
-
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+* An object that caches loaded textures and uploads them
+* to WebGL contexts.
+*/
+function TextureLoader(){
+ this.loadedTextures=[];
+ this.textureImages={};
+ this.maxAnisotropy=[];
+}
+/**
+ * Not documented yet.
+ * @param {*} name
+ */
+TextureLoader.prototype.loadTexture=function(name){
+ return Texture.loadTexture(name,this.textureImages);
+}
+/** @private */
+TextureLoader.prototype._setMaxAnisotropy=function(context){
+ context= (context.getContext) ? context.getContext() : context;
+ var ma=this.maxAnisotropy;
+ for(var i=0;i&lt;ma.length;i++){
+  if(ma[i][0]==context){
+   if(ma[i][2]>=0){
+    context.texParameteri(context.TEXTURE_2D,ma[i][2],ma[i][1]);
+   } else {
+    return;
+   }
+  }
+ }
+ var ext=context.getExtension("EXT_texture_filter_anisotropic") ||
+         context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
+         context.getExtension("MOZ_EXT_texture_filter_anisotropic")
+ if(!ext){
+  ma.push([context,1,-1])
+  return 1
+ } else {
+  var cnst=ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT;
+  var ret=context.getParameter(cnst);
+  ma.push([context,ret,cnst])
+  context.texParameteri(context.TEXTURE_2D,cnst,ret);
+  return ret
+ }
+}
+/**
+ * Not documented yet.
+ * @param {*} textures
+ * @param {*} resolve
+ * @param {*} reject
+ */
+TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
+ context= (context.getContext) ? context.getContext() : context;
+ var promises=[]
+ for(var i=0;i&lt;textures.length;i++){
+  promises.push(this.loadTexture(textures[i]));
+ }
+ return GLUtil.getPromiseResultsAll(textures,resolve,reject);
+}
+/**
+ * Not documented yet.
+ * @param {*} textures
+ * @param {*} context
+ */
+TextureLoader.prototype.mapTextures=function(textures,context){
+ context= (context.getContext) ? context.getContext() : context;
+ for(var i=0;i&lt;textures.length;i++){
+  this.mapTexture(textures[i],context);
+ }
+ return this;
+}
+/**
+ * Not documented yet.
+ * @param {*} texture
+ * @param {*} context
+ */
+TextureLoader.prototype.mapTexture=function(texture,context){
+ context= (context.getContext) ? context.getContext() : context;
+ var lt=this.loadedTextures;
+ for(var i=0;i&lt;lt.length;i++){
+  if(lt[i][0]==texture &amp;&amp; lt[i][1]==context){
+   return lt[i][2];
+  }
+ }
+ var loadedTex=new GLUtil._LoadedTexture(texture,context);
+ lt.push([texture,context,loadedTex])
+ return loadedTex;
+}
+/**
+ * Not documented yet.
+ */
+TextureLoader.prototype.dispose=function(){
+ for(var tex in this.textureImages){
+  this.textureImages[tex].dispose();
+ }
+ for(var i=0;i&lt;lt.length;i++){
+  this.loadedTextures[i][2].dispose();
+ }
+ this.textureImages={}
+ this.loadedTextures=[]
+ this.maxAnisotropy=[]
+}
+</code></pre>
+        </article>
+    </section>
 
 </div>
 <nav id="navigation">

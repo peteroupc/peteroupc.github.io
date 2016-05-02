@@ -59,6 +59,7 @@ var canvas=scene.getContext().canvas;
  this.scene=scene;
  this.fc=new FrameCounter();
 }
+/** @private */
 FrameCounterDiv._makeDiv=function(element){
  "use strict";
 var div=document.createElement("div");

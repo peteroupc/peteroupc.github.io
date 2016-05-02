@@ -50,15 +50,9 @@ var multi=new ShapeGroup();
  }
  return multi;
 };
-/**
- * Not documented yet.
- * @param {*} scene
- * @param {*} resolved
- * @param {*} rejected
- */
-ObjData.prototype.loadTextures=function(scene,resolved,rejected){
- "use strict";
-var textures=[];
+/** @private */
+ObjData.prototype._gatherTextureNames=function(){
+ var textures=[];
  if(this.mtl){
   for(var i=0;i<this.mtl.list.length;i++){
     var mtl=this.mtl.list[i].data;
@@ -67,7 +61,17 @@ var textures=[];
     }
   }
  }
- return scene.loadAndMapTextures(textures,resolved,rejected);
+ return textures;
+}
+/**
+ * Not documented yet.
+ * @param {*} scene
+ * @param {*} resolved
+ * @param {*} rejected
+ */
+ObjData.prototype.loadTextures=function(scene,resolved,rejected){
+ "use strict";
+ return scene.loadAndMapTexturesAll(this._gatherTextureNames(),resolved,rejected);
 };
 /**
  * Creates one or more 3D shapes from the named portion
@@ -90,6 +94,7 @@ var multi=new ShapeGroup();
  }
  return multi;
 };
+/** @private */
 ObjData._resolvePath=function(path, name){
  // Relatively dumb for a relative path
  // resolver, but sufficient here, as it will
@@ -148,6 +153,7 @@ for(var i=0;i<this.list.length;i++){
   }
   return null;
 };
+/** @private */
 MtlData._getMaterial=function(mtl){
  "use strict";
 var shininess=1.0;
@@ -222,6 +228,10 @@ var shininess=1.0;
  }
  return ret;
 };
+/**
+ * Not documented yet.
+ * @param {*} url
+ */
 ObjData.loadMtlFromUrl=function(url){
  "use strict";
 return GLUtil.loadFileFromUrl(url).then(
@@ -237,6 +247,23 @@ return GLUtil.loadFileFromUrl(url).then(
      return Promise.reject(e);
    });
 };
+/**
+ * Not documented yet.
+ * @param {*} url
+ * @param {*} textureLoader
+ */
+ObjData.loadObjFromUrlWithTextures=function(url,textureLoader){
+ return ObjData.loadObjFromUrl(url).then(function(obj){
+   var o=obj;
+   return textureLoader.loadTexturesAll(o._gatherTextureNames())
+     .then(function(ret){
+       return Promise.resolve(o);
+     },function(results){
+       return Promise.reject({"url":url,"textureResults":results});
+     });
+ })
+}
+
 /**
 Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available) asynchronously.
@@ -276,6 +303,7 @@ return GLUtil.loadFileFromUrl(url).then(
      return Promise.reject(e);
    });
 };
+/** @private */
 MtlData._loadMtl=function(str){
  "use strict";
 function xyzToRgb(xyz){
@@ -403,6 +431,7 @@ function xyzToRgb(xyz){
  }
  return {success: mtl};
 };
+/** @private */
 ObjData._refIndex=function(idxstr,arr){
  "use strict";
 var ret=parseInt(idxstr,10);
@@ -410,6 +439,7 @@ var ret=parseInt(idxstr,10);
  if(ret<0 || ret>=arr.length)ret=0;
  return ret;
 };
+/** @private */
 ObjData._loadObj=function(str){
  "use strict";
 var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";

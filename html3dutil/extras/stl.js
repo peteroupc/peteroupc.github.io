@@ -53,6 +53,7 @@ StlData.IN_FACET=2;
 StlData.IN_OUTER_LOOP=3;
 /** @private */
 StlData.AFTER_SOLID=3;
+/** @private */
 StlData._loadStl=function(str){
  var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
  var facet=new RegExp("^\\s*facet\\s+normal\\s+"+number+"\\s+"+number+

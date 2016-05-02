@@ -157,6 +157,7 @@ function colorToHex(x){
  });
  return JSON.stringify(json);
 };
+/** @private */
 MeshJSON._checkPath=function(path,file){
  "use strict";
 if((/(?![\/\\])([^\:\?\#\t\r\n]+)/).test(file)){
@@ -224,7 +225,7 @@ var shininess=1.0;
  }
  return ret;
 };
-
+/** @private */
 MeshJSON._Model=function(mesh){
  "use strict";
 this.meshes=[mesh];

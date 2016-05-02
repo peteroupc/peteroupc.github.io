@@ -56,6 +56,7 @@ GraphicsPath.prototype.isIncomplete=function(){
 
 return this.incomplete;
 };
+/** @private */
 GraphicsPath._startPoint=function(a){
 
 if(a[0]===GraphicsPath.CLOSE){
@@ -64,6 +65,7 @@ if(a[0]===GraphicsPath.CLOSE){
   return [a[1],a[2]];
  }
 };
+/** @private */
 GraphicsPath._endPoint=function(a){
 
 if(a[0]===GraphicsPath.CLOSE){
@@ -74,7 +76,7 @@ if(a[0]===GraphicsPath.CLOSE){
   return [a[a.length-2],a[a.length-1]];
  }
 };
-
+/** @private */
 GraphicsPath._point=function(seg,t){
 
  var a,b,x,y;
@@ -168,7 +170,7 @@ var x1=a1+(a3-a1)*tcut;
    GraphicsPath._flattenCubic(a1,a2,x1,y1,xc1,yc1,xd,yd,t1,tmid,list,flatness,mode,depth+1);
    GraphicsPath._subdivide2(xd,yd,xc2,yc2,x3,y3,a7,a8,tmid,t2,tcutx,list,flatness,mode,depth+1);
 };
-
+/** @private */
 GraphicsPath._flattenCubic=function(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,list,flatness,mode,depth){
 
 if((depth===null || typeof depth==="undefined"))depth=0;
@@ -207,7 +209,7 @@ if((depth===null || typeof depth==="undefined"))depth=0;
   GraphicsPath._subdivide2(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,0.5,list,flatness,mode,depth);
  }
 };
-
+/** @private */
 GraphicsPath._flattenQuad=function(a1,a2,a3,a4,a5,a6,t1,t2,list,flatness,mode,depth){
 
 if((depth===null || typeof depth==="undefined"))depth=0;
@@ -232,7 +234,7 @@ if((depth===null || typeof depth==="undefined"))depth=0;
   GraphicsPath._flattenQuad(xc,yc,x2,y2,a5,a6,tmid,t2,list,flatness,mode,depth+1);
  }
 };
-
+/** @private */
 GraphicsPath._flattenArc=function(a,t1,t2,list,flatness,mode,depth){
 
 var rot=a[5];
@@ -241,6 +243,7 @@ var rot=a[5];
  var ellipseInfo=[a[3],a[4],a[10],a[11],crot,srot];
  GraphicsPath._flattenArcInternal(ellipseInfo,a[1],a[2],a[8],a[9],a[12],a[13],t1,t2,list,flatness,mode,depth);
 };
+/** @private */
 GraphicsPath._flattenArcInternal=function(ellipseInfo,x1,y1,x2,y2,theta1,theta2,t1,t2,list,flatness,mode,depth){
 
 if((depth===null || typeof depth==="undefined"))depth=0;
@@ -326,6 +329,7 @@ GraphicsPath.prototype.toString=function(){
  }
  return ret;
 };
+/** @private */
 GraphicsPath._quadCurveLength=function(x1,y1,x2,y2,x3,y3){
 
 var integrand=function(t){
@@ -336,6 +340,7 @@ var integrand=function(t){
  };
  return GraphicsPath._numIntegrate(integrand,0,1);
 };
+/** @private */
 GraphicsPath._cubicCurveLength=function(x1,y1,x2,y2,x3,y3,x4,y4){
 
 var integrand=function(t){
@@ -353,6 +358,7 @@ var integrand=function(t){
  };
  return GraphicsPath._numIntegrate(integrand,0,1);
 };
+/** @private */
 GraphicsPath._length=function(a){
 
  var flat,len,j;
@@ -486,6 +492,7 @@ GraphicsPath.prototype.toLinePath=function(flatness){
  }
  return path;
 };
+/** @private */
 GraphicsPath._accBounds=function(ret,first,s,t){
 
 if(t>=0 && t<=1){
@@ -501,6 +508,7 @@ if(t>=0 && t<=1){
   }
  }
 };
+/** @private */
 GraphicsPath._accBoundsArc=function(ret,first,rx,ry,cphi,sphi,cx,cy,angle){
 
 var ca = Math.cos(angle);
@@ -517,6 +525,7 @@ var ca = Math.cos(angle);
   ret[3]=Math.max(py,ret[3]);
  }
 };
+/** @private */
 GraphicsPath._normAngle=function(angle){
 
 var twopi=Math.PI*2;
@@ -529,6 +538,7 @@ var twopi=Math.PI*2;
  }
  return normAngle;
 };
+/** @private */
 GraphicsPath._angleInRange=function(angle,startAngle,endAngle){
 
 var twopi=Math.PI*2;
@@ -747,7 +757,7 @@ var tmp=[];
  }
  return subpaths;
 };
-
+/** @private */
 GraphicsPath._CurveList=function(curves){
 
 this.curves=curves;
@@ -795,7 +805,7 @@ if(this.curves.length === 0)return [0,0,0];
  }
  return null;
 };
-
+/** @private */
 GraphicsPath._Curve=function(segments){
 
 this.segments=segments;
@@ -1064,7 +1074,7 @@ this.segments.push([GraphicsPath.LINE,
  this.incomplete=false;
  return this;
 };
-
+/** @private */
 GraphicsPath._areCollinear=function(x0,y0,x1,y1,x2,y2){
 
 var t1 = x1 - x0;
@@ -1272,7 +1282,7 @@ GraphicsPath._numIntegrate=function(func, xmin, xmax){
  }
  return ret*bm;
 };
-
+/** @private */
 GraphicsPath._ellipticArcLength=function(xRadius,yRadius,startAngle,endAngle){
 
 if(startAngle===endAngle || xRadius<=0 || yRadius<=0)return 0;
@@ -1290,6 +1300,7 @@ if(startAngle===endAngle || xRadius<=0 || yRadius<=0)return 0;
  return Math.abs(mx*GraphicsPath._numIntegrate(
    ellipticIntegrand,startAngle,endAngle));
 };
+/** @private */
 GraphicsPath._vecangle=function(a,b,c,d){
  var dot=a*c+b*d;
  var denom=Math.sqrt(a*a+b*b)*Math.sqrt(c*c+d*d);
@@ -1303,6 +1314,7 @@ GraphicsPath._vecangle=function(a,b,c,d){
  if(sgn<0)ret=-ret;
  return ret;
 };
+/** @private */
 GraphicsPath._arcSvgToCenterParam=function(a){
  var x1=a[1];
  var y1=a[2];
@@ -1355,7 +1367,7 @@ GraphicsPath._arcSvgToCenterParam=function(a){
  delta+=theta1;
  return [cx,cy,theta1,delta];
 };
-
+/** @private */
 GraphicsPath._arcToBezierCurves=function(cx,cy,rx,ry,rot,angle1,angle2){
  var crot = Math.cos(rot);
  var srot = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-crot*crot) : -Math.sqrt(1.0-crot*crot)) : Math.sin(rot);
@@ -1448,6 +1460,7 @@ GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  this.incomplete=false;
  return this;
 };
+/** @private */
 GraphicsPath._nextAfterWs=function(str,index){
 
 while(index[0]<str.length){
@@ -1459,6 +1472,7 @@ while(index[0]<str.length){
  }
  return -1;
 };
+/** @private */
 GraphicsPath._nextAfterSepReq=function(str,index){
 
 var comma=false;
@@ -1479,6 +1493,7 @@ var comma=false;
  }
  return -1;
 };
+/** @private */
 GraphicsPath._nextAfterSep=function(str,index){
 
 var comma=false;
@@ -1495,6 +1510,7 @@ var comma=false;
  }
  return -1;
 };
+/** @private */
 GraphicsPath._peekNextNumber=function(str,index){
 
 var oldindex=index[0];
@@ -1502,11 +1518,13 @@ var oldindex=index[0];
  index[0]=oldindex;
  return ret;
 };
+/** @private */
 GraphicsPath._notFinite=function(n){
 
 return isNaN(n) || n===Number.POSITIVE_INFINITY ||
    n===Number.NEGATIVE_INFINITY;
 };
+/** @private */
 GraphicsPath._nextNumber=function(str,index,afterSep){
 
 var oldindex=index[0];
@@ -1928,6 +1946,7 @@ var index=[0];
 Triangulate._CONVEX=1;
 Triangulate._EAR=2;
 Triangulate._REFLEX=3;
+/** @private */
 Triangulate._pointInTri=function(i1,i2,i3,pt){
  var t1 = Math.min (i3[0], i1[0]);
   var t2 = Math.min (i3[1], i1[1]);
@@ -1943,7 +1962,7 @@ Triangulate._pointInTri=function(i1,i2,i3,pt){
    (((pt[1] - t8) * (Math.max (i2[0], i3[0]) - t7)) < ((Math.max (i2[1], i3[1]) - t8) * (pt[0] - t7))));
   return t;
 };
-
+/** @private */
 Triangulate._vertClass=function(v,ori){
  var curori=Triangulate._triOrient(v.prev.data,v.data,v.next.data);
  if(curori === 0 || curori===ori){
@@ -1963,6 +1982,7 @@ Triangulate._vertClass=function(v,ori){
   return Triangulate._REFLEX;
  }
 };
+/** @private */
 Triangulate._triOrient=function(v1,v2,v3){
  var ori=v1[0]*v2[1]-v1[1]*v2[0];
  ori+=v2[0]*v3[1]-v2[1]*v3[0];
@@ -2106,8 +2126,8 @@ var LinkedList=function(){
   return this;
  };
 };
-
-Triangulate.Contour=function(vertices){
+/** @private */
+Triangulate._Contour=function(vertices){
  this.vertexList=new LinkedList();
  var vertLength=vertices.length;
  // For convenience, eliminate the last
@@ -2165,7 +2185,7 @@ Triangulate.Contour=function(vertices){
  }
  this.orientation=(ori === 0) ? 0 : (ori<0 ? -1 : 1);
 };
-Triangulate.Contour.prototype.findVisiblePoint=function(x,y){
+Triangulate._Contour.prototype.findVisiblePoint=function(x,y){
   var vert=this.vertexList.first();
   if((vert===null || typeof vert==="undefined"))return null;
   var bounds=this.bounds;
@@ -2299,7 +2319,7 @@ GraphicsPath.prototype.getTriangles=function(flatness){
  var tris=[];
  var i,j;
  for(i=0;i<subpaths.length;i++){
-  var contour=new Triangulate.Contour(subpaths[i]);
+  var contour=new Triangulate._Contour(subpaths[i]);
   // NOTE: Ignores contours with orientation 0
   // (empty, zero area, sometimes self-intersecting)
   if(contour.orientation>0){
@@ -2345,7 +2365,7 @@ GraphicsPath.prototype.getTriangles=function(flatness){
  }
  return tris;
 };
-
+/** @private */
 Triangulate._connectContours=function(src,dst,maxPoint,dstNode){
  var vpnode=dstNode;
  var oldNext=dstNode.next;
@@ -2367,7 +2387,7 @@ Triangulate._connectContours=function(src,dst,maxPoint,dstNode){
  count+=2;
  return count;
 };
-
+/** @private */
 Triangulate._triangulate=function(contour,tris){
  var i,t1,tri;
  if(!contour || contour.vertexCount<3 || contour.orientation === 0){
