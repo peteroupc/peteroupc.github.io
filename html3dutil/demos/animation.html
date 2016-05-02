@@ -175,9 +175,7 @@ function rotateVec(vec,angle){
   var shapesizes=[1,0.9,0.8,0.7,0.6,0.7,0.8]
   var fc=new FrameCounterDiv(scene)
   // load the floor texture
-  scene.loadAndMapTextures(["461223191.jpg"]).then(function(results){
-   // abort if floor texture wasn't loaded
-   if(results.failures.length>0)return
+  scene.loadAndMapTexture("461223191.jpg").then(function(texture){
    // create a stack of washers, each with different sizes
    for(var i=0;i<shapecolors.length;i++){
     var s=scene.makeShape(createWasher(0.5,shapesizes[i],0.1,32)).setColor(shapecolors[i])
@@ -186,7 +184,7 @@ function rotateVec(vec,angle){
     scene.addShape(s)
    }
    scene.addShape(
-    scene.makeShape(makeFloor(-5,-5,10,10,1)).setTexture(results.successes[0]))
+    scene.makeShape(makeFloor(-5,-5,10,10,1)).setTexture(texture))
   })
   var anim=null
   var timer={}

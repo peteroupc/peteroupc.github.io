@@ -105,7 +105,7 @@ var ff=this.sampler.sample(fX, fY, fZ);
         rfNormal[2] = this.sampler.sample(fX, fY, fZ+0.001)-ff;
         GLMath.vec3normInPlace(rfNormal);
 };
-
+/** @private */
 ImplicitSurface._fGetOffset=function(a,b,desired){
  "use strict";
 var delta=b-a;
@@ -723,7 +723,11 @@ mesh.mode(Mesh.TRIANGLES);
         }
         }
 };
-
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ */
 ImplicitSurface.union=function(a,b){
   "use strict";
 return {
@@ -732,6 +736,11 @@ return {
    }
   };
 };
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ */
 ImplicitSurface.intersection=function(a,b){
   "use strict";
 return {
@@ -740,7 +749,11 @@ return {
    }
   };
 };
-
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ */
 ImplicitSurface.difference=function(a,b){
   "use strict";
 return {

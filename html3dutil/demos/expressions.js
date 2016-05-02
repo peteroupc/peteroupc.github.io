@@ -142,8 +142,11 @@ if ((name===null || typeof name==="undefined")) {
        "use strict";
 this.nodes = [];
     };
-
-    Expression.isExpr = function(x) {
+/**
+ * Not documented yet.
+ * @param {*} x
+ */
+Expression.isExpr=function(x) {
       "use strict";
 var a, b, c, d;
       if(!x || typeof x==="undefined")return false;
@@ -157,8 +160,11 @@ Expression.prototype.simplify=function() {
       "use strict";
 return Expression.simplifyNodes(this.nodes);
     };
-
-    Expression.simplifyNodes = function(nodes) {
+/**
+ * Not documented yet.
+ * @param {*} nodes
+ */
+Expression.simplifyNodes=function(nodes) {
       "use strict";
       var negative;
 var a, b, c, d, e, passes = null, pass__ = null, pass = null, prevNode = null, prevNodeIndex = null, i = null, node = null, nextNode = null, op = null;
@@ -509,8 +515,12 @@ var a, b, c, val = null, node__ = null, node = null, cv = null;
         return null;
       }
     };
-
-    Operation.func = function(operation, args) {
+/**
+ * Not documented yet.
+ * @param {*} operation
+ * @param {*} args
+ */
+Operation.func=function(operation,args) {
       "use strict";
 var a, op = null, arg__ = null, arg = null;
       op = new Operation(operation);

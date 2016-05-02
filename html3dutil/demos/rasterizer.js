@@ -8,6 +8,10 @@
 */
 var __oldget3DContext=GLUtil.get3DContext;
 var __use3D=false;
+/**
+ * Not documented yet.
+ * @param {*} canvas
+ */
 GLUtil.get3DContext=function(canvas){
  "use strict";
 if(__use3D){
@@ -16,6 +20,7 @@ if(__use3D){
   return canvas.getContext("2d");
  }
 };
+/** @private */
 Scene3D._Triangle=function(v0,v1,v2){
     "use strict";
 this.v1=v0;
@@ -63,6 +68,10 @@ var e0x=this.v3[0]-this.v1[0],
     this.dy = [((de0[0] * lambda3) + de1[0] * lambda4), ((de0[1] * lambda3) + de1[1] * lambda4), ((de0[2] * lambda3) + de1[2] * lambda4)];
     return true;
   };
+/**
+ * Not documented yet.
+ * @param {*} vec
+ */
 Scene3D.vec2normInPlace=function(vec){
  "use strict";
 var x=vec[0];
@@ -368,7 +377,7 @@ var t0=Math.max(0,tex[0]);
        data[offset+3]=255;
       }
 };
-
+/** @private */
 Scene3D._drawPoint=function(data,depth,x,y,z,width,height,rgb){
 "use strict";
 if(x<0 || x>=width || y<0 || y>=height)return;
@@ -383,6 +392,7 @@ if(x<0 || x>=width || y<0 || y>=height)return;
        data[offset+3]=0xFF;
       }
 };
+/** @private */
 Scene3D._drawPoint2=function(data,depth,x,y,z,width,height,rgb){
 "use strict";
 if(x<0 || x>=width || y<0 || y>=height)return;
@@ -397,6 +407,7 @@ if(x<0 || x>=width || y<0 || y>=height)return;
        data[offset+3]=0xFF;
       }
 };
+/** @private */
 Scene3D._drawLine=function(data,depth,x,y,z,x2,y2,z2,width,height,rgb,rgb2){
 "use strict";
 if((x<0 && x2<0) ||
@@ -482,6 +493,7 @@ var x=pt[0];
   pt[2]*=w;
  }
 };
+/** @private */
 Scene3D._transformAndClipPoint=function(mat,pt){
  "use strict";
 var x=pt[0];
@@ -502,6 +514,7 @@ var x=pt[0];
  }
  return true;
 };
+/** @private */
 Scene3D._transformAndClipLine=function(mat,pt,pt2,size){
  "use strict";
 var x=pt[0];

@@ -134,24 +134,6 @@ addLink("Hyperboloid of One Sheet",function(){
  "hyp1-z":["Z radius",1,0.05,2.0,0.05]
  });
 })
-/*
-addLink("Plane",function(){
- pushSettings(function(allsettings){
-    return makeImplicit(
-    new PlaneSurface(
-      allsettings["plane-a"],
-      allsettings["plane-b"],
-      allsettings["plane-c"],
-      allsettings["plane-d"]
-    ));
- },{
- "plane-a":["Normal X",2,-1,2,0.05],
- "plane-b":["Normal Y",0,-1,2,0.05],
- "plane-c":["Normal Z",0,-1,2,0.05],
- "plane-d":["Distance",0,-2,2,0.05]
- });
-})
-*/
 addLink("Cylinder",function(){
  pushSettings(function(allsettings){
    var cyl=new Cylinder(

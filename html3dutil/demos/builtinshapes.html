@@ -20,7 +20,10 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:sampleShape(5)">Box</a>,
 <a href="javascript:sampleShape(6)">Cone</a>,
 <a href="javascript:sampleShape(7)">Disk</a>,
-<a href="javascript:sampleShape(8)">Partial Disk</a><br>
+<a href="javascript:sampleShape(8)">Partial Disk</a>,
+<a href="javascript:sampleShape(9)">5-Pointed Star</a>,
+<a href="javascript:sampleShape(10)">10-Pointed Star</a>,
+<br>
 Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
@@ -55,6 +58,10 @@ function createSampleShape(index){
    return Meshes.createDisk(0.4,1);
   case 8:
    return Meshes.createPartialDisk(0.2,1,32,1,20,150);
+  case 9:
+   return Meshes.createPointedStar(5,1.0,0.5);
+  case 10:
+   return Meshes.createPointedStar(10,1.0,0.5);
   default:
    return new Mesh();
  }
