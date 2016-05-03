@@ -185,6 +185,8 @@ Texture.prototype.loadImage=function(){
  var thisImage=this;
  var thisName=this.name;
  thisImage.loadStatus=1;
+ // Use the TGA image loader if it has the TGA file
+ // extension
  if((/\.tga$/i).test(thisName)){
   return Texture.loadTga(thisName).then(function(e){
    thisImage.image=e.image;
@@ -215,10 +217,15 @@ Texture.prototype.loadImage=function(){
  });
 };
 /**
- * Has no effect.  Previously, would dispose
- * the texture data in this object.
+ * Disposes resources used by this texture.
  */
 Texture.prototype.dispose=function(){
+ this.width=0;
+ this.height=0;
+ this.name="";
+ this.image=null;
+ this.clamp=false;
+ this.loadStatus=0;
 };
 
 /**

@@ -142,7 +142,7 @@ Subscene3D._isSameMatrix=function(a,b){
  * @param {*} mat
  */
 Subscene3D.prototype.setProjectionMatrix=function(mat){
- if(!Subscene3D._isSameMatrix(this._projectionMatrix)){
+ if(!Subscene3D._isSameMatrix(this._projectionMatrix,mat)){
   this._projectionMatrix=mat.slice(0,16)
   this._frustum=null
  }
@@ -202,7 +202,7 @@ Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
  * @param {*} mat
  */
 Subscene3D.prototype.setViewMatrix=function(mat){
- if(!Subscene3D._isSameMatrix(this._viewMatrix)){
+ if(!Subscene3D._isSameMatrix(this._viewMatrix,mat)){
   this._viewMatrix=mat.slice(0,16)
   this._frustum=null
  }
@@ -304,8 +304,8 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
  * @param {*} resolve
  * @param {*} reject
  */
-Subscene3D.prototype.loadAndMapTextures=function(textureFiles,resolve,reject){
- return this.parent.loadAndMapTextures(textureFiles,resolve,reject);
+Subscene3D.prototype.loadAndMapTexturesAll=function(textureFiles,resolve,reject){
+ return this.parent.loadAndMapTexturesAll(textureFiles,resolve,reject);
 }
 /**
  * Not documented yet.

@@ -23,6 +23,11 @@ function TextureLoader(){
  this.textureImages={};
  this.maxAnisotropy=[];
 }
+
+TextureLoader.prototype.getTexture=function(name){
+ return this.textureImages[name]||null;
+}
+
 /**
  * Not documented yet.
  * @param {*} name
@@ -47,11 +52,12 @@ TextureLoader.prototype._setMaxAnisotropy=function(context){
          context.getExtension("WEBKIT_EXT_texture_filter_anisotropic") ||
          context.getExtension("MOZ_EXT_texture_filter_anisotropic")
  if(!ext){
-  ma.push([context,1,-1])
+  ma.push([context,1,-1,null])
   return 1
  } else {
-  var cnst=ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT;
-  var ret=context.getParameter(cnst);
+  var cnst=ext.TEXTURE_MAX_ANISOTROPY_EXT;
+  var ret=context.getParameter(
+    ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
   ma.push([context,ret,cnst])
   context.texParameteri(context.TEXTURE_2D,cnst,ret);
   return ret
@@ -64,12 +70,11 @@ TextureLoader.prototype._setMaxAnisotropy=function(context){
  * @param {*} reject
  */
 TextureLoader.prototype.loadTexturesAll=function(textures,resolve,reject){
- context= (context.getContext) ? context.getContext() : context;
  var promises=[]
  for(var i=0;i&lt;textures.length;i++){
   promises.push(this.loadTexture(textures[i]));
  }
- return GLUtil.getPromiseResultsAll(textures,resolve,reject);
+ return GLUtil.getPromiseResultsAll(promises,resolve,reject);
 }
 /**
  * Not documented yet.
@@ -101,7 +106,7 @@ TextureLoader.prototype.mapTexture=function(texture,context){
  return loadedTex;
 }
 /**
- * Not documented yet.
+ * Disposes all resources used by this texture loader.
  */
 TextureLoader.prototype.dispose=function(){
  for(var tex in this.textureImages){

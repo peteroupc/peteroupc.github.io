@@ -686,7 +686,7 @@ Connector.prototype.toPolygon=function(){
    contour.vertices.push(k.data[0],k.data[1]);
    k=k.next;
   }
-  Polygon._Contours.push(contour);
+  polygon.contours.push(contour);
   j=j.next;
  }
  return polygon;

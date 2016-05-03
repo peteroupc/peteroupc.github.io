@@ -232,7 +232,7 @@ is null or not an HTML canvas element.
 
     <h4 style="margin-bottom:0px" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line232">line 232</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line233">line 233</a>
      </i></small></p>
 
 <div class="description">
@@ -315,7 +315,7 @@ True means success, and false means failure.</ul>
 
     <h4 style="margin-bottom:0px" id=".getPromiseResultsAll"><span style="font-weight:lighter">(static) </span>getPromiseResultsAll<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line200">line 200</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line201">line 201</a>
      </i></small></p>
 
 <div class="description">
@@ -379,10 +379,11 @@ its work.
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    A promise that is resolves when
-all of the promises are each resolved.
-Will be rejected if any of the promises is rejected. Whether
-the return value's promise is resolved or rejected, the result
+    A promise that is resolved when
+all of the promises are each resolved; the result will
+be an array of results from those promises,
+in the order in which those promises were listed.
+Will be rejected if any of the promises is rejected; the result
 will be an object as specified in <a href="glutil.GLUtil.html#.getPromiseResults">glutil.GLUtil.getPromiseResults</a>.</ul>
 
      (Type:
@@ -392,7 +393,7 @@ will be an object as specified in <a href="glutil.GLUtil.html#.getPromiseResults
 
     <h4 style="margin-bottom:0px" id=".getTimePosition"><span style="font-weight:lighter">(static) </span>getTimePosition<span class="signature">(timer, timeInMs, intervalInMs)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line362">line 362</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line363">line 363</a>
      </i></small></p>
 
 <div class="description">
@@ -509,7 +510,7 @@ value in milliseconds, such as the parameter of a
 
     <h4 style="margin-bottom:0px" id=".loadFileFromUrl"><span style="font-weight:lighter">(static) </span>loadFileFromUrl<span class="signature">(url, responseType)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line298">line 298</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line299">line 299</a>
      </i></small></p>
 
 <div class="description">
@@ -578,7 +579,7 @@ from JSON.
 
     <h4 style="margin-bottom:0px" id=".newFrames"><span style="font-weight:lighter">(static) </span>newFrames<span class="signature">(timer, timeInMs)</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line387">line 387</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line388">line 388</a>
      </i></small></p>
 
 <div class="description">
@@ -676,7 +677,7 @@ milliseconds since the page was loaded.</dd>
 
     <h4 style="margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line559">line 559</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil.js.html">glutil.js</a>, <a href="glutil.js.html#line560">line 560</a>
      </i></small></p>
 
 <div class="description">

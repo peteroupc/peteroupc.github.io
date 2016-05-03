@@ -54,23 +54,23 @@ function TextRenderer(scene){
  this.fontTextures=[]
 }
 /** @private */
-TextRenderer.prototype._getFontTextures=function(tf){
+TextRenderer.prototype._getFontTextures=function(font){
  for(var i=0;i<this.fontTextures.length;i++){
-  if(this.fontTextures[i][0]==tf){
+  if(this.fontTextures[i][0]==font){
    return this.fontTextures[i][1]
   }
  }
  return []
 }
 /** @private */
-TextRenderer.prototype._setFontTextures=function(tf,ft){
+TextRenderer.prototype._setFontTextures=function(font,textureList){
  for(var i=0;i<this.fontTextures.length;i++){
-  if(this.fontTextures[i][0]==tf){
-   this.fontTextures[i][1]=ft;
+  if(this.fontTextures[i][0]==font){
+   this.fontTextures[i][1]=textureList;
    return;
   }
  }
- this.fontTextures.push([tf,ft]);
+ this.fontTextures.push([font,textureList]);
 }
 
 /**
@@ -109,22 +109,6 @@ TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
  }
  return group;
 }
-/** @private */
-TextRenderer.prototype._loadPages=function(font){
- var textures=[]
- for(var i=0;i<font.pages.length;i++){
-  if(!font.pages[i])continue
-  textures.push(font.pages[i])
- }
- var thisObject=this;
- return this.scene.loadAndMapTextures(textures).then(function(r){
-  if(r.failures.length>0) {
-   return Promise.reject({"url":font.fileUrl});
-  }
-  thisObject._setFontTextures(font,r.successes);
-  return Promise.resolve(font);
- })
-}
 /**
 * Loads a bitmap font definition from a file,
 * as well as the bitmaps used by that font, and maps them
@@ -138,14 +122,21 @@ TextRenderer.prototype._loadPages=function(font){
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
 * @return {Promise<TextFont>} A promise that is resolved
-* when the font data is loaded successfully (the result will be
+* when the font data and all the textures it uses are loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
 */
 TextRenderer.prototype.loadFont=function(fontFileName){
  var thisObject=this;
- return TextFont.load(fontFileName).then(function(f){
-   return thisObject._loadPages(f)
- });
+ var loader=scene._textureLoader;
+ return TextFont.loadWithTextures(fontFileName,loader)
+   .then(function(f){
+     var textures=[];
+     for(var i=0;i<f.pages.length;i++){
+      textures.push(loader.getTexture(f.pages[i]));
+     }
+     thisObject._setFontTextures(f,textures);
+     return Promise.resolve(f);
+   });
 }
 /**
 * Represents a bitmap font.
@@ -625,6 +616,30 @@ TextFont._loadTextFontInner=function(data){
   }
   return new TextFont(fontinfo,chars,pages,kernings,common,data.url)
 }
+/**
+ * Not documented yet.
+ * @param {*} fontFileName
+ * @param {*} textureLoader
+ */
+TextFont.loadWithTextures=function(fontFileName,textureLoader){
+ if(!textureLoader){
+  return TextFont.load(fontFileName);
+ }
+ return TextFont.load(fontFileName).then(function(font){
+  var textures=[]
+  for(var i=0;i<font.pages.length;i++){
+   if(!font.pages[i])continue
+   textures.push(font.pages[i])
+  }
+  var thisObject=font;
+  return textureLoader.loadTexturesAll(textures).then(function(r){
+     return Promise.resolve(font);
+  },function(r){
+     return Promise.reject({"url":font.fileUrl,"results":r});
+  });
+ });
+}
+
 /**
 * Loads a bitmap font definition from a file.
 * Note that this method only loads the font data and not the bitmaps
