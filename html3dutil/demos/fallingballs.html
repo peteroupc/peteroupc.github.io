@@ -130,7 +130,7 @@ CubicBody.prototype.integrate=function(timeStep){
 
 function Particles(scene,count,width,height){
  this.shapes=new ShapeGroup();
- var sphere=scene.makeShape(Meshes.createSphere(1,64,64));
+ var sphere=new Shape(Meshes.createSphere(1,64,64));
  this.bodies=[];
  this.bounds=[0,0,-5000,width,height,5000];
  for(var i=0;i<count;i++){
@@ -165,14 +165,16 @@ Particles.prototype.update=function(time){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
+   var sub=new Subscene3D(scene);
+   sub.getLights().setDefaults();
+   sub.orthoAspect(0,12,0,9,-5000,5000);
   // 12 meters wide and 9 meters high
-  var tris=new Particles(scene,10,12,9);
+  var tris=new Particles(sub,10,12,9);
   // Set up the render loop
   GLUtil.renderLoop(function(time){
-   scene.setOrthoAspect(0,12,0,9,-5000,5000);
    tris.update(time);
    // Render the scene
-   scene.render();
+   scene.render(sub);
   });
 //-->
 </script>

@@ -21,8 +21,8 @@ var StlData={};
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
 @alias glutil.GLUtil.loadStlFromUrl
-@param {string} url The URL to load.
-@return {Promise} A promise that:
+@param {String} url The URL to load.
+@returns {Promise} A promise that:
 - Resolves when:
 The .STL file is loaded successfully.  The result is a Mesh object.
 - Is rejected when:

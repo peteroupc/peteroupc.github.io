@@ -25,16 +25,18 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
+
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   //
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("#f0f0f0");
   var textSub=new Subscene3D(scene)
-    .ortho2DAspect(0,640,480,0);
+    .orthoAspect(0,640,480,0,-1,1);
   var figureSub=new Subscene3D(scene)
     .perspectiveAspect(45,0.1,100)
     .setLookAt([0,0,40]);
+  figureSub.getLights().setDefaults();
   var mesh=Meshes.createBox(10,20,20);
   var shape2=figureSub.makeShape(mesh).setColor("#e0e0e0");
   figureSub.addShape(shape2);
@@ -44,20 +46,22 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   ]
   var timer={}
   var textrnd=new TextRenderer(textSub);
-  GLUtil.getPromiseResults([
+  GLUtil.getPromiseResultsAll([
    textrnd.loadFont("black-chancery.fnt"),
    textrnd.loadFont("aileron-bold-red.fnt")
   ]).then(function(results){
-   if(results.failures.length>0)return;
-   var shape=textrnd.textShape(results.successes[0],"This is...\na test.",0,50,100,"blue");
+   var shape=textrnd.textShape(results[0],"This is...\na test.",0,50,100,"blue");
    textSub.addShape(shape);
    var y=250;
    var size=20;
    for(var i=0;i<8;i++){
     var text="Example text. Example text. Example text. Example text. Example text."
-    shape=textrnd.textShape(results.successes[1],text,0,y,size);
+    if(i==0){
+      text="Uses the public domain font Aileron from http://dotcolon.net/font/aileron/"
+    }
+    shape=textrnd.textShape(results[1],text,0,y,size);
     textSub.addShape(shape);
-    y+=results.successes[1].measure(text,size)[1];
+    y+=results[1].measure(text,size)[1];
     size+=10;
    }
    return true;

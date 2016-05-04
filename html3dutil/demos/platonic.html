@@ -116,20 +116,20 @@ function shiny(color){
   var dims=4.5*2/Math.sqrt(3);
   mesh=Meshes.createBox(dims,dims,dims);
   scene.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
+    new Shape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
   // this configuration of a sphere results in an octahedron
   mesh=Meshes.createSphere(4.5,4,2,true);
   scene.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
+    new Shape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
   mesh=icosahedron(4.5);
   scene.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("lime")).setPosition(5,5,0))
+    new Shape(mesh).setMaterial(shiny("lime")).setPosition(5,5,0))
   mesh=tetrahedron(4.5);
   scene.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("darkorange")).setPosition(15,5,0))
+    new Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15,5,0))
   mesh=dodecahedron(4.5);
   scene.addShape(
-    scene.makeShape(mesh).setMaterial(shiny("yellow")).setPosition(-15,-5,0))
+    new Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15,-5,0))
   var rotation=[0,0,0];
   var timer={};
   GLUtil.renderLoop(function(time){

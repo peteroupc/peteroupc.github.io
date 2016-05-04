@@ -50,14 +50,14 @@ function ClockShape(scene){
    .transform(frontTransform)
  var back=Meshes.createDisk(0,1,64).reverseWinding().reverseNormals()
    .transform(GLMath.mat4translated(0,0,-0.05));
- clock.addShape(scene.makeShape(border));
- clock.addShape(scene.makeShape(front));
- clock.addShape(scene.makeShape(back));
- clock.addShape(scene.makeShape(hourhand));
- clock.addShape(scene.makeShape(minutehand));
- clock.addShape(scene.makeShape(secondhand));
- clock.addShape(scene.makeShape(center));
- clock.addShape(scene.makeShape(twelveoclock));
+ clock.addShape(new Shape(border));
+ clock.addShape(new Shape(front));
+ clock.addShape(new Shape(back));
+ clock.addShape(new Shape(hourhand));
+ clock.addShape(new Shape(minutehand));
+ clock.addShape(new Shape(secondhand));
+ clock.addShape(new Shape(center));
+ clock.addShape(new Shape(twelveoclock));
  scene.addShape(clock);
  this.shape=clock;
  this.hour=-1;
@@ -111,20 +111,21 @@ function ClockShape(scene){
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white")
+  var scene=new Scene3D(document.getElementById("canvas"))
+   .setClearColor("white")
    .cullFace(Scene3D.BACK)
-  var camera=new Camera(scene,45,1,1000).setDistance(5)
-  var pc=new FrameCounterDiv(scene)
-  var clock=new ClockShape(scene);
+  var sub=new Subscene3D(scene);
+  var camera=new Camera(sub,45,1,1000).setDistance(5)
+  var pc=new FrameCounterDiv(sub)
+  var clock=new ClockShape(sub);
   document.getElementById("colorsetting").addEventListener("change",
    function(e){ clock.setColor(e.target.value) });
   GLUtil.renderLoop(function(){
    clock.update();
    pc.update();
    camera.update();
-   scene.setDirectionalLight(0,camera.getPosition());
-   scene.render();
+   sub.getLights().setDirectionalLight(0,camera.getPosition());
+   scene.render(sub);
   });
 //-->
 </script>

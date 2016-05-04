@@ -29,14 +29,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var camera=new Camera(scene,45,1,1000).setDistance(80);
+  var sub=new Subscene3D(scene);
+  var camera=new Camera(sub,45,1,1000).setDistance(80);
   GLUtil.loadStlFromUrl("holder.stl").then(function(mesh){
-    scene.addShape(scene.makeShape(mesh).setColor("red"));
+    sub.addShape(new Shape(mesh).setColor("red"));
   })
   GLUtil.renderLoop(function(){
    camera.update();
-   scene.setDirectionalLight(0,camera.getPosition());
-   scene.render();
+   sub.getLights().setDirectionalLight(0,camera.getPosition());
+   scene.render(sub);
   });
 //-->
 </script>

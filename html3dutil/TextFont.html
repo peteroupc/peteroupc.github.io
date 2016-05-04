@@ -27,7 +27,7 @@
 
     <h4 style="margin-bottom:0px" id="TextFont"><span style="font-weight:lighter"></span>new TextFont<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line149">line 149</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line150">line 150</a>
      </i></small></p>
 
 <div class="description">
@@ -47,7 +47,7 @@ constructor's parameters are undocumented and are subject to change.
 
     <h4 style="margin-bottom:0px" id=".load"><span style="font-weight:lighter">(static) </span>load<span class="signature">(fontFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="TextFont.html">TextFont</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line658">line 658</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line669">line 669</a>
      </i></small></p>
 
 <div class="description">
@@ -65,7 +65,7 @@ used to represent the font.
                 <code>fontFileName</code>
 
                 (
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 )
 
@@ -96,13 +96,14 @@ a TextFont object), and is rejected when an error occurs.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id=".loadWithTextures"><span style="font-weight:lighter">(static) </span>loadWithTextures<span class="signature">(fontFileName, textureLoader)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id=".loadWithTextures"><span style="font-weight:lighter">(static) </span>loadWithTextures<span class="signature">(fontFileName, textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line624">line 624</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line635">line 635</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Loads a bitmap font definition from a file along with the textures
+used by that font.
 </div>
 
     <h5>Parameters:</h5>
@@ -114,19 +115,25 @@ a TextFont object), and is rejected when an error occurs.
                 <code>fontFileName</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">String</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The URL of the font data file
+to load.  The following file extensions are read as the following formats:<ul>
+<li>".xml": XML</li>
+<li>".json": JSON</li>
+<li>".bin": Binary</li>
+<li>".fnt": Text or binary</li>
+<li>All others: Text</li></ul></dd>
 
         <dt>
 
                 <code>textureLoader</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type"><a href="glutil.TextureLoader.html">glutil.TextureLoader</a></span>
 
 )
 
@@ -139,9 +146,21 @@ a TextFont object), and is rejected when an error occurs.
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that is resolved
+when the font data and textures are loaded successfully (the result will be
+a TextFont object), and is rejected when an error occurs.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="makeShapeMeshes"><span style="font-weight:lighter"></span>makeShapeMeshes<span class="signature">(str, xPos, yPos, height)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line245">line 245</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line246">line 246</a>
      </i></small></p>
 
 <div class="description">
@@ -206,9 +225,9 @@ a TextFont object), and is rejected when an error occurs.
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id="measure"><span style="font-weight:lighter"></span>measure<span class="signature">(str, height)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;number>}</span></h4>
+    <h4 style="margin-bottom:0px" id="measure"><span style="font-weight:lighter"></span>measure<span class="signature">(str, height)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line197">line 197</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line198">line 198</a>
      </i></small></p>
 
 <div class="description">
@@ -260,7 +279,7 @@ height of the string (taking into account line feed characters,
 U+000A, that break lines).
 
      (Type:
-<span class="param-type">Array.&lt;number></span>)
+<span class="param-type">Array.&lt;Number></span>)
 
 </div>
 
@@ -288,7 +307,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

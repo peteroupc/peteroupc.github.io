@@ -47,7 +47,7 @@ see the <a href="glutil.Material.html#setParams">glutil.Material#setParams</a> m
                 <code>ambient</code>
 
                 (
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
@@ -61,7 +61,7 @@ see the <a href="glutil.Material.html#setParams">glutil.Material#setParams</a> m
                 <code>diffuse</code>
 
                 (
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
@@ -75,7 +75,7 @@ see the <a href="glutil.Material.html#setParams">glutil.Material#setParams</a> m
                 <code>specular</code>
 
                 (
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
@@ -89,7 +89,7 @@ see the <a href="glutil.Material.html#setParams">glutil.Material#setParams</a> m
                 <code>shininess</code>
 
                 (
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
@@ -103,7 +103,7 @@ see the <a href="glutil.Material.html#setParams">glutil.Material#setParams</a> m
                 <code>emission</code>
 
                 (
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
@@ -261,7 +261,7 @@ method can calculate the tangents and bitangents appropriate for normal mapping.
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Shader program to use when rendering objects with this material.
 </div>
 
 <dl class="details">
@@ -349,7 +349,7 @@ of each part of the material.
 
     <h4 style="margin-bottom:0px" id=".forShader"><span style="font-weight:lighter">(static) </span>forShader<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line304">line 304</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line306">line 306</a>
      </i></small></p>
 
 <div class="description">
@@ -362,7 +362,7 @@ of each part of the material.
 
     <h4 style="margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter">(static) </span>fromColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line284">line 284</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line286">line 286</a>
      </i></small></p>
 
 <div class="description">
@@ -379,7 +379,7 @@ object from an RGBA color.
                 <code>r</code>
 
                 (
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 |
 
 <span class="param-type">number</span>
@@ -398,7 +398,7 @@ or the red color component (0-1).</dd>
                 <code>g</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -411,7 +411,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
                 <code>b</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -424,7 +424,7 @@ May be null or omitted if a string or array is given as the "r" parameter.</dd>
                 <code>a</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -453,7 +453,7 @@ this value is treated as 1.0.</dd>
 
     <h4 style="margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter">(static) </span>fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line297">line 297</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line299">line 299</a>
      </i></small></p>
 
 <div class="description">
@@ -527,7 +527,7 @@ to the same object will be used.
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Material.html">glutil.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line218">line 218</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-material.js.html">glutil-material.js</a>, <a href="glutil-material.js.html#line220">line 220</a>
      </i></small></p>
 
 <div class="description">
@@ -552,7 +552,8 @@ to the same object will be used.
 the possibilities given below, and whose values are those
 allowed for each key.<ul>
 <li><code>basic</code> - If set to true, only the "diffuse" and "texture" properties
-of this material are used.
+of this material are used, and the object with this material will be drawn without
+regard to lighting.
 <li><code>ambient</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving the ambient color. (See <a href="glutil.Material.html#ambient">glutil.Material#ambient</a>.)
 The default is (0.2, 0.2, 0.2).
 <li><code>diffuse</code> - A <a href="glutil.GLUtil.html#.toGLColor">color vector or string</a> giving
@@ -570,7 +571,8 @@ to use.
 map texture (see <a href="glutil.Material.html#specularMap">glutil.Material#specularMap</a>).
 <li><code>normalMap</code> - <a href="glutil.Texture.html">glutil.Texture</a> object, or a string with the URL, of a normal
 map (bump map) texture (see <a href="glutil.Material.html#normalMap">glutil.Material#normalMap</a>).
-<li><code>shader</code> - <a href="glutil.ShaderProgram.html">glutil.ShaderProgram</a> object for a WebGL shader program.
+<li><code>shader</code> - <a href="glutil.ShaderProgram.html">glutil.ShaderProgram</a> object for a WebGL shader program
+to use when rendering objects with this material.
 </ul>
 Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.</dd>
 
@@ -614,7 +616,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

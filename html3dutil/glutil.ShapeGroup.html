@@ -107,7 +107,7 @@ will be stored in the list of shapes.
 
     <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>getBounds<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line120">line 120</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line142">line 142</a>
      </i></small></p>
 
 <div class="description">
@@ -178,9 +178,9 @@ this shape group's coordinates to world coordinates.
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+    <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line165">line 165</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line187">line 187</a>
      </i></small></p>
 
 <div class="description">
@@ -198,13 +198,13 @@ and points) composed by all shapes in this shape group.
     Return value.
 
      (Type:
-<span class="param-type">number</span>)
+<span class="param-type">Number</span>)
 
 </div>
 
     <h4 style="margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.ShapeGroup.html">glutil.ShapeGroup</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line108">line 108</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line130">line 130</a>
      </i></small></p>
 
 <div class="description">
@@ -277,9 +277,24 @@ and points) composed by all shapes in this shape group.
 
 </dl>
 
+    <h4 style="margin-bottom:0px" id="setMaterialParams"><span style="font-weight:lighter"></span>setMaterialParams<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line119">line 119</a>
+     </i></small></p>
+
+<div class="description">
+    Sets material parameters for all shapes in this shape group.
+@ {Object} params An object described in <a href="glutil.Material.html#setParams">glutil.Material#setParams</a>.
+@ {glutil.Shape} This object.
+</div>
+
+<dl class="details">
+
+</dl>
+
     <h4 style="margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line184">line 184</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line206">line 206</a>
      </i></small></p>
 
 <div class="description">
@@ -302,7 +317,7 @@ rather than the transform for each shape in the group.
 <span class="param-type">number</span>
 |
 
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
@@ -315,7 +330,7 @@ or a 3-element position array, as specified in <a href="glutil.Transform.html#se
                 <code>y</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -327,7 +342,7 @@ or a 3-element position array, as specified in <a href="glutil.Transform.html#se
                 <code>z</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -352,7 +367,7 @@ or a 3-element position array, as specified in <a href="glutil.Transform.html#se
 
     <h4 style="margin-bottom:0px" id="setQuaternion"><span style="font-weight:lighter"></span>setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Shape.html">glutil.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line196">line 196</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line218">line 218</a>
      </i></small></p>
 
 <div class="description">
@@ -371,7 +386,7 @@ rather than the transform for each shape in the group.
                 <code>quat</code>
 
                 (
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
@@ -396,7 +411,7 @@ rather than the transform for each shape in the group.
 
     <h4 style="margin-bottom:0px" id="setScale"><span style="font-weight:lighter"></span>setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Scene3D.html">glutil.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line211">line 211</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line233">line 233</a>
      </i></small></p>
 
 <div class="description">
@@ -418,7 +433,7 @@ rather than the transform for each shape in the group.
 <span class="param-type">number</span>
 |
 
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
@@ -431,7 +446,7 @@ or a 3-element scaling array, as specified in <a href="glutil.Transform.html#set
                 <code>y</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -443,7 +458,7 @@ or a 3-element scaling array, as specified in <a href="glutil.Transform.html#set
                 <code>z</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -468,11 +483,42 @@ or a 3-element scaling array, as specified in <a href="glutil.Transform.html#set
 
     <h4 style="margin-bottom:0px" id="setShader"><span style="font-weight:lighter"></span>setShader<span class="signature">(material)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line97">line 97</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line108">line 108</a>
      </i></small></p>
 
 <div class="description">
     Sets the shader program used by all shapes in this shape group.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>material</code>
+
+                (
+<span class="param-type"><a href="glutil.Material.html">glutil.Material</a></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setTexture"><span style="font-weight:lighter"></span>setTexture<span class="signature">(material)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line98">line 98</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the texture used by all shapes in this shape group.
 </div>
 
     <h5>Parameters:</h5>
@@ -562,9 +608,9 @@ with the child shape's transform as it renders the child shape.
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {number}</span></h4>
+    <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line154">line 154</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-shapegroup.js.html">glutil-shapegroup.js</a>, <a href="glutil-shapegroup.js.html#line176">line 176</a>
      </i></small></p>
 
 <div class="description">
@@ -581,7 +627,7 @@ with the child shape's transform as it renders the child shape.
     Return value.
 
      (Type:
-<span class="param-type">number</span>)
+<span class="param-type">Number</span>)
 
 </div>
 
@@ -609,7 +655,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

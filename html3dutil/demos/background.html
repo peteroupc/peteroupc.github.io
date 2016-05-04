@@ -141,10 +141,10 @@ CanvasBackground.prototype.start=function(){
  this.scene=new Scene3D(this.canvas)
     .setDirectionalLight(0, [0,0,-1])
     .setClearColor(rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0, 1.0);
- this.cubeMesh=this.scene.makeShape(Meshes.createBox(2,2,2));
- this.sphereMesh=this.scene.makeShape(Meshes.createSphere());
- this.torusMesh=this.scene.makeShape(Meshes.createTorus(0.5,1));
- this.cylinderMesh=this.scene.makeShape(Meshes.createClosedCylinder(1,1,2));
+ this.cubeMesh=this.makeShape(Meshes.createBox(2,2,2));
+ this.sphereMesh=this.makeShape(Meshes.createSphere());
+ this.torusMesh=this.makeShape(Meshes.createTorus(0.5,1));
+ this.cylinderMesh=this.makeShape(Meshes.createClosedCylinder(1,1,2));
  this.timeInfo={};
  this.count=0;
  GLUtil["renderLoop"](this.animate.bind(this));

@@ -7,6 +7,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../glutil_min.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="animation.js"></script>
 </head>
 <body>
 <canvas id=canvas></canvas>
@@ -21,66 +22,36 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-function makeFloor(xStart,yStart,width,height,tileSize,z){
- if(z==null)z=0.0
- var mesh=new Mesh()
- var tilesX=Math.ceil(width/tileSize)
- var tilesY=Math.ceil(height/tileSize)
- var lastY=(height-(tilesY*tileSize))/tileSize
- var lastX=(width-(tilesX*tileSize))/tileSize
- if(lastY<=0)lastY=1.0
- if(lastX<=0)lastX=1.0
- mesh.normal3(0,0,1)
- for(var y=0;y<tilesY;y++){
-  var endY=(y==tilesY-1) ? 1.0-lastY : 0.0
-  var endPosY=(y==tilesY-1) ? yStart+height : yStart+(y+1)*tileSize
-  for(var x=0;x<tilesX;x++){
-   var endX=(x==tilesX-1) ? lastX : 1.0
-   var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
-   mesh.mode(Mesh.TRIANGLE_STRIP)
-     .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
-     .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
-     .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
-     .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
-  }
- }
- return mesh
-}
-
-function rotateVec(vec,angle){
- return GLMath.mat4transformVec3(
-   GLMath.mat4rotated(angle,0,0,1),vec);
-}
-
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  scene.setDirectionalLight(0,[0,-3,1.2],[1,1,1])
-  scene.setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
-  scene.loadAndMapTextures(["461223191.jpg"]).then(function(results){
-   if(results.failures.length>0)return
+  var sub=new Subscene3D(scene);
+  var loader=new TextureLoader();
+  sub.getLights().setDirectionalLight(0,[0,-3,1.2],[1,1,1])
+  sub.getLights().setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
+  loader.loadAndMapTexturesAll(["461223191.jpg"],sub).then(function(results){
    var mesh=null
-   scene.addShape(
-    scene.makeShape(makeFloor(-5,-5,10,10,1)).setTexture(results.successes[0]))
+   sub.addShape(
+    new Shape(makeFloor(-5,-5,10,10,1)).setTexture(results[0]))
    mesh=Meshes.createSphere(0.5)
-   scene.addShape(scene.makeShape(mesh).setColor("red").setPosition(1.5,0,0.5));
+   sub.addShape(new Shape(mesh).setColor("red").setPosition(1.5,0,0.5));
    mesh=Meshes.createClosedCylinder(0.5,0.5,1)
-   scene.addShape(scene.makeShape(mesh).setColor("yellow").setPosition(0,1.5,0));
+   sub.addShape(new Shape(mesh).setColor("yellow").setPosition(0,1.5,0));
    mesh=Meshes.createCylinder(0.5,0,1)
-   scene.addShape(scene.makeShape(mesh).setColor("blue").setPosition(0,-1.5,0));
+   sub.addShape(new Shape(mesh).setColor("blue").setPosition(0,-1.5,0));
    mesh=Meshes.createTorus(0.2,0.5)
-   scene.addShape(scene.makeShape(mesh).setColor("rebeccapurple").setPosition(-1.5,0,0.2));
+   sub.addShape(new Shape(mesh).setColor("rebeccapurple").setPosition(-1.5,0,0.2));
   })
   var anim=null
   var timer={}
   var fc=new FrameCounterDiv(scene)
   GLUtil.renderLoop(function(time){
-   scene.setPerspective(45,scene.getClientAspect(),1,1000)
+   sub.perspectiveAspect(45,1,1000)
    var angle=360*GLUtil.getTimePosition(timer,time,6000)
-   scene.setLookAt(rotateVec([0,-3,1.2],angle),[0,0,0],[0,0,1])
+   sub.setLookAt(rotateVec([0,-3,1.2],angle),[0,0,0],[0,0,1])
    fc.update();
-   scene.render();
+   scene.render(sub);
   });
 //-->
 </script>

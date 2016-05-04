@@ -33,7 +33,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  * necessarily cross the curve.
  * @class
  * @alias BezierCurve
- * @param {Array&lt;Array&lt;number>>} controlPoints An array of control points.  Each
+ * @param {Array&lt;Array&lt;Number>>} controlPoints An array of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:&lt;ul>
  * &lt;li>The length of this parameter minus 1 represents the degree of the B&amp;eacute;zier
@@ -42,9 +42,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  * &lt;li>The first control point's length represents the size of all the control
  * points.
  * &lt;/ul>
- * @param {number} [u1] Starting point for the purpose of interpolation; it will correspond to 0.
+ * @param {Number} [u1] Starting point for the purpose of interpolation; it will correspond to 0.
  * May be omitted; default is 0.
- * @param {number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
+ * @param {Number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
  * May be omitted; default is 1.
  */
 var BezierCurve=function(cp, u1, u2){
@@ -62,9 +62,9 @@ var BezierCurve=function(cp, u1, u2){
 /**
  * Evaluates the curve function based on a point
  * in a B&amp;eacute;zier curve.
- * @param {number} u Point on the curve to evaluate (generally within the range
+ * @param {Number} u Point on the curve to evaluate (generally within the range
  * given in the constructor).
- * @return {Array&lt;number>} An array of the result of
+ * @returns {Array&lt;Number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point, as specified in the constructor.
 * @example
@@ -86,7 +86,7 @@ BezierCurve.prototype.evaluate=function(u){
  * necessarily cross the surface.
  * @class
  * @alias BezierSurface
- * @param {Array&lt;Array&lt;number>>} controlPoints An array of control point
+ * @param {Array&lt;Array&lt;Number>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:&lt;ul>
@@ -99,16 +99,16 @@ BezierCurve.prototype.evaluate=function(u){
  * &lt;li>The first control point's length represents the size of all the control
  * points.
  * &lt;/ul>
- * @param {number} [u1] Starting point for the purpose of interpolation along the
+ * @param {Number} [u1] Starting point for the purpose of interpolation along the
  * U-axis; it will correspond to 0.
  * May be omitted; default is 0.
- * @param {number} [u2] Ending point for the purpose of interpolation along the
+ * @param {Number} [u2] Ending point for the purpose of interpolation along the
  * U-axis; it will correspond to 1.
  * May be omitted; default is 1.
- * @param {number} [v1] Starting point for the purpose of interpolation along the
+ * @param {Number} [v1] Starting point for the purpose of interpolation along the
  * V-axis; it will correspond to 0.
  * May be omitted; default is 0.
- * @param {number} [v2] Ending point for the purpose of interpolation along the
+ * @param {Number} [v2] Ending point for the purpose of interpolation along the
  * V-axis; it will correspond to 1.
  * May be omitted; default is 1.
  */
@@ -134,10 +134,10 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 /**
  * Evaluates the surface function based on a point
  * in a B&amp;eacute;zier surface.
- * @param {number} u U-coordinate of the surface to evaluate (generally within the range
+ * @param {Number} u U-coordinate of the surface to evaluate (generally within the range
  * given in the constructor).
- * @param {number} v V-coordinate of the surface to evaluate.
- * @return {Array&lt;number>} An array of the result of
+ * @param {Number} v V-coordinate of the surface to evaluate.
+ * @returns {Array&lt;Number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point, as specified in the constructor.
  */
@@ -150,11 +150,11 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * A parametric evaluator for B-spline (basis spline) curves.
 * @class
 * @alias BSplineCurve
- * @param {Array&lt;Array&lt;number>>} controlPoints An array of control points.  Each
+ * @param {Array&lt;Array&lt;Number>>} controlPoints An array of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that the first control point's length represents the size of all the control
  * points.
-* @param {Array&lt;number>} knots Knot vector of the curve.
+* @param {Array&lt;Number>} knots Knot vector of the curve.
 * Its size must be at least 2 plus the number of control
 * points and not more than twice the number of control points.&lt;p>
 * The length of this parameter minus 1, minus the number
@@ -171,7 +171,7 @@ var BezierSurface=function(cp, u1, u2, v1, v2){
 * equal to 1, where N is the number of control points,
 * the control points describe a &lt;i>B&amp;eacute;zier&lt;/i> curve, in which the
 * first and last control points match the curve's end points.&lt;p>
-* @param {boolean} [bits] Bits for defining input
+* @param {Boolean} [bits] Bits for defining input
 * and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
 * BSplineCurve.HOMOGENEOUS_BIT,
 * and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
@@ -291,8 +291,8 @@ BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
 /**
  * Evaluates the curve function based on a point
  * in a B-spline curve.
- * @param {number} u Point on the curve to evaluate (from 0 through 1).
- * @return {Array&lt;number>} An array of the result of
+ * @param {Number} u Point on the curve to evaluate (from 0 through 1).
+ * @returns {Array&lt;Number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor.
 * @example
@@ -358,7 +358,7 @@ BSplineCurve.prototype.evaluate=function(u){
 * A parametric evaluator for B-spline (basis spline) surfaces.
 * @class
 * @alias BSplineSurface
- * @param {Array&lt;Array&lt;number>>} controlPoints An array of control point
+ * @param {Array&lt;Array&lt;Number>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points.  Each
  * control point is an array with the same length as the other control points.
  * It is assumed that:&lt;ul>
@@ -369,10 +369,10 @@ BSplineCurve.prototype.evaluate=function(u){
  * &lt;li>The first control point's length represents the size of all the control
  * points.
  * &lt;/ul>
-* @param {Array&lt;number>} knotsU Knot vector of the curve, along the U-axis.
+* @param {Array&lt;Number>} knotsU Knot vector of the curve, along the U-axis.
 * For more information, see {@link glutil.BSplineCurve}.
-* @param {Array&lt;number>} knotsV Knot vector of the curve, along the V-axis.
-* @param {boolean} [bits] Bits for defining input
+* @param {Array&lt;Number>} knotsV Knot vector of the curve, along the V-axis.
+* @param {Boolean} [bits] Bits for defining input
 * and controlling output.  Zero or more of BSplineCurve.WEIGHTED_BIT,
 * BSplineCurve.HOMOGENEOUS_BIT,
 * and BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
@@ -411,26 +411,26 @@ var BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
 /**
 * Creates a B-spline curve with uniform knots, except that
 * the curve will start and end at the first and last control points.
-* @param {Array&lt;Array&lt;number>>} controlPoints Array of
+* @param {Array&lt;Array&lt;Number>>} controlPoints Array of
 * control points as specified in the {@link glutil.BSplineCurve} constructor.
-* @param {number} [degree] Degree of the B-Spline
+* @param {Number} [degree] Degree of the B-Spline
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
-* @param {number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
-* @return {BSplineCurve} Return value.*/
+* @param {Number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
+* @returns {BSplineCurve} Return value.*/
 BSplineCurve.clamped=function(controlPoints,degree,bits){
  return new BSplineCurve(controlPoints,
    BSplineCurve.clampedKnots(controlPoints.length,degree),bits);
 };
 /**
 * Creates a B-spline curve with uniform knots.
-* @param {Array&lt;Array&lt;number>>} controlPoints Array of
+* @param {Array&lt;Array&lt;Number>>} controlPoints Array of
 * control points as specified in the {@link glutil.BSplineCurve} constructor.
-* @param {number} [degree] Degree of the B-Spline
+* @param {Number} [degree] Degree of the B-Spline
 * curve.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
-* @param {number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
-* @return {BSplineCurve} Return value.*/
+* @param {Number} [bits] Bits as specified in the {@link glutil.BSplineCurve} constructor.
+* @returns {BSplineCurve} Return value.*/
 BSplineCurve.uniform=function(controlPoints,degree,bits){
  return new BSplineCurve(controlPoints,
    BSplineCurve.uniformKnots(controlPoints.length,degree),bits);
@@ -438,16 +438,16 @@ BSplineCurve.uniform=function(controlPoints,degree,bits){
 /**
 * Creates a B-spline surface with uniform knots, except that
 * the surface's edges lie on the edges of the control point array.
-* @param {Array&lt;Array&lt;Array&lt;number>>>} controlPoints Array of
+* @param {Array&lt;Array&lt;Array&lt;Number>>>} controlPoints Array of
 * control point arrays as specified in the {@link glutil.BSplineSurface} constructor.
-* @param {number} [degreeU] Degree of the B-Spline
+* @param {Number} [degreeU] Degree of the B-Spline
 * surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
-* @param {number} [degreeV] Degree of the B-Spline
+* @param {Number} [degreeV] Degree of the B-Spline
 * surface along the V-axis
 * If null or omitted, the default is 3.
-* @param {number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
-* @return {BSplineSurface} Return value.*/
+* @param {Number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
+* @returns {BSplineSurface} Return value.*/
 BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
    BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
@@ -455,16 +455,16 @@ BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
 };
 /**
 * Creates a B-spline surface with uniform knots.
-* @param {Array&lt;Array&lt;Array&lt;number>>>} controlPoints Array of
+* @param {Array&lt;Array&lt;Array&lt;Number>>>} controlPoints Array of
 * control point arrays as specified in the {@link glutil.BSplineSurface} constructor.
-* @param {number} [degreeU] Degree of the B-Spline
+* @param {Number} [degreeU] Degree of the B-Spline
 * surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
 * If null or omitted, the default is 3.
-* @param {number} [degreeV] Degree of the B-Spline
+* @param {Number} [degreeV] Degree of the B-Spline
 * surface along the V-axis
 * If null or omitted, the default is 3.
-* @param {number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
-* @return {BSplineSurface} Return value.*/
+* @param {Number} [bits] Bits as specified in the {@link glutil.BSplineSurface} constructor.
+* @returns {BSplineSurface} Return value.*/
 BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
  return new BSplineSurface(controlPoints,
    BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
@@ -472,9 +472,9 @@ BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
 };
 /**
 * Not documented yet.
-* @param {number} controlPoints
-* @param {number} degree
-* @return {Array&lt;number>} A uniform knot vector.
+* @param {Number} controlPoints
+* @param {Number} degree
+* @returns {Array&lt;Number>} A uniform knot vector.
 */
 BSplineCurve.uniformKnots=function(controlPoints,degree){
   if(typeof controlPoints==="object")
@@ -491,9 +491,9 @@ BSplineCurve.uniformKnots=function(controlPoints,degree){
 };
 /**
 * Not documented yet.
-* @param {number} controlPoints
-* @param {number} degree
-* @return {Array&lt;number>} A clamped knot vector.
+* @param {Number} controlPoints
+* @param {Number} degree
+* @returns {Array&lt;Number>} A clamped knot vector.
 */
 BSplineCurve.clampedKnots=function(controlPoints,degree){
   if(typeof controlPoints==="object")
@@ -519,9 +519,9 @@ BSplineCurve.clampedKnots=function(controlPoints,degree){
 /**
  * Evaluates the surface function based on a point
  * in a B-spline surface.
- * @param {number} u U-coordinate of the surface to evaluate (from 0 through 1).
- * @param {number} v V-coordinate of the surface to evaluate.
- * @return {Array&lt;number>} An array of the result of
+ * @param {Number} u U-coordinate of the surface to evaluate (from 0 through 1).
+ * @param {Number} v V-coordinate of the surface to evaluate.
+ * @returns {Array&lt;Number>} An array of the result of
  * the evaluation.  Its length will be equal to the
  * length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
  */
@@ -624,7 +624,7 @@ var CurveEval=function(){
 * &lt;li>&lt;code>u&lt;/code> - A curve coordinate, generally from 0 to 1.
 * &lt;/ul>
 * The evaluator function returns an array of the result of the evaluation.
-* @return {CurveEval} This object.
+* @returns {CurveEval} This object.
 * @example &lt;caption>The following function sets a circle as the curve
 * to use for generating vertex positions.&lt;/caption>
 * // "u" can range from 0 to 2*Math.PI
@@ -641,7 +641,7 @@ CurveEval.prototype.vertex=function(evaluator){
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link CurveEval#vertex}.
 * &lt;/ul>
-* @return {CurveEval} This object.
+* @returns {CurveEval} This object.
 */
 CurveEval.prototype.normal=function(evaluator){
  this.normalCurve=evaluator;
@@ -652,7 +652,7 @@ CurveEval.prototype.normal=function(evaluator){
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link CurveEval#vertex}.
 * &lt;/ul>
-* @return {CurveEval} This object.
+* @returns {CurveEval} This object.
 */
 CurveEval.prototype.color=function(evaluator){
  this.colorCurve=evaluator;
@@ -663,7 +663,7 @@ CurveEval.prototype.color=function(evaluator){
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 2 values as a result.  See {@link CurveEval#vertex}.
 * &lt;/ul>
-* @return {CurveEval} This object.
+* @returns {CurveEval} This object.
 */
 CurveEval.prototype.texCoord=function(evaluator){
  this.texCoordCurve=evaluator;
@@ -676,8 +676,8 @@ CurveEval.prototype.texCoord=function(evaluator){
  * will be generated.  When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {number} u Point of the curve to evaluate.
- * @return {CurveEval} This object.
+ * @param {Number} u Point of the curve to evaluate.
+ * @returns {CurveEval} This object.
  */
 CurveEval.prototype.evalOne=function(mesh,u){
  var color=null;
@@ -716,22 +716,22 @@ CurveEval.prototype.evalOne=function(mesh,u){
  * function.
  * @param {glutil.Mesh} mesh A geometric mesh where the vertices will be
  * generated.
- * @param {number} [mode] If this value is Mesh.LINES, or is null
+ * @param {Number} [mode] If this value is Mesh.LINES, or is null
 * or omitted, generates
  * a series of lines defining the curve. If this value is Mesh.POINTS,
  * generates a series of points along the curve.  For any other value,
  * this method has no effect.
- * @param {number} [n] Number of subdivisions of the curve to be drawn.
+ * @param {Number} [n] Number of subdivisions of the curve to be drawn.
  * May be omitted; default is 24.
- * @param {number} [u1] Starting point of the curve (within the range
+ * @param {Number} [u1] Starting point of the curve (within the range
  * given in the &lt;code>vector&lt;/code>, &lt;code>normal&lt;/code>,
  * &lt;code>color&lt;/code>, and &lt;code>texCoord&lt;/code> methods).
  *May be omitted; default is 0.
- * @param {number} [u2] Ending point of the curve (within the range
+ * @param {Number} [u2] Ending point of the curve (within the range
  * given in the &lt;code>vector&lt;/code>, &lt;code>normal&lt;/code>,
  * &lt;code>color&lt;/code>, and &lt;code>texCoord&lt;/code> methods).
  *May be omitted; default is 1.
- * @return {CurveEval} This object.
+ * @returns {CurveEval} This object.
  */
 CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
  if(typeof n==="undefined")n=24;
@@ -782,9 +782,9 @@ var SurfaceEval=function(){
  * normals rather than use the parametric evaluator
  * specified for normal generation, if any.
  * By default, normals won't be generated automatically.
- * @param {boolean} value Either true or false.  True means normals
+ * @param {Boolean} value Either true or false.  True means normals
  * will automatically be generated; false means they won't.
- * @return {SurfaceEval} This object.
+ * @returns {SurfaceEval} This object.
  */
 SurfaceEval.prototype.setAutoNormal=function(value){
  this.autoNormal=!!value;
@@ -798,7 +798,7 @@ SurfaceEval.prototype.setAutoNormal=function(value){
 * &lt;li>&lt;code>v&lt;/code> - Vertical-axis coordinate, generally from 0 to 1.
 * &lt;/ul>
 * The evaluator function returns an array of the result of the evaluation.
-* @return {SurfaceEval} This object.
+* @returns {SurfaceEval} This object.
 */
 SurfaceEval.prototype.vertex=function(evaluator){
  this.vertexSurface=evaluator;
@@ -826,7 +826,7 @@ SurfaceEval.prototype.vertex=function(evaluator){
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
 * &lt;/ul>
-* @return {SurfaceEval} This object.
+* @returns {SurfaceEval} This object.
 * @example &lt;caption>The following example sets the normal generation
 * function for a parametric surface.  To illustrate how the method is derived
 * from the vector calculation method, that method is also given below.  To
@@ -859,7 +859,7 @@ SurfaceEval.prototype.normal=function(evaluator){
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link SurfaceEval#vertex}.
 * &lt;/ul>
-* @return {SurfaceEval} This object.
+* @returns {SurfaceEval} This object.
 */
 SurfaceEval.prototype.color=function(evaluator){
  this.colorSurface=evaluator;
@@ -870,7 +870,7 @@ SurfaceEval.prototype.color=function(evaluator){
 * @param {object} evaluator An object that must contain a function
 * named "evaluate", giving 2 values as a result.  See {@link SurfaceEval#vertex}.
 * &lt;/ul>
-* @return {SurfaceEval} This object.
+* @returns {SurfaceEval} This object.
 * @example &lt;caption>The following example sets the surface
 * function to a linear evaluator. Thus, coordinates passed to the
 * evalOne and evalSurface methods will be interpolated as direct
@@ -888,9 +888,9 @@ SurfaceEval.prototype.texCoord=function(evaluator){
  * will be generated.  When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {number} u U-coordinate of the curve to evaluate
- * @param {number} v V-coordinate of the curve to evaluate.
- * @return {SurfaceEval} This object.
+ * @param {Number} u U-coordinate of the curve to evaluate
+ * @param {Number} v V-coordinate of the curve to evaluate.
+ * @returns {SurfaceEval} This object.
  */
 SurfaceEval.prototype.evalOne=function(mesh,u,v){
  var values=[];
@@ -1036,25 +1036,25 @@ SurfaceEval.prototype._playBack=function(mesh,buffer,index){
  * will be generated.  When this method returns, the current color, normal,
  * and texture coordinates will be the same as they were before the method
  * started.
- * @param {number} [mode] If this value is Mesh.TRIANGLES, or is null
+ * @param {Number} [mode] If this value is Mesh.TRIANGLES, or is null
  * or omitted, generates a series of triangles defining the surface.  If
  * this value is Mesh.LINES, generates
  * a series of lines defining the curve. If this value is Mesh.POINTS,
  * generates a series of points along the curve.  For any other value,
  * this method has no effect.
- * @param {number} [un] Number of subdivisions along the U-axis.
+ * @param {Number} [un] Number of subdivisions along the U-axis.
  * Default is 24.
- * @param {number} [vn] Number of subdivisions along the V-axis.
+ * @param {Number} [vn] Number of subdivisions along the V-axis.
  * Default is 24.
- * @param {number} [u1] Starting U-coordinate of the surface to evaluate.
+ * @param {Number} [u1] Starting U-coordinate of the surface to evaluate.
  * Default is 0.
- * @param {number} [u2] Ending U-coordinate of the surface to evaluate.
+ * @param {Number} [u2] Ending U-coordinate of the surface to evaluate.
  * Default is 1.
- * @param {number} [v1] Starting U-coordinate of the surface to evaluate.
+ * @param {Number} [v1] Starting U-coordinate of the surface to evaluate.
  * Default is 0.
- * @param {number} [v2] Ending U-coordinate of the surface to evaluate.
+ * @param {Number} [v2] Ending U-coordinate of the surface to evaluate.
  * Default is 1.
- * @return {SurfaceEval} This object.
+ * @returns {SurfaceEval} This object.
  */
 SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
  if(typeof un==="undefined")un=24;
@@ -1151,7 +1151,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

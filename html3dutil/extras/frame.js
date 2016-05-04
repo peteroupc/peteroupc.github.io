@@ -100,7 +100,9 @@ var canvas=scene.getContext().canvas;
  */
 PrimitiveCounter.prototype.update=function(){
  "use strict";
-var v=this.scene.vertexCount();
- var p=this.scene.primitiveCount();
- this.div.innerHTML=v+" vertices, "+p+" primitives";
+ if(this.scene.vertexCount){
+  var v=this.scene.vertexCount();
+  var p=this.scene.primitiveCount();
+  this.div.innerHTML=v+" vertices, "+p+" primitives";
+ }
 };

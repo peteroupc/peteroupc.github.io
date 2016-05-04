@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.util.ColorValidator</h1>
 
-<pre><code>public final class ColorValidator extends Object
+<pre><code>public final class ColorValidator extends java.lang.Object
 </code></pre>
 
 <p>Contains methods to convert between different representations of HTML and
@@ -15,22 +15,22 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static double[] ColorHtmlToRgba(String x)</code><br>
+<li><code>static double[] ColorHtmlToRgba(java.lang.String x)</code><br>
 Converts HTML colors to Red/Green/Blue colors.</li>
-<li><code>static double[] ColorToRgb(String x)</code><br>
+<li><code>static double[] ColorToRgb(java.lang.String x)</code><br>
 Converts HTML colors to Red/Green/Blue colors.</li>
-<li><code>static double[] ColorToRgba(String x)</code><br>
+<li><code>static double[] ColorToRgba(java.lang.String x)</code><br>
 Not documented yet.</li>
 <li><code>static double[] HlsToRgb(double[] hls)</code><br>
 Converts a color in the HLS color space to red/green/blue.</li>
-<li><code>static String RgbToColor(double[] arrayRGB)</code><br>
+<li><code>static java.lang.String RgbToColor(double[] arrayRGB)</code><br>
 Converts an RGBA color to a string, either rgb(...) or rgba(...) as
 applicable.</li>
-<li><code>static String RgbToColorDisplay(double[] rgb)</code><br>
+<li><code>static java.lang.String RgbToColorDisplay(double[] rgb)</code><br>
 Converts a red-green-blue-alpha color to a string in CSS format.</li>
-<li><code>static String RgbToColorHtml(double[] rgb)</code><br>
+<li><code>static java.lang.String RgbToColorHtml(double[] rgb)</code><br>
 Converts an RGBA color to an HTML color, (ex.</li>
-<li><code>static String RgbToColorHtml(double r,
+<li><code>static java.lang.String RgbToColorHtml(double r,
           double g,
           double b)</code><br>
 Converts a red-green-blue color to a string in HTML format.</li>
@@ -60,12 +60,12 @@ Converts a red-green-blue color to a string in HTML format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>hls</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>hls</code> is null.</li>
 </ul>
 
 <h3>ColorHtmlToRgba</h3>
 
-<pre><code>public static double[] ColorHtmlToRgba(String x)
+<pre><code>public static double[] ColorHtmlToRgba(java.lang.String x)
 </code></pre>
 
 <p>Converts HTML colors to Red/Green/Blue colors.</p>
@@ -85,12 +85,12 @@ Converts a red-green-blue color to a string in HTML format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>x</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>x</code> is null.</li>
 </ul>
 
 <h3>ColorToRgba</h3>
 
-<pre><code>public static double[] ColorToRgba(String x)
+<pre><code>public static double[] ColorToRgba(java.lang.String x)
 </code></pre>
 
 <p>Not documented yet.</p>
@@ -109,7 +109,7 @@ Converts a red-green-blue color to a string in HTML format.</li>
 
 <h3>ColorToRgb</h3>
 
-<pre><code>public static double[] ColorToRgb(String x)
+<pre><code>public static double[] ColorToRgb(java.lang.String x)
 </code></pre>
 
 <p>Converts HTML colors to Red/Green/Blue colors. Use this function to parse
@@ -130,7 +130,7 @@ Converts a red-green-blue color to a string in HTML format.</li>
 
 <h3>RgbToColor</h3>
 
-<pre><code>public static String RgbToColor(double[] arrayRGB)
+<pre><code>public static java.lang.String RgbToColor(double[] arrayRGB)
 </code></pre>
 
 <p>Converts an RGBA color to a string, either rgb(...) or rgba(...) as
@@ -151,12 +151,12 @@ Converts a red-green-blue color to a string in HTML format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>arrayRGB</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>arrayRGB</code> is null.</li>
 </ul>
 
 <h3>RgbToColorDisplay</h3>
 
-<pre><code>public static String RgbToColorDisplay(double[] rgb)
+<pre><code>public static java.lang.String RgbToColorDisplay(double[] rgb)
 </code></pre>
 
 <p>Converts a red-green-blue-alpha color to a string in CSS format.</p>
@@ -176,14 +176,14 @@ Converts a red-green-blue color to a string in HTML format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>rgb</code> is null or contains
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>rgb</code> is null or contains
 fewer than three elements.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>rgb</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>rgb</code> is null.</p></li>
 </ul>
 
 <h3>RgbToColorHtml</h3>
 
-<pre><code>public static String RgbToColorHtml(double[] rgb)
+<pre><code>public static java.lang.String RgbToColorHtml(double[] rgb)
 </code></pre>
 
 <p>Converts an RGBA color to an HTML color, (ex. #002233).&#x22;rgb&#x22; must
@@ -204,12 +204,12 @@ fewer than three elements.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>rgb</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>rgb</code> is null.</li>
 </ul>
 
 <h3>RgbToColorHtml</h3>
 
-<pre><code>public static String RgbToColorHtml(double r, double g, double b)
+<pre><code>public static java.lang.String RgbToColorHtml(double r, double g, double b)
 </code></pre>
 
 <p>Converts a red-green-blue color to a string in HTML format.</p>

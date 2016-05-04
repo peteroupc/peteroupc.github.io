@@ -209,7 +209,7 @@ var dx=b[0]-a[0];
 * The evaluator function returns a 3-element array: the first
 * element is the X coordinate of the curve's position, the second
 * element is the Y coordinate, and the third is the Z coordinate.
-* @param {number} [thickness] Radius of the
+* @param {Number} [thickness] Radius of the
 * extruded tube.  If this parameter is null or omitted, the default is 0.125.
 * @param {Object} [sweptCurve] Object describing
 * a two-dimensional curve to serve as the cross section of the extruded shape,
@@ -235,10 +235,10 @@ this.thickness=(thickness===null || typeof thickness==="undefined") ? 0.125 : th
 
 /**
 * Generates a point on the extruded tube from the given u and v coordinates.
-* @param {number} u U coordinate.  This will run the length of the curve.
-* @param {number} v V coordinate.  This will sweep around the extruded
+* @param {Number} u U coordinate.  This will run the length of the curve.
+* @param {Number} v V coordinate.  This will sweep around the extruded
 * tube.
-* @return {Array<number>} A 3-element array specifying a 3D point.
+* @returns {Array<Number>} A 3-element array specifying a 3D point.
 */
 CurveTube.prototype.evaluate=function(u, v){
  "use strict";

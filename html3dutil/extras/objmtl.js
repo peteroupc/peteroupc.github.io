@@ -37,13 +37,15 @@ this.url=null;
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
  * @param {Scene3D} scene 3D scene to load the shape with.
- * @return {glutil.ShapeGroup} Group of shapes.
+ * @returns {glutil.ShapeGroup} Group of shapes.
  */
 ObjData.prototype.toShape=function(scene){
  "use strict";
+ // TODO: temporary
+ if(arguments.length!=0)throw new Error();
 var multi=new ShapeGroup();
  for(var i=0;i<this.meshes.length;i++){
-  var shape=scene.makeShape(this.meshes[i].data);
+  var shape=new Shape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.addShape(shape);
@@ -76,18 +78,20 @@ ObjData.prototype.loadTextures=function(scene,resolved,rejected){
 /**
  * Creates one or more 3D shapes from the named portion
  * of the data in this OBJ file.
- * @param {Scene3D} scene 3D scene to load the shape with.
- * @param {string} name Name from the OBJ file of the portion
+ * @param {String} name Name from the OBJ file of the portion
  * of the model to use.
- * @return {glutil.ShapeGroup} Group of shapes. The group
+ * @returns {glutil.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
  */
-ObjData.prototype.toShapeFromName=function(scene, name){
+ObjData.prototype.toShapeFromName=function(name){
  "use strict";
+ // TODO: temporary
+ if(name instanceof Scene3D ||
+  name instanceof Subscene3D)throw new Error();
 var multi=new ShapeGroup();
  for(var i=0;i<this.meshes.length;i++){
   if(this.meshes[i].name!==name)continue;
-  var shape=scene.makeShape(this.meshes[i].data);
+  var shape=new Shape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.addShape(shape);
@@ -134,7 +138,7 @@ for(var i=0;i<this.list.length;i++){
     var mtl=this.list[i].data;
     if(mtl.texture){
      var resolvedName=ObjData._resolvePath(
-       this.url,mtl.texture.name);
+       this.url,mtl.texture);
      this.list[i].data=mtl.copy()
        .setParams({"texture":resolvedName});
     }
@@ -267,8 +271,8 @@ ObjData.loadObjFromUrlWithTextures=function(url,textureLoader){
 /**
 Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available) asynchronously.
-@param {string} url The URL to load.
-@return {Promise} A promise that resolves when
+@param {String} url The URL to load.
+@returns {Promise} A promise that resolves when
 the OBJ file is loaded successfully, whether or not its associated
 MTL is also loaded successfully (the result is an ObjData object),
 and is rejected when an error occurs when loading the OBJ file.

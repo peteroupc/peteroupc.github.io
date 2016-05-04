@@ -34,10 +34,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * If the curve function draws a curve that goes around the axis of rotation, such
 * as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must
 * restrict the curve definition to no more than half of the curve.
-* @param {number} minval Smallest V-coordinate.
-* @param {number} maxval Largest V-coordinate.   If _minval_ is greater than
+* @param {Number} minval Smallest V-coordinate.
+* @param {Number} maxval Largest V-coordinate.   If _minval_ is greater than
 * _maxval_, both values will be swapped.
-* @param {Array<number>} [axis] Axis of rotation, around which the curve
+* @param {Array<Number>} [axis] Axis of rotation, around which the curve
 * will be rotated to generate the surface of revolution.  If null or omitted, the positive
 * Z-axis will be the axis of rotation.  This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
@@ -97,19 +97,19 @@ SurfaceOfRevolution._quatTransformInPlace=function(q,v){
 * as a single parameter and returns a number.  The return
 * value is effectively the radius of each part of the surface
 * from beginning to end.
-* @param {number} minval Smallest parameter of the function.
+* @param {Number} minval Smallest parameter of the function.
 * This is a number of units from the origin along the axis of rotation.
-* @param {number} maxval Largest parameter of the function.
+* @param {Number} maxval Largest parameter of the function.
 * This is a number of units from the origin along the axis of rotation.
 * If _minval_ is greater than _maxval_, both values will be swapped.
-* @param {Array<number>} [axis] Axis of rotation, around which the
+* @param {Array<Number>} [axis] Axis of rotation, around which the
 * function graph will be rotated to generate the surface of revolution.
 * If null or omitted, the positive Z-axis will be the axis of rotation.
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be normalized to unit length.
-* @return {SurfaceOfRevolution} Return value.
+* @returns {SurfaceOfRevolution} Return value.
  @example <caption>The following creates an evaluator for a cone
 * which starts at the origin and runs 10 units along the Z axis.</caption>
 * var surf=SurfaceOfRevolution.fromFunction(
@@ -135,9 +135,9 @@ return new SurfaceOfRevolution({
 };
 /**
 * Parametric evaluator for a torus, a special case of a surface of revolution.
-* @param {number} outerRadius Radius from the center to the innermost
+* @param {Number} outerRadius Radius from the center to the innermost
 * part of the torus.
-* @param {number} innerRadius Radius from the inner edge to the innermost
+* @param {Number} innerRadius Radius from the inner edge to the innermost
 * part of the torus.
 * @param {Function} [curve] Object describing
 * a curve to serve as the cross section of the torus.
@@ -150,14 +150,14 @@ return new SurfaceOfRevolution({
 * The evaluator function returns an array of at least 2 elements: the first
 * element is the X coordinate of the curve's position, and the second
 * element is the Y coordinate.  If null or omitted, uses a circular cross section.
-* @param {Array<number>} [axis] Axis of rotation, which the torus
+* @param {Array<Number>} [axis] Axis of rotation, which the torus
 * will pass through.
 * If null or omitted, the positive Z-axis will be the axis of rotation.
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be normalized to unit length.
-* @return {SurfaceOfRevolution} Return value.*/
+* @returns {SurfaceOfRevolution} Return value.*/
 SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve,axis){
   "use strict";
 if(!curve)curve={
@@ -187,11 +187,11 @@ if(!curve)curve={
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
-* @param {number} outerRadius Radius of the circle whose position
+* @param {Number} outerRadius Radius of the circle whose position
 * is fixed.
-* @param {number} innerRadius Radius of the rolling circle.
+* @param {Number} innerRadius Radius of the rolling circle.
 * A hypocycloid results when outerRadius=innerRadius.
-* @param {number} distFromInnerCenter Distance from the center of the
+* @param {Number} distFromInnerCenter Distance from the center of the
 * rolling circle to the drawing pen.. A prolate hypotrochoid results when
 * distFromInnerCenter is greater than innerRadius.
 */
@@ -203,8 +203,8 @@ this.outer=outerRadius;
  /**
 * Generates a point on the curve from the given u coordinate.
 * @function
-* @param {number} u U coordinate.
-* @return {Array<number>} A 3-element array specifying a 3D point.
+* @param {Number} u U coordinate.
+* @returns {Array<Number>} A 3-element array specifying a 3D point.
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
@@ -225,8 +225,8 @@ this.outer=outerRadius;
  * Creates a modified version of this curve so that it
  * fits the given radius.
  * @function
- * @param {number} radius Desired radius of the curve.
- * @return {Hypotrochoid} Return value. */
+ * @param {Number} radius Desired radius of the curve.
+ * @returns {Hypotrochoid} Return value. */
  this.scaleTo=function(radius){
   var oi=(this.outer-this.inner);
   var mx=Math.abs(Math.max(
@@ -253,8 +253,8 @@ this.outer=outerRadius;
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
-* @param {number} radius Radius of the rolling circle.
-* @param {number} distFromCenter Distance from the center of the
+* @param {Number} radius Radius of the rolling circle.
+* @param {Number} distFromCenter Distance from the center of the
 * rolling circle to the drawing pen.
 */
 function Trochoid(radius, distFromCenter){
@@ -264,8 +264,8 @@ this.inner=radius;
  /**
 * Generates a point on the curve from the given u coordinate.
 * @function
-* @param {number} u U coordinate.
-* @return {Array<number>} A 3-element array specifying a 3D point.
+* @param {Number} u U coordinate.
+* @returns {Array<Number>} A 3-element array specifying a 3D point.
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
@@ -292,11 +292,11 @@ this.inner=radius;
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
-* @param {number} outerRadius Radius of the circle whose position
+* @param {Number} outerRadius Radius of the circle whose position
 * is fixed.
-* @param {number} innerRadius Radius of the rolling circle.
+* @param {Number} innerRadius Radius of the rolling circle.
 * An epicycloid results when outerRadius=innerRadius.
-* @param {number} distFromInnerCenter Distance from the center of the
+* @param {Number} distFromInnerCenter Distance from the center of the
 * rolling circle to the drawing pen. A prolate epitrochoid results when
 * distFromInnerCenter is greater than innerRadius.
 */
@@ -308,8 +308,8 @@ this.outer=outerRadius;
  /**
 * Generates a point on the curve from the given u coordinate.
 * @function
-* @param {number} u U coordinate.
-* @return {Array<number>} A 3-element array specifying a 3D point.
+* @param {Number} u U coordinate.
+* @returns {Array<Number>} A 3-element array specifying a 3D point.
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
@@ -328,8 +328,8 @@ this.outer=outerRadius;
  * Creates a modified version of this curve so that it
  * fits the given radius.
  * @function
- * @param {number} radius Desired radius of the curve.
- * @return {Epitrochoid} Return value. */
+ * @param {Number} radius Desired radius of the curve.
+ * @returns {Epitrochoid} Return value. */
  this.scaleTo=function(radius){
   var oi=(this.outer+this.inner);
   var mx=Math.abs(Math.max(

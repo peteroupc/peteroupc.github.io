@@ -14,18 +14,26 @@ if(nearZ<=0)throw new Error("invalid nearZ");
  this.scene=scene;
  this.near=nearZ;
  this.far=farZ;
- this.currentAspect=this.scene.getClientAspect();
- this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ if(this.scene instanceof Scene3D){
+   this.currentAspect=this.scene.getClientAspect();
+   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ } else {
+   this.scene.perspectiveAspect(this.fov,this.near,this.far);
+ }
 }
 /**
  * Not documented yet.
  */
 Perspective.prototype.update=function(){
  "use strict";
-var aspect=this.scene.getClientAspect();
- if(aspect!==this.currentAspect){
-  this.currentAspect=aspect;
-  this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+ if(this.scene instanceof Scene3D){
+  var aspect=this.scene.getClientAspect();
+  if(aspect!==this.currentAspect){
+   this.currentAspect=aspect;
+   this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
+  }
+ } else {
+   this.scene.perspectiveAspect(this.fov,this.near,this.far);
  }
 };
 
@@ -213,15 +221,15 @@ var deltaX=0;
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
 * @class
 * @alias Camera
-* @param {glutil.Scene} scene A 3D scene to associate with this
+* @param {*} scene A 3D scene to associate with this
 * camera object.
-* @param {number}  fov Vertical field of view, in degrees. Should be less
+* @param {*}  fov Vertical field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.)
-* @param {number} near The distance from the camera to
+* @param {*} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
-* @param {number}  far The distance from the camera to
+* @param {*}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
 */

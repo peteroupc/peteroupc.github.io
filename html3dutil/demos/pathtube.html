@@ -77,9 +77,9 @@ function makeTubeFromPath(path,flatness,thickness){
    var mesh=null
    mesh=makeTubeFromPath(path,0.2,2)
    scene.addShape(
-    scene.makeShape(mesh).setColor("blue"))
+    new Shape(mesh).setColor("blue"))
    scene.addShape(
-    scene.makeShape(pathFloor(path)).setColor("#eeeeee"))
+    new Shape(pathFloor(path)).setColor("#eeeeee"))
    scene.addShape(group)
   var anim=null
   var timer={}

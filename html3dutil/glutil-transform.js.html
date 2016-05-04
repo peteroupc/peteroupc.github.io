@@ -50,7 +50,7 @@ this.scale=[1,1,1];
   * Returns a copy of a three-element array giving the scaling for an object's width,
   * height, and depth, respectively.
   * For each component, 1 means no scaling.
-  * @return {Array&lt;number>} Return value.   */
+  * @returns {Array&lt;Number>} Return value.   */
 Transform.prototype.getScale=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -62,7 +62,7 @@ if(!this.complexMatrix){
   /**
   * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
   * of an object relative to its original position.
-  * @return {Array&lt;number>} Return value.   */
+  * @returns {Array&lt;Number>} Return value.   */
 Transform.prototype.getPosition=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -73,7 +73,7 @@ if(!this.complexMatrix){
 };
   /**
    * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
-   * @return {Array&lt;number>} Return value.   */
+   * @returns {Array&lt;Number>} Return value.   */
 Transform.prototype.getQuaternion=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -85,7 +85,7 @@ if(!this.complexMatrix){
 };
 /**
 * Resets this shape to the untransformed state.
-* @return {glutil.Shape} This object.
+* @returns {glutil.Shape} This object.
 */
 Transform.prototype.reset=function(){
  "use strict";
@@ -102,9 +102,9 @@ this.matrix=GLMath.mat4identity();
  * Sets this shape's transformation matrix. This method
  * will set the position, rotation, and scale properties
  * accordingly to the matrix given.
- * @param {Array&lt;number>} value A 4x4 matrix.
+ * @param {Array&lt;Number>} value A 4x4 matrix.
  * This method will copy the value of this parameter.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.setMatrix=function(value){
  "use strict";
@@ -125,7 +125,7 @@ this._matrixDirty=false;
 };
 /**
  * Returns whether this transform is the identity transform.
- * @return {boolean} Return value. */
+ * @returns {Boolean} Return value. */
 Transform.prototype.isIdentity=function(){
  "use strict";
 if(this._matrixDirty){
@@ -143,7 +143,7 @@ if(this._matrixDirty){
 /**
 * Resets this transform to the untransformed state.
 * (Same as "reset"; use that method instead.)
-* @return {glutil.Transform} This object.
+* @returns {glutil.Transform} This object.
 */
 Transform.prototype.resetTransform=function(){
  "use strict";
@@ -153,14 +153,14 @@ Transform.prototype.resetTransform=function(){
  * Sets the scale of an object relative to its original
  * size. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {number|Array&lt;number>} x Scaling factor for this object's width.
+ * @param {number|Array&lt;Number>} x Scaling factor for this object's width.
  *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the scaling factors
  * for width, height, and depth, respectively, or a single number
  * giving the scaling factor for all three dimensions.
- * @param {number} y Scaling factor for this object's height.
- * @param {number} z Scaling factor for this object's depth.
-* @return {glutil.Transform} This object.
+ * @param {Number} y Scaling factor for this object's height.
+ * @param {Number} z Scaling factor for this object's depth.
+* @returns {glutil.Transform} This object.
  */
 Transform.prototype.setScale=function(x,y,z){
   "use strict";
@@ -184,15 +184,15 @@ if(this.complexMatrix)return this;
  * Sets the relative position of an object from its original
  * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array&lt;number>|number} x The X-coordinate.
+ * @param {Array&lt;Number>|number} x The X-coordinate.
  *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {number} y The Y-coordinate.
+ * @param {Number} y The Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z The Z-coordinate.
+ * @param {Number} z The Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.setPosition=function(x,y,z){
   "use strict";
@@ -217,15 +217,15 @@ if(this.complexMatrix)return this;
  * Moves the relative position of an object from its original
  * position.  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array&lt;number>|number} x Number to add to the X-coordinate,
+ * @param {Array&lt;Number>|number} x Number to add to the X-coordinate,
  *   If "y" and "z" are null or omitted, this is instead
  *  a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number
  * to add to all three coordinates.
- * @param {number} y Number to add to the Y-coordinate.
+ * @param {Number} y Number to add to the Y-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z Number to add to the Z-coordinate.
+ * @param {Number} z Number to add to the Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.movePosition=function(x,y,z){
   "use strict";
@@ -256,10 +256,10 @@ if(this.complexMatrix)return this;
  * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath} (a 4-element array
  * for describing 3D rotations). Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array&lt;number>} quat A four-element array describing the rotation.
+ * @param {Array&lt;Number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
  * and {@link glmath.GLMath.quatFromTaitBryan}, among others.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  * @example
  * // Set an object's orientation to 30 degrees about the X-axis
  * transform.setQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
@@ -281,7 +281,7 @@ if(this.complexMatrix)return this;
  * Sets this object's orientation in the form of an angle and an axis of
  * rotation. Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array&lt;number>|number} angle The desired angle
+ * @param {Array&lt;Number>|number} angle The desired angle
  * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
@@ -289,15 +289,15 @@ if(this.complexMatrix)return this;
  * points toward the viewer, a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
- * @param {Array&lt;number>|number} v X-component of the point lying on the axis
+ * @param {Array&lt;Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
+ * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
+ * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.setOrientation=function(angle, v,vy,vz){
  "use strict";
@@ -310,10 +310,10 @@ return this.setQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
  * same effect as the new rotation followed by the existing rotation.
  *  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array&lt;number>} quat A four-element array describing the rotation.
+ * @param {Array&lt;Number>} quat A four-element array describing the rotation.
  * A quaternion is returned from the methods {@link glmath.GLMath.quatFromAxisAngle}
  * or {@link glmath.GLMath.quatFromTaitBryan}.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  * @example
  * // Combine an object's orientation with a rotation 20 degrees about the X-axis
  * transform.multQuaternion(GLMath.quatFromAxisAngle(20,1,0,0));
@@ -338,17 +338,17 @@ if(this.complexMatrix)return this;
  * same effect as the new rotation followed by the existing rotation.
  *  Has no effect if a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @param {Array&lt;number>|number} angle The desired angle
+ * @param {Array&lt;Number>|number} angle The desired angle
  * to rotate in degrees. See {@link glutil.Transform#setOrientation}.
- * @param {Array&lt;number>|number} v X-component of the point lying on the axis
+ * @param {Array&lt;Number>|number} v X-component of the point lying on the axis
  * of rotation.  If "vy" and "vz" are omitted, this can
  * instead be a 3-element array giving the axis
  * of rotation in x, y, and z, respectively.
- * @param {number} vy Y-component of the point lying on the axis
+ * @param {Number} vy Y-component of the point lying on the axis
  * of rotation.
- * @param {number} vz Z-component of the point lying on the axis
+ * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
- * @return {glutil.Transform} This object.
+ * @returns {glutil.Transform} This object.
  */
 Transform.prototype.multOrientation=function(angle, v,vy,vz){
  "use strict";
@@ -359,7 +359,7 @@ return this.multQuaternion(GLMath.quatFromAxisAngle(angle,v,vy,vz));
  * of the scale, position, and rotation properties,
  * unless a matrix was defined with {@link glutil.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link glutil.Transform#resetTransform}.
- * @return {Array&lt;number>} Return value. */
+ * @returns {Array&lt;Number>} Return value. */
 Transform.prototype.getMatrix=function(){
   "use strict";
 if(this._matrixDirty){
@@ -404,7 +404,7 @@ if(this._matrixDirty){
 * Makes a copy of this object.  The copied object
 * will have its own version of the rotation, scale,
 * position, and matrix data.
-* @return {glutil.Transform} A copy of this object.
+* @returns {glutil.Transform} A copy of this object.
 */
 Transform.prototype.copy=function(){
  "use strict";
@@ -440,7 +440,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

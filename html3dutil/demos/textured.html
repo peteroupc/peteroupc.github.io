@@ -26,26 +26,25 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
     .cullFace(Scene3D.BACK);
-  var fc=new FrameCounterDiv(scene)
-  scene.loadAndMapTexture("461223191.jpg").then(function(tex){
+  var sub=new Subscene3D(scene)
+   // Set the perspective view.  Camera has a 45-degree field of view
+   // and will see objects from 0.1 to 100 units away.
+   .perspectiveAspect(45,0.1,100)
+   // Move the camera back 40 units.
+   .setLookAt([0,0,40]);
+  sub.getLights().setDefaults();
+  var fc=new FrameCounterDiv(sub)
+  var loader=new TextureLoader();
+  loader.loadAndMapTexturesAll([
+   "461223191.jpg"
+   ],sub).then(function(tex){
    var mesh=Meshes.createBox(10,20,20);
-   var shape=scene.makeShape(mesh).setMaterial(new Material()
-    .setParams({
-     "diffuse":"white",
-     "specular":"white",
-     "shininess":5,
-     "texture":tex
-    }))
-   scene.addShape(shape);
+   var shape=new Shape(mesh).setTexture(tex[0])
+   sub.addShape(shape);
    // Create a timer
    var timer={};
   // Set up the render loop
   GLUtil.renderLoop(function(time){
-   // Set the perspective view.  Camera has a 45-degree field of view
-   // and will see objects from 0.1 to 100 units away.
-   scene.setPerspective(45,scene.getClientAspect(),0.1,100);
-   // Move the camera back 40 units.
-   scene.setLookAt([0,0,40]);
    // Update the shape's rotation
    var q=GLMath.quatFromTaitBryan(
      360*GLUtil.getTimePosition(timer,time,6000),
@@ -55,7 +54,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
    fc.update();
    shape.setQuaternion(q);
    // Render the scene
-   scene.render();
+   scene.render(sub);
   });
  })
 //-->

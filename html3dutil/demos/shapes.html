@@ -24,7 +24,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  scene.setOrthoAspect(
+  var sub=new Subscene3D(scene);
+  sub.getLights().setDefaults();
+  sub.orthoAspect(
    -20,20,
    -10,10,
    -20,20
@@ -32,36 +34,36 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   var mesh;
   mesh=Meshes.createBox(7,7,7)
     .transform(GLMath.mat4rotated(20,1,1,0));
-  scene.addShape(
-    scene.makeShape(mesh).setColor("red").setPosition(-15,5,0))
+  sub.addShape(
+    new Shape(mesh).setColor("red").setPosition(-15,5,0))
   mesh=Meshes.createSphere(4.5);
-  scene.addShape(
-    scene.makeShape(mesh).setColor("blue").setPosition(-5,5,0))
+  sub.addShape(
+    new Shape(mesh).setColor("blue").setPosition(-5,5,0))
   mesh=Meshes.createPointedStar(5,4.5,2);
-  scene.addShape(
-    scene.makeShape(mesh).setColor("lime").setPosition(5,5,0))
+  sub.addShape(
+    new Shape(mesh).setColor("lime").setPosition(5,5,0))
   mesh=Meshes.createPartialDisk(1,4.5,32,1,20,150);
-  scene.addShape(
-    scene.makeShape(mesh).setColor("darkorange").setPosition(15,5,0))
+  sub.addShape(
+    new Shape(mesh).setColor("darkorange").setPosition(15,5,0))
   mesh=Meshes.createTorus(1,3)
    .transform(GLMath.mat4rotated(60,0,1,1));
-  scene.addShape(
-    scene.makeShape(mesh).setColor("yellow").setPosition(-15,-5,0))
+  sub.addShape(
+    new Shape(mesh).setColor("yellow").setPosition(-15,-5,0))
   mesh=Meshes.createCylinder(4.5,4.5,9)
    .transform(GLMath.mat4translated(0,0,-4.5))
    .transform(GLMath.mat4rotated(80,1,0,0));
-  scene.addShape(
-    scene.makeShape(mesh).setColor("brown").setPosition(-5,-5,0))
+  sub.addShape(
+    new Shape(mesh).setColor("brown").setPosition(-5,-5,0))
   mesh=Meshes.createPlane(9,9);
-  scene.addShape(
-    scene.makeShape(mesh).setColor("darkgreen").setPosition(5,-5,0))
+  sub.addShape(
+    new Shape(mesh).setColor("darkgreen").setPosition(5,-5,0))
   mesh=Meshes.createCylinder(4.5,0,9)
    .transform(GLMath.mat4translated(0,0,-4.5))
    .transform(GLMath.mat4rotated(85,1,0,0));
-  scene.addShape(
-    scene.makeShape(mesh).setColor("rebeccapurple").setPosition(15,-5,0))
+  sub.addShape(
+    new Shape(mesh).setColor("rebeccapurple").setPosition(15,-5,0))
   GLUtil.renderLoop(function(){
-   scene.render();
+   scene.render(sub);
   });
 //-->
 </script>

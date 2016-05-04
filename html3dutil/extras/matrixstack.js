@@ -41,14 +41,14 @@ function MatrixStack(){
 }
 /**
  * Gets a copy of the matrix at the top of this stack.
- * @return {Array<number>}.
+ * @returns {Array<Number>}.
  */
 MatrixStack.prototype.get=function(){
  return this.stack[this.stack.length-1].slice(0,16);
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the identity matrix.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.loadIdentity=function(){
  this.stack[this.stack.length-1]=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
@@ -56,8 +56,8 @@ MatrixStack.prototype.loadIdentity=function(){
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the given matrix.
- * @param {Array<number>} mat A matrix to replace the top of the stack with.
- * @return {MatrixStack} This object.
+ * @param {Array<Number>} mat A matrix to replace the top of the stack with.
+ * @returns {MatrixStack} This object.
 */
 MatrixStack.prototype.loadMatrix=function(mat){
  this.stack[this.stack.length-1]=mat.slice(0,16);
@@ -66,9 +66,9 @@ MatrixStack.prototype.loadMatrix=function(mat){
 /**
  * Modifies the matrix at the top of this stack by replacing it with the
  * transpose of the given matrix.
- * @param {Array<number>} mat A matrix whose transpose will
+ * @param {Array<Number>} mat A matrix whose transpose will
  * replace the top of the stack.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
 */
 MatrixStack.prototype.loadTransposeMatrix=function(mat){
  var m=mat.slice(0,16);
@@ -89,8 +89,8 @@ MatrixStack.prototype.loadTransposeMatrix=function(mat){
  * at the top of the stack describes a translation and the matrix
  * passed to this method describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
- * @param {Array<number>} mat A matrix to multiply the current one by.
- * @return {MatrixStack} This object.
+ * @param {Array<Number>} mat A matrix to multiply the current one by.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.multMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
@@ -115,9 +115,9 @@ MatrixStack.prototype.multMatrix=function(mat){
  * at the top of the stack describes a translation and the matrix
  * passed to this method describes a scaling, the multiplied matrix will describe
  * the effect of translation then scaling.
- * @param {Array<number>} mat A matrix whose transpose the current
+ * @param {Array<Number>} mat A matrix whose transpose the current
  * matrix will be multiplied by.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.multTransposeMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
@@ -136,17 +136,17 @@ MatrixStack.prototype.multTransposeMatrix=function(mat){
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
- * @param {number} angle The desired angle
+ * @param {Number} angle The desired angle
  * to rotate in degrees. If the axis of rotation
  * points toward the viewer, the angle's value is increasing in
  * a counterclockwise direction.
- * @param {number} x X-component of the axis
+ * @param {Number} x X-component of the axis
  * of rotation.
- * @param {number} y Y-component of the axis
+ * @param {Number} y Y-component of the axis
  * of rotation.
- * @param {number} z Z-component of the axis
+ * @param {Number} z Z-component of the axis
  * of rotation.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.rotate=function(angle,x,y,z){
  var ang=angle*Math.PI/180;
@@ -188,10 +188,10 @@ return this.multMatrix([cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+x
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a
 * translation transformation.
- * @param {number} x Translation along the X axis.
- * @param {number} y Translation along the Y axis.
- * @param {number} z Translation along the Z axis.
- * @return {MatrixStack} This object.
+ * @param {Number} x Translation along the X axis.
+ * @param {Number} y Translation along the Y axis.
+ * @param {Number} z Translation along the Z axis.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.translate=function(x,y,z){
  var mat=this.stack[this.stack.length-1];
@@ -209,10 +209,10 @@ MatrixStack.prototype.translate=function(x,y,z){
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a
 * scaling transformation.
- * @param {number} x Scale factor along the X axis.
- * @param {number} y Scale factor along the Y axis.
- * @param {number} z Scale factor along the Z axis.
- * @return {MatrixStack} This object.
+ * @param {Number} x Scale factor along the X axis.
+ * @param {Number} y Scale factor along the Y axis.
+ * @param {Number} z Scale factor along the Z axis.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.scale=function(x,y,z){
  var mat=this.stack[this.stack.length-1];
@@ -233,7 +233,7 @@ MatrixStack.prototype.scale=function(x,y,z){
 /**
  * Makes a copy of the matrix at the top of this stack
  * and puts the copy on top of the stack.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.pushMatrix=function(){
  this.stack.push(this.stack[this.stack.length-1].slice(0,16));
@@ -243,7 +243,7 @@ MatrixStack.prototype.pushMatrix=function(){
  * Removes the matrix at the top of this stack, making
  * the matrix beneath it the new top matrix.  Has no
  * effect if the stack has only one matrix.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.popMatrix=function(){
  if(this.stack.length>1){
@@ -258,17 +258,17 @@ MatrixStack.prototype.popMatrix=function(){
  * plane and the top to the bottom.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's.
- * @param {number} l Leftmost coordinate of the 3D view.
- * @param {number} r Rightmost coordinate of the 3D view.
+ * @param {Number} l Leftmost coordinate of the 3D view.
+ * @param {Number} r Rightmost coordinate of the 3D view.
  * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the 3D view.
- * @param {number} t Topmost coordinate of the 3D view.
+ * @param {Number} b Bottommost coordinate of the 3D view.
+ * @param {Number} t Topmost coordinate of the 3D view.
  * (Note that t can be greater than b or vice versa.)
- * @param {number} n Distance from the camera to the near clipping
+ * @param {Number} n Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @param {number} f Distance from the camera to the far clipping
+ * @param {Number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.ortho=function(l,r,b,t,n,f){
 var m=this.stack[this.stack.length-1];
@@ -297,21 +297,21 @@ return this;
  * a frustum matrix.
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's.
- * @param {number} l X-coordinate of the point where the left
+ * @param {Number} l X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
- * @param {number} r X-coordinate of the point where the right
+ * @param {Number} r X-coordinate of the point where the right
  * clipping plane meets the near clipping plane.
- * @param {number} b Y-coordinate of the point where the bottom
+ * @param {Number} b Y-coordinate of the point where the bottom
  * clipping plane meets the near clipping plane.
- * @param {number} t Y-coordinate of the point where the top
+ * @param {Number} t Y-coordinate of the point where the top
  * clipping plane meets the near clipping plane.
-* @param {number} n The distance from the camera to
+* @param {Number} n The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
-* @param {number} f The distance from the camera to
+* @param {Number} f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.frustum=function(l,r,b,t,n,f){
 var m=this.stack[this.stack.length-1];
@@ -341,19 +341,19 @@ return this;
  * a matrix representing a camera view.
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's.
- * @param {number} ex X coordinate of the camera position in world space.
- * @param {number} ey Y coordinate of the camera position.
- * @param {number} ez Z coordinate of the camera position.
- * @param {number} cx X coordinate of the position in world space that
+ * @param {Number} ex X coordinate of the camera position in world space.
+ * @param {Number} ey Y coordinate of the camera position.
+ * @param {Number} ez Z coordinate of the camera position.
+ * @param {Number} cx X coordinate of the position in world space that
 *  the camera is looking at.
- * @param {number} cy Y coordinate of the position looked at.
- * @param {number} cz Z coordinate of the position looked at.
- * @param {number} ux X coordinate of the up direction vector.
+ * @param {Number} cy Y coordinate of the position looked at.
+ * @param {Number} cz Z coordinate of the position looked at.
+ * @param {Number} ux X coordinate of the up direction vector.
  * This vector must not point in the same or opposite direction as
 * the camera's view direction.
- * @param {number} uy Y coordinate of the up vector.
- * @param {number} uz Z coordinate of the up vector.
- * @return {MatrixStack} This object.
+ * @param {Number} uy Y coordinate of the up vector.
+ * @param {Number} uz Z coordinate of the up vector.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
   var viewerPos=[ex,ey,ez];
@@ -425,13 +425,13 @@ MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
  * a 2D orthographic projection.
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's.
- * @param {number} l Leftmost coordinate of the 2D view.
- * @param {number} r Rightmost coordinate of the 2D view.
+ * @param {Number} l Leftmost coordinate of the 2D view.
+ * @param {Number} r Rightmost coordinate of the 2D view.
  * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the 2D view.
- * @param {number} t Topmost coordinate of the 2D view.
+ * @param {Number} b Bottommost coordinate of the 2D view.
+ * @param {Number} t Topmost coordinate of the 2D view.
  * (Note that t can be greater than b or vice versa.)
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.ortho2d=function(l,r,b,t){
 var invrl=1.0/(r-l);
@@ -456,20 +456,20 @@ return this;
  * a matrix that defines a perspective projection.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's.
-* @param {number}  fov Vertical field of view, in degrees. Should be less
+* @param {Number}  fov Vertical field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,
 * zoom can be implemented by multiplying field of view by an
 * additional factor.)
-* @param {number}  aspect The ratio of width to height of the viewport, usually
+* @param {Number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
-* @param {number} n The distance from the camera to
+* @param {Number} n The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
-* @param {number}  f The distance from the camera to
+* @param {Number}  f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.perspective=function(fov,aspect,n,f){
 var ftan = 1/Math.tan(fov*Math.PI/360);
@@ -491,14 +491,14 @@ return this;
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
  * a matrix that transforms the view to a portion of the viewport.
- * @param {number} wx X-coordinate of the center of the desired viewport portion.
- * @param {number} wy Y-coordinate of the center of the desired viewport portion.
- * @param {number} ww Width of the desired viewport portion.
- * @param {number} wh Height of the desired viewport portion.
- * @param {Array<number>} vp A 4-element array giving the X and Y coordinates
+ * @param {Number} wx X-coordinate of the center of the desired viewport portion.
+ * @param {Number} wy Y-coordinate of the center of the desired viewport portion.
+ * @param {Number} ww Width of the desired viewport portion.
+ * @param {Number} wh Height of the desired viewport portion.
+ * @param {Array<Number>} vp A 4-element array giving the X and Y coordinates
  * of the lower left corner followed by the width and height
  * of a rectangle indicating the current viewport.
- * @return {MatrixStack} This object.
+ * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
  var invww=1.0/ww;

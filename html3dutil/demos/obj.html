@@ -32,28 +32,34 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var camera=new Camera(scene,45,1,1000).setDistance(5);
+  var sub=new Subscene3D(scene);
+  var loader=new TextureLoader();
+  var camera=new Camera(sub,45,1,1000).setDistance(5);
   var startfunc=null
   var shape=null
   addLink("Toboggan",startfunc=function(){
-  ObjData.loadObjFromUrl("toboggan.obj").then(function(mesh){
-    scene.removeShape(shape)
-    scene.addShape(shape=mesh.toShape(scene));
+  ObjData.loadObjFromUrlWithTextures("toboggan.obj",loader)
+   .then(function(mesh){
+    sub.removeShape(shape)
+    sub.addShape(shape=mesh.toShape());
     camera.setDistance(5)
   })
   })
   addLink("Spot",function(){
-  ObjData.loadObjFromUrl("spot_quadrangulated.obj").then(function(mesh){
-    scene.removeShape(shape)
-    scene.addShape(shape=mesh.toShape(scene).setMaterial(Material.fromTexture("spot_texture.png")));
+  GLUtil.getPromiseResultsAll([
+    ObjData.loadObjFromUrl("spot_quadrangulated.obj"),
+    loader.loadTexture("spot_texture.png")
+  ]).then(function(results){
+    sub.removeShape(shape)
+    sub.addShape(shape=results[0].toShape().setTexture(results[1]));
    camera.setDistance(3)
   })
   })
   startfunc()
   GLUtil.renderLoop(function(){
    camera.update();
-   scene.setDirectionalLight(0,camera.getPosition());
-   scene.render();
+   sub.getLights().setDirectionalLight(0,camera.getPosition());
+   scene.render(sub);
   });
 //-->
 </script>

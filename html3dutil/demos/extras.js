@@ -2,8 +2,8 @@
 /**
 * Represents a knot in the form of the Fourier series<p>
 * <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) +  <b>b</b> sin(<i>iu</i>).<p>
-* @param {Array<Array<number>>} a
-* @param {Array<Array<number>>} b
+* @param {Array<Array<Number>>} a
+* @param {Array<Array<Number>>} b
 */
 function FourierKnot(a,b){
  "use strict";

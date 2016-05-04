@@ -51,7 +51,7 @@ GraphicsPath.ARC=4;
 * This flag will be reset if a moveTo command,
 * closePath command, or another path segment
 * is added to the path.
-* @return {boolean} Return value.*/
+* @returns {Boolean} Return value.*/
 GraphicsPath.prototype.isIncomplete=function(){
 
 return this.incomplete;
@@ -293,7 +293,7 @@ for(var i=this.segments.length-1;i>=0;i--){
 /**
  * Returns this path in the form of a string in SVG path format.
  * See {@link GraphicsPath.fromString}.
- * @return {string} A string describing the path in the SVG path
+ * @returns {String} A string describing the path in the SVG path
   format. */
 GraphicsPath.prototype.toString=function(){
 
@@ -387,8 +387,8 @@ if(a[0]===GraphicsPath.LINE){
 
 /**
  * Finds the approximate length of this path.
-* @param {number} [flatness] No longer used by this method.
- * @return {number} Approximate length of this path
+* @param {Number} [flatness] No longer used by this method.
+ * @returns {Number} Approximate length of this path
  * in units.
  */
 GraphicsPath.prototype.pathLength=function(flatness){
@@ -406,11 +406,11 @@ if(this.segments.length === 0)return 0;
 /**
 * Gets an array of line segments approximating
 * the path.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
-* @return {Array<Array<number>>} Array of line segments.
+* @returns {Array<Array<Number>>} Array of line segments.
 * Each line segment is an array of four numbers: the X and
 * Y coordinates of the start point, respectively, then the X and
 * Y coordinates of the end point, respectively.
@@ -439,11 +439,11 @@ var ret=[];
 /**
 * Creates a path in which curves and arcs are decomposed
 * to line segments.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
-* @return {GraphicsPath} A path consisting only of line
+* @returns {GraphicsPath} A path consisting only of line
 * segments and close commands.
  */
 GraphicsPath.prototype.toLinePath=function(flatness){
@@ -566,7 +566,7 @@ var twopi=Math.PI*2;
 /**
 * Calculates an axis-aligned bounding box that tightly
 * fits this graphics path.
-* @return {Array<number>} An array of four numbers
+* @returns {Array<Number>} An array of four numbers
 * describing the bounding box.  The first two are
 * the lowest X and Y coordinates, and the last two are
 * the highest X and Y coordinates.  If the path is empty,
@@ -660,7 +660,7 @@ var inf=Number.POSITIVE_INFINITY;
 
 /**
 * Returns a path that reverses the course of this path.
-* @return {GraphicsPath} A GraphicsPath
+* @returns {GraphicsPath} A GraphicsPath
 * object with its path segments reversed.
 */
 GraphicsPath.prototype.reverse=function(){
@@ -898,14 +898,14 @@ if(this._isClosed){
 * {@link CurveTube} class, or any other class that
 * accepts parametric curves.<p>
 * The return value doesn't track changes to the path.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments for the purpose of
 * calculating their length, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.  This
 is only used to make the arc-length parameterization more
 accurate if the path contains curves or arcs.
-* @return {object} An object that implements
+* @returns {object} An object that implements
 * the following methods:<ul>
 <li><code>getCurves()</code> - Returns a list of curves described
 * by this path.  The list will contain one object for each disconnected
@@ -994,13 +994,13 @@ var subpaths=[];
 /**
 * Gets an array of points evenly spaced across the length
 * of the path.
-* @param {number} numPoints Number of points to return.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} numPoints Number of points to return.
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments for the purpose of
 * calculating their length, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
-* @return {Array<Array<number>>} Array of points lying on
+* @returns {Array<Array<Number>>} Array of points lying on
 * the path and evenly spaced across the length of the path,
 * starting and ending with the path's endpoints.  Returns
 * an empty array if <i>numPoints</i> is less than 1.  Returns
@@ -1028,7 +1028,7 @@ if(numPoints<1)return [];
 /**
  * Makes this path closed.  Adds a line segment to the
  * path's start position, if necessary.
- * @return {GraphicsPath} This object.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.closePath=function(){
 
@@ -1044,9 +1044,9 @@ if(this.startPos[0]!==this.endPos[0] ||
 };
 /**
  * Moves the current start position and end position to the given position.
- * @param {number} x X-coordinate of the position.
- * @param {number} y Y-coordinate of the position.
- * @return {GraphicsPath} This object.
+ * @param {Number} x X-coordinate of the position.
+ * @param {Number} y Y-coordinate of the position.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.moveTo=function(x,y){
 
@@ -1061,9 +1061,9 @@ this.startPos[0]=x;
  * Adds a line segment to the path, starting
  * at the path's end position, then
  * sets the end position to the end of the segment.
- * @param {number} x X-coordinate of the end of the line segment.
- * @param {number} y Y-coordinate of the end of the line segment.
- * @return {GraphicsPath} This object.
+ * @param {Number} x X-coordinate of the end of the line segment.
+ * @param {Number} y Y-coordinate of the end of the line segment.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.lineTo=function(x,y){
 
@@ -1093,18 +1093,18 @@ var t1 = x1 - x0;
  * Adds path segments in the form of a circular arc to this path,
  * using the parameterization specified in the "arcTo" method of the
  * HTML Canvas 2D Context.
- * @param {number} x1 X-coordinate of a point that, along with the
+ * @param {Number} x1 X-coordinate of a point that, along with the
  * current end point, forms a tangent line.  The point where the
  * circle touches this tangent line is the start point of the arc, and if the
  * point isn't the same as the current end point, this method adds
  * a line segment connecting the two points.
- * @param {number} y1 Y-coordinate of the point described under "x1".
- * @param {number} x2 X-coordinate of a point that, along with the
+ * @param {Number} y1 Y-coordinate of the point described under "x1".
+ * @param {Number} x2 X-coordinate of a point that, along with the
  * point (x1, y1), forms a tangent line.  The point where the
  * circle touches this tangent line is the end point of the arc.
- * @param {number} y2 Y-coordinate of the point described under "x2".
- * @param {number} radius Radius of the circle the arc forms a part of.
- * @return {GraphicsPath} This object.
+ * @param {Number} y2 Y-coordinate of the point described under "x2".
+ * @param {Number} radius Radius of the circle the arc forms a part of.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
 
@@ -1137,17 +1137,17 @@ if(radius<0){
  * Adds path segments in the form of a circular arc to this path,
  * using the parameterization specified in the "arc" method of the
  * HTML Canvas 2D Context.
- * @param {number} x X-coordinate of the center of the circle that the arc forms a part of.
- * @param {number} y Y-coordinate of the circle's center.
- * @param {number} radius Radius of the circle.
- * @param {number} startAngle Starting angle of the arc, in radians.
+ * @param {Number} x X-coordinate of the center of the circle that the arc forms a part of.
+ * @param {Number} y Y-coordinate of the circle's center.
+ * @param {Number} radius Radius of the circle.
+ * @param {Number} startAngle Starting angle of the arc, in radians.
  * 0 means the positive X-axis, &pi;/2 means the positive Y-axis,
  * &pi; means the negative X-axis, and &pi;*1.5 means the negative Y-axis.
- * @param {number} endAngle Ending angle of the arc, in radians.
- * @param {boolean} ccw Whether the arc runs counterclockwise
+ * @param {Number} endAngle Ending angle of the arc, in radians.
+ * @param {Boolean} ccw Whether the arc runs counterclockwise
  * (assuming the X axis points right and the Y axis points
  * down under the coordinate system).
- * @return {GraphicsPath} This object.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
 
@@ -1196,11 +1196,11 @@ return this.lineTo(startX,startY)
 /**
  * Adds a quadratic B&eacute;zier curve to this path starting
  * at this path's current position.
- * @param {number} x X-coordinate of the curve's control point.
- * @param {number} y Y-coordinate of the curve's control point.
- * @param {number} x2 X-coordinate of the curve's end point.
- * @param {number} y2 Y-coordinate of the curve's end point.
- * @return {GraphicsPath} This object.
+ * @param {Number} x X-coordinate of the curve's control point.
+ * @param {Number} y Y-coordinate of the curve's control point.
+ * @param {Number} x2 X-coordinate of the curve's end point.
+ * @param {Number} y2 Y-coordinate of the curve's end point.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
 
@@ -1214,13 +1214,13 @@ this.segments.push([GraphicsPath.QUAD,
 /**
  * Adds a cubic B&eacute;zier curve to this path starting
  * at this path's current position.
- * @param {number} x
- * @param {number} y
- * @param {number} x2
- * @param {number} y2
- * @param {number} x3 X-coordinate of the curve's end point.
- * @param {number} y3 Y-coordinate of the curve's end point.
- * @return {GraphicsPath} This object.
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} x2
+ * @param {Number} y2
+ * @param {Number} x3 X-coordinate of the curve's end point.
+ * @param {Number} y3 Y-coordinate of the curve's end point.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
 
@@ -1403,22 +1403,22 @@ GraphicsPath._arcToBezierCurves=function(cx,cy,rx,ry,rot,angle1,angle2){
 /**
  * Adds path segments in the form of an elliptical arc to this path,
  * using the parameterization used by the SVG specification.
- * @param {number} rx X-axis radius of the ellipse that the arc will
+ * @param {Number} rx X-axis radius of the ellipse that the arc will
  * be formed from.
- * @param {number} ry Y-axis radius of the ellipse that the arc will
+ * @param {Number} ry Y-axis radius of the ellipse that the arc will
  * be formed from.
- * @param {number} rot Rotation of the ellipse in degrees (clockwise
+ * @param {Number} rot Rotation of the ellipse in degrees (clockwise
  * assuming the X axis points right and the Y axis points
  * down under the coordinate system).
- * @param {boolean} largeArc In general, there are four possible solutions
+ * @param {Boolean} largeArc In general, there are four possible solutions
  * for arcs given the start and end points, rotation, and x- and y-radii.  If true,
  * chooses an arc solution with the larger arc length; if false, smaller.
- * @param {boolean} sweep If true, the arc solution chosen will run
+ * @param {Boolean} sweep If true, the arc solution chosen will run
  * clockwise (assuming the X axis points right and the Y axis points
  * down under the coordinate system); if false, counterclockwise.
- * @param {number} x2 X-coordinate of the arc's end point.
- * @param {number} y2 Y-coordinate of the arc's end point.
- * @return {GraphicsPath} This object.
+ * @param {Number} x2 X-coordinate of the arc's end point.
+ * @param {Number} y2 Y-coordinate of the arc's end point.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  if(rx === 0 || ry === 0){
@@ -1691,11 +1691,11 @@ GraphicsPath.prototype.transform=function(trans){
 
 /**
  * Adds four lines in an axis-aligned rectangle shape to the path.
- * @param {number} x X-coordinate of a corner of the rectangle.
- * @param {number} y Y-coordinate of a corner of the rectangle.
- * @param {number} width X-offset (width) to another corner of the rectangle.
- * @param {number} height Y-offset (height) to another corner of the rectangle.
- * @return {GraphicsPath} This object.
+ * @param {Number} x X-coordinate of a corner of the rectangle.
+ * @param {Number} y Y-coordinate of a corner of the rectangle.
+ * @param {Number} width X-offset (width) to another corner of the rectangle.
+ * @param {Number} height Y-offset (height) to another corner of the rectangle.
+ * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.rect=function(x,y,width,height){
 
@@ -1706,7 +1706,7 @@ return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
 /**
 * Creates a graphics path from a string whose format follows
 * the SVG specification.
-* @param {string} str A string, in the SVG path format, representing
+* @param {String} str A string, in the SVG path format, representing
 * a two-dimensional path.  An SVG path consists of a number of
 * path segments, starting with a single letter, as follows:
 * <ul>
@@ -1738,7 +1738,7 @@ return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
 * introduce ambiguity.  All commands set the current point
 * to the end of the path segment (including Z/z, which adds a line
 * segment if needed).
-* @return {GraphicsPath} The resulting path.  If an error
+* @returns {GraphicsPath} The resulting path.  If an error
 * occurs while parsing the path, the path's "isIncomplete() method
 * will return <code>true</code>.
 * @example <caption>The following example creates a graphics path
@@ -2301,11 +2301,11 @@ Triangulate._Contour.prototype.findVisiblePoint=function(x,y){
 * The path can contain holes. In this case, subpaths
 * whose winding order (counterclockwise or clockwise)
 * differs from the first subpath's winding order can be holes.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
-* @return {Array<Array<number>>} Array of six-element
+* @returns {Array<Array<Number>>} Array of six-element
 * arrays each describing a single triangle.  For each six-element
 * array, the first two, next two, and last two numbers each
 * describe a vertex position of that triangle (X and Y coordinates

@@ -30,11 +30,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * see the {@link glutil.Material#setParams} method.&lt;/i>
 * @class
 * @alias glutil.Material
-* @param {Array&lt;number>} [ambient] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color.
-* @param {Array&lt;number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffusion color (also called "albedo").
-* @param {Array&lt;number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the specular highlight reflection.
-* @param {Array&lt;number>} [shininess] Specular highlight exponent of this material.
-* @param {Array&lt;number>} [emission] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the additive color emitted by an object.
+* @param {Array&lt;Number>} [ambient] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color.
+* @param {Array&lt;Number>} [diffuse] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the diffusion color (also called "albedo").
+* @param {Array&lt;Number>} [specular] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the specular highlight reflection.
+* @param {Array&lt;Number>} [shininess] Specular highlight exponent of this material.
+* @param {Array&lt;Number>} [emission] A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the additive color emitted by an object.
 */
 function Material(ambient, diffuse, specular,shininess,emission) {
  //console.log([ambient,diffuse,specular,shininess,emission]+"")
@@ -175,8 +175,8 @@ A strong tilt indicates strong relief detail at that point.&lt;p>
  */
  this.basic=false;
  /**
- * Not documented yet.
-* @default
+ * Shader program to use when rendering objects with this material.
+ * @default
  */
  this.shader=null;
 }
@@ -185,7 +185,7 @@ A strong tilt indicates strong relief detail at that point.&lt;p>
 * object and returns that object. The material's texture
 * maps and shader program, if any, won't be cloned, but rather, a reference
 * to the same object will be used.
-* @return {glutil.Material} A copy of this object.
+* @returns {glutil.Material} A copy of this object.
 */
 Material.prototype.copy=function(){
  return new Material(
@@ -208,7 +208,8 @@ Material.prototype.copy=function(){
 * the possibilities given below, and whose values are those
 * allowed for each key.&lt;ul>
 * &lt;li>&lt;code>basic&lt;/code> - If set to true, only the "diffuse" and "texture" properties
-* of this material are used.
+* of this material are used, and the object with this material will be drawn without
+* regard to lighting.
 * &lt;li>&lt;code>ambient&lt;/code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving the ambient color. (See {@link glutil.Material#ambient}.)
 * The default is (0.2, 0.2, 0.2).
 * &lt;li>&lt;code>diffuse&lt;/code> - A [color vector or string]{@link glutil.GLUtil.toGLColor} giving
@@ -226,33 +227,34 @@ Material.prototype.copy=function(){
 * map texture (see {@link glutil.Material#specularMap}).
 * &lt;li>&lt;code>normalMap&lt;/code> - {@link glutil.Texture} object, or a string with the URL, of a normal
 * map (bump map) texture (see {@link glutil.Material#normalMap}).
-* &lt;li>&lt;code>shader&lt;/code> - {@link glutil.ShaderProgram} object for a WebGL shader program.
+* &lt;li>&lt;code>shader&lt;/code> - {@link glutil.ShaderProgram} object for a WebGL shader program
+* to use when rendering objects with this material.
 * &lt;/ul>
 * Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.
-* @return {glutil.Material} This object.
+* @returns {glutil.Material} This object.
 */
 Material.prototype.setParams=function(params){
  var param;
- if(((typeof params.ambient!=="undefined" &amp;&amp; ((typeof params.ambient!=="undefined" &amp;&amp; ((typeof params.ambient!=="undefined" &amp;&amp; params.ambient!==null))))))){
+ if((typeof params.ambient !== "undefined" &amp;&amp; params.ambient !== null)){
   this.ambient=GLUtil.toGLColor(params.ambient);
   if(this.ambient.length>3)this.ambient=this.ambient.slice(0,3)
  }
- if(((typeof params.diffuse!=="undefined" &amp;&amp; ((typeof params.diffuse!=="undefined" &amp;&amp; ((typeof params.diffuse!=="undefined" &amp;&amp; params.diffuse!==null))))))){
+ if((typeof params.diffuse !== "undefined" &amp;&amp; params.diffuse !== null)){
   this.diffuse=GLUtil.toGLColor(params.diffuse);
   if(this.diffuse.length>4)this.diffuse=this.diffuse.slice(0,4)
  }
- if(((typeof params.specular!=="undefined" &amp;&amp; ((typeof params.specular!=="undefined" &amp;&amp; ((typeof params.specular!=="undefined" &amp;&amp; params.specular!==null))))))){
+ if((typeof params.specular !== "undefined" &amp;&amp; params.specular !== null)){
   this.specular=GLUtil.toGLColor(params.specular);
   if(this.specular.length>3)this.specular=this.specular.slice(0,3)
  }
- if(((typeof params.emission!=="undefined" &amp;&amp; ((typeof params.emission!=="undefined" &amp;&amp; ((typeof params.emission!=="undefined" &amp;&amp; params.emission!==null))))))){
+ if((typeof params.emission !== "undefined" &amp;&amp; params.emission !== null)){
   this.emission=GLUtil.toGLColor(params.emission);
   if(this.emission.length>3)this.emission=this.emission.slice(0,3)
  }
- if(((typeof params.shininess!=="undefined" &amp;&amp; ((typeof params.shininess!=="undefined" &amp;&amp; ((typeof params.shininess!=="undefined" &amp;&amp; params.shininess!==null))))))){
+ if((typeof params.shininess !== "undefined" &amp;&amp; params.shininess !== null)){
   this.shininess=params.shininess;
  }
- if(((typeof params.texture!=="undefined" &amp;&amp; ((typeof params.texture!=="undefined" &amp;&amp; ((typeof params.texture!=="undefined" &amp;&amp; params.texture!==null))))))){
+ if((typeof params.texture !== "undefined" &amp;&amp; params.texture !== null)){
    param=params.texture;
    if(typeof param==="string"){
     this.texture=new Texture(param);
@@ -260,7 +262,7 @@ Material.prototype.setParams=function(params){
     this.texture=param;
    }
  }
- if(((typeof params.specularMap!=="undefined" &amp;&amp; ((typeof params.specularMap!=="undefined" &amp;&amp; ((typeof params.specularMap!=="undefined" &amp;&amp; params.specularMap!==null))))))){
+ if((typeof params.specularMap !== "undefined" &amp;&amp; params.specularMap !== null)){
    param=params.specularMap;
    if(typeof param==="string"){
     this.specularMap=new Texture(param);
@@ -268,7 +270,7 @@ Material.prototype.setParams=function(params){
     this.specularMap=param;
    }
  }
- if(((typeof params.normalMap!=="undefined" &amp;&amp; ((typeof params.normalMap!=="undefined" &amp;&amp; ((typeof params.normalMap!=="undefined" &amp;&amp; params.normalMap!==null))))))){
+ if((typeof params.normalMap !== "undefined" &amp;&amp; params.normalMap !== null)){
    param=params.normalMap;
    if(typeof param==="string"){
     this.normalMap=new Texture(param);
@@ -276,26 +278,26 @@ Material.prototype.setParams=function(params){
     this.normalMap=param;
    }
  }
- if(typeof params.basic!="undefined"){
+ if(typeof params.basic!="undefined" &amp;&amp; params.basic!==null){
   this.basic=params.basic;
  }
- if(typeof params.shader!="undefined"){
+ if(typeof params.shader!="undefined" &amp;&amp; params.shader!==null){
   this.shader=params.shader;
  }
  return this;
 };
 /** Convenience method that returns a Material
  * object from an RGBA color.
-* @param {Array&lt;number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
+* @param {Array&lt;Number>|number|string} r A [color vector or string]{@link glutil.GLUtil.toGLColor},
 * or the red color component (0-1).
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
-* @return {glutil.Material} The resulting material object.
+* @returns {glutil.Material} The resulting material object.
  */
 Material.fromColor=function(r,g,b,a){
  var color=GLUtil.toGLColor(r,g,b,a);
@@ -308,7 +310,7 @@ Material.fromColor=function(r,g,b,a){
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this constructor
 *  will not load that image yet.
-* @return {glutil.Material} The resulting material object.
+* @returns {glutil.Material} The resulting material object.
  */
 Material.fromTexture=function(texture){
  return new Material().setParams({"texture":texture});
@@ -344,7 +346,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

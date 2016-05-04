@@ -86,12 +86,12 @@ var points=path.getPoints(50,0.2)
   scene.setDirectionalLight(0,[0,-3,1.2],[1,1,1])
   scene.setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
    var mesh=null
-   var sphere=scene.makeShape(Meshes.createSphere(0.2,16,8)).setColor("blue")
+   var sphere=new Shape(Meshes.createSphere(0.2,16,8)).setColor("blue")
    for(var i=0;i<50;i++){
     group.addShape(sphere.copy())
    }
    scene.addShape(
-    scene.makeShape(pathFloor(path)).setColor("#eeeeee"))
+    new Shape(pathFloor(path)).setColor("#eeeeee"))
    scene.addShape(group)
   var anim=null
   var timer={}

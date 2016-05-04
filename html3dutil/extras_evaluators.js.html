@@ -50,10 +50,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * If the curve function draws a curve that goes around the axis of rotation, such
 * as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must
 * restrict the curve definition to no more than half of the curve.
-* @param {number} minval Smallest V-coordinate.
-* @param {number} maxval Largest V-coordinate.   If _minval_ is greater than
+* @param {Number} minval Smallest V-coordinate.
+* @param {Number} maxval Largest V-coordinate.   If _minval_ is greater than
 * _maxval_, both values will be swapped.
-* @param {Array&lt;number>} [axis] Axis of rotation, around which the curve
+* @param {Array&lt;Number>} [axis] Axis of rotation, around which the curve
 * will be rotated to generate the surface of revolution.  If null or omitted, the positive
 * Z-axis will be the axis of rotation.  This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
@@ -113,19 +113,19 @@ SurfaceOfRevolution._quatTransformInPlace=function(q,v){
 * as a single parameter and returns a number.  The return
 * value is effectively the radius of each part of the surface
 * from beginning to end.
-* @param {number} minval Smallest parameter of the function.
+* @param {Number} minval Smallest parameter of the function.
 * This is a number of units from the origin along the axis of rotation.
-* @param {number} maxval Largest parameter of the function.
+* @param {Number} maxval Largest parameter of the function.
 * This is a number of units from the origin along the axis of rotation.
 * If _minval_ is greater than _maxval_, both values will be swapped.
-* @param {Array&lt;number>} [axis] Axis of rotation, around which the
+* @param {Array&lt;Number>} [axis] Axis of rotation, around which the
 * function graph will be rotated to generate the surface of revolution.
 * If null or omitted, the positive Z-axis will be the axis of rotation.
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be normalized to unit length.
-* @return {SurfaceOfRevolution} Return value.
+* @returns {SurfaceOfRevolution} Return value.
  @example &lt;caption>The following creates an evaluator for a cone
 * which starts at the origin and runs 10 units along the Z axis.&lt;/caption>
 * var surf=SurfaceOfRevolution.fromFunction(
@@ -151,9 +151,9 @@ return new SurfaceOfRevolution({
 };
 /**
 * Parametric evaluator for a torus, a special case of a surface of revolution.
-* @param {number} outerRadius Radius from the center to the innermost
+* @param {Number} outerRadius Radius from the center to the innermost
 * part of the torus.
-* @param {number} innerRadius Radius from the inner edge to the innermost
+* @param {Number} innerRadius Radius from the inner edge to the innermost
 * part of the torus.
 * @param {Function} [curve] Object describing
 * a curve to serve as the cross section of the torus.
@@ -166,14 +166,14 @@ return new SurfaceOfRevolution({
 * The evaluator function returns an array of at least 2 elements: the first
 * element is the X coordinate of the curve's position, and the second
 * element is the Y coordinate.  If null or omitted, uses a circular cross section.
-* @param {Array&lt;number>} [axis] Axis of rotation, which the torus
+* @param {Array&lt;Number>} [axis] Axis of rotation, which the torus
 * will pass through.
 * If null or omitted, the positive Z-axis will be the axis of rotation.
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be normalized to unit length.
-* @return {SurfaceOfRevolution} Return value.*/
+* @returns {SurfaceOfRevolution} Return value.*/
 SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve,axis){
   "use strict";
 if(!curve)curve={
@@ -203,11 +203,11 @@ if(!curve)curve={
  * the HTML 3D Library.  Example:&lt;pre>
  * &amp;lt;script type="text/javascript" src="extras/evaluators.js">&amp;lt;/script>&lt;/pre>
 * @class
-* @param {number} outerRadius Radius of the circle whose position
+* @param {Number} outerRadius Radius of the circle whose position
 * is fixed.
-* @param {number} innerRadius Radius of the rolling circle.
+* @param {Number} innerRadius Radius of the rolling circle.
 * A hypocycloid results when outerRadius=innerRadius.
-* @param {number} distFromInnerCenter Distance from the center of the
+* @param {Number} distFromInnerCenter Distance from the center of the
 * rolling circle to the drawing pen.. A prolate hypotrochoid results when
 * distFromInnerCenter is greater than innerRadius.
 */
@@ -219,8 +219,8 @@ this.outer=outerRadius;
  /**
 * Generates a point on the curve from the given u coordinate.
 * @function
-* @param {number} u U coordinate.
-* @return {Array&lt;number>} A 3-element array specifying a 3D point.
+* @param {Number} u U coordinate.
+* @returns {Array&lt;Number>} A 3-element array specifying a 3D point.
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
@@ -241,8 +241,8 @@ this.outer=outerRadius;
  * Creates a modified version of this curve so that it
  * fits the given radius.
  * @function
- * @param {number} radius Desired radius of the curve.
- * @return {Hypotrochoid} Return value. */
+ * @param {Number} radius Desired radius of the curve.
+ * @returns {Hypotrochoid} Return value. */
  this.scaleTo=function(radius){
   var oi=(this.outer-this.inner);
   var mx=Math.abs(Math.max(
@@ -269,8 +269,8 @@ this.outer=outerRadius;
  * the HTML 3D Library.  Example:&lt;pre>
  * &amp;lt;script type="text/javascript" src="extras/evaluators.js">&amp;lt;/script>&lt;/pre>
 * @class
-* @param {number} radius Radius of the rolling circle.
-* @param {number} distFromCenter Distance from the center of the
+* @param {Number} radius Radius of the rolling circle.
+* @param {Number} distFromCenter Distance from the center of the
 * rolling circle to the drawing pen.
 */
 function Trochoid(radius, distFromCenter){
@@ -280,8 +280,8 @@ this.inner=radius;
  /**
 * Generates a point on the curve from the given u coordinate.
 * @function
-* @param {number} u U coordinate.
-* @return {Array&lt;number>} A 3-element array specifying a 3D point.
+* @param {Number} u U coordinate.
+* @returns {Array&lt;Number>} A 3-element array specifying a 3D point.
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
@@ -308,11 +308,11 @@ this.inner=radius;
  * the HTML 3D Library.  Example:&lt;pre>
  * &amp;lt;script type="text/javascript" src="extras/evaluators.js">&amp;lt;/script>&lt;/pre>
 * @class
-* @param {number} outerRadius Radius of the circle whose position
+* @param {Number} outerRadius Radius of the circle whose position
 * is fixed.
-* @param {number} innerRadius Radius of the rolling circle.
+* @param {Number} innerRadius Radius of the rolling circle.
 * An epicycloid results when outerRadius=innerRadius.
-* @param {number} distFromInnerCenter Distance from the center of the
+* @param {Number} distFromInnerCenter Distance from the center of the
 * rolling circle to the drawing pen. A prolate epitrochoid results when
 * distFromInnerCenter is greater than innerRadius.
 */
@@ -324,8 +324,8 @@ this.outer=outerRadius;
  /**
 * Generates a point on the curve from the given u coordinate.
 * @function
-* @param {number} u U coordinate.
-* @return {Array&lt;number>} A 3-element array specifying a 3D point.
+* @param {Number} u U coordinate.
+* @returns {Array&lt;Number>} A 3-element array specifying a 3D point.
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
@@ -344,8 +344,8 @@ this.outer=outerRadius;
  * Creates a modified version of this curve so that it
  * fits the given radius.
  * @function
- * @param {number} radius Desired radius of the curve.
- * @return {Epitrochoid} Return value. */
+ * @param {Number} radius Desired radius of the curve.
+ * @returns {Epitrochoid} Return value. */
  this.scaleTo=function(radius){
   var oi=(this.outer+this.inner);
   var mx=Math.abs(Math.max(
@@ -384,7 +384,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

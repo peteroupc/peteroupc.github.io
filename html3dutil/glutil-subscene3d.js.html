@@ -22,7 +22,11 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-
+/**
+* @class
+* @alias glutil.Subscene3D
+* @param {Scene3D} scene
+*/
 function Subscene3D(scene){
  this.parent=scene;
  this._projectionMatrix=GLMath.mat4identity();
@@ -90,11 +94,6 @@ Subscene3D._setupMatrices=function(
    uniforms.projection=projMatrix;
    uniforms.viewMatrix=viewMatrix;
    uniforms.projectionMatrix=projMatrix;
-   var viewInvW=program.get("viewInvW");
-   if(viewInvW!==null &amp;&amp; typeof viewInvW!=="undefined"){
-    var invView=GLMath.mat4invert(viewMatrix);
-    uniforms.viewInvW=[invView[12],invView[13],invView[14],invView[15]];
-   }
    viewInvW=program.get("projView");
    if(viewInvW!==null &amp;&amp; typeof viewInvW!=="undefined"){
     var projView=GLMath.mat4multiply(projMatrix,viewMatrix);
@@ -159,6 +158,7 @@ Subscene3D.prototype.getContext=function(){
  * @param {*} fov
  * @param {*} near
  * @param {*} far
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
  this._projectionUpdater=new Subscene3D._PerspectiveView(this,fov,near,far);
@@ -169,6 +169,7 @@ Subscene3D.prototype.perspectiveAspect=function(fov,near,far){
  * @param {*} eye
  * @param {*} center
  * @param {*} up
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.setLookAt=function(eye,center,up){
  return this.setViewMatrix(GLMath.mat4lookat(eye,center,up));
@@ -181,6 +182,7 @@ Subscene3D.prototype.setLookAt=function(eye,center,up){
  * @param {*} d
  * @param {*} e
  * @param {*} f
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
  this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,e,f);
@@ -192,6 +194,7 @@ Subscene3D.prototype.orthoAspect=function(a,b,c,d,e,f){
  * @param {*} b
  * @param {*} c
  * @param {*} d
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
  this._projectionUpdater=new Subscene3D._OrthoView(this,a,b,c,d,-1,1);
@@ -200,6 +203,7 @@ Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
 /**
  * Not documented yet.
  * @param {*} mat
+ * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.setViewMatrix=function(mat){
  if(!Subscene3D._isSameMatrix(this._viewMatrix,mat)){
@@ -210,13 +214,13 @@ Subscene3D.prototype.setViewMatrix=function(mat){
 };
 /**
  * Gets the current projection matrix for this scene.
- * @return {Array&lt;number>} Return value. */
+ * @returns {Array&lt;Number>} Return value. */
 Subscene3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this scene.
- * @return {Array&lt;number>} Return value. */
+ * @returns {Array&lt;Number>} Return value. */
 Subscene3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
 };
@@ -230,26 +234,58 @@ Subscene3D.prototype._getFrustum=function(){
 }
 /**
  * Not documented yet.
+ * @returns {glutil.Lights} Return value.
  */
 Subscene3D.prototype.getLights=function(){
  return this.lights;
 };
 /**
+ * Not documented yet.
+ */
+Subscene3D.prototype.getClientAspect=function(){
+ return this.parent.getClientAspect();
+};
+
+/**
 * Adds a 3D shape to this scene.  Its reference, not a copy,
 * will be stored in the 3D scene's list of shapes.
 * Its parent will be set to no parent.
 * @param {glutil.Shape|glutil.ShapeGroup} shape A 3D shape.
-* @return {glutil.Subscene3D} This object.
+* @returns {glutil.Subscene3D} This object.
 */
 Subscene3D.prototype.addShape=function(shape){
  shape.parent=null;
  this.shapes.push(shape);
  return this;
 };
+
+/**
+ * Gets the number of vertices composed by
+ * all shapes in this scene.
+ * @returns {Number} Return value. */
+Subscene3D.prototype.vertexCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].vertexCount();
+ }
+ return c;
+};
+/**
+* Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this scene.
+ * @returns {Number} Return value. */
+Subscene3D.prototype.primitiveCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].primitiveCount();
+ }
+ return c;
+};
+
 /**
 * Removes all instances of a 3D shape from this scene.
 * @param {glutil.Shape|glutil.ShapeGroup} shape The 3D shape to remove.
-* @return {glutil.Subscene3D} This object.
+* @returns {glutil.Subscene3D} This object.
 */
 Subscene3D.prototype.removeShape=function(shape){
  for(var i=0;i&lt;this.shapes.length;i++){
@@ -294,25 +330,17 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
       projAndView);
     Subscene3D._getMaterialBinder(shape.material).bind(prog,
       this.parent._textureLoader);
-    shape.bufferedMesh.draw(prog);
+    this.parent._meshLoader.draw(shape.bufferedMesh,prog);
   }
  }
 };
 /**
  * Not documented yet.
- * @param {*} textureFiles
- * @param {*} resolve
- * @param {*} reject
- */
-Subscene3D.prototype.loadAndMapTexturesAll=function(textureFiles,resolve,reject){
- return this.parent.loadAndMapTexturesAll(textureFiles,resolve,reject);
-}
-/**
- * Not documented yet.
- * @param {*} mesh
+ * @deprecated
+ * @param {glutil.Mesh} mesh
  */
 Subscene3D.prototype.makeShape=function(mesh){
- return this.parent.makeShape(mesh)
+ return new Shape(mesh)
 }
 /**
  * Not documented yet.
@@ -388,7 +416,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

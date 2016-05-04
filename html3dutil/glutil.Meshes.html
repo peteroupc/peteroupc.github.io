@@ -32,7 +32,7 @@
 
 <div class="description">
     Contains methods that create meshes
-of common geometric shapes.
+of various geometric shapes.
 </div>
 
 <dl class="details">
@@ -65,7 +65,7 @@ is used on each face of the box.
                 <code>xSize</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -77,7 +77,7 @@ is used on each face of the box.
                 <code>ySize</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -89,7 +89,7 @@ is used on each face of the box.
                 <code>xSize</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -101,7 +101,7 @@ is used on each face of the box.
                 <code>inward</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -128,7 +128,7 @@ unless the box will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createCapsule"><span style="font-weight:lighter">(static) </span>createCapsule<span class="signature">(radius, length, slices, stacks, middleStacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line547">line 547</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line616">line 616</a>
      </i></small></p>
 
 <div class="description">
@@ -148,7 +148,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>radius</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -162,7 +162,7 @@ May be null or omitted, in which case the default is 1.</dd>
                 <code>length</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -176,7 +176,7 @@ If this value is 0, an approximation to a sphere will be generated.</dd>
                 <code>slices</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -190,7 +190,7 @@ Must be 3 or greater. May be null or omitted, in which case the default is 16.</
                 <code>stacks</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -204,7 +204,7 @@ May be null or omitted, in which case the default is 8.</dd>
                 <code>middleStacks</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -218,7 +218,7 @@ May be null or omitted, in which case the default is 1.</dd>
                 <code>flat</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -232,7 +232,7 @@ capsule will be smooth shaded.</dd>
                 <code>inside</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -259,7 +259,7 @@ unless the capsule will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createClosedCylinder"><span style="font-weight:lighter">(static) </span>createClosedCylinder<span class="signature">(baseRad, topRad, height, slices, stacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line202">line 202</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line270">line 270</a>
      </i></small></p>
 
 <div class="description">
@@ -279,7 +279,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>baseRad</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -292,7 +292,7 @@ See <a href="glutil.Meshes.html#.createCylinder">glutil.Meshes.createCylinder</a
                 <code>topRad</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -305,7 +305,7 @@ See <a href="glutil.Meshes.html#.createCylinder">glutil.Meshes.createCylinder</a
                 <code>height</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -317,7 +317,7 @@ See <a href="glutil.Meshes.html#.createCylinder">glutil.Meshes.createCylinder</a
                 <code>slices</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -330,7 +330,7 @@ of. See <a href="glutil.Meshes.html#.createCylinder">glutil.Meshes.createCylinde
                 <code>stacks</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -343,7 +343,7 @@ May be null or omitted, in which case the default is 1.</dd>
                 <code>flat</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -357,7 +357,7 @@ cylinder will be smooth shaded.</dd>
                 <code>inside</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -404,7 +404,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>baseRad</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -417,7 +417,7 @@ this function will create an approximation to a downward pointing cone.</dd>
                 <code>topRad</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -430,7 +430,7 @@ this function will create an approximation to an upward pointing cone.</dd>
                 <code>height</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -442,7 +442,7 @@ this function will create an approximation to an upward pointing cone.</dd>
                 <code>slices</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -461,7 +461,7 @@ May be null or omitted, in which case the default is 32.</dd>
                 <code>stacks</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -474,7 +474,7 @@ May be null or omitted, in which case the default is 1.</dd>
                 <code>flat</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -488,7 +488,7 @@ cylinder will be smooth shaded.</dd>
                 <code>inside</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -515,7 +515,7 @@ unless the cylinder will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createDisk"><span style="font-weight:lighter">(static) </span>createDisk<span class="signature">(inner, outer, slices, loops, inward)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line234">line 234</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line302">line 302</a>
      </i></small></p>
 
 <div class="description">
@@ -535,7 +535,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>inner</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -551,7 +551,7 @@ a square for 4 "slices", a regular pentagon for 5 "slices", and so on.</dd>
                 <code>outer</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -563,7 +563,7 @@ a square for 4 "slices", a regular pentagon for 5 "slices", and so on.</dd>
                 <code>slices</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -576,7 +576,7 @@ May be null or omitted; default is 16.</dd>
                 <code>loops</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -589,7 +589,7 @@ May be null or omitted; default is 1.</dd>
                 <code>inward</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -611,9 +611,76 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
 </div>
 
+    <h4 style="margin-bottom:0px" id=".createLathe"><span style="font-weight:lighter">(static) </span>createLathe<span class="signature">(points, slices, flat, inside)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line186">line 186</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>points</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>slices</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>flat</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>inside</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
     <h4 style="margin-bottom:0px" id=".createPartialDisk"><span style="font-weight:lighter">(static) </span>createPartialDisk<span class="signature">(inner, outer, slices, loops, start, sweep, inward)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line263">line 263</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line331">line 331</a>
      </i></small></p>
 
 <div class="description">
@@ -630,7 +697,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>inner</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -643,7 +710,7 @@ complete disk would be.  If 0, no hole is created.</dd>
                 <code>outer</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -655,7 +722,7 @@ complete disk would be.  If 0, no hole is created.</dd>
                 <code>slices</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -668,7 +735,7 @@ May be null or omitted; default is 32.</dd>
                 <code>loops</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -681,7 +748,7 @@ May be null or omitted; default is 1.</dd>
                 <code>start</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -699,7 +766,7 @@ and 90 degrees at the 3 o'clock position.</dd>
                 <code>sweep</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -712,7 +779,7 @@ May be null or omitted; default is 360. May be negative.</dd>
                 <code>inward</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -736,7 +803,7 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".createPlane"><span style="font-weight:lighter">(static) </span>createPlane<span class="signature">(width, height, widthDiv, heightDiv, inward)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line456">line 456</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line525">line 525</a>
      </i></small></p>
 
 <div class="description">
@@ -753,7 +820,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>width</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -766,7 +833,7 @@ May be null or omitted; default is 1.</dd>
                 <code>height</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -779,7 +846,7 @@ May be null or omitted; default is 1.</dd>
                 <code>widthDiv</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -792,7 +859,7 @@ May be null or omitted; default is 1.</dd>
                 <code>heightDiv</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -805,7 +872,7 @@ May be null or omitted; default is 1.</dd>
                 <code>inward</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -832,11 +899,11 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".createPointedStar"><span style="font-weight:lighter">(static) </span>createPointedStar<span class="signature">(points, firstRadius, secondRadius, inward)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.Mesh.html">glutil.Mesh</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line739">line 739</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line808">line 808</a>
      </i></small></p>
 
 <div class="description">
-    Creates a mesh in the form of a 2D n-pointed star.
+    Creates a mesh in the form of a two-dimensional n-pointed star.
 </div>
 
     <h5>Parameters:</h5>
@@ -848,7 +915,7 @@ in the same direction of the positive z-axis.  Default is false.</dd>
                 <code>points</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -861,7 +928,7 @@ Must be 2 or greater.</dd>
                 <code>firstRadius</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -875,7 +942,7 @@ can't both be 0.</dd>
                 <code>secondRadius</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -889,7 +956,7 @@ can't both be 0.</dd>
                 <code>inward</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -916,7 +983,7 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".createSphere"><span style="font-weight:lighter">(static) </span>createSphere<span class="signature">(radius, slices, stacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line513">line 513</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line582">line 582</a>
      </i></small></p>
 
 <div class="description">
@@ -933,7 +1000,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>radius</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -946,7 +1013,7 @@ May be null or omitted, in which case the default is 1.</dd>
                 <code>slices</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -960,7 +1027,7 @@ Must be 3 or greater. May be null or omitted, in which case the default is 16.</
                 <code>stacks</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -973,7 +1040,7 @@ May be null or omitted, in which case the default is 16.</dd>
                 <code>flat</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -987,7 +1054,7 @@ sphere will be smooth shaded.</dd>
                 <code>inside</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -1014,7 +1081,7 @@ unless the sphere will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".createTorus"><span style="font-weight:lighter">(static) </span>createTorus<span class="signature">(inner, outer, lengthwise, crosswise, flat, inward)</span><span style="font-weight:lighter"> &rarr; {Mesh}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line373">line 373</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-meshes.js.html">glutil-meshes.js</a>, <a href="glutil-meshes.js.html#line442">line 442</a>
      </i></small></p>
 
 <div class="description">
@@ -1031,7 +1098,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>inner</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1043,7 +1110,7 @@ See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
                 <code>outer</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1056,7 +1123,7 @@ center to the innermost part of the torus).</dd>
                 <code>lengthwise</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1069,7 +1136,7 @@ May be null or omitted; default is 16.</dd>
                 <code>crosswise</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1082,7 +1149,7 @@ May be null or omitted; default is 16.</dd>
                 <code>flat</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -1096,7 +1163,7 @@ will be smooth shaded.</dd>
                 <code>inward</code>
 
                 (
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )
 
@@ -1144,7 +1211,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

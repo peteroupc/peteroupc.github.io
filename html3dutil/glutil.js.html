@@ -97,7 +97,7 @@ var GLUtil={
 * element would ordinarily have
 * under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up.
 * This parameter can't be a negative number.
-* @return {HTMLCanvasElement} The resulting canvas element.
+* @returns {HTMLCanvasElement} The resulting canvas element.
 */
 "createCanvasElement":function(parent, width, height){
  var canvas=document.createElement("canvas");
@@ -125,7 +125,7 @@ var GLUtil={
 * falling back to a 2D context if that fails.
 * @param {HTMLCanvasElement} canvasElement An HTML
 * canvas element.
-* @return {WebGLRenderingContext} A 3D or 2D rendering context, or null
+* @returns {WebGLRenderingContext} A 3D or 2D rendering context, or null
 * if an error occurred in creating the context. Returns null if "canvasElement"
 * is null or not an HTML canvas element.
 */
@@ -171,7 +171,7 @@ var GLUtil={
 * @param {function} err A function to call if an error occurs in creating
 * the context.  The function takes one parameter consisting of a human-
 * readable error message.  If "err" is null, window.alert() will be used instead.
-* @return {WebGLRenderingContext} A 3D rendering context, or null
+* @returns {WebGLRenderingContext} A 3D rendering context, or null
 * if an error occurred in creating the context.  Returns null if "canvasElement"
 * is null or not an HTML canvas element.
 */
@@ -193,7 +193,7 @@ var GLUtil={
 },
 /**
 * Returns whether the given object is a 3D rendering context.
-* @return {boolean} Return value.*/
+* @returns {Boolean} Return value.*/
 "is3DContext":function(context){
  return context &amp;&amp; ("compileShader" in context);
 },
@@ -207,7 +207,7 @@ var GLUtil={
  *   individual promise is resolved; optional
  *  @param {Function} [progressReject] - a function called as each
  *   individual promise is rejected; optional
- * @return {Promise} A promise that is resolved when
+ * @returns {Promise} A promise that is resolved when
 * all of the promises are each resolved; the result will
 * be an array of results from those promises,
 * in the order in which those promises were listed.
@@ -234,7 +234,7 @@ var GLUtil={
  *   individual promise is resolved; optional
  *  @param {Function} [progressReject] - a function called as each
  *   individual promise is rejected; optional
- * @return {Promise} A promise that is never rejected and resolves when
+ * @returns {Promise} A promise that is never rejected and resolves when
 * all of the promises are each resolved or rejected. The result
  * of the promise will be an object with
  * three keys:&lt;ul>
@@ -295,11 +295,11 @@ var GLUtil={
 },
 /**
 * Loads a file from a URL asynchronously, using XMLHttpRequest.
-* @param {string} url URL of the file to load.
+* @param {String} url URL of the file to load.
 * @param {string|null} responseType Expected data type of
 * the file.  Can be "json", "xml", "text", or "arraybuffer".
 * If null or omitted, the default is "text".
-* @return {Promise} A promise that resolves when the data
+* @returns {Promise} A promise that resolves when the data
 * file is loaded successfully (the result will be an object with
 * two properties: "url", the URL of the file, and "data", the
 * file's text or data), as given below, and is rejected when an error occurs (the
@@ -357,13 +357,13 @@ var GLUtil={
 * &lt;/ul>
 * The object should be initialized using the idiom &lt;code>{}&lt;/code>
 * or &lt;code>new Object()&lt;/code>.
-* @param {number} timeInMs A time value, in milliseconds.
+* @param {Number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a
 * &lt;code>requestAnimationFrame()&lt;/code> callback method.
 * &lt;/code>.
-* @param {number} intervalInMs The length of the interval
+* @param {Number} intervalInMs The length of the interval
 * (animation cycle), in milliseconds.
-* @return {number} A value in the range [0, 1), where closer
+* @returns {Number} A value in the range [0, 1), where closer
 * to 0 means "timeInMs" lies
 * closer to the start, and closer to 1 means closer
 * to the end of the interval.  If an initial time wasn't set, returns 0.
@@ -392,11 +392,11 @@ GLUtil.getTimePosition=function(timer,timeInMs,intervalInMs){
 * This method should be called only once each frame.
 * @param {object} timer An object described
 * in {@link glutil.GLUtil.getTimePosition}.
-* @param {number} timeInMs A time value, in milliseconds.
+* @param {Number} timeInMs A time value, in milliseconds.
 * This could be the parameter received in a
 * &lt;code>requestAnimationFrame()&lt;/code> callback method.
 * &lt;/code>.
-* @return {number} The number of frame-length intervals relative to
+* @returns {Number} The number of frame-length intervals relative to
 * the last known time held in the parameter "timer".
 * The number can include fractional frames.  If an
 * initial time or last known time wasn't set, returns 0.
@@ -550,7 +550,7 @@ var clampRgba=function(x){
 * For more information:
 * [Colors in HTML and How to Enter Them]{@link http://upokecenter.dreamhosters.com/articles/miscellaneous/how-to-enter-colors/}.
 * @alias glutil.GLUtil.toGLColor
-* @param {Array&lt;number>|number|string} r One of the following:&lt;ul>
+* @param {Array&lt;Number>|number|string} r One of the following:&lt;ul>
 * &lt;li>A &lt;b>color vector or string&lt;/b>, which can be one of these:&lt;ul>
 * &lt;li>An array of three color components, each of which ranges from 0 to 1.
 The three components are red, green, and blue in that order.&lt;/li>
@@ -561,14 +561,14 @@ The three components are red, green, blue, and alpha in that order.&lt;/li>
 * &lt;li>A number specifying the red component.  Must range from 0 to 1.&lt;/li>
 * &lt;/ul>
 * Returns (0,0,0,0) if this value is null.
-* @param {number} g Green color component (0-1).
+* @param {Number} g Green color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} b Blue color component (0-1).
+* @param {Number} b Blue color component (0-1).
 * May be null or omitted if a string or array is given as the "r" parameter.
-* @param {number} [a] Alpha color component (0-1).
+* @param {Number} [a] Alpha color component (0-1).
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
-* @return the color as a 4-element array; if the color is
+* @returns the color as a 4-element array; if the color is
 * invalid, returns [0,0,0,0] (transparent black). Numbers less
 * than 0 are clamped to 0, and numbers greater than 1 are
 * clamped to 1.
@@ -677,7 +677,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

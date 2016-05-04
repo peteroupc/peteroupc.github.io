@@ -24,7 +24,7 @@
 <p>The library differs from many others because this one is in the public domain, so no license is required to use it.</p>
 <p>This tip will include information on how to use the HTML 3D library, an overview of its features, and an example of a simple 3D-enabled Web page.</p>
 <h2>Example <a id=Example></a></h2><p><img src="https://peteroupc.github.io/html3dutil/html3d.png" alt=""></p>
-<h2>Contents <a id=Contents></a></h2><p><a href="#Public_Domain_HTML_3D_Library">Public-Domain HTML 3D Library</a><br><a href="#Example">Example</a><br><a href="#Contents">Contents</a><br><a href="#How_to_Use">How to Use</a><br>&nbsp;&nbsp;<a href="#List_of_Classes">List of Classes</a><br>&nbsp;&nbsp;<a href="#Scene3D">Scene3D</a><br>&nbsp;&nbsp;<a href="#The_Camera">The &quot;Camera&quot;</a><br>&nbsp;&nbsp;<a href="#3D_Models">3D Models</a><br>&nbsp;&nbsp;<a href="#Shapes">Shapes</a><br>&nbsp;&nbsp;<a href="#The_Render_Loop">The Render Loop</a><br><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a><br><a href="#Demos">Demos</a><br><a href="#Example">Example</a><br></p>
+<h2>Contents <a id=Contents></a></h2><p><a href="#Public_Domain_HTML_3D_Library">Public-Domain HTML 3D Library</a><br><a href="#Example">Example</a><br><a href="#Contents">Contents</a><br><a href="#How_to_Use">How to Use</a><br>&nbsp;&nbsp;<a href="#List_of_Classes">List of Classes</a><br>&nbsp;&nbsp;<a href="#Scene3D">Scene3D</a><br>&nbsp;&nbsp;<a href="#The_Camera">The &quot;Camera&quot;</a><br>&nbsp;&nbsp;<a href="#3D_Models">3D Models</a><br>&nbsp;&nbsp;<a href="#Shapes">Shapes</a><br>&nbsp;&nbsp;<a href="#The_Render_Loop">The Render Loop</a><br><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a><br><a href="#Demos">Demos</a><br>&nbsp;&nbsp;<a href="#Simple_Demos">Simple Demos</a><br>&nbsp;&nbsp;<a href="#Materials">Materials</a><br>&nbsp;&nbsp;<a href="#Shapes_and_meshes">Shapes and meshes</a><br>&nbsp;&nbsp;<a href="#Paths">Paths</a><br>&nbsp;&nbsp;<a href="#Curves_and_Surfaces">Curves and Surfaces</a><br>&nbsp;&nbsp;<a href="#Textures">Textures</a><br>&nbsp;&nbsp;<a href="#Shaders">Shaders</a><br>&nbsp;&nbsp;<a href="#Particle_Systems">Particle Systems</a><br>&nbsp;&nbsp;<a href="#Loading_3D_Models">Loading 3D Models</a><br>&nbsp;&nbsp;<a href="#Text">Text</a><br>&nbsp;&nbsp;<a href="#Alternative_Rendering">Alternative Rendering</a><br>&nbsp;&nbsp;<a href="#Miscellaneous">Miscellaneous</a><br><a href="#Example">Example</a><br></p>
 <h2>How to Use <a id=How_to_Use></a></h2><ol>
 <li><a href="https://github.com/peteroupc/html3dutil/releases"><strong>Download the HTML 3D library</strong></a>.</li>
 <li><p>Extract the file <i>&quot;glutil_min.js&quot;</i>, and write the following code in every HTML page where you will use the library.</p>
@@ -89,9 +89,10 @@ var mesh=Meshes.createBox(10,20,25);</code></pre><p>Here are some other built-in
 <br>Same as calling <code>createPartialDisk</code> with <code>start</code> 0 and <code>sweep</code> 360.</li>
 </ul>
 <p>For more information on meshes, see <a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a>.</p>
-<h3>Shapes <a id=Shapes></a></h3><p>Once a mesh is created, it needs to be added to the 3D scene in order to be rendered. Use the 3D scene's <code>makeShape()</code> method to convert the mesh to a shape. Now you can set the shape's properties such as color, size, and position. Then, call <code>addShape()</code> to add the shape to the 3D scene.</p>
+<h3>Shapes <a id=Shapes></a></h3><p>Once a mesh is created, it needs to be added to the 3D scene in order to be rendered.
+Use the <code>Shape</code> constructor method to convert the mesh to a shape. Now you can set the shape's properties such as color, size, and position. Then, call <code>addShape()</code> to add the shape to the 3D scene.</p>
 <pre class="prettyprint source"><code>// Create a shape based on the mesh
-var shape=scene.makeShape(mesh);
+var shape=new Shape(mesh);
 // Make it red (you can also use the HTML color string
 // &quot;#FF0000&quot; instead)
 shape.setColor(&quot;red&quot;);
@@ -112,7 +113,7 @@ scene.addShape(shape);</code></pre><p>The appearance of a 3D shape is known in t
 <li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setTexture(name)</code></dfn>
 <br>Gives the shape a particular texture, with the URL <code>name</code>. The texture should be in the same origin as the Web page (which usually means the same directory).</li>
 <li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.copy()</code></dfn>
-<br>Creates a copy of this shape. Can be more efficient than calling <code>scene.makeShape</code> if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</li>
+<br>Creates a copy of this shape. Can be more efficient than calling <code>new Shape</code> if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</li>
 </ul>
 <h3>The Render Loop <a id=The_Render_Loop></a></h3><p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many &quot;frames&quot; a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the <code>Scene3D.render()</code> method.&nbsp; Render loops are created using the <code>GLUtil.renderLoop()</code> method. Here is an example of a render loop.</p>
 <p>   // Set up the render loop
@@ -134,19 +135,86 @@ scene.addShape(shape);</code></pre><p>The appearance of a 3D shape is known in t
 // Your script goes here
 &lt;/script>
 &lt;/body></code></pre><h2>Demos <a id=Demos></a></h2><p>The following are HTML Web pages showing a variety of features of the HTML 3D library. Each demo includes source code for that demo at the bottom of the page.</p>
-<ul>
-<li><a href="https://peteroupc.github.io/html3dutil/simple.html">simple.html</a> - A simple demo using this library</li>
-<li><a href="https://peteroupc.github.io/html3dutil/squares.html">squares.html</a> - Demonstrates shader-based filters</li>
-<li><a href="https://peteroupc.github.io/html3dutil/compositeMesh.html">compositeMesh.html</a> - Demonstrates combining multiple meshes (3D models) into one</li>
-<li><a href="https://peteroupc.github.io/html3dutil/shapes.html">shapes.html</a> - Demonstrates the built-in shapes</li>
-<li><a href="https://peteroupc.github.io/html3dutil/platonic.html">platonic.html</a> - A demo featuring the five platonic solids. Demonstrates how vertex and index arrays are built up to create geometric meshes</li>
-<li><a href="https://peteroupc.github.io/html3dutil/selfpulse.html">selfpulse.html</a> - Demonstrates a rotating, pulsating box.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/surfaces.html">surfaces.html</a> - Demonstrates using evaluators to generate parametric surfaces.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/stl.html">stl.html</a> - Demonstrates loading 3D models.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/textured.html">textured.html</a> - Demonstrates loading textures and applying them to 3D shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/tris.html">tris.html</a> - Demonstrates a particle system</li>
-<li><a href="https://peteroupc.github.io/html3dutil/gradient.html">gradient.html</a> - Demonstrates generating a custom texture -- a linear gradient from one color to another.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/starfield.html">starfield.html</a> - Demo of a star field.</li>
+<h3>Simple Demos <a id=Simple_Demos></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/simple.html">demos/simple.html</a> - A simple demo using this library.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/triangle.html">demos/triangle.html</a> - Demonstrates drawing a triangle.</li>
+</ul>
+<h3>Materials <a id=Materials></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/selfpulse.html">demos/selfpulse.html</a> - Demonstrates
+a rotating, pulsating box.</li>
+</ul>
+<h3>Shapes and meshes <a id=Shapes_and_meshes></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/compositeMesh.html">demos/compositeMesh.html</a> - Demonstrates
+combining multiple meshes into one.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/shapes.html">demos/shapes.html</a> - Demonstrates
+the built-in shapes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/newshapes.html">demos/newshapes.html</a> - Fancier
+demo of some of the built-in shapes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/builtinshapes.html">demos/builtinshapes.html</a> - Interactive demo of
+the built-in shapes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/platonic.html">demos/platonic.html</a> - A demo featuring the five
+platonic solids.  Demonstrates how vertex and index arrays are built up to create geometric meshes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/clock.html">demos/clock.html</a> - A demo
+featuring a wall clock.</li>
+</ul>
+<h3>Paths <a id=Paths></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/marchingdots.html">demos/marchingdots.html</a> - Demo
+of a series of dots following a path like marching ants. Shows some of the functionality of graphics paths.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/polyclip.html">demos/polyclip.html</a> -
+Similar to &quot;marchingdots.html&quot;, but now uses the union of two circles as a path to demonstrate polygon
+clipping.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/pathtube.html">demos/pathtube.html</a> - Demo
+of a tube formed by a path curve.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/pathshapes.html">demos/pathshapes.html</a> - Demo
+of 3D and 2D shapes generated by a 2D path.</li>
+</ul>
+<h3>Curves and Surfaces <a id=Curves_and_Surfaces></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/surfaces.html">demos/surfaces.html</a> - Demonstrates
+using evaluators to generate parametric surfaces.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/curves.html">demos/curves.html</a> - Demonstrates
+using evaluators to generate parametric curves.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html">demos/surfacesexpr.html</a> - Demonstrates
+parametric surfaces, with a custom formula editor.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/curvesexpr.html">demos/curvesexpr.html</a> - Demonstrates
+parametric curves, with a custom formula editor.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/implicit.html">demos/implicit.html</a> - Demonstrates
+implicit surfaces.</li>
+</ul>
+<h3>Textures <a id=Textures></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/textured.html">demos/textured.html</a> - Demonstrates loading textures
+and applying them to 3D shapes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/specular.html">demos/specular.html</a> - Demonstrates using
+textures as specular reflection maps.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/gradient.html">demos/gradient.html</a> - Demonstrates generating a custom
+texture -- a linear gradient from one color to another.</li>
+</ul>
+<h3>Shaders <a id=Shaders></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html">demos/squares.html</a> - Demonstrates shader-based filters.</li>
+</ul>
+<h3>Particle Systems <a id=Particle_Systems></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/tris.html">demos/tris.html</a> - Demonstrates a particle system.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/fallingballs.html">demos/fallingballs.html</a> - Demonstrates falling balls
+of different sizes.</li>
+</ul>
+<h3>Loading 3D Models <a id=Loading_3D_Models></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/obj.html">demos/obj.html</a> - An object file loader.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/stl.html">demos/stl.html</a> - Demonstrates loading 3D models.</li>
+</ul>
+<h3>Text <a id=Text></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/textwith3d.html">demos/textwith3D.html</a> - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.</li>
+</ul>
+<h3>Alternative Rendering <a id=Alternative_Rendering></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/surfaces2d.html">demos/surfaces2d.html</a> - Same as the surfaces.html
+demo, but uses an experimental renderer using the HTML 2D Canvas instead of an HTML 3D context.  Only a limited
+set of features are currently supported.</li>
+</ul>
+<h3>Miscellaneous <a id=Miscellaneous></a></h3><ul>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/background.html">demos/background.html</a> - A demo
+featuring a background with continuously drawn 3D shapes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/animation.html">demos/animation.html</a> - A demo
+illustrating a simple animation of 3D shapes.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/starfield.html">demos/starfield.html</a> - Demo of a star field.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html">demos/perspective.html</a> - Demonstrates a perspective projection.</li>
 </ul>
 <h2>Example <a id=Example></a></h2><p>The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the <code>&lt;canvas&gt;</code> element it uses on the page.</p>
 <pre class="prettyprint source"><code>&lt;head>
@@ -167,7 +235,7 @@ scene.addShape(shape);</code></pre><p>The appearance of a 3D shape is known in t
   // in height, and 20 units in depth
   var mesh=Meshes.createBox(10,20,20);
   // Create a shape based on the mesh and give it a red color
-  var shape=scene.makeShape(mesh).setColor(&quot;red&quot;);
+  var shape=new Shape(mesh).setColor(&quot;red&quot;);
   // Add the shape to the scene
   scene.addShape(shape);
   // Set the starting rotation
@@ -338,7 +406,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

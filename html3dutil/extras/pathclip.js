@@ -1278,11 +1278,11 @@ var GraphicsPath=globalContext.GraphicsPath;
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
  * @param {GraphicsPath} path A path to combine with this one.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
-* @return {GraphicsPath} The union of the two paths.
+* @returns {GraphicsPath} The union of the two paths.
  */
 GraphicsPath.prototype.union=function(path,flatness){
  if((path===null || typeof path==="undefined"))return this;
@@ -1296,11 +1296,11 @@ GraphicsPath.prototype.union=function(path,flatness){
  * path's shape. The points given in the {@link GraphicsPath#union} method
  * apply to this method.
  * @param {GraphicsPath} path A path to combine with this one.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
- * @return {GraphicsPath} The difference between this path
+ * @returns {GraphicsPath} The difference between this path
  * and the other path.
  */
 GraphicsPath.prototype.difference=function(path,flatness){
@@ -1315,11 +1315,11 @@ GraphicsPath.prototype.difference=function(path,flatness){
  * and another path's shape. The points given in the {@link GraphicsPath#union} method
  * apply to this method.
  * @param {GraphicsPath} path A path to combine with this one.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
- * @return {GraphicsPath} A path whose shape is contained in
+ * @returns {GraphicsPath} A path whose shape is contained in
  * both paths.
  */
 GraphicsPath.prototype.intersection=function(path,flatness){
@@ -1334,11 +1334,11 @@ GraphicsPath.prototype.intersection=function(path,flatness){
  * but not both. The points given in the {@link GraphicsPath#union} method
  * apply to this method.
  * @param {GraphicsPath} path A path to combine with this one.
-* @param {number} [flatness] When curves and arcs
+* @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
- * @return {GraphicsPath} A path whose shape is contained in
+ * @returns {GraphicsPath} A path whose shape is contained in
  * only one of the two paths.
  */
 GraphicsPath.prototype.xor=function(path,flatness){

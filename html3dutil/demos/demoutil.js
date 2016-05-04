@@ -1,4 +1,4 @@
-/* global Material, Mesh, MeshJSON, SurfaceEval, alert, allsettings, scene, shapeGroup */
+/* global Material, Mesh, MeshJSON, SurfaceEval, alert, allsettings, shapeGroup */
 function formulaEditorHelp(){
 "use strict";
 if(typeof alert!=="undefined"){
@@ -124,11 +124,11 @@ var settings=document.getElementById("settings-link");
     }
   }
   shapeGroup.removeShape(shapeGroup.shapes[0]);
-  shapeGroup.addShape(scene.makeShape(func(allsettings)).setMaterial(
+  shapeGroup.addShape(new Shape(func(allsettings)).setMaterial(
     new Material().setParams({
      "diffuse":"black",
      "specular":"white",
-     "shininess":10
+     "shininess":32
     })));
 }
 

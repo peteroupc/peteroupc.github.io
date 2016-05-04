@@ -62,27 +62,29 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
-  scene.setDirectionalLight(0,[5,5,10])
+  var scene=new Scene3D(document.getElementById("canvas"))
+    .setClearColor("white");
+  var sub=new Subscene3D(scene)
+   // Set the perspective view.  Camera has a 45-degree field of view
+   // and will see objects from 0.1 to 100 units away.
+   .perspectiveAspect(45,0.1,100)
+   // Move the camera back 40 units.
+   .setLookAt([0,0,40]);
+  sub.getLights().setDirectionalLight(0,[5,5,10]);
   // Create an arrow mesh 10 units in size
   var mesh1=multiColoredArrow(10,2,1,2);
   var mesh2=arrow(10,2,1,2);
   // Create a shape based on the mesh and give it a red color
-  var shape1=scene.makeShape(mesh1)
-  var shape2=scene.makeShape(mesh2).setColor("green")
+  var shape1=new Shape(mesh1)
+  var shape2=new Shape(mesh2).setColor("green")
   // Add the shape to the scene
-  scene.addShape(shape1);
+  sub.addShape(shape1);
   // Set the starting rotation
   var rotation=[0,0,0];
   // Create a timer
   var timer={};
   // Set up the render loop
   GLUtil.renderLoop(function(time){
-   // Set the perspective view.  Camera has a 45-degree field of view
-   // and will see objects from 0.1 to 100 units away.
-   scene.setPerspective(45,scene.getClientAspect(),0.1,100);
-   // Move the camera back 40 units.
-   scene.setLookAt([0,0,40]);
    // Update the shape's rotation
    var q=GLMath.quatFromTaitBryan(
      360*GLUtil.getTimePosition(timer,time,6000),
@@ -92,17 +94,17 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
    shape1.setQuaternion(q);
    shape2.setQuaternion(q);
    // Render the scene
-   scene.render();
+   scene.render(sub);
   });
 
 function link1(){
- scene.removeShape(shape1);
- scene.addShape(shape2);
+ sub.removeShape(shape1);
+ sub.addShape(shape2);
 }
 
 function link2(){
- scene.removeShape(shape2);
- scene.addShape(shape1);
+ sub.removeShape(shape2);
+ sub.addShape(shape1);
 }
 
 //-->

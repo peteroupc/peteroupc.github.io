@@ -155,14 +155,15 @@ function frustumMesh(frustum){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
+  var sub=new Subscene3D(scene);
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
-  var camera=new Camera(scene,45,1,1000).setDistance(10);
+  var camera=new Camera(sub,45,1,1000).setDistance(10);
   var frustum=perspectiveFrustum(45,scene.getClientAspect(),2,10,[0,0,10],[0,0,0]);
   var mesh=frustumMesh(frustum);
   var spheres=new ShapeGroup();
   var radius=0.3;
-  var sphere=scene.makeShape(Meshes.createSphere(radius));
+  var sphere=new Shape(Meshes.createSphere(radius));
   for(var i=-10; i<=10;i++){
    var shape=sphere.copy().setPosition(1,-1,i)
    if(!GLMath.frustumHasSphere(frustum,1,-1,i,radius)){
@@ -179,14 +180,14 @@ function frustumMesh(frustum){
    }
     spheres.addShape(shape);
   }
-  scene.addShape(scene.makeShape(mesh));
-  scene.addShape(spheres);
+  sub.addShape(new Shape(mesh));
+  sub.addShape(spheres);
   // Set up the render loop
   GLUtil.renderLoop(function(){
    camera.update();
-   scene.setDirectionalLight(0,camera.getPosition());
+   sub.getLights().setDirectionalLight(0,camera.getPosition());
    // Render the scene
-   scene.render();
+   scene.render(sub);
   });
 //-->
 </script>

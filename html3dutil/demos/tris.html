@@ -111,13 +111,14 @@ TriangleParticles.generateTri=function(width,height){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-  var tris=new TriangleParticles(scene,200);
+  var sub=new Subscene3D(scene);
+  var tris=new TriangleParticles(sub,200);
   // Set up the render loop
   GLUtil.renderLoop(function(time){
-   scene.setOrtho(0,scene.getWidth(),scene.getHeight(),0,-2,2);
+   sub.ortho2DAspect(0,scene.getWidth(),scene.getHeight(),0);
    tris.update(time);
    // Render the scene
-   scene.render();
+   scene.render(sub);
   });
 //-->
 </script>

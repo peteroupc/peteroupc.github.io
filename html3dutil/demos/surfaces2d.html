@@ -393,15 +393,17 @@ addLink("B-Spline Surface",function(){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
+  var sub=new Subscene3D();
+  sub.getLights().setDefaults();
   var camera=new Camera(scene,45,1,100);
   camera.setDistance(5);
-  var pc=new PrimitiveCounter(scene)
+  var pc=new PrimitiveCounter(sub)
   link0();
-  scene.addShape(shapeGroup);
+  sub.addShape(shapeGroup);
   GLUtil.renderLoop(function(){
    pc.update();
    camera.update();
-   scene.render();
+   scene.render(sub);
   });
 //-->
 </script>

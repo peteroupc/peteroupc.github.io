@@ -41,7 +41,7 @@ var ret=path;
 * Converts a mesh to JSON format.
 * @param {glutil.Mesh} mesh A mesh object, as used
 * in the Public Domain HTML 3D Library.
-* @return {string} A JSON string describing the mesh.
+* @returns {String} A JSON string describing the mesh.
 */
 MeshJSON.toJSON=function(mesh){
  "use strict";
@@ -251,7 +251,7 @@ this.meshes=[mesh];
 * Loads a mesh from JSON format.
 * @param {glutil.Mesh} mesh A mesh object, as used
 * in the Public Domain HTML 3D Library.
-* @return {Promise} A promise that, when resolved, exposes an object
+* @returns {Promise} A promise that, when resolved, exposes an object
 * that implements the following property:
 * <ul><li><code>toShape(scene)</code> - Gets a {@link glutil.ShapeGroup}
 * describing the 3D mesh.  <code>scene</code> is a {@link glutil.Scene3D}

@@ -205,6 +205,14 @@ addLink("Surface of revolution for f(x) = x<sup>2</sup>",function(){
  },{
  });
 })
+addLink("...for f(x) = x<sup>2</sup>+0.01",function(){
+ pushSettings(function(allsettings){
+ return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
+  return x*x+0.01
+ },-1,1,[1,0,0]))
+ },{
+ });
+})
 addLink("Cylinder",function(){
  pushSettings(function(allsettings){
     return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
@@ -302,16 +310,17 @@ addLink("B-Spline Surface",function(){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
-  var camera=new Camera(scene,45,1,100);
+  var sub=new Subscene3D(scene)
+  var camera=new Camera(sub,45,1,100);
   camera.setDistance(5);
-  var pc=new PrimitiveCounter(scene)
+  var pc=new PrimitiveCounter(sub)
   link0();
-  scene.addShape(shapeGroup);
+  sub.addShape(shapeGroup);
   GLUtil.renderLoop(function(){
    pc.update();
    camera.update();
-   scene.setDirectionalLight(0,camera.getPosition());
-   scene.render();
+   sub.getLights().setDirectionalLight(0,camera.getPosition());
+   scene.render(sub);
   });
 //-->
 </script>

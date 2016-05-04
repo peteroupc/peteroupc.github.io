@@ -65,7 +65,7 @@ that returns a WebGL context.</dd>
                 <code>width</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -78,7 +78,7 @@ Fractional values are rounded up.</dd>
                 <code>height</code>
 
                 (
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -98,7 +98,7 @@ Fractional values are rounded up.</dd>
 
 <h4 style="margin-bottom:0px" id="height"><span style="font-weight:lighter">(readonly) </span>height<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line40">line 40</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line41">line 41</a>
      </i></small></p>
 
 <div class="description">
@@ -111,7 +111,7 @@ Fractional values are rounded up.</dd>
 
 <h4 style="margin-bottom:0px" id="width"><span style="font-weight:lighter">(readonly) </span>width<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line37">line 37</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line38">line 38</a>
      </i></small></p>
 
 <div class="description">
@@ -126,7 +126,7 @@ Fractional values are rounded up.</dd>
 
     <h4 style="margin-bottom:0px" id="bind"><span style="font-weight:lighter"></span>bind<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.FrameBuffer.html">glutil.FrameBuffer</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line99">line 99</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line108">line 108</a>
      </i></small></p>
 
 <div class="description">
@@ -152,7 +152,7 @@ method.
 
     <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line129">line 129</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line138">line 138</a>
      </i></small></p>
 
 <div class="description">
@@ -165,7 +165,7 @@ method.
 
     <h4 style="margin-bottom:0px" id="getContext"><span style="font-weight:lighter"></span>getContext<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line88">line 88</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line97">line 97</a>
      </i></small></p>
 
 <div class="description">
@@ -186,13 +186,14 @@ method.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="resize"><span style="font-weight:lighter"></span>resize<span class="signature">(width, height)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="resize"><span style="font-weight:lighter"></span>resize<span class="signature">(width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="glutil.FrameBuffer.html">glutil.FrameBuffer</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line79">line 79</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line84">line 84</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Resizes the frame buffer to a new width and height,
+if either differs from the current width or height.
 </div>
 
     <h5>Parameters:</h5>
@@ -204,24 +205,26 @@ method.
                 <code>width</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           New width, in pixels, of the frame buffer.
+Fractional values are rounded up.</dd>
 
         <dt>
 
                 <code>height</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           New height, in pixels, of the frame buffer.
+Fractional values are rounded up.</dd>
 
     </dl>
 
@@ -229,9 +232,19 @@ method.
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="glutil.FrameBuffer.html">glutil.FrameBuffer</a></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="unbind"><span style="font-weight:lighter"></span>unbind<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line115">line 115</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="glutil-framebuffer.js.html">glutil-framebuffer.js</a>, <a href="glutil-framebuffer.js.html#line124">line 124</a>
      </i></small></p>
 
 <div class="description">
@@ -266,7 +279,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li><li><a href="global.html#TextureLoader">TextureLoader</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

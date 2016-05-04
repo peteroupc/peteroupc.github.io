@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: BezierCurve</title>
+<head><meta charset="utf-8"><title>JSDoc: Source: glutil-meshbuffer.js</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,155 +10,124 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: BezierCurve</h1>
+    <h1>Source: glutil-meshbuffer.js</h1>
 
-<section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+Written by Peter O. in 2015.
 
-<header>
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+/* global GLUtil, Mesh */
 
-        <h2>
-        BezierCurve
-        </h2>
-
-</header>
-
-<article>
-    <div class="container-overview">
-
-    <h4 style="margin-bottom:0px" id="BezierCurve"><span style="font-weight:lighter"></span>new BezierCurve<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line34">line 34</a>
-     </i></small></p>
-
-<div class="description">
-    A parametric evaluator for B&eacute;zier curves.<p>
-A B&eacute;zier curve is defined by a series of control points, where
-the first and last control points define the endpoints of the curve, and
-the remaining control points define the curve's shape, though they don't
-necessarily cross the curve.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>controlPoints</code>
-
-                (
-<span class="param-type">Array.&lt;Array.&lt;Number>></span>
-
-)
-
-           </dt><dd>
-           An array of control points.  Each
-control point is an array with the same length as the other control points.
-It is assumed that:<ul>
-<li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
-curve.  For example, a degree-3 (cubic) curve
-contains 4 control points.  A degree of 1 results in a straight line segment.
-<li>The first control point's length represents the size of all the control
-points.
-</ul></dd>
-
-        <dt>
-
-                <code>u1</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Starting point for the purpose of interpolation; it will correspond to 0.
-May be omitted; default is 0.</dd>
-
-        <dt>
-
-                <code>u2</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Ending point for the purpose of interpolation; it will correspond to 1.
-May be omitted; default is 1.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line62">line 62</a>
-     </i></small></p>
-
-<div class="description">
-    Evaluates the curve function based on a point
-in a B&eacute;zier curve.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>u</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Point on the curve to evaluate (generally within the range
-given in the constructor).</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    An array of the result of
-the evaluation.  Its length will be equal to the
-length of a control point, as specified in the constructor.
-
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
-
-</div>
-
-    <h5>Example</h5>
-
-    <pre class="prettyprint"><code>// Generate 11 points forming the B&amp;eacute;zier curve.
-// Assumes the curve was created with u1=0 and u2=1 (the default).
-var points=[];
-for(var i=0;i&lt;=10;i++){
- points.push(curve.evaluate(i/10.0));
-}</code></pre>
-
-</article>
-
-</section>
+/** @private */
+var SubMeshBuffer=function(mesh){
+ "use strict";
+ this.vertices=new Float32Array(mesh.vertices)
+ if(mesh.vertices.length>=65536 || mesh.indices.length>=65536){
+  this.indexBufferSize=4;
+  this.indices=new Uint32Array(mesh.indices);
+ } else if(mesh.vertices.length&lt;=256 &amp;&amp; mesh.indices.length&lt;=256){
+  this.indexBufferSize=1;
+  this.indices=new Uint8Array(mesh.indices);
+ } else {
+  this.indexBufferSize=2;
+  this.indices=new Uint16Array(mesh.indices);
+ }
+  this.numVertices=mesh.vertices.length/mesh.getStride();
+  this.facesLength=mesh.indices.length;
+  this.format=mesh.attributeBits;
+  this._stride=Mesh._getStride(this.format);
+  this._attribsUsed=[
+   0,
+   Mesh._normalOffset(this.format),
+   Mesh._colorOffset(this.format),
+   Mesh._texCoordOffset(this.format),
+   Mesh._tangentOffset(this.format),
+   Mesh._bitangentOffset(this.format)
+  ];
+  this._sizes=[3,3,3,2,3,3];
+};
+/**
+ * @private */
+SubMeshBuffer.prototype.primitiveCount=function(){
+  "use strict";
+if((this.format&amp;Mesh.LINES_BIT)!==0)
+   return Math.floor(this.facesLength/2);
+  if((this.format&amp;Mesh.POINTS_BIT)!==0)
+   return this.facesLength;
+  return Math.floor(this.facesLength/3);
+};
+/**
+* A geometric mesh in the form of buffer objects.
+* @class
+* @private
+* @alias glutil.MeshBuffer
+* @param {*} mesh A geometric mesh object.
+* @param {*} context A WebGL context to
+*  create a buffer from, or an object, such as Scene3D, that
+* implements a no-argument &lt;code>getContext&lt;/code> method
+* that returns a WebGL context. (Note that this constructor uses
+*  a WebGL context rather than a shader program because
+*  buffer objects are not specific to shader programs.)
+*/
+function MeshBuffer(mesh, context){
+ "use strict";
+this.subMeshes=[];
+ this._bounds=mesh.getBoundingBox();
+ for(var i=0;i&lt;mesh.subMeshes.length;i++){
+  var sm=mesh.subMeshes[i];
+  // skip empty submeshes
+  if(sm.indices.length===0)continue;
+  this.subMeshes.push(new SubMeshBuffer(
+    sm));
+ }
+}
+/** @private */
+MeshBuffer.prototype._getBounds=function(){
+ "use strict";
+return this._bounds;
+};
+/** @private */
+MeshBuffer.prototype.getFormat=function(){
+ "use strict";
+var format=0;
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  var sm=this.subMeshes[i];
+  format|=sm.format;
+ }
+ return format;
+};
+/**
+ * Not documented yet.
+ */
+MeshBuffer.prototype.vertexCount=function(){
+ "use strict";
+var ret=0;
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  ret+=this.subMeshes[i].numVertices;
+ }
+ return ret;
+};
+/**
+ * Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this mesh.
+* @param {*} Return value.*/
+MeshBuffer.prototype.primitiveCount=function(){
+ "use strict";
+var ret=0;
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  ret+=this.subMeshes[i].primitiveCount();
+ }
+ return ret;
+};
+</code></pre>
+        </article>
+    </section>
 
 </div>
 <nav id="navigation">
