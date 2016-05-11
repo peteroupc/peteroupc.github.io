@@ -207,12 +207,15 @@ Texture.prototype.loadImage=function(){
    thisImage.width=target.width;
    thisImage.height=target.height;
    thisImage.loadStatus=2;
+   console.log("loaded: "+thisName)
    image.onload=null;
    image.onerror=null;
    resolve(thisImage);
   };
   image.onerror=function(e){
    thisImage.loadStatus=-1;
+   console.log("error: "+thisName)
+   console.log(e)
    image.onload=null;
    image.onerror=null;
    reject({"name":thisName,"error":e});
