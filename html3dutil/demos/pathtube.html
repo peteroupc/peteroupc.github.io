@@ -70,25 +70,27 @@ function makeTubeFromPath(path,flatness,thickness){
 
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
+  var sub=new Subscene3D()
+   .perspectiveAspect(45,1,1000)
+   .setLookAt([22.5,22.5-3*8,1.2*50],[22.5,22.5,0],[0,0,1])
   var fc=new FrameCounterDiv(scene)
   var group=new ShapeGroup()
-  scene.setDirectionalLight(0,[0,-3,1.2],[1,1,1])
-  scene.setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
+  sub.getLights()
+    .setDirectionalLight(0,[0,-3,1.2],[1,1,1])
+    .setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
    var mesh=null
    mesh=makeTubeFromPath(path,0.2,2)
-   scene.addShape(
+   sub.addShape(
     new Shape(mesh).setColor("blue"))
-   scene.addShape(
+   sub.addShape(
     new Shape(pathFloor(path)).setColor("#eeeeee"))
-   scene.addShape(group)
+   sub.addShape(group)
   var anim=null
   var timer={}
   GLUtil.renderLoop(function(time){
-   scene.setPerspective(45,scene.getClientAspect(),1,1000)
-   scene.setLookAt([22.5,22.5-3*8,1.2*50],[22.5,22.5,0],[0,0,1])
    var t=GLUtil.getTimePosition(timer,time,1000)
    fc.update()
-   scene.render();
+   scene.render(sub);
   });
 //-->
 </script>

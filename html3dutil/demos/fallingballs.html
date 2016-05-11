@@ -165,7 +165,7 @@ Particles.prototype.update=function(time){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-   var sub=new Subscene3D(scene);
+   var sub=new Subscene3D();
    sub.getLights().setDefaults();
    sub.orthoAspect(0,12,0,9,-5000,5000);
   // 12 meters wide and 9 meters high

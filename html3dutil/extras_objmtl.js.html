@@ -52,13 +52,10 @@ this.url=null;
 /**
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
- * @param {Scene3D} scene 3D scene to load the shape with.
  * @returns {glutil.ShapeGroup} Group of shapes.
  */
-ObjData.prototype.toShape=function(scene){
+ObjData.prototype.toShape=function(){
  "use strict";
- // TODO: temporary
- if(arguments.length!=0)throw new Error();
 var multi=new ShapeGroup();
  for(var i=0;i&lt;this.meshes.length;i++){
   var shape=new Shape(this.meshes[i].data);
@@ -82,16 +79,6 @@ ObjData.prototype._gatherTextureNames=function(){
  return textures;
 }
 /**
- * Not documented yet.
- * @param {*} scene
- * @param {*} resolved
- * @param {*} rejected
- */
-ObjData.prototype.loadTextures=function(scene,resolved,rejected){
- "use strict";
- return scene.loadAndMapTexturesAll(this._gatherTextureNames(),resolved,rejected);
-};
-/**
  * Creates one or more 3D shapes from the named portion
  * of the data in this OBJ file.
  * @param {String} name Name from the OBJ file of the portion
@@ -101,9 +88,6 @@ ObjData.prototype.loadTextures=function(scene,resolved,rejected){
  */
 ObjData.prototype.toShapeFromName=function(name){
  "use strict";
- // TODO: temporary
- if(name instanceof Scene3D ||
-  name instanceof Subscene3D)throw new Error();
 var multi=new ShapeGroup();
  for(var i=0;i&lt;this.meshes.length;i++){
   if(this.meshes[i].name!==name)continue;

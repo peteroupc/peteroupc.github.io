@@ -74,11 +74,14 @@ var points=path.getPoints(50,0.2)
 
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new Subscene3D(scene);
+  var sub=new Subscene3D()
+    .perspectiveAspect(45,1,1000)
+    .setLookAt([22.5,22.5-3*8,1.2*50],[22.5,22.5,0],[0,0,1]);
   var fc=new FrameCounterDiv(scene)
   var group=new ShapeGroup()
-  sub.getLights().setDirectionalLight(0,[0,-3,1.2],[1,1,1])
-  sub.getLights().setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
+  sub.getLights()
+    .setDirectionalLight(0,[0,-3,1.2],[1,1,1])
+    .setDirectionalLight(1,[0,3,1.2],[.6,.6,.6]);
    var mesh=null
    var sphere=new Shape(Meshes.createSphere(0.2,16,8)).setColor("blue")
    for(var i=0;i<50;i++){
@@ -90,8 +93,6 @@ var points=path.getPoints(50,0.2)
   var anim=null
   var timer={}
   GLUtil.renderLoop(function(time){
-   sub.perspectiveAspect(45,1,1000)
-   sub.setLookAt([22.5,22.5-3*8,1.2*50],[22.5,22.5,0],[0,0,1])
    var t=GLUtil.getTimePosition(timer,time,1000)
    pointMarch(group,curves,t)
    fc.update()

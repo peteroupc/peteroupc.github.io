@@ -19,13 +19,13 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-function TriangleParticles(scene,count){
+function TriangleParticles(scene,count,w,h){
  this.tris=[];
  this.group=new ShapeGroup();
- this.width=scene.getWidth();
+ this.width=w;
  this.scene=scene;
  this.timer={};
- this.height=scene.getHeight();
+ this.height=h;
  for(var i=0;i<count;i++){
   var tri=TriangleParticles.generateTri(this.width,this.height)
   this.tris.push(tri);
@@ -51,14 +51,14 @@ TriangleParticles.prototype.update=function(time){
  }
 }
 TriangleParticles.makeShapeFromTri=function(tri,shape){
- var sh=scene.makeShape(new Mesh()
+ var sh=new Shape(new Mesh()
    .mode(Mesh.TRIANGLES)
    .normal3(0,0,1)
    .color3(tri.color)
    .vertex3(tri.position[0],tri.position[1],tri.position[2])
    .vertex3(tri.position[3],tri.position[4],tri.position[5])
-   .vertex3(tri.position[6],tri.position[7],tri.position[8])
-   );
+   .vertex3(tri.position[6],tri.position[7],tri.position[8]))
+   .setMaterialParams({basic:true});
  sh.getTransform().setPosition(
   tri.center[0],tri.center[1],tri.center[2]
  )
@@ -111,8 +111,8 @@ TriangleParticles.generateTri=function(width,height){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-  var sub=new Subscene3D(scene);
-  var tris=new TriangleParticles(sub,200);
+  var sub=new Subscene3D();
+  var tris=new TriangleParticles(sub,200,scene.getWidth(),scene.getHeight());
   // Set up the render loop
   GLUtil.renderLoop(function(time){
    sub.ortho2DAspect(0,scene.getWidth(),scene.getHeight(),0);

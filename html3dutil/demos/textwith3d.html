@@ -31,26 +31,26 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   //
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("#f0f0f0");
-  var textSub=new Subscene3D(scene)
+  var textSub=new Subscene3D()
     .orthoAspect(0,640,480,0,-1,1);
-  var figureSub=new Subscene3D(scene)
+  var figureSub=new Subscene3D()
     .perspectiveAspect(45,0.1,100)
     .setLookAt([0,0,40]);
   figureSub.getLights().setDefaults();
   var mesh=Meshes.createBox(10,20,20);
-  var shape2=figureSub.makeShape(mesh).setColor("#e0e0e0");
+  var shape2=new Shape(mesh).setColor("#e0e0e0");
   figureSub.addShape(shape2);
   var passes=[
    new RenderPass3D(figureSub),
    new RenderPass3D(textSub,{"clearColor":false})
   ]
   var timer={}
-  var textrnd=new TextRenderer(textSub);
+  var textrnd=new TextRenderer(scene);
   GLUtil.getPromiseResultsAll([
    textrnd.loadFont("black-chancery.fnt"),
    textrnd.loadFont("aileron-bold-red.fnt")
   ]).then(function(results){
-   var shape=textrnd.textShape(results[0],"This is...\na test.",0,50,100,"blue");
+   var shape=textrnd.textShape(results[0],"This is a signed\ndistance field test.",0,50,100,"blue");
    textSub.addShape(shape);
    var y=250;
    var size=20;

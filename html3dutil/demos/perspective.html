@@ -155,10 +155,10 @@ function frustumMesh(frustum){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
-  var sub=new Subscene3D(scene);
+  var sub=new Subscene3D();
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
-  var camera=new Camera(sub,45,1,1000).setDistance(10);
+  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(10);
   var frustum=perspectiveFrustum(45,scene.getClientAspect(),2,10,[0,0,10],[0,0,0]);
   var mesh=frustumMesh(frustum);
   var spheres=new ShapeGroup();

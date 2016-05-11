@@ -27,8 +27,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @alias glutil.Subscene3D
 * @param {Scene3D} scene
 */
-function Subscene3D(scene){
- this.parent=scene;
+function Subscene3D(){
  this._projectionMatrix=GLMath.mat4identity();
  this._viewMatrix=GLMath.mat4identity();
  this.lights=new Lights();
@@ -46,8 +45,8 @@ Subscene3D._PerspectiveView=function(scene,fov,near,far){
 /**
  * Not documented yet.
  */
-this.update=function(){
-  var aspect=this.scene.parent.getClientAspect();
+this.update=function(width,height){
+  var aspect=width*1.0/height;
   if(aspect!=this.lastAspect){
    this.lastAspect=aspect;
    this.scene.setProjectionMatrix(
@@ -69,8 +68,8 @@ Subscene3D._OrthoView=function(scene,a,b,c,d,e,f){
 /**
  * Not documented yet.
  */
-this.update=function(){
-  var aspect=this.scene.parent.getClientAspect();
+this.update=function(width, height){
+  var aspect=width*1.0/height;
   if(aspect!=this.lastAspect){
    this.lastAspect=aspect;
    this.scene.setProjectionMatrix(
@@ -149,12 +148,6 @@ Subscene3D.prototype.setProjectionMatrix=function(mat){
 };
 /**
  * Not documented yet.
- */
-Subscene3D.prototype.getContext=function(){
- return this.parent.getContext();
-}
-/**
- * Not documented yet.
  * @param {*} fov
  * @param {*} near
  * @param {*} far
@@ -201,8 +194,8 @@ Subscene3D.prototype.ortho2DAspect=function(a,b,c,d){
  return this;
 };
 /**
- * Not documented yet.
- * @param {*} mat
+ * Sets the current view matrix for this scene.
+ * @param {Array&lt;Number>} mat
  * @returns {glutil.Subscene3D} This object.
  */
 Subscene3D.prototype.setViewMatrix=function(mat){
@@ -238,12 +231,6 @@ Subscene3D.prototype._getFrustum=function(){
  */
 Subscene3D.prototype.getLights=function(){
  return this.lights;
-};
-/**
- * Not documented yet.
- */
-Subscene3D.prototype.getClientAspect=function(){
- return this.parent.getClientAspect();
 };
 
 /**
@@ -305,16 +292,19 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
    this._renderShape(shape.shapes[i], renderContext);
   }
  } else {
-   if(!shape.isCulled(this._getFrustum())){
+   if(shape.visible &amp;&amp; !shape.isCulled(this._getFrustum())){
     var prog=null;
     var params={};
     var flags=0;
     if(shape.material instanceof Material){
      prog=shape.material.shader ?
-       shape.material.shader :
-       this.parent._programs.getProgram(Scene3D._materialToFlags(shape.material));
+       renderContext.scene._programs.getCustomProgram(
+         shape.material.shader, renderContext.context) :
+       renderContext.scene._programs.getProgram(Scene3D._materialToFlags(shape.material),
+         renderContext.context);
     } else {
-     prog=this.parent._programs.getProgram(0);
+     prog=renderContext.scene._programs.getProgram(0,
+       renderContext.context);
     }
     var projAndView=false;
     if(renderContext.prog!=prog){
@@ -329,27 +319,27 @@ Subscene3D.prototype._renderShape=function(shape, renderContext){
       shape.getMatrix(),
       projAndView);
     Subscene3D._getMaterialBinder(shape.material).bind(prog,
-      this.parent._textureLoader);
-    this.parent._meshLoader.draw(shape.bufferedMesh,prog);
+      renderContext.context,
+      renderContext.scene._textureLoader);
+    renderContext.scene._meshLoader.draw(shape.bufferedMesh,prog);
   }
  }
 };
-/**
- * Not documented yet.
- * @deprecated
- * @param {glutil.Mesh} mesh
- */
-Subscene3D.prototype.makeShape=function(mesh){
- return new Shape(mesh)
+
+/** @private */
+Subscene3D.prototype.resize=function(width, height) {
+ if(this._projectionUpdater){
+   this._projectionUpdater.update(width, height);
+ }
 }
+
 /**
  * Not documented yet.
  */
-Subscene3D.prototype.render=function(){
+Subscene3D.prototype.render=function(scene){
   var rc={};
-  if(this._projectionUpdater){
-   this._projectionUpdater.update();
-  }
+  rc.scene=scene;
+  rc.context=scene.getContext();
   for(var i=0;i&lt;this.shapes.length;i++){
    this._renderShape(this.shapes[i],rc);
   }
@@ -373,7 +363,7 @@ Subscene3D.forFilter=function(scene,fbo,shader){
       1,-1,0,1,0],
      [0,1,2,2,1,3],
      Mesh.TEXCOORDS_BIT);
-  var shape=ret.makeShape(mesh)
+  var shape=new Shape(mesh)
   shape.setTexture(fbo);
   shape.setShader(shader);
   ret.addShape(shape);

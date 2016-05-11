@@ -53,20 +53,24 @@ return this.fps;
 
 function FrameCounterDiv(scene){
  "use strict";
-var canvas=scene.getContext().canvas;
- this.div=FrameCounterDiv._makeDiv(canvas);
+ this.div=FrameCounterDiv._makeDiv(scene);
  this.count=0;
  this.scene=scene;
  this.fc=new FrameCounter();
 }
 /** @private */
-FrameCounterDiv._makeDiv=function(element){
+FrameCounterDiv._makeDiv=function(scene){
  "use strict";
-var div=document.createElement("div");
+  var referenceElement = document.documentElement;
+ if(scene.getContext) {
+  referenceElement = scene.getContext().canvas ||
+    document.documentElement;
+ }
+ var div=document.createElement("div");
  div.style.backgroundColor="white";
  div.style.position="absolute";
- div.style.left=element.offsetLeft+"px";
- div.style.top=element.offsetTop+"px";
+ div.style.left=referenceElement.offsetLeft+"px";
+ div.style.top=referenceElement.offsetTop+"px";
  document.body.appendChild(div);
  return div;
 };
@@ -90,8 +94,7 @@ this.fc.update();
 
 function PrimitiveCounter(scene){
  "use strict";
-var canvas=scene.getContext().canvas;
- this.div=FrameCounterDiv._makeDiv(canvas);
+ this.div=FrameCounterDiv._makeDiv(scene);
  this.count=0;
  this.scene=scene;
 }

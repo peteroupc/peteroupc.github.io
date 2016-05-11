@@ -310,8 +310,8 @@ addLink("B-Spline Surface",function(){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
-  var sub=new Subscene3D(scene)
-  var camera=new Camera(sub,45,1,100);
+  var sub=new Subscene3D()
+  var camera=new Camera(sub,45,1,100, scene.getCanvas());
   camera.setDistance(5);
   var pc=new PrimitiveCounter(sub)
   link0();

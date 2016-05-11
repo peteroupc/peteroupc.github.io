@@ -344,15 +344,6 @@ if(isTriangleOutside(p1,p2,p3,this.width,this.height)){
     var tri=new Scene3D._Triangle(p1,p2,p3);
     return (tri.valid) ? tri : null;
 };
-/**
- * Not documented yet.
- * @param {*} mesh
- */
-Scene3D.prototype.makeShape=function(mesh){
- "use strict";
-var buffer=mesh;
- return new Shape(buffer);
-};
 Scene3D._MIN_DEPTH = 0;
 Scene3D._DEPTH_RESOLUTION = 65536;
 

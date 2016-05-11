@@ -68,14 +68,8 @@ if((this.format&amp;Mesh.LINES_BIT)!==0)
 * @private
 * @alias glutil.MeshBuffer
 * @param {*} mesh A geometric mesh object.
-* @param {*} context A WebGL context to
-*  create a buffer from, or an object, such as Scene3D, that
-* implements a no-argument &lt;code>getContext&lt;/code> method
-* that returns a WebGL context. (Note that this constructor uses
-*  a WebGL context rather than a shader program because
-*  buffer objects are not specific to shader programs.)
 */
-function MeshBuffer(mesh, context){
+function MeshBuffer(mesh){
  "use strict";
 this.subMeshes=[];
  this._bounds=mesh.getBoundingBox();

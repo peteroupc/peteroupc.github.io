@@ -57,7 +57,7 @@ Perspective.prototype.update=function(){
 
 function InputTracker(element){
  "use strict";
-this.leftButton=false;
+ this.leftButton=false;
  this.rightButton=false;
  this.middleButton=false;
  this.keys={};
@@ -65,18 +65,48 @@ this.leftButton=false;
  this.clientX=null;
  this.clientY=null;
  this.element=element;
+ this.mouseWheelCallback=null;
  var thisObj=this;
- window.addEventListener("blur",function(e){
+ this.handlers=[];
+ var addHandler=function(h,a,b,c){
+  h.push([a,b,c])
+  a.addEventListener(b,c);
+ }
+ if(element){
+ addHandler(this.handlers,window,"blur",function(e){
   thisObj.leftButton=false;
   thisObj.rightButton=false;
   thisObj.keys={};
  });
- document.addEventListener("keydown",function(e){
+ addHandler(this.handlers,document,"keydown",function(e){
   thisObj.keys[e.keyCode]=true;
  });
- document.addEventListener("keyup",function(e){
+ addHandler(this.handlers,document,"keyup",function(e){
   delete thisObj.keys[e.keyCode];
  });
+ var mouseWheelFunc=function(thisObj, e, click){
+  var clientX=e.clientX-InputTracker._getPageX(e.target);
+  var clientY=e.clientY-InputTracker._getPageY(e.target);
+  var delta=0;
+  if (e.wheelDelta){
+    delta=e.wheelDelta;
+  } else if (e.detail){
+    delta=e.detail * -40;
+  } else if (e.originalEvent &amp;&amp; e.originalEvent.wheelDelta){
+    delta=e.originalEvent.wheelDelta;
+  }
+  // delta of 120 represents 1 tick of the mouse wheel;
+  // positive values mean moving the mouse wheel up,
+  // negative values mean down
+  if(thisObj.mouseWheelCallback) {
+   thisObj.mouseWheelCallback({"target":e.target,
+     "delta":delta,
+     "click":click,
+     "x":clientX,
+     "y":clientY});
+    e.preventDefault();
+   }
+ };
  var mouseEvent=function(thisObj,e){
   if(e.button === 0){
    thisObj.leftButton=e.isDown;
@@ -101,63 +131,60 @@ this.leftButton=false;
    }
   }
  };
- element.addEventListener("mousedown",function(e){
+ addHandler(this.handlers,element,"mousedown",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":e.button,
     "clientX":e.clientX,"clientY":e.clientY});
  });
- element.addEventListener("touchstart",function(e){
+ addHandler(this.handlers,element,"touchstart",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":0,
     "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
  });
- element.addEventListener("mouseup",function(e){
+ addHandler(this.handlers,element,"mouseup",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":e.button,
     "clientX":e.clientX,"clientY":e.clientY});
  });
- element.addEventListener("touchend",function(e){
+ addHandler(this.handlers,element,"touchend",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":0,
     "clientX":e.changedTouches[0].clientX,"clientY":e.changedTouches[0].clientY,"touch":true});
  });
- element.addEventListener("mousemove",function(e){
+ addHandler(this.handlers,element,"mousemove",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
     "clientX":e.clientX,"clientY":e.clientY});
  });
- element.addEventListener("touchmove",function(e){
+ addHandler(this.handlers,element,"touchmove",function(e){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
     "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
  });
+ var evt=("mousewheel" in element) ? "mousewheel" : "DOMMouseScroll"
+ addHandler(this.handlers,element,evt,function(e,click){
+  mouseWheelFunc(thisObj,e,click);
+ });
+ }
 }
+/**
+ * Not documented yet.
+ */
+InputTracker.prototype.dispose=function(){
+ for(var i=0;i&lt;this.handlers.length;i++){
+  var h=this.handlers[i]
+  h[0].removeEventListener(h[1],h[2]);
+ }
+ this.handlers=[]
+ this.element=null
+ this.mouseWheelCallback=null
+ this.keys={}
+ this.clientX=null
+ this.clientY=null
+ this.lastClient=[]
+}
+
 /**
  * Not documented yet.
  * @param {*} func
  */
 InputTracker.prototype.mousewheel=function(func){
  "use strict";
-var cb=function(e, click){
-  var clientX=e.clientX-InputTracker._getPageX(e.target);
-  var clientY=e.clientY-InputTracker._getPageY(e.target);
-  var delta=0;
-  if (e.wheelDelta){
-    delta=e.wheelDelta;
-  } else if (e.detail){
-    delta=e.detail * -40;
-  } else if (e.originalEvent &amp;&amp; e.originalEvent.wheelDelta){
-    delta=e.originalEvent.wheelDelta;
-  }
-  // delta of 120 represents 1 tick of the mouse wheel;
-  // positive values mean moving the mouse wheel up,
-  // negative values mean down
-  func({"target":e.target,
-     "delta":delta,
-     "click":click,
-     "x":clientX,
-     "y":clientY});
-   e.preventDefault();
- };
- if("onmousewheel" in this.element){
-  this.element.addEventListener("mousewheel",cb);
- } else {
-  this.element.addEventListener("DOMMouseScroll",cb);
- }
+ this.mouseWheelCallback=func;
 };
 
 /** @private */
@@ -248,22 +275,23 @@ var deltaX=0;
 * @param {*}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
+* @param {*} [canvas] A canvas to associate with this
+* camera object.
 */
-function Camera(scene, fov, nearZ, farZ){
+function Camera(sub, fov, nearZ, farZ, canvas){
  "use strict";
-if(nearZ&lt;=0)throw new Error("invalid nearZ");
+ if(nearZ&lt;=0)throw new Error("invalid nearZ");
  this.near=nearZ;
- this.persp=new Perspective(scene,fov,nearZ,farZ);
+ this.persp=new Perspective(sub,fov,nearZ,farZ);
  this.rotation=GLMath.quatIdentity();
  this.dolly=GLMath.quatIdentity();
  this.position=[0,0,0];
  this.center=[0,0,0];
- this.scene=scene;
+ this.scene=sub;
  this.trackballMode=true;
- if(typeof InputTracker!=="undefined"){
-  this.input=new InputTracker(scene.getContext().canvas);
- }
  this._updateView();
+ if(!canvas)canvas=scene.getCanvas();
+ this.input=new InputTracker(canvas);
  this.input.mousewheel(this._mousewheel.bind(this));
 }
 /** @private */

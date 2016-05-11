@@ -1525,15 +1525,30 @@ mat4ortho2dAspect:function(l,r,b,t,aspect){
 * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
 mat4orthoAspect:function(l,r,b,t,n,f,aspect){
- var xdist=Math.abs(r-l);
- var ydist=Math.abs(t-b);
- var boxAspect=xdist/ydist;
+ var boxAspect=Math.abs((r-l)/(t-b));
  aspect/=boxAspect;
- if(aspect&lt;1){
-  return GLMath.mat4ortho(l,r,b/aspect,t/aspect,n,f);
- } else {
-  return GLMath.mat4ortho(l*aspect,r*aspect,b,t,n,f);
- }
+ var w=Math.abs(r-l)
+ var h=Math.abs(t-b)
+  if (aspect &lt; 1.0) {
+    var newDim=h/aspect
+    if(t>b){
+     b-=(newDim-h)*0.5
+     t+=(newDim-h)*0.5
+    } else {
+     t-=(newDim-h)*0.5
+     b+=(newDim-h)*0.5
+    }
+  } else {
+    var newDim=w*aspect
+    if(r>l){
+     l-=(newDim-w)*0.5
+     r+=(newDim-w)*0.5
+    } else {
+     r-=(newDim-w)*0.5
+     l+=(newDim-w)*0.5
+    }
+  };
+  return GLMath.mat4ortho(l,r,b,t,n,f);
 },
 /**
  * Returns a 4x4 matrix representing a perspective projection

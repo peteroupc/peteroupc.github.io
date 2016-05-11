@@ -129,8 +129,8 @@ function sampleShape(num){
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new Subscene3D(scene);
-  var camera=new Camera(sub,45,1,1000).setDistance(5)
+  var sub=new Subscene3D();
+  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
    .turnVertical(-90)
   var xyz=new ShapeGroup();
   var pc=new FrameCounterDiv(sub)

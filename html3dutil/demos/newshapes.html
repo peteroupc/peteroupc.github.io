@@ -26,11 +26,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new Subscene3D(scene);
+  var sub=new Subscene3D();
   var loader=new TextureLoader();
   sub.getLights().setDirectionalLight(0,[0,-3,1.2],[1,1,1])
   sub.getLights().setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
-  loader.loadAndMapTexturesAll(["461223191.jpg"],sub).then(function(results){
+  loader.loadAndMapTexturesAll(["461223191.jpg"],scene).then(function(results){
    var mesh=null
    sub.addShape(
     new Shape(makeFloor(-5,-5,10,10,1)).setTexture(results[0]))

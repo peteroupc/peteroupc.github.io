@@ -207,10 +207,14 @@ Texture.prototype.loadImage=function(){
    thisImage.width=target.width;
    thisImage.height=target.height;
    thisImage.loadStatus=2;
+   image.onload=null;
+   image.onerror=null;
    resolve(thisImage);
   };
   image.onerror=function(e){
    thisImage.loadStatus=-1;
+   image.onload=null;
+   image.onerror=null;
    reject({"name":thisName,"error":e});
   };
   image.src=thisName;
@@ -223,6 +227,14 @@ Texture.prototype.dispose=function(){
  this.width=0;
  this.height=0;
  this.name="";
+ if(this.image){
+  if((typeof image.onload !== "undefined" &amp;&amp; image.onload!==null)){
+   image.onload=null;
+  }
+  if((typeof image.onerror !== "undefined" &amp;&amp; image.onerror!==null)){
+   image.onerror=null;
+  }
+ }
  this.image=null;
  this.clamp=false;
  this.loadStatus=0;

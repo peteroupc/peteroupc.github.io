@@ -114,8 +114,8 @@ function ClockShape(scene){
   var scene=new Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
    .cullFace(Scene3D.BACK)
-  var sub=new Subscene3D(scene);
-  var camera=new Camera(sub,45,1,1000).setDistance(5)
+  var sub=new Subscene3D();
+  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
   var pc=new FrameCounterDiv(sub)
   var clock=new ClockShape(sub);
   document.getElementById("colorsetting").addEventListener("change",

@@ -138,13 +138,14 @@ CanvasBackground.hls2rgb=function(hls) {
 };
 CanvasBackground.prototype.start=function(){
  var rgb=this.constructor.hls2rgb(this.hls);
- this.scene=new Scene3D(this.canvas)
-    .setDirectionalLight(0, [0,0,-1])
+ this.rend=new Scene3D(this.canvas)
     .setClearColor(rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0, 1.0);
- this.cubeMesh=this.makeShape(Meshes.createBox(2,2,2));
- this.sphereMesh=this.makeShape(Meshes.createSphere());
- this.torusMesh=this.makeShape(Meshes.createTorus(0.5,1));
- this.cylinderMesh=this.makeShape(Meshes.createClosedCylinder(1,1,2));
+ this.scene=new Subscene3D();
+ this.scene.getLights().setDirectionalLight(0, [0,0,-1])
+ this.cubeMesh=new Shape(Meshes.createBox(2,2,2));
+ this.sphereMesh=new Shape(Meshes.createSphere());
+ this.torusMesh=new Shape(Meshes.createTorus(0.5,1));
+ this.cylinderMesh=new Shape(Meshes.createClosedCylinder(1,1,2));
  this.timeInfo={};
  this.count=0;
  GLUtil["renderLoop"](this.animate.bind(this));
@@ -163,13 +164,13 @@ CanvasBackground.prototype.animate=function(time){
    this.drawOne();
    this.count-=4;
   }
-   this.scene.render();
+   this.rend.render(this.scene);
 }
 CanvasBackground.prototype.drawOne=function(){
  var newhls=this.constructor.varyColor(this.hls);
   if(this.scene.shapes.length>300){
    // Delete the oldest shape generated
-   this.scene.shapes.shift();
+   this.scene.removeShape(this.scene.shapes[0]);
   }
   var x=(this.constructor.rand(2000)/1000.0)-1.0;
   var y=(this.constructor.rand(2000)/1000.0)-1.0;

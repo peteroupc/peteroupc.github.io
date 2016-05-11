@@ -24,7 +24,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   // to Scene3D.
   var scene=new Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new Subscene3D(scene);
+  var sub=new Subscene3D();
   sub.getLights().setDefaults();
   sub.orthoAspect(
    -20,20,

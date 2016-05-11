@@ -230,10 +230,10 @@ MeshJSON._Model=function(mesh){
  "use strict";
 this.meshes=[mesh];
  this.materials=[null];
- this.toShape=function(scene){
+ this.toShape=function(){
   var group=new ShapeGroup();
   for(var i=0;i<this.meshes.length;i++){
-   var shape=scene.makeShape(this.meshes[i]);
+   var shape=new Shape(this.meshes[i]);
    if(this.materials[i])shape.setMaterial(this.materials[i]);
    group.addShape(shape);
   }
@@ -253,9 +253,8 @@ this.meshes=[mesh];
 * in the Public Domain HTML 3D Library.
 * @returns {Promise} A promise that, when resolved, exposes an object
 * that implements the following property:
-* <ul><li><code>toShape(scene)</code> - Gets a {@link glutil.ShapeGroup}
-* describing the 3D mesh.  <code>scene</code> is a {@link glutil.Scene3D}
-* object that the shape group belongs to.
+* <ul><li><code>toShape()</code> - Gets a {@link glutil.ShapeGroup}
+* describing the 3D mesh.
 * </ul>
 */
 MeshJSON.loadJSON=function(url){
