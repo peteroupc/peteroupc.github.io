@@ -128,7 +128,9 @@ TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
 */
 TextRenderer.prototype.loadFont=function(fontFileName){
  var thisObject=this;
- var loader=scene._textureLoader;
+ // TODO: Don't rely on an instance variable
+ // treated as private; maybe take TextureLoader instead
+ var loader=this.scene._textureLoader;
  return TextFont.loadWithTextures(fontFileName,loader)
    .then(function(f){
      var textures=[];
@@ -710,7 +712,7 @@ TextFont.load=function(fontFileName){
  }
 }
 
-TextRenderer._textShader=function(scene){
+TextRenderer._textShader=function(){
 "use strict";
 var i;
 var shader=""
