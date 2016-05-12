@@ -29,7 +29,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     // Default resolution is 50
     if(resolution==null)resolution=50
      // create a new mesh
-     var mesh=new Mesh();
+     var mesh=new H3DU.Mesh();
      // define a color gradient evaluator for
      // demonstration purposes.  Instead of X, Y, and Z,
      // generate a Red/Green/Blue color based on
@@ -96,13 +96,13 @@ function HyperboloidOneSheet(a,b,c){
 
 function makeImplicit(func){
  var surf=new ImplicitSurface(func);
- var mesh=new Mesh();
+ var mesh=new H3DU.Mesh();
  mesh.color3("blue");
  surf.evalSurface(mesh,48,48,48,-5,5,-5,5,-5,5);
  return mesh;
 }
 
-var shapeGroup=new ShapeGroup();
+var shapeGroup=new H3DU.ShapeGroup();
 var allsettings={}
 var link1=null;
 addLink("Ellipsoid",link1=function(){
@@ -204,15 +204,15 @@ addLink("Sphere minus cylinder",function(){
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
-  var sub=new Subscene3D()
+  var sub=new H3DU.Batch3D()
   var camera=new Camera(sub,45,1,100, scene.getCanvas());
   camera.setDistance(5);
   var pc=new PrimitiveCounter(sub)
   link1();
   sub.addShape(shapeGroup);
-  GLUtil.renderLoop(function(){
+  H3DU.renderLoop(function(){
    pc.update();
    camera.update();
    sub.getLights().setDirectionalLight(0,camera.getPosition());

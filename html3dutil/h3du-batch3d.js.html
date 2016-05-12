@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Source: h3du-batch3d.js</title>
+<meta name="viewport" content="width=device-width">
+<script src="mathml.js"></script>
+<link rel=stylesheet type="text/css" href="/style.css">
+</head>
+<body style="margin-top:0px">
+<div class="header">
+<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+    <h1>Source: h3du-batch3d.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+/**
+* @class
+* @alias H3DU.Batch3D
+*/
+H3DU.Batch3D = function(){
+ this._projectionMatrix=H3DU.Math.mat4identity();
+ this._viewMatrix=H3DU.Math.mat4identity();
+ this.lights=new H3DU.Lights();
+ this._projectionUpdater=null;
+ this._frustum=null;
+ this.shapes=[];
+}
+/** @private */
+H3DU.Batch3D._PerspectiveView=function(scene,fov,near,far){
+ this.fov=fov;
+ this.near=near;
+ this.far=far;
+ this.scene=scene;
+ this.lastAspect=null;
+/**
+ * Not documented yet.
+ */
+this.update=function(width,height){
+  var aspect=width*1.0/height;
+  if(aspect!=this.lastAspect){
+   this.lastAspect=aspect;
+   this.scene.setProjectionMatrix(
+     H3DU.Math.mat4perspective(this.fov,aspect,this.near,this.far));
+  }
+ }
+ this.update();
+}
+/** @private */
+H3DU.Batch3D._OrthoView=function(scene,a,b,c,d,e,f){
+ this.a=a;
+ this.b=b;
+ this.c=c;
+ this.d=d;
+ this.e=e;
+ this.f=f;
+ this.scene=scene;
+ this.lastAspect=null;
+/**
+ * Not documented yet.
+ */
+this.update=function(width, height){
+  var aspect=width*1.0/height;
+  if(aspect!=this.lastAspect){
+   this.lastAspect=aspect;
+   this.scene.setProjectionMatrix(
+     H3DU.Math.mat4orthoAspect(this.a,this.b,this.c,this.d,this.e,this.f,aspect));
+  }
+ }
+ this.update();
+}
+
+/** @private */
+H3DU.Batch3D._setupMatrices=function(
+  program,
+  projMatrix,
+  viewMatrix,
+  worldMatrix,
+  projAndView){
+  var uniforms={};
+  var viewWorld;
+  if(projAndView){
+   uniforms.view=viewMatrix;
+   uniforms.projection=projMatrix;
+   uniforms.viewMatrix=viewMatrix;
+   uniforms.projectionMatrix=projMatrix;
+   viewInvW=program.get("projView");
+   if(viewInvW!==null &amp;&amp; typeof viewInvW!=="undefined"){
+    var projView=H3DU.Math.mat4multiply(projMatrix,viewMatrix);
+    uniforms.projView=projView;
+   }
+  }
+  var invTrans=H3DU.Math.mat4inverseTranspose3(worldMatrix);
+  uniforms.world=worldMatrix;
+  uniforms.modelMatrix=worldMatrix;
+  uniforms.normalMatrix=invTrans;
+  var mvm=program.get("modelViewMatrix");
+  if((mvm!==null &amp;&amp; typeof mvm!=="undefined")){
+   if(H3DU._isIdentityExceptTranslate(viewMatrix)){
+    // view matrix is just a translation matrix, so that getting the model-view
+    // matrix amounts to simply adding the view's position
+    viewWorld=worldMatrix.slice(0,16);
+    viewWorld[12]+=viewMatrix[12];
+    viewWorld[13]+=viewMatrix[13];
+    viewWorld[14]+=viewMatrix[14];
+   } else {
+    viewWorld=H3DU.Math.mat4multiply(viewMatrix,
+     worldMatrix);
+   }
+   uniforms.modelViewMatrix=viewWorld;
+
+  var invTrans=H3DU.Math.mat4inverseTranspose3(viewWorld);
+  uniforms.world=viewWorld;
+  uniforms.modelMatrix=viewWorld;
+  uniforms.normalMatrix=invTrans;
+
+  }
+  program.setUniforms(uniforms);
+};
+/** @private */
+H3DU.Batch3D._isSameMatrix=function(a,b){
+ return (a[0]==b[0] &amp;&amp; a[1]==b[1] &amp;&amp; a[2]==b[2] &amp;&amp;
+   a[3]==b[3] &amp;&amp; a[4]==b[4] &amp;&amp; a[5]==b[5] &amp;&amp;
+   a[6]==b[6] &amp;&amp; a[7]==b[7] &amp;&amp; a[8]==b[8] &amp;&amp;
+   a[9]==b[9] &amp;&amp; a[10]==b[10] &amp;&amp; a[11]==b[11] &amp;&amp;
+   a[12]==b[12] &amp;&amp; a[13]==b[13] &amp;&amp; a[14]==b[14] &amp;&amp;
+   a[15]==b[15]);
+}
+/**
+ * Not documented yet.
+ * @param {*} mat
+ */
+H3DU.Batch3D.prototype.setProjectionMatrix=function(mat){
+ if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix,mat)){
+  this._projectionMatrix=mat.slice(0,16)
+  this._frustum=null
+ }
+ return this;
+};
+/**
+ * Not documented yet.
+ * @param {*} fov
+ * @param {*} near
+ * @param {*} far
+ * @returns {H3DU.Batch3D} This object.
+ */
+H3DU.Batch3D.prototype.perspectiveAspect=function(fov,near,far){
+ this._projectionUpdater=new H3DU.Batch3D._PerspectiveView(this,fov,near,far);
+ return this;
+};
+/**
+ * Not documented yet.
+ * @param {*} eye
+ * @param {*} center
+ * @param {*} up
+ * @returns {H3DU.Batch3D} This object.
+ */
+H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
+ return this.setViewMatrix(H3DU.Math.mat4lookat(eye,center,up));
+};
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} c
+ * @param {*} d
+ * @param {*} e
+ * @param {*} f
+ * @returns {H3DU.Batch3D} This object.
+ */
+H3DU.Batch3D.prototype.orthoAspect=function(a,b,c,d,e,f){
+ this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,a,b,c,d,e,f);
+ return this;
+};
+/**
+ * Not documented yet.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} c
+ * @param {*} d
+ * @returns {H3DU.Batch3D} This object.
+ */
+H3DU.Batch3D.prototype.ortho2DAspect=function(a,b,c,d){
+ this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,a,b,c,d,-1,1);
+ return this;
+};
+/**
+ * Sets the current view matrix for this batch of shapes.
+ * @param {Array&lt;Number>} mat
+ * @returns {H3DU.Batch3D} This object.
+ */
+H3DU.Batch3D.prototype.setViewMatrix=function(mat){
+ if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix,mat)){
+  this._viewMatrix=mat.slice(0,16)
+  this._frustum=null
+ }
+ return this;
+};
+/**
+ * Gets the current projection matrix for this batch of shapes.
+ * @returns {Array&lt;Number>} Return value. */
+H3DU.Batch3D.prototype.getProjectionMatrix=function(){
+ return this._projectionMatrix.slice(0,16);
+};
+/**
+ * Gets the current view matrix for this batch of shapes.
+ * @returns {Array&lt;Number>} Return value. */
+H3DU.Batch3D.prototype.getViewMatrix=function(){
+ return this._viewMatrix.slice(0,16);
+};
+/** @private */
+H3DU.Batch3D.prototype._getFrustum=function(){
+ if(this._frustum==null){
+  var projView=H3DU.Math.mat4multiply(this._projectionMatrix,this._viewMatrix);
+  this._frustum=H3DU.Math.mat4toFrustumPlanes(projView);
+ }
+ return this._frustum;
+}
+/**
+ * Not documented yet.
+ * @returns {H3DU.Lights} Return value.
+ */
+H3DU.Batch3D.prototype.getLights=function(){
+ return this.lights;
+};
+
+/**
+* Adds a 3D shape to this batch of shapes.  Its reference, not a copy,
+* will be stored in the 3D scene's list of shapes.
+* Its parent will be set to no parent.
+* @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
+* @returns {H3DU.Batch3D} This object.
+*/
+H3DU.Batch3D.prototype.addShape=function(shape){
+ shape.parent=null;
+ this.shapes.push(shape);
+ return this;
+};
+
+/**
+ * Gets the number of vertices composed by
+ * all shapes in this batch of shapes.
+ * @returns {Number} Return value. */
+H3DU.Batch3D.prototype.vertexCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].vertexCount();
+ }
+ return c;
+};
+/**
+* Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this batch of shapes.
+ * @returns {Number} Return value. */
+H3DU.Batch3D.prototype.primitiveCount=function(){
+ var c=0;
+ for(var i=0;i&lt;this.shapes.length;i++){
+  c+=this.shapes[i].primitiveCount();
+ }
+ return c;
+};
+
+/**
+* Removes all instances of a 3D shape from this batch of shapes.
+* @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
+* @returns {H3DU.Batch3D} This object.
+*/
+H3DU.Batch3D.prototype.removeShape=function(shape){
+ for(var i=0;i&lt;this.shapes.length;i++){
+   if(this.shapes[i]===shape){
+     this.shapes.splice(i,1);
+     i--;
+   }
+ }
+ return this;
+};
+
+/** @private */
+H3DU.Batch3D.prototype._renderShape=function(shape, renderContext){
+ if(shape.constructor===H3DU.ShapeGroup){
+  if(!shape.visible)return;
+  for(var i=0;i&lt;shape.shapes.length;i++){
+   this._renderShape(shape.shapes[i], renderContext);
+  }
+ } else {
+   if(shape.visible &amp;&amp; !shape.isCulled(this._getFrustum())){
+    var prog=null;
+    var params={};
+    var flags=0;
+    if(shape.material instanceof Material){
+     prog=shape.material.shader ?
+       renderContext.scene._programs.getCustomProgram(
+         shape.material.shader, renderContext.context) :
+       renderContext.scene._programs.getProgram(H3DU.Scene3D._materialToFlags(shape.material),
+         renderContext.context);
+    } else {
+     prog=renderContext.scene._programs.getProgram(0,
+       renderContext.context);
+    }
+    var projAndView=false;
+    if(renderContext.prog!=prog){
+     prog.use();
+     projAndView=true;
+     new H3DU._LightsBinder(this.lights).bind(prog,this._viewMatrix);
+     renderContext.prog=prog;
+    }
+    H3DU.Batch3D._setupMatrices(prog,
+      this._projectionMatrix,
+      this._viewMatrix,
+      shape.getMatrix(),
+      projAndView);
+    H3DU.Batch3D._getMaterialBinder(shape.material).bind(prog,
+      renderContext.context,
+      renderContext.scene._textureLoader);
+    renderContext.scene._meshLoader.draw(shape.bufferedMesh,prog);
+  }
+ }
+};
+
+/** @private */
+H3DU.Batch3D.prototype.resize=function(width, height) {
+ if(this._projectionUpdater){
+   this._projectionUpdater.update(width, height);
+ }
+}
+
+/**
+ * Not documented yet.
+ */
+H3DU.Batch3D.prototype.render=function(scene){
+  var rc={};
+  rc.scene=scene;
+  rc.context=scene.getContext();
+  for(var i=0;i&lt;this.shapes.length;i++){
+   this._renderShape(this.shapes[i],rc);
+  }
+  return this;
+};
+/**
+ * Not documented yet.
+ * @param {*} scene
+ * @param {*} fbo
+ * @param {*} shader
+ */
+H3DU.Batch3D.forFilter=function(scene,fbo,shader){
+  if(shader==null){
+    shader=H3DU.ShaderProgram.makeCopyEffect(scene);
+  }
+  var ret=new H3DU.Batch3D(scene);
+  var mesh=new H3DU.Mesh(
+     [-1,1,0,0,1,
+      -1,-1,0,0,0,
+      1,1,0,1,1,
+      1,-1,0,1,0],
+     [0,1,2,2,1,3],
+     H3DU.Mesh.TEXCOORDS_BIT);
+  var shape=new H3DU.Shape(mesh)
+  shape.setTexture(fbo);
+  shape.setShader(shader);
+  ret.addShape(shape);
+   return ret;
+}
+/** @private */
+H3DU.Batch3D._getMaterialBinder=function(material){
+ "use strict";
+if(material){
+ if(material instanceof Material){
+  return new H3DU._MaterialBinder(material);
+ }
+ }
+ // Return an empty binding object
+ return {
+/** @private */
+bind:function(program){}};
+};
+</code></pre>
+        </article>
+    </section>
+
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class=noprint>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

@@ -36,7 +36,7 @@ function horizontalGradient(color1,color2){
  var size=32;
  for(var i=0;i<size;i++){
   arr.push(
-    GLMath.vec4scaleInPlace(GLMath.vec4lerp(color1,color2,i/(size-1)),255)
+    H3DU.Math.vec4scaleInPlace(H3DU.Math.vec4lerp(color1,color2,i/(size-1)),255)
   )
  }
  var gradient=[]
@@ -62,7 +62,7 @@ function radialGradient(colorCenter,colorEdges){
  var size=32;
  for(var i=0;i<32;i++){
   arr.push(
-    GLMath.vec4scaleInPlace(GLMath.vec4lerp(colorCenter,colorEdges,i/31),255)
+    H3DU.Math.vec4scaleInPlace(H3DU.Math.vec4lerp(colorCenter,colorEdges,i/31),255)
   )
  }
  var i=0
@@ -98,9 +98,9 @@ function link4(){
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-var scene=new Scene3D(document.getElementById("canvas"))
+var scene=new H3DU.Scene3D(document.getElementById("canvas"))
     .setClearColor("white");
-  var sub=new Subscene3D()
+  var sub=new H3DU.Batch3D()
    // Set the perspective view.  Camera has a 45-degree field of view
    // and will see objects from 0.1 to 100 units away.
    .perspectiveAspect(45,0.1,100)
@@ -111,12 +111,12 @@ var scene=new Scene3D(document.getElementById("canvas"))
   // Generate a red-blue gradient texture
   var tex=horizontalGradient("red","blue");
    var mesh=Meshes.createBox(10,20,20);
-   var shape=new Shape(mesh).setTexture(tex)
+   var shape=new H3DU.Shape(mesh).setTexture(tex)
    sub.addShape(shape);
    var timer={};
-   GLUtil.renderLoop(function(time){
+   H3DU.renderLoop(function(time){
     fc.update();
-    var q=GLMath.quatFromTaitBryan([
+    var q=H3DU.Math.quatFromTaitBryan([
       360*GLUtil.getTimePosition(timer,time,6000),
       360*GLUtil.getTimePosition(timer,time,12000),
       0

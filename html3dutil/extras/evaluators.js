@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLMath */
+/* global H3DU.Math */
 
 /**
 * Parametric evaluator for a surface of revolution, which results by revolving
@@ -52,12 +52,12 @@ this.curve=curve;
  this._axis=axis;
  this._axisQuat=null;
  if(this._axis){
-  this._axisQuat=GLMath.quatFromVectors([0,0,1],this._axis);
+  this._axisQuat=H3DU.Math.quatFromVectors([0,0,1],this._axis);
  }
  this.evaluate=function(u,v){
   v=minval+(maxval-minval)*v;
   var curvepos=this.curve.evaluate(v);
-  u=(GLMath.PiTimes2)*u;
+  u=(H3DU.Math.PiTimes2)*u;
   var cosu = Math.cos(u);
   var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
   var cp1=curvepos[1];
@@ -162,7 +162,7 @@ SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve,axis){
   "use strict";
 if(!curve)curve={
     "evaluate":function(u){
-      u*=GLMath.PiTimes2;
+      u*=H3DU.Math.PiTimes2;
       return [Math.cos(u),Math.sin(u)];
     }
   };
@@ -208,7 +208,7 @@ this.outer=outerRadius;
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
-  u=u*GLMath.PiTimes2;
+  u=u*H3DU.Math.PiTimes2;
   var oi=(this.outer-this.inner);
   var term=oi*u/this.inner;
   var cosu = Math.cos(u),
@@ -269,7 +269,7 @@ this.inner=radius;
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
-  u=u*GLMath.PiTimes2;
+  u=u*H3DU.Math.PiTimes2;
   var cosu = Math.cos(u);
   var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
   return [
@@ -313,7 +313,7 @@ this.outer=outerRadius;
 * Only the X and Y coordinates will be other than 0.
 */
  this.evaluate=function(u){
-  u=u*GLMath.PiTimes2;
+  u=u*H3DU.Math.PiTimes2;
   var oi=(this.outer+this.inner);
   var term=oi*u/this.inner;
   var cosu = Math.cos(u),sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);

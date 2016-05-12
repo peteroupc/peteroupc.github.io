@@ -36,7 +36,7 @@ function tetrahedron(radius){
  var faces=[0,2,1,1,3,0,2,0,3,3,1,2];
  // Create the mesh and generate normals
  // for a flat-shaded appearance
- return new Mesh(vertices,faces).recalcNormals(true);
+ return new H3DU.Mesh(vertices,faces).recalcNormals(true);
 }
 
 function icosahedron(radius){
@@ -62,7 +62,7 @@ function icosahedron(radius){
  ]
  // Create the mesh and generate normals
  // for a flat-shaded appearance
- return new Mesh(vertices,faces).recalcNormals(true);
+ return new H3DU.Mesh(vertices,faces).recalcNormals(true);
 }
 
 function dodecahedron(radius){
@@ -88,7 +88,7 @@ function dodecahedron(radius){
 [3,7,11,15,19],[10,9,8,12,13],
 [14,13,12,16,17],[18,17,16,0,1],
 [1,2,3,19,18],[5,6,7,3,2]]
- var mesh=new Mesh();
+ var mesh=new H3DU.Mesh();
  for(var i=0;i<polygons.length;i++){
   mesh.mode(Mesh.TRIANGLE_FAN);
   for(var j=0;j<polygons[i].length;j++){
@@ -110,35 +110,35 @@ function shiny(color){
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"))
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
    .cullFace(Scene3D.BACK);
-  var sub=new Subscene3D()
+  var sub=new H3DU.Batch3D()
    .orthoAspect(-20,20,-10,10,-20,20);
   sub.getLights().setDefaults();
   var mesh;
   var dims=4.5*2/Math.sqrt(3);
   mesh=Meshes.createBox(dims,dims,dims);
   sub.addShape(
-    new Shape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
+    new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
   // this configuration of a sphere results in an octahedron
   mesh=Meshes.createSphere(4.5,4,2,true);
   sub.addShape(
-    new Shape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
+    new H3DU.Shape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
   mesh=icosahedron(4.5);
   sub.addShape(
-    new Shape(mesh).setMaterial(shiny("lime")).setPosition(5,5,0))
+    new H3DU.Shape(mesh).setMaterial(shiny("lime")).setPosition(5,5,0))
   mesh=tetrahedron(4.5);
   sub.addShape(
-    new Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15,5,0))
+    new H3DU.Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15,5,0))
   mesh=dodecahedron(4.5);
   sub.addShape(
-    new Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15,-5,0))
+    new H3DU.Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15,-5,0))
   var rotation=[0,0,0];
   var timer={};
-  GLUtil.renderLoop(function(time){
+  H3DU.renderLoop(function(time){
    for(var i=0;i<sub.shapes.length;i++){
     sub.shapes[i].setQuaternion(
-      GLMath.quatFromTaitBryan(rotation));
+      H3DU.Math.quatFromTaitBryan(rotation));
    }
    rotation[0]=360*GLUtil.getTimePosition(timer,time,6000);
    rotation[1]=360*GLUtil.getTimePosition(timer,time,12000);

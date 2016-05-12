@@ -4,7 +4,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLMath, Mesh */
+/* global H3DU.Math, H3DU.Mesh */
 // The following was adapted by Peter O. from public-domain
 // source code by Cory Gene Bloyd.
 
@@ -103,7 +103,7 @@ var ff=this.sampler.sample(fX, fY, fZ);
         rfNormal[0] = this.sampler.sample(fX+0.001, fY, fZ)-ff;
         rfNormal[1] = this.sampler.sample(fX, fY+0.001, fZ)-ff;
         rfNormal[2] = this.sampler.sample(fX, fY, fZ+0.001)-ff;
-        GLMath.vec3normInPlace(rfNormal);
+        H3DU.Math.vec3normInPlace(rfNormal);
 };
 /** @private */
 ImplicitSurface._fGetOffset=function(a,b,desired){
@@ -665,7 +665,7 @@ var xstep=(xmax-xmin)/xsize;
 ImplicitSurface.prototype.evalSurfacePoints=function(mesh,xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax)
 {
         "use strict";
-mesh.mode(Mesh.POINTS);
+mesh.mode(H3DU.Mesh.POINTS);
         var xstep=(xmax-xmin)/xsize;
         var ystep=(ymax-ymin)/ysize;
         var zstep=(zmax-zmin)/zsize;
@@ -699,7 +699,7 @@ mesh.mode(Mesh.POINTS);
 ImplicitSurface.prototype.evalSurface=function(mesh,xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax)
 {
         "use strict";
-mesh.mode(Mesh.TRIANGLES);
+mesh.mode(H3DU.Mesh.TRIANGLES);
         var tmpobj={
            "asCubePosition":[[],[],[],[],[],[],[],[]],
            "afCubeValue":[],

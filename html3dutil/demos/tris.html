@@ -21,7 +21,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
 function TriangleParticles(scene,count,w,h){
  this.tris=[];
- this.group=new ShapeGroup();
+ this.group=new H3DU.ShapeGroup();
  this.width=w;
  this.scene=scene;
  this.timer={};
@@ -45,13 +45,13 @@ TriangleParticles.prototype.update=function(time){
     TriangleParticles.makeShapeFromTri(tri,this.scene);
   } else {
    var trans=this.group.shapes[i].getTransform()
-   trans.movePosition(GLMath.vec3scale(this.tris[i].movement,frames))
+   trans.movePosition(H3DU.Math.vec3scale(this.tris[i].movement,frames))
    trans.multOrientation(this.tris[i].rotation*frames,0,0,1)
   }
  }
 }
 TriangleParticles.makeShapeFromTri=function(tri,shape){
- var sh=new Shape(new Mesh()
+ var sh=new H3DU.Shape(new H3DU.Mesh()
    .mode(Mesh.TRIANGLES)
    .normal3(0,0,1)
    .color3(tri.color)
@@ -69,8 +69,8 @@ TriangleParticles.makeShapeFromTri=function(tri,shape){
 TriangleParticles._getArea=function(tri){
  var tx=[tri[0]-tri[3],tri[1]-tri[4],tri[2]-tri[5]];
  var ty=[tri[6]-tri[3],tri[7]-tri[4],tri[8]-tri[5]];
- var tz=GLMath.vec3cross(tx,ty);
- return GLMath.vec3length(tz)*0.5;
+ var tz=H3DU.Math.vec3cross(tx,ty);
+ return H3DU.Math.vec3length(tz)*0.5;
 }
 
 TriangleParticles.generateTri=function(width,height){
@@ -109,12 +109,12 @@ TriangleParticles.generateTri=function(width,height){
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"))
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-  var sub=new Subscene3D();
+  var sub=new H3DU.Batch3D();
   var tris=new TriangleParticles(sub,200,scene.getWidth(),scene.getHeight());
   // Set up the render loop
-  GLUtil.renderLoop(function(time){
+  H3DU.renderLoop(function(time){
    sub.ortho2DAspect(0,scene.getWidth(),scene.getHeight(),0);
    tris.update(time);
    // Render the scene

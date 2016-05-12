@@ -27,37 +27,37 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
 function ClockShape(scene){
- var clock=new ShapeGroup();
+ var clock=new H3DU.ShapeGroup();
  var border=Meshes.createTorus(0.1,1,16,64);
- var frontTransform=GLMath.mat4translated(0,0,0.05);
+ var frontTransform=H3DU.Math.mat4translated(0,0,0.05);
  var front=Meshes.createDisk(0,1,64).transform(frontTransform);
  var hourhand=Meshes.createCapsule(0.01,0.5,6,4)
-   .transform(GLMath.mat4translated(0,0,-0.25))
-   .transform(GLMath.mat4rotated(90,1,0,0))
+   .transform(H3DU.Math.mat4translated(0,0,-0.25))
+   .transform(H3DU.Math.mat4rotated(90,1,0,0))
    .transform(frontTransform);
  var minutehand=Meshes.createCapsule(0.0075,0.7,6,4)
-   .transform(GLMath.mat4translated(0,0,-0.35))
-   .transform(GLMath.mat4rotated(90,1,0,0))
+   .transform(H3DU.Math.mat4translated(0,0,-0.35))
+   .transform(H3DU.Math.mat4rotated(90,1,0,0))
    .transform(frontTransform);
  var secondhand=Meshes.createCapsule(0.005,0.9,6,4)
-   .transform(GLMath.mat4translated(0,0,-0.30))
-   .transform(GLMath.mat4rotated(90,1,0,0))
+   .transform(H3DU.Math.mat4translated(0,0,-0.30))
+   .transform(H3DU.Math.mat4rotated(90,1,0,0))
    .transform(frontTransform);
  var center=Meshes.createSphere(0.03,4,4)
    .transform(frontTransform)
  var twelveoclock=Meshes.createSphere(0.03,4,4)
-   .transform(GLMath.mat4translated(0,0.85,0))
+   .transform(H3DU.Math.mat4translated(0,0.85,0))
    .transform(frontTransform)
  var back=Meshes.createDisk(0,1,64).reverseWinding().reverseNormals()
-   .transform(GLMath.mat4translated(0,0,-0.05));
- clock.addShape(new Shape(border));
- clock.addShape(new Shape(front));
- clock.addShape(new Shape(back));
- clock.addShape(new Shape(hourhand));
- clock.addShape(new Shape(minutehand));
- clock.addShape(new Shape(secondhand));
- clock.addShape(new Shape(center));
- clock.addShape(new Shape(twelveoclock));
+   .transform(H3DU.Math.mat4translated(0,0,-0.05));
+ clock.addShape(new H3DU.Shape(border));
+ clock.addShape(new H3DU.Shape(front));
+ clock.addShape(new H3DU.Shape(back));
+ clock.addShape(new H3DU.Shape(hourhand));
+ clock.addShape(new H3DU.Shape(minutehand));
+ clock.addShape(new H3DU.Shape(secondhand));
+ clock.addShape(new H3DU.Shape(center));
+ clock.addShape(new H3DU.Shape(twelveoclock));
  scene.addShape(clock);
  this.shape=clock;
  this.hour=-1;
@@ -85,25 +85,25 @@ function ClockShape(scene){
  this.setColor=function(color){
   var rgb=GLUtil.toGLColor(color);
   if((rgb[0]+rgb[1]+rgb[2])/3>=0.5){
-   var halftoneColor=GLMath.vec3lerp(rgb.slice(0,4),[0,0,0],0.5);
+   var halftoneColor=H3DU.Math.vec3lerp(rgb.slice(0,4),[0,0,0],0.5);
    this.shape.shapes[3].setColor("black")
    this.shape.shapes[4].setColor("black")
    this.shape.shapes[5].setColor(halftoneColor)
    this.shape.shapes[6].setColor("black")
    this.shape.shapes[7].setColor(halftoneColor)
   } else {
-   var halftoneColor=GLMath.vec3lerp(rgb.slice(0,4),[1,1,1],0.5);
+   var halftoneColor=H3DU.Math.vec3lerp(rgb.slice(0,4),[1,1,1],0.5);
    this.shape.shapes[3].setColor("white")
    this.shape.shapes[4].setColor("white")
    this.shape.shapes[5].setColor(halftoneColor)
    this.shape.shapes[6].setColor("white")
    this.shape.shapes[7].setColor(halftoneColor)
   }
-  var borderColor=GLMath.vec3scaleInPlace(rgb.slice(0,4),0.5);
+  var borderColor=H3DU.Math.vec3scaleInPlace(rgb.slice(0,4),0.5);
   this.shape.shapes[0].setColor(borderColor);
-  var frontColor=GLMath.vec3scaleInPlace(rgb.slice(0,4),1.0);
+  var frontColor=H3DU.Math.vec3scaleInPlace(rgb.slice(0,4),1.0);
   this.shape.shapes[1].setColor(frontColor);
-  var backColor=GLMath.vec3scaleInPlace(rgb.slice(0,4),0.75);
+  var backColor=H3DU.Math.vec3scaleInPlace(rgb.slice(0,4),0.75);
   this.shape.shapes[2].setColor(backColor);
  }
  this.setColor("#ffffff")
@@ -111,16 +111,16 @@ function ClockShape(scene){
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"))
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
    .cullFace(Scene3D.BACK)
-  var sub=new Subscene3D();
+  var sub=new H3DU.Batch3D();
   var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
   var pc=new FrameCounterDiv(sub)
   var clock=new ClockShape(sub);
   document.getElementById("colorsetting").addEventListener("change",
    function(e){ clock.setColor(e.target.value) });
-  GLUtil.renderLoop(function(){
+  H3DU.renderLoop(function(){
    clock.update();
    pc.update();
    camera.update();

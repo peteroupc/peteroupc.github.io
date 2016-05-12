@@ -63,25 +63,25 @@ function createSampleShape(index){
   case 10:
    return Meshes.createPointedStar(10,1.0,0.5);
   default:
-   return new Mesh();
+   return new H3DU.Mesh();
  }
 }
 function sampleShape(num){
  if(shape)sub.removeShape(shape);
  var cs=document.getElementById("colorsetting").value
- sub.addShape(shape=new Shape(createSampleShape(num)).setColor(cs))
+ sub.addShape(shape=new H3DU.Shape(createSampleShape(num)).setColor(cs))
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"))
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white");
-  var sub=new Subscene3D();
+  var sub=new H3DU.Batch3D();
   var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
    .turnVertical(-90)
-  var xyz=new ShapeGroup();
+  var xyz=new H3DU.ShapeGroup();
   var pc=new FrameCounterDiv(sub)
   var shape=null;
-  var axisline=new Shape(Meshes.createCapsule(0.005,10,6,4));
+  var axisline=new H3DU.Shape(Meshes.createCapsule(0.005,10,6,4));
   var zaxis=axisline.copy().setColor("blue")
   var yaxis=axisline.copy().setColor("green");
   yaxis.getTransform().setOrientation(90,1,0,0);
@@ -92,7 +92,7 @@ function sampleShape(num){
   xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
   sub.addShape(xyz);
   sampleShape(0);
-  GLUtil.renderLoop(function(){
+  H3DU.renderLoop(function(){
    camera.update();
    sub.getLights().setDirectionalLight(0,camera.getPosition());
    pc.update();

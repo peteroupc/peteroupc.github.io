@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global FrenetFrames, GLMath */
+/* global FrenetFrames, H3DU.Math */
 function FrenetFrames(func){
  "use strict";
  this.func=func;
@@ -38,28 +38,28 @@ function FrenetFrames(func){
   nextSample=(i===res) ? e0 : func.evaluate((i+1)/res);
   samples.push(e0);
   if(i===0)firstSample=e0;
-  var tangent=GLMath.vec3normInPlace(
-    GLMath.vec3sub(e01,e0));
+  var tangent=H3DU.Math.vec3normInPlace(
+    H3DU.Math.vec3sub(e01,e0));
   if(t===1){
-   GLMath.vec3scaleInPlace(tangent,-1);
+   H3DU.Math.vec3scaleInPlace(tangent,-1);
   }
   var normal;
   if(i>0){
-   normal=GLMath.vec3normInPlace(
-    GLMath.vec3cross(this.binormals[i-1],tangent));
+   normal=H3DU.Math.vec3normInPlace(
+    H3DU.Math.vec3cross(this.binormals[i-1],tangent));
   } else {
    normal=FrenetFrames.normalFromTangent(tangent);
   }
-  var binormal=GLMath.vec3normInPlace(
-    GLMath.vec3cross(tangent,normal));
+  var binormal=H3DU.Math.vec3normInPlace(
+    H3DU.Math.vec3cross(tangent,normal));
   this.normals[i]=normal;
   this.binormals[i]=binormal;
   this.tangents[i]=tangent;
  }
  if(isClosed && totalLength>0){
   // Adjust angles of binormal and normal to prevent seams
-  var quat=GLMath.quatFromVectors(this.normals[res],this.normals[0]);
-  var angle=GLMath.quatToAxisAngle(quat)[3];
+  var quat=H3DU.Math.quatFromVectors(this.normals[res],this.normals[0]);
+  var angle=H3DU.Math.quatToAxisAngle(quat)[3];
   var runningLength=0;
   // Set basis vectors at ends to the same value
   this.normals[res]=this.normals[0];
@@ -68,11 +68,11 @@ function FrenetFrames(func){
   for(i=0;i<res-1;i++){
    runningLength+=lengths[i];
    var lenproportion=runningLength/totalLength;
-   var newq=GLMath.quatFromAxisAngle(angle*lenproportion,this.tangents[i+1]);
+   var newq=H3DU.Math.quatFromAxisAngle(angle*lenproportion,this.tangents[i+1]);
    // Rotate normal and binormal about the tangent, to keep them orthogonal to
    // tangent and each other
-   this.normals[i+1]=GLMath.quatTransform(newq,this.normals[i+1]);
-   this.binormals[i+1]=GLMath.quatTransform(newq,this.binormals[i+1]);
+   this.normals[i+1]=H3DU.Math.quatTransform(newq,this.normals[i+1]);
+   this.binormals[i+1]=H3DU.Math.quatTransform(newq,this.binormals[i+1]);
   }
  }
 }
@@ -100,7 +100,7 @@ var absx=Math.abs(tangent[0]);
   normal[1]=0;
   normal[2]=tangent[0];
  }
- return GLMath.vec3normInPlace(normal);
+ return H3DU.Math.vec3normInPlace(normal);
 };
 FrenetFrames._EPSILON=0.000001;
 /**
@@ -132,12 +132,12 @@ FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
    index=Math.floor(index);
    e0=sample;
    e01=this.func.evaluate(u+FrenetFrames._EPSILON);
-   tangent=GLMath.vec3normInPlace(
-    GLMath.vec3sub(e01,e0));
-   normal=GLMath.vec3normInPlace(
-     GLMath.vec3cross(this.binormals[index],tangent));
-   binormal=GLMath.vec3normInPlace(
-     GLMath.vec3cross(tangent,normal));
+   tangent=H3DU.Math.vec3normInPlace(
+    H3DU.Math.vec3sub(e01,e0));
+   normal=H3DU.Math.vec3normInPlace(
+     H3DU.Math.vec3cross(this.binormals[index],tangent));
+   binormal=H3DU.Math.vec3normInPlace(
+     H3DU.Math.vec3cross(tangent,normal));
    b=binormal;
    n=normal;
    t=tangent;
@@ -153,11 +153,11 @@ FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
    this.cacheMisses=(this.cacheMisses||0)+1;
   e0=sample;
   e01=this.func.evaluate(u+FrenetFrames._EPSILON);
-  tangent=GLMath.vec3normInPlace(
-    GLMath.vec3sub(e01,e0));
+  tangent=H3DU.Math.vec3normInPlace(
+    H3DU.Math.vec3sub(e01,e0));
   normal=FrenetFrames.normalFromTangent(tangent);
-  binormal=GLMath.vec3normInPlace(
-    GLMath.vec3cross(tangent,normal));
+  binormal=H3DU.Math.vec3normInPlace(
+    H3DU.Math.vec3cross(tangent,normal));
   b=binormal;
   n=normal;
   t=tangent;
@@ -255,7 +255,7 @@ var basisVectors=this.tangentFinder.getSampleAndBasisVectors(u);
   sy = sampleY+(-basisVectors[1]*t1+basisVectors[4]*t2)*this.thickness;
   sz = sampleZ+(-basisVectors[2]*t1+basisVectors[5]*t2)*this.thickness;
  } else {
-  var vt=GLMath.PiTimes2*v;
+  var vt=H3DU.Math.PiTimes2*v;
   t1 = Math.cos(vt);
   t2 = (vt>=0 && vt<6.283185307179586) ? (vt<=3.141592653589793 ? Math.sqrt(1.0-t1*t1) : -Math.sqrt(1.0-t1*t1)) : Math.sin(vt);
   sx = sampleX+(-basisVectors[0]*t1+basisVectors[3]*t2)*this.thickness;

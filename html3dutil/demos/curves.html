@@ -47,7 +47,7 @@ function TorusKnot(p,q,outerRadius,innerRadius){
  this.outerRadius=outerRadius==null ? 1 : outerRadius;
  this.innerRadius=innerRadius==null ? 0.25 : innerRadius;
  this.evaluate=function(u){
-  u=u*GLMath.PiTimes2;
+  u=u*H3DU.Math.PiTimes2;
   var pu=this.period*u;
   var qu=this.revolutions*u;
   var tmp=this.innerRadius*Math.cos(pu)+this.outerRadius;
@@ -77,7 +77,7 @@ function makeThinCurveMesh(curve){
  return makeMesh(surface,150,20)
 }
 
-var shapeGroup=new ShapeGroup();
+var shapeGroup=new H3DU.ShapeGroup();
 var allsettings={}
 var link0=null;
 
@@ -163,15 +163,15 @@ addLink("Trochoid",function(){
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
-  var sub=new Subscene3D()
+  var sub=new H3DU.Batch3D()
   var camera=new Camera(sub,45,1,100, scene.getCanvas());
   camera.setDistance(5);
   var pc=new PrimitiveCounter(sub)
   link0();
   sub.addShape(shapeGroup);
-  GLUtil.renderLoop(function(){
+  H3DU.renderLoop(function(){
    pc.update();
    camera.update();
    sub.getLights().setDirectionalLight(0,camera.getPosition());

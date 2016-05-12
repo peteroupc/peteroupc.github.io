@@ -6,7 +6,9 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLMath */
+/* global H3DU.Math */
+
+/** @private */
 function Perspective(scene, fov, nearZ, farZ){
  "use strict";
 if(nearZ<=0)throw new Error("invalid nearZ");
@@ -14,19 +16,17 @@ if(nearZ<=0)throw new Error("invalid nearZ");
  this.scene=scene;
  this.near=nearZ;
  this.far=farZ;
- if(this.scene instanceof Scene3D){
+ if(this.scene instanceof H3DU.Scene3D){
    this.currentAspect=this.scene.getClientAspect();
    this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
  } else {
    this.scene.perspectiveAspect(this.fov,this.near,this.far);
  }
 }
-/**
- * Not documented yet.
- */
+/** @private */
 Perspective.prototype.update=function(){
  "use strict";
- if(this.scene instanceof Scene3D){
+ if(this.scene instanceof H3DU.Scene3D){
   var aspect=this.scene.getClientAspect();
   if(aspect!==this.currentAspect){
    this.currentAspect=aspect;
@@ -267,8 +267,8 @@ function Camera(sub, fov, nearZ, farZ, canvas){
  if(nearZ<=0)throw new Error("invalid nearZ");
  this.near=nearZ;
  this.persp=new Perspective(sub,fov,nearZ,farZ);
- this.rotation=GLMath.quatIdentity();
- this.dolly=GLMath.quatIdentity();
+ this.rotation=H3DU.Math.quatIdentity();
+ this.dolly=H3DU.Math.quatIdentity();
  this.position=[0,0,0];
  this.center=[0,0,0];
  this.scene=sub;
@@ -285,7 +285,7 @@ var len=x*x+y*y+z*z;
  if(len===1){
   return [x,y,z,1];
  } else {
-  var n=GLMath.vec3normInPlace([x,y,z]);
+  var n=H3DU.Math.vec3normInPlace([x,y,z]);
   return [n[0],n[1],n[2],1];
  }
 };
@@ -294,33 +294,33 @@ Camera._quatRotateRelative=function(quat, angle, x, y, z){
  // Rotate quaternion about a relative axis
  "use strict";
 var vec=Camera._normAsVec4(x,y,z);
- var q=GLMath.quatRotate(quat,angle,vec);
- q=GLMath.quatMultiply(GLMath.quatFromAxisAngle(angle,vec),quat);
- GLMath.vec4assign(quat,q);
+ var q=H3DU.Math.quatRotate(quat,angle,vec);
+ q=H3DU.Math.quatMultiply(H3DU.Math.quatFromAxisAngle(angle,vec),quat);
+ H3DU.Math.vec4assign(quat,q);
 };
 /** @private */
 Camera._quatRotateFixed=function(quat, angle, x, y, z){
  // Rotate quaternion about a fixed axis
  "use strict";
 var vec=Camera._normAsVec4(x,y,z);
- var q=GLMath.quatRotate(quat,angle,vec);
- q=GLMath.quatMultiply(quat,GLMath.quatFromAxisAngle(angle,vec));
- GLMath.vec4assign(quat,q);
+ var q=H3DU.Math.quatRotate(quat,angle,vec);
+ q=H3DU.Math.quatMultiply(quat,H3DU.Math.quatFromAxisAngle(angle,vec));
+ H3DU.Math.vec4assign(quat,q);
 };
 /** @private */
 Camera._moveRelative=function(vec, quat, dist, x, y, z){
  "use strict";
 var velocity=Camera._normAsVec4(x,y,z);
- GLMath.vec3scaleInPlace(velocity,dist);
+ H3DU.Math.vec3scaleInPlace(velocity,dist);
  vec[0]+=velocity[0]; vec[1]+=velocity[1]; vec[2]+=velocity[2];
 };
 /** @private */
 Camera._moveTrans=function(vec,quat,dist,x,y,z){
  "use strict";
 var velocity=Camera._normAsVec4(x,y,z);
- velocity=GLMath.quatTransform(
-   GLMath.quatConjugate(quat),velocity);
- GLMath.vec3scaleInPlace(velocity,dist);
+ velocity=H3DU.Math.quatTransform(
+   H3DU.Math.quatConjugate(quat),velocity);
+ H3DU.Math.vec3scaleInPlace(velocity,dist);
  vec[0]+=velocity[0]; vec[1]+=velocity[1]; vec[2]+=velocity[2];
 };
 /**
@@ -328,17 +328,17 @@ var velocity=Camera._normAsVec4(x,y,z);
  *//** @private */
 Camera.prototype._distance=function(){
  "use strict";
-var rel=GLMath.vec3sub(this.position,this.center);
- return GLMath.vec3length(rel);
+var rel=H3DU.Math.vec3sub(this.position,this.center);
+ return H3DU.Math.vec3length(rel);
 };
 /** @private */
 Camera.prototype._getView=function(){
  "use strict";
-var mat=GLMath.quatToMat4(this.rotation);
- var mat2=GLMath.mat4translated(-this.position[0],
+var mat=H3DU.Math.quatToMat4(this.rotation);
+ var mat2=H3DU.Math.mat4translated(-this.position[0],
   -this.position[1],-this.position[2]);
- mat=GLMath.mat4multiply(mat2,mat);
- mat=GLMath.mat4translate(mat,-this.center[0],
+ mat=H3DU.Math.mat4multiply(mat2,mat);
+ mat=H3DU.Math.mat4translate(mat,-this.center[0],
   -this.center[1],-this.center[2]);
  return mat;
 };
@@ -368,11 +368,11 @@ Camera.prototype._orbit=function(deltaMouseX,deltaMouseY,angleMultiplier){
   "use strict";
 var x=deltaMouseX*angleMultiplier;
   var y=deltaMouseY*angleMultiplier;
-  var vec=GLMath.quatTransform(
-    GLMath.quatConjugate(this.dolly),Camera._normAsVec4(0,0,1));
+  var vec=H3DU.Math.quatTransform(
+    H3DU.Math.quatConjugate(this.dolly),Camera._normAsVec4(0,0,1));
   var lat=Math.atan2(Math.sqrt(vec[2]*vec[2]+vec[0]*vec[0]),vec[1]);
   var oldlat=lat;
-  y=y*GLMath.PiDividedBy180;
+  y=y*H3DU.Math.PiDividedBy180;
   lat-=y;
   var pi2=Math.PI-0.00001;
   if(lat<0.00001){
@@ -382,7 +382,7 @@ var x=deltaMouseX*angleMultiplier;
    y+=lat-pi2;
    lat=pi2;
   }
-  this.moveAngleVertical(y*GLMath.Num180DividedByPi);
+  this.moveAngleVertical(y*H3DU.Math.Num180DividedByPi);
   this._moveAngleFixedHorizontal(x);
 };
 
@@ -564,8 +564,8 @@ if(dist!==0){
 Camera.prototype.getPosition=function(){
   "use strict";
 var view=this._getView();
-  var pos=GLMath.quatTransform(
-    GLMath.quatConjugate(this.rotation),
+  var pos=H3DU.Math.quatTransform(
+    H3DU.Math.quatConjugate(this.rotation),
     [this.position[0],this.position[1],this.position[2],1]);
   pos[0]-=this.center[0]; pos[1]-=this.center[1]; pos[2]-=this.center[2];
   return pos;
@@ -575,7 +575,7 @@ var view=this._getView();
  */
 Camera.prototype.getVectorFromCenter=function(){
   "use strict";
-return GLMath.vec3normInPlace(this.getPosition());
+return H3DU.Math.vec3normInPlace(this.getPosition());
 };
 
 /** @private */

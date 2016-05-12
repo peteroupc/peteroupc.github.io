@@ -1,18 +1,18 @@
 /*
 * Experimental renderer using the HTML 2D Canvas.
 */
-/* global GLMath, GLUtil, Mesh, Scene3D, Shape, ShapeGroup */
+/* global H3DU.Math, H3DU, H3DU.Mesh, H3DU.Scene3D, H3DU.Shape, H3DU.ShapeGroup */
 /*
 // Rasterizer adapted by Peter O. from public domain code by
 // castanyo@yahoo.es, in the file Raster.cpp.
 */
-var __oldget3DContext=GLUtil.get3DContext;
+var __oldget3DContext=H3DU.get3DContext;
 var __use3D=false;
 /**
  * Not documented yet.
  * @param {*} canvas
  */
-GLUtil.get3DContext=function(canvas){
+H3DU.get3DContext=function(canvas){
  "use strict";
 if(__use3D){
   return __oldget3DContext(canvas);
@@ -21,7 +21,7 @@ if(__use3D){
  }
 };
 /** @private */
-Scene3D._Triangle=function(v0,v1,v2){
+H3DU.Scene3D._Triangle=function(v0,v1,v2){
     "use strict";
 this.v1=v0;
     this.v2=v1;
@@ -37,9 +37,9 @@ this.v1=v0;
     this.valid=this.computeDeltas();
     if(this.valid){
      //console.log([this.v1[2],this.v2[2],this.v3[2]]+"")
-     this.n1=Scene3D.vec2normInPlace([this.v2[1] - this.v1[1], this.v1[0] - this.v2[0]]);
-     this.n2=Scene3D.vec2normInPlace([this.v3[1] - this.v2[1], this.v2[0] - this.v3[0]]);
-     this.n3=Scene3D.vec2normInPlace([this.v1[1] - this.v3[1], this.v3[0] - this.v1[0]]);
+     this.n1=H3DU.Scene3D.vec2normInPlace([this.v2[1] - this.v1[1], this.v1[0] - this.v2[0]]);
+     this.n2=H3DU.Scene3D.vec2normInPlace([this.v3[1] - this.v2[1], this.v2[0] - this.v3[0]]);
+     this.n3=H3DU.Scene3D.vec2normInPlace([this.v1[1] - this.v3[1], this.v3[0] - this.v1[0]]);
     }
   };
 
@@ -47,14 +47,14 @@ this.v1=v0;
   /// This method takes two edge vectors that form a basis, determines the
   /// coordinates of the canonic vectors in that basis, and computes the
   /// texture gradient that corresponds to those vectors.
-  Scene3D._Triangle.prototype.computeDeltas=function(){
+  H3DU.Scene3D._Triangle.prototype.computeDeltas=function(){
     "use strict";
 var e0x=this.v3[0]-this.v1[0],
       e0y=this.v3[1]-this.v1[1];
     var e1x=this.v2[0]-this.v1[0],
       e1y=this.v2[1]-this.v1[1];
-    var de0 = GLMath.vec3sub(this.t3,this.t1);
-    var de1 = GLMath.vec3sub(this.t2,this.t1);
+    var de0 = H3DU.Math.vec3sub(this.t3,this.t1);
+    var de1 = H3DU.Math.vec3sub(this.t2,this.t1);
     var d=(e0y*e1x-e1y*e0x);
     if (Math.abs(d)<1e-6) {
       return false;
@@ -72,7 +72,7 @@ var e0x=this.v3[0]-this.v1[0],
  * Not documented yet.
  * @param {*} vec
  */
-Scene3D.vec2normInPlace=function(vec){
+H3DU.Scene3D.vec2normInPlace=function(vec){
  "use strict";
 var x=vec[0];
  var y=vec[1];
@@ -85,7 +85,7 @@ var x=vec[0];
  return vec;
 };
 
-Scene3D._Triangle.prototype.draw=function(width, height, data, depth, color, colorOffset){
+H3DU.Scene3D._Triangle.prototype.draw=function(width, height, data, depth, color, colorOffset){
     // 28.4 fixed-point coordinates
     "use strict";
     var offset;
@@ -317,7 +317,7 @@ var maxx=Math.max(p1[0],p2[0],p3[0]);
 }
 
 /** @private */
-Scene3D.prototype._getTriangle=function(p1,p2,p3) {
+H3DU.Scene3D.prototype._getTriangle=function(p1,p2,p3) {
     "use strict";
 if(isTriangleOutside(p1,p2,p3,this.width,this.height)){
         return null;
@@ -333,28 +333,28 @@ if(isTriangleOutside(p1,p2,p3,this.width,this.height)){
     if(p1[2]<-1 && p2[2]<-1 && p3[2]<-1)return null;
     if(p1[2]>1 && p2[2]>1 && p3[2]>1)return null;
     var area = (p1[0]*p2[1]-p2[0]*p1[1])+(p2[0]*p3[1]-p3[0]*p2[1]);
-    if(this._frontFace===Scene3D.CCW)area=-area;
-    var front=(area>0) ? Scene3D.FRONT : Scene3D.BACK;
-    var culled=area===0 || (this._cullFace!==Scene3D.NONE &&
+    if(this._frontFace===H3DU.Scene3D.CCW)area=-area;
+    var front=(area>0) ? H3DU.Scene3D.FRONT : H3DU.Scene3D.BACK;
+    var culled=area===0 || (this._cullFace!==H3DU.Scene3D.NONE &&
         ((area<0 && front!==this._frontFace) ||
         (area>0 && front===this._frontFace)));
     if(culled){
         return null;
     }
-    var tri=new Scene3D._Triangle(p1,p2,p3);
+    var tri=new H3DU.Scene3D._Triangle(p1,p2,p3);
     return (tri.valid) ? tri : null;
 };
-Scene3D._MIN_DEPTH = 0;
-Scene3D._DEPTH_RESOLUTION = 65536;
+H3DU.Scene3D._MIN_DEPTH = 0;
+H3DU.Scene3D._DEPTH_RESOLUTION = 65536;
 
-Scene3D._Triangle.prototype.pixel=function(offset, tex, width, height, data, depth, color, colorOffset){
+H3DU.Scene3D._Triangle.prototype.pixel=function(offset, tex, width, height, data, depth, color, colorOffset){
     "use strict";
 var t0=Math.max(0,tex[0]);
     var t1=Math.max(0,tex[1]);
     var t2=Math.max(0,tex[2]);
     var d=(t0*this.v1[2]+t1*this.v2[2]+t2*this.v3[2]);
-    var dep=Math.floor(d*Scene3D._DEPTH_RESOLUTION)|0;
-    if(dep<=depth[offset>>2] && dep>=Scene3D._MIN_DEPTH){
+    var dep=Math.floor(d*H3DU.Scene3D._DEPTH_RESOLUTION)|0;
+    if(dep<=depth[offset>>2] && dep>=H3DU.Scene3D._MIN_DEPTH){
        depth[offset>>2]=dep;
        if(color){
         data[offset]=color[0];
@@ -369,12 +369,12 @@ var t0=Math.max(0,tex[0]);
       }
 };
 /** @private */
-Scene3D._drawPoint=function(data,depth,x,y,z,width,height,rgb){
+H3DU.Scene3D._drawPoint=function(data,depth,x,y,z,width,height,rgb){
 "use strict";
 if(x<0 || x>=width || y<0 || y>=height)return;
-      var dep=Math.floor(z*Scene3D._DEPTH_RESOLUTION)|0;
+      var dep=Math.floor(z*H3DU.Scene3D._DEPTH_RESOLUTION)|0;
       var offset=y*width+x;
-      if(dep<=depth[offset] && dep>=Scene3D._MIN_DEPTH){
+      if(dep<=depth[offset] && dep>=H3DU.Scene3D._MIN_DEPTH){
        depth[offset]=dep;
        offset<<=2;
        data[offset]=rgb[0];
@@ -384,12 +384,12 @@ if(x<0 || x>=width || y<0 || y>=height)return;
       }
 };
 /** @private */
-Scene3D._drawPoint2=function(data,depth,x,y,z,width,height,rgb){
+H3DU.Scene3D._drawPoint2=function(data,depth,x,y,z,width,height,rgb){
 "use strict";
 if(x<0 || x>=width || y<0 || y>=height)return;
       var dep=z>>8;
       var offset=y*width+x;
-      if(dep<=depth[offset] && dep>=Scene3D._MIN_DEPTH){
+      if(dep<=depth[offset] && dep>=H3DU.Scene3D._MIN_DEPTH){
        depth[offset]=dep;
        offset<<=2;
        data[offset]=rgb[0]>>8;
@@ -399,7 +399,7 @@ if(x<0 || x>=width || y<0 || y>=height)return;
       }
 };
 /** @private */
-Scene3D._drawLine=function(data,depth,x,y,z,x2,y2,z2,width,height,rgb,rgb2){
+H3DU.Scene3D._drawLine=function(data,depth,x,y,z,x2,y2,z2,width,height,rgb,rgb2){
 "use strict";
 if((x<0 && x2<0) ||
    (x>=width && x2>=width) ||
@@ -418,8 +418,8 @@ if(dy<0){
  sy=-1;
  dy=-dy;
 }
-var depth1=(Math.floor(z*Scene3D._DEPTH_RESOLUTION)|0)<<8;
-var depth2=(Math.floor(z2*Scene3D._DEPTH_RESOLUTION)|0)<<8;
+var depth1=(Math.floor(z*H3DU.Scene3D._DEPTH_RESOLUTION)|0)<<8;
+var depth2=(Math.floor(z2*H3DU.Scene3D._DEPTH_RESOLUTION)|0)<<8;
 var interprgb=[rgb[0]<<8,rgb[1]<<8,rgb[2]<<8];
 var dydy=dy+dy;
 var dxdx=dx+dx;
@@ -431,7 +431,7 @@ if(dy>dx){
       sg=(dy===0 || rgb2[1]===rgb[1]) ? 0 : (((rgb2[1]-rgb[1])<<8)/dy)|0;
       sb=(dy===0 || rgb2[2]===rgb[2]) ? 0 : (((rgb2[2]-rgb[2])<<8)/dy)|0;
       for(i = 0; i < dy; i++){
-            Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
+            H3DU.Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
             while(e >= 0){
                   x += sx;
                   e -= dydy;
@@ -450,7 +450,7 @@ if(dy>dx){
       sg=(dx === 0 || rgb2[1]===rgb[1]) ? 0 : (((rgb2[1]-rgb[1])<<8)/dx)|0;
       sb=(dx === 0 || rgb2[2]===rgb[2]) ? 0 : (((rgb2[2]-rgb[2])<<8)/dx)|0;
       for(i = 0; i < dx; i++){
-            Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
+            H3DU.Scene3D._drawPoint2(data,depth,x,y,depth1,width,height,interprgb);
             while(e >= 0)
             {
                   y += sy;
@@ -464,11 +464,11 @@ if(dy>dx){
             interprgb[2]+=sb;
       }
 }
-Scene3D._drawPoint(data,depth,x2,y2,z2,width,height,rgb2);
+H3DU.Scene3D._drawPoint(data,depth,x2,y2,z2,width,height,rgb2);
 };
 
 /** @private */
-Scene3D._perspectiveTransform=function(mat,pt){
+H3DU.Scene3D._perspectiveTransform=function(mat,pt){
  "use strict";
 var x=pt[0];
  var y=pt[1];
@@ -485,7 +485,7 @@ var x=pt[0];
  }
 };
 /** @private */
-Scene3D._transformAndClipPoint=function(mat,pt){
+H3DU.Scene3D._transformAndClipPoint=function(mat,pt){
  "use strict";
 var x=pt[0];
  var y=pt[1];
@@ -506,7 +506,7 @@ var x=pt[0];
  return true;
 };
 /** @private */
-Scene3D._transformAndClipLine=function(mat,pt,pt2,size){
+H3DU.Scene3D._transformAndClipLine=function(mat,pt,pt2,size){
  "use strict";
 var x=pt[0];
  var y=pt[1];
@@ -586,10 +586,10 @@ var x=pt[0];
 };
 
 /** @private */
-Scene3D.prototype._renderInner=function(){
+H3DU.Scene3D.prototype._renderInner=function(){
   "use strict";
 var data={};
-  data.projview=GLMath.mat4multiply(
+  data.projview=H3DU.Math.mat4multiply(
    this._projectionMatrix,this._viewMatrix);
   var cc=[
    Math.floor(this.clearColor[0]*255),
@@ -616,7 +616,7 @@ var data={};
   }
   size=this.width*this.height;
     for(i=0;i<size;i++){
-      this._depth[i]=Scene3D._DEPTH_RESOLUTION-1;
+      this._depth[i]=H3DU.Scene3D._DEPTH_RESOLUTION-1;
     }
   for(i=0;i<this.shapes.length;i++){
    this._renderShape(this.shapes[i],data);
@@ -625,10 +625,10 @@ var data={};
   return this;
 };
 /** @private */
-Scene3D.prototype._renderShape=function(shape,data){
+H3DU.Scene3D.prototype._renderShape=function(shape,data){
  "use strict";
  var i,index1,index2,j,x,y;
-if(shape.constructor===ShapeGroup){
+if(shape.constructor===H3DU.ShapeGroup){
   for(i=0;i<shape.shapes.length;i++){
    this._renderShape(shape.shapes[i],data);
   }
@@ -636,7 +636,7 @@ if(shape.constructor===ShapeGroup){
    var currentMatrix=shape.getMatrix();
    var w2=this.width/2;
    var h2=this.height/2;
-   var mvpMatrix=GLMath.mat4multiply(data.projview,currentMatrix);
+   var mvpMatrix=H3DU.Math.mat4multiply(data.projview,currentMatrix);
    var mesh=shape.bufferedMesh;
    var v1=[];
    var v2=[];
@@ -645,7 +645,7 @@ if(shape.constructor===ShapeGroup){
    var colorValueBuffer=[0,0,0];
    for(i=0;i<mesh.subMeshes.length;i++){
     var subMesh=mesh.subMeshes[i];
-    var colorOffset=Mesh._colorOffset(subMesh.attributeBits);
+    var colorOffset=H3DU.Mesh._colorOffset(subMesh.attributeBits);
     var colorValue=null;
     var stride=subMesh.getStride();
     var prim=subMesh.primitiveType();
@@ -655,9 +655,9 @@ if(shape.constructor===ShapeGroup){
      colorValueBuffer[1]=Math.floor(shape.material.diffuse[1]*255.0);
      colorValueBuffer[2]=Math.floor(shape.material.diffuse[2]*255.0);
     }
-    if(prim===Mesh.TRIANGLES){
+    if(prim===H3DU.Mesh.TRIANGLES){
      v=subMesh.vertices;
-     if(this._cullFace===Scene3D.FRONT_AND_BACK)continue;
+     if(this._cullFace===H3DU.Scene3D.FRONT_AND_BACK)continue;
      for(i=0;i<subMesh.indices.length;i+=3){
       index1=subMesh.indices[i]*stride;
       index2=subMesh.indices[i+1]*stride;
@@ -667,9 +667,9 @@ if(shape.constructor===ShapeGroup){
        v2[j]=v[index2+j];
        v3[j]=v[index3+j];
       }
-      Scene3D._perspectiveTransform(mvpMatrix,v1);
-      Scene3D._perspectiveTransform(mvpMatrix,v2);
-      Scene3D._perspectiveTransform(mvpMatrix,v3);
+      H3DU.Scene3D._perspectiveTransform(mvpMatrix,v1);
+      H3DU.Scene3D._perspectiveTransform(mvpMatrix,v2);
+      H3DU.Scene3D._perspectiveTransform(mvpMatrix,v3);
       v1[0]=v1[0]*w2+w2;
       v1[1]=v1[1]*-h2+h2;
       v1[2]=v1[2]*0.5+0.5;
@@ -693,7 +693,7 @@ if(shape.constructor===ShapeGroup){
        }
       }
      }
-    } else if(prim===Mesh.LINES){
+    } else if(prim===H3DU.Mesh.LINES){
      v=subMesh.vertices;
      for(i=0;i<subMesh.indices.length;i+=2){
       index1=subMesh.indices[i]*stride;
@@ -702,7 +702,7 @@ if(shape.constructor===ShapeGroup){
        v1[j]=v[index1+j];
        v2[j]=v[index2+j];
       }
-      if(Scene3D._transformAndClipLine(mvpMatrix,v1,v2,stride)){
+      if(H3DU.Scene3D._transformAndClipLine(mvpMatrix,v1,v2,stride)){
        v1[0]=v1[0]*w2+w2;
        v1[1]=v1[1]*-h2+h2;
        v1[2]=v1[2]*0.5+0.5;
@@ -714,7 +714,7 @@ if(shape.constructor===ShapeGroup){
        var x2=Math.round(v2[0])|0;
        var y2=Math.round(v2[1])|0;
        if(colorOffset>=0){
-        Scene3D._drawLine(data.imgdata.data,this._depth,
+        H3DU.Scene3D._drawLine(data.imgdata.data,this._depth,
          x,y,v1[2],x2,y2,v2[2],this.width,this.height,[
           Math.floor(v1[colorOffset]*255)|0,
           Math.floor(v1[colorOffset+1]*255)|0,
@@ -725,20 +725,20 @@ if(shape.constructor===ShapeGroup){
           Math.floor(v2[colorOffset+2]*255)|0
          ]);
         } else {
-       Scene3D._drawLine(data.imgdata.data,this._depth,
+       H3DU.Scene3D._drawLine(data.imgdata.data,this._depth,
          x,y,v1[2],x2,y2,v2[2],
          this.width,this.height,colorValue,colorValue);
         }
        }
      }
-    } else if(prim===Mesh.POINTS){
+    } else if(prim===H3DU.Mesh.POINTS){
      v=subMesh.vertices;
      for(i=0;i<subMesh.indices.length;i++){
       index1=subMesh.indices[i]*stride;
       for(j=0;j<stride;j++){
        v1[j]=v[index1+j];
       }
-      if(Scene3D._transformAndClipPoint(mvpMatrix,v1)){
+      if(H3DU.Scene3D._transformAndClipPoint(mvpMatrix,v1)){
        v1[0]=v1[0]*w2+w2;
        v1[1]=v1[1]*-h2+h2;
        v1[2]=v1[2]*0.5+0.5;
@@ -750,7 +750,7 @@ if(shape.constructor===ShapeGroup){
          colorValue[1]=Math.floor(v1[colorOffset+1]*255)|0;
          colorValue[2]=Math.floor(v1[colorOffset+2]*255)|0;
         }
-        Scene3D._drawPoint(data.imgdata.data,this._depth,
+        H3DU.Scene3D._drawPoint(data.imgdata.data,this._depth,
           x,y,v1[2],this.width,this.height,colorValue);
        }
      }

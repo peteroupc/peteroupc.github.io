@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Source: h3du-bufferedmesh.js</title>
+<meta name="viewport" content="width=device-width">
+<script src="mathml.js"></script>
+<link rel=stylesheet type="text/css" href="/style.css">
+</head>
+<body style="margin-top:0px">
+<div class="header">
+<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+    <h1>Source: h3du-bufferedmesh.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+/* global H3DU, H3DU.Mesh */
+
+/** @private */
+H3DU.BufferedSubMesh=function(mesh, context){
+ "use strict";
+ var smb=(mesh instanceof H3DU.SubMeshBuffer) ? mesh :
+   new H3DU.SubMeshBuffer(mesh);
+ this.smb=smb;
+ this.verts=context.createBuffer();
+ if(!this.verts)throw new Error("can't create buffer")
+ this.indices=context.createBuffer();
+ if(!this.indices)throw new Error("can't create face buffer")
+ this.arrayObjectExt=context.getExtension("OES_vertex_array_object")
+ this.arrayObjectExtContext=context;
+ this.vao=null;
+ if(this.arrayObjectExt){
+   this.vao=this.arrayObjectExt.createVertexArrayOES();
+ }
+ context.bindBuffer(context.ARRAY_BUFFER, this.verts);
+ context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.indices);
+ context.bufferData(context.ARRAY_BUFFER,
+    smb.vertices, context.STATIC_DRAW);
+ context.bufferData(context.ELEMENT_ARRAY_BUFFER,
+    smb.indices, context.STATIC_DRAW);
+ var type=context.UNSIGNED_SHORT;
+ if(smb.indexBufferSize === 4){
+  type=context.UNSIGNED_INT;
+ } else if(smb.indexBufferSize === 1){
+  type=context.UNSIGNED_BYTE;
+ }
+  this.type=type;
+  this.context=context;
+  this._lastKnownProgram=null;
+  this._attribLocations=[];
+};
+/** @private */
+H3DU.BufferedSubMesh.prototype._getVaoExtension=function(context){
+ if(this.arrayObjectExtContext==context){
+  return this.arrayObjectExt;
+ } else {
+  return context.getExtension("OES_vertex_array_object")
+ }
+}
+/**
+* A geometric mesh in the form of buffer objects.
+* @deprecated This class is likely
+* to become a private class. Use the MeshBuffer class instead, which
+* is not coupled to WebGL contexts.
+* @class
+* @alias H3DU.BufferedMesh
+* @param {H3DU.Mesh} mesh A geometric mesh object.
+* @param {WebGLRenderingContext|object} context A WebGL context to
+*  create a buffer from, or an object, such as H3DU.Scene3D, that
+* implements a no-argument &lt;code>getContext&lt;/code> method
+* that returns a WebGL context. (Note that this constructor uses
+*  a WebGL context rather than a shader program because
+*  buffer objects are not specific to shader programs.)
+*/
+H3DU.BufferedMesh = function(mesh, context){
+ "use strict";
+ this.subMeshes=[];
+ this.context=H3DU._toContext(context);
+ if(mesh instanceof H3DU.MeshBuffer){
+  this._bounds=mesh._bounds;
+  for(var i=0;i&lt;mesh.subMeshes.length;i++){
+   this.subMeshes.push(new H3DU.BufferedSubMesh(
+    mesh.subMeshes[i],this.context));
+  }
+ } else {
+  this._bounds=mesh.getBoundingBox();
+  for(var i=0;i&lt;mesh.subMeshes.length;i++){
+   var sm=mesh.subMeshes[i];
+   // skip empty submeshes
+   if(sm.indices.length===0)continue;
+   this.subMeshes.push(new H3DU.BufferedSubMesh(
+    sm,this.context));
+  }
+ }
+}
+/** @private */
+H3DU.BufferedMesh.prototype._getBounds=function(){
+ "use strict";
+return this._bounds;
+};
+/**
+ * Returns the WebGL context associated with this object.
+ * @deprecated
+ * @returns {WebGLRenderingContext} Return value. */
+H3DU.BufferedMesh.prototype.getContext=function(){
+ "use strict";
+return this.context;
+};
+/** @private */
+H3DU.BufferedMesh.prototype.getFormat=function(){
+ "use strict";
+ var format=0;
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  var sm=this.subMeshes[i];
+  format|=sm.smb.format;
+ }
+ return format;
+};
+
+/**
+* Binds the buffers in this object to attributes according
+* to their data format, and draws the elements in this mesh
+* according to the data in its buffers.
+* @param {H3DU.ShaderProgram} program A shader program object to get
+* the IDs from for attributes named "position", "normal",
+* "colorAttr", and "uv", and the "useColorAttr" uniform.
+*/
+H3DU.BufferedMesh.prototype.draw=function(program){
+ "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
+  this.subMeshes[i].draw(program);
+ }
+};
+/**
+* Deletes the vertex and index buffers associated with this object.
+*/
+H3DU.BufferedMesh.prototype.dispose=function(){
+ "use strict";
+for(var i=0;i&lt;this.subMeshes.length;i++){
+  this.subMeshes[i].dispose();
+ }
+ this.subMeshes=[];
+};
+/**
+ * @private */
+H3DU.BufferedSubMesh.prototype.dispose=function(){
+ "use strict";
+if(this.verts!==null)
+  this.context.deleteBuffer(this.verts);
+ if(this.indices!==null)
+  this.context.deleteBuffer(this.indices);
+ if(this.vao!==null){
+  this.arrayObjectExt.deleteVertexArrayOES(this.vao);
+ }
+ this.verts=null;
+ this.indices=null;
+ this.smb=null;
+ this.vao=null;
+ this._lastKnownProgram=null;
+ this._attribLocations=[];
+};
+/** @private */
+H3DU.BufferedSubMesh.prototype._getAttribLocations=function(program,context){
+ if(this._lastKnownProgram!=program){
+  this._lastKnownProgram=program;
+  this._attribLocations=[
+    program.get("position"),
+    program.get("normal"),
+    program.get("colorAttr"),
+    program.get("uv"),
+    program.get("tangent"),
+    program.get("bitangent")];
+  for(var i=0;i&lt;6;i++){
+   if(this._attribLocations[i]==null){
+    this._attribLocations[i]=-1;
+   }
+  }
+  return true;
+ }
+ return false;
+}
+
+/**
+ * @private */
+H3DU.BufferedSubMesh.prototype._prepareDraw=function(program, context){
+  var rebind=this._getAttribLocations(program,context);
+  var vaoExt=this._getVaoExtension(context);
+  if(this.vao) {
+   vaoExt.bindVertexArrayOES(this.vao);
+  } else {
+   rebind=true;
+  }
+  if(rebind) {
+   context.bindBuffer(context.ARRAY_BUFFER, this.verts);
+   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.indices);
+   for(var i=0;i&lt;this._attribLocations.length;i++){
+    var attrib=this._attribLocations[i];
+    if(attrib>=0){
+     if(this.smb._attribsUsed[i]>=0){
+      context.enableVertexAttribArray(attrib);
+      context.vertexAttribPointer(attrib, this.smb._sizes[i],
+        context.FLOAT, false,this.smb._stride*4, this.smb._attribsUsed[i]*4);
+     } else {
+      context.disableVertexAttribArray(attrib);
+     }
+    }
+   }
+  }
+  var useColorAttr=(this.smb._attribsUsed[2]>=0) ? 1.0 : 0.0;
+  program.setUniforms({"useColorAttr":useColorAttr});
+}
+/**
+ * @private */
+H3DU.BufferedSubMesh.prototype.draw=function(program){
+  // Binding phase
+  "use strict";
+  var context=program.getContext();
+  if(this.verts===null || this.face===null){
+   throw new Error("mesh buffer disposed");
+  }
+  if(context!==this.context){
+   throw new Error("can't bind mesh: context mismatch");
+  }
+  this._prepareDraw(program,context);
+  // Drawing phase
+  var primitive=context.TRIANGLES;
+  if((this.smb.format&amp;H3DU.Mesh.LINES_BIT)!==0)primitive=context.LINES;
+  if((this.smb.format&amp;H3DU.Mesh.POINTS_BIT)!==0)primitive=context.POINTS;
+  context.drawElements(primitive,
+    this.smb.facesLength,
+    this.type, 0);
+  var vaoExt=this._getVaoExtension(context);
+  if(this.vao) {
+   vaoExt.bindVertexArrayOES(null);
+  }
+};
+/**
+ * Gets the number of vertices composed by all shapes in this mesh.
+* @returns {Number} Return value.*/
+H3DU.BufferedMesh.prototype.vertexCount=function(){
+ "use strict";
+var ret=0;
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  ret+=this.subMeshes[i].smb.numVertices;
+ }
+ return ret;
+};
+/**
+ * Gets the number of primitives (triangles, lines,
+* and points) composed by all shapes in this mesh.
+* @returns {Number} Return value.*/
+H3DU.BufferedMesh.prototype.primitiveCount=function(){
+ "use strict";
+var ret=0;
+ for(var i=0;i&lt;this.subMeshes.length;i++){
+  ret+=this.subMeshes[i].smb.primitiveCount();
+ }
+ return ret;
+};
+
+/** @private */
+H3DU.BufferedMesh._MeshLoader=function(){
+ this.meshes=[]
+}
+/** @private */
+H3DU.BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
+ if(meshBuffer instanceof H3DU.BufferedMesh){
+  // NOTE: Using H3DU.BufferedMesh objects directly in Shapes is deprecated
+  meshBuffer.draw(prog);
+ } else {
+  var context=prog.getContext();
+  for(var i=0;i&lt;this.meshes.length;i++){
+   var m=this.meshes[i];
+   if(m[0]==meshBuffer &amp;&amp; m[1]==context){
+    m[2].draw(prog);
+    return;
+   }
+  }
+  var bm=new H3DU.BufferedMesh(meshBuffer,prog);
+  this.meshes.push([meshBuffer,context,bm]);
+  bm.draw(prog);
+ }
+}
+/** @private */
+H3DU.BufferedMesh._MeshLoader.prototype.dispose=function(){
+  for(var i=0;i&lt;this.meshes.length;i++){
+   this.meshes[i][2].dispose();
+  }
+  this.meshes=[];
+}
+</code></pre>
+        </article>
+    </section>
+
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class=noprint>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

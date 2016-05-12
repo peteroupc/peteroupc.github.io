@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Source: h3du-texture.js</title>
+<meta name="viewport" content="width=device-width">
+<script src="mathml.js"></script>
+<link rel=stylesheet type="text/css" href="/style.css">
+</head>
+<body style="margin-top:0px">
+<div class="header">
+<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+    <h1>Source: h3du-texture.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+*  Specifies a texture, which can serve as image data applied to
+*  the surface of a shape, or even a 2-dimensional array of pixels
+*  used for some other purpose, such as a depth map, a height map,
+*  a bump map, a specular map, and so on.&lt;p>
+* By default, texture coordinates go from (0,0) at the lower left corner
+* to (1,1) at the upper right corner.
+* @class
+* @alias H3DU.Texture
+* @param {String} name URL of the texture data.  Based on the
+* URL, the texture may be loaded via the JavaScript DOM's Image
+* class.  However, this constructor will not load that image yet.
+*/
+H3DU.Texture=function(name){
+ this.image=null;
+ this.loadStatus=0;
+ this.name=name;
+ this.width=0;
+ this.clamp=false;
+ this.height=0;
+};
+
+/**
+* Sets the wrapping behavior of texture coordinates that
+* fall out of range when using this texture.  This setting
+* will only have an effect on textures whose width and height
+* are both powers of two.  For other textures, this setting
+* is ignored and out-of-range texture coordinates are
+* always clamped.
+* @param {Boolean} clamp If true, the texture's texture
+* coordinates will be clamped to the range [0, 1].  If false,
+* the fractional parts of the texture coordinates'
+* be used as the coordinates (causing wraparound).
+* The default is false.
+* @returns {H3DU.Texture} This object.
+*/
+H3DU.Texture.prototype.setClamp=function(clamp){
+ this.clamp=clamp;
+ return this;
+};
+
+/**
+*  Loads a texture by its URL.
+* @param {String} name URL of the texture data.  Images with a TGA
+* extension that use the RGBA or grayscale format are supported.
+* Images supported by the browser will be loaded via
+* the JavaScript DOM's Image class.
+* @param {Object} [textureCache] An object whose keys
+* are the names of textures already loaded.  This will help avoid loading
+* the same texture more than once.  This parameter is optional
+* and may be omitted.
+* @returns {Promise} A promise that resolves when the texture
+* is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
+*/
+H3DU.Texture.loadTexture=function(name, textureCache){
+ // Get cached texture
+ if(textureCache &amp;&amp; textureCache[name]){
+   return Promise.resolve(textureCache[name]);
+ }
+ var texImage=new H3DU.Texture(name);
+ if(textureCache){
+  textureCache[name]=texImage;
+ }
+ // Load new texture and cache it
+ return texImage.loadImage().then(
+  function(result){
+   return result;
+  },
+  function(name){
+    return Promise.reject(name.name);
+  });
+};
+
+/**
+*  Creates a texture from a byte array specifying the texture data.
+* @param {Uint8Array} array A byte array containing the texture data,
+* with the pixels arranged in left-to-right rows from top to bottom.
+* Each pixel takes 4 bytes, where the bytes are the red, green, blue,
+* and alpha components, in that order.
+* @param {Uint8Array} width Width, in pixels, of the texture.
+* @param {Uint8Array} height Height, in pixels, of the texture.
+* @returns {H3DU.Texture} The new H3DU.Texture object.
+*/
+H3DU.Texture.fromUint8Array=function(array, width, height){
+ if(width&lt;0)throw new Error("width less than 0");
+ if(height&lt;0)throw new Error("height less than 0");
+ if(array.length&lt;width*height*4)throw new Error("array too short for texture");
+ var texImage=new H3DU.Texture("");
+ texImage.image=array;
+ texImage.width=Math.ceil(width);
+ texImage.height=Math.ceil(height);
+ texImage.loadStatus=2;
+ return texImage;
+};
+
+/** @private */
+H3DU.Texture.loadTga=function(name){
+ var tex=this;
+ return H3DU.loadFileFromUrl(name,"arraybuffer")
+ .then(function(buf){
+   var view=new DataView(buf.data);
+   var id=view.getUint8(0);
+   var cmaptype=view.getUint8(1);
+   var imgtype=view.getUint8(2);
+   if(imgtype!==2 &amp;&amp; imgtype!==3){
+    return Promise.reject(new Error("unsupported image type"));
+   }
+   var xorg=view.getUint16(8,true);
+   var yorg=view.getUint16(10,true);
+   if(xorg!==0 || yorg!==0){
+    return Promise.reject(new Error("unsupported origins"));
+   }
+   var width=view.getUint16(12,true);
+   var height=view.getUint16(14,true);
+   if(width===0 || height === 0){
+    return Promise.reject(new Error("invalid width or height"));
+   }
+   var pixelsize=view.getUint8(16);
+   if(!(pixelsize===32 &amp;&amp; imgtype === 2) &amp;&amp;
+      !(pixelsize===24 &amp;&amp; imgtype === 2) &amp;&amp;
+      !(pixelsize===8 &amp;&amp; imgtype === 3)){
+    return Promise.reject(new Error("unsupported pixelsize"));
+   }
+   var size=width*height;
+   if(size>buf.data.length){
+    return Promise.reject(new Error("size too big"));
+   }
+   var i;
+   var arr=new Uint8Array(size*4);
+   var offset=18;
+   var io=0;
+   if(pixelsize===32 &amp;&amp; imgtype === 2){
+    for(i=0,io=0;i&lt;size;i++,io+=4){
+     arr[io+2]=view.getUint8(offset);
+     arr[io+1]=view.getUint8(offset+1);
+     arr[io]=view.getUint8(offset+2);
+     arr[io+3]=view.getUint8(offset+3);
+     offset+=4;
+    }
+   } else if(pixelsize===24 &amp;&amp; imgtype === 2){
+    for(i=0,io=0;i&lt;size;i++,io+=4){
+     arr[io+2]=view.getUint8(offset);
+     arr[io+1]=view.getUint8(offset+1);
+     arr[io]=view.getUint8(offset+2);
+     arr[io+3]=0xFF;
+     offset+=3;
+    }
+   } else if(pixelsize===8 &amp;&amp; imgtype === 3){
+    for(i=0,io=0;i&lt;size;i++,io+=4){
+     var col=view.getUint8(offset);
+     arr[io]=col;
+     arr[io+1]=col;
+     arr[io+2]=col;
+     arr[io+3]=0xFF;
+     offset++;
+    }
+   }
+   buf.data=null;
+   return {"width":width,"height":height,"image":arr};
+  });
+};
+
+/** @private */
+H3DU.Texture.prototype.loadImage=function(){
+ if(this.image!==null){
+  // already loaded
+  return Promise.resolve(this);
+ }
+ var thisImage=this;
+ var thisName=this.name;
+ thisImage.loadStatus=1;
+ // Use the TGA image loader if it has the TGA file
+ // extension
+ if((/\.tga$/i).test(thisName)){
+  return H3DU.Texture.loadTga(thisName).then(function(e){
+   thisImage.image=e.image;
+   thisImage.width=e.width;
+   thisImage.height=e.height;
+   thisImage.loadStatus=2;
+   return thisImage;
+  },function(e){
+   thisImage.loadStatus=-1;
+   return Promise.reject({"name":thisName,"error":e});
+  });
+ }
+ return new Promise(function(resolve,reject){
+  var image=new Image();
+  image.onload=function(e) {
+   var target=e.target;
+   thisImage.image=target;
+   thisImage.width=target.width;
+   thisImage.height=target.height;
+   thisImage.loadStatus=2;
+   //console.log("loaded: "+thisName)
+   image.onload=null;
+   image.onerror=null;
+   resolve(thisImage);
+  };
+  image.onerror=function(e){
+   thisImage.loadStatus=-1;
+   //console.log("error: "+thisName)
+   //console.log(e)
+   image.onload=null;
+   image.onerror=null;
+   reject({"name":thisName,"error":e});
+  };
+  image.src=thisName;
+ });
+};
+/**
+ * Disposes resources used by this texture.
+ */
+H3DU.Texture.prototype.dispose=function(){
+ this.width=0;
+ this.height=0;
+ this.name="";
+ if(this.image){
+  if((typeof image.onload !== "undefined" &amp;&amp; image.onload!==null)){
+   image.onload=null;
+  }
+  if((typeof image.onerror !== "undefined" &amp;&amp; image.onerror!==null)){
+   image.onerror=null;
+  }
+ }
+ this.image=null;
+ this.clamp=false;
+ this.loadStatus=0;
+};
+
+/**
+* Gets the name of this texture.
+*/
+H3DU.Texture.prototype.getName=function(){
+ return name;
+}
+</code></pre>
+        </article>
+    </section>
+
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class=noprint>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHfwYJKoZIhvcNAQcEoIIHcDCCB2wCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBTEjVSqAfM9cTLwXVwxBqNI8r1Il0SJNqahKnIJrEIZOdmziEnZsYS8kifxxbWCBrNGl1S/eO5kcMG6WO50eBSxFlNpweevNYIs0dIdfQZtiWcRD2yYzaWHBkHu3PmCCLmc3pPT5QaOc949w2dPcg+syabMOSwN94Mk67Wh//7pTELMAkGBSsOAwIaBQAwgfwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIm7w2yVS0zOeAgdhYAX/keBkbLTGS2k5QcVstRROvRVuMlDL7sy/YUie0YlEJKDFTFE7n6LP15AFfODDattjmqKJ7UZ+6hY9sqJhayUNqdl/rA/RYgPVKGWTM1l68+KFdz2SO3IHvBUJIAwnHFX1JVyNUAofSxWj+3eoN5MnQzskA4cKe/RFWB04oXxZS7/WCOHL3q3mlwFDSK83C3Wcqro7S18YnVxfJ4XGUQ7nlx1C9K0Xq+JbCGEC4D8yjQHzm9w3LqUOogiI3l9VVlXxuqcAdq+iBkAGIt3y4TXABMtXEFG2gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MTAxMzA4NDBaMCMGCSqGSIb3DQEJBDEWBBQImRl0rdSM38l1aTcRhxgiKb7ipTANBgkqhkiG9w0BAQEFAASBgE0IsEWvN+n6QuwDFkBMQO9C4z5uf7wAvoMDgifDKBCyGFmpYZPsKawkYVcS/kASDtyq6aWU3lqP+KweyA+0xfpAyE3R8/7p80uqGGs8bHGicxkl2pEkX95R23HGRa1pEDHFF1XQNkhns558WioFipI2RvmAAEaMgZQ1p+SV/cdu-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

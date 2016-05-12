@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLUtil, Material, Mesh, Promise, ShapeGroup */
+/* global H3DU, Material, H3DU.Mesh, Promise, H3DU.ShapeGroup */
 /**
 OBJ file.<p>
 * <p>This class is considered a supplementary class to the
@@ -36,13 +36,13 @@ this.url=null;
 /**
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
- * @returns {glutil.ShapeGroup} Group of shapes.
+ * @returns {H3DU.ShapeGroup} Group of shapes.
  */
 ObjData.prototype.toShape=function(){
  "use strict";
-var multi=new ShapeGroup();
+var multi=new H3DU.ShapeGroup();
  for(var i=0;i<this.meshes.length;i++){
-  var shape=new Shape(this.meshes[i].data);
+  var shape=new H3DU.Shape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.addShape(shape);
@@ -67,15 +67,15 @@ ObjData.prototype._gatherTextureNames=function(){
  * of the data in this OBJ file.
  * @param {String} name Name from the OBJ file of the portion
  * of the model to use.
- * @returns {glutil.ShapeGroup} Group of shapes. The group
+ * @returns {H3DU.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
  */
 ObjData.prototype.toShapeFromName=function(name){
  "use strict";
-var multi=new ShapeGroup();
+var multi=new H3DU.ShapeGroup();
  for(var i=0;i<this.meshes.length;i++){
   if(this.meshes[i].name!==name)continue;
-  var shape=new Shape(this.meshes[i].data);
+  var shape=new H3DU.Shape(this.meshes[i].data);
   var mat=this._getMaterial(this.meshes[i]);
   shape.setMaterial(mat);
   multi.addShape(shape);
@@ -103,14 +103,14 @@ var ret=path;
 ObjData.prototype._getMaterial=function(mesh){
  "use strict";
 if(!this.mtl || !mesh){
-  return new Material();
+  return new H3DU.Material();
  } else {
   if(mesh.usemtl){
    var mtl=this.mtl.getMaterial(mesh.usemtl);
-   if(!mtl)return new Material();
+   if(!mtl)return new H3DU.Material();
    return mtl;
   } else {
-   return new Material();
+   return new H3DU.Material();
   }
  }
 };
@@ -222,7 +222,7 @@ var shininess=1.0;
  */
 ObjData.loadMtlFromUrl=function(url){
  "use strict";
-return GLUtil.loadFileFromUrl(url).then(
+return H3DU.loadFileFromUrl(url).then(
    function(e){
      var mtl=MtlData._loadMtl(e.data);
      if(mtl.error)return Promise.reject({"url":e.url, "error": mtl.error});
@@ -263,7 +263,7 @@ and is rejected when an error occurs when loading the OBJ file.
 */
 ObjData.loadObjFromUrl=function(url){
  "use strict";
-return GLUtil.loadFileFromUrl(url).then(
+return H3DU.loadFileFromUrl(url).then(
    function(e){
      var obj;
      obj=ObjData._loadObj(e.data);
@@ -449,7 +449,7 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
  var pointStart=new RegExp("^p\\s+");
  var lines=str.split(/\r?\n/);
  var vertices=[];
- var currentMesh=new Mesh();
+ var currentMesh=new H3DU.Mesh();
  var normals=[];
  var uvs=[];
  var faces=[];
@@ -460,7 +460,7 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
  var lastPrimitiveSeen=-1;
  var haveNormals=false;
  var vertexKind=-1;
- var mesh=new Mesh();
+ var mesh=new H3DU.Mesh();
  var objName="";
  var oldObjName="";
  var seenFacesAfterObjName=false;
@@ -499,15 +499,15 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
   var prim=-1;
   e=faceStart.exec(line);
   if(e){
-   prim=Mesh.TRIANGLES;
+   prim=H3DU.Mesh.TRIANGLES;
   } else {
    e=lineStart.exec(line);
    if(e){
-    prim=Mesh.LINES;
+    prim=H3DU.Mesh.LINES;
    } else {
     e=pointStart.exec(line);
     if(e){
-     prim=Mesh.POINTS;
+     prim=H3DU.Mesh.POINTS;
     }
    }
   }
@@ -528,11 +528,11 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
       vertexKind=-1;
       lastPrimitiveSeen=-1;
       haveNormals=false;
-      mesh=new Mesh();
+      mesh=new H3DU.Mesh();
     }
-    mesh.mode(prim===Mesh.TRIANGLES ?
-      Mesh.TRIANGLE_FAN :
-      (prim===Mesh.LINES ? Mesh.LINE_STRIP : Mesh.POINTS));
+    mesh.mode(prim===H3DU.Mesh.TRIANGLES ?
+      H3DU.Mesh.TRIANGLE_FAN :
+      (prim===H3DU.Mesh.LINES ? H3DU.Mesh.LINE_STRIP : H3DU.Mesh.POINTS));
     while(line.length>0){
      e=vertexOnly.exec(line);
      if(e){
@@ -608,7 +608,7 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
         vertexKind=-1;
         lastPrimitiveSeen=-1;
         haveNormals=false;
-        mesh=new Mesh();
+        mesh=new H3DU.Mesh();
       }
       usemtl=e[2];
     } else if(e[1]==="g"){
@@ -625,7 +625,7 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
         lastPrimitiveSeen=-1;
         haveNormals=false;
         usemtl=null;
-        mesh=new Mesh();
+        mesh=new H3DU.Mesh();
       }
       meshName=e[2];
     } else if(e[1]==="o"){

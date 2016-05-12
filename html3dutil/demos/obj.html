@@ -30,9 +30,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new Subscene3D();
+  var sub=new H3DU.Batch3D();
   var loader=new TextureLoader();
   var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5);
   var startfunc=null
@@ -56,7 +56,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
   })
   })
   startfunc()
-  GLUtil.renderLoop(function(){
+  H3DU.renderLoop(function(){
    camera.update();
    sub.getLights().setDirectionalLight(0,camera.getPosition());
    scene.render(sub);

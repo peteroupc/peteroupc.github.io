@@ -6,10 +6,10 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLUtil, Mesh, Promise */
-(function(GLUtil){
+/* global H3DU, H3DU.Mesh, Promise */
+(function(H3DU){
 "use strict";
-if(!GLUtil){ GLUtil={}; }
+if(!H3DU){ H3DU={}; }
 var StlData={};
 /**
 * Loads a .STL file asynchronously.
@@ -20,16 +20,16 @@ var StlData={};
  * class is not included in the "glutil_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
-@alias glutil.GLUtil.loadStlFromUrl
+@alias H3DU.loadStlFromUrl
 @param {String} url The URL to load.
 @returns {Promise} A promise that:
 - Resolves when:
-The .STL file is loaded successfully.  The result is a Mesh object.
+The .STL file is loaded successfully.  The result is an H3DU.Mesh object.
 - Is rejected when:
 An error occurs when loading the .STL file.
 */
-GLUtil.loadStlFromUrl=function(url){
- return GLUtil.loadFileFromUrl(url).then(
+H3DU.loadStlFromUrl=function(url){
+ return H3DU.loadFileFromUrl(url).then(
    function(e){
      var obj;
      obj=StlData._loadStl(e.data);
@@ -66,7 +66,7 @@ StlData._loadStl=function(str){
  var endloop=new RegExp("^\\s*endloop\\s*");
  var endsolid=new RegExp("^\\s*endsolid(?=\\s+.*|$)");
  var lines=str.split(/\r?\n/);
- var mesh=new Mesh();
+ var mesh=new H3DU.Mesh();
  var currentNormal=[];
  var state=StlData.INITIAL;
  var vertexCount=0;
@@ -83,7 +83,7 @@ StlData._loadStl=function(str){
   }
   e=facet.exec(line);
   if(e && state===StlData.IN_SOLID){
-    mesh.mode(Mesh.TRIANGLE_FAN);
+    mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
     mesh.normal3(parseFloat(e[1]),parseFloat(e[2]),parseFloat(e[3]));
     state=StlData.IN_FACET;
     continue;
@@ -118,4 +118,4 @@ StlData._loadStl=function(str){
  }
  return {success: mesh};
 };
-})(GLUtil);
+})(H3DU);

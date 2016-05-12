@@ -35,7 +35,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * @param {number} timeStep Time step for integration.  This is usually
 * a fractional number of seconds.
 */
-GLMath.integrateVerlet=function(particle, timeStep){
+H3DU.Math.integrateVerlet=function(particle, timeStep){
  var x=particle[0];
  var y=particle[1];
  var z=particle[2];
@@ -74,7 +74,7 @@ GLMath.integrateVerlet=function(particle, timeStep){
 * @param {number} timeStep Optimal time step.
 * @return {Array<Number>} The parameter "particle".
 */
-GLMath.initParticle=function(particle,
+H3DU.Math.initParticle=function(particle,
   x, y, z, vx, vy, vz, ax, ay, az, timeStep){
  particle[0]=x;
  particle[1]=y;
@@ -89,7 +89,7 @@ GLMath.initParticle=function(particle,
  particle[9]=timeStep;
  return particle;
 }
-GLMath.constrainPointToBox=function(p, radius, pointIndex, bounds){
+H3DU.Math.constrainPointToBox=function(p, radius, pointIndex, bounds){
  var xmin=bounds[0]+radius;
  var xmax=bounds[3]-radius;
  var ymin=bounds[1]+radius;
@@ -103,7 +103,7 @@ GLMath.constrainPointToBox=function(p, radius, pointIndex, bounds){
 
 function CubicBody(radius, mass, x, y, z){
  this.divmass=1.0/mass;
- this.particle=GLMath.initParticle([],
+ this.particle=H3DU.Math.initParticle([],
    x,y,z,
    0,0,0,
    0,CubicBody.GRAVITY,0,
@@ -122,15 +122,15 @@ CubicBody.prototype.z=function(){
  return this.particle[2];
 }
 CubicBody.prototype.constrainToBox=function(bounds){
- GLMath.constrainPointToBox(this.particle,this.radius,0,bounds);
+ H3DU.Math.constrainPointToBox(this.particle,this.radius,0,bounds);
 }
 CubicBody.prototype.integrate=function(timeStep){
- GLMath.integrateVerlet(this.particle,timeStep);
+ H3DU.Math.integrateVerlet(this.particle,timeStep);
 }
 
 function Particles(scene,count,width,height){
- this.shapes=new ShapeGroup();
- var sphere=new Shape(Meshes.createSphere(1,64,64));
+ this.shapes=new H3DU.ShapeGroup();
+ var sphere=new H3DU.Shape(Meshes.createSphere(1,64,64));
  this.bodies=[];
  this.bounds=[0,0,-5000,width,height,5000];
  for(var i=0;i<count;i++){
@@ -140,7 +140,7 @@ function Particles(scene,count,width,height){
   p[1]=Math.random()*height;
   p[2]=0;
   var scale=(width/100)*mass;
-  GLMath.constrainPointToBox(p,scale,0,this.bounds);
+  H3DU.Math.constrainPointToBox(p,scale,0,this.bounds);
   this.bodies.push(new CubicBody(scale,mass,p[0],p[1],p[2]));
   var shape=sphere.copy();
   shape.setScale(scale,scale,scale);
@@ -163,15 +163,15 @@ Particles.prototype.update=function(time){
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"))
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-   var sub=new Subscene3D();
+   var sub=new H3DU.Batch3D();
    sub.getLights().setDefaults();
    sub.orthoAspect(0,12,0,9,-5000,5000);
   // 12 meters wide and 9 meters high
   var tris=new Particles(sub,10,12,9);
   // Set up the render loop
-  GLUtil.renderLoop(function(time){
+  H3DU.renderLoop(function(time){
    tris.update(time);
    // Render the scene
    scene.render(sub);

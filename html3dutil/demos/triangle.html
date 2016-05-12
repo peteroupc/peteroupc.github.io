@@ -19,10 +19,10 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-  var scene=new Scene3D(document.getElementById("canvas"));
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
-  var sub=new Subscene3D();
-  var mesh=new Mesh()
+  var sub=new H3DU.Batch3D();
+  var mesh=new H3DU.Mesh()
     .mode(Mesh.TRIANGLES)
     .normal3(0,0,1)
     .color3("red")
@@ -31,8 +31,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     .vertex2(0.5,-0.5)
     .color3("blue")
     .vertex2(-0.5,-0.5)
-  sub.addShape(new Shape(mesh).setMaterialParams({basic:true}));
-  GLUtil.renderLoop(function(){
+  sub.addShape(new H3DU.Shape(mesh).setMaterialParams({basic:true}));
+  H3DU.renderLoop(function(){
    scene.render(sub);
   });
 //-->

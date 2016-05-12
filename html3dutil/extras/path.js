@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLMath, define, exports */
+/* global H3DU.Math, define, exports */
 (function (g,f) {
  "use strict";
 if (typeof define==="function" && define.amd) {
@@ -894,7 +894,7 @@ if(this._isClosed){
 * Gets an object for the curves described by this path.
 * The resulting object can be used to retrieve the points
 * that lie on the path or as a parameter for one of
-* the {@link CurveEval} methods, in the
+* the {@link H3DU.CurveEval} methods, in the
 * {@link CurveTube} class, or any other class that
 * accepts parametric curves.<p>
 * The return value doesn't track changes to the path.
@@ -1663,7 +1663,7 @@ GraphicsPath.prototype.transform=function(trans){
      ret.segments.push(s)
      break
     }
-    var curves=GLMath.arcToBezierCurves(s[10],s[11],s[3],s[4],s[5],s[12],s[13]);
+    var curves=H3DU.Math.arcToBezierCurves(s[10],s[11],s[3],s[4],s[5],s[12],s[13]);
     curves[0][0]=s[1]
     curves[0][1]=s[2]
     curves[curves.length-1][6]=s[8]

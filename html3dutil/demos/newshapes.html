@@ -24,29 +24,29 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new Subscene3D();
+  var sub=new H3DU.Batch3D();
   var loader=new TextureLoader();
   sub.getLights().setDirectionalLight(0,[0,-3,1.2],[1,1,1])
   sub.getLights().setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
   loader.loadAndMapTexturesAll(["461223191.jpg"],scene).then(function(results){
    var mesh=null
    sub.addShape(
-    new Shape(makeFloor(-5,-5,10,10,1)).setTexture(results[0]))
+    new H3DU.Shape(makeFloor(-5,-5,10,10,1)).setTexture(results[0]))
    mesh=Meshes.createSphere(0.5)
-   sub.addShape(new Shape(mesh).setColor("red").setPosition(1.5,0,0.5));
+   sub.addShape(new H3DU.Shape(mesh).setColor("red").setPosition(1.5,0,0.5));
    mesh=Meshes.createClosedCylinder(0.5,0.5,1)
-   sub.addShape(new Shape(mesh).setColor("yellow").setPosition(0,1.5,0));
+   sub.addShape(new H3DU.Shape(mesh).setColor("yellow").setPosition(0,1.5,0));
    mesh=Meshes.createCylinder(0.5,0,1)
-   sub.addShape(new Shape(mesh).setColor("blue").setPosition(0,-1.5,0));
+   sub.addShape(new H3DU.Shape(mesh).setColor("blue").setPosition(0,-1.5,0));
    mesh=Meshes.createTorus(0.2,0.5)
-   sub.addShape(new Shape(mesh).setColor("rebeccapurple").setPosition(-1.5,0,0.2));
+   sub.addShape(new H3DU.Shape(mesh).setColor("rebeccapurple").setPosition(-1.5,0,0.2));
   })
   var anim=null
   var timer={}
   var fc=new FrameCounterDiv(scene)
-  GLUtil.renderLoop(function(time){
+  H3DU.renderLoop(function(time){
    sub.perspectiveAspect(45,1,1000)
    var angle=360*GLUtil.getTimePosition(timer,time,6000)
    sub.setLookAt(rotateVec([0,-3,1.2],angle),[0,0,0],[0,0,1])

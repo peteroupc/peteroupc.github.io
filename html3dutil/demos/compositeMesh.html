@@ -33,9 +33,9 @@ function arrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
  var base=Meshes.createDisk(0,shaftRadius,slices,1,true);
  var pointerBase=Meshes.createDisk(shaftRadius,pointerRadius,slices,1,true);
  // move the pointer base to the top of the shaft
- pointerBase.transform(GLMath.mat4translated(0,0,shaftLength));
+ pointerBase.transform(H3DU.Math.mat4translated(0,0,shaftLength));
  // move the pointer to the top of the shaft
- pointer.transform(GLMath.mat4translated(0,0,shaftLength));
+ pointer.transform(H3DU.Math.mat4translated(0,0,shaftLength));
  // merge the four parts of the arrow
  return shaft.merge(base).merge(pointer).merge(pointerBase);
 }
@@ -53,18 +53,18 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
  base.setColor3("red");
  pointerBase.setColor3("blue");
  // move the pointer base to the top of the shaft
- pointerBase.transform(GLMath.mat4translated(0,0,shaftLength));
+ pointerBase.transform(H3DU.Math.mat4translated(0,0,shaftLength));
  // move the pointer to the top of the shaft
- pointer.transform(GLMath.mat4translated(0,0,shaftLength));
+ pointer.transform(H3DU.Math.mat4translated(0,0,shaftLength));
  // merge the four parts of the arrow
  return shaft.merge(base).merge(pointer).merge(pointerBase);
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"))
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
     .setClearColor("white");
-  var sub=new Subscene3D()
+  var sub=new H3DU.Batch3D()
    // Set the perspective view.  Camera has a 45-degree field of view
    // and will see objects from 0.1 to 100 units away.
    .perspectiveAspect(45,0.1,100)
@@ -75,8 +75,8 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
   var mesh1=multiColoredArrow(10,2,1,2);
   var mesh2=arrow(10,2,1,2);
   // Create a shape based on the mesh and give it a red color
-  var shape1=new Shape(mesh1)
-  var shape2=new Shape(mesh2).setColor("green")
+  var shape1=new H3DU.Shape(mesh1)
+  var shape2=new H3DU.Shape(mesh2).setColor("green")
   // Add the shape to the scene
   sub.addShape(shape1);
   // Set the starting rotation
@@ -84,9 +84,9 @@ function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadiu
   // Create a timer
   var timer={};
   // Set up the render loop
-  GLUtil.renderLoop(function(time){
+  H3DU.renderLoop(function(time){
    // Update the shape's rotation
-   var q=GLMath.quatFromTaitBryan(
+   var q=H3DU.Math.quatFromTaitBryan(
      360*GLUtil.getTimePosition(timer,time,6000),
      360*GLUtil.getTimePosition(timer,time,12000),
      0

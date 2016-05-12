@@ -6,10 +6,10 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLUtil, Mesh, Promise */
+/* global H3DU, H3DU.Mesh, Promise */
 (function(exports){
 "use strict";
-if(!GLUtil){ GLUtil={}; }
+if(!H3DU){ H3DU={}; }
 
 /**
 * Renderer for drawing text using bitmap fonts.  This class supports
@@ -47,11 +47,11 @@ if(!GLUtil){ GLUtil={}; }
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
 * @class
 * @alias TextRenderer
-* @param {glutil.Scene3D|glutil.Subscene3D} scene 3D scene to load font textures with.
+* @param {H3DU.Scene3D} scene 3D scene to load font textures with.
 */
 function TextRenderer(scene){
  this.scene=scene;
- this.shader=new ShaderInfo(null,TextRenderer._textShader());
+ this.shader=new H3DU.ShaderInfo(null,TextRenderer._textShader());
  this.fontTextures=[]
 }
 /** @private */
@@ -86,18 +86,18 @@ TextRenderer.prototype._setFontTextures=function(font,textureList){
 * @param {string|Array<Number>} [color] The color to draw the text with.
 * An array of three or
 * four color components; or a string
-* specifying an [HTML or CSS color]{@link glutil.GLUtil.toGLColor}.
+* specifying an [HTML or CSS color]{@link H3DU.toGLColor}.
 * If null or omitted, the bitmap font is assumed to be a signed distance field
 * font.
 */
 TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
- var group=new ShapeGroup();
+ var group=new H3DU.ShapeGroup();
  var fontTextures=this._getFontTextures(font);
  var meshesForPage=font.makeShapeMeshes(str,xPos,yPos,height);
  for(var i=0;i<meshesForPage.length;i++){
   var mfp=meshesForPage[i];
   if(!mfp || !fontTextures[i])continue;
-  var sh=new Shape(mfp);
+  var sh=new H3DU.Shape(mfp);
   var material=new Material(
      color||[0,0,0,0],
      color||[0,0,0,0]).setParams({
@@ -129,7 +129,7 @@ TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
 TextRenderer.prototype.loadFont=function(fontFileName){
  var thisObject=this;
  // TODO: Don't rely on an instance variable
- // treated as private; maybe take TextureLoader instead
+ // treated as private; maybe take H3DU.TextureLoader instead
  var loader=this.scene._textureLoader;
  return TextFont.loadWithTextures(fontFileName,loader)
    .then(function(f){
@@ -281,10 +281,10 @@ TextFont.prototype.makeShapeMeshes=function(str,xPos,yPos,height){
    var vy2=vy+ch.height*scale;
    var chMesh=meshesForPage[ch.page];
    if(!chMesh){
-    chMesh=new Mesh();
+    chMesh=new H3DU.Mesh();
     meshesForPage[ch.page]=chMesh;
    }
-   chMesh.mode(Mesh.TRIANGLE_STRIP)
+   chMesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
      .texCoord2(sx,1-sy)
      .vertex2(vx,vy)
      .texCoord2(sx,1-sy2)
@@ -629,7 +629,7 @@ TextFont._loadTextFontInner=function(data){
 * <li>".bin": Binary</li>
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
- * @param {glutil.TextureLoader} textureLoader
+ * @param {H3DU.TextureLoader} textureLoader
 * @returns {Promise} A promise that is resolved
 * when the font data and textures are loaded successfully (the result will be
 * a TextFont object), and is rejected when an error occurs.
@@ -670,13 +670,13 @@ TextFont.loadWithTextures=function(fontFileName,textureLoader){
 */
 TextFont.load=function(fontFileName){
  if((/\.xml$/i.exec(fontFileName))){
-  return GLUtil.loadFileFromUrl(fontFileName,"xml").then(
+  return H3DU.loadFileFromUrl(fontFileName,"xml").then(
    function(data){
     var ret=TextFont._loadXmlFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  } else if((/\.bin$/i.exec(fontFileName))){
-  return GLUtil.loadFileFromUrl(fontFileName,"arraybuffer").then(
+  return H3DU.loadFileFromUrl(fontFileName,"arraybuffer").then(
    function(data){
     var ret=TextFont._loadBinaryFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
@@ -684,7 +684,7 @@ TextFont.load=function(fontFileName){
     console.log(e)
    })
  } else if((/\.fnt$/i.exec(fontFileName))){
-  return GLUtil.loadFileFromUrl(fontFileName,"arraybuffer").then(
+  return H3DU.loadFileFromUrl(fontFileName,"arraybuffer").then(
    function(data){
     var view=new DataView(data.data)
     var ret=null;
@@ -698,20 +698,20 @@ TextFont.load=function(fontFileName){
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  } else if((/\.json$/i.exec(fontFileName))){
-  return GLUtil.loadFileFromUrl(fontFileName,"json").then(
+  return H3DU.loadFileFromUrl(fontFileName,"json").then(
    function(data){
     var ret=TextFont._loadJsonFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  } else {
-  return GLUtil.loadFileFromUrl(fontFileName).then(
+  return H3DU.loadFileFromUrl(fontFileName).then(
    function(data){
     var ret=TextFont._loadTextFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  }
 }
-
+/** @private */
 TextRenderer._textShader=function(){
 "use strict";
 var i;
@@ -719,7 +719,7 @@ var shader=""
 shader+="#ifdef GL_OES_standard_derivatives\n"
 shader+="#extension GL_OES_standard_derivatives : enable\n"
 shader+="#endif\n"
-shader+=ShaderProgram.fragmentShaderHeader() +
+shader+=H3DU.ShaderProgram.fragmentShaderHeader() +
 "uniform vec4 md;\n" +
 "uniform sampler2D sampler;\n" +
 "varying vec2 uvVar;\n"+

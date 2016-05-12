@@ -1,4 +1,4 @@
-/* global GLMath */
+/* global H3DU.Math */
 /**
 * Represents a knot in the form of the Fourier series<p>
 * <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) +  <b>b</b> sin(<i>iu</i>).<p>
@@ -14,7 +14,7 @@ this.a=a; // Cosine coefficients
   throw new Error("a and b must be the same length");
  }
  this.evaluate=function(u){
-  u*=GLMath.PiTimes2;
+  u*=H3DU.Math.PiTimes2;
   var ret=[0,0,0];
   for(var i=0;i<this.a.length;i++){
    var iu=(i+1)*u;

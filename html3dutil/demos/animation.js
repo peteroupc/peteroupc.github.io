@@ -1,10 +1,10 @@
 function createWasher(inner,outer,height,slices){
-      var innerCylinder=Meshes.createCylinder(inner,inner,height,slices,1,false,true);
-      var outerCylinder=Meshes.createCylinder(outer,outer,height,slices,1,false,false);
-      var base=Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
-      var top=Meshes.createDisk(inner,outer,slices,2,false);
+      var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
+      var outerCylinder=H3DU.Meshes.createCylinder(outer,outer,height,slices,1,false,false);
+      var base=H3DU.Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
+      var top=H3DU.Meshes.createDisk(inner,outer,slices,2,false);
       // move the top disk to the top of the cylinder
-      top.transform(GLMath.mat4translated(0,0,height));
+      top.transform(H3DU.Math.mat4translated(0,0,height));
       // merge the base and the top
       return innerCylinder.merge(outerCylinder).merge(base).merge(top);
     }
@@ -167,7 +167,7 @@ Animator.prototype.update=function(time){
   } else {
    // in progress
    var t=(time-a[2])/(a[3]-a[2]);
-   this.shape.setPosition(GLMath.vec3lerp(a[0],a[1],t));
+   this.shape.setPosition(H3DU.Math.vec3lerp(a[0],a[1],t));
   }
  }
  for(var i=0;i<this.visibleAnim.length;i++){
@@ -185,7 +185,7 @@ Animator.prototype.update=function(time){
 
 function makeFloor(xStart,yStart,width,height,tileSize,z){
  if(z==null)z=0.0
- var mesh=new Mesh()
+ var mesh=new H3DU.Mesh()
  var tilesX=Math.ceil(width/tileSize)
  var tilesY=Math.ceil(height/tileSize)
  var lastY=(height-(tilesY*tileSize))/tileSize
@@ -199,7 +199,7 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
   for(var x=0;x<tilesX;x++){
    var endX=(x==tilesX-1) ? lastX : 1.0
    var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
-   mesh.mode(Mesh.TRIANGLE_STRIP)
+   mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
      .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
      .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
      .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
@@ -210,6 +210,6 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
 }
 
 function rotateVec(vec,angle){
- return GLMath.mat4transformVec3(
-   GLMath.mat4rotated(angle,0,0,1),vec);
+ return H3DU.Math.mat4transformVec3(
+   H3DU.Math.mat4rotated(angle,0,0,1),vec);
 }

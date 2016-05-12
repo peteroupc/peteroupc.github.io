@@ -55,7 +55,7 @@ if(typeof Math.sign=="undefined"){
     // Default resolution is 50
     if(resolution==null)resolution=50
      // create a new mesh
-     var mesh=new Mesh();
+     var mesh=new H3DU.Mesh();
      // define a color gradient evaluator for
      // demonstration purposes.  Instead of X, Y, and Z,
      // generate a Red/Green/Blue color based on
@@ -82,11 +82,11 @@ if(typeof Math.sign=="undefined"){
     // or Mesh.POINTS to create a point mesh.
       .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
     // Surface generated, return the mesh
-    var otherWinding=new Mesh().merge(mesh).reverseWinding().reverseNormals();
+    var otherWinding=new H3DU.Mesh().merge(mesh).reverseWinding().reverseNormals();
     return mesh.merge(otherWinding);
   }
 
-var shapeGroup=new ShapeGroup();
+var shapeGroup=new H3DU.ShapeGroup();
 var allsettings={
 "current":0,
 "custom-x":"cos(v)*cos(u)",
@@ -110,12 +110,12 @@ function updateMesh(){
       allsettings["custom-minv"],
       allsettings["custom-maxv"]
     )
-    if(!cs.evaluate)return new Mesh()
+    if(!cs.evaluate)return new H3DU.Mesh()
     document.getElementById("sourceCode").value=cs.getCode();
    return makeMesh(new CurveTube(cs),70);
     }
     default:
-   return new Mesh();
+   return new H3DU.Mesh();
  }
 }
 
@@ -209,16 +209,16 @@ function link0(){
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new Scene3D(document.getElementById("canvas"));
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
   scene.cullFace(Scene3D.FRONT)
-  var sub=new Subscene3D()
+  var sub=new H3DU.Batch3D()
   var camera=new Camera(sub,45,1,100, scene.getCanvas());
   camera.setDistance(5);
   var pc=new PrimitiveCounter(sub)
   link0();
   sub.addShape(shapeGroup);
-  GLUtil.renderLoop(function(){
+  H3DU.renderLoop(function(){
    pc.update();
    camera.update();
    sub.getLights().setDirectionalLight(0,camera.getPosition());

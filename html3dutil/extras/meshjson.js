@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLUtil, JSON, Material, Mesh, Promise, ShapeGroup */
+/* global H3DU, JSON, Material, H3DU.Mesh, Promise, H3DU.ShapeGroup */
 /**
 * JSON exporter of graphics meshes.
 * <p>This class is considered a supplementary class to the
@@ -39,7 +39,7 @@ var ret=path;
 };
 /**
 * Converts a mesh to JSON format.
-* @param {glutil.Mesh} mesh A mesh object, as used
+* @param {H3DU.Mesh} mesh A mesh object, as used
 * in the Public Domain HTML 3D Library.
 * @returns {String} A JSON string describing the mesh.
 */
@@ -206,7 +206,7 @@ var shininess=1.0;
  if(mtl.hasOwnProperty("colorSpecular")){
   specular=(mtl.colorSpecular);
  }
- var ret=new Material(ambient,diffuse,specular,shininess,
+ var ret=new H3DU.Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
   ret=ret.setParams({
@@ -231,9 +231,9 @@ MeshJSON._Model=function(mesh){
 this.meshes=[mesh];
  this.materials=[null];
  this.toShape=function(){
-  var group=new ShapeGroup();
+  var group=new H3DU.ShapeGroup();
   for(var i=0;i<this.meshes.length;i++){
-   var shape=new Shape(this.meshes[i]);
+   var shape=new H3DU.Shape(this.meshes[i]);
    if(this.materials[i])shape.setMaterial(this.materials[i]);
    group.addShape(shape);
   }
@@ -249,11 +249,11 @@ this.meshes=[mesh];
 };
 /**
 * Loads a mesh from JSON format.
-* @param {glutil.Mesh} mesh A mesh object, as used
+* @param {H3DU.Mesh} mesh A mesh object, as used
 * in the Public Domain HTML 3D Library.
 * @returns {Promise} A promise that, when resolved, exposes an object
 * that implements the following property:
-* <ul><li><code>toShape()</code> - Gets a {@link glutil.ShapeGroup}
+* <ul><li><code>toShape()</code> - Gets a {@link H3DU.ShapeGroup}
 * describing the 3D mesh.
 * </ul>
 */
@@ -265,9 +265,9 @@ function convHexColor(c){
     ((c>>8)&0xFF)/255.0,
      ((c)&0xFF)/255.0];
   }
-  return GLUtil.getGLColor(c);
+  return H3DU.getGLColor(c);
  }
- return GLUtil.loadFileFromUrl(url,"json").then(function(f){
+ return H3DU.loadFileFromUrl(url,"json").then(function(f){
   var json=f.data;
   var i,ret;
   if(!json.vertices)return Promise.reject(new Error("invalid JSON: no verts"));
@@ -282,10 +282,10 @@ function convHexColor(c){
      verts.push(json.normals[i+1]);
      verts.push(json.normals[i+2]);
     }
-    ret=new MeshJSON._Model(new Mesh(verts,json.indices,Mesh.NORMALS_BIT));
+    ret=new MeshJSON._Model(new H3DU.Mesh(verts,json.indices,H3DU.Mesh.NORMALS_BIT));
     return ret;
    } else {
-    return new MeshJSON._Model(new Mesh(json.vertices,json.indices));
+    return new MeshJSON._Model(new H3DU.Mesh(json.vertices,json.indices));
    }
   } else if(json.faces){
    var meshes=[];
@@ -294,10 +294,10 @@ function convHexColor(c){
    if(json.materials && json.materials.length>0){
     for(i=0;i<json.materials.length;i++){
      materials.push(MeshJSON._getJsonMaterial(f.url,json.materials[i]));
-     meshes[i]=new Mesh().mode(Mesh.TRIANGLES);
+     meshes[i]=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES);
     }
    } else {
-    meshes[0]=new Mesh().mode(Mesh.TRIANGLES);
+    meshes[0]=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES);
     materials[0]=null;
    }
    var quadIndices=[0,1,3,2,3,1];

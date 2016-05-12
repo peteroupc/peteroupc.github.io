@@ -1,4 +1,4 @@
-/* global Material, Mesh, MeshJSON, SurfaceEval, alert, allsettings, shapeGroup */
+/* global Material, H3DU.Mesh, MeshJSON, H3DU.SurfaceEval, alert, allsettings, shapeGroup */
 function formulaEditorHelp(){
 "use strict";
 if(typeof alert!=="undefined"){
@@ -124,7 +124,7 @@ var settings=document.getElementById("settings-link");
     }
   }
   shapeGroup.removeShape(shapeGroup.shapes[0]);
-  shapeGroup.addShape(new Shape(func(allsettings)).setMaterial(
+  shapeGroup.addShape(new H3DU.Shape(func(allsettings)).setMaterial(
     new Material().setParams({
      "diffuse":"black",
      "specular":"white",
@@ -167,7 +167,7 @@ if((resolutionV===null || typeof resolutionV==="undefined"))resolutionV=resoluti
     if((resolutionU===null || typeof resolutionU==="undefined"))resolutionU=50;
     if((resolutionV===null || typeof resolutionV==="undefined"))resolutionV=50;
      // create a new mesh
-     var mesh=new Mesh();
+     var mesh=new H3DU.Mesh();
      // define a color gradient evaluator for
      // demonstration purposes.  Instead of X, Y, and Z,
      // generate a Red/Green/Blue color based on
@@ -178,7 +178,7 @@ if((resolutionV===null || typeof resolutionV==="undefined"))resolutionV=resoluti
      };
      // generate the parametric surface.
 
-     var ev=new SurfaceEval()
+     var ev=new H3DU.SurfaceEval()
       .vertex(func)
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
@@ -189,10 +189,10 @@ if((resolutionV===null || typeof resolutionV==="undefined"))resolutionV=resoluti
     // mesh, using resolution+1 different U-coordinates ranging
     // from 0 to 1, and resolution+1
     // different V-coordinates ranging from 0 to 1
-    // Instead of Mesh.TRIANGLES, we could use
-    // Mesh.LINES to create a wireframe mesh,
-    // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,Mesh.TRIANGLES,resolutionU,resolutionV);
+    // Instead of H3DU.Mesh.TRIANGLES, we could use
+    // H3DU.Mesh.LINES to create a wireframe mesh,
+    // or H3DU.Mesh.POINTS to create a point mesh.
+      .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolutionU,resolutionV);
     // Surface generated, return the mesh
     return mesh;
   }

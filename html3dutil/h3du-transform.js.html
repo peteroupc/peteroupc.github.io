@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Source: h3du-transform.js</title>
+<meta name="viewport" content="width=device-width">
+<script src="mathml.js"></script>
+<link rel=stylesheet type="text/css" href="/style.css">
+</head>
+<body style="margin-top:0px">
+<div class="header">
+<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+    <h1>Source: h3du-transform.js</h1>
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
+*/
+/* global H3DU.Math */
+/**
+*  A class offering a convenient way to set a transformation
+* from one coordinate system to another.
+* @class
+* @alias H3DU.Transform
+*/
+H3DU.Transform = function(){
+  /** @private */
+  "use strict";
+this.scale=[1,1,1];
+  /** @private */
+  this.position=[0,0,0];
+  /** @private */
+  this.rotation=H3DU.Math.quatIdentity();
+  /** @private */
+  this.complexMatrix=false;
+  /** @private */
+  this._matrixDirty=false;
+  /** @private */
+  this._isIdentity=true;
+  /** @private */
+  this.matrix=H3DU.Math.mat4identity();
+}
+  /**
+  * Returns a copy of a three-element array giving the scaling for an object's width,
+  * height, and depth, respectively.
+  * For each component, 1 means no scaling.
+  * @returns {Array&lt;Number>} Return value.   */
+H3DU.Transform.prototype.getScale=function(){
+ "use strict";
+if(!this.complexMatrix){
+  return this.scale.slice(0,3);
+ } else {
+  return [this.matrix[0],this.matrix[5],this.matrix[10]];
+ }
+};
+  /**
+  * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+  * of an object relative to its original position.
+  * @returns {Array&lt;Number>} Return value.   */
+H3DU.Transform.prototype.getPosition=function(){
+ "use strict";
+if(!this.complexMatrix){
+  return this.position.slice(0,3);
+ } else {
+  return [this.matrix[12],this.matrix[13],this.matrix[14]];
+ }
+};
+  /**
+   * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
+   * @returns {Array&lt;Number>} Return value.   */
+H3DU.Transform.prototype.getQuaternion=function(){
+ "use strict";
+if(!this.complexMatrix){
+  return this.rotation.slice(0,4);
+ } else {
+  return H3DU.Math.quatNormInPlace(
+    H3DU.Math.quatFromMat4(this.matrix));
+ }
+};
+/**
+* Resets this shape to the untransformed state.
+* @returns {H3DU.Shape} This object.
+*/
+H3DU.Transform.prototype.reset=function(){
+ "use strict";
+this.matrix=H3DU.Math.mat4identity();
+ this.position=[0,0,0];
+ this.scale=[1,1,1];
+ this.rotation=H3DU.Math.quatIdentity();
+ this.complexMatrix=false;
+ this._matrixDirty=false;
+ this._isIdentity=true;
+ return this;
+};
+/**
+ * Sets this shape's transformation matrix. This method
+ * will set the position, rotation, and scale properties
+ * accordingly to the matrix given.
+ * @param {Array&lt;Number>} value A 4x4 matrix.
+ * This method will copy the value of this parameter.
+ * @returns {H3DU.Transform} This object.
+ */
+H3DU.Transform.prototype.setMatrix=function(value){
+ "use strict";
+this._matrixDirty=false;
+ this.complexMatrix=true;
+ this.matrix=value.slice(0,16);
+ this.position=[this.matrix[12],this.matrix[13],this.matrix[14]];
+ this.rotation=H3DU.Math.quatFromMat4(this.matrix);
+ this.rotation=H3DU.Math.quatNormInPlace(this.rotation);
+ this.scale=[this.matrix[0],this.matrix[5],this.matrix[10]];
+ this._isIdentity=(
+    value[0]===1 &amp;&amp; value[1] === 0 &amp;&amp; value[2] === 0 &amp;&amp; value[3] === 0 &amp;&amp;
+    value[4]===0 &amp;&amp; value[5] === 1 &amp;&amp; value[6] === 0 &amp;&amp; value[7] === 0 &amp;&amp;
+    value[8]===0 &amp;&amp; value[9] === 0 &amp;&amp; value[10] === 1 &amp;&amp; value[11] === 0 &amp;&amp;
+    value[12]===0 &amp;&amp; value[13] === 0 &amp;&amp; value[14] === 0 &amp;&amp; value[15] === 1
+ );
+ return this;
+};
+/**
+ * Returns whether this transform is the identity transform.
+ * @returns {Boolean} Return value. */
+H3DU.Transform.prototype.isIdentity=function(){
+ "use strict";
+if(this._matrixDirty){
+  if(this.complexMatrix){
+   this.getMatrix();
+  } else {
+   return this.position[0]===0 &amp;&amp; this.position[1] === 0 &amp;&amp;
+    this.position[2]===0 &amp;&amp; this.scale[0] === 1 &amp;&amp;
+    this.scale[1]===1 &amp;&amp; this.scale[2] === 1 &amp;&amp;
+    H3DU.Math.quatIsIdentity(this.rotation);
+  }
+ }
+ return this._isIdentity;
+};
+/**
+* Resets this transform to the untransformed state.
+* (Same as "reset"; use that method instead.)
+* @returns {H3DU.Transform} This object.
+*/
+H3DU.Transform.prototype.resetTransform=function(){
+ "use strict";
+ return this.resetTransform();
+};
+/**
+ * Sets the scale of an object relative to its original
+ * size. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @param {number|Array&lt;Number>} x Scaling factor for this object's width.
+ *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the scaling factors
+ * for width, height, and depth, respectively, or a single number
+ * giving the scaling factor for all three dimensions.
+ * @param {Number} y Scaling factor for this object's height.
+ * @param {Number} z Scaling factor for this object's depth.
+* @returns {H3DU.Transform} This object.
+ */
+H3DU.Transform.prototype.setScale=function(x,y,z){
+  "use strict";
+if(this.complexMatrix)return this;
+  if((x!==null &amp;&amp; typeof x!=="undefined") &amp;&amp; (y===null || typeof y==="undefined") &amp;&amp; (z===null || typeof z==="undefined")){
+   if(typeof x!=="number")
+    this.scale=[x[0],x[1],x[2]];
+   else
+    this.scale=[x,x,x];
+  } else {
+   this.scale=[x,y,z];
+  }
+  this._isIdentity=(this._isIdentity &amp;&amp;
+   this.scale[0]===1 &amp;&amp;
+   this.scale[1]===1 &amp;&amp;
+   this.scale[2]===1);
+  this._matrixDirty=true;
+  return this;
+};
+/**
+ * Sets the relative position of an object from its original
+ * position.  Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @param {Array&lt;Number>|number} x The X-coordinate.
+ *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
+ * @param {Number} y The Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {Number} z The Z-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @returns {H3DU.Transform} This object.
+ */
+H3DU.Transform.prototype.setPosition=function(x,y,z){
+  "use strict";
+if(this.complexMatrix)return this;
+  if((x!==null &amp;&amp; typeof x!=="undefined") &amp;&amp; (y===null || typeof y==="undefined") &amp;&amp; (z===null || typeof z==="undefined")){
+   if(typeof x!=="number")
+    this.position=[x[0],x[1],x[2]];
+   else
+    this.position=[x,x,x];
+  } else {
+   this.position=[x,y,z];
+  }
+  this._isIdentity=(this._isIdentity &amp;&amp;
+   this.position[0]===0 &amp;&amp;
+   this.position[1]===0 &amp;&amp;
+   this.position[2]===0);
+  this._matrixDirty=true;
+  return this;
+};
+
+/**
+ * Moves the relative position of an object from its original
+ * position.  Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @param {Array&lt;Number>|number} x Number to add to the X-coordinate,
+ *   If "y" and "z" are null or omitted, this is instead
+ *  a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number
+ * to add to all three coordinates.
+ * @param {Number} y Number to add to the Y-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {Number} z Number to add to the Z-coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @returns {H3DU.Transform} This object.
+ */
+H3DU.Transform.prototype.movePosition=function(x,y,z){
+  "use strict";
+if(this.complexMatrix)return this;
+  if((x!==null &amp;&amp; typeof x!=="undefined") &amp;&amp; (y===null || typeof y==="undefined") &amp;&amp; (z===null || typeof z==="undefined")){
+   if(typeof x!=="number"){
+    this.position[0]+=x[0];
+    this.position[1]+=x[1];
+    this.position[2]+=x[2];
+   } else {
+    this.position[0]+=x;
+    this.position[1]+=x;
+    this.position[2]+=x;
+   }
+  } else {
+    this.position[0]+=x;
+    this.position[1]+=y;
+    this.position[2]+=z;
+  }
+  this._isIdentity=(this._isIdentity &amp;&amp;
+   this.position[0]===0 &amp;&amp;
+   this.position[1]===0 &amp;&amp;
+   this.position[2]===0);
+  this._matrixDirty=true;
+  return this;
+};
+/**
+ * Sets this object's orientation in the form of a [quaternion]{@tutorial glmath} (a 4-element array
+ * for describing 3D rotations). Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @param {Array&lt;Number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.H3DU.Math.quatFromAxisAngle}
+ * and {@link glmath.H3DU.Math.quatFromTaitBryan}, among others.
+ * @returns {H3DU.Transform} This object.
+ * @example
+ * // Set an object's orientation to 30 degrees about the X-axis
+ * transform.setQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
+ * // Set an object's orientation to identity (no rotation)
+ * transform.setQuaternion(H3DU.Math.quatIdentity());
+ * // Set an object's orientation to 30 degree pitch multiplied
+ * // by 40 degree roll
+ * transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
+ */
+H3DU.Transform.prototype.setQuaternion=function(quat){
+  "use strict";
+if(this.complexMatrix)return this;
+  this.rotation=quat.slice(0,4);
+  H3DU.Math.quatNormInPlace(this.rotation);
+  this._matrixDirty=true;
+  return this;
+};
+/**
+ * Sets this object's orientation in the form of an angle and an axis of
+ * rotation. Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @param {Array&lt;Number>|number} angle The desired angle
+ * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
+ * instead be a 4-element array giving the axis
+ * of rotation as the first three elements, followed by the angle
+ * in degrees as the fourth element.  If the axis of rotation
+ * points toward the viewer, a positive value means the angle runs in
+ * a counterclockwise direction for right-handed coordinate systems and
+ * in a clockwise direction for left-handed systems.
+ * @param {Array&lt;Number>|number} v X-component of the point lying on the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {Number} vy Y-component of the point lying on the axis
+ * of rotation.
+ * @param {Number} vz Z-component of the point lying on the axis
+ * of rotation.
+ * @returns {H3DU.Transform} This object.
+ */
+H3DU.Transform.prototype.setOrientation=function(angle, v,vy,vz){
+ "use strict";
+return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
+};
+/**
+ * Combines an object's current rotation with another rotation
+ * described by a [quaternion]{@tutorial glmath} (a 4-element array
+ * for describing 3D rotations).  The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ *  Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @param {Array&lt;Number>} quat A four-element array describing the rotation.
+ * A quaternion is returned from the methods {@link glmath.H3DU.Math.quatFromAxisAngle}
+ * or {@link glmath.H3DU.Math.quatFromTaitBryan}.
+ * @returns {H3DU.Transform} This object.
+ * @example
+ * // Combine an object's orientation with a rotation 20 degrees about the X-axis
+ * transform.multQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
+ * // Combine an object's orientation with identity (no rotation)
+ * transform.multQuaternion(H3DU.Math.quatIdentity());
+ * // Combine an object's orientation with 30 degree pitch multiplied
+ * // by 40 degree roll
+ * transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
+ */
+H3DU.Transform.prototype.multQuaternion=function(quat){
+  "use strict";
+if(this.complexMatrix)return this;
+  this.rotation=H3DU.Math.quatNormInPlace(
+   H3DU.Math.quatMultiply(this.rotation,quat));
+  this._matrixDirty=true;
+  return this;
+};
+/**
+ * Combines an object's current rotation with another rotation
+ * in the form of an angle and an axis of
+ * rotation. The combined rotation will have the
+ * same effect as the new rotation followed by the existing rotation.
+ *  Has no effect if a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @param {Array&lt;Number>|number} angle The desired angle
+ * to rotate in degrees. See {@link H3DU.Transform#setOrientation}.
+ * @param {Array&lt;Number>|number} v X-component of the point lying on the axis
+ * of rotation.  If "vy" and "vz" are omitted, this can
+ * instead be a 3-element array giving the axis
+ * of rotation in x, y, and z, respectively.
+ * @param {Number} vy Y-component of the point lying on the axis
+ * of rotation.
+ * @param {Number} vz Z-component of the point lying on the axis
+ * of rotation.
+ * @returns {H3DU.Transform} This object.
+ */
+H3DU.Transform.prototype.multOrientation=function(angle, v,vy,vz){
+ "use strict";
+return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
+};
+/**
+ * Gets the transformation matrix used by an object.  It is a combination
+ * of the scale, position, and rotation properties,
+ * unless a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+ * @returns {Array&lt;Number>} Return value. */
+H3DU.Transform.prototype.getMatrix=function(){
+  "use strict";
+if(this._matrixDirty){
+   this._matrixDirty=false;
+   if(H3DU.Math.quatIsIdentity(this.rotation)){
+    this.matrix=[this.scale[0],0,0,0,0,
+     this.scale[1],0,0,0,0,
+     this.scale[2],0,
+     this.position[0],
+     this.position[1],
+     this.position[2],1];
+    this._isIdentity=(this.position[0]===0 &amp;&amp; this.position[1] === 0 &amp;&amp;
+     this.position[2]===0 &amp;&amp; this.scale[0] === 1 &amp;&amp;
+     this.scale[1]===1 &amp;&amp; this.scale[2] === 1);
+   } else {
+    // for best results, multiply in this order:
+    // 1. translation
+   this.matrix=[1,0,0,0,0,1,0,0,0,0,1,0,
+    this.position[0],
+    this.position[1],
+    this.position[2],1];
+    // 2. rotation
+    this.matrix=H3DU.Math.mat4multiply(this.matrix,
+      H3DU.Math.quatToMat4(this.rotation));
+    // 3. scaling
+    H3DU.Math.mat4scaleInPlace(this.matrix,this.scale);
+    var m=this.matrix;
+    this._isIdentity=(
+     m[0]===1 &amp;&amp; m[1] === 0 &amp;&amp; m[2] === 0 &amp;&amp; m[3] === 0 &amp;&amp;
+     m[4]===0 &amp;&amp; m[5] === 1 &amp;&amp; m[6] === 0 &amp;&amp; m[7] === 0 &amp;&amp;
+     m[8]===0 &amp;&amp; m[9] === 0 &amp;&amp; m[10] === 1 &amp;&amp; m[11] === 0 &amp;&amp;
+     m[12]===0 &amp;&amp; m[13] === 0 &amp;&amp; m[14] === 0 &amp;&amp; m[15] === 1
+    );
+   }
+  } else if(this._isIdentity){
+   return H3DU.Math.mat4identity();
+  }
+  return this.matrix.slice(0,16);
+};
+
+/**
+* Makes a copy of this object.  The copied object
+* will have its own version of the rotation, scale,
+* position, and matrix data.
+* @returns {H3DU.Transform} A copy of this object.
+*/
+H3DU.Transform.prototype.copy=function(){
+ "use strict";
+var ret=new H3DU.Transform();
+ ret.scale=this.scale.slice(0,this.scale.length);
+ ret.position=this.position.slice(0,this.scale.length);
+ ret.complexMatrix=this.complexMatrix;
+ ret._matrixDirty=this._matrixDirty;
+ ret.matrix=this.matrix.slice(0,this.matrix.length);
+ return ret;
+};
+</code></pre>
+        </article>
+    </section>
+
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class=noprint>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

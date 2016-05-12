@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>JSDoc: Class: SurfaceEval</title>
+<meta name="viewport" content="width=device-width">
+<script src="mathml.js"></script>
+<link rel=stylesheet type="text/css" href="/style.css">
+</head>
+<body style="margin-top:0px">
+<div class="header">
+<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+    <h1>Class: SurfaceEval</h1>
+
+<section>
+
+<header>
+
+        <h2>
+            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
+
+        SurfaceEval
+        </h2>
+
+            <div class="class-description">See the <a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a> tutorial for more information.</div>
+
+</header>
+
+<article>
+    <div class="container-overview">
+
+    <h2>Constructor</h2>
+
+    <h4 style="margin-bottom:0px" id="SurfaceEval"><span style="font-weight:lighter"></span>new SurfaceEval<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line757">line 757</a>
+     </i></small></p>
+
+<div class="description">
+    An evaluator of parametric functions for generating
+vertex positions, normals, colors, and texture coordinates
+of a surface.<p>
+A parametric surface is a surface whose points are based on a
+parametric surface function.  A surface function takes two numbers
+(U and V) and returns a point (in 1, 2, 3 or more dimensions, but
+usually 2 or 3) that lies on the surface.  For example, in 3
+dimensions, a surface function has the following form:<p>
+<b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]<p>
+where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
+and z(u, v) returns a Z coordinate.<p>
+For more information, see the <a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a> tutorial.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="color"><span style="font-weight:lighter"></span>color<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line848">line 848</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating color values.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>evaluator</code>
+
+                (
+<span class="param-type">object</span>
+
+)
+
+           </dt><dd>
+           An object that must contain a function
+named "evaluate", giving 3 values as a result.  See <a href="H3DU.SurfaceEval.html#vertex">H3DU.SurfaceEval#vertex</a>.
+</ul></dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="evalOne"><span style="font-weight:lighter"></span>evalOne<span class="signature">(mesh, u, v)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line879">line 879</a>
+     </i></small></p>
+
+<div class="description">
+    Generates vertex positions and attributes based on a point
+in a parametric surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>mesh</code>
+
+                (
+<span class="param-type"><a href="H3DU.Mesh.html">H3DU.Mesh</a></span>
+
+)
+
+           </dt><dd>
+           H3DU.Mesh where vertex positions and attributes
+will be generated.  When this method returns, the current color, normal,
+and texture coordinates will be the same as they were before the method
+started.</dd>
+
+        <dt>
+
+                <code>u</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           U-coordinate of the curve to evaluate</dd>
+
+        <dt>
+
+                <code>v</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           V-coordinate of the curve to evaluate.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="evalSurface"><span style="font-weight:lighter"></span>evalSurface<span class="signature">(mesh, mode<sub style="font-weight:lighter">opt</sub>, un<sub style="font-weight:lighter">opt</sub>, vn<sub style="font-weight:lighter">opt</sub>, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line1043">line 1043</a>
+     </i></small></p>
+
+<div class="description">
+    Generates the vertex positions and attributes of a parametric
+surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>mesh</code>
+
+                (
+<span class="param-type"><a href="H3DU.Mesh.html">H3DU.Mesh</a></span>
+
+)
+
+           </dt><dd>
+           H3DU.Mesh where vertex positions and attributes
+will be generated.  When this method returns, the current color, normal,
+and texture coordinates will be the same as they were before the method
+started.</dd>
+
+        <dt>
+
+                <code>mode</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           If this value is H3DU.Mesh.TRIANGLES, or is null
+or omitted, generates a series of triangles defining the surface.  If
+this value is H3DU.Mesh.LINES, generates
+a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
+generates a series of points along the curve.  For any other value,
+this method has no effect.</dd>
+
+        <dt>
+
+                <code>un</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Number of subdivisions along the U-axis.
+Default is 24.</dd>
+
+        <dt>
+
+                <code>vn</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Number of subdivisions along the V-axis.
+Default is 24.</dd>
+
+        <dt>
+
+                <code>u1</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Starting U-coordinate of the surface to evaluate.
+Default is 0.</dd>
+
+        <dt>
+
+                <code>u2</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Ending U-coordinate of the surface to evaluate.
+Default is 1.</dd>
+
+        <dt>
+
+                <code>v1</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Starting U-coordinate of the surface to evaluate.
+Default is 0.</dd>
+
+        <dt>
+
+                <code>v2</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Ending U-coordinate of the surface to evaluate.
+Default is 1.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="normal"><span style="font-weight:lighter"></span>normal<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line837">line 837</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating normals.
+<p>
+To generate normals for a function for a regular surface (usually
+a continuous, unbroken surface such as a sphere, disk, or open
+cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
+the function used for vertex calculation (we'll call it <b>F</b>) with
+respect to u, then find the partial derivative of <b>F</b> with respect to
+v, then take their <a href="http://en.wikipedia.org/wiki/Cross_product">cross
+product</a>, then normalize the result to unit length.
+In mathematical notation, this looks like:
+<b>c</b> = &#x2202;<b>F</b>/&#x2202<i>u</i> &times;
+&#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
+If autonormal is enabled (see setAutoNormal()), H3DU.SurfaceEval uses an approximation to this approach,
+as the H3DU.SurfaceEval class doesn't know the implementation of the method used
+for vertex calculation.<p>
+(Note: &#x2202;<b>F</b>/&#x2202<i>u</i> is also called the <i>bitangent</i>
+or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>v</i> is also
+called the <i>tangent vector</i>.)
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>evaluator</code>
+
+                (
+<span class="param-type">object</span>
+
+)
+
+           </dt><dd>
+           An object that must contain a function
+named "evaluate", giving 3 values as a result.  See <a href="H3DU.SurfaceEval.html#vertex">H3DU.SurfaceEval#vertex</a>.
+</ul></dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h5>Example</h5>
+
+        <p class="code-caption">The following example sets the normal generation
+function for a parametric surface.  To illustrate how the method is derived
+from the vector calculation method, that method is also given below.  To
+derive the normal calculation, first look at the vector function:<p>
+<b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
+Then, find the partial derivatives with respect to u and v:<p>
+&#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
+&#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
+Next, take their cross product:<p>
+<b>c</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
+And finally, normalize the result:<p>
+<b>n</b>(u, v) = <b>c</b>(u, v)/|<b>c</b>(u, v)|<p>
+</p>
+
+    <pre class="prettyprint"><code>surfaceEval.vertex({"evaluate":function(u,v){
+ return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+}})
+.normal({"evaluate":function(u,v){
+ return H3DU.Math.vec3normInPlace([
+  Math.cos(u)*-Math.sin(v)*Math.sin(u),
+  Math.sin(u)*-Math.sin(v)*Math.sin(u),
+  0]);
+}})</code></pre>
+
+    <h4 style="margin-bottom:0px" id="setAutoNormal"><span style="font-weight:lighter"></span>setAutoNormal<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line773">line 773</a>
+     </i></small></p>
+
+<div class="description">
+    Sets whether this object will automatically generate
+normals rather than use the parametric evaluator
+specified for normal generation, if any.
+By default, normals won't be generated automatically.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>value</code>
+
+                (
+<span class="param-type">Boolean</span>
+
+)
+
+           </dt><dd>
+           Either true or false.  True means normals
+will automatically be generated; false means they won't.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="texCoord"><span style="font-weight:lighter"></span>texCoord<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line864">line 864</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating texture coordinates.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>evaluator</code>
+
+                (
+<span class="param-type">object</span>
+
+)
+
+           </dt><dd>
+           An object that must contain a function
+named "evaluate", giving 2 values as a result.  See <a href="H3DU.SurfaceEval.html#vertex">H3DU.SurfaceEval#vertex</a>.
+</ul></dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h5>Example</h5>
+
+        <p class="code-caption">The following example sets the surface
+function to a linear evaluator. Thus, coordinates passed to the
+evalOne and evalSurface methods will be interpolated as direct
+texture coordinates.</p>
+
+    <pre class="prettyprint"><code>surface.texCoord({"evaluate":function(u,v){ return [u,v] }});</code></pre>
+
+    <h4 style="margin-bottom:0px" id="vertex"><span style="font-weight:lighter"></span>vertex<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line787">line 787</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating vertex positions.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>evaluator</code>
+
+                (
+<span class="param-type">object</span>
+
+)
+
+           </dt><dd>
+           An object that must contain a function
+named "evaluate".  It takes the following parameters in this order:<ul>
+<li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
+<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
+</ul>
+The evaluator function returns an array of the result of the evaluation.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+</article>
+
+</section>
+
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
+<div class=noprint>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="-_anonymous_-H3DU.Math.html">Math</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.html">H3DU</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+</nav>
+<script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body>
+</html>

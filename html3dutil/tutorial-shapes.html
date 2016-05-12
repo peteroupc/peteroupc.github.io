@@ -48,26 +48,26 @@ platonic solids.  Demonstrates how vertex and index arrays are built up to creat
 <p>Examples:</p>
 <p>See <a href="https://peteroupc.github.io/html3dutil/tutorial.meshexamples.html">Examples of Creating Meshes on the Fly</a> for
 examples of 3D models that can be created using the Mesh class and built-in shapes.</p>
-<h3>Built-In Shapes <a id=Built_In_Shapes></a></h3><p>The <a href="glutil.Meshes.html"><code>Meshes</code></a> class includes several handy methods for creating built-in shapes.
+<h3>Built-In Shapes <a id=Built_In_Shapes></a></h3><p>The <a href="H3DU.Meshes.html"><code>Meshes</code></a> class includes several handy methods for creating built-in shapes.
 All methods described below return a <code>Mesh</code> object that describes the triangles they
 are composed of.  See &quot;Custom Shapes&quot; below for more on meshes.</p>
 <p><strong>3D Figures:</strong></p>
 <ul>
-<li><a href="glutil.Meshes.html#.createBox">Meshes.createBox()</a> - Creates a cube or box.</li>
-<li><a href="glutil.Meshes.html#.createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
+<li><a href="H3DU.Meshes.html#.createBox">Meshes.createBox()</a> - Creates a cube or box.</li>
+<li><a href="H3DU.Meshes.html#.createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
 or top.</li>
-<li><a href="glutil.Meshes.html#.createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.</li>
-<li><a href="glutil.Meshes.html#.createTorus">Meshes.createTorus()</a> - Creates a torus (doughnut shape).</li>
-<li><a href="glutil.Meshes.html#.createSphere">Meshes.createSphere()</a> - Creates a sphere.</li>
-<li><a href="glutil.Meshes.html#.createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.</li>
+<li><a href="H3DU.Meshes.html#.createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.</li>
+<li><a href="H3DU.Meshes.html#.createTorus">Meshes.createTorus()</a> - Creates a torus (doughnut shape).</li>
+<li><a href="H3DU.Meshes.html#.createSphere">Meshes.createSphere()</a> - Creates a sphere.</li>
+<li><a href="H3DU.Meshes.html#.createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.</li>
 </ul>
 <p><strong>2D Figures:</strong></p>
 <ul>
-<li><a href="glutil.Meshes.html#.createDisk">Meshes.createDisk()</a> - Creates a circular disk or a regular polygon, possibly
+<li><a href="H3DU.Meshes.html#.createDisk">Meshes.createDisk()</a> - Creates a circular disk or a regular polygon, possibly
 with a hole in the middle.</li>
-<li><a href="glutil.Meshes.html#.createPartialDisk">Meshes.createPartialDisk()</a> - Creates a portion of a circular disk, possibly
+<li><a href="H3DU.Meshes.html#.createPartialDisk">Meshes.createPartialDisk()</a> - Creates a portion of a circular disk, possibly
 with a hole where the middle of the complete disk would be.</li>
-<li><a href="glutil.Meshes.html#.createPlane">Meshes.createPlane()</a> - Creates a rectangle.</li>
+<li><a href="H3DU.Meshes.html#.createPlane">Meshes.createPlane()</a> - Creates a rectangle.</li>
 </ul>
 <h3>Custom Shapes <a id=Custom_Shapes></a></h3><p>Also included is a <code>Mesh</code> class for defining shapes not given among the built-in ones.
 Shapes can consist of triangles, lines, or points.</p>
@@ -178,12 +178,12 @@ specify the proper normals.</p>
 in order to give the shape a flat or smooth appearance or to shade the shape from
 the inside or the outside.  This method takes two parameters:</p>
 <ul>
-<li>The first parameter is true if the normals will be calculated such that the shape
-will have a flat appearance; otherwise, false (giving the shape a smooth appearance).
+<li>The first parameter is <code>true</code> if the normals will be calculated such that the shape
+will have a flat appearance; otherwise, <code>false</code> (giving the shape a smooth appearance).
 This works by either giving each triangle the same normal (flat shading) or giving
 each unique vertex its own normal (smooth shading).</li>
-<li>The second parameter is true if the normals will be calculated such that the shape
-is shaded from the inside; otherwise, false.</li>
+<li>The second parameter is <code>true</code> if the normals will be calculated such that the shape
+is shaded from the inside; otherwise, <code>false</code>.</li>
 </ul>
 <p>Remember, for normal calculation to properly affect shading, each triangle in
 the mesh must have its vertices defined in counterclockwise order.</p>
@@ -192,7 +192,7 @@ the mesh must have its vertices defined in counterclockwise order.</p>
 mesh = mesh.recalcNormals(true, false);
 // Both parameters can be omitted, setting both to false
 mesh = mesh.recalcNormals();</code></pre><h2>Binding Shapes <a id=Binding_Shapes></a></h2><p>Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
-in order to have it drawn.  This is where the <a href="glutil.Shape.html"><code>Shape</code></a> class comes into
+in order to have it drawn.  This is where the <a href="H3DU.Shape.html"><code>Shape</code></a> class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:</p>
 <p>(1) Create a <code>Shape</code> object by passing the mesh to the 3D scene's <code>makeShape()</code> method:</p>
@@ -228,9 +228,9 @@ shape.setScale([2,2,2]);</code></pre><p>If setMatrix wasn't called, then when th
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.</p>
 <p>(3) Add the shape to the 3D scene:</p>
-<pre class="prettyprint source"><code>scene3d.addShape(shape);</code></pre><p>Now, the next time <code>scene3d.render()</code> is called, the <a href="glutil.Scene3D.html"><code>Scene3D</code></a> will render the
+<pre class="prettyprint source"><code>scene3d.addShape(shape);</code></pre><p>Now, the next time <code>scene3d.render()</code> is called, the <a href="H3DU.Scene3D.html"><code>Scene3D</code></a> will render the
 given shape to the scene.</p>
-<h2>Shape Groups <a id=Shape_Groups></a></h2><p>The <code>ShapeGroup</code> class represents a shape that's a combination of multiple shapes.  Usually,
+<h2>Shape Groups <a id=Shape_Groups></a></h2><p>The <code>H3DU.ShapeGroup</code> class represents a shape that's a combination of multiple shapes.  Usually,
 they form different pieces of a combined shape that can be positioned, rotated, and scaled
 at once.  Here is an example of a clock made up of multiple shapes:</p>
 <p><img src="clock.png" alt="Clock"></p>
@@ -255,9 +255,9 @@ are added to a single ShapeGroup which represents the whole clock:</p>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/clock.html">clock.html</a> - A demo
 featuring a wall clock.</li>
 </ul>
-<p>To create a shape group, call <code>new ShapeGroup()</code>. To add a <code>Shape</code> object to the group,
-call <code>shapeGroup.addShape(shape)</code>.  Note that you can only add shapes, not meshes,
-to a shape group, just as for a 3D scene.  A shape group, though, is perfectly allowed to contain
+<p>To create a shape group, call <code>new H3DU.ShapeGroup()</code>. To add a <code>Shape</code> object to the group,
+call <code>new H3DU.Shape(shape)</code>.  Note that you can only add shapes, not meshes,
+to a shape group, just as for a 3D batch (<code>H3DU.Batch3D</code>).  A shape group, though, is perfectly allowed to contain
 other shape groups.</p>
 <h2>Other Pages <a id=Other_Pages></a></h2><p>The following pages of mine on CodeProject also discuss this library:</p>
 <ul>
@@ -289,7 +289,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

@@ -22,7 +22,9 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global GLMath */
+/* global H3DU.Math */
+
+/** @private */
 function Perspective(scene, fov, nearZ, farZ){
  "use strict";
 if(nearZ&lt;=0)throw new Error("invalid nearZ");
@@ -30,19 +32,17 @@ if(nearZ&lt;=0)throw new Error("invalid nearZ");
  this.scene=scene;
  this.near=nearZ;
  this.far=farZ;
- if(this.scene instanceof Scene3D){
+ if(this.scene instanceof H3DU.Scene3D){
    this.currentAspect=this.scene.getClientAspect();
    this.scene.setPerspective(this.fov,this.currentAspect,this.near,this.far);
  } else {
    this.scene.perspectiveAspect(this.fov,this.near,this.far);
  }
 }
-/**
- * Not documented yet.
- */
+/** @private */
 Perspective.prototype.update=function(){
  "use strict";
- if(this.scene instanceof Scene3D){
+ if(this.scene instanceof H3DU.Scene3D){
   var aspect=this.scene.getClientAspect();
   if(aspect!==this.currentAspect){
    this.currentAspect=aspect;
@@ -283,8 +283,8 @@ function Camera(sub, fov, nearZ, farZ, canvas){
  if(nearZ&lt;=0)throw new Error("invalid nearZ");
  this.near=nearZ;
  this.persp=new Perspective(sub,fov,nearZ,farZ);
- this.rotation=GLMath.quatIdentity();
- this.dolly=GLMath.quatIdentity();
+ this.rotation=H3DU.Math.quatIdentity();
+ this.dolly=H3DU.Math.quatIdentity();
  this.position=[0,0,0];
  this.center=[0,0,0];
  this.scene=sub;
@@ -301,7 +301,7 @@ var len=x*x+y*y+z*z;
  if(len===1){
   return [x,y,z,1];
  } else {
-  var n=GLMath.vec3normInPlace([x,y,z]);
+  var n=H3DU.Math.vec3normInPlace([x,y,z]);
   return [n[0],n[1],n[2],1];
  }
 };
@@ -310,33 +310,33 @@ Camera._quatRotateRelative=function(quat, angle, x, y, z){
  // Rotate quaternion about a relative axis
  "use strict";
 var vec=Camera._normAsVec4(x,y,z);
- var q=GLMath.quatRotate(quat,angle,vec);
- q=GLMath.quatMultiply(GLMath.quatFromAxisAngle(angle,vec),quat);
- GLMath.vec4assign(quat,q);
+ var q=H3DU.Math.quatRotate(quat,angle,vec);
+ q=H3DU.Math.quatMultiply(H3DU.Math.quatFromAxisAngle(angle,vec),quat);
+ H3DU.Math.vec4assign(quat,q);
 };
 /** @private */
 Camera._quatRotateFixed=function(quat, angle, x, y, z){
  // Rotate quaternion about a fixed axis
  "use strict";
 var vec=Camera._normAsVec4(x,y,z);
- var q=GLMath.quatRotate(quat,angle,vec);
- q=GLMath.quatMultiply(quat,GLMath.quatFromAxisAngle(angle,vec));
- GLMath.vec4assign(quat,q);
+ var q=H3DU.Math.quatRotate(quat,angle,vec);
+ q=H3DU.Math.quatMultiply(quat,H3DU.Math.quatFromAxisAngle(angle,vec));
+ H3DU.Math.vec4assign(quat,q);
 };
 /** @private */
 Camera._moveRelative=function(vec, quat, dist, x, y, z){
  "use strict";
 var velocity=Camera._normAsVec4(x,y,z);
- GLMath.vec3scaleInPlace(velocity,dist);
+ H3DU.Math.vec3scaleInPlace(velocity,dist);
  vec[0]+=velocity[0]; vec[1]+=velocity[1]; vec[2]+=velocity[2];
 };
 /** @private */
 Camera._moveTrans=function(vec,quat,dist,x,y,z){
  "use strict";
 var velocity=Camera._normAsVec4(x,y,z);
- velocity=GLMath.quatTransform(
-   GLMath.quatConjugate(quat),velocity);
- GLMath.vec3scaleInPlace(velocity,dist);
+ velocity=H3DU.Math.quatTransform(
+   H3DU.Math.quatConjugate(quat),velocity);
+ H3DU.Math.vec3scaleInPlace(velocity,dist);
  vec[0]+=velocity[0]; vec[1]+=velocity[1]; vec[2]+=velocity[2];
 };
 /**
@@ -344,17 +344,17 @@ var velocity=Camera._normAsVec4(x,y,z);
  *//** @private */
 Camera.prototype._distance=function(){
  "use strict";
-var rel=GLMath.vec3sub(this.position,this.center);
- return GLMath.vec3length(rel);
+var rel=H3DU.Math.vec3sub(this.position,this.center);
+ return H3DU.Math.vec3length(rel);
 };
 /** @private */
 Camera.prototype._getView=function(){
  "use strict";
-var mat=GLMath.quatToMat4(this.rotation);
- var mat2=GLMath.mat4translated(-this.position[0],
+var mat=H3DU.Math.quatToMat4(this.rotation);
+ var mat2=H3DU.Math.mat4translated(-this.position[0],
   -this.position[1],-this.position[2]);
- mat=GLMath.mat4multiply(mat2,mat);
- mat=GLMath.mat4translate(mat,-this.center[0],
+ mat=H3DU.Math.mat4multiply(mat2,mat);
+ mat=H3DU.Math.mat4translate(mat,-this.center[0],
   -this.center[1],-this.center[2]);
  return mat;
 };
@@ -384,11 +384,11 @@ Camera.prototype._orbit=function(deltaMouseX,deltaMouseY,angleMultiplier){
   "use strict";
 var x=deltaMouseX*angleMultiplier;
   var y=deltaMouseY*angleMultiplier;
-  var vec=GLMath.quatTransform(
-    GLMath.quatConjugate(this.dolly),Camera._normAsVec4(0,0,1));
+  var vec=H3DU.Math.quatTransform(
+    H3DU.Math.quatConjugate(this.dolly),Camera._normAsVec4(0,0,1));
   var lat=Math.atan2(Math.sqrt(vec[2]*vec[2]+vec[0]*vec[0]),vec[1]);
   var oldlat=lat;
-  y=y*GLMath.PiDividedBy180;
+  y=y*H3DU.Math.PiDividedBy180;
   lat-=y;
   var pi2=Math.PI-0.00001;
   if(lat&lt;0.00001){
@@ -398,7 +398,7 @@ var x=deltaMouseX*angleMultiplier;
    y+=lat-pi2;
    lat=pi2;
   }
-  this.moveAngleVertical(y*GLMath.Num180DividedByPi);
+  this.moveAngleVertical(y*H3DU.Math.Num180DividedByPi);
   this._moveAngleFixedHorizontal(x);
 };
 
@@ -580,8 +580,8 @@ if(dist!==0){
 Camera.prototype.getPosition=function(){
   "use strict";
 var view=this._getView();
-  var pos=GLMath.quatTransform(
-    GLMath.quatConjugate(this.rotation),
+  var pos=H3DU.Math.quatTransform(
+    H3DU.Math.quatConjugate(this.rotation),
     [this.position[0],this.position[1],this.position[2],1]);
   pos[0]-=this.center[0]; pos[1]-=this.center[1]; pos[2]-=this.center[2];
   return pos;
@@ -591,7 +591,7 @@ var view=this._getView();
  */
 Camera.prototype.getVectorFromCenter=function(){
   "use strict";
-return GLMath.vec3normInPlace(this.getPosition());
+return H3DU.Math.vec3normInPlace(this.getPosition());
 };
 
 /** @private */
@@ -652,7 +652,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){
