@@ -3,7 +3,7 @@
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
-<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../h3du_min.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
@@ -52,7 +52,7 @@ TriangleParticles.prototype.update=function(time){
 }
 TriangleParticles.makeShapeFromTri=function(tri,shape){
  var sh=new H3DU.Shape(new H3DU.Mesh()
-   .mode(Mesh.TRIANGLES)
+   .mode(H3DU.Mesh.TRIANGLES)
    .normal3(0,0,1)
    .color3(tri.color)
    .vertex3(tri.position[0],tri.position[1],tri.position[2])

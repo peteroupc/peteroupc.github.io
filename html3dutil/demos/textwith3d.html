@@ -4,7 +4,7 @@
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
-<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../h3du_min.js"></script>
 <script type="text/javascript" src="../extras/camera.js"></script>
 <script type="text/javascript" src="../extras/text.js"></script>
 </head>
@@ -37,20 +37,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     .perspectiveAspect(45,0.1,100)
     .setLookAt([0,0,40]);
   figureSub.getLights().setDefaults();
-  var mesh=Meshes.createBox(10,20,20);
+  var mesh=H3DU.Meshes.createBox(10,20,20);
   var shape2=new H3DU.Shape(mesh).setColor("#e0e0e0");
   figureSub.addShape(shape2);
   var passes=[
-   new RenderPass3D(figureSub),
-   new RenderPass3D(textSub,{"clearColor":false})
+   new H3DU.RenderPass3D(figureSub),
+   new H3DU.RenderPass3D(textSub,{"clearColor":false})
   ]
   var timer={}
-  var textrnd=new TextRenderer(scene);
-  GLUtil.getPromiseResultsAll([
-   textrnd.loadFont("black-chancery.fnt"),
-   textrnd.loadFont("aileron-bold-red.fnt")
+  var loader=new TextureLoader();
+  H3DU.getPromiseResultsAll([
+   H3DU.TextFont.loadWithTextures("black-chancery.fnt",loader),
+   H3DU.TextFont.loadWithTextures("aileron-bold-red.fnt",loader)
   ]).then(function(results){
-   var shape=textrnd.textShape(results[0],"This is a signed\ndistance field test.",0,50,100,"blue");
+   var shape=results[0].font.textShape("This is a signed distance field test.",
+    {x:0,y:50,lineHeight:100,width:640,align:"left",color:"blue",textures:results[0].textures});
    textSub.addShape(shape);
    var y=250;
    var size=20;
@@ -59,17 +60,18 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     if(i==0){
       text="Uses the public domain font Aileron from http://dotcolon.net/font/aileron/"
     }
-    shape=textrnd.textShape(results[1],text,0,y,size);
+    shape=results[1].font.textShape(text,
+      {x:0,y:y,lineHeight:size,width:640,textures:results[1].textures,align:"center"});
     textSub.addShape(shape);
-    y+=results[1].measure(text,size)[1];
+    y+=results[1].font.measure(text,{lineHeight:size,width:640})[1];
     size+=10;
    }
    return true;
   }).then(function(){
   H3DU.renderLoop(function(time){
    var q=H3DU.Math.quatFromTaitBryan(
-     360*GLUtil.getTimePosition(timer,time,6000),
-     360*GLUtil.getTimePosition(timer,time,12000),
+     360*H3DU.getTimePosition(timer,time,6000),
+     360*H3DU.getTimePosition(timer,time,12000),
      0
    );
    shape2.setQuaternion(q);

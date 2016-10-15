@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: Trochoid</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: ShaderInfo</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,14 +10,14 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: Trochoid</h1>
+    <h1>Class: ShaderInfo</h1>
 
 <section>
 
 <header>
 
         <h2>
-        Trochoid
+        ShaderInfo
         </h2>
 
 </header>
@@ -25,21 +25,19 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="margin-bottom:0px" id="Trochoid"><span style="font-weight:lighter"></span>new Trochoid<span class="signature">(radius, distFromCenter)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="ShaderInfo"><span style="font-weight:lighter"></span>new ShaderInfo<span class="signature">(vertexShader<sub style="font-weight:lighter">opt</sub>, fragmentShader<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line260">line 260</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line27">line 27</a>
      </i></small></p>
 
 <div class="description">
-    Parametric evaluator for a
-curve drawn by a circle that rolls along the X-axis.
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library. <p>
-To use this class, you must include the script "extras/evaluators.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library.  Example:<pre>
-&lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
+    Holds source code for a WebGL shader program.  A shader program in
+WebGL consists of a vertex shader (which processes vertices),
+and a fragment shader (which processes pixels).  Shader programs
+are specially designed for running on a graphics processing unit,
+or GPU.<p>
+This class also stores uniform values associated with the shader
+source code.
 </div>
 
     <h5>Parameters:</h5>
@@ -48,28 +46,34 @@ the HTML 3D Library.  Example:<pre>
 
         <dt>
 
-                <code>radius</code>
+                <code>vertexShader</code>
 
                 (
-<span class="param-type">Number</span>
+<span class="param-type">String</span>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           Radius of the rolling circle.</dd>
+           Source text of a vertex shader, in OpenGL
+ES Shading Language (GLSL).  If null, a default
+vertex shader is used instead.</dd>
 
         <dt>
 
-                <code>distFromCenter</code>
+                <code>fragmentShader</code>
 
                 (
-<span class="param-type">Number</span>
+<span class="param-type">String</span>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           Distance from the center of the
-rolling circle to the drawing pen.</dd>
+           Source text of a fragment shader in GLSL.
+If null, a default fragment shader is used instead.</dd>
 
     </dl>
 
@@ -81,13 +85,26 @@ rolling circle to the drawing pen.</dd>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>copy<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line271">line 271</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line42">line 42</a>
      </i></small></p>
 
 <div class="description">
-    Generates a point on the curve from the given u coordinate.
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setUniforms"><span style="font-weight:lighter"></span>setUniforms<span class="signature">(uniforms)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line51">line 51</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
 </div>
 
     <h5>Parameters:</h5>
@@ -96,32 +113,21 @@ rolling circle to the drawing pen.</dd>
 
         <dt>
 
-                <code>u</code>
+                <code>uniforms</code>
 
                 (
-<span class="param-type">Number</span>
+<span class="param-type">*</span>
 
 )
 
            </dt><dd>
-           U coordinate.</dd>
+           </dd>
 
     </dl>
 
 <dl class="details">
 
 </dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A 3-element array specifying a 3D point.
-Only the X and Y coordinates will be other than 0.
-
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
-
-</div>
 
 </article>
 

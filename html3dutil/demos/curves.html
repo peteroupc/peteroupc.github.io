@@ -4,7 +4,7 @@
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
-<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../h3du_min.js"></script>
 <script type="text/javascript" src="../extras/camera.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="../extras/evaluators.js"></script>
@@ -84,7 +84,7 @@ var link0=null;
 addLink("Torus knot",link0=function(){
  pushSettings(function(allsettings){
     return makeMesh(
-    new CurveTube(new TorusKnot(
+    new H3DU.CurveTube(new TorusKnot(
       allsettings["torusknot-p"],
       allsettings["torusknot-q"]
     )),100);
@@ -97,7 +97,7 @@ addLink("Torus knot",link0=function(){
 addLink("Swept torus knot",function(){
  pushSettings(function(allsettings){
    return makeMesh(
-    new CurveTube(new TorusKnot(
+    new H3DU.CurveTube(new TorusKnot(
       allsettings["torusknot-p"],
       allsettings["torusknot-q"]
     ),0.1,TorusKnot.getFlatCurve(5)),100);
@@ -110,7 +110,7 @@ addLink("Swept torus knot",function(){
 addLink("Flattened torus knot",function(){
  pushSettings(function(allsettings){
    return makeMesh(
-    new CurveTube(TorusKnot.getFlatCurve(
+    new H3DU.CurveTube(TorusKnot.getFlatCurve(
       allsettings["torusknot-p"]
     )),100);
  },{

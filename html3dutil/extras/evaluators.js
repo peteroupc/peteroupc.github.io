@@ -15,7 +15,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/evaluators.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
@@ -183,7 +183,7 @@ if(!curve)curve={
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/evaluators.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
@@ -249,7 +249,7 @@ this.outer=outerRadius;
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/evaluators.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
@@ -288,7 +288,7 @@ this.inner=radius;
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/evaluators.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class

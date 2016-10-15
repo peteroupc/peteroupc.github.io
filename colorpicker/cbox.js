@@ -506,6 +506,8 @@ var e=null;
  var b,c,r1,r2,r3,r4,rgb;
  if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),255];
+ } else if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
+  return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),parseInt(e[4],16)];
  } else if((e=(/^rgb\(\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*,\s*([\+\-]?\d+(?:\.\d+)?%)\s*\)$/.exec(x)))!==null){
   return [parsePercent(e[1]),parsePercent(e[2]),parsePercent(e[3]),255];
  } else if((e=(/^rgb\(\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*\)$/.exec(x)))!==null){
@@ -517,6 +519,9 @@ var e=null;
  } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
   var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
   return [a+(a<<4),b+(b<<4),c+(c<<4),255];
+ } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
+  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16); d=parseInt(e[4],16);
+  return [a+(a<<4),b+(b<<4),c+(c<<4),d+(d<<4)];
  } else if((e=(/^hsl\(\s*([\+\-]?\d+(?:\.\d+)?)\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*\)$/.exec(x)))!==null){
   rgb=hlsToRgb([parseHue(e[1]),parsePercent(e[3]),parsePercent(e[2])]);
   return [rgb[0],rgb[1],rgb[2],255];
@@ -684,42 +689,6 @@ colorToRgba.setUpNamedColors();var b=[];
  }
  return ret;
 };
-
-function colorHtmlToRgba(x){
-
-var arr=[];
- colorToRgba.setUpNamedColors();
- if(!x || x.length===0)return [0,0,0,255];
- x=x.toLowerCase();
- if(x.indexOf("grey")>=0)x=x.replace("grey","gray");// support "grey" variants
- var ret=colorToRgba.namedColors[x];
- if(typeof ret==="string")return colorToRgba(ret);
- for(var i=(x.charAt(0)==="#") ? 1 : 0;i<x.length;i++){
-  var c=x.charCodeAt(i);
-  var hex=0;
-  if(c>=0x30 && c<=0x39)hex=c-0x30;
-  if(c>=0x61 && c<=0x66)hex=c-0x61+10;
-  arr[arr.length]=hex;
- }
- var sublength=Math.floor((arr.length+2)/3);
- while(arr.length<sublength*3){
-  arr[arr.length]=0;
- }
- var currlength=sublength;
- var offset=0;
- while(currlength>2){
-  if(arr[offset]===0 && arr[sublength+offset]===0 &&
-      arr[sublength*2+offset]===0){
-   currlength--; offset++;
-  } else break;
- }
- return [
-   arr[offset]*16+arr[offset+1],
-   arr[sublength+offset]*16+arr[sublength+offset+1],
-   arr[sublength*2+offset]*16+arr[sublength*2+offset+1],
-   255
- ];
-}
 
 function rgbToColorDisplay(rgb){
 

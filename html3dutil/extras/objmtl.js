@@ -13,7 +13,7 @@ OBJ file.<p>
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/objmtl.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/objmtl.js">&lt;/script></pre>
 @class */
@@ -236,9 +236,13 @@ return H3DU.loadFileFromUrl(url).then(
    });
 };
 /**
- * Not documented yet.
+ * Loads a WaveFront OBJ file (along with its associated MTL, or
+ * material file, if available), along with the textures it uses,
+ * asynchronously.
+ * @param {String} url The URL to load.
  * @param {*} url
- * @param {*} textureLoader
+ * @param {TextureLoader} textureLoader An object to load
+ * textures with.
  */
 ObjData.loadObjFromUrlWithTextures=function(url,textureLoader){
  return ObjData.loadObjFromUrl(url).then(function(obj){

@@ -7,16 +7,13 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global H3DU, H3DU.Mesh, Promise */
-(function(exports){
-"use strict";
-if(!H3DU){ H3DU={}; }
-
+if((typeof H3DU === "undefined" || H3DU === null)){ H3DU={}; }
 /**
-* Renderer for drawing text using bitmap fonts.  This class supports
+* Represents a bitmap font.  This class supports
 * traditional bitmap fonts and signed distance field fonts.<p>
 * Bitmap fonts consist of a font definition file and one
-* or more bitmaps containing the shape of each font glyph.  The glyphs
-* are packed so they take as little space as possible and the glyphs don't
+* or more textures containing the shape of each font glyph.  The glyphs
+* are packed so that the glyphs don't
 * overlap each other.<p>
 * In a signed distance field font, each pixel's alpha value depends on the
 * distance from that location to the edge of the glyph.  A pixel alpha less
@@ -37,125 +34,28 @@ if(!H3DU){ H3DU={}; }
 * See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
 * for a list of bitmap font generation tools. (No one tool is recommended over any
 * other, and the mention of this link is not an endorsement or sponsorship
-* of any particular tool.)
+* of any particular tool.)<p>
+* NOTE: The constructor should not be called directly by applications.
+* Use the {@link H3DU.TextFont.load} method to get an H3DU.TextFont object.  This
+* constructor's parameters are undocumented and are subject to change.
 * <p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/text.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
 * @class
-* @alias TextRenderer
-* @param {H3DU.Scene3D} scene 3D scene to load font textures with.
+* @alias H3DU.TextFont
 */
-function TextRenderer(scene){
- this.scene=scene;
- this.shader=new H3DU.ShaderInfo(null,TextRenderer._textShader());
- this.fontTextures=[]
-}
-/** @private */
-TextRenderer.prototype._getFontTextures=function(font){
- for(var i=0;i<this.fontTextures.length;i++){
-  if(this.fontTextures[i][0]==font){
-   return this.fontTextures[i][1]
-  }
- }
- return []
-}
-/** @private */
-TextRenderer.prototype._setFontTextures=function(font,textureList){
- for(var i=0;i<this.fontTextures.length;i++){
-  if(this.fontTextures[i][0]==font){
-   this.fontTextures[i][1]=textureList;
-   return;
-  }
- }
- this.fontTextures.push([font,textureList]);
-}
-
-/**
-* Creates a shape containing the primitives needed to
-* draw text in the given position, size, and color.
-* @param {TextFont} font The bitmap font to use when drawing the text.
-* @param {String} string The text to draw.  Line breaks ("\n") are recognized
-* by this method.
-* @param {Number} xPos X-coordinate of the top left corner of the text.
-* @param {Number} yPos Y-coordinate of the top left corner of the text.
-* @param {Number} height Size of the text in units.
-* @param {string|Array<Number>} [color] The color to draw the text with.
-* An array of three or
-* four color components; or a string
-* specifying an [HTML or CSS color]{@link H3DU.toGLColor}.
-* If null or omitted, the bitmap font is assumed to be a signed distance field
-* font.
-*/
-TextRenderer.prototype.textShape=function(font, str, xPos, yPos, height, color){
- var group=new H3DU.ShapeGroup();
- var fontTextures=this._getFontTextures(font);
- var meshesForPage=font.makeShapeMeshes(str,xPos,yPos,height);
- for(var i=0;i<meshesForPage.length;i++){
-  var mfp=meshesForPage[i];
-  if(!mfp || !fontTextures[i])continue;
-  var sh=new H3DU.Shape(mfp);
-  var material=new Material(
-     color||[0,0,0,0],
-     color||[0,0,0,0]).setParams({
-   "texture":fontTextures[i],
-   "basic":true,
-   "shader":color ? this.shader : null
-  });
-  sh.setMaterial(material);
-  group.addShape(sh);
- }
- return group;
-}
-/**
-* Loads a bitmap font definition from a file,
-* as well as the bitmaps used by that font, and maps them
-* to WebGL textures.  See {@link TextRenderer} for
-* more information.
-* @param {String} fontFileName The URL of the font data file
-* to load.  The following file extensions are read as the following formats:<ul>
-* <li>".xml": XML</li>
-* <li>".json": JSON</li>
-* <li>".bin": Binary</li>
-* <li>".fnt": Text or binary</li>
-* <li>All others: Text</li></ul>
-* @returns {Promise<TextFont>} A promise that is resolved
-* when the font data and all the textures it uses are loaded successfully (the result will be
-* a TextFont object), and is rejected when an error occurs.
-*/
-TextRenderer.prototype.loadFont=function(fontFileName){
- var thisObject=this;
- // TODO: Don't rely on an instance variable
- // treated as private; maybe take H3DU.TextureLoader instead
- var loader=this.scene._textureLoader;
- return TextFont.loadWithTextures(fontFileName,loader)
-   .then(function(f){
-     var textures=[];
-     for(var i=0;i<f.pages.length;i++){
-      textures.push(loader.getTexture(f.pages[i]));
-     }
-     thisObject._setFontTextures(f,textures);
-     return Promise.resolve(f);
-   });
-}
-/**
-* Represents a bitmap font.
-* NOTE: The constructor should not be called directly by applications.
-* Use the {@link TextFont.load} method to get a TextFont object.  This
-* constructor's parameters are undocumented and are subject to change.
-* @class
-* @alias TextFont
-*/
-function TextFont(fontinfo,chars,pages,kernings,common,fileUrl){
+H3DU.TextFont=function(fontinfo,chars,pages,kernings,common,fileUrl){
  this.info=fontinfo
  this.common=common
  if(this.info){
-  this.info.padding=TextFont._toArray(this.info.padding,4)
-  this.info.spacing=TextFont._toArray(this.info.spacing,2)
+  this.info.padding=H3DU.TextFont._toArray(this.info.padding,4)
+  this.info.spacing=H3DU.TextFont._toArray(this.info.spacing,2)
  }
+ this.textShader=H3DU.TextFont._textShader();
  this.fileUrl=fileUrl;
  this.chars=chars
  this.pages=pages
@@ -167,12 +67,12 @@ function TextFont(fontinfo,chars,pages,kernings,common,fileUrl){
  }
 }
 /** @private */
-TextFont._toArray=function(str,minLength){
+H3DU.TextFont._toArray=function(str,minLength){
  var spl;
  if(typeof str==="string"){
   spl=str.split(",")
   for(var i=0;i<spl.length;i++){
-   spl[i]=parseInt(spl[i])
+   spl[i]=parseInt(spl[i],10)
   }
  } else if(str!=null &&
    str.constructor==Array && str.length>=minLength){
@@ -189,41 +89,52 @@ TextFont._toArray=function(str,minLength){
 /**
  * Calculates the width and height of a text string when
  * drawn using this font.
- * @param {String} str A text string.
- * @param {Number} height The line height to use when
- * measuring the text.  Cannot be less than 0.
+* @param {String} string The text string to measure.  Line breaks
+* ("\n", "\r", "\r\n") are recognized by this method.
+* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
  * @returns {Array<Number>} An array of two numbers;
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
  * U+000A, that break lines).
  */
-TextFont.prototype.measure=function(str,height){
- if(height<0)throw new Error;
- var haveChar=false;
+H3DU.TextFont.prototype.measure=function(str,params){
+ var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight :
+   this.common.lineHeight;
+ if(height<0)throw new Error();
+ var width=((typeof params.width !== "undefined" && params.width !== null)) ? params.width : -1;
  var scale=height/this.common.lineHeight;
- var lastChar=-1;
- var xSize=0;
- var xPos=0;
+ var linebreaks=this._findLineBreaks(str,scale,width);
+ var size=0;
  var yPos=0;
- for(var i=0;i<str.length;i++){
+ for(var i=0;i<linebreaks.length;i+=3){
+  size=Math.max(size,linebreaks[i+2]);
+  yPos+=height;
+ }
+ return [size,yPos];
+}
+/** @private */
+H3DU.TextFont.prototype._measureWord=function(
+  str,startIndex,endIndex,lastChar,scale,info){
+ var xPos=0;
+ var xSize=0;
+ for(var i=startIndex;i<endIndex;i++){
   var c=str.charCodeAt(i);
-  if(c>=0xd800 && c<0xdc00 && i+1<str.length){
+  if(c>=0xd800 && c<0xdc00 && i+1<endIndex){
    c = 0x10000 + ((c - 0xd800) << 10) + (str.charCodeAt(i+1) -
           0xdc00);
    i++;
   } else if(c>=0xd800 && c<0xe000){
    c=0xfffd
   }
-  if(c === 0x0a){
-   yPos+=this.common.lineHeight*scale;
-   xPos=0;
+  if(c==0x0d || c==0x0a){
+   // don't measure line break characters; mandatory line
+   // breaks should have been classified as such already
    lastChar=c;
    continue;
   }
   var ch=this.chars[c]||this.chars[0]||null
   if(ch){
    xSize=Math.max(xSize,xPos+ch.width*scale);
-   haveChar=true;
    if(lastChar!=-1){
     if(this.kern[lastChar] && this.kern[lastChar][c]){
      xPos+=this.kern[lastChar][c].amount*scale;
@@ -233,25 +144,20 @@ TextFont.prototype.measure=function(str,height){
   }
   lastChar=c;
  }
- var ySize=yPos;
- if(haveChar)ySize+=this.common.lineHeight*scale;
- return [xSize,ySize];
+ info[0]=xPos; // x-advance of the word
+ info[1]=xSize; // width of the word
+ info[2]=lastChar; // last character of the word
 }
-
-/**
- * Not documented yet.
- * @param {*} str
- * @param {*} xPos
- * @param {*} yPos
- * @param {*} height
- */
-TextFont.prototype.makeShapeMeshes=function(str,xPos,yPos,height){
- var meshesForPage=[];
- var scale=height/this.common.lineHeight;
- var recipPageWidth=1.0/this.common.scaleW;
- var recipPageHeight=1.0/this.common.scaleH;
- var startXPos=xPos;
- var lastChar=-1;
+/** @private */
+H3DU.TextFont.prototype._findLineBreaks=function(str,scale,maxWidth){
+ if(str.length==0){
+  return [];
+ }
+ var breaks=[];
+ var classes=[];
+ var linePositions=[];
+ var currentClass=-1;
+ // Find the runs of non-whitespace/whitespace in the text
  for(var i=0;i<str.length;i++){
   var c=str.charCodeAt(i);
   if(c>=0xd800 && c<0xdc00 && i+1<str.length){
@@ -261,30 +167,165 @@ TextFont.prototype.makeShapeMeshes=function(str,xPos,yPos,height){
   } else if(c>=0xd800 && c<0xe000){
    c=0xfffd
   }
-  if(c === 0x0a){
-   yPos+=this.common.lineHeight*scale;
-   xPos=startXPos;
+  if(c==0x0d || c==0x0a){
+   classes.push(2); // line break
+   breaks.push(i);
+   if(c==0x0d && i+1<str.length && str.charCodeAt(i+1)==0x0a){
+    i++;
+   }
+   currentClass=-1;
+   continue;
+  } else if(c==0x0c || c==0x09 || c==0x20){
+   // non-linebreak whitespace
+   if(currentClass!=1){
+    classes.push(1); // whitespace
+    breaks.push(i);
+   }
+   currentClass=1;
+   xPos=0;
+  } else {
+   // non-whitespace
+   if(currentClass!=0){
+    classes.push(0); // non-whitespace
+    breaks.push(i);
+   }
+   currentClass=0;
+  }
+ }
+ breaks.push(str.length);
+ var wordInfo=[]
+ var lastChar=-1;
+ var xPos=0;
+ var xSize=0;
+ var lineStart=0;
+ var possibleLineEnd=0;
+ for(var i=0;i<classes.length;i++){
+   if(classes[i]==2){
+    // mandatory line break
+    linePositions.push(lineStart,breaks[i],xSize);
+    xPos=0;
+    xSize=0;
+    lineStart=breaks[i+1];
+    possibleLineEnd=lineStart
+   } else {
+    this._measureWord(str,breaks[i],
+     breaks[i+1],lastChar,scale,wordInfo);
+    var size=xPos+wordInfo[1];
+    lastChar=wordInfo[2];
+    if(maxWidth>=0 && size>maxWidth){
+     linePositions.push(lineStart,possibleLineEnd,xSize);
+     if(classes[i]==1){
+      // Spaces that overshoot the max width;
+      // don't include the spaces
+      xPos=0;
+      xSize=0;
+      lineStart=breaks[i+1];
+      possibleLineEnd=lineStart
+     } else {
+      xPos=wordInfo[0];
+      xSize=Math.max(0,wordInfo[1]);
+      lineStart=breaks[i];
+      possibleLineEnd=breaks[i+1]
+     }
+    } else {
+     if(classes[i]==0){
+      possibleLineEnd=breaks[i+1]
+      xSize=Math.max(0,xPos+wordInfo[1]);
+     }
+     xPos+=wordInfo[0];
+    }
+   }
+ }
+ if(lineStart!=str.length){
+  linePositions.push(lineStart,possibleLineEnd,xSize);
+ }
+ return linePositions
+}
+
+/**
+* Creates a shape containing the primitives needed to
+* draw text in the given position, size, and color.
+* For the text to show upright, the coordinate system should have the
+* X-axis pointing right and the Y-axis pointing down (for example, an
+* orthographic projection where the left and top coordinates are less
+* than the right and bottom coordinates, respectively).
+* @param {H3DU.TextFont} font The bitmap font to use when drawing the text.
+* @param {String} string The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
+* by this method.
+* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
+* Can also contain the following keys:<ul>
+* <li><code>color</code> - A [color vector or string]{@link H3DU.toGLColor} giving
+* the color to draw the text with.
+* If this value is given, the bitmap font is assumed to be a signed distance field
+* font.
+* <li><code>texture</code> - An array of textures ({@link H3DU.Texture}) to use with this font,
+* or a single {@link H3DU.Texture} if only one texture page is used.
+* If null or omitted, uses the default filenames for texture pages defined in this font.
+* </ul>
+*/
+H3DU.TextFont.prototype.textShape=function(str, params){
+ var group=new H3DU.ShapeGroup();
+ var color=((typeof params.color !== "undefined" && params.color !== null)) ? params.color : null;
+ var textures=((typeof params.textures !== "undefined" && params.textures !== null)) ?
+   params.textures : null;
+ if(textures && textures instanceof H3DU.Texture){
+  textures=[textures]
+ }
+ var hasColor=(color!=null);
+ color=(hasColor) ? color : [0,0,0,0];
+ var meshesForPage=this.makeTextMeshes(str,params);
+ for(var i=0;i<meshesForPage.length;i++){
+  var mfp=meshesForPage[i];
+  if(!mfp)continue;
+  var sh=new H3DU.Shape(mfp);
+  var material=new Material(color,color).setParams({
+   "texture":textures ? textures[i] : this.pages[i],
+   "basic":true,
+   "shader": hasColor ? H3DU.TextFont._textShaderInfo : null
+  });
+  sh.setMaterial(material);
+  group.addShape(sh);
+ }
+ return group;
+}
+/** @private */
+H3DU.TextFont.prototype._makeTextMeshesInner=function(str,startPos,endPos,xPos,yPos,params,extra,meshesForPage){
+ var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
+ var startXPos=xPos;
+ var lastChar=-1;
+ for(var i=startPos;i<endPos;i++){
+  var c=str.charCodeAt(i);
+  if(c>=0xd800 && c<0xdc00 && i+1<endPos){
+   c = 0x10000 + ((c - 0xd800) << 10) + (str.charCodeAt(i+1) -
+          0xdc00);
+   i++;
+  } else if(c>=0xd800 && c<0xe000){
+   c=0xfffd
+  }
+  if(c === 0x0a || c==0x0d){
+   // NOTE: Should not occur at this point
    lastChar=c;
    continue;
   }
   var ch=this.chars[c]||this.chars[0]||null
   if(ch){
-   var sx=ch.x*recipPageWidth;
-   var sy=ch.y*recipPageHeight;
-   var sx2=(ch.x+ch.width)*recipPageWidth;
-   var sy2=(ch.y+ch.height)*recipPageHeight;
-   var xo=ch.xoffset*scale;
-   var yo=ch.yoffset*scale;
+   var sx=ch.x*extra.recipPageWidth;
+   var sy=ch.y*extra.recipPageHeight;
+   var sx2=(ch.x+ch.width)*extra.recipPageWidth;
+   var sy2=(ch.y+ch.height)*extra.recipPageHeight;
+   var xo=ch.xoffset*extra.scale;
+   var yo=ch.yoffset*extra.scale;
    var vx=xPos+xo;
    var vy=yPos+yo;
-   var vx2=vx+ch.width*scale;
-   var vy2=vy+ch.height*scale;
-   var chMesh=meshesForPage[ch.page];
-   if(!chMesh){
-    chMesh=new H3DU.Mesh();
-    meshesForPage[ch.page]=chMesh;
-   }
-   chMesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
+   var vx2=vx+ch.width*extra.scale;
+   var vy2=vy+ch.height*extra.scale;
+   if(ch.width>0 && ch.height>0) {
+    var chMesh=meshesForPage[ch.page];
+    if(!chMesh){
+     chMesh=new H3DU.Mesh();
+     meshesForPage[ch.page]=chMesh;
+    }
+    chMesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
      .texCoord2(sx,1-sy)
      .vertex2(vx,vy)
      .texCoord2(sx,1-sy2)
@@ -293,21 +334,90 @@ TextFont.prototype.makeShapeMeshes=function(str,xPos,yPos,height){
      .vertex2(vx2,vy)
      .texCoord2(sx2,1-sy2)
      .vertex2(vx2,vy2);
+   }
    if(lastChar!=-1){
     if(this.kern[lastChar] && this.kern[lastChar][c]){
-     xPos+=this.kern[lastChar][c].amount*scale;
+     xPos+=this.kern[lastChar][c].amount*extra.scale;
     }
    }
-   xPos+=ch.xadvance*scale;
+   xPos+=ch.xadvance*extra.scale;
   }
   lastChar=c;
+ }
+}
+
+/**
+ * Creates an array of meshes containing the primitives
+ * needed to draw text with this font.
+* @param {String} string The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized
+* by this method.
+* @param {Object} params An object whose keys have
+* the possibilities given below, and whose values are those
+* allowed for each key.<ul>
+* <li><code>x</code> - X-coordinate of the top left corner of the text.
+* If null or omitted, uses 0.
+* For the text to show upright, the coordinate system should have the
+* X-axis pointing right and the Y-axis pointing down (for example, an
+* orthographic projection where the left and top coordinates are less
+* than the right and bottom coordinates, respectively).
+* <li><code>y</code> - Y-coordinate of the top left corner of the text.
+* If null or omitted, uses 0.
+* <li><code>lineHeight</code> - Height of each line of the text in units.
+* If null or omitted, uses the line height given in the font.
+* <li><code>width</code> - Maximum width of each line.  Lines
+* that exceed this width will be wrapped.
+* <li><code>align</code> - Horizontal text alignment.  Can be "left",
+* "center", or "right" (all strings).
+* </ul>
+* @returns {Array<Mesh>} An array of meshes representing the text.
+* There is one mesh for each texture page of the font.  If none of the
+* text uses a given page, the corresponding mesh will be null.
+ */
+H3DU.TextFont.prototype.makeTextMeshes=function(str,params){
+ var meshesForPage=[];
+ var xPos=((typeof params.x !== "undefined" && params.x !== null)) ? params.x : 0;
+ var yPos=((typeof params.y !== "undefined" && params.y !== null)) ? params.y : 0;
+ var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight :
+   this.common.lineHeight;
+ if(height<0)throw new Error();
+ var width=((typeof params.width !== "undefined" && params.width !== null)) ? params.width : -1;
+ var align=((typeof params.align !== "undefined" && params.align !== null)) ? params.align : 0;
+ if(align=="right")align=2;
+ else if(align=="center")align=1;
+ else align=0;
+ var extra={
+  recipPageWidth:1.0/this.common.scaleW,
+  recipPageHeight:1.0/this.common.scaleH,
+  scale:height/this.common.lineHeight
+ };
+ var meshesForPage=[];
+ for(var i=0;i<this.pages.length;i++){
+  meshesForPage[i]=null;
+ }
+ var linebreaks=this._findLineBreaks(str,extra.scale,width);
+ if(linebreaks.length==0){
+  return meshesForPage;
+ }
+ if(width<0){
+  // Calculate max width if no explicit width was given
+  for(var i=0;i<linebreaks.length;i+=3){
+   width=(i==0) ? linebreaks[i+2] : Math.max(width,linebreaks[i+2])
+  }
+ }
+ for(var i=0;i<linebreaks.length;i+=3){
+  var x=xPos
+  if(align==1)x=x+(width-linebreaks[i+2])*0.5
+  else if(align==2)x=x+width-linebreaks[i+2]
+  this._makeTextMeshesInner(str,linebreaks[i],
+    linebreaks[i+1],x,yPos,params,extra,meshesForPage);
+  yPos+=height;
  }
  return meshesForPage;
 }
 /** @private */
-TextFont._resolvePath=function(path,name){
+H3DU.TextFont._resolvePath=function(path,name){
  // Relatively dumb for a relative path
- // resolver, but sufficient for TextFont's purposes
+ // resolver, but sufficient for H3DU.TextFont's purposes
  "use strict";
 var ret=path;
  var lastSlash=ret.lastIndexOf("/");
@@ -319,7 +429,7 @@ var ret=path;
  return ret;
 };
 /** @private */
-TextFont._elementToObject=function(element){
+H3DU.TextFont._elementToObject=function(element){
  var attrs=element.getAttributeNames();
  var x={};
  for(var i=0;i<attrs.length;i++){
@@ -328,14 +438,14 @@ TextFont._elementToObject=function(element){
      n=="spacing"){
     x[n]=element.getAttribute(n)
    } else {
-    x[n]=parseInt(element.getAttribute(n))
+    x[n]=parseInt(element.getAttribute(n),10)
     if(isNaN(x[n]))x[n]=0;
    }
  }
  return x;
 }
 /** @private */
-TextFont._loadJsonFontInner=function(data){
+H3DU.TextFont._loadJsonFontInner=function(data){
  var xchars=[]
  var xpages=[]
  var xkernings=[]
@@ -349,16 +459,16 @@ TextFont._loadJsonFontInner=function(data){
   }
   for(var i=0;i<json.pages.length;i++){
    var p=json.pages[i]
-   xpages[i]=TextFont._resolvePath(data.url,p);
+   xpages[i]=H3DU.TextFont._resolvePath(data.url,p);
   }
  if(json.kernings){
    xkernings=json.kernings
  }
- return new TextFont(json.info,xchars,xpages,xkernings,
+ return new H3DU.TextFont(json.info,xchars,xpages,xkernings,
    json.common,data.url)
 }
 /** @private */
-TextFont._loadXmlFontInner=function(data){
+H3DU.TextFont._loadXmlFontInner=function(data){
  var doc=data.data
  var commons=doc.getElementsByTagName("common")
  if(commons.length === 0)return null;
@@ -371,24 +481,24 @@ TextFont._loadXmlFontInner=function(data){
  var xchars=[]
  var xpages=[]
  var xkernings=[]
- var xcommons=TextFont._elementToObject(commons[0])
- var xinfos=TextFont._elementToObject(infos[0])
+ var xcommons=H3DU.TextFont._elementToObject(commons[0])
+ var xinfos=H3DU.TextFont._elementToObject(infos[0])
  for(var i=0;i<pages.length;i++){
-  var p=TextFont._elementToObject(pages[i])
-  xpages[p.id]=TextFont._resolvePath(data.url,p.file);
+  var p=H3DU.TextFont._elementToObject(pages[i])
+  xpages[p.id]=H3DU.TextFont._resolvePath(data.url,p.file);
  }
  for(var i=0;i<chars.length;i++){
-  var p=TextFont._elementToObject(chars[i])
+  var p=H3DU.TextFont._elementToObject(chars[i])
   xchars[p.id]=p
  }
  for(var i=0;i<kernings.length;i++){
-  var p=TextFont._elementToObject(kernings[i])
+  var p=H3DU.TextFont._elementToObject(kernings[i])
   xkernings.push(p)
  }
- return new TextFont(xinfos,xchars,xpages,xkernings,xcommons,data.url)
+ return new H3DU.TextFont(xinfos,xchars,xpages,xkernings,xcommons,data.url)
 }
 /** @private */
-TextFont._decodeUtf8=function(data,offset,endOffset){
+H3DU.TextFont._decodeUtf8=function(data,offset,endOffset){
 var ret=[];
 var cp,bytesSeen;
 var bytesNeeded=0;
@@ -449,7 +559,7 @@ var upper=0xbf;
         }
 }
 /** @private */
-TextFont._loadBinaryFontInner=function(data){
+H3DU.TextFont._loadBinaryFontInner=function(data){
  var view=new DataView(data.data)
  var offset=4;
  if(view.getUint8(0)!=66||
@@ -476,7 +586,7 @@ TextFont._loadBinaryFontInner=function(data){
  function utf8string(view,startIndex,endIndex){
    for(var i=startIndex;i<endIndex;i++){
      if(view.getUint8(i) === 0){
-      return TextFont._decodeUtf8(view,startIndex,i);
+      return H3DU.TextFont._decodeUtf8(view,startIndex,i);
      }
    }
    return null
@@ -530,7 +640,7 @@ TextFont._loadBinaryFontInner=function(data){
     for(var x=0;x<size;x+=ss+1){
      var name=utf8string(view,offset,offset+ss+1)
      if(name==null){return null}
-     pages.push(TextFont._resolvePath(data.url,name))
+     pages.push(H3DU.TextFont._resolvePath(data.url,name))
      offset+=ss+1
     }
     break;
@@ -565,10 +675,10 @@ TextFont._loadBinaryFontInner=function(data){
  }
 if(!havetype[1] || !havetype[2] || !havetype[3]){
   return null;}
- return new TextFont(info,chars,pages,kernings,commons,data.url)
+ return new H3DU.TextFont(info,chars,pages,kernings,commons,data.url)
 }
 /** @private */
-TextFont._loadTextFontInner=function(data){
+H3DU.TextFont._loadTextFontInner=function(data){
   var text=data.data
   var lines=text.split(/\r?\n/)
   var pages=[]
@@ -591,13 +701,13 @@ TextFont._loadTextFontInner=function(data){
      if(value.charAt(0)=='"'){
       value=value.substring(1,value.length-1);
      } else if(value.match(/^-?\d+$/)){
-      value=parseInt(value)|0;
+      value=parseInt(value,10)|0;
      }
      hash[key]=value;
      rest=rest.substr(e[1].length);
    }
    if(word=="page"){
-    pages[hash.id|0]=TextFont._resolvePath(data.url,hash.file);
+    pages[hash.id|0]=H3DU.TextFont._resolvePath(data.url,hash.file);
    }
    if(word=="char" && hash.id!=null){
     chars[hash.id|0]=hash;
@@ -617,7 +727,7 @@ TextFont._loadTextFontInner=function(data){
   if(!fontinfo || !common || pages.length === 0){
    return null;
   }
-  return new TextFont(fontinfo,chars,pages,kernings,common,data.url)
+  return new H3DU.TextFont(fontinfo,chars,pages,kernings,common,data.url)
 }
 /**
 * Loads a bitmap font definition from a file along with the textures
@@ -629,28 +739,41 @@ TextFont._loadTextFontInner=function(data){
 * <li>".bin": Binary</li>
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
- * @param {H3DU.TextureLoader} textureLoader
+ * @param {H3DU.TextureLoader} [textureLoader]
 * @returns {Promise} A promise that is resolved
-* when the font data and textures are loaded successfully (the result will be
-* a TextFont object), and is rejected when an error occurs.
+* when the font data and textures are loaded successfully,
+* and is rejected when an error occurs.
+* If the promise is resolved, the result will be an object with the
+* following keys:<ul>
+<li><code>url</code> - The URL of the font data file.
+<li><code>font</code> - The font data in the form of an {@link H3DU.TextFont} object.
+<li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
+in the order in which they are declared in the font data file.
+</ul>
 */
-TextFont.loadWithTextures=function(fontFileName,textureLoader){
+H3DU.TextFont.loadWithTextures=function(fontFileName,textureLoader){
  if(!textureLoader){
-  return TextFont.load(fontFileName);
+  throw new Error();
  }
- return TextFont.load(fontFileName).then(function(font){
-  var textures=[]
-  for(var i=0;i<font.pages.length;i++){
-   if(!font.pages[i])continue
-   textures.push(font.pages[i])
-  }
-  var thisObject=font;
-  return textureLoader.loadTexturesAll(textures).then(function(r){
-     return Promise.resolve(font);
+ return H3DU.TextFont.load(fontFileName).then(function(font){
+  return font.loadTextures(textureLoader).then(function(r){
+     return Promise.resolve({"url":font.fileUrl,"font":font,"textures":r});
   },function(r){
      return Promise.reject({"url":font.fileUrl,"results":r});
   });
  });
+}
+/**
+ * Not documented yet.
+ * @param {*} textureLoader
+ */
+H3DU.TextFont.prototype.loadTextures=function(textureLoader){
+  var textures=[]
+  for(var i=0;i<this.pages.length;i++){
+   if(!this.pages[i])throw new Error();
+   textures.push(this.pages[i])
+  }
+  return textureLoader.loadTexturesAll(textures);
 }
 
 /**
@@ -664,21 +787,21 @@ TextFont.loadWithTextures=function(fontFileName,textureLoader){
 * <li>".bin": Binary</li>
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
-* @returns {Promise<TextFont>} A promise that is resolved
+* @returns {Promise<H3DU.TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
-* a TextFont object), and is rejected when an error occurs.
+* an H3DU.TextFont object), and is rejected when an error occurs.
 */
-TextFont.load=function(fontFileName){
+H3DU.TextFont.load=function(fontFileName){
  if((/\.xml$/i.exec(fontFileName))){
   return H3DU.loadFileFromUrl(fontFileName,"xml").then(
    function(data){
-    var ret=TextFont._loadXmlFontInner(data)
+    var ret=H3DU.TextFont._loadXmlFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  } else if((/\.bin$/i.exec(fontFileName))){
   return H3DU.loadFileFromUrl(fontFileName,"arraybuffer").then(
    function(data){
-    var ret=TextFont._loadBinaryFontInner(data)
+    var ret=H3DU.TextFont._loadBinaryFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    },function(e){
     console.log(e)
@@ -689,30 +812,30 @@ TextFont.load=function(fontFileName){
     var view=new DataView(data.data)
     var ret=null;
     if(view.getUint8(0) === 66 && view.getUint8(1) === 77 && view.getUint8(2) === 70) {
-     ret=TextFont._loadBinaryFontInner(data)
+     ret=H3DU.TextFont._loadBinaryFontInner(data)
     } else {
      var view=new DataView(data.data)
-     ret=TextFont._loadTextFontInner({
-       "url":data.url,"data":TextFont._decodeUtf8(view,0,view.byteLength)})
+     ret=H3DU.TextFont._loadTextFontInner({
+       "url":data.url,"data":H3DU.TextFont._decodeUtf8(view,0,view.byteLength)})
     }
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  } else if((/\.json$/i.exec(fontFileName))){
   return H3DU.loadFileFromUrl(fontFileName,"json").then(
    function(data){
-    var ret=TextFont._loadJsonFontInner(data)
+    var ret=H3DU.TextFont._loadJsonFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  } else {
   return H3DU.loadFileFromUrl(fontFileName).then(
    function(data){
-    var ret=TextFont._loadTextFontInner(data)
+    var ret=H3DU.TextFont._loadTextFontInner(data)
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url})
    })
  }
 }
 /** @private */
-TextRenderer._textShader=function(){
+H3DU.TextFont._textShader=function(){
 "use strict";
 var i;
 var shader=""
@@ -735,8 +858,4 @@ shader+=" gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-dsmooth,0.5+dsmooth,d));\
 "}";
 return shader;
 };
-
-exports.TextFont=TextFont;
-exports.TextRenderer=TextRenderer;
-
-})(this);
+H3DU.TextFont._textShaderInfo=new H3DU.ShaderInfo(null,H3DU.TextFont._textShader());

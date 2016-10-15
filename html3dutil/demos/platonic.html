@@ -4,7 +4,7 @@
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
-<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../h3du_min.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
@@ -111,17 +111,17 @@ function shiny(color){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new H3DU.Scene3D(document.getElementById("canvas"))
-   .cullFace(Scene3D.BACK);
+   .cullFace(H3DU.Scene3D.BACK);
   var sub=new H3DU.Batch3D()
    .orthoAspect(-20,20,-10,10,-20,20);
   sub.getLights().setDefaults();
   var mesh;
   var dims=4.5*2/Math.sqrt(3);
-  mesh=Meshes.createBox(dims,dims,dims);
+  mesh=H3DU.Meshes.createBox(dims,dims,dims);
   sub.addShape(
     new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
   // this configuration of a sphere results in an octahedron
-  mesh=Meshes.createSphere(4.5,4,2,true);
+  mesh=H3DU.Meshes.createSphere(4.5,4,2,true);
   sub.addShape(
     new H3DU.Shape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
   mesh=icosahedron(4.5);

@@ -23,7 +23,7 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 
-if(!H3DU){
+if((typeof H3DU === "undefined" || H3DU === null)){
  exports.H3DU = {};
 }
 /**
@@ -1314,7 +1314,7 @@ mat4translate:function(mat,v3,v3y,v3z){
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
+* to be seen.&lt;p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.&lt;p>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
@@ -1386,12 +1386,14 @@ mat4lookat:function(viewerPos,lookingAt,up){
  * in OpenGL. To adjust the result of this method to a left-handed system,
  * such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
  * elements of the result (zero-based indices 8, 9, 10, and 11).
- * @param {Number} l Leftmost coordinate of the 3D view.
- * @param {Number} r Rightmost coordinate of the 3D view.
- * (Note that r can be greater than l or vice versa.)
- * @param {Number} b Bottommost coordinate of the 3D view.
- * @param {Number} t Topmost coordinate of the 3D view.
- * (Note that t can be greater than b or vice versa.)
+ * @param {Number} l Leftmost coordinate of the orthographic view.
+ * @param {Number} r Rightmost coordinate of the orthographic view.
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
+ * @param {Number} b Bottommost coordinate of the orthographic view.
+ * @param {Number} t Topmost coordinate of the orthographic view.
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
  * @param {Number} n Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the camera to the far clipping
@@ -1428,7 +1430,7 @@ mat4ortho:function(l,r,b,t,n,f){
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
+* to be seen.&lt;p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.&lt;p>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
@@ -1447,12 +1449,14 @@ mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
  * This method assumes a right-handed coordinate system; see mat4ortho().&lt;p>
  * This is the same as mat4ortho() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.
- * @param {Number} l Leftmost coordinate of the 2D view.
- * @param {Number} r Rightmost coordinate of the 2D view.
- * (Note that r can be greater than l or vice versa.)
- * @param {Number} b Bottommost coordinate of the 2D view.
- * @param {Number} t Topmost coordinate of the 2D view.
- * (Note that t can be greater than b or vice versa.)
+ * @param {Number} l Leftmost coordinate of the orthographic view.
+ * @param {Number} r Rightmost coordinate of the orthographic view.
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
+ * @param {Number} b Bottommost coordinate of the orthographic view.
+ * @param {Number} t Topmost coordinate of the orthographic view.
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
 mat4ortho2d:function(l,r,b,t){
@@ -1468,12 +1472,14 @@ mat4ortho2d:function(l,r,b,t){
  * This is the same as mat4orthoAspect() with the near clipping plane
  * set to -1 and the far clipping plane set to 1.&lt;p>
  * This method assumes a right-handed coordinate system; see mat4ortho().&lt;p>
- * @param {Number} l Leftmost coordinate of the view rectangle.
+* @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
- * (Note that r can be greater than l or vice versa.)
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (Note that t can be greater than b or vice versa.)
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
 * @param {Number}  aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @returns {Array&lt;Number>} The resulting 4x4 matrix.
@@ -1488,15 +1494,15 @@ mat4ortho2dAspect:function(l,r,b,t,aspect){
  * ratio, the view rectangle will be centered on the viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.&lt;p>
- * This is the same as mat4ortho() with the near clipping plane
- * set to -1 and the far clipping plane set to 1.&lt;p>
  * This method assumes a right-handed coordinate system; see mat4ortho().
- * @param {Number} l Leftmost coordinate of the view rectangle.
+* @param {Number} l Leftmost coordinate of the view rectangle.
  * @param {Number} r Rightmost coordinate of the view rectangle.
- * (Note that r can be greater than l or vice versa.)
+ * (If l is greater than r, X-coordinates increase rightward; otherwise,
+ * they increase leftward.)
  * @param {Number} b Bottommost coordinate of the view rectangle.
  * @param {Number} t Topmost coordinate of the view rectangle.
- * (Note that t can be greater than b or vice versa.)
+ * (If b is greater than t, X-coordinates increase downward; otherwise,
+ * they increase upward.)
  * @param {Number} n Distance from the camera to the near clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the camera to the far clipping
@@ -1555,7 +1561,7 @@ mat4orthoAspect:function(l,r,b,t,n,f,aspect){
 * close, for example, 0.5, 1, or higher.
 * @param {Number} far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
-* to be seen.  This value should be greater than "near" and be set so that the ratio of "far" to "near"
+* to be seen.&lt;p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 * is as small as the application can accept.&lt;p>
  * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel,
  * which are more spread out toward the far clipping plane than toward the
@@ -2194,7 +2200,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

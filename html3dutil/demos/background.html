@@ -4,7 +4,7 @@ body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
-<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../h3du_min.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
@@ -151,14 +151,14 @@ CanvasBackground.prototype.start=function(){
  GLUtil["renderLoop"](this.animate.bind(this));
 }
 CanvasBackground.prototype["setColor"]=function(color){
- var rgb=GLUtil["toGLColor"](color)
+ var rgb=H3DU.toGLColor(color)
  if(!rgb)throw new Error("invalid color parameter");
  this.color=[rgb[0]*255,rgb[1]*255,rgb[2]*255];
  this.hls=this.constructor.rgb2hls(this.color);
 }
 
 CanvasBackground.prototype.animate=function(time){
-  this.count+=GLUtil.newFrames(this.timeInfo,time);
+  this.count+=H3DU.newFrames(this.timeInfo,time);
   while(this.count>=4){
    // Draw a new shape every 4 frames
    this.drawOne();

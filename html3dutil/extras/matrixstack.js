@@ -7,20 +7,9 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
 /* global define, exports */
-(function (g,f) {
-  "use strict";
-if (typeof define==="function" && define.amd) {
-    define([ "exports" ], f);
-  } else if (typeof exports==="object") {
-    f(exports);
-  } else {
-    f(g);
-  }
-}(this, function (exports) {
-  "use strict";
-if (exports.MatrixStack) { return; }
+if((typeof H3DU === "undefined" || H3DU === null)){ var H3DU={}; }
 /**
-MatrixStack is a class that implements a stack
+H3DU.MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.<p>
 When the constructor is called, it will create a stack whose
 only element is the identity matrix.
@@ -28,13 +17,13 @@ only element is the identity matrix.
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/matrixstack.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre>
- @alias MatrixStack
+ @alias H3DU.H3DU.MatrixStack
  @class
  */
-function MatrixStack(){
+function H3DU.MatrixStack(){
  this.stack=[
   [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
  ];
@@ -43,23 +32,23 @@ function MatrixStack(){
  * Gets a copy of the matrix at the top of this stack.
  * @returns {Array<Number>}.
  */
-MatrixStack.prototype.get=function(){
+H3DU.MatrixStack.prototype.get=function(){
  return this.stack[this.stack.length-1].slice(0,16);
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the identity matrix.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.loadIdentity=function(){
+H3DU.MatrixStack.prototype.loadIdentity=function(){
  this.stack[this.stack.length-1]=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
  return this;
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the given matrix.
  * @param {Array<Number>} mat A matrix to replace the top of the stack with.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
 */
-MatrixStack.prototype.loadMatrix=function(mat){
+H3DU.MatrixStack.prototype.loadMatrix=function(mat){
  this.stack[this.stack.length-1]=mat.slice(0,16);
  return this;
 };
@@ -68,9 +57,9 @@ MatrixStack.prototype.loadMatrix=function(mat){
  * transpose of the given matrix.
  * @param {Array<Number>} mat A matrix whose transpose will
  * replace the top of the stack.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
 */
-MatrixStack.prototype.loadTransposeMatrix=function(mat){
+H3DU.MatrixStack.prototype.loadTransposeMatrix=function(mat){
  var m=mat.slice(0,16);
  var tmp;
  tmp=m[1];m[1]=m[4];m[4]=tmp;
@@ -90,9 +79,9 @@ MatrixStack.prototype.loadTransposeMatrix=function(mat){
  * passed to this method describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
  * @param {Array<Number>} mat A matrix to multiply the current one by.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.multMatrix=function(mat){
+H3DU.MatrixStack.prototype.multMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i < 16; i+= 4){
@@ -117,9 +106,9 @@ MatrixStack.prototype.multMatrix=function(mat){
  * the effect of translation then scaling.
  * @param {Array<Number>} mat A matrix whose transpose the current
  * matrix will be multiplied by.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.multTransposeMatrix=function(mat){
+H3DU.MatrixStack.prototype.multTransposeMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i < 16; i+= 4){
@@ -146,9 +135,9 @@ MatrixStack.prototype.multTransposeMatrix=function(mat){
  * of rotation.
  * @param {Number} z Z-component of the axis
  * of rotation.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.rotate=function(angle,x,y,z){
+H3DU.MatrixStack.prototype.rotate=function(angle,x,y,z){
  var ang=angle*Math.PI/180;
  var v0=x;
  var v1=y;
@@ -191,9 +180,9 @@ return this.multMatrix([cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+x
  * @param {Number} x Translation along the X axis.
  * @param {Number} y Translation along the Y axis.
  * @param {Number} z Translation along the Z axis.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.translate=function(x,y,z){
+H3DU.MatrixStack.prototype.translate=function(x,y,z){
  var mat=this.stack[this.stack.length-1];
  this.stack[this.stack.length-1]=[
   mat[0],mat[1],mat[2],mat[3],
@@ -212,9 +201,9 @@ MatrixStack.prototype.translate=function(x,y,z){
  * @param {Number} x Scale factor along the X axis.
  * @param {Number} y Scale factor along the Y axis.
  * @param {Number} z Scale factor along the Z axis.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.scale=function(x,y,z){
+H3DU.MatrixStack.prototype.scale=function(x,y,z){
  var mat=this.stack[this.stack.length-1];
  mat[0]*=x;
  mat[1]*=x;
@@ -233,9 +222,9 @@ MatrixStack.prototype.scale=function(x,y,z){
 /**
  * Makes a copy of the matrix at the top of this stack
  * and puts the copy on top of the stack.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.pushMatrix=function(){
+H3DU.MatrixStack.prototype.pushMatrix=function(){
  this.stack.push(this.stack[this.stack.length-1].slice(0,16));
  return this;
 };
@@ -243,9 +232,9 @@ MatrixStack.prototype.pushMatrix=function(){
  * Removes the matrix at the top of this stack, making
  * the matrix beneath it the new top matrix.  Has no
  * effect if the stack has only one matrix.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.popMatrix=function(){
+H3DU.MatrixStack.prototype.popMatrix=function(){
  if(this.stack.length>1){
   this.stack.pop();
  }
@@ -268,9 +257,9 @@ MatrixStack.prototype.popMatrix=function(){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.ortho=function(l,r,b,t,n,f){
+H3DU.MatrixStack.prototype.ortho=function(l,r,b,t,n,f){
 var m=this.stack[this.stack.length-1];
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
@@ -311,9 +300,9 @@ return this;
 * @param {Number} f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.frustum=function(l,r,b,t,n,f){
+H3DU.MatrixStack.prototype.frustum=function(l,r,b,t,n,f){
 var m=this.stack[this.stack.length-1];
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
@@ -353,9 +342,9 @@ return this;
 * the camera's view direction.
  * @param {Number} uy Y coordinate of the up vector.
  * @param {Number} uz Z coordinate of the up vector.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
+H3DU.MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
   var viewerPos=[ex,ey,ez];
   var lookingAt=[cx,cy,cz];
   var up=[ux,uy,uz];
@@ -431,9 +420,9 @@ MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
  * @param {Number} b Bottommost coordinate of the 2D view.
  * @param {Number} t Topmost coordinate of the 2D view.
  * (Note that t can be greater than b or vice versa.)
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.ortho2d=function(l,r,b,t){
+H3DU.MatrixStack.prototype.ortho2d=function(l,r,b,t){
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
 var v0 = 2.0*invrl;
@@ -469,9 +458,9 @@ return this;
 * @param {Number}  f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.perspective=function(fov,aspect,n,f){
+H3DU.MatrixStack.prototype.perspective=function(fov,aspect,n,f){
 var ftan = 1/Math.tan(fov*Math.PI/360);
 var v0 = ftan/aspect;
 var invnf=1.0/(n-f);
@@ -498,9 +487,9 @@ return this;
  * @param {Array<Number>} vp A 4-element array giving the X and Y coordinates
  * of the lower left corner followed by the width and height
  * of a rectangle indicating the current viewport.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
  */
-MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
+H3DU.MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
  var invww=1.0/ww;
  var invwh=1.0/wh;
  wx-=vp[0];
@@ -512,5 +501,3 @@ MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
    .scale(scaleX*2,-scaleY*2,1)
    .multMatrix([ 0.5, 0, 0, 0, 0, -0.5, 0, 0, 0, 0, 1, 0, 0.5, -0.5, 0, 1 ]);
 };
-exports.MatrixStack=MatrixStack;
-}));

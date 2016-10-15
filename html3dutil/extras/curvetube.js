@@ -6,8 +6,8 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 */
-/* global FrenetFrames, H3DU.Math */
-function FrenetFrames(func){
+/* global H3DU._FrenetFrames, H3DU.Math */
+H3DU._FrenetFrames = function(func){
  "use strict";
  this.func=func;
  this.normals=[];
@@ -23,15 +23,15 @@ function FrenetFrames(func){
  var totalLength=0;
  var samples=[];
  var lengths=[];
- if(FrenetFrames._distSq(func.evaluate(0),lastSample) < FrenetFrames._EPSILON){
+ if(H3DU._FrenetFrames._distSq(func.evaluate(0),lastSample) < H3DU._FrenetFrames._EPSILON){
   isClosed=true;
  }
  for(var i=0;i<=res;i++){
   var t=i/res;
   var e0=(nextSample) ? nextSample : func.evaluate(t);
-  var e01=func.evaluate(i===res ? t-FrenetFrames._EPSILON : t+FrenetFrames._EPSILON);
+  var e01=func.evaluate(i===res ? t-H3DU._FrenetFrames._EPSILON : t+H3DU._FrenetFrames._EPSILON);
   if(isClosed && i>0){
-   var len=Math.sqrt(FrenetFrames._distSq(e0,samples[i-1]));
+   var len=Math.sqrt(H3DU._FrenetFrames._distSq(e0,samples[i-1]));
    totalLength+=len;
    lengths.push(len);
   }
@@ -48,7 +48,7 @@ function FrenetFrames(func){
    normal=H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3cross(this.binormals[i-1],tangent));
   } else {
-   normal=FrenetFrames.normalFromTangent(tangent);
+   normal=H3DU._FrenetFrames.normalFromTangent(tangent);
   }
   var binormal=H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3cross(tangent,normal));
@@ -80,7 +80,7 @@ function FrenetFrames(func){
  * Not documented yet.
  * @param {*} tangent
  */
-FrenetFrames.normalFromTangent=function(tangent){
+H3DU._FrenetFrames.normalFromTangent=function(tangent){
  "use strict";
 var absx=Math.abs(tangent[0]);
  var absy=Math.abs(tangent[1]);
@@ -102,12 +102,12 @@ var absx=Math.abs(tangent[0]);
  }
  return H3DU.Math.vec3normInPlace(normal);
 };
-FrenetFrames._EPSILON=0.000001;
+H3DU._FrenetFrames._EPSILON=0.000001;
 /**
  * Not documented yet.
  * @param {*} u
  */
-FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
+H3DU._FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
  "use strict";
  var sample=this.func.evaluate(u);
  var b,n,t;
@@ -116,7 +116,7 @@ FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
  var i,e0,e01,normal,tangent,binormal;
  if(u>=0 && u<=1){
   var index=u*(this.binormals.length-1);
-  if(Math.abs(index-Math.round(index))<FrenetFrames._EPSILON){
+  if(Math.abs(index-Math.round(index))<H3DU._FrenetFrames._EPSILON){
    index=Math.round(index);
    b=this.binormals[index];
    n=this.normals[index];
@@ -131,7 +131,7 @@ FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
    this.cacheMisses=(this.cacheMisses||0)+1;
    index=Math.floor(index);
    e0=sample;
-   e01=this.func.evaluate(u+FrenetFrames._EPSILON);
+   e01=this.func.evaluate(u+H3DU._FrenetFrames._EPSILON);
    tangent=H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3sub(e01,e0));
    normal=H3DU.Math.vec3normInPlace(
@@ -152,10 +152,10 @@ FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
    }
    this.cacheMisses=(this.cacheMisses||0)+1;
   e0=sample;
-  e01=this.func.evaluate(u+FrenetFrames._EPSILON);
+  e01=this.func.evaluate(u+H3DU._FrenetFrames._EPSILON);
   tangent=H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3sub(e01,e0));
-  normal=FrenetFrames.normalFromTangent(tangent);
+  normal=H3DU._FrenetFrames.normalFromTangent(tangent);
   binormal=H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3cross(tangent,normal));
   b=binormal;
@@ -183,7 +183,7 @@ FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
  return val;
 };
 /** @private */
-FrenetFrames._distSq=function(a,b){
+H3DU._FrenetFrames._distSq=function(a,b){
   "use strict";
 var dx=b[0]-a[0];
   var dy=b[1]-a[1];
@@ -197,7 +197,7 @@ var dx=b[0]-a[0];
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/curvetube.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
 * @class
@@ -225,12 +225,12 @@ var dx=b[0]-a[0];
 * or smaller cross sections will affect the meaning of the "thickness"
 * parameter.
 */
-function CurveTube(func, thickness, sweptCurve){
+H3DU.CurveTube=function(func, thickness, sweptCurve){
  "use strict";
 this.thickness=(thickness===null || typeof thickness==="undefined") ? 0.125 : thickness;
  this.sweptCurve=sweptCurve;
  this.func=func;
- this.tangentFinder=new FrenetFrames(func);
+ this.tangentFinder=new H3DU._FrenetFrames(func);
 }
 
 /**
@@ -240,7 +240,7 @@ this.thickness=(thickness===null || typeof thickness==="undefined") ? 0.125 : th
 * tube.
 * @returns {Array<Number>} A 3-element array specifying a 3D point.
 */
-CurveTube.prototype.evaluate=function(u, v){
+H3DU.CurveTube.prototype.evaluate=function(u, v){
  "use strict";
 var basisVectors=this.tangentFinder.getSampleAndBasisVectors(u);
  var sampleX=basisVectors[9];
@@ -264,3 +264,6 @@ var basisVectors=this.tangentFinder.getSampleAndBasisVectors(u);
  }
  return [sx,sy,sz];
 };
+/** @alias CurveTube
+ @deprecated Use H3DU.CurveTube instead. */
+var CurveTube=H3DU.CurveTube;

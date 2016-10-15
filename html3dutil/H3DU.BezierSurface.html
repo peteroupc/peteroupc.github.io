@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: BezierCurve</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: BezierSurface</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,14 +10,14 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://upokecenter.dreamhosters.com/articles/donate-now-2/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: BezierCurve</h1>
+    <h1>Class: BezierSurface</h1>
 
 <section>
 
 <header>
 
         <h2>
-        BezierCurve
+        BezierSurface
         </h2>
 
 </header>
@@ -25,17 +25,17 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="margin-bottom:0px" id="BezierCurve"><span style="font-weight:lighter"></span>new BezierCurve<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="BezierSurface"><span style="font-weight:lighter"></span>new BezierSurface<span class="signature">(controlPoints, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line34">line 34</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line99">line 99</a>
      </i></small></p>
 
 <div class="description">
-    A parametric evaluator for B&eacute;zier curves.<p>
-A B&eacute;zier curve is defined by a series of control points, where
-the first and last control points define the endpoints of the curve, and
-the remaining control points define the curve's shape, though they don't
-necessarily cross the curve.
+    A parametric evaluator for B&eacute;zier surfaces.<p>
+A B&eacute;zier surface is defined by a series of control points, where
+the control points on each corner define the endpoints of the surface, and
+the remaining control points define the surface's shape, though they don't
+necessarily cross the surface.
 </div>
 
     <h5>Parameters:</h5>
@@ -52,12 +52,16 @@ necessarily cross the curve.
 )
 
            </dt><dd>
-           An array of control points.  Each
+           An array of control point
+arrays, which in turn contain a number of control points.  Each
 control point is an array with the same length as the other control points.
 It is assumed that:<ul>
 <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
-curve.  For example, a degree-3 (cubic) curve
-contains 4 control points.  A degree of 1 results in a straight line segment.
+surface along the V axis.  For example, a degree-3 (cubic) surface along the V axis
+contains 4 control points, one in each control point array.  A degree of 1 on
+both the U and V axes results in a flat surface.
+<li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier
+surface along the U axis.
 <li>The first control point's length represents the size of all the control
 points.
 </ul></dd>
@@ -74,7 +78,8 @@ points.
                     &lt;optional>
 
            </dt><dd>
-           Starting point for the purpose of interpolation; it will correspond to 0.
+           Starting point for the purpose of interpolation along the
+U-axis; it will correspond to 0.
 May be omitted; default is 0.</dd>
 
         <dt>
@@ -89,7 +94,40 @@ May be omitted; default is 0.</dd>
                     &lt;optional>
 
            </dt><dd>
-           Ending point for the purpose of interpolation; it will correspond to 1.
+           Ending point for the purpose of interpolation along the
+U-axis; it will correspond to 1.
+May be omitted; default is 1.</dd>
+
+        <dt>
+
+                <code>v1</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Starting point for the purpose of interpolation along the
+V-axis; it will correspond to 0.
+May be omitted; default is 0.</dd>
+
+        <dt>
+
+                <code>v2</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Ending point for the purpose of interpolation along the
+V-axis; it will correspond to 1.
 May be omitted; default is 1.</dd>
 
     </dl>
@@ -102,14 +140,14 @@ May be omitted; default is 1.</dd>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>evaluate<span class="signature">(u, v)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="glutil-eval.js.html">glutil-eval.js</a>, <a href="glutil-eval.js.html#line62">line 62</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line128">line 128</a>
      </i></small></p>
 
 <div class="description">
-    Evaluates the curve function based on a point
-in a B&eacute;zier curve.
+    Evaluates the surface function based on a point
+in a B&eacute;zier surface.
 </div>
 
     <h5>Parameters:</h5>
@@ -126,8 +164,20 @@ in a B&eacute;zier curve.
 )
 
            </dt><dd>
-           Point on the curve to evaluate (generally within the range
+           U-coordinate of the surface to evaluate (generally within the range
 given in the constructor).</dd>
+
+        <dt>
+
+                <code>v</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           V-coordinate of the surface to evaluate.</dd>
 
     </dl>
 
@@ -146,15 +196,6 @@ length of a control point, as specified in the constructor.
 <span class="param-type">Array.&lt;Number></span>)
 
 </div>
-
-    <h5>Example</h5>
-
-    <pre class="prettyprint"><code>// Generate 11 points forming the B&amp;eacute;zier curve.
-// Assumes the curve was created with u1=0 and u2=1 (the default).
-var points=[];
-for(var i=0;i&lt;=10;i++){
- points.push(curve.evaluate(i/10.0));
-}</code></pre>
 
 </article>
 
@@ -180,7 +221,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glmath.html">glmath</a></li><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="BezierCurve.html">BezierCurve</a></li><li><a href="BezierSurface.html">BezierSurface</a></li><li><a href="BSplineCurve.html">BSplineCurve</a></li><li><a href="BSplineSurface.html">BSplineSurface</a></li><li><a href="Camera.html">Camera</a></li><li><a href="CurveEval.html">CurveEval</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="glmath.GLMath.html">GLMath</a></li><li><a href="glutil.BufferedMesh.html">BufferedMesh</a></li><li><a href="glutil.FrameBuffer.html">FrameBuffer</a></li><li><a href="glutil.GLUtil.html">GLUtil</a></li><li><a href="glutil.Lights.html">Lights</a></li><li><a href="glutil.LightSource.html">LightSource</a></li><li><a href="glutil.Material.html">Material</a></li><li><a href="glutil.Mesh.html">Mesh</a></li><li><a href="glutil.Meshes.html">Meshes</a></li><li><a href="glutil.RenderPass3D.html">RenderPass3D</a></li><li><a href="glutil.Scene3D.html">Scene3D</a></li><li><a href="glutil.ShaderProgram.html">ShaderProgram</a></li><li><a href="glutil.Shape.html">Shape</a></li><li><a href="glutil.ShapeGroup.html">ShapeGroup</a></li><li><a href="glutil.Subscene3D.html">Subscene3D</a></li><li><a href="glutil.SurfaceEval.html">SurfaceEval</a></li><li><a href="glutil.Texture.html">Texture</a></li><li><a href="glutil.TextureLoader.html">TextureLoader</a></li><li><a href="glutil.Transform.html">Transform</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#clearColor">clearColor</a></li><li><a href="global.html#clearDepth">clearDepth</a></li><li><a href="global.html#clearStencil">clearStencil</a></li><li><a href="global.html#frameBuffer">frameBuffer</a></li><li><a href="global.html#subScene">subScene</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

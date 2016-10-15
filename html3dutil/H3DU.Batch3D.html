@@ -17,8 +17,6 @@
 <header>
 
         <h2>
-            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
-
         Batch3D
         </h2>
 
@@ -42,7 +40,7 @@
 
     <h4 style="margin-bottom:0px" id=".forFilter"><span style="font-weight:lighter">(static) </span>forFilter<span class="signature">(scene, fbo, shader)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line337">line 337</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line348">line 348</a>
      </i></small></p>
 
 <div class="description">
@@ -97,7 +95,7 @@
 
     <h4 style="margin-bottom:0px" id="addShape"><span style="font-weight:lighter"></span>addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line226">line 226</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line237">line 237</a>
      </i></small></p>
 
 <div class="description">
@@ -143,7 +141,7 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="getLights"><span style="font-weight:lighter"></span>getLights<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Lights.html">H3DU.Lights</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line215">line 215</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line226">line 226</a>
      </i></small></p>
 
 <div class="description">
@@ -166,7 +164,7 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="getProjectionMatrix"><span style="font-weight:lighter"></span>getProjectionMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line194">line 194</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line205">line 205</a>
      </i></small></p>
 
 <div class="description">
@@ -189,7 +187,7 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="getViewMatrix"><span style="font-weight:lighter"></span>getViewMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line200">line 200</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line211">line 211</a>
      </i></small></p>
 
 <div class="description">
@@ -210,9 +208,9 @@ Its parent will be set to no parent.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="ortho2DAspect"><span style="font-weight:lighter"></span>ortho2DAspect<span class="signature">(a, b, c, d)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id="ortho2DAspect"><span style="font-weight:lighter"></span>ortho2DAspect<span class="signature">(l, r, b, t)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line175">line 175</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line187">line 187</a>
      </i></small></p>
 
 <div class="description">
@@ -225,51 +223,55 @@ Its parent will be set to no parent.
 
         <dt>
 
-                <code>a</code>
+                <code>l</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           Leftmost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>r</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Rightmost coordinate of the view rectangle.
+(If l is greater than r, X-coordinates increase rightward; otherwise,
+they increase leftward.)</dd>
 
         <dt>
 
                 <code>b</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           Bottommost coordinate of the view rectangle.</dd>
 
         <dt>
 
-                <code>c</code>
+                <code>t</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
-
-        <dt>
-
-                <code>d</code>
-
-                (
-<span class="param-type">*</span>
-
-)
-
-           </dt><dd>
-           </dd>
+           Topmost coordinate of the view rectangle.
+(If b is greater than t, X-coordinates increase downward; otherwise,
+they increase upward.)</dd>
 
     </dl>
 
@@ -287,13 +289,14 @@ Its parent will be set to no parent.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="orthoAspect"><span style="font-weight:lighter"></span>orthoAspect<span class="signature">(a, b, c, d, e, f)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id="orthoAspect"><span style="font-weight:lighter"></span>orthoAspect<span class="signature">(l, r, b, t, e, f)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line163">line 163</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line171">line 171</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Uses an orthographic projection for this batch.  It will be adjusted
+to the scene's aspect ratio each time this batch is rendered.<p>
 </div>
 
     <h5>Parameters:</h5>
@@ -302,75 +305,79 @@ Its parent will be set to no parent.
 
         <dt>
 
-                <code>a</code>
+                <code>l</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           Leftmost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>r</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Rightmost coordinate of the view rectangle.
+(If l is greater than r, X-coordinates increase rightward; otherwise,
+they increase leftward.)</dd>
 
         <dt>
 
                 <code>b</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           Bottommost coordinate of the view rectangle.</dd>
 
         <dt>
 
-                <code>c</code>
+                <code>t</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
-
-        <dt>
-
-                <code>d</code>
-
-                (
-<span class="param-type">*</span>
-
-)
-
-           </dt><dd>
-           </dd>
+           Topmost coordinate of the view rectangle.
+(If b is greater than t, X-coordinates increase downward; otherwise,
+they increase upward.)</dd>
 
         <dt>
 
                 <code>e</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.</dd>
 
         <dt>
 
                 <code>f</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</dd>
 
     </dl>
 
@@ -390,11 +397,14 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="perspectiveAspect"><span style="font-weight:lighter"></span>perspectiveAspect<span class="signature">(fov, near, far)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line139">line 139</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line142">line 142</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Uses a perspective projection for this batch.  It will be adjusted
+to the scene's aspect ratio each time this batch is rendered.<p>
+For considerations when choosing the "near" and "far" parameters,
+see glmath.H3DU.Math.mat4perspective.
 </div>
 
     <h5>Parameters:</h5>
@@ -406,36 +416,36 @@ Its parent will be set to no parent.
                 <code>fov</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</dd>
 
         <dt>
 
                 <code>near</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.</dd>
 
         <dt>
 
                 <code>far</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</dd>
 
     </dl>
 
@@ -455,7 +465,7 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line247">line 247</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line258">line 258</a>
      </i></small></p>
 
 <div class="description">
@@ -479,7 +489,7 @@ and points) composed by all shapes in this batch of shapes.
 
     <h4 style="margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line260">line 260</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line271">line 271</a>
      </i></small></p>
 
 <div class="description">
@@ -523,7 +533,7 @@ and points) composed by all shapes in this batch of shapes.
 
     <h4 style="margin-bottom:0px" id="render"><span style="font-weight:lighter"></span>render<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line322">line 322</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line333">line 333</a>
      </i></small></p>
 
 <div class="description">
@@ -536,7 +546,7 @@ and points) composed by all shapes in this batch of shapes.
 
     <h4 style="margin-bottom:0px" id="setLookAt"><span style="font-weight:lighter"></span>setLookAt<span class="signature">(eye, center, up)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line150">line 150</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line153">line 153</a>
      </i></small></p>
 
 <div class="description">
@@ -632,7 +642,7 @@ and points) composed by all shapes in this batch of shapes.
 
     <h4 style="margin-bottom:0px" id="setViewMatrix"><span style="font-weight:lighter"></span>setViewMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line184">line 184</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line195">line 195</a>
      </i></small></p>
 
 <div class="description">
@@ -673,7 +683,7 @@ and points) composed by all shapes in this batch of shapes.
 
     <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line236">line 236</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line247">line 247</a>
      </i></small></p>
 
 <div class="description">
@@ -719,7 +729,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.html#.ShaderProgram">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){
