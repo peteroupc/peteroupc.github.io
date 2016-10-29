@@ -33,4 +33,4 @@ About
 Written by [Peter O.](https://github.com/peteroupc/)
 
 If you like any of these projects, you should donate to Peter O.
-at: [http://upokecenter.dreamhosters.com/articles/donate-now-2/](http://upokecenter.dreamhosters.com/articles/donate-now-2/)
+at: [http://peteroupc.github.io/](http://peteroupc.github.io/)
