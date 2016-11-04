@@ -1,0 +1,68 @@
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="animation.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://peteroupc.github.io/
+*/
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new H3DU.Scene3D(document.getElementById("canvas")).setClearColor("white");
+  var sub=new H3DU.Batch3D();
+  H3DU.loadFileFromUrl("Box.gltf","json").then(function(result){
+   var data=result.data
+   var promises=[]
+   var shaders=[];
+   var scenes=[];
+   return H3DU.getPromiseResultsAll(promises).then(function(results){
+    for(var i=0;i<shaders.length;i++){
+     shaders[i].push(results[i+bufferPromises]);
+    }
+    var bufferviewkeys={}
+    var bufferviewinfos=[]
+    for(var key in data.bufferViews){
+     var node=data.bufferViews[key]
+     if((typeof node.buffer === "undefined" || node.buffer === null) || (typeof node.byteOffset === "undefined" || node.byteOffset === null)){
+      return Promise.reject({url:result.url})
+     }
+     var bufferinfo=bufferkeys[node.buffer]
+     var bufferindex=bufferindices[node.buffer]
+     if((typeof buffer === "undefined" || buffer === null))return Promise.reject({url:result.url})
+     var buffer=results[bufferindex]
+     bufferinfo[2]=buffer;
+     var target=node.target
+     if(target!=34962 && target!=34963){
+      return Promise.reject({url:result.url})
+     }
+     var bytelength=node.byteLength||0;
+     var nodeinfo=[key,node,new DataView(buffer,
+       node.byteOffset,bytelength)];
+     bufferviewinfos.push(nodeinfo);
+     bufferviewkeys[key]=nodeinfo;
+    }
+   });
+  })
+  H3DU.renderLoop(function(time){
+   scene.render(sub);
+  });
+  })
+//-->
+</script>
+</body>

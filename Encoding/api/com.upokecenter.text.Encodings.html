@@ -37,13 +37,16 @@
  example:</li> <li>(a) ISO 8859 encodings and
  <code>windows-1252</code>.</li> <li>(b) ASCII is usually used as a
  single-byte encoding where each code point fits in the lower 7 bits
- of an eight-bit byte. In the Encoding Standard, all single-byte
- encodings use the ASCII characters as the first 128 code points of
- their character sets.</li> <li><b>Multi-byte encodings</b> include
- code points from one or more character sets and assign some or all
- code points to several bytes. For example:</li> <li>(a) UTF-16 uses 2
- bytes for the most common Unicode code points and 4 bytes for
- supplementary code points.</li> <li>(b) <code>utf-8</code> uses 1 byte for
+ of an eight-bit byte (in that case, the encoding is often called
+ <code>us-ascii</code>). In the Encoding Standard, all single-byte encodings
+ use the ASCII characters as the first 128 code points of their
+ character sets.</li> <li><b>Multi-byte encodings</b> include code
+ points from one or more character sets and assign some or all code
+ points to several bytes. For example:</li> <li>(a) <code>utf-16le</code>
+ and <code>utf-16be</code> are two encodings defined in the Unicode
+ Standard. They use 2 bytes for the most common code points, and 4
+ bytes for supplementary code points.</li> <li>(b) <code>utf-8</code> is
+ another encoding defined in the Unicode Standard. It uses 1 byte for
  ASCII and 2 to 4 bytes for the other Unicode code points.</li>
  <li>(c) Most legacy East Asian encodings, such as <code>shift_jis</code>,
  <code>gbk</code>, and <code>big5</code> use 1 byte for ASCII (or a slightly
@@ -57,32 +60,33 @@
  example:</li> <li>(a) <code>iso-2022-jp</code> supports several escape
  sequences that shift into different encodings, including a Katakana,
  a Kanji, and an ASCII encoding (with ASCII as the default).</li>
- <li>(b) UTF-7 (not included in the Encoding Standard) is a Unicode
- encoding that uses a limited subset of ASCII. The plus symbol is used
- to shift into a modified version of base-64 to encode other Unicode
- code points.</li> <li>The Encoding Standard also defines a
- <b>replacement encoding</b>, which causes a decoding error and is
- used to alias a few problematic or unsupported encoding names, such
- as <code>hz-gb-2312</code>.</li></ul> <p><b>Getting an Encoding</b></p>
- <p>The Encoding Standard includes UTF-8, UTF-16, and many legacy
- encodings, and gives each one of them a name. The
- <code>GetEncoding(name)</code> method takes a name string and returns an
- ICharacterEncoding object that implements that encoding, or
- <code>null</code> if the name is unrecognized.</p> <p>However, the Encoding
- Standard is designed to include only encodings commonly used on Web
- pages, not in other protocols such as email. For email, the Encoding
- class includes an alternate function <code>GetEncoding(name,
- forEmail)</code>. Setting <code>forEmail</code> to <code>true</code> will use rules
- modified from the Encoding Standard to better suit encoding and
- decoding text from email messages.</p> <p><b>Classes for Character
- Encodings</b></p> <p>This Encodings class provides access to common
- character encodings through classes as described below:</p> <ul>
- <li>An <b>encoder class</b> is a class that converts a sequence of
- bytes to a sequence of code points in the universal character set
- (otherwise known under the name Unicode). An encoder class implements
- the <code>ICharacterEncoder</code> interface.</li> <li>A <b>decoder
- class</b> is a class that converts a sequence of Unicode code points
- to a sequence of bytes. A decoder class implements the
+ <li>(b) UTF-7 (not included in the Encoding Standard) is an encoding
+ that uses the Unicode Standard&#39;s character set, which is encoded
+ using a limited subset of ASCII. The plus symbol is used to shift
+ into a modified version of base-64 to encode other Unicode code
+ points.</li> <li>The Encoding Standard also defines a <b>replacement
+ encoding</b>, which causes a decoding error and is used to alias a
+ few problematic or unsupported encoding names, such as
+ <code>hz-gb-2312</code>.</li></ul> <p><b>Getting an Encoding</b></p> <p>The
+ Encoding Standard includes UTF-8, UTF-16, and many legacy encodings,
+ and gives each one of them a name. The <code>GetEncoding(name)</code>
+ method takes a name string and returns an ICharacterEncoding object
+ that implements that encoding, or <code>null</code> if the name is
+ unrecognized.</p> <p>However, the Encoding Standard is designed to
+ include only encodings commonly used on Web pages, not in other
+ protocols such as email. For email, the Encoding class includes an
+ alternate function <code>GetEncoding(name, forEmail)</code>. Setting
+ <code>forEmail</code> to <code>true</code> will use rules modified from the
+ Encoding Standard to better suit encoding and decoding text from
+ email messages.</p> <p><b>Classes for Character Encodings</b></p>
+ <p>This Encodings class provides access to common character encodings
+ through classes as described below:</p> <ul> <li>An <b>encoder
+ class</b> is a class that converts a sequence of bytes to a sequence
+ of code points in the universal character set (otherwise known under
+ the name Unicode). An encoder class implements the
+ <code>ICharacterEncoder</code> interface.</li> <li>A <b>decoder class</b>
+ is a class that converts a sequence of Unicode code points to a
+ sequence of bytes. A decoder class implements the
  <code>ICharacterDecoder</code> interface.</li> <li>An <b>encoding class</b>
  allows access to both an encoder class and a decoder class and
  implements the <code>ICharacterEncoding</code> interface. The encoder and
