@@ -271,7 +271,7 @@ Generates a CBOR object from a list of objects.</li>
 Generates a CBOR object from a 64-bit signed integer.</li>
 <li><code>static CBORObject FromObject(long[] array)</code><br>
 Generates a CBOR object from an array of 64-bit integers.</li>
-<li><code>static &lt;TKey,TValue&gt; CBORObject FromObject(Map&lt;TKey,TValue&gt; dic)</code><br>
+<li><code>static &lt;TKey,TValue&gt;CBORObject FromObject(Map&lt;TKey,TValue&gt; dic)</code><br>
 Generates a CBOR object from a map of objects.</li>
 <li><code>static CBORObject FromObject(Object obj)</code><br>
 Generates a CBORObject from an arbitrary object.</li>
@@ -608,7 +608,7 @@ array, or 0 if this item is neither an array nor a map.</li>
 <pre><code>@Deprecated public final BigInteger getInnermostTag()
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use MostInnerTag instead.</i></p>
+<p>Deprecated.&nbsp;Use MostInnerTag instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -622,7 +622,7 @@ untagged.</li>
 <pre><code>@Deprecated public final BigInteger getOutermostTag()
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use MostOuterTag instead.</i></p>
+<p>Deprecated.&nbsp;Use MostOuterTag instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1030,7 +1030,7 @@ opposed to Not-a-Number, NaN).</li>
 <pre><code>@Deprecated public static void AddTagHandler(BigInteger bigintTag, ICBORTag handler)
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the EInteger version of this method.</i></p>
+<p>Deprecated.&nbsp;Use the EInteger version of this method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1254,7 +1254,7 @@ byte-order mark (U + FEFF).</p></li>
 <pre><code>@Deprecated public static CBORObject FromObject(BigInteger bigintValue)
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the EInteger version of this method.</i></p>
+<p>Deprecated.&nbsp;Use the EInteger version of this method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1292,7 +1292,7 @@ byte-order mark (U + FEFF).</p></li>
 <pre><code>@Deprecated public static CBORObject FromObject(ExtendedFloat bigValue)
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the EFloat version of this method instead.</i></p>
+<p>Deprecated.&nbsp;Use the EFloat version of this method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1311,7 +1311,7 @@ byte-order mark (U + FEFF).</p></li>
 <pre><code>@Deprecated public static CBORObject FromObject(ExtendedRational bigValue)
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the ERational version of this method instead.</i></p>
+<p>Deprecated.&nbsp;Use the ERational version of this method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1349,7 +1349,7 @@ byte-order mark (U + FEFF).</p></li>
 <pre><code>@Deprecated public static CBORObject FromObject(ExtendedDecimal otherValue)
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the EDecimal version of this method instead.</i></p>
+<p>Deprecated.&nbsp;Use the EDecimal version of this method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1748,7 +1748,7 @@ CBORObject.Null if the object is null.</li>
 <pre><code>@Deprecated public static CBORObject FromObjectAndTag(Object valueOb, BigInteger bigintTag)
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the EInteger version instead.</i></p>
+<p>Deprecated.&nbsp;Use the EInteger version instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2166,7 +2166,7 @@ opposed to Not-a-Number, NaN).</li>
 <pre><code>@Deprecated public static void Write(ExtendedFloat bignum, OutputStream stream) throws IOException
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Pass an EFloat to the Write method instead.</i></p>
+<p>Deprecated.&nbsp;Pass an EFloat to the Write method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2216,7 +2216,7 @@ opposed to Not-a-Number, NaN).</li>
 <pre><code>@Deprecated public static void Write(ExtendedRational rational, OutputStream stream) throws IOException
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Pass an ERational to the Write method instead.</i></p>
+<p>Deprecated.&nbsp;Pass an ERational to the Write method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2258,7 +2258,7 @@ opposed to Not-a-Number, NaN).</li>
 <pre><code>@Deprecated public static void Write(ExtendedDecimal bignum, OutputStream stream) throws IOException
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Pass an EDecimal to the Write method instead.</i></p>
+<p>Deprecated.&nbsp;Pass an EDecimal to the Write method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2308,7 +2308,7 @@ opposed to Not-a-Number, NaN).</li>
 <pre><code>@Deprecated public static void Write(BigInteger bigint, OutputStream stream) throws IOException
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Pass an EInteger to this method instead.</i></p>
+<p>Deprecated.&nbsp;Pass an EInteger to this method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2723,7 +2723,7 @@ this map.</p></li>
 <pre><code>@Deprecated public BigInteger AsBigInteger()
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the AsEInteger method instead.</i></p>
+<p>Deprecated.&nbsp;Use the AsEInteger method instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2825,7 +2825,7 @@ exceeds the range of a 64-bit floating point number.</li>
 <pre><code>@Deprecated public ExtendedDecimal AsExtendedDecimal()
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use AsEDecimal instead.</i></p>
+<p>Deprecated.&nbsp;Use AsEDecimal instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2869,7 +2869,7 @@ including if this object is CBORObject.Null.</li>
 <pre><code>@Deprecated public ExtendedFloat AsExtendedFloat()
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use AsEFloat instead.</i></p>
+<p>Deprecated.&nbsp;Use AsEFloat instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2919,7 +2919,7 @@ including if this object is CBORObject.Null.</li>
 <pre><code>@Deprecated public ExtendedRational AsExtendedRational()
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use AsERational instead.</i></p>
+<p>Deprecated.&nbsp;Use AsERational instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3416,7 +3416,7 @@ if the given key is not found or this object is not a map.</li>
 <pre><code>@Deprecated public BigInteger[] GetTags()
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the GetAllTags method instead.</i></p>
+<p>Deprecated.&nbsp;Use the GetAllTags method instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3469,7 +3469,7 @@ otherwise, <code>false</code>.</li>
 <pre><code>@Deprecated public boolean HasTag(BigInteger bigTagValue)
 </code></pre>
 
-<p>Deprecated.&nbsp;<i>Use the EInteger version of this method.</i></p>
+<p>Deprecated.&nbsp;Use the EInteger version of this method.</p>
 
 <p><strong>Parameters:</strong></p>
 
