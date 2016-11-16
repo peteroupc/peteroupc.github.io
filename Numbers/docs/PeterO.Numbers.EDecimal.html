@@ -67,8 +67,8 @@
 <ul>
 <li><p>8-bit unsigned integer, or <i>byte</i>: 255.</p></li>
 <li><p>16-bit unsigned integer: 65535.</p></li>
-<li><p>32-bit unsigned integer: (2 <sup>32</sup>-1).</p></li>
-<li><p>64-bit unsigned integer: (2 <sup>64</sup>-1).</p></li>
+<li><p>32-bit unsigned integer: (2 <sup>32</sup> -1).</p></li>
+<li><p>64-bit unsigned integer: (2 <sup>64</sup> -1).</p></li>
 </ul>
 
 <p><b>Signed integer</b>: An integer in <i>two&#39;s complement form</i>, with the following ranges:</p>
@@ -77,7 +77,7 @@
 <li><p>8-bit signed integer: -128 to 127.</p></li>
 <li><p>16-bit signed integer: -32768 to 32767.</p></li>
 <li><p>32-bit signed integer: -2 <sup>31</sup>to (2 <sup>31</sup>- 1).</p></li>
-<li><p>64-bit signed integer: -2 <sup>63</sup>to (2 <sup>63</sup>- ).</p></li>
+<li><p>64-bit signed integer: -2 <sup>63</sup>to (2 <sup>63</sup>- 1).</p></li>
 </ul>
 
 <p><b>Two&#39;s complement form</b>: In <i>two&#39; s-complement form</i>, positive numbers have the highest (most significant) bit et to zero, and negative numbers have that bit (and all bits eyond) set to one. To store a negative number, decrease its bsolute value by 1 and swap the bits of the resulting umber.</p>
@@ -109,7 +109,7 @@
 <li><p>C. If the highest bit is one, this is a negative number.</p></li>
 </ul>
 
-<p><b>.NET Framework decimal</b>: A 128-bit decimal loating-point number, in the form <i>significand</i>* 10 <sup>-<i>scale</i></sup>, where the scale ranges from 0 to 28. The umber is stored in the following format:</p>
+<p><b>.NET Framework decimal</b> : A 128-bit decimal floating-point number, in the form <i>significand</i> * 10 <sup>-<i>scale</i></sup>, where the scale ranges from 0 to 28. The umber is stored in the following format:</p>
 
 <ul>
 <li><p>Low 96 bits are the significand, as a 96-bit unsigned integer (all 96-bit values are allowed, up to (2 <sup>96</sup>-1)).</p></li>
@@ -1094,12 +1094,12 @@ is null or  <i>ctx</i>
     System.Decimal dec);
 </code></pre>
 
-<p>Converts a .NET Framework decimal (see<a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a> ) to an arbitrary-precision decimal.</p>
+<p>Converts a  <code>decimal</code>  under the Common Language Infrastructure (see<a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a> ) to an arbitrary-precision decimal.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>dec</i>: A .NET Framework decimal.</li>
+<li><i>dec</i>: A  <code>decimal</code>  under the Common Language Infrastructure (usually a .NET Framework decimal).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
