@@ -116,7 +116,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToReader</h3>
 
-<pre><code>public static IReader ToReader(InputStream input) throws IOException
+<pre><code>public static IReader ToReader(InputStream input)
 </code></pre>
 
 <p>Wraps an input stream into a reader object. If an IOException is thrown by
@@ -142,8 +142,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>input</code> is null.</p></li>
-<li><p><code>IOException</code></p></li>
+<li><code>NullPointerException</code> - The parameter <code>input</code> is null.</li>
 </ul>
 
 <h3>ToByteReader</h3>
