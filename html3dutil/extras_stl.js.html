@@ -25,22 +25,22 @@ at: http://peteroupc.github.io/
 /* global H3DU, H3DU.Mesh, Promise */
 (function(H3DU){
 "use strict";
-if(!H3DU){ H3DU={}; }
-var StlData={};
+if((typeof H3DU === "undefined" || (H3DU===null || typeof H3DU==="undefined"))){ H3DU={}; }
+H3DU._StlData={};
 /**
 * Loads a .STL file asynchronously.
 * &lt;p>This method is considered a supplementary method to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. &lt;p>
 * To use this method, you must include the script "extras/stl.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:&lt;pre>
  * &amp;lt;script type="text/javascript" src="extras/stl.js">&amp;lt;/script>&lt;/pre>
 @alias H3DU.loadStlFromUrl
 @param {String} url The URL to load.
 @returns {Promise} A promise that:
 - Resolves when:
-The .STL file is loaded successfully.  The result is an H3DU.Mesh object.
+The .STL file is loaded successfully.  The result is an {@link H3DU.Mesh} object.
 - Is rejected when:
 An error occurs when loading the .STL file.
 */
@@ -48,7 +48,7 @@ H3DU.loadStlFromUrl=function(url){
  return H3DU.loadFileFromUrl(url).then(
    function(e){
      var obj;
-     obj=StlData._loadStl(e.data);
+     obj=H3DU._StlData._loadStl(e.data);
      if(obj.error)return Promise.reject({"url":e.url, "error":obj.error});
      obj=obj.success;
      obj.url=e.url;
@@ -60,17 +60,17 @@ H3DU.loadStlFromUrl=function(url){
    });
 };
 /** @private */
-StlData.INITIAL=0;
+H3DU._StlData.INITIAL=0;
 /** @private */
-StlData.IN_SOLID=1;
+H3DU._StlData.IN_SOLID=1;
 /** @private */
-StlData.IN_FACET=2;
+H3DU._StlData.IN_FACET=2;
 /** @private */
-StlData.IN_OUTER_LOOP=3;
+H3DU._StlData.IN_OUTER_LOOP=3;
 /** @private */
-StlData.AFTER_SOLID=3;
+H3DU._StlData.AFTER_SOLID=3;
 /** @private */
-StlData._loadStl=function(str){
+H3DU._StlData._loadStl=function(str){
  var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
  var facet=new RegExp("^\\s*facet\\s+normal\\s+"+number+"\\s+"+number+
    "\\s+"+number+"\\s*");
@@ -84,7 +84,7 @@ StlData._loadStl=function(str){
  var lines=str.split(/\r?\n/);
  var mesh=new H3DU.Mesh();
  var currentNormal=[];
- var state=StlData.INITIAL;
+ var state=H3DU._StlData.INITIAL;
  var vertexCount=0;
  var solidName="";
  for(var i=0;i&lt;lines.length;i++){
@@ -92,42 +92,42 @@ StlData._loadStl=function(str){
   // skip empty lines
   if(line.length===0||(/^\s*$/).test(line))continue;
   var e=solid.exec(line);
-  if(e &amp;&amp; (state===StlData.INITIAL || state===StlData.AFTER_SOLID)){
+  if(e &amp;&amp; (state===H3DU._StlData.INITIAL || state===H3DU._StlData.AFTER_SOLID)){
     solidName=e[1];
-    state=StlData.IN_SOLID;
+    state=H3DU._StlData.IN_SOLID;
     continue;
   }
   e=facet.exec(line);
-  if(e &amp;&amp; state===StlData.IN_SOLID){
+  if(e &amp;&amp; state===H3DU._StlData.IN_SOLID){
     mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
     mesh.normal3(parseFloat(e[1]),parseFloat(e[2]),parseFloat(e[3]));
-    state=StlData.IN_FACET;
+    state=H3DU._StlData.IN_FACET;
     continue;
   }
   e=outerloop.exec(line);
-  if(e &amp;&amp; state===StlData.IN_FACET){
-    state=StlData.IN_OUTER_LOOP;
+  if(e &amp;&amp; state===H3DU._StlData.IN_FACET){
+    state=H3DU._StlData.IN_OUTER_LOOP;
     vertexCount=0;
     continue;
   }
   e=vertex.exec(line);
-  if(e &amp;&amp; state===StlData.IN_OUTER_LOOP){
+  if(e &amp;&amp; state===H3DU._StlData.IN_OUTER_LOOP){
     mesh.vertex3(parseFloat(e[1]),parseFloat(e[2]),parseFloat(e[3]));
     continue;
   }
   e=endloop.exec(line);
-  if(e &amp;&amp; state===StlData.IN_OUTER_LOOP){
-    state=StlData.IN_FACET;
+  if(e &amp;&amp; state===H3DU._StlData.IN_OUTER_LOOP){
+    state=H3DU._StlData.IN_FACET;
     continue;
   }
   e=endfacet.exec(line);
-  if(e &amp;&amp; state===StlData.IN_FACET){
-    state=StlData.IN_SOLID;
+  if(e &amp;&amp; state===H3DU._StlData.IN_FACET){
+    state=H3DU._StlData.IN_SOLID;
     continue;
   }
   e=endsolid.exec(line);
-  if(e &amp;&amp; state===StlData.IN_SOLID){
-    state=StlData.AFTER_SOLID;
+  if(e &amp;&amp; state===H3DU._StlData.IN_SOLID){
+    state=H3DU._StlData.AFTER_SOLID;
     continue;
   }
   return {"error": new Error("unsupported line: "+line)};
@@ -159,7 +159,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

@@ -9,8 +9,8 @@ at: http://peteroupc.github.io/
 /* global H3DU, H3DU.Mesh, Promise */
 (function(H3DU){
 "use strict";
-if((typeof H3DU === "undefined" || H3DU === null)){ H3DU={}; }
-var H3DU._StlData={};
+if((typeof H3DU === "undefined" || (H3DU===null || typeof H3DU==="undefined"))){ H3DU={}; }
+H3DU._StlData={};
 /**
 * Loads a .STL file asynchronously.
 * <p>This method is considered a supplementary method to the

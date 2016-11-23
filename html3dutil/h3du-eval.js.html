@@ -22,7 +22,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math, H3DU.Mesh */
+/* global H3DU, H3DU.Math, H3DU.Mesh */
 (function(global){
 "use strict";
 /**
@@ -47,7 +47,8 @@ at: http://peteroupc.github.io/
  * @param {Number} [u2] Ending point for the purpose of interpolation; it will correspond to 1.
  * May be omitted; default is 1.
  */
-H3DU.BezierCurve=function(cp, u1, u2){
+H3DU.BezierCurve=function(cp, u1, u2) {
+
  if(typeof u1==="undefined" &amp;&amp; typeof u2==="undefined"){
   this.uoffset=0;
   this.umul=1;
@@ -76,7 +77,8 @@ H3DU.BezierCurve=function(cp, u1, u2){
 * }
  * @memberof! H3DU.BezierCurve#
 */
-H3DU.BezierCurve.prototype.evaluate=function(u){
+H3DU.BezierCurve.prototype.evaluate=function(u) {
+
  return this.evaluator.evaluate((u-this.uoffset)*this.umul);
 };
 /**
@@ -113,7 +115,8 @@ H3DU.BezierCurve.prototype.evaluate=function(u){
  * V-axis; it will correspond to 1.
  * May be omitted; default is 1.
  */
-H3DU.BezierSurface=function(cp, u1, u2, v1, v2){
+H3DU.BezierSurface=function(cp, u1, u2, v1, v2) {
+
  if(typeof u1==="undefined" &amp;&amp; typeof u2==="undefined" &amp;&amp;
     typeof v1==="undefined" &amp;&amp; typeof v2==="undefined"){
   this.uoffset=0;
@@ -143,7 +146,8 @@ H3DU.BezierSurface=function(cp, u1, u2, v1, v2){
  * length of a control point, as specified in the constructor.
  * @memberof! H3DU.BezierSurface#
 */
-H3DU.BezierSurface.prototype.evaluate=function(u,v, output){
+H3DU.BezierSurface.prototype.evaluate=function(u,v, output) {
+
  return this.evaluator.evaluate((u-this.uoffset)*this.umul,
    (v-this.voffset)*this.vmul);
 };
@@ -178,7 +182,8 @@ H3DU.BezierSurface.prototype.evaluate=function(u,v, output){
 * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
 * and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.
 */
-H3DU.BSplineCurve=function(controlPoints, knots, bits){
+H3DU.BSplineCurve=function(controlPoints, knots, bits) {
+
  if(controlPoints.length&lt;=0)throw new Error();
  if(!knots)throw new Error();
  this.bits=bits||0;
@@ -236,7 +241,8 @@ H3DU.BSplineCurve.HOMOGENEOUS_BIT = 4;
 */
 H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS = 3;
 /** @private */
-H3DU.BSplineCurve._checkKnots=function(knots){
+H3DU.BSplineCurve._checkKnots=function(knots) {
+
  for(var i=1;i&lt;knots.length;i++){
   if(knots[i]&lt;knots[i-1])
    throw new Error();
@@ -244,7 +250,8 @@ H3DU.BSplineCurve._checkKnots=function(knots){
  if(knots[0]===knots[knots.length-1])throw new Error();
 };
 /** @private */
-H3DU.BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
+H3DU.BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer) {
+
  var c=1;
  for(var i=0;i&lt;numPoints;i++){
    buffer[i]=0;
@@ -305,7 +312,8 @@ H3DU.BSplineCurve._getFactors=function(kn,t,order,numPoints,buffer){
 * }
  * @memberof! H3DU.BSplineCurve#
 */
-H3DU.BSplineCurve.prototype.evaluate=function(u){
+H3DU.BSplineCurve.prototype.evaluate=function(u) {
+
   var numPoints=this.controlPoints.length;
   var order=this.knots.length-numPoints;
   var oldu=u;
@@ -380,7 +388,8 @@ H3DU.BSplineCurve.prototype.evaluate=function(u){
 * H3DU.BSplineCurve.HOMOGENEOUS_BIT,
 * and H3DU.BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.
 */
-H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
+H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits) {
+
  var vcplen=controlPoints.length;
  if(vcplen&lt;=0)throw new Error();
  var ucplen=controlPoints[0].length;
@@ -421,7 +430,8 @@ H3DU.BSplineSurface=function(controlPoints, knotsU, knotsV, bits){
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
 * @returns {H3DU.BSplineCurve} Return value.*/
-H3DU.BSplineCurve.clamped=function(controlPoints,degree,bits){
+H3DU.BSplineCurve.clamped=function(controlPoints,degree,bits) {
+
  return new H3DU.BSplineCurve(controlPoints,
    H3DU.BSplineCurve.clampedKnots(controlPoints.length,degree),bits);
 };
@@ -434,7 +444,8 @@ H3DU.BSplineCurve.clamped=function(controlPoints,degree,bits){
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineCurve} constructor.
 * @returns {H3DU.BSplineCurve} Return value.*/
-H3DU.BSplineCurve.uniform=function(controlPoints,degree,bits){
+H3DU.BSplineCurve.uniform=function(controlPoints,degree,bits) {
+
  return new H3DU.BSplineCurve(controlPoints,
    H3DU.BSplineCurve.uniformKnots(controlPoints.length,degree),bits);
 };
@@ -451,7 +462,8 @@ H3DU.BSplineCurve.uniform=function(controlPoints,degree,bits){
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
 * @returns {H3DU.BSplineSurface} Return value.*/
-H3DU.BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
+H3DU.BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits) {
+
  return new H3DU.BSplineSurface(controlPoints,
    H3DU.BSplineCurve.clampedKnots(controlPoints[0].length,degreeU),
    H3DU.BSplineCurve.clampedKnots(controlPoints.length,degreeV),bits);
@@ -468,7 +480,8 @@ H3DU.BSplineSurface.clamped=function(controlPoints,degreeU,degreeV,bits){
 * If null or omitted, the default is 3.
 * @param {Number} [bits] Bits as specified in the {@link H3DU.BSplineSurface} constructor.
 * @returns {H3DU.BSplineSurface} Return value.*/
-H3DU.BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
+H3DU.BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits) {
+
  return new H3DU.BSplineSurface(controlPoints,
    H3DU.BSplineCurve.uniformKnots(controlPoints[0].length,degreeU),
    H3DU.BSplineCurve.uniformKnots(controlPoints.length,degreeV),bits);
@@ -479,7 +492,8 @@ H3DU.BSplineSurface.uniform=function(controlPoints,degreeU,degreeV,bits){
 * @param {Number} degree
 * @returns {Array&lt;Number>} A uniform knot vector.
 */
-H3DU.BSplineCurve.uniformKnots=function(controlPoints,degree){
+H3DU.BSplineCurve.uniformKnots=function(controlPoints,degree) {
+
   if(typeof controlPoints==="object")
    controlPoints=controlPoints.length;
   if((degree===null || typeof degree==="undefined"))degree=3;
@@ -498,7 +512,8 @@ H3DU.BSplineCurve.uniformKnots=function(controlPoints,degree){
 * @param {Number} degree
 * @returns {Array&lt;Number>} A clamped knot vector.
 */
-H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree){
+H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree) {
+
   if(typeof controlPoints==="object")
    controlPoints=controlPoints.length;
   if((degree===null || typeof degree==="undefined"))degree=3;
@@ -529,7 +544,8 @@ H3DU.BSplineCurve.clampedKnots=function(controlPoints,degree){
  * length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
  * @memberof! H3DU.BSplineSurface#
 */
-H3DU.BSplineSurface.prototype.evaluate=function(u,v){
+H3DU.BSplineSurface.prototype.evaluate=function(u,v) {
+
   u=this.knotsU[this.orderU-1]+u*(this.knotsU[this.ucplen]-
     this.knotsU[this.orderU-1]);
   v=this.knotsV[this.orderV-1]+v*(this.knotsV[this.vcplen]-
@@ -614,7 +630,8 @@ H3DU.BSplineSurface.prototype.evaluate=function(u,v){
 * @class
 * @alias H3DU.CurveEval
 */
-H3DU.CurveEval=function(){
+H3DU.CurveEval=function() {
+
  this.colorCurve=null;
  this.normalCurve=null;
  this.texCoordCurve=null;
@@ -632,12 +649,14 @@ H3DU.CurveEval=function(){
 * @example &lt;caption>The following function sets a circle as the curve
 * to use for generating vertex positions.&lt;/caption>
 * // "u" can range from 0 to 2*Math.PI
-* curveEval.vertex({"evaluate":function(u){
+* curveEval.vertex({"evaluate":function(u) {
+"use strict";
 *  return [Math.cos(u),Math.sin(u),0]
 * }});
 * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.vertex=function(evaluator){
+H3DU.CurveEval.prototype.vertex=function(evaluator) {
+
  this.vertexCurve=evaluator;
  return this;
 };
@@ -649,7 +668,8 @@ H3DU.CurveEval.prototype.vertex=function(evaluator){
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.normal=function(evaluator){
+H3DU.CurveEval.prototype.normal=function(evaluator) {
+
  this.normalCurve=evaluator;
  return this;
 };
@@ -661,7 +681,8 @@ H3DU.CurveEval.prototype.normal=function(evaluator){
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.color=function(evaluator){
+H3DU.CurveEval.prototype.color=function(evaluator) {
+
  this.colorCurve=evaluator;
  return this;
 };
@@ -673,7 +694,8 @@ H3DU.CurveEval.prototype.color=function(evaluator){
 * @returns {H3DU.CurveEval} This object.
 * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.texCoord=function(evaluator){
+H3DU.CurveEval.prototype.texCoord=function(evaluator) {
+
  this.texCoordCurve=evaluator;
  return this;
 };
@@ -688,7 +710,8 @@ H3DU.CurveEval.prototype.texCoord=function(evaluator){
  * @returns {H3DU.CurveEval} This object.
  * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.evalOne=function(mesh,u){
+H3DU.CurveEval.prototype.evalOne=function(mesh,u) {
+
  var color=null;
  var normal=null;
  var texcoord=null;
@@ -743,7 +766,8 @@ H3DU.CurveEval.prototype.evalOne=function(mesh,u){
  * @returns {H3DU.CurveEval} This object.
  * @memberof! H3DU.CurveEval#
 */
-H3DU.CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
+H3DU.CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2) {
+
  if(typeof n==="undefined")n=24;
  if(n&lt;=0)throw new Error("invalid n");
  if(typeof u1==="undefined" &amp;&amp; typeof u2==="undefined"){
@@ -780,7 +804,8 @@ H3DU.CurveEval.prototype.evalCurve=function(mesh,mode,n,u1,u2){
 * @class
 * @alias H3DU.SurfaceEval
 */
-H3DU.SurfaceEval=function(){
+H3DU.SurfaceEval=function() {
+
  this.colorSurface=null;
  this.normalSurface=null;
  this.texCoordSurface=null;
@@ -797,7 +822,8 @@ H3DU.SurfaceEval=function(){
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.setAutoNormal=function(value){
+H3DU.SurfaceEval.prototype.setAutoNormal=function(value) {
+
  this.autoNormal=!!value;
  return this;
 };
@@ -812,7 +838,8 @@ H3DU.SurfaceEval.prototype.setAutoNormal=function(value){
 * @returns {H3DU.SurfaceEval} This object.
 * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.vertex=function(evaluator){
+H3DU.SurfaceEval.prototype.vertex=function(evaluator) {
+
  this.vertexSurface=evaluator;
  return this;
 };
@@ -852,10 +879,13 @@ H3DU.SurfaceEval.prototype.vertex=function(evaluator){
 * And finally, normalize the result:&lt;p>
 * &lt;b>n&lt;/b>(u, v) = &lt;b>c&lt;/b>(u, v)/|&lt;b>c&lt;/b>(u, v)|&lt;p>
 *&lt;/caption>
-* surfaceEval.vertex({"evaluate":function(u,v){
+* surfaceEval.vertex({"evaluate":function(u,v) {
+"use strict";
+
 *  return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
 * }})
-* .normal({"evaluate":function(u,v){
+* .normal({"evaluate":function(u,v) {
+"use strict";
 *  return H3DU.Math.vec3normInPlace([
 *   Math.cos(u)*-Math.sin(v)*Math.sin(u),
 *   Math.sin(u)*-Math.sin(v)*Math.sin(u),
@@ -863,7 +893,8 @@ H3DU.SurfaceEval.prototype.vertex=function(evaluator){
 * }})
 * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.normal=function(evaluator){
+H3DU.SurfaceEval.prototype.normal=function(evaluator) {
+
  this.normalSurface=evaluator;
  return this;
 };
@@ -875,7 +906,8 @@ H3DU.SurfaceEval.prototype.normal=function(evaluator){
 * @returns {H3DU.SurfaceEval} This object.
 * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.color=function(evaluator){
+H3DU.SurfaceEval.prototype.color=function(evaluator) {
+
  this.colorSurface=evaluator;
  return this;
 };
@@ -889,10 +921,12 @@ H3DU.SurfaceEval.prototype.color=function(evaluator){
 * function to a linear evaluator. Thus, coordinates passed to the
 * evalOne and evalSurface methods will be interpolated as direct
 * texture coordinates.&lt;/caption>
-* surface.texCoord({"evaluate":function(u,v){ return [u,v] }});
+* surface.texCoord({"evaluate":function(u,v) {
+"use strict"; return [u,v] }});
 * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.texCoord=function(evaluator){
+H3DU.SurfaceEval.prototype.texCoord=function(evaluator) {
+
  this.texCoordSurface=evaluator;
  return this;
 };
@@ -908,7 +942,8 @@ H3DU.SurfaceEval.prototype.texCoord=function(evaluator){
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.evalOne=function(mesh,u,v){
+H3DU.SurfaceEval.prototype.evalOne=function(mesh,u,v) {
+
  var values=[];
  this._saveValues(mesh,values,0);
  this._record(u,v,values,_OLD_VALUES_SIZE);
@@ -925,12 +960,14 @@ var _OLD_VALUES_SIZE = 8;
 */
 var _RECORDED_VALUES_SIZE = 11;
 /** @private */
-H3DU.SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index){
+H3DU.SurfaceEval.prototype._recordAndPlayBack=function(mesh,u,v,buffer,index) {
+
  this._record(u,v,buffer,index);
  this._playBack(mesh,buffer,index);
 };
 /** @private */
-H3DU.SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
+H3DU.SurfaceEval.prototype._saveValues=function(mesh,buffer,index) {
+
  if(this.colorSurface){
   buffer[index+3]=mesh.color[0];
   buffer[index+4]=mesh.color[1];
@@ -947,7 +984,8 @@ H3DU.SurfaceEval.prototype._saveValues=function(mesh,buffer,index){
  }
 };
 /** @private */
-H3DU.SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
+H3DU.SurfaceEval.prototype._restoreValues=function(mesh,buffer,index) {
+
  if(this.colorSurface){
   mesh.color3(buffer[index+3],buffer[index+4],buffer[index+5]);
  }
@@ -959,7 +997,8 @@ H3DU.SurfaceEval.prototype._restoreValues=function(mesh,buffer,index){
  }
 };
 /** @private */
-H3DU.SurfaceEval.prototype._record=function(u,v,buffer,index){
+H3DU.SurfaceEval.prototype._record=function(u,v,buffer,index) {
+
  var normal=null;
  if(this.colorSurface){
   var color=this.colorSurface.evaluate(u,v);
@@ -1030,7 +1069,8 @@ H3DU.SurfaceEval.prototype._record=function(u,v,buffer,index){
  }
 };
 /** @private */
-H3DU.SurfaceEval.prototype._playBack=function(mesh,buffer,index){
+H3DU.SurfaceEval.prototype._playBack=function(mesh,buffer,index) {
+
  if(this.vertexSurface){
   if(this.colorSurface){
    mesh.color3(buffer[index+6],buffer[index+7],buffer[index+8]);
@@ -1073,7 +1113,8 @@ H3DU.SurfaceEval.prototype._playBack=function(mesh,buffer,index){
  * @returns {H3DU.SurfaceEval} This object.
  * @memberof! H3DU.SurfaceEval#
 */
-H3DU.SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2){
+H3DU.SurfaceEval.prototype.evalSurface=function(mesh,mode,un,vn,u1,u2,v1,v2) {
+
  if(typeof un==="undefined")un=24;
  if(typeof vn==="undefined")vn=24;
  if(un&lt;=0)throw new Error("invalid un");
@@ -1168,7 +1209,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

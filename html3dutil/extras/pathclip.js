@@ -1,21 +1,23 @@
-(function(globalContext){
+(function(globalContext) {
+"use strict";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //  Data structures
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-"use strict";
+var LinkedListNode=function(item) {
 
-var LinkedListNode=function(item){
  this.data=item;
  this.prev=null;
  this.next=null;
 };
 
-var LinkedList=function(){
+var LinkedList=function() {
+
  this.root=null;
  this._last=null;
- this.size=function(){
+ this.size=function() {
+
   var k=this.root;
   var ret=0;
   while(k){
@@ -24,22 +26,28 @@ var LinkedList=function(){
   }
   return ret;
  };
- this.first=function(){
+ this.first=function() {
+
   return this.root;
  };
- this.last=function(){
+ this.last=function() {
+
   return this._last;
  };
- this.front=function(){
+ this.front=function() {
+
   return this.root ? this.root.data : null;
  };
- this.back=function(){
+ this.back=function() {
+
   return this._last ? this._last.data : null;
  };
- this.clear=function(){
+ this.clear=function() {
+
   this.root=this._last=null;
  };
- this.spliceToBegin=function(list){
+ this.spliceToBegin=function(list) {
+
   if(list.root){
    this.root.prev=list._last;
    list._last.next=this.root;
@@ -47,7 +55,8 @@ var LinkedList=function(){
    list.clear();
   }
  };
- this.spliceToEnd=function(list){
+ this.spliceToEnd=function(list) {
+
   if(list.root){
    this._last.next=list.root;
    list.root.prev=this._last;
@@ -55,11 +64,13 @@ var LinkedList=function(){
    list.clear();
   }
  };
- this.spliceOneToEnd=function(list,listNode){
+ this.spliceOneToEnd=function(list,listNode) {
+
   list.erase(listNode);
   return this.push(listNode.data);
  };
- this.erase=function(node){
+ this.erase=function(node) {
+
   if(!node)return this;
   if(node===this.root){
    this.root=node.next;
@@ -73,7 +84,8 @@ var LinkedList=function(){
    node.next.prev=node.prev;
   return this;
  };
- this.insertAfter=function(item,node){
+ this.insertAfter=function(item,node) {
+
   var newNode=new LinkedListNode(item);
   if(node===this._last)
    this._last=newNode;
@@ -86,7 +98,8 @@ var LinkedList=function(){
   }
   return newNode;
  };
- this.push=function(item){
+ this.push=function(item) {
+
   if(!this.root){
    this.root=this._last=new LinkedListNode(item);
   } else {
@@ -97,7 +110,8 @@ var LinkedList=function(){
   }
   return this;
  };
- this.reverse=function(){
+ this.reverse=function() {
+
   var s=this.root;
   var e=this._last;
   if(!s)return;
@@ -114,7 +128,8 @@ var LinkedList=function(){
   this._last=oldroot;
   return this;
  };
- this.unshift=function(item){
+ this.unshift=function(item) {
+
   if(!this.root){
    this.root=this._last=new LinkedListNode(item);
   } else {
@@ -125,7 +140,8 @@ var LinkedList=function(){
   }
   return this;
  };
- this.pop=function(item){
+ this.pop=function(item) {
+
   if(this._last){
    if(this._last.prev)
     this._last.prev.next=null;
@@ -133,7 +149,8 @@ var LinkedList=function(){
   }
   return this;
  };
- this.shift=function(item){
+ this.shift=function(item) {
+
   if(this.root){
    if(this.root.next)
     this.root.next.prev=null;
@@ -143,15 +160,18 @@ var LinkedList=function(){
  };
 };
 
-var PriorityQueue=function(comparer){
+var PriorityQueue=function(comparer) {
+
  // Based on Doug Lea's public domain Heap class in Java
  this.comparer=comparer;
  this.nodes=[];
  this._size=0;
- this.size=function(){
+ this.size=function() {
+
   return this._size;
  };
- this._compare=function(a,b){
+ this._compare=function(a,b) {
+
   if(this.comparer){
    return this.comparer(a,b);
   } else {
@@ -159,7 +179,8 @@ var PriorityQueue=function(comparer){
    return (a<b) ? -1 : 1;
   }
  };
- this.push=function(item){
+ this.push=function(item) {
+
   var x=this._size;
   while(x>0){
    var p=((x-1)/2)|0;
@@ -174,7 +195,8 @@ var PriorityQueue=function(comparer){
  };
  // NOTE: Pops out the greatest element, not
  // the least, as in Doug Lea's implementation
- this.pop=function(){
+ this.pop=function() {
+
   var data=null;
   if(this._size>0){
    var k=0;
@@ -200,16 +222,19 @@ var PriorityQueue=function(comparer){
 };
 // Mostly based on Julienne Walker's
 // public domain C implementation
-var RedBlackTreeNode=function(data){
+var RedBlackTreeNode=function(data) {
+
   this.left=null;
   this.right=null;
   this.red=true;
   this.p=null;
   this.data=data;
-  this.link=function(dir){
+  this.link=function(dir) {
+
     return dir ? this.right : this.left;
   };
-  this.copy=function(){
+  this.copy=function() {
+
    var c=new RedBlackTreeNode(this.data);
    c.left=this.left;
    c.right=this.right;
@@ -218,7 +243,8 @@ var RedBlackTreeNode=function(data){
    c.data=this.data;
    return c;
   };
-  this.setLink=function(dir,child){
+  this.setLink=function(dir,child) {
+
     if(dir){
       this.right=child;
     } else {
@@ -228,10 +254,11 @@ var RedBlackTreeNode=function(data){
       child.p=this;
     }
   };
-  this.prev=function(){
-    if(this.left!==null){
+  this.prev=function() {
+
+    if(this.left !== null){
       var r=this.left;
-      while(r.right!==null)r=r.right;
+      while(r.right !== null)r=r.right;
       return r;
     } else {
       var p=this.p;
@@ -243,10 +270,11 @@ var RedBlackTreeNode=function(data){
       return p;
     }
   };
-  this.next=function(){
-    if(this.right!==null){
+  this.next=function() {
+
+    if(this.right !== null){
       var r=this.right;
-      while(r.left!==null)r=r.left;
+      while(r.left !== null)r=r.left;
       return r;
     } else {
       var p=this.p;
@@ -259,7 +287,8 @@ var RedBlackTreeNode=function(data){
     }
   };
 };
-var RedBlackTree=function(comparer){
+var RedBlackTree=function(comparer) {
+
   if(!comparer){
    this.comparer=RedBlackTree._defaultCompare;
   } else {
@@ -267,12 +296,14 @@ var RedBlackTree=function(comparer){
   }
   this.root=null;
   this._size=0;
-  this.size=function(){
+  this.size=function() {
+
    return this._size;
   };
 };
 /** @private */
-RedBlackTree._defaultCompare=function(a,b){
+RedBlackTree._defaultCompare=function(a,b) {
+
  if(a===b)return 0;
  return (a<b) ? -1 : 1;
 };
@@ -280,20 +311,22 @@ RedBlackTree._defaultCompare=function(a,b){
  * Not documented yet.
  * @memberof! RedBlackTree#
 */
-RedBlackTree.prototype.first=function(){
+RedBlackTree.prototype.first=function() {
+
  var r=this.root;
  if((r===null || typeof r==="undefined"))return null;
- while(r.left!==null)r=r.left;
+ while(r.left !== null)r=r.left;
  return r;
 };
 /**
  * Not documented yet.
  * @memberof! RedBlackTree#
 */
-RedBlackTree.prototype.last=function(){
+RedBlackTree.prototype.last=function() {
+
  var r=this.root;
  if((r===null || typeof r==="undefined"))return null;
- while(r.right!==null)r=r.right;
+ while(r.right !== null)r=r.right;
  return r;
 };
 /**
@@ -301,7 +334,8 @@ RedBlackTree.prototype.last=function(){
  * @param {*} data
  * @memberof! RedBlackTree#
 */
-RedBlackTree.prototype.find=function(data){
+RedBlackTree.prototype.find=function(data) {
+
   var it=this.root;
   while((it!==null && typeof it!=="undefined")){
     var cmp=this.cmp(it.data,data);
@@ -311,11 +345,13 @@ RedBlackTree.prototype.find=function(data){
   return ((it===null || typeof it==="undefined")) ? null : it.data;
 };
 /** @private */
-RedBlackTree._red=function(node){
+RedBlackTree._red=function(node) {
+
  return (node!==null && typeof node!=="undefined") && node.red === 1;
 };
 /** @private */
-RedBlackTree._single=function(root,dir){
+RedBlackTree._single=function(root,dir) {
+
   var save = root.link(!dir);
   root.setLink(!dir,save.link(dir));
   save.setLink(dir,root);
@@ -324,7 +360,8 @@ RedBlackTree._single=function(root,dir){
   return save;
 };
 /** @private */
-RedBlackTree._double=function(root,dir){
+RedBlackTree._double=function(root,dir) {
+
   root.setLink(!dir,RedBlackTree._single ( root.link(!dir), !dir ));
   return RedBlackTree._single ( root, dir );
 };
@@ -333,8 +370,9 @@ RedBlackTree._double=function(root,dir){
  * @param {*} data
  * @memberof! RedBlackTree#
 */
-RedBlackTree.prototype.erase=function(data){
-  if( this.root!==null ) {
+RedBlackTree.prototype.erase=function(data) {
+
+  if( this.root !== null ) {
     var head = new RedBlackTreeNode(null); /* False tree root */
     var q, p, g; /* Helpers */
     var f = null;  /* Found item */
@@ -397,14 +435,14 @@ RedBlackTree.prototype.erase=function(data){
     /* Replace and remove the saved node */
     if( (f!==null && typeof f!=="undefined") ) {
       f.data = q.data;
-      p.setLink(p.right === q,q.link(q.left===null));
+      p.setLink(p.right === q,q.link(q.left === null));
     }
 
     /* Update the root(it may be different) */
     this.root = head.right;
 
     /* Make the root black for simplified logic */
-    if( this.root!==null ){
+    if( this.root !== null ){
       this.root.p = null;
       this.root.red = false;
     }
@@ -416,10 +454,11 @@ RedBlackTree.prototype.erase=function(data){
  * @param {*} data
  * @memberof! RedBlackTree#
 */
-RedBlackTree.prototype.insert=function(data){
+RedBlackTree.prototype.insert=function(data) {
+
   if(!data)throw new Error();
   var retval=null;
-  if ( this.root===null ) {
+  if ( this.root === null ) {
     /*
       We have an empty tree; attach the
       new node directly to the root
@@ -484,7 +523,7 @@ RedBlackTree.prototype.insert=function(data){
 
     /* Update the root (it may be different) */
     this.root = head.right;
-    if(this.root!==null)
+    if(this.root !== null)
       this.root.p = null;
   }
 
@@ -494,7 +533,10 @@ RedBlackTree.prototype.insert=function(data){
   return retval;
 };
 
-var Polygon=function(path,flatness){
+var GraphicsPath = {};
+
+var Polygon=function(path,flatness) {
+
  this.subpaths=[];
  this.contours=[];
  if((path!==null && typeof path!=="undefined")){
@@ -504,19 +546,24 @@ var Polygon=function(path,flatness){
   }
  }
  this.path=path;
- this.getBounds=function(){
+ this.getBounds=function() {
+
   return this.path.getBounds();
  };
- this.ncontours=function(){
+ this.ncontours=function() {
+
   return this.subpaths.length;
  };
- this.contour=function(i){
+ this.contour=function(i) {
+
   return this.contours[i];
  };
- this.push=function(c){
+ this.push=function(c) {
+
   this.contours.push(c);
  };
- this.toPath=function(){
+ this.toPath=function() {
+
   var p=new GraphicsPath();
   for(var i=0;i<this.contours.length;i++){
    var c=this.contours[i];
@@ -534,7 +581,8 @@ var Polygon=function(path,flatness){
  };
 };
 /** private */
-Polygon._Contour=function(subpath){
+Polygon._Contour=function(subpath) {
+
  var vertLength=subpath.length;
   /*
  // For convenience, eliminate the last
@@ -546,10 +594,12 @@ Polygon._Contour=function(subpath){
  }
  */
  this.vertices=subpath;
- this.nvertices=function(){
+ this.nvertices=function() {
+
   return this.vertices.length/2;
  };
- this.segment=function(i){
+ this.segment=function(i) {
+
   if(i===this.nvertices()-1){
    return [[this.vertices[i*2],this.vertices[i*2+1]],[this.vertices[0],this.vertices[1]]];
   } else {
@@ -558,39 +608,59 @@ Polygon._Contour=function(subpath){
  };
 };
 
+var Clipper=function(s,c) {
+
+ this.eq=new PriorityQueue(Clipper.sweepEventCompNum);
+ this.eventHolder=[];
+ this.subject=s;
+ this.clipping=c;
+ this.nint=0;
+};
+
+GraphicsPath = {};
+
 function Connector(){
  this.openPolygons=new LinkedList();
  this.closedPolygons=new LinkedList();
- this.clear=function(){
+ this.clear=function() {
+
   this.openPolygons.clear();
   this.closedPolygons.clear();
  };
- this.size=function(){
+ this.size=function() {
+
   return this.closedPolygons.size();
  };
 }
 /**
  * Not documented yet.
  */
-Polygon.PointChain=function(){
+Polygon.PointChain=function() {
+
  this.l=new LinkedList();
  this._closed=false;
- this.closed=function(){
+ this.closed=function() {
+
   return this._closed;
  };
- this.clear=function(){
+ this.clear=function() {
+
   this.l.clear();
  };
- this.first=function(){
+ this.first=function() {
+
   return this.l.first();
  };
- this.size=function(){
+ this.size=function() {
+
   return this.l.length;
  };
- this.init=function(s){
+ this.init=function(s) {
+
   this.l.push(s[0]).push(s[1]);
  };
- this.linkSegment=function(s){
+ this.linkSegment=function(s) {
+
   if(Clipper._ptEq(s[0],this.l.front())) {
     if(Clipper._ptEq(s[1],this.l.back()))
       this._closed = true;
@@ -623,7 +693,8 @@ Polygon.PointChain=function(){
  };
 };
 
-Polygon.PointChain.prototype.linkPointChain=function(chain){
+Polygon.PointChain.prototype.linkPointChain=function(chain) {
+
   if(Clipper._ptEq(chain.l.front(),this.l.back())) {
     chain.l.shift();
     this.l.spliceToEnd(chain.l);
@@ -653,7 +724,8 @@ Polygon.PointChain.prototype.linkPointChain=function(chain){
  * @param {*} s
  * @memberof! Connector#
 */
-Connector.prototype.add=function(s){
+Connector.prototype.add=function(s) {
+
   var changed=false;
   var j=this.openPolygons.first();
   while(j){
@@ -683,7 +755,8 @@ Connector.prototype.add=function(s){
  * Not documented yet.
  * @memberof! Connector#
 */
-Connector.prototype.toPolygon=function(){
+Connector.prototype.toPolygon=function() {
+
  var polygon=new Polygon(null);
  var j=this.closedPolygons.first();
  while(j){
@@ -699,13 +772,6 @@ Connector.prototype.toPolygon=function(){
  return polygon;
 };
 
-var Clipper=function(s,c){
- this.eq=new PriorityQueue(Clipper.sweepEventCompNum);
- this.eventHolder=[];
- this.subject=s;
- this.clipping=c;
- this.nint=0;
-};
 Clipper.NORMAL=0;
 Clipper.SUBJECT=0;
 Clipper.CLIPPING=1;
@@ -724,7 +790,8 @@ Clipper.DIFFERENT_TRANSITION=3;
  * @param {*} o
  * @param {*} t
  */
-Clipper.SweepEvent=function(pp,b,apl,o,t){
+Clipper.SweepEvent=function(pp,b,apl,o,t) {
+
  this.p=pp;
  this.id=-1;
  this.left=b;
@@ -734,20 +801,24 @@ Clipper.SweepEvent=function(pp,b,apl,o,t){
  this.poss=null;
  this.inOut=false;
  this.inside=false;
- this.segment=function(){
+ this.segment=function() {
+
   return [this.p,this.other.p];
  };
- this.below=function(x){
+ this.below=function(x) {
+
   return this.left ?
    (Clipper.signedArea(this.p,this.other.p,x)>0) :
    (Clipper.signedArea(this.other.p,this.p,x)>0);
  };
- this.above=function(x){
+ this.above=function(x) {
+
   return !this.below(x);
  };
 };
 
-Clipper.SweepEvent.prototype.toString=function(){
+Clipper.SweepEvent.prototype.toString=function() {
+
  return Clipper._print(this);
 };
 /**
@@ -756,7 +827,8 @@ Clipper.SweepEvent.prototype.toString=function(){
  * @param {*} b
  * @param {*} c
  */
-Clipper.signedArea=function(a,b,c){
+Clipper.signedArea=function(a,b,c) {
+
  var xa=a[0]-c[0];
  var ya=a[1]-c[1];
  var xb=b[0]-c[0];
@@ -764,12 +836,14 @@ Clipper.signedArea=function(a,b,c){
  return 0.5*(xa*yb-xb*ya);
 };
 /** @private */
-Clipper._ptEq=function(a,b){
+Clipper._ptEq=function(a,b) {
+
  return a[0]===b[0] && a[1]===b[1];
 };
 // Compare two sweep events
 // Return true means that e1 is placed at the event queue after e2, i.e,, e1 is processed by the algorithm after e2
 Clipper.sweepEventComp=function(e1,e2) {
+
   if(e1.p[0] > e2.p[0]) // Different x-coordinate
     return true;
   if(e2.p[0] > e1.p[0]) // Different x-coordinate
@@ -787,11 +861,13 @@ Clipper.sweepEventComp=function(e1,e2) {
  * @param {*} e2
  */
 Clipper.sweepEventCompNum=function(e1,e2) {
+
  if(e1===e2)return 0;
  return Clipper.sweepEventComp(e1,e2) ? -1 : 1;
 };
 // e1 and a2 are the left events of line segments(e1.p, e1.other.p) and(e2.p, e2.other.p)
 Clipper.segmentComp=function(e1,e2) {
+
   if(e1 === e2)
     return false;
   if(Clipper.signedArea(e1.p, e1.other.p, e2.p) !== 0 || Clipper.signedArea(e1.p, e1.other.p, e2.other.p) !== 0) {
@@ -819,6 +895,7 @@ Clipper.segmentComp=function(e1,e2) {
  * @param {*} e2
  */
 Clipper.segmentCompNum=function(e1,e2) {
+
  if(e1===e2)return 0;
  return Clipper.segmentComp(e1,e2) ? -1 : 1;
 };
@@ -827,14 +904,15 @@ Clipper.segmentCompNum=function(e1,e2) {
  * @param {*} e
  * @memberof! Clipper#
 */
-Clipper.prototype.storeSweepEvent=function(e){
+Clipper.prototype.storeSweepEvent=function(e) {
+
  e.id=this.eventHolder.length;
  this.eventHolder.push(e);
  return e;
 };
 /** @private */
-Clipper._print=function(e)
-{
+Clipper._print=function(e) {
+
   if(!e)return "null";
   var namesEventTypes=[
     " (NORMAL) ", " (NON_CONTRIBUTING) ", " (SAME_TRANSITION) ", " (DIFFERENT_TRANSITION) " ];
@@ -847,7 +925,8 @@ Clipper._print=function(e)
  * @param {*} op
  * @memberof! Clipper#
 */
-Clipper.prototype.compute=function(op){
+Clipper.prototype.compute=function(op) {
+
   // Test 1 for trivial result case
   if(this.subject.ncontours()*this.clipping.ncontours() === 0) { // At least one of the polygons is empty
     if(op === Clipper.DIFFERENCE)
@@ -1025,8 +1104,8 @@ Clipper.prototype.compute=function(op){
  * @param {*} pl
  * @memberof! Clipper#
 */
-Clipper.prototype.processSegment=function(s,pl)
-{
+Clipper.prototype.processSegment=function(s,pl) {
+
   if(Clipper._ptEq(s[0],s[1])) // if the two edge endpoints are equal the segment is dicarded
     return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
   var e1 = this.storeSweepEvent(new Clipper.SweepEvent(s[0], true, pl, null));
@@ -1051,7 +1130,8 @@ Clipper.prototype.processSegment=function(s,pl)
  * @param {*} e
  * @param {*} f
  */
-Clipper.findIntersection=function(a,b,e,f){
+Clipper.findIntersection=function(a,b,e,f) {
+
  var ret=Clipper._findIntersectionInternal(a[0][0],a[0][1],a[1][0],a[1][1],
   b[0][0],b[0][1],b[1][0],b[1][1]);
  if(ret.length>0){
@@ -1065,7 +1145,8 @@ Clipper.findIntersection=function(a,b,e,f){
  return ret.length;
 };
 /** @private */
-Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
+Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y) {
+
   var dpdeltad0;
   var t2 = a2x - a1x;
   var t3 = a2y - a1y;
@@ -1168,7 +1249,8 @@ Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
  * @param {*} e2
  * @memberof! Clipper#
 */
-Clipper.prototype.possibleIntersection=function(e1,e2){
+Clipper.prototype.possibleIntersection=function(e1,e2) {
+
 //  if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
 //    return false;
 
@@ -1250,7 +1332,8 @@ Clipper.prototype.possibleIntersection=function(e1,e2){
  * @param {*} p
  * @memberof! Clipper#
 */
-Clipper.prototype.divideSegment=function(e,p){
+Clipper.prototype.divideSegment=function(e,p) {
+
   // "Right event" of the "left line segment" resulting from dividing e(the line segment associated to e)
   var r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
   // "Left event" of the "right line segment" resulting from dividing e(the line segment associated to e)
@@ -1271,7 +1354,7 @@ Clipper.prototype.divideSegment=function(e,p){
 
 if(globalContext.GraphicsPath){
 /** @lends GraphicsPath */
-var GraphicsPath=globalContext.GraphicsPath;
+GraphicsPath=globalContext.GraphicsPath;
 /**
  * Computes the combination of this path's shape with another
  * path's shape. The following points apply to this method:<ul>
@@ -1297,7 +1380,8 @@ var GraphicsPath=globalContext.GraphicsPath;
 * @returns {GraphicsPath} The union of the two paths.
  * @memberof! GraphicsPath#
 */
-GraphicsPath.prototype.union=function(path,flatness){
+GraphicsPath.prototype.union=function(path,flatness) {
+
  if((path===null || typeof path==="undefined"))return this;
  var polygon1=new Polygon(this,flatness);
  var polygon2=new Polygon(path,flatness);
@@ -1317,7 +1401,8 @@ GraphicsPath.prototype.union=function(path,flatness){
  * and the other path.
  * @memberof! GraphicsPath#
 */
-GraphicsPath.prototype.difference=function(path,flatness){
+GraphicsPath.prototype.difference=function(path,flatness) {
+
  if((path===null || typeof path==="undefined"))return this;
  var polygon1=new Polygon(this,flatness);
  var polygon2=new Polygon(path,flatness);
@@ -1337,7 +1422,8 @@ GraphicsPath.prototype.difference=function(path,flatness){
  * both paths.
  * @memberof! GraphicsPath#
 */
-GraphicsPath.prototype.intersection=function(path,flatness){
+GraphicsPath.prototype.intersection=function(path,flatness) {
+
  if((path===null || typeof path==="undefined"))return this;
  var polygon1=new Polygon(this,flatness);
  var polygon2=new Polygon(path,flatness);
@@ -1357,7 +1443,8 @@ GraphicsPath.prototype.intersection=function(path,flatness){
  * only one of the two paths.
  * @memberof! GraphicsPath#
 */
-GraphicsPath.prototype.xor=function(path,flatness){
+GraphicsPath.prototype.xor=function(path,flatness) {
+
  if((path===null || typeof path==="undefined"))return this;
  var polygon1=new Polygon(this,flatness);
  var polygon2=new Polygon(path,flatness);

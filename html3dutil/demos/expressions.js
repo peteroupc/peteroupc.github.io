@@ -92,8 +92,7 @@ var a, x = null, e = null, t = null, token = null;
     throw new Error("unexpected token");
   };
 
-    var Operator = function(name) {
-
+    var Operator = function(name){
       "use strict";
 this.name = name;
     };
@@ -101,8 +100,7 @@ this.name = name;
  * Not documented yet.
  * @memberof! Operator#
 */
-Operator.prototype.toString=function() {
-
+Operator.prototype.toString=function(){
       "use strict";
 return this.name;
     };
@@ -112,15 +110,13 @@ return this.name;
 this.name = name;
       this.negative = false;
     };
-        var Operation = function(operator) {
-
+        var Operation = function(operator){
       "use strict";
 this.operator = operator;
       this.nodes = [];
       this.negative = false;
     };
-    var Constant = function(value, name) {
-
+    var Constant = function(value, name){
       "use strict";
 if ((name===null || typeof name==="undefined")) {
         name = null;
@@ -138,8 +134,7 @@ if ((name===null || typeof name==="undefined")) {
       }
     };
 
-    var Expression = function() {
-
+    var Expression = function(){
        "use strict";
 this.nodes = [];
     };
@@ -157,8 +152,7 @@ var a, b, c, d;
  * Not documented yet.
  * @memberof! Expression#
 */
-Expression.prototype.simplify=function() {
-
+Expression.prototype.simplify=function(){
       "use strict";
 return Expression.simplifyNodes(this.nodes);
     };
@@ -274,8 +268,7 @@ var a, b, c, d, e, passes = null, pass__ = null, pass = null, prevNode = null, p
  * Not documented yet.
  * @memberof! Expression#
 */
-Expression.prototype.toString=function() {
-
+Expression.prototype.toString=function(){
       "use strict";
 return "["+this.nodes+"]";
     };
@@ -284,8 +277,7 @@ return "["+this.nodes+"]";
  * Not documented yet.
  * @memberof! Operation#
 */
-Operation.prototype.length=function() {
-
+Operation.prototype.length=function(){
       "use strict";
 return this.nodes.length;
     };
@@ -294,8 +286,7 @@ return this.nodes.length;
  * @param {*} index
  * @memberof! Operation#
 */
-Operation.prototype.get=function(index) {
-
+Operation.prototype.get=function(index){
       "use strict";
 return this.nodes[index];
     };
@@ -304,8 +295,7 @@ return this.nodes[index];
  * @param {*} op
  * @memberof! Operation#
 */
-Operation.prototype.isOperation=function(op) {
-
+Operation.prototype.isOperation=function(op){
       "use strict";
 return this.operator===(op);
     };
@@ -615,8 +605,7 @@ return this.add((typeof x==="number") ? (-x) : (x.negate()));
  * @param {*} x
  * @memberof! Operation#
 */
-Operation.prototype.add=function(x) {
-
+Operation.prototype.add=function(x){
       "use strict";
 return this.combineOp("plus", x);
     };
@@ -652,8 +641,7 @@ var a;
  * @param {*} x
  * @memberof! Operation#
 */
-Operation.prototype.divide=function(x) {
-
+Operation.prototype.divide=function(x){
       "use strict";
 return this.combineOp("div", x);
     };
@@ -746,8 +734,7 @@ var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, 
  * @param {*} op
  * @memberof! Variable#
 */
-Variable.prototype.isOperation=function(op) {
-
+Variable.prototype.isOperation=function(op){
       "use strict";
 return false;
     };
@@ -763,8 +750,7 @@ return this;
  * Not documented yet.
  * @memberof! Variable#
 */
-Variable.prototype.constantValue=function() {
-
+Variable.prototype.constantValue=function(){
       "use strict";
 return null;
     };
@@ -832,8 +818,7 @@ var a, op = null, cv = null;
  * Not documented yet.
  * @memberof! Variable#
 */
-Variable.prototype.degen=function() {
-
+Variable.prototype.degen=function(){
       "use strict";
 return this;
     };
@@ -842,8 +827,7 @@ return this;
  * @param {*} x
  * @memberof! Variable#
 */
-Variable.prototype.add=function(x) {
-
+Variable.prototype.add=function(x){
       "use strict";
 return this.combineOp("plus", x);
     };
@@ -875,8 +859,7 @@ var a;
  * @param {*} x
  * @memberof! Variable#
 */
-Variable.prototype.multiply=function(x) {
-
+Variable.prototype.multiply=function(x){
       "use strict";
 return this.combineOp("mul", x);
     };
@@ -885,8 +868,7 @@ return this.combineOp("mul", x);
  * @param {*} x
  * @memberof! Variable#
 */
-Variable.prototype.divide=function(x) {
-
+Variable.prototype.divide=function(x){
       "use strict";
 return this.combineOp("div", x);
     };
@@ -904,8 +886,7 @@ return this;
  * @param {*} op
  * @memberof! Constant#
 */
-Constant.prototype.isOperation=function(op) {
-
+Constant.prototype.isOperation=function(op){
       "use strict";
 return false;
     };
@@ -926,8 +907,7 @@ var a;
  * Not documented yet.
  * @memberof! Constant#
 */
-Constant.prototype.constantValue=function() {
-
+Constant.prototype.constantValue=function(){
       "use strict";
 return this.value;
     };
@@ -935,8 +915,7 @@ return this.value;
  * Not documented yet.
  * @memberof! Constant#
 */
-Constant.prototype.degen=function() {
-
+Constant.prototype.degen=function(){
       "use strict";
 return this;
     };
@@ -988,8 +967,7 @@ var a, op = null;
  * Not documented yet.
  * @memberof! Constant#
 */
-Constant.prototype.negate=function() {
-
+Constant.prototype.negate=function(){
       "use strict";
 return new Constant(-this.value);
     };
@@ -1125,7 +1103,7 @@ var a, b, i__ = null, i = null, node = null;
 
   var findPartialDerivative = function(expr, differential) {
     "use strict";
-var product = function(expr, start, count) {
+var product = function(expr, start, count){
       var a, ret = null, i__ = null, i = null;
       if (count===(1)) {
         return expr.get(start);}
@@ -1134,7 +1112,7 @@ var product = function(expr, start, count) {
       ret = ret.multiply(expr.get(start+(i)));}
       return ret;
     };
-    var quotient = function(expr, start, count) {
+    var quotient = function(expr, start, count){
     var a, ret = null, i__ = null, i = null;
 
     if (count===(1)) {

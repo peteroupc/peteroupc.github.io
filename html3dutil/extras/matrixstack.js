@@ -7,7 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 /* global define, exports */
-if((typeof H3DU === "undefined" || H3DU === null)){ var H3DU={}; }
+if((typeof H3DU === "undefined" || (H3DU === null || typeof H3DU === "undefined"))){ var H3DU={}; }
 /**
 H3DU.MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.<p>

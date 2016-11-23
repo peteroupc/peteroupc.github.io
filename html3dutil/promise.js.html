@@ -40,7 +40,7 @@ if (exports.Promise) { return; }
    * @alias Promise
    * @param {function} [resolver]
    */
-  var Promise = function(resolver) {
+  var Promise = function(resolver){
     this._state = 0; /* 0 = pending, 1 = fulfilled, 2 = rejected */
     this._value = null; /* fulfillment / rejection value */
     this._timeout = null;
@@ -55,14 +55,14 @@ if (exports.Promise) { return; }
     if (resolver) { this._invokeResolver(resolver); }
   };
 
-  Promise.resolve = function(value) {
-    return new this(function(resolve, reject) {
+  Promise.resolve = function(value){
+    return new this(function(resolve, reject){
       resolve(value);
     });
   };
 
-  Promise.reject = function(reason) {
-    return new this(function(resolve, reject) {
+  Promise.reject = function(reason){
+    return new this(function(resolve, reject){
       reject(reason);
     });
   };
@@ -70,18 +70,18 @@ if (exports.Promise) { return; }
   /**
    * Wait for all these promises to complete. One failed => this fails too.
    */
-  Promise.all = Promise.when = function(all) {
-    return new this(function(resolve, reject) {
+  Promise.all = Promise.when = function(all){
+    return new this(function(resolve, reject){
       var counter = 0;
       var results = [];
 
-      all.forEach(function(promise, index) {
+      all.forEach(function(promise, index){
         counter++;
-        promise.then(function(result) {
+        promise.then(function(result){
           results[index] = result;
           counter--;
           if (!counter) { resolve(results); }
-        }, function(reason) {
+        }, function(reason){
           counter = 1/0;
           reject(reason);
         });
@@ -89,9 +89,9 @@ if (exports.Promise) { return; }
     });
   };
 
-  Promise.race = function(all) {
-    return new this(function(resolve, reject) {
-      all.forEach(function(promise) {
+  Promise.race = function(all){
+    return new this(function(resolve, reject){
+      all.forEach(function(promise){
         promise.then(resolve, reject);
       });
     });
@@ -102,7 +102,7 @@ if (exports.Promise) { return; }
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise}
    */
-  Promise.prototype.then = function(onFulfilled, onRejected) {
+  Promise.prototype.then = function(onFulfilled, onRejected){
     this._cb.fulfilled.push(onFulfilled);
     this._cb.rejected.push(onRejected);
 
@@ -116,7 +116,7 @@ if (exports.Promise) { return; }
     return thenPromise;
   };
 
-  Promise.prototype.fulfill = function(value) {
+  Promise.prototype.fulfill = function(value){
     if (this._state !== 0) { return this; }
 
     this._state = 1;
@@ -127,7 +127,7 @@ if (exports.Promise) { return; }
     return this;
   };
 
-  Promise.prototype.reject = function(value) {
+  Promise.prototype.reject = function(value){
     if (this._state !== 0) { return this; }
 
     this._state = 2;
@@ -138,7 +138,7 @@ if (exports.Promise) { return; }
     return this;
   };
 
-  Promise.prototype.resolve = function(x) {
+  Promise.prototype.resolve = function(x){
     /* 2.3.1. If promise and x refer to the same object, reject promise with a TypeError as the reason. */
     if (x === this) {
       this.reject(new TypeError("Promise resolved by its own instance"));
@@ -164,13 +164,13 @@ if (exports.Promise) { return; }
       if (typeof(then) === "function") {
         /* 2.3.3.3. If then is a function, call it */
         var called = false;
-        var resolvePromise = function(y) {
+        var resolvePromise = function(y){
           /* 2.3.3.3.1. If/when resolvePromise is called with a value y, run [[Resolve]](promise, y). */
           if (called) { return; }
           called = true;
           this.resolve(y);
         };
-        var rejectPromise = function(r) {
+        var rejectPromise = function(r){
           /* 2.3.3.3.2. If/when rejectPromise is called with a reason r, reject promise with r. */
           if (called) { return; }
           called = true;
@@ -196,11 +196,11 @@ if (exports.Promise) { return; }
     this.fulfill(x);
   };
 
-  Promise.prototype.chain = function(promise) {
-    var resolve = function(value) {
+  Promise.prototype.chain = function(promise){
+    var resolve = function(value){
       promise.resolve(value);
     };
-    var reject = function(value) {
+    var reject = function(value){
       promise.reject(value);
     };
     return this.then(resolve, reject);
@@ -210,16 +210,16 @@ if (exports.Promise) { return; }
    * @param {function} onRejected To be called once this promise gets rejected
    * @returns {Promise}
    */
-  Promise.prototype["catch"]  = function(onRejected) {
+  Promise.prototype["catch"]  = function(onRejected){
     return this.then(null, onRejected);
   };
 
-  Promise.prototype._schedule = function() {
+  Promise.prototype._schedule = function(){
     if (this._timeout) { return; } /* resolution already scheduled */
     this._timeout = setTimeout(this._processQueue.bind(this), 0);
   };
 
-  Promise.prototype._processQueue = function() {
+  Promise.prototype._processQueue = function(){
     this._timeout = null;
 
     while (this._thenPromises.length) {
@@ -229,7 +229,7 @@ if (exports.Promise) { return; }
     }
   };
 
-  Promise.prototype._executeCallback = function(cb) {
+  Promise.prototype._executeCallback = function(cb){
     var thenPromise = this._thenPromises.shift();
 
     if (typeof(cb) !== "function") {
@@ -253,7 +253,7 @@ if (exports.Promise) { return; }
     }
   };
 
-  Promise.prototype._invokeResolver = function(resolver) {
+  Promise.prototype._invokeResolver = function(resolver){
     try {
       resolver(this.resolve.bind(this), this.reject.bind(this));
     } catch (e) {
@@ -289,7 +289,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

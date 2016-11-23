@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, Material, H3DU.Mesh, Promise, H3DU.ShapeGroup */
+/* global H3DU, H3DU.Mesh, H3DU.ShapeGroup, Material, Promise */
 /**
 OBJ file.<p>
 * <p>This class is considered a supplementary class to the
@@ -52,7 +52,8 @@ var multi=new H3DU.ShapeGroup();
 };
 /** @private */
 ObjData.prototype._gatherTextureNames=function(){
- var textures=[];
+ "use strict";
+var textures=[];
  if(this.mtl){
   for(var i=0;i<this.mtl.list.length;i++){
     var mtl=this.mtl.list[i].data;
@@ -62,7 +63,7 @@ ObjData.prototype._gatherTextureNames=function(){
   }
  }
  return textures;
-}
+};
 /**
  * Creates one or more 3D shapes from the named portion
  * of the data in this OBJ file.
@@ -85,12 +86,13 @@ var multi=new H3DU.ShapeGroup();
  return multi;
 };
 /** @private */
-ObjData._resolvePath=function(path, name){
+ObjData._resolvePath=function(path, name) {
+"use strict";
  // Relatively dumb for a relative path
  // resolver, but sufficient here, as it will
  // only be used with relative "mtllib"/"map_Kd"
  // strings
- "use strict";
+
 var ret=path;
  var lastSlash=ret.lastIndexOf("/");
  if(lastSlash>=0){
@@ -247,8 +249,10 @@ return H3DU.loadFileFromUrl(url).then(
  * @param {TextureLoader} textureLoader An object to load
  * textures with.
  */
-ObjData.loadObjFromUrlWithTextures=function(url,textureLoader){
- return ObjData.loadObjFromUrl(url).then(function(obj){
+ObjData.loadObjFromUrlWithTextures=function(url,textureLoader) {
+"use strict";
+
+return ObjData.loadObjFromUrl(url).then(function(obj){
    var o=obj;
    return textureLoader.loadTexturesAll(o._gatherTextureNames())
      .then(function(ret){
@@ -256,8 +260,8 @@ ObjData.loadObjFromUrlWithTextures=function(url,textureLoader){
      },function(results){
        return Promise.reject({"url":url,"textureResults":results});
      });
- })
-}
+ });
+};
 
 /**
 Loads a WaveFront OBJ file (along with its associated MTL, or

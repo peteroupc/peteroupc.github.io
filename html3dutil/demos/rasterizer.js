@@ -1,7 +1,7 @@
 /*
 * Experimental renderer using the HTML 2D Canvas.
 */
-/* global H3DU.Math, H3DU, H3DU.Mesh, H3DU.Scene3D, H3DU.Shape, H3DU.ShapeGroup */
+/* global H3DU, H3DU.Math, H3DU.Mesh, H3DU.Scene3D, H3DU.Shape, H3DU.ShapeGroup */
 /*
 // Rasterizer adapted by Peter O. from public domain code by
 // castanyo@yahoo.es, in the file Raster.cpp.
@@ -85,9 +85,10 @@ var x=vec[0];
  return vec;
 };
 
-H3DU.Scene3D._Triangle.prototype.draw=function(width, height, data, depth, color, colorOffset){
+H3DU.Scene3D._Triangle.prototype.draw=function(width, height, data, depth, color, colorOffset) {
+"use strict";
     // 28.4 fixed-point coordinates
-    "use strict";
+
     var offset;
     var Y1 = Math.round(16.0 * this.v1[1])|0;
     var Y2 = Math.round(16.0 * this.v2[1])|0;

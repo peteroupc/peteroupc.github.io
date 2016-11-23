@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, JSON, Material, H3DU.Mesh, Promise, H3DU.ShapeGroup */
+/* global H3DU, H3DU.Mesh, H3DU.ShapeGroup, JSON, Material, Promise */
 /**
 * JSON exporter of graphics meshes.
 * <p>This class is considered a supplementary class to the
@@ -22,12 +22,13 @@ at: http://peteroupc.github.io/
 var MeshJSON={};
 
 /** @private */
-MeshJSON._resolvePath=function(path, name){
+MeshJSON._resolvePath=function(path, name) {
+"use strict";
  // Relatively dumb for a relative path
  // resolver, but sufficient here, as it will
  // only be used with relative path
  // strings
- "use strict";
+
 var ret=path;
  var lastSlash=ret.lastIndexOf("/");
  if(lastSlash>=0){

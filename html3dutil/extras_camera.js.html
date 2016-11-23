@@ -22,7 +22,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math */
+/* global H3DU, H3DU.Math, scene */
 
 ////////////////////////////////////////////
 
@@ -40,9 +40,9 @@ function InputTracker(element){
  var thisObj=this;
  this.handlers=[];
  var addHandler=function(h,a,b,c){
-  h.push([a,b,c])
+  h.push([a,b,c]);
   a.addEventListener(b,c);
- }
+ };
  if(element){
  addHandler(this.handlers,window,"blur",function(e){
   thisObj.leftButton=false;
@@ -126,7 +126,7 @@ function InputTracker(element){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
     "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
  });
- var evt=("mousewheel" in element) ? "mousewheel" : "DOMMouseScroll"
+ var evt=("mousewheel" in element) ? "mousewheel" : "DOMMouseScroll";
  addHandler(this.handlers,element,evt,function(e,click){
   mouseWheelFunc(thisObj,e,click);
  });
@@ -137,18 +137,19 @@ function InputTracker(element){
  * @memberof! InputTracker#
 */
 InputTracker.prototype.dispose=function(){
- for(var i=0;i&lt;this.handlers.length;i++){
-  var h=this.handlers[i]
+ "use strict";
+for(var i=0;i&lt;this.handlers.length;i++){
+  var h=this.handlers[i];
   h[0].removeEventListener(h[1],h[2]);
  }
- this.handlers=[]
- this.element=null
- this.mouseWheelCallback=null
- this.keys={}
- this.clientX=null
- this.clientY=null
- this.lastClient=[]
-}
+ this.handlers=[];
+ this.element=null;
+ this.mouseWheelCallback=null;
+ this.keys={};
+ this.clientX=null;
+ this.clientY=null;
+ this.lastClient=[];
+};
 
 /**
  * Not documented yet.
@@ -211,7 +212,7 @@ InputTracker.prototype.deltaXY=function(){
  "use strict";
 var deltaX=0;
  var deltaY=0;
- if(this.clientX===null || this.clientY===null){
+ if(this.clientX === null || this.clientY === null){
   return {"x":0,"y":0,"cx":0,"cy":0};
  }
  deltaX=(this.lastClient.length === 0) ? 0 :
@@ -283,7 +284,7 @@ if(nearZ&lt;=0)throw new Error("invalid nearZ");
  } else {
    this.scene.perspectiveAspect(this.fov,this.near,this.far);
  }
-}
+};
 /** @private */
 Camera._Perspective.prototype.update=function(){
  "use strict";
@@ -298,8 +299,9 @@ Camera._Perspective.prototype.update=function(){
  }
 };
 /** @private */
-Camera._normAsVec4=function(x,y,z){
- "use strict";
+Camera._normAsVec4=function(x,y,z) {
+"use strict";
+
 var len=x*x+y*y+z*z;
  if(len===1){
   return [x,y,z,1];
@@ -309,18 +311,20 @@ var len=x*x+y*y+z*z;
  }
 };
 /** @private */
-Camera._quatRotateRelative=function(quat, angle, x, y, z){
+Camera._quatRotateRelative=function(quat, angle, x, y, z) {
+"use strict";
  // Rotate quaternion about a relative axis
- "use strict";
+
 var vec=Camera._normAsVec4(x,y,z);
  var q=H3DU.Math.quatRotate(quat,angle,vec);
  q=H3DU.Math.quatMultiply(H3DU.Math.quatFromAxisAngle(angle,vec),quat);
  H3DU.Math.vec4assign(quat,q);
 };
 /** @private */
-Camera._quatRotateFixed=function(quat, angle, x, y, z){
+Camera._quatRotateFixed=function(quat, angle, x, y, z) {
+"use strict";
  // Rotate quaternion about a fixed axis
- "use strict";
+
 var vec=Camera._normAsVec4(x,y,z);
  var q=H3DU.Math.quatRotate(quat,angle,vec);
  q=H3DU.Math.quatMultiply(quat,H3DU.Math.quatFromAxisAngle(angle,vec));
@@ -373,9 +377,10 @@ this.scene.setViewMatrix(this._getView());
  * @param {*} dist
  * @memberof! Camera#
 */
-Camera.prototype.setDistance=function(dist){
+Camera.prototype.setDistance=function(dist) {
+"use strict";
  // don't move closer than the near plane
- "use strict";
+
 dist=Math.max(this.near,dist);
  var currentDist=this._distance();
  var relDist=currentDist-dist;
@@ -670,7 +675,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

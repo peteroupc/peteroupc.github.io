@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math */
+/* global H3DU, H3DU.Math */
 
 /**
 * Parametric evaluator for a surface of revolution, which results by revolving
@@ -113,17 +113,20 @@ SurfaceOfRevolution._quatTransformInPlace=function(q,v){
  @example <caption>The following creates an evaluator for a cone
 * which starts at the origin and runs 10 units along the Z axis.</caption>
 * var surf=SurfaceOfRevolution.fromFunction(
-*  function(x){  return x/2; }, // use a constantly increasing function
+*  function(x) {
+"use strict";  return x/2; }, // use a constantly increasing function
 * 0, 10);
 * @example <caption>This is an evaluator for the same cone, but
 * shifted 3 units back.</caption>
 * var surf=SurfaceOfRevolution.fromFunction(
-*  function(x){  x+=3; return x/2; },
+*  function(x) {
+"use strict";  x+=3; return x/2; },
 * -3,7);
 * @example <caption>The following creates an evaluator for a cylinder
 * which runs from 5 to 10 units, and with a radius of 2 units.</caption>
 * var surf=SurfaceOfRevolution.fromFunction(
-*  function(x){  return 2; }, // use a constant radius
+*  function(x) {
+"use strict";  return 2; }, // use a constant radius
 * 5, 10);
 */
 SurfaceOfRevolution.fromFunction=function(func,minval,maxval,axis){

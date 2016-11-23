@@ -7,7 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 /* global H3DU, H3DU.Mesh, Promise */
-if((typeof H3DU === "undefined" || H3DU === null)){ H3DU={}; }
+if((typeof H3DU === "undefined" || (H3DU === null || typeof H3DU === "undefined"))){ H3DU={}; }
 /**
 * Represents a bitmap font.  This class supports
 * traditional bitmap fonts and signed distance field fonts.<p>
@@ -127,7 +127,7 @@ H3DU.TextFont.prototype._measureWord=function(
   } else if(c>=0xd800 && c<0xe000){
    c=0xfffd
   }
-  if(c==0x0d || c==0x0a){
+  if(c === 0x0d || c === 0x0a){
    // don't measure line break characters; mandatory line
    // breaks should have been classified as such already
    lastChar=c;
@@ -151,7 +151,7 @@ H3DU.TextFont.prototype._measureWord=function(
 }
 /** @private */
 H3DU.TextFont.prototype._findLineBreaks=function(str,scale,maxWidth){
- if(str.length==0){
+ if(str.length === 0){
   return [];
  }
  var breaks=[];
@@ -168,15 +168,15 @@ H3DU.TextFont.prototype._findLineBreaks=function(str,scale,maxWidth){
   } else if(c>=0xd800 && c<0xe000){
    c=0xfffd
   }
-  if(c==0x0d || c==0x0a){
+  if(c === 0x0d || c === 0x0a){
    classes.push(2); // line break
    breaks.push(i);
-   if(c==0x0d && i+1<str.length && str.charCodeAt(i+1)==0x0a){
+   if(c === 0x0d && i+1<str.length && str.charCodeAt(i+1) === 0x0a){
     i++;
    }
    currentClass=-1;
    continue;
-  } else if(c==0x0c || c==0x09 || c==0x20){
+  } else if(c === 0x0c || c === 0x09 || c === 0x20){
    // non-linebreak whitespace
    if(currentClass!=1){
     classes.push(1); // whitespace
@@ -201,7 +201,7 @@ H3DU.TextFont.prototype._findLineBreaks=function(str,scale,maxWidth){
  var lineStart=0;
  var possibleLineEnd=0;
  for(var i=0;i<classes.length;i++){
-   if(classes[i]==2){
+   if(classes[i] === 2){
     // mandatory line break
     linePositions.push(lineStart,breaks[i],xSize);
     xPos=0;
@@ -215,7 +215,7 @@ H3DU.TextFont.prototype._findLineBreaks=function(str,scale,maxWidth){
     lastChar=wordInfo[2];
     if(maxWidth>=0 && size>maxWidth){
      linePositions.push(lineStart,possibleLineEnd,xSize);
-     if(classes[i]==1){
+     if(classes[i] === 1){
       // Spaces that overshoot the max width;
       // don't include the spaces
       xPos=0;
@@ -229,7 +229,7 @@ H3DU.TextFont.prototype._findLineBreaks=function(str,scale,maxWidth){
       possibleLineEnd=breaks[i+1]
      }
     } else {
-     if(classes[i]==0){
+     if(classes[i] === 0){
       possibleLineEnd=breaks[i+1]
       xSize=Math.max(0,xPos+wordInfo[1]);
      }
@@ -304,7 +304,7 @@ H3DU.TextFont.prototype._makeTextMeshesInner=function(str,startPos,endPos,xPos,y
   } else if(c>=0xd800 && c<0xe000){
    c=0xfffd
   }
-  if(c === 0x0a || c==0x0d){
+  if(c === 0x0a || c === 0x0d){
    // NOTE: Should not occur at this point
    lastChar=c;
    continue;
@@ -398,19 +398,19 @@ H3DU.TextFont.prototype.makeTextMeshes=function(str,params){
   meshesForPage[i]=null;
  }
  var linebreaks=this._findLineBreaks(str,extra.scale,width);
- if(linebreaks.length==0){
+ if(linebreaks.length === 0){
   return meshesForPage;
  }
  if(width<0){
   // Calculate max width if no explicit width was given
   for(var i=0;i<linebreaks.length;i+=3){
-   width=(i==0) ? linebreaks[i+2] : Math.max(width,linebreaks[i+2])
+   width=(i === 0) ? linebreaks[i+2] : Math.max(width,linebreaks[i+2])
   }
  }
  for(var i=0;i<linebreaks.length;i+=3){
   var x=xPos
-  if(align==1)x=x+(width-linebreaks[i+2])*0.5
-  else if(align==2)x=x+width-linebreaks[i+2]
+  if(align === 1)x=x+(width-linebreaks[i+2])*0.5
+  else if(align === 2)x=x+width-linebreaks[i+2]
   this._makeTextMeshesInner(str,linebreaks[i],
     linebreaks[i+1],x,yPos,params,extra,meshesForPage);
   yPos+=height;

@@ -4,7 +4,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math, H3DU.Mesh */
+/* global H3DU, H3DU.Math, H3DU.Mesh */
 // The following was adapted by Peter O. from public-domain
 // source code by Cory Gene Bloyd.
 
@@ -20,7 +20,8 @@ at: http://peteroupc.github.io/
 * means the point lies on the surface.
 * @example <caption>The following defines an implicit surface
 * function for a sphere.</caption>
-* var surface=new ImplicitSurface({"sample":function(x, y, z){
+* var surface=new ImplicitSurface({"sample":function(x, y, z) {
+"use strict";
 *  return x*x+y*y+z*z-1;
 * }});
 */

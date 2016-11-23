@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math */
+/* global H3DU, H3DU.Math, scene */
 
 ////////////////////////////////////////////
 
@@ -24,9 +24,9 @@ function InputTracker(element){
  var thisObj=this;
  this.handlers=[];
  var addHandler=function(h,a,b,c){
-  h.push([a,b,c])
+  h.push([a,b,c]);
   a.addEventListener(b,c);
- }
+ };
  if(element){
  addHandler(this.handlers,window,"blur",function(e){
   thisObj.leftButton=false;
@@ -110,7 +110,7 @@ function InputTracker(element){
   mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
     "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
  });
- var evt=("mousewheel" in element) ? "mousewheel" : "DOMMouseScroll"
+ var evt=("mousewheel" in element) ? "mousewheel" : "DOMMouseScroll";
  addHandler(this.handlers,element,evt,function(e,click){
   mouseWheelFunc(thisObj,e,click);
  });
@@ -121,18 +121,19 @@ function InputTracker(element){
  * @memberof! InputTracker#
 */
 InputTracker.prototype.dispose=function(){
- for(var i=0;i<this.handlers.length;i++){
-  var h=this.handlers[i]
+ "use strict";
+for(var i=0;i<this.handlers.length;i++){
+  var h=this.handlers[i];
   h[0].removeEventListener(h[1],h[2]);
  }
- this.handlers=[]
- this.element=null
- this.mouseWheelCallback=null
- this.keys={}
- this.clientX=null
- this.clientY=null
- this.lastClient=[]
-}
+ this.handlers=[];
+ this.element=null;
+ this.mouseWheelCallback=null;
+ this.keys={};
+ this.clientX=null;
+ this.clientY=null;
+ this.lastClient=[];
+};
 
 /**
  * Not documented yet.
@@ -195,7 +196,7 @@ InputTracker.prototype.deltaXY=function(){
  "use strict";
 var deltaX=0;
  var deltaY=0;
- if(this.clientX===null || this.clientY===null){
+ if(this.clientX === null || this.clientY === null){
   return {"x":0,"y":0,"cx":0,"cy":0};
  }
  deltaX=(this.lastClient.length === 0) ? 0 :
@@ -267,7 +268,7 @@ if(nearZ<=0)throw new Error("invalid nearZ");
  } else {
    this.scene.perspectiveAspect(this.fov,this.near,this.far);
  }
-}
+};
 /** @private */
 Camera._Perspective.prototype.update=function(){
  "use strict";
@@ -282,8 +283,9 @@ Camera._Perspective.prototype.update=function(){
  }
 };
 /** @private */
-Camera._normAsVec4=function(x,y,z){
- "use strict";
+Camera._normAsVec4=function(x,y,z) {
+"use strict";
+
 var len=x*x+y*y+z*z;
  if(len===1){
   return [x,y,z,1];
@@ -293,18 +295,20 @@ var len=x*x+y*y+z*z;
  }
 };
 /** @private */
-Camera._quatRotateRelative=function(quat, angle, x, y, z){
+Camera._quatRotateRelative=function(quat, angle, x, y, z) {
+"use strict";
  // Rotate quaternion about a relative axis
- "use strict";
+
 var vec=Camera._normAsVec4(x,y,z);
  var q=H3DU.Math.quatRotate(quat,angle,vec);
  q=H3DU.Math.quatMultiply(H3DU.Math.quatFromAxisAngle(angle,vec),quat);
  H3DU.Math.vec4assign(quat,q);
 };
 /** @private */
-Camera._quatRotateFixed=function(quat, angle, x, y, z){
+Camera._quatRotateFixed=function(quat, angle, x, y, z) {
+"use strict";
  // Rotate quaternion about a fixed axis
- "use strict";
+
 var vec=Camera._normAsVec4(x,y,z);
  var q=H3DU.Math.quatRotate(quat,angle,vec);
  q=H3DU.Math.quatMultiply(quat,H3DU.Math.quatFromAxisAngle(angle,vec));
@@ -357,9 +361,10 @@ this.scene.setViewMatrix(this._getView());
  * @param {*} dist
  * @memberof! Camera#
 */
-Camera.prototype.setDistance=function(dist){
+Camera.prototype.setDistance=function(dist) {
+"use strict";
  // don't move closer than the near plane
- "use strict";
+
 dist=Math.max(this.near,dist);
  var currentDist=this._distance();
  var relDist=currentDist-dist;

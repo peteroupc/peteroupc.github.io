@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU._FrenetFrames, H3DU.Math */
+/* global H3DU, H3DU.Math, H3DU._FrenetFrames */
 H3DU._FrenetFrames = function(func){
  "use strict";
  this.func=func;
@@ -75,7 +75,7 @@ H3DU._FrenetFrames = function(func){
    this.binormals[i+1]=H3DU.Math.quatTransform(newq,this.binormals[i+1]);
   }
  }
-}
+};
 /**
  * Not documented yet.
  * @param {*} tangent
@@ -232,7 +232,7 @@ this.thickness=(thickness===null || typeof thickness==="undefined") ? 0.125 : th
  this.sweptCurve=sweptCurve;
  this.func=func;
  this.tangentFinder=new H3DU._FrenetFrames(func);
-}
+};
 
 /**
 * Generates a point on the extruded tube from the given u and v coordinates.
