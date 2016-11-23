@@ -1,0 +1,408 @@
+<head>
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../glutil_min.js"></script>
+<script type="text/javascript" src="../extras/evaluators.js"></script>
+<script type="text/javascript" src="../extras/camera.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="rasterizer.js"></script>
+</head>
+<body>
+<div style="position:absolute;left:0;top:1em">
+This is an <a href="rasterizer.js">experimental renderer</a> using the HTML 2D Canvas
+instead of the WebGL context.  Only a limited set of features are
+currently supported.  Also see the <a href="surfaces.html">demo using WebGL</a>.<br>
+Powered by the <a href="http://peteroupc.github.io/html3dutil/">Public Domain HTML 3D Library</a>.
+<div id=links></div>
+</div>
+<div id="settings" style="position:absolute;left:0;top:8em"></div>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+/*
+Written by Peter O. in 2015.
+
+Any copyright is dedicated to the Public Domain.
+http://creativecommons.org/publicdomain/zero/1.0/
+If you like this, you should donate to Peter O.
+at: http://peteroupc.github.io/
+*/
+if(typeof Math.sign=="undefined"){
+ Math.sign=function(x){
+  return (x<0) ? -1 : (x==0 ? 0 : 1);
+ }
+};
+
+var Supertoroid=function(xRadius, yRadius, innerRadius, n, m){
+ this.xRadius=xRadius;
+ this.yRadius=yRadius;
+ this.innerRadius=innerRadius;
+ // exponent for the sines and cosines in U-axis
+ this.n=(n==null) ? 1 : n;
+ // exponent for the sines and cosines in V-axis
+ this.m=(m==null) ? 1 : m;
+ this.evaluate=function(u,v){
+  u=1-u
+  if(u==1)u=0;
+  u*=GLMath.PiTimes2;
+  if(v==1)v=0;
+  v*=GLMath.PiTimes2;
+  var cosu=Superellipsoid.cospow(u,this.n);
+  return [
+   Superellipsoid.cospow(v,this.m)*(cosu*this.innerRadius+this.xRadius),
+   Superellipsoid.sinpow(v,this.m)*(cosu*this.innerRadius+this.yRadius),
+   Superellipsoid.sinpow(u,this.n)*this.innerRadius
+  ];
+ }
+}
+
+var Superellipsoid=function(xRadius, yRadius, zRadius, n, m){
+ this.xRadius=xRadius;
+ this.yRadius=yRadius;
+ this.zRadius=zRadius;
+ // exponent for the sines and cosines in U-axis
+ this.n=(n==null) ? 1 : n;
+ // exponent for the sines and cosines in V-axis
+ this.m=(m==null) ? 1 : m;
+ this.evaluate=function(u,v){
+  u=1-u
+  if(u==1){
+   u=Math.PI/2;
+  } else {
+   u*=Math.PI;
+   u-=Math.PI/2;
+  }
+  if(v==1)v=0;
+  v*=GLMath.PiTimes2;
+  v-=Math.PI;
+  var cosu=Superellipsoid.cospow(u,this.n);
+  return [
+   Superellipsoid.cospow(v,this.m)*cosu*this.xRadius,
+   Superellipsoid.sinpow(v,this.m)*cosu*this.yRadius,
+   Superellipsoid.sinpow(u,this.n)*this.zRadius
+  ];
+ }
+}
+
+Superellipsoid.sinpow=function(x,n){
+  var r=Math.sin(x);
+  return Math.sign(r)*Math.pow(Math.abs(r),n);
+ }
+Superellipsoid.cospow=function(x,n){
+  var r=Math.cos(x);
+  return Math.sign(r)*Math.pow(Math.abs(r),n);
+ }
+
+/**
+* Parametric evaluator for a surface of revolution, which results by revolving
+* an X/Y curve around an axis.
+* @class
+* @alias SurfaceOfRevolution
+* @param {Function} curve Curve to rotate about the X-axis.
+* The curve function must contain a function
+* named "evaluate", which takes the following parameter:<ul>
+* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
+* </ul>
+* The evaluator function returns an array of at least 2 elements: the first
+* element is the X coordinate of the curve's position, and the second
+* element is the Y coordinate.
+* @param {number} minval Smallest U-coordinate.
+* @param {number} maxval Largest U-coordinate.
+*/
+var SurfaceOfRevolution=function(curve,minval,maxval){
+ this.curve=curve
+ this.minval=minval
+ this.maxval=maxval
+ this.evaluate=function(u,v){
+  v=1-v;
+  v*=GLMath.PiTimes2;
+  u=minval+(maxval-minval)*u;
+  var cosv = Math.cos(v);
+  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
+  var curvepos=this.curve.evaluate(u);
+  return [curvepos[0],curvepos[1]*cosv,curvepos[1]*sinv];
+ }
+}
+/**
+* Parametric evaluator for a surface of revolution whose curve is the graph of
+* a single-variable function.
+* @param {Function} func Function whose graph will be
+* rotated about the X-axis.  The function takes a number
+* as a single parameter and returns a number.
+* @param {number} minval Smallest parameter of the function.
+* @param {number} maxval Largest parameter of the function.
+* @return {SurfaceOfRevolution}
+*/
+SurfaceOfRevolution.fromFunction=function(func,minval,maxval){
+  return new SurfaceOfRevolution({
+    "evaluate":function(u){
+      return [u,func(u),0];
+    }},minval,maxval);
+}
+/**
+* Parametric evaluator for a torus, a special case of a surface of revolution.
+* @param {number} outerRadius Radius from the center to the innermost
+* part of the torus.
+* @param {number} innerRadius Radius from the inner edge to the innermost
+* part of the torus.
+* @param {Function|undefined} curve Object describing
+* a curve to serve as the cross section of the torus.
+* The curve need not be closed; in fact, certain special surfaces can result
+* by leaving the ends open.
+* The curve function must contain a function
+* named "evaluate", which takes the following parameter:<ul>
+* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
+* </ul>
+* The evaluator function returns an array of at least 2 elements: the first
+* element is the X coordinate of the curve's position, and the second
+* element is the Y coordinate.  If null or omitted, uses a circular cross section.
+* @return {SurfaceOfRevolution}
+*/
+SurfaceOfRevolution.torus=function(outerRadius,innerRadius,curve){
+  if(!curve)curve={
+    "evaluate":function(u){
+      u*=GLMath.PiTimes2;
+      return [Math.sin(u),Math.cos(v)]
+    }
+  }
+  return new SurfaceOfRevolution({
+    "evaluate":function(u){
+      var curvept=curve.evaluate(u)
+      var x=innerRadius*curvept[1];
+      var y=outerRadius+innerRadius*curvept[0];
+      return [x,y,0];
+    }},0,GLMath.PiTimes2);
+}
+
+var KleinBottle=function(){
+ this.evaluate=function(u,v){
+  var cospi;
+  u*=GLMath.PiTimes2;
+  v*=GLMath.PiTimes2;
+  var x, y, z;
+  var cosu = Math.cos(u);
+  var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
+  var cosv = Math.cos(v);
+  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
+  if(u<Math.PI){
+   x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * cosu * cosv;
+   z = -8 * sinu - 2 * (1 - cosu / 2) * sinu * cosv;
+  } else {
+   x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * Math.cos(v + Math.PI)
+   z = -8 * sinu
+  }
+  y = -2 * (1 - cosu / 2) * sinv;
+  return [x/6,z/6,y/6];
+ }
+}
+
+var MoebiusLikeStrip=function(maj, a, b){
+ this.maj=maj==null ? 1.25 : maj
+ this.a=a==null ? 0.125 : a
+ this.b=b==null ? 0.5 : b
+ this.evaluate=function(u,v){
+  u*=Math.PI;
+  if(v==1)v=0;
+  v*=GLMath.PiTimes2;
+  u=-u
+  var x, y, z;
+  var sinu=Math.sin(u);
+  var sinv=Math.sin(v);
+  var cosu=Math.cos(u);
+  var cosv=Math.cos(v);
+    x = this.a * cosv * cosu - this.b * sinv * sinu
+    z = this.a * cosv * sinu + this.b * sinv * cosu
+    y = (this.maj + x) * Math.sin(u*2)
+    x = (this.maj + x) * Math.cos(u*2)
+  return [x,z,y]
+ }
+}
+
+var MoebiusStrip=function(radius,width){
+ this.radius=radius==null ? 1 : radius;
+ this.width=width==null ? 0.5 : width;
+ this.evaluate=function(u,v){
+  u=-this.width+(this.width*2)*u;
+  v*=GLMath.PiTimes2;
+  var x, y, z;
+  var cosv = Math.cos(v==1 ? 0 : v);
+  var sinv = ((v==1 ? 0 : v)>=0 && (v==1 ? 0 : v)<6.283185307179586) ? ((v==1 ? 0 : v)<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v==1 ? 0 : v);
+  var sinv2=Math.sin(v/2);
+  var tmp=u*Math.cos(v/2)+this.radius;
+  x=cosv*tmp;
+  y=sinv*tmp;
+  z=sinv2*u;
+  return [x,y,z]
+ }
+}
+   function makeMesh(func,resolution){
+    // Default resolution is 50
+    if(resolution==null)resolution=50
+     // create a new mesh
+     var mesh=new Mesh();
+     // define a color gradient evaluator for
+     // demonstration purposes.  Instead of X, Y, and Z,
+     // generate a Red/Green/Blue color based on
+     // the same parameters U and V as the surface
+     // function for 3D points.
+     var colorGradient={
+      "evaluate":function(u,v){ return [1-u,v,u]; }
+     }
+     // generate the parametric surface.
+
+     var ev=new SurfaceEval()
+      .vertex(func)
+    // Specify the color gradient evaluator defined above
+      .color(colorGradient)
+    // Generate normals for the parametric surface,
+    // which is required for lighting to work correctly
+      .setAutoNormal(true)
+    // Evaluate the surface and generate a triangle
+    // mesh, using resolution+1 different U-coordinates ranging
+    // from 0 to 1, and resolution+1
+    // different V-coordinates ranging from 0 to 1
+    // Instead of Mesh.TRIANGLES, we could use
+    // Mesh.LINES to create a wireframe mesh,
+    // or Mesh.POINTS to create a point mesh.
+      .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
+    // Surface generated, return the mesh
+    return mesh;
+  }
+
+var shapeGroup=new ShapeGroup();
+var allsettings={}
+var link0=null;
+
+addLink("Superellipsoid",link0=function(){
+ pushSettings(function(allsettings){
+    return makeMesh(
+    new Superellipsoid(
+      allsettings["superel-x"],
+      allsettings["superel-y"],
+      allsettings["superel-z"],
+      allsettings["superel-n"],
+      allsettings["superel-m"]
+    ));
+ },{
+ "superel-x":["X radius",1.2,0.05,2.0,0.05],
+ "superel-y":["Y radius",1,0.05,2.0,0.05],
+ "superel-z":["Z radius",1,0.05,2.0,0.05],
+ "superel-n":["N",1,0.05,3.0,0.05],
+ "superel-m":["M",1,0.05,3.0,0.05]
+  });
+})
+
+addLink("Klein bottle",function(){
+ pushSettings(function(allsettings){
+   return makeMesh(
+   new KleinBottle());
+ },{
+ });
+})
+addLink("Surface of revolution for f(x) = sin x",function(){
+ pushSettings(function(allsettings){
+    return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
+  return Math.sin(x)
+ },-Math.PI,Math.PI))
+ },{
+ });
+})
+addLink("Surface of revolution for f(x) = x<sup>2</sup>",function(){
+ pushSettings(function(allsettings){
+ return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
+  return x*x
+ },-1,1))
+ },{
+ });
+})
+
+addLink("M&ouml;bius-like strip",function(){
+ pushSettings(function(allsettings){
+   return makeMesh(
+    new MoebiusLikeStrip(
+      allsettings["moeb-maj"],
+      allsettings["moeb-a"],
+      allsettings["moeb-b"]
+    ));
+ },{
+  "moeb-maj":["Size",1.25,0.05,3.0,0.05],
+  "moeb-a":["Height",0.125,0.05,2.0,0.05],
+  "moeb-b":["Thickness",0.05,0.05,1.0,0.05]
+  });
+});
+
+addLink("Supertoroid",function(){
+ pushSettings(function(allsettings){
+   return makeMesh(
+    new Supertoroid(
+      allsettings["superto-x"],
+      allsettings["superto-y"],
+      allsettings["superto-ir"],
+      allsettings["superto-n"],
+      allsettings["superto-m"]
+    ));
+ },{
+ "superto-x":["X radius",1,0.05,2.0,0.05],
+ "superto-y":["Y radius",1,0.05,2.0,0.05],
+ "superto-ir":["Inner radius",0.25,0.05,1.0,0.05],
+ "superto-n":["N",1,0.05,3.0,0.05],
+ "superto-m":["M",1,0.05,3.0,0.05]
+  });
+});
+
+addLink("M&ouml;bius strip",function(){
+ pushSettings(function(allsettings){
+   return makeMesh(
+    new MoebiusStrip(
+      allsettings["moeb2-r"],
+      allsettings["moeb2-w"]
+    ));
+ },{
+  "moeb2-r":["Radius",1,0.05,2,0.05],
+  "moeb2-w":["Width",0.25,0.05,2,0.05]
+  });
+});
+
+var bsplineSurf=null;
+addLink("B-Spline Surface",function(){
+ pushSettings(function(allsettings){
+  var bspline=[]
+  for(var i=0;i<=5;i++){
+   var c=[]
+   for(var j=0;j<=5;j++){
+    var cp=[
+     (j*5.0/5)-2.5,
+     (i*5.0/5)-2.5,
+     Math.random()*2.5-1.25
+    ]
+    c.push(cp)
+   }
+   bspline.push(c)
+  }
+  if(!bsplineSurf)
+   bsplineSurf=BSplineSurface.clamped(bspline,3,3)
+  return makeMesh(bsplineSurf);
+ },{
+  });
+})
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene=new Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white")
+  var camera=new Camera(scene,45,1,100);
+  camera.setDistance(5);
+  var pc=new PrimitiveCounter(scene)
+  link0();
+  scene.addShape(shapeGroup);
+  GLUtil.renderLoop(function(){
+   pc.update();
+   camera.update();
+   scene.render();
+  });
+//-->
+</script>
+</body>
