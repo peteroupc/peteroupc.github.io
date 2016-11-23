@@ -24,6 +24,31 @@ at: http://peteroupc.github.io/
 */
 /* global H3DU, H3DU.Mesh */
 
+/**
+* A geometric mesh in the form of buffer objects.
+* @deprecated This class is likely
+* to become a private class. Use the MeshBuffer class instead, which
+* is not coupled to WebGL contexts.
+* @class
+* @alias H3DU.BufferedMesh
+* @param {H3DU.Mesh} mesh A geometric mesh object.
+* @param {WebGLRenderingContext|object} context A WebGL context to
+*  create a buffer from, or an object, such as H3DU.Scene3D, that
+* implements a no-argument &lt;code>getContext&lt;/code> method
+* that returns a WebGL context. (Note that this constructor uses
+*  a WebGL context rather than a shader program because
+*  buffer objects are not specific to shader programs.)
+*/
+H3DU.BufferedMesh = function(mesh, context){
+ "use strict";
+ context=H3DU._toContext(context);
+ if(mesh instanceof H3DU.MeshBuffer){
+  this._bounds=mesh._bounds;
+ } else {
+  this._bounds=mesh.getBoundingBox();
+ }
+ this._initialize(mesh,context);
+}
 /** @private */
 H3DU.BufferedMesh.prototype._initialize=function(mesh, context){
  "use strict";
@@ -64,31 +89,6 @@ H3DU.BufferedMesh.prototype._getVaoExtension=function(context){
  } else {
   return context.getExtension("OES_vertex_array_object")
  }
-}
-/**
-* A geometric mesh in the form of buffer objects.
-* @deprecated This class is likely
-* to become a private class. Use the MeshBuffer class instead, which
-* is not coupled to WebGL contexts.
-* @class
-* @alias H3DU.BufferedMesh
-* @param {H3DU.Mesh} mesh A geometric mesh object.
-* @param {WebGLRenderingContext|object} context A WebGL context to
-*  create a buffer from, or an object, such as H3DU.Scene3D, that
-* implements a no-argument &lt;code>getContext&lt;/code> method
-* that returns a WebGL context. (Note that this constructor uses
-*  a WebGL context rather than a shader program because
-*  buffer objects are not specific to shader programs.)
-*/
-H3DU.BufferedMesh = function(mesh, context){
- "use strict";
- context=H3DU._toContext(context);
- if(mesh instanceof H3DU.MeshBuffer){
-  this._bounds=mesh._bounds;
- } else {
-  this._bounds=mesh.getBoundingBox();
- }
- this._initialize(mesh,context);
 }
 /** @private */
 H3DU.BufferedMesh.prototype._getBounds=function(){

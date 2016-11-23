@@ -306,7 +306,7 @@ H3DU.Batch3D.prototype._renderShape=function(shape, renderContext){
     var prog=null;
     var params={};
     var flags=0;
-    if(shape.material instanceof Material){
+    if(shape.material instanceof H3DU.Material){
      prog=shape.material.shader ?
        renderContext.scene._programs.getCustomProgram(
          shape.material.shader, renderContext.context) :
@@ -383,7 +383,7 @@ H3DU.Batch3D.forFilter=function(scene,fbo,shader){
 H3DU.Batch3D._getMaterialBinder=function(material){
  "use strict";
 if(material){
- if(material instanceof Material){
+ if(material instanceof H3DU.Material){
   return new H3DU._MaterialBinder(material);
  }
  }

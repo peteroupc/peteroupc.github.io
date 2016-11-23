@@ -639,7 +639,7 @@ var shader=H3DU.ShaderProgram.fragmentShaderHeader() +
 " vec4 radius; /* light radius */\n" +
 "};\n" +
 "uniform vec3 sceneAmbient;\n" +
-"uniform light lights["+Lights.MAX_LIGHTS+"];\n" +
+"uniform light lights["+H3DU.Lights.MAX_LIGHTS+"];\n" +
 "uniform vec3 ma;\n" +
 "uniform vec3 me;\n" +
 "#ifdef SPECULAR\n" +
@@ -710,15 +710,15 @@ var shader=H3DU.ShaderProgram.fragmentShaderHeader() +
 "#else\n" +
 "normal = normalize(transformedNormalVar);\n" +
 "#endif\n" +
-"vec4 lightPower["+Lights.MAX_LIGHTS+"];\n" +
-"float lightCosines["+Lights.MAX_LIGHTS+"];\n";
+"vec4 lightPower["+H3DU.Lights.MAX_LIGHTS+"];\n" +
+"float lightCosines["+H3DU.Lights.MAX_LIGHTS+"];\n";
 shader+=""+
 "if(baseColor.a ="+"= 0.0)discard;\n" +
 "vec3 materialAmbient=ma; /* ambient*/\n" +
 "vec3 lightedColor=sceneAmbient*materialAmbient; /* ambient*/\n" +
 " // diffuse\n"+
 " vec3 materialDiffuse=baseColor.rgb;\n";
-for(i=0;i&lt;Lights.MAX_LIGHTS;i++){
+for(i=0;i&lt;H3DU.Lights.MAX_LIGHTS;i++){
  shader+="lightPower["+i+"]=calcLightPower(lights["+i+"],viewPositionVar);\n";
  shader+=" /* Lambert diffusion term */\n";
  shader+="lightCosines["+i+"]=clamp(dot(normal,lightPower["+i+"].xyz),0.0,1.0);\n";
@@ -734,7 +734,7 @@ shader+="#ifdef SPECULAR\n" +
 "// specular reflection\n" +
 "if(materialSpecular.x!=0. || materialSpecular.y!=0. || materialSpecular.z!=0.){\n" +
 "vec3 viewDirection=normalize((-viewPositionVar).xyz);\n";
-for(i=0;i&lt;Lights.MAX_LIGHTS;i++){
+for(i=0;i&lt;H3DU.Lights.MAX_LIGHTS;i++){
 shader+="  spectmp = lightCosines["+i+"] > 0.0;\n" +
 "  if (spectmp) {\n" +
 "    /* Blinn-Phong specular term */\n"+
