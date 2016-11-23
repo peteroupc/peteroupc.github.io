@@ -32,32 +32,32 @@ at: http://peteroupc.github.io/
    -20,20
   );
   var mesh;
-  mesh=Meshes.createBox(7,7,7)
+  mesh=H3DU.Meshes.createBox(7,7,7)
     .transform(H3DU.Math.mat4rotated(20,1,1,0));
   sub.addShape(
     new H3DU.Shape(mesh).setColor("red").setPosition(-15,5,0))
-  mesh=Meshes.createSphere(4.5);
+  mesh=H3DU.Meshes.createSphere(4.5);
   sub.addShape(
     new H3DU.Shape(mesh).setColor("blue").setPosition(-5,5,0))
-  mesh=Meshes.createPointedStar(5,4.5,2);
+  mesh=H3DU.Meshes.createPointedStar(5,4.5,2);
   sub.addShape(
     new H3DU.Shape(mesh).setColor("lime").setPosition(5,5,0))
-  mesh=Meshes.createPartialDisk(1,4.5,32,1,20,150);
+  mesh=H3DU.Meshes.createPartialDisk(1,4.5,32,1,20,150);
   sub.addShape(
     new H3DU.Shape(mesh).setColor("darkorange").setPosition(15,5,0))
-  mesh=Meshes.createTorus(1,3)
+  mesh=H3DU.Meshes.createTorus(1,3)
    .transform(H3DU.Math.mat4rotated(60,0,1,1));
   sub.addShape(
     new H3DU.Shape(mesh).setColor("yellow").setPosition(-15,-5,0))
-  mesh=Meshes.createCylinder(4.5,4.5,9)
+  mesh=H3DU.Meshes.createCylinder(4.5,4.5,9)
    .transform(H3DU.Math.mat4translated(0,0,-4.5))
    .transform(H3DU.Math.mat4rotated(80,1,0,0));
   sub.addShape(
     new H3DU.Shape(mesh).setColor("brown").setPosition(-5,-5,0))
-  mesh=Meshes.createPlane(9,9);
+  mesh=H3DU.Meshes.createPlane(9,9);
   sub.addShape(
     new H3DU.Shape(mesh).setColor("darkgreen").setPosition(5,-5,0))
-  mesh=Meshes.createCylinder(4.5,0,9)
+  mesh=H3DU.Meshes.createCylinder(4.5,0,9)
    .transform(H3DU.Math.mat4translated(0,0,-4.5))
    .transform(H3DU.Math.mat4rotated(85,1,0,0));
   sub.addShape(

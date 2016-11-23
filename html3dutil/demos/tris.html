@@ -35,7 +35,7 @@ function TriangleParticles(scene,count,w,h){
  this.scene.addShape(this.group);
 }
 TriangleParticles.prototype.update=function(time){
- var frames=GLUtil.newFrames(this.timer,time);
+ var frames=H3DU.newFrames(this.timer,time);
  for(var i=0;i<this.tris.length;i++){
   this.tris[i].life-=frames;
   if(this.tris[i].life<=0){

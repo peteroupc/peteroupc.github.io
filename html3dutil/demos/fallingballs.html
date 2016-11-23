@@ -130,7 +130,7 @@ CubicBody.prototype.integrate=function(timeStep){
 
 function Particles(scene,count,width,height){
  this.shapes=new H3DU.ShapeGroup();
- var sphere=new H3DU.Shape(Meshes.createSphere(1,64,64));
+ var sphere=new H3DU.Shape(H3DU.Meshes.createSphere(1,64,64));
  this.bodies=[];
  this.bounds=[0,0,-5000,width,height,5000];
  for(var i=0;i<count;i++){
@@ -152,7 +152,7 @@ function Particles(scene,count,width,height){
  this.timeInfo={};
 }
 Particles.prototype.update=function(time){
- var timeStep=GLUtil.newFrames(this.timeInfo,time)/60;
+ var timeStep=H3DU.newFrames(this.timeInfo,time)/60;
  for(var i=0;i<this.bodies.length;i++){
   var body=this.bodies[i];
   body.integrate(timeStep);

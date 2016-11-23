@@ -114,16 +114,12 @@ function perspectiveFrustum(fov,aspect,near,far,cameraPos,lookingAt){
  return frustum;
 }
 
-Mesh.prototype.vertex3v=function(x){
- return this.vertex3(x[0],x[1],x[2]);
-}
-
 function meshAddLine(mesh,point1,point2,thickness){
  var vector=H3DU.Math.vec3sub(point1,point2);
  var dist=H3DU.Math.vec3length(vector);
  var normVector=H3DU.Math.vec3norm(vector);
  var midPoint=H3DU.Math.vec3lerp(point1,point2,0.5);
- var line=Meshes.createCapsule(thickness/2,dist,6,4);
+ var line=H3DU.Meshes.createCapsule(thickness/2,dist,6,4);
  var matrix=H3DU.Math.quatToMat4(H3DU.Math.quatFromVectors([0,0,1],normVector));
  matrix[12]=midPoint[0]
  matrix[13]=midPoint[1]
@@ -163,7 +159,7 @@ function frustumMesh(frustum){
   var mesh=frustumMesh(frustum);
   var spheres=new H3DU.ShapeGroup();
   var radius=0.3;
-  var sphere=new H3DU.Shape(Meshes.createSphere(radius));
+  var sphere=new H3DU.Shape(H3DU.Meshes.createSphere(radius));
   for(var i=-10; i<=10;i++){
    var shape=sphere.copy().setPosition(1,-1,i)
    if(!H3DU.Math.frustumHasSphere(frustum,1,-1,i,radius)){

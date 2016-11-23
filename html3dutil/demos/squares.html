@@ -223,7 +223,7 @@ function link1(){
  if(scene){
 
   currentFilter=makeGrayscale(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link1a(){
@@ -243,8 +243,8 @@ function link2a(){
 function link2(){
  if(scene){
 
-  currentFilter=ShaderProgram.getInvertEffect(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  currentFilter=H3DU.ShaderProgram.getInvertEffect(scene);
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -252,7 +252,7 @@ function link3(){
  if(scene){
 
   currentFilter=makeWave(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -261,28 +261,28 @@ function link4(){
 
   currentFilter=makeKernelMatrix(scene);
   setKernelMatrix(currentFilter,[1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9])
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link5(){
  if(scene){
 
   currentFilter=makePixelate(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link6(){
  if(scene){
 
   currentFilter=makeWaterpaint(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link7(){
  if(scene){
 
   currentFilter=makeMirror(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link8(){
@@ -290,7 +290,7 @@ function link8(){
 
   currentFilter=makeKernelMatrix(scene);
   setKernelMatrix(currentFilter,[0,1,0,1,-4,1,0,1,0])
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -298,7 +298,7 @@ function link9(){
  if(scene){
 
   currentFilter=makeRedTint(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -306,7 +306,7 @@ function link9a(){
  if(scene){
 
   currentFilter=makeBlueTint(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -314,14 +314,14 @@ function link10(){
  if(scene){
 
   currentFilter=makeWarp(scene);
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function linknone(){
  if(scene){
 
   currentFilter=null;
-  renders[1]=new RenderPass3D(Batch3D.forFilter(scene,fbo,currentFilter));
+  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 
@@ -395,7 +395,7 @@ function dodecahedron(radius){
 [1,2,3,19,18],[5,6,7,3,2]]
  var mesh=new H3DU.Mesh();
  for(var i=0;i<polygons.length;i++){
-  mesh.mode(Mesh.TRIANGLE_FAN);
+  mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
   for(var j=0;j<polygons[i].length;j++){
    var f1=polygons[i][j];
    var v1=vertices[f1*3];
@@ -410,18 +410,18 @@ function dodecahedron(radius){
 }
 
 function shiny(color){
- return new Material(color,color,"white",5);
+ return new H3DU.Material(color,color,"white",5);
 }
 
 function platonicGroup(scene){
   var size=4.5;
   var dims=size*2/Math.sqrt(3);
-  var mesh=Meshes.createBox(dims,dims,dims);
+  var mesh=H3DU.Meshes.createBox(dims,dims,dims);
   var group=new H3DU.ShapeGroup();
   group.addShape(
     new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
   // this configuration of a sphere results in an octahedron
-  mesh=Meshes.createSphere(size,4,2,true);
+  mesh=H3DU.Meshes.createSphere(size,4,2,true);
   group.addShape(
     new H3DU.Shape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
   mesh=icosahedron(size);
@@ -445,7 +445,7 @@ function blindsGroup(scene){
    for(var y=-100;y<100;y+=20){
     var xx=((x/100)+1)/2
     var yy=((y/100)+1)/2
-    var mesh=Meshes.createPlane(0.2,0.2);
+    var mesh=H3DU.Meshes.createPlane(0.2,0.2);
     group.addShape(new H3DU.Shape(mesh)
       .setColor(color ? [0,xx,yy] : [1,0.7,0.7])
       .setPosition(x/100+0.1,y/100+0.1,0));
@@ -459,13 +459,13 @@ function blindsGroup(scene){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new H3DU.Scene3D((document.getElementById("canvas")));
-  var fbo=new FrameBuffer(scene,scene.getWidth(),scene.getHeight());
+  var fbo=new H3DU.FrameBuffer(scene,scene.getWidth(),scene.getHeight());
   scene.setClearColor("white")
   var subScene=new H3DU.Batch3D()
   subScene.getLights().setDefaults();
   var renders=[
-    new RenderPass3D(subScene,{"frameBuffer":fbo}),
-    new RenderPass3D(Batch3D.forFilter(scene,fbo))
+    new H3DU.RenderPass3D(subScene,{"frameBuffer":fbo}),
+    new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo))
   ]
   var fc=new FrameCounterDiv(scene)
   var blinds=blindsGroup(subScene)
@@ -480,8 +480,8 @@ function blindsGroup(scene){
    fbo.resize(scene.getWidth(),scene.getHeight());
    if(currentFilter){
     currentFilter.setUniforms({
-      "coarseness":c[Math.floor(c.length*GLUtil.getTimePosition(timer,time,1500))],
-      "time":100*GLUtil.getTimePosition(timer,time,5000)
+      "coarseness":c[Math.floor(c.length*H3DU.getTimePosition(timer,time,1500))],
+      "time":100*H3DU.getTimePosition(timer,time,5000)
     })
    }
    for(var i=0;i<blinds.shapes.length;i++){

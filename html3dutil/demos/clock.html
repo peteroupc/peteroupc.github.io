@@ -35,20 +35,20 @@ function ClockShape(scene){
    .transform(H3DU.Math.mat4translated(0,0,-0.25))
    .transform(H3DU.Math.mat4rotated(90,1,0,0))
    .transform(frontTransform);
- var minutehand=Meshes.createCapsule(0.0075,0.7,6,4)
+ var minutehand=H3DU.Meshes.createCapsule(0.0075,0.7,6,4)
    .transform(H3DU.Math.mat4translated(0,0,-0.35))
    .transform(H3DU.Math.mat4rotated(90,1,0,0))
    .transform(frontTransform);
- var secondhand=Meshes.createCapsule(0.005,0.9,6,4)
+ var secondhand=H3DU.Meshes.createCapsule(0.005,0.9,6,4)
    .transform(H3DU.Math.mat4translated(0,0,-0.30))
    .transform(H3DU.Math.mat4rotated(90,1,0,0))
    .transform(frontTransform);
  var center=H3DU.Meshes.createSphere(0.03,4,4)
    .transform(frontTransform)
- var twelveoclock=Meshes.createSphere(0.03,4,4)
+ var twelveoclock=H3DU.Meshes.createSphere(0.03,4,4)
    .transform(H3DU.Math.mat4translated(0,0.85,0))
    .transform(frontTransform)
- var back=Meshes.createDisk(0,1,64).reverseWinding().reverseNormals()
+ var back=H3DU.Meshes.createDisk(0,1,64).reverseWinding().reverseNormals()
    .transform(H3DU.Math.mat4translated(0,0,-0.05));
  clock.addShape(new H3DU.Shape(border));
  clock.addShape(new H3DU.Shape(front));
@@ -83,7 +83,7 @@ function ClockShape(scene){
   }
  }
  this.setColor=function(color){
-  var rgb=GLUtil.toGLColor(color);
+  var rgb=H3DU.toGLColor(color);
   if((rgb[0]+rgb[1]+rgb[2])/3>=0.5){
    var halftoneColor=H3DU.Math.vec3lerp(rgb.slice(0,4),[0,0,0],0.5);
    this.shape.shapes[3].setColor("black")

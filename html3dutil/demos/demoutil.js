@@ -125,7 +125,7 @@ var settings=document.getElementById("settings-link");
   }
   shapeGroup.removeShape(shapeGroup.shapes[0]);
   shapeGroup.addShape(new H3DU.Shape(func(allsettings)).setMaterial(
-    new Material().setParams({
+    new H3DU.Material().setParams({
      "diffuse":"black",
      "specular":"white",
      "shininess":32

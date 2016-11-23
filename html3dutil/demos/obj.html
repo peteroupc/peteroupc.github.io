@@ -33,7 +33,7 @@ at: http://peteroupc.github.io/
   var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
   var sub=new H3DU.Batch3D();
-  var loader=new TextureLoader();
+  var loader=new H3DU.TextureLoader();
   var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5);
   var startfunc=null
   var shape=null
@@ -46,7 +46,7 @@ at: http://peteroupc.github.io/
   })
   })
   addLink("Spot",function(){
-  GLUtil.getPromiseResultsAll([
+  H3DU.getPromiseResultsAll([
     ObjData.loadObjFromUrl("spot_quadrangulated.obj"),
     loader.loadTexture("spot_texture.png")
   ]).then(function(results){

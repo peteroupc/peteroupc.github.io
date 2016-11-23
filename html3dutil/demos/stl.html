@@ -31,7 +31,7 @@ at: http://peteroupc.github.io/
   scene.setClearColor("white");
   var sub=new H3DU.Batch3D();
   var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(80);
-  GLUtil.loadStlFromUrl("holder.stl").then(function(mesh){
+  H3DU.loadStlFromUrl("holder.stl").then(function(mesh){
     sub.addShape(new H3DU.Shape(mesh).setColor("red"));
   })
   H3DU.renderLoop(function(){

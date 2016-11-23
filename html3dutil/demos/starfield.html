@@ -39,7 +39,7 @@ function setStarPos(star, range){
 function starField(scene, range){
   var group=new H3DU.ShapeGroup();
   // use a crude white sphere to represent a star
-  var star=new H3DU.Shape(Meshes.createSphere(range/1000,4,3)).setColor("white");
+  var star=new H3DU.Shape(H3DU.Meshes.createSphere(range/1000,4,3)).setColor("white");
   for(var i=0;i<200;i++){
    group.addShape(setStarPos(star.copy(),range))
   }
@@ -62,7 +62,7 @@ function moveStarField(group, range,frames){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new H3DU.Scene3D(document.getElementById("canvas"))
-   .cullFace(Scene3D.BACK);
+   .cullFace(H3DU.Scene3D.BACK);
   var sub=new H3DU.Batch3D();
   sub.getLights().setDefaults();
   var fc=new FrameCounterDiv(sub);
@@ -71,7 +71,7 @@ function moveStarField(group, range,frames){
   sub.addShape(group);
    H3DU.renderLoop(function(time){
     sub.perspectiveAspect(45,5,1000).setLookAt([0,0,500]);
-    moveStarField(group,1000,GLUtil.newFrames(timer,time))
+    moveStarField(group,1000,H3DU.newFrames(timer,time))
     fc.update()
     scene.render(sub);
    })

@@ -31,7 +31,7 @@ at: http://peteroupc.github.io/
    .setLookAt([0,0,40]);
   sub.getLights().setDefaults();
   // Create a box mesh 10 units in size
-  var mesh=Meshes.createBox(10,20,20);
+  var mesh=H3DU.Meshes.createBox(10,20,20);
   // Create a shape based on the mesh and give it a red color
   var shape=new H3DU.Shape(mesh).setColor("red");
   // Add the shape to the scene
@@ -46,8 +46,8 @@ at: http://peteroupc.github.io/
       0.6*((1.0-emissivePos))/0.5;
    // Update the shape's rotation
    var q=H3DU.Math.quatFromTaitBryan(
-     360*GLUtil.getTimePosition(timer,time,6000),
-     360*GLUtil.getTimePosition(timer,time,12000),
+     360*H3DU.getTimePosition(timer,time,6000),
+     360*H3DU.getTimePosition(timer,time,12000),
      0
    );
    shape.setQuaternion(q);

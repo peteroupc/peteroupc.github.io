@@ -20,7 +20,7 @@ only element is the identity matrix.
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre>
- @alias H3DU.H3DU.MatrixStack
+ @alias H3DU.MatrixStack
  @class
  */
 function H3DU.MatrixStack(){

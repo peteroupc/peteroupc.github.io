@@ -26,17 +26,17 @@ the texture loaded or an error.  Loading a texture often happens asynchronously,
 follows the <code>loadAndMapTexture</code> call (and its corresponding <code>then</code> calls) will generally run without
 waiting for the texture to finish loading.</p>
 <p>In the sample code below, the variable <code>textureURL</code> is the URL of the texture to load.</p>
-<pre class="prettyprint source"><code>  var loader=new TextureLoader();
+<pre class="prettyprint source"><code>  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexture(textureURL, scene).then(function(tex){
     // texture is loaded, the Texture object is in the &quot;tex&quot; parameter
     // Now create a sphere
-    var mesh=Meshes.createSphere(1);
+    var mesh=H3DU.Meshes.createSphere(1);
     // Make a shape using the texture
     var shape=new Shape(mesh).setTexture(texture);
   }, function(error){
     // an error occurred
   });</code></pre><h3>Loading multiple textures <a id=Loading_multiple_textures></a></h3><p>The variables <code>textureURL1</code> and <code>textureURL2</code> are URL textures.</p>
-<pre class="prettyprint source"><code>  var loader=new TextureLoader();
+<pre class="prettyprint source"><code>  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexturesAll([
    textureURL1,
    textureURL2

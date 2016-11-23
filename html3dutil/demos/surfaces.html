@@ -300,7 +300,7 @@ addLink("B-Spline Surface",function(){
    bspline.push(c)
   }
   if(!bsplineSurf)
-   bsplineSurf=BSplineSurface.clamped(bspline,3,3)
+   bsplineSurf=H3DU.BSplineSurface.clamped(bspline,3,3)
   return makeMesh(bsplineSurf);
  },{
   });

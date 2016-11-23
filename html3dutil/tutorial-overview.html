@@ -117,7 +117,7 @@ batch.addShape(shape);</code></pre><p>The appearance of a 3D shape is known in t
 <li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.copy()</code></dfn>
 <br>Creates a copy of this shape. Can be more efficient than calling <code>new H3DU.Shape</code> if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</li>
 </ul>
-<h3>The Render Loop <a id=The_Render_Loop></a></h3><p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many &quot;frames&quot; a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the <code>H3DU.Scene3D.render()</code> method, passing a batch of shapes to render. Render loops are created using the <code>H3DU.GLUtil.renderLoop()</code> method. Here is an example of a render loop.</p>
+<h3>The Render Loop <a id=The_Render_Loop></a></h3><p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many &quot;frames&quot; a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the <code>H3DU.Scene3D.render()</code> method, passing a batch of shapes to render. Render loops are created using the <code>H3DU.renderLoop()</code> method. Here is an example of a render loop.</p>
 <p>   // Set up the render loop
    H3DU.renderLoop(function(time){
     // This will be called once each frame.
@@ -247,8 +247,8 @@ sub.getLights().setDefaults();
  H3DU.renderLoop(function(time){
   // Update the shape's rotation
   var q=H3DU.Math.quatFromTaitBryan(
-    360*GLUtil.getTimePosition(timer,time,6000),
-    360*GLUtil.getTimePosition(timer,time,12000),
+    360*H3DU.getTimePosition(timer,time,6000),
+    360*H3DU.getTimePosition(timer,time,12000),
     0
   );
   shape.setQuaternion(q);

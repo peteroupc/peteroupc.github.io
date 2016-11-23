@@ -118,7 +118,7 @@ array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; 
 you can specify the mesh's shape by calling methods that give each vertex's position and parameters:</p>
 <p>(1) Call the <code>mode()</code> method and choose a primitive mode, such as <code>Mesh.TRIANGLES</code>
 or <code>Mesh.QUAD_STRIP</code>:</p>
-<pre class="prettyprint source"><code>mesh.mode(Mesh.TRIANGLES);</code></pre><p>The mesh will build up the shape from the vertices you give it depending on the mesh's
+<pre class="prettyprint source"><code>mesh.mode(H3DU.Mesh.TRIANGLES);</code></pre><p>The mesh will build up the shape from the vertices you give it depending on the mesh's
 primitive mode.  For example, <code>QUAD_STRIP</code> defines a strip of connecting quadrilaterals,
 and <code>TRIANGLES</code> defines a set of triangles that are not necessarily connected:</p>
 <ul>
@@ -153,14 +153,14 @@ were given:</p>
 <pre class="prettyprint source"><code>mesh.vertex3(x, y, z);</code></pre><p>You can also call the <code>mode()</code> method any time to change the primitive mode, even to
 the same mode.  What this does is reset the state of the primitive so that future vertices
 won't depend on previous vertices.  For example, if you define a <code>TRIANGLE_FAN</code>, and
-you call <code>mesh.mode(Mesh.TRIANGLE_FAN)</code>, the newly defined <code>TRIANGLE_FAN</code> will be
+you call <code>mesh.mode(H3DU.Mesh.TRIANGLE_FAN)</code>, the newly defined <code>TRIANGLE_FAN</code> will be
 &quot;disconnected&quot; from the previous one as far as the mesh object is concerned.</p>
 <h3>Transforming the Mesh <a id=Transforming_the_Mesh></a></h3><p>Once you've created the mesh, you can use the <code>transform()</code> method to transform
 all the vertices in the mesh with a <a href="tutorial-glmath.html">4x4 matrix</a>.  The
 <a href="https://peteroupc.github.io/html3dutil/demos/shapes.html">shapes.html</a> demo uses
 this method to adjust some of the meshes to make them look better on the screen.
 Example:</p>
-<pre class="prettyprint source"><code>var matrix = GLMath.mat4scaled(2,2,2);
+<pre class="prettyprint source"><code>var matrix = H3DU.Math.mat4scaled(2,2,2);
 // Use the transform to double the mesh's size
 mesh = mesh.transform(matrix);</code></pre><h3>Normals <a id=Normals></a></h3><p>For lighting and shading to work correctly, you must specify normals for all the
 vertices in the mesh.</p>
@@ -204,10 +204,10 @@ shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
 // set material parameters: ambient, diffuse,
 // specular, shininess (NOTE: if the mesh defines its own colors they
 // will override ambient and diffuse reflection given below)
-shape.setMaterial(new Material(&quot;blue&quot;,&quot;blue&quot;,&quot;white&quot;,30));
+shape.setMaterial(new H3DU.Material(&quot;blue&quot;,&quot;blue&quot;,&quot;white&quot;,30));
 // set material parameters: ambient, diffuse,
 // specular, shininess, emission
-shape.setMaterial(new Material(&quot;lime&quot;,&quot;lime&quot;,&quot;white&quot;,30,[0.2,0.2,0.2]));
+shape.setMaterial(new H3DU.Material(&quot;lime&quot;,&quot;lime&quot;,&quot;white&quot;,30,[0.2,0.2,0.2]));
 // set a texture; this requires the mesh to have texture
 // coordinates assigned to each vertex
 shape.setMaterial(new TextureMaterial(&quot;texture.png&quot;));</code></pre><p>Examples for setting position:</p>
@@ -218,9 +218,9 @@ shape.setPosition(2,4,5);
 shape.setPosition([2,4,5]);
 // rotate the shape 40 units about X axis, 20 units about Y axis,
 // and 50 units about Z axis
-shape.setQuaternion(GLMath.quatFromTaitBryan(40,20,50));
+shape.setQuaternion(H3DU.Math.quatFromTaitBryan(40,20,50));
 // rotate the shape 20 units about Y axis
-shape.setQuaternion(GLMath.quatFromAxisAngle(20,0,1,0));
+shape.setQuaternion(H3DU.Math.quatFromAxisAngle(20,0,1,0));
 // scale the shape by 2x in all axes
 shape.setScale(2,2,2);
 // same, but passing an array

@@ -40,7 +40,7 @@ at: http://peteroupc.github.io/
      }
      // generate the parametric surface.
 
-     var ev=new SurfaceEval()
+     var ev=new H3DU.SurfaceEval()
       .vertex(func)
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
@@ -54,7 +54,7 @@ at: http://peteroupc.github.io/
     // Instead of Mesh.TRIANGLES, we could use
     // Mesh.LINES to create a wireframe mesh,
     // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,Mesh.TRIANGLES,resolution,resolution);
+      .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,resolution);
     // Surface generated, return the mesh
     return mesh;
   }

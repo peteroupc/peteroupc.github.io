@@ -43,7 +43,7 @@ function getPoints(curves, numPoints, offset){
 function pathFloor(path, z, flatness){
  if(z==null)z=0
  var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(Mesh.TRIANGLES)
+ var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
    .normal3(0,0,1);
  for(var i=0;i<tris.length;i++){
   var tri=tris[i]
@@ -83,7 +83,7 @@ var points=path.getPoints(50,0.2)
     .setDirectionalLight(0,[0,-3,1.2],[1,1,1])
     .setDirectionalLight(1,[0,3,1.2],[.6,.6,.6]);
    var mesh=null
-   var sphere=new H3DU.Shape(Meshes.createSphere(0.2,16,8)).setColor("blue")
+   var sphere=new H3DU.Shape(H3DU.Meshes.createSphere(0.2,16,8)).setColor("blue")
    for(var i=0;i<50;i++){
     group.addShape(sphere.copy())
    }
@@ -93,7 +93,7 @@ var points=path.getPoints(50,0.2)
   var anim=null
   var timer={}
   H3DU.renderLoop(function(time){
-   var t=GLUtil.getTimePosition(timer,time,1000)
+   var t=H3DU.getTimePosition(timer,time,1000)
    pointMarch(group,curves,t)
    fc.update()
    scene.render(sub);

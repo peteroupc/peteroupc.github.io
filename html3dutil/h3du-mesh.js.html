@@ -276,7 +276,8 @@ H3DU.Mesh.prototype.merge=function(other){
   if(!H3DU.Mesh._isCompatibleMode(this.currentMode,other.currentMode)){
     throw new Error("Meshes have incompatible types")
   }
-  // TODO: Won't work if meshes have different attributes
+  // TODO: Won't work if meshes have different attributes;
+  // this causes issues in the compositemesh and pathshapes demos
   var oldVertexLength=this.vertexCount();
    var oldIndexLength=this.indices.length;
    this.vertices.push.apply(this.vertices,other.vertices);

@@ -41,27 +41,27 @@ at: http://peteroupc.github.io/
 function createSampleShape(index){
  switch(index){
   case 0:
-   return Meshes.createSphere(1);
+   return H3DU.Meshes.createSphere(1);
   case 1:
-   return Meshes.createCylinder(0.5,0.5,1)
+   return H3DU.Meshes.createCylinder(0.5,0.5,1)
   case 2:
-   return Meshes.createClosedCylinder(0.5,0.5,1)
+   return H3DU.Meshes.createClosedCylinder(0.5,0.5,1)
   case 3:
-   return Meshes.createTorus(0.25,1,16,64)
+   return H3DU.Meshes.createTorus(0.25,1,16,64)
   case 4:
-   return Meshes.createCapsule(1,1);
+   return H3DU.Meshes.createCapsule(1,1);
   case 5:
-   return Meshes.createBox(1,1,1);
+   return H3DU.Meshes.createBox(1,1,1);
   case 6:
-   return Meshes.createCylinder(1,0,2)
+   return H3DU.Meshes.createCylinder(1,0,2)
   case 7:
-   return Meshes.createDisk(0.4,1);
+   return H3DU.Meshes.createDisk(0.4,1);
   case 8:
-   return Meshes.createPartialDisk(0.2,1,32,1,20,150);
+   return H3DU.Meshes.createPartialDisk(0.2,1,32,1,20,150);
   case 9:
-   return Meshes.createPointedStar(5,1.0,0.5);
+   return H3DU.Meshes.createPointedStar(5,1.0,0.5);
   case 10:
-   return Meshes.createPointedStar(10,1.0,0.5);
+   return H3DU.Meshes.createPointedStar(10,1.0,0.5);
   default:
    return new H3DU.Mesh();
  }
@@ -81,7 +81,7 @@ function sampleShape(num){
   var xyz=new H3DU.ShapeGroup();
   var pc=new FrameCounterDiv(sub)
   var shape=null;
-  var axisline=new H3DU.Shape(Meshes.createCapsule(0.005,10,6,4));
+  var axisline=new H3DU.Shape(H3DU.Meshes.createCapsule(0.005,10,6,4));
   var zaxis=axisline.copy().setColor("blue")
   var yaxis=axisline.copy().setColor("green");
   yaxis.getTransform().setOrientation(90,1,0,0);

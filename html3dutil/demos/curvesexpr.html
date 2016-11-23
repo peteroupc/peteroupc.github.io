@@ -29,7 +29,7 @@ CurveEval will only generate<br>
 the actual lines of the curve,<br>
 not the extruded surface).<br>
 Example:<br>
-<code>var surface = new CurveEval()<br>
+<code>var surface = new H3DU.CurveEval()<br>
 .vector({"evaluate":...});</code>.</small><br>
 <textarea id=sourceCode rows=5 cols=25>
 </textarea>
@@ -154,7 +154,7 @@ function CustomCurve(x,y,z,minu,maxu){
   " "+ye.toJSString()+","+
   " "+ze.toJSString()+"];\n"
  this.getCode=function(){
-  return "var evaluator=new CurveEval().vertex({\n"+
+  return "var evaluator=new H3DU.CurveEval().vertex({\n"+
    "\"evaluate\":function(u){\n"+code+"}})\n"
  }
  this.evaluate=null
@@ -210,7 +210,7 @@ function link0(){
   // to Scene3D.
   var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white")
-  scene.cullFace(Scene3D.FRONT)
+  scene.cullFace(H3DU.Scene3D.FRONT)
   var sub=new H3DU.Batch3D()
   var camera=new Camera(sub,45,1,100, scene.getCanvas());
   camera.setDistance(5);

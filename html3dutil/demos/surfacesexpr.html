@@ -24,7 +24,7 @@ Source code for the parametric<br>
 surface object.  Use this object as<br>
 a parameter in the SurfaceEval<br>
 class, example:<br>
-<code>var surface = new SurfaceEval()<br>
+<code>var surface = new H3DU.SurfaceEval()<br>
 .vector({"evaluate":...});</code>.<br>
 <textarea id=sourceCode rows=5 cols=25>
 </textarea>
@@ -161,7 +161,7 @@ function CustomSurface(x,y,z,minu,maxu,minv,maxv){
   " "+normalExpr[1].toJSString()+","+
   " "+normalExpr[2].toJSString()+"];\n"
  this.getCode=function(){
-  return "var evaluator=new SurfaceEval().vertex({\n"+
+  return "var evaluator=new H3DU.SurfaceEval().vertex({\n"+
     "\"evaluate\":function(u){\n"+code+"}})\n"+
     ".normal({\n"+
     "\"evaluate\":function(u){\n"+normalCode+"}})\n"

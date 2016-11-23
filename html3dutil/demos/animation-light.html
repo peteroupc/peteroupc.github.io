@@ -35,7 +35,7 @@ at: http://peteroupc.github.io/
   // Outer radius of each washer
   var shapesizes=[1,0.9,0.8,0.7,0.6,0.7,0.8]
   var fc=new FrameCounterDiv(sub)
-  var loader=new TextureLoader();
+  var loader=new H3DU.TextureLoader();
   // load the floor texture
   loader.loadAndMapTexturesAll([
     "461223191.jpg"
@@ -54,7 +54,7 @@ at: http://peteroupc.github.io/
   var timer={}
   H3DU.renderLoop(function(time){
    sub.perspectiveAspect(45,1,1000)
-   var angle=360*GLUtil.getTimePosition(timer,time,6000)
+   var angle=360*H3DU.getTimePosition(timer,time,6000)
    sub.setLookAt(rotateVec([0,-3,1.2],angle),[0,0,0],[0,0,1])
    fc.update();
    if(!anim){

@@ -64,10 +64,10 @@ function makeTubeFromPath(path,flatness,thickness,pathSection){
  var curves=path.getCurves(flatness)
  var resolution=Math.ceil((curves.getLength()/flatness)/10)
  var curveSection=(pathSection) ? pathSection.getCurves(flatness) : null
- new SurfaceEval()
+ new H3DU.SurfaceEval()
     .vertex(new CurveTube(curves,thickness,curveSection))
     .setAutoNormal(true)
-    .evalSurface(mesh,Mesh.TRIANGLES,resolution,
+    .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,
       Math.ceil(2*thickness/flatness));
   return mesh
 }
@@ -75,7 +75,7 @@ function makeTubeFromPath(path,flatness,thickness,pathSection){
 function pathFloor(path, z, flatness){
  if(z==null)z=0
  var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(Mesh.TRIANGLES)
+ var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
    .normal3(0,0,1);
  for(var i=0;i<tris.length;i++){
   var tri=tris[i]
@@ -87,7 +87,7 @@ function pathFloor(path, z, flatness){
 }
 function extrudePath(path, zStart, zEnd, flatness){
  var lines=path.getLines(flatness)
- var mesh=new H3DU.Mesh().mode(Mesh.TRIANGLES)
+ var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
  var z1=Math.min(zStart,zEnd)
  var z2=Math.max(zStart,zEnd)
  for(var i=0;i<lines.length;i++){
@@ -135,7 +135,7 @@ function sampleShape(num){
   var xyz=new H3DU.ShapeGroup();
   var pc=new FrameCounterDiv(sub)
   var shape=null;
-  var axisline=new H3DU.Shape(Meshes.createCapsule(0.005,10,6,4));
+  var axisline=new H3DU.Shape(H3DU.Meshes.createCapsule(0.005,10,6,4));
   var zaxis=axisline.copy().setColor("blue")
   var yaxis=axisline.copy().setColor("green");
   yaxis.getTransform().setOrientation(90,1,0,0);

@@ -90,7 +90,7 @@ function dodecahedron(radius){
 [1,2,3,19,18],[5,6,7,3,2]]
  var mesh=new H3DU.Mesh();
  for(var i=0;i<polygons.length;i++){
-  mesh.mode(Mesh.TRIANGLE_FAN);
+  mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
   for(var j=0;j<polygons[i].length;j++){
    var f1=polygons[i][j];
    var v1=vertices[f1*3];
@@ -105,7 +105,7 @@ function dodecahedron(radius){
 }
 
 function shiny(color){
- return new Material(color,color,"white",5);
+ return new H3DU.Material(color,color,"white",5);
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
@@ -140,8 +140,8 @@ function shiny(color){
     sub.shapes[i].setQuaternion(
       H3DU.Math.quatFromTaitBryan(rotation));
    }
-   rotation[0]=360*GLUtil.getTimePosition(timer,time,6000);
-   rotation[1]=360*GLUtil.getTimePosition(timer,time,12000);
+   rotation[0]=360*H3DU.getTimePosition(timer,time,6000);
+   rotation[1]=360*H3DU.getTimePosition(timer,time,12000);
    scene.render(sub);
   });
 //-->

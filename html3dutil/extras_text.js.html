@@ -294,7 +294,7 @@ H3DU.TextFont.prototype.textShape=function(str, params){
   var mfp=meshesForPage[i];
   if(!mfp)continue;
   var sh=new H3DU.Shape(mfp);
-  var material=new Material(color,color).setParams({
+  var material=new H3DU.Material(color,color).setParams({
    "texture":textures ? textures[i] : this.pages[i],
    "basic":true,
    "shader": hasColor ? H3DU.TextFont._textShaderInfo : null
