@@ -67,6 +67,84 @@ class.  However, this constructor will not load that image yet.</dd>
 
     </div>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.Texture#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line215">line 215</a>
+     </i></small></p>
+
+<div class="description">
+    Disposes resources used by this texture.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="getName"><span style="font-weight:lighter"></span>H3DU.Texture#getName<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line236">line 236</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the name of this texture.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setClamp"><span style="font-weight:lighter"></span>H3DU.Texture#setClamp<span class="signature">(clamp)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Texture.html">H3DU.Texture</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line38">line 38</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the wrapping behavior of texture coordinates that
+fall out of range when using this texture.  This setting
+will only have an effect on textures whose width and height
+are both powers of two.  For other textures, this setting
+is ignored and out-of-range texture coordinates are
+always clamped.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>clamp</code>
+
+                (
+<span class="param-type">Boolean</span>
+
+)
+
+           </dt><dd>
+           If true, the texture's texture
+coordinates will be clamped to the range [0, 1].  If false,
+the fractional parts of the texture coordinates'
+be used as the coordinates (causing wraparound).
+The default is false.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>)
+
+</div>
+
 </article>
 
 </section>

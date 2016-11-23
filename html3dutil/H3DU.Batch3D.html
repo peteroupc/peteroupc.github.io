@@ -38,6 +38,526 @@
 
     </div>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="addShape"><span style="font-weight:lighter"></span>H3DU.Batch3D#addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line247">line 247</a>
+     </i></small></p>
+
+<div class="description">
+    Adds a 3D shape to this batch of shapes.  Its reference, not a copy,
+will be stored in the 3D scene's list of shapes.
+Its parent will be set to no parent.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>shape</code>
+
+                (
+<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>
+|
+
+<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>
+
+)
+
+           </dt><dd>
+           A 3D shape.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getLights"><span style="font-weight:lighter"></span>H3DU.Batch3D#getLights<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Lights.html">H3DU.Lights</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line235">line 235</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Lights.html">H3DU.Lights</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="ortho2DAspect"><span style="font-weight:lighter"></span>H3DU.Batch3D#ortho2DAspect<span class="signature">(l, r, b, t)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line192">line 192</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>l</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Leftmost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>r</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Rightmost coordinate of the view rectangle.
+(If l is greater than r, X-coordinates increase rightward; otherwise,
+they increase leftward.)</dd>
+
+        <dt>
+
+                <code>b</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Bottommost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>t</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Topmost coordinate of the view rectangle.
+(If b is greater than t, X-coordinates increase downward; otherwise,
+they increase upward.)</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="orthoAspect"><span style="font-weight:lighter"></span>H3DU.Batch3D#orthoAspect<span class="signature">(l, r, b, t, e, f)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line175">line 175</a>
+     </i></small></p>
+
+<div class="description">
+    Uses an orthographic projection for this batch.  It will be adjusted
+to the scene's aspect ratio each time this batch is rendered.<p>
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>l</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Leftmost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>r</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Rightmost coordinate of the view rectangle.
+(If l is greater than r, X-coordinates increase rightward; otherwise,
+they increase leftward.)</dd>
+
+        <dt>
+
+                <code>b</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Bottommost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>t</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Topmost coordinate of the view rectangle.
+(If b is greater than t, X-coordinates increase downward; otherwise,
+they increase upward.)</dd>
+
+        <dt>
+
+                <code>e</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.</dd>
+
+        <dt>
+
+                <code>f</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="perspectiveAspect"><span style="font-weight:lighter"></span>H3DU.Batch3D#perspectiveAspect<span class="signature">(fov, near, far)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line144">line 144</a>
+     </i></small></p>
+
+<div class="description">
+    Uses a perspective projection for this batch.  It will be adjusted
+to the scene's aspect ratio each time this batch is rendered.<p>
+For considerations when choosing the "near" and "far" parameters,
+see glmath.H3DU.Math.mat4perspective.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>fov</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</dd>
+
+        <dt>
+
+                <code>near</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen.</dd>
+
+        <dt>
+
+                <code>far</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>H3DU.Batch3D#removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line284">line 284</a>
+     </i></small></p>
+
+<div class="description">
+    Removes all instances of a 3D shape from this batch of shapes.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>shape</code>
+
+                (
+<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>
+|
+
+<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>
+
+)
+
+           </dt><dd>
+           The 3D shape to remove.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="render"><span style="font-weight:lighter"></span>H3DU.Batch3D#render<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line347">line 347</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setLookAt"><span style="font-weight:lighter"></span>H3DU.Batch3D#setLookAt<span class="signature">(eye, center, up)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line156">line 156</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>eye</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>center</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>up</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setProjectionMatrix"><span style="font-weight:lighter"></span>H3DU.Batch3D#setProjectionMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line126">line 126</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>mat</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setViewMatrix"><span style="font-weight:lighter"></span>H3DU.Batch3D#setViewMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line201">line 201</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the current view matrix for this batch of shapes.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>mat</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
+
+</div>
+
 </article>
 
 </section>

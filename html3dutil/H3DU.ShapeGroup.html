@@ -60,6 +60,509 @@ or replace shapes directly.
 
 </dl>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="addShape"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line25">line 25</a>
+     </i></small></p>
+
+<div class="description">
+    Adds a 3D shape to this shape group.  Its reference, not a copy,
+will be stored in the list of shapes.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>shape</code>
+
+                (
+<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>
+|
+
+<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>
+
+)
+
+           </dt><dd>
+           A 3D shape.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#getBounds<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line154">line 154</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line59">line 59</a>
+     </i></small></p>
+
+<div class="description">
+    Gets a copy of the transformation needed to transform
+this shape group's coordinates to world coordinates.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A 4x4 matrix.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Transform.html">H3DU.Transform</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getVisible"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#getVisible<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line43">line 43</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line141">line 141</a>
+     </i></small></p>
+
+<div class="description">
+    Removes all instances of a 3D shape from this shape group
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>shape</code>
+
+                (
+<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>
+|
+
+<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>
+
+)
+
+           </dt><dd>
+           The 3D shape to remove.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setMaterial"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setMaterial<span class="signature">(material)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line94">line 94</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the material used by all shapes in this shape group.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>material</code>
+
+                (
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setMaterialParams"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setMaterialParams<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line129">line 129</a>
+     </i></small></p>
+
+<div class="description">
+    Sets material parameters for all shapes in this shape group.
+@ {Object} params An object described in H3DU.Material#setParams.
+@ {H3DU.Shape} This object.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line221">line 221</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the relative position of the shapes in this group
+from their original position.
+See H3DU.Transform#setPosition
+This method will modify this shape group's transform
+rather than the transform for each shape in the group.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>x</code>
+
+                (
+<span class="param-type">number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           X coordinate
+or a 3-element position array, as specified in H3DU.Transform#setScale.</dd>
+
+        <dt>
+
+                <code>y</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Y-coordinate.</dd>
+
+        <dt>
+
+                <code>z</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Z-coordinate.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setQuaternion"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line234">line 234</a>
+     </i></small></p>
+
+<div class="description">
+    Sets this shape group's orientation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
+See H3DU.Transform#setQuaternion.
+This method will modify this shape group's transform
+rather than the transform for each shape in the group.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>quat</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A four-element array describing the rotation.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setScale"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line250">line 250</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the scale of this shape group relative to its original
+size. See H3DU.Transform#setScale.
+This method will modify this shape group's transform
+rather than the transform for each shape in the group.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>x</code>
+
+                (
+<span class="param-type">number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           Scaling factor for this object's width,
+or a 3-element scaling array, as specified in H3DU.Transform#setScale.</dd>
+
+        <dt>
+
+                <code>y</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Scaling factor for this object's height.</dd>
+
+        <dt>
+
+                <code>z</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Scaling factor for this object's depth.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setShader"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setShader<span class="signature">(material)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line117">line 117</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the shader program used by all shapes in this shape group.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>material</code>
+
+                (
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setTexture"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setTexture<span class="signature">(material)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line106">line 106</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the texture used by all shapes in this shape group.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>material</code>
+
+                (
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setTransform"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setTransform<span class="signature">(transform)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line85">line 85</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the transform used by this shape group.  Child
+shapes can set their own transforms, in which case the
+rendering process will multiply this shape group's transform
+with the child shape's transform as it renders the child shape.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>transform</code>
+
+                (
+<span class="param-type"><a href="H3DU.Transform.html">H3DU.Transform</a></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setVisible"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setVisible<span class="signature">(value)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line35">line 35</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>value</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
 </article>
 
 </section>

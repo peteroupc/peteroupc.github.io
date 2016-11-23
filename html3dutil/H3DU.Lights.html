@@ -72,6 +72,381 @@ Ambient lights simulate this phenomenon.</small>
 
 </dl>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="getLight"><span style="font-weight:lighter"></span>H3DU.Lights#getLight<span class="signature">(index)</span><span style="font-weight:lighter"> &rarr; {LightSource}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-lights.js.html">h3du-lights.js</a>, <a href="h3du-lights.js.html#line73">line 73</a>
+     </i></small></p>
+
+<div class="description">
+    Gets information about the light source at the given index.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>index</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Zero-based index of the light to set.  The first
+light has index 0, the second has index 1, and so on.
+If the light doesn't exist at that index, it will be created.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The corresponding light source object.
+
+     (Type:
+<span class="param-type">LightSource</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setAmbient"><span style="font-weight:lighter"></span>H3DU.Lights#setAmbient<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-lights.js.html">h3du-lights.js</a>, <a href="h3du-lights.js.html#line160">line 160</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the color of the scene's ambient light.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>r</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+|
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">string</span>
+
+)
+
+           </dt><dd>
+           Array of three or
+four color components; or the red color component (0-1); or a string
+specifying an <a href="H3DU.html#.toGLColor">HTML or CSS color</a>.</dd>
+
+        <dt>
+
+                <code>g</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
+
+        <dt>
+
+                <code>b</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
+
+        <dt>
+
+                <code>a</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Alpha color component (0-1).
+Currently not used.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setDefaults"><span style="font-weight:lighter"></span>H3DU.Lights#setDefaults<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-lights.js.html">h3du-lights.js</a>, <a href="h3du-lights.js.html#line31">line 31</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="setDirectionalLight"><span style="font-weight:lighter"></span>H3DU.Lights#setDirectionalLight<span class="signature">(index, direction, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Lights.html">H3DU.Lights</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-lights.js.html">h3du-lights.js</a>, <a href="h3du-lights.js.html#line117">line 117</a>
+     </i></small></p>
+
+<div class="description">
+    Sets a directional light.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>index</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Zero-based index of the light to set.  The first
+light has index 0, the second has index 1, and so on.
+If the light doesn't exist at that index, it will be created.</dd>
+
+        <dt>
+
+                <code>direction</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A 3-element vector giving the direction of the light, along the X, Y, and Z
+axes, respectively.</dd>
+
+        <dt>
+
+                <code>diffuse</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           A <a href="H3DU.html#.toGLColor">color vector or string</a>  giving the diffuse color of the light.
+If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
+
+        <dt>
+
+                <code>specular</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           A <a href="H3DU.html#.toGLColor">color vector or string</a>  giving the color of specular highlights caused by
+the light.
+If null or omitted, the specular highlight color will
+remain unchanged.  The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Lights.html">H3DU.Lights</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>H3DU.Lights#setParams<span class="signature">(index, params)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Lights.html">H3DU.Lights</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-lights.js.html">h3du-lights.js</a>, <a href="h3du-lights.js.html#line96">line 96</a>
+     </i></small></p>
+
+<div class="description">
+    Sets parameters for the light source at the given index.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>index</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Zero-based index of the light to set.  The first
+light has index 0, the second has index 1, and so on.
+If the light doesn't exist at that index, it will be created.</dd>
+
+        <dt>
+
+                <code>params</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           An object as described in H3DU.LightSource.setParams.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Lights.html">H3DU.Lights</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setPointLight"><span style="font-weight:lighter"></span>H3DU.Lights#setPointLight<span class="signature">(index, position, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Lights.html">H3DU.Lights</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-lights.js.html">h3du-lights.js</a>, <a href="h3du-lights.js.html#line137">line 137</a>
+     </i></small></p>
+
+<div class="description">
+    Sets a point light.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>index</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Zero-based index of the light to set.  The first
+light has index 0, the second has index 1, and so on.
+If the light doesn't exist at that index, it will be created.</dd>
+
+        <dt>
+
+                <code>position</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A 3-element vector giving the X, Y, and Z
+coordinates, respectively, of the light, in world coordinates.</dd>
+
+        <dt>
+
+                <code>diffuse</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Diffuse color, as described in H3DU.Lights.setDirectionalLight.</dd>
+
+        <dt>
+
+                <code>specular</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Specular color, as described in H3DU.Lights.setDirectionalLight.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Lights.html">H3DU.Lights</a></span>)
+
+</div>
+
 </article>
 
 </section>

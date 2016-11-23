@@ -15,7 +15,8 @@ this.fps=-1;
 };
 /**
  * Not documented yet.
- */
+ * @memberof! FrameCounter#
+*/
 FrameCounter.prototype.update=function(){
   "use strict";
 var now=("performance" in window) ?
@@ -45,7 +46,8 @@ var now=("performance" in window) ?
 };
 /**
  * Not documented yet.
- */
+ * @memberof! FrameCounter#
+*/
 FrameCounter.prototype.getFPS=function(){
  "use strict";
 return this.fps;
@@ -76,7 +78,8 @@ FrameCounterDiv._makeDiv=function(scene){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! FrameCounterDiv#
+*/
 FrameCounterDiv.prototype.update=function(){
  "use strict";
 this.fc.update();
@@ -100,7 +103,8 @@ function PrimitiveCounter(scene){
 }
 /**
  * Not documented yet.
- */
+ * @memberof! PrimitiveCounter#
+*/
 PrimitiveCounter.prototype.update=function(){
  "use strict";
  if(this.scene.vertexCount){

@@ -278,7 +278,8 @@ RedBlackTree._defaultCompare=function(a,b){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! RedBlackTree#
+*/
 RedBlackTree.prototype.first=function(){
  var r=this.root;
  if((r===null || typeof r==="undefined"))return null;
@@ -287,7 +288,8 @@ RedBlackTree.prototype.first=function(){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! RedBlackTree#
+*/
 RedBlackTree.prototype.last=function(){
  var r=this.root;
  if((r===null || typeof r==="undefined"))return null;
@@ -297,7 +299,8 @@ RedBlackTree.prototype.last=function(){
 /**
  * Not documented yet.
  * @param {*} data
- */
+ * @memberof! RedBlackTree#
+*/
 RedBlackTree.prototype.find=function(data){
   var it=this.root;
   while((it!==null && typeof it!=="undefined")){
@@ -328,7 +331,8 @@ RedBlackTree._double=function(root,dir){
 /**
  * Not documented yet.
  * @param {*} data
- */
+ * @memberof! RedBlackTree#
+*/
 RedBlackTree.prototype.erase=function(data){
   if( this.root!==null ) {
     var head = new RedBlackTreeNode(null); /* False tree root */
@@ -410,7 +414,8 @@ RedBlackTree.prototype.erase=function(data){
 /**
  * Not documented yet.
  * @param {*} data
- */
+ * @memberof! RedBlackTree#
+*/
 RedBlackTree.prototype.insert=function(data){
   if(!data)throw new Error();
   var retval=null;
@@ -646,7 +651,8 @@ Polygon.PointChain.prototype.linkPointChain=function(chain){
 /**
  * Not documented yet.
  * @param {*} s
- */
+ * @memberof! Connector#
+*/
 Connector.prototype.add=function(s){
   var changed=false;
   var j=this.openPolygons.first();
@@ -675,7 +681,8 @@ Connector.prototype.add=function(s){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! Connector#
+*/
 Connector.prototype.toPolygon=function(){
  var polygon=new Polygon(null);
  var j=this.closedPolygons.first();
@@ -818,7 +825,8 @@ Clipper.segmentCompNum=function(e1,e2) {
 /**
  * Not documented yet.
  * @param {*} e
- */
+ * @memberof! Clipper#
+*/
 Clipper.prototype.storeSweepEvent=function(e){
  e.id=this.eventHolder.length;
  this.eventHolder.push(e);
@@ -837,7 +845,8 @@ Clipper._print=function(e)
 /**
  * Not documented yet.
  * @param {*} op
- */
+ * @memberof! Clipper#
+*/
 Clipper.prototype.compute=function(op){
   // Test 1 for trivial result case
   if(this.subject.ncontours()*this.clipping.ncontours() === 0) { // At least one of the polygons is empty
@@ -1014,7 +1023,8 @@ Clipper.prototype.compute=function(op){
  * Not documented yet.
  * @param {*} s
  * @param {*} pl
- */
+ * @memberof! Clipper#
+*/
 Clipper.prototype.processSegment=function(s,pl)
 {
   if(Clipper._ptEq(s[0],s[1])) // if the two edge endpoints are equal the segment is dicarded
@@ -1156,7 +1166,8 @@ Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
  * Not documented yet.
  * @param {*} e1
  * @param {*} e2
- */
+ * @memberof! Clipper#
+*/
 Clipper.prototype.possibleIntersection=function(e1,e2){
 //  if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
 //    return false;
@@ -1237,7 +1248,8 @@ Clipper.prototype.possibleIntersection=function(e1,e2){
  * Not documented yet.
  * @param {*} e
  * @param {*} p
- */
+ * @memberof! Clipper#
+*/
 Clipper.prototype.divideSegment=function(e,p){
   // "Right event" of the "left line segment" resulting from dividing e(the line segment associated to e)
   var r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
@@ -1283,7 +1295,8 @@ var GraphicsPath=globalContext.GraphicsPath;
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
 * @returns {GraphicsPath} The union of the two paths.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.union=function(path,flatness){
  if((path===null || typeof path==="undefined"))return this;
  var polygon1=new Polygon(this,flatness);
@@ -1302,7 +1315,8 @@ GraphicsPath.prototype.union=function(path,flatness){
 * value, given in units.  If null or omitted, default is 1.
  * @returns {GraphicsPath} The difference between this path
  * and the other path.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.difference=function(path,flatness){
  if((path===null || typeof path==="undefined"))return this;
  var polygon1=new Polygon(this,flatness);
@@ -1321,7 +1335,8 @@ GraphicsPath.prototype.difference=function(path,flatness){
 * value, given in units.  If null or omitted, default is 1.
  * @returns {GraphicsPath} A path whose shape is contained in
  * both paths.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.intersection=function(path,flatness){
  if((path===null || typeof path==="undefined"))return this;
  var polygon1=new Polygon(this,flatness);
@@ -1340,7 +1355,8 @@ GraphicsPath.prototype.intersection=function(path,flatness){
 * value, given in units.  If null or omitted, default is 1.
  * @returns {GraphicsPath} A path whose shape is contained in
  * only one of the two paths.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.xor=function(path,flatness){
  if((path===null || typeof path==="undefined"))return this;
  var polygon1=new Polygon(this,flatness);

@@ -98,7 +98,8 @@ return this._bounds;
 /**
  * Returns the WebGL context associated with this object.
  * @deprecated
- * @returns {WebGLRenderingContext} Return value. */
+ * @returns {WebGLRenderingContext} Return value. * @memberof! H3DU.BufferedMesh#
+*/
 H3DU.BufferedMesh.prototype.getContext=function(){
  "use strict";
 return this.context;
@@ -111,6 +112,7 @@ H3DU.BufferedMesh.prototype.getFormat=function(){
 
 /**
 * Deletes the vertex and index buffers associated with this object.
+* @memberof! H3DU.BufferedMesh#
 */
 H3DU.BufferedMesh.prototype.dispose=function(){
  "use strict";
@@ -185,6 +187,7 @@ H3DU.BufferedMesh.prototype._prepareDraw=function(program, context){
 * @param {H3DU.ShaderProgram} program A shader program object to get
 * the IDs from for attributes named "position", "normal",
 * "colorAttr", and "uv", and the "useColorAttr" uniform.
+* @memberof! H3DU.BufferedMesh#
 */
 H3DU.BufferedMesh.prototype.draw=function(program){
   // Binding phase
@@ -211,7 +214,8 @@ H3DU.BufferedMesh.prototype.draw=function(program){
 };
 /**
  * Gets the number of vertices composed by all shapes in this mesh.
-* @returns {Number} Return value.*/
+* @returns {Number} Return value.* @memberof! H3DU.BufferedMesh#
+*/
 H3DU.BufferedMesh.prototype.vertexCount=function(){
  "use strict";
  return this.smb.numVertices;
@@ -219,7 +223,8 @@ H3DU.BufferedMesh.prototype.vertexCount=function(){
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
-* @returns {Number} Return value.*/
+* @returns {Number} Return value.* @memberof! H3DU.BufferedMesh#
+*/
 H3DU.BufferedMesh.prototype.primitiveCount=function(){
  "use strict";
  return this.smb.primitiveCount();

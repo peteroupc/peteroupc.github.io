@@ -102,6 +102,62 @@ May be omitted; default is 1.</dd>
 
     </div>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>H3DU.BezierCurve#evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line63">line 63</a>
+     </i></small></p>
+
+<div class="description">
+    Evaluates the curve function based on a point
+in a B&eacute;zier curve.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>u</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Point on the curve to evaluate (generally within the range
+given in the constructor).</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    An array of the result of
+the evaluation.  Its length will be equal to the
+length of a control point, as specified in the constructor.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h5>Example</h5>
+
+    <pre class="prettyprint"><code>// Generate 11 points forming the B&amp;eacute;zier curve.
+// Assumes the curve was created with u1=0 and u2=1 (the default).
+var points=[];
+for(var i=0;i&lt;=10;i++){
+ points.push(curve.evaluate(i/10.0));
+}</code></pre>
+
 </article>
 
 </section>

@@ -82,6 +82,1925 @@ that returns a WebGL context.</dd>
 
 </dl>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="clear"><span style="font-weight:lighter"></span>H3DU.Scene3D#clear<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line674">line 674</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="clearDepth"><span style="font-weight:lighter"></span>H3DU.Scene3D#clearDepth<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line686">line 686</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="createBuffer"><span style="font-weight:lighter"></span>H3DU.Scene3D#createBuffer<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line383">line 383</a>
+     </i></small></p>
+
+<div class="description">
+    Creates a frame buffer object associated with this scene.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A buffer with the same size as this scene.
+
+     (Type:
+<span class="param-type"><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="cullFace"><span style="font-weight:lighter"></span>H3DU.Scene3D#cullFace<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line200">line 200</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies which kinds of triangle faces are culled (not drawn)
+when rendering this scene.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>value</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           If this is <a href="H3DU.html#.Scene3D.BACK">H3DU.Scene3D.BACK</a>,
+<a href="H3DU.html#.Scene3D.FRONT">H3DU.Scene3D.FRONT</a>, or <a href="H3DU.html#.Scene3D.FRONT_AND_BACK">H3DU.Scene3D.FRONT_AND_BACK</a>,
+enables face culling of the specified faces.  For any other value,
+disables face culling.  By default, face culling is disabled.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.Scene3D#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line577">line 577</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="frontFace"><span style="font-weight:lighter"></span>H3DU.Scene3D#frontFace<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line242">line 242</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies the winding of front faces.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>value</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           If this is <a href="H3DU.html#.Scene3D.CW">H3DU.Scene3D.CW</a>,
+clockwise triangles are front-facing.  For any other value,
+counterclockwise triangles are front-facing, which is the
+default behavior.  If using a left-handed coordinate system,
+set this value to <a href="H3DU.html#.Scene3D.CW">H3DU.Scene3D.CW</a>.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getCanvas"><span style="font-weight:lighter"></span>H3DU.Scene3D#getCanvas<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line70">line 70</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="getClearColor"><span style="font-weight:lighter"></span>H3DU.Scene3D#getClearColor<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line289">line 289</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the color used when clearing the screen each frame.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    An array of four numbers, from 0 through
+   1, specifying the red, green, blue, and alpha components of the color.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="loadAndMapTexture"><span style="font-weight:lighter"></span>H3DU.Scene3D#loadAndMapTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line629">line 629</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</b><p>
+
+<div class="description">
+    Loads a texture from an image URL and uploads it
+to a texture buffer object.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>texture</code>
+
+                (
+<span class="param-type">string</span>
+|
+
+<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>
+
+)
+
+           </dt><dd>
+           String giving the
+URL of the image to load, or
+an H3DU.Texture object whose data may or may not be loaded.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that is resolved when
+the image is loaded successfully and uploaded
+to a texture buffer (the result will be an H3DU.Texture
+object), and is rejected when an error occurs.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="loadAndMapTextures"><span style="font-weight:lighter"></span>H3DU.Scene3D#loadAndMapTextures<span class="signature">(textureFiles, resolve<sub style="font-weight:lighter">opt</sub>, reject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line661">line 661</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</b><p>
+
+<div class="description">
+    Loads one or more textures from an image URL and uploads each of them
+to a texture buffer object.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>textureFiles</code>
+
+                (
+<span class="param-type">Array.&lt;String></span>
+
+)
+
+           </dt><dd>
+           A list of URLs of the image to load.</dd>
+
+        <dt>
+
+                <code>resolve</code>
+
+                (
+<span class="param-type">function</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Called for each URL that is loaded successfully
+and uploaded to a texture buffer (the argument will be an H3DU.Texture object.)</dd>
+
+        <dt>
+
+                <code>reject</code>
+
+                (
+<span class="param-type">function</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Called for each URL for which an error
+occurs (the argument will be the data passed upon
+rejection).</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that is resolved when
+all the URLs in the textureFiles array are either resolved or rejected.
+The result will be an object with three properties:
+"successes", "failures", and "results".
+See <a href="H3DU.html#.getPromiseResults">H3DU.getPromiseResults</a>.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="loadTexture"><span style="font-weight:lighter"></span>H3DU.Scene3D#loadTexture<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line612">line 612</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the H3DU.TextureLoader method loadTexture or
+loadTexturesAll instead.</b><p>
+
+<div class="description">
+    Loads a texture from an image URL.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>name</code>
+
+                (
+<span class="param-type">String</span>
+
+)
+
+           </dt><dd>
+           URL of the image to load.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that is resolved when
+the image is loaded successfully (the result will be an H3DU.Texture
+object), and is rejected when an error occurs.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="makeShape"><span style="font-weight:lighter"></span>H3DU.Scene3D#makeShape<span class="signature">(mesh)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line801">line 801</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the H3DU.Shape constructor instead.</b><p>
+
+<div class="description">
+    Creates a buffer from a geometric mesh and
+returns a shape object.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>mesh</code>
+
+                (
+<span class="param-type"><a href="H3DU.Mesh.html">H3DU.Mesh</a></span>
+
+)
+
+           </dt><dd>
+           A geometric mesh object.  The shape
+created will use the mesh in its current state and won't
+track future changes.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The generated shape object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>H3DU.Scene3D#removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line815">line 815</a>
+     </i></small></p>
+
+<div class="description">
+    Removes all instances of a 3D shape from this scene.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>shape</code>
+
+                (
+<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>
+|
+
+<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>
+
+)
+
+           </dt><dd>
+           The 3D shape to remove.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="render"><span style="font-weight:lighter"></span>H3DU.Scene3D#render<span class="signature">(renderPasses)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line943">line 943</a>
+     </i></small></p>
+
+<div class="description">
+    Renders all shapes added to this scene.
+ This is usually called in a render loop, such
+ as <a href="H3DU.html#.renderLoop">H3DU.renderLoop</a>.<p>
+NOTE: For compatibility, the "render" function with a null or omitted parameter will clear the color
+buffer and depth buffer. This compatibility option may be dropped in the future.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>renderPasses</code>
+
+                (
+<span class="param-type">Array.&lt;<a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a>></span>
+|
+
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>
+
+)
+
+           </dt><dd>
+           An array of scenes
+to draw, or a single subscene to render. Can be null.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setAmbient"><span style="font-weight:lighter"></span>H3DU.Scene3D#setAmbient<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line890">line 890</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the Lights method setAmbient instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets the color of the scene's ambient light.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>r</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+|
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">string</span>
+
+)
+
+           </dt><dd>
+           Array of three or
+four color components; or the red color component (0-1); or a string
+specifying an <a href="H3DU.html#.toGLColor">HTML or CSS color</a>.</dd>
+
+        <dt>
+
+                <code>g</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
+
+        <dt>
+
+                <code>b</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
+
+        <dt>
+
+                <code>a</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Alpha color component (0-1).
+Currently not used.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setAutoResize"><span style="font-weight:lighter"></span>H3DU.Scene3D#setAutoResize<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line258">line 258</a>
+     </i></small></p>
+
+<div class="description">
+    Sets whether to check whether to resize the canvas
+when the render() method is called.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>value</code>
+
+                (
+<span class="param-type">Boolean</span>
+
+)
+
+           </dt><dd>
+           If true, will check whether to resize the canvas
+when the render() method is called. Default is true.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setClearColor"><span style="font-weight:lighter"></span>H3DU.Scene3D#setClearColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line598">line 598</a>
+     </i></small></p>
+
+<div class="description">
+    Sets the color used when clearing the screen each frame.
+This color is black by default.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>r</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+|
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">string</span>
+
+)
+
+           </dt><dd>
+           Array of three or
+four color components; or the red color component (0-1); or a string
+specifying an <a href="H3DU.html#.toGLColor">HTML or CSS color</a>.</dd>
+
+        <dt>
+
+                <code>g</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
+
+        <dt>
+
+                <code>b</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
+
+        <dt>
+
+                <code>a</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Alpha color component (0-1).
+If the "r" parameter is given and this parameter is null or omitted,
+this value is treated as 1.0.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setDirectionalLight"><span style="font-weight:lighter"></span>H3DU.Scene3D#setDirectionalLight<span class="signature">(index, position, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line848">line 848</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the Lights method setDirectionalLight instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets a light source in this scene to a directional light.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>index</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Zero-based index of the light to set.  The first
+light has index 0, the second has index 1, and so on.  Will be created
+if the light doesn't exist.</dd>
+
+        <dt>
+
+                <code>position</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A 3-element vector giving the direction of the light, along the X, Y, and Z
+axes, respectively.  May be null, in which case the default
+is (0, 0, 1).</dd>
+
+        <dt>
+
+                <code>diffuse</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           A <a href="H3DU.html#.toGLColor">color vector or string</a> giving the diffuse color of the light.
+If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
+
+        <dt>
+
+                <code>specular</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           A <a href="H3DU.html#.toGLColor">color vector or string</a>  giving the color of specular highlights caused by
+the light.
+If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setFrustum"><span style="font-weight:lighter"></span>H3DU.Scene3D#setFrustum<span class="signature">(left, right, bottom, top, near, far)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line520">line 520</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.html#.mat4frustum">H3DU.Math.mat4frustum</a>.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets this scene's projection matrix to a perspective projection that defines
+the view frustum, or the limits in the camera's view.
+<p>
+For considerations when choosing the "near" and "far" parameters,
+see <a href="H3DU.Math.html#.mat4perspective">H3DU.Math.mat4perspective</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>left</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           X-coordinate of the point where the left
+clipping plane meets the near clipping plane.</dd>
+
+        <dt>
+
+                <code>right</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           X-coordinate of the point where the right
+clipping plane meets the near clipping plane.</dd>
+
+        <dt>
+
+                <code>bottom</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Y-coordinate of the point where the bottom
+clipping plane meets the near clipping plane.</dd>
+
+        <dt>
+
+                <code>top</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Y-coordinate of the point where the top
+clipping plane meets the near clipping plane.</dd>
+
+        <dt>
+
+                <code>near</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The distance from the camera to
+the near clipping plane. Objects closer than this distance won't be
+seen.</dd>
+
+        <dt>
+
+                <code>far</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The distance from the camera to
+the far clipping plane. Objects beyond this distance will be too far
+to be seen.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setLightParams"><span style="font-weight:lighter"></span>H3DU.Scene3D#setLightParams<span class="signature">(index, params)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line866">line 866</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the Lights method setParams instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets parameters for a light in this scene.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>index</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Zero-based index of the light to set.  The first
+light has index 0, the second has index 1, and so on.  Will be created
+if the light doesn't exist.</dd>
+
+        <dt>
+
+                <code>params</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           An object as described in H3DU.LightSource.setParams.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setLookAt"><span style="font-weight:lighter"></span>H3DU.Scene3D#setLookAt<span class="signature">(eye, center<sub style="font-weight:lighter">opt</sub>, up<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line770">line 770</a>
+     </i></small></p>
+
+        <p><b>Deprecated: TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets this scene's view matrix to represent a camera view.
+This method takes a camera's position (<code>eye</code>), and the point the camera is viewing
+(<code>center</code>).
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>eye</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A 3-element vector specifying
+the camera position in world space.</dd>
+
+        <dt>
+
+                <code>center</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           A 3-element vector specifying
+the point in world space that the camera is looking at. May be null or omitted,
+in which case the default is the coordinates (0,0,0).</dd>
+
+        <dt>
+
+                <code>up</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           A 3-element vector specifying
+the direction from the center of the camera to its top. This parameter may
+be null or omitted, in which case the default is the vector (0, 1, 0),
+the vector that results when the camera is held upright.  This
+vector must not point in the same or opposite direction as
+the camera's view direction. (For best results, rotate the vector (0, 1, 0)
+so it points perpendicular to the camera's view direction.)</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setOrtho"><span style="font-weight:lighter"></span>H3DU.Scene3D#setOrtho<span class="signature">(left, right, bottom, top, near, far)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line544">line 544</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.html#.mat4ortho">H3DU.Math.mat4ortho</a>.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets this scene's projection matrix to an orthographic projection.
+In this projection, the left clipping plane is parallel to the right clipping
+plane and the top to the bottom.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>left</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Leftmost coordinate of the 3D view.</dd>
+
+        <dt>
+
+                <code>right</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Rightmost coordinate of the 3D view.
+(Note that right can be greater than left or vice versa.)</dd>
+
+        <dt>
+
+                <code>bottom</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Bottommost coordinate of the 3D view.</dd>
+
+        <dt>
+
+                <code>top</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Topmost coordinate of the 3D view.
+(Note that top can be greater than bottom or vice versa.)</dd>
+
+        <dt>
+
+                <code>near</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Distance from the camera to the near clipping
+plane.  A positive value means the plane is in front of the viewer.</dd>
+
+        <dt>
+
+                <code>far</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Distance from the camera to the far clipping
+plane.  A positive value means the plane is in front of the viewer.
+(Note that near can be greater than far or vice versa.)  The absolute difference
+between near and far should be as small as the application can accept.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setOrtho2D"><span style="font-weight:lighter"></span>H3DU.Scene3D#setOrtho2D<span class="signature">(left, right, bottom, top)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line561">line 561</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.html#.mat4ortho2d">H3DU.Math.mat4ortho2d</a>.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets this scene's projection matrix to a 2D orthographic projection.
+The near and far clipping planes will be set to -1 and 1, respectively.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>left</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Leftmost coordinate of the 2D view.</dd>
+
+        <dt>
+
+                <code>right</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Rightmost coordinate of the 2D view.
+(Note that right can be greater than left or vice versa.)</dd>
+
+        <dt>
+
+                <code>bottom</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Bottommost coordinate of the 2D view.</dd>
+
+        <dt>
+
+                <code>top</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Topmost coordinate of the 2D view.
+(Note that top can be greater than bottom or vice versa.)</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setOrtho2DAspect"><span style="font-weight:lighter"></span>H3DU.Scene3D#setOrtho2DAspect<span class="signature">(left, right, bottom, top, aspect<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line492">line 492</a>
+     </i></small></p>
+
+        <p><b>Deprecated: TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets this scene's projection matrix to a 2D orthographic projection.
+The near and far clipping planes will be set to -1 and 1, respectively.<p>
+If the view rectangle's aspect ratio doesn't match the desired aspect
+ratio, the view rectangle will be centered on the 3D scene's viewport
+or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+or squishing it.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>left</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Leftmost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>right</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Rightmost coordinate of the view rectangle.
+(Note that right can be greater than left or vice versa.)</dd>
+
+        <dt>
+
+                <code>bottom</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Bottommost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>top</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Topmost coordinate of the view rectangle.
+(Note that top can be greater than bottom or vice versa.)</dd>
+
+        <dt>
+
+                <code>aspect</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Desired aspect ratio of the viewport (ratio
+of width to height).  If null or omitted, uses this scene's aspect ratio instead.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setOrthoAspect"><span style="font-weight:lighter"></span>H3DU.Scene3D#setOrthoAspect<span class="signature">(left, right, bottom, top, near, far, aspect<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line467">line 467</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.html#.mat4orthoAspect">H3DU.Math.mat4orthoAspect</a>.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets this scene's projection matrix to an orthographic projection.
+In this projection, the left clipping plane is parallel to the right clipping
+plane and the top to the bottom.<p>
+If the view rectangle's aspect ratio doesn't match the desired aspect
+ratio, the view rectangle will be centered on the 3D scene's viewport
+or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+or squishing it.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>left</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Leftmost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>right</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Rightmost coordinate of the view rectangle.
+(Note that right can be greater than left or vice versa.)</dd>
+
+        <dt>
+
+                <code>bottom</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Bottommost coordinate of the view rectangle.</dd>
+
+        <dt>
+
+                <code>top</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Topmost coordinate of the view rectangle.
+(Note that top can be greater than bottom or vice versa.)</dd>
+
+        <dt>
+
+                <code>near</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Distance from the camera to the near clipping
+plane.  A positive value means the plane is in front of the viewer.</dd>
+
+        <dt>
+
+                <code>far</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Distance from the camera to the far clipping
+plane.  A positive value means the plane is in front of the viewer.
+(Note that near can be greater than far or vice versa.)  The absolute difference
+between near and far should be as small as the application can accept.</dd>
+
+        <dt>
+
+                <code>aspect</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Desired aspect ratio of the viewport (ratio
+of width to height).  If null or omitted, uses this scene's aspect ratio instead.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setPerspective"><span style="font-weight:lighter"></span>H3DU.Scene3D#setPerspective<span class="signature">(fov, aspect, near, far)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line436">line 436</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU.Math.html#.mat4perspective">H3DU.Math.mat4perspective</a>. This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets this scene's projection matrix to a perspective projection.
+<p>
+For considerations when choosing the "near" and "far" parameters,
+see <a href="H3DU.Math.html#.mat4perspective">H3DU.Math.mat4perspective</a>.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>fov</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Y-axis field of view, in degrees. Should be less
+than 180 degrees. (The smaller
+this number, the bigger close objects appear to be. As a result, zooming out
+can be implemented by raising this value, and zooming in by lowering it.)</dd>
+
+        <dt>
+
+                <code>aspect</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The ratio of width to height of the viewport, usually
+ the scene's aspect ratio (getAspect() or getClientAspect()).</dd>
+
+        <dt>
+
+                <code>near</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The distance from the camera to
+the near clipping plane. Objects closer than this distance won't be
+seen.</dd>
+
+        <dt>
+
+                <code>far</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           The distance from the camera to
+the far clipping plane. Objects beyond this distance will be too far
+to be seen.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h5>Example</h5>
+
+    <pre class="prettyprint"><code>// Set the perspective projection.  Camera has a 45-degree field of view
+// and will see objects from 0.1 to 100 units away.
+scene.setPerspective(45,scene.getClientAspect(),0.1,100);</code></pre>
+
+    <h4 style="margin-bottom:0px" id="setPointLight"><span style="font-weight:lighter"></span>H3DU.Scene3D#setPointLight<span class="signature">(index, position, diffuse<sub style="font-weight:lighter">opt</sub>, specular<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line913">line 913</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the LightSource method setPointLight instead and the H3DU.Batch3D method getLights.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets a light source in this scene to a point light.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>index</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Zero-based index of the light to set.  The first
+light has index 0, the second has index 1, and so on.</dd>
+
+        <dt>
+
+                <code>position</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>diffuse</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           A <a href="H3DU.html#.toGLColor">color vector or string</a>  giving the diffuse color of the light.
+If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</dd>
+
+        <dt>
+
+                <code>specular</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           A <a href="H3DU.html#.toGLColor">color vector or string</a>  giving the color of specular highlights caused by
+the light.
+If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setProjectionMatrix"><span style="font-weight:lighter"></span>H3DU.Scene3D#setProjectionMatrix<span class="signature">(matrix)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line726">line 726</a>
+     </i></small></p>
+
+        <p><b>Deprecated: TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets the projection matrix for this object.  The projection
+matrix can also be set using the H3DU.Scene3D#setFrustum, H3DU.Scene3D#setOrtho,
+H3DU.Scene3D#setOrtho2D, and H3DU.Scene3D#setPerspective methods.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>matrix</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A 16-element matrix (4x4).</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setUseDevicePixelRatio"><span style="font-weight:lighter"></span>H3DU.Scene3D#setUseDevicePixelRatio<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line273">line 273</a>
+     </i></small></p>
+
+<div class="description">
+    Sets whether to use the device's pixel ratio (if supported by
+the browser) in addition to the canvas's size when setting
+the viewport's dimensions.<p>
+When this value changes, the H3DU.Scene3D will automatically
+adjust the viewport.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>value</code>
+
+                (
+<span class="param-type">Boolean</span>
+
+)
+
+           </dt><dd>
+           If true, use the device's pixel ratio
+when setting the viewport's dimensions.  Default is true.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setViewMatrix"><span style="font-weight:lighter"></span>H3DU.Scene3D#setViewMatrix<span class="signature">(matrix)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line742">line 742</a>
+     </i></small></p>
+
+        <p><b>Deprecated: TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
+
+<div class="description">
+    Sets this scene's view matrix. The view matrix can also
+be set using the H3DU.Scene3D#setLookAt method.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>matrix</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A 16-element matrix (4x4).</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="useFilter"><span style="font-weight:lighter"></span>H3DU.Scene3D#useFilter<span class="signature">(filterProgram)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line989">line 989</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Use the <a href="H3DU.html#.Batch3D.forFilter">H3DU.Batch3D.forFilter</a> method to create a subscene
+for rendering filter effects from a frame buffer.</b><p>
+
+<div class="description">
+    Has no effect. (Previously, used a shader program to apply a texture filter after the
+scene is rendered.)
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>filterProgram</code>
+
+                (
+<span class="param-type"><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></span>
+|
+
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+)
+
+           </dt><dd>
+           Not used.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="useProgram"><span style="font-weight:lighter"></span>H3DU.Scene3D#useProgram<span class="signature">(program)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line302">line 302</a>
+     </i></small></p>
+
+        <p><b>Deprecated: Instead of this method, use the "setShader" program of individual shapes
+to set the shader programs they use.</b><p>
+
+<div class="description">
+    Has no effect. (In previous versions, this method changed
+the active shader program for this scene
+and prepared this object for the new program.)
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>program</code>
+
+                (
+<span class="param-type"><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></span>
+
+)
+
+           </dt><dd>
+           The shader program to use.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
+
+</div>
+
 </article>
 
 </section>

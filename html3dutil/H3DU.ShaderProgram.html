@@ -29,7 +29,7 @@
 
     <h4 style="margin-bottom:0px" id="ShaderProgram"><span style="font-weight:lighter"></span>new ShaderProgram<span class="signature">(context, vertexShader, fragmentShader)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line150">line 150</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line152">line 152</a>
      </i></small></p>
 
 <div class="description">
@@ -95,6 +95,180 @@ log is output to the JavaScript console.
 </dl>
 
     </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line210">line 210</a>
+     </i></small></p>
+
+<div class="description">
+    Disposes resources from this shader program.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="get"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#get<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {number|WebGLUniformLocation|null}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line270">line 270</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the location of the given uniform or attribute's name in this program.
+(Although the location may change each time the shader program
+is linked, that normally only happens upon construction
+in the case of H3DU.ShaderInfo.)
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>name</code>
+
+                (
+<span class="param-type">String</span>
+
+)
+
+           </dt><dd>
+           The name of an attribute or uniform defined in either the
+vertex or fragment shader of this shader program.  If the uniform or attribute
+is an array, each element in the array is named as in these examples:
+"unif[0]", "unif[1]".   If it's a struct, each member in the struct is named as in these examples:
+"unif.member1", "unif.member2".  If it's an array of struct, each
+member is named as in these examples: "unif[0].member1",
+"unif[0].member2".</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The location of the uniform or attribute
+name, or null if it doesn't exist.
+
+     (Type:
+<span class="param-type">number</span>
+|
+
+<span class="param-type">WebGLUniformLocation</span>
+|
+
+<span class="param-type">null</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getContext"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#getContext<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line225">line 225</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="getUniform"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#getUniform<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {*}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line285">line 285</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the value of the given uniform in this program. This method
+may be called at any time, even if this program is not currently the
+active program in the WebGL context.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>name</code>
+
+                (
+<span class="param-type">String</span>
+
+)
+
+           </dt><dd>
+           The name of a uniform defined in either the
+vertex or fragment shader of this shader program.  See get().</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The uniform's value, or null if it doesn't exist or if
+an attribute is named, not a uniform.
+
+     (Type:
+<span class="param-type">*</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setUniforms"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#setUniforms<span class="signature">(uniforms)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line342">line 342</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>uniforms</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="use"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#use<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line323">line 323</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+<dl class="details">
+
+</dl>
 
 </article>
 

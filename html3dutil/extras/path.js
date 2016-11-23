@@ -51,7 +51,8 @@ GraphicsPath.ARC=4;
 * This flag will be reset if a moveTo command,
 * closePath command, or another path segment
 * is added to the path.
-* @returns {Boolean} Return value.*/
+* @returns {Boolean} Return value.* @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.isIncomplete=function(){
 
 return this.incomplete;
@@ -294,7 +295,8 @@ for(var i=this.segments.length-1;i>=0;i--){
  * Returns this path in the form of a string in SVG path format.
  * See {@link GraphicsPath.fromString}.
  * @returns {String} A string describing the path in the SVG path
-  format. */
+  format. * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.toString=function(){
 
  var oldpos=null;
@@ -390,7 +392,8 @@ if(a[0]===GraphicsPath.LINE){
 * @param {Number} [flatness] No longer used by this method.
  * @returns {Number} Approximate length of this path
  * in units.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.pathLength=function(flatness){
 
 if(this.segments.length === 0)return 0;
@@ -414,6 +417,7 @@ if(this.segments.length === 0)return 0;
 * Each line segment is an array of four numbers: the X and
 * Y coordinates of the start point, respectively, then the X and
 * Y coordinates of the end point, respectively.
+* @memberof! GraphicsPath#
 */
 GraphicsPath.prototype.getLines=function(flatness){
 
@@ -445,7 +449,8 @@ var ret=[];
 * value, given in units.  If null or omitted, default is 1.
 * @returns {GraphicsPath} A path consisting only of line
 * segments and close commands.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.toLinePath=function(flatness){
 
  var ret=[];
@@ -571,6 +576,7 @@ var twopi=Math.PI*2;
 * the lowest X and Y coordinates, and the last two are
 * the highest X and Y coordinates.  If the path is empty,
 * returns the array (Infinity, Infinity, -Infinity, -Infinity).
+* @memberof! GraphicsPath#
 */
 GraphicsPath.prototype.getBounds=function(){
 
@@ -662,6 +668,7 @@ var inf=Number.POSITIVE_INFINITY;
 * Returns a path that reverses the course of this path.
 * @returns {GraphicsPath} A GraphicsPath
 * object with its path segments reversed.
+* @memberof! GraphicsPath#
 */
 GraphicsPath.prototype.reverse=function(){
  var lastptx=0;
@@ -930,6 +937,7 @@ Note that calling this "evaluate" method is only
 recommended when drawing the path as a set of points, not lines, since
 the path may contain several disconnected parts.
 </ul>
+* @memberof! GraphicsPath#
 */
 GraphicsPath.prototype.getCurves=function(flatness){
 
@@ -1006,6 +1014,7 @@ var subpaths=[];
 * an empty array if <i>numPoints</i> is less than 1.  Returns
 * an array consisting of the start point if <i>numPoints</i>
 * is 1.
+* @memberof! GraphicsPath#
 */
 GraphicsPath.prototype.getPoints=function(numPoints,flatness){
 
@@ -1029,7 +1038,8 @@ if(numPoints<1)return [];
  * Makes this path closed.  Adds a line segment to the
  * path's start position, if necessary.
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.closePath=function(){
 
 if(this.startPos[0]!==this.endPos[0] ||
@@ -1047,7 +1057,8 @@ if(this.startPos[0]!==this.endPos[0] ||
  * @param {Number} x X-coordinate of the position.
  * @param {Number} y Y-coordinate of the position.
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.moveTo=function(x,y){
 
 this.startPos[0]=x;
@@ -1064,7 +1075,8 @@ this.startPos[0]=x;
  * @param {Number} x X-coordinate of the end of the line segment.
  * @param {Number} y Y-coordinate of the end of the line segment.
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.lineTo=function(x,y){
 
 this.segments.push([GraphicsPath.LINE,
@@ -1105,7 +1117,8 @@ var t1 = x1 - x0;
  * @param {Number} y2 Y-coordinate of the point described under "x2".
  * @param {Number} radius Radius of the circle the arc forms a part of.
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.arcTo=function(x1,y1,x2,y2,radius){
 
 if(radius<0){
@@ -1148,7 +1161,8 @@ if(radius<0){
  * (assuming the X axis points right and the Y axis points
  * down under the coordinate system).
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
 
 if(radius<0){
@@ -1201,7 +1215,8 @@ return this.lineTo(startX,startY)
  * @param {Number} x2 X-coordinate of the curve's end point.
  * @param {Number} y2 Y-coordinate of the curve's end point.
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.quadraticCurveTo=function(x,y,x2,y2){
 
 this.segments.push([GraphicsPath.QUAD,
@@ -1221,7 +1236,8 @@ this.segments.push([GraphicsPath.QUAD,
  * @param {Number} x3 X-coordinate of the curve's end point.
  * @param {Number} y3 Y-coordinate of the curve's end point.
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.bezierCurveTo=function(x,y,x2,y2,x3,y3){
 
 this.segments.push([GraphicsPath.CUBIC,
@@ -1419,7 +1435,8 @@ GraphicsPath._arcToBezierCurves=function(cx,cy,rx,ry,rot,angle1,angle2){
  * @param {Number} x2 X-coordinate of the arc's end point.
  * @param {Number} y2 Y-coordinate of the arc's end point.
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.arcSvgTo=function(rx,ry,rot,largeArc,sweep,x2,y2){
  if(rx === 0 || ry === 0){
   return this.lineTo(x2,y2);
@@ -1627,7 +1644,8 @@ var oldindex=index[0];
 /**
  * Not documented yet.
  * @param {*} trans
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.transform=function(trans){
  var ret=new GraphicsPath()
  var a=trans[0]
@@ -1696,7 +1714,8 @@ GraphicsPath.prototype.transform=function(trans){
  * @param {Number} width X-offset (width) to another corner of the rectangle.
  * @param {Number} height Y-offset (height) to another corner of the rectangle.
  * @returns {GraphicsPath} This object.
- */
+ * @memberof! GraphicsPath#
+*/
 GraphicsPath.prototype.rect=function(x,y,width,height){
 
 return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
@@ -2310,6 +2329,7 @@ Triangulate._Contour.prototype.findVisiblePoint=function(x,y){
 * array, the first two, next two, and last two numbers each
 * describe a vertex position of that triangle (X and Y coordinates
 * in that order).
+* @memberof! GraphicsPath#
 */
 GraphicsPath.prototype.getTriangles=function(flatness){
  var subpaths=this._getSubpaths(flatness);

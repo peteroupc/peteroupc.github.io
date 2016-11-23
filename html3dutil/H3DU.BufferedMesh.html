@@ -84,6 +84,56 @@ that returns a WebGL context. (Note that this constructor uses
 
     </div>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.BufferedMesh#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-bufferedmesh.js.html">h3du-bufferedmesh.js</a>, <a href="h3du-bufferedmesh.js.html#line101">line 101</a>
+     </i></small></p>
+
+<div class="description">
+    Deletes the vertex and index buffers associated with this object.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="draw"><span style="font-weight:lighter"></span>H3DU.BufferedMesh#draw<span class="signature">(program)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-bufferedmesh.js.html">h3du-bufferedmesh.js</a>, <a href="h3du-bufferedmesh.js.html#line176">line 176</a>
+     </i></small></p>
+
+<div class="description">
+    Binds the buffers in this object to attributes according
+to their data format, and draws the elements in this mesh
+according to the data in its buffers.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>program</code>
+
+                (
+<span class="param-type"><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></span>
+
+)
+
+           </dt><dd>
+           A shader program object to get
+the IDs from for attributes named "position", "normal",
+"colorAttr", and "uv", and the "useColorAttr" uniform.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
 </article>
 
 </section>

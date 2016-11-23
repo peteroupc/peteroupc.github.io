@@ -29,7 +29,7 @@
 
     <h4 style="margin-bottom:0px" id="BSplineSurface"><span style="font-weight:lighter"></span>new BSplineSurface<span class="signature">(controlPoints, knotsU, knotsV, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line364">line 364</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line367">line 367</a>
      </i></small></p>
 
 <div class="description">
@@ -111,6 +111,64 @@ and H3DU.BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</dd>
 </dl>
 
     </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>H3DU.BSplineSurface#evaluate<span class="signature">(u, v)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line516">line 516</a>
+     </i></small></p>
+
+<div class="description">
+    Evaluates the surface function based on a point
+in a B-spline surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>u</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           U-coordinate of the surface to evaluate (from 0 through 1).</dd>
+
+        <dt>
+
+                <code>v</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           V-coordinate of the surface to evaluate.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    An array of the result of
+the evaluation.  Its length will be equal to the
+length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
 
 </article>
 

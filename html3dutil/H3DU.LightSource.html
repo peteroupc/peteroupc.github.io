@@ -126,6 +126,60 @@ The default is (1,1,1), or white.
 
 </dl>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>H3DU.LightSource#setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-lightsource.js.html">h3du-lightsource.js</a>, <a href="h3du-lightsource.js.html#line63">line 63</a>
+     </i></small></p>
+
+<div class="description">
+    Sets parameters for this material object.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>params</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           An object whose keys have
+the possibilities given below, and whose values are those
+allowed for each key.<ul>
+<li><code>position</code> - Light position.  (See <a href="H3DU.LightSource.html#position">H3DU.LightSource#position</a>.)
+<li><code>ambient</code> - Not used in the default shader program.
+<li><code>diffuse</code> - A <a href="H3DU.html#.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion
+color of each object (which is also called "albedo").
+The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.
+<li><code>specular</code> - A <a href="H3DU.html#.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light.
+The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.
+</ul>
+If a value is null or undefined, it is ignored.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>)
+
+</div>
+
 </article>
 
 </section>

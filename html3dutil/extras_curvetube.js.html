@@ -122,7 +122,8 @@ H3DU._FrenetFrames._EPSILON=0.000001;
 /**
  * Not documented yet.
  * @param {*} u
- */
+ * @memberof! H3DU._FrenetFrames#
+*/
 H3DU._FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
  "use strict";
  var sample=this.func.evaluate(u);
@@ -255,6 +256,7 @@ this.thickness=(thickness===null || typeof thickness==="undefined") ? 0.125 : th
 * @param {Number} v V coordinate.  This will sweep around the extruded
 * tube.
 * @returns {Array&lt;Number>} A 3-element array specifying a 3D point.
+* @memberof! H3DU.CurveTube#
 */
 H3DU.CurveTube.prototype.evaluate=function(u, v){
  "use strict";

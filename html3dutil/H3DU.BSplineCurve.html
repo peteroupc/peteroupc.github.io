@@ -29,7 +29,7 @@
 
     <h4 style="margin-bottom:0px" id="BSplineCurve"><span style="font-weight:lighter"></span>new BSplineCurve<span class="signature">(controlPoints, knots, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line163">line 163</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line165">line 165</a>
      </i></small></p>
 
 <div class="description">
@@ -107,6 +107,60 @@ and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</dd>
 </dl>
 
     </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>H3DU.BSplineCurve#evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line292">line 292</a>
+     </i></small></p>
+
+<div class="description">
+    Evaluates the curve function based on a point
+in a B-spline curve.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>u</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Point on the curve to evaluate (from 0 through 1).</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    An array of the result of
+the evaluation.  Its length will be equal to the
+length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h5>Example</h5>
+
+    <pre class="prettyprint"><code>// Generate 11 points forming the B-spline curve.
+var points=[];
+for(var i=0;i&lt;=10;i++){
+ points.push(curve.evaluate(i/10.0));
+}</code></pre>
 
 </article>
 

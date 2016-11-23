@@ -36,6 +36,7 @@ H3DU.ShapeGroup = function(){
 * will be stored in the list of shapes.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
 * @returns {H3DU.ShapeGroup} This object.
+* @memberof! H3DU.ShapeGroup#
 */
 H3DU.ShapeGroup.prototype.addShape=function(shape){
  shape.parent=this;
@@ -45,20 +46,23 @@ H3DU.ShapeGroup.prototype.addShape=function(shape){
 /**
  * Not documented yet.
  * @param {*} value
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setVisible=function(value){
  this.visible=!!value;
  return this;
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.getVisible=function(){
  return this.visible;
 };
 /**
  * Gets a reference to the transform used by this shape group object.
- * @returns {H3DU.Transform} Return value. */
+ * @returns {H3DU.Transform} Return value. * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.getTransform=function(){
  return this.transform;
 };
@@ -66,7 +70,8 @@ H3DU.ShapeGroup.prototype.getTransform=function(){
  * Gets a copy of the transformation needed to transform
  * this shape group's coordinates to world coordinates.
  * @returns {H3DU.Transform} A 4x4 matrix.
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.getMatrix=function(){
   var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();
@@ -91,7 +96,8 @@ H3DU.ShapeGroup.prototype.getMatrix=function(){
  * rendering process will multiply this shape group's transform
  * with the child shape's transform as it renders the child shape.
  * @param {H3DU.Transform} transform
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setTransform=function(transform){
  this.transform=transform.copy();
  return this;
@@ -99,7 +105,8 @@ H3DU.ShapeGroup.prototype.setTransform=function(transform){
 /**
  * Sets the material used by all shapes in this shape group.
  * @param {H3DU.Material} material
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setMaterial=function(material){
  for(var i=0;i&lt;this.shapes.length;i++){
   this.shapes[i].setMaterial(material);
@@ -110,7 +117,8 @@ H3DU.ShapeGroup.prototype.setMaterial=function(material){
 /**
  * Sets the texture used by all shapes in this shape group.
  * @param {H3DU.Material} material
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setTexture=function(material){
  for(var i=0;i&lt;this.shapes.length;i++){
   this.shapes[i].setTexture(material);
@@ -120,7 +128,8 @@ H3DU.ShapeGroup.prototype.setTexture=function(material){
 /**
  * Sets the shader program used by all shapes in this shape group.
  * @param {H3DU.Material} material
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setShader=function(material){
  for(var i=0;i&lt;this.shapes.length;i++){
   this.shapes[i].setShader(material);
@@ -131,7 +140,8 @@ H3DU.ShapeGroup.prototype.setShader=function(material){
  * Sets material parameters for all shapes in this shape group.
  * @ {Object} params An object described in {@link H3DU.Material#setParams}.
  * @ {H3DU.Shape} This object.
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setMaterialParams=function(params){
  for(var i=0;i&lt;this.shapes.length;i++){
   this.shapes[i].setMaterialParams(params);
@@ -142,6 +152,7 @@ H3DU.ShapeGroup.prototype.setMaterialParams=function(params){
 * Removes all instances of a 3D shape from this shape group
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape The 3D shape to remove.
 * @returns {H3DU.ShapeGroup} This object.
+* @memberof! H3DU.ShapeGroup#
 */
 H3DU.ShapeGroup.prototype.removeShape=function(shape){
  for(var i=0;i&lt;this.shapes.length;i++){
@@ -154,7 +165,8 @@ H3DU.ShapeGroup.prototype.removeShape=function(shape){
 };
 /**
  * Not documented yet.
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.getBounds=function(){
  var ret=[0,0,0,0,0,0];
  var first=true;
@@ -188,7 +200,8 @@ H3DU.ShapeGroup.prototype.getBounds=function(){
 
 /**
  * Gets the number of vertices composed by all shapes in this shape group.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value. * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.vertexCount=function(){
  var c=0;
  for(var i=0;i&lt;this.shapes.length;i++){
@@ -199,7 +212,8 @@ H3DU.ShapeGroup.prototype.vertexCount=function(){
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this shape group.
- * @returns {Number} Return value. */
+ * @returns {Number} Return value. * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.primitiveCount=function(){
  var c=0;
  for(var i=0;i&lt;this.shapes.length;i++){
@@ -218,7 +232,8 @@ H3DU.ShapeGroup.prototype.primitiveCount=function(){
  * @param {Number} y Y-coordinate.
  * @param {Number} z Z-coordinate.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setPosition=function(x,y,z){
  this.transform.setPosition(x,y,z);
  return this;
@@ -230,7 +245,8 @@ H3DU.ShapeGroup.prototype.setPosition=function(x,y,z){
  * rather than the transform for each shape in the group.
  * @param {Array&lt;Number>} quat A four-element array describing the rotation.
  * @returns {H3DU.Shape} This object.
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setQuaternion=function(quat){
  this.transform.setQuaternion(quat);
  return this;
@@ -245,7 +261,8 @@ H3DU.ShapeGroup.prototype.setQuaternion=function(quat){
  * @param {Number} y Scaling factor for this object's height.
  * @param {Number} z Scaling factor for this object's depth.
 * @returns {H3DU.Scene3D} This object.
- */
+ * @memberof! H3DU.ShapeGroup#
+*/
 H3DU.ShapeGroup.prototype.setScale=function(x,y,z){
  this.transform.setScale(x,y,z);
  return this;

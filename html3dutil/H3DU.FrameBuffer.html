@@ -96,6 +96,116 @@ Fractional values are rounded up.</dd>
 
     </div>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="bind"><span style="font-weight:lighter"></span>H3DU.FrameBuffer#bind<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebuffer.js.html">h3du-framebuffer.js</a>, <a href="h3du-framebuffer.js.html#line111">line 111</a>
+     </i></small></p>
+
+<div class="description">
+    Binds this frame buffer to the WebGL context associated with
+it.  Future draw calls that use the WebGL context will be rendered
+to this frame buffer until it's unbound with the H3DU.FrameBuffer#unbind
+method.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.FrameBuffer#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebuffer.js.html">h3du-framebuffer.js</a>, <a href="h3du-framebuffer.js.html#line143">line 143</a>
+     </i></small></p>
+
+<div class="description">
+    Disposes all resources from this frame buffer object.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="resize"><span style="font-weight:lighter"></span>H3DU.FrameBuffer#resize<span class="signature">(width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebuffer.js.html">h3du-framebuffer.js</a>, <a href="h3du-framebuffer.js.html#line85">line 85</a>
+     </i></small></p>
+
+<div class="description">
+    Resizes the frame buffer to a new width and height,
+if either differs from the current width or height.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>width</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           New width, in pixels, of the frame buffer.
+Fractional values are rounded up.</dd>
+
+        <dt>
+
+                <code>height</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           New height, in pixels, of the frame buffer.
+Fractional values are rounded up.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="unbind"><span style="font-weight:lighter"></span>H3DU.FrameBuffer#unbind<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebuffer.js.html">h3du-framebuffer.js</a>, <a href="h3du-framebuffer.js.html#line128">line 128</a>
+     </i></small></p>
+
+<div class="description">
+    Unbinds this frame buffer from its associated WebGL context.
+</div>
+
+<dl class="details">
+
+</dl>
+
 </article>
 
 </section>

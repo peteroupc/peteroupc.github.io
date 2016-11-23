@@ -33,7 +33,7 @@
 
     <h4 style="margin-bottom:0px" id="SurfaceEval"><span style="font-weight:lighter"></span>new SurfaceEval<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line757">line 757</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line767">line 767</a>
      </i></small></p>
 
 <div class="description">
@@ -56,6 +56,503 @@ For more information, see the <a href="tutorial-surfaces.html">Parametric Curves
 </dl>
 
     </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="color"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#color<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line862">line 862</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating color values.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>evaluator</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           An object that must contain a function
+named "evaluate", giving 3 values as a result.  See H3DU.SurfaceEval#vertex.
+</ul></dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="evalOne"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#evalOne<span class="signature">(mesh, u, v)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line895">line 895</a>
+     </i></small></p>
+
+<div class="description">
+    Generates vertex positions and attributes based on a point
+in a parametric surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>mesh</code>
+
+                (
+<span class="param-type"><a href="H3DU.Mesh.html">H3DU.Mesh</a></span>
+
+)
+
+           </dt><dd>
+           H3DU.Mesh where vertex positions and attributes
+will be generated.  When this method returns, the current color, normal,
+and texture coordinates will be the same as they were before the method
+started.</dd>
+
+        <dt>
+
+                <code>u</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           U-coordinate of the curve to evaluate</dd>
+
+        <dt>
+
+                <code>v</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           V-coordinate of the curve to evaluate.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="evalSurface"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#evalSurface<span class="signature">(mesh, mode<sub style="font-weight:lighter">opt</sub>, un<sub style="font-weight:lighter">opt</sub>, vn<sub style="font-weight:lighter">opt</sub>, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line1060">line 1060</a>
+     </i></small></p>
+
+<div class="description">
+    Generates the vertex positions and attributes of a parametric
+surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>mesh</code>
+
+                (
+<span class="param-type"><a href="H3DU.Mesh.html">H3DU.Mesh</a></span>
+
+)
+
+           </dt><dd>
+           H3DU.Mesh where vertex positions and attributes
+will be generated.  When this method returns, the current color, normal,
+and texture coordinates will be the same as they were before the method
+started.</dd>
+
+        <dt>
+
+                <code>mode</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           If this value is H3DU.Mesh.TRIANGLES, or is null
+or omitted, generates a series of triangles defining the surface.  If
+this value is H3DU.Mesh.LINES, generates
+a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
+generates a series of points along the curve.  For any other value,
+this method has no effect.</dd>
+
+        <dt>
+
+                <code>un</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Number of subdivisions along the U-axis.
+Default is 24.</dd>
+
+        <dt>
+
+                <code>vn</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Number of subdivisions along the V-axis.
+Default is 24.</dd>
+
+        <dt>
+
+                <code>u1</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Starting U-coordinate of the surface to evaluate.
+Default is 0.</dd>
+
+        <dt>
+
+                <code>u2</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Ending U-coordinate of the surface to evaluate.
+Default is 1.</dd>
+
+        <dt>
+
+                <code>v1</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Starting U-coordinate of the surface to evaluate.
+Default is 0.</dd>
+
+        <dt>
+
+                <code>v2</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Ending U-coordinate of the surface to evaluate.
+Default is 1.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="normal"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#normal<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line850">line 850</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating normals.
+<p>
+To generate normals for a function for a regular surface (usually
+a continuous, unbroken surface such as a sphere, disk, or open
+cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
+the function used for vertex calculation (we'll call it <b>F</b>) with
+respect to u, then find the partial derivative of <b>F</b> with respect to
+v, then take their <a href="http://en.wikipedia.org/wiki/Cross_product">cross
+product</a> (e.g., <a href="H3DU.Math.html#.vec3cross">H3DU.Math.vec3cross</a>), then normalize the result to unit length.
+In mathematical notation, this looks like:
+<b>c</b> = &#x2202;<b>F</b>/&#x2202<i>u</i> &times;
+&#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
+If autonormal is enabled (see setAutoNormal()), H3DU.SurfaceEval uses an approximation to this approach,
+as the H3DU.SurfaceEval class doesn't know the implementation of the method used
+for vertex calculation.<p>
+(Note: &#x2202;<b>F</b>/&#x2202<i>u</i> is also called the <i>bitangent</i>
+or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>v</i> is also
+called the <i>tangent vector</i>.)
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>evaluator</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           An object that must contain a function
+named "evaluate", giving 3 values as a result.  See H3DU.SurfaceEval#vertex.
+</ul></dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h5>Example</h5>
+
+        <p class="code-caption">The following example sets the normal generation
+function for a parametric surface.  To illustrate how the method is derived
+from the vector calculation method, that method is also given below.  To
+derive the normal calculation, first look at the vector function:<p>
+<b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
+Then, find the partial derivatives with respect to u and v:<p>
+&#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
+&#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))<p>
+Next, take their cross product:<p>
+<b>c</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br><p>
+And finally, normalize the result:<p>
+<b>n</b>(u, v) = <b>c</b>(u, v)/|<b>c</b>(u, v)|<p>
+</p>
+
+    <pre class="prettyprint"><code>surfaceEval.vertex({"evaluate":function(u,v){
+ return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+}})
+.normal({"evaluate":function(u,v){
+ return H3DU.Math.vec3normInPlace([
+  Math.cos(u)*-Math.sin(v)*Math.sin(u),
+  Math.sin(u)*-Math.sin(v)*Math.sin(u),
+  0]);
+}})</code></pre>
+
+    <h4 style="margin-bottom:0px" id="setAutoNormal"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#setAutoNormal<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line784">line 784</a>
+     </i></small></p>
+
+<div class="description">
+    Sets whether this object will automatically generate
+normals rather than use the parametric evaluator
+specified for normal generation, if any.
+By default, normals won't be generated automatically.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>value</code>
+
+                (
+<span class="param-type">Boolean</span>
+
+)
+
+           </dt><dd>
+           Either true or false.  True means normals
+will automatically be generated; false means they won't.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="texCoord"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#texCoord<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line879">line 879</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating texture coordinates.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>evaluator</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           An object that must contain a function
+named "evaluate", giving 2 values as a result.  See H3DU.SurfaceEval#vertex.
+</ul></dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
+
+    <h5>Example</h5>
+
+        <p class="code-caption">The following example sets the surface
+function to a linear evaluator. Thus, coordinates passed to the
+evalOne and evalSurface methods will be interpolated as direct
+texture coordinates.</p>
+
+    <pre class="prettyprint"><code>surface.texCoord({"evaluate":function(u,v){ return [u,v] }});</code></pre>
+
+    <h4 style="margin-bottom:0px" id="vertex"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#vertex<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line799">line 799</a>
+     </i></small></p>
+
+<div class="description">
+    Specifies a parametric surface function for generating vertex positions.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>evaluator</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           An object that must contain a function
+named "evaluate".  It takes the following parameters in this order:<ul>
+<li><code>u</code> - Horizontal-axis coordinate, generally from 0 to 1.
+<li><code>v</code> - Vertical-axis coordinate, generally from 0 to 1.
+</ul>
+The evaluator function returns an array of the result of the evaluation.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></span>)
+
+</div>
 
 </article>
 

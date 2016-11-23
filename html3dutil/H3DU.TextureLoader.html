@@ -43,6 +43,372 @@ to WebGL contexts.
 
     </div>
 
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.TextureLoader#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line148">line 148</a>
+     </i></small></p>
+
+<div class="description">
+    Disposes all resources used by this texture loader.
+</div>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="getTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#getTexture<span class="signature">(name)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line17">line 17</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>name</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="loadAndMapTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadAndMapTexture<span class="signature">(texture, context)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line84">line 84</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>texture</code>
+
+                (
+<span class="param-type">String</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>context</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that resolves when
+the texture is loaded successfully (the result will be an H3DU.Texture object)
+and is rejected when an error occurs.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="loadAndMapTexturesAll"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadAndMapTexturesAll<span class="signature">(textures, context, resolve, reject)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line104">line 104</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>textures</code>
+
+                (
+<span class="param-type">Array.&lt;String></span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>context</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>resolve</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>reject</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise as described in
+<a href="H3DU.html#.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>.  If the promise
+resolves, each item in the resulting array will be a loaded
+<a href="H3DU.Texture.html">H3DU.Texture</a> object.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="loadTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadTexture<span class="signature">(name)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line26">line 26</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>name</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="loadTexturesAll"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadTexturesAll<span class="signature">(textures, resolve, reject)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line68">line 68</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>textures</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>resolve</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>reject</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise as described in
+<a href="H3DU.html#.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>.  If the promise
+resolves, each item in the resulting array will be a loaded
+<a href="H3DU.Texture.html">H3DU.Texture</a> object.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="mapTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#mapTexture<span class="signature">(texture, context)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line132">line 132</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>texture</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>context</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="mapTextures"><span style="font-weight:lighter"></span>H3DU.TextureLoader#mapTextures<span class="signature">(textures, context)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line119">line 119</a>
+     </i></small></p>
+
+<div class="description">
+    Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>textures</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+        <dt>
+
+                <code>context</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
 </article>
 
 </section>

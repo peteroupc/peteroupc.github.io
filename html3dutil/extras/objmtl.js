@@ -37,7 +37,8 @@ this.url=null;
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
  * @returns {H3DU.ShapeGroup} Group of shapes.
- */
+ * @memberof! ObjData#
+*/
 ObjData.prototype.toShape=function(){
  "use strict";
 var multi=new H3DU.ShapeGroup();
@@ -69,7 +70,8 @@ ObjData.prototype._gatherTextureNames=function(){
  * of the model to use.
  * @returns {H3DU.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
- */
+ * @memberof! ObjData#
+*/
 ObjData.prototype.toShapeFromName=function(name){
  "use strict";
 var multi=new H3DU.ShapeGroup();
@@ -131,7 +133,8 @@ for(var i=0;i<this.list.length;i++){
 /**
  * Not documented yet.
  * @param {*} name
- */
+ * @memberof! MtlData#
+*/
 MtlData.prototype.getMaterial=function(name){
   "use strict";
 for(var i=0;i<this.list.length;i++){

@@ -37,7 +37,7 @@
 3D object. This includes how an object scatters, reflects, or absorbs light, as well
 as well as a texture image to apply on that object's surface.<p>
 <i>For more information on this constructor's parameters,
-see the <a href="H3DU.html#.Material#setParams">H3DU.Material#setParams</a> method.</i>
+see the H3DU.Material#setParams method.</i>
 </div>
 
     <h5>Parameters:</h5>
@@ -346,6 +346,101 @@ of each part of the material.
 <dl class="details">
 
 </dl>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.Material#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line175">line 175</a>
+     </i></small></p>
+
+<div class="description">
+    Clones this object's parameters to a new H3DU.Material
+object and returns that object. The material's texture
+maps and shader program, if any, won't be cloned, but rather, a reference
+to the same object will be used.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A copy of this object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>H3DU.Material#setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line222">line 222</a>
+     </i></small></p>
+
+<div class="description">
+    Sets parameters for this material object.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>params</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           An object whose keys have
+the possibilities given below, and whose values are those
+allowed for each key.<ul>
+<li><code>basic</code> - If set to true, only the "diffuse" and "texture" properties
+of this material are used, and the object with this material will be drawn without
+regard to lighting.
+<li><code>ambient</code> - A <a href="H3DU.html#.toGLColor">color vector or string</a> giving the ambient color. (See <a href="H3DU.Material.html#ambient">H3DU.Material#ambient</a>.)
+The default is (0.2, 0.2, 0.2).
+<li><code>diffuse</code> - A <a href="H3DU.html#.toGLColor">color vector or string</a> giving
+the diffusion color (also called "albedo"). (See <a href="H3DU.Material.html#diffuse">H3DU.Material#diffuse</a>.) The default is (0.8, 0.8, 0.8).
+<li><code>specular</code> - A <a href="H3DU.html#.toGLColor">color vector or string</a> giving
+the specular reflection.  (See <a href="H3DU.Material.html#specular">H3DU.Material#specular</a>.) The default is (0,0,0), meaning no specular highlights.
+<li><code>shininess</code> - Specular reflection exponent.  (See <a href="H3DU.Material.html#shininess">H3DU.Material#shininess</a>).
+Ranges from 0 through 128. The default is 0.
+<li><code>emission</code> - A <a href="H3DU.html#.toGLColor">color vector or string</a> giving
+the additive color.  (See <a href="H3DU.Material.html#emission">H3DU.Material#emission</a>.) If this is an array, its numbers can
+range from -1 to 1. The default is (0,0,0).
+<li><code>texture</code> - <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture
+to use.
+<li><code>specularMap</code> - <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL, of a specular
+map texture (see <a href="H3DU.Material.html#specularMap">H3DU.Material#specularMap</a>).
+<li><code>normalMap</code> - <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL, of a normal
+map (bump map) texture (see <a href="H3DU.Material.html#normalMap">H3DU.Material#normalMap</a>).
+<li><code>shader</code> - <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a> object for a WebGL shader program
+to use when rendering objects with this material.
+</ul>
+Any or all of these keys can exist in the parameters object.  If a value is null or undefined, it is ignored.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>)
+
+</div>
 
 </article>
 

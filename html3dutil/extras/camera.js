@@ -118,7 +118,8 @@ function InputTracker(element){
 }
 /**
  * Not documented yet.
- */
+ * @memberof! InputTracker#
+*/
 InputTracker.prototype.dispose=function(){
  for(var i=0;i<this.handlers.length;i++){
   var h=this.handlers[i]
@@ -136,7 +137,8 @@ InputTracker.prototype.dispose=function(){
 /**
  * Not documented yet.
  * @param {*} func
- */
+ * @memberof! InputTracker#
+*/
 InputTracker.prototype.mousewheel=function(func){
  "use strict";
  this.mouseWheelCallback=func;
@@ -187,7 +189,8 @@ InputTracker.ADD=107;
 InputTracker.SUBTRACT=109;
 /**
  * Not documented yet.
- */
+ * @memberof! InputTracker#
+*/
 InputTracker.prototype.deltaXY=function(){
  "use strict";
 var deltaX=0;
@@ -352,7 +355,8 @@ this.scene.setViewMatrix(this._getView());
 /**
  * Not documented yet.
  * @param {*} dist
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.setDistance=function(dist){
  // don't move closer than the near plane
  "use strict";
@@ -425,7 +429,8 @@ if(angleDegrees!==0){
 /**
  * Not documented yet.
  * @param {*} angleDegrees
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.moveAngleVertical=function(angleDegrees){
  "use strict";
 if(angleDegrees!==0){
@@ -438,7 +443,8 @@ if(angleDegrees!==0){
 /**
  * Not documented yet.
  * @param {*} angleDegrees
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.moveAngleHorizontal=function(angleDegrees){
  "use strict";
 if(angleDegrees!==0){
@@ -451,7 +457,8 @@ if(angleDegrees!==0){
 /**
  * Not documented yet.
  * @param {*} angleDegrees
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.turnVertical=function(angleDegrees){
  "use strict";
 if(angleDegrees!==0){
@@ -463,7 +470,8 @@ if(angleDegrees!==0){
  }
  return this;
 };
-/** @deprecated */
+/** @deprecated * @memberof! Camera#
+*/
 Camera.prototype.turnHorizontal=function(angleDegrees){
  "use strict";
 if(angleDegrees!==0){
@@ -480,7 +488,8 @@ if(angleDegrees!==0){
  * @param {*} cx
  * @param {*} cy
  * @param {*} cz
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.movePosition=function(cx,cy,cz){
  "use strict";
 this.position[0]=cx;
@@ -492,7 +501,8 @@ this.position[0]=cx;
 /**
  * Not documented yet.
  * @param {*} dist
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.moveClose=function(dist){
  "use strict";
 return this.setDistance(this._distance()-dist);
@@ -500,7 +510,8 @@ return this.setDistance(this._distance()-dist);
 /**
  * Not documented yet.
  * @param {*} dist
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.moveForward=function(dist){
  "use strict";
 if(dist!==0){
@@ -512,7 +523,8 @@ if(dist!==0){
 /**
  * Not documented yet.
  * @param {*} dist
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.moveCenterHorizontal=function(dist){
  "use strict";
 if(dist!==0){
@@ -524,7 +536,8 @@ if(dist!==0){
 /**
  * Not documented yet.
  * @param {*} dist
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.moveCenterVertical=function(dist){
  "use strict";
 if(dist!==0){
@@ -536,7 +549,8 @@ if(dist!==0){
 /**
  * Not documented yet.
  * @param {*} dist
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.moveHorizontal=function(dist){
  "use strict";
 if(dist!==0){
@@ -548,7 +562,8 @@ if(dist!==0){
 /**
  * Not documented yet.
  * @param {*} dist
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.moveVertical=function(dist){
  "use strict";
 if(dist!==0){
@@ -560,7 +575,8 @@ if(dist!==0){
 /**
  * Not documented yet.
  * @param {*} e
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.getPosition=function(){
   "use strict";
 var view=this._getView();
@@ -572,7 +588,8 @@ var view=this._getView();
 };
 /**
  * Not documented yet.
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.getVectorFromCenter=function(){
   "use strict";
 return H3DU.Math.vec3normInPlace(this.getPosition());
@@ -589,7 +606,8 @@ var ticks=e.delta/120.0;
 
 /**
  * Not documented yet.
- */
+ * @memberof! Camera#
+*/
 Camera.prototype.update=function(){
  "use strict";
 var delta=this.input.deltaXY();

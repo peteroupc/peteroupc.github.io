@@ -614,7 +614,8 @@ var iVertex, iTetrahedron, iVertexInACube;
  * @param {*} ymax
  * @param {*} zmin
  * @param {*} zmax
- */
+ * @memberof! ImplicitSurface#
+*/
 ImplicitSurface.prototype.findBox=function(xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax){
         "use strict";
 var xstep=(xmax-xmin)/xsize;
@@ -661,7 +662,8 @@ var xstep=(xmax-xmin)/xsize;
  * @param {*} ymax
  * @param {*} zmin
  * @param {*} zmax
- */
+ * @memberof! ImplicitSurface#
+*/
 ImplicitSurface.prototype.evalSurfacePoints=function(mesh,xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax)
 {
         "use strict";
@@ -695,7 +697,8 @@ mesh.mode(H3DU.Mesh.POINTS);
  * @param {*} ymax
  * @param {*} zmin
  * @param {*} zmax
- */
+ * @memberof! ImplicitSurface#
+*/
 ImplicitSurface.prototype.evalSurface=function(mesh,xsize,ysize,zsize,xmin,xmax,ymin,ymax,zmin,zmax)
 {
         "use strict";

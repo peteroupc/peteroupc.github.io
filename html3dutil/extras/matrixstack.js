@@ -31,14 +31,16 @@ function H3DU.MatrixStack(){
 /**
  * Gets a copy of the matrix at the top of this stack.
  * @returns {Array<Number>}.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.get=function(){
  return this.stack[this.stack.length-1].slice(0,16);
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the identity matrix.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.loadIdentity=function(){
  this.stack[this.stack.length-1]=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
  return this;
@@ -47,6 +49,7 @@ H3DU.MatrixStack.prototype.loadIdentity=function(){
  * Modifies the matrix at the top of this stack by replacing it with the given matrix.
  * @param {Array<Number>} mat A matrix to replace the top of the stack with.
  * @returns {H3DU.MatrixStack} This object.
+* @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.loadMatrix=function(mat){
  this.stack[this.stack.length-1]=mat.slice(0,16);
@@ -58,6 +61,7 @@ H3DU.MatrixStack.prototype.loadMatrix=function(mat){
  * @param {Array<Number>} mat A matrix whose transpose will
  * replace the top of the stack.
  * @returns {H3DU.MatrixStack} This object.
+* @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.loadTransposeMatrix=function(mat){
  var m=mat.slice(0,16);
@@ -80,7 +84,8 @@ H3DU.MatrixStack.prototype.loadTransposeMatrix=function(mat){
  * the effect of scaling then translation.
  * @param {Array<Number>} mat A matrix to multiply the current one by.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.multMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
  var dst=[];
@@ -107,7 +112,8 @@ H3DU.MatrixStack.prototype.multMatrix=function(mat){
  * @param {Array<Number>} mat A matrix whose transpose the current
  * matrix will be multiplied by.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.multTransposeMatrix=function(mat){
  var curmat=this.stack[this.stack.length-1];
  var dst=[];
@@ -136,7 +142,8 @@ H3DU.MatrixStack.prototype.multTransposeMatrix=function(mat){
  * @param {Number} z Z-component of the axis
  * of rotation.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.rotate=function(angle,x,y,z){
  var ang=angle*Math.PI/180;
  var v0=x;
@@ -181,7 +188,8 @@ return this.multMatrix([cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+x
  * @param {Number} y Translation along the Y axis.
  * @param {Number} z Translation along the Z axis.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.translate=function(x,y,z){
  var mat=this.stack[this.stack.length-1];
  this.stack[this.stack.length-1]=[
@@ -202,7 +210,8 @@ H3DU.MatrixStack.prototype.translate=function(x,y,z){
  * @param {Number} y Scale factor along the Y axis.
  * @param {Number} z Scale factor along the Z axis.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.scale=function(x,y,z){
  var mat=this.stack[this.stack.length-1];
  mat[0]*=x;
@@ -223,7 +232,8 @@ H3DU.MatrixStack.prototype.scale=function(x,y,z){
  * Makes a copy of the matrix at the top of this stack
  * and puts the copy on top of the stack.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.pushMatrix=function(){
  this.stack.push(this.stack[this.stack.length-1].slice(0,16));
  return this;
@@ -233,7 +243,8 @@ H3DU.MatrixStack.prototype.pushMatrix=function(){
  * the matrix beneath it the new top matrix.  Has no
  * effect if the stack has only one matrix.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.popMatrix=function(){
  if(this.stack.length>1){
   this.stack.pop();
@@ -258,7 +269,8 @@ H3DU.MatrixStack.prototype.popMatrix=function(){
  * @param {Number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.ortho=function(l,r,b,t,n,f){
 var m=this.stack[this.stack.length-1];
 var invrl=1.0/(r-l);
@@ -301,7 +313,8 @@ return this;
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.frustum=function(l,r,b,t,n,f){
 var m=this.stack[this.stack.length-1];
 var invrl=1.0/(r-l);
@@ -343,7 +356,8 @@ return this;
  * @param {Number} uy Y coordinate of the up vector.
  * @param {Number} uz Z coordinate of the up vector.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
   var viewerPos=[ex,ey,ez];
   var lookingAt=[cx,cy,cz];
@@ -421,7 +435,8 @@ H3DU.MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
  * @param {Number} t Topmost coordinate of the 2D view.
  * (Note that t can be greater than b or vice versa.)
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.ortho2d=function(l,r,b,t){
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
@@ -459,7 +474,8 @@ return this;
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.perspective=function(fov,aspect,n,f){
 var ftan = 1/Math.tan(fov*Math.PI/360);
 var v0 = ftan/aspect;
@@ -488,7 +504,8 @@ return this;
  * of the lower left corner followed by the width and height
  * of a rectangle indicating the current viewport.
  * @returns {H3DU.MatrixStack} This object.
- */
+ * @memberof! H3DU.MatrixStack#
+*/
 H3DU.MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
  var invww=1.0/ww;
  var invwh=1.0/wh;

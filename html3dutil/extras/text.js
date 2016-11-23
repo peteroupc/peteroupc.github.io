@@ -96,7 +96,8 @@ H3DU.TextFont._toArray=function(str,minLength){
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
  * U+000A, that break lines).
- */
+ * @memberof! H3DU.TextFont#
+*/
 H3DU.TextFont.prototype.measure=function(str,params){
  var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight :
    this.common.lineHeight;
@@ -262,6 +263,7 @@ H3DU.TextFont.prototype._findLineBreaks=function(str,scale,maxWidth){
 * or a single {@link H3DU.Texture} if only one texture page is used.
 * If null or omitted, uses the default filenames for texture pages defined in this font.
 * </ul>
+* @memberof! H3DU.TextFont#
 */
 H3DU.TextFont.prototype.textShape=function(str, params){
  var group=new H3DU.ShapeGroup();
@@ -372,7 +374,8 @@ H3DU.TextFont.prototype._makeTextMeshesInner=function(str,startPos,endPos,xPos,y
 * @returns {Array<Mesh>} An array of meshes representing the text.
 * There is one mesh for each texture page of the font.  If none of the
 * text uses a given page, the corresponding mesh will be null.
- */
+ * @memberof! H3DU.TextFont#
+*/
 H3DU.TextFont.prototype.makeTextMeshes=function(str,params){
  var meshesForPage=[];
  var xPos=((typeof params.x !== "undefined" && params.x !== null)) ? params.x : 0;
@@ -766,7 +769,8 @@ H3DU.TextFont.loadWithTextures=function(fontFileName,textureLoader){
 /**
  * Not documented yet.
  * @param {*} textureLoader
- */
+ * @memberof! H3DU.TextFont#
+*/
 H3DU.TextFont.prototype.loadTextures=function(textureLoader){
   var textures=[]
   for(var i=0;i<this.pages.length;i++){

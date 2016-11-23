@@ -50,7 +50,8 @@ this.scale=[1,1,1];
   * Returns a copy of a three-element array giving the scaling for an object's width,
   * height, and depth, respectively.
   * For each component, 1 means no scaling.
-  * @returns {Array&lt;Number>} Return value.   */
+  * @returns {Array&lt;Number>} Return value.   * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.getScale=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -62,7 +63,8 @@ if(!this.complexMatrix){
   /**
   * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
   * of an object relative to its original position.
-  * @returns {Array&lt;Number>} Return value.   */
+  * @returns {Array&lt;Number>} Return value.   * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.getPosition=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -73,7 +75,8 @@ if(!this.complexMatrix){
 };
   /**
    * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
-   * @returns {Array&lt;Number>} Return value.   */
+   * @returns {Array&lt;Number>} Return value.   * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.getQuaternion=function(){
  "use strict";
 if(!this.complexMatrix){
@@ -86,6 +89,7 @@ if(!this.complexMatrix){
 /**
 * Resets this shape to the untransformed state.
 * @returns {H3DU.Shape} This object.
+* @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.reset=function(){
  "use strict";
@@ -105,7 +109,8 @@ this.matrix=H3DU.Math.mat4identity();
  * @param {Array&lt;Number>} value A 4x4 matrix.
  * This method will copy the value of this parameter.
  * @returns {H3DU.Transform} This object.
- */
+ * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.setMatrix=function(value){
  "use strict";
 this._matrixDirty=false;
@@ -125,7 +130,8 @@ this._matrixDirty=false;
 };
 /**
  * Returns whether this transform is the identity transform.
- * @returns {Boolean} Return value. */
+ * @returns {Boolean} Return value. * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.isIdentity=function(){
  "use strict";
 if(this._matrixDirty){
@@ -144,6 +150,7 @@ if(this._matrixDirty){
 * Resets this transform to the untransformed state.
 * @deprecated Use the "reset" method instead.
 * @returns {H3DU.Transform} This object.
+* @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.resetTransform=function(){
  "use strict";
@@ -161,7 +168,8 @@ H3DU.Transform.prototype.resetTransform=function(){
  * @param {Number} y Scaling factor for this object's height.
  * @param {Number} z Scaling factor for this object's depth.
 * @returns {H3DU.Transform} This object.
- */
+ * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.setScale=function(x,y,z){
   "use strict";
 if(this.complexMatrix)return this;
@@ -193,7 +201,8 @@ if(this.complexMatrix)return this;
  * @param {Number} z The Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @returns {H3DU.Transform} This object.
- */
+ * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.setPosition=function(x,y,z){
   "use strict";
 if(this.complexMatrix)return this;
@@ -226,7 +235,8 @@ if(this.complexMatrix)return this;
  * @param {Number} z Number to add to the Z-coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @returns {H3DU.Transform} This object.
- */
+ * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.movePosition=function(x,y,z){
   "use strict";
 if(this.complexMatrix)return this;
@@ -268,7 +278,8 @@ if(this.complexMatrix)return this;
  * // Set an object's orientation to 30 degree pitch multiplied
  * // by 40 degree roll
  * transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
- */
+ * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.setQuaternion=function(quat){
   "use strict";
 if(this.complexMatrix)return this;
@@ -298,7 +309,8 @@ if(this.complexMatrix)return this;
  * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
  * @returns {H3DU.Transform} This object.
- */
+ * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.setOrientation=function(angle, v,vy,vz){
  "use strict";
 return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
@@ -322,7 +334,8 @@ return this.setQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
  * // Combine an object's orientation with 30 degree pitch multiplied
  * // by 40 degree roll
  * transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
- */
+ * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.multQuaternion=function(quat){
   "use strict";
 if(this.complexMatrix)return this;
@@ -349,7 +362,8 @@ if(this.complexMatrix)return this;
  * @param {Number} vz Z-component of the point lying on the axis
  * of rotation.
  * @returns {H3DU.Transform} This object.
- */
+ * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.multOrientation=function(angle, v,vy,vz){
  "use strict";
 return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
@@ -359,7 +373,8 @@ return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
  * of the scale, position, and rotation properties,
  * unless a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
- * @returns {Array&lt;Number>} Return value. */
+ * @returns {Array&lt;Number>} Return value. * @memberof! H3DU.Transform#
+*/
 H3DU.Transform.prototype.getMatrix=function(){
   "use strict";
 if(this._matrixDirty){
@@ -405,6 +420,7 @@ if(this._matrixDirty){
 * will have its own version of the rotation, scale,
 * position, and matrix data.
 * @returns {H3DU.Transform} A copy of this object.
+* @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.copy=function(){
  "use strict";

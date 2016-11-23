@@ -24,7 +24,8 @@ Animators.prototype._ensure=function(shape){
 /**
  * Not documented yet.
  * @param {*} time
- */
+ * @memberof! Animators#
+*/
 Animators.prototype.startAt=function(time){
  this.curTime=time
  return this;
@@ -32,7 +33,8 @@ Animators.prototype.startAt=function(time){
 /**
  * Not documented yet.
  * @param {*} shape
- */
+ * @memberof! Animators#
+*/
 Animators.prototype.thenShow=function(shape){
  this._ensure(shape).setVisibleAt(true,this.curTime)
  return this;
@@ -47,7 +49,8 @@ Animators.prototype.thenShow=function(shape){
  * @param {*} y2
  * @param {*} z2
  * @param {*} dur
- */
+ * @memberof! Animators#
+*/
 Animators.prototype.thenShowAndMove=function(shape,x,y,z,x2,y2,z2,dur){
  return this.thenShow(shape).thenMove(shape,x,y,z,x2,y2,z2,dur)
 }
@@ -61,7 +64,8 @@ Animators.prototype.thenShowAndMove=function(shape,x,y,z,x2,y2,z2,dur){
  * @param {*} y2
  * @param {*} z2
  * @param {*} dur
- */
+ * @memberof! Animators#
+*/
 Animators.prototype.thenMove=function(shape,x,y,z,x2,y2,z2,dur){
  this._ensure(shape).moveTo(x,y,z,x2,y2,z2,this.curTime,dur)
  this.curTime+=dur
@@ -70,7 +74,8 @@ Animators.prototype.thenMove=function(shape,x,y,z,x2,y2,z2,dur){
 /**
  * Not documented yet.
  * @param {*} time
- */
+ * @memberof! Animators#
+*/
 Animators.prototype.thenPause=function(time){
  this.curTime+=time
  return this;
@@ -78,7 +83,8 @@ Animators.prototype.thenPause=function(time){
 /**
  * Not documented yet.
  * @param {*} time
- */
+ * @memberof! Animators#
+*/
 Animators.prototype.update=function(time){
  for(var i=0;i<this.list.length;i++){
   this.list[i].update(time)
@@ -115,7 +121,8 @@ Animator._compact=function(arr){
  * @param {*} z2
  * @param {*} startInMs
  * @param {*} durationInMs
- */
+ * @memberof! Animator#
+*/
 Animator.prototype.showAndMoveTo=function(
   x,y,z,x2,y2,z2,startInMs,durationInMs){
  return this.setVisibleAt(true,startInMs)
@@ -132,7 +139,8 @@ Animator.prototype.showAndMoveTo=function(
  * @param {*} z2
  * @param {*} startInMs
  * @param {*} durationInMs
- */
+ * @memberof! Animator#
+*/
 Animator.prototype.moveTo=function(
   x,y,z,x2,y2,z2,startInMs,durationInMs){
  this.positionAnim.push([
@@ -143,7 +151,8 @@ Animator.prototype.moveTo=function(
  * Not documented yet.
  * @param {*} vis
  * @param {*} timeInMs
- */
+ * @memberof! Animator#
+*/
 Animator.prototype.setVisibleAt=function(vis,timeInMs){
  this.visibleAnim.push([!!vis,timeInMs])
  return this;
@@ -151,7 +160,8 @@ Animator.prototype.setVisibleAt=function(vis,timeInMs){
 /**
  * Not documented yet.
  * @param {*} time
- */
+ * @memberof! Animator#
+*/
 Animator.prototype.update=function(time){
  var posChanged=false
  var visChanged=false

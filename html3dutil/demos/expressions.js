@@ -99,7 +99,8 @@ this.name = name;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Operator#
+*/
 Operator.prototype.toString=function() {
 
       "use strict";
@@ -154,7 +155,8 @@ var a, b, c, d;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Expression#
+*/
 Expression.prototype.simplify=function() {
 
       "use strict";
@@ -270,7 +272,8 @@ var a, b, c, d, e, passes = null, pass__ = null, pass = null, prevNode = null, p
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Expression#
+*/
 Expression.prototype.toString=function() {
 
       "use strict";
@@ -279,7 +282,8 @@ return "["+this.nodes+"]";
 
 /**
  * Not documented yet.
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.length=function() {
 
       "use strict";
@@ -288,7 +292,8 @@ return this.nodes.length;
 /**
  * Not documented yet.
  * @param {*} index
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.get=function(index) {
 
       "use strict";
@@ -297,7 +302,8 @@ return this.nodes[index];
 /**
  * Not documented yet.
  * @param {*} op
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.isOperation=function(op) {
 
       "use strict";
@@ -306,7 +312,8 @@ return this.operator===(op);
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.equals=function(x) {
       "use strict";
 var a, b, i__ = null, i = null;
@@ -326,7 +333,8 @@ var a, b, i__ = null, i = null;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.simplify=function() {
       "use strict";
 var a, b, c, d, e, f, g;
@@ -463,7 +471,8 @@ var j;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.degen=function() {
       "use strict";
 var a, b, c, cv = null;
@@ -478,7 +487,8 @@ var a, b, c, cv = null;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.constantValue=function() {
       "use strict";
 var a, b, c, val = null, node__ = null, node = null, cv = null;
@@ -533,7 +543,8 @@ var a, op = null, arg__ = null, arg = null;
  * Not documented yet.
  * @param {*} operation
  * @param {*} x
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.combineOp=function(operation,x) {
       "use strict";
 var a, op = null;
@@ -555,7 +566,8 @@ var a, op = null;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.copy=function() {
      "use strict";
 var op=new Operation(this.operator);
@@ -567,7 +579,8 @@ var op=new Operation(this.operator);
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.negate=function() {
       "use strict";
 var a, b, op = null, node__ = null, node = null;
@@ -591,7 +604,8 @@ var a, b, op = null, node__ = null, node = null;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.subtract=function(x) {
       "use strict";
 return this.add((typeof x==="number") ? (-x) : (x.negate()));
@@ -599,7 +613,8 @@ return this.add((typeof x==="number") ? (-x) : (x.negate()));
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.add=function(x) {
 
       "use strict";
@@ -608,7 +623,8 @@ return this.combineOp("plus", x);
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.multiply=function(x) {
       "use strict";
 var a;
@@ -634,7 +650,8 @@ var a;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.divide=function(x) {
 
       "use strict";
@@ -642,7 +659,8 @@ return this.combineOp("div", x);
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.toJSString=function() {
       "use strict";
 var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, op = null;
@@ -688,7 +706,8 @@ var p1;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Operation#
+*/
 Operation.prototype.toString=function() {
       "use strict";
 var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, op = null;
@@ -725,7 +744,8 @@ var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, 
 /**
  * Not documented yet.
  * @param {*} op
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.isOperation=function(op) {
 
       "use strict";
@@ -733,14 +753,16 @@ return false;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.copy=function(){
       "use strict";
 return this;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.constantValue=function() {
 
       "use strict";
@@ -749,7 +771,8 @@ return null;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.equals=function(x) {
       "use strict";
 var a;
@@ -762,14 +785,16 @@ var a;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.toJSString=function() {
       "use strict";
 return this.toString();
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.toString=function() {
       "use strict";
 var a;
@@ -779,7 +804,8 @@ var a;
  * Not documented yet.
  * @param {*} operation
  * @param {*} x
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.combineOp=function(operation,x) {
       "use strict";
 var a, op = null, cv = null;
@@ -804,7 +830,8 @@ var a, op = null, cv = null;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.degen=function() {
 
       "use strict";
@@ -813,7 +840,8 @@ return this;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.add=function(x) {
 
       "use strict";
@@ -821,7 +849,8 @@ return this.combineOp("plus", x);
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.negate=function() {
       "use strict";
 var a, b, v = null;
@@ -833,7 +862,8 @@ var a, b, v = null;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.subtract=function(x) {
       "use strict";
 var a;
@@ -843,7 +873,8 @@ var a;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.multiply=function(x) {
 
       "use strict";
@@ -852,7 +883,8 @@ return this.combineOp("mul", x);
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Variable#
+*/
 Variable.prototype.divide=function(x) {
 
       "use strict";
@@ -861,7 +893,8 @@ return this.combineOp("div", x);
 
 /**
  * Not documented yet.
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.copy=function(){
       "use strict";
 return this;
@@ -869,7 +902,8 @@ return this;
 /**
  * Not documented yet.
  * @param {*} op
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.isOperation=function(op) {
 
       "use strict";
@@ -878,7 +912,8 @@ return false;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.equals=function(x) {
       "use strict";
 var a;
@@ -889,7 +924,8 @@ var a;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.constantValue=function() {
 
       "use strict";
@@ -897,7 +933,8 @@ return this.value;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.degen=function() {
 
       "use strict";
@@ -905,7 +942,8 @@ return this;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.toJSString=function() {
       "use strict";
 var vi = this.value.toString();
@@ -915,7 +953,8 @@ var vi = this.value.toString();
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.toString=function() {
       "use strict";
 var a, vi = null;
@@ -930,7 +969,8 @@ var a, vi = null;
  * Not documented yet.
  * @param {*} operation
  * @param {*} x
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.combineOp=function(operation,x) {
       "use strict";
 var a, op = null;
@@ -946,7 +986,8 @@ var a, op = null;
     };
 /**
  * Not documented yet.
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.negate=function() {
 
       "use strict";
@@ -955,7 +996,8 @@ return new Constant(-this.value);
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.add=function(x) {
       "use strict";
 var a;
@@ -967,7 +1009,8 @@ var a;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.subtract=function(x) {
       "use strict";
 var a;
@@ -976,7 +1019,8 @@ var a;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.multiply=function(x) {
       "use strict";
 var a;
@@ -988,7 +1032,8 @@ var a;
 /**
  * Not documented yet.
  * @param {*} x
- */
+ * @memberof! Constant#
+*/
 Constant.prototype.divide=function(x) {
       "use strict";
 var a;
