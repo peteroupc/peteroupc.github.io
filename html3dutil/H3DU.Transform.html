@@ -47,7 +47,7 @@ from one coordinate system to another.
 
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.Transform#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line409">line 409</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line414">line 414</a>
      </i></small></p>
 
 <div class="description">
@@ -70,9 +70,130 @@ position, and matrix data.
 
 </div>
 
+    <h4 style="margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>H3DU.Transform#getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line367">line 367</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the transformation matrix used by an object.  It is a combination
+of the scale, position, and rotation properties,
+unless a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn't reset yet with H3DU.Transform#resetTransform.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getPosition"><span style="font-weight:lighter"></span>H3DU.Transform#getPosition<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line54">line 54</a>
+     </i></small></p>
+
+<div class="description">
+    Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+of an object relative to its original position.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getQuaternion"><span style="font-weight:lighter"></span>H3DU.Transform#getQuaternion<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line67">line 67</a>
+     </i></small></p>
+
+<div class="description">
+    Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getScale"><span style="font-weight:lighter"></span>H3DU.Transform#getScale<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line40">line 40</a>
+     </i></small></p>
+
+<div class="description">
+    Returns a copy of a three-element array giving the scaling for an object's width,
+height, and depth, respectively.
+For each component, 1 means no scaling.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="isIdentity"><span style="font-weight:lighter"></span>H3DU.Transform#isIdentity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line123">line 123</a>
+     </i></small></p>
+
+<div class="description">
+    Returns whether this transform is the identity transform.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Boolean</span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="movePosition"><span style="font-weight:lighter"></span>H3DU.Transform#movePosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line224">line 224</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line228">line 228</a>
      </i></small></p>
 
 <div class="description">
@@ -147,7 +268,7 @@ If "x" is an array, this parameter may be omitted.</dd>
 
     <h4 style="margin-bottom:0px" id="multOrientation"><span style="font-weight:lighter"></span>H3DU.Transform#multOrientation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line351">line 351</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line355">line 355</a>
      </i></small></p>
 
 <div class="description">
@@ -241,7 +362,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id="multQuaternion"><span style="font-weight:lighter"></span>H3DU.Transform#multQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line323">line 323</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line327">line 327</a>
      </i></small></p>
 
 <div class="description">
@@ -299,7 +420,7 @@ transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));</code></pre>
 
     <h4 style="margin-bottom:0px" id="reset"><span style="font-weight:lighter"></span>H3DU.Transform#reset<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line78">line 78</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line81">line 81</a>
      </i></small></p>
 
 <div class="description">
@@ -322,7 +443,7 @@ transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));</code></pre>
 
     <h4 style="margin-bottom:0px" id="resetTransform"><span style="font-weight:lighter"></span>H3DU.Transform#resetTransform<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line139">line 139</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line143">line 143</a>
      </i></small></p>
 
         <p><b>Deprecated: Use the "reset" method instead.</b><p>
@@ -347,7 +468,7 @@ transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));</code></pre>
 
     <h4 style="margin-bottom:0px" id="setMatrix"><span style="font-weight:lighter"></span>H3DU.Transform#setMatrix<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line98">line 98</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line101">line 101</a>
      </i></small></p>
 
 <div class="description">
@@ -391,7 +512,7 @@ This method will copy the value of this parameter.</dd>
 
     <h4 style="margin-bottom:0px" id="setOrientation"><span style="font-weight:lighter"></span>H3DU.Transform#setOrientation<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line298">line 298</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line302">line 302</a>
      </i></small></p>
 
 <div class="description">
@@ -488,7 +609,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>H3DU.Transform#setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line190">line 190</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line194">line 194</a>
      </i></small></p>
 
 <div class="description">
@@ -563,7 +684,7 @@ If "x" is an array, this parameter may be omitted.</dd>
 
     <h4 style="margin-bottom:0px" id="setQuaternion"><span style="font-weight:lighter"></span>H3DU.Transform#setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line267">line 267</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line271">line 271</a>
      </i></small></p>
 
 <div class="description">
@@ -618,7 +739,7 @@ transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));</code></pre>
 
     <h4 style="margin-bottom:0px" id="setScale"><span style="font-weight:lighter"></span>H3DU.Transform#setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line157">line 157</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line161">line 161</a>
      </i></small></p>
 
 <div class="description">

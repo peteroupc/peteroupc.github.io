@@ -42,7 +42,7 @@
 
     <h4 style="margin-bottom:0px" id="addShape"><span style="font-weight:lighter"></span>H3DU.Batch3D#addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line247">line 247</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line249">line 249</a>
      </i></small></p>
 
 <div class="description">
@@ -88,7 +88,7 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="getLights"><span style="font-weight:lighter"></span>H3DU.Batch3D#getLights<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Lights.html">H3DU.Lights</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line235">line 235</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line237">line 237</a>
      </i></small></p>
 
 <div class="description">
@@ -106,6 +106,52 @@ Its parent will be set to no parent.
 
      (Type:
 <span class="param-type"><a href="H3DU.Lights.html">H3DU.Lights</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getProjectionMatrix"><span style="font-weight:lighter"></span>H3DU.Batch3D#getProjectionMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line213">line 213</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the current projection matrix for this batch of shapes.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getViewMatrix"><span style="font-weight:lighter"></span>H3DU.Batch3D#getViewMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line221">line 221</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the current view matrix for this batch of shapes.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
 
 </div>
 
@@ -364,9 +410,33 @@ see glmath.H3DU.Math.mat4perspective.
 
 </div>
 
+    <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>H3DU.Batch3D#primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line274">line 274</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this batch of shapes.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Number</span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>H3DU.Batch3D#removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line284">line 284</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line288">line 288</a>
      </i></small></p>
 
 <div class="description">
@@ -410,7 +480,7 @@ see glmath.H3DU.Math.mat4perspective.
 
     <h4 style="margin-bottom:0px" id="render"><span style="font-weight:lighter"></span>H3DU.Batch3D#render<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line347">line 347</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line351">line 351</a>
      </i></small></p>
 
 <div class="description">
@@ -555,6 +625,30 @@ see glmath.H3DU.Math.mat4perspective.
 
      (Type:
 <span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>H3DU.Batch3D#vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line261">line 261</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the number of vertices composed by
+all shapes in this batch of shapes.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Number</span>)
 
 </div>
 

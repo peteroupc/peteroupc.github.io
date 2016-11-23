@@ -170,7 +170,8 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram=function(flags, context){
  this._programs[flags].push([context,prog]);
  return prog;
 }
-/** Returns the WebGL context associated with this scene. * @memberof! H3DU.Scene3D#
+/** Returns the WebGL context associated with this scene.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getContext=function(){
  return this.context;
@@ -403,7 +404,8 @@ H3DU.Scene3D.prototype.createBuffer=function(){
 /**
  * Gets the current projection matrix for this scene.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @returns {Array&lt;Number>} Return value. * @memberof! H3DU.Scene3D#
+ * @returns {Array&lt;Number>} Return value.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getProjectionMatrix=function(){
 if(this._errors)throw new Error();
@@ -415,7 +417,8 @@ return this._subScene._projectionMatrix.slice(0,16);
 /**
  * Gets the current view matrix for this scene.
 * @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @returns {Array&lt;Number>} Return value. * @memberof! H3DU.Scene3D#
+ * @returns {Array&lt;Number>} Return value.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getViewMatrix=function(){
 if(this._errors)throw new Error();
@@ -708,7 +711,8 @@ H3DU.Scene3D.prototype.clearDepth=function(){
  * Gets the number of vertices composed by
  * all shapes in this scene.
  * @deprecated Use the vertexCount method of H3DU.Batch3D objects instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
- * @returns {Number} Return value. * @memberof! H3DU.Scene3D#
+ * @returns {Number} Return value.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.vertexCount=function(){
 if(this._errors)throw new Error();
@@ -721,7 +725,8 @@ return this._subScene.vertexCount();
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this scene.
 * @deprecated  Use the primitiveCount method of H3DU.Batch3D objects instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
-* @returns {Number} Return value. * @memberof! H3DU.Scene3D#
+* @returns {Number} Return value.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.primitiveCount=function(){
 if(this._errors)throw new Error();

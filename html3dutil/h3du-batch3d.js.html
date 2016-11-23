@@ -223,14 +223,16 @@ H3DU.Batch3D.prototype.setViewMatrix=function(mat){
 };
 /**
  * Gets the current projection matrix for this batch of shapes.
- * @returns {Array&lt;Number>} Return value. * @memberof! H3DU.Batch3D#
+ * @returns {Array&lt;Number>} Return value.
+* @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.getProjectionMatrix=function(){
  return this._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this batch of shapes.
- * @returns {Array&lt;Number>} Return value. * @memberof! H3DU.Batch3D#
+ * @returns {Array&lt;Number>} Return value.
+* @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.getViewMatrix=function(){
  return this._viewMatrix.slice(0,16);
@@ -269,7 +271,8 @@ H3DU.Batch3D.prototype.addShape=function(shape){
 /**
  * Gets the number of vertices composed by
  * all shapes in this batch of shapes.
- * @returns {Number} Return value. * @memberof! H3DU.Batch3D#
+ * @returns {Number} Return value.
+* @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.vertexCount=function(){
  var c=0;
@@ -281,7 +284,8 @@ H3DU.Batch3D.prototype.vertexCount=function(){
 /**
 * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this batch of shapes.
- * @returns {Number} Return value. * @memberof! H3DU.Batch3D#
+ * @returns {Number} Return value.
+* @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.primitiveCount=function(){
  var c=0;

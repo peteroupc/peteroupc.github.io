@@ -50,7 +50,8 @@ this.scale=[1,1,1];
   * Returns a copy of a three-element array giving the scaling for an object's width,
   * height, and depth, respectively.
   * For each component, 1 means no scaling.
-  * @returns {Array&lt;Number>} Return value.   * @memberof! H3DU.Transform#
+  * @returns {Array&lt;Number>} Return value.
+* @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.getScale=function(){
  "use strict";
@@ -63,7 +64,8 @@ if(!this.complexMatrix){
   /**
   * Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
   * of an object relative to its original position.
-  * @returns {Array&lt;Number>} Return value.   * @memberof! H3DU.Transform#
+  * @returns {Array&lt;Number>} Return value.
+* @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.getPosition=function(){
  "use strict";
@@ -75,7 +77,8 @@ if(!this.complexMatrix){
 };
   /**
    * Returns a copy of the rotation of an object in the form of a [quaternion]{@tutorial glmath}.
-   * @returns {Array&lt;Number>} Return value.   * @memberof! H3DU.Transform#
+   * @returns {Array&lt;Number>} Return value.
+* @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.getQuaternion=function(){
  "use strict";
@@ -130,7 +133,8 @@ this._matrixDirty=false;
 };
 /**
  * Returns whether this transform is the identity transform.
- * @returns {Boolean} Return value. * @memberof! H3DU.Transform#
+ * @returns {Boolean} Return value.
+* @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.isIdentity=function(){
  "use strict";
@@ -373,7 +377,8 @@ return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
  * of the scale, position, and rotation properties,
  * unless a matrix was defined with {@link H3DU.Transform#setMatrix}
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
- * @returns {Array&lt;Number>} Return value. * @memberof! H3DU.Transform#
+ * @returns {Array&lt;Number>} Return value.
+* @memberof! H3DU.Transform#
 */
 H3DU.Transform.prototype.getMatrix=function(){
   "use strict";
