@@ -54,21 +54,35 @@ H3DU.BufferedMesh.prototype._initialize=function(mesh, context){
  "use strict";
  var smb=(mesh instanceof H3DU.MeshBuffer) ? mesh :
    new H3DU.MeshBuffer(mesh);
+ this.arrayObjectExt=context.getExtension("OES_vertex_array_object")
+ this.arrayObjectExtContext=context;
  this.smb=smb;
  this.verts=context.createBuffer();
  if(!this.verts)throw new Error("can't create buffer")
  this.indices=context.createBuffer();
  if(!this.indices)throw new Error("can't create face buffer")
- this.arrayObjectExt=context.getExtension("OES_vertex_array_object")
- this.arrayObjectExtContext=context;
  this.vao=null;
  if(this.arrayObjectExt){
    this.vao=this.arrayObjectExt.createVertexArrayOES();
  }
+ var vertexBuffer=null;
+ var attribs=smb._getAttributes()
+ for(var i=0;i&lt;attribs.length;i++){
+  var vb=attribs[i][2]
+  if(vb &amp;&amp; vertexBuffer &amp;&amp; vertexBuffer!=vb){
+    // TODO: Support multiple vertex buffers in one mesh buffer
+    throw new Error("Not yet supported")
+  } else if(vb){
+    vertexBuffer=vb;
+  }
+ }
+ if(!vertexBuffer){
+  vertexBuffer=new Float32Array([]);
+ }
  context.bindBuffer(context.ARRAY_BUFFER, this.verts);
  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.indices);
  context.bufferData(context.ARRAY_BUFFER,
-    smb.vertices, context.STATIC_DRAW);
+    vertexBuffer, context.STATIC_DRAW);
  context.bufferData(context.ELEMENT_ARRAY_BUFFER,
     smb.indices, context.STATIC_DRAW);
  var type=context.UNSIGNED_SHORT;
@@ -135,17 +149,14 @@ if(this.verts!==null)
 H3DU.BufferedMesh.prototype._getAttribLocations=function(program,context){
  if(this._lastKnownProgram!=program){
   this._lastKnownProgram=program;
-  this._attribLocations=[
-    program.get("position"),
-    program.get("normal"),
-    program.get("colorAttr"),
-    program.get("uv"),
-    program.get("tangent"),
-    program.get("bitangent")];
-  for(var i=0;i&lt;6;i++){
-   if(this._attribLocations[i]==null){
-    this._attribLocations[i]=-1;
-   }
+  var attrs=this.smb._getAttributes()
+  this._attribLocations=[]
+  var ix=false
+  for(var i=0;i&lt;attrs.length;i++){
+    var loc=program.get(attrs[i][0]);
+    if(loc==null)loc=-1;
+    if(loc==-1)ix=true
+    this._attribLocations[i]=loc;
   }
   return true;
  }
@@ -165,20 +176,19 @@ H3DU.BufferedMesh.prototype._prepareDraw=function(program, context){
   if(rebind) {
    context.bindBuffer(context.ARRAY_BUFFER, this.verts);
    context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, this.indices);
+   var attrs=this.smb._getAttributes()
    for(var i=0;i&lt;this._attribLocations.length;i++){
     var attrib=this._attribLocations[i];
     if(attrib>=0){
-     if(this.smb._attribsUsed[i]>=0){
-      context.enableVertexAttribArray(attrib);
-      context.vertexAttribPointer(attrib, this.smb._sizes[i],
-        context.FLOAT, false,this.smb._stride*4, this.smb._attribsUsed[i]*4);
-     } else {
-      context.disableVertexAttribArray(attrib);
-     }
+     context.enableVertexAttribArray(attrib);
+     context.vertexAttribPointer(attrib, attrs[i][3],
+         context.FLOAT, false,attrs[i][4]*4, attrs[i][1]*4);
     }
    }
+   program._disableOthers(attrs);
   }
-  var useColorAttr=(this.smb._attribsUsed[2]>=0) ? 1.0 : 0.0;
+  // TODO: Somehow get rid of this special case
+  var useColorAttr=(this.smb._getAttribute("colorAttr")) ? 1.0 : 0.0;
   program.setUniforms({"useColorAttr":useColorAttr});
 }
 /**
@@ -215,7 +225,8 @@ H3DU.BufferedMesh.prototype.draw=function(program){
 };
 /**
  * Gets the number of vertices composed by all shapes in this mesh.
-* @returns {Number} Return value.* @memberof! H3DU.BufferedMesh#
+* @returns {Number} Return value.
+* @memberof! H3DU.BufferedMesh#
 */
 H3DU.BufferedMesh.prototype.vertexCount=function(){
  "use strict";
@@ -224,7 +235,8 @@ H3DU.BufferedMesh.prototype.vertexCount=function(){
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
-* @returns {Number} Return value.* @memberof! H3DU.BufferedMesh#
+* @returns {Number} Return value.
+* @memberof! H3DU.BufferedMesh#
 */
 H3DU.BufferedMesh.prototype.primitiveCount=function(){
  "use strict";

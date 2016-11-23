@@ -40,25 +40,25 @@ transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with &quot;mat&quot;.</p>
 <h3>Translation <a id=Translation></a></h3><p>A translation is a shifting of an object's position.</p>
-<p>To create a translation matrix, use H3DU.Math.mat4translated(),
+<p>To create a translation matrix, use <a href="H3DU.Math.html#.mat4translated">H3DU.Math.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 <p>To multiply an existing matrix by a translation, use
-H3DU.Math.mat4translate().  This will put the translation
+<a href="H3DU.Math.html#.mat4translate">H3DU.Math.mat4translate()</a>.  This will put the translation
 before the other transformations.</p>
 <h3>Scaling <a id=Scaling></a></h3><p>Scaling changes an object's size.</p>
-<p>To create a scaling matrix, use H3DU.Math.mat4scaled(),
+<p>To create a scaling matrix, use <a href="H3DU.Math.html#.mat4scaled">H3DU.Math.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
 factors to change the object's size.  For example, a Y-factor of 2 doubles an object's height.</p>
 <p>To multiply an existing matrix by a scaling, use
-H3DU.Math.mat4scale().  This will put the scaling
+<a href="H3DU.Math.html#.mat4scale">H3DU.Math.mat4scale()</a>.  This will put the scaling
 before the other transformations.</p>
 <h3>Rotation <a id=Rotation></a></h3><p>Rotation changes an object's orientation.</p>
-<p>To create a rotation matrix, use H3DU.Math.mat4rotated(),
+<p>To create a rotation matrix, use <a href="H3DU.Math.html#.mat4rotated">H3DU.Math.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
 origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
 <p>To multiply an existing matrix by a rotation, use
-H3DU.Math.mat4rotate().  This will put the rotation
+<a href="H3DU.Math.html#.mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
 before the other transformations.</p>
 <h3>Combining Transforms <a id=Combining_Transforms></a></h3><p>The order in which you do transforms is important.  In general, scaling then translating is
 not the same as translating then scaling.  Assuming your geometry is centered at the origin
@@ -71,7 +71,7 @@ not the same as translating then scaling.  Assuming your geometry is centered at
 </ul>
 <p>This way, the scalings and rotations will affect the object while it's still centered, and
 before the translations (shifts) take place.</p>
-<p>You can also multiply transforms using H3DU.Math.mat4multiply().
+<p>You can also multiply transforms using <a href="H3DU.Math.html#.mat4multiply">H3DU.Math.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.</p>
 <h2>Quaternions <a id=Quaternions></a></h2><p>A quaternion is a 4-element array that describes a
@@ -122,9 +122,9 @@ axis), so that a rotation along that axis will do nothing.</li>
 </ul>
 <p>Related functions:</p>
 <ul>
-<li>H3DU.Math.quatFromTaitBryan() -
+<li><a href="H3DU.Math.html#.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan()</a> -
 Converts from Tait-Bryan angles to a quaternion</li>
-<li>H3DU.Math.quatToTaitBryan() -
+<li><a href="H3DU.Math.html#.quatToTaitBryan">H3DU.Math.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 <h2>Planes <a id=Planes></a></h2><p>A 4-element array can describe a 3D plane in the following manner:</p>
@@ -143,7 +143,7 @@ plane's normal and any point on the plane.</li>
 </ul>
 <p>There is one method that deals with planes:</p>
 <ul>
-<li>H3DU.Math.planeNormInPlace() -
+<li><a href="H3DU.html#.Math.planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
 Converts the plane to a form in which its normal is unit length.</li>
 </ul>
 <h2>Coordinate Systems <a id=Coordinate_Systems></a></h2><p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>

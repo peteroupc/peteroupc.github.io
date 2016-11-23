@@ -51,7 +51,8 @@ GraphicsPath.ARC=4;
 * This flag will be reset if a moveTo command,
 * closePath command, or another path segment
 * is added to the path.
-* @returns {Boolean} Return value.* @memberof! GraphicsPath#
+* @returns {Boolean} Return value.
+* @memberof! GraphicsPath#
 */
 GraphicsPath.prototype.isIncomplete=function(){
 

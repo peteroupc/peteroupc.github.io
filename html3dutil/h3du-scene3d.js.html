@@ -326,7 +326,8 @@ H3DU.Scene3D.prototype.useProgram=function(program){
 *  Will be rounded up.
 * @param {Number} height Height of the scene, in pixels.
 *  Will be rounded up.
-* @returns {Number} Return value.* @memberof! H3DU.Scene3D#
+* @returns {Number} Return value.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.setDimensions=function(width, height){
  if(width&lt;0 || height&lt;0)throw new Error("width or height negative");
@@ -348,7 +349,8 @@ H3DU.Scene3D.prototype.setDimensions=function(width, height){
 * Gets the viewport width for this scene.
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @returns {Number} Return value.* @memberof! H3DU.Scene3D#
+* @returns {Number} Return value.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getWidth=function(){
  return this.width;
@@ -357,7 +359,8 @@ H3DU.Scene3D.prototype.getWidth=function(){
 * Gets the viewport height for this scene.
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @returns {Number} Return value.* @memberof! H3DU.Scene3D#
+* @returns {Number} Return value.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getHeight=function(){
  return this.height;
@@ -367,7 +370,8 @@ H3DU.Scene3D.prototype.getHeight=function(){
 * divided by getHeight()).
 * Note that if auto-resizing is enabled, this value may change
 * after each call to the render() method.
-* @returns {Number} Aspect ratio, or 1 if height is 0.* @memberof! H3DU.Scene3D#
+* @returns {Number} Aspect ratio, or 1 if height is 0.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getAspect=function(){
  var ch=this.getHeight();
@@ -385,7 +389,8 @@ H3DU.Scene3D.prototype.getClientHeight=function(){
 /**
 * Gets the ratio of width to height for this scene,
 * as actually displayed on the screen.
-* @returns {Number} Aspect ratio, or 1 if height is 0.* @memberof! H3DU.Scene3D#
+* @returns {Number} Aspect ratio, or 1 if height is 0.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getClientAspect=function(){
  var ch=this.getClientHeight();
@@ -799,7 +804,8 @@ H3DU.Scene3D.prototype.setLookAt=function(eye, center, up){
 * instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom
 * H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {H3DU.Shape|H3DU.ShapeGroup} shape A 3D shape.
-* @returns {H3DU.Scene3D} This object.* @memberof! H3DU.Scene3D#
+* @returns {H3DU.Scene3D} This object.
+* @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.addShape=function(shape){
 if(this._errors)throw new Error();

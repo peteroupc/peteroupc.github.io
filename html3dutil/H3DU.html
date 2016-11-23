@@ -1195,53 +1195,6 @@ If null or omitted, the default is 3.</dd>
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter">(static) </span>BufferedMesh#primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-bufferedmesh.js.html">h3du-bufferedmesh.js</a>, <a href="h3du-bufferedmesh.js.html#line213">line 213</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the number of primitives (triangles, lines,
-and points) composed by all shapes in this mesh.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.* @memberof! H3DU.BufferedMesh#
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter">(static) </span>BufferedMesh#vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-bufferedmesh.js.html">h3du-bufferedmesh.js</a>, <a href="h3du-bufferedmesh.js.html#line204">line 204</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the number of vertices composed by all shapes in this mesh.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.* @memberof! H3DU.BufferedMesh#
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
     <h4 style="margin-bottom:0px" id=".createCanvasElement"><span style="font-weight:lighter">(static) </span>createCanvasElement<span class="signature">(parent, width, height)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line76">line 76</a>
@@ -2629,38 +2582,6 @@ and stores the result in that quaternion.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter">(static) </span>MeshBuffer#primitiveCount<span class="signature">(Return)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line52">line 52</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the number of primitives (triangles, lines,
-and points) composed by all shapes in this mesh.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>Return</code>
-
-                (
-<span class="param-type">*</span>
-
-)
-
-           </dt><dd>
-           value.* @memberof! H3DU.MeshBuffer#</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
     <h4 style="margin-bottom:0px" id=".Meshes.createBox"><span style="font-weight:lighter">(static) </span>Meshes.createBox<span class="signature">(xSize, ySize, xSize, inward)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line32">line 32</a>
@@ -3903,214 +3824,9 @@ milliseconds since the page was loaded.</dd>
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id="addShape"><span style="font-weight:lighter">(static) </span>Scene3D#addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line788">line 788</a>
-     </i></small></p>
-
-        <p><b>Deprecated: Use the addShape method of individual H3DU.Batch3D instances
-instead.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom
-H3DU.Batch3D.  This compatibility behavior may be dropped in the future.</b><p>
-
-<div class="description">
-    Adds a 3D shape to this scene.  Its reference, not a copy,
-will be stored in the 3D scene's list of shapes.
-Its parent will be set to no parent.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>shape</code>
-
-                (
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>
-|
-
-<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>
-
-)
-
-           </dt><dd>
-           A 3D shape.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.* @memberof! H3DU.Scene3D#
-
-     (Type:
-<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getAspect"><span style="font-weight:lighter">(static) </span>Scene3D#getAspect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line356">line 356</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the ratio of width to height for this scene (getWidth()
-divided by getHeight()).
-Note that if auto-resizing is enabled, this value may change
-after each call to the render() method.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Aspect ratio, or 1 if height is 0.* @memberof! H3DU.Scene3D#
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getClientAspect"><span style="font-weight:lighter">(static) </span>Scene3D#getClientAspect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line374">line 374</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the ratio of width to height for this scene,
-as actually displayed on the screen.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Aspect ratio, or 1 if height is 0.* @memberof! H3DU.Scene3D#
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getHeight"><span style="font-weight:lighter">(static) </span>Scene3D#getHeight<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line346">line 346</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the viewport height for this scene.
-Note that if auto-resizing is enabled, this value may change
-after each call to the render() method.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.* @memberof! H3DU.Scene3D#
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getWidth"><span style="font-weight:lighter">(static) </span>Scene3D#getWidth<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line337">line 337</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the viewport width for this scene.
-Note that if auto-resizing is enabled, this value may change
-after each call to the render() method.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.* @memberof! H3DU.Scene3D#
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setDimensions"><span style="font-weight:lighter">(static) </span>Scene3D#setDimensions<span class="signature">(width, height)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line315">line 315</a>
-     </i></small></p>
-
-<div class="description">
-    Sets the viewport width and height for this scene.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>width</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Width of the scene, in pixels.
- Will be rounded up.</dd>
-
-        <dt>
-
-                <code>height</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Height of the scene, in pixels.
- Will be rounded up.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.* @memberof! H3DU.Scene3D#
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
     <h4 style="margin-bottom:0px" id=".ShaderProgram.getDefaultFragment"><span style="font-weight:lighter">(static) </span>ShaderProgram.getDefaultFragment<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line615">line 615</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line629">line 629</a>
      </i></small></p>
 
 <div class="description">
@@ -4137,7 +3853,7 @@ as SHADING is also enabled).
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.getDefaultVertex"><span style="font-weight:lighter">(static) </span>ShaderProgram.getDefaultVertex<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line565">line 565</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line579">line 579</a>
      </i></small></p>
 
 <div class="description">
@@ -4161,7 +3877,7 @@ at the start of the return value enables the lighting model.
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.getEdgeDetectEffect"><span style="font-weight:lighter">(static) </span>ShaderProgram.getEdgeDetectEffect<span class="signature">(context<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line509">line 509</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line523">line 523</a>
      </i></small></p>
 
 <div class="description">
@@ -4205,7 +3921,7 @@ the source texture's edges.
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.getInvertEffect"><span style="font-weight:lighter">(static) </span>ShaderProgram.getInvertEffect<span class="signature">(context<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line494">line 494</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line508">line 508</a>
      </i></small></p>
 
 <div class="description">
@@ -4248,7 +3964,7 @@ the source texture's edges.
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.makeCopyEffect"><span style="font-weight:lighter">(static) </span>ShaderProgram.makeCopyEffect<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line451">line 451</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line465">line 465</a>
      </i></small></p>
 
 <div class="description">
@@ -4261,7 +3977,7 @@ the source texture's edges.
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.makeEffect"><span style="font-weight:lighter">(static) </span>ShaderProgram.makeEffect<span class="signature">(context, functionCode)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line483">line 483</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line497">line 497</a>
      </i></small></p>
 
 <div class="description">
@@ -4326,7 +4042,7 @@ constants, functions, and so on (but not another "main" function).</dd>
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.makeEffectFragment"><span style="font-weight:lighter">(static) </span>ShaderProgram.makeEffectFragment<span class="signature">(functionCode)</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line432">line 432</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line446">line 446</a>
      </i></small></p>
 
 <div class="description">
