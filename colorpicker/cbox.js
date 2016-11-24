@@ -500,10 +500,11 @@ function colorToRgba(x){
  function parsePercent(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>100 ? 100 : c))*255/100; }
  function parseAlpha(x){ var c; return ((c=parseFloat(x))<0 ? 0 : (c>1 ? 1 : c))*255; }
  function parseByte(x){ var c; return ((c=parseInt(x,10))<0 ? 0 : (c>255 ? 255 : c)); }
- function parseHue(x){ var r1=parseFloat(e[1]);if(r1<0||r1>=360)r1=(((r1%360)+360)%360); return r1; }
+ function parseHue(x){ var r1=parseFloat(x);if(r1<0||r1>=360)r1=(((r1%360)+360)%360); return r1; }
 var e=null;
+ var a;
  if(!x)return null;
- var b,c,r1,r2,r3,r4,rgb;
+ var b,c,d,r1,r2,r3,r4,rgb;
  if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),255];
  } else if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
@@ -517,10 +518,10 @@ var e=null;
  } else if((e=(/^rgba\(\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+(?:\.\d+)?)\s*\)$/.exec(x)))!==null){
   return [parseByte(e[1]),parseByte(e[2]),parseByte(e[3]),parseAlpha(e[4])];
  } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
-  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
+  a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
   return [a+(a<<4),b+(b<<4),c+(c<<4),255];
  } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
-  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16); d=parseInt(e[4],16);
+  a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16); d=parseInt(e[4],16);
   return [a+(a<<4),b+(b<<4),c+(c<<4),d+(d<<4)];
  } else if((e=(/^hsl\(\s*([\+\-]?\d+(?:\.\d+)?)\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*\)$/.exec(x)))!==null){
   rgb=hlsToRgb([parseHue(e[1]),parsePercent(e[3]),parsePercent(e[2])]);
@@ -698,34 +699,9 @@ if(rgb.length===3 || (rgb.length>3 && ((rgb[3]===null || typeof rgb[3]==="undefi
   return rgbToColor(rgb).replace(/\s+/g,"");
  }
 }
-
+var applyCssGradient,removeFilter;
+var supportsColorInput,coloredInput;
 var doNothingURL="javascript:void(null)";
-  var removeFilter=function(o,filter){
-   if("filter" in o.style){
-    var fs=(o.style.filter||"");
-    if(fs==="none")return;
-    fs=(getComputedValue(o,"filter")||"");
-    if(fs==="none"||fs==="")return;
-    var ftmp=fs;
-    var ff=[];
-    filter=filter.toLowerCase();
-    while(ftmp.length>0){
-     var e=(/^(\s*([^\(\s\,]+)\s*(\([^\)]+\))?\s*)/).exec(ftmp);
-     if(e){
-      var filtername=e[2];
-      var filterparams=(e[3]||"");
-      var lcfiltername=e[2].toLowerCase();
-      if(lcfiltername!==filter && lcfiltername!=="progid:dximagetransform.microsoft."+filter){
-       ff[ff.length]=filtername+filterparams;
-      }
-      ftmp=ftmp.substr(e[1].length);
-     } else break;
-    }
-    var newfs=ff.join(" ");
-    if(newfs.length===0)newfs="none";
-    if(fs!==newfs)o.style.filter=newfs;
-   }
-  };
  var fakeMultiGradient=function(o,colors){
   if(colors.length===2)return applyCssGradient(o,colors);
   var nodes=o.getElementsByTagName("div");
@@ -769,7 +745,7 @@ var doNothingURL="javascript:void(null)";
    return true;
   }
  };
- var applyCssGradient=function(o,colors){
+ applyCssGradient=function(o,colors){
  if(!o || !colors || colors.length===0)return false;// no colors
  var colorstrings=[];
  for(var i=0;i<colors.length;i++){
@@ -829,6 +805,32 @@ var doNothingURL="javascript:void(null)";
  }
  return false;
 } ;
+removeFilter=function(o,filter){
+   if("filter" in o.style){
+    var fs=(o.style.filter||"");
+    if(fs==="none")return;
+    fs=(getComputedValue(o,"filter")||"");
+    if(fs==="none"||fs==="")return;
+    var ftmp=fs;
+    var ff=[];
+    filter=filter.toLowerCase();
+    while(ftmp.length>0){
+     var e=(/^(\s*([^\(\s\,]+)\s*(\([^\)]+\))?\s*)/).exec(ftmp);
+     if(e){
+      var filtername=e[2];
+      var filterparams=(e[3]||"");
+      var lcfiltername=e[2].toLowerCase();
+      if(lcfiltername!==filter && lcfiltername!=="progid:dximagetransform.microsoft."+filter){
+       ff[ff.length]=filtername+filterparams;
+      }
+      ftmp=ftmp.substr(e[1].length);
+     } else break;
+    }
+    var newfs=ff.join(" ");
+    if(newfs.length===0)newfs="none";
+    if(fs!==newfs)o.style.filter=newfs;
+   }
+  };
 var ColorSpace=subclass(Object,{
   initialize:function(info,usealpha){
   this.usealpha=usealpha;
@@ -1900,7 +1902,7 @@ documentMouseMove:function(e){
     }
   };
   var _supportsColorInput=null;
-  var supportsColorInput=function(){
+  supportsColorInput=function(){
     if((_supportsColorInput!==null && typeof _supportsColorInput!=="undefined"))return _supportsColorInput;
     var f=document.createElement("form");
     var inp=document.createElement("input");
@@ -1938,7 +1940,7 @@ documentMouseMove:function(e){
    o.setAttribute("data-currentbgcolor",val);
    setTimeout(dobgcolordelayfunc(o,val),100);
   };
-  var coloredInput=function(input,button){
+  coloredInput=function(input,button){
    var c=rootobj.getRgba(input);
    dobgcolordelay(input,rgbToColorHtml(c));
    removeFilter(input,"gradient");//IE's filter takes precedence over background, so remove
@@ -1952,6 +1954,7 @@ documentMouseMove:function(e){
   coloredInput.norgba=false;
   function onNewInputClickFunction(newInput,thisInput,extra){
    return function(){
+       var keydown,docclick,docdown;
        var ie7=ieversionorbelow(7) ; // IE7 and below doesn't support div inline-block
        var o=document.createElement((ie7 && extra.flat) ? "span" : "div");
        var cj=null;
@@ -1984,7 +1987,7 @@ documentMouseMove:function(e){
            removeListener(document,"mousedown",binder.bind(docdown));
            rootobj.triggerColorChange(thisInput);
        };
-       var keydown=function(e){
+       keydown=function(e){
          e=eventDetails(e);
          if(e.key()===27 || e.key()===13){ // escape or enter
            e.preventDefault();
@@ -1992,7 +1995,7 @@ documentMouseMove:function(e){
            endColorBox();
          }
        };
-       var docclick=function(e){
+       docclick=function(e){
          e=eventDetails(e);
          var cx=e.pageX(); var cy=e.pageY();
          if(checkclick && !(cx>=getPageX(o) && cy>=getPageY(o) &&
@@ -2002,7 +2005,7 @@ documentMouseMove:function(e){
            endColorBox();
          }
        };
-       var docdown=function(){ checkclick=true; };
+       docdown=function(){ checkclick=true; };
        if(!extra.flat){
         addListener(document,"click",binder.bind(docclick));
         addListener(document,"mousedown",binder.bind(docdown));
