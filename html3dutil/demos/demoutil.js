@@ -1,8 +1,6 @@
-"use strict";
-
 /* global H3DU, H3DU.Mesh, H3DU.SurfaceEval, Material, MeshJSON, alert, allsettings, shapeGroup */
 function formulaEditorHelp(){
-
+"use strict";
 if(typeof alert!=="undefined"){
 alert(""+
 "* The operators `+` `-` `*` `/` work as they do in "+
@@ -38,14 +36,13 @@ alert(""+
 }
 
 function addLink(name,func){
-
+"use strict";
 var s=document.createElement("span");
  var ins=document.createElement("span");
  ins.innerHTML=" - ";
  var a=document.createElement("a");
  a.href="javascript:void(null)";
- a.onclick=function() {
-
+ a.onclick=function(){
  func(); };
  a.innerHTML=name;
  s.appendChild(ins);
@@ -54,7 +51,7 @@ var s=document.createElement("span");
 }
 
 function addRange(label,min,max,step,defvalue,func){
-
+"use strict";
 var div=document.createElement("div");
  var lbl=document.createElement("span");
  lbl.innerHTML=label;
@@ -67,8 +64,7 @@ var div=document.createElement("div");
  input.setAttribute("max",""+max);
  input.setAttribute("step",""+step);
  var oldvalue=[defvalue];
- input.addEventListener("input",function(e) {
-
+ input.addEventListener("input",function(e){
   var val=e.target.value*1.0;
   if(oldvalue[0]!==val){
    defvaluelbl.innerHTML=val+"";
@@ -83,7 +79,7 @@ var div=document.createElement("div");
 }
 
 function setRanges(ranges){
-
+"use strict";
 var settings=document.getElementById("settings");
  settings.innerHTML="";
  for(var i=0;i<ranges.length;i++){
@@ -92,7 +88,7 @@ var settings=document.getElementById("settings");
 }
 
 function saveString(string,type,filename){
-
+"use strict";
 var extension=".txt";
  type=type||"text/plain";
  if(type==="text/plain")extension=".txt";
@@ -110,7 +106,7 @@ var extension=".txt";
 }
 
 function updateShape(func){
-
+"use strict";
 var settings=document.getElementById("settings-link");
   if(!settings){
     settings=document.getElementById("settings");
@@ -120,8 +116,7 @@ var settings=document.getElementById("settings-link");
         a.href="javascript:void(null)";
         a.id="settings-link";
         a.innerHTML="Save this model (JSON)";
-        a.addEventListener("click",function() {
-
+        a.addEventListener("click",function(){
            var json=MeshJSON.toJSON(func(allsettings));
            saveString(json,"application/json","model.json");
         });
@@ -139,10 +134,9 @@ var settings=document.getElementById("settings-link");
 }
 
 function pushSettings(updateMeshFunc,settings){
-
+"use strict";
 function settingOnChange(name,updateMeshFunc){
-   return function(val) {
-
+   return function(val){
      allsettings[name]=val;
      updateShape(updateMeshFunc);
    };
@@ -170,6 +164,7 @@ function settingOnChange(name,updateMeshFunc){
    function makeMesh(func,resolutionU,resolutionV){
     // Default resolution is 50
 
+"use strict";
 if((resolutionV===null || typeof resolutionV==="undefined"))resolutionV=resolutionU;
     if((resolutionU===null || typeof resolutionU==="undefined"))resolutionU=50;
     if((resolutionV===null || typeof resolutionV==="undefined"))resolutionV=50;
@@ -181,8 +176,7 @@ if((resolutionV===null || typeof resolutionV==="undefined"))resolutionV=resoluti
      // the same parameters U and V as the surface
      // function for 3D points.
      var colorGradient={
-      "evaluate":function(u,v) {
-
+      "evaluate":function(u,v){
  return [1-u,v,u]; }
      };
      // generate the parametric surface.
@@ -206,8 +200,8 @@ if((resolutionV===null || typeof resolutionV==="undefined"))resolutionV=resoluti
     return mesh;
   }
 
-window.addEventListener("load",function() {
-
+window.addEventListener("load",function(){
+"use strict";
 var a=document.createElement("a");
  a.setAttribute("style","margin-left:2px;margin-top:2px;margin-bottom:2px;position:absolute;left:80%;top:0;"+
    "background-color:white;text-align:center;text-decoration:none;font-weight:bold");
@@ -221,8 +215,7 @@ var a=document.createElement("a");
  document.body.appendChild(a);
  document.body.appendChild(e);
  var viewed=false;
- a.addEventListener("click",function() {
-
+ a.addEventListener("click",function(){
    if(viewed){
     viewed=false;
     a.innerHTML="View Source";

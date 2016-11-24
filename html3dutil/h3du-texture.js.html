@@ -14,7 +14,9 @@
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>/* global H3DU, Promise */
+
+/**
 *  Specifies a texture, which can serve as image data applied to
 *  the surface of a shape, or even a 2-dimensional array of pixels
 *  used for some other purpose, such as a depth map, a height map,
@@ -28,7 +30,8 @@
 * class.  However, this constructor will not load that image yet.
 */
 H3DU.Texture=function(name){
- this.image=null;
+ "use strict";
+this.image=null;
  this.loadStatus=0;
  this.name=name;
  this.width=0;
@@ -52,7 +55,8 @@ H3DU.Texture=function(name){
 * @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.setClamp=function(clamp){
- this.clamp=clamp;
+ "use strict";
+this.clamp=clamp;
  return this;
 };
 
@@ -71,7 +75,8 @@ H3DU.Texture.prototype.setClamp=function(clamp){
 */
 H3DU.Texture.loadTexture=function(name, textureCache){
  // Get cached texture
- if(textureCache &amp;&amp; textureCache[name]){
+ "use strict";
+if(textureCache &amp;&amp; textureCache[name]){
    return Promise.resolve(textureCache[name]);
  }
  var texImage=new H3DU.Texture(name);
@@ -99,7 +104,8 @@ H3DU.Texture.loadTexture=function(name, textureCache){
 * @returns {H3DU.Texture} The new H3DU.Texture object.
 */
 H3DU.Texture.fromUint8Array=function(array, width, height){
- if(width&lt;0)throw new Error("width less than 0");
+ "use strict";
+if(width&lt;0)throw new Error("width less than 0");
  if(height&lt;0)throw new Error("height less than 0");
  if(array.length&lt;width*height*4)throw new Error("array too short for texture");
  var texImage=new H3DU.Texture("");
@@ -112,7 +118,8 @@ H3DU.Texture.fromUint8Array=function(array, width, height){
 
 /** @private */
 H3DU.Texture.loadTga=function(name){
- var tex=this;
+ "use strict";
+var tex=this;
  return H3DU.loadFileFromUrl(name,"arraybuffer")
  .then(function(buf){
    var view=new DataView(buf.data);
@@ -179,7 +186,8 @@ H3DU.Texture.loadTga=function(name){
 
 /** @private */
 H3DU.Texture.prototype.loadImage=function(){
- if(this.image!==null){
+ "use strict";
+if(this.image !== null){
   // already loaded
   return Promise.resolve(this);
  }
@@ -189,7 +197,7 @@ H3DU.Texture.prototype.loadImage=function(){
  // Use the TGA image loader if it has the TGA file
  // extension
  if((/\.tga$/i).test(thisName)){
-  return H3DU.Texture.loadTga(thisName).then(function(e){
+  return H3DU.Texture.loadTga(thisName).then(function(e) {
    thisImage.image=e.image;
    thisImage.width=e.width;
    thisImage.height=e.height;
@@ -202,7 +210,7 @@ H3DU.Texture.prototype.loadImage=function(){
  }
  return new Promise(function(resolve,reject){
   var image=new Image();
-  image.onload=function(e) {
+  image.onload=function(e){
    var target=e.target;
    thisImage.image=target;
    thisImage.width=target.width;
@@ -213,7 +221,7 @@ H3DU.Texture.prototype.loadImage=function(){
    image.onerror=null;
    resolve(thisImage);
   };
-  image.onerror=function(e){
+  image.onerror=function(e) {
    thisImage.loadStatus=-1;
    //console.log("error: "+thisName)
    //console.log(e)
@@ -228,16 +236,17 @@ H3DU.Texture.prototype.loadImage=function(){
  * Disposes resources used by this texture.
  * @memberof! H3DU.Texture#
 */
-H3DU.Texture.prototype.dispose=function(){
- this.width=0;
+H3DU.Texture.prototype.dispose=function() {
+ "use strict";
+this.width=0;
  this.height=0;
  this.name="";
  if(this.image){
-  if((typeof image.onload !== "undefined" &amp;&amp; image.onload!==null)){
-   image.onload=null;
+  if((typeof this.image.onload !== "undefined" &amp;&amp; this.image.onload !== null)){
+   this.image.onload=null;
   }
-  if((typeof image.onerror !== "undefined" &amp;&amp; image.onerror!==null)){
-   image.onerror=null;
+  if((typeof this.image.onerror !== "undefined" &amp;&amp; this.image.onerror !== null)){
+   this.image.onerror=null;
   }
  }
  this.image=null;
@@ -249,9 +258,10 @@ H3DU.Texture.prototype.dispose=function(){
 * Gets the name of this texture.
 * @memberof! H3DU.Texture#
 */
-H3DU.Texture.prototype.getName=function(){
+H3DU.Texture.prototype.getName=function() {
+"use strict";
  return name;
-}
+};
 </code></pre>
         </article>
     </section>
@@ -276,7 +286,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

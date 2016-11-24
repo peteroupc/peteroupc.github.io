@@ -22,21 +22,10 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global define, exports */
-(function (g,f) {
-  "use strict";
-if (typeof define==="function" &amp;&amp; define.amd) {
-    define([ "exports" ], f);
-  } else if (typeof exports==="object") {
-    f(exports);
-  } else {
-    f(g);
-  }
-}(this, function (exports) {
-  "use strict";
-if (exports.MatrixStack) { return; }
+/* global H3DU */
+
 /**
-MatrixStack is a class that implements a stack
+H3DU.MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.&lt;p>
 When the constructor is called, it will create a stack whose
 only element is the identity matrix.
@@ -44,39 +33,46 @@ only element is the identity matrix.
 * Public Domain HTML 3D Library and is not considered part of that
 * library. &lt;p>
 * To use this class, you must include the script "extras/matrixstack.js"; the
- * class is not included in the "glutil_min.js" file which makes up
+ * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:&lt;pre>
  * &amp;lt;script type="text/javascript" src="extras/matrixstack.js">&amp;lt;/script>&lt;/pre>
- @alias MatrixStack
+ @alias H3DU.MatrixStack
  @class
  */
-function MatrixStack(){
+H3DU.MatrixStack=function(){
+"use strict";
  this.stack=[
   [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
  ];
-}
+};
 /**
  * Gets a copy of the matrix at the top of this stack.
  * @returns {Array&lt;Number>}.
- */
-MatrixStack.prototype.get=function(){
- return this.stack[this.stack.length-1].slice(0,16);
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.get=function(){
+ "use strict";
+return this.stack[this.stack.length-1].slice(0,16);
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the identity matrix.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.loadIdentity=function(){
- this.stack[this.stack.length-1]=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.loadIdentity=function(){
+ "use strict";
+this.stack[this.stack.length-1]=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
  return this;
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the given matrix.
  * @param {Array&lt;Number>} mat A matrix to replace the top of the stack with.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
+* @memberof! H3DU.MatrixStack#
 */
-MatrixStack.prototype.loadMatrix=function(mat){
- this.stack[this.stack.length-1]=mat.slice(0,16);
+H3DU.MatrixStack.prototype.loadMatrix=function(mat){
+ "use strict";
+this.stack[this.stack.length-1]=mat.slice(0,16);
  return this;
 };
 /**
@@ -84,10 +80,12 @@ MatrixStack.prototype.loadMatrix=function(mat){
  * transpose of the given matrix.
  * @param {Array&lt;Number>} mat A matrix whose transpose will
  * replace the top of the stack.
- * @returns {MatrixStack} This object.
+ * @returns {H3DU.MatrixStack} This object.
+* @memberof! H3DU.MatrixStack#
 */
-MatrixStack.prototype.loadTransposeMatrix=function(mat){
- var m=mat.slice(0,16);
+H3DU.MatrixStack.prototype.loadTransposeMatrix=function(mat){
+ "use strict";
+var m=mat.slice(0,16);
  var tmp;
  tmp=m[1];m[1]=m[4];m[4]=tmp;
  tmp=m[2];m[2]=m[8];m[8]=tmp;
@@ -106,10 +104,12 @@ MatrixStack.prototype.loadTransposeMatrix=function(mat){
  * passed to this method describes a scaling, the multiplied matrix will describe
  * the effect of scaling then translation.
  * @param {Array&lt;Number>} mat A matrix to multiply the current one by.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.multMatrix=function(mat){
- var curmat=this.stack[this.stack.length-1];
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.multMatrix=function(mat){
+ "use strict";
+var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i &lt; 16; i+= 4){
     for(var j = 0; j &lt; 4; j++){
@@ -133,10 +133,12 @@ MatrixStack.prototype.multMatrix=function(mat){
  * the effect of translation then scaling.
  * @param {Array&lt;Number>} mat A matrix whose transpose the current
  * matrix will be multiplied by.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.multTransposeMatrix=function(mat){
- var curmat=this.stack[this.stack.length-1];
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.multTransposeMatrix=function(mat){
+ "use strict";
+var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i &lt; 16; i+= 4){
     for(var j = 0; j &lt; 4; j++){
@@ -162,10 +164,12 @@ MatrixStack.prototype.multTransposeMatrix=function(mat){
  * of rotation.
  * @param {Number} z Z-component of the axis
  * of rotation.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.rotate=function(angle,x,y,z){
- var ang=angle*Math.PI/180;
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.rotate=function(angle,x,y,z){
+ "use strict";
+var ang=angle*Math.PI/180;
  var v0=x;
  var v1=y;
  var v2=z;
@@ -207,10 +211,12 @@ return this.multMatrix([cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+x
  * @param {Number} x Translation along the X axis.
  * @param {Number} y Translation along the Y axis.
  * @param {Number} z Translation along the Z axis.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.translate=function(x,y,z){
- var mat=this.stack[this.stack.length-1];
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.translate=function(x,y,z){
+ "use strict";
+var mat=this.stack[this.stack.length-1];
  this.stack[this.stack.length-1]=[
   mat[0],mat[1],mat[2],mat[3],
   mat[4],mat[5],mat[6],mat[7],
@@ -228,10 +234,12 @@ MatrixStack.prototype.translate=function(x,y,z){
  * @param {Number} x Scale factor along the X axis.
  * @param {Number} y Scale factor along the Y axis.
  * @param {Number} z Scale factor along the Z axis.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.scale=function(x,y,z){
- var mat=this.stack[this.stack.length-1];
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.scale=function(x,y,z){
+ "use strict";
+var mat=this.stack[this.stack.length-1];
  mat[0]*=x;
  mat[1]*=x;
  mat[2]*=x;
@@ -249,20 +257,24 @@ MatrixStack.prototype.scale=function(x,y,z){
 /**
  * Makes a copy of the matrix at the top of this stack
  * and puts the copy on top of the stack.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.pushMatrix=function(){
- this.stack.push(this.stack[this.stack.length-1].slice(0,16));
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.pushMatrix=function(){
+ "use strict";
+this.stack.push(this.stack[this.stack.length-1].slice(0,16));
  return this;
 };
 /**
  * Removes the matrix at the top of this stack, making
  * the matrix beneath it the new top matrix.  Has no
  * effect if the stack has only one matrix.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.popMatrix=function(){
- if(this.stack.length>1){
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.popMatrix=function(){
+ "use strict";
+if(this.stack.length>1){
   this.stack.pop();
  }
  return this;
@@ -284,9 +296,11 @@ MatrixStack.prototype.popMatrix=function(){
  * plane.  A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the camera to the far clipping
  * plane.  A positive value means the plane is in front of the viewer.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.ortho=function(l,r,b,t,n,f){
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.ortho=function(l,r,b,t,n,f){
+"use strict";
 var m=this.stack[this.stack.length-1];
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
@@ -327,9 +341,11 @@ return this;
 * @param {Number} f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.frustum=function(l,r,b,t,n,f){
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.frustum=function(l,r,b,t,n,f){
+"use strict";
 var m=this.stack[this.stack.length-1];
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
@@ -369,10 +385,12 @@ return this;
 * the camera's view direction.
  * @param {Number} uy Y coordinate of the up vector.
  * @param {Number} uz Z coordinate of the up vector.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
-  var viewerPos=[ex,ey,ez];
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
+  "use strict";
+var viewerPos=[ex,ey,ez];
   var lookingAt=[cx,cy,cz];
   var up=[ux,uy,uz];
   var u;
@@ -447,9 +465,11 @@ MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
  * @param {Number} b Bottommost coordinate of the 2D view.
  * @param {Number} t Topmost coordinate of the 2D view.
  * (Note that t can be greater than b or vice versa.)
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.ortho2d=function(l,r,b,t){
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.ortho2d=function(l,r,b,t){
+"use strict";
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
 var v0 = 2.0*invrl;
@@ -485,9 +505,11 @@ return this;
 * @param {Number}  f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.perspective=function(fov,aspect,n,f){
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.perspective=function(fov,aspect,n,f){
+"use strict";
 var ftan = 1/Math.tan(fov*Math.PI/360);
 var v0 = ftan/aspect;
 var invnf=1.0/(n-f);
@@ -514,10 +536,12 @@ return this;
  * @param {Array&lt;Number>} vp A 4-element array giving the X and Y coordinates
  * of the lower left corner followed by the width and height
  * of a rectangle indicating the current viewport.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
- var invww=1.0/ww;
+ * @returns {H3DU.MatrixStack} This object.
+ * @memberof! H3DU.MatrixStack#
+*/
+H3DU.MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
+ "use strict";
+var invww=1.0/ww;
  var invwh=1.0/wh;
  wx-=vp[0];
  wy-=vp[1];
@@ -528,8 +552,6 @@ MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
    .scale(scaleX*2,-scaleY*2,1)
    .multMatrix([ 0.5, 0, 0, 0, 0, -0.5, 0, 0, 0, 0, 1, 0, 0.5, -0.5, 0, 1 ]);
 };
-exports.MatrixStack=MatrixStack;
-}));
 </code></pre>
         </article>
     </section>
@@ -554,7 +576,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MatrixStack.html">MatrixStack</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="TextFont.html">TextFont</a></li><li><a href="TextRenderer.html">TextRenderer</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

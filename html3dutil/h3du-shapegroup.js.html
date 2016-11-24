@@ -14,25 +14,23 @@
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>"use strict";
-
-/* global H3DU, his, is */
+            <pre class="prettyprint source linenums"><code>/* global H3DU */
 
 /**
 * Represents a grouping of shapes.
 * @class
 * @alias H3DU.ShapeGroup
 */
-H3DU.ShapeGroup = function() {
-
+H3DU.ShapeGroup = function(){
  /** List of shapes contained in this group.
  * This property should only be used to access properties
  * and call methods on each shape, and not to add, remove
  * or replace shapes directly.
  * @readonly
  */
- this.shapes=[];
- his.parent=null;
+ "use strict";
+this.shapes=[];
+ this.parent=null;
  this.visible=true;
  this.transform=new H3DU.Transform();
 };
@@ -43,9 +41,9 @@ H3DU.ShapeGroup = function() {
 * @returns {H3DU.ShapeGroup} This object.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.addShape=function(shape) {
-
- shape.parent=this;
+H3DU.ShapeGroup.prototype.addShape=function(shape){
+ "use strict";
+shape.parent=this;
  this.shapes.push(shape);
  return this;
 };
@@ -54,27 +52,27 @@ H3DU.ShapeGroup.prototype.addShape=function(shape) {
  * @param {*} value
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setVisible=function(value) {
-
- this.visible=!!value;
+H3DU.ShapeGroup.prototype.setVisible=function(value){
+ "use strict";
+this.visible=!!value;
  return this;
 };
 /**
  * Not documented yet.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.getVisible=function() {
-
- return this.visible;
+H3DU.ShapeGroup.prototype.getVisible=function(){
+ "use strict";
+return this.visible;
 };
 /**
  * Gets a reference to the transform used by this shape group object.
  * @returns {H3DU.Transform} Return value.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.getTransform=function() {
-
- return this.transform;
+H3DU.ShapeGroup.prototype.getTransform=function(){
+ "use strict";
+return this.transform;
 };
 /**
  * Gets a copy of the transformation needed to transform
@@ -82,9 +80,9 @@ H3DU.ShapeGroup.prototype.getTransform=function() {
  * @returns {H3DU.Transform} A 4x4 matrix.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.getMatrix=function() {
-
-  var xform=this.getTransform();
+H3DU.ShapeGroup.prototype.getMatrix=function(){
+  "use strict";
+var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();
   var mat;
   if(this.parent !== null){
@@ -109,9 +107,9 @@ H3DU.ShapeGroup.prototype.getMatrix=function() {
  * @param {H3DU.Transform} transform
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setTransform=function(transform) {
-
- this.transform=transform.copy();
+H3DU.ShapeGroup.prototype.setTransform=function(transform){
+ "use strict";
+this.transform=transform.copy();
  return this;
 };
 /**
@@ -119,9 +117,9 @@ H3DU.ShapeGroup.prototype.setTransform=function(transform) {
  * @param {H3DU.Material} material
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setMaterial=function(material) {
-
- for(var i=0;i&lt;this.shapes.length;i++){
+H3DU.ShapeGroup.prototype.setMaterial=function(material){
+ "use strict";
+for(var i=0;i&lt;this.shapes.length;i++){
   this.shapes[i].setMaterial(material);
  }
  return this;
@@ -132,9 +130,9 @@ H3DU.ShapeGroup.prototype.setMaterial=function(material) {
  * @param {H3DU.Material} material
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setTexture=function(material) {
-
- for(var i=0;i&lt;this.shapes.length;i++){
+H3DU.ShapeGroup.prototype.setTexture=function(material){
+ "use strict";
+for(var i=0;i&lt;this.shapes.length;i++){
   this.shapes[i].setTexture(material);
  }
  return this;
@@ -144,9 +142,9 @@ H3DU.ShapeGroup.prototype.setTexture=function(material) {
  * @param {H3DU.Material} material
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setShader=function(material) {
-
- for(var i=0;i&lt;this.shapes.length;i++){
+H3DU.ShapeGroup.prototype.setShader=function(material){
+ "use strict";
+for(var i=0;i&lt;this.shapes.length;i++){
   this.shapes[i].setShader(material);
  }
  return this;
@@ -157,9 +155,9 @@ H3DU.ShapeGroup.prototype.setShader=function(material) {
  * @ {H3DU.Shape} This object.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setMaterialParams=function(params) {
-
- for(var i=0;i&lt;this.shapes.length;i++){
+H3DU.ShapeGroup.prototype.setMaterialParams=function(params){
+ "use strict";
+for(var i=0;i&lt;this.shapes.length;i++){
   this.shapes[i].setMaterialParams(params);
  }
  return this;
@@ -170,9 +168,9 @@ H3DU.ShapeGroup.prototype.setMaterialParams=function(params) {
 * @returns {H3DU.ShapeGroup} This object.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.removeShape=function(shape) {
-
- for(var i=0;i&lt;this.shapes.length;i++){
+H3DU.ShapeGroup.prototype.removeShape=function(shape){
+ "use strict";
+for(var i=0;i&lt;this.shapes.length;i++){
    if(this.shapes[i]===shape){
      this.shapes.splice(i,1);
      i--;
@@ -184,9 +182,9 @@ H3DU.ShapeGroup.prototype.removeShape=function(shape) {
  * Not documented yet.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.getBounds=function() {
-
- var ret=[0,0,0,0,0,0];
+H3DU.ShapeGroup.prototype.getBounds=function(){
+ "use strict";
+var ret=[0,0,0,0,0,0];
  var first=true;
  for(var i=0;i&lt;this.shapes.length;i++){
   var b=this.shapes[i].getBounds();
@@ -221,9 +219,9 @@ H3DU.ShapeGroup.prototype.getBounds=function() {
  * @returns {Number} Return value.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.vertexCount=function() {
-
- var c=0;
+H3DU.ShapeGroup.prototype.vertexCount=function(){
+ "use strict";
+var c=0;
  for(var i=0;i&lt;this.shapes.length;i++){
   c+=this.shapes[i].vertexCount();
  }
@@ -235,9 +233,9 @@ H3DU.ShapeGroup.prototype.vertexCount=function() {
  * @returns {Number} Return value.
 * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.primitiveCount=function() {
-
- var c=0;
+H3DU.ShapeGroup.prototype.primitiveCount=function(){
+ "use strict";
+var c=0;
  for(var i=0;i&lt;this.shapes.length;i++){
   c+=this.shapes[i].primitiveCount();
  }
@@ -256,9 +254,9 @@ H3DU.ShapeGroup.prototype.primitiveCount=function() {
 * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setPosition=function(x,y,z) {
-
- this.transform.setPosition(x,y,z);
+H3DU.ShapeGroup.prototype.setPosition=function(x,y,z){
+ "use strict";
+this.transform.setPosition(x,y,z);
  return this;
 };
 /**
@@ -270,9 +268,9 @@ H3DU.ShapeGroup.prototype.setPosition=function(x,y,z) {
  * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setQuaternion=function(quat) {
-
- this.transform.setQuaternion(quat);
+H3DU.ShapeGroup.prototype.setQuaternion=function(quat){
+ "use strict";
+this.transform.setQuaternion(quat);
  return this;
 };
 /**
@@ -287,9 +285,9 @@ H3DU.ShapeGroup.prototype.setQuaternion=function(quat) {
 * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.ShapeGroup#
 */
-H3DU.ShapeGroup.prototype.setScale=function(x,y,z) {
-
- this.transform.setScale(x,y,z);
+H3DU.ShapeGroup.prototype.setScale=function(x,y,z){
+ "use strict";
+this.transform.setScale(x,y,z);
  return this;
 };
 </code></pre>
@@ -316,7 +314,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

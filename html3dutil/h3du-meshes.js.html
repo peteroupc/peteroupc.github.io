@@ -22,7 +22,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU.Math, H3DU.Mesh */
+/* global H3DU, H3DU.Math, H3DU.Mesh */
 /**
 * Contains methods that create meshes
 * of various geometric shapes.
@@ -162,7 +162,7 @@ var mesh=new H3DU.Mesh();
   var recipstacks=1.0/(stacks);
   for(i=0;i&lt;stacks;i++){
    var zStart=lastZ;
-   var zEnd=(i+1==stacks) ? 1.0 : (i+1)*recipstacks;
+   var zEnd=(i+1===stacks) ? 1.0 : (i+1)*recipstacks;
    var zStartHeight=height*zStart;
    var zEndHeight=height*zEnd;
    var radiusStart=lastRad;
@@ -206,13 +206,13 @@ H3DU.Meshes.createLathe=function(points,slices,flat,inside){
  if(points.length&lt;4)throw new Error("too few points");
  if((slices===null || typeof slices==="undefined"))slices=32;
  if(slices&lt;=2)throw new Error("too few slices");
- if((points.length%1)!=0)throw new Error("points array length is not an even number");
-for(var i=0;i&lt;points.length;i+=2){
- if(points[i&lt;&lt;1]&lt;0)throw new Error("point's x is less than 0")
+ if((points.length%1)!==0)throw new Error("points array length is not an even number");
+  var i;
+for(i=0;i&lt;points.length;i+=2){
+ if(points[i&lt;&lt;1]&lt;0)throw new Error("point's x is less than 0");
 }
  var sc=[0,1]; // sin(0), cos(0)
  var tc=[0];
- var i;
  var twopi=H3DU.Math.PiTimes2;
  for(i=1;i&lt;slices;i++){
   var t=i*1.0/slices;
@@ -226,12 +226,12 @@ for(var i=0;i&lt;points.length;i+=2){
  tc.push(1);
  var slicesTimes2=slices*2;
   var lastZ=0;
-  var lastRad=baseRad;
+  var lastRad;
   var stacks=(points.length/2)-1;
   var recipstacks=1.0/stacks;
   for(i=0;i&lt;stacks;i++){
    var zStart=lastZ;
-   var zEnd=(i+1==stacks) ? 1.0 : (i+1)*recipstacks;
+   var zEnd=(i+1===stacks) ? 1.0 : (i+1)*recipstacks;
    var index=i&lt;&lt;1;
    var zsh=points[index+1];
    var zeh=points[index+3];
@@ -371,7 +371,7 @@ var mesh=new H3DU.Mesh();
  if(sweepDir&lt;0){
   arcLength=-arcLength;
  }
- for(var i=0;i&lt;=slices;i++){
+ for(i=0;i&lt;=slices;i++){
   var t=i*1.0/slices;
   var angle=(t===1 &amp;&amp; arcLength===twopi) ? start : start+arcLength*t;
   angle=(angle&lt;0) ? twopi-(-angle)%twopi : angle%twopi;
@@ -653,6 +653,8 @@ var mesh=new H3DU.Mesh();
   // radius is zero
   return mesh;
  }
+ var cangle;
+ var sangle;
  var halfLength=length*0.5;
  var halfStacks=stacks/2;
  var normDir=(inside) ? -1 : 1;
@@ -666,8 +668,8 @@ var mesh=new H3DU.Mesh();
  for(var i=1;i&lt;slices;i++){
   var t=i*1.0/slices;
   angle=twopi*t;
-  var cangle = Math.cos(angle);
-  var sangle = (angle>=0 &amp;&amp; angle&lt;6.283185307179586) ? (angle&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
+  cangle = Math.cos(angle);
+  sangle = (angle>=0 &amp;&amp; angle&lt;6.283185307179586) ? (angle&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
   sc.push(sangle,cangle);
   tc.push(t);
  }
@@ -679,8 +681,8 @@ var mesh=new H3DU.Mesh();
  for(i=1;i&lt;stacks;i++){
    var origt=i*1.0/stacks;
    angle=Math.PI*origt;
-   var cangle = Math.cos(angle);
-   var sangle = (angle>=0 &amp;&amp; angle&lt;6.283185307179586) ? (angle&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
+   cangle = Math.cos(angle);
+   sangle = (angle>=0 &amp;&amp; angle&lt;6.283185307179586) ? (angle&lt;=3.141592653589793 ? Math.sqrt(1.0-cangle*cangle) : -Math.sqrt(1.0-cangle*cangle)) : Math.sin(angle);
    scStack.push(sangle);
    zEnd.push(-cangle);
    var tex=origt;
@@ -822,7 +824,8 @@ var mesh=new H3DU.Mesh();
     * @returns {H3DU.Mesh} The generated mesh.
     */
     H3DU.Meshes.createPointedStar=function(points, firstRadius, secondRadius,inward){
-     var mesh=new H3DU.Mesh();
+     "use strict";
+var mesh=new H3DU.Mesh();
      if(points&lt;2 || firstRadius&lt;0 || secondRadius&lt;0)return mesh;
      if(firstRadius&lt;=0 &amp;&amp; secondRadius&lt;=0)return mesh;
      mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
@@ -853,7 +856,7 @@ var mesh=new H3DU.Mesh();
         0.5*(1+startY*recipRadius))
        .vertex2(startX,startY);
      return mesh;
-    }
+    };
 
 this.H3DU.Meshes=H3DU.Meshes;
 </code></pre>
@@ -880,7 +883,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

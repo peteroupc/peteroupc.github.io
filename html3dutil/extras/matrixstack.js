@@ -6,8 +6,8 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global define, exports */
-if((typeof H3DU === "undefined" || (H3DU === null || typeof H3DU === "undefined"))){ var H3DU={}; }
+/* global H3DU */
+
 /**
 H3DU.MatrixStack is a class that implements a stack
 of 4x4 transformation matrices.<p>
@@ -23,18 +23,20 @@ only element is the identity matrix.
  @alias H3DU.MatrixStack
  @class
  */
-function H3DU.MatrixStack(){
+H3DU.MatrixStack=function(){
+"use strict";
  this.stack=[
   [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
  ];
-}
+};
 /**
  * Gets a copy of the matrix at the top of this stack.
  * @returns {Array<Number>}.
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.get=function(){
- return this.stack[this.stack.length-1].slice(0,16);
+ "use strict";
+return this.stack[this.stack.length-1].slice(0,16);
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the identity matrix.
@@ -42,7 +44,8 @@ H3DU.MatrixStack.prototype.get=function(){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.loadIdentity=function(){
- this.stack[this.stack.length-1]=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
+ "use strict";
+this.stack[this.stack.length-1]=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
  return this;
 };
 /**
@@ -52,7 +55,8 @@ H3DU.MatrixStack.prototype.loadIdentity=function(){
 * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.loadMatrix=function(mat){
- this.stack[this.stack.length-1]=mat.slice(0,16);
+ "use strict";
+this.stack[this.stack.length-1]=mat.slice(0,16);
  return this;
 };
 /**
@@ -64,7 +68,8 @@ H3DU.MatrixStack.prototype.loadMatrix=function(mat){
 * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.loadTransposeMatrix=function(mat){
- var m=mat.slice(0,16);
+ "use strict";
+var m=mat.slice(0,16);
  var tmp;
  tmp=m[1];m[1]=m[4];m[4]=tmp;
  tmp=m[2];m[2]=m[8];m[8]=tmp;
@@ -87,7 +92,8 @@ H3DU.MatrixStack.prototype.loadTransposeMatrix=function(mat){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.multMatrix=function(mat){
- var curmat=this.stack[this.stack.length-1];
+ "use strict";
+var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i < 16; i+= 4){
     for(var j = 0; j < 4; j++){
@@ -115,7 +121,8 @@ H3DU.MatrixStack.prototype.multMatrix=function(mat){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.multTransposeMatrix=function(mat){
- var curmat=this.stack[this.stack.length-1];
+ "use strict";
+var curmat=this.stack[this.stack.length-1];
  var dst=[];
  for(var i = 0; i < 16; i+= 4){
     for(var j = 0; j < 4; j++){
@@ -145,7 +152,8 @@ H3DU.MatrixStack.prototype.multTransposeMatrix=function(mat){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.rotate=function(angle,x,y,z){
- var ang=angle*Math.PI/180;
+ "use strict";
+var ang=angle*Math.PI/180;
  var v0=x;
  var v1=y;
  var v2=z;
@@ -191,7 +199,8 @@ return this.multMatrix([cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+x
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.translate=function(x,y,z){
- var mat=this.stack[this.stack.length-1];
+ "use strict";
+var mat=this.stack[this.stack.length-1];
  this.stack[this.stack.length-1]=[
   mat[0],mat[1],mat[2],mat[3],
   mat[4],mat[5],mat[6],mat[7],
@@ -213,7 +222,8 @@ H3DU.MatrixStack.prototype.translate=function(x,y,z){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.scale=function(x,y,z){
- var mat=this.stack[this.stack.length-1];
+ "use strict";
+var mat=this.stack[this.stack.length-1];
  mat[0]*=x;
  mat[1]*=x;
  mat[2]*=x;
@@ -235,7 +245,8 @@ H3DU.MatrixStack.prototype.scale=function(x,y,z){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.pushMatrix=function(){
- this.stack.push(this.stack[this.stack.length-1].slice(0,16));
+ "use strict";
+this.stack.push(this.stack[this.stack.length-1].slice(0,16));
  return this;
 };
 /**
@@ -246,7 +257,8 @@ H3DU.MatrixStack.prototype.pushMatrix=function(){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.popMatrix=function(){
- if(this.stack.length>1){
+ "use strict";
+if(this.stack.length>1){
   this.stack.pop();
  }
  return this;
@@ -272,6 +284,7 @@ H3DU.MatrixStack.prototype.popMatrix=function(){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.ortho=function(l,r,b,t,n,f){
+"use strict";
 var m=this.stack[this.stack.length-1];
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
@@ -316,6 +329,7 @@ return this;
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.frustum=function(l,r,b,t,n,f){
+"use strict";
 var m=this.stack[this.stack.length-1];
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
@@ -359,7 +373,8 @@ return this;
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
-  var viewerPos=[ex,ey,ez];
+  "use strict";
+var viewerPos=[ex,ey,ez];
   var lookingAt=[cx,cy,cz];
   var up=[ux,uy,uz];
   var u;
@@ -438,6 +453,7 @@ H3DU.MatrixStack.prototype.lookAt=function(ex,ey,ez,cx,cy,cz,ux,uy,uz){
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.ortho2d=function(l,r,b,t){
+"use strict";
 var invrl=1.0/(r-l);
 var invtb=1.0/(t-b);
 var v0 = 2.0*invrl;
@@ -477,6 +493,7 @@ return this;
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.perspective=function(fov,aspect,n,f){
+"use strict";
 var ftan = 1/Math.tan(fov*Math.PI/360);
 var v0 = ftan/aspect;
 var invnf=1.0/(n-f);
@@ -507,7 +524,8 @@ return this;
  * @memberof! H3DU.MatrixStack#
 */
 H3DU.MatrixStack.prototype.pickMatrix=function(wx,wy,ww,wh,vp){
- var invww=1.0/ww;
+ "use strict";
+var invww=1.0/ww;
  var invwh=1.0/wh;
  wx-=vp[0];
  wy-=vp[1];

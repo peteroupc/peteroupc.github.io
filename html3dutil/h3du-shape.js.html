@@ -14,7 +14,8 @@
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>/* global H3DU, console */
+/**
  * An object that associates a geometric mesh (the shape of the object) with
  *  material data (which defines what is seen on the object's surface)
  * and a transformation matrix (which defines the object's position and size).
@@ -22,19 +23,20 @@
  *  @class
  * @alias H3DU.Shape
 * @param {H3DU.BufferedMesh} mesh A mesh in the form of a buffer object.
-* For {@link H3DU.Mesh} objects, the shape
+* For {@link H3DU.Mesh} objects, the shapeparam {H3DU.Material}
  * created will use the mesh in its current state and won't
  * track future changes.  &lt;i>Using H3DU.BufferedMesh objects as the parameter
  * is deprecated.&lt;/i>
   */
 H3DU.Shape = function(mesh){
-  if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
+  "use strict";
+if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
   if(mesh instanceof H3DU.Mesh){
    this.bufferedMesh=new H3DU.MeshBuffer(mesh);
   } else {
    if(!H3DU.Shape._bufferedMeshWarning &amp;&amp; mesh instanceof H3DU.BufferedMesh){
-    console.warn("Using an H3DU.BufferedMesh in H3DU.Shape objects is deprecated.")
-    H3DU.Shape._bufferedMeshWarning=true
+    console.warn("Using an H3DU.BufferedMesh in H3DU.Shape objects is deprecated.");
+    H3DU.Shape._bufferedMeshWarning=true;
    }
    this.bufferedMesh=mesh;
   }
@@ -42,12 +44,13 @@ H3DU.Shape = function(mesh){
   this.material=new H3DU.Material();
   this.parent=null;
   this.visible=true;
-}
+};
 /** @private */
 H3DU.Shape.prototype._hasColorAttr=function(){
-  var bm=this.bufferedMesh;
+  "use strict";
+var bm=this.bufferedMesh;
   return bm &amp;&amp; bm instanceof H3DU.MeshBuffer &amp;&amp; bm._getAttribute("colorAttr");
-}
+};
 /** @private */
 H3DU.Shape._bufferedMeshWarning=false;
 /**
@@ -57,7 +60,8 @@ H3DU.Shape._bufferedMeshWarning=false;
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.vertexCount=function(){
- return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
+ "use strict";
+return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 };
 /**
 * Gets the number of primitives (triangles, lines,
@@ -66,7 +70,8 @@ H3DU.Shape.prototype.vertexCount=function(){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.primitiveCount=function(){
- return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
+ "use strict";
+return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
 };
 /**
  * Not documented yet.
@@ -74,7 +79,8 @@ H3DU.Shape.prototype.primitiveCount=function(){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setVisible=function(value){
- this.visible=!!value;
+ "use strict";
+this.visible=!!value;
  return this;
 };
 /**
@@ -83,7 +89,8 @@ H3DU.Shape.prototype.setVisible=function(value){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getVisible=function(){
- return this.visible;
+ "use strict";
+return this.visible;
 };
 /**
 * Sets material parameters that give the shape a certain color.
@@ -104,8 +111,9 @@ H3DU.Shape.prototype.getVisible=function(){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setColor=function(r,g,b,a){
-  var c=H3DU.toGLColor(r,g,b,a);
-  return this.setMaterialParams({"ambient":c,"diffuse":c})
+  "use strict";
+var c=H3DU.toGLColor(r,g,b,a);
+  return this.setMaterialParams({"ambient":c,"diffuse":c});
 };
 /**
  * Sets material parameters that give the shape a texture with the given URL.
@@ -117,7 +125,8 @@ H3DU.Shape.prototype.setColor=function(r,g,b,a){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setTexture=function(name){
- return this.setMaterialParams({"texture":name});
+ "use strict";
+return this.setMaterialParams({"texture":name});
 };
 /**
  * Sets this shape's material to a shader with the given URL.
@@ -128,7 +137,8 @@ H3DU.Shape.prototype.setTexture=function(name){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setShader=function(shader){
- return this.setMaterialParams({"shader":shader});
+ "use strict";
+return this.setMaterialParams({"shader":shader});
 };
 /**
  * Sets parameters of this shape's material.
@@ -137,10 +147,11 @@ H3DU.Shape.prototype.setShader=function(shader){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setMaterialParams=function(params){
- if(this.material){
-   this.material.setParams(params)
+ "use strict";
+if(this.material){
+   this.material.setParams(params);
  } else {
-   this.material=new Material().setParams(params)
+   this.material=new H3DU.Material().setParams(params);
  }
  return this;
 };
@@ -163,7 +174,8 @@ H3DU.Shape.prototype.setMaterialParams=function(params){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
- var c=H3DU.toGLColor(r,g,b,a);
+ "use strict";
+var c=H3DU.toGLColor(r,g,b,a);
  return this.setMaterialParams({
   "texture":name,
   "ambient":c,
@@ -177,7 +189,8 @@ H3DU.Shape.prototype.setTextureAndColor=function(name,r,g,b,a){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setMaterial=function(material){
- this.material=material;
+ "use strict";
+this.material=material;
  return this;
 };
 /**
@@ -190,7 +203,8 @@ H3DU.Shape.prototype.setMaterial=function(material){
 * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.copy=function(){
- var ret=new H3DU.Shape(this.bufferedMesh);
+ "use strict";
+var ret=new H3DU.Shape(this.bufferedMesh);
  ret.material=this.material.copy();
  ret.transform=this.getTransform().copy();
  return ret;
@@ -200,14 +214,16 @@ H3DU.Shape.prototype.copy=function(){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getTransform=function(){
- return this.transform;
+ "use strict";
+return this.transform;
 };
 /**
  * Not documented yet.
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getBounds=function(){
- if(!this.bufferedMesh){
+ "use strict";
+if(!this.bufferedMesh){
   return [0,0,0,-1,-1,-1];
  }
  var bounds=(this.bufferedMesh.getBounds) ?
@@ -228,10 +244,11 @@ H3DU.Shape.prototype.getBounds=function(){
  } else {
   return bounds.slice(0,6);
  }
-}
+};
 /** @private */
 H3DU.Shape.prototype.isCulled=function(frustum){
- if(!this.bufferedMesh||!this.visible)return true;
+ "use strict";
+if(!this.bufferedMesh||!this.visible)return true;
  return !H3DU.Math.frustumHasBox(frustum,this.getBounds());
 };
 /**
@@ -240,7 +257,8 @@ H3DU.Shape.prototype.isCulled=function(frustum){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setTransform=function(transform){
- this.transform=transform.copy();
+ "use strict";
+this.transform=transform.copy();
  return this;
 };
 /**
@@ -254,7 +272,8 @@ H3DU.Shape.prototype.setTransform=function(transform){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setScale=function(x,y,z){
-  this.getTransform().setScale(x,y,z);
+  "use strict";
+this.getTransform().setScale(x,y,z);
   return this;
 };
 /**
@@ -268,7 +287,8 @@ H3DU.Shape.prototype.setScale=function(x,y,z){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setPosition=function(x,y,z){
-  this.getTransform().setPosition(x,y,z);
+  "use strict";
+this.getTransform().setPosition(x,y,z);
   return this;
 };
 /**
@@ -279,7 +299,8 @@ H3DU.Shape.prototype.setPosition=function(x,y,z){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setQuaternion=function(quat){
-  this.getTransform().setQuaternion(quat);
+  "use strict";
+this.getTransform().setQuaternion(quat);
   return this;
 };
 /**
@@ -289,7 +310,8 @@ H3DU.Shape.prototype.setQuaternion=function(quat){
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.getMatrix=function(){
-  var xform=this.getTransform();
+  "use strict";
+var xform=this.getTransform();
   var thisIdentity=xform.isIdentity();
   var mat;
   if(this.parent !== null){
@@ -330,7 +352,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

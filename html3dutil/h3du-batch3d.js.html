@@ -14,7 +14,8 @@
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/*
+            <pre class="prettyprint source linenums"><code>/* global H3DU */
+/*
 Written by Peter O. in 2015.
 
 Any copyright is dedicated to the Public Domain.
@@ -27,16 +28,18 @@ at: http://peteroupc.github.io/
 * @alias H3DU.Batch3D
 */
 H3DU.Batch3D = function(){
- this._projectionMatrix=H3DU.Math.mat4identity();
+ "use strict";
+this._projectionMatrix=H3DU.Math.mat4identity();
  this._viewMatrix=H3DU.Math.mat4identity();
  this.lights=new H3DU.Lights();
  this._projectionUpdater=null;
  this._frustum=null;
  this.shapes=[];
-}
+};
 /** @private */
 H3DU.Batch3D._PerspectiveView=function(scene,fov,near,far){
- this.fov=fov;
+ "use strict";
+this.fov=fov;
  this.near=near;
  this.far=far;
  this.scene=scene;
@@ -46,17 +49,18 @@ H3DU.Batch3D._PerspectiveView=function(scene,fov,near,far){
  */
 this.update=function(width,height){
   var aspect=width*1.0/height;
-  if(aspect!=this.lastAspect){
+  if(aspect!==this.lastAspect){
    this.lastAspect=aspect;
    this.scene.setProjectionMatrix(
      H3DU.Math.mat4perspective(this.fov,aspect,this.near,this.far));
   }
- }
+ };
  this.update();
-}
+};
 /** @private */
 H3DU.Batch3D._OrthoView=function(scene,a,b,c,d,e,f){
- this.a=a;
+ "use strict";
+this.a=a;
  this.b=b;
  this.c=c;
  this.d=d;
@@ -69,14 +73,14 @@ H3DU.Batch3D._OrthoView=function(scene,a,b,c,d,e,f){
  */
 this.update=function(width, height){
   var aspect=width*1.0/height;
-  if(aspect!=this.lastAspect){
+  if(aspect!==this.lastAspect){
    this.lastAspect=aspect;
    this.scene.setProjectionMatrix(
      H3DU.Math.mat4orthoAspect(this.a,this.b,this.c,this.d,this.e,this.f,aspect));
   }
- }
+ };
  this.update();
-}
+};
 
 /** @private */
 H3DU.Batch3D._setupMatrices=function(
@@ -85,14 +89,15 @@ H3DU.Batch3D._setupMatrices=function(
   viewMatrix,
   worldMatrix,
   projAndView){
-  var uniforms={};
+  "use strict";
+var uniforms={};
   var viewWorld;
   if(projAndView){
    uniforms.view=viewMatrix;
    uniforms.projection=projMatrix;
    uniforms.viewMatrix=viewMatrix;
    uniforms.projectionMatrix=projMatrix;
-   viewInvW=program.get("projView");
+   var viewInvW=program.get("projView");
    if(viewInvW!==null &amp;&amp; typeof viewInvW!=="undefined"){
     var projView=H3DU.Math.mat4multiply(projMatrix,viewMatrix);
     uniforms.projView=projView;
@@ -117,7 +122,7 @@ H3DU.Batch3D._setupMatrices=function(
    }
    uniforms.modelViewMatrix=viewWorld;
 
-  var invTrans=H3DU.Math.mat4inverseTranspose3(viewWorld);
+  invTrans=H3DU.Math.mat4inverseTranspose3(viewWorld);
   uniforms.world=viewWorld;
   uniforms.modelMatrix=viewWorld;
   uniforms.normalMatrix=invTrans;
@@ -127,22 +132,24 @@ H3DU.Batch3D._setupMatrices=function(
 };
 /** @private */
 H3DU.Batch3D._isSameMatrix=function(a,b){
- return (a[0]==b[0] &amp;&amp; a[1]==b[1] &amp;&amp; a[2]==b[2] &amp;&amp;
-   a[3]==b[3] &amp;&amp; a[4]==b[4] &amp;&amp; a[5]==b[5] &amp;&amp;
-   a[6]==b[6] &amp;&amp; a[7]==b[7] &amp;&amp; a[8]==b[8] &amp;&amp;
-   a[9]==b[9] &amp;&amp; a[10]==b[10] &amp;&amp; a[11]==b[11] &amp;&amp;
-   a[12]==b[12] &amp;&amp; a[13]==b[13] &amp;&amp; a[14]==b[14] &amp;&amp;
-   a[15]==b[15]);
-}
+ "use strict";
+return (a[0]===b[0] &amp;&amp; a[1]===b[1] &amp;&amp; a[2]===b[2] &amp;&amp;
+   a[3]===b[3] &amp;&amp; a[4]===b[4] &amp;&amp; a[5]===b[5] &amp;&amp;
+   a[6]===b[6] &amp;&amp; a[7]===b[7] &amp;&amp; a[8]===b[8] &amp;&amp;
+   a[9]===b[9] &amp;&amp; a[10]===b[10] &amp;&amp; a[11]===b[11] &amp;&amp;
+   a[12]===b[12] &amp;&amp; a[13]===b[13] &amp;&amp; a[14]===b[14] &amp;&amp;
+   a[15]===b[15]);
+};
 /**
  * Not documented yet.
  * @param {*} mat
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.setProjectionMatrix=function(mat){
- if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix,mat)){
-  this._projectionMatrix=mat.slice(0,16)
-  this._frustum=null
+ "use strict";
+if(!H3DU.Batch3D._isSameMatrix(this._projectionMatrix,mat)){
+  this._projectionMatrix=mat.slice(0,16);
+  this._frustum=null;
  }
  return this;
 };
@@ -158,7 +165,8 @@ H3DU.Batch3D.prototype.setProjectionMatrix=function(mat){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.perspectiveAspect=function(fov,near,far){
- this._projectionUpdater=new H3DU.Batch3D._PerspectiveView(this,fov,near,far);
+ "use strict";
+this._projectionUpdater=new H3DU.Batch3D._PerspectiveView(this,fov,near,far);
  return this;
 };
 /**
@@ -170,7 +178,8 @@ H3DU.Batch3D.prototype.perspectiveAspect=function(fov,near,far){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
- return this.setViewMatrix(H3DU.Math.mat4lookat(eye,center,up));
+ "use strict";
+return this.setViewMatrix(H3DU.Math.mat4lookat(eye,center,up));
 };
 /**
  * Uses an orthographic projection for this batch.  It will be adjusted
@@ -189,7 +198,8 @@ H3DU.Batch3D.prototype.setLookAt=function(eye,center,up){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.orthoAspect=function(l,r,b,t,e,f){
- this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,l,r,b,t,e,f);
+ "use strict";
+this._projectionUpdater=new H3DU.Batch3D._OrthoView(this,l,r,b,t,e,f);
  return this;
 };
 /**
@@ -206,7 +216,8 @@ H3DU.Batch3D.prototype.orthoAspect=function(l,r,b,t,e,f){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.ortho2DAspect=function(l,r,b,t){
- return this.orthoAspect(l,r,b,t,-1,1);
+ "use strict";
+return this.orthoAspect(l,r,b,t,-1,1);
 };
 /**
  * Sets the current view matrix for this batch of shapes.
@@ -215,9 +226,10 @@ H3DU.Batch3D.prototype.ortho2DAspect=function(l,r,b,t){
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.setViewMatrix=function(mat){
- if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix,mat)){
-  this._viewMatrix=mat.slice(0,16)
-  this._frustum=null
+ "use strict";
+if(!H3DU.Batch3D._isSameMatrix(this._viewMatrix,mat)){
+  this._viewMatrix=mat.slice(0,16);
+  this._frustum=null;
  }
  return this;
 };
@@ -227,7 +239,8 @@ H3DU.Batch3D.prototype.setViewMatrix=function(mat){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.getProjectionMatrix=function(){
- return this._projectionMatrix.slice(0,16);
+ "use strict";
+return this._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this batch of shapes.
@@ -235,23 +248,26 @@ H3DU.Batch3D.prototype.getProjectionMatrix=function(){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.getViewMatrix=function(){
- return this._viewMatrix.slice(0,16);
+ "use strict";
+return this._viewMatrix.slice(0,16);
 };
 /** @private */
 H3DU.Batch3D.prototype._getFrustum=function(){
- if(this._frustum==null){
+ "use strict";
+if(this._frustum === null){
   var projView=H3DU.Math.mat4multiply(this._projectionMatrix,this._viewMatrix);
   this._frustum=H3DU.Math.mat4toFrustumPlanes(projView);
  }
  return this._frustum;
-}
+};
 /**
  * Not documented yet.
  * @returns {H3DU.Lights} Return value.
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.getLights=function(){
- return this.lights;
+ "use strict";
+return this.lights;
 };
 
 /**
@@ -263,7 +279,8 @@ H3DU.Batch3D.prototype.getLights=function(){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.addShape=function(shape){
- shape.parent=null;
+ "use strict";
+shape.parent=null;
  this.shapes.push(shape);
  return this;
 };
@@ -275,7 +292,8 @@ H3DU.Batch3D.prototype.addShape=function(shape){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.vertexCount=function(){
- var c=0;
+ "use strict";
+var c=0;
  for(var i=0;i&lt;this.shapes.length;i++){
   c+=this.shapes[i].vertexCount();
  }
@@ -288,7 +306,8 @@ H3DU.Batch3D.prototype.vertexCount=function(){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.primitiveCount=function(){
- var c=0;
+ "use strict";
+var c=0;
  for(var i=0;i&lt;this.shapes.length;i++){
   c+=this.shapes[i].primitiveCount();
  }
@@ -302,7 +321,8 @@ H3DU.Batch3D.prototype.primitiveCount=function(){
 * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.removeShape=function(shape){
- for(var i=0;i&lt;this.shapes.length;i++){
+ "use strict";
+for(var i=0;i&lt;this.shapes.length;i++){
    if(this.shapes[i]===shape){
      this.shapes.splice(i,1);
      i--;
@@ -313,7 +333,8 @@ H3DU.Batch3D.prototype.removeShape=function(shape){
 
 /** @private */
 H3DU.Batch3D.prototype._renderShape=function(shape, renderContext){
- if(shape.constructor===H3DU.ShapeGroup){
+ "use strict";
+if(shape.constructor===H3DU.ShapeGroup){
   if(!shape.visible)return;
   for(var i=0;i&lt;shape.shapes.length;i++){
    this._renderShape(shape.shapes[i], renderContext);
@@ -333,12 +354,12 @@ H3DU.Batch3D.prototype._renderShape=function(shape, renderContext){
     if(shape._hasColorAttr()){
       flags|=H3DU.Scene3D.COLORATTR_ENABLED;
     }
-    if(prog==null) {
+    if((prog === null || typeof prog === "undefined")) {
       prog=renderContext.scene._programs.getProgram(
            flags,renderContext.context);
     }
     var projAndView=false;
-    if(renderContext.prog!=prog){
+    if(renderContext.prog!==prog){
      prog.use();
      projAndView=true;
      new H3DU._LightsBinder(this.lights).bind(prog,this._viewMatrix);
@@ -359,17 +380,19 @@ H3DU.Batch3D.prototype._renderShape=function(shape, renderContext){
 
 /** @private */
 H3DU.Batch3D.prototype.resize=function(width, height) {
- if(this._projectionUpdater){
+ "use strict";
+if(this._projectionUpdater){
    this._projectionUpdater.update(width, height);
  }
-}
+};
 
 /**
  * Not documented yet.
  * @memberof! H3DU.Batch3D#
 */
 H3DU.Batch3D.prototype.render=function(scene){
-  var rc={};
+  "use strict";
+var rc={};
   rc.scene=scene;
   rc.context=scene.getContext();
   for(var i=0;i&lt;this.shapes.length;i++){
@@ -384,7 +407,8 @@ H3DU.Batch3D.prototype.render=function(scene){
  * @param {*} shader
  */
 H3DU.Batch3D.forFilter=function(scene,fbo,shader){
-  if(shader==null){
+  "use strict";
+if((shader === null || typeof shader === "undefined")){
     shader=H3DU.ShaderProgram.makeCopyEffect(scene);
   }
   var ret=new H3DU.Batch3D(scene);
@@ -395,12 +419,12 @@ H3DU.Batch3D.forFilter=function(scene,fbo,shader){
       1,-1,0,1,0],
      [0,1,2,2,1,3],
      H3DU.Mesh.TEXCOORDS_BIT);
-  var shape=new H3DU.Shape(mesh)
+  var shape=new H3DU.Shape(mesh);
   shape.setTexture(fbo);
   shape.setShader(shader);
   ret.addShape(shape);
    return ret;
-}
+};
 /** @private */
 H3DU.Batch3D._getMaterialBinder=function(material){
  "use strict";
@@ -438,7 +462,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

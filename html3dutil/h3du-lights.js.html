@@ -14,7 +14,8 @@
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>/* global H3DU */
+/**
 * A collection of light sources.  It stores the scene's
 * ambient color as well as data on one or more light sources.
 * When constructed, the default lighting will have a default
@@ -23,7 +24,8 @@
 * @alias H3DU.Lights
 */
 H3DU.Lights = function(){
- this.lights=[];
+ "use strict";
+this.lights=[];
  /**
  *  Ambient color for the scene.  This is the color of the light
  *  that shines on every part of every object equally and in
@@ -39,13 +41,14 @@ H3DU.Lights = function(){
  *  @default
  */
  this.sceneAmbient=[0.2,0.2,0.2];
-}
+};
 /**
  * Not documented yet.
  * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.setDefaults=function(){
- var ls=new H3DU.LightSource().setParams({
+ "use strict";
+var ls=new H3DU.LightSource().setParams({
   ambient:[0,0,0,1],
   position:[0,0,1,0],
   diffuse:[1,1,1,1],
@@ -54,7 +57,7 @@ H3DU.Lights.prototype.setDefaults=function(){
  });
  this.lights=[ls];
  this.sceneAmbient=[0.2,0.2,0.2];
-}
+};
 
 /** Maximum number of lights supported
    by the default shader program.
@@ -63,7 +66,8 @@ H3DU.Lights.prototype.setDefaults=function(){
 H3DU.Lights.MAX_LIGHTS = 3;
 /** @private */
 H3DU.Lights._createNewLight=function(index){
- var ret=new H3DU.LightSource();
+ "use strict";
+var ret=new H3DU.LightSource();
  if(index!==0){
   ret.diffuse=[0,0,0,0];
   ret.specular=[0,0,0];
@@ -76,7 +80,8 @@ H3DU.Lights._createNewLight=function(index){
 * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.getCount=function(){
- return this.lights.length;
+ "use strict";
+return this.lights.length;
 };
 
 /**
@@ -88,7 +93,8 @@ H3DU.Lights.prototype.getCount=function(){
  * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.getLight=function(index){
- var oldLength=this.lights.length;
+ "use strict";
+var oldLength=this.lights.length;
  if(!this.lights[index])this.lights[index]=H3DU.Lights._createNewLight(index);
  if(this.lights.length-oldLength>=2){
   // Ensure existence of lights that come between the new
@@ -111,7 +117,8 @@ H3DU.Lights.prototype.getLight=function(index){
  * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.setParams=function(index,params){
- this.getLight(index).setParams(params);
+ "use strict";
+this.getLight(index).setParams(params);
  return this;
 };
 
@@ -132,10 +139,11 @@ H3DU.Lights.prototype.setParams=function(index,params){
  * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specular){
- var ret=this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
- if(diffuse!=null)
+ "use strict";
+var ret=this.setParams(index,{"position":[direction[0],direction[1],direction[2],0]});
+ if((diffuse !== null &amp;&amp; typeof diffuse !== "undefined"))
    ret=ret.setParams(index,{"diffuse":diffuse});
- if(specular!=null)
+ if((specular !== null &amp;&amp; typeof specular !== "undefined"))
    ret=ret.setParams(index,{"specular":specular});
  return ret;
 };
@@ -152,10 +160,11 @@ H3DU.Lights.prototype.setDirectionalLight=function(index,direction,diffuse,specu
  * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.setPointLight=function(index,position,diffuse,specular){
- var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]});
- if(diffuse!=null)
+ "use strict";
+var ret=this.setParams(index,{"position":[position[0],position[1],position[2],1]});
+ if((diffuse !== null &amp;&amp; typeof diffuse !== "undefined"))
    ret=ret.setParams(index,{"diffuse":diffuse});
- if(specular!=null)
+ if((specular !== null &amp;&amp; typeof specular !== "undefined"))
    ret=ret.setParams(index,{"specular":specular});
  return ret;
 };
@@ -175,9 +184,10 @@ H3DU.Lights.prototype.setPointLight=function(index,position,diffuse,specular){
  * @memberof! H3DU.Lights#
 */
 H3DU.Lights.prototype.setAmbient=function(r,g,b,a){
- this.sceneAmbient=H3DU.toGLColor(r,g,b,a);
+ "use strict";
+this.sceneAmbient=H3DU.toGLColor(r,g,b,a);
  return this;
-}
+};
 </code></pre>
         </article>
     </section>
@@ -202,7 +212,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

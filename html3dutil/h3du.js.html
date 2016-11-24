@@ -14,7 +14,8 @@
 
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>/* global JSON, Promise */
+/**
 * Contains classes and methods for easing development
 * of WebGL applications.
 * @module glutil
@@ -28,7 +29,8 @@ if(!window.requestAnimationFrame){
     window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
  if(!window.requestAnimationFrame){
   window.requestAnimationFrame=function(func){
-   window.setTimeout(function(){
+   "use strict";
+window.setTimeout(function(){
     func(window.performance.now());
    },17);
   };
@@ -39,7 +41,8 @@ if(!window.performance){
 }
 if(!window.performance.now){
  window.performance.now=function(){
-   return (new Date().getTime()*1000)-window.performance._startTime;
+   "use strict";
+return (new Date().getTime()*1000)-window.performance._startTime;
  };
  window.performance._startTime=new Date().getTime()*1000;
 }
@@ -64,7 +67,8 @@ var H3DU={
 * milliseconds since the page was loaded.
 */
 "renderLoop":function(func){
-  func(window.performance.now());
+  "use strict";
+func(window.performance.now());
   var selfRefFunc=function(time){
    window.requestAnimationFrame(selfRefFunc);
    func(time);
@@ -90,7 +94,8 @@ var H3DU={
 * @returns {HTMLCanvasElement} The resulting canvas element.
 */
 "createCanvasElement":function(parent, width, height){
- var canvas=document.createElement("canvas");
+ "use strict";
+var canvas=document.createElement("canvas");
  if(parent){
   parent.appendChild(canvas);
  }
@@ -120,7 +125,8 @@ var H3DU={
 * is null or not an HTML canvas element.
 */
 "get3DOr2DContext":function(canvasElement){
-  if(!canvasElement)return null;
+  "use strict";
+if(!canvasElement)return null;
   if(!canvasElement.getContext)return null;
   var context=null;
   var options={"preserveDrawingBuffer":true,
@@ -166,7 +172,8 @@ var H3DU={
 * is null or not an HTML canvas element.
 */
 "get3DContext":function(canvasElement,err){
-  var c=H3DU.get3DOr2DContext(canvasElement);
+  "use strict";
+var c=H3DU.get3DOr2DContext(canvasElement);
   var errmsg=null;
   if(!c &amp;&amp; window.WebGLShader){
     errmsg="Failed to initialize graphics support required by this page.";
@@ -185,7 +192,8 @@ var H3DU={
 * Returns whether the given object is a 3D rendering context.
 * @returns {Boolean} Return value.*/
 "is3DContext":function(context){
- return context &amp;&amp; ("compileShader" in context);
+ "use strict";
+return context &amp;&amp; ("compileShader" in context);
 },
 
 /**
@@ -206,7 +214,8 @@ var H3DU={
  */
 "getPromiseResultsAll":function(promises,
    progressResolve, progressReject){
-   return H3DU.getPromiseResults(promises,progressResolve,progressReject)
+   "use strict";
+return H3DU.getPromiseResults(promises,progressResolve,progressReject)
      .then(function(results){
       if(results.failures.length>0){
        return Promise.reject(results);
@@ -238,7 +247,8 @@ var H3DU={
  */
 "getPromiseResults":function(promises,
    progressResolve, progressReject){
- if(!promises || promises.length===0){
+ "use strict";
+if(!promises || promises.length===0){
   return Promise.resolve({
     successes:[], failures:[], results:[]});
  }
@@ -303,7 +313,8 @@ var H3DU={
 * &lt;li>For any other type, a string of the file's text.&lt;/ul>
 */
 "loadFileFromUrl":function(url,responseType){
- var urlstr=url;
+ "use strict";
+var urlstr=url;
  var respType=responseType||"text";
  return new Promise(function(resolve, reject){
    var xhr=new XMLHttpRequest();
@@ -369,7 +380,8 @@ var H3DU={
 * var angle = 360 * H3DU.getTimePosition(timer, time, 5000);
 */
 H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
- if(((typeof timer.time==="undefined" || timer.time === null))) {
+ "use strict";
+if(((typeof timer.time==="undefined" || timer.time === null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
@@ -394,7 +406,8 @@ H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
 * initial time or last known time wasn't set, returns 0.
 */
 H3DU.newFrames=function(timer,timeInMs){
- if(((typeof timer.time==="undefined" || timer.time === null))) {
+ "use strict";
+if(((typeof timer.time==="undefined" || timer.time === null))) {
   timer.time=timeInMs;
   timer.lastTime=timeInMs;
   return 0;
@@ -409,6 +422,9 @@ H3DU.newFrames=function(timer,timeInMs){
 };
 
 (function(exports){
+"use strict";
+var namedColors=null;
+var setUpNamedColors=null;
 var hlsToRgb=function(hls){
 var hueval=hls[0]*1.0;//[0-360)
  var lum=hls[1]*1.0;//[0-255]
@@ -458,10 +474,10 @@ var colorToRgba=function(x){
  function parsePercent(x){ var c; return ((c=parseFloat(x))&lt;0 ? 0 : (c>100 ? 100 : c))*255/100; }
  function parseAlpha(x){ var c; return ((c=parseFloat(x))&lt;0 ? 0 : (c>1 ? 1 : c))*255; }
  function parseByte(x){ var c; return ((c=parseInt(x,10))&lt;0 ? 0 : (c>255 ? 255 : c)); }
- function parseHue(x){ var r1=parseFloat(e[1]);if(r1&lt;0||r1>=360)r1=(((r1%360)+360)%360); return r1; }
+ function parseHue(x){ var r1=parseFloat(x);if(r1&lt;0||r1>=360)r1=(((r1%360)+360)%360); return r1; }
 var e=null;
  if(!x)return null;
- var b,c,r1,r2,r3,r4,rgb;
+ var b,c,d,a,r1,r2,r3,r4,rgb;
  if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),255];
  } else if((e=(/^#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(x)))!==null){
@@ -475,10 +491,10 @@ var e=null;
  } else if((e=(/^rgba\(\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+)\s*,\s*([\+\-]?\d+(?:\.\d+)?)\s*\)$/.exec(x)))!==null){
   return [parseByte(e[1]),parseByte(e[2]),parseByte(e[3]),parseAlpha(e[4])];
  } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
-  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
+  a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16);
   return [a+(a&lt;&lt;4),b+(b&lt;&lt;4),c+(c&lt;&lt;4),255];
  } else if((e=(/^#([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})([A-Fa-f0-9]{1})$/.exec(x)))!==null){
-  var a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16); d=parseInt(e[4],16);
+  a=parseInt(e[1],16); b=parseInt(e[2],16); c=parseInt(e[3],16); d=parseInt(e[4],16);
   return [a+(a&lt;&lt;4),b+(b&lt;&lt;4),c+(c&lt;&lt;4),d+(d&lt;&lt;4)];
  } else if((e=(/^hsl\(\s*([\+\-]?\d+(?:\.\d+)?)\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*,\s*([\+\-]?\d+(?:\.\d+)?)%\s*\)$/.exec(x)))!==null){
   rgb=hlsToRgb([parseHue(e[1]),parsePercent(e[3]),parsePercent(e[2])]);
@@ -502,8 +518,8 @@ var clampRgba=function(x){
  x[1]=(x[1]&lt;0 ? 0 : Math.min(x[1],1));
  x[2]=(x[2]&lt;0 ? 0 : Math.min(x[2],1));
  x[3]=(x[3]&lt;0 ? 0 : Math.min(x[3],1));
- return x
-}
+ return x;
+};
 /**
 * Creates a 4-element array representing a color.  Each element
 * can range from 0 to 1 and specifies the red, green, blue or alpha
@@ -589,8 +605,8 @@ exports.toGLColor=function(r,g,b,a){
  }
 };
 
-var namedColors=null;
-var setUpNamedColors=function(){
+namedColors=null;
+setUpNamedColors=function(){
 if(!namedColors){
     var nc=("aliceblue,f0f8ff,antiquewhite,faebd7,aqua,00ffff,aquamarine,7fffd4,azure,f0ffff,beige,f5f5dc,bisque,ffe4c4,black,000000,blanchedalmond,ffebcd,blue,0000ff,"+
 "blueviolet,8a2be2,brown,a52a2a,burlywood,deb887,cadetblue,5f9ea0,chartreuse,7fff00,chocolate,d2691e,coral,ff7f50,cornflowerblue,6495ed,cornsilk,fff8dc,"+
@@ -618,11 +634,13 @@ if(!namedColors){
 
 /** @private */
 H3DU._toContext=function(context){
- return (context &amp;&amp; context.getContext) ? context.getContext() : context;
+ "use strict";
+return (context &amp;&amp; context.getContext) ? context.getContext() : context;
 };
 /** @private */
 H3DU._isPowerOfTwo=function(a){
-   if(Math.floor(a)!==a || a&lt;=0)return false;
+   "use strict";
+if(Math.floor(a)!==a || a&lt;=0)return false;
    while(a>1 &amp;&amp; (a&amp;1)===0){
     a>>=1;
    }
@@ -630,6 +648,7 @@ H3DU._isPowerOfTwo=function(a){
 };
 /** @private */
 H3DU._isIdentityExceptTranslate=function(mat){
+"use strict";
 return (
     mat[0]===1 &amp;&amp; mat[1] === 0 &amp;&amp; mat[2] === 0 &amp;&amp; mat[3] === 0 &amp;&amp;
     mat[4] === 0 &amp;&amp; mat[5] === 1 &amp;&amp; mat[6] === 0 &amp;&amp; mat[7] === 0 &amp;&amp;
@@ -661,7 +680,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-glutil.html">glutil</a></li></ul><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){
