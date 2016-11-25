@@ -1,0 +1,367 @@
+//
+//   Written by Peter O. 2015.
+//
+//   Any copyright is dedicated to the Public Domain.
+//   http://creativecommons.org/publicdomain/zero/1.0/
+//
+//   If you like this, you should donate to Peter O.
+//   at: http://peteroupc.github.io/
+//
+@import "typography.less";
+@import "lessutil.less";
+@import "reset.less";
+//////////////////////////////////////////////////////////////////////
+//  General styles
+//////////////////////////////////////////////////////////////////////
+
+ .traditionaltypography();
+
+body {
+ margin:0 auto;
+ text-align:center;
+ padding: 0.5% 2%;
+ font-size:120%;
+ max-width: 960px;
+}
+
+kbd {
+ white-space:nowrap;
+ border-style:solid;
+ padding:2px 4px;
+ border-width:1px 3px 3px 1px;
+}
+
+dfn {
+  .italic();
+}
+
+hr {
+ border: 1px solid;
+}
+
+abbr,acronym {
+  border-bottom:1px dotted;
+  cursor:help;
+}
+
+table {
+ border: 1px solid;
+ .tableRadii(10px);
+ caption { .smallcaps(); }
+ td, th {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-top: 1px solid;
+  padding: 0.2em 0.2em 0.2em 0.2em;
+  font-size: 85%;
+ }
+ tr:first-child > th,
+ tbody:first-child > tr:first-child > td {
+  border-top: none
+ }
+}
+
+option { font-size:110%; }
+
+.bigHeader(@size) {
+ font-size:@size;
+ .lightweight();
+ padding-top: 0.2em;
+ padding-bottom: 0.2em;
+ padding-left: 0.05em;
+ border-top: 1px solid;
+ border-bottom: 1px solid;
+}
+.littleHeader(@size){
+ text-align:left; font-size:@size;
+}
+
+h1 { .bigHeader(180%); }
+h2 { .bigHeader(160%); }
+h3 { .littleHeader(140%); }
+h4 { .littleHeader(130%); }
+h5 { .littleHeader(120%); }
+h6 { .littleHeader(110%); }
+
+blockquote {
+ padding-top: 0.4em;
+ padding-bottom: 0.4em;
+ padding-left: 0.2em;
+ margin-top: 0.4em;
+ margin-bottom: 0.4em;
+ margin-right: 2.5em;
+ margin-left: 2.5em;
+ border-top: 1px solid;
+ border-bottom: 1px solid;
+ border-left: none;
+ border-right: none;
+ .lightweight();
+ .italic();
+}
+
+.citation, blockquote footer {
+ margin-top: 0;
+ text-align: right;
+ .smallcaps();
+ .roman();
+}
+
+.aside() {
+ border: 1px solid;
+ font-size: 85%;
+ margin-left: 1em;
+ margin-right: 1em;
+ margin-top: 0.4em;
+ margin-bottom: 0.4em;
+ padding: 1em;
+ .lightweight();
+}
+aside { .aside(); }
+aside, div {
+ &.example, &.caution, &.warning, &.note {
+  border: 2px solid;
+ }
+ &.warning {
+  .regularweight();
+ }
+}
+
+fieldset {
+    margin: 1em 0em 1em 0em;
+    padding: 0em 1em 1em 1em;
+}
+
+pre {
+  text-align: left;
+  width: 95%;
+  overflow: auto;
+  padding: 0.1em;
+}
+
+//////////////////////////////////////////////////////////////////////
+//  Colors
+//////////////////////////////////////////////////////////////////////
+
+@primarybackground: #e0f6fc;
+@primary100: #b3e8f8;
+@primary200: #8dd8f3;
+@primarylight: #4dc8ee;
+@primary: #00b1e7;
+@primarydark: #0095da;
+
+@secondaryverylight: #f9d9fe;
+@secondarylight: #ea80fc;
+@secondary: #e040db;
+@secondarydark: #d500f9;
+
+// Recommended by Material Design
+@textblackprimary: rgba(0,0,0,87%);
+@textblacksecondary: rgba(0,0,0,54%);
+@textblackhint: rgba(0,0,0,38%);
+@dividerblack: rgba(0,0,0,12%);
+
+@textwhiteprimary: #ffffff;
+@textwhitesecondary: rgba(255,255,255,70%);
+@textwhitehint: rgba(255,255,255,50%);
+@dividerwhite: rgba(255,255,255,12%);
+
+body {
+ color:@textblackprimary;
+ background-color:@primarybackground;
+}
+
+a:link,a:hover,a:visited {
+ color:@secondary;
+ h1 &, h2 & {
+  color:@secondarydark;
+ }
+}
+
+kbd {
+ background:@primary100;
+}
+
+.header {
+ border-bottom-color: @dividerblack;
+ background: @primary;
+ a:link,a:hover,a:visited {
+  color:@secondaryverylight;
+ }
+}
+
+nav {
+ border-color: @dividerblack;
+}
+
+caption, figcaption {
+ color: @textblacksecondary;
+}
+
+h1 {
+ color: @textwhiteprimary;
+ border-color: @dividerblack;
+ background: @primary;
+}
+
+h2 {
+ color: @textwhiteprimary;
+ border-color: @dividerblack;
+ background: @primarylight;
+}
+
+pre {
+  border-color:@dividerblack;
+  background:@primary100;
+}
+
+button, input.button, input[type="button"],
+input[type="submit"], input[type="reset"],
+input[type="file"]{
+  .inputuibuttonmodern(@textwhiteprimary,@secondary,
+    @dividerwhite,@secondarydark);
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"]{
+  .inputuifieldmodern(@textblackprimary,@secondary);
+}
+
+input[type="checkbox"],
+input[type="radio"]{
+ border: 1;
+ border-color:@secondary;
+ color:@textblackhint;
+}
+
+blockquote {
+ color: @textblacksecondary;
+ border-color:@dividerblack;
+}
+
+hr {
+ border-color:@dividerblack;
+ color:@dividerblack;
+}
+
+table {
+  border-color:@dividerblack;
+}
+/* odd-row cells */
+td{
+ border-color:@dividerblack;
+ background-color:@primary100;
+ color:@textblackprimary;
+ b{
+  color:@textblackprimary;
+ }
+}
+th {
+  color:@textwhiteprimary;
+  background-color:@primarydark;
+}
+/* even-row cells */
+tr {
+  td:nth-child(even){background-color:@primary200;}
+}
+aside {
+ border-color:  @dividerblack;
+}
+aside, div {
+ &.example {
+  border-color: #0022c0;
+  background-color: #f8fcff;
+ }
+ &.caution {
+  border-color: #ff8000;
+  background-color: #fffcf8;
+ }
+ &.warning {
+  border-color: #ff0000;
+  background-color: #fff8f8;
+ }
+ &.note {
+  border-color: #00c022;
+  background-color: #f8fffc;
+ }
+}
+@import "print.less";
+
+//////////////////////////////////////////////////////////////////////
+//  Site-specific styles
+//////////////////////////////////////////////////////////////////////
+nav {
+    float: left;
+    width: 25%;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    border-left-width: 1px;
+    border-left-style: solid;
+    margin-top: 0px;
+    box-sizing: border-box;
+    padding-left: 1em;
+}
+.mainarea {
+ width:75%;
+ float:left;
+}
+
+.header {
+ .stickyheader();
+ font-size:130%;
+ width:100%;
+ white-space:nowrap;
+ padding-left:1em;
+ padding-right:1em;
+ font-weight:bolder;
+ display:none;
+}
+
+div.description {
+ margin-top: 0.3em;
+ margin-bottom: 0.3em;
+}
+img {
+ padding: 6px;
+}
+ p, li, dt, dd, aside {
+  img {
+    padding: 0px;
+  }
+ }
+
+@media screen and (max-width:785px){
+.header {
+ display:block;
+}
+
+.mainarea {
+ margin-top: 3em;
+ width:100%;
+ float:none;
+}
+nav {
+    float: none;
+    width: 100%;
+    border: none;
+    margin-top: 0px;
+    box-sizing: border-box;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+}
