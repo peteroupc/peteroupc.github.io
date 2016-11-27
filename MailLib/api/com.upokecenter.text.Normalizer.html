@@ -11,15 +11,16 @@
 
 <p>Deprecated.&nbsp;</p>
 
-<div class='block'>Use NormalizingCharacterInput instead; that class is much more flexible than
+<div class='block'>Use NormalizerInput instead; that class is much more flexible than
  Normalizer.</div>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>Normalizer(String str,
-      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the Normalizer class.</li>
+      Normalization form) Normalizer</code><br>
+Deprecated.  Initializes a new instance of the Normalizer
+class.</li>
 <li><code>static boolean IsNormalized(String str,
         Normalization form)</code><br>
 Deprecated.  Returns whether this string is normalized.</li>
@@ -38,8 +39,9 @@ Deprecated.  Reads a Unicode character from a data source.</li>
 
 <ul>
 <li><code>Normalizer(String str,
-      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the Normalizer class.</li>
+      Normalization form) Normalizer</code><br>
+Deprecated.  Initializes a new instance of the Normalizer
+class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -54,7 +56,7 @@ Deprecated.  Initializes a new instance of the Normalizer class.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A string object.</p></li>
+<li><p><code>str</code> - A text string.</p></li>
 <li><p><code>form</code> - A Normalization object.</p></li>
 </ul>
 
@@ -68,7 +70,7 @@ Deprecated.  Initializes a new instance of the Normalizer class.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A string object.</p></li>
+<li><p><code>str</code> - A text string.</p></li>
 <li><p><code>form</code> - A Normalization object.</p></li>
 </ul>
 
@@ -115,7 +117,7 @@ Deprecated.  Initializes a new instance of the Normalizer class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this string is normalized; otherwise, false.</li>
+<li><code>true</code> if this string is normalized; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>ReadChar</h3>
@@ -157,9 +159,9 @@ source is reached.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is less
-than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s
-length minus <code>index</code> is less than <code>length</code>.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is
+less than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code>
+&#39; s length minus <code>index</code> is less than <code>length</code>.</p></li>
 <li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
 </ul>
 

@@ -29,13 +29,14 @@
 Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary
 binary data.</li>
 <li><code>static MediaType MessageRfc822</code><br>
-Specifies the media type &quot;message/rfc822&quot; , used for Internet mail messages.</li>
+Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</li>
 <li><code>static MediaType TextPlainAscii</code><br>
 Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
 &quot;US-ASCII&quot;, used for plain text data.</li>
 <li><code>static MediaType TextPlainUtf8</code><br>
 Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
-used for Unicode plain text data.</li>
+used for plain text data that may contain characters outside the
+basic Latin range (U + 0000 to U + 007F).</li>
 </ul>
 
 <h2>Methods</h2>
@@ -91,14 +92,15 @@ Converts this object to a text string.</li>
 </code></pre>
 
 <p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
- used for Unicode plain text data.</p>
+ used for plain text data that may contain characters outside the
+ basic Latin range (U + 0000 to U + 007F).</p>
 
 <h3>MessageRfc822</h3>
 
 <pre><code>public static final MediaType MessageRfc822
 </code></pre>
 
-<p>Specifies the media type &quot;message/rfc822&quot; , used for Internet mail messages.</p>
+<p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</p>
 
 <h3>ApplicationOctetStream</h3>
 
@@ -147,7 +149,8 @@ Converts this object to a text string.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this object and another object are equal; otherwise, false.</li>
+<li><code>true</code> if this object and another object are equal; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -192,7 +195,7 @@ Converts this object to a text string.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this is a text media type; otherwise, false.</li>
+<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isMultipart</h3>
@@ -205,7 +208,7 @@ Converts this object to a text string.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this is a multipart media type; otherwise, false.</li>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>getParameters</h3>
@@ -254,11 +257,11 @@ by name.</li>
 <ul>
 <li>If the &quot;charset&quot; parameter exists, returns that parameter with the
 basic upper-case letters A to Z (U + 0041 to U + 005A) converted to lower
-case. Returns &quot;us-ascii&quot; instead if the media type is ill-formed
-(RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t
-have a &quot;charset&quot; parameter (see RFC2046), or the default value for
-that parameter, if any, for the media type if the &quot;charset&quot; parameter
-is absent. Returns an empty string in all other cases.</li>
+case. Returns <code>&quot;us-ascii&quot;</code> instead if the media type is
+ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot;
+and doesn&#39;t have a &quot;charset&quot; parameter (see RFC2046), or the default
+value for that parameter, if any, for the media type if the &quot;charset&quot;
+parameter is absent. Returns an empty string in all other cases.</li>
 </ul>
 
 <h3>GetParameter</h3>
@@ -317,7 +320,7 @@ slash; for example, &quot;text/plain&quot;.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>mediaTypeValue</code> - A string object representing a media type. This media
+<li><code>mediaTypeValue</code> - A text string representing a media type. This media
 type can include parameters.</li>
 </ul>
 
@@ -342,7 +345,7 @@ empty or syntactically invalid.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A string object representing a media type. This media type can
+<li><p><code>str</code> - A text string representing a media type. This media type can
 include parameters.</p></li>
 <li><p><code>defaultValue</code> - The media type to return if the string is syntactically
 invalid. Can be null.</p></li>

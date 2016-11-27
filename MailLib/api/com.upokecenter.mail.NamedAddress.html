@@ -15,23 +15,25 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>NamedAddress(String address)</code><br>
-Initializes a new instance of the NamedAddress class.</li>
+<li><code>NamedAddress(String address) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class.</li>
 <li><code>NamedAddress(String displayName,
-        Address address)</code><br>
-Initializes a new instance of the NamedAddress class.</li>
+        Address address) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class.</li>
 <li><code>NamedAddress(String groupName,
-        List&lt;NamedAddress&gt; mailboxes)</code><br>
-Initializes a new instance of the NamedAddress class.</li>
+        List&lt;NamedAddress&gt; mailboxes)</code><br></li>
 <li><code>NamedAddress(String displayName,
-        String address)</code><br>
-Initializes a new instance of the NamedAddress class using the given display
-name and email address.</li>
+        String address) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class using the given display name and email address.</li>
 <li><code>NamedAddress(String displayName,
         String localPart,
-        String domain)</code><br>
-Initializes a new instance of the NamedAddress class using the given name
-and an email address made up of its local part and domain.</li>
+        String domain) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class using the given name and an email address made up of its local
+part and domain.</li>
 <li><code>Address getAddress()</code><br>
 Gets the email address associated with this object.</li>
 <li><code>List&lt;NamedAddress&gt; getGroupAddresses()</code><br>
@@ -50,23 +52,25 @@ Converts this object to a text string.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>NamedAddress(String address)</code><br>
-Initializes a new instance of the NamedAddress class.</li>
+<li><code>NamedAddress(String address) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class.</li>
 <li><code>NamedAddress(String displayName,
-        Address address)</code><br>
-Initializes a new instance of the NamedAddress class.</li>
+        Address address) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class.</li>
 <li><code>NamedAddress(String groupName,
-        List&lt;NamedAddress&gt; mailboxes)</code><br>
-Initializes a new instance of the NamedAddress class.</li>
+        List&lt;NamedAddress&gt; mailboxes)</code><br></li>
 <li><code>NamedAddress(String displayName,
-        String address)</code><br>
-Initializes a new instance of the NamedAddress class using the given display
-name and email address.</li>
+        String address) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class using the given display name and email address.</li>
 <li><code>NamedAddress(String displayName,
         String localPart,
-        String domain)</code><br>
-Initializes a new instance of the NamedAddress class using the given name
-and an email address made up of its local part and domain.</li>
+        String domain) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class using the given name and an email address made up of its local
+part and domain.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -76,9 +80,9 @@ and an email address made up of its local part and domain.</li>
 <pre><code>public NamedAddress(String address)
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class. Examples: <ul>
- <li><code><a href="mailto:john@example.com">john@example.com</a></code></li> <li><code>&quot;John Doe&quot;
- &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li>
+<p>Initializes a new instance of the <code>NamedAddress</code>
+ class. Examples: <ul> <li><code><a href="mailto:john@example.com">john@example.com</a></code></li> <li><code>&quot;John
+ Doe&quot; &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li>
  <li><code>=?utf-8?q?John</code><code>=</code><code>27s_Office?=
  &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li> <li><code>John
  &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li> <li><code>&quot;Group&quot; : Tom
@@ -87,7 +91,7 @@ and an email address made up of its local part and domain.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>address</code> - A string object identifying a single email address or a group
+<li><code>address</code> - A text string identifying a single email address or a group
 of email addresses. Comments, or text within parentheses, can appear.
 Multiple email addresses are not allowed unless they appear in the
 group syntax given above. Encoded words under RFC 2047 that appear
@@ -96,10 +100,10 @@ encoded word consists of &quot;=?&quot;, a character encoding name, such as
 <code>utf-8</code>, either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a
 series of bytes in the character encoding, further encoded using B or
 Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q
-encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;,
-and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and
-the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed
-to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s
+encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and
+most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the
+basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to
+&quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s
 maximum length is 75 characters. See the second example.</p>.</li>
 </ul>
 
@@ -115,8 +119,8 @@ maximum length is 75 characters. See the second example.</p>.</li>
 <pre><code>public NamedAddress(String displayName, String address)
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class using the given display
- name and email address.</p>
+<p>Initializes a new instance of the <code>NamedAddress</code>
+ class using the given display name and email address.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -131,7 +135,8 @@ which case the email address is used instead. Encoded words under RFC
 
 <ul>
 <li><p><code>NullPointerException</code> - The parameter <code>address</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The display name or address has an invalid syntax.</p></li>
+<li><p><code>IllegalArgumentException</code> - The display name or address has an invalid
+syntax.</p></li>
 </ul>
 
 <h3>NamedAddress</h3>
@@ -139,12 +144,13 @@ which case the email address is used instead. Encoded words under RFC
 <pre><code>public NamedAddress(String displayName, Address address)
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class.</p>
+<p>Initializes a new instance of the <code>NamedAddress</code>
+ class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>displayName</code> - A string object. If this value is null or empty, uses the
+<li><p><code>displayName</code> - A text string. If this value is null or empty, uses the
 email address as the display name. Encoded words under RFC 2047 will
 not be decoded.</p></li>
 <li><p><code>address</code> - An email address.</p></li>
@@ -161,13 +167,14 @@ not be decoded.</p></li>
 <pre><code>public NamedAddress(String displayName, String localPart, String domain)
 </code></pre>
 
-<p>Initializes a new instance of the NamedAddress class using the given name
- and an email address made up of its local part and domain.</p>
+<p>Initializes a new instance of the <code>NamedAddress</code>
+ class using the given name and an email address made up of its local
+ part and domain.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>displayName</code> - A string object. If this value is null or empty, uses the
+<li><p><code>displayName</code> - A text string. If this value is null or empty, uses the
 email address as the display name.</p></li>
 <li><p><code>localPart</code> - The local part of the email address (before the &quot;@&quot;).</p></li>
 <li><p><code>domain</code> - The domain of the email address (before the &quot;@&quot;).</p></li>
@@ -176,32 +183,14 @@ email address as the display name.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>localPart</code> or <code>domain</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>localPart</code> or
+<code>domain</code> is null.</li>
 </ul>
 
 <h3>NamedAddress</h3>
 
 <pre><code>public NamedAddress(String groupName, List&lt;NamedAddress&gt; mailboxes)
 </code></pre>
-
-<p>Initializes a new instance of the NamedAddress class. Takes a group name and
- several named email addresses as parameters, and forms a group with
- them.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>groupName</code> - The group&#39;s name.</p></li>
-<li><p><code>mailboxes</code> - A list of named addresses that make up the group.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>groupName</code> or <code>mailboxes</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>groupName</code> is empty, or an
-item in the list is itself a group.</p></li>
-</ul>
 
 <h3>getName</h3>
 
@@ -242,7 +231,8 @@ this object represents a group of addresses instead.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this represents a group of addresses; otherwise, false.</li>
+<li><code>true</code> If this represents a group of addresses; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>toString</h3>

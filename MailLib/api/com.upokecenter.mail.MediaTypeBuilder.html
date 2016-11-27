@@ -14,14 +14,14 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>MediaTypeBuilder()</code><br>
+<li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class, using the type
 &quot;application/octet-stream&quot;.</li>
-<li><code>MediaTypeBuilder(MediaType mt)</code><br>
+<li><code>MediaTypeBuilder(MediaType mt) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class using the data from
 another media type.</li>
 <li><code>MediaTypeBuilder(String type,
-            String subtype)</code><br>
+            String subtype) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class.</li>
 <li><code>String getSubType()</code><br>
 Gets this value&#39;s subtype.</li>
@@ -51,14 +51,14 @@ Converts this object to a text string.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>MediaTypeBuilder()</code><br>
+<li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class, using the type
 &quot;application/octet-stream&quot;.</li>
-<li><code>MediaTypeBuilder(MediaType mt)</code><br>
+<li><code>MediaTypeBuilder(MediaType mt) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class using the data from
 another media type.</li>
 <li><code>MediaTypeBuilder(String type,
-            String subtype)</code><br>
+            String subtype) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class.</li>
 </ul>
 
@@ -69,7 +69,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre><code>public MediaTypeBuilder()
 </code></pre>
 
-<p>Initializes a new instance of the MediaTypeBuilder class, using the type
+<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class, using the type
  &quot;application/octet-stream&quot;.</p>
 
 <h3>MediaTypeBuilder</h3>
@@ -77,7 +77,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre><code>public MediaTypeBuilder(MediaType mt)
 </code></pre>
 
-<p>Initializes a new instance of the MediaTypeBuilder class using the data from
+<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class using the data from
  another media type.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -97,7 +97,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre><code>public MediaTypeBuilder(String type, String subtype)
 </code></pre>
 
-<p>Initializes a new instance of the MediaTypeBuilder class.</p>
+<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -152,7 +152,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this is a text media type; otherwise, false.</li>
+<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isMultipart</h3>
@@ -165,7 +165,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this is a multipart media type; otherwise, false.</li>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>ToMediaType</h3>
@@ -191,8 +191,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A string object naming a top-level type, such as &quot;text&quot; or
-&quot;audio&quot;.</li>
+<li><code>str</code> - A text string naming a top-level type, such as &quot;text&quot; or &quot;audio&quot;.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -205,8 +204,8 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 
 <ul>
 <li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> is syntactically invalid
-for a top-level type.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> is syntactically
+invalid for a top-level type.</p></li>
 </ul>
 
 <h3>RemoveParameter</h3>
@@ -248,7 +247,7 @@ case-insensitively.</li>
 <ul>
 <li><p><code>name</code> - Name of the parameter to set, such as &quot;charset&quot;. The name is
 compared case-insensitively.</p></li>
-<li><p><code>value</code> - A string object giving the parameter&#39;s value.</p></li>
+<li><p><code>value</code> - A text string giving the parameter&#39;s value.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -260,8 +259,7 @@ compared case-insensitively.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>value</code> or <code>name</code> is
-null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>value</code> or <code>name</code> is null.</p></li>
 <li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty or
 syntactically invalid.</p></li>
 </ul>
@@ -276,7 +274,7 @@ syntactically invalid.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A string object naming a media subtype.</li>
+<li><code>str</code> - A text string naming a media subtype.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

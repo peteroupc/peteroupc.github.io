@@ -28,6 +28,8 @@ The content disposition value &quot;inline&quot;.</li>
 <ul>
 <li><code>boolean equals(Object obj)</code><br>
 Determines whether this object and another object are equal.</li>
+<li><code>static String EscapeString(String str)</code><br>
+Not documented yet.</li>
 <li><code>String getDispositionType()</code><br>
 Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
 &quot;attachment&quot;.</li>
@@ -110,7 +112,7 @@ or &quot;attachment&quot;.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if the objects are equal; otherwise, false.</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -142,7 +144,7 @@ or &quot;attachment&quot;.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if the disposition type is inline; otherwise, false.</li>
+<li><code>true</code> If the disposition type is inline; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isAttachment</h3>
@@ -155,7 +157,8 @@ or &quot;attachment&quot;.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if the disposition type is attachment; otherwise, false.</li>
+<li><code>true</code> If the disposition type is attachment; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>getParameters</h3>
@@ -198,12 +201,12 @@ their values. The names will be sorted.</li>
 
 <p>Converts a file name from the Content-Disposition header to a suitable name
  for saving data to a file. <p>Examples:</p>
- <p>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot; (RFC 2047
- encoding)</p> <p>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;
- (RFC 2047 encoding)</p> <p>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;
- (RFC 2231 encoding)</p> <p>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot; (Reserved
- name)</p> <p>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot; (Directory
- separators)</p></p>
+ <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot;</code> (RFC 2047
+ encoding)</p> <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long
+ filename&quot;</code> (RFC 2047 encoding)</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot;
+ -&gt; &quot;hello.txt&quot;</code> (RFC 2231 encoding)</p> <p><code>&quot;nul.txt&quot; -&gt;
+ &quot;_nul.txt&quot;</code> (Reserved name)</p> <p><code>&quot;dir1/dir2/file&quot; -&gt;
+ &quot;dir1_dir2_file&quot;</code> (Directory separators)</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -229,8 +232,26 @@ string will be in normalization form C. Returns an empty string if
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;name&quot; or <code>str</code> or
-&quot;dispoValue&quot; or &quot;dispositionValue&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>EscapeString</h3>
+
+<pre><code>public static String EscapeString(String str)
+</code></pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string object.</li>
 </ul>
 
 <h3>GetParameter</h3>
@@ -271,7 +292,7 @@ case-insensitively. Can&#39;t be null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>dispoValue</code> - A string object.</li>
+<li><code>dispoValue</code> - A text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -284,7 +305,8 @@ is empty or syntactically invalid.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>dispoValue</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>dispoValue</code> is
+null.</li>
 </ul>
 
 <h3>Parse</h3>
@@ -298,7 +320,7 @@ is empty or syntactically invalid.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>dispositionValue</code> - A string object that should be the value of a
+<li><p><code>dispositionValue</code> - A text string that should be the value of a
 Content-Disposition header field.</p></li>
 <li><p><code>defaultValue</code> - The value to return in case the disposition value is
 syntactically invalid. Can be null.</p></li>
@@ -313,8 +335,8 @@ syntactically invalid. Can be null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>dispositionValue</code> is
-null.</li>
+<li><code>NullPointerException</code> - The parameter <code>dispositionValue</code>
+is null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

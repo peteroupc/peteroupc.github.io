@@ -29,7 +29,7 @@
 
 <p>COPYRIGHT AND PERMISSION NOTICE</p>
 
-<p>Copyright (c) 1991-2014 Unicode, Inc. All rights reserved. Distributed under the Terms of Use in <a href="http://www.unicode.org/copyright.html.">http://www.unicode.org/copyright.html.</a></p>
+<p>Copyright (c) 1991-2014 Unicode, Inc. All rights reserved. Distributed under the Terms of Use in <a href="http://www.unicode.org/copyright.html">http://www.unicode.org/copyright.html</a>.</p>
 
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy of the Unicode data files and any associated documentation (the &quot;Data Files&quot;) or Unicode software and any associated documentation (the &quot;Software&quot;) to deal in the Data Files or Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, and/or sell copies of the Data Files or Software, and to permit persons to whom the Data Files or Software are furnished to do so, provided that (a) this copyright and permission notice appear with all copies of the Data Files or Software, (b) this copyright and permission notice appear in associated documentation, and (c) there is clear notice in each modified Data File or in the Software as well as in the documentation associated with the Data File(s) or Software that the data or software has been modified.</p>
 
@@ -134,6 +134,8 @@ begins.</p></li>
     System.Collections.Generic.IList characterList);
 </code></pre>
 
+<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
+
 <p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
@@ -148,6 +150,8 @@ begins.</p></li>
     System.Collections.Generic.IList characterList,
     PeterO.Text.Normalization form);
 </code></pre>
+
+<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using the given normalization form.</p>
 
@@ -169,9 +173,11 @@ is null.</li>
 <h3>GetChars</h3>
 
 <pre><code>public static System.Collections.Generic.IList GetChars(
-    PeterO.Text.ICharacterInput str,
+    PeterO.Text.ICharacterInput input,
     PeterO.Text.Normalization form);
 </code></pre>
+
+<p><b>Deprecated.</b> Instead of this method, create a NormalizingCharacterInput on the input and call ReadChar to get the normalized string&#39;s code points.</p>
 
 <p>Gets a list of normalized code points after reading from a character stream.</p>
 
@@ -201,6 +207,8 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
+<p><b>Deprecated.</b> Instead of this method, create a NormalizingCharacterInput on the string and call ReadChar to get the normalized string&#39;s code points.</p>
+
 <p>Gets a list of normalized code points after reading from a string.</p>
 
 <p><b>Parameters:</b></p>
@@ -229,6 +237,8 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
+<p><b>Deprecated.</b> Either convert the array to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
+
 <p>Determines whether the given array of characters is in the given Unicode normalization form.</p>
 
 <p><b>Parameters:</b></p>
@@ -240,7 +250,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given list of characters is in the given Unicode normalization form, otherwise, false .</p>
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -267,7 +277,7 @@ The parameter &quot;charList&quot; is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the text is normalized, otherwise, false .</p>
+<p><code>true</code>  if the text is normalized; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -295,7 +305,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is in the given Unicode normalization form, otherwise, false .</p>
+<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -312,6 +322,8 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
+<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
+
 <p>Determines whether the given list of characters is in the given Unicode normalization form.</p>
 
 <p><b>Parameters:</b></p>
@@ -323,7 +335,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given list of characters is in the given Unicode normalization form, otherwise, false .</p>
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 

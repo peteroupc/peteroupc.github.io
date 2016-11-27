@@ -38,7 +38,7 @@
  except header field names.</li> <li>There is no line length limit
  imposed when parsing quoted-printable or base64 encoded bodies.</li>
  <li>If the transfer encoding is absent and the content type is
- "message/rfc822" , bytes with values greater than 127 (called "8-bit
+ "message/rfc822", bytes with values greater than 127 (called "8-bit
  bytes" in the rest of this summary) are still allowed, despite the
  default value of "7bit" for "Content-Transfer-Encoding".</li> <li>In
  the following cases, if the transfer encoding is absent or declared
@@ -67,12 +67,15 @@
 
 ## Methods
 
-* `Message()`<br>
- Initializes a new instance of the Message class.
-* `Message(byte[] bytes)`<br>
- Initializes a new instance of the Message class.
-* `Message(InputStream stream)`<br>
- Initializes a new instance of the Message class.
+* `Message() Message`<br>
+ Initializes a new instance of the Message
+ class.
+* `Message(byte[] bytes) Message`<br>
+ Initializes a new instance of the Message
+ class.
+* `Message(InputStream stream) Message`<br>
+ Initializes a new instance of the Message
+ class.
 * `Message AddHeader(Map.Entry<String,String> header)`<br>
  Adds a header field to the end of the message's header.
 * `Message AddHeader(String name,
@@ -156,19 +159,22 @@
 
 ## Constructors
 
-* `Message()`<br>
- Initializes a new instance of the Message class.
-* `Message(byte[] bytes)`<br>
- Initializes a new instance of the Message class.
-* `Message(InputStream stream)`<br>
- Initializes a new instance of the Message class.
+* `Message() Message`<br>
+ Initializes a new instance of the Message
+ class.
+* `Message(byte[] bytes) Message`<br>
+ Initializes a new instance of the Message
+ class.
+* `Message(InputStream stream) Message`<br>
+ Initializes a new instance of the Message
+ class.
 
 ## Method Details
 
 ### Message
     public Message(InputStream stream)
-Initializes a new instance of the Message class. Reads from the given InputStream
- object to initialize the message.
+Initializes a new instance of the <code>Message</code>
+ class. Reads from the given InputStream object to initialize the message.
 
 **Parameters:**
 
@@ -180,8 +186,8 @@ Initializes a new instance of the Message class. Reads from the given InputStrea
 
 ### Message
     public Message(byte[] bytes)
-Initializes a new instance of the Message class. Reads from the given byte
- array to initialize the message.
+Initializes a new instance of the <code>Message</code>
+ class. Reads from the given byte array to initialize the message.
 
 **Parameters:**
 
@@ -193,8 +199,9 @@ Initializes a new instance of the Message class. Reads from the given byte
 
 ### Message
     public Message()
-Initializes a new instance of the Message class. The message will be plain
- text and have an artificial From address.
+Initializes a new instance of the <code>Message</code>
+ class. The message will be plain text and have an artificial From
+ address.
 ### SetCurrentDate
     public Message SetCurrentDate()
 Sets this message's Date header field to the current time as its value.
@@ -291,7 +298,8 @@ the character encoding is not supported.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - This value is being set and &quot;value&quot; is null.</li>
+<li><code>NullPointerException</code> - This value is being set and &quot;value&quot; is
+null.</li>
 </ul>
 
 <h3>setContentType</h3>
@@ -403,9 +411,9 @@ will only be used if the message is a multipart message.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>header</code> - A Map.Entry object. The key is the name of the header
-field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header
-field&#39;s value.</li>
+<li><code>header</code> - A key/value pair. The key is the name of the header field,
+such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s
+value.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -417,10 +425,11 @@ field&#39;s value.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The key or value of <code>header</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The header field name is too long or contains an
-invalid character, or the header field&#39;s value is syntactically
-invalid.</p></li>
+<li><p><code>NullPointerException</code> - The key or value of <code>header</code> is
+null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The header field name is too long or
+contains an invalid character, or the header field&#39;s value is
+syntactically invalid.</p></li>
 </ul>
 
 <h3>AddHeader</h3>
@@ -448,11 +457,10 @@ invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
-null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The header field name is too long or contains an
-invalid character, or the header field&#39;s value is syntactically
-invalid.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The header field name is too long or
+contains an invalid character, or the header field&#39;s value is
+syntactically invalid.</p></li>
 </ul>
 
 <h3>Generate</h3>
@@ -489,7 +497,7 @@ invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>MessageDataException</code> - The message can&#39;t be generated.</li>
+<li><code>PeterO.Mail.MessageDataException</code> - The message can&#39;t be generated.</li>
 </ul>
 
 <h3>GetBody</h3>
@@ -572,9 +580,9 @@ negative.</li></ul>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> contains fewer than
-eight elements, contains invalid values, or contains a year less than
-0.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> contains
+fewer than eight elements, contains invalid values, or contains a
+year less than 0.</p></li>
 <li><p><code>NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
 </ul>
 
@@ -608,15 +616,15 @@ eight elements, contains invalid values, or contains a year less than
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Map.Entry object. The key is the name of the header field, such
-as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
+<li>A key/value pair. The key is the name of the header field, such as
+&quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
-high as the number of header fields.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
+least as high as the number of header fields.</li>
 </ul>
 
 <h3>GetHeader</h3>
@@ -703,8 +711,8 @@ empty if no header field has that name.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
-high as the number of header fields.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
+least as high as the number of header fields.</li>
 </ul>
 
 <h3>RemoveHeader</h3>
@@ -778,9 +786,9 @@ high as the number of header fields.</li>
 
 <ul>
 <li><p><code>index</code> - Zero-based index of the header field to set.</p></li>
-<li><p><code>header</code> - A Map.Entry object. The key is the name of the header
-field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header
-field&#39;s value.</p></li>
+<li><p><code>header</code> - A key/value pair. The key is the name of the header field,
+such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s
+value.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -792,11 +800,12 @@ field&#39;s value.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
-high as the number of header fields; or, the header field name is too
-long or contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
-<li><p><code>NullPointerException</code> - The key or value of <code>header</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
+least as high as the number of header fields; or, the header field
+name is too long or contains an invalid character, or the header
+field&#39;s value is syntactically invalid.</p></li>
+<li><p><code>NullPointerException</code> - The key or value of <code>header</code> is
+null.</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -825,12 +834,11 @@ syntactically invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
-high as the number of header fields; or, the header field name is too
-long or contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
-null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
+least as high as the number of header fields; or, the header field
+name is too long or contains an invalid character, or the header
+field&#39;s value is syntactically invalid.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is null.</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -858,10 +866,10 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
-high as the number of header fields; or, the header field name is too
-long or contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
+least as high as the number of header fields; or, the header field
+name is too long or contains an invalid character, or the header
+field&#39;s value is syntactically invalid.</p></li>
 <li><p><code>NullPointerException</code> - The parameter <code>value</code> is null.</p></li>
 </ul>
 
@@ -893,11 +901,10 @@ syntactically invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The header field name is too long or contains an
-invalid character, or the header field&#39;s value is syntactically
-invalid.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
-null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The header field name is too long or
+contains an invalid character, or the header field&#39;s value is
+syntactically invalid.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is null.</p></li>
 </ul>
 
 <h3>SetHtmlBody</h3>
@@ -906,8 +913,8 @@ null.</p></li>
 </code></pre>
 
 <p>Sets the body of this message to the specified string in HTML format. The
- character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line
- feed, &quot;\n&quot; , U+000A), and CR/LF will be converted to CR/LF line
+ character sequences CR (carriage return, &quot;&#x5c;r&quot;, U+000D), LF (line
+ feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be converted to CR/LF line
  breaks. Unpaired surrogate code points will be replaced with
  replacement characters.</p>
 
@@ -936,7 +943,7 @@ null.</p></li>
 
 <p>Sets the body of this message to a multipart body with plain text and HTML
  versions of the same message. The character sequences CR (carriage
- return, &quot;\r&quot; , U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will
+ return, &quot;&#x5c;r&quot; , U+000D), LF (line feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will
  be converted to CR/LF line breaks. Unpaired surrogate code points
  will be replaced with replacement characters.</p>
 
@@ -956,8 +963,7 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>text</code> or <code>html</code> is
-null.</li>
+<li><code>NullPointerException</code> - The parameter <code>text</code> or <code>html</code> is null.</li>
 </ul>
 
 <h3>SetTextBody</h3>
@@ -966,8 +972,8 @@ null.</li>
 </code></pre>
 
 <p>Sets the body of this message to the specified plain text string. The
- character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line
- feed, &quot;\n&quot; , U+000A), and CR/LF will be converted to CR/LF line
+ character sequences CR (carriage return, &quot;&#x5c;r&quot;, U+000D), LF (line
+ feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be converted to CR/LF line
  breaks. Unpaired surrogate code points will be replaced with
  replacement characters. This method changes this message&#39;s media type
  to plain text.</p>

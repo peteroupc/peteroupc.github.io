@@ -14,11 +14,11 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>DispositionBuilder()</code><br>
+<li><code>DispositionBuilder() DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
-<li><code>DispositionBuilder(ContentDisposition mt)</code><br>
+<li><code>DispositionBuilder(ContentDisposition mt) DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
-<li><code>DispositionBuilder(String type)</code><br>
+<li><code>DispositionBuilder(String type) DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
 <li><code>String getDispositionType()</code><br>
 Gets this value&#39;s disposition type, such value, such as &quot;inline&quot; or
@@ -48,11 +48,11 @@ Converts this object to a text string.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>DispositionBuilder()</code><br>
+<li><code>DispositionBuilder() DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
-<li><code>DispositionBuilder(ContentDisposition mt)</code><br>
+<li><code>DispositionBuilder(ContentDisposition mt) DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
-<li><code>DispositionBuilder(String type)</code><br>
+<li><code>DispositionBuilder(String type) DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
 </ul>
 
@@ -63,14 +63,14 @@ Initializes a new instance of the DispositionBuilder class.</li>
 <pre><code>public DispositionBuilder()
 </code></pre>
 
-<p>Initializes a new instance of the DispositionBuilder class.</p>
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class.</p>
 
 <h3>DispositionBuilder</h3>
 
 <pre><code>public DispositionBuilder(ContentDisposition mt)
 </code></pre>
 
-<p>Initializes a new instance of the DispositionBuilder class.</p>
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -89,12 +89,12 @@ Initializes a new instance of the DispositionBuilder class.</li>
 <pre><code>public DispositionBuilder(String type)
 </code></pre>
 
-<p>Initializes a new instance of the DispositionBuilder class.</p>
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>type</code> - A string object.</li>
+<li><code>type</code> - A text string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -133,7 +133,7 @@ Initializes a new instance of the DispositionBuilder class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this is a text media type; otherwise, false.</li>
+<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isMultipart</h3>
@@ -146,7 +146,7 @@ Initializes a new instance of the DispositionBuilder class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>True if this is a multipart media type; otherwise, false.</li>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>ToDisposition</h3>
@@ -172,7 +172,7 @@ Initializes a new instance of the DispositionBuilder class.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A string object.</li>
+<li><code>str</code> - A text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -238,9 +238,10 @@ insensitively.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - Either <code>value</code> or <code>name</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty, or it isn&#39;t a
-well-formed parameter name.</p></li>
+<li><p><code>NullPointerException</code> - Either <code>value</code> or <code>name</code> is
+null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty, or it
+isn&#39;t a well-formed parameter name.</p></li>
 </ul>
 
 <h3>toString</h3>
