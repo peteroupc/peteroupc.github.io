@@ -1,16 +1,14 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Text.NormalizingCharacterInput</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Text.NormalizerInput</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>PeterO.Text.NormalizingCharacterInput</h1>
+<h1>PeterO.Text.NormalizerInput</h1>
 
-<h2>PeterO.Text.NormalizingCharacterInput</h2>
+<h2>PeterO.Text.NormalizerInput</h2>
 
-<pre><code>public sealed class NormalizingCharacterInput :
+<pre><code>public sealed class NormalizerInput :
     PeterO.Text.ICharacterInput
 </code></pre>
-
-<p><b>Deprecated.</b> Renamed to NormalizerInput.</p>
 
 <p>A character input class that implements the Unicode normalization algorithm and contains methods and functionality to test and convert text strings for normalization. This is similar to the deprecated Normalizer class, except it implements the ICharacterInput interface.</p>
 
@@ -39,13 +37,13 @@
 
 <p>Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale, use or other dealings in these Data Files or Software without prior written authorization of the copyright holder.</p>
 
-<h3>NormalizingCharacterInput Constructor</h3>
+<h3>NormalizerInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre><code>public NormalizerInput(
     PeterO.Text.ICharacterInput input);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -53,14 +51,14 @@
 <li><i>input</i>: An ICharacterInput object.</li>
 </ul>
 
-<h3>NormalizingCharacterInput Constructor</h3>
+<h3>NormalizerInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre><code>public NormalizerInput(
     PeterO.Text.ICharacterInput stream,
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -77,13 +75,13 @@ The parameter <i>stream</i>
 is null.</li>
 </ul>
 
-<h3>NormalizingCharacterInput Constructor</h3>
+<h3>NormalizerInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre><code>public NormalizerInput(
     string str);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -91,16 +89,16 @@ is null.</li>
 <li><i>str</i>: A string specifying the text to normalize.</li>
 </ul>
 
-<h3>NormalizingCharacterInput Constructor</h3>
+<h3>NormalizerInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre><code>public NormalizerInput(
     string str,
     int index,
     int length,
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class. Uses a portion of a string as the input.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class. Uses a portion of a string as the input.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -114,151 +112,20 @@ begins.</p></li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
-<h3>NormalizingCharacterInput Constructor</h3>
+<h3>NormalizerInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre><code>public NormalizerInput(
     string str,
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A text string.</p></li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
-</ul>
-
-<h3>NormalizingCharacterInput Constructor</h3>
-
-<pre><code>public NormalizingCharacterInput(
-    System.Collections.Generic.IList characterList);
-</code></pre>
-
-<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>characterList</i>: A list of Unicode code points specifying the text to normalize.</li>
-</ul>
-
-<h3>NormalizingCharacterInput Constructor</h3>
-
-<pre><code>public NormalizingCharacterInput(
-    System.Collections.Generic.IList characterList,
-    PeterO.Text.Normalization form);
-</code></pre>
-
-<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using the given normalization form.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>characterList</i>: An IList object.</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>characterList</i>
-is null.</li>
-</ul>
-
-<h3>GetChars</h3>
-
-<pre><code>public static System.Collections.Generic.IList GetChars(
-    PeterO.Text.ICharacterInput input,
-    PeterO.Text.Normalization form);
-</code></pre>
-
-<p><b>Deprecated.</b> Instead of this method, create a NormalizingCharacterInput on the input and call ReadChar to get the normalized string&#39;s code points.</p>
-
-<p>Gets a list of normalized code points after reading from a character stream.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: An object that implements a stream of Unicode characters.</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A list of the normalized Unicode characters.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>str</i>
-is null.</li>
-</ul>
-
-<h3>GetChars</h3>
-
-<pre><code>public static System.Collections.Generic.IList GetChars(
-    string str,
-    PeterO.Text.Normalization form);
-</code></pre>
-
-<p><b>Deprecated.</b> Instead of this method, create a NormalizingCharacterInput on the string and call ReadChar to get the normalized string&#39;s code points.</p>
-
-<p>Gets a list of normalized code points after reading from a string.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A text string.</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A list of the normalized Unicode characters.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>str</i>
-is null.</li>
-</ul>
-
-<h3>IsNormalized</h3>
-
-<pre><code>public static bool IsNormalized(
-    int[] charArray,
-    PeterO.Text.Normalization form);
-</code></pre>
-
-<p><b>Deprecated.</b> Either convert the array to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
-
-<p>Determines whether the given array of characters is in the given Unicode normalization form.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>charArray</i>: An array of Unicode code points.</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter &quot;charList&quot; is null.</li>
 </ul>
 
 <h3>IsNormalized</h3>
@@ -314,36 +181,6 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>str</i>
-is null.</li>
-</ul>
-
-<h3>IsNormalized</h3>
-
-<pre><code>public static bool IsNormalized(
-    System.Collections.Generic.IList charList,
-    PeterO.Text.Normalization form);
-</code></pre>
-
-<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
-
-<p>Determines whether the given list of characters is in the given Unicode normalization form.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>charList</i>: A list of Unicode code points.</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>charList</i>
 is null.</li>
 </ul>
 
