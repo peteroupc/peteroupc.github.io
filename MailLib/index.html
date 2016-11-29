@@ -36,11 +36,9 @@ project, add the following to the <code>dependencies</code> section in your <cod
 <pre><code>&lt;dependency&gt;
   &lt;groupId&gt;com.upokecenter&lt;/groupId&gt;
   &lt;artifactId&gt;maillib&lt;/artifactId&gt;
-  &lt;version&gt;0.9.0&lt;/version&gt;
+  &lt;version&gt;0.10.0&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
-
-<p>(The .NET version is currently version 0.9.1.)</p>
 
 <p>In other Java-based environments, the library can be referred to by its
 group ID (<code>com.upokecenter</code>), artifact ID (<code>maillib</code>), and version, as given above.</p>
@@ -72,6 +70,29 @@ using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMo
 
 <h2>Release Notes</h2>
 
+<p>Version 0.10.0:</p>
+
+<ul>
+<li>Character encoding conversion library moved out of this library (see <a href="https://github.com/peteroupc/Encoding">PeterO.Encoding</a>; currently uses version 2.0 of that library.</li>
+<li>Updated normalization and IDNA data to Unicode 9.0</li>
+<li>Normalization implementation renamed to NormalizerInput from NormalizerCharacterInput; the latter class is now deprecated</li>
+<li>Add GetHeaderArray, SetDate, and GetDate methods of Message class</li>
+<li>Add support for parsing several new header fields</li>
+<li>Date header field is included in generated messages</li>
+<li>Improve MakeFilename method of ContentDisposition class</li>
+<li>Fix bugs in Unicode normalization implementation</li>
+<li>Fixed several bugs and addressed corner cases in message generation, such as Quoted-Printable encoding</li>
+<li>In the .NET version of the source code, documentation is moved out of the source code and placed into a consolidated XML file</li>
+<li>SetBody method of Message class now returns the Message object that was edited</li>
+<li>Other bug fixes</li>
+</ul>
+
+<p>Version 0.9.2:</p>
+
+<ul>
+<li>Removed dependencies (.NET version)</li>
+</ul>
+
 <p>Version 0.9.1:</p>
 
 <ul>
@@ -94,49 +115,8 @@ for that table, round-tripping is not possible.  As a result, tests on GB18030 a
 for now.</li>
 </ul>
 
-<p>Version 0.8.1:</p>
-
-<ul>
-<li>Fixes bugs in character encoding algorithms</li>
-</ul>
-
-<p>Version 0.8.0:</p>
-
-<ul>
-<li>New helper classes added:</li>
-<li>- ArrayWriter</li>
-<li>-  Data abstraction interfaces IByteWriter, IReader, IWriter</li>
-<li>-  Encoding namespace, to access character encodings</li>
-<li>Normalizer class deprecated; use NormalizingCharacterInput
-instead</li>
-<li>Updated normalization and IDNA data to Unicode 8.0</li>
-<li>Fixed wrongly generated data that can make normalization form NFKC
-behave incorrectly</li>
-<li>Parses three new structured header fields</li>
-<li>ContentDisposition.MakeFilename decodes RFC2047 words
-in more cases and avoids returning unsuitable filenames in more cases</li>
-<li>Adds byte[] constructor to Message class</li>
-<li>Be more lenient for some &quot;message/rfc822&quot; bodies</li>
-<li>Fix bug in header parsing if a header field ends in folding whitespace</li>
-<li>Some parts of the code were rewritten, such as the Quoted-Printable
-encoder</li>
-</ul>
-
-<p>Version 0.7.0:</p>
-
-<ul>
-<li>More header fields that can be merged are merged when generating messages from Message objects.</li>
-<li>The Unicode data for normalization and IDNA was updated to version 7.0.</li>
-</ul>
-
-<p>Version 0.6.1:</p>
-
-<ul>
-<li>First release as an artifact and a NuGet package.</li>
-</ul>
-
-<p>The <a href="https://github.com/peteroupc/MailLIb/commits/master">commit history</a>
-contains details on code changes in previous versions.</p>
+<p>See <a href="https://github.com/peteroupc/MailLib/tree/master/History.md">History.md</a>
+for release notes for older versions.</p>
 
 <h2>About</h2>
 
