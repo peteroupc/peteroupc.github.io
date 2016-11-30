@@ -269,7 +269,9 @@ text.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> contains an
+unpaired surrogate code point.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>IsNormalized</h3>
@@ -292,7 +294,8 @@ text.</p></li>
 
 <ul>
 <li><code>true</code> if the given string is in the given Unicode
-normalization form; otherwise, <code>false</code>.</li>
+normalization form; otherwise, <code>false</code>. Returns <code>false</code>
+if the string contains an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
