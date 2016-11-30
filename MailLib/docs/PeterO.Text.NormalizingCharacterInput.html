@@ -45,7 +45,7 @@
     PeterO.Text.ICharacterInput input);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -60,7 +60,7 @@
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -83,7 +83,7 @@ is null.</li>
     string str);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -100,7 +100,7 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class. Uses a portion of a string as the input.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class. Uses a portion of a string as the input.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -121,7 +121,7 @@ begins.</p></li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -138,7 +138,7 @@ begins.</p></li>
 
 <p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -155,7 +155,7 @@ begins.</p></li>
 
 <p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class using the given normalization form.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using the given normalization form.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -179,7 +179,7 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p><b>Deprecated.</b> Instead of this method, create a NormalizingCharacterInput on the input and call ReadChar to get the normalized string&#39;s code points.</p>
+<p><b>Deprecated.</b> Instead of this method, create a NormalizerInput on the input and call ReadChar to get the normalized string&#39;s code points.</p>
 
 <p>Gets a list of normalized code points after reading from a character stream.</p>
 
@@ -209,7 +209,7 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p><b>Deprecated.</b> Instead of this method, create a NormalizingCharacterInput on the string and call ReadChar to get the normalized string&#39;s code points.</p>
+<p><b>Deprecated.</b> Instead of this method, create a NormalizerInput on the string and call ReadChar to get the normalized string&#39;s code points.</p>
 
 <p>Gets a list of normalized code points after reading from a string.</p>
 
@@ -307,7 +307,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -371,9 +371,12 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentException:
 The parameter <i>str</i>
-is null.</li>
+contains an unpaired surrogate code point.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>str</i>
+is null.</p></li>
 </ul>
 
 <h3>Read</h3>

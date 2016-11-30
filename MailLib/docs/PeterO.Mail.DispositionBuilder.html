@@ -110,7 +110,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The parameter to remove. The name is compared case insensitively.</li>
+<li><i>name</i>: The parameter to remove. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -163,7 +163,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: Name of the parameter to set. If this name already exists (compared case-insensitively), it will be overwritten.</p></li>
+<li><p><i>name</i>: Name of the parameter to set. If this name already exists (compared using a basic case-insensitive comparison), it will be overwritten. . (Two strings are equal in a basic case-insensitive comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.)</p></li>
 <li><p><i>value</i>: Value of the parameter to set.</p></li>
 </ul>
 

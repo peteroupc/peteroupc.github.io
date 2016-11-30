@@ -174,7 +174,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -208,9 +208,12 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentException:
 The parameter <i>str</i>
-is null.</li>
+contains an unpaired surrogate code point.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>str</i>
+is null.</p></li>
 </ul>
 
 <h3>Read</h3>

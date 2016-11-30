@@ -72,11 +72,11 @@
 <pre><code>public System.Collections.Generic.IDictionary Parameters { get; }
 </code></pre>
 
-<p>Gets a sorted list of the parameters contained in this media type object.</p>
+<p>Gets a list of the parameters contained in this media type object.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A list of the parameters contained in this media type object, sorted by name.</p>
+<p>A list of the parameters contained in this media type object. NOTE: Previous versions erroneously stated that the list will be sorted by name. In fact, the names will not be guaranteed to appear in any particular order; this is at least the case in version 0.10.0.</p>
 
 <h3>SubType</h3>
 
@@ -162,7 +162,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: Name of the parameter to get. The name is compared case-insensitively.</li>
+<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
