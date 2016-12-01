@@ -11,43 +11,26 @@
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
     <h1>Class: MatrixStack</h1>
-    
-
-
-
 
 <section>
 
 <header>
-    
+
         <h2>
             <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
-        
+
         MatrixStack
         </h2>
-        
-    
+
 </header>
 
 <article>
     <div class="container-overview">
-    
-        
-
-    
 
     <h4 style="margin-bottom:0px" id="MatrixStack"><span style="font-weight:lighter"></span>new MatrixStack<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line26">line 26</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     H3DU.MatrixStack is a class that implements a stack
@@ -63,100 +46,18 @@ the HTML 3D Library.  Example:<pre>
 &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     </div>
 
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
         <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="frustum"><span style="font-weight:lighter"></span>H3DU.MatrixStack#frustum<span class="signature">(l, r, b, t, n, f)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line331">line 331</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by
@@ -165,135 +66,85 @@ This method assumes a right-handed coordinate system, such as
 OpenGL's.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>l</code>
-            
 
-            
+                <code>l</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            X-coordinate of the point where the left
 clipping plane meets the near clipping plane.</dd>
 
-    
-
         <dt>
-            
-                <code>r</code>
-            
 
-            
+                <code>r</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            X-coordinate of the point where the right
 clipping plane meets the near clipping plane.</dd>
 
-    
-
         <dt>
-            
-                <code>b</code>
-            
 
-            
+                <code>b</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Y-coordinate of the point where the bottom
 clipping plane meets the near clipping plane.</dd>
 
-    
-
         <dt>
-            
-                <code>t</code>
-            
 
-            
+                <code>t</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Y-coordinate of the point where the top
 clipping plane meets the near clipping plane.</dd>
 
-    
-
         <dt>
-            
-                <code>n</code>
-            
 
-            
+                <code>n</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
 seen. This should be slightly greater than 0.</dd>
 
-    
-
         <dt>
-            
-                <code>f</code>
-            
 
-            
+                <code>f</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            The distance from the camera to
 the far clipping plane. Objects beyond this distance will be too far
@@ -301,518 +152,154 @@ to be seen.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="get"><span style="font-weight:lighter"></span>H3DU.MatrixStack#get<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line37">line 37</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Gets a copy of the matrix at the top of this stack.
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     .
-    
-     (Type: 
+
+     (Type:
 <span class="param-type">Array.&lt;Number></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="loadIdentity"><span style="font-weight:lighter"></span>H3DU.MatrixStack#loadIdentity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line46">line 46</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by replacing it with the identity matrix.
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="loadMatrix"><span style="font-weight:lighter"></span>H3DU.MatrixStack#loadMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line57">line 57</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by replacing it with the given matrix.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>mat</code>
-            
 
-            
+                <code>mat</code>
+
                 (
 <span class="param-type">Array.&lt;Number></span>
 
 )
-            
-            
 
-            
            </dt><dd>
            A matrix to replace the top of the stack with.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="loadTransposeMatrix"><span style="font-weight:lighter"></span>H3DU.MatrixStack#loadTransposeMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line70">line 70</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by replacing it with the
 transpose of the given matrix.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>mat</code>
-            
 
-            
+                <code>mat</code>
+
                 (
 <span class="param-type">Array.&lt;Number></span>
 
 )
-            
-            
 
-            
            </dt><dd>
            A matrix whose transpose will
 replace the top of the stack.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="lookAt"><span style="font-weight:lighter"></span>H3DU.MatrixStack#lookAt<span class="signature">(ex, ey, ez, cx, cy, cz, ux, uy, uz)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line375">line 375</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by
@@ -821,276 +308,141 @@ This method assumes a right-handed coordinate system, such as
 OpenGL's.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>ex</code>
-            
 
-            
+                <code>ex</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            X coordinate of the camera position in world space.</dd>
 
-    
-
         <dt>
-            
-                <code>ey</code>
-            
 
-            
+                <code>ey</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Y coordinate of the camera position.</dd>
 
-    
-
         <dt>
-            
-                <code>ez</code>
-            
 
-            
+                <code>ez</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Z coordinate of the camera position.</dd>
 
-    
-
         <dt>
-            
-                <code>cx</code>
-            
 
-            
+                <code>cx</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            X coordinate of the position in world space that
  the camera is looking at.</dd>
 
-    
-
         <dt>
-            
-                <code>cy</code>
-            
 
-            
+                <code>cy</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Y coordinate of the position looked at.</dd>
 
-    
-
         <dt>
-            
-                <code>cz</code>
-            
 
-            
+                <code>cz</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Z coordinate of the position looked at.</dd>
 
-    
-
         <dt>
-            
-                <code>ux</code>
-            
 
-            
+                <code>ux</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            X coordinate of the up direction vector.
 This vector must not point in the same or opposite direction as
 the camera's view direction.</dd>
 
-    
-
         <dt>
-            
-                <code>uy</code>
-            
 
-            
+                <code>uy</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Y coordinate of the up vector.</dd>
 
-    
-
         <dt>
-            
-                <code>uz</code>
-            
 
-            
+                <code>uz</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Z coordinate of the up vector.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="multMatrix"><span style="font-weight:lighter"></span>H3DU.MatrixStack#multMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line94">line 94</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by another matrix.
@@ -1101,121 +453,42 @@ passed to this method describes a scaling, the multiplied matrix will describe
 the effect of scaling then translation.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>mat</code>
-            
 
-            
+                <code>mat</code>
+
                 (
 <span class="param-type">Array.&lt;Number></span>
 
 )
-            
-            
 
-            
            </dt><dd>
            A matrix to multiply the current one by.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="multTransposeMatrix"><span style="font-weight:lighter"></span>H3DU.MatrixStack#multTransposeMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line123">line 123</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by the transpose of
@@ -1227,122 +500,43 @@ passed to this method describes a scaling, the multiplied matrix will describe
 the effect of translation then scaling.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>mat</code>
-            
 
-            
+                <code>mat</code>
+
                 (
 <span class="param-type">Array.&lt;Number></span>
 
 )
-            
-            
 
-            
            </dt><dd>
            A matrix whose transpose the current
 matrix will be multiplied by.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="ortho"><span style="font-weight:lighter"></span>H3DU.MatrixStack#ortho<span class="signature">(l, r, b, t, n, f)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line286">line 286</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by
@@ -1353,220 +547,106 @@ This method assumes a right-handed coordinate system, such as
 OpenGL's.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>l</code>
-            
 
-            
+                <code>l</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Leftmost coordinate of the 3D view.</dd>
 
-    
-
         <dt>
-            
-                <code>r</code>
-            
 
-            
+                <code>r</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Rightmost coordinate of the 3D view.
 (Note that r can be greater than l or vice versa.)</dd>
 
-    
-
         <dt>
-            
-                <code>b</code>
-            
 
-            
+                <code>b</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Bottommost coordinate of the 3D view.</dd>
 
-    
-
         <dt>
-            
-                <code>t</code>
-            
 
-            
+                <code>t</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Topmost coordinate of the 3D view.
 (Note that t can be greater than b or vice versa.)</dd>
 
-    
-
         <dt>
-            
-                <code>n</code>
-            
 
-            
+                <code>n</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Distance from the camera to the near clipping
 plane.  A positive value means the plane is in front of the viewer.</dd>
 
-    
-
         <dt>
-            
-                <code>f</code>
-            
 
-            
+                <code>f</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Distance from the camera to the far clipping
 plane.  A positive value means the plane is in front of the viewer.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="ortho2d"><span style="font-weight:lighter"></span>H3DU.MatrixStack#ortho2d<span class="signature">(l, r, b, t)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line455">line 455</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by
@@ -1575,180 +655,80 @@ This method assumes a right-handed coordinate system, such as
 OpenGL's.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>l</code>
-            
 
-            
+                <code>l</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Leftmost coordinate of the 2D view.</dd>
 
-    
-
         <dt>
-            
-                <code>r</code>
-            
 
-            
+                <code>r</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Rightmost coordinate of the 2D view.
 (Note that r can be greater than l or vice versa.)</dd>
 
-    
-
         <dt>
-            
-                <code>b</code>
-            
 
-            
+                <code>b</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Bottommost coordinate of the 2D view.</dd>
 
-    
-
         <dt>
-            
-                <code>t</code>
-            
 
-            
+                <code>t</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Topmost coordinate of the 2D view.
 (Note that t can be greater than b or vice versa.)</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="perspective"><span style="font-weight:lighter"></span>H3DU.MatrixStack#perspective<span class="signature">(fov, aspect, n, f)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line495">line 495</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by
@@ -1757,34 +737,19 @@ This method assumes a right-handed coordinate system, such as
 OpenGL's.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>fov</code>
-            
 
-            
+                <code>fov</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Vertical field of view, in degrees. Should be less
 than 180 degrees.  (The smaller
@@ -1792,63 +757,42 @@ this number, the bigger close objects appear to be.  As a result,
 zoom can be implemented by multiplying field of view by an
 additional factor.)</dd>
 
-    
-
         <dt>
-            
-                <code>aspect</code>
-            
 
-            
+                <code>aspect</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            The ratio of width to height of the viewport, usually
  the scene's aspect ratio.</dd>
 
-    
-
         <dt>
-            
-                <code>n</code>
-            
 
-            
+                <code>n</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            The distance from the camera to
 the near clipping plane. Objects closer than this distance won't be
 seen. This should be slightly greater than 0.</dd>
 
-    
-
         <dt>
-            
-                <code>f</code>
-            
 
-            
+                <code>f</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            The distance from the camera to
 the far clipping plane. Objects beyond this distance will be too far
@@ -1856,198 +800,91 @@ to be seen.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="pickMatrix"><span style="font-weight:lighter"></span>H3DU.MatrixStack#pickMatrix<span class="signature">(wx, wy, ww, wh, vp)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line526">line 526</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by
 a matrix that transforms the view to a portion of the viewport.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>wx</code>
-            
 
-            
+                <code>wx</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            X-coordinate of the center of the desired viewport portion.</dd>
 
-    
-
         <dt>
-            
-                <code>wy</code>
-            
 
-            
+                <code>wy</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Y-coordinate of the center of the desired viewport portion.</dd>
 
-    
-
         <dt>
-            
-                <code>ww</code>
-            
 
-            
+                <code>ww</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Width of the desired viewport portion.</dd>
 
-    
-
         <dt>
-            
-                <code>wh</code>
-            
 
-            
+                <code>wh</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Height of the desired viewport portion.</dd>
 
-    
-
         <dt>
-            
-                <code>vp</code>
-            
 
-            
+                <code>vp</code>
+
                 (
 <span class="param-type">Array.&lt;Number></span>
 
 )
-            
-            
 
-            
            </dt><dd>
            A 4-element array giving the X and Y coordinates
 of the lower left corner followed by the width and height
@@ -2055,88 +892,24 @@ of a rectangle indicating the current viewport.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="popMatrix"><span style="font-weight:lighter"></span>H3DU.MatrixStack#popMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line259">line 259</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Removes the matrix at the top of this stack, making
@@ -2144,686 +917,262 @@ the matrix beneath it the new top matrix.  Has no
 effect if the stack has only one matrix.
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="pushMatrix"><span style="font-weight:lighter"></span>H3DU.MatrixStack#pushMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line247">line 247</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Makes a copy of the matrix at the top of this stack
 and puts the copy on top of the stack.
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="rotate"><span style="font-weight:lighter"></span>H3DU.MatrixStack#rotate<span class="signature">(angle, x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line154">line 154</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>angle</code>
-            
 
-            
+                <code>angle</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            The desired angle
 to rotate in degrees. If the axis of rotation
 points toward the viewer, the angle's value is increasing in
 a counterclockwise direction.</dd>
 
-    
-
         <dt>
-            
-                <code>x</code>
-            
 
-            
+                <code>x</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            X-component of the axis
 of rotation.</dd>
 
-    
-
         <dt>
-            
-                <code>y</code>
-            
 
-            
+                <code>y</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Y-component of the axis
 of rotation.</dd>
 
-    
-
         <dt>
-            
-                <code>z</code>
-            
 
-            
+                <code>z</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Z-component of the axis
 of rotation.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="scale"><span style="font-weight:lighter"></span>H3DU.MatrixStack#scale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line224">line 224</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by a
 scaling transformation.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>x</code>
-            
 
-            
+                <code>x</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Scale factor along the X axis.</dd>
 
-    
-
         <dt>
-            
-                <code>y</code>
-            
 
-            
+                <code>y</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Scale factor along the Y axis.</dd>
 
-    
-
         <dt>
-            
-                <code>z</code>
-            
 
-            
+                <code>z</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Scale factor along the Z axis.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
-
-
-    
-
-
-
-        
-            
-
-    
 
     <h4 style="margin-bottom:0px" id="translate"><span style="font-weight:lighter"></span>H3DU.MatrixStack#translate<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>}</span></h4>
 
-    
-    
      <p style="margin-top:0px"><small><i>Source: <a href="extras_matrixstack.js.html">extras/matrixstack.js</a>, <a href="extras_matrixstack.js.html#line201">line 201</a>
      </i></small></p>
-    
-
-
-
-
-
 
 <div class="description">
     Modifies the matrix at the top of this stack by multiplying it by a
 translation transformation.
 </div>
 
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
-    
 
 <dl>
-    
 
         <dt>
-            
-                <code>x</code>
-            
 
-            
+                <code>x</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Translation along the X axis.</dd>
 
-    
-
         <dt>
-            
-                <code>y</code>
-            
 
-            
+                <code>y</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Translation along the Y axis.</dd>
 
-    
-
         <dt>
-            
-                <code>z</code>
-            
 
-            
+                <code>z</code>
+
                 (
 <span class="param-type">Number</span>
 
 )
-            
-            
 
-            
            </dt><dd>
            Translation along the Z axis.</dd>
 
     </dl>
 
-
-
-
-
-
 <dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <h5>Returns:</h5>
 
-        
 <div class="param-desc">
     This object.
-    
-     (Type: 
+
+     (Type:
 <span class="param-type"><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></span>)
-    
+
 </div>
 
-
-    
-
-
-
-        
-    
-
-    
-
-    
 </article>
 
 </section>
-
-
-
 
 </div>
 <nav id="navigation">
