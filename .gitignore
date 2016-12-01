@@ -25,6 +25,7 @@ Help/
 ProfilingSessions/
 TestResults/
 bin/
+encoding/
 node_modules/
 obj/
 packages/
