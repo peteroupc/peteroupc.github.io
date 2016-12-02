@@ -42,9 +42,10 @@
 </ol>
 <p>This is an overview of most of the JavaScript classes available in this library:</p>
 <h3>List of Classes <a id=List_of_Classes></a></h3><ul>
+<li><code>H3DU</code> - Contains various utility methods in the HTML 3D Library</li>
 <li><code>H3DU.Math</code> - Contains math methods useful in 3D applications, such as matrices and vectors</li>
-<li><code>H3DU.GLUtil</code> - Contains various utility methods in the HTML 3D Library</li>
-<li><code>H3DU.Mesh</code> - Represents a 3D model</li>
+<li><code>H3DU.Mesh</code> - Helper class for building a 3D model</li>
+<li><code>H3DU.MeshBuffer</code> - Represents a 3D model</li>
 <li><code>H3DU.Meshes</code> - Generates built-in 3D models</li>
 <li><code>H3DU.Material</code>, <code>Texture</code> - Represents textures and colors for a 3D object's appearance</li>
 <li><code>H3DU.Lights</code>, <code>LightSource</code> - Represents light sources</li>
@@ -59,13 +60,13 @@
 <p>For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the HTML 3D library</a>.</p>
 <p>The following sections detail how a 3D application using this library works.</p>
 <h3>Scene3D <a id=Scene3D></a></h3><p>The <code>H3DU.Scene3D</code> class is a renderer for a canvas 3D context.  It renders batches of 3D shapes in the form of <code>H3DU.Batch3D</code> object.  Each <code>Batch3D</code> represents a so-called &quot;scene graph&quot;. It holds 3D objects which will be drawn to the screen, as well as the camera's projection, the camera's position, and light sources to illuminate the 3D scene.</p>
-<p>To create a <code>Scene3D</code>, you first need to find the HTML canvas in your JavaScript, then you need to pass it to <code>new Scene3D()</code>. Once you do so, <code>Scene3D</code> will use that canvas to draw 3D objects. Here is an example.
-You will also need to create a <code>Batch3D</code> to hold 3D objects.</p>
+<p>To create a <code>H3DU.Scene3D</code>, you first need to find the HTML canvas in your JavaScript, then you need to pass it to <code>new Scene3D()</code>. Once you do so, <code>H3DU.Scene3D</code> will use that canvas to draw 3D objects. Here is an example.
+You will also need to create a <code>H3DU.Batch3D</code> to hold 3D objects.</p>
 <pre class="prettyprint source"><code>// Find the HTML canvas with the ID &quot;canvas&quot;.
 var canvas=document.getElementById(&quot;canvas&quot;)
 // Create a 3D scene using that canvas.
-var scene=new Scene3D(canvas);
-var batch=new H3DU.Batch3D();</code></pre><h3>The &quot;Camera&quot; <a id=The_Camera></a></h3><p>The <code>Batch3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>Batch3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>perspectiveAspect()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
+var scene=new H3DU.Scene3D(canvas);
+var batch=new H3DU.Batch3D();</code></pre><h3>The &quot;Camera&quot; <a id=The_Camera></a></h3><p>The <code>H3DU.Batch3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we use the concept of a &quot;camera&quot;, the projection is like setting the camera's focus and lens, and the view transform is like setting its position and orientation. <code>H3DU.Batch3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>perspectiveAspect()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
 <pre class="prettyprint source"><code>// Set the perspective view.  Camera has a 45-degree field of view
 // and will see objects from 0.1 to 100 units away.
 batch.perspectiveAspect(45,0.1,100);

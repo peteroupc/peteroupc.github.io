@@ -30,7 +30,7 @@ var fillOffset=0;
    fillOffset++;
   }
  }
- arr.length=fillOffset;
+ arr.splice(fillOffset,arr.length-(fillOffset));
 };
 
 function Animators(){
