@@ -27,7 +27,7 @@
   .noBoxShadow();
   border: 1px solid black !important;
   background: transparent !important;
-  .borderRadius(3px);
+  border-radius: 3px;
   padding: 1px !important;
  }
 .menu {
@@ -72,13 +72,12 @@ table {
  span.printonly, b.printonly, sup.printonly {
   display: inline;
  }
-
 ol, ul {
- .columns(2);
- ol, ul { .columns(1); }
+ columns: 2;
+ ol, ul { columns: 1; }
 }
 nav, td, th, dd {
- ol, ul { .columns(1); }
+ ol, ul { columns: 1; }
 }
 ul li, ol li, dl dt, thead, thead tr, tbody tr:first-child {   page-break-after: avoid;  }
 ul li:first-child, ol li:first-child, dl dt:first-child { page-break-after: auto; }
@@ -152,9 +151,9 @@ h5, h6 { &, &:after { .regularweight(); } }
 /* define headers */
 h1 { margin-top: 0.2em;
     border-bottom: 5px double black;
-    .borderRadius(0px); }
+    border-radius: 0px; }
 h2 { margin-top: 0.2em;margin-left: 0em;
-   border-bottom: 1px solid black; .borderRadius(0px);
+   border-bottom: 1px solid black; border-radius: 0px;
    padding:2px 2px 2px 0px;}
 h3 { margin-left: 0em; font-size: 130%; }
 h4 { margin-left: 0em; font-size: 120%; .italic(); }

@@ -29,26 +29,6 @@
        "Segoe UI",  "Roboto", "Meiryo UI", Verdana, "Droid Sans", "DejaVu Sans",
        "Lucida Grande", "Lucida Sans Unicode", "Arial Unicode MS", Arial, sans-serif;
 
-.fontFeatureSettings3(@v1, @v2, @v3){
-  font-feature-settings: @v1, @v2, @v3 !important;
-  -moz-font-feature-settings: @v1, @v2, @v3  !important;
-  -webkit-font-feature-settings: @v1, @v2, @v3  !important;
-  -ms-font-feature-settings: @v1, @v2, @v3 !important;
-}
-.fontFeatureSettings1(@v1){
-  font-feature-settings: @v1 !important;
-  -moz-font-feature-settings: @v1 !important;
-  -webkit-font-feature-settings: @v1 !important;
-  -ms-font-feature-settings: @v1 !important;
-}
-
-.fontFeatureSettings4(@v1, @v2, @v3, @v4){
-  font-feature-settings: @v1, @v2, @v3, @v4 !important;
-  -moz-font-feature-settings: @v1, @v2, @v3, @v4  !important;
-  -webkit-font-feature-settings: @v1, @v2, @v3, @v4  !important;
-  -ms-font-feature-settings: @v1, @v2, @v3, @v4 !important;
-}
-
 // Enables small caps
 .smallcaps() {
   font-variant: small-caps;
@@ -56,48 +36,40 @@
 
 .typographybase(){
   text-rendering: optimizeLegibility;
-  -webkit-text-rendering: optimizeLegibility;
   font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
 }
 
 .hyphens(){
   // Enable hyphenation where supported
   word-wrap: break-word;
   hyphens: auto;
- -moz-hyphens: auto;
- -webkit-hyphens: auto;
- -ms-hyphens: auto;
 }
 
 .nohyphens(){
   word-wrap: normal;
   hyphens: none;
- -moz-hyphens: none;
- -webkit-hyphens: none;
- -ms-hyphens: none;
 }
 
 .typography(){
   .typographybase();
   .hyphens();
-  .fontFeatureSettings4("onum" 1, "pnum" 1,"liga" 1, "kern" 1);
+  font-feature-settings: "onum" 1, "pnum" 1,"liga" 1, "kern" 1 !important;
 }
 
 .typographytabfigures() {
   .typographybase();
   .hyphens();
-  .fontFeatureSettings4("onum" 0, "pnum" 0,"liga" 1, "kern" 1);
+  font-feature-settings: "onum" 0, "pnum" 0,"liga" 1, "kern" 1 !important;
 }
 
 .fractions() {
- .fontFeatureSettings1("frac" 1);
+ font-feature-settings: "frac" 1 !important;
 }
 
 // Disables small caps
 .nosmallcaps() {
   font-variant: normal !important;
-  .fontFeatureSettings4("liga" 1, "kern" 1, "smcp" 0,"c2sc" 0);
+  font-feature-settings: "liga" 1, "kern" 1, "smcp" 0,"c2sc" 0;
 }
 
 .monospaced(){

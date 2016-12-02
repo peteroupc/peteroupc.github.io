@@ -7,125 +7,37 @@
 //   If you like this, you should donate to Peter O.
 //   at: http://peteroupc.github.io/
 //
-.borderRadius(@size){
- border-radius: @size;
- -webkit-border-radius: @size;
- -moz-border-radius: @size;
-}
-.borderTopLeftRadius(@size){
- border-top-left-radius: @size;
- -webkit-border-top-left-radius: @size;
- -moz-border-radius-topleft: @size;
-}
-.borderTopRightRadius(@size){
- border-top-right-radius: @size;
- -webkit-border-top-right-radius: @size;
- -moz-border-radius-topright: @size;
-}
-.borderBottomLeftRadius(@size){
- border-bottom-left-radius: @size;
- -webkit-border-bottom-left-radius: @size;
- -moz-border-radius-bottomleft: @size;
-}
-.borderBottomRightRadius(@size){
- border-bottom-right-radius: @size;
- -webkit-border-bottom-right-radius: @size;
- -moz-border-radius-bottomright: @size;
-}
-
 .opacity(@o){
  opacity:@o;
  @o100:@o*100;
  *filter:~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{o100})";
 }
 .boxShadow(@size,@color){
-.boxShadowEx(@size,@size,@size,@color);
-}
-.boxShadowFour(@sizea,@sizeb,@sizec,@sized,@color){
- box-shadow: @sizea @sizeb @sizec @sized @color;
- -moz-box-shadow: @sizea @sizeb @sizec @sized @color;
- -ms-box-shadow: @sizea @sizeb @sizec @sized @color;
- -o-box-shadow: @sizea @sizeb @sizec @sized @color;
- -webkit-box-shadow: @sizea @sizeb @sizec @sized @color;
-}
-.boxShadowEx(@sizea,@sizeb,@sizec,@color){
- box-shadow: @sizea @sizeb @sizec @color;
- -moz-box-shadow: @sizea @sizeb @sizec @color;
- -ms-box-shadow: @sizea @sizeb @sizec @color;
- -o-box-shadow: @sizea @sizeb @sizec @color;
- -webkit-box-shadow: @sizea @sizeb @sizec @color;
-}
-
-.boxShadowInset(@sizea,@sizeb,@sizec,@color){
- box-shadow: inset @sizea @sizeb @sizec @color;
- -moz-box-shadow: inset @sizea @sizeb @sizec @color;
- -ms-box-shadow: inset @sizea @sizeb @sizec @color;
- -o-box-shadow: inset @sizea @sizeb @sizec @color;
- -webkit-box-shadow: inset @sizea @sizeb @sizec @color;
-}
-
-.columns(@value){
- columns:@value;
- -moz-columns:@value;
- -webkit-columns:@value;
- -ms-columns:@value;
-}
-
-.transition(@value){
- transition:@value;
- -moz-transition:@value;
- -ms-transition:@value;
- -o-transition:@value;
- -webkit-transition:@value;
-}
-
-.transform(@value){
- transform:@value;
- -moz-transform:@value;
- -webkit-transform:@value;
+ box-shadow: @size @size @size @color;
 }
 
 .noBoxShadow(){
  box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
- -moz-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
- -ms-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
- -o-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
- -webkit-box-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
- *filter:~"progid:DXImageTransform.Microsoft.shadow(Enabled=false)" !important;
 }
-
 .noTextShadow(){
  .textShadowEx(0px,0px,0px,rgba(0,0,0,0));
 }
 .textShadow(@size,@color){
- .textShadowEx(@size,@size,@size,@color);
-}
-
-.textShadowEx(@sizea,@sizeb,@sizec,@color){
- text-shadow: @sizea @sizeb @sizec @color;
- -moz-text-shadow: @sizea @sizeb @sizec @color;
- -webkit-text-shadow: @sizea @sizeb @sizec @color;
-}
-
-.backgroundClipPadding(){
-  background-clip: padding-box;
-  -o-background-clip: padding-box;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding;
+ text-shadow: @size @size @size @color;
 }
 
 // enables tables to have a border radius
 .tableRadii(@size){
-.borderRadius(@size);
+border-radius: @size;
 /* needed because of undefined behavior of 'border-radius' on table elements with 'border-collapse: collapse' */
 border-collapse: separate;
 &>tbody:first-child>tr:first-child, &>thead>tr {
-  &>th:first-child, &>td:first-child { .borderTopLeftRadius(@size);}
-  &>th:last-child, &>td:last-child { .borderTopRightRadius(@size);}
+  &>th:first-child, &>td:first-child { border-top-left-radius: @size;}
+  &>th:last-child, &>td:last-child { border-top-right-radius: @size;}
 }
 &>tbody > tr:last-child {
-  &, &>td:first-child { .borderBottomLeftRadius(@size); }
-  &, &>td:last-child { .borderBottomRightRadius(@size); }
+  &, &>td:first-child { border-bottom-left-radius: @size; }
+  &, &>td:last-child { border-bottom-right-radius: @size; }
 }
 }
 
@@ -150,7 +62,7 @@ border-collapse: separate;
  padding: 0.5em 1em;
  cursor: pointer;
  border: 1px solid;
- .borderRadius(3px);
+ border-radius: 3px;
  display: inline-block;
  overflow: visible;
  &:hover, &:active {
@@ -167,21 +79,21 @@ border-collapse: separate;
  padding: 0.3em 0.6em;
  border: 1px solid @bordercolor;
  background-color:#ffffff;
- .backgroundClipPadding();
- .borderRadius(3px);
+ background-clip: padding-box;
+ border-radius: 3px;
   &:hover {
     text-decoration: none;
-    .boxShadowEx(0,0,3px,@textblackhint);
+    box-shadow: 0 0 3px @textblackhint;
  }
  &:focus, &.focused {
     text-decoration: none;
-    .boxShadowEx(0,0,6px,@textblackhint);
+    box-shadow: 0 0 6px @textblackhint;
  }
  &[disabled] {
   cursor: not-allowed;
   border: 1px solid @bordercolor;
   color: @textblackhint;
-  .transition(none);
+  transition: none;
   &:hover {
     .noBoxShadow();
   }
@@ -189,7 +101,7 @@ border-collapse: separate;
  &[readonly] {
   border: 1px solid @bordercolor;
   color: @textblackhint;
-  .transition(none);
+  transition: none;
   &:hover, &:focus {
     .noBoxShadow();
   }
@@ -205,17 +117,17 @@ border-collapse: separate;
  padding: 0.3em 0.6em;
  border: 1px solid @bordercolor;
  background-color:@backgroundcolor;
- .backgroundClipPadding();
+ background-clip: padding-box;
  .boldweight();
- .borderRadius(3px);
+ border-radius: 3px;
   &:hover {
     text-decoration: none;
-    .boxShadowEx(0,0,3px,@textblackhint);
+    box-shadow: 0 0 3px @textblackhint;
  }
  &:focus, &.focused {
     text-decoration: none;
     background-color:@presscolor;
-    .boxShadowEx(0,0,6px,@textblackhint);
+    box-shadow: 0 0 6px @textblackhint;
  }
  &[disabled] {
   cursor: not-allowed;
@@ -241,10 +153,6 @@ border-collapse: separate;
     & when (@fbc = 'none') { background: @sc; }
     background-repeat: repeat-x;
     background: linear-gradient(top,@startColor,@endColor);
-    background: -moz-linear-gradient(@startColor,@endColor);
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor));
-    background: -ms-linear-gradient(top,@startColor,@endColor);
-    background: -o-linear-gradient(top,@startColor,@endColor);
     *zoom:1;
     *filter: ~"progid:DXImageTransform.Microsoft.Gradient( StartColorStr='@{startColor}', EndColorStr='@{endColor}',GradientType=0)";
     .ie8 & {
