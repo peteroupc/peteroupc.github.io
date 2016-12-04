@@ -472,21 +472,25 @@ syntactically invalid.</p></li>
  have only Basic Latin code points (U + 0000 to U + 007F), and the
  transfer encoding will always be 7bit, quoted-printable, or base64
  (the declared transfer encoding for this message will be
- ignored).</p> <p>The following applies to the From, To, Cc, and Bcc
- header fields. If the header field exists, but has an invalid syntax
- or has no addresses, this method will generate a synthetic header
- field with the display-name set to the contents of all of the header
- fields with the same name, and the address set to
+ ignored).</p> <p>The following applies to the following header
+ fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From,
+ Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists,
+ but has an invalid syntax, has no addresses, or appears more than
+ once, this method will generate a synthetic header field with the
+ display-name set to the contents of all of the header fields with the
+ same name, and the address set to
  <code>me@[header-name]-address.invalid</code> as the address (a
  <code>.invalid</code> address is a reserved address that can never belong
- to anyone). The generated message should always have a From header
- field.</p> <p>If a Date and/or Message-ID header field doesn&#39;t exist,
- a field with that name will be generated (using the current local
- time for the Date field).</p> <p>When encoding the message&#39;s body, if
- the message has a text content type (&quot;text/*&quot;), the line breaks are a
- CR byte (carriage return, 0x0d) followed by an LF byte (line feed,
- 0x0a), CR alone, or LF alone. If the message has any other content
- type, only CR followed by LF is considered a line break.</p></p>
+ to anyone). (An exception is that the Resent-From and Resent-Sender
+ header fields may appear more than once.) The generated message
+ should always have a From header field.</p> <p>If a Date and/or
+ Message-ID header field doesn&#39;t exist, a field with that name will be
+ generated (using the current local time for the Date field).</p>
+ <p>When encoding the message&#39;s body, if the message has a text
+ content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage
+ return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or
+ LF alone. If the message has any other content type, only CR followed
+ by LF is considered a line break.</p></p>
 
 <p><strong>Returns:</strong></p>
 
