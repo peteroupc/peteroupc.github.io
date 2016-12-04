@@ -1686,7 +1686,7 @@ return this.moveTo(x,y).lineTo(x+width,y).lineTo(x+width,y+height)
 * <li>H/h (x) - Specifies horizontal line segments to the given X points.
 * <li>V/v (y) - Specifies vertical line segments to the given Y points.
 * <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
-* (see quadCurveTo).
+* (see quadraticCurveTo).
 * <li>T/t (x y) - Specifies quadratic curves tangent to the previous
 * quadratic curve.
 * <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves

@@ -79,7 +79,10 @@ ol, ul {
 nav, td, th, dd {
  ol, ul { columns: 1; }
 }
-ul li, ol li, dl dt, thead, thead tr, tbody tr:first-child {   page-break-after: avoid;  }
+ul li, ol li, dl dt, thead, thead tr, tbody tr:first-child,
+h1, h2, h3, h4, h5, h6 {
+  page-break-after: avoid;
+}
 ul li:first-child, ol li:first-child, dl dt:first-child { page-break-after: auto; }
  footer {
   border-top: 3px double black;
@@ -91,7 +94,7 @@ blockquote footer { border: none; }
  h1, h2, h3, h4, h5, h6 {
   color:black;
   .noBoxShadow();
-  .textShadow(0,black);
+  text-shadow: 0 0 0 black;
   .boldweight();
   filter:none;
   border: none;
@@ -121,6 +124,7 @@ p{
 margin-left: 0.2em;
 margin-top: 0em;
 margin-bottom: 0em; widows:3;orphans:3; text-indent: 1em;}
+h2, h3 { widows:3; orphans:3; }
 ul, ol, dd, dd p{
 margin-left: 0.4em;
 margin-top: 0.1em;

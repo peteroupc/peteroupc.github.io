@@ -7,11 +7,51 @@
 //   If you like this, you should donate to Peter O.
 //   at: http://peteroupc.github.io/
 //
-.opacity(@o){
- opacity:@o;
- @o100:@o*100;
- *filter:~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{o100})";
+
+.text-primary-color(@color) when(luma(@color)>=50%) {
+ @text-primary-color: rgba(0,0,0,87%); // black
 }
+.text-primary-color(@color) when(luma(@color)<50%) {
+ @text-primary-color: #fff; // white
+}
+.text-secondary-color(@color) when(luma(@color)>=50%) {
+ @text-secondary-color: rgba(0,0,0,54%); // black
+}
+.text-secondary-color(@color) when(luma(@color)<50%) {
+ @text-secondary-color: rgba(255,255,255,70%); // white
+}
+.text-hint-color(@color) when(luma(@color)>=50%) {
+ @text-hint-color:  rgba(0,0,0,38%); // black
+}
+.text-hint-color(@color) when(luma(@color)<50%) {
+ @text-hint-color: rgba(255,255,255,50%); // white
+}
+.divider-color(@color) when(luma(@color)>=50%) {
+ @divider-color:  rgba(0,0,0,12%); // black
+}
+.divider-color(@color) when(luma(@color)<50%) {
+ @divider-color: rgba(255,255,255,12%); // white
+}
+.background-text-primary(@color) {
+ background-color: @color;
+ .text-primary-color(@color);
+ color: @text-primary-color;
+}
+.background-text-secondary(@color) {
+ background-color: @color;
+ .text-secondary-color(@color);
+ color: @text-secondary-color;
+}
+.background-text-hint(@color) {
+ background-color: @color;
+ .text-hint-color(@color);
+ color: @text-hint-color;
+}
+.border-divider(@color) {
+ .divider-color(@color);
+ border-color: @divider-color;
+}
+
 .boxShadow(@size,@color){
  box-shadow: @size @size @size @color;
 }
@@ -70,37 +110,36 @@ border-collapse: separate;
  }
 }
 
-.inputuifieldmodern(
-  @textcolor,@bordercolor
-){
- color: @textcolor;
+.inputuifieldmodern(@background, @border){
  text-decoration: none;
  margin: 0;
  padding: 0.3em 0.6em;
- border: 1px solid @bordercolor;
- background-color:#ffffff;
+ border-width: 1px;
+ border-style: solid;
+ .background-text-primary(@background);
+ .border-divider(@border);
  background-clip: padding-box;
  border-radius: 3px;
   &:hover {
     text-decoration: none;
-    box-shadow: 0 0 3px @textblackhint;
+    .text-hint-color(@background);
+    box-shadow: 0 0 3px @text-hint-color;
  }
  &:focus, &.focused {
     text-decoration: none;
-    box-shadow: 0 0 6px @textblackhint;
+    .text-hint-color(@background);
+    box-shadow: 0 0 6px @text-hint-color;
  }
  &[disabled] {
   cursor: not-allowed;
-  border: 1px solid @bordercolor;
-  color: @textblackhint;
+  .background-text-hint(@background);
   transition: none;
   &:hover {
     .noBoxShadow();
   }
  }
  &[readonly] {
-  border: 1px solid @bordercolor;
-  color: @textblackhint;
+  .background-text-hint(@background);
   transition: none;
   &:hover, &:focus {
     .noBoxShadow();
@@ -109,37 +148,40 @@ border-collapse: separate;
 }
 
 .inputuibuttonmodern(
-  @textcolor,@backgroundcolor,@bordercolor,@presscolor
+  @background,@presscolor
 ){
- color: @textcolor;
  text-decoration: none;
  margin: 0;
  padding: 0.3em 0.6em;
- border: 1px solid @bordercolor;
- background-color:@backgroundcolor;
+ border-width: 1px;
+ border-style: solid;
+ .background-text-primary(@background);
+ .border-divider(@background);
+ background-color:#ffffff;
  background-clip: padding-box;
- .boldweight();
  border-radius: 3px;
   &:hover {
     text-decoration: none;
-    box-shadow: 0 0 3px @textblackhint;
+    .text-hint-color(@background);
+    box-shadow: 0 0 3px @text-hint-color;
  }
  &:focus, &.focused {
     text-decoration: none;
-    background-color:@presscolor;
-    box-shadow: 0 0 6px @textblackhint;
+   .background-text-primary(@presscolor);
+    .text-hint-color(@presscolor);
+    box-shadow: 0 0 6px @text-hint-color;
  }
  &[disabled] {
   cursor: not-allowed;
-  border: 1px solid @bordercolor;
-  color: @textwhitehint;
+  .background-text-hint(@background);
+  transition: none;
   &:hover {
     .noBoxShadow();
   }
  }
  &[readonly] {
-  border: 1px solid @bordercolor;
-  color: @textwhitehint;
+  .background-text-hint(@background);
+  transition: none;
   &:hover, &:focus {
     .noBoxShadow();
   }

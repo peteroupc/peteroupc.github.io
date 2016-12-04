@@ -39,6 +39,13 @@ hr {
  border: 1px solid;
 }
 
+header {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid;
+}
+
 abbr,acronym {
   border-bottom:1px dotted;
   cursor:help;
@@ -143,83 +150,71 @@ pre {
 //  Colors
 //////////////////////////////////////////////////////////////////////
 
-@primarybackground: #e0f6fc;
-@primary100: #b3e8f8;
-@primary200: #8dd8f3;
-@primarylight: #4dc8ee;
 @primary: #00b1e7;
-@primarydark: #0095da;
-
-@secondaryverylight: #f9d9fe;
-@secondarylight: #ea80fc;
 @secondary: #e040db;
-@secondarydark: #d500f9;
 
-// Recommended by Material Design
-@textblackprimary: rgba(0,0,0,87%);
-@textblacksecondary: rgba(0,0,0,54%);
-@textblackhint: rgba(0,0,0,38%);
-@dividerblack: rgba(0,0,0,12%);
+@primary50: mix(#fff,@primary,85%);
+@primary100: mix(#fff,@primary,70%);
+@primary200: mix(#fff,@primary,50%);
+@primary400: mix(#fff,@primary,15%);
+@primary600: mix(#000,@primary,15%);
 
-@textwhiteprimary: #ffffff;
-@textwhitesecondary: rgba(255,255,255,70%);
-@textwhitehint: rgba(255,255,255,50%);
-@dividerwhite: rgba(255,255,255,12%);
+@secondary50: mix(#fff,@secondary,85%);
+@secondary200: mix(#fff,@secondary,50%);
+@secondary700: mix(#000,@secondary,30%);
 
 body {
- color:@textblackprimary;
- background-color:@primarybackground;
+ .background-text-primary(@primary50);
 }
 
 a:link,a:hover,a:visited {
  color:@secondary;
  h1 &, h2 & {
-  color:@secondarydark;
+  color:@secondary700;
  }
 }
 
 kbd {
- background:@primary100;
+ .background-text-primary(@primary100);
 }
 
 .header {
- border-bottom-color: @dividerblack;
- background: @primary;
+ .background-text-primary(@primary);
+ .border-divider(@primary);
  a:link,a:hover,a:visited {
-  color:@secondaryverylight;
+  color:@secondary200;
  }
 }
 
 nav {
- border-color: @dividerblack;
+ .divider-color(@primary50);
+ border-color: @divider-color;
 }
 
 caption, figcaption {
- color: @textblacksecondary;
+ .text-secondary-color(@primary50);
+  color: @text-secondary-color;
 }
 
 h1 {
- color: @textwhiteprimary;
- border-color: @dividerblack;
- background: @primary;
+ .border-divider(@primary);
+ .background-text-primary(@primary);
 }
 
 h2 {
- color: @textwhiteprimary;
- border-color: @dividerblack;
- background: @primarylight;
+ .border-divider(@primary400);
+ .background-text-primary(@primary400);
 }
 
 pre {
-  border-color:@dividerblack;
-  background:@primary100;
+ .border-divider(@primary100);
+ .background-text-primary(@primary100);
 }
 
 button, input.button, input[type="button"],
 input[type="submit"], input[type="reset"],
 input[type="file"]{
-  .inputuibuttonmodern(@textwhiteprimary,@secondary,
-    @dividerwhite,@secondarydark);
+  .inputuibuttonmodern(@secondary,@secondary700);
 }
 
 select,
@@ -238,65 +233,60 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"]{
-  .inputuifieldmodern(@textblackprimary,@secondary);
+  .inputuifieldmodern(@secondary50, @secondary);
 }
 
 input[type="checkbox"],
 input[type="radio"]{
- border: 1;
- border-color:@secondary;
- color:@textblackhint;
+ border-width: 1px;
+ .background-text-hint(@secondary);
+ .border-divider(@secondary);
 }
 
 blockquote {
- color: @textblacksecondary;
- border-color:@dividerblack;
+ .background-text-secondary(@primary50);
+ .border-divider(@primary50);
 }
 
 hr {
- border-color:@dividerblack;
- color:@dividerblack;
+ .border-divider(@primary50);
+ .divider-color(@primary50);
+ color:@divider-color;
 }
 
 table {
-  border-color:@dividerblack;
+ .border-divider(@primary50);
 }
-/* odd-row cells */
+// odd-row cells
 td{
- border-color:@dividerblack;
- background-color:@primary100;
- color:@textblackprimary;
- b{
-  color:@textblackprimary;
- }
+ .border-divider(@primary50);
+ .background-text-primary(@primary100);
 }
 th {
-  color:@textwhiteprimary;
-  background-color:@primarydark;
+ .border-divider(@primary50);
+ .background-text-primary(@primary600);
 }
 /* even-row cells */
 tr {
-  td:nth-child(even){background-color:@primary200;}
+  td:nth-child(even){
+    .background-text-primary(@primary200);
+  }
 }
 aside {
- border-color:  @dividerblack;
+ .border-divider(@primary50);
 }
 aside, div {
  &.example {
-  border-color: #0022c0;
-  background-color: #f8fcff;
+    .background-text-primary(@primary100);
  }
  &.caution {
-  border-color: #ff8000;
-  background-color: #fffcf8;
+    .background-text-primary(@secondary200);
  }
  &.warning {
-  border-color: #ff0000;
-  background-color: #fff8f8;
+    .background-text-primary(@secondary700);
  }
  &.note {
-  border-color: #00c022;
-  background-color: #f8fffc;
+    .background-text-primary(@primary100);
  }
 }
 @import "print.less";

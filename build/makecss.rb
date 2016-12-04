@@ -20,6 +20,4 @@ plugins.each{|f|
  cmd+=" --use #{f}"
 }
 cmd+=" --postcss-discard-comments.removeAll true -o ../style.css < ../style.css"
-puts cmd
 `#{cmd}`
-
