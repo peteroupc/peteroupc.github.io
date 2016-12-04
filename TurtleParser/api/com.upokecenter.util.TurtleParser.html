@@ -14,10 +14,13 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>TurtleParser(PeterO.IByteReader stream) com.upokecenter.Rdf.getTurtleParser()</code><br>
+<li><code>TurtleParser(com.upokecenter.util.IByteReader stream)</code><br></li>
+<li><code>TurtleParser(com.upokecenter.util.IByteReader stream,
+        String baseURI)</code><br></li>
+<li><code>TurtleParser(String str) com.upokecenter.Rdf.getTurtleParser()</code><br>
 Initializes a new instance of the com.upokecenter.Rdf.getTurtleParser()
 class.</li>
-<li><code>TurtleParser(PeterO.IByteReader stream,
+<li><code>TurtleParser(String str,
         String baseURI) com.upokecenter.Rdf.getTurtleParser()</code><br>
 Initializes a new instance of the com.upokecenter.Rdf.getTurtleParser()
 class.</li>
@@ -28,10 +31,13 @@ Not documented yet.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>TurtleParser(PeterO.IByteReader stream) com.upokecenter.Rdf.getTurtleParser()</code><br>
+<li><code>TurtleParser(com.upokecenter.util.IByteReader stream)</code><br></li>
+<li><code>TurtleParser(com.upokecenter.util.IByteReader stream,
+        String baseURI)</code><br></li>
+<li><code>TurtleParser(String str) com.upokecenter.Rdf.getTurtleParser()</code><br>
 Initializes a new instance of the com.upokecenter.Rdf.getTurtleParser()
 class.</li>
-<li><code>TurtleParser(PeterO.IByteReader stream,
+<li><code>TurtleParser(String str,
         String baseURI) com.upokecenter.Rdf.getTurtleParser()</code><br>
 Initializes a new instance of the com.upokecenter.Rdf.getTurtleParser()
 class.</li>
@@ -41,7 +47,17 @@ class.</li>
 
 <h3>TurtleParser</h3>
 
-<pre><code>public TurtleParser(PeterO.IByteReader stream)
+<pre><code>public TurtleParser(com.upokecenter.util.IByteReader stream)
+</code></pre>
+
+<h3>TurtleParser</h3>
+
+<pre><code>public TurtleParser(com.upokecenter.util.IByteReader stream, String baseURI)
+</code></pre>
+
+<h3>TurtleParser</h3>
+
+<pre><code>public TurtleParser(String str)
 </code></pre>
 
 <p>Initializes a new instance of the <code>com.upokecenter.Rdf.getTurtleParser()</code>
@@ -50,12 +66,12 @@ class.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>stream</code> - A PeterO.IByteReader object.</li>
+<li><code>str</code> - A text string.</li>
 </ul>
 
 <h3>TurtleParser</h3>
 
-<pre><code>public TurtleParser(PeterO.IByteReader stream, String baseURI)
+<pre><code>public TurtleParser(String str, String baseURI)
 </code></pre>
 
 <p>Initializes a new instance of the <code>com.upokecenter.Rdf.getTurtleParser()</code>
@@ -64,14 +80,14 @@ class.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>stream</code> - A PeterO.IByteReader object.</p></li>
-<li><p><code>baseURI</code> - A text string.</p></li>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>baseURI</code> - Another string object.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>stream</code> or <code>baseURI</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> or <code>baseURI</code> is null.</li>
 </ul>
 
 <h3>Parse</h3>
