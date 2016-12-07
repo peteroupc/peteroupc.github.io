@@ -17,25 +17,30 @@
 
 <ul>
 <li><code>NormalizingCharacterInput(com.upokecenter.text.ICharacterInput input)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>NormalizingCharacterInput(com.upokecenter.text.ICharacterInput stream,
                      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>NormalizingCharacterInput(List&lt;Integer&gt; characterList)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.</li>
 <li><code>NormalizingCharacterInput(List&lt;Integer&gt; characterList,
                      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.</li>
 <li><code>NormalizingCharacterInput(String str)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>NormalizingCharacterInput(String str,
                      int index,
                      int length,
                      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>NormalizingCharacterInput(String str,
                      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>static List&lt;Integer&gt; GetChars(com.upokecenter.text.ICharacterInput input,
     Normalization form)</code><br>
 Deprecated.
@@ -86,25 +91,30 @@ Deprecated.  Reads a Unicode character from a data source.</li>
 
 <ul>
 <li><code>NormalizingCharacterInput(com.upokecenter.text.ICharacterInput input)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>NormalizingCharacterInput(com.upokecenter.text.ICharacterInput stream,
                      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>NormalizingCharacterInput(List&lt;Integer&gt; characterList)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.</li>
 <li><code>NormalizingCharacterInput(List&lt;Integer&gt; characterList,
                      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.</li>
 <li><code>NormalizingCharacterInput(String str)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>NormalizingCharacterInput(String str,
                      int index,
                      int length,
                      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 <li><code>NormalizingCharacterInput(String str,
                      Normalization form)</code><br>
-Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.</li>
+Deprecated.  Initializes a new instance of the
+class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -119,7 +129,7 @@ Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.<
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A string object.</li>
+<li><code>str</code> - A public object.</li>
 </ul>
 
 <h3>NormalizingCharacterInput</h3>
@@ -132,7 +142,7 @@ Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.<
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>input</code> - An ICharacterInput object.</li>
+<li><code>input</code> - A public object.</li>
 </ul>
 
 <h3>NormalizingCharacterInput</h3>
@@ -142,25 +152,12 @@ Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.<
 
 <p>Deprecated.&nbsp;</p>
 
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>characterList</code> - An List object.</li>
-</ul>
-
 <h3>NormalizingCharacterInput</h3>
 
 <pre><code>public NormalizingCharacterInput(List&lt;Integer&gt; characterList, Normalization form)
 </code></pre>
 
 <p>Deprecated.&nbsp;</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>characterList</code> - An List object.</p></li>
-<li><p><code>form</code> - A Normalization object.</p></li>
-</ul>
 
 <h3>NormalizingCharacterInput</h3>
 
@@ -172,7 +169,7 @@ Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.<
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A string object.</p></li>
+<li><p><code>str</code> - A public object.</p></li>
 <li><p><code>index</code> - A 32-bit signed integer.</p></li>
 <li><p><code>length</code> - Another 32-bit signed integer.</p></li>
 <li><p><code>form</code> - A Normalization object.</p></li>
@@ -188,8 +185,15 @@ Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.<
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A string object.</p></li>
+<li><p><code>str</code> - A text string.</p></li>
 <li><p><code>form</code> - A Normalization object.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> or &quot;input&quot; or
+&quot;charArray&quot; is null.</li>
 </ul>
 
 <h3>NormalizingCharacterInput</h3>
@@ -202,7 +206,7 @@ Deprecated.  Initializes a new instance of the NormalizingCharacterInput class.<
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>stream</code> - An ICharacterInput object.</p></li>
+<li><p><code>stream</code> - A public object.</p></li>
 <li><p><code>form</code> - A Normalization object.</p></li>
 </ul>
 

@@ -285,14 +285,14 @@ H3DU.Mesh.prototype.merge=function(other){
   if(thisAttributes!=otherAttributes) {
     throw new Error("Meshes have different attributes");
   }
-   var i;
-   var oldVertexLength=this.vertexCount();
-   var oldIndexLength=this.indices.length;
-   this.vertices.push.apply(this.vertices,other.vertices);
-   this.indices.push.apply(this.indices,other.indices);
-   for(i=oldIndexLength;i&lt;this.indices.length;i++){
+  var i;
+  var oldVertexLength=this.vertexCount();
+  var oldIndexLength=this.indices.length;
+  this.vertices.push.apply(this.vertices,other.vertices);
+  this.indices.push.apply(this.indices,other.indices);
+  for(i=oldIndexLength;i&lt;this.indices.length;i++){
     this.indices[i]+=oldVertexLength;
-   }
+  }
   // Reset the primitive
   this.newPrimitive();
  return this;
