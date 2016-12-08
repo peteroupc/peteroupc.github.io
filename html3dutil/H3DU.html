@@ -2701,7 +2701,7 @@ unless the box will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createCapsule"><span style="font-weight:lighter">(static) </span>Meshes.createCapsule<span class="signature">(radius, length, slices, stacks, middleStacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line616">line 616</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line632">line 632</a>
      </i></small></p>
 
 <div class="description">
@@ -2709,6 +2709,7 @@ unless the box will be viewed from the inside.</dd>
 The length of the capsule will run along the z-axis. (If the capsule
 has a high length and a very low radius, it will resemble a 3D line
 with rounded corners.)
+Will also generate texture coordinates.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 </div>
 
@@ -2832,14 +2833,17 @@ unless the capsule will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createClosedCylinder"><span style="font-weight:lighter">(static) </span>Meshes.createClosedCylinder<span class="signature">(baseRad, topRad, height, slices, stacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line270">line 270</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line279">line 279</a>
      </i></small></p>
 
 <div class="description">
     Creates a mesh of a closed cylinder.  The cylinder's base will
 be centered at the origin and its height will run along the
 positive z-axis.  The base and top will be included in the mesh if
-their radius is greater than 0.
+their radius is greater than 0. Will generate texture coordinates such
+that the texture's width goes around the cylinder's circumference.
+The base's and top's texture coordinates will be such that the
+texture will be flat as seen from either.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 </div>
 
@@ -2957,14 +2961,15 @@ unless the cylinder will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createCylinder"><span style="font-weight:lighter">(static) </span>Meshes.createCylinder<span class="signature">(baseRad, topRad, height, slices, stacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line104">line 104</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line105">line 105</a>
      </i></small></p>
 
 <div class="description">
     Creates a mesh of a cylinder.  The cylinder's base will
 be centered at the origin and its height will run along the
 positive z-axis.  The base and top themselves will not be
-included in the mesh.
+included in the mesh  Will generate texture coordinates such
+that the texture's width goes around the cylinder's circumference.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 </div>
 
@@ -3088,7 +3093,7 @@ unless the cylinder will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createDisk"><span style="font-weight:lighter">(static) </span>Meshes.createDisk<span class="signature">(inner, outer, slices, loops, inward)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line302">line 302</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line312">line 312</a>
      </i></small></p>
 
 <div class="description">
@@ -3096,6 +3101,7 @@ unless the cylinder will be viewed from the inside.</dd>
 Assuming the Y axis points up, the X axis right,
 and the Z axis toward the viewer, the first vertex in the outer edge
 of the 2D disk will be at the 12 o'clock position.
+Will also generate texture coordinates.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 </div>
 
@@ -3184,9 +3190,9 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
 </div>
 
-    <h4 style="margin-bottom:0px" id=".Meshes.createLathe"><span style="font-weight:lighter">(static) </span>Meshes.createLathe<span class="signature">(points, slices, flat, inside)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id=".Meshes.createLathe"><span style="font-weight:lighter">(static) </span>Meshes.createLathe<span class="signature">(points, slices, flat, inside, inside)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line186">line 186</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line192">line 192</a>
      </i></small></p>
 
 <div class="description">
@@ -3207,7 +3213,7 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 )
 
            </dt><dd>
-           </dd>
+           Must be 4 or greater and be an even number.</dd>
 
         <dt>
 
@@ -3219,19 +3225,35 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 )
 
            </dt><dd>
-           </dd>
+           Must be 3 or greater.  May be null or omitted; default is 32.</dd>
 
         <dt>
 
                 <code>flat</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Boolean</span>
 
 )
 
            </dt><dd>
-           </dd>
+           If true, will generate normals such that the
+figure will be flat shaded; otherwise, will generate normals such that the
+figure will be smooth shaded.</dd>
+
+        <dt>
+
+                <code>inside</code>
+
+                (
+<span class="param-type">Boolean</span>
+
+)
+
+           </dt><dd>
+           If true, the normals generated by this
+method will point inward; otherwise, outward.  Should normally be false
+unless the figure will be viewed from the inside.</dd>
 
         <dt>
 
@@ -3253,11 +3275,12 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createPartialDisk"><span style="font-weight:lighter">(static) </span>Meshes.createPartialDisk<span class="signature">(inner, outer, slices, loops, start, sweep, inward)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line331">line 331</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line342">line 342</a>
      </i></small></p>
 
 <div class="description">
     Creates a mesh of a 2D disk or an arc of a 2D disk.
+Will also generate texture coordinates.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 </div>
 
@@ -3376,11 +3399,13 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createPlane"><span style="font-weight:lighter">(static) </span>Meshes.createPlane<span class="signature">(width, height, widthDiv, heightDiv, inward)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line525">line 525</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line539">line 539</a>
      </i></small></p>
 
 <div class="description">
     Creates a mesh of a 2D rectangle, centered at the origin.
+The plane's Z-coordinate will be 0.
+Will also generate texture coordinates.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 </div>
 
@@ -3472,11 +3497,12 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createPointedStar"><span style="font-weight:lighter">(static) </span>Meshes.createPointedStar<span class="signature">(points, firstRadius, secondRadius, inward)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line810">line 810</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line827">line 827</a>
      </i></small></p>
 
 <div class="description">
     Creates a mesh in the form of a two-dimensional n-pointed star.
+Will also generate texture coordinates.
 </div>
 
     <h5>Parameters:</h5>
@@ -3556,11 +3582,12 @@ in the same direction of the positive z-axis.  Default is false.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createSphere"><span style="font-weight:lighter">(static) </span>Meshes.createSphere<span class="signature">(radius, slices, stacks, flat, inside)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line582">line 582</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line597">line 597</a>
      </i></small></p>
 
 <div class="description">
     Creates a mesh of a sphere, centered at the origin.
+Will also generate texture coordinates.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 </div>
 
@@ -3654,11 +3681,12 @@ unless the sphere will be viewed from the inside.</dd>
 
     <h4 style="margin-bottom:0px" id=".Meshes.createTorus"><span style="font-weight:lighter">(static) </span>Meshes.createTorus<span class="signature">(inner, outer, lengthwise, crosswise, flat, inward)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line442">line 442</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshes.js.html">h3du-meshes.js</a>, <a href="h3du-meshes.js.html#line454">line 454</a>
      </i></small></p>
 
 <div class="description">
     Creates a mesh of a torus (donut), centered at the origin.
+Will also generate texture coordinates.
 See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
 </div>
 
