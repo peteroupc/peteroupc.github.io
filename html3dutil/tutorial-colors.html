@@ -50,7 +50,7 @@
 <p>Take <code>#ff80cc</code> as an example. The color defined is a carnation pink. There are four parts to this example:</p>
 <ul>
 <li>The <code>#</code> identifies this word as a color.</li>
-<li>The <code>ff</code> is two letters and/or digits that show the red component of the color. This is a so-called hexadecimal number, or base-16 number. Each digit of this number can range from 0-9 and from A-F, with 0 being the lowest digit, and F being the highest digit. The highest two-digit value is 00, and the lowest two-digit value is FF (256).</li>
+<li>The <code>ff</code> is two letters and/or digits that show the red component of the color. This is a so-called hexadecimal number, or base-16 number. Each digit of this number can range from 0-9 and from A-F, with 0 being the lowest digit, and F being the highest digit. The highest two-digit value is 00, and the lowest two-digit value is FF (256). (The digits A-F may appear in upper or lower case.)</li>
 <li>The <code>80</code> is a base-16 number showing the color&#8217;s green component.</li>
 <li>The <code>cc</code> is a base-16 number showing the color&#8217;s blue component.</li>
 </ul>
@@ -85,8 +85,10 @@ Gray         80    80    80    #808080</code></pre><h2>How Do I Darken an HTML C
 <p>For example, to make a lighter red, start with FF, 00, and 00 for red, green, and blue. When we move these components ten steps to the right, we get FF, A0, and A0. The final color becomes #FFA0A0.</p>
 <h2>How Do I Desaturate an HTML Color? <a id=How_Do_I_Desaturate_an_HTML_Color></a></h2><p>To make a desaturated (washed-out) version (or <em>tone</em>) of a color, move the color components closer to each other, in about the same proportion. (If they&#8217;re exactly the same, the result is a shade of gray.)</p>
 <p>For example, to make a washed-out red, start with FF, 00, and 00 for red, green, and blue. When we move these components closer to each other, we get C0, 40, and 40. The final color becomes #C04040.</p>
-<h2>What Is an RGB Color? <a id=What_Is_an_RGB_Color></a></h2><p>An RGB color contains the same information as an HTML color, except that each value is shown in the familiar base-10 format.  For example, the value <code>rgb(192,64,0)</code> is the same as the HTML color value <code>#C04000</code>.  The steps for darkening, lightening, and desaturating RGB colors are pretty much the same as with HTML colors.</p>
-<p>An alternate syntax for RGB colors supports the alpha component (see &quot;What Is an Alpha Component?&quot;, below): in the example <code>rgba(192,64,0,50%)</code>, the <code>50%</code> is the alpha component.</p>
+<h2>What Is an RGB Color? <a id=What_Is_an_RGB_Color></a></h2><p>An RGB color contains the same information as an HTML color, except that each value is shown in the familiar base-10 format.  For example, the value <code>rgb(192,64,0)</code> is the same as the HTML color value <code>#C04000</code>.</p>
+<p>The components of the RGB color (red, green, and blue, in that order) can range from <code>0</code> to <code>255</code>, or from <code>0%</code> to <code>100%</code>, but mixing ranges is not allowed.  For example, <code>rgb(192,64,0)</code> and <code>rgb(80%,50%,0%)</code> are allowed, but not <code>rgb(192,50%,0%)</code>.</p>
+<p>The steps for darkening, lightening, and desaturating RGB colors are pretty much the same as with HTML colors.</p>
+<p>An alternate syntax for RGB colors supports the alpha component (see &quot;What Is an Alpha Component?&quot;, below): in the example <code>rgba(192,64,0,0.5)</code>, the <code>0.5</code> is the alpha component.  This component can be used with either range for RGB colors, either 0-255 or percentages. (Note that the example starts with <code>rgba</code>, not just <code>rgb</code>.)</p>
 <h2>What Is an HSL Color? <a id=What_Is_an_HSL_Color></a></h2><p>An HSL color is a color represented in the Hue-Saturation-Lightness color space.  Here&#8217;s what each component means in detail.</p>
 <ul>
 <li><p>Hue ranges from 0 to 360 degrees.  Each angle on the color wheel stands for a different hue:</p>
@@ -99,14 +101,14 @@ Gray         80    80    80    #808080</code></pre><h2>How Do I Darken an HTML C
 <li>Magentas have hue 300 (10 o&#8217;clock).</li>
 </ul>
 </li>
-<li><p><strong>Saturation</strong>, or vividness, ranges from 0% to 100%. 100% stands for the purest, most vivid color. The lower the number, the greater the amount of gray in the color.  0% means the color is completely gray.  Therefore, <strong><em>to desaturate a color</em></strong>, simply lower the amount of saturation.</p>
+<li><p><strong>Saturation</strong>, or vividness, ranges from 0% to 100%. 100% stands for the purest, most vivid color. The lower the number, the greater the amount of gray in the color.  0% means the color is totally gray.  Therefore, <strong><em>to desaturate a color</em></strong>, simply lower the amount of saturation.</p>
 </li>
 <li><p><strong>Lightness</strong> is also a value ranging from 0% to 100%. It expresses the amount of black or white in the color. 0% means fully black, 100% means fully white, and 50% means the color contains neither black nor white.  <strong><em>To darken a color</em></strong>, lower the lightness, and <strong><em>to lighten a color</em></strong>, raise the lightness.</p>
 </li>
 </ul>
 <h3>HSL Example <a id=HSL_Example></a></h3><p>The value <code>hsl(240,100%,50%)</code> has a hue of 240 (blue), a saturation of 100% (fully saturated), and a lightness of 50% (neither black or white).  It represents a vivid blue.  If we lower lightness to 20%, we get a dark blue.  If we also change the hue to 0, we get a dark red.</p>
 <p>An alternate syntax for HSL colors supports the alpha component (see &quot;What Is an Alpha Component?&quot;, below): in the example <code>hsla(240,100%,50%,80%)</code>, the <code>80%</code> is the alpha component.</p>
-<h2>What Is an Alpha Component? <a id=What_Is_an_Alpha_Component></a></h2><p>An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from <code>00</code>/<code>0%</code>, or &quot;fully transparent&quot; (completely invisible), to <code>FF</code>/<code>100%</code>, or &quot;fully opaque&quot; (letting nothing through it).  If a color notation doesn't use an alpha component, the color is fully opaque.</p>
+<h2>What Is an Alpha Component? <a id=What_Is_an_Alpha_Component></a></h2><p>An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from <code>00</code>/<code>0.0</code>, or &quot;fully transparent&quot; (completely invisible), to <code>FF</code>/<code>1.0</code>, or &quot;fully opaque&quot; (letting nothing through it).  If a color notation doesn't use an alpha component, the color is fully opaque.</p>
 </article>
 
 </section>

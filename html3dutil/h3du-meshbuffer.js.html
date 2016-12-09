@@ -73,19 +73,20 @@ H3DU.MeshBuffer=function(mesh){
 };
 
 H3DU.MeshBuffer.prototype.setAttribute=function(name,buffer,startIndex,countPerVertex,stride){
- if(buffer.constructor==Array){
+ "use strict";
+if(buffer.constructor===Array){
   buffer=new Float32Array(buffer);
  }
- var attr=this._getAttribute(name)
+ var attr=this._getAttribute(name);
  if(attr){
-  attr[1]=startIndex
-  attr[2]=buffer
-  attr[3]=countPerVertex
-  attr[4]=stride
+  attr[1]=startIndex;
+  attr[2]=buffer;
+  attr[3]=countPerVertex;
+  attr[4]=stride;
  } else {
-  this.attributes.push([name,startIndex,buffer,countPerVertex,stride])
+  this.attributes.push([name,startIndex,buffer,countPerVertex,stride]);
  }
-}
+};
 
 /** @private */
 H3DU.MeshBuffer.prototype._getAttributes=function(){
