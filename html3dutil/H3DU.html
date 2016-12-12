@@ -2261,7 +2261,7 @@ multiplied by view matrix).</dd>
 4-element arrays representing the six clipping planes of the
 view frustum.  In order, they are the left, right, top,
 bottom, near, and far clipping planes.  All six planes
-will be normalized.
+will be unit vectors ("normalized" vectors with a length of 1).
 
      (Type:
 <span class="param-type">Array.&lt;Array.&lt;Number>></span>)
@@ -2324,10 +2324,10 @@ the plane.
      </i></small></p>
 
 <div class="description">
-    Normalizes this plane so that its normal is unit
-length (unless all the normal's components are 0).
+    Normalizes this plane so that its normal is a unit vector (a "normalized" vector with a length of 1),
+unless all the normal's components are 0.
 The plane's distance will be divided by the
-normal's length.
+current normal's length.
 </div>
 
     <h5>Parameters:</h5>
@@ -2524,7 +2524,7 @@ by its length.
 
 <div class="description">
     Converts a quaternion to its normalized version.
-When a quaternion is normalized, the distance from the origin
+When a quaternion is normalized, it describes the same orientation but the distance from the origin
 to that quaternion becomes 1 (unless all its components are 0).
 A quaternion is normalized by dividing each of its components
 by its length.

@@ -351,7 +351,7 @@ the given 4x4 matrix.<p>
 This is usually used to convert a model-view matrix to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the world matrix.  Normals are then
-transformed by this matrix and then re-normalized.  But if the
+transformed by this matrix and then converted to unit vectors  ("normalized" vectors with a length of 1).  But if the
 input matrix uses only rotations, translations, and/or uniform scaling
 (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 be used instead of the inverse-transpose matrix to transform the normals.
@@ -2413,7 +2413,7 @@ described as the effect of a roll, then pitch, then yaw (each rotation around th
 two 3-element vectors.  The quaternion
 will describe the rotation required to rotate
 the ray described in the first vector toward the ray described
-in the second vector.  The vectors need not be normalized.
+in the second vector.  The vectors need not be unit vectors ("normalized" vectors with a length of 1).
 </div>
 
     <h5>Parameters:</h5>
@@ -2454,7 +2454,7 @@ in the second vector.  The vectors need not be normalized.
 
 <div class="param-desc">
     The generated quaternion, which
-will be normalized.
+will be unit vectors ("normalized" vectors with a length of 1).
 
      (Type:
 <span class="param-type">Array.&lt;Number></span>)
@@ -2625,7 +2625,7 @@ returns a new quaternion.
 )
 
            </dt><dd>
-           The first quaternion.  Should be normalized.</dd>
+           The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).</dd>
 
         <dt>
 
@@ -2637,7 +2637,7 @@ returns a new quaternion.
 )
 
            </dt><dd>
-           The second quaternion.  Should be normalized.</dd>
+           The second quaternion.  Should be a unit vector.</dd>
 
         <dt>
 
@@ -2662,7 +2662,7 @@ closer to q1, and closer to 1 means closer to q2.</dd>
 
 <div class="param-desc">
     The interpolated quaternion,
-which will be normalized.
+which will be unit vectors ("normalized" vectors with a length of 1).
 
      (Type:
 <span class="param-type">Array.&lt;Number></span>)
@@ -2796,7 +2796,7 @@ rotations they describe.
 )
 
            </dt><dd>
-           The first quaternion.  Should be normalized.</dd>
+           The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).</dd>
 
         <dt>
 
@@ -2808,7 +2808,7 @@ rotations they describe.
 )
 
            </dt><dd>
-           The second quaternion.  Should be normalized.</dd>
+           The second quaternion.  Should be a unit vector.</dd>
 
         <dt>
 
@@ -2864,7 +2864,7 @@ origin (0,0,0) and points toward a 3D point.)
 )
 
            </dt><dd>
-           A quaternion.  Must be normalized.</dd>
+           A quaternion.  Must be unit vectors ("normalized" vectors with a length of 1).</dd>
 
     </dl>
 
@@ -2953,7 +2953,7 @@ in the form of pitch, yaw, and roll angles.
 )
 
            </dt><dd>
-           A quaternion.  Should be normalized.</dd>
+           A quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).</dd>
 
         <dt>
 
@@ -3746,7 +3746,7 @@ is the same as reversing the sign of each of its components.
 
 <div class="description">
     Returns a normalized version of a 3-element vector.
-When a vector is normalized, the distance from the origin
+When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its length.
@@ -3791,7 +3791,7 @@ by its length.
 
 <div class="description">
     Converts a 3-element vector to its normalized version.
-When a vector is normalized, the distance from the origin
+When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its length.
@@ -4292,7 +4292,7 @@ closer to v1, and closer to 1 means closer to v2.</dd>
 
 <div class="description">
     Returns a normalized version of a 4-element vector.
-When a vector is normalized, the distance from the origin
+When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its length.
@@ -4337,7 +4337,7 @@ by its length.
 
 <div class="description">
     Converts a 4-element vector to its normalized version.
-When a vector is normalized, the distance from the origin
+When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its length.

@@ -322,7 +322,7 @@ return [
 },
 /**
  * Converts a 3-element vector to its normalized version.
- * When a vector is normalized, the distance from the origin
+ * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.vec3length}.
@@ -345,7 +345,7 @@ var x=vec[0];
 },
 /**
  * Converts a 4-element vector to its normalized version.
- * When a vector is normalized, the distance from the origin
+ * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.vec4length}.
@@ -370,7 +370,7 @@ var x=vec[0];
 },
 /**
  * Returns a normalized version of a 3-element vector.
- * When a vector is normalized, the distance from the origin
+ * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.vec3length}.
@@ -383,7 +383,7 @@ return H3DU.Math.vec3normInPlace([vec[0],vec[1],vec[2]]);
 },
 /**
  * Returns a normalized version of a 4-element vector.
- * When a vector is normalized, the distance from the origin
+ * When a vector is normalized, its direction remains the same but the distance from the origin
  * to that vector becomes 1 (unless all its components are 0).
  * A vector is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.vec4length}.
@@ -663,7 +663,7 @@ var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
 * Calculates the angle and axis of rotation for this
 * quaternion. (The axis of rotation is a ray that starts at the
 * origin (0,0,0) and points toward a 3D point.)
-* @param {Array&lt;Number>} a A quaternion.  Must be normalized.
+* @param {Array&lt;Number>} a A quaternion.  Must be unit vectors ("normalized" vectors with a length of 1).
 * @returns {Array&lt;Number>} A 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
@@ -688,11 +688,11 @@ var w=a[3];
  * two 3-element vectors.  The quaternion
  * will describe the rotation required to rotate
  * the ray described in the first vector toward the ray described
- * in the second vector.  The vectors need not be normalized.
+ * in the second vector.  The vectors need not be unit vectors ("normalized" vectors with a length of 1).
  * @param {Array&lt;Number>} vec1 The first 3-element vector.
 * @param {Array&lt;Number>} vec2 The second 3-element vector.
  * @returns {Array&lt;Number>} The generated quaternion, which
- * will be normalized.
+ * will be unit vectors ("normalized" vectors with a length of 1).
  */
 quatFromVectors:function(vec1,vec2){
   "use strict";
@@ -815,7 +815,7 @@ var rollRad,pitchRad,yawRad;
 /**
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
- * @param {Array&lt;Number>} a A quaternion.  Should be normalized.
+ * @param {Array&lt;Number>} a A quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
  * @param {number|null} mode Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
@@ -890,12 +890,12 @@ var c0=a[3];
 /**
  * Does a linear interpolation between two quaternions;
  * returns a new quaternion.
- * @param {Array&lt;Number>} q1 The first quaternion.  Should be normalized.
- * @param {Array&lt;Number>} q2 The second quaternion.  Should be normalized.
+ * @param {Array&lt;Number>} q1 The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
+ * @param {Array&lt;Number>} q2 The second quaternion.  Should be a unit vector.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array&lt;Number>} The interpolated quaternion,
- * which will be normalized.
+ * which will be unit vectors ("normalized" vectors with a length of 1).
 */
 quatNlerp:function(q1,q2,factor){
   "use strict";
@@ -920,8 +920,8 @@ var t1 = 1.0 - factor;
  * returns a new quaternion.
  * This method is useful for smoothly animating between the two
  * rotations they describe.
- * @param {Array&lt;Number>} q1 The first quaternion.  Should be normalized.
- * @param {Array&lt;Number>} q2 The second quaternion.  Should be normalized.
+ * @param {Array&lt;Number>} q1 The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).
+ * @param {Array&lt;Number>} q2 The second quaternion.  Should be a unit vector.
  * @param {Number} factor A value from 0 through 1.  Closer to 0 means
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array&lt;Number>} The interpolated quaternion.
@@ -1109,7 +1109,7 @@ var tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
 * This is usually used to convert a model-view matrix to a matrix
 * for transforming surface normals in order to keep them perpendicular
 * to a surface transformed by the world matrix.  Normals are then
-* transformed by this matrix and then re-normalized.  But if the
+* transformed by this matrix and then converted to unit vectors  ("normalized" vectors with a length of 1).  But if the
 * input matrix uses only rotations, translations, and/or uniform scaling
 * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 * be used instead of the inverse-transpose matrix to transform the normals.
@@ -1904,10 +1904,10 @@ return [cost+mcos*x2, v0+zs, v1-ys, 0, v0-zs, cost+mcos*y2, v2+xs, 0, v1+ys,
 };
 
 /**
-* Normalizes this plane so that its normal is unit
-* length (unless all the normal's components are 0).
+* Normalizes this plane so that its normal is a unit vector (a "normalized" vector with a length of 1),
+* unless all the normal's components are 0.
 * The plane's distance will be divided by the
-* normal's length.
+* current normal's length.
 * @param {Array&lt;Number>} plane A four-element array
 * defining the plane. The first three elements of the array
 * are the X, Y, and Z components of the plane's normal vector, and
@@ -1966,7 +1966,7 @@ return H3DU.Math.planeNormInPlace(plane.slice(0,4));
 * 4-element arrays representing the six clipping planes of the
 * view frustum.  In order, they are the left, right, top,
 * bottom, near, and far clipping planes.  All six planes
-* will be normalized.
+* will be unit vectors ("normalized" vectors with a length of 1).
 */
 H3DU.Math.mat4toFrustumPlanes=function(matrix){
  "use strict";
@@ -2140,7 +2140,7 @@ for(var i=0;i&lt;6;i++){
 H3DU.Math.quatDot=H3DU.Math.vec4dot;
 /**
  * Converts a quaternion to its normalized version.
- * When a quaternion is normalized, the distance from the origin
+ * When a quaternion is normalized, it describes the same orientation but the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
  * by its [length]{@link glmath.H3DU.Math.quatLength}.
