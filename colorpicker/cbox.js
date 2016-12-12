@@ -50,8 +50,7 @@ if(!elem)return null;
  return(null);
 }
 
-function getHeight(o) {
-
+function getHeight(o){
 if(!o)return 0;
   var x=(
     (window.opera&&typeof o.style.pixelHeight!=="undefined")?
@@ -64,8 +63,7 @@ if(!o)return 0;
   }
   return x;
 }
-function setHeight(o,h) {
-
+function setHeight(o,h){
 if(!o)return 0;if(o.clip)
    o.clip.height=h;
   else if(window.opera && typeof o.style.pixelHeight !== "undefined")
@@ -73,8 +71,7 @@ if(!o)return 0;if(o.clip)
   else
    o.style.height=h+"px";
 }
-function getWidth(o) {
-
+function getWidth(o){
 if(!o)return 0;
   var x=(window.opera && typeof o.style.pixelWidth!=="undefined")?
     o.style.pixelWidth:
@@ -85,8 +82,7 @@ if(!o)return 0;
   }
   return x;
 }
-function setWidth(o,w) {
-
+function setWidth(o,w){
 if(!o)return 0;if(o.clip)
    o.clip.width=w;
   else if(window.opera && typeof o.style.pixelWidth !== "undefined")
@@ -95,7 +91,6 @@ if(!o)return 0;if(o.clip)
    o.style.width=w+"px";
 }
 function setPageX(e,x){
-
 if(!e||isNaN(x))return;
  var estyle=e.style;
  if (estyle){
@@ -107,7 +102,6 @@ if(!e||isNaN(x))return;
 }
 
 function setPageY(e,x){
-
 if(!e||isNaN(x))return;
  var estyle=e.style;
  if (estyle){
@@ -118,8 +112,7 @@ if(!e||isNaN(x))return;
  }
 }
 
-function getPageX(o) {
-
+function getPageX(o){
 var x=0;
  if(!o)return 0;
  while(o!==null && typeof o!=="undefined") {
@@ -129,8 +122,7 @@ var x=0;
  }
  return x;
 }
-function getPageY(o) {
-
+function getPageY(o){
 var x=0;
  if(!o)return 0;
   while(o!==null && typeof o!=="undefined") {
@@ -142,7 +134,6 @@ var x=0;
 }
 
 function addListener(o,e,f){
-
 if(!o)return;
   if(e==="mousewheel" && !("onmousewheel" in document))
    e="DOMMouseScroll";
@@ -154,7 +145,6 @@ if(!o)return;
 addListener.bind=function(o,e,f){
 return f;};
 function removeListener(o,e,f){
-
 if(!o)return;
   if(e==="mousewheel" && navigator.userAgent.indexOf("Gecko/")>=0)
    e="DOMMouseScroll";
@@ -174,7 +164,6 @@ if(!o)return;
 
 // Gets the visible rectangle of a Web page
 function getViewport(){
-
  var ret={left:0, top:0, width:0, height:0};
  var d=document;
  var db=document.body||null;
@@ -247,7 +236,6 @@ if(dde&&dde.scrollLeft)
 // constructor.  Members with the same name in the subclass
 // are overridden.
 function subclass(otherClass,newMembers){
-
 var func=function(){
   // call the initialize method (constructor)
   this.initialize.apply(this,arguments);
@@ -290,7 +278,6 @@ function MyClass(name){
 }
 */
 function MethodBinder(obj){
-
 this.methods={};
  this.obj=obj;
  // Returns a method in which the method's arguments
@@ -314,7 +301,6 @@ this.methods={};
 }
 
 (function(window){
-
 var __isMouse=function(eventType){
      return (/(click|mouse|menu|touch)/.test(eventType) || eventType==="DOMMouseScroll");
 };
@@ -451,7 +437,7 @@ var ColorValidator = function() {};
     constructor.SkipWhite = function(str, index, endIndex) {
          while (index < endIndex){
             var c = str.charCodeAt(index);
-            if (c === 32 || c === 13 || c === 9 || c === 10) {
+            if (c === 32 || c === 13 || c === 12 || c=== 9 || c === 10) {
                 ++index;
             } else {
                 break;
@@ -743,11 +729,16 @@ var ColorValidator = function() {};
     constructor.ParseNumber = function(str, index, endIndex) {
         var indexStart = index;
         var tmp = index;
+          var tmp2=0;
         if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, true)) !== indexStart) {
             index = tmp;
             if (index < endIndex && (str.charCodeAt(index) === 46)) {
                 ++index;
                 if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, false)) !== index) {
+          if(index<endIndex && (str.charCodeAt(index)===0x45 || str.charCodeAt(index) === 0x65) &&
+            (tmp2=ColorValidator.ParseInteger(str,index+1,endIndex,true))!==index+1){
+              return tmp2;
+            }
                     return tmp;
                 } else {
                     return index - 1;
@@ -761,6 +752,10 @@ var ColorValidator = function() {};
             if (index < endIndex && (str.charCodeAt(index) === 46)) {
                 ++index;
                 if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, false)) !== index) {
+          if(index<endIndex && (str.charCodeAt(index)===0x45 || str.charCodeAt(index) === 0x65) &&
+            (tmp2=ColorValidator.ParseInteger(str,index+1,endIndex,true))!==index+1){
+              return tmp2;
+            }
                     return tmp;
                 } else {
                     return indexStart;
@@ -811,7 +806,7 @@ var ColorValidator = function() {};
         return (c >= 65 && c <= 70) ? (c + 10 - 65) : ((c >= 97 && c <= 102) ? (c + 10 - 97) : (-1));
     };
     constructor.RgbHex = function(str, hexval, hash) {
-        if ((str) === null || (str).length === 0) {
+        if ((str === null || typeof str === "undefined") || (str).length === 0) {
             return false;
         }
         var slen = str.length;
@@ -854,15 +849,15 @@ var ColorValidator = function() {};
     };
 
     constructor.ColorToRgba = constructor.ColorToRgba = function(x) {
-        if ((x) === null || (x).length === 0) {
+        if ((x === null || typeof x === "undefined") || (x).length === 0) {
             return null;
         }
-        x = x.replace(/^\s+|\s+$/g,"");
+        x = x.replace(/^[\r\n\t \u000c]+|[\r\n\t \u000c]+$/g,"");
         x = x.toLowerCase();
         if (x===("transparent")) {
             return [0, 0, 0, 0];
         }
-        if ((x) === null || (x).length === 0) {
+        if ((x === null || typeof x === "undefined") || (x).length === 0) {
             return null;
         }
         var ret = [0, 0, 0, 0];
@@ -884,7 +879,7 @@ var ColorValidator = function() {};
             return (ColorValidator.Hsla(x, 5, x.length, ret) === x.length) ? ret : null;
         }
         var colors = ColorValidator.ColorToRgbaSetUpNamedColors();
-        if (colors[x] !== null) {
+        if (colors[x] !== null && typeof colors[x]!=="undefined") {
             var colorValue = colors[x];
             ColorValidator.RgbHex(colorValue, ret, false);
             return ret;
@@ -917,8 +912,7 @@ var ColorValidator = function() {};
 
 function colorToRgb(x){
  // don't include rgba or hsla
-
-if(x.indexOf("rgba")===0 || x.indexOf("hsla")===0)return null;
+ if(x.indexOf("rgba")===0 || x.indexOf("hsla")===0)return null;
  var rgba=ColorValidator.ColorToRgba(x);
  if((rgba === null || typeof rgba === "undefined")){
   rgba=ColorValidator.ColorToRgba("#"+x);
@@ -942,7 +936,6 @@ if((x.length>3 && (x[3]===255 || (x[3]===null || typeof x[3]==="undefined"))) ||
 }
 
 function colorRgbaToRgba(value){
-
 var e;
 if((e=(/^([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(value)))!==null){
   return [parseInt(e[1],16),parseInt(e[2],16),parseInt(e[3],16),parseInt(e[4],16)];
@@ -951,7 +944,6 @@ if((e=(/^([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec
 }
 
 function colorArgbToRgba(value){
-
 var e;
 if((e=(/^([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec(value)))!==null){
   return [parseInt(e[2],16),parseInt(e[3],16),parseInt(e[4],16),parseInt(e[1],16)];
@@ -960,7 +952,6 @@ if((e=(/^([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})$/.exec
 }
 
 function rgbToColorRgba(r,g,b,a){
-
 if(!rgbToColorRgba.table){
   rgbToColorRgba.table=[];
   for(var i=0;i<256;i++){
@@ -986,7 +977,6 @@ if(!rgbToColorRgba.table){
 }
 
 function rgbToColorArgb(r,g,b,a){
-
 if((r!==null && typeof r!=="undefined") && (g===null || typeof g==="undefined") && (b===null || typeof b==="undefined")){
   return rgbToColorRgba(r[3],r[0],r[1],r[2]);
  } else {
@@ -995,7 +985,6 @@ if((r!==null && typeof r!=="undefined") && (g===null || typeof g==="undefined") 
 }
 
 function rgbToColorHtml(r,g,b){
-
 if(!rgbToColorRgba.table){
   rgbToColorRgba.table=[];
   for(var i=0;i<256;i++){
@@ -1017,7 +1006,6 @@ if(!rgbToColorRgba.table){
 }
 
 function isRgbDark(rgb){
-
 return((rgb[0]*299)+(rgb[1]*587)+(rgb[2]*114))/1000<=127.5;
 }
 
@@ -1027,7 +1015,7 @@ ColorValidator.ColorToRgba.namedColorsPattern=function(){
  for(var o in nc){
   var v=nc[o];
   if(typeof v==="string"){
-   b[b.length]=o;if(o.indexOf("gray")>=0)b[b.length]=o.replace("gray","grey");
+   b[b.length]=o;
   }
  }
  // for IE10 compatibility, sort by descending length
@@ -1044,7 +1032,6 @@ ColorValidator.ColorToRgba.namedColorsPattern=function(){
 };
 
 function rgbToColorDisplay(rgb){
-
 if(rgb.length===3 || (rgb.length>3 && ((rgb[3]===null || typeof rgb[3]==="undefined") || rgb[3]===255))){
   return rgbToColorHtml(rgb);
  } else {
