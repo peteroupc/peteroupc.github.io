@@ -378,17 +378,17 @@ matrix describes a scaling, the multiplied matrix will
 describe the effect of scaling then translation.</p>
 <p>Matrix multiplication is not commutative; the order
 of multiplying matrices is important.  This multiplication
-behavior in GLMath follows that of OpenGL and is opposite to that in the
+behavior in the HTML 3D Utility Library follows that of OpenGL and is opposite to that in the
 D3DX and DirectXMath libraries.</p>
-<p>The methods mat4multiply, mat4scale, mat4scaleInPlace, mat4translate, and
-mat4rotate involve multiplying 4x4 matrices</p>
+<p>The methods <code>mat4multiply</code>, <code>mat4scale</code>, <code>mat4scaleInPlace</code>, <code>mat4translate</code>, and
+mat4rotate involve multiplying 4x4 matrices.</p>
 <p>Related functions:</p>
 <ul>
 <li><a href="H3DU.Math.html#.mat4multiply">H3DU.Math.mat4multiply()</a> -
 Multiplies two matrices</li>
 </ul>
 <h3>Other Transformations <a id=Other_Transformations></a></h3><p>In all the transformations described above, the last row in the transformation matrix is
-(0, 0, 0, 1).  (For that reason, they are called <em>affine transformations</em>, those that
+(0, 0, 0, 1).  (Such transformations are called <em>affine transformations</em>, those that
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the GLMath library.</p>
 <p>One example of such a transformation is the frustum matrix.  When a 4-element
@@ -398,7 +398,8 @@ vector is transformed with this matrix, its W component is generated as follows:
 </ul>
 <p><small>The graphics system (outside of this JavaScript library) uses this W component
 to help achieve the perspective rendering effect.  Assuming the transformed vector
-is a device coordinate returned by a vertex shader, the system will divide the vector's
+is a set of device coordinates returned by a vertex shader
+(a so-called <em>clip space</em> vector), the system will divide the vector's
 X, Y, and Z by its W to get the vector's <em>normalized device coordinates</em>.</small></p>
 <p>Related functions:</p>
 <ul>

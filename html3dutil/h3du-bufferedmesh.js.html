@@ -31,7 +31,8 @@ at: http://peteroupc.github.io/
 * contexts.
 * @class
 * @alias H3DU.BufferedMesh
-* @param {H3DU.Mesh} mesh A geometric mesh object.
+* @param {H3DU.Mesh|H3DU.MeshBuffer} mesh
+* A geometric mesh object.
 * @param {WebGLRenderingContext|object} context A WebGL context to
 *  create a buffer from, or an object, such as H3DU.Scene3D, that
 * implements a no-argument &lt;code>getContext&lt;/code> method
@@ -96,6 +97,9 @@ H3DU.BufferedMesh.prototype._initialize=function(mesh, context){
   this._lastKnownProgram=null;
   this._attribLocations=[];
 };
+H3DU.BufferedMesh.prototype._toMeshBuffer=function(){
+ return this.smb;
+}
 /** @private */
 H3DU.BufferedMesh.prototype._getVaoExtension=function(context){
  "use strict";
@@ -230,7 +234,7 @@ H3DU.BufferedMesh.prototype.draw=function(program) {
 * @memberof! H3DU.BufferedMesh#
 */
 H3DU.BufferedMesh.prototype.vertexCount=function(){
- "use strict";
+ "use strict"
  return this.smb.numVertices;
 };
 /**
@@ -252,10 +256,9 @@ this.meshes=[];
 /** @private */
 H3DU.BufferedMesh._MeshLoader.prototype.draw=function(meshBuffer,prog){
  "use strict";
-if(meshBuffer instanceof H3DU.BufferedMesh){
-  // NOTE: Using H3DU.BufferedMesh objects directly in Shapes is deprecated
-  meshBuffer.draw(prog);
- } else {
+  if(!(meshBuffer instanceof H3DU.MeshBuffer)){
+  throw new Error("Expected H3DU.MeshBuffer");
+  }
   var context=prog.getContext();
   for(var i=0;i&lt;this.meshes.length;i++){
    var m=this.meshes[i];
@@ -267,7 +270,6 @@ if(meshBuffer instanceof H3DU.BufferedMesh){
   var bm=new H3DU.BufferedMesh(meshBuffer,prog);
   this.meshes.push([meshBuffer,context,bm]);
   bm.draw(prog);
- }
 };
 /** @private */
 H3DU.BufferedMesh._MeshLoader.prototype.dispose=function(){

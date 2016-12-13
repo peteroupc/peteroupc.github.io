@@ -19,7 +19,7 @@
 </header>
 
 <article>
-    <p>The GLMath library, part of the HTML 3D library, is a collection
+    <p>The HTML 3D library includes a collection
 of math functions for working with vectors, matrices, and quaternions.</p>
 <p>Here is an overview of these three data types.</p>
 <h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br></p>
@@ -38,7 +38,8 @@ is used in a 4-element vector function, use 0 as the fourth element.</p>
 <h2>Matrices <a id=Matrices></a></h2><p>A matrix is a 16- or 9-element array that describes a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
-Functions dealing with matrices begin with &quot;mat&quot;.</p>
+Functions dealing with matrices begin with &quot;mat&quot;.
+For more details, see the <a href="tutorial-matrixdetails.html">Matrix Details</a> tutorial.</p>
 <h3>Translation <a id=Translation></a></h3><p>A translation is a shifting of an object's position.</p>
 <p>To create a translation matrix, use <a href="H3DU.Math.html#.mat4translated">H3DU.Math.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves

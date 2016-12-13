@@ -278,12 +278,26 @@ H3DU.Mesh.prototype.merge=function(other){
   if(!H3DU.Mesh._isCompatibleMode(this.currentMode,other.currentMode)){
     throw new Error("Meshes have incompatible types");
   }
-  // TODO: Won't work if meshes have different attributes;
-  // this causes issues in the compositemesh and pathshapes demos
   var thisAttributes=this.attributeBits&amp;H3DU.Mesh.ATTRIBUTES_BITS;
   var otherAttributes=other.attributeBits&amp;H3DU.Mesh.ATTRIBUTES_BITS;
   if(thisAttributes!==otherAttributes) {
-    throw new Error("Meshes have different attributes");
+    var newAttributes=thisAttributes|otherAttributes;
+    // Meshes have different attribute sets, so this will
+    // be slower
+    if(newAttributes==otherAttributes){
+      // If the other's attributes are a subset, just
+      // rebuild the vertices of this mesh
+      this._rebuildVertices(newAttributes);
+    } else {
+      // Copy this mesh to get the correct set of attributes
+      // (this will be quite slow, relatively speaking, if the mesh
+      // is large)
+      var m=new Mesh();
+      m.currentMode=other.currentMode;
+      m._rebuildVertices(otherAttributes);
+      m.merge(other);
+      other=m;
+    }
   }
   var i;
   var oldVertexLength=this.vertexCount();
@@ -540,13 +554,14 @@ var rr=r;
    gg=c[1];
    bb=c[2];
   }
+  //console.log([r,g,b,rr,gg,bb])
   this._rebuildVertices(H3DU.Mesh.COLORS_BIT);
   var stride=this.getStride();
   var colorOffset=H3DU.Mesh._colorOffset(this.attributeBits);
   for(var i=colorOffset;i&lt;this.vertices.length;i+=stride){
-    this.vertices[i]=r;
-    this.vertices[i+1]=g;
-    this.vertices[i+2]=b;
+    this.vertices[i]=rr;
+    this.vertices[i+1]=gg;
+    this.vertices[i+2]=bb;
   }
   return this;
 };

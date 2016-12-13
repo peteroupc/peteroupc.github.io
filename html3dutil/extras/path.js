@@ -1440,7 +1440,7 @@ GraphicsPath._nextAfterWs=function(str,index){
 while(index[0]<str.length){
   var c=str.charCodeAt(index[0]);
   index[0]++;
-  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c)
+  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a)
    continue;
   return c;
  }
@@ -1453,7 +1453,7 @@ var comma=false;
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0]);
   index[0]++;
-  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c){
+  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a){
    havesep=true;
    continue;
   }
@@ -1472,7 +1472,7 @@ var comma=false;
  while(index[0]<str.length){
   var c=str.charCodeAt(index[0]);
   index[0]++;
-  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a || c === 0x0c)
+  if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a)
    continue;
   if(!comma && c === 0x2c){
    comma=true;
@@ -1490,11 +1490,6 @@ var oldindex=index[0];
  return ret;
 };
 /** @private */
-GraphicsPath._notFinite=function(n){
-return isNaN(n) || n===Number.POSITIVE_INFINITY ||
-   n===Number.NEGATIVE_INFINITY;
-};
-/** @private */
 GraphicsPath._nextNumber=function(str,index,afterSep){
 var oldindex=index[0];
  var c=(afterSep) ?
@@ -1507,14 +1502,14 @@ var oldindex=index[0];
  var ret;
  if(c === 0x2e)dot=true;
  else if(c>=0x30 && c<=0x39)digit=true;
- else if(c!==0x2d && c!==0x2b){
+ else if(c!==0x2d && c!==0x2b){ // plus or minus
     index[0]=oldindex;
     return null;
    }
  while(index[0]<str.length){
   c=str.charCodeAt(index[0]);
   index[0]++;
-  if(c === 0x2e){
+  if(c === 0x2e){ // dot
    if(dot){
     index[0]=oldindex;
     return null;
@@ -1535,11 +1530,14 @@ var oldindex=index[0];
     return null;
    }
    index[0]--;
+   // console.log(str.substr(startIndex,index[0]-startIndex))
    ret=parseFloat(str.substr(startIndex,index[0]-startIndex));
-   if(GraphicsPath._notFinite(ret)){
-    index[0]=oldindex;
+   if(Number.isNaN(ret)){
+    index[0]=ret;
     return null;
    }
+   if(ret===Number.POSITIVE_INFINITY||ret===Number.NEGATIVE_INFINITY)
+    return 0;
    return ret;
   }
  }
@@ -1567,11 +1565,14 @@ var oldindex=index[0];
     return null;
     }
     index[0]--;
-    ret=parseFloat(str.substr(startIndex,index[0]-startIndex));
-    if(GraphicsPath._notFinite(ret)){
+   ret=parseFloat(str.substr(startIndex,index[0]-startIndex));
+    // console.log([str.substr(startIndex,index[0]-startIndex),ret])
+    if(Number.isNaN(ret)){
      index[0]=oldindex;
      return null;
     }
+    if(ret===Number.POSITIVE_INFINITY||ret===Number.NEGATIVE_INFINITY)
+     return 0;
     return ret;
    }
   }
@@ -1585,11 +1586,14 @@ var oldindex=index[0];
     return null;
   }
  }
- ret=parseFloat(str.substr(startIndex,str.length-startIndex));
- if(GraphicsPath._notFinite(ret)){
+    ret=parseFloat(str.substr(startIndex,str.length-startIndex));
+ // console.log([str.substr(startIndex,str.length-startIndex),ret])
+if(Number.isNaN(ret)){
   index[0]=oldindex;
   return null;
  }
+ if(ret===Number.POSITIVE_INFINITY||ret===Number.NEGATIVE_INFINITY)
+  return 0;
  return ret;
 };
 
@@ -1723,6 +1727,7 @@ var index=[0];
  var endx,endy;
  var sep,curx,cury,x,y,curpt,x2,y2,xcp,ycp;
  while(!failed && index[0]<str.length){
+  // console.log("////"+[index,str.substr(index[0],30)])
   var c=GraphicsPath._nextAfterWs(str,index);
   if(!started && c!==0x4d && c!==0x6d){
    // not a move-to command when path
@@ -1739,12 +1744,14 @@ var index=[0];
    case 0x4d:case 0x6d:{ // 'M', 'm'
     sep=false;
     while(true){
-     curx=(c === 0x6d) ? ret.endPos[0] : 0;
+      // console.log("////"+[index,str.substr(index[0],30)])
+      curx=(c === 0x6d) ? ret.endPos[0] : 0;
      cury=(c === 0x6d) ? ret.endPos[1] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
      if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
      y=GraphicsPath._nextNumber(str,index,true);
      if((y===null || typeof y==="undefined")){ failed=true;break; }
+     // console.log([x,y])
      if(sep)ret.lineTo(curx+x,cury+y);
      else ret.moveTo(curx+x,cury+y);
      sep=true;

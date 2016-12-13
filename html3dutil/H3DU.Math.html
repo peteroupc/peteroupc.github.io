@@ -72,7 +72,7 @@ See the tutorial "<a href="tutorial-glmath.html">GLMath Math Library</a>" for mo
 
     <h4 style="margin-bottom:0px" id=".mat3transform"><span style="font-weight:lighter">(static) </span>mat3transform<span class="signature">(mat, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1264">line 1264</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1266">line 1266</a>
      </i></small></p>
 
 <div class="description">
@@ -197,12 +197,12 @@ point, set Z to 1.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4frustum"><span style="font-weight:lighter">(static) </span>mat4frustum<span class="signature">(l, r, b, t, near, far)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1620">line 1620</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1622">line 1622</a>
      </i></small></p>
 
 <div class="description">
     Returns a 4x4 matrix representing a perspective projection
-in the form of a view frustum, or the limits in the camera's view.<p>
+in the form of a view frustum, or the limits in the "camera"'s view.<p>
 This method assumes a right-handed coordinate system, such as
 in OpenGL. To adjust the result of this method to a left-handed system,
 such as in legacy Direct3D, reverse the sign of the 9th, 10th, 11th, and 12th
@@ -275,10 +275,10 @@ clipping plane meets the near clipping plane.</dd>
 )
 
            </dt><dd>
-           The distance from the camera to
+           The distance from the "camera" to
 the near clipping plane. Objects closer than this distance won't be
 seen.<p>This value should not be 0 or less, and should be set to the highest distance
-from the camera that the application can afford to clip out for being too
+from the "camera" that the application can afford to clip out for being too
 close, for example, 0.5, 1, or higher.</dd>
 
         <dt>
@@ -291,7 +291,7 @@ close, for example, 0.5, 1, or higher.</dd>
 )
 
            </dt><dd>
-           The distance from the camera to
+           The distance from the "camera" to
 the far clipping plane. Objects beyond this distance will be too far
 to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 is as small as the application can accept.<p>
@@ -342,7 +342,7 @@ to the far plane will have identical depth values.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4inverseTranspose3"><span style="font-weight:lighter">(static) </span>mat4inverseTranspose3<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1104">line 1104</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1106">line 1106</a>
      </i></small></p>
 
 <div class="description">
@@ -396,7 +396,7 @@ can't be inverted, returns the identity 3x3 matrix.
      </i></small></p>
 
 <div class="description">
-    Finds the inverse of a 4x4 matrix.
+    Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
 </div>
 
     <h5>Parameters:</h5>
@@ -475,7 +475,7 @@ Returns the identity matrix if this matrix is not invertible.
 
     <h4 style="margin-bottom:0px" id=".mat4lookat"><span style="font-weight:lighter">(static) </span>mat4lookat<span class="signature">(viewerPos, lookingAt<sub style="font-weight:lighter">opt</sub>, up<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1395">line 1395</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1397">line 1397</a>
      </i></small></p>
 
 <div class="description">
@@ -502,7 +502,7 @@ such as in legacy Direct3D, reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11t
 
            </dt><dd>
            A 3-element vector specifying
-the camera position in world space.</dd>
+the "camera" position in world space.</dd>
 
         <dt>
 
@@ -517,7 +517,7 @@ the camera position in world space.</dd>
 
            </dt><dd>
            A 3-element vector specifying
-the point in world space that the camera is looking at.  May be null or omitted,
+the point in world space that the "camera" is looking at.  May be null or omitted,
 in which case the default is the coordinates (0,0,0).</dd>
 
         <dt>
@@ -533,12 +533,12 @@ in which case the default is the coordinates (0,0,0).</dd>
 
            </dt><dd>
            A 3-element vector specifying
-the direction from the center of the camera to its top. This parameter may
+the direction from the center of the "camera" to its top. This parameter may
 be null or omitted, in which case the default is the vector (0, 1, 0),
-the vector that results when the camera is held upright.  This
+the vector that results when the "camera" is held upright.  This
 vector must not point in the same or opposite direction as
-the camera's view direction. (For best results, rotate the vector (0, 1, 0)
-so it points perpendicular to the camera's view direction.)</dd>
+the "camera"'s view direction. (For best results, rotate the vector (0, 1, 0)
+so it points perpendicular to the "camera"'s view direction.)</dd>
 
     </dl>
 
@@ -558,7 +558,7 @@ so it points perpendicular to the camera's view direction.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4multiply"><span style="font-weight:lighter">(static) </span>mat4multiply<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1681">line 1681</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1683">line 1683</a>
      </i></small></p>
 
 <div class="description">
@@ -616,7 +616,7 @@ the effect of scaling then translation.
 
     <h4 style="margin-bottom:0px" id=".mat4ortho"><span style="font-weight:lighter">(static) </span>mat4ortho<span class="signature">(l, r, b, t, n, f)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1446">line 1446</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1448">line 1448</a>
      </i></small></p>
 
 <div class="description">
@@ -695,7 +695,7 @@ they increase upward.)</dd>
 )
 
            </dt><dd>
-           Distance from the camera to the near clipping
+           Distance from the "camera" to the near clipping
 plane.  A positive value means the plane is in front of the viewer.</dd>
 
         <dt>
@@ -708,7 +708,7 @@ plane.  A positive value means the plane is in front of the viewer.</dd>
 )
 
            </dt><dd>
-           Distance from the camera to the far clipping
+           Distance from the "camera" to the far clipping
 plane.  A positive value means the plane is in front of the viewer.
 (Note that n can be greater than f or vice versa.)  The absolute difference
 between n and f should be as small as the application can accept.</dd>
@@ -731,7 +731,7 @@ between n and f should be as small as the application can accept.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4ortho2d"><span style="font-weight:lighter">(static) </span>mat4ortho2d<span class="signature">(l, r, b, t)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1505">line 1505</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1507">line 1507</a>
      </i></small></p>
 
 <div class="description">
@@ -815,7 +815,7 @@ they increase upward.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4ortho2dAspect"><span style="font-weight:lighter">(static) </span>mat4ortho2dAspect<span class="signature">(l, r, b, t, aspect)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1531">line 1531</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1533">line 1533</a>
      </i></small></p>
 
 <div class="description">
@@ -917,7 +917,7 @@ they increase upward.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4orthoAspect"><span style="font-weight:lighter">(static) </span>mat4orthoAspect<span class="signature">(l, r, b, t, n, f, aspect)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1561">line 1561</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1563">line 1563</a>
      </i></small></p>
 
 <div class="description">
@@ -996,7 +996,7 @@ they increase upward.)</dd>
 )
 
            </dt><dd>
-           Distance from the camera to the near clipping
+           Distance from the "camera" to the near clipping
 plane.  A positive value means the plane is in front of the viewer.</dd>
 
         <dt>
@@ -1009,7 +1009,7 @@ plane.  A positive value means the plane is in front of the viewer.</dd>
 )
 
            </dt><dd>
-           Distance from the camera to the far clipping
+           Distance from the "camera" to the far clipping
 plane.  A positive value means the plane is in front of the viewer.
 (Note that n can be greater than f or vice versa.)  The absolute difference
 between n and f should be as small as the application can accept.</dd>
@@ -1045,7 +1045,7 @@ between n and f should be as small as the application can accept.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4perspective"><span style="font-weight:lighter">(static) </span>mat4perspective<span class="signature">(fovY, aspectRatio, near, far)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1365">line 1365</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1367">line 1367</a>
      </i></small></p>
 
 <div class="description">
@@ -1098,10 +1098,10 @@ can be implemented by raising this value, and zooming in by lowering it.)</dd>
 )
 
            </dt><dd>
-           The distance from the camera to
+           The distance from the "camera" to
 the near clipping plane. Objects closer than this distance won't be
 seen.<p>This value should not be 0 or less, and should be set to the highest distance
-from the camera that the application can afford to clip out for being too
+from the "camera" that the application can afford to clip out for being too
 close, for example, 0.5, 1, or higher.</dd>
 
         <dt>
@@ -1114,7 +1114,7 @@ close, for example, 0.5, 1, or higher.</dd>
 )
 
            </dt><dd>
-           The distance from the camera to
+           The distance from the "camera" to
 the far clipping plane. Objects beyond this distance will be too far
 to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 is as small as the application can accept.<p>
@@ -1142,7 +1142,7 @@ to the far plane will have identical depth values.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4perspectiveHorizontal"><span style="font-weight:lighter">(static) </span>mat4perspectiveHorizontal<span class="signature">(fovX, aspectRatio, near, far)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1484">line 1484</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1486">line 1486</a>
      </i></small></p>
 
 <div class="description">
@@ -1196,10 +1196,10 @@ can be implemented by raising this value, and zooming in by lowering it.)</dd>
 )
 
            </dt><dd>
-           The distance from the camera to
+           The distance from the "camera" to
 the near clipping plane. Objects closer than this distance won't be
 seen.<p>This value should not be 0 or less, and should be set to the highest distance
-from the camera that the application can afford to clip out for being too
+from the "camera" that the application can afford to clip out for being too
 close, for example, 0.5, 1, or higher.</dd>
 
         <dt>
@@ -1212,7 +1212,7 @@ close, for example, 0.5, 1, or higher.</dd>
 )
 
            </dt><dd>
-           The distance from the camera to
+           The distance from the "camera" to
 the far clipping plane. Objects beyond this distance will be too far
 to be seen.<p>This value should be greater than "near" and be set so that the ratio of "far" to "near"
 is as small as the application can accept.<p>
@@ -1240,7 +1240,7 @@ to the far plane will have identical depth values.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4rotate"><span style="font-weight:lighter">(static) </span>mat4rotate<span class="signature">(mat, angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1738">line 1738</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1740">line 1740</a>
      </i></small></p>
 
 <div class="description">
@@ -1348,7 +1348,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4rotated"><span style="font-weight:lighter">(static) </span>mat4rotated<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1836">line 1836</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1838">line 1838</a>
      </i></small></p>
 
 <div class="description">
@@ -1443,7 +1443,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4scale"><span style="font-weight:lighter">(static) </span>mat4scale<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1152">line 1152</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1154">line 1154</a>
      </i></small></p>
 
 <div class="description">
@@ -1514,7 +1514,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4scaled"><span style="font-weight:lighter">(static) </span>mat4scaled<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1181">line 1181</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1183">line 1183</a>
      </i></small></p>
 
 <div class="description">
@@ -1585,7 +1585,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4scaleInPlace"><span style="font-weight:lighter">(static) </span>mat4scaleInPlace<span class="signature">(mat, v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1644">line 1644</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1646">line 1646</a>
      </i></small></p>
 
 <div class="description">
@@ -1669,7 +1669,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4toMat3"><span style="font-weight:lighter">(static) </span>mat4toMat3<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1057">line 1057</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1059">line 1059</a>
      </i></small></p>
 
 <div class="description">
@@ -1711,7 +1711,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4transform"><span style="font-weight:lighter">(static) </span>mat4transform<span class="signature">(mat, v, vy, vz, vw)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1203">line 1203</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1205">line 1205</a>
      </i></small></p>
 
 <div class="description">
@@ -1808,7 +1808,7 @@ point, set Z and W to 1.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4transformVec3"><span style="font-weight:lighter">(static) </span>mat4transformVec3<span class="signature">(mat, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1235">line 1235</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1237">line 1237</a>
      </i></small></p>
 
 <div class="description">
@@ -1892,7 +1892,7 @@ point, set Z to 1.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4translate"><span style="font-weight:lighter">(static) </span>mat4translate<span class="signature">(mat, v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1315">line 1315</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1317">line 1317</a>
      </i></small></p>
 
 <div class="description">
@@ -1975,7 +1975,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4translated"><span style="font-weight:lighter">(static) </span>mat4translated<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1290">line 1290</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1292">line 1292</a>
      </i></small></p>
 
 <div class="description">
@@ -2046,7 +2046,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4transpose"><span style="font-weight:lighter">(static) </span>mat4transpose<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1070">line 1070</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1072">line 1072</a>
      </i></small></p>
 
 <div class="description">
@@ -2087,7 +2087,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4transposeInPlace"><span style="font-weight:lighter">(static) </span>mat4transposeInPlace<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1080">line 1080</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1082">line 1082</a>
      </i></small></p>
 
 <div class="description">
@@ -2129,12 +2129,13 @@ a new matrix.
 
     <h4 style="margin-bottom:0px" id=".quatConjugate"><span style="font-weight:lighter">(static) </span>quatConjugate<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line596">line 596</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line597">line 597</a>
      </i></small></p>
 
 <div class="description">
-    Inverts the rotation given in this quaternion without normalizing it;
-returns a new quaternion.
+    Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
+but without changing its length (the return value won't necessarily be a unit vector, a "normalized" vector with a length of 1).
+Returns a new quaternion.
 </div>
 
     <h5>Parameters:</h5>
@@ -2171,7 +2172,7 @@ returns a new quaternion.
 
     <h4 style="margin-bottom:0px" id=".quatFromAxisAngle"><span style="font-weight:lighter">(static) </span>quatFromAxisAngle<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line712">line 712</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line714">line 714</a>
      </i></small></p>
 
 <div class="description">
@@ -2268,7 +2269,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id=".quatFromMat4"><span style="font-weight:lighter">(static) </span>quatFromMat4<span class="signature">(m)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line999">line 999</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1001">line 1001</a>
      </i></small></p>
 
 <div class="description">
@@ -2311,7 +2312,7 @@ The results are undefined if the matrix includes shearing.
 
     <h4 style="margin-bottom:0px" id=".quatFromTaitBryan"><span style="font-weight:lighter">(static) </span>quatFromTaitBryan<span class="signature">(pitchDegrees, yawDegrees, rollDegrees, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line763">line 763</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line765">line 765</a>
      </i></small></p>
 
 <div class="description">
@@ -2405,7 +2406,7 @@ described as the effect of a roll, then pitch, then yaw (each rotation around th
 
     <h4 style="margin-bottom:0px" id=".quatFromVectors"><span style="font-weight:lighter">(static) </span>quatFromVectors<span class="signature">(vec1, vec2)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line681">line 681</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line683">line 683</a>
      </i></small></p>
 
 <div class="description">
@@ -2478,12 +2479,13 @@ will be unit vectors ("normalized" vectors with a length of 1).
 
     <h4 style="margin-bottom:0px" id=".quatInvert"><span style="font-weight:lighter">(static) </span>quatInvert<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line605">line 605</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line607">line 607</a>
      </i></small></p>
 
 <div class="description">
-    Inverts the rotation given in this quaternion;
-returns a new quaternion.
+    Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
+and converts this quaternion to a unit vector (a "normalized" vector with a length of 1).
+Returns a new quaternion.
 </div>
 
     <h5>Parameters:</h5>
@@ -2520,7 +2522,7 @@ returns a new quaternion.
 
     <h4 style="margin-bottom:0px" id=".quatIsIdentity"><span style="font-weight:lighter">(static) </span>quatIsIdentity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line614">line 614</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line616">line 616</a>
      </i></small></p>
 
 <div class="description">
@@ -2543,7 +2545,7 @@ returns a new quaternion.
 
     <h4 style="margin-bottom:0px" id=".quatMultiply"><span style="font-weight:lighter">(static) </span>quatMultiply<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1708">line 1708</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1710">line 1710</a>
      </i></small></p>
 
 <div class="description">
@@ -2603,7 +2605,7 @@ multiplications can cause rounding errors.
 
     <h4 style="margin-bottom:0px" id=".quatNlerp"><span style="font-weight:lighter">(static) </span>quatNlerp<span class="signature">(q1, q2, factor)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line884">line 884</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line886">line 886</a>
      </i></small></p>
 
 <div class="description">
@@ -2671,7 +2673,7 @@ which will be unit vectors ("normalized" vectors with a length of 1).
 
     <h4 style="margin-bottom:0px" id=".quatRotate"><span style="font-weight:lighter">(static) </span>quatRotate<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line968">line 968</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line970">line 970</a>
      </i></small></p>
 
 <div class="description">
@@ -2772,7 +2774,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id=".quatSlerp"><span style="font-weight:lighter">(static) </span>quatSlerp<span class="signature">(q1, q2, factor)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line913">line 913</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line915">line 915</a>
      </i></small></p>
 
 <div class="description">
@@ -2841,7 +2843,7 @@ closer to q1, and closer to 1 means closer to q2.</dd>
 
     <h4 style="margin-bottom:0px" id=".quatToAxisAngle"><span style="font-weight:lighter">(static) </span>quatToAxisAngle<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line658">line 658</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line660">line 660</a>
      </i></small></p>
 
 <div class="description">
@@ -2889,7 +2891,7 @@ in a clockwise direction for left-handed systems.
 
     <h4 style="margin-bottom:0px" id=".quatToMat4"><span style="font-weight:lighter">(static) </span>quatToMat4<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line624">line 624</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line626">line 626</a>
      </i></small></p>
 
 <div class="description">
@@ -2931,7 +2933,7 @@ described by this quaternion.
 
     <h4 style="margin-bottom:0px" id=".quatToTaitBryan"><span style="font-weight:lighter">(static) </span>quatToTaitBryan<span class="signature">(a, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line815">line 815</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line817">line 817</a>
      </i></small></p>
 
 <div class="description">
@@ -2997,7 +2999,7 @@ in a clockwise direction for left-handed systems.
 
     <h4 style="margin-bottom:0px" id=".quatTransform"><span style="font-weight:lighter">(static) </span>quatTransform<span class="signature">(q, v)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line982">line 982</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line984">line 984</a>
      </i></small></p>
 
 <div class="description">

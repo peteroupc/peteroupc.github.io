@@ -23,23 +23,27 @@
  *  @class
  * @alias H3DU.Shape
 * @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.
-* For {@link H3DU.Mesh} objects, the shapeparam {H3DU.Material}
+* Cannot be null. For {@link H3DU.Mesh} objects, the {@link H3DU.Material}
  * created will use the mesh in its current state and won't
  * track future changes.  &lt;i>Using {@link H3DU.BufferedMesh} objects as the parameter
  * is deprecated.&lt;/i>
   */
 H3DU.Shape = function(mesh){
   "use strict";
-if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
+  if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
   if(mesh instanceof H3DU.Mesh){
-   this.bufferedMesh=new H3DU.MeshBuffer(mesh);
-  } else {
-   if(!H3DU.Shape._bufferedMeshWarning &amp;&amp; mesh instanceof H3DU.BufferedMesh){
+   this.meshBuffer=new H3DU.MeshBuffer(mesh);
+  } else if(mesh instanceof H3DU.BufferedMesh){
+   if(!H3DU.Shape._meshBufferWarning){
     console.warn("Using an H3DU.BufferedMesh in H3DU.Shape objects is deprecated.");
-    // TODO: Convert to MeshBuffer
-    H3DU.Shape._bufferedMeshWarning=true;
+    H3DU.Shape._meshBufferWarning=true;
    }
-   this.bufferedMesh=mesh;
+   this.meshBuffer=mesh._toMeshBuffer();
+  } else {
+   this.meshBuffer=mesh;
+  }
+  if(!(this.meshBuffer instanceof H3DU.MeshBuffer)){
+    throw new Error("Unsupported data type for mesh parameter (must be MeshBuffer)");
   }
   this.transform=new H3DU.Transform();
   this.material=new H3DU.Material();
@@ -50,11 +54,10 @@ if((mesh===null || typeof mesh==="undefined"))throw new Error("mesh is null");
 H3DU.Shape.prototype._hasColorAttr=function(){
   "use strict";
 // TODO: Maybe use better approach
-var bm=this.bufferedMesh;
-  return bm &amp;&amp; bm instanceof H3DU.MeshBuffer &amp;&amp; bm._getAttribute("colorAttr");
+ return !!this.meshBuffer._getAttribute("colorAttr");
 };
 /** @private */
-H3DU.Shape._bufferedMeshWarning=false;
+H3DU.Shape._meshBufferWarning=false;
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
@@ -63,7 +66,7 @@ H3DU.Shape._bufferedMeshWarning=false;
 */
 H3DU.Shape.prototype.vertexCount=function(){
  "use strict";
-return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
+return (this.meshBuffer) ? this.meshBuffer.vertexCount() : 0;
 };
 /**
 * Gets the number of primitives (triangles, lines,
@@ -73,7 +76,7 @@ return (this.bufferedMesh) ? this.bufferedMesh.vertexCount() : 0;
 */
 H3DU.Shape.prototype.primitiveCount=function(){
  "use strict";
-return (this.bufferedMesh) ? this.bufferedMesh.primitiveCount() : 0;
+return (this.meshBuffer) ? this.meshBuffer.primitiveCount() : 0;
 };
 /**
  * Not documented yet.
@@ -206,7 +209,7 @@ this.material=material;
 */
 H3DU.Shape.prototype.copy=function(){
  "use strict";
-var ret=new H3DU.Shape(this.bufferedMesh);
+var ret=new H3DU.Shape(this.meshBuffer);
  ret.material=this.material.copy();
  ret.transform=this.getTransform().copy();
  return ret;
@@ -225,12 +228,10 @@ return this.transform;
 */
 H3DU.Shape.prototype.getBounds=function(){
  "use strict";
-if(!this.bufferedMesh){
+if(!this.meshBuffer){
   return [0,0,0,-1,-1,-1];
  }
- var bounds=(this.bufferedMesh.getBounds) ?
-   this.bufferedMesh.getBounds() :
-   this.bufferedMesh._getBounds();
+ var bounds=this.meshBuffer.getBounds();
  var matrix=this.getMatrix();
  if(!H3DU.Math.mat4isIdentity(matrix)){
   var mn=H3DU.Math.mat4transformVec3(matrix,bounds[0],bounds[1],bounds[2]);
@@ -250,7 +251,7 @@ if(!this.bufferedMesh){
 /** @private */
 H3DU.Shape.prototype.isCulled=function(frustum){
  "use strict";
-if(!this.bufferedMesh||!this.visible)return true;
+if(!this.meshBuffer||!this.visible)return true;
  return !H3DU.Math.frustumHasBox(frustum,this.getBounds());
 };
 /**
