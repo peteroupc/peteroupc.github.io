@@ -71,8 +71,18 @@ H3DU.MeshBuffer=function(mesh){
    this.attributes.push(["bitangent",o,vertices,3,stride]);
   }
 };
-
-H3DU.MeshBuffer.prototype.setAttribute=function(name,buffer,startIndex,countPerVertex,stride){
+/**
+ * Not documented yet.
+ * @param {*} name
+ * @param {*} buffer
+ * @param {*} startIndex
+ * @param {*} countPerVertex
+ * @param {*} stride
+ * @memberof! H3DU.MeshBuffer#
+*/
+H3DU.MeshBuffer.prototype.setAttribute=function(
+  name,buffer,startIndex,countPerVertex,stride
+){
  "use strict";
 if(buffer.constructor===Array){
   buffer=new Float32Array(buffer);

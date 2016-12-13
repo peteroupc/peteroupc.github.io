@@ -22,13 +22,13 @@
 * @alias H3DU.ShapeGroup
 */
 H3DU.ShapeGroup = function(){
+ "use strict";
  /** List of shapes contained in this group.
  * This property should only be used to access properties
  * and call methods on each shape, and not to add, remove
  * or replace shapes directly.
  * @readonly
  */
- "use strict";
 this.shapes=[];
  this.parent=null;
  this.visible=true;

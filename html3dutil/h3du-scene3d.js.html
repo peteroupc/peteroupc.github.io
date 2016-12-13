@@ -436,7 +436,7 @@ return new H3DU.FrameBuffer(this.context,
 };
 /**
  * Gets the current projection matrix for this scene.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use H3DU.Batch3D instead. To get the view matrix of a Batch3D, call its getProjectionMatrix method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Array&lt;Number>} Return value.
 * @memberof! H3DU.Scene3D#
 */
@@ -450,7 +450,7 @@ return this._subScene._projectionMatrix.slice(0,16);
 };
 /**
  * Gets the current view matrix for this scene.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Use H3DU.Batch3D instead. To get the view matrix of a Batch3D, call its getViewMatrix method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @returns {Array&lt;Number>} Return value.
 * @memberof! H3DU.Scene3D#
 */
