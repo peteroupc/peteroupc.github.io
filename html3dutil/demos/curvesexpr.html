@@ -111,7 +111,7 @@ function updateMesh(){
     )
     if(!cs.evaluate)return new H3DU.Mesh()
     document.getElementById("sourceCode").value=cs.getCode();
-   return makeMesh(new CurveTube(cs),70);
+   return makeMesh(new H3DU.CurveTube(cs),70);
     }
     default:
    return new H3DU.Mesh();

@@ -21,27 +21,27 @@
 /*
   Polyfills
 */
-if(!window.requestAnimationFrame){
- window.requestAnimationFrame=window.mozRequestAnimationFrame ||
+if(!window.requestAnimationFrame) {
+  window.requestAnimationFrame = window.mozRequestAnimationFrame ||
     window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
- if(!window.requestAnimationFrame){
-  window.requestAnimationFrame=function(func){
-   "use strict";
-window.setTimeout(function(){
-    func(window.performance.now());
-   },17);
+  if(!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function(func) {
+      "use strict";
+      window.setTimeout(function() {
+        func(window.performance.now());
+      }, 17);
+    };
+  }
+}
+if(!window.performance) {
+  window.performance = {};
+}
+if(!window.performance.now) {
+  window.performance.now = function() {
+    "use strict";
+    return new Date().getTime() * 1000 - window.performance._startTime;
   };
- }
-}
-if(!window.performance){
- window.performance={};
-}
-if(!window.performance.now){
- window.performance.now=function(){
-   "use strict";
-return (new Date().getTime()*1000)-window.performance._startTime;
- };
- window.performance._startTime=new Date().getTime()*1000;
+  window.performance._startTime = new Date().getTime() * 1000;
 }
 
 /**
@@ -53,7 +53,7 @@ return (new Date().getTime()*1000)-window.performance._startTime;
 * @namespace
 * @alias H3DU
 */
-var H3DU={
+var H3DU = {
 /**
 * This method will call a function once before returning,
 * and queue requests to call that function once per frame,
@@ -63,15 +63,15 @@ var H3DU={
 * takes one parameter, "time", which is the number of
 * milliseconds since the page was loaded.
 */
-"renderLoop":function(func){
-  "use strict";
-func(window.performance.now());
-  var selfRefFunc=function(time){
-   window.requestAnimationFrame(selfRefFunc);
-   func(time);
-  };
-  window.requestAnimationFrame(selfRefFunc);
-},
+  "renderLoop":function(func) {
+    "use strict";
+    func(window.performance.now());
+    var selfRefFunc = function(time) {
+      window.requestAnimationFrame(selfRefFunc);
+      func(time);
+    };
+    window.requestAnimationFrame(selfRefFunc);
+  },
 /**
 * Creates an HTML canvas element, optionally appending
 * it to an existing HTML element.
@@ -90,28 +90,28 @@ func(window.performance.now());
 * This parameter can't be a negative number.
 * @returns {HTMLCanvasElement} The resulting canvas element.
 */
-"createCanvasElement":function(parent, width, height){
- "use strict";
-var canvas=document.createElement("canvas");
- if(parent){
-  parent.appendChild(canvas);
- }
- if((width===null || typeof width==="undefined")){
-  canvas.width=Math.ceil(canvas.clientWidth)+"";
- } else if(width&lt;0){
-  throw new Error("width negative");
- } else {
-  canvas.width=Math.ceil(width)+"";
- }
- if((height===null || typeof height==="undefined")){
-  canvas.height=Math.ceil(canvas.clientHeight)+"";
- } else if(height&lt;0){
-  throw new Error("height negative");
- } else {
-  canvas.height=Math.ceil(height)+"";
- }
- return canvas;
-},
+  "createCanvasElement":function(parent, width, height) {
+    "use strict";
+    var canvas = document.createElement("canvas");
+    if(parent) {
+      parent.appendChild(canvas);
+    }
+    if(width === null || typeof width === "undefined") {
+      canvas.width = Math.ceil(canvas.clientWidth) + "";
+    } else if(width &lt; 0) {
+      throw new Error("width negative");
+    } else {
+      canvas.width = Math.ceil(width) + "";
+    }
+    if(height === null || typeof height === "undefined") {
+      canvas.height = Math.ceil(canvas.clientHeight) + "";
+    } else if(height &lt; 0) {
+      throw new Error("height negative");
+    } else {
+      canvas.height = Math.ceil(height) + "";
+    }
+    return canvas;
+  },
 /**
 * Creates a 3D rendering context from an HTML canvas element,
 * falling back to a 2D context if that fails.
@@ -121,44 +121,59 @@ var canvas=document.createElement("canvas");
 * if an error occurred in creating the context. Returns null if "canvasElement"
 * is null or not an HTML canvas element.
 */
-"get3DOr2DContext":function(canvasElement){
-  "use strict";
-if(!canvasElement)return null;
-  if(!canvasElement.getContext)return null;
-  var context=null;
-  var options={
-"preserveDrawingBuffer":true,
-    "alpha":false
-};
-  if(window.devicePixelRatio &amp;&amp; window.devicePixelRatio>1){
-   options.antialias=false;
-  } else {
-   options.antialias=true;
-  }
-  try { context=canvasElement.getContext("webgl", options);
-  } catch(ex) { context=null; }
-  if(!context){
-    try { context=canvasElement.getContext("experimental-webgl", options);
-    } catch(ex) { context=null; }
-  }
-  if(!context){
-    try { context=canvasElement.getContext("moz-webgl", options);
-    } catch(ex) { context=null; }
-  }
-  if(!context){
-    try { context=canvasElement.getContext("webkit-3d", options);
-    } catch(ex) { context=null; }
-  }
-  if(!context){
-    try { context=canvasElement.getContext("2d", options);
-    } catch(ex) { context=null; }
-  }
-  if(H3DU.is3DContext(context)){
-   context.getExtension("OES_element_index_uint");
-   context.getExtension("OES_standard_derivatives");
-  }
-  return context;
-},
+  "get3DOr2DContext":function(canvasElement) {
+    "use strict";
+    if(!canvasElement)return null;
+    if(!canvasElement.getContext)return null;
+    var context = null;
+    var options = {
+      "preserveDrawingBuffer":true,
+      "alpha":false
+    };
+    if(window.devicePixelRatio &amp;&amp; window.devicePixelRatio > 1) {
+      options.antialias = false;
+    } else {
+      options.antialias = true;
+    }
+    try {
+      context = canvasElement.getContext("webgl", options);
+    } catch(ex) {
+      context = null;
+    }
+    if(!context) {
+      try {
+        context = canvasElement.getContext("experimental-webgl", options);
+      } catch(ex) {
+        context = null;
+      }
+    }
+    if(!context) {
+      try {
+        context = canvasElement.getContext("moz-webgl", options);
+      } catch(ex) {
+        context = null;
+      }
+    }
+    if(!context) {
+      try {
+        context = canvasElement.getContext("webkit-3d", options);
+      } catch(ex) {
+        context = null;
+      }
+    }
+    if(!context) {
+      try {
+        context = canvasElement.getContext("2d", options);
+      } catch(ex) {
+        context = null;
+      }
+    }
+    if(H3DU.is3DContext(context)) {
+      context.getExtension("OES_element_index_uint");
+      context.getExtension("OES_standard_derivatives");
+    }
+    return context;
+  },
 /**
 * Creates a 3D rendering context from an HTML canvas element.
 * @param {HTMLCanvasElement} canvasElement An HTML
@@ -170,30 +185,30 @@ if(!canvasElement)return null;
 * if an error occurred in creating the context.  Returns null if "canvasElement"
 * is null or not an HTML canvas element.
 */
-"get3DContext":function(canvasElement,err){
-  "use strict";
-var c=H3DU.get3DOr2DContext(canvasElement);
-  var errmsg=null;
-  if(!c &amp;&amp; window.WebGLShader){
-    errmsg="Failed to initialize graphics support required by this page.";
-  } else if(window.WebGLShader &amp;&amp; !H3DU.is3DContext(c)){
-    errmsg="This page requires WebGL, but it failed to start. Your computer might not support WebGL.";
-  } else if(!c || !H3DU.is3DContext(c)){
-    errmsg="This page requires a WebGL-supporting browser.";
-  }
-  if(errmsg){
-   (err || window.alert)(errmsg);
-   return null;
-  }
-  return c;
-},
+  "get3DContext":function(canvasElement, err) {
+    "use strict";
+    var c = H3DU.get3DOr2DContext(canvasElement);
+    var errmsg = null;
+    if(!c &amp;&amp; window.WebGLShader) {
+      errmsg = "Failed to initialize graphics support required by this page.";
+    } else if(window.WebGLShader &amp;&amp; !H3DU.is3DContext(c)) {
+      errmsg = "This page requires WebGL, but it failed to start. Your computer might not support WebGL.";
+    } else if(!c || !H3DU.is3DContext(c)) {
+      errmsg = "This page requires a WebGL-supporting browser.";
+    }
+    if(errmsg) {
+      (err || window.alert)(errmsg);
+      return null;
+    }
+    return c;
+  },
 /**
 * Returns whether the given object is a 3D rendering context.
 * @returns {Boolean} Return value.*/
-"is3DContext":function(context){
- "use strict";
-return context &amp;&amp; ("compileShader" in context);
-},
+  "is3DContext":function(context) {
+    "use strict";
+    return context &amp;&amp; "compileShader" in context;
+  },
 
 /**
 * Utility function that returns a promise that
@@ -211,18 +226,18 @@ return context &amp;&amp; ("compileShader" in context);
  * Will be rejected if any of the promises is rejected; the result
  * will be an object as specified in {@link H3DU.getPromiseResults}.&lt;/ul>
  */
-"getPromiseResultsAll":function(promises,
-   progressResolve, progressReject){
-   "use strict";
-return H3DU.getPromiseResults(promises,progressResolve,progressReject)
-     .then(function(results){
-      if(results.failures.length>0){
-       return Promise.reject(results);
-      } else {
-       return Promise.resolve(results.successes);
-      }
+  "getPromiseResultsAll":function(promises,
+   progressResolve, progressReject) {
+    "use strict";
+    return H3DU.getPromiseResults(promises, progressResolve, progressReject)
+     .then(function(results) {
+       if(results.failures.length > 0) {
+         return Promise.reject(results);
+       } else {
+         return Promise.resolve(results.successes);
+       }
      });
-},
+  },
 /**
 * Utility function that returns a promise that
  * resolves after the given list of promises finishes
@@ -244,61 +259,61 @@ return H3DU.getPromiseResults(promises,progressResolve,progressReject)
  * promise, in the order in which the promises were listed.
  * True means success, and false means failure.&lt;/ul>
  */
-"getPromiseResults":function(promises,
-   progressResolve, progressReject){
- "use strict";
-if(!promises || promises.length===0){
-  return Promise.resolve({
-"successes":[],
-"failures":[],
-"results":[]
-});
- }
- function promiseResolveFunc(pr,ret,index){
-   return function(x){
-    if(pr)pr(x);
-    ret.successes[index]=x;
-    return true;
-   };
- }
- function promiseRejectFunc(pr,ret,index){
-   return function(x){
-    if(pr)pr(x);
-    ret.failures[index]=x;
-    return true;
-   };
- }
- var ret={
-"successes":[],
-"failures":[],
-"results":[]
-};
- var newPromises=[];
- for(var i=0;i&lt;promises.length;i++){
-  var index=i;
-  newPromises.push(promises[i].then(
-    promiseResolveFunc(progressResolve,ret,index),
-    promiseRejectFunc(progressReject,ret,index)
+  "getPromiseResults":function(promises,
+   progressResolve, progressReject) {
+    "use strict";
+    if(!promises || promises.length === 0) {
+      return Promise.resolve({
+        "successes":[],
+        "failures":[],
+        "results":[]
+      });
+    }
+    function promiseResolveFunc(pr, ret, index) {
+      return function(x) {
+        if(pr)pr(x);
+        ret.successes[index] = x;
+        return true;
+      };
+    }
+    function promiseRejectFunc(pr, ret, index) {
+      return function(x) {
+        if(pr)pr(x);
+        ret.failures[index] = x;
+        return true;
+      };
+    }
+    var ret = {
+      "successes":[],
+      "failures":[],
+      "results":[]
+    };
+    var newPromises = [];
+    for(var i = 0;i &lt; promises.length;i++) {
+      var index = i;
+      newPromises.push(promises[i].then(
+    promiseResolveFunc(progressResolve, ret, index),
+    promiseRejectFunc(progressReject, ret, index)
   ));
- }
- return Promise.all(newPromises).then(function(results){
+    }
+    return Promise.all(newPromises).then(function(results) {
   // compact the successes and failures arrays
-  for(var i=0;i&lt;ret.successes.length;i++){
-   if(typeof ret.successes[i]==="undefined"){
-    ret.successes.splice(i,1);
-    i-=1;
-   }
-  }
-  for(i=0;i&lt;ret.failures.length;i++){
-   if(typeof ret.failures[i]==="undefined"){
-    ret.failures.splice(i,1);
-    i-=1;
-   }
-  }
-  ret.results=results;
-  return Promise.resolve(ret);
- });
-},
+      for(var i = 0;i &lt; ret.successes.length;i++) {
+        if(typeof ret.successes[i] === "undefined") {
+          ret.successes.splice(i, 1);
+          i -= 1;
+        }
+      }
+      for(i = 0;i &lt; ret.failures.length;i++) {
+        if(typeof ret.failures[i] === "undefined") {
+          ret.failures.splice(i, 1);
+          i -= 1;
+        }
+      }
+      ret.results = results;
+      return Promise.resolve(ret);
+    });
+  },
 /**
 * Loads a file from a URL asynchronously, using XMLHttpRequest.
 * @param {String} url URL of the file to load.
@@ -318,45 +333,45 @@ if(!promises || promises.length===0){
 * from JSON.
 * &lt;li>For any other type, a string of the file's text.&lt;/ul>
 */
-"loadFileFromUrl":function(url,responseType){
- "use strict";
-var urlstr=url;
- var respType=responseType||"text";
- return new Promise(function(resolve, reject){
-   var xhr=new XMLHttpRequest();
-   xhr.onreadystatechange=function(e){
-    var t=e.target;
+  "loadFileFromUrl":function(url, responseType) {
+    "use strict";
+    var urlstr = url;
+    var respType = responseType || "text";
+    return new Promise(function(resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(e) {
+        var t = e.target;
     //console.log([t.readyState,t.status,urlstr])
-    if(t.readyState===4){
-     if(t.status>=200 &amp;&amp; t.status&lt;300){
-      var resp="";
-      if(respType==="xml")resp=t.responseXML;
-      else if(respType==="json")
-        resp=("response" in t) ? t.response : JSON.parse(t.responseText);
-      else if(respType==="arraybuffer")
-        resp=t.response;
-      else resp=t.responseText+"";
-      resolve({
-"url": urlstr,
-"data": resp
-});
-     } else {
-      reject({"url": urlstr});
-     }
-    }
-   };
-   xhr.onerror=function(e){
+        if(t.readyState === 4) {
+          if(t.status >= 200 &amp;&amp; t.status &lt; 300) {
+            var resp = "";
+            if(respType === "xml")resp = t.responseXML;
+            else if(respType === "json")
+              resp = "response" in t ? t.response : JSON.parse(t.responseText);
+            else if(respType === "arraybuffer")
+              resp = t.response;
+            else resp = t.responseText + "";
+            resolve({
+              "url": urlstr,
+              "data": resp
+            });
+          } else {
+            reject({"url": urlstr});
+          }
+        }
+      };
+      xhr.onerror = function(e) {
     //console.log([urlstr,e])
-    reject({
-"url": urlstr,
-"error": e
-});
-   };
-   xhr.open("get", url, true);
-   xhr.responseType=respType;
-   xhr.send();
- });
-}
+        reject({
+          "url": urlstr,
+          "error": e
+        });
+      };
+      xhr.open("get", url, true);
+      xhr.responseType = respType;
+      xhr.send();
+    });
+  }
 };
 
 /**
@@ -391,16 +406,16 @@ var urlstr=url;
 * &lt;/caption>
 * var angle = 360 * H3DU.getTimePosition(timer, time, 5000);
 */
-H3DU.getTimePosition=function(timer,timeInMs,intervalInMs){
- "use strict";
-if(((typeof timer.time==="undefined" || timer.time === null))) {
-  timer.time=timeInMs;
-  timer.lastTime=timeInMs;
-  return 0;
- } else {
-  if(((typeof timer.lastTime==="undefined" || timer.lastTime === null)))timer.lastTime=timeInMs;
-  return (((timeInMs-timer.time)*1.0)%intervalInMs)/intervalInMs;
- }
+H3DU.getTimePosition = function(timer, timeInMs, intervalInMs) {
+  "use strict";
+  if(typeof timer.time === "undefined" || timer.time === null) {
+    timer.time = timeInMs;
+    timer.lastTime = timeInMs;
+    return 0;
+  } else {
+    if(typeof timer.lastTime === "undefined" || timer.lastTime === null)timer.lastTime = timeInMs;
+    return (timeInMs - timer.time) * 1.0 % intervalInMs / intervalInMs;
+  }
 };
 /**
 * Returns the number of frame-length intervals that occurred since
@@ -417,510 +432,506 @@ if(((typeof timer.time==="undefined" || timer.time === null))) {
 * The number can include fractional frames.  If an
 * initial time or last known time wasn't set, returns 0.
 */
-H3DU.newFrames=function(timer,timeInMs){
- "use strict";
-if(((typeof timer.time==="undefined" || timer.time === null))) {
-  timer.time=timeInMs;
-  timer.lastTime=timeInMs;
-  return 0;
- } else if(((typeof timer.lastTime==="undefined" || timer.lastTime === null))){
-  timer.lastTime=timeInMs;
-  return 0;
- } else {
-  var diff=(timeInMs-timer.lastTime);
-  timer.lastTime=timeInMs;
-  return diff*60.0/1000.0;
- }
+H3DU.newFrames = function(timer, timeInMs) {
+  "use strict";
+  if(typeof timer.time === "undefined" || timer.time === null) {
+    timer.time = timeInMs;
+    timer.lastTime = timeInMs;
+    return 0;
+  } else if(typeof timer.lastTime === "undefined" || timer.lastTime === null) {
+    timer.lastTime = timeInMs;
+    return 0;
+  } else {
+    var diff = timeInMs - timer.lastTime;
+    timer.lastTime = timeInMs;
+    return diff * 60.0 / 1000.0;
+  }
 };
 
-(function(exports){
-"use strict";
+(function(exports) {
+  "use strict";
 
-var ColorValidator = function() {};
-(function(constructor){
-    constructor.SkipWhite = function(str, index, endIndex) {
-         while (index &lt; endIndex){
-            var c = str.charCodeAt(index);
-            if (c === 32 || c === 13 || c === 12 || c === 9 || c === 10) {
-                ++index;
-            } else {
-                break;
-            }
-        }
-        return index;
-    };
-
-    constructor.ParseComma = function(str, index, endIndex) {
-        var indexStart = index;
-        index = ColorValidator.SkipWhite(str, index, endIndex);
-        if (index &lt; endIndex &amp;&amp; (str.charCodeAt(index) === 44)) {
-            return ColorValidator.SkipWhite(str, index + 1, endIndex);
+  var ColorValidator = function() {
+    throw new Error();
+  };
+  (function(constructor) {
+    constructor.skipWhite = function(str, index, endIndex) {
+      while (index &lt; endIndex) {
+        var c = str.charCodeAt(index);
+        if (c === 32 || c === 13 || c === 12 || c === 9 || c === 10) {
+          ++index;
         } else {
-            return indexStart;
+          break;
         }
+      }
+      return index;
     };
 
-    constructor.ParseEndparen = function(str, index, endIndex) {
-        var indexStart = index;
-        index = ColorValidator.SkipWhite(str, index, endIndex);
-        if (index &lt; endIndex &amp;&amp; (str.charCodeAt(index) === 41)) {
-            return index + 1;
-        } else {
-            return indexStart;
-        }
+    constructor.parseComma = function(str, index, endIndex) {
+      var indexStart = index;
+      index = ColorValidator.skipWhite(str, index, endIndex);
+      if (index &lt; endIndex &amp;&amp; str.charCodeAt(index) === 44) {
+        return ColorValidator.skipWhite(str, index + 1, endIndex);
+      } else {
+        return indexStart;
+      }
     };
 
-    constructor.Hsl = function(str, index, endIndex, ret) {
-        var indexStart, indexTemp, tx2;
-        indexStart = index;
-        indexTemp = index;
-        do {
-            if ((tx2 = ColorValidator.ParseHue(str, index, endIndex, ret, 0)) === index) {
-                return indexStart;
-            }
-            index = tx2;
-            if ((tx2 = ColorValidator.SepPct(str, index, endIndex, ret, 1)) === index) {
-                return indexStart;
-            }
-            index = tx2;
-            if ((tx2 = ColorValidator.SepPct(str, index, endIndex, ret, 2)) === index) {
-                return indexStart;
-            }
-            index = tx2;
-            tx2 = ColorValidator.ParseEndparen(str, index, endIndex);
-            if (tx2 === index) {
-                index = indexStart;
-                break;
-            } else {
-                index = tx2;
-            }
-            var rgb = ColorValidator.HlsToRgb(ret[0], ret[2], ret[1]);
-            ret[0] = rgb[0];
-            ret[1] = rgb[1];
-            ret[2] = rgb[2];
-            ret[3] = 255.0;
-            indexTemp = index;
-        } while (false);
-        return indexTemp;
+    constructor.parseEndparen = function(str, index, endIndex) {
+      var indexStart = index;
+      index = ColorValidator.skipWhite(str, index, endIndex);
+      if (index &lt; endIndex &amp;&amp; str.charCodeAt(index) === 41) {
+        return index + 1;
+      } else {
+        return indexStart;
+      }
     };
-    constructor.Pct = function(str, index, endIndex, ret, retIndex) {
-        var tx2 = ColorValidator.ParseNumber(str, index, endIndex);
-        if (tx2 !== index) {
-            if (tx2 >= endIndex || str.charAt(tx2) !== 37)
-                return index;
-            ret[retIndex] = ColorValidator.StringToPercent(str, index, tx2) * 255.0 / 100.0;
-            return tx2 + 1;
-        }
+
+    constructor.hsl = function(str, index, endIndex, ret) {
+      var indexStart, indexTemp, tx2;
+      indexStart = index;
+      indexTemp = index;
+      if ((tx2 = ColorValidator.parseHue(str, index, endIndex, ret, 0)) === index) {
+        return indexStart;
+      }
+      index = tx2;
+      if ((tx2 = ColorValidator.sepPct(str, index, endIndex, ret, 1)) === index) {
+        return indexStart;
+      }
+      index = tx2;
+      if ((tx2 = ColorValidator.sepPct(str, index, endIndex, ret, 2)) === index) {
+        return indexStart;
+      }
+      index = tx2;
+      tx2 = ColorValidator.parseEndparen(str, index, endIndex);
+      if (tx2 === index) {
+        return indexStart;
+      } else {
+        index = tx2;
+      }
+      var rgb = ColorValidator.hlsToRgb(ret[0], ret[2], ret[1]);
+      ret[0] = rgb[0];
+      ret[1] = rgb[1];
+      ret[2] = rgb[2];
+      ret[3] = 255.0;
+      indexTemp = index;
+      return indexTemp;
+    };
+    constructor.pct = function(str, index, endIndex, ret, retIndex) {
+      var tx2 = ColorValidator.parseNumber(str, index, endIndex);
+      if (tx2 !== index) {
+        if (tx2 >= endIndex || str.charAt(tx2) !== 37)
+          return index;
+        ret[retIndex] = ColorValidator.stringToPercent(str, index, tx2) * 255.0 / 100.0;
+        return tx2 + 1;
+      }
+      return tx2;
+    };
+    constructor.parseByte = function(str, index, endIndex, ret, retIndex) {
+      var tx2 = ColorValidator.parseInteger(str, index, endIndex, true);
+      if (tx2 !== index) {
+        ret[retIndex] = ColorValidator.stringToByte(str, index, tx2);
+      }
+      return tx2;
+    };
+    constructor.parseHue = function(str, index, endIndex, ret, retIndex) {
+      var start = index;
+      index = ColorValidator.skipWhite(str, index, endIndex);
+      var tx2 = ColorValidator.parseNumber(str, index, endIndex);
+      if (tx2 !== index) {
+        ret[retIndex] = ColorValidator.stringToHue(str, index, tx2);
         return tx2;
+      } else {
+        return start;
+      }
     };
-    constructor.ParseByte = function(str, index, endIndex, ret, retIndex) {
-        var tx2 = ColorValidator.ParseInteger(str, index, endIndex, true);
+    constructor.sepByte = function(str, index, endIndex, ret, retIndex) {
+      var tx2 = ColorValidator.parseComma(str, index, endIndex);
+      return tx2 !== index ? ColorValidator.parseByte(str, tx2, endIndex, ret, retIndex) : tx2;
+    };
+    constructor.sepPct = function(str, index, endIndex, ret, retIndex) {
+      var tx2 = ColorValidator.parseComma(str, index, endIndex);
+      return tx2 !== index ? ColorValidator.pct(str, tx2, endIndex, ret, retIndex) : tx2;
+    };
+    constructor.sepAlpha = function(str, index, endIndex, ret, retIndex) {
+      var tx2 = ColorValidator.parseComma(str, index, endIndex);
+      if (tx2 !== index) {
+        index = tx2;
+        tx2 = ColorValidator.parseNumber(str, index, endIndex);
         if (tx2 !== index) {
-            ret[retIndex] = ColorValidator.StringToByte(str, index, tx2);
+          ret[retIndex] = ColorValidator.stringToAlpha(str, index, tx2);
         }
+      }
+      return tx2;
+    };
+
+    constructor.hsla = function(str, index, endIndex, ret) {
+      var indexStart, indexTemp, tx2;
+      indexStart = index;
+      indexTemp = index;
+      if ((tx2 = ColorValidator.parseHue(str, index, endIndex, ret, 0)) === index) {
+        return indexStart;
+      }
+      index = tx2;
+      if ((tx2 = ColorValidator.sepPct(str, index, endIndex, ret, 1)) === index) {
+        return indexStart;
+      }
+      index = tx2;
+      if ((tx2 = ColorValidator.sepPct(str, index, endIndex, ret, 2)) === index) {
+        return indexStart;
+      }
+      index = tx2;
+      if ((tx2 = ColorValidator.sepAlpha(str, index, endIndex, ret, 3)) === index) {
+        return indexStart;
+      }
+      index = tx2;
+      var rgb = ColorValidator.hlsToRgb(ret[0], ret[2], ret[1]);
+      ret[0] = rgb[0];
+      ret[1] = rgb[1];
+      ret[2] = rgb[2];
+      tx2 = ColorValidator.parseEndparen(str, index, endIndex);
+      if (tx2 === index) {
+        return indexStart;
+      } else {
+        index = tx2;
+      }
+      indexTemp = index;
+      return indexTemp;
+    };
+
+    constructor.rgba = function(str, index, endIndex, result) {
+      var indexStart, tx2;
+      indexStart = index;
+      index = ColorValidator.skipWhite(str, index, endIndex);
+      var st = index;
+      var continuing = true;
+      if ((tx2 = ColorValidator.pct(str, index, endIndex, result, 0)) === index) {
+        continuing = false;
+      } else {
+        index = tx2;
+      }
+      if (continuing &amp;&amp; (tx2 = ColorValidator.sepPct(str, index, endIndex, result, 1)) === index) {
+        continuing = false;
+      } else {
+        index = tx2;
+      }
+      if (continuing &amp;&amp; (tx2 = ColorValidator.sepPct(str, index, endIndex, result, 2)) === index) {
+        continuing = false;
+      } else {
+        index = tx2;
+      }
+      if (continuing &amp;&amp; (tx2 = ColorValidator.sepAlpha(str, index, endIndex, result, 3)) === index) {
+        continuing = false;
+      } else {
+        index = tx2;
+      }
+      if (!continuing) {
+        index = st;
+        continuing = true;
+        if ((tx2 = ColorValidator.parseByte(str, index, endIndex, result, 0)) === index) {
+          continuing = false;
+        } else {
+          index = tx2;
+        }
+        if (continuing &amp;&amp; (tx2 = ColorValidator.sepByte(str, index, endIndex, result, 1)) === index) {
+          continuing = false;
+        } else {
+          index = tx2;
+        }
+        if (continuing &amp;&amp; (tx2 = ColorValidator.sepByte(str, index, endIndex, result, 2)) === index) {
+          continuing = false;
+        } else {
+          index = tx2;
+        }
+        if (continuing &amp;&amp; (tx2 = ColorValidator.sepAlpha(str, index, endIndex, result, 3)) === index) {
+          continuing = false;
+        } else {
+          index = tx2;
+        }
+      }
+      if (!continuing) {
+        return indexStart;
+      }
+      tx2 = ColorValidator.parseEndparen(str, index, endIndex);
+      index = tx2 === index ? indexStart : tx2;
+      return index;
+    };
+    constructor.rgb = function(str, index, endIndex, result) {
+      var indexStart, tx2;
+      indexStart = index;
+      index = ColorValidator.skipWhite(str, index, endIndex);
+      var st = index;
+      var continuing = true;
+      if ((tx2 = ColorValidator.pct(str, index, endIndex, result, 0)) === index) {
+        continuing = false;
+      } else {
+        index = tx2;
+      }
+      if (continuing &amp;&amp; (tx2 = ColorValidator.sepPct(str, index, endIndex, result, 1)) === index) {
+        continuing = false;
+      } else {
+        index = tx2;
+      }
+      if (continuing &amp;&amp; (tx2 = ColorValidator.sepPct(str, index, endIndex, result, 2)) === index) {
+        continuing = false;
+      } else {
+        index = tx2;
+      }
+      if (!continuing) {
+        index = st;
+        continuing = true;
+        if ((tx2 = ColorValidator.parseByte(str, index, endIndex, result, 0)) === index) {
+          continuing = false;
+        } else {
+          index = tx2;
+        }
+        if (continuing &amp;&amp; (tx2 = ColorValidator.sepByte(str, index, endIndex, result, 1)) === index) {
+          continuing = false;
+        } else {
+          index = tx2;
+        }
+        if (continuing &amp;&amp; (tx2 = ColorValidator.sepByte(str, index, endIndex, result, 2)) === index) {
+          continuing = false;
+        } else {
+          index = tx2;
+        }
+      }
+      if (!continuing) {
+        return indexStart;
+      }
+      result[3] = 255.0;
+      tx2 = ColorValidator.parseEndparen(str, index, endIndex);
+      if (tx2 === index) {
+        return indexStart;
+      } else {
         return tx2;
+      }
     };
-    constructor.ParseHue = function(str, index, endIndex, ret, retIndex) {
-        var start = index;
-        index = ColorValidator.SkipWhite(str, index, endIndex);
-        var tx2 = ColorValidator.ParseNumber(str, index, endIndex);
-        if (tx2 !== index) {
-            ret[retIndex] = ColorValidator.StringToHue(str, index, tx2);
-            return tx2;
-        } else {
-            return start;
-        }
+    constructor.stringToNumber = function(str, index, endIndex) {
+      var str2 = str.substring(index, index + (endIndex - index));
+      return parseFloat(str2);
     };
-    constructor.SepByte = function(str, index, endIndex, ret, retIndex) {
-        var tx2 = ColorValidator.ParseComma(str, index, endIndex);
-        return (tx2 !== index) ? ColorValidator.ParseByte(str, tx2, endIndex, ret, retIndex) : tx2;
+    constructor.stringToPercent = function(str, index, endIndex) {
+      var num = ColorValidator.stringToNumber(str, index, endIndex);
+      return Number.isNaN(num) ? -1 : num &lt; 0 ? 0 : num > 100 ? 100 : num;
     };
-    constructor.SepPct = function(str, index, endIndex, ret, retIndex) {
-        var tx2 = ColorValidator.ParseComma(str, index, endIndex);
-        return (tx2 !== index) ? ColorValidator.Pct(str, tx2, endIndex, ret, retIndex) : tx2;
+    constructor.stringToAlpha = function(str, index, endIndex) {
+      var num = ColorValidator.stringToNumber(str, index, endIndex);
+      return num &lt; 0 ? 0 : num > 1.0 ? 255 : num * 255.0;
     };
-    constructor.SepAlpha = function(str, index, endIndex, ret, retIndex) {
-        var tx2 = ColorValidator.ParseComma(str, index, endIndex);
-        if (tx2 !== index) {
-            index = tx2;
-            tx2 = ColorValidator.ParseNumber(str, index, endIndex);
-            if (tx2 !== index) {
-                ret[retIndex] = ColorValidator.StringToAlpha(str, index, tx2);
-            }
-        }
-        return tx2;
+    constructor.stringToHue = function(str, index, endIndex) {
+      var num = ColorValidator.stringToNumber(str, index, endIndex);
+      return Number.isNaN(num) || num === Number.POSITIVE_INFINITY || num === Number.NEGATIVE_INFINITY ? 0 : (num % 360 + 360) % 360;
+    };
+    constructor.stringToByte = function(str, index, endIndex) {
+      var num = ColorValidator.stringToNumber(str, index, endIndex);
+      return num &lt; 0 ? 0 : num > 255 ? 255 : num;
     };
 
-    constructor.Hsla = function(str, index, endIndex, ret) {
-        var indexStart, indexTemp, tx2;
-        indexStart = index;
-        indexTemp = index;
-        do {
-            if ((tx2 = ColorValidator.ParseHue(str, index, endIndex, ret, 0)) === index) {
-                return indexStart;
-            }
-            index = tx2;
-            if ((tx2 = ColorValidator.SepPct(str, index, endIndex, ret, 1)) === index) {
-                return indexStart;
-            }
-            index = tx2;
-            if ((tx2 = ColorValidator.SepPct(str, index, endIndex, ret, 2)) === index) {
-                return indexStart;
-            }
-            index = tx2;
-            if ((tx2 = ColorValidator.SepAlpha(str, index, endIndex, ret, 3)) === index) {
-                return indexStart;
-            }
-            index = tx2;
-            var rgb = ColorValidator.HlsToRgb(ret[0], ret[2], ret[1]);
-            ret[0] = rgb[0];
-            ret[1] = rgb[1];
-            ret[2] = rgb[2];
-            tx2 = ColorValidator.ParseEndparen(str, index, endIndex);
-            if (tx2 === index) {
-                index = indexStart;
-                break;
-            } else {
-                index = tx2;
-            }
-            indexTemp = index;
-        } while (false);
-        return indexTemp;
+    constructor.parseInteger = function(str, index, endIndex, posneg) {
+      var digits = false;
+      var indexStart = index;
+      if (posneg &amp;&amp; index &lt; endIndex &amp;&amp; (str.charCodeAt(index) === 43 || str.charCodeAt(index) === 45)) {
+        ++index;
+      }
+      while (index &lt; endIndex &amp;&amp; (str.charCodeAt(index) >= 48 &amp;&amp; str.charCodeAt(index) &lt;= 57)) {
+        ++index;
+        digits = true;
+      }
+      return digits ? index : indexStart;
     };
 
-    constructor.Rgba = function(str, index, endIndex, result) {
-        var indexStart, tx2;
-        indexStart = index;
-        index = ColorValidator.SkipWhite(str, index, endIndex);
-        var st = index;
-        var continuing = true;
-        if ((tx2 = ColorValidator.Pct(str, index, endIndex, result, 0)) === index) {
-            continuing = false;
-        } else {
-            index = tx2;
-        }
-        if (continuing &amp;&amp; (tx2 = ColorValidator.SepPct(str, index, endIndex, result, 1)) === index) {
-            continuing = false;
-        } else {
-            index = tx2;
-        }
-        if (continuing &amp;&amp; (tx2 = ColorValidator.SepPct(str, index, endIndex, result, 2)) === index) {
-            continuing = false;
-        } else {
-            index = tx2;
-        }
-        if (continuing &amp;&amp; (tx2 = ColorValidator.SepAlpha(str, index, endIndex, result, 3)) === index) {
-            continuing = false;
-        } else {
-            index = tx2;
-        }
-        if (!continuing) {
-            index = st;
-            continuing = true;
-            if ((tx2 = ColorValidator.ParseByte(str, index, endIndex, result, 0)) === index) {
-                continuing = false;
-            } else {
-                index = tx2;
-            }
-            if (continuing &amp;&amp; (tx2 = ColorValidator.SepByte(str, index, endIndex, result, 1)) === index) {
-                continuing = false;
-            } else {
-                index = tx2;
-            }
-            if (continuing &amp;&amp; (tx2 = ColorValidator.SepByte(str, index, endIndex, result, 2)) === index) {
-                continuing = false;
-            } else {
-                index = tx2;
-            }
-            if (continuing &amp;&amp; (tx2 = ColorValidator.SepAlpha(str, index, endIndex, result, 3)) === index) {
-                continuing = false;
-            } else {
-                index = tx2;
-            }
-        }
-        if (!continuing) {
-            return indexStart;
-        }
-        tx2 = ColorValidator.ParseEndparen(str, index, endIndex);
-        index = (tx2 === index) ? indexStart : tx2;
-        return index;
-    };
-    constructor.Rgb = function(str, index, endIndex, result) {
-        var indexStart, tx2;
-        indexStart = index;
-        index = ColorValidator.SkipWhite(str, index, endIndex);
-        var st = index;
-        var continuing = true;
-        if ((tx2 = ColorValidator.Pct(str, index, endIndex, result, 0)) === index) {
-            continuing = false;
-        } else {
-            index = tx2;
-        }
-        if (continuing &amp;&amp; (tx2 = ColorValidator.SepPct(str, index, endIndex, result, 1)) === index) {
-            continuing = false;
-        } else {
-            index = tx2;
-        }
-        if (continuing &amp;&amp; (tx2 = ColorValidator.SepPct(str, index, endIndex, result, 2)) === index) {
-            continuing = false;
-        } else {
-            index = tx2;
-        }
-        if (!continuing) {
-            index = st;
-            continuing = true;
-            if ((tx2 = ColorValidator.ParseByte(str, index, endIndex, result, 0)) === index) {
-                continuing = false;
-            } else {
-                index = tx2;
-            }
-            if (continuing &amp;&amp; (tx2 = ColorValidator.SepByte(str, index, endIndex, result, 1)) === index) {
-                continuing = false;
-            } else {
-                index = tx2;
-            }
-            if (continuing &amp;&amp; (tx2 = ColorValidator.SepByte(str, index, endIndex, result, 2)) === index) {
-                continuing = false;
-            } else {
-                index = tx2;
-            }
-        }
-        if (!continuing) {
-            return indexStart;
-        }
-        result[3] = 255.0;
-        tx2 = ColorValidator.ParseEndparen(str, index, endIndex);
-        if (tx2 === index) {
-            return indexStart;
-        } else {
-            return tx2;
-        }
-    };
-    constructor.StringToNumber = function(str, index, endIndex) {
-        var str2 = str.substring(index, (index) + (endIndex - index));
-        return parseFloat(str2);
-    };
-    constructor.StringToPercent = function(str, index, endIndex) {
-        var num = ColorValidator.StringToNumber(str, index, endIndex);
-        return Number.isNaN(num) ? (-1) : ((num &lt; 0) ? 0 : ((num > 100) ? 100 : num));
-    };
-    constructor.StringToAlpha = function(str, index, endIndex) {
-        var num = ColorValidator.StringToNumber(str, index, endIndex);
-        return (num &lt; 0) ? 0 : ((num > 1.0) ? 255 : num * 255.0);
-    };
-    constructor.StringToHue = function(str, index, endIndex) {
-        var num = ColorValidator.StringToNumber(str, index, endIndex);
-        return (Number.isNaN(num) || ((num) === Number.POSITIVE_INFINITY) || ((num)=== Number.NEGATIVE_INFINITY)) ? 0 : (((num % 360) + 360) % 360);
-    };
-    constructor.StringToByte = function(str, index, endIndex) {
-        var num = ColorValidator.StringToNumber(str, index, endIndex);
-        return (num &lt; 0) ? 0 : ((num > 255) ? 255 : num);
-    };
-
-    constructor.ParseInteger = function(str, index, endIndex, posneg) {
-        var digits = false;
-        var indexStart = index;
-        if (posneg &amp;&amp; index &lt; endIndex &amp;&amp; ((str.charCodeAt(index) === 43) || (str.charCodeAt(index) === 45))) {
-            ++index;
-        }
-         while (index &lt; endIndex &amp;&amp; (str.charCodeAt(index) >= 48 &amp;&amp; str.charCodeAt(index) &lt;= 57)){
-            ++index;
-            digits = true;
-        }
-        return digits ? index : indexStart;
-    };
-
-    constructor.ParseNumber = function(str, index, endIndex) {
-        var indexStart = index;
-        var tmp = index;
-                         var tmp2=0;
-        if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, true)) !== indexStart) {
-            index = tmp;
-            if (index &lt; endIndex &amp;&amp; (str.charCodeAt(index) === 46)) {
-                ++index;
-                if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, false)) !== index) {
-          if(index&lt;endIndex &amp;&amp; (str.charCodeAt(index)===0x45 || str.charCodeAt(index) === 0x65) &amp;&amp;
-            (tmp2=ColorValidator.ParseInteger(str,index+1,endIndex,true))!==index+1){
+    constructor.parseNumber = function(str, index, endIndex) {
+      var indexStart = index;
+      var tmp = index;
+      var tmp2 = 0;
+      if ((tmp = ColorValidator.parseInteger(str, index, endIndex, true)) !== indexStart) {
+        index = tmp;
+        if (index &lt; endIndex &amp;&amp; str.charCodeAt(index) === 46) {
+          ++index;
+          if ((tmp = ColorValidator.parseInteger(str, index, endIndex, false)) !== index) {
+            if(index &lt; endIndex &amp;&amp; (str.charCodeAt(index) === 0x45 || str.charCodeAt(index) === 0x65) &amp;&amp;
+            (tmp2 = ColorValidator.parseInteger(str, index + 1, endIndex, true)) !== index + 1) {
               return tmp2;
             }
-                     return tmp;
-                } else {
-                    return index - 1;
-                }
-            }
-            return index;
-        } else {
-            if (index &lt; endIndex &amp;&amp; ((str.charCodeAt(index) === 43) || (str.charCodeAt(index) === 45))) {
-                ++index;
-            }
-            if (index &lt; endIndex &amp;&amp; (str.charCodeAt(index) === 46)) {
-                ++index;
-                if ((tmp = ColorValidator.ParseInteger(str, index, endIndex, false)) !== index) {
-          if(index&lt;endIndex &amp;&amp; (str.charCodeAt(index)===0x45 || str.charCodeAt(index) === 0x65) &amp;&amp;
-            (tmp2=ColorValidator.ParseInteger(str,index+1,endIndex,true))!==index+1){
+            return tmp;
+          } else {
+            return index - 1;
+          }
+        }
+        return index;
+      } else {
+        if (index &lt; endIndex &amp;&amp; (str.charCodeAt(index) === 43 || str.charCodeAt(index) === 45)) {
+          ++index;
+        }
+        if (index &lt; endIndex &amp;&amp; str.charCodeAt(index) === 46) {
+          ++index;
+          if ((tmp = ColorValidator.parseInteger(str, index, endIndex, false)) !== index) {
+            if(index &lt; endIndex &amp;&amp; (str.charCodeAt(index) === 0x45 || str.charCodeAt(index) === 0x65) &amp;&amp;
+            (tmp2 = ColorValidator.parseInteger(str, index + 1, endIndex, true)) !== index + 1) {
               return tmp2;
             }
-                    return tmp;
-                } else {
-                    return indexStart;
-                }
-            }
+            return tmp;
+          } else {
             return indexStart;
+          }
         }
+        return indexStart;
+      }
     };
 
-    constructor.HlsToRgb = constructor.HlsToRgb = function(hueval, lum, sat) {
-        lum = lum &lt; 0 ? 0 : (lum > 255 ? 255 : lum);
-        sat = sat &lt; 0 ? 0 : (sat > 255 ? 255 : sat);
-        if (sat === 0) {
-            return [lum, lum, lum];
-        }
-        var b = 0;
-        if (lum &lt;= 127.5) {
-            b = (lum * (255.0 + sat)) / 255.0;
-        } else {
-            b = lum * sat;
-            b = b / (255.0);
-            b = lum + sat - b;
-        }
-        var a = (lum * 2) - b;
-        var r, g, bl;
-        if (hueval &lt; 0 || hueval >= 360) {
-            hueval = ((hueval % 360) + 360) % 360;
-        }
-        var hue = hueval + 120;
-        if (hue >= 360) {
-            hue -= 360;
-        }
-        r = (hue &lt; 60) ? (a + (b - a) * hue / 60) : ((hue &lt; 180) ? b : ((hue &lt; 240) ? (a + (b - a) * (240 - hue) / 60) : a));
-        hue = hueval;
-        g = (hue &lt; 60) ? (a + (b - a) * hue / 60) : ((hue &lt; 180) ? b : ((hue &lt; 240) ? (a + (b - a) * (240 - hue) / 60) : a));
-        hue = hueval - 120;
-        if (hue &lt; 0) {
-            hue = hue + (360);
-        }
-        bl = (hue &lt; 60) ? (a + (b - a) * hue / 60) : ((hue &lt; 180) ? b : ((hue &lt; 240) ? (a + (b - a) * (240 - hue) / 60) : a));
-        return [(r &lt; 0 ? 0 : (r > 255 ? 255 : r)), (g &lt; 0 ? 0 : (g > 255 ? 255 : g)), (bl &lt; 0 ? 0 : (bl > 255 ? 255 : bl))];
+    constructor.hlsToRgb = constructor.HlsToRgb = function(hueval, lum, sat) {
+      lum = lum &lt; 0 ? 0 : lum > 255 ? 255 : lum;
+      sat = sat &lt; 0 ? 0 : sat > 255 ? 255 : sat;
+      if (sat === 0) {
+        return [lum, lum, lum];
+      }
+      var b = 0;
+      if (lum &lt;= 127.5) {
+        b = lum * (255.0 + sat) / 255.0;
+      } else {
+        b = lum * sat;
+        b = b / 255.0;
+        b = lum + sat - b;
+      }
+      var a = lum * 2 - b;
+      var r, g, bl;
+      if (hueval &lt; 0 || hueval >= 360) {
+        hueval = (hueval % 360 + 360) % 360;
+      }
+      var hue = hueval + 120;
+      if (hue >= 360) {
+        hue -= 360;
+      }
+      r = hue &lt; 60 ? a + (b - a) * hue / 60 : hue &lt; 180 ? b : hue &lt; 240 ? a + (b - a) * (240 - hue) / 60 : a;
+      hue = hueval;
+      g = hue &lt; 60 ? a + (b - a) * hue / 60 : hue &lt; 180 ? b : hue &lt; 240 ? a + (b - a) * (240 - hue) / 60 : a;
+      hue = hueval - 120;
+      if (hue &lt; 0) {
+        hue = hue + 360;
+      }
+      bl = hue &lt; 60 ? a + (b - a) * hue / 60 : hue &lt; 180 ? b : hue &lt; 240 ? a + (b - a) * (240 - hue) / 60 : a;
+      return [r &lt; 0 ? 0 : r > 255 ? 255 : r, g &lt; 0 ? 0 : g > 255 ? 255 : g, bl &lt; 0 ? 0 : bl > 255 ? 255 : bl];
     };
 
     constructor.dehexchar = function(c) {
-        if (c >= 48 &amp;&amp; c &lt;= 57) {
-            return c - 48;
-        }
-        return (c >= 65 &amp;&amp; c &lt;= 70) ? (c + 10 - 65) : ((c >= 97 &amp;&amp; c &lt;= 102) ? (c + 10 - 97) : (-1));
+      if (c >= 48 &amp;&amp; c &lt;= 57) {
+        return c - 48;
+      }
+      return c >= 65 &amp;&amp; c &lt;= 70 ? c + 10 - 65 : c >= 97 &amp;&amp; c &lt;= 102 ? c + 10 - 97 : -1;
     };
-    constructor.RgbHex = function(str, hexval, hash) {
-        if ((str === null || typeof str === "undefined") || (str).length === 0) {
-            return false;
+    constructor.rgbHex = function(str, hexval, hash) {
+      if (str === null || typeof str === "undefined" || str.length === 0) {
+        return false;
+      }
+      var slen = str.length;
+      var hexes = [0, 0, 0, 0, 0, 0, 0, 0];
+      var index = 0;
+      var hexIndex = 0;
+      if (str.charAt(0) === "#") {
+        --slen;
+        ++index;
+      } else if (hash) {
+        return false;
+      }
+      if (slen !== 3 &amp;&amp; slen !== 4 &amp;&amp; slen !== 6 &amp;&amp; slen !== 8) {
+        return false;
+      }
+      for (var i = index; i &lt; str.length; ++i) {
+        var hex = ColorValidator.dehexchar(str.charCodeAt(i));
+        if (hex &lt; 0) {
+          return false;
         }
-        var slen = str.length;
-        var hexes = [0, 0, 0, 0, 0, 0, 0, 0];
-        var index = 0;
-        var hexIndex = 0;
-        if (str.charAt(0) === "#") {
-            --slen;
-            ++index;
-        } else if (hash) {
-            return false;
-        }
-        if (slen !== 3 &amp;&amp; slen !== 4 &amp;&amp; slen !== 6 &amp;&amp; slen !== 8) {
-            return false;
-        }
-        for (var i = index; i &lt; str.length; ++i) {
-            var hex = ColorValidator.dehexchar(str.charCodeAt(i));
-            if (hex &lt; 0) {
-                return false;
-            }
-            hexes[hexIndex++] = hex;
-        }
-        if (slen === 4) {
-            hexval[3] = (hexes[3] | (hexes[3] &lt;&lt; 4));
-        } else if (slen === 8) {
-            hexval[3] = (hexes[7] | (hexes[6] &lt;&lt; 4));
-        } else {
-            hexval[3] = 255.0;
-        }
-        if (slen === 3 || slen === 4) {
-            hexval[0] = (hexes[0] | (hexes[0] &lt;&lt; 4));
-            hexval[1] = (hexes[1] | (hexes[1] &lt;&lt; 4));
-            hexval[2] = (hexes[2] | (hexes[2] &lt;&lt; 4));
-        } else if (slen >= 6) {
-            hexval[0] = (hexes[1] | (hexes[0] &lt;&lt; 4));
-            hexval[1] = (hexes[3] | (hexes[2] &lt;&lt; 4));
-            hexval[2] = (hexes[5] | (hexes[4] &lt;&lt; 4));
-        }
-        return true;
+        hexes[hexIndex++] = hex;
+      }
+      if (slen === 4) {
+        hexval[3] = hexes[3] | hexes[3] &lt;&lt; 4;
+      } else if (slen === 8) {
+        hexval[3] = hexes[7] | hexes[6] &lt;&lt; 4;
+      } else {
+        hexval[3] = 255.0;
+      }
+      if (slen === 3 || slen === 4) {
+        hexval[0] = hexes[0] | hexes[0] &lt;&lt; 4;
+        hexval[1] = hexes[1] | hexes[1] &lt;&lt; 4;
+        hexval[2] = hexes[2] | hexes[2] &lt;&lt; 4;
+      } else if (slen >= 6) {
+        hexval[0] = hexes[1] | hexes[0] &lt;&lt; 4;
+        hexval[1] = hexes[3] | hexes[2] &lt;&lt; 4;
+        hexval[2] = hexes[5] | hexes[4] &lt;&lt; 4;
+      }
+      return true;
     };
 
-    constructor.ColorToRgba = constructor.ColorToRgba = function(x) {
-        if ((x === null || typeof x === "undefined") || (x).length === 0) {
-            return null;
-        }
-        x = x.replace(/^[\r\n\t \u000c]+|[\r\n\t \u000c]+$/g,"");
-        x = x.toLowerCase();
-        if (x===("transparent")) {
-            return [0, 0, 0, 0];
-        }
-        if ((x === null || typeof x === "undefined") || (x).length === 0) {
-            return null;
-        }
-        var ret = [0, 0, 0, 0];
-        if (x.charAt(0) === "#") {
-            if (ColorValidator.RgbHex(x, ret, true)) {
-                return ret;
-            }
-        }
-        if (x.length > 4 &amp;&amp; x.substring(0, 4)===("rgb(")) {
-            return (ColorValidator.Rgb(x, 4, x.length, ret) === x.length) ? ret : null;
-        }
-        if (x.length > 5 &amp;&amp; x.substring(0, 5)===("rgba(")) {
-            return (ColorValidator.Rgba(x, 5, x.length, ret) === x.length) ? ret : null;
-        }
-        if (x.length > 4 &amp;&amp; x.substring(0, 4)===("hsl(")) {
-            return (ColorValidator.Hsl(x, 4, x.length, ret) === x.length) ? ret : null;
-        }
-        if (x.length > 5 &amp;&amp; x.substring(0, 5)===("hsla(")) {
-            return (ColorValidator.Hsla(x, 5, x.length, ret) === x.length) ? ret : null;
-        }
-        var colors = ColorValidator.ColorToRgbaSetUpNamedColors();
-        if (colors[x] !== null &amp;&amp; typeof colors[x]!=="undefined") {
-            var colorValue = colors[x];
-            ColorValidator.RgbHex(colorValue, ret, false);
-            return ret;
-        }
+    constructor.colorToRgba = constructor.colorToRgba = function(x) {
+      if (x === null || typeof x === "undefined" || x.length === 0) {
         return null;
+      }
+      x = x.replace(/^[\r\n\t \u000c]+|[\r\n\t \u000c]+$/g, "");
+      x = x.toLowerCase();
+      if (x === "transparent") {
+        return [0, 0, 0, 0];
+      }
+      if (x === null || typeof x === "undefined" || x.length === 0) {
+        return null;
+      }
+      var ret = [0, 0, 0, 0];
+      if (x.charAt(0) === "#") {
+        if (ColorValidator.rgbHex(x, ret, true)) {
+          return ret;
+        }
+      }
+      if (x.length > 4 &amp;&amp; x.substring(0, 4) === "rgb(") {
+        return ColorValidator.rgb(x, 4, x.length, ret) === x.length ? ret : null;
+      }
+      if (x.length > 5 &amp;&amp; x.substring(0, 5) === "rgba(") {
+        return ColorValidator.rgba(x, 5, x.length, ret) === x.length ? ret : null;
+      }
+      if (x.length > 4 &amp;&amp; x.substring(0, 4) === "hsl(") {
+        return ColorValidator.hsl(x, 4, x.length, ret) === x.length ? ret : null;
+      }
+      if (x.length > 5 &amp;&amp; x.substring(0, 5) === "hsla(") {
+        return ColorValidator.hsla(x, 5, x.length, ret) === x.length ? ret : null;
+      }
+      var colors = ColorValidator.colorToRgbaSetUpNamedColors();
+      if (colors[x] !== null &amp;&amp; typeof colors[x] !== "undefined") {
+        var colorValue = colors[x];
+        ColorValidator.rgbHex(colorValue, ret, false);
+        return ret;
+      }
+      return null;
     };
 
     constructor.namedColorMap = constructor.namedColorMap = null;
 
     constructor.nc = ["aliceblue", "f0f8ff", "antiquewhite", "faebd7", "aqua", "00ffff", "aquamarine", "7fffd4", "azure", "f0ffff", "beige", "f5f5dc", "bisque", "ffe4c4", "black", "000000", "blanchedalmond", "ffebcd", "blue", "0000ff", "blueviolet", "8a2be2", "brown", "a52a2a", "burlywood", "deb887", "cadetblue", "5f9ea0", "chartreuse", "7fff00", "chocolate", "d2691e", "coral", "ff7f50", "cornflowerblue", "6495ed", "cornsilk", "fff8dc", "crimson", "dc143c", "cyan", "00ffff", "darkblue", "00008b", "darkcyan", "008b8b", "darkgoldenrod", "b8860b", "darkgray", "a9a9a9", "darkgreen", "006400", "darkkhaki", "bdb76b", "darkmagenta", "8b008b", "darkolivegreen", "556b2f", "darkorange", "ff8c00", "darkorchid", "9932cc", "darkred", "8b0000", "darksalmon", "e9967a", "darkseagreen", "8fbc8f", "darkslateblue", "483d8b", "darkslategray", "2f4f4f", "darkturquoise", "00ced1", "darkviolet", "9400d3", "deeppink", "ff1493", "deepskyblue", "00bfff", "dimgray", "696969", "dodgerblue", "1e90ff", "firebrick", "b22222", "floralwhite", "fffaf0", "forestgreen", "228b22", "fuchsia", "ff00ff", "gainsboro", "dcdcdc", "ghostwhite", "f8f8ff", "gold", "ffd700", "goldenrod", "daa520", "gray", "808080", "green", "008000", "greenyellow", "adff2f", "honeydew", "f0fff0", "hotpink", "ff69b4", "indianred", "cd5c5c", "indigo", "4b0082", "ivory", "fffff0", "khaki", "f0e68c", "lavender", "e6e6fa", "lavenderblush", "fff0f5", "lawngreen", "7cfc00", "lemonchiffon", "fffacd", "lightblue", "add8e6", "lightcoral", "f08080", "lightcyan", "e0ffff", "lightgoldenrodyellow", "fafad2", "lightgray", "d3d3d3", "lightgreen", "90ee90", "lightpink", "ffb6c1", "lightsalmon", "ffa07a", "lightseagreen", "20b2aa", "lightskyblue", "87cefa", "lightslategray", "778899", "lightsteelblue", "b0c4de", "lightyellow", "ffffe0", "lime", "00ff00", "limegreen", "32cd32", "linen", "faf0e6", "magenta", "ff00ff", "maroon", "800000", "mediumaquamarine", "66cdaa", "mediumblue", "0000cd", "mediumorchid", "ba55d3", "mediumpurple", "9370d8", "mediumseagreen", "3cb371", "mediumslateblue", "7b68ee", "mediumspringgreen", "00fa9a", "mediumturquoise", "48d1cc", "mediumvioletred", "c71585", "midnightblue", "191970", "mintcream", "f5fffa", "mistyrose", "ffe4e1", "moccasin", "ffe4b5", "navajowhite", "ffdead", "navy", "000080", "oldlace", "fdf5e6", "olive", "808000", "olivedrab", "6b8e23", "orange", "ffa500", "orangered", "ff4500", "orchid", "da70d6", "palegoldenrod", "eee8aa", "palegreen", "98fb98", "paleturquoise", "afeeee", "palevioletred", "d87093", "papayawhip", "ffefd5", "peachpuff", "ffdab9", "peru", "cd853f", "pink", "ffc0cb", "plum", "dda0dd", "powderblue", "b0e0e6", "purple", "800080", "rebeccapurple", "663399", "red", "ff0000", "rosybrown", "bc8f8f", "royalblue", "4169e1", "saddlebrown", "8b4513", "salmon", "fa8072", "sandybrown", "f4a460", "seagreen", "2e8b57", "seashell", "fff5ee", "sienna", "a0522d", "silver", "c0c0c0", "skyblue", "87ceeb", "slateblue", "6a5acd", "slategray", "708090", "snow", "fffafa", "springgreen", "00ff7f", "steelblue", "4682b4", "tan", "d2b48c", "teal", "008080", "thistle", "d8bfd8", "tomato", "ff6347", "turquoise", "40e0d0", "violet", "ee82ee", "wheat", "f5deb3", "white", "ffffff", "whitesmoke", "f5f5f5", "yellow", "ffff00", "yellowgreen", "9acd32"];
 
-    constructor.ColorToRgbaSetUpNamedColors = function() {
-        if (ColorValidator.namedColorMap === null) {
-                    var ncm = {};
-                    for (var i = 0; i &lt; ColorValidator.nc.length; i += 2) {
-                        ncm[ColorValidator.nc[i]] = ColorValidator.nc[i + 1];
-                    }
-                    ncm.grey = ncm.gray;
-                    ncm.darkgrey = ncm.darkgray;
-                    ncm.darkslategrey = ncm.darkslategray;
-                    ncm.dimgrey = ncm.dimgray;
-                    ncm.lightgrey = ncm.lightgray;
-                    ncm.lightslategrey = ncm.lightslategray;
-                    ncm.slategrey = ncm.slategray;
-                    ColorValidator.namedColorMap = ncm;
-            }
-        return ColorValidator.namedColorMap;
+    constructor.colorToRgbaSetUpNamedColors = function() {
+      if (ColorValidator.namedColorMap === null) {
+        var ncm = {};
+        for (var i = 0; i &lt; ColorValidator.nc.length; i += 2) {
+          ncm[ColorValidator.nc[i]] = ColorValidator.nc[i + 1];
+        }
+        ncm.grey = ncm.gray;
+        ncm.darkgrey = ncm.darkgray;
+        ncm.darkslategrey = ncm.darkslategray;
+        ncm.dimgrey = ncm.dimgray;
+        ncm.lightgrey = ncm.lightgray;
+        ncm.lightslategrey = ncm.lightslategray;
+        ncm.slategrey = ncm.slategray;
+        ColorValidator.namedColorMap = ncm;
+      }
+      return ColorValidator.namedColorMap;
     };
-}(ColorValidator,ColorValidator.prototype));
+  }(ColorValidator, ColorValidator.prototype));
 
-var clampRgba=function(x){
- x[0]=(x[0]&lt;0 ? 0 : Math.min(x[0],1));
- x[1]=(x[1]&lt;0 ? 0 : Math.min(x[1],1));
- x[2]=(x[2]&lt;0 ? 0 : Math.min(x[2],1));
- x[3]=(x[3]&lt;0 ? 0 : Math.min(x[3],1));
- return x;
-};
+  var clampRgba = function(x) {
+    x[0] = x[0] &lt; 0 ? 0 : Math.min(x[0], 1);
+    x[1] = x[1] &lt; 0 ? 0 : Math.min(x[1], 1);
+    x[2] = x[2] &lt; 0 ? 0 : Math.min(x[2], 1);
+    x[3] = x[3] &lt; 0 ? 0 : Math.min(x[3], 1);
+    return x;
+  };
 /**
 * Creates a 4-element array representing a color.  Each element
 * can range from 0 to 1 and specifies the red, green, blue or alpha
@@ -983,52 +994,52 @@ The three components are red, green, blue, and alpha in that order.&lt;/li>
 * than 0 are clamped to 0, and numbers greater than 1 are
 * clamped to 1.
 */
-exports.toGLColor=function(r,g,b,a){
- if((r===null || typeof r==="undefined"))return [0,0,0,0];
- if(typeof r==="string"){
-   var rgba=ColorValidator.ColorToRgba(r) || [0,0,0,0];
-   var mul=1.0/255;
-   rgba[0]*=mul;
-   rgba[1]*=mul;
-   rgba[2]*=mul;
-   rgba[3]*=mul;
-   return clampRgba(rgba);
- }
- if(typeof r==="number" &amp;&amp;
-     typeof g==="number" &amp;&amp; typeof b==="number"){
-   return [r,g,b,(typeof a!=="number") ? 1.0 : a];
- } else if(r.constructor===Array){
-   return clampRgba([r[0]||0,r[1]||0,r[2]||0,
-     (typeof r[3]!=="number") ? 1.0 : r[3]]);
- } else {
-   return clampRgba(r || [0,0,0,0]);
- }
-};
+  exports.toGLColor = function(r, g, b, a) {
+    if(r === null || typeof r === "undefined")return [0, 0, 0, 0];
+    if(typeof r === "string") {
+      var rgba = ColorValidator.colorToRgba(r) || [0, 0, 0, 0];
+      var mul = 1.0 / 255;
+      rgba[0] *= mul;
+      rgba[1] *= mul;
+      rgba[2] *= mul;
+      rgba[3] *= mul;
+      return clampRgba(rgba);
+    }
+    if(typeof r === "number" &amp;&amp;
+     typeof g === "number" &amp;&amp; typeof b === "number") {
+      return [r, g, b, typeof a !== "number" ? 1.0 : a];
+    } else if(r.constructor === Array) {
+      return clampRgba([r[0] || 0, r[1] || 0, r[2] || 0,
+        typeof r[3] !== "number" ? 1.0 : r[3]]);
+    } else {
+      return clampRgba(r || [0, 0, 0, 0]);
+    }
+  };
 }(H3DU));
 
 /** @private */
-H3DU._toContext=function(context){
- "use strict";
-return (context &amp;&amp; context.getContext) ? context.getContext() : context;
+H3DU._toContext = function(context) {
+  "use strict";
+  return context &amp;&amp; context.getContext ? context.getContext() : context;
 };
 /** @private */
-H3DU._isPowerOfTwo=function(a){
-   "use strict";
-if(Math.floor(a)!==a || a&lt;=0)return false;
-   while(a>1 &amp;&amp; (a&amp;1)===0){
-    a>>=1;
-   }
-   return (a===1);
+H3DU._isPowerOfTwo = function(a) {
+  "use strict";
+  if(Math.floor(a) !== a || a &lt;= 0)return false;
+  while(a > 1 &amp;&amp; (a &amp; 1) === 0) {
+    a >>= 1;
+  }
+  return a === 1;
 };
 /** @private */
-H3DU._isIdentityExceptTranslate=function(mat){
-"use strict";
-return (
-    mat[0]===1 &amp;&amp; mat[1] === 0 &amp;&amp; mat[2] === 0 &amp;&amp; mat[3] === 0 &amp;&amp;
+H3DU._isIdentityExceptTranslate = function(mat) {
+  "use strict";
+  return (
+    mat[0] === 1 &amp;&amp; mat[1] === 0 &amp;&amp; mat[2] === 0 &amp;&amp; mat[3] === 0 &amp;&amp;
     mat[4] === 0 &amp;&amp; mat[5] === 1 &amp;&amp; mat[6] === 0 &amp;&amp; mat[7] === 0 &amp;&amp;
     mat[8] === 0 &amp;&amp; mat[9] === 0 &amp;&amp; mat[10] === 1 &amp;&amp; mat[11] === 0 &amp;&amp;
     mat[15] === 1
- );
+  );
 };
 </code></pre>
         </article>
