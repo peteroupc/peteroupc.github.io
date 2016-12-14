@@ -4,7 +4,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math, H3DU.Mesh */
+/* global H3DU */
 // The following was adapted by Peter O. from public-domain
 // source code by Cory Gene Bloyd.
 
@@ -119,7 +119,7 @@ ImplicitSurface.prototype._vMarchTetrahedron=function(mesh, pasTetrahedronPositi
 {
         "use strict";
 var iEdge, iVert0, iVert1, iEdgeFlags, iTriangle, iCorner, iVertex, iFlagIndex = 0;
-        var fOffset, fInvOffset, fValue = 0.0;
+        var fOffset, fInvOffset;
         //Find which vertices are inside of the surface and which are outside
         for(iVertex = 0; iVertex < 4; iVertex++)
         {
@@ -497,8 +497,8 @@ var mx=0;
 ImplicitSurface.prototype._vMarchCube1=function(mesh,fX,fY,fZ,fScaleX,fScaleY,fScaleZ,tmpobj)
 {
  "use strict";
-var  iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
-  var   fOffset;
+var iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
+  var fOffset;
 
         var mx=0;
         var mn=0;
@@ -672,8 +672,6 @@ mesh.mode(H3DU.Mesh.POINTS);
         var xstep=(xmax-xmin)/xsize;
         var ystep=(ymax-ymin)/ysize;
         var zstep=(zmax-zmin)/zsize;
-        var bounds=[0,0,0,0,0,0];
-        var first=true;
         var x,y,z;
         var iX,iY,iZ;
         for(iX=0,x=xmin;iX < xsize; iX+=1,x+=xstep){

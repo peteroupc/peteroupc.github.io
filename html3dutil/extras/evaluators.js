@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math */
+/* global H3DU */
 
 /**
 * Parametric evaluator for a surface of revolution, which results by revolving
@@ -134,7 +134,8 @@ SurfaceOfRevolution.fromFunction=function(func,minval,maxval,axis){
 return new SurfaceOfRevolution({
     "evaluate":function(u){
       return [u,func(u),0];
-    }},minval,maxval,axis);
+    }
+},minval,maxval,axis);
 };
 /**
 * Parametric evaluator for a torus, a special case of a surface of revolution.
@@ -175,7 +176,8 @@ if(!curve)curve={
       var x=innerRadius*curvept[1];
       var y=outerRadius+innerRadius*curvept[0];
       return [x,y,0];
-    }},0,Math.PI,axis);
+    }
+},0,Math.PI,axis);
 };
 
 /**
@@ -198,6 +200,7 @@ if(!curve)curve={
 * rolling circle to the drawing pen.. A prolate hypotrochoid results when
 * distFromInnerCenter is greater than innerRadius.
 */
+/* exported Hypotrochoid */
 function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter){
  "use strict";
 this.outer=outerRadius;
@@ -260,6 +263,7 @@ this.outer=outerRadius;
 * @param {Number} distFromCenter Distance from the center of the
 * rolling circle to the drawing pen.
 */
+/* exported Trochoid */
 function Trochoid(radius, distFromCenter){
  "use strict";
 this.inner=radius;
@@ -303,6 +307,7 @@ this.inner=radius;
 * rolling circle to the drawing pen. A prolate epitrochoid results when
 * distFromInnerCenter is greater than innerRadius.
 */
+/* exported Epitrochoid */
 function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter){
  "use strict";
 this.outer=outerRadius;

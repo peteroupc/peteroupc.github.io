@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math, H3DU._FrenetFrames */
+/* global H3DU */
 H3DU._FrenetFrames = function(func){
  "use strict";
  this.func=func;
@@ -18,7 +18,7 @@ H3DU._FrenetFrames = function(func){
  var isClosed=false;
  var res=50;
  var nextSample=null;
- var firstSample=null;
+
  var lastSample=func.evaluate(1.0);
  var totalLength=0;
  var samples=[];
@@ -37,7 +37,7 @@ H3DU._FrenetFrames = function(func){
   }
   nextSample=(i===res) ? e0 : func.evaluate((i+1)/res);
   samples.push(e0);
-  if(i===0)firstSample=e0;
+ // firstSample=e0;
   var tangent=H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3sub(e01,e0));
   if(t===1){
@@ -103,11 +103,7 @@ var absx=Math.abs(tangent[0]);
  return H3DU.Math.vec3normInPlace(normal);
 };
 H3DU._FrenetFrames._EPSILON=0.000001;
-/**
- * Not documented yet.
- * @param {*} u
- * @memberof! H3DU._FrenetFrames#
-*/
+/** @private */
 H3DU._FrenetFrames.prototype.getSampleAndBasisVectors=function(u){
  "use strict";
  var sample=this.func.evaluate(u);
@@ -268,4 +264,3 @@ var basisVectors=this.tangentFinder.getSampleAndBasisVectors(u);
 };
 /** @alias CurveTube
  @deprecated Use H3DU.CurveTube instead. */
-var CurveTube=H3DU.CurveTube;

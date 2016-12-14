@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Mesh, Promise, console */
+/* global DataView, H3DU, Promise, console */
 
 /**
 * Represents a bitmap font.  This class supports
@@ -301,8 +301,8 @@ var group=new H3DU.ShapeGroup();
 /** @private */
 H3DU.TextFont.prototype._makeTextMeshesInner=function(str,startPos,endPos,xPos,yPos,params,extra,meshesForPage){
  "use strict";
-var height=((typeof params.lineHeight !== "undefined" && params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
- var startXPos=xPos;
+//var height=((typeof params.lineHeight !== "undefined" &&
+//params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
  var lastChar=-1;
  for(var i=startPos;i<endPos;i++){
   var c=str.charCodeAt(i);
@@ -399,9 +399,9 @@ var meshesForPage=[];
  else if(align==="center")align=1;
  else align=0;
  var extra={
-  recipPageWidth:1.0/this.common.scaleW,
-  recipPageHeight:1.0/this.common.scaleH,
-  scale:height/this.common.lineHeight
+  "recipPageWidth":1.0/this.common.scaleW,
+  "recipPageHeight":1.0/this.common.scaleH,
+  "scale":height/this.common.lineHeight
  };
  meshesForPage=[];
  for(var i=0;i<this.pages.length;i++){
@@ -523,7 +523,7 @@ var bytesNeeded=0;
 var lower=0x80;
 var upper=0xbf;
  if(offset>endOffset)throw new Error();
- while (true) {
+ for (;;) {
           if (offset >= endOffset) {
             if (bytesNeeded !== 0) {
               return null;
@@ -619,6 +619,9 @@ var view=new DataView(data.data);
   offset+=5;
   var ch;
   switch(type){
+   default:
+     // unexpected type; ignore
+      break;
    case 1:
     if(size<14){return null;}
     info.fontSize=view.getInt16(offset,true);
@@ -706,14 +709,14 @@ var text=data.data;
   var kernings=[];
   var common=null;
   var fontinfo=null;
-  var firstline=true;
+
   for(var i=0;i<lines.length;i++){
    var e=(/^(\w+)\s+(.*)/).exec(lines[i]);
    if(!e)continue;
    var word=e[1];
    var rest=e[2];
    var hash={};
-   while(true){
+   for (;;) {
      e=(/^((\w+)\=(\"[^\"]+\"|\S+(?:\s+(?![^\s\=]+\=)[^\s\=]+)*)\s*)/).exec(rest);
      if(!e)break;
      var key=e[2];
@@ -778,9 +781,16 @@ if(!textureLoader){
  }
  return H3DU.TextFont.load(fontFileName).then(function(font){
   return font.loadTextures(textureLoader).then(function(r){
-     return Promise.resolve({"url":font.fileUrl,"font":font,"textures":r});
+     return Promise.resolve({
+"url":font.fileUrl,
+"font":font,
+"textures":r
+});
   },function(r){
-     return Promise.reject({"url":font.fileUrl,"results":r});
+     return Promise.reject({
+"url":font.fileUrl,
+"results":r
+});
   });
  });
 };
@@ -840,7 +850,9 @@ if((/\.xml$/i.exec(fontFileName))){
     } else {
      view=new DataView(data.data);
      ret=H3DU.TextFont._loadTextFontInner({
-       "url":data.url,"data":H3DU.TextFont._decodeUtf8(view,0,view.byteLength)});
+       "url":data.url,
+"data":H3DU.TextFont._decodeUtf8(view,0,view.byteLength)
+});
     }
     return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url});
    });
@@ -861,7 +873,7 @@ if((/\.xml$/i.exec(fontFileName))){
 /** @private */
 H3DU.TextFont._textShader=function(){
 "use strict";
-var i;
+
 var shader="";
 shader+="#ifdef GL_OES_standard_derivatives\n";
 shader+="#extension GL_OES_standard_derivatives : enable\n";

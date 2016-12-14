@@ -124,7 +124,7 @@ var LinkedList=function(){
   }
   return this;
  };
- this.pop=function(item){
+ this.pop=function(){
   if(this._last){
    if(this._last.prev)
     this._last.prev.next=null;
@@ -132,7 +132,7 @@ var LinkedList=function(){
   }
   return this;
  };
- this.shift=function(item){
+ this.shift=function(){
   if(this.root){
    if(this.root.next)
     this.root.next.prev=null;
@@ -180,7 +180,7 @@ var PriorityQueue=function(comparer){
    data=this.nodes[k];
    this._size--;
    var x=this.nodes[this._size];
-   while(true){
+   for (;;) {
     var left=1+2*k;
     var right=2*(k+1);
     if(left<this._size){
@@ -234,9 +234,9 @@ var RedBlackTreeNode=function(data){
       return r;
     } else {
       var p=this.p;
-      var ch=this;
-      while((p!==null && typeof p!=="undefined") && ch===p.left){
-        ch=p;
+      var that=this;
+      while((p!==null && typeof p!=="undefined") && that===p.left){
+        that=p;
         p=p.p;
       }
       return p;
@@ -249,9 +249,9 @@ var RedBlackTreeNode=function(data){
       return r;
     } else {
       var p=this.p;
-      var ch=this;
-      while((p!==null && typeof p!=="undefined") && ch===p.right){
-        ch=p;
+      var that=this;
+      while((p!==null && typeof p!=="undefined") && that===p.right){
+        that=p;
         p=p.p;
       }
       return p;
@@ -324,8 +324,8 @@ RedBlackTree._single=function(root,dir){
 };
 /** @private */
 RedBlackTree._double=function(root,dir){
-  root.setLink(!dir,RedBlackTree._single ( root.link(!dir), !dir ));
-  return RedBlackTree._single ( root, dir );
+  root.setLink(!dir,RedBlackTree._single( root.link(!dir), !dir ));
+  return RedBlackTree._single( root, dir );
 };
 /**
  * Not documented yet.
@@ -437,22 +437,20 @@ RedBlackTree.prototype.insert=function(data){
     g = p = null;
     t.setLink(true,q=this.root);
 
-  var iter=0;
     /* Search down the tree for a place to insert */
-    while(true){
-      iter+=1;
+    for (;;) {
       if ( (q===null || typeof q==="undefined") ) {
         /* Insert a new node at the first null link */
         p.setLink(dir,q = new RedBlackTreeNode(data));
       }
-      else if ( RedBlackTree._red ( q.left ) && RedBlackTree._red ( q.right ) ) {
+      else if ( RedBlackTree._red( q.left ) && RedBlackTree._red( q.right ) ) {
         /* Simple red violation: color flip */
         q.red = true;
         q.left.red = false;
         q.right.red = false;
       }
 
-      if ( RedBlackTree._red ( q ) && RedBlackTree._red ( p ) ) {
+      if ( RedBlackTree._red( q ) && RedBlackTree._red( p ) ) {
         /* Hard red violation: rotations necessary */
         var dir2 = t.right === g;
         if ( q === p.link(last) )
@@ -536,7 +534,6 @@ var Polygon=function(path,flatness){
 };
 /** private */
 Polygon._Contour=function(subpath){
- var vertLength=subpath.length;
   /*
  // For convenience, eliminate the last
  // vertex if it matches the first vertex
@@ -665,7 +662,6 @@ Polygon.PointChain.prototype.linkPointChain=function(chain){
  * @memberof! Connector#
 */
 Connector.prototype.add=function(s){
-  var changed=false;
   var j=this.openPolygons.first();
   while(j){
     if(j.data.linkSegment(s)) {
@@ -892,16 +888,16 @@ Clipper.prototype.compute=function(op){
    var it,sli,prev,next;
    var connector=new Connector(); // to connect the edge solutions
   var e;
-  var MINMAXX = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
+  var minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
   while(this.eq.size()>0) {
     e = this.eq.pop();
     //console.log("Process event:  "+e.toString())
     // optimization 1
-    if((op === Clipper.INTERSECTION &&(e.p[0]> Clipper.MINMAXX)) ||
+    if((op === Clipper.INTERSECTION &&(e.p[0]> minMaxx)) ||
        (op === Clipper.DIFFERENCE && e.p[0]> maxsubj[0])) {
       return connector.toPolygon(result);
     }
-    if((op === Clipper.UNION &&(e.p[0]> Clipper.MINMAXX))) {
+    if((op === Clipper.UNION &&(e.p[0]> minMaxx))) {
       // add all the non-processed line segments to the result
       if(!e.left)
         connector.add(e.segment());
@@ -1095,8 +1091,7 @@ Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
       }
     }
     return ret;
-  } else {
-    if ((t7 === 0.0)) {
+  } else if ((t7 === 0.0)) {
       var t15 = ((((b1x - a1x) * t2) + ((b1y - a1y) * t3)) / t6);
       if (((t15 >= 0.0) && (t15 <= 1.0))) {
         var t16 = [(a1x + t2 * t15), (a1y + t3 * t15)];
@@ -1109,7 +1104,6 @@ Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
       }
       return ret;
     }
-  }
   var t21 = ((t2 * t5) - t4 * t3);
   var t22 = b1x - a1x;
   var t23 = b1y - a1y;
@@ -1369,4 +1363,4 @@ GraphicsPath.prototype.xor=function(path,flatness){
 
 }
 
-})(this);
+}(this));

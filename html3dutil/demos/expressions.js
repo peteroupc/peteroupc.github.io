@@ -1,3 +1,4 @@
+/* global resimplify */
 /*
 Written by Peter O. in 2015.
 
@@ -10,7 +11,7 @@ var Extras={
 "compact":function(arr){
  "use strict";
 var fillOffset=0;
- var newLength=arr.length;
+
  for(var i=0;i<arr.length;i++){
   if(fillOffset!==i && arr[i]!==null){
    arr[fillOffset]=arr[i];
@@ -144,7 +145,7 @@ this.nodes = [];
  */
 Expression.isExpr=function(x) {
       "use strict";
-var a, b, c, d;
+
       if(!x || typeof x==="undefined")return false;
       return (x instanceof Operation || x instanceof Variable || x instanceof Constant);
     };
@@ -163,7 +164,7 @@ return Expression.simplifyNodes(this.nodes);
 Expression.simplifyNodes=function(nodes) {
       "use strict";
       var negative;
-var a, b, c, d, e, passes = null, pass__ = null, pass = null, prevNode = null, prevNodeIndex = null, i = null, node = null, nextNode = null, op = null;
+var d,  passes = null, pass__ = null, pass = null, prevNode = null, prevNodeIndex = null, i = null, node = null, nextNode = null, op = null;
       // Eliminate expression nodes
       for(i=0;i<nodes.length;i++){
        node=nodes[i];
@@ -185,7 +186,7 @@ var a, b, c, d, e, passes = null, pass__ = null, pass = null, prevNode = null, p
       i = nodes.length-1;
       while (i>=0) {
       node = nodes[i];
-      if (!(c = node)) {
+      if (!(node)) {
         i = i+(1);
         continue;}
       if (node instanceof Operator && node.name==="pow") {
@@ -228,7 +229,7 @@ var a, b, c, d, e, passes = null, pass__ = null, pass = null, prevNode = null, p
       i = 0;
       while (i<(nodes.length)) {
       node = nodes[i];
-      if (!(c = node)) {
+      if (!(node)) {
         i = i+(1);
         continue;}
       if ((d = node instanceof Operator, d !== false && (d!==null && typeof d!=="undefined") ?Extras.includes(pass,node.name) : d)) {
@@ -306,18 +307,18 @@ return this.operator===(op);
 */
 Operation.prototype.equals=function(x) {
       "use strict";
-var a, b, i__ = null, i = null;
+var i = null;
 
-      if (!(a = x instanceof Operation)) {
+      if (!(x instanceof Operation)) {
         return false;}
-      if (!(a = this.nodes.length===(x.nodes.length))) {
+      if (!(this.nodes.length===(x.nodes.length))) {
         return false;}
-      if (!(a = this.negative===(x.negative))) {
+      if (!(this.negative===(x.negative))) {
         return false;}
-      if (!(a = this.operator===(x.operator))) {
+      if (!(this.operator===(x.operator))) {
         return false;}
       for (i=0;i<(this.nodes.length);i++){
-      if (!(b = this.nodes[i]===(x.nodes[i]))) {
+      if (!(this.nodes[i]===(x.nodes[i]))) {
         return false;}}
       return true;
     };
@@ -327,8 +328,8 @@ var a, b, i__ = null, i = null;
 */
 Operation.prototype.simplify=function() {
       "use strict";
-var a, b, c, d, e, f, g;
-var done = null, resimplify = null, origlength = null, constVals = null, constValsIndex = null;
+var b, c, d, e, f, g;
+var done = null,  origlength = null, constVals = null, constValsIndex = null;
 var i = null;
 var node;
 var n__;
@@ -336,13 +337,13 @@ var n = null;
 var realnode = null;
 var cv;
 var haveNonconst = null;
-var negative;
+
 var neg;
 var j;
       Expression.simplifyNodes(this.nodes);
-      if (((a = (((b = (((c = this.operator==="plus") !== false && (c!==null && typeof c!=="undefined")) ? c : this.operator==="mul")) !== false && (b!==null && typeof b!=="undefined")) ? b : this.operator==="div")))) {
+      if ((((((b = (((c = this.operator==="plus") !== false && (c!==null && typeof c!=="undefined")) ? c : this.operator==="mul")) !== false && (b!==null && typeof b!=="undefined")) ? b : this.operator==="div")))) {
         done = false;
-        resimplify = false;
+ // resimplify = false;
         while (!(b = done)) {
         origlength = this.nodes.length;
         done = true;
@@ -465,13 +466,13 @@ var j;
 */
 Operation.prototype.degen=function() {
       "use strict";
-var a, b, c, cv = null;
+var cv = null;
       this.simplify();
       if (this.operator==="plus" || this.operator==="mul" || this.operator==="div") {
         if (this.nodes.length===(1) && !this.negative) {
           return this.nodes[0].degen();}}
       cv = this.constantValue();
-      if (!(a = cv===(null))) {
+      if (!(cv===(null))) {
         return new Constant(cv);}
       return this;
     };
@@ -481,9 +482,9 @@ var a, b, c, cv = null;
 */
 Operation.prototype.constantValue=function() {
       "use strict";
-var a, b, c, val = null, node__ = null, node = null, cv = null;
+var b, c, val = null, node__ = null, node = null, cv = null;
 
-      if (((a = (((b = (((c = this.operator==="plus") !== false && (c!==null && typeof c!=="undefined")) ? c : this.operator==="mul")) !== false && (b!==null && typeof b!=="undefined")) ? b : this.operator==="div")))) {
+      if ((((((b = (((c = this.operator==="plus") !== false && (c!==null && typeof c!=="undefined")) ? c : this.operator==="mul")) !== false && (b!==null && typeof b!=="undefined")) ? b : this.operator==="div")))) {
         val = null;
         for (node__=0;node__<(this.nodes.length);node__++){
         node=this.nodes[node__];
@@ -520,9 +521,9 @@ var a, b, c, val = null, node__ = null, node = null, cv = null;
  * @param {*} operation
  * @param {*} args
  */
-Operation.func=function(operation,args) {
+Operation.func=function(operation) {
       "use strict";
-var a, op = null, arg__ = null, arg = null;
+var op = null,  arg = null;
       op = new Operation(operation);
       for (arg=1;arg<arguments.length;arg++){
        op.nodes.push(arguments[arg]);
@@ -537,7 +538,7 @@ var a, op = null, arg__ = null, arg = null;
 */
 Operation.prototype.combineOp=function(operation,x) {
       "use strict";
-var a, op = null;
+var op = null;
 
       if (typeof x==="number") {
         x = new Constant(x);}
@@ -573,7 +574,7 @@ var op=new Operation(this.operator);
 */
 Operation.prototype.negate=function() {
       "use strict";
-var a, b, op = null, node__ = null, node = null;
+var op = null, node__ = null;
       op = new Operation(this.operator);
       if(op.operator==="plus"){
        for (node__=0;node__<(this.nodes.length);node__++){
@@ -616,14 +617,14 @@ return this.combineOp("plus", x);
 */
 Operation.prototype.multiply=function(x) {
       "use strict";
-var a;
+
       if (this.operator==="div" && this.nodes.length === 2){
         if(this.nodes[1].equals(x)){
           return this.nodes[0];
         }
      }
       if (this.operator==="mul"){
-        var idx=-1;
+
         for(var i=0;i<this.nodes.length;i++){
            if(this.nodes[i].equals(x)){
               var c=this.copy();
@@ -651,7 +652,7 @@ return this.combineOp("div", x);
 */
 Operation.prototype.toJSString=function() {
       "use strict";
-var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, op = null;
+var b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, op = null;
 var p1;
       opArray = [];
       for (i__=0;i__<(this.nodes.length);i__++){
@@ -676,20 +677,20 @@ var p1;
         if (this.negative) { ret = ret+(")");}
         return ret;
       } else if (this.operator==="mul") {
-        return ((a = this.negative) ? ("-") : (""))+(opArray.join("*"));
+        return ((this.negative) ? ("-") : (""))+(opArray.join("*"));
       } else if (this.operator==="div") {
-        return ((a = this.negative) ? ("-") : (""))+(opArray.join("/"));
+        return ((this.negative) ? ("-") : (""))+(opArray.join("/"));
       } else if (this.operator==="sqrt") {
         p1=opArray[0];
-        return ((a = this.negative) ? ("-") : (""))+"((("+p1+")<0 ? -1 : 1)*Math.pow(Math.abs("+p1+"),0.5))";
+        return ((this.negative) ? ("-") : (""))+"((("+p1+")<0 ? -1 : 1)*Math.pow(Math.abs("+p1+"),0.5))";
       } else if (this.operator==="pow") {
         p1=opArray[0];
         var p2=opArray[1];
-        return ((a = this.negative) ? ("-") : (""))+"((("+p1+")<0 ? -1 : 1)*Math.pow(Math.abs("+p1+"),"+p2+"))";
+        return ((this.negative) ? ("-") : (""))+"((("+p1+")<0 ? -1 : 1)*Math.pow(Math.abs("+p1+"),"+p2+"))";
       } else {
         var oper=this.operator;
         if(oper==="ln")oper="log";
-        return ((a = this.negative) ? ("-") : (""))+("Math." + oper + "(")+(opArray.join(", "))+(")");
+        return ((this.negative) ? ("-") : (""))+("Math." + oper + "(")+(opArray.join(", "))+(")");
       }
     };
 /**
@@ -698,7 +699,7 @@ var p1;
 */
 Operation.prototype.toString=function() {
       "use strict";
-var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, op = null;
+var b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, op = null;
 
       opArray = [];
       for (i__=0;i__<(this.nodes.length);i__++){
@@ -719,13 +720,13 @@ var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, 
         if (this.negative) { ret = ret+(")");}
         return ret;
       } else if (this.operator==="mul") {
-        return ((a = this.negative) ? ("-") : (""))+(opArray.join("*"));
+        return ((this.negative) ? ("-") : (""))+(opArray.join("*"));
       } else if (this.operator==="div") {
-        return ((a = this.negative) ? ("-") : (""))+(opArray.join("/"));
+        return ((this.negative) ? ("-") : (""))+(opArray.join("/"));
       } else if (this.operator==="pow") {
-        return ((a = this.negative) ? ("-") : (""))+(opArray.join("^"));
+        return ((this.negative) ? ("-") : (""))+(opArray.join("^"));
         } else {
-        return ((a = this.negative) ? ("-") : (""))+("" + (this.operator) + "(")+(opArray.join(", "))+(")");
+        return ((this.negative) ? ("-") : (""))+("" + (this.operator) + "(")+(opArray.join(", "))+(")");
       }
     };
 
@@ -734,7 +735,7 @@ var a, b, c, d, opArray = null, i__ = null, i = null, paren = null, ret = null, 
  * @param {*} op
  * @memberof! Variable#
 */
-Variable.prototype.isOperation=function(op){
+Variable.prototype.isOperation=function(){
       "use strict";
 return false;
     };
@@ -761,9 +762,8 @@ return null;
 */
 Variable.prototype.equals=function(x) {
       "use strict";
-var a;
 
-      if (!(a = x instanceof Variable)) {
+      if (!(x instanceof Variable)) {
         return false;}
       if ((this.negative!==(x.negative))) {
         return false;}
@@ -783,8 +783,8 @@ return this.toString();
 */
 Variable.prototype.toString=function() {
       "use strict";
-var a;
-      return ((a = this.negative) ? ("-") : (""))+(this.name);
+
+      return ((this.negative) ? ("-") : (""))+(this.name);
     };
 /**
  * Not documented yet.
@@ -794,7 +794,7 @@ var a;
 */
 Variable.prototype.combineOp=function(operation,x) {
       "use strict";
-var a, op = null, cv = null;
+var op = null, cv = null;
 
       if (typeof x==="number") {
         x = new Constant(x);}
@@ -837,7 +837,7 @@ return this.combineOp("plus", x);
 */
 Variable.prototype.negate=function() {
       "use strict";
-var a, b, v = null;
+var v = null;
 
       v = new Variable(this.name);
       v.negative=!this.negative;
@@ -850,7 +850,6 @@ var a, b, v = null;
 */
 Variable.prototype.subtract=function(x) {
       "use strict";
-var a;
 
       return this.add((typeof x==="number") ? (-x) : (x.negate()));
     };
@@ -886,7 +885,7 @@ return this;
  * @param {*} op
  * @memberof! Constant#
 */
-Constant.prototype.isOperation=function(op){
+Constant.prototype.isOperation=function(){
       "use strict";
 return false;
     };
@@ -897,9 +896,8 @@ return false;
 */
 Constant.prototype.equals=function(x) {
       "use strict";
-var a;
 
-      if (!(a = x instanceof Constant)) {
+      if (!(x instanceof Constant)) {
         return false;}
       return this.value===(x.value);
     };
@@ -936,7 +934,7 @@ var vi = this.value.toString();
 */
 Constant.prototype.toString=function() {
       "use strict";
-var a, vi = null;
+var vi = null;
       if (this.name) {
         return this.name.toString();}
       vi = this.value.toString();
@@ -952,14 +950,14 @@ var a, vi = null;
 */
 Constant.prototype.combineOp=function(operation,x) {
       "use strict";
-var a, op = null;
+var op = null;
 
       if (typeof x==="number") {
         x = new Constant(x);}
       op = new Operation(operation);
       op.nodes.push(this);
       op.nodes.push(x);
-      if (!(a = op.constantValue()===(null))) {
+      if (!(op.constantValue()===(null))) {
         return new Constant(op.constantValue());}
       return op.degen();
     };
@@ -978,7 +976,6 @@ return new Constant(-this.value);
 */
 Constant.prototype.add=function(x) {
       "use strict";
-var a;
 
       if (typeof x==="number") {
         return new Constant(x+(this.constantValue()));}
@@ -991,7 +988,7 @@ var a;
 */
 Constant.prototype.subtract=function(x) {
       "use strict";
-var a;
+
       return this.add((typeof x==="number") ? (-x) : (x.negate()));
     };
 /**
@@ -1001,7 +998,6 @@ var a;
 */
 Constant.prototype.multiply=function(x) {
       "use strict";
-var a;
 
       if (typeof x==="number") {
         return new Constant(x*(this.constantValue()));}
@@ -1014,7 +1010,6 @@ var a;
 */
 Constant.prototype.divide=function(x) {
       "use strict";
-var a;
 
       if (typeof x==="number") {
         return new Constant(x/(this.constantValue()));}
@@ -1023,11 +1018,11 @@ var a;
 
   var getExpression = function(expr) {
     "use strict";
-var a, b, c, d, e, test = null, tokens = null, token = null, expressions = null, i = null, lastexpr = null, prevexpr = null, expression = null, ret = null;
+var c, d, e, test = null, tokens = null, token = null, expressions = null, i = null, lastexpr = null, prevexpr = null, expression = null, ret = null;
 
     test = [expr];
     tokens = [];
-    while (!(b = (token = nextToken(test))[0]==="end")) {
+    while (!((token = nextToken(test))[0]==="end")) {
     tokens.push(token);}
     expressions = [new Expression()];
     i = 0;
@@ -1037,8 +1032,8 @@ var a, b, c, d, e, test = null, tokens = null, token = null, expressions = null,
       throw new Error("unbalanced");}
     lastexpr = expressions[expressions.length-(1)];
     if (token[0]==="lparen") {
-      prevexpr = (b = (lastexpr.nodes.length===(0))) ? (null) : (lastexpr.nodes[lastexpr.nodes.length-(1)]);
-      if (((b = ((c = prevexpr !== false && (prevexpr!==null && typeof prevexpr!=="undefined")) ? ((((d = (((e = prevexpr instanceof Constant) !== false && (e!==null && typeof e!=="undefined")) ? e : prevexpr instanceof Variable)) !== false && (d!==null && typeof d!=="undefined")) ? d : prevexpr instanceof Expression)) : c)))) {
+      prevexpr = ((lastexpr.nodes.length===(0))) ? (null) : (lastexpr.nodes[lastexpr.nodes.length-(1)]);
+      if (((((c = prevexpr !== false && (prevexpr!==null && typeof prevexpr!=="undefined")) ? ((((d = (((e = prevexpr instanceof Constant) !== false && (e!==null && typeof e!=="undefined")) ? e : prevexpr instanceof Variable)) !== false && (d!==null && typeof d!=="undefined")) ? d : prevexpr instanceof Expression)) : c)))) {
         lastexpr.nodes.push(new Operator("mul"));}
       expressions.push(new Expression());
     } else if (token[0]==="rparen") {
@@ -1047,14 +1042,14 @@ var a, b, c, d, e, test = null, tokens = null, token = null, expressions = null,
         throw new Error("unbalanced");}
       expressions[expressions.length-(1)].nodes.push(lastexpr);
     } else if (token[0]==="function") {
-      if (!(((b = (((c = i+(1)>=(tokens.length)) !== false && (c!==null && typeof c!=="undefined")) ? c : tokens[i+(1)][0]==="lparen"))))) {
+      if (!((((((c = i+(1)>=(tokens.length)) !== false && (c!==null && typeof c!=="undefined")) ? c : tokens[i+(1)][0]==="lparen"))))) {
         throw new Error("left paren expected");}
       i = i+(1);
       expressions.push(new Operation(token[1]));
     } else if (token[0]==="constant") {
       if (token[1]<(0)) {
-        prevexpr = (b = (lastexpr.nodes.length===(0))) ? (null) : (lastexpr.nodes[lastexpr.nodes.length-(1)]);
-        if (((b = ((c = prevexpr !== false && (prevexpr!==null && typeof prevexpr!=="undefined")) ?
+        prevexpr = ((lastexpr.nodes.length===(0))) ? (null) : (lastexpr.nodes[lastexpr.nodes.length-(1)]);
+        if (((((c = prevexpr !== false && (prevexpr!==null && typeof prevexpr!=="undefined")) ?
           !((d = prevexpr instanceof Operator, d !== false && (d!==null && typeof d!=="undefined") ?prevexpr.name==="pow" : d)) : c)))) {
           lastexpr.nodes.push(new Operator("plus"));}
         lastexpr.nodes.push(new Constant(token[1]));
@@ -1062,13 +1057,13 @@ var a, b, c, d, e, test = null, tokens = null, token = null, expressions = null,
         lastexpr.nodes.push(new Constant(token[1]));
       }
     } else if (token[0]==="variable") {
-      prevexpr = (b = (lastexpr.nodes.length===(0))) ? (null) : (lastexpr.nodes[lastexpr.nodes.length-(1)]);
-      if (((b = ((c = prevexpr !== false && (prevexpr!==null && typeof prevexpr!=="undefined")) ? ((((d = (((e = prevexpr instanceof Constant) !== false && (e!==null && typeof e!=="undefined")) ? e : prevexpr instanceof Variable)) !== false && (d!==null && typeof d!=="undefined")) ? d : prevexpr instanceof Expression)) : c)))) {
+      prevexpr = ((lastexpr.nodes.length===(0))) ? (null) : (lastexpr.nodes[lastexpr.nodes.length-(1)]);
+      if (((((c = prevexpr !== false && (prevexpr!==null && typeof prevexpr!=="undefined")) ? ((((d = (((e = prevexpr instanceof Constant) !== false && (e!==null && typeof e!=="undefined")) ? e : prevexpr instanceof Variable)) !== false && (d!==null && typeof d!=="undefined")) ? d : prevexpr instanceof Expression)) : c)))) {
         lastexpr.nodes.push(new Operator("mul"));}
       lastexpr.nodes.push(new Variable(token[1]));
     } else if (token[0]==="knownconstant") {
-      prevexpr = (b = (lastexpr.nodes.length===(0))) ? (null) : (lastexpr.nodes[lastexpr.nodes.length-(1)]);
-      if (((b = ((c = prevexpr !== false && (prevexpr!==null && typeof prevexpr!=="undefined")) ? ((((d = (((e = prevexpr instanceof Constant) !== false && (e!==null && typeof e!=="undefined")) ? e : prevexpr instanceof Variable)) !== false && (d!==null && typeof d!=="undefined")) ? d : prevexpr instanceof Expression)) : c)))) {
+      prevexpr = ((lastexpr.nodes.length===(0))) ? (null) : (lastexpr.nodes[lastexpr.nodes.length-(1)]);
+      if (((((c = prevexpr !== false && (prevexpr!==null && typeof prevexpr!=="undefined")) ? ((((d = (((e = prevexpr instanceof Constant) !== false && (e!==null && typeof e!=="undefined")) ? e : prevexpr instanceof Variable)) !== false && (d!==null && typeof d!=="undefined")) ? d : prevexpr instanceof Expression)) : c)))) {
         lastexpr.nodes.push(new Operator("mul"));}
       lastexpr.nodes.push(new Constant(null, token[1]));
     } else {
@@ -1078,7 +1073,7 @@ var a, b, c, d, e, test = null, tokens = null, token = null, expressions = null,
       lastexpr.nodes.push(new Operator(token[0]));
     }
     i = i+(1);}
-    if (!(a = expressions.length===(1))) {
+    if (!(expressions.length===(1))) {
       throw new Error("unbalanced");}
     expression = expressions[0];
     expression.simplify();
@@ -1087,7 +1082,7 @@ var a, b, c, d, e, test = null, tokens = null, token = null, expressions = null,
   };
   var getSingleVariable = function(op, variable) {
     "use strict";
-var a, b, i__ = null, i = null, node = null;
+var i = null, node = null;
 
     for (i=0;i<op.length();i++){
     node = op.get(i);
@@ -1104,7 +1099,7 @@ var a, b, i__ = null, i = null, node = null;
   var findPartialDerivative = function(expr, differential) {
     "use strict";
 var product = function(expr, start, count){
-      var a, ret = null, i__ = null, i = null;
+      var ret = null,  i = null;
       if (count===(1)) {
         return expr.get(start);}
       ret = new Constant(1);
@@ -1113,7 +1108,7 @@ var product = function(expr, start, count){
       return ret;
     };
     var quotient = function(expr, start, count){
-    var a, ret = null, i__ = null, i = null;
+    var ret = null,  i = null;
 
     if (count===(1)) {
       return expr.get(start);}
@@ -1123,11 +1118,11 @@ var product = function(expr, start, count){
     return ret;
   };
 
-    var a, deriv1 = null, deriv2 = null, cutoff = null, e0 = null, e1 = null, sq = null, ops = null, i = null;
+    var deriv1 = null, deriv2 = null, cutoff = null, e0 = null, e1 = null, sq = null, ops = null, i = null;
 var ex,cv;
 var ret;
     if(typeof differential==="string")differential=new Variable(differential);
-    if (!(a = expr.constantValue()===(null))) {
+    if (!(expr.constantValue()===(null))) {
       return new Constant(0);
     } else if (expr.isOperation("pow")) {
       if(expr.get(1).constantValue()!==null && expr.get(0).constantValue()===null){
@@ -1150,7 +1145,7 @@ var ret;
            .multiply(expr.negative ? -1 : 1),differential);
     } else if (expr instanceof Variable) {
       if(expr.name===differential.name){
-        return new Constant((a = expr.negative) ? (-1) : (1));
+        return new Constant((expr.negative) ? (-1) : (1));
       } else {
         // other variables are treated as constants
         return new Constant(0);
@@ -1244,6 +1239,7 @@ var ret;
     return expr;
   };
 
+/* exported normalCalcExpr */
   function normalCalcExpr(vecExpr){
    "use strict";
 var varu=new Variable("u");

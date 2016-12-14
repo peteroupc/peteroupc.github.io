@@ -15,6 +15,76 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/* global H3DU */
+
+/** @private */
+H3DU.FrameBufferInfo = function(width, height){
+"use strict";
+ if(width&lt;0 || height&lt;0)throw new Error("width or height negative");
+ this.width=width;
+ this.height=height;
+};
+/** @private */
+H3DU.FrameBufferInfo.prototype.resize=function(width,height){
+ "use strict";
+ width=Math.ceil(width);
+ height=Math.ceil(height);
+ this.width=width;
+ this.height=height;
+};
+/** @private */
+H3DU.FrameBufferInfo.prototype.getWidth=function(){
+"use strict";
+ return this.width;
+};
+/** @private */
+H3DU.FrameBufferInfo.prototype.getHeight=function(){
+"use strict";
+ return this.height;
+};
+
+/** @private */
+H3DU.FrameBufferLoader=function(){
+"use strict";
+ this._frameBuffers=[];
+};
+/** @private */
+H3DU.FrameBufferLoader.prototype.mapFrameBuffer=function(info, context){
+"use strict";
+ var fb;
+ for(var i=0;i&lt;this._frameBuffers.length;i++){
+  fb=this._frameBuffers[i];
+  if(fb[0]===info &amp;&amp; fb[1]===context) {
+   return fb[2];
+  }
+ }
+ fb=new H3DU.FrameBuffer(context,info.width,info.height);
+ return fb;
+};
+/** @private */
+H3DU.FrameBufferLoader.prototype.dispose=function(){
+"use strict";
+ for(var i=0;i&lt;this._frameBuffers.length;i++){
+   this._frameBuffers[i][2].dispose();
+ }
+ this._frameBuffers=[];
+};
+/** @private */
+H3DU.FrameBufferLoader.prototype.bind=function(info,context){
+"use strict";
+ if((info !== null &amp;&amp; typeof info !== "undefined")){
+  var fc=this.mapFrameBuffer(info,context);
+  context.activeTexture(context.TEXTURE0+fc.textureUnit);
+  context.bindFramebuffer(
+    context.FRAMEBUFFER,fc.buffer);
+  context.framebufferTexture2D(
+   context.FRAMEBUFFER,context.COLOR_ATTACHMENT0,
+   context.TEXTURE_2D,fc.colorTexture,0);
+  context.framebufferRenderbuffer(
+   context.FRAMEBUFFER,context.DEPTH_ATTACHMENT,
+   context.RENDERBUFFER,fc.depthbuffer);
+ }
+};
+
 /**
 * Represents an off-screen frame buffer.&lt;p>
 * When H3DU.FrameBuffer's
@@ -48,7 +118,7 @@ H3DU.FrameBuffer = function(context, width, height){
 /** @private */
 H3DU.FrameBuffer.prototype._init=function(context,width,height){
  "use strict";
-this.buffer=context.createFramebuffer();
+ this.buffer=context.createFramebuffer();
  // create color texture
  this.colorTexture = context.createTexture();
  /** The frame buffer's width.
@@ -102,13 +172,24 @@ this.buffer=context.createFramebuffer();
 */
 H3DU.FrameBuffer.prototype.resize=function(width,height){
  "use strict";
-width=Math.ceil(width);
+ width=Math.ceil(width);
  height=Math.ceil(height);
  if(width!==this.width || height!==this.height){
   this.dispose();
   this._init(this.context,width,height);
  }
  return this;
+};
+
+/** @private */
+H3DU.FrameBuffer.prototype.getWidth=function(){
+"use strict";
+ return this.width;
+};
+/** @private */
+H3DU.FrameBuffer.prototype.getHeight=function(){
+"use strict";
+ return this.height;
 };
 
 /**
@@ -121,24 +202,14 @@ H3DU.FrameBuffer.prototype.getContext=function(){
 return this.context;
 };
 /**
- * Binds this frame buffer to the WebGL context associated with
- * it.  Future draw calls that use the WebGL context will be rendered
- * to this frame buffer until it's unbound with the {@link H3DU.FrameBuffer#unbind}
- * method.
+ * Has no effect. (Previously, bound this frame buffer to the WebGL context associated with
+ * it.)
  * @returns {H3DU.FrameBuffer} This object.
  * @memberof! H3DU.FrameBuffer#
 */
 H3DU.FrameBuffer.prototype.bind=function(){
   "use strict";
- this.context.activeTexture(this.context.TEXTURE0+this.textureUnit);
- this.context.bindFramebuffer(
-    this.context.FRAMEBUFFER,this.buffer);
- this.context.framebufferTexture2D(
-   this.context.FRAMEBUFFER,this.context.COLOR_ATTACHMENT0,
-   this.context.TEXTURE_2D,this.colorTexture,0);
- this.context.framebufferRenderbuffer(
-   this.context.FRAMEBUFFER,this.context.DEPTH_ATTACHMENT,
-   this.context.RENDERBUFFER,this.depthbuffer);
+ console.log("FrameBuffer bind method has no effect.");
  return this;
 };
 /**
@@ -204,7 +275,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

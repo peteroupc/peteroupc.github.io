@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Mesh, H3DU.ShapeGroup, JSON, Material, Promise */
+/* global H3DU, JSON, Promise */
 /**
 * JSON exporter of graphics meshes.
 * <p>This class is considered a supplementary class to the
@@ -65,10 +65,15 @@ function colorToHex(x){
  var texcoords=[[]];
  var json={
    "metadata":{"formatVersion":3.1},
-   "materials":[{"DbgColor":0xffffff, "DbgIndex":0,
-     "DbgName":"Untitled", "colorDiffuse":[1,1,1],
-     "colorAmbient":[1,1,1],"colorSpecular":[1,1,1],
-     "specularCoef":5}]
+   "materials":[{
+"DbgColor":0xffffff,
+"DbgIndex":0,
+     "DbgName":"Untitled",
+"colorDiffuse":[1,1,1],
+     "colorAmbient":[1,1,1],
+"colorSpecular":[1,1,1],
+     "specularCoef":5
+}]
  };
  json.faces=faces;
  json.vertices=vertices;
@@ -178,25 +183,25 @@ var shininess=1.0;
  var textureName=null;
  var specularName=null;
  var normalName=null;
- if(mtl.hasOwnProperty("specularCoef")){
+ if({}.hasOwnProperty.call(mtl,"specularCoef")){
   shininess=mtl.specularCoef;
  }
- if(mtl.hasOwnProperty("colorDiffuse")){
+ if({}.hasOwnProperty.call(mtl,"colorDiffuse")){
   diffuse=mtl.colorDiffuse;
  }
- if(mtl.hasOwnProperty("colorAmbient")){
+ if({}.hasOwnProperty.call(mtl,"colorAmbient")){
   ambient=mtl.colorAmbient;
  }
- if(mtl.hasOwnProperty("mapDiffuse")){
+ if({}.hasOwnProperty.call(mtl,"mapDiffuse")){
   textureName=MeshJSON._checkPath(path,mtl.mapDiffuse);
  }
- if(mtl.hasOwnProperty("mapSpecular")){
+ if({}.hasOwnProperty.call(mtl,"mapSpecular")){
   specularName=MeshJSON._checkPath(path,mtl.mapSpecular);
  }
- if(mtl.hasOwnProperty("mapNormal")){
+ if({}.hasOwnProperty.call(mtl,"mapNormal")){
   normalName=MeshJSON._checkPath(path,mtl.mapNormal);
  }
- if(mtl.hasOwnProperty("colorEmissive")){
+ if({}.hasOwnProperty.call(mtl,"colorEmissive")){
   var ke=mtl.colorEmissive;
   if(ke.length===1){
    emission=[ke,ke,ke];
@@ -204,25 +209,19 @@ var shininess=1.0;
    emission=(ke);
   }
  }
- if(mtl.hasOwnProperty("colorSpecular")){
+ if({}.hasOwnProperty.call(mtl,"colorSpecular")){
   specular=(mtl.colorSpecular);
  }
  var ret=new H3DU.Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
-  ret=ret.setParams({
-   "texture":textureName
-  });
+  ret=ret.setParams({"texture":textureName});
  }
  if(specularName){
-  ret=ret.setParams({
-   "specularMap":specularName
-  });
+  ret=ret.setParams({"specularMap":specularName});
  }
  if(normalName){
-  ret=ret.setParams({
-   "normalMap":normalName
-  });
+  ret=ret.setParams({"normalMap":normalName});
  }
  return ret;
 };
@@ -290,7 +289,7 @@ function convHexColor(c){
    }
   } else if(json.faces){
    var meshes=[];
-   var mode=-1;
+
    var materials=[];
    if(json.materials && json.materials.length>0){
     for(i=0;i<json.materials.length;i++){

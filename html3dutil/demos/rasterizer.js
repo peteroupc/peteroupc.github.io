@@ -1,7 +1,7 @@
 /*
 * Experimental renderer using the HTML 2D Canvas.
 */
-/* global H3DU, H3DU.Math, H3DU.Mesh, H3DU.Scene3D, H3DU.Shape, H3DU.ShapeGroup */
+/* global Float32Array, H3DU, Uint8Array */
 /*
 // Rasterizer adapted by Peter O. from public domain code by
 // castanyo@yahoo.es, in the file Raster.cpp.

@@ -1,4 +1,5 @@
 /* global H3DU */
+/* exported createWasher */
 function createWasher(inner,outer,height,slices){
       "use strict";
 var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
@@ -21,7 +22,7 @@ this.shape=shape;
 Animator._compact=function(arr){
  "use strict";
 var fillOffset=0;
- var newLength=arr.length;
+
  for(var i=0;i<arr.length;i++){
   if(fillOffset!==i && arr[i]!==null){
    arr[fillOffset]=arr[i];
@@ -211,6 +212,7 @@ var posChanged=false;
  if(visChanged)Animator._compact(this.visibleAnim);
 };
 
+/* exported makeFloor */
 function makeFloor(xStart,yStart,width,height,tileSize,z){
  "use strict";
 if((z === null || typeof z === "undefined"))z=0.0;
@@ -238,6 +240,7 @@ if((z === null || typeof z === "undefined"))z=0.0;
  return mesh;
 }
 
+/* exported rotateVec */
 function rotateVec(vec,angle){
  "use strict";
 return H3DU.Math.mat4transformVec3(

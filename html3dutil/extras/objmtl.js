@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Mesh, H3DU.ShapeGroup, Material, Promise */
+/* global H3DU, Promise */
 /**
 OBJ file.<p>
 * <p>This class is considered a supplementary class to the
@@ -108,15 +108,13 @@ ObjData.prototype._getMaterial=function(mesh){
  "use strict";
 if(!this.mtl || !mesh){
   return new H3DU.Material();
- } else {
-  if(mesh.usemtl){
+ } else if(mesh.usemtl){
    var mtl=this.mtl.getMaterial(mesh.usemtl);
    if(!mtl)return new H3DU.Material();
    return mtl;
   } else {
    return new H3DU.Material();
   }
- }
 };
 
 /** @private */
@@ -157,31 +155,31 @@ var shininess=1.0;
  var specularName=null;
  var normalName=null;
  var textureName=null;
- if(mtl.hasOwnProperty("Ns")){
+ if({}.hasOwnProperty.call(mtl,"Ns")){
   shininess=mtl.Ns;
  }
- if(mtl.hasOwnProperty("Kd")){
+ if({}.hasOwnProperty.call(mtl,"Kd")){
   diffuse=(mtl.Kd);
  }
- if(mtl.hasOwnProperty("map_Kd")){
+ if({}.hasOwnProperty.call(mtl,"map_Kd")){
   textureName=mtl.map_Kd;
  }
- if(mtl.hasOwnProperty("map_Ks")){
+ if({}.hasOwnProperty.call(mtl,"map_Ks")){
   specularName=mtl.map_Ks;
  }
- if(mtl.hasOwnProperty("map_Bump")){
+ if({}.hasOwnProperty.call(mtl,"map_Bump")){
   normalName=mtl.map_Bump;
  }
- if(mtl.hasOwnProperty("map_bump")){
+ if({}.hasOwnProperty.call(mtl,"map_bump")){
   normalName=mtl.map_bump;
  }
- if(mtl.hasOwnProperty("bump")){
+ if({}.hasOwnProperty.call(mtl,"bump")){
   normalName=mtl.bump;
  }
- if(mtl.hasOwnProperty("Ka")){
+ if({}.hasOwnProperty.call(mtl,"Ka")){
   ambient=(mtl.Ka);
  }
- if(mtl.hasOwnProperty("Ke")){
+ if({}.hasOwnProperty.call(mtl,"Ke")){
   var ke=mtl.Ke;
   if(ke.length===1){
    emission=[ke,ke,ke];
@@ -189,11 +187,11 @@ var shininess=1.0;
    emission=(ke);
   }
  }
- if(mtl.hasOwnProperty("Ks")){
+ if({}.hasOwnProperty.call(mtl,"Ks")){
   specular=(mtl.Ks);
  }
  // NOTE: illum must be checked last
- if(mtl.hasOwnProperty("illum")){
+ if({}.hasOwnProperty.call(mtl,"illum")){
   if(mtl.illum===0){
    ambient=diffuse ? diffuse.slice(0,3) : [0,0,0];
    diffuse=[0,0,0];
@@ -205,19 +203,13 @@ var shininess=1.0;
  var ret=new H3DU.Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
-  ret=ret.setParams({
-   "texture":textureName
-  });
+  ret=ret.setParams({"texture":textureName});
  }
  if(specularName){
-  ret=ret.setParams({
-   "specularMap":specularName
-  });
+  ret=ret.setParams({"specularMap":specularName});
  }
  if(normalName){
-  ret=ret.setParams({
-   "normalMap":normalName
-  });
+  ret=ret.setParams({"normalMap":normalName});
  }
  return ret;
 };
@@ -230,7 +222,10 @@ ObjData.loadMtlFromUrl=function(url){
 return H3DU.loadFileFromUrl(url).then(
    function(e){
      var mtl=MtlData._loadMtl(e.data);
-     if(mtl.error)return Promise.reject({"url":e.url, "error": mtl.error});
+     if(mtl.error)return Promise.reject({
+"url":e.url,
+"error": mtl.error
+});
      var mtldata=mtl.success;
      mtldata.url=e.url;
      mtldata._resolveTextures();
@@ -255,10 +250,13 @@ ObjData.loadObjFromUrlWithTextures=function(url,textureLoader) {
 return ObjData.loadObjFromUrl(url).then(function(obj){
    var o=obj;
    return textureLoader.loadTexturesAll(o._gatherTextureNames())
-     .then(function(ret){
+     .then(function(){
        return Promise.resolve(o);
      },function(results){
-       return Promise.reject({"url":url,"textureResults":results});
+       return Promise.reject({
+"url":url,
+"textureResults":results
+});
      });
  });
 };
@@ -278,7 +276,10 @@ return H3DU.loadFileFromUrl(url).then(
    function(e){
      var obj;
      obj=ObjData._loadObj(e.data);
-     if(obj.error)return Promise.reject({"url":e.url, "error":obj.error});
+     if(obj.error)return Promise.reject({
+"url":e.url,
+"error":obj.error
+});
      obj=obj.success;
      obj.url=e.url;
      if(obj.mtllib){
@@ -288,7 +289,7 @@ return H3DU.loadFileFromUrl(url).then(
         function(result){
           obj.mtl=result;
           return Promise.resolve(obj);
-        }, function(result){
+        }, function(){
           // MTL not loaded successfully, ignore
           obj.mtl=null;
           return Promise.resolve(obj);
@@ -338,7 +339,7 @@ function xyzToRgb(xyz){
    "\\s+"+number+"(?:\\s+"+number+")?\\s*$");
  var mapLine=new RegExp("^[ \\t]*(map_Kd|bump|map_[Bb]ump|map_Ka|map_Ks)\\s+(.*?)\\s*$");
  var newmtlLine=new RegExp("^newmtl\\s+([^\\s]*)$");
- var faceStart=new RegExp("^f\\s+");
+  // var faceStart=new RegExp("^f\\s+");
  var lines=str.split(/\r?\n/);
  var firstLine=true;
  var materials=[];
@@ -365,9 +366,12 @@ function xyzToRgb(xyz){
   firstLine=false;
   var e=newmtlLine.exec(line);
   if(e){
-    var name=e[1];
+
     currentMat={};
-    materials.push({name:name, data: currentMat});
+    materials.push({
+"name":"name",
+"data": currentMat
+});
     continue;
   }
   e=threeOrFourNumLine.exec(line);
@@ -428,7 +432,7 @@ function xyzToRgb(xyz){
  for(i=0;i<mtl.list.length;i++){
   mtl.list[i].data=MtlData._getMaterial(mtl.list[i].data);
  }
- return {success: mtl};
+ return {"success": mtl};
 };
 /** @private */
 ObjData._refIndex=function(idxstr,arr){
@@ -460,13 +464,12 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
  var pointStart=new RegExp("^p\\s+");
  var lines=str.split(/\r?\n/);
  var vertices=[];
- var currentMesh=new H3DU.Mesh();
+  // var currentMesh=new H3DU.Mesh();
  var normals=[];
  var uvs=[];
- var faces=[];
- var meshName=name;
+
  var usemtl=null;
- var currentFaces=[];
+
  var ret=new ObjData();
  var lastPrimitiveSeen=-1;
  var haveNormals=false;
@@ -535,7 +538,9 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
       }
       ret.meshes.push({
           "name": seenFacesAfterObjName ? objName : oldObjName,
-          "usemtl": usemtl, "data": mesh});
+          "usemtl": usemtl,
+"data": mesh
+});
       vertexKind=-1;
       lastPrimitiveSeen=-1;
       haveNormals=false;
@@ -615,7 +620,9 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
         }
         ret.meshes.push({
           "name": seenFacesAfterObjName ? objName : oldObjName,
-          "usemtl": usemtl, "data": mesh});
+          "usemtl": usemtl,
+"data": mesh
+});
         vertexKind=-1;
         lastPrimitiveSeen=-1;
         haveNormals=false;
@@ -631,14 +638,16 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
         }
         ret.meshes.push({
           "name": seenFacesAfterObjName ? objName : oldObjName,
-          "usemtl": usemtl, "data": mesh});
+          "usemtl": usemtl,
+"data": mesh
+});
         vertexKind=-1;
         lastPrimitiveSeen=-1;
         haveNormals=false;
         usemtl=null;
         mesh=new H3DU.Mesh();
       }
-      meshName=e[2];
+ // meshName=e[2];
     } else if(e[1]==="o"){
       oldObjName=objName;
       objName=e[2];
@@ -666,6 +675,8 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
  }
  ret.meshes.push({
           "name": seenFacesAfterObjName ? objName : oldObjName,
-          "usemtl": usemtl, "data": mesh});
+          "usemtl": usemtl,
+"data": mesh
+});
  return {"success": ret};
 };

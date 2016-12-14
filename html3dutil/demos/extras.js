@@ -1,10 +1,11 @@
-/* global H3DU, H3DU.Math */
+/* global H3DU */
 /**
 * Represents a knot in the form of the Fourier series<p>
 * <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) +  <b>b</b> sin(<i>iu</i>).<p>
 * @param {Array<Array<Number>>} a
 * @param {Array<Array<Number>>} b
 */
+/* exported FourierKnot */
 function FourierKnot(a,b){
  "use strict";
 this.a=a; // Cosine coefficients

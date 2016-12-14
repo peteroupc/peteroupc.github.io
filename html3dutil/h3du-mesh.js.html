@@ -22,7 +22,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math */
+/* global H3DU */
 /**
 * Specifies the triangles, lines, or points that make up a geometric shape.
 * Each vertex, that is, each point, each end of a line, and each corner
@@ -302,8 +302,8 @@ H3DU.Mesh.prototype.merge=function(other){
   var i;
   var oldVertexLength=this.vertexCount();
   var oldIndexLength=this.indices.length;
-  this.vertices.push.apply(this.vertices,other.vertices);
-  this.indices.push.apply(this.indices,other.indices);
+  this.vertices.push(...other.vertices);
+  this.indices.push(...other.indices);
   for(i=oldIndexLength;i&lt;this.indices.length;i++){
     this.indices[i]+=oldVertexLength;
   }
@@ -625,7 +625,7 @@ if(index&lt;0)return this;
   }
   var c=this.vertexCount();
   if(index&lt;c){
-    var idx=index;
+
     index*=this.getStride();
     this.vertices[index]=x;
     this.vertices[index+1]=y;
@@ -656,7 +656,7 @@ if(index&lt;0)return this;
 H3DU.Mesh.prototype.setVertexNormal=function(index,x,y,z){
   "use strict";
   if(index&lt;0)return this;
-  var count=0;
+
   if(typeof y==="undefined" &amp;&amp; typeof z==="undefined"){
    y=x[1];
    z=x[2];
@@ -664,7 +664,7 @@ H3DU.Mesh.prototype.setVertexNormal=function(index,x,y,z){
   }
   var c=this.vertexCount();
   if(index&lt;c){
-    var idx=index;
+
     this._rebuildVertices(H3DU.Mesh.NORMALS_BIT);
     index*=this.getStride();
     index+=H3DU.Mesh._normalOffset(this.attributeBits);
@@ -769,17 +769,6 @@ this.vertices=vertices||[];
   // Rebuild the list of vertices if a new kind of
   // attribute is added to the mesh
   var newVertices=[];
-  var newStride=3;
-  if((newBits&amp;H3DU.Mesh.COLORS_BIT)!==0)
-   newStride+=3;
-  if((newBits&amp;H3DU.Mesh.NORMALS_BIT)!==0)
-   newStride+=3;
-  if((newBits&amp;H3DU.Mesh.TEXCOORDS_BIT)!==0)
-   newStride+=2;
-  if((newBits&amp;H3DU.Mesh.TANGENTS_BIT)!==0)
-   newStride+=3;
-  if((newBits&amp;H3DU.Mesh.BITANGENTS_BIT)!==0)
-   newStride+=3;
   for(var i=0;i&lt;this.vertices.length;i+=currentStride){
    var vx=this.vertices[i];
    var vy=this.vertices[i+1];
@@ -798,46 +787,46 @@ this.vertices=vertices||[];
     }
    }
    if((newBits&amp;H3DU.Mesh.COLORS_BIT)!==0){
-    if((oldBits&amp;H3DU.Mesh.COLORS_BIT)!==0){
+    if((oldBits&amp;H3DU.Mesh.COLORS_BIT)===0){
+     newVertices.push(0,0,0);
+    } else {
      var r=this.vertices[s];
      var g=this.vertices[s+1];
      var b=this.vertices[s+2];
      s+=3;
      newVertices.push(r,g,b);
-    } else {
-     newVertices.push(0,0,0);
     }
    }
    if((newBits&amp;H3DU.Mesh.TEXCOORDS_BIT)!==0){
-    if((oldBits&amp;H3DU.Mesh.TEXCOORDS_BIT)!==0){
+    if((oldBits&amp;H3DU.Mesh.TEXCOORDS_BIT)===0){
+     newVertices.push(0,0);
+    } else {
      var u=this.vertices[s];
      var v=this.vertices[s+1];
      s+=2;
      newVertices.push(u,v);
-    } else {
-     newVertices.push(0,0);
     }
    }
    if((newBits&amp;H3DU.Mesh.TANGENTS_BIT)!==0){
-    if((oldBits&amp;H3DU.Mesh.TANGENTS_BIT)!==0){
+    if((oldBits&amp;H3DU.Mesh.TANGENTS_BIT)===0){
+     newVertices.push(0,0,0);
+    } else {
      x=this.vertices[s];
      y=this.vertices[s+1];
      z=this.vertices[s+2];
      s+=3;
      newVertices.push(x,y,z);
-    } else {
-     newVertices.push(0,0,0);
     }
    }
    if((newBits&amp;H3DU.Mesh.BITANGENTS_BIT)!==0){
-    if((oldBits&amp;H3DU.Mesh.BITANGENTS_BIT)!==0){
+    if((oldBits&amp;H3DU.Mesh.BITANGENTS_BIT)===0){
+     newVertices.push(0,0,0);
+    } else {
      x=this.vertices[s];
      y=this.vertices[s+1];
      z=this.vertices[s+2];
      s+=3;
      newVertices.push(x,y,z);
-    } else {
-     newVertices.push(0,0,0);
     }
    }
   }
@@ -1035,7 +1024,7 @@ H3DU.Mesh._isIdentityInUpperLeft=function(m){
  "use strict";
 return (m[0] === 1 &amp;&amp; m[1] === 0 &amp;&amp; m[2] === 0 &amp;&amp;
     m[4] === 0 &amp;&amp; m[5] === 1 &amp;&amp; m[6] === 0 &amp;&amp;
-    m[8] === 0 &amp;&amp; m[9] === 0 &amp;&amp; m[10] === 1) ? true : false;
+    m[8] === 0 &amp;&amp; m[9] === 0 &amp;&amp; m[10] === 1);
 };
  /**
   * Transforms the positions and normals of all the vertices currently
@@ -1571,7 +1560,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

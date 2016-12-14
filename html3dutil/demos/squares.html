@@ -374,7 +374,7 @@ function blindsGroup(scene){
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   var scene=new H3DU.Scene3D((document.getElementById("canvas")));
-  var fbo=new H3DU.FrameBuffer(scene,scene.getWidth(),scene.getHeight());
+  var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());
   scene.setClearColor("white")
   var subScene=new H3DU.Batch3D()
   subScene.getLights().setDefaults();

@@ -1,4 +1,5 @@
-/* global H3DU, H3DU.Mesh, H3DU.SurfaceEval, Material, MeshJSON, alert, allsettings, shapeGroup */
+/* global H3DU, MeshJSON, alert, allsettings, shapeGroup */
+/* exported formulaEditorHelp */
 function formulaEditorHelp(){
 "use strict";
 if(typeof alert!=="undefined"){
@@ -35,6 +36,7 @@ alert(""+
  }
 }
 
+/* exported addLink */
 function addLink(name,func){
 "use strict";
 var s=document.createElement("span");
@@ -133,6 +135,7 @@ var settings=document.getElementById("settings-link");
     })));
 }
 
+/* exported pushSettings */
 function pushSettings(updateMeshFunc,settings){
 "use strict";
 function settingOnChange(name,updateMeshFunc){
@@ -161,6 +164,7 @@ function settingOnChange(name,updateMeshFunc){
  updateShape(updateMeshFunc);
 }
 
+/* exported makeMesh */
    function makeMesh(func,resolutionU,resolutionV){
     // Default resolution is 50
 

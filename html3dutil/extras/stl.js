@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Mesh, Promise */
+/* global H3DU, Promise */
 (function(H3DU){
 "use strict";
 if((typeof H3DU === "undefined" || (H3DU===null || typeof H3DU==="undefined"))){ H3DU={}; }
@@ -33,7 +33,10 @@ H3DU.loadStlFromUrl=function(url){
    function(e){
      var obj;
      obj=H3DU._StlData._loadStl(e.data);
-     if(obj.error)return Promise.reject({"url":e.url, "error":obj.error});
+     if(obj.error)return Promise.reject({
+"url":e.url,
+"error":obj.error
+});
      obj=obj.success;
      obj.url=e.url;
      // otherwise just return the object
@@ -67,17 +70,16 @@ H3DU._StlData._loadStl=function(str){
  var endsolid=new RegExp("^\\s*endsolid(?=\\s+.*|$)");
  var lines=str.split(/\r?\n/);
  var mesh=new H3DU.Mesh();
- var currentNormal=[];
+
  var state=H3DU._StlData.INITIAL;
- var vertexCount=0;
- var solidName="";
+
  for(var i=0;i<lines.length;i++){
   var line=lines[i];
   // skip empty lines
   if(line.length===0||(/^\s*$/).test(line))continue;
   var e=solid.exec(line);
   if(e && (state===H3DU._StlData.INITIAL || state===H3DU._StlData.AFTER_SOLID)){
-    solidName=e[1];
+    // 'e[1]' holds the name of the solid
     state=H3DU._StlData.IN_SOLID;
     continue;
   }
@@ -91,7 +93,7 @@ H3DU._StlData._loadStl=function(str){
   e=outerloop.exec(line);
   if(e && state===H3DU._StlData.IN_FACET){
     state=H3DU._StlData.IN_OUTER_LOOP;
-    vertexCount=0;
+ // vertexCount=0;
     continue;
   }
   e=vertex.exec(line);
@@ -116,6 +118,6 @@ H3DU._StlData._loadStl=function(str){
   }
   return {"error": new Error("unsupported line: "+line)};
  }
- return {success: mesh};
+ return {"success": mesh};
 };
-})(H3DU);
+}(H3DU));

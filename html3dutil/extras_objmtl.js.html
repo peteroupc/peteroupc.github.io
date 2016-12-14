@@ -22,7 +22,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Mesh, H3DU.ShapeGroup, Material, Promise */
+/* global H3DU, Promise */
 /**
 OBJ file.&lt;p>
 * &lt;p>This class is considered a supplementary class to the
@@ -124,15 +124,13 @@ ObjData.prototype._getMaterial=function(mesh){
  "use strict";
 if(!this.mtl || !mesh){
   return new H3DU.Material();
- } else {
-  if(mesh.usemtl){
+ } else if(mesh.usemtl){
    var mtl=this.mtl.getMaterial(mesh.usemtl);
    if(!mtl)return new H3DU.Material();
    return mtl;
   } else {
    return new H3DU.Material();
   }
- }
 };
 
 /** @private */
@@ -173,31 +171,31 @@ var shininess=1.0;
  var specularName=null;
  var normalName=null;
  var textureName=null;
- if(mtl.hasOwnProperty("Ns")){
+ if({}.hasOwnProperty.call(mtl,"Ns")){
   shininess=mtl.Ns;
  }
- if(mtl.hasOwnProperty("Kd")){
+ if({}.hasOwnProperty.call(mtl,"Kd")){
   diffuse=(mtl.Kd);
  }
- if(mtl.hasOwnProperty("map_Kd")){
+ if({}.hasOwnProperty.call(mtl,"map_Kd")){
   textureName=mtl.map_Kd;
  }
- if(mtl.hasOwnProperty("map_Ks")){
+ if({}.hasOwnProperty.call(mtl,"map_Ks")){
   specularName=mtl.map_Ks;
  }
- if(mtl.hasOwnProperty("map_Bump")){
+ if({}.hasOwnProperty.call(mtl,"map_Bump")){
   normalName=mtl.map_Bump;
  }
- if(mtl.hasOwnProperty("map_bump")){
+ if({}.hasOwnProperty.call(mtl,"map_bump")){
   normalName=mtl.map_bump;
  }
- if(mtl.hasOwnProperty("bump")){
+ if({}.hasOwnProperty.call(mtl,"bump")){
   normalName=mtl.bump;
  }
- if(mtl.hasOwnProperty("Ka")){
+ if({}.hasOwnProperty.call(mtl,"Ka")){
   ambient=(mtl.Ka);
  }
- if(mtl.hasOwnProperty("Ke")){
+ if({}.hasOwnProperty.call(mtl,"Ke")){
   var ke=mtl.Ke;
   if(ke.length===1){
    emission=[ke,ke,ke];
@@ -205,11 +203,11 @@ var shininess=1.0;
    emission=(ke);
   }
  }
- if(mtl.hasOwnProperty("Ks")){
+ if({}.hasOwnProperty.call(mtl,"Ks")){
   specular=(mtl.Ks);
  }
  // NOTE: illum must be checked last
- if(mtl.hasOwnProperty("illum")){
+ if({}.hasOwnProperty.call(mtl,"illum")){
   if(mtl.illum===0){
    ambient=diffuse ? diffuse.slice(0,3) : [0,0,0];
    diffuse=[0,0,0];
@@ -221,19 +219,13 @@ var shininess=1.0;
  var ret=new H3DU.Material(ambient,diffuse,specular,shininess,
    emission);
  if(textureName){
-  ret=ret.setParams({
-   "texture":textureName
-  });
+  ret=ret.setParams({"texture":textureName});
  }
  if(specularName){
-  ret=ret.setParams({
-   "specularMap":specularName
-  });
+  ret=ret.setParams({"specularMap":specularName});
  }
  if(normalName){
-  ret=ret.setParams({
-   "normalMap":normalName
-  });
+  ret=ret.setParams({"normalMap":normalName});
  }
  return ret;
 };
@@ -246,7 +238,10 @@ ObjData.loadMtlFromUrl=function(url){
 return H3DU.loadFileFromUrl(url).then(
    function(e){
      var mtl=MtlData._loadMtl(e.data);
-     if(mtl.error)return Promise.reject({"url":e.url, "error": mtl.error});
+     if(mtl.error)return Promise.reject({
+"url":e.url,
+"error": mtl.error
+});
      var mtldata=mtl.success;
      mtldata.url=e.url;
      mtldata._resolveTextures();
@@ -271,10 +266,13 @@ ObjData.loadObjFromUrlWithTextures=function(url,textureLoader) {
 return ObjData.loadObjFromUrl(url).then(function(obj){
    var o=obj;
    return textureLoader.loadTexturesAll(o._gatherTextureNames())
-     .then(function(ret){
+     .then(function(){
        return Promise.resolve(o);
      },function(results){
-       return Promise.reject({"url":url,"textureResults":results});
+       return Promise.reject({
+"url":url,
+"textureResults":results
+});
      });
  });
 };
@@ -294,7 +292,10 @@ return H3DU.loadFileFromUrl(url).then(
    function(e){
      var obj;
      obj=ObjData._loadObj(e.data);
-     if(obj.error)return Promise.reject({"url":e.url, "error":obj.error});
+     if(obj.error)return Promise.reject({
+"url":e.url,
+"error":obj.error
+});
      obj=obj.success;
      obj.url=e.url;
      if(obj.mtllib){
@@ -304,7 +305,7 @@ return H3DU.loadFileFromUrl(url).then(
         function(result){
           obj.mtl=result;
           return Promise.resolve(obj);
-        }, function(result){
+        }, function(){
           // MTL not loaded successfully, ignore
           obj.mtl=null;
           return Promise.resolve(obj);
@@ -354,7 +355,7 @@ function xyzToRgb(xyz){
    "\\s+"+number+"(?:\\s+"+number+")?\\s*$");
  var mapLine=new RegExp("^[ \\t]*(map_Kd|bump|map_[Bb]ump|map_Ka|map_Ks)\\s+(.*?)\\s*$");
  var newmtlLine=new RegExp("^newmtl\\s+([^\\s]*)$");
- var faceStart=new RegExp("^f\\s+");
+  // var faceStart=new RegExp("^f\\s+");
  var lines=str.split(/\r?\n/);
  var firstLine=true;
  var materials=[];
@@ -381,9 +382,12 @@ function xyzToRgb(xyz){
   firstLine=false;
   var e=newmtlLine.exec(line);
   if(e){
-    var name=e[1];
+
     currentMat={};
-    materials.push({name:name, data: currentMat});
+    materials.push({
+"name":"name",
+"data": currentMat
+});
     continue;
   }
   e=threeOrFourNumLine.exec(line);
@@ -444,7 +448,7 @@ function xyzToRgb(xyz){
  for(i=0;i&lt;mtl.list.length;i++){
   mtl.list[i].data=MtlData._getMaterial(mtl.list[i].data);
  }
- return {success: mtl};
+ return {"success": mtl};
 };
 /** @private */
 ObjData._refIndex=function(idxstr,arr){
@@ -476,13 +480,12 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
  var pointStart=new RegExp("^p\\s+");
  var lines=str.split(/\r?\n/);
  var vertices=[];
- var currentMesh=new H3DU.Mesh();
+  // var currentMesh=new H3DU.Mesh();
  var normals=[];
  var uvs=[];
- var faces=[];
- var meshName=name;
+
  var usemtl=null;
- var currentFaces=[];
+
  var ret=new ObjData();
  var lastPrimitiveSeen=-1;
  var haveNormals=false;
@@ -551,7 +554,9 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
       }
       ret.meshes.push({
           "name": seenFacesAfterObjName ? objName : oldObjName,
-          "usemtl": usemtl, "data": mesh});
+          "usemtl": usemtl,
+"data": mesh
+});
       vertexKind=-1;
       lastPrimitiveSeen=-1;
       haveNormals=false;
@@ -631,7 +636,9 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
         }
         ret.meshes.push({
           "name": seenFacesAfterObjName ? objName : oldObjName,
-          "usemtl": usemtl, "data": mesh});
+          "usemtl": usemtl,
+"data": mesh
+});
         vertexKind=-1;
         lastPrimitiveSeen=-1;
         haveNormals=false;
@@ -647,14 +654,16 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
         }
         ret.meshes.push({
           "name": seenFacesAfterObjName ? objName : oldObjName,
-          "usemtl": usemtl, "data": mesh});
+          "usemtl": usemtl,
+"data": mesh
+});
         vertexKind=-1;
         lastPrimitiveSeen=-1;
         haveNormals=false;
         usemtl=null;
         mesh=new H3DU.Mesh();
       }
-      meshName=e[2];
+ // meshName=e[2];
     } else if(e[1]==="o"){
       oldObjName=objName;
       objName=e[2];
@@ -682,7 +691,9 @@ var number="(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
  }
  ret.meshes.push({
           "name": seenFacesAfterObjName ? objName : oldObjName,
-          "usemtl": usemtl, "data": mesh});
+          "usemtl": usemtl,
+"data": mesh
+});
  return {"success": ret};
 };
 </code></pre>
@@ -709,7 +720,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

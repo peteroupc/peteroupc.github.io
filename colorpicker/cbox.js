@@ -164,7 +164,7 @@ if(!o)return;
 
 // Gets the visible rectangle of a Web page
 function getViewport(){
- var ret={left:0, top:0, width:0, height:0};
+ var ret={"left":0, top:0, width:0, height:0};
  var d=document;
  var db=document.body||null;
  var dde=document.documentElement||null;
@@ -286,13 +286,13 @@ this.methods={};
   if(this.methods[method]){
    return this.methods[method];
   } else {
-   var thisObject=this.obj;
+   var that=this.obj;
    var m=function(){
      var args=[];
      for(var i=0;i<arguments.length;i++){
       args[i]=arguments[i];
      }
-     return method.apply(thisObject,args);
+     return method.apply(that,args);
    };
    this.methods[method]=m;
    return m;
@@ -305,49 +305,53 @@ var __isMouse=function(eventType){
      return (/(click|mouse|menu|touch)/.test(eventType) || eventType==="DOMMouseScroll");
 };
 var eventDetailsFunc={
-   rightClick:function(){
+   "rightClick":function(){
     return (this.event.which===3)||(this.event.button===2);
    },
-   relatedTarget:function(){
+   "relatedTarget":function(){
     return this.event.relatedTarget || ((this.type==="mouseover") ? this.event.fromElement : this.event.toElement);
    },
-   wheel:function(){
+   "wheel":function(){
       return (this.type==="mousewheel" || this.type==="DOMMouseScroll") ?
          ((this.event.wheelDelta) ? this.event.wheelDelta/120 : -(this.event.detail||0)/3) : 0;
    },
    // Mouse coordinates relative to page's top left corner
-   pageX:function(){
+   "pageX":function(){
       return (!__isMouse(this.type)) ? 0 : (this.event.pageX || ((this.event.clientX||0)+
          Math.max((document.documentElement ? document.documentElement.scrollLeft : 0),document.body.scrollLeft)));
    },
-   pageY:function(){
+   "pageY":function(){
       return (!__isMouse(this.type)) ? 0 : (this.event.pageY || ((this.event.clientY||0)+
          Math.max((document.documentElement ? document.documentElement.scrollTop : 0),document.body.scrollTop)));
    },
    // Mouse coordinates relative to client area's top left corner
-   clientX:function(){
+   "clientX":function(){
       return (!__isMouse(this.type)) ? 0 : (this.event.pageX ? this.event.pageX-window.pageXOffset : this.event.clientX);
    },
-   clientY:function(){
+   "clientY":function(){
       return (!__isMouse(this.type)) ? 0 : (this.event.pageY ? this.event.pageY-window.pageYOffset : this.event.clientY);
    },
-   key:function(){ return (this.event.which || this.event.keyCode || this.event.charCode || 0); },
-  shiftKey: function(){ return typeof this.event.shiftKey==="undefined" ? this.event.shiftKey : this.key()===16;},
-  ctrlKey: function(){ return typeof this.event.ctrlKey==="undefined" ? this.event.ctrlKey : this.key()===17;},
-  altKey: function(){ return typeof this.event.altKey==="undefined" ? this.event.altKey : this.key()===18;},
-  metaKey: function(){ return typeof this.event.metaKey==="undefined" ? this.event.metaKey : false;},
-  objectX:function(){
+   "key":function(){ return (this.event.which || this.event.keyCode || this.event.charCode || 0); },
+  "shiftKey": function(){ return typeof this.event.shiftKey==="undefined" ?
+      this.event.shiftKey : this.key()===16;},
+  "ctrlKey": function(){ return typeof this.event.ctrlKey==="undefined" ?
+      this.event.ctrlKey : this.key()===17;},
+  "altKey": function(){ return typeof this.event.altKey==="undefined" ?
+      this.event.altKey : this.key()===18;},
+  "metaKey": function(){ return typeof this.event.metaKey==="undefined" ?
+      this.event.metaKey : false;},
+  "objectX":function(){
    return this.pageX()-getPageX(this.target);
   },
-  objectY:function(){
+  "objectY":function(){
    return this.pageY()-getPageY(this.target);
   },
-  cancel:function(){
+  "cancel":function(){
    this.preventDefault();
    this.stopPropagation();
    return false;
   },
- preventDefault:function(){
+ "preventDefault":function(){
   if(this.event.cancelable && this.event.preventDefault){
     this.event.preventDefault();
   } else if(window.event){
@@ -356,7 +360,7 @@ var eventDetailsFunc={
   }
   return false;
  },
- stopPropagation:function(){
+ "stopPropagation":function(){
   if(this.event.stopPropagation){
     this.event.stopPropagation();
   } else if(window.event){
@@ -376,10 +380,10 @@ window.eventDetails=function(e){
  if(target && target.nodeType===3)
   target=target.parentNode;
  var o={
-   fixedEvent: true, // to prevent recursion
-   event: event,
-   target: target,
-   type: (event ? event.type : "")
+   "fixedEvent": true, // to prevent recursion
+   "event": "event",
+   "target": "target",
+   "type": (event ? event."type" : "")
  };
  for(var i in eventDetailsFunc){
   o[i]=eventDetailsFunc[i];
@@ -1171,7 +1175,7 @@ removeFilter=function(o,filter){
    }
   };
 var ColorSpace=subclass(Object,{
-  initialize:function(info,usealpha){
+  "initialize":function(info,usealpha){
   this.usealpha=usealpha;
   this.info=info;
   var faster=(navigator.userAgent.indexOf("Gecko/")>=0);
@@ -1186,28 +1190,28 @@ var ColorSpace=subclass(Object,{
   this.setupdimensions();
   this.areacache=[];
  },
-fromrgbcolor:function(c){
+"fromrgbcolor":function(c){
  var ret=(typeof this.info.fromrgbcolor!=="undefined" && this.info.fromrgbcolor) ?
    this.info.fromrgbcolor(c) : [0,0,0];
  if(ret===c){ ret=[c[0],c[1],c[2]];}
  ret[3]=((c[3]===null || typeof c[3]==="undefined")) ? 255 : c[3];
  return ret;
 },
-torgbcolor:function(c){
+"torgbcolor":function(c){
  var ret=this.info.torgbcolor(c);
  if(ret===c){ ret=[c[0],c[1],c[2]];}
  ret[3]=((c[3]===null || typeof c[3]==="undefined")) ? 255 : c[3];
  return ret;
 },
-dimensions:function(){
+"dimensions":function(){
   return [this.maxWidth,this.maxHeight];
 },
-areadimensions:function(area){
+"areadimensions":function(area){
  var a=this.areas[area];
  if(!a)return this.emptyArea;
  return a;
 },
-setupdimensions:function(){
+"setupdimensions":function(){
  if(!(typeof this.info.fromrgbcolor!=="undefined" && this.info.fromrgbcolor)){
  if(!this.usealpha)this.areas[1]=[0,0,this.maxWidth,this.matrixHeight];
  else this.areas[1]=[0,0,this.matrixWidth+
@@ -1249,7 +1253,7 @@ setupdimensions:function(){
                this.maxWidth-this.swatchWidth,
                Math.floor((this.maxHeight-this.matrixHeight)/2)] ;
 },
-confinetoarea:function(area,xy){
+"confinetoarea":function(area,xy){
  var nxy=[xy[0],xy[1]];
  var dims=this.areadimensions(area);
  if(nxy[0]<dims[0])nxy[0]=dims[0];
@@ -1258,7 +1262,7 @@ confinetoarea:function(area,xy){
  if(nxy[1]>dims[1]+dims[3]-1)nxy[1]=dims[1]+dims[3]-1;
  return nxy;
 },
-getarea:function(x,y){
+"getarea":function(x,y){
  var unrounded=(Math.round(x)===x && Math.round(y)===y);
  if(unrounded){
   var ret=this.areacache[y*this.maxWidth+x];
@@ -1276,7 +1280,7 @@ getarea:function(x,y){
  if(unrounded)this.areacache[y*this.maxWidth+x]=this.areas.length;
  return this.areas.length;
 },
-rgbatorgb:function(rgba,shade){
+"rgbatorgb":function(rgba,shade){
  if(rgba[3]<255){
   var bgalpha=255-rgba[3];
   return [
@@ -1287,7 +1291,7 @@ rgbatorgb:function(rgba,shade){
  }
  return rgba;
 },
-getcolor:function(x,y,current){ // for display only
+"getcolor":function(x,y,current){ // for display only
  var area=this.getarea(x,y);
  var rgba,xx,yy,dims;
  if(area===1){
@@ -1320,7 +1324,7 @@ getcolor:function(x,y,current){ // for display only
     return [255,255,255,255];
  }
 },
-colortopos:function(current){
+"colortopos":function(current){
  var ret=[];
  var dims=this.areadimensions(1);
  var dimsside=this.areadimensions(2);
@@ -1337,7 +1341,7 @@ colortopos:function(current){
  ret[3]=dimsalpha[1]+(255-current[3])*(dimsalpha[3]-1)/255.0 ;// alpha side Y
  return ret;
 },
-changecolor:function(x,y,current){
+"changecolor":function(x,y,current){
  var ret=[current[0],current[1],current[2],((current[3]===null || typeof current[3]==="undefined")) ? 255 : current[3]];
  var info=this.info;
  var ci0=info.indexes[0];
@@ -1610,7 +1614,7 @@ var setPatternAndTitle=function(thisInput,usealpha){
 
 ////////////////
 var MyColorPicker=subclass(Object,{
-initialize:function(info,parent,startingvalue,usealpha){
+"initialize":function(info,parent,startingvalue,usealpha){
   var w=window;
   this.binder=new MethodBinder(this);
   this.isoriginal=(info===rootobj.HueSatVal);
@@ -1855,7 +1859,7 @@ initialize:function(info,parent,startingvalue,usealpha){
    addListener(document,"touchend",this.binder.bind(this.documentMouseUp));
    addListener(document,"touchmove",this.binder.bind(this.documentMouseMove));
 },
-documentKeyDown:function(e){
+"documentKeyDown":function(e){
   e=eventDetails(e);
   var key=e.key();
   if(key===9){ // tab
@@ -1901,7 +1905,7 @@ documentKeyDown:function(e){
   }
   return true;
 },
-updateHueSlider:function(o,current){
+"updateHueSlider":function(o,current){
  var areadims=this.colorspace.areadimensions(2);
  var huecolors=[
      rgbToColorHtml(this.colorspace.getcolor(areadims[0],areadims[1],current)),
@@ -1914,7 +1918,7 @@ updateHueSlider:function(o,current){
     ];
     return applyCssGradient(this.hueslider,huecolors);
 },
-adjustPos:function(){
+"adjustPos":function(){
    if(this.p.style.position==="absolute"){
     var viewport=getViewport();
     var height=getHeight(this.p);
@@ -1928,7 +1932,7 @@ adjustPos:function(){
     this.pagex=getPageX(this.tbl) ;// get page X again since table's x may have changed
     this.pagey=getPageY(this.tbl) ;// get page Y again since table's y may have changed
    }},
-windowResize:function(){
+"windowResize":function(){
   this.adjustPos();
   if(this.p.style.position!=="absolute"){
    this.startx=getPageX(this.p);
@@ -1941,7 +1945,7 @@ windowResize:function(){
   this.endy=this.starty+this.pheight;
   this.readjustpos(this.current);
 },
-setValueText:function(text){
+"setValueText":function(text){
     var size=100;
     var hexarea=this.colorspace.areadimensions(4);
     do {
@@ -1950,20 +1954,20 @@ setValueText:function(text){
      size-=10;
     } while(size>=50 && (text.length>=8 && (getWidth(this.hexvalue)>(hexarea[2]*this.pixelWidth))));
 },
-isdifferentcolor:function(c1,c2){
+"isdifferentcolor":function(c1,c2){
     for(var i=0;i<c1.length;i++){
      if(c1[i]!==c2[i])return true;
     }
     return false;
 },
-getxy:function(evt,pagex,pagey,pixelWidth,pixelHeight){
+"getxy":function(evt,pagex,pagey,pixelWidth,pixelHeight){
     var px=evt.pageX();
     px=(px-pagex)*1.0/pixelWidth;
     var py=evt.pageY();
     py=(py-pagey)*1.0/pixelHeight;
     return [px,py];
 },
-readjustpos:function(current){
+"readjustpos":function(current){
     var curpos=this.colorspace.colortopos(current);
     var dimsmatrix=this.colorspace.areadimensions(1) ;         // matrix dimensions
     var dimsswatch=this.colorspace.areadimensions(3) ;         // matrix dimensions
@@ -2001,7 +2005,7 @@ readjustpos:function(current){
     }
     this.setValueText(rgbToColorDisplay(rgbcurrent));
 },
-hide:function(){ // public
+"hide":function(){ // public
     this.p.style.display="none";
     removeListener(this.resetlink,"click",this.binder.bind(this.resetLinkClick));
     removeListener(window,"resize",this.binder.bind(this.windowResize));
@@ -2013,7 +2017,7 @@ hide:function(){ // public
     removeListener(document,"touchend",this.binder.bind(this.documentMouseUp));
     removeListener(document,"touchmove",this.binder.bind(this.documentMouseMove));
 },
-isInAreas3:function(o,x,y){
+"isInAreas3":function(o,x,y){
  var a=o.areacache[y*o.overalldims[0]+x];
  if((a===null || typeof a==="undefined")){
   a=o.colorspace.getarea(x,y);
@@ -2021,7 +2025,7 @@ isInAreas3:function(o,x,y){
  }
  return (a===3);
 },
-cachedarea:function(o,x,y){
+"cachedarea":function(o,x,y){
  var a=o.areacache[y*o.overalldims[0]+x];
  if((a===null || typeof a==="undefined")){
   a=o.colorspace.getarea(x,y);
@@ -2029,7 +2033,7 @@ cachedarea:function(o,x,y){
  }
  return a;
 },
-isInAreas2:function(o,x,y){
+"isInAreas2":function(o,x,y){
  var a=o.areacache[y*o.overalldims[0]+x];
  if((a===null || typeof a==="undefined")){
   a=o.colorspace.getarea(x,y);
@@ -2037,7 +2041,7 @@ isInAreas2:function(o,x,y){
  }
  return (a===1 || a===3 || a===6);
 },
-isInAreas1:function(o,x,y){
+"isInAreas1":function(o,x,y){
  var a=o.areacache[y*o.overalldims[0]+x];
  if((a===null || typeof a==="undefined")){
   a=o.colorspace.getarea(x,y);
@@ -2045,7 +2049,7 @@ isInAreas1:function(o,x,y){
  }
  return (a===2 || a===3 || a===6);
 },
-updatedivs:function(area){
+"updatedivs":function(area){
     var i=0;
     var areafunc=null;
     var justswatch=false;
@@ -2086,13 +2090,13 @@ updatedivs:function(area){
      i+=1;
     }}
 },
-setChangeCallback:function(func){ // public
+"setChangeCallback":function(func){ // public
  this.changeCallback=func;
 },
-triggerChangeCallback:function(c){
+"triggerChangeCallback":function(c){
  if(this.changeCallback)this.changeCallback(c);
 },
-resetLinkClick:function(e){
+"resetLinkClick":function(e){
      this.changed=false;
      this.current=this.colorspace.fromrgbcolor(this.origvalue);
      this.readjustpos(this.current);
@@ -2102,7 +2106,7 @@ resetLinkClick:function(e){
      this.triggerChangeCallback(rgb);
      return false;
 },
-respondToMouseDown:function(e,xy,area){
+"respondToMouseDown":function(e,xy,area){
      this.currentArea=area;
      var oldcolor=this.current;
      this.current=this.colorspace.changecolor(xy[0],xy[1],this.current);
@@ -2115,7 +2119,7 @@ respondToMouseDown:function(e,xy,area){
      }
      e.preventDefault();
 },
-documentMouseDown:function(e){
+"documentMouseDown":function(e){
     this.handleclick=true;
     e=eventDetails(e);
     var xy=this.getxy(e,this.pagex,this.pagey,this.pixelWidth,this.pixelHeight);
@@ -2124,11 +2128,11 @@ documentMouseDown:function(e){
        this.respondToMouseDown(e,xy,area);
     }
 },
-documentMouseUp:function(e){
+"documentMouseUp":function(e){
     this.handleclick=true;
     this.currentArea=0;
 },
-documentMouseMove:function(e){
+"documentMouseMove":function(e){
     this.handleclick=true;
     if(this.currentArea===1 || this.currentArea===2 || this.currentArea===6){
      e=eventDetails(e);
@@ -2141,9 +2145,9 @@ documentMouseMove:function(e){
 
   var defaultModel=null;
   var EventHandlers=subclass(Object,{
-  initialize:function(){ this.handlers=[]; },
-  add:function(func){ if(func)this.handlers.push(func) ;      },
-  remove:function(func){
+  "initialize":function(){ this.handlers=[]; },
+  "add":function(func){ if(func)this.handlers.push(func) ;      },
+  "remove":function(func){
    var newhandlers=[];
    var removed=false;
    for(var i=0;i<this.handlers.length;i++){
@@ -2153,18 +2157,18 @@ documentMouseMove:function(e){
    }
    return newhandlers;
   },
-  clear:function(){ this.handlers=[] ;      },
-  trigger:function(){
+  "clear":function(){ this.handlers=[] ;      },
+  "trigger":function(){
    for(var i=0;i<this.handlers.length;i++){
     if(this.handlers[i])this.handlers[i].apply(this,arguments);
    }
   }
   });
   var PublicEventHandlers=subclass(Object,{
-   initialize:function(o){ this.o=o; },
-   add:function(f){ this.o.add(f); },
-   remove:function(f){ this.o.remove(f); },
-   clear:function(f){ this.o.clear(f); }
+   "initialize":function(o){ this.o=o; },
+   "add":function(f){ this.o."add"(f); },
+   "remove":function(f){ this.o."remove"(f); },
+   "clear":function(f){ this.o."clear"(f); }
   });
   var colorChangeEvent=new EventHandlers();
   var colorPreviewEvent=new EventHandlers();
@@ -2396,14 +2400,14 @@ documentMouseMove:function(e){
      if(!extra)extra={};
      var newInput=null;
      var newextra={
-      flat: ("flat" in extra) ? extra.flat : false,
+      "flat": (""flat"" in extra) ? extra."flat" : false,
       // Don't show a button. Instead, clicking the input
       // box calls up the color picker box.
-      nobutton: ("nobutton" in extra) ? extra.nobutton : false,
-      argbhex: ("argbhex" in extra) ? extra.argbhex : false,
-      rgbahex: ("rgbahex" in extra) ? extra.rgbahex : false,
-      usealpha: ("usealpha" in extra) ? extra.usealpha : false,
-      info: ("info" in extra && extra.info) ? extra.info : (defaultModel || rootobj.HueSatVal)
+      "nobutton": (""nobutton"" in extra) ? extra."nobutton" : false,
+      "argbhex": (""argbhex"" in extra) ? extra."argbhex" : false,
+      "rgbahex": (""rgbahex"" in extra) ? extra."rgbahex" : false,
+      "usealpha": (""usealpha"" in extra) ? extra."usealpha" : false,
+      "info": (""info"" in extra && extra."info") ? extra."info" : (defaultModel || rootobj.HueSatVal)
      };
      extra=newextra;
      thisInput.setAttribute("usealpha",extra.usealpha ? "1" : "0");
@@ -2445,18 +2449,18 @@ documentMouseMove:function(e){
     var thisInput=inputsArray[i];
     if(thisInput.getAttribute("type")==="color" ||
        (thisInput.type==="text" && rootobj.hasIdOrClassName(thisInput,"color_"))){
-     rootobj.setColorPicker(thisInput,{usealpha:false});
+     rootobj.setColorPicker(thisInput,{"usealpha":false});
     } else if(thisInput.getAttribute("type")==="text" && rootobj.hasIdOrClassName(thisInput,"rgbahex_")){
-     rootobj.setColorPicker(thisInput,{usealpha:true,rgbahex:true});
+     rootobj.setColorPicker(thisInput,{"usealpha":true,rgbahex:true});
     } else if(thisInput.getAttribute("type")==="text" && rootobj.hasIdOrClassName(thisInput,"argbhex_")){
-     rootobj.setColorPicker(thisInput,{usealpha:true,argbhex:true});
+     rootobj.setColorPicker(thisInput,{"usealpha":true,argbhex:true});
     } else if(thisInput.getAttribute("type")==="text" && rootobj.hasIdOrClassName(thisInput,"acolor_")){
-     rootobj.setColorPicker(thisInput,{usealpha:true});
+     rootobj.setColorPicker(thisInput,{"usealpha":true});
     }
    }
   });
 rootobj.HueLumSat={
- fromrgbcolor:function(rgb){
+ "fromrgbcolor":function(rgb){
   var r=rgb[0];
   var g=rgb[1];
   var b=rgb[2];
@@ -2489,7 +2493,7 @@ rootobj.HueLumSat={
    if(h<0||h>=360)h=(((h%360)+360)%360);
   return [h,(lt<0 ? 0 : (lt>255 ? 255 : lt)),(s<0 ? 0 : (s>255 ? 255 : s))];
  },
- torgbcolor:function(hls){
+ "torgbcolor":function(hls){
  var hueval=hls[0]*1.0;//[0-360)
  var lum=hls[1]*1.0;//[0-255]
  var sat=hls[2]*1.0;//[0-255]
@@ -2530,12 +2534,12 @@ rootobj.HueLumSat={
    (g<0 ? 0 : (g>255 ? 255 : g)),
    (bl<0 ? 0 : (bl>255 ? 255 : bl))];
  },
- maxes:[360,255,255], // Hue, Lum, Sat
- reversed:[true,false,false], // Hue, Lum, Sat
- indexes:[1,2,0] // SatxLum, and Hue on the side
+ "maxes":[360,255,255], // Hue, Lum, Sat
+ "reversed":[true,false,false], // Hue, Lum, Sat
+ "indexes":[1,2,0] // SatxLum, and Hue on the side
 };
 rootobj.HueSatVal={
- fromrgbcolor:function(rgb){
+ "fromrgbcolor":function(rgb){
   var r=rgb[0]/255.0;
   var g=rgb[1]/255.0;
   var b=rgb[2]/255.0;
@@ -2566,7 +2570,7 @@ rootobj.HueSatVal={
     (s<0 ? 0 : (s>255 ? 255 : s)),
     (v<0 ? 0 : (v>255 ? 255 : v))];
 },
-torgbcolor:function(hsv){
+"torgbcolor":function(hsv){
   var hue=hsv[0];
   var sat=hsv[1];
   var val=hsv[2];
@@ -2598,9 +2602,9 @@ torgbcolor:function(hsv){
     (g<0 ? 0 : (g>255 ? 255 : g)),
     (b<0 ? 0 : (b>255 ? 255 : b))];
 },
-maxes:[360,255,255],
-  reversed:[true,false,true],
-  indexes:[1,2,0]
+"maxes":[360,255,255],
+  "reversed":[true,false,true],
+  "indexes":[1,2,0]
  };
 })(window,window.PDColorPicker={});
 /////////////////////////////////////////

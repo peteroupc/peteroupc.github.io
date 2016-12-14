@@ -140,7 +140,7 @@ var LinkedList=function(){
   }
   return this;
  };
- this.pop=function(item){
+ this.pop=function(){
   if(this._last){
    if(this._last.prev)
     this._last.prev.next=null;
@@ -148,7 +148,7 @@ var LinkedList=function(){
   }
   return this;
  };
- this.shift=function(item){
+ this.shift=function(){
   if(this.root){
    if(this.root.next)
     this.root.next.prev=null;
@@ -196,7 +196,7 @@ var PriorityQueue=function(comparer){
    data=this.nodes[k];
    this._size--;
    var x=this.nodes[this._size];
-   while(true){
+   for (;;) {
     var left=1+2*k;
     var right=2*(k+1);
     if(left&lt;this._size){
@@ -250,9 +250,9 @@ var RedBlackTreeNode=function(data){
       return r;
     } else {
       var p=this.p;
-      var ch=this;
-      while((p!==null &amp;&amp; typeof p!=="undefined") &amp;&amp; ch===p.left){
-        ch=p;
+      var that=this;
+      while((p!==null &amp;&amp; typeof p!=="undefined") &amp;&amp; that===p.left){
+        that=p;
         p=p.p;
       }
       return p;
@@ -265,9 +265,9 @@ var RedBlackTreeNode=function(data){
       return r;
     } else {
       var p=this.p;
-      var ch=this;
-      while((p!==null &amp;&amp; typeof p!=="undefined") &amp;&amp; ch===p.right){
-        ch=p;
+      var that=this;
+      while((p!==null &amp;&amp; typeof p!=="undefined") &amp;&amp; that===p.right){
+        that=p;
         p=p.p;
       }
       return p;
@@ -340,8 +340,8 @@ RedBlackTree._single=function(root,dir){
 };
 /** @private */
 RedBlackTree._double=function(root,dir){
-  root.setLink(!dir,RedBlackTree._single ( root.link(!dir), !dir ));
-  return RedBlackTree._single ( root, dir );
+  root.setLink(!dir,RedBlackTree._single( root.link(!dir), !dir ));
+  return RedBlackTree._single( root, dir );
 };
 /**
  * Not documented yet.
@@ -453,22 +453,20 @@ RedBlackTree.prototype.insert=function(data){
     g = p = null;
     t.setLink(true,q=this.root);
 
-  var iter=0;
     /* Search down the tree for a place to insert */
-    while(true){
-      iter+=1;
+    for (;;) {
       if ( (q===null || typeof q==="undefined") ) {
         /* Insert a new node at the first null link */
         p.setLink(dir,q = new RedBlackTreeNode(data));
       }
-      else if ( RedBlackTree._red ( q.left ) &amp;&amp; RedBlackTree._red ( q.right ) ) {
+      else if ( RedBlackTree._red( q.left ) &amp;&amp; RedBlackTree._red( q.right ) ) {
         /* Simple red violation: color flip */
         q.red = true;
         q.left.red = false;
         q.right.red = false;
       }
 
-      if ( RedBlackTree._red ( q ) &amp;&amp; RedBlackTree._red ( p ) ) {
+      if ( RedBlackTree._red( q ) &amp;&amp; RedBlackTree._red( p ) ) {
         /* Hard red violation: rotations necessary */
         var dir2 = t.right === g;
         if ( q === p.link(last) )
@@ -552,7 +550,6 @@ var Polygon=function(path,flatness){
 };
 /** private */
 Polygon._Contour=function(subpath){
- var vertLength=subpath.length;
   /*
  // For convenience, eliminate the last
  // vertex if it matches the first vertex
@@ -681,7 +678,6 @@ Polygon.PointChain.prototype.linkPointChain=function(chain){
  * @memberof! Connector#
 */
 Connector.prototype.add=function(s){
-  var changed=false;
   var j=this.openPolygons.first();
   while(j){
     if(j.data.linkSegment(s)) {
@@ -908,16 +904,16 @@ Clipper.prototype.compute=function(op){
    var it,sli,prev,next;
    var connector=new Connector(); // to connect the edge solutions
   var e;
-  var MINMAXX = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
+  var minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
   while(this.eq.size()>0) {
     e = this.eq.pop();
     //console.log("Process event:  "+e.toString())
     // optimization 1
-    if((op === Clipper.INTERSECTION &amp;&amp;(e.p[0]> Clipper.MINMAXX)) ||
+    if((op === Clipper.INTERSECTION &amp;&amp;(e.p[0]> minMaxx)) ||
        (op === Clipper.DIFFERENCE &amp;&amp; e.p[0]> maxsubj[0])) {
       return connector.toPolygon(result);
     }
-    if((op === Clipper.UNION &amp;&amp;(e.p[0]> Clipper.MINMAXX))) {
+    if((op === Clipper.UNION &amp;&amp;(e.p[0]> minMaxx))) {
       // add all the non-processed line segments to the result
       if(!e.left)
         connector.add(e.segment());
@@ -1111,8 +1107,7 @@ Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
       }
     }
     return ret;
-  } else {
-    if ((t7 === 0.0)) {
+  } else if ((t7 === 0.0)) {
       var t15 = ((((b1x - a1x) * t2) + ((b1y - a1y) * t3)) / t6);
       if (((t15 >= 0.0) &amp;&amp; (t15 &lt;= 1.0))) {
         var t16 = [(a1x + t2 * t15), (a1y + t3 * t15)];
@@ -1125,7 +1120,6 @@ Clipper._findIntersectionInternal=function(a1x,a1y,a2x,a2y,b1x,b1y,b2x,b2y){
       }
       return ret;
     }
-  }
   var t21 = ((t2 * t5) - t4 * t3);
   var t22 = b1x - a1x;
   var t23 = b1y - a1y;
@@ -1385,7 +1379,7 @@ GraphicsPath.prototype.xor=function(path,flatness){
 
 }
 
-})(this);
+}(this));
 </code></pre>
         </article>
     </section>
@@ -1410,7 +1404,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

@@ -159,13 +159,13 @@ var ang=angle*Math.PI/180;
  var v2=z;
 var cost = Math.cos(ang);
 var sint = (ang>=0 && ang<6.283185307179586) ? (ang<=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
-if( 1 === v0 && 0=== v1 && 0=== v2 ) {
+if( v0 === 1 && v1 === 0 && v2 === 0 ) {
   return this.multMatrix([1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1]);
-} else if( 0 === v0 && 1=== v1 && 0=== v2 ) {
+} else if( v0 === 0 && v1 === 1 && v2 === 0 ) {
 return this.multMatrix([cost, 0, -sint, 0, 0, 1, 0, 0, sint, 0, cost, 0, 0, 0, 0, 1]);
-} else if( 0 === v0 && 0=== v1 && 1=== v2 ) {
+} else if( v0 === 0 && v1 === 0 && v2 === 1 ) {
  return this.multMatrix([cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
-} else if(0===v0 && 0=== v1 && 0===v2){
+} else if(v0 === 0 && v1 === 0 && v2 === 0){
  return this;
 } else {
 var iscale = 1.0 / Math.sqrt(v0*v0+v1*v1+v2*v2);
@@ -498,7 +498,7 @@ var ftan = 1/Math.tan(fov*Math.PI/360);
 var v0 = ftan/aspect;
 var invnf=1.0/(n-f);
 var v2 = f+n;
-var v1 = v2*invnf;
+
 var v3 = 2*f*invnf*n;
 var v4 = invnf*v2;
 var m=this.stack[this.stack.length-1];

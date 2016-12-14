@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math, define, exports */
+/* global H3DU, define, exports */
 (function (g,f) {
  "use strict";
 if (typeof define==="function" && define.amd) {
@@ -289,7 +289,7 @@ for(var i=this.segments.length-1;i>=0;i--){
 GraphicsPath.prototype.toString=function(){
  var oldpos=null;
  var ret="";
- var lastcommand=-1;
+
  for(var i=0;i<this.segments.length;i++){
   var a=this.segments[i];
   if(a[0]===GraphicsPath.CLOSE){
@@ -348,7 +348,6 @@ var integrand=function(t){
 };
 /** @private */
 GraphicsPath._length=function(a){
- var flat,len,j;
 if(a[0]===GraphicsPath.LINE){
   var dx=a[3]-a[1];
   var dy=a[4]-a[2];
@@ -357,8 +356,8 @@ if(a[0]===GraphicsPath.LINE){
    return GraphicsPath._quadCurveLength(a[1],a[2],a[3],a[4],
      a[5],a[6]);
   } else if(a[0]===GraphicsPath.CUBIC){
-   flat=[];
-   len=0;
+ // flat=[];
+ // len=0;
    return GraphicsPath._cubicCurveLength(a[1],a[2],a[3],a[4],
      a[5],a[6],a[7],a[8]);
  } else if(a[0]===GraphicsPath.ARC){
@@ -408,7 +407,7 @@ var ret=[];
  if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i];
-  var len=0;
+
   if(s[0]===GraphicsPath.QUAD){
    GraphicsPath._flattenQuad(s[1],s[2],s[3],s[4],
      s[5],s[6],0.0,1.0,ret,flatness*2,0);
@@ -441,7 +440,7 @@ GraphicsPath.prototype.toLinePath=function(flatness){
  if((flatness===null || typeof flatness==="undefined"))flatness=1.0;
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i];
-  var len=0;
+
   if(s[0]===GraphicsPath.CLOSE){
    path.closePath();
    continue;
@@ -538,13 +537,11 @@ var twopi=Math.PI*2;
   } else {
    return normAngle>=normStart || normAngle<=normEnd;
   }
- } else {
-  if(normEnd<normStart){
+ } else if(normEnd<normStart){
    return normAngle>=normEnd && normAngle<=normStart;
   } else {
    return normAngle>=normEnd || normAngle<=normStart;
   }
- }
 };
 /**
 * Calculates an axis-aligned bounding box that tightly
@@ -562,7 +559,7 @@ var inf=Number.POSITIVE_INFINITY;
  var first=true;
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i];
-  var len=0;
+
   var ax,ay;
   if(s[0]===GraphicsPath.CLOSE)continue;
   var endpt=GraphicsPath._endPoint(s);
@@ -651,7 +648,7 @@ GraphicsPath.prototype.reverse=function(){
  var lastptx=0;
  var lastpty=0;
  var firstOrAfterClose=true;
- var curPath=null;
+
  var lastClosed=false;
  var ret=new GraphicsPath();
  for(var i=this.segments.length-1;i>=0;i--){
@@ -700,7 +697,7 @@ var tmp=[];
  var curPath=null;
  for(var i=0;i<this.segments.length;i++){
   var s=this.segments[i];
-  var len=0;
+
   var startpt=GraphicsPath._startPoint(s);
   var endpt=GraphicsPath._endPoint(s);
   tmp.splice(0,tmp.length);
@@ -807,10 +804,8 @@ GraphicsPath._Curve.prototype.evaluate=function(u){
 if(this._isClosed){
   if(u<0)u+=Math.ceil(u);
   else if(u>1)u-=Math.floor(u);
- } else {
-  if(u<0)u=0;
+ } else if(u<0)u=0;
   else if(u>1)u=1;
- }
  if(this.segments.length === 0)return [0,0,0];
  var partialLen=u*this.totalLength;
  var left=0;
@@ -1129,8 +1124,7 @@ GraphicsPath.prototype.arc=function(x,y,radius,startAngle,endAngle,ccw){
 if(radius<0){
   throw new Error("IndexSizeError");
  }
- var x0=this.endPos[0];
- var y0=this.endPos[1];
+
  var twopi=Math.PI*2;
  var cosStart = Math.cos(startAngle);
  var sinStart = (startAngle>=0 && startAngle<6.283185307179586) ? (startAngle<=3.141592653589793 ? Math.sqrt(1.0-cosStart*cosStart) : -Math.sqrt(1.0-cosStart*cosStart)) : Math.sin(startAngle);
@@ -1309,8 +1303,8 @@ GraphicsPath._arcSvgToCenterParam=function(a){
  var rysq=ry*ry;
  var x1psq=x1p*x1p;
  var y1psq=y1p*y1p;
- var rx_xy=rxsq*y1psq+rysq*x1psq;
- var cxsqrt=Math.sqrt(Math.max(0,(rxsq*rysq-rx_xy)/rx_xy));
+ var rxXy=rxsq*y1psq+rysq*x1psq;
+ var cxsqrt=Math.sqrt(Math.max(0,(rxsq*rysq-rxXy)/rxXy));
  var cxp=(rx*y1p)*cxsqrt/ry;
  var cyp=(ry*x1p)*cxsqrt/rx;
  if(a[6]===a[7]){
@@ -1580,12 +1574,10 @@ var oldindex=index[0];
     index[0]=oldindex;
     return null;
   }
- } else {
-  if(!digit){
+ } else if(!digit){
     index[0]=oldindex;
     return null;
   }
- }
     ret=parseFloat(str.substr(startIndex,str.length-startIndex));
  // console.log([str.substr(startIndex,str.length-startIndex),ret])
 if(Number.isNaN(ret)){
@@ -1743,7 +1735,7 @@ var index=[0];
    }
    case 0x4d:case 0x6d:{ // 'M', 'm'
     sep=false;
-    while(true){
+    for (;;) {
       // console.log("////"+[index,str.substr(index[0],30)])
       curx=(c === 0x6d) ? ret.endPos[0] : 0;
      cury=(c === 0x6d) ? ret.endPos[1] : 0;
@@ -1761,7 +1753,7 @@ var index=[0];
    }
    case 0x4c:case 0x6c:{ // 'L', 'l'
     sep=false;
-    while(true){
+    for (;;) {
      curx=(c === 0x6c) ? ret.endPos[0] : 0;
      cury=(c === 0x6c) ? ret.endPos[1] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
@@ -1775,7 +1767,7 @@ var index=[0];
    }
    case 0x48:case 0x68:{ // 'H', 'h'
     sep=false;
-    while(true){
+    for (;;) {
      curpt=(c === 0x68) ? ret.endPos[0] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
      if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
@@ -1786,7 +1778,7 @@ var index=[0];
    }
    case 0x56:case 0x76:{ // 'V', 'v'
     sep=false;
-    while(true){
+    for (;;) {
      curpt=(c === 0x76) ? ret.endPos[1] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
      if((x===null || typeof x==="undefined")){ if(!sep)failed=true;break; }
@@ -1797,7 +1789,7 @@ var index=[0];
    }
    case 0x43:case 0x63:{ // 'C', 'c'
     sep=false;
-    while(true){
+    for (;;) {
      curx=(c === 0x63) ? ret.endPos[0] : 0;
      cury=(c === 0x63) ? ret.endPos[1] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
@@ -1820,7 +1812,7 @@ var index=[0];
    }
    case 0x51:case 0x71:{ // 'Q', 'q'
     sep=false;
-    while(true){
+    for (;;) {
      curx=(c === 0x71) ? ret.endPos[0] : 0;
      cury=(c === 0x71) ? ret.endPos[1] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
@@ -1838,7 +1830,7 @@ var index=[0];
    }
    case 0x41:case 0x61:{ // 'A', 'a'
     sep=false;
-    while(true){
+    for (;;) {
      curx=(c === 0x61) ? ret.endPos[0] : 0;
      cury=(c === 0x61) ? ret.endPos[1] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
@@ -1862,7 +1854,7 @@ var index=[0];
    }
    case 0x53:case 0x73:{ // 'S', 's'
     sep=false;
-    while(true){
+    for (;;) {
      curx=(c === 0x73) ? ret.endPos[0] : 0;
      cury=(c === 0x73) ? ret.endPos[1] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
@@ -1889,7 +1881,7 @@ var index=[0];
    }
    case 0x54:case 0x74:{ // 'T', 't'
     sep=false;
-    while(true){
+    for (;;) {
      curx=(c === 0x74) ? ret.endPos[0] : 0;
      cury=(c === 0x74) ? ret.endPos[1] : 0;
      x=GraphicsPath._nextNumber(str,index,sep);
@@ -1924,18 +1916,18 @@ Triangulate._EAR=2;
 Triangulate._REFLEX=3;
 /** @private */
 Triangulate._pointInTri=function(i1,i2,i3,pt){
- var t1 = Math.min (i3[0], i1[0]);
-  var t2 = Math.min (i3[1], i1[1]);
+ var t1 = Math.min(i3[0], i1[0]);
+  var t2 = Math.min(i3[1], i1[1]);
   var t=(((i1[0] < pt[0]) === (pt[0] <= i3[0])) &&
-  (((pt[1] - t2) * (Math.max (i3[0], i1[0]) - t1)) < ((Math.max (i3[1], i1[1]) - t2) * (pt[0] - t1))));
-  var t4 = Math.min (i1[0], i2[0]);
-  var t5 = Math.min (i1[1], i2[1]);
+  (((pt[1] - t2) * (Math.max(i3[0], i1[0]) - t1)) < ((Math.max(i3[1], i1[1]) - t2) * (pt[0] - t1))));
+  var t4 = Math.min(i1[0], i2[0]);
+  var t5 = Math.min(i1[1], i2[1]);
   t^=(((i2[0] < pt[0]) === (pt[0] <= i1[0])) &&
-   (((pt[1] - t5) * (Math.max (i1[0], i2[0]) - t4)) < ((Math.max (i1[1], i2[1]) - t5) * (pt[0] - t4))));
-  var t7 = Math.min (i2[0], i3[0]);
-  var t8 = Math.min (i2[1], i3[1]);
+   (((pt[1] - t5) * (Math.max(i1[0], i2[0]) - t4)) < ((Math.max(i1[1], i2[1]) - t5) * (pt[0] - t4))));
+  var t7 = Math.min(i2[0], i3[0]);
+  var t8 = Math.min(i2[1], i3[1]);
   t^=(((i3[0] < pt[0]) === (pt[0] <= i2[0])) &&
-   (((pt[1] - t8) * (Math.max (i2[0], i3[0]) - t7)) < ((Math.max (i2[1], i3[1]) - t8) * (pt[0] - t7))));
+   (((pt[1] - t8) * (Math.max(i2[0], i3[0]) - t7)) < ((Math.max(i2[1], i3[1]) - t8) * (pt[0] - t7))));
   return t;
 };
 /** @private */
@@ -1945,7 +1937,7 @@ Triangulate._vertClass=function(v,ori){
   // This is a convex vertex, find out whether this
   // is an ear
   var vert=v.next.next;
-  while(true){
+  for (;;) {
    if(vert===v.prev || vert===v || vert===v.next)
      break;
    if(Triangulate._pointInTri(v.prev.data,v.data,v.next.data,vert.data)){
@@ -2085,7 +2077,7 @@ var LinkedList=function(){
   }
   return this;
  };
- this.pop=function(item){
+ this.pop=function(){
   if(this._last){
    if(this._last.prev)
     this._last.prev.next=null;
@@ -2093,7 +2085,7 @@ var LinkedList=function(){
   }
   return this;
  };
- this.shift=function(item){
+ this.shift=function(){
   if(this.root){
    if(this.root.next)
     this.root.next.prev=null;
@@ -2226,7 +2218,7 @@ Triangulate._Contour.prototype.findVisiblePoint=function(x,y){
   var triangle1=[x,y];
   var triangle2=[closeVertices[0][0],y];
   var iterVert=firstVert;
-  var isVisible=true;
+
   var innerReflexes=[];
   while(iterVert){
    if(iterVert!==nextVert){
@@ -2345,7 +2337,7 @@ GraphicsPath.prototype.getTriangles=function(flatness){
 /** @private */
 Triangulate._connectContours=function(src,dst,maxPoint,dstNode){
  var vpnode=dstNode;
- var oldNext=dstNode.next;
+
  var c2node=maxPoint;
  var count=0;
  while(c2node){
@@ -2366,7 +2358,7 @@ Triangulate._connectContours=function(src,dst,maxPoint,dstNode){
 };
 /** @private */
 Triangulate._triangulate=function(contour,tris){
- var i,t1,tri;
+ var t1,tri;
  if(!contour || contour.vertexCount<3 || contour.orientation === 0){
   // too few vertices, or the orientation
   // suggests a zero area or even a certain

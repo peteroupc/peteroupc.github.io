@@ -75,7 +75,7 @@ true.)  The triangle's area is half of the cross product's length.
  // Find the triangle's area
  var area=H3DU.Math.vec3length(normal)*0.5;
  */
-vec3cross:function(a,b){
+"vec3cross":function(a,b){
 "use strict";
 return [a[1]*b[2]-a[2]*b[1],
  a[2]*b[0]-a[0]*b[2],
@@ -112,7 +112,7 @@ return [a[1]*b[2]-a[2]*b[1],
  *  // The vector's length is shorter than 20 units
  * }
  */
-vec3dot:function(a,b){
+"vec3dot":function(a,b){
 "use strict";
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
 },
@@ -124,7 +124,7 @@ return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
  * @param {Array&lt;Number>} b The second 3-element vector.
  * @returns {Array&lt;Number>} The resulting 3-element vector.
  */
-vec3add:function(a,b){
+"vec3add":function(a,b){
 "use strict";
 return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
 },
@@ -136,7 +136,7 @@ return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
  * @param {Array&lt;Number>} b The second 3-element vector.
  * @returns {Array&lt;Number>} The resulting 3-element vector.
  */
-vec3sub:function(a,b){
+"vec3sub":function(a,b){
 "use strict";
 return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
 },
@@ -147,7 +147,7 @@ return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
  * @param {Array&lt;Number>} a A 3-element vector.
  * @returns {Array&lt;Number>} The resulting 3-element vector.
  */
-vec3negate:function(a){
+"vec3negate":function(a){
 "use strict";
 return [-a[0],-a[1],-a[2]];
 },
@@ -158,7 +158,7 @@ Negating a vector
  * @param {Array&lt;Number>} a A 3-element vector.
  * @returns {Array&lt;Number>} The parameter "a".
  */
-vec3negateInPlace:function(a){
+"vec3negateInPlace":function(a){
 "use strict";
 a[0]=-a[0];
 a[1]=-a[1];
@@ -173,7 +173,7 @@ return a;
  * @param {Array&lt;Number>} b The second 3-element vector.
  * @returns {Array&lt;Number>} The resulting 3-element vector.
  */
-vec3mul:function(a,b){
+"vec3mul":function(a,b){
 "use strict";
 return [a[0]*b[0],a[1]*b[1],a[2]*b[2]];
 },
@@ -185,7 +185,7 @@ return [a[0]*b[0],a[1]*b[1],a[2]*b[2]];
  * @param {Array&lt;Number>} b The second 3-element vector.
  * @returns {Array&lt;Number>} The parameter "a"
  */
-vec3addInPlace:function(a,b){
+"vec3addInPlace":function(a,b){
 // Use variables in case a and b are the same
 "use strict";
 var b0=b[0];
@@ -204,7 +204,7 @@ return a;
  * @param {Array&lt;Number>} b The second 3-element vector.
  * @returns {Array&lt;Number>} The parameter "a"
  */
-vec3subInPlace:function(a,b){
+"vec3subInPlace":function(a,b){
 // Use variables in case a and b are the same
 "use strict";
 var b0=b[0];
@@ -223,7 +223,7 @@ return a;
  * @param {Array&lt;Number>} b The second 3-element vector.
  * @returns {Array&lt;Number>} The parameter "a"
  */
-vec3mulInPlace:function(a,b){
+"vec3mulInPlace":function(a,b){
 // Use variables in case a and b are the same
 "use strict";
 var b0=b[0];
@@ -241,7 +241,7 @@ return a;
  * @param {Number} scalar A factor to multiply.
  * @returns {Array&lt;Number>} The parameter "a".
  */
-vec3scaleInPlace:function(a,scalar){
+"vec3scaleInPlace":function(a,scalar){
 "use strict";
 a[0]*=scalar;
 a[1]*=scalar;
@@ -256,7 +256,7 @@ return a;
  * @param {Number} scalar A factor to multiply.
  * @returns {Array&lt;Number>} The parameter "a".
  */
-vec3scale:function(a,scalar){
+"vec3scale":function(a,scalar){
  "use strict";
 return H3DU.Math.vec3scaleInPlace([a[0],a[1],a[2]],scalar);
 },
@@ -269,7 +269,7 @@ return H3DU.Math.vec3scaleInPlace([a[0],a[1],a[2]],scalar);
  * closer to v1, and closer to 1 means closer to v2.
  * @returns {Array&lt;Number>} The interpolated vector.
  */
-vec3lerp:function(v1,v2,factor){
+"vec3lerp":function(v1,v2,factor){
  "use strict";
 return [
   v1[0]+(v2[0]-v1[0])*factor,
@@ -283,7 +283,7 @@ return [
  * @param {Array&lt;Number>} a The first 4-element vector.
  * @param {Array&lt;Number>} b The second 4-element vector.
  */
-vec4dot:function(a,b){
+"vec4dot":function(a,b){
 "use strict";
 return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
 },
@@ -294,7 +294,7 @@ return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
  * @param {Number} scalar A factor to multiply.
  * @returns {Array&lt;Number>} The parameter "a".
  */
-vec4scaleInPlace:function(a,scalar){
+"vec4scaleInPlace":function(a,scalar){
 "use strict";
 a[0]*=scalar;
 a[1]*=scalar;
@@ -311,7 +311,7 @@ return a;
  * closer to v1, and closer to 1 means closer to v2.
  * @returns {Array&lt;Number>} The interpolated vector.
  */
-vec4lerp:function(v1,v2,factor){
+"vec4lerp":function(v1,v2,factor){
  "use strict";
 return [
   v1[0]+(v2[0]-v1[0])*factor,
@@ -329,7 +329,7 @@ return [
  * @param {Array&lt;Number>} vec A 3-element vector.
  * @returns {Array&lt;Number>} The parameter "vec".
  */
-vec3normInPlace:function(vec){
+"vec3normInPlace":function(vec){
  "use strict";
 var x=vec[0];
  var y=vec[1];
@@ -352,7 +352,7 @@ var x=vec[0];
  * @param {Array&lt;Number>} vec A 4-element vector.
  * @returns {Array&lt;Number>} The parameter "vec".
  */
-vec4normInPlace:function(vec){
+"vec4normInPlace":function(vec){
  "use strict";
 var x=vec[0];
  var y=vec[1];
@@ -377,7 +377,7 @@ var x=vec[0];
  * @param {Array&lt;Number>} vec A 3-element vector.
  * @returns {Array&lt;Number>} The resulting vector.
  */
-vec3norm:function(vec){
+"vec3norm":function(vec){
  "use strict";
 return H3DU.Math.vec3normInPlace([vec[0],vec[1],vec[2]]);
 },
@@ -390,7 +390,7 @@ return H3DU.Math.vec3normInPlace([vec[0],vec[1],vec[2]]);
  * @param {Array&lt;Number>} vec A 4-element vector.
  * @returns {Array&lt;Number>} The resulting vector.
  */
-vec4norm:function(vec){
+"vec4norm":function(vec){
  "use strict";
 return H3DU.Math.vec4normInPlace([vec[0],vec[1],vec[2],vec[3]]);
 },
@@ -400,7 +400,7 @@ return H3DU.Math.vec4normInPlace([vec[0],vec[1],vec[2],vec[3]]);
  * of its components.
  * @param {Array&lt;Number>} a A 3-element vector.
  * @returns {Number} Return value. */
-vec3length:function(a){
+"vec3length":function(a){
  "use strict";
 var dx=a[0];
  var dy=a[1];
@@ -413,7 +413,7 @@ var dx=a[0];
  * of its components.
  * @param {Array&lt;Number>} a A 4-element vector.
  * @returns {Number} Return value. */
-vec4length:function(a){
+"vec4length":function(a){
  "use strict";
 var dx=a[0];
  var dy=a[1];
@@ -424,20 +424,20 @@ var dx=a[0];
 /**
  * Returns the identity 3x3 matrix.
  * @returns {Array&lt;Number>} Return value. */
-mat3identity:function(){
+"mat3identity":function(){
  "use strict";
 return [1,0,0,0,1,0,0,0,1];
 },
 /**
  * Returns the identity 4x4 matrix.
  * @returns {Array&lt;Number>} Return value. */
-mat4identity:function(){
+"mat4identity":function(){
  "use strict";
 return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
 },
 /** Returns the identity quaternion of multiplication, (0, 0, 0, 1).
  @returns {Array&lt;Number>} */
-quatIdentity:function(){
+"quatIdentity":function(){
  "use strict";
 return [0,0,0,1];
 },
@@ -445,7 +445,7 @@ return [0,0,0,1];
  * Returns a copy of a 4x4 matrix.
  * @param {Array&lt;Number>} mat A 4x4 matrix.
  * @returns {Array&lt;Number>} Return value. */
-mat4copy:function(mat){
+"mat4copy":function(mat){
  "use strict";
 return mat.slice(0,16);
 },
@@ -453,7 +453,7 @@ return mat.slice(0,16);
  * Returns a copy of a 3-element vector.
  * @param {Array&lt;Number>} vec A 3-element vector.
  * @returns {Array&lt;Number>} Return value. */
-vec3copy:function(vec){
+"vec3copy":function(vec){
  "use strict";
 return vec.slice(0,3);
 },
@@ -461,7 +461,7 @@ return vec.slice(0,3);
  * Returns a copy of a 4-element vector.
  * @param {Array&lt;Number>} vec A 4-element vector.
  * @returns {Array&lt;Number>} Return value. */
-vec4copy:function(vec){
+"vec4copy":function(vec){
  "use strict";
 return vec.slice(0,4);
 },
@@ -474,7 +474,7 @@ return vec.slice(0,4);
  * values will be copied.
  * @returns {Array&lt;Number>} The parameter "dst"
  */
-vec3assign:function(dst,src){
+"vec3assign":function(dst,src){
  "use strict";
 dst[0]=src[0];
  dst[1]=src[1];
@@ -488,7 +488,7 @@ dst[0]=src[0];
  * values will be copied.
  * @returns {Array&lt;Number>} The parameter "dst"
  */
-vec4assign:function(dst,src){
+"vec4assign":function(dst,src){
  "use strict";
 dst[0]=src[0];
  dst[1]=src[1];
@@ -500,7 +500,7 @@ dst[0]=src[0];
  * Returns whether a 4x4 matrix is the identity matrix.
  * @param {Array&lt;Number>} mat A 4x4 matrix.
  * @returns {Boolean} Return value. */
-mat4isIdentity:function(mat){
+"mat4isIdentity":function(mat){
 "use strict";
 return (
     mat[0]===1 &amp;&amp; mat[1] === 0 &amp;&amp; mat[2] === 0 &amp;&amp; mat[3] === 0 &amp;&amp;
@@ -515,7 +515,7 @@ return (
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  * Returns the identity matrix if this matrix is not invertible.
  */
-mat4invert:function(m){
+"mat4invert":function(m){
 "use strict";
 var tvar0 = m[0]*m[10];
 var tvar1 = m[0]*m[11];
@@ -529,34 +529,31 @@ var tvar8 = m[10]*m[15];
 var tvar9 = m[11]*m[12];
 var tvar10 = m[11]*m[13];
 var tvar11 = m[11]*m[14];
-var tvar12 = m[1]*m[10];
-var tvar13 = m[1]*m[11];
+
 var tvar14 = m[1]*m[4];
 var tvar15 = m[1]*m[6];
 var tvar16 = m[1]*m[7];
 var tvar17 = m[1]*m[8];
-var tvar18 = m[2]*m[11];
+
 var tvar19 = m[2]*m[4];
 var tvar20 = m[2]*m[5];
 var tvar21 = m[2]*m[7];
 var tvar22 = m[2]*m[8];
 var tvar23 = m[2]*m[9];
-var tvar24 = m[3]*m[10];
+
 var tvar25 = m[3]*m[4];
 var tvar26 = m[3]*m[5];
 var tvar27 = m[3]*m[6];
 var tvar28 = m[3]*m[8];
 var tvar29 = m[3]*m[9];
-var tvar30 = m[4]*m[10];
-var tvar31 = m[4]*m[11];
+
 var tvar32 = m[4]*m[9];
-var tvar33 = m[5]*m[10];
-var tvar34 = m[5]*m[11];
+
 var tvar35 = m[5]*m[8];
-var tvar36 = m[6]*m[11];
+
 var tvar37 = m[6]*m[8];
 var tvar38 = m[6]*m[9];
-var tvar39 = m[7]*m[10];
+
 var tvar40 = m[7]*m[8];
 var tvar41 = m[7]*m[9];
 var tvar42 = m[8]*m[13];
@@ -610,7 +607,7 @@ return r;
  * Returns a new quaternion.
  * @param {Array&lt;Number>} quat A quaternion, containing four elements.
  * @returns {Array&lt;Number>} Return value. */
-quatConjugate:function(quat){
+"quatConjugate":function(quat){
  "use strict";
 return [-quat[0],-quat[1],-quat[2],quat[3]];
 },
@@ -620,7 +617,7 @@ return [-quat[0],-quat[1],-quat[2],quat[3]];
  * Returns a new quaternion.
  * @param {Array&lt;Number>} quat A quaternion, containing four elements.
  * @returns {Array&lt;Number>} Return value. */
-quatInvert:function(quat){
+"quatInvert":function(quat){
  "use strict";
 var lsq=1.0/H3DU.Math.quatDot(quat,quat);
  return H3DU.Math.vec4scaleInPlace(
@@ -629,7 +626,7 @@ var lsq=1.0/H3DU.Math.quatDot(quat,quat);
 /**
 * Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 * @returns {Boolean} Return value.*/
-quatIsIdentity:function(quat){
+"quatIsIdentity":function(quat){
  "use strict";
 return quat[0]===0 &amp;&amp; quat[1] === 0 &amp;&amp; quat[2] === 0 &amp;&amp; quat[3] === 1;
 },
@@ -639,7 +636,7 @@ return quat[0]===0 &amp;&amp; quat[1] === 0 &amp;&amp; quat[2] === 0 &amp;&amp; 
  * @param {Array&lt;Number>} quat A quaternion.
  * @returns {Array&lt;Number>} Return value.
  */
-quatToMat4:function(quat){
+"quatToMat4":function(quat){
   "use strict";
 var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
   tx = 2.0 * quat[0];
@@ -673,7 +670,7 @@ var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
 */
-quatToAxisAngle:function(a){
+"quatToAxisAngle":function(a){
  "use strict";
 var w=a[3];
  var d=1.0-(w*w);
@@ -696,7 +693,7 @@ var w=a[3];
  * @returns {Array&lt;Number>} The generated quaternion, which
  * will be unit vectors ("normalized" vectors with a length of 1).
  */
-quatFromVectors:function(vec1,vec2){
+"quatFromVectors":function(vec1,vec2){
   "use strict";
 var ret=H3DU.Math.vec3cross(vec1,vec2);
   var vecLengths=Math.sqrt(H3DU.Math.vec3dot(vec1,vec1))*
@@ -727,7 +724,7 @@ var ret=H3DU.Math.vec3cross(vec1,vec2);
  * of rotation.
  * @returns {Array&lt;Number>} The generated quaternion.
  */
-quatFromAxisAngle:function(angle,v,vy,vz){
+"quatFromAxisAngle":function(angle,v,vy,vz){
 "use strict";
 var v0,v1,v2,ang;
 if(typeof vy!=="undefined" &amp;&amp; typeof vz!=="undefined"){
@@ -778,7 +775,7 @@ return ret;
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
  * @returns {Array&lt;Number>} The generated quaternion.
  */
-quatFromTaitBryan:function(pitchDegrees,yawDegrees,rollDegrees, mode){
+"quatFromTaitBryan":function(pitchDegrees,yawDegrees,rollDegrees, mode){
  "use strict";
 var rollRad,pitchRad,yawRad;
  if((mode===null || typeof mode==="undefined"))mode=H3DU.Math.RollPitchYaw;
@@ -830,7 +827,7 @@ var rollRad,pitchRad,yawRad;
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  */
-quatToTaitBryan:function(a,mode){
+"quatToTaitBryan":function(a,mode){
   "use strict";
 var c0=a[3];
   var c1,c2,c3;
@@ -899,7 +896,7 @@ var c0=a[3];
  * @returns {Array&lt;Number>} The interpolated quaternion,
  * which will be unit vectors ("normalized" vectors with a length of 1).
 */
-quatNlerp:function(q1,q2,factor){
+"quatNlerp":function(q1,q2,factor){
   "use strict";
 var t1 = 1.0 - factor;
   var t2 = q1[0] * t1;
@@ -928,7 +925,7 @@ var t1 = 1.0 - factor;
  * closer to q1, and closer to 1 means closer to q2.
  * @returns {Array&lt;Number>} The interpolated quaternion.
  */
-quatSlerp:function(q1,q2,factor){
+"quatSlerp":function(q1,q2,factor){
  "use strict";
 var cosval=H3DU.Math.quatDot(q1,q2);
  var qd=q2;
@@ -983,7 +980,7 @@ var cosval=H3DU.Math.quatDot(q1,q2);
  * of rotation.
  * @returns {Array&lt;Number>} The resulting quaternion.
  */
-quatRotate:function(quat,angle,v,vy,vz){
+"quatRotate":function(quat,angle,v,vy,vz){
   "use strict";
 return H3DU.Math.quatMultiply(quat,
     H3DU.Math.quatFromAxisAngle(angle,v,vy,vz));
@@ -997,7 +994,7 @@ return H3DU.Math.quatMultiply(quat,
  * @returns {Array&lt;Number>} A 4-element vector representing
 * the transformed vector.
  */
-quatTransform:function(q,v){
+"quatTransform":function(q,v){
   "use strict";
 var t1 = (((q[1] * v[2]) - q[2] * v[1]) + v[0] * q[3]);
   var t2 = (((q[2] * v[0]) - q[0] * v[2]) + v[1] * q[3]);
@@ -1014,7 +1011,7 @@ var t1 = (((q[1] * v[2]) - q[2] * v[1]) + v[0] * q[3]);
  * @param {Array&lt;Number>} m A 4x4 matrix.
  * @returns {Array&lt;Number>} The resulting quaternion.
  */
-quatFromMat4:function(m){
+"quatFromMat4":function(m){
 "use strict";
 var ret=[];
  var xy=m[1];
@@ -1072,7 +1069,7 @@ return ret;
  * @param {Array&lt;Number>} m4 A 4x4 matrix.
  * @returns {Array&lt;Number>} The resulting 3x3 matrix.
  */
-mat4toMat3:function(m4){
+"mat4toMat3":function(m4){
  "use strict";
 return [
   m4[0],m4[1],m4[2],
@@ -1085,7 +1082,7 @@ return [
  * @param {Array&lt;Number>} m4 A 4x4 matrix.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4transpose:function(m4){
+"mat4transpose":function(m4){
  "use strict";
 return H3DU.Math.mat4transposeInPlace(m4.slice(0,16));
 },
@@ -1095,7 +1092,7 @@ return H3DU.Math.mat4transposeInPlace(m4.slice(0,16));
  * @param {Array&lt;Number>} mat A 4x4 matrix.
  * @returns {Array&lt;Number>} The parameter "mat".
  */
-mat4transposeInPlace:function(mat){
+"mat4transposeInPlace":function(mat){
  "use strict";
 var tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
  tmp=mat[2];mat[2]=mat[8];mat[8]=tmp;
@@ -1119,7 +1116,7 @@ var tmp=mat[1];mat[1]=mat[4];mat[4]=tmp;
 * @returns {Array&lt;Number>} The resulting 3x3 matrix. If the matrix
 * can't be inverted, returns the identity 3x3 matrix.
 */
-mat4inverseTranspose3:function(m4){
+"mat4inverseTranspose3":function(m4){
 "use strict";
 if(m4[1]===0 &amp;&amp; m4[2] === 0 &amp;&amp; m4[4] === 0 &amp;&amp;
    m4[6] === 0 &amp;&amp; m4[8] === 0 &amp;&amp; m4[9] === 0){
@@ -1167,7 +1164,7 @@ return [
  * @param {Number} v3z Scaling factor along the Z axis.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4scale:function(mat,v3,v3y,v3z){
+"mat4scale":function(mat,v3,v3y,v3z){
   "use strict";
 var scaleX,scaleY,scaleZ;
   if(typeof v3y!=="undefined" &amp;&amp; typeof v3z!=="undefined"){
@@ -1196,7 +1193,7 @@ var scaleX,scaleY,scaleZ;
  * @param {Number} v3z Scaling factor along the Z axis.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4scaled:function(v3,v3y,v3z){
+"mat4scaled":function(v3,v3y,v3z){
   "use strict";
 if(typeof v3y!=="undefined" &amp;&amp; typeof v3z!=="undefined"){
    return [v3,0,0,0,0,v3y,0,0,0,0,v3z,0,0,0,0,1];
@@ -1218,7 +1215,7 @@ if(typeof v3y!=="undefined" &amp;&amp; typeof v3z!=="undefined"){
  * point, set Z and W to 1.
  * @returns {Array&lt;Number>} The transformed vector.
  */
-mat4transform:function(mat,v,vy,vz,vw){
+"mat4transform":function(mat,v,vy,vz,vw){
   "use strict";
 var x,y,z,w;
   if(typeof vy!=="undefined" &amp;&amp; typeof vz!=="undefined" &amp;&amp;
@@ -1250,7 +1247,7 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + w * mat[12],
  * point, set Z to 1.
  * @returns {Array&lt;Number>} The transformed vector.
  */
-mat4transformVec3:function(mat,v,vy,vz){
+"mat4transformVec3":function(mat,v,vy,vz){
   "use strict";
 var x,y,z;
   if(typeof vy!=="undefined" &amp;&amp; typeof vz!=="undefined"){
@@ -1279,7 +1276,7 @@ return [x * mat[0] + y * mat[4] + z * mat[8] + mat[12],
  * point, set Z to 1.
  * @returns {Array&lt;Number>} The transformed vector.
  */
-mat3transform:function(mat,v,vy,vz){
+"mat3transform":function(mat,v,vy,vz){
   "use strict";
 var x,y,z;
   if(typeof vy!=="undefined" &amp;&amp; typeof vz!=="undefined"){
@@ -1305,7 +1302,7 @@ return [x * mat[0] + y * mat[3] + z * mat[6],
  * @param {Number} v3z Translation along the Z axis.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4translated:function(v3,v3y,v3z){
+"mat4translated":function(v3,v3y,v3z){
   "use strict";
 var x,y,z;
   if(typeof v3y!=="undefined" &amp;&amp; typeof v3z!=="undefined"){
@@ -1330,7 +1327,7 @@ var x,y,z;
  * @param {Number} v3z Translation along the Z axis.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4translate:function(mat,v3,v3y,v3z){
+"mat4translate":function(mat,v3,v3y,v3z){
   "use strict";
 var x,y,z;
   if(typeof v3y!=="undefined" &amp;&amp; typeof v3z!=="undefined"){
@@ -1380,7 +1377,7 @@ var x,y,z;
  * to the far plane will have identical depth values.)
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4perspective:function(fovY,aspectRatio,near,far){
+"mat4perspective":function(fovY,aspectRatio,near,far){
  "use strict";
 var fov=((fovY>=0 &amp;&amp; fovY&lt;360) ? fovY : ((fovY%360)+(fovY&lt;0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
  var f = 1/Math.tan(fov);
@@ -1410,7 +1407,7 @@ var fov=((fovY>=0 &amp;&amp; fovY&lt;360) ? fovY : ((fovY%360)+(fovY&lt;0 ? 360 
 * so it points perpendicular to the "camera"'s view direction.)
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4lookat:function(viewerPos,lookingAt,up){
+"mat4lookat":function(viewerPos,lookingAt,up){
  "use strict";
 if((up === null || typeof up === "undefined"))up=[0,1,0];
  if((lookingAt === null || typeof lookingAt === "undefined"))lookingAt=[0,0,0];
@@ -1461,7 +1458,7 @@ if((up === null || typeof up === "undefined"))up=[0,1,0];
  * between n and f should be as small as the application can accept.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4ortho:function(l,r,b,t,n,f){
+"mat4ortho":function(l,r,b,t,n,f){
  "use strict";
 var width=1/(r-l);
  var height=1/(t-b);
@@ -1499,7 +1496,7 @@ var width=1/(r-l);
  * to the far plane will have identical depth values.)
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4perspectiveHorizontal:function(fovX,aspectRatio,near,far){
+"mat4perspectiveHorizontal":function(fovX,aspectRatio,near,far){
  "use strict";
 var fov=((fovX>=0 &amp;&amp; fovX&lt;360) ? fovX : ((fovX%360)+(fovX&lt;0 ? 360 : 0)))*H3DU.Math.PiDividedBy360;
  var fovY=H3DU.Math.Num360DividedByPi*Math.atan2(Math.tan(fov),aspectRatio);
@@ -1520,7 +1517,7 @@ var fov=((fovX>=0 &amp;&amp; fovX&lt;360) ? fovX : ((fovX%360)+(fovX&lt;0 ? 360 
  * they increase upward.)
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4ortho2d:function(l,r,b,t){
+"mat4ortho2d":function(l,r,b,t){
  "use strict";
 return H3DU.Math.mat4ortho2d(l,r,b,t,-1,1);
 },
@@ -1546,7 +1543,7 @@ return H3DU.Math.mat4ortho2d(l,r,b,t,-1,1);
 *  the scene's aspect ratio.
 * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4ortho2dAspect:function(l,r,b,t,aspect){
+"mat4ortho2dAspect":function(l,r,b,t,aspect){
  "use strict";
 return H3DU.Math.mat4orthoAspect(l,r,b,t,-1,1,aspect);
 },
@@ -1576,7 +1573,7 @@ return H3DU.Math.mat4orthoAspect(l,r,b,t,-1,1,aspect);
 *  the scene's aspect ratio.
 * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4orthoAspect:function(l,r,b,t,n,f,aspect){
+"mat4orthoAspect":function(l,r,b,t,n,f,aspect){
  "use strict";
   var newDim;
 var boxAspect=Math.abs((r-l)/(t-b));
@@ -1635,7 +1632,7 @@ var boxAspect=Math.abs((r-l)/(t-b));
  * to the far plane will have identical depth values.)
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4frustum:function(l,r,b,t,near,far){
+"mat4frustum":function(l,r,b,t,near,far){
  "use strict";
 var dn=2*near;
  var onedx=1/(r-l);
@@ -1659,7 +1656,7 @@ return [
  * @param {Number} v3z Scale factor along the Z axis.
  * @returns {Array&lt;Number>} The same parameter as "mat".
  */
-mat4scaleInPlace:function(mat,v3,v3y,v3z){
+"mat4scaleInPlace":function(mat,v3,v3y,v3z){
   "use strict";
 var x,y,z;
   if(typeof v3y!=="undefined" &amp;&amp; typeof v3z!=="undefined"){
@@ -1696,7 +1693,7 @@ var x,y,z;
  * @param {Array&lt;Number>} b The second matrix.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4multiply:function(a,b){
+"mat4multiply":function(a,b){
   "use strict";
 var dst=[];
  for(var i = 0; i &lt; 16; i+= 4){
@@ -1723,7 +1720,7 @@ var dst=[];
  * @param {Array&lt;Number>} b The second quaternion.
  * @returns {Array&lt;Number>} The resulting quaternion.
 */
-quatMultiply:function(a,b){
+"quatMultiply":function(a,b){
  "use strict";
 return [
  a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1],
@@ -1753,7 +1750,7 @@ return [
  * of rotation.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4rotate:function(mat,angle,v,vy,vz){
+"mat4rotate":function(mat,angle,v,vy,vz){
 "use strict";
 var v0,v1,v2,ang;
 if(typeof vy!=="undefined" &amp;&amp; typeof vz!=="undefined"){
@@ -1775,21 +1772,21 @@ if(typeof vy!=="undefined" &amp;&amp; typeof vz!=="undefined"){
 }
 var cost = Math.cos(ang);
 var sint = (ang>=0 &amp;&amp; ang&lt;6.283185307179586) ? (ang&lt;=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
-if( 1 === v0 &amp;&amp; 0=== v1 &amp;&amp; 0=== v2 ) {
+if( v0 === 1 &amp;&amp; v1 === 0 &amp;&amp; v2 === 0 ) {
   return [mat[0], mat[1], mat[2], mat[3],
   cost*mat[4]+mat[8]*sint, cost*mat[5]+mat[9]*sint, cost*mat[6]+mat[10]*sint, cost*mat[7]+mat[11]*sint,
   cost*mat[8]-sint*mat[4], cost*mat[9]-sint*mat[5], cost*mat[10]-sint*mat[6], cost*mat[11]-sint*mat[7],
   mat[12], mat[13], mat[14], mat[15]];
-} else if( 0 === v0 &amp;&amp; 1=== v1 &amp;&amp; 0=== v2 ) {
+} else if( v0 === 0 &amp;&amp; v1 === 1 &amp;&amp; v2 === 0 ) {
 return [cost*mat[0]-sint*mat[8], cost*mat[1]-sint*mat[9], cost*mat[2]-sint*mat[10], cost*mat[3]-sint*mat[11],
   mat[4], mat[5], mat[6], mat[7],
   cost*mat[8]+mat[0]*sint, cost*mat[9]+mat[1]*sint, cost*mat[10]+mat[2]*sint, cost*mat[11]+mat[3]*sint,
   mat[12], mat[13], mat[14], mat[15]];
-} else if( 0 === v0 &amp;&amp; 0=== v1 &amp;&amp; 1=== v2 ) {
+} else if( v0 === 0 &amp;&amp; v1 === 0 &amp;&amp; v2 === 1 ) {
  return [cost*mat[0]+mat[4]*sint, cost*mat[1]+mat[5]*sint, cost*mat[2]+mat[6]*sint, cost*mat[3]+mat[7]*sint,
   cost*mat[4]-sint*mat[0], cost*mat[5]-sint*mat[1], cost*mat[6]-sint*mat[2], cost*mat[7]-sint*mat[3],
   mat[8], mat[9], mat[10], mat[11], mat[12], mat[13], mat[14], mat[15]];
-} else if(0===v0 &amp;&amp; 0=== v1 &amp;&amp; 0===v2){
+} else if(v0 === 0 &amp;&amp; v1 === 0 &amp;&amp; v2 === 0){
  return mat.slice(0,16);
 } else {
 var iscale = 1.0 / Math.sqrt(v0*v0+v1*v1+v2*v2);
@@ -1851,7 +1848,7 @@ mat[12], mat[13], mat[14], mat[15]];
  * of rotation.
  * @returns {Array&lt;Number>} The resulting 4x4 matrix.
  */
-mat4rotated:function(angle,v,vy,vz){
+"mat4rotated":function(angle,v,vy,vz){
 "use strict";
 var v0,v1,v2,ang;
 if(typeof vy!=="undefined" &amp;&amp; typeof vz!=="undefined"){
@@ -1873,13 +1870,13 @@ if(typeof vy!=="undefined" &amp;&amp; typeof vz!=="undefined"){
 }
 var cost = Math.cos(ang);
 var sint = (ang>=0 &amp;&amp; ang&lt;6.283185307179586) ? (ang&lt;=3.141592653589793 ? Math.sqrt(1.0-cost*cost) : -Math.sqrt(1.0-cost*cost)) : Math.sin(ang);
-if( 1 === v0 &amp;&amp; 0=== v1 &amp;&amp; 0=== v2 ) {
+if( v0 === 1 &amp;&amp; v1 === 0 &amp;&amp; v2 === 0 ) {
   return[1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1];
-} else if( 0 === v0 &amp;&amp; 1=== v1 &amp;&amp; 0=== v2 ) {
+} else if( v0 === 0 &amp;&amp; v1 === 1 &amp;&amp; v2 === 0 ) {
 return [cost, 0, -sint, 0, 0, 1, 0, 0, sint, 0, cost, 0, 0, 0, 0, 1];
-} else if( 0 === v0 &amp;&amp; 0=== v1 &amp;&amp; 1=== v2 ) {
+} else if( v0 === 0 &amp;&amp; v1 === 0 &amp;&amp; v2 === 1 ) {
  return [cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-} else if(0===v0 &amp;&amp; 0=== v1 &amp;&amp; 0===v2){
+} else if(v0 === 0 &amp;&amp; v1 === 0 &amp;&amp; v2 === 0){
  return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
 } else {
 var iscale = 1.0 / Math.sqrt(v0*v0+v1*v1+v2*v2);
@@ -1923,7 +1920,7 @@ H3DU.Math.planeNormInPlace=function(plane){
 var x=plane[0];
  var y=plane[1];
  var z=plane[2];
- var w=plane[3];
+
  var len=Math.sqrt(x*x+y*y+z*z);
  if(len!==0){
   len=1.0/len;
@@ -2278,7 +2275,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="global.html#CurveTube">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3><a href="global.html">Global</a></h3>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

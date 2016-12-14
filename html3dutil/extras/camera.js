@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, H3DU.Math, scene */
+/* global H3DU */
 
 ////////////////////////////////////////////
 
@@ -21,25 +21,25 @@ function InputTracker(element){
  this.clientY=null;
  this.element=element;
  this.mouseWheelCallback=null;
- var thisObj=this;
+ var that=this;
  this.handlers=[];
  var addHandler=function(h,a,b,c){
   h.push([a,b,c]);
   a.addEventListener(b,c);
  };
  if(element){
- addHandler(this.handlers,window,"blur",function(e){
-  thisObj.leftButton=false;
-  thisObj.rightButton=false;
-  thisObj.keys={};
+ addHandler(this.handlers,window,"blur",function(){
+  that.leftButton=false;
+  that.rightButton=false;
+  that.keys={};
  });
  addHandler(this.handlers,document,"keydown",function(e){
-  thisObj.keys[e.keyCode]=true;
+  that.keys[e.keyCode]=true;
  });
  addHandler(this.handlers,document,"keyup",function(e){
-  delete thisObj.keys[e.keyCode];
+  delete that.keys[e.keyCode];
  });
- var mouseWheelFunc=function(thisObj, e, click){
+ var mouseWheelFunc=function(tracker, e, click){
   var clientX=e.clientX-InputTracker._getPageX(e.target);
   var clientY=e.clientY-InputTracker._getPageY(e.target);
   var delta=0;
@@ -53,66 +53,101 @@ function InputTracker(element){
   // delta of 120 represents 1 tick of the mouse wheel;
   // positive values mean moving the mouse wheel up,
   // negative values mean down
-  if(thisObj.mouseWheelCallback) {
-   thisObj.mouseWheelCallback({"target":e.target,
+  if(tracker.mouseWheelCallback) {
+   tracker.mouseWheelCallback({
+"target":e.target,
      "delta":delta,
      "click":click,
      "x":clientX,
-     "y":clientY});
+     "y":clientY
+});
     e.preventDefault();
    }
  };
- var mouseEvent=function(thisObj,e){
+ var mouseEvent=function(tracker,e){
   if(e.button === 0){
-   thisObj.leftButton=e.isDown;
+   tracker.leftButton=e.isDown;
   }
   if(e.button === 1){
-   thisObj.middleButton=e.isDown;
+   tracker.middleButton=e.isDown;
   }
   if(e.button === 2){
-   thisObj.rightButton=e.isDown;
+   tracker.rightButton=e.isDown;
   }
   if(e.button === 0 && e.touch && !e.isDown){
-   thisObj.clientX=null;
-   thisObj.clientY=null;
-   thisObj.lastClient=[];
+   tracker.clientX=null;
+   tracker.clientY=null;
+   tracker.lastClient=[];
   } else {
-   thisObj.clientX=e.clientX-InputTracker._getPageX(e.target);
-   thisObj.clientY=e.clientY-InputTracker._getPageY(e.target);
+   tracker.clientX=e.clientX-InputTracker._getPageX(e.target);
+   tracker.clientY=e.clientY-InputTracker._getPageY(e.target);
    if(e.button!==-1){
     // update mouse position to current click position
-    thisObj.lastClient[0]=thisObj.clientX;
-    thisObj.lastClient[1]=thisObj.clientY;
+    tracker.lastClient[0]=tracker.clientX;
+    tracker.lastClient[1]=tracker.clientY;
    }
   }
  };
  addHandler(this.handlers,element,"mousedown",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":e.button,
-    "clientX":e.clientX,"clientY":e.clientY});
+  mouseEvent(that,{
+"target":e.target,
+"isDown":true,
+"button":e.button,
+    "clientX":e.clientX,
+"clientY":e.clientY
+});
  });
  addHandler(this.handlers,element,"touchstart",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":true,"button":0,
-    "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
+  mouseEvent(that,{
+"target":e.target,
+"isDown":true,
+"button":0,
+    "clientX":e.touches[0].clientX,
+"clientY":e.touches[0].clientY,
+"touch":true
+});
  });
  addHandler(this.handlers,element,"mouseup",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":e.button,
-    "clientX":e.clientX,"clientY":e.clientY});
+  mouseEvent(that,{
+"target":e.target,
+"isDown":false,
+"button":e.button,
+    "clientX":e.clientX,
+"clientY":e.clientY
+});
  });
  addHandler(this.handlers,element,"touchend",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":0,
-    "clientX":e.changedTouches[0].clientX,"clientY":e.changedTouches[0].clientY,"touch":true});
+  mouseEvent(that,{
+"target":e.target,
+"isDown":false,
+"button":0,
+    "clientX":e.changedTouches[0].clientX,
+"clientY":e.changedTouches[0].clientY,
+"touch":true
+});
  });
  addHandler(this.handlers,element,"mousemove",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
-    "clientX":e.clientX,"clientY":e.clientY});
+  mouseEvent(that,{
+"target":e.target,
+"isDown":false,
+"button":-1,
+    "clientX":e.clientX,
+"clientY":e.clientY
+});
  });
  addHandler(this.handlers,element,"touchmove",function(e){
-  mouseEvent(thisObj,{"target":e.target,"isDown":false,"button":-1,
-    "clientX":e.touches[0].clientX,"clientY":e.touches[0].clientY,"touch":true});
+  mouseEvent(that,{
+"target":e.target,
+"isDown":false,
+"button":-1,
+    "clientX":e.touches[0].clientX,
+"clientY":e.touches[0].clientY,
+"touch":true
+});
  });
  var evt=("mousewheel" in element) ? "mousewheel" : "DOMMouseScroll";
  addHandler(this.handlers,element,evt,function(e,click){
-  mouseWheelFunc(thisObj,e,click);
+  mouseWheelFunc(that,e,click);
  });
  }
 }
@@ -197,7 +232,12 @@ InputTracker.prototype.deltaXY=function(){
 var deltaX=0;
  var deltaY=0;
  if(this.clientX === null || this.clientY === null){
-  return {"x":0,"y":0,"cx":0,"cy":0};
+  return {
+"x":0,
+"y":0,
+"cx":0,
+"cy":0
+};
  }
  deltaX=(this.lastClient.length === 0) ? 0 :
    this.clientX-this.lastClient[0];
@@ -205,8 +245,12 @@ var deltaX=0;
    this.clientY-this.lastClient[1];
  this.lastClient[0]=this.clientX;
  this.lastClient[1]=this.clientY;
- return {"x":deltaX,"y":deltaY,
-   "cx":this.clientX,"cy":this.clientY};
+ return {
+"x":deltaX,
+"y":deltaY,
+   "cx":this.clientX,
+"cy":this.clientY
+};
 };
 
 //////////////////////////////////////////////////////
@@ -249,7 +293,7 @@ function Camera(sub, fov, nearZ, farZ, canvas){
  this.scene=sub;
  this.trackballMode=true;
  this._updateView();
- if(!canvas)canvas=scene.getCanvas();
+ if(!canvas)canvas=this.scene.getCanvas();
  this.input=new InputTracker(canvas);
  this.input.mousewheel(this._mousewheel.bind(this));
 }
@@ -380,7 +424,7 @@ var x=deltaMouseX*angleMultiplier;
   var vec=H3DU.Math.quatTransform(
     H3DU.Math.quatConjugate(this.dolly),Camera._normAsVec4(0,0,1));
   var lat=Math.atan2(Math.sqrt(vec[2]*vec[2]+vec[0]*vec[0]),vec[1]);
-  var oldlat=lat;
+
   y=y*H3DU.Math.PiDividedBy180;
   lat-=y;
   var pi2=Math.PI-0.00001;
@@ -584,7 +628,7 @@ if(dist!==0){
 */
 Camera.prototype.getPosition=function(){
   "use strict";
-var view=this._getView();
+  // var view=this._getView();
   var pos=H3DU.Math.quatTransform(
     H3DU.Math.quatConjugate(this.rotation),
     [this.position[0],this.position[1],this.position[2],1]);
