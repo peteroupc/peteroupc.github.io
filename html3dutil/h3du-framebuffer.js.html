@@ -17,32 +17,6 @@
             <pre class="prettyprint source linenums"><code>/* global H3DU */
 
 /** @private */
-H3DU.FrameBufferInfo = function(width, height) {
-  "use strict";
-  if(width &lt; 0 || height &lt; 0)throw new Error("width or height negative");
-  this.width = width;
-  this.height = height;
-};
-/** @private */
-H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
-  "use strict";
-  width = Math.ceil(width);
-  height = Math.ceil(height);
-  this.width = width;
-  this.height = height;
-};
-/** @private */
-H3DU.FrameBufferInfo.prototype.getWidth = function() {
-  "use strict";
-  return this.width;
-};
-/** @private */
-H3DU.FrameBufferInfo.prototype.getHeight = function() {
-  "use strict";
-  return this.height;
-};
-
-/** @private */
 H3DU.FrameBufferLoader = function() {
   "use strict";
   this._frameBuffers = [];
@@ -84,7 +58,20 @@ H3DU.FrameBufferLoader.prototype.bind = function(info, context) {
    context.RENDERBUFFER, fc.depthbuffer);
   }
 };
-
+/** @private */
+H3DU.FrameBufferLoader.prototype.unbind = function(info, context) {
+  "use strict";
+  if(info !== null &amp;&amp; typeof info !== "undefined") {
+    context.framebufferTexture2D(
+     context.FRAMEBUFFER, context.COLOR_ATTACHMENT0,
+     context.TEXTURE_2D, null, 0);
+    context.framebufferRenderbuffer(
+     context.FRAMEBUFFER, context.DEPTH_ATTACHMENT,
+     context.RENDERBUFFER, null);
+    context.bindFramebuffer(
+     context.FRAMEBUFFER, null);
+  }
+};
 /**
 * Represents an off-screen frame buffer.&lt;p>
 * When H3DU.FrameBuffer's
@@ -213,19 +200,12 @@ H3DU.FrameBuffer.prototype.bind = function() {
   return this;
 };
 /**
- * Unbinds this frame buffer from its associated WebGL context.
+ * Has no effect. (Previously, unbound this frame buffer from its associated WebGL context.)
  * @memberof! H3DU.FrameBuffer#
 */
 H3DU.FrameBuffer.prototype.unbind = function() {
   "use strict";
-  this.context.framebufferTexture2D(
-   this.context.FRAMEBUFFER, this.context.COLOR_ATTACHMENT0,
-   this.context.TEXTURE_2D, null, 0);
-  this.context.framebufferRenderbuffer(
-   this.context.FRAMEBUFFER, this.context.DEPTH_ATTACHMENT,
-   this.context.RENDERBUFFER, null);
-  this.context.bindFramebuffer(
-    this.context.FRAMEBUFFER, null);
+  console.log("FrameBuffer unbind method has no effect.");
 };
 /**
  * Disposes all resources from this frame buffer object.

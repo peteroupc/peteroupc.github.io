@@ -22,12 +22,13 @@
  * See the "{@tutorial shapes}" tutorial.
  *  @class
  * @alias H3DU.Shape
-* @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.
-* Cannot be null. For {@link H3DU.Mesh} objects, the {@link H3DU.Material}
+ * @param {H3DU.MeshBuffer} mesh A mesh in the form of a buffer object.
+ * Cannot be null. For {@link H3DU.Mesh} objects, the {@link H3DU.Material}
  * created will use the mesh in its current state and won't
- * track future changes.  &lt;i>Using {@link H3DU.BufferedMesh} objects as the parameter
+ * track future changes.  &lt;i>Using {@link H3DU.BufferedMesh} objects as the
+ * parameter
  * is deprecated.&lt;/i>
-  */
+ */
 H3DU.Shape = function(mesh) {
   "use strict";
   if(mesh === null || typeof mesh === "undefined")throw new Error("mesh is null");
@@ -79,8 +80,9 @@ H3DU.Shape.prototype.primitiveCount = function() {
   return this.meshBuffer ? this.meshBuffer.primitiveCount() : 0;
 };
 /**
- * Not documented yet.
- * @param {*} value
+ * Sets whether this shape will be drawn on rendering.
+ * @param {Boolean} value True if this shape will be visible; otherwise, false.
+ * @returns {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
 */
 H3DU.Shape.prototype.setVisible = function(value) {
@@ -258,9 +260,11 @@ H3DU.Shape.prototype.isCulled = function(frustum) {
   return !H3DU.Math.frustumHasBox(frustum, this.getBounds());
 };
 /**
- * Not documented yet.
- * @param {*} transform
+ * Sets this shape's transformation
+ * to a copy of the given transformation.
+ * @param {H3DU.Transform} transform
  * @memberof! H3DU.Shape#
+ * @returns {H3DU.Shape} This object.
 */
 H3DU.Shape.prototype.setTransform = function(transform) {
   "use strict";

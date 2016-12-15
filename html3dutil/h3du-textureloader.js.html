@@ -168,16 +168,17 @@ H3DU.TextureLoader.prototype.mapTexture = function(texture, context) {
   lt.push([texture, context, loadedTex]);
   return loadedTex;
 };
-/**
- * Not documented yet.
- * @param {*} info
- * @param {*} context
- * @memberof! H3DU.TextureLoader#
-*/
+/** @private */
 H3DU.TextureLoader.prototype.bindFrameBuffer = function(info, context) {
   "use strict";
   context = context.getContext ? context.getContext() : context;
   this.fbLoader.bind(info, context);
+};
+/** @private */
+H3DU.FrameBufferLoader.prototype.unbindFrameBuffer = function(info, context) {
+  "use strict";
+  context = context.getContext ? context.getContext() : context;
+  this.fbLoader.unbind(info, context);
 };
 /**
  * Disposes all resources used by this texture loader.

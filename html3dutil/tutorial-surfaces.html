@@ -50,7 +50,7 @@ surface can be found by evaluating different UV points.  By the way, the surface
 <h3>Why two variables? <a id=Why_two_variables></a></h3><p>The surface functions take two variables, <em>u</em>, and <em>v</em>, because a parametric
 surface can be a seen as a &quot;warped&quot; version of a rectangular grid.  The vector
 function &quot;warps&quot; this grid into a three-dimensional surface.</p>
-<h2>Parametric Surfaces in the HTML 3D Library <a id=Parametric_Surfaces_in_the_HTML_3D_Library></a></h2><p>The HTML 3D Library supports parametric surfaces using a class named <a href="http://peteroupc.github.io/html3dutil/glutil.SurfaceEval.html"><code>SurfaceEval</code></a>.  It helps
+<h2>Parametric Surfaces in the HTML 3D Library <a id=Parametric_Surfaces_in_the_HTML_3D_Library></a></h2><p>The HTML 3D Library supports parametric surfaces using a class named <a href="http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html"><code>SurfaceEval</code></a>.  It helps
 generate vertex coordinates, texture coordinates, normals, and colors using a parametric surface
 function.  The following helper function, <code>makeMesh</code>, generates a parametric surface mesh
 that was used to produce the pictures on this page. <code>makeMesh</code> is only included in the demo, not
@@ -70,7 +70,7 @@ in the HTML 3D Library.</p>
    evaluate:function(u,v){ return [1-u,v,u]; }
   }
  // generate the parametric surface.
- var ev=new H3DU.SurfaceEval()
+ new H3DU.SurfaceEval()
   .vertex(func)
 // Specify the color gradient evaluator defined above
   .color(colorGradient)
@@ -131,15 +131,15 @@ scene.addShape(shape);</code></pre><p>The generated 3D mesh from a parametric su
 other mesh, and the same functions and methods you use for other meshes
 can be used on this mesh as well.  For more information, see the
 <a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library">overview page</a>
-and the API references for the <a href="http://peteroupc.github.io/html3dutil/glutil.Mesh.html"><code>Mesh</code></a> and
-<a href="http://peteroupc.github.io/html3dutil/glutil.Shape.html"><code>Shape</code></a> classes.</p>
+and the API references for the <a href="http://peteroupc.github.io/html3dutil/H3DU.Mesh.html"><code>H3DU.Mesh</code></a> and
+<a href="http://peteroupc.github.io/html3dutil/H3DU.Shape.html"><code>Shape</code></a> classes.</p>
 <h2>Chaining Surface Functions <a id=Chaining_Surface_Functions></a></h2><p>The technique of using evaluators is very flexible.  In fact, you can chain evaluators,
 using the output of one evaluator as the input of another evaluator.  This can be used
 to transform the surface's points to new positions.</p>
 <p>As an example, we'll define a new evaluator that shifts the position
 of a parametric surface.  It takes an existing surface evaluator and the X, Y, and
 Z of how many units to shift the surface.  Note that this class includes its
-own <code>evaluate</code> method, allowing itself to be passed to the SurfaceEval class
+own <code>evaluate</code> method, allowing itself to be passed to the <code>H3DU.SurfaceEval</code> class
 or the makeMesh class above.</p>
 <pre class="prettyprint source"><code>function SurfaceShifter(evaluator, x, y, z) {
  // Shift the surface by X units.

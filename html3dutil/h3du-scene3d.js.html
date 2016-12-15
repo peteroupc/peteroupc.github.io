@@ -533,7 +533,7 @@ H3DU.Scene3D.prototype.setOrthoAspect = function(left, right, bottom, top, near,
  * ratio, the view rectangle will be centered on the 3D scene's viewport
  * or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
  * or squishing it.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Number} left Leftmost coordinate of the view rectangle.
  * @param {Number} right Rightmost coordinate of the view rectangle.
  * (Note that right can be greater than left or vice versa.)
@@ -790,7 +790,7 @@ H3DU.Scene3D.prototype.primitiveCount = function() {
  * Sets the projection matrix for this object.  The projection
  * matrix can also be set using the {@link H3DU.Scene3D#setFrustum}, {@link H3DU.Scene3D#setOrtho},
  * {@link H3DU.Scene3D#setOrtho2D}, and {@link H3DU.Scene3D#setPerspective} methods.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setProjectionMatrix}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Array&lt;Number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
@@ -807,7 +807,7 @@ H3DU.Scene3D.prototype.setProjectionMatrix = function(matrix) {
 /**
 *  Sets this scene's view matrix. The view matrix can also
 * be set using the {@link H3DU.Scene3D#setLookAt} method.
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setViewMatrix} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
  * @param {Array&lt;Number>} matrix A 16-element matrix (4x4).
  * @returns {H3DU.Scene3D} This object.
 * @memberof! H3DU.Scene3D#
@@ -825,7 +825,7 @@ H3DU.Scene3D.prototype.setViewMatrix = function(matrix) {
 *  Sets this scene's view matrix to represent a camera view.
 * This method takes a camera's position (&lt;code>eye&lt;/code>), and the point the camera is viewing
 * (&lt;code>center&lt;/code>).
-* @deprecated TODO: Document the replacement for this method.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
+* @deprecated Instead of this method, use {@link H3DU.Batch3D#setLookAt} in conjunction with {@link H3DU.Math.mat4ortho2dAspect}.  For compatibility, existing code that doesn't use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D.  This compatibility behavior may be dropped in the future.
 * @param {Array&lt;Number>} eye A 3-element vector specifying
 * the camera position in world space.
 * @param {Array&lt;Number>} [center] A 3-element vector specifying
@@ -1057,8 +1057,8 @@ H3DU.Scene3D.prototype.render = function(renderPasses) {
       this._clearForPass(pass);
       renderPasses[i].subScene.resize(width, height);
       renderPasses[i].subScene.render(this);
-      // TODO: Implement "unbindFrameBuffer"
-      if(pass.frameBuffer)pass.frameBuffer.unbind();
+      this._textureLoader.unbindFrameBuffer(
+          pass.frameBuffer, this.context);
     }
   }
   if(this._is3d)this.context.flush();

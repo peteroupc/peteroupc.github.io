@@ -27,13 +27,14 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="margin-bottom:0px" id="RenderPass3D"><span style="font-weight:lighter"></span>new RenderPass3D<span class="signature">(subScene, parameters)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="RenderPass3D"><span style="font-weight:lighter"></span>new RenderPass3D<span class="signature">(subScene, parameters<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line2">line 2</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line4">line 4</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Describes a batch and options for
+rendering that batch.
 </div>
 
     <h5>Parameters:</h5>
@@ -45,7 +46,7 @@
                 <code>subScene</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>
 
 )
 
@@ -57,9 +58,11 @@
                 <code>parameters</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 )
+
+                    &lt;optional>
 
            </dt><dd>
            </dd>
@@ -76,7 +79,7 @@
 
 <h4 style="margin-bottom:0px" id="clearColor"><span style="font-weight:lighter"></span>clearColor<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line14">line 14</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line19">line 19</a>
      </i></small></p>
 
 <div class="description">
@@ -91,7 +94,7 @@
 
 <h4 style="margin-bottom:0px" id="clearDepth"><span style="font-weight:lighter"></span>clearDepth<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line17">line 17</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line22">line 22</a>
      </i></small></p>
 
 <div class="description">
@@ -106,7 +109,7 @@
 
 <h4 style="margin-bottom:0px" id="clearStencil"><span style="font-weight:lighter"></span>clearStencil<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line20">line 20</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line25">line 25</a>
      </i></small></p>
 
 <div class="description">
@@ -119,15 +122,45 @@
 
 </dl>
 
-<h4 style="margin-bottom:0px" id="frameBuffer"><span style="font-weight:lighter"></span>frameBuffer<span style="font-weight:lighter"></span></h4>
+<h4 style="margin-bottom:0px" id="frameBuffer"><span style="font-weight:lighter"></span>frameBuffer<span style="font-weight:lighter"> :H3DU.FrameBufferInfo</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line23">line 23</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line29">line 29</a>
      </i></small></p>
 
 <div class="description">
     Framebuffer to render to.
-   TODO: Use something other than H3DU.FrameBuffer
 </div>
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+
+<span class="param-type">H3DU.FrameBufferInfo</span>
+
+        </li>
+    </ul>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id="subScene"><span style="font-weight:lighter"></span>subScene<span style="font-weight:lighter"> :<a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line16">line 16</a>
+     </i></small></p>
+
+<div class="description">
+    The batch to render.
+</div>
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+
+<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>
+
+        </li>
+    </ul>
 
 <dl class="details">
 
@@ -137,7 +170,7 @@
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>H3DU.RenderPass3D#setParams<span class="signature">(parameters)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line31">line 31</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-renderpass3d.js.html">h3du-renderpass3d.js</a>, <a href="h3du-renderpass3d.js.html#line37">line 37</a>
      </i></small></p>
 
 <div class="description">
@@ -153,7 +186,7 @@
                 <code>parameters</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 )
 

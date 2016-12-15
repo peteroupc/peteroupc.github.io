@@ -1,0 +1,161 @@
+<head>
+<meta charset=utf-8>
+<title>3D Gears (based on a public-domain program courtesy of Brian Paul)</title>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+
+// Adapted by Peter O. from gears.c (3D Gears), a public domain program
+// written by Brian Paul.
+
+function createGear(inner_radius, outer_radius, width, teeth, tooth_depth)
+{
+var i;
+var r0, r1, r2;
+var angle, da;
+var u, v, len;
+r0 = inner_radius;
+r1 = outer_radius - tooth_depth/2.0;
+r2 = outer_radius + tooth_depth/2.0;
+da = 2.0*Math.PI / teeth / 4.0;
+var mesh=new H3DU.Mesh();
+mesh.normal3( 0.0, 0.0, 1.0 );
+/* draw front face */
+mesh.mode(H3DU.Mesh.QUAD_STRIP );
+for (i=0;i<=teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+var cosAngle = Math.cos(angle),sinAngle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(angle);
+mesh.vertex3( r0*cosAngle, r0*sinAngle, width*0.5 );
+mesh.vertex3( r1*cosAngle, r1*sinAngle, width*0.5 );
+mesh.vertex3( r0*cosAngle, r0*sinAngle, width*0.5 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), width*0.5 );
+}
+
+/* draw front sides of teeth */
+mesh.mode(H3DU.Mesh.QUADS );
+da = 2.0*Math.PI / teeth / 4.0;
+for (i=0;i<teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+var cosAngle = Math.cos(angle),sinAngle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(angle);
+mesh.vertex3( r1*cosAngle, r1*sinAngle, width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+da), r2*Math.sin(angle+da), width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+2*da), r2*Math.sin(angle+2*da), width*0.5 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), width*0.5 );
+}
+
+mesh.normal3( 0.0, 0.0, -1.0 );
+/* draw back face */
+mesh.mode(H3DU.Mesh.QUAD_STRIP );
+for (i=0;i<=teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+var cosAngle = Math.cos(angle),sinAngle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(angle);
+mesh.vertex3( r1*cosAngle, r1*sinAngle, -width*0.5 );
+mesh.vertex3( r0*cosAngle, r0*sinAngle, -width*0.5 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), -width*0.5 );
+mesh.vertex3( r0*cosAngle, r0*sinAngle, -width*0.5 );
+}
+
+/* draw back sides of teeth */
+mesh.mode(H3DU.Mesh.QUADS );
+da = 2.0*Math.PI / teeth / 4.0;
+for (i=0;i<teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+var cosAngle = Math.cos(angle),sinAngle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(angle);
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), -width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+2*da), r2*Math.sin(angle+2*da), -width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+da), r2*Math.sin(angle+da), -width*0.5 );
+mesh.vertex3( r1*cosAngle, r1*sinAngle, -width*0.5 );
+}
+
+/* draw outward faces of teeth */
+mesh.mode(H3DU.Mesh.QUAD_STRIP );
+for (i=0;i<teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+var cosAngle = Math.cos(angle),sinAngle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(angle);
+mesh.vertex3( r1*cosAngle, r1*sinAngle, width*0.5 );
+mesh.vertex3( r1*cosAngle, r1*sinAngle, -width*0.5 );
+u = r2*Math.cos(angle+da) - r1*cosAngle;
+v = r2*Math.sin(angle+da) - r1*sinAngle;
+len = Math.sqrt( u*u + v*v );
+u /= len;
+v /= len;
+mesh.normal3( v, -u, 0.0 );
+mesh.vertex3( r2*Math.cos(angle+da), r2*Math.sin(angle+da), width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+da), r2*Math.sin(angle+da), -width*0.5 );
+mesh.normal3( Math.cos(angle), Math.sin(angle), 0.0 );
+mesh.vertex3( r2*Math.cos(angle+2*da), r2*Math.sin(angle+2*da), width*0.5 );
+mesh.vertex3( r2*Math.cos(angle+2*da), r2*Math.sin(angle+2*da), -width*0.5 );
+u = r1*Math.cos(angle+3*da) - r2*Math.cos(angle+2*da);
+v = r1*Math.sin(angle+3*da) - r2*Math.sin(angle+2*da);
+mesh.normal3( v, -u, 0.0 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), width*0.5 );
+mesh.vertex3( r1*Math.cos(angle+3*da), r1*Math.sin(angle+3*da), -width*0.5 );
+mesh.normal3( Math.cos(angle), Math.sin(angle), 0.0 );
+}
+mesh.vertex3( r1*Math.cos(0), r1*Math.sin(0), width*0.5 );
+mesh.vertex3( r1*Math.cos(0), r1*Math.sin(0), -width*0.5 );
+
+/* draw inside radius cylinder */
+mesh.mode(H3DU.Mesh.QUAD_STRIP );
+for (i=0;i<=teeth;i++) {
+angle = i * 2.0*Math.PI / teeth;
+var cosAngle = Math.cos(angle),sinAngle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(angle);
+mesh.normal3( -cosAngle, -sinAngle, 0.0 );
+mesh.vertex3( r0*cosAngle, r0*sinAngle, -width*0.5 );
+mesh.vertex3( r0*cosAngle, r0*sinAngle, width*0.5 );
+}
+return mesh;
+}
+
+window.onload=(function(){
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
+  var sub=new H3DU.Batch3D()
+  sub.getLights().setDirectionalLight(0,[5,5,10]);
+  var gear1=createGear(1.0, 4.0, 1.0, 20, 0.7);
+  var gear2=createGear(0.5, 2.0, 2.0, 10, 0.7);
+  var gear3=createGear(1.3, 2.0, 0.5, 10, 0.7);
+  gear1=new H3DU.Shape(gear1).setColor("red");
+  gear2=new H3DU.Shape(gear2).setColor("lime");
+  gear3=new H3DU.Shape(gear3).setColor("blue");
+  scene.addShape(gear1).addShape(gear2).addShape(gear3);
+  var view_rotx=20,view_roty=30,view_rotz=0;
+  var angle=0;
+  var info={}
+  H3DU.renderLoop(function(time){
+   var h=scene.getHeight()/scene.getWidth();
+   var view=new H3DU.Transform()
+    .setPosition(0,0,-40)
+    .setOrientation(view_rotx,1,0,0)
+    .multOrientation(view_roty,0,1,0)
+    .multOrientation(view_rotz,0,0,1);
+   scene.setProjectionMatrix(H3DU.Math.mat4frustum(
+     -1,1,-h,h,5,60));
+   scene.setViewMatrix(view.getMatrix());
+   gear1.getTransform()
+     .setPosition(-3,-2,0)
+     .setOrientation(angle,0,0,1);
+   gear2.getTransform()
+     .setPosition(3.1,-2,0)
+     .setOrientation(-2*angle-9,0,0,1);
+   gear3.getTransform()
+     .setPosition(-3.1,4.2,0)
+     .setOrientation(-2*angle-25,0,0,1);
+   scene.render();
+   var frames=H3DU.newFrames(info,time);
+   angle+=4/2.0*frames;
+   view_rotx+=3/2.0*frames;
+   view_roty+=1*frames;
+   view_rotz+=1/2.0*frames;
+ });
+})
+//-->
+</script>
+<body>

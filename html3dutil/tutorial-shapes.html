@@ -23,11 +23,11 @@
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
 shapes.</p>
 <p><strong>Download the latest version of the HTML 3D Library at the <a href="https://github.com/peteroupc/html3dutil/releases">library's Releases page</a>.</strong> As of version 1.2.1, it includes
-the shapes.html and platonic.html demos mentioned in this page.</p>
+the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page.</p>
 <p>This page will discuss:</p>
 <ul>
 <li>Using the Meshes methods to make built-in shapes</li>
-<li>Making your own shapes with the Meshes constructor</li>
+<li>Making your own shapes with the <code>H3DU.Mesh</code> constructor</li>
 <li>Building up your own shapes using the vertex methods</li>
 <li>Binding meshes to shapes</li>
 <li>Shape groups, or combinations of several shapes</li>
@@ -192,7 +192,7 @@ the mesh must have its vertices defined in counterclockwise order.</p>
 mesh = mesh.recalcNormals(true, false);
 // Both parameters can be omitted, setting both to false
 mesh = mesh.recalcNormals();</code></pre><h2>Binding Shapes <a id=Binding_Shapes></a></h2><p>Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
-in order to have it drawn.  This is where the <a href="H3DU.Shape.html"><code>Shape</code></a> class comes into
+in order to have it drawn.  This is where the <a href="H3DU.Shape.html"><code>H3DU.Shape</code></a> class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:</p>
 <p>(1) Create a <code>Shape</code> object by passing the mesh to the 3D scene's <code>makeShape()</code> method:</p>
@@ -210,7 +210,7 @@ shape.setMaterial(new H3DU.Material(&quot;blue&quot;,&quot;blue&quot;,&quot;whit
 shape.setMaterial(new H3DU.Material(&quot;lime&quot;,&quot;lime&quot;,&quot;white&quot;,30,[0.2,0.2,0.2]));
 // set a texture; this requires the mesh to have texture
 // coordinates assigned to each vertex
-shape.setMaterial(new TextureMaterial(&quot;texture.png&quot;));</code></pre><p>Examples for setting position:</p>
+shape.setMaterial(H3DU.Material.fromTexture(&quot;texture.png&quot;));</code></pre><p>Examples for setting position:</p>
 <pre class="prettyprint source"><code>// move the shape 2 units along X axis, 4 units along Y axis,
 // and 5 units along Z axis
 shape.setPosition(2,4,5);
@@ -228,7 +228,7 @@ shape.setScale([2,2,2]);</code></pre><p>If setMatrix wasn't called, then when th
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.</p>
 <p>(3) Add the shape to the 3D scene:</p>
-<pre class="prettyprint source"><code>scene3d.addShape(shape);</code></pre><p>Now, the next time <code>scene3d.render()</code> is called, the <a href="H3DU.Scene3D.html"><code>Scene3D</code></a> will render the
+<pre class="prettyprint source"><code>scene3d.addShape(shape);</code></pre><p>Now, the next time <code>scene3d.render()</code> is called, the <a href="H3DU.Scene3D.html"><code>H3DU.Scene3D</code></a> will render the
 given shape to the scene.</p>
 <h2>Shape Groups <a id=Shape_Groups></a></h2><p>The <code>H3DU.ShapeGroup</code> class represents a shape that's a combination of multiple shapes.  Usually,
 they form different pieces of a combined shape that can be positioned, rotated, and scaled
