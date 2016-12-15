@@ -19,6 +19,12 @@
   http://creativecommons.org/publicdomain/zero/1.0/
 */
 /* global define, exports */
+// 2016-12-14: This is a polyfill for Promises, and it's only used
+// when the environment doesn't support promises
+// already, so the no-extend-native rule is disabled for this file.
+// The callback-return rule is also disabled here in order
+// to communicate the callback's return value properly.
+/* eslint no-extend-native: "off", callback-return: "off" */
 // Note by Peter O., 2015-03-09: This file was taken
 // from https://github.com/ondras/promise/.
 (function (root, factory) {
@@ -271,6 +277,7 @@
       var x = cb(this._value);
       /* 2.2.7.1. If either onFulfilled or onRejected returns a value x, run the Promise Resolution Procedure [[Resolve]](promise2, x). */
       thenPromise.resolve(x);
+      return x;
     } catch (e) {
       /* 2.2.7.2. If either onFulfilled or onRejected throws an exception, promise2 must be rejected with the thrown exception as the reason. */
       thenPromise.reject(e);

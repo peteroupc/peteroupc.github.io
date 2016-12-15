@@ -73,7 +73,7 @@ var SurfaceOfRevolution = function(curve, minval, maxval, axis) {
   this.evaluate = function(u, v) {
     v = minval + (maxval - minval) * v;
     var curvepos = this.curve.evaluate(v);
-    u = H3DU.Math.PiTimes2 * u;
+    u *= H3DU.Math.PiTimes2;
     var cosu = Math.cos(u);
     var sinu = u >= 0 &amp;&amp; u &lt; 6.283185307179586 ? u &lt;= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
     var cp1 = curvepos[1];
@@ -230,7 +230,7 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter) {
 * Only the X and Y coordinates will be other than 0.
 */
   this.evaluate = function(u) {
-    u = u * H3DU.Math.PiTimes2;
+    u *= H3DU.Math.PiTimes2;
     var oi = this.outer - this.inner;
     var term = oi * u / this.inner;
     var cosu = Math.cos(u),
@@ -292,7 +292,7 @@ function Trochoid(radius, distFromCenter) {
 * Only the X and Y coordinates will be other than 0.
 */
   this.evaluate = function(u) {
-    u = u * H3DU.Math.PiTimes2;
+    u *= H3DU.Math.PiTimes2;
     var cosu = Math.cos(u);
     var sinu = u >= 0 &amp;&amp; u &lt; 6.283185307179586 ? u &lt;= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
     return [
@@ -337,11 +337,13 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter) {
 * Only the X and Y coordinates will be other than 0.
 */
   this.evaluate = function(u) {
-    u = u * H3DU.Math.PiTimes2;
+    u *= H3DU.Math.PiTimes2;
     var oi = this.outer + this.inner;
     var term = oi * u / this.inner;
-    var cosu = Math.cos(u), sinu = u >= 0 &amp;&amp; u &lt; 6.283185307179586 ? u &lt;= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
-    var cost = Math.cos(term), sint = term >= 0 &amp;&amp; term &lt; 6.283185307179586 ? term &lt;= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(term);
+    var cosu = Math.cos(u),
+      sinu = u >= 0 &amp;&amp; u &lt; 6.283185307179586 ? u &lt;= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    var cost = Math.cos(term),
+      sint = term >= 0 &amp;&amp; term &lt; 6.283185307179586 ? term &lt;= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(term);
     return [
       oi * cosu - this.distFromInner * cost,
       oi * sinu - this.distFromInner * sint,

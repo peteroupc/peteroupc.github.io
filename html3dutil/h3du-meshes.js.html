@@ -149,7 +149,8 @@ H3DU.Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, f
   if(height > 0) {
     var lastZ = 0;
     var lastRad = baseRad;
-    var slopeAngle = 0, sinSlopeNorm, cosSlopeNorm;
+    var slopeAngle = 0,
+      sinSlopeNorm, cosSlopeNorm;
     if(baseRad === topRad) {
       sinSlopeNorm = 0;
       cosSlopeNorm = normDir;
@@ -386,7 +387,7 @@ H3DU.Meshes.createPartialDisk = function(inner, outer, slices, loops, start, swe
   var i;
   var twopi = H3DU.Math.PiTimes2;
   var arcLength = sweep === 360 ? twopi : sweep * H3DU.Math.PiDividedBy180;
-  start = start * H3DU.Math.PiDividedBy180;
+  start *= H3DU.Math.PiDividedBy180;
   if(sweepDir &lt; 0) {
     arcLength = -arcLength;
   }

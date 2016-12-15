@@ -430,7 +430,8 @@
       var head = new RedBlackTreeNode(null); /* False tree root */
       var g, t;     /* Grandparent & parent */
       var p, q;     /* Iterator & parent */
-      var dir = false, last = false;
+      var dir = false,
+        last = false;
 
     /* Set up our helpers */
       t = head;

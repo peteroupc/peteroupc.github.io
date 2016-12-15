@@ -581,7 +581,10 @@ at: http://peteroupc.github.io/
       var ax, ay;
       if(s[0] === GraphicsPath.CLOSE)continue;
       var endpt = GraphicsPath._endPoint(s);
-      var x1 = s[1], y1 = s[2], x2 = endpt[0], y2 = endpt[1];
+      var x1 = s[1],
+        y1 = s[2],
+        x2 = endpt[0],
+        y2 = endpt[1];
       if(first) {
         ret[0] = Math.min(x1, x2);
         ret[1] = Math.min(y1, y2);

@@ -121,40 +121,42 @@ H3DU.Mesh._recalcNormalsFinish = function(vertices, uniqueVertices, faces, strid
    // that every vertex with the same position has the
    // same normal
     for(var key in uniqueVertices) {
-      var v = uniqueVertices[key];
-      if(v &amp;&amp; v.constructor === Array &amp;&amp; v.length >= 2) {
-        var v0 = v[0];
-        var avgx = vertices[v0];
-        var avgy = vertices[v0 + 1];
-        var avgz = vertices[v0 + 2];
-        dupverts[0] = avgx;
-        dupverts[1] = avgy;
-        dupverts[2] = avgz;
-        dupvertcount = 3;
-        for(i = 1;i &lt; v.length;i++) {
-          var dupfound = false;
-          var nx = vertices[v[i]];
-          var ny = vertices[v[i] + 1];
-          var nz = vertices[v[i] + 2];
-          for(var j = 0;j &lt; dupvertcount;j += 3) {
-            if(nx === dupverts[j] &amp;&amp; ny === dupverts[j + 1] &amp;&amp; nz === dupverts[j + 2]) {
-              dupfound = true;
-              break;
+      if(Object.prototype.hasOwnProperty.call(uniqueVertices, key)) {
+        var v = uniqueVertices[key];
+        if(v &amp;&amp; v.constructor === Array &amp;&amp; v.length >= 2) {
+          var v0 = v[0];
+          var avgx = vertices[v0];
+          var avgy = vertices[v0 + 1];
+          var avgz = vertices[v0 + 2];
+          dupverts[0] = avgx;
+          dupverts[1] = avgy;
+          dupverts[2] = avgz;
+          dupvertcount = 3;
+          for(i = 1;i &lt; v.length;i++) {
+            var dupfound = false;
+            var nx = vertices[v[i]];
+            var ny = vertices[v[i] + 1];
+            var nz = vertices[v[i] + 2];
+            for(var j = 0;j &lt; dupvertcount;j += 3) {
+              if(nx === dupverts[j] &amp;&amp; ny === dupverts[j + 1] &amp;&amp; nz === dupverts[j + 2]) {
+                dupfound = true;
+                break;
+              }
+            }
+            if(!dupfound) {
+              dupverts[dupvertcount++] = nx;
+              dupverts[dupvertcount++] = ny;
+              dupverts[dupvertcount++] = nz;
+              avgx += nx;
+              avgy += ny;
+              avgz += nz;
             }
           }
-          if(!dupfound) {
-            dupverts[dupvertcount++] = nx;
-            dupverts[dupvertcount++] = ny;
-            dupverts[dupvertcount++] = nz;
-            avgx += nx;
-            avgy += ny;
-            avgz += nz;
+          for(i = 0;i &lt; v.length;i++) {
+            vertices[v[i]] = avgx;
+            vertices[v[i] + 1] = avgy;
+            vertices[v[i] + 2] = avgz;
           }
-        }
-        for(i = 0;i &lt; v.length;i++) {
-          vertices[v[i]] = avgx;
-          vertices[v[i] + 1] = avgy;
-          vertices[v[i] + 2] = avgz;
         }
       }
     }

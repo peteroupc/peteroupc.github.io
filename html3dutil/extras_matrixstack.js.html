@@ -410,9 +410,9 @@ H3DU.MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz)
   var t8 = Math.sqrt(up[0] * up[0] + up[1] * up[1] + up[2] * up[2]);
   if (t8 !== 0.0) {
     var t9 = 1.0 / t8;
-    up[0] = up[0] * t9;
-    up[1] = up[1] * t9;
-    up[2] = up[2] * t9;
+    up[0] *= t9;
+    up[1] *= t9;
+    up[2] *= t9;
   }
   var t10 = [f[1] * up[2] - f[2] * up[1], f[2] * up[0] - f[0] * up[2], f[0] * up[1] - f[1] * up[0]];
   s = t10;

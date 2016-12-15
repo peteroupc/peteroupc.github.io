@@ -116,7 +116,8 @@ ImplicitSurface._TARGET_VALUE = 0;
 //vMarchTetrahedron performs the Marching Tetrahedrons algorithm on a single tetrahedron
 ImplicitSurface.prototype._vMarchTetrahedron = function(mesh, pasTetrahedronPosition, pafTetrahedronValue, tmpobj) {
   "use strict";
-  var iEdge, iVert0, iVert1, iEdgeFlags, iTriangle, iCorner, iVertex, iFlagIndex = 0;
+  var iEdge, iVert0, iVert1, iEdgeFlags, iTriangle, iCorner, iVertex,
+    iFlagIndex = 0;
   var fOffset, fInvOffset;
         //Find which vertices are inside of the surface and which are outside
   for(iVertex = 0; iVertex < 4; iVertex++) {

@@ -435,7 +435,7 @@ H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
   }
   for(i = 0;i &lt; linebreaks.length;i += 3) {
     var x = xPos;
-    if(align === 1)x = x + (width - linebreaks[i + 2]) * 0.5;
+    if(align === 1)x += (width - linebreaks[i + 2]) * 0.5;
     else if(align === 2)x = x + width - linebreaks[i + 2];
     this._makeTextMeshesInner(str, linebreaks[i],
     linebreaks[i + 1], x, yPos, params, extra, meshesForPage);
