@@ -207,7 +207,7 @@ H3DU.Texture.loadTga = function(name) {
 /** @private */
 H3DU.Texture.prototype.loadImage = function() {
   "use strict";
-  if(this.image !== null) {
+  if((typeof this.image !== "undefined" &amp;&amp; this.image !== null)) {
   // already loaded
     return Promise.resolve(this);
   }
@@ -282,6 +282,7 @@ H3DU.Texture.prototype.dispose = function() {
 
 /**
 * Gets the name of this texture.
+* @return {String}
 * @memberof! H3DU.Texture#
 */
 H3DU.Texture.prototype.getName = function() {

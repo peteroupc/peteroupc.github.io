@@ -98,7 +98,7 @@ var atan2glsl=
 "float arctan2(float y, float x){"+
 "   float abs_y = abs(y)+1e-10;"+
 "   float r, angle;"+
-"   int divisor = abs_y+abs(x);"+
+"   float divisor = abs_y+abs(x);"+
 "   if (x>=0.0) {"+
 "      r = (x - abs_y) / divisor;"+
 "      angle = 0.78539816339745 - 0.78539816339745 * r;"+

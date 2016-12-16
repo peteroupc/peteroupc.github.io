@@ -650,7 +650,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
         view.getUint8(offset + 12)];
       info.outline = view.getUint8(offset + 13);
       info.fontName = utf8string(view, offset + 14, offset + size);
-      if(info.fontName === null) {
+      if((typeof info.fontName === "undefined" || info.fontName === null)) {
         return null;
       }
       break;
@@ -777,7 +777,7 @@ H3DU.TextFont._loadTextFontInner = function(data) {
 * <li>".bin": Binary</li>
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
- * @param {H3DU.TextureLoader} [textureLoader]
+ * @param {H3DU.TextureLoader} textureLoader
 * @returns {Promise} A promise that is resolved
 * when the font data and textures are loaded successfully,
 * and is rejected when an error occurs.

@@ -90,11 +90,17 @@ H3DU.Scene3D.prototype.getCanvas = function() {
   return this.context.canvas;
 };
 
+/** @private */
 H3DU.Scene3D.LIGHTING_ENABLED = 1;
+/** @private */
 H3DU.Scene3D.SPECULAR_MAP_ENABLED = 2;
-H3DU.Scene3D.NORMAL_ENABLED = 4;
+/** @private */
+H3DU.Scene3D.NORMAL_MAP_ENABLED = 4;
+/** @private */
 H3DU.Scene3D.SPECULAR_ENABLED = 8;
+/** @private */
 H3DU.Scene3D.TEXTURE_ENABLED = 16;
+/** @private */
 H3DU.Scene3D.COLORATTR_ENABLED = 32;
 
 /** @private */
@@ -106,7 +112,7 @@ H3DU.Scene3D._materialToFlags = function(material) {
         material.specular[1] !== 0 ||
         material.specular[2] !== 0 ? H3DU.Scene3D.SPECULAR_ENABLED : 0;
   flags |= material.specularMap ? H3DU.Scene3D.SPECULAR_MAP_ENABLED : 0;
-  flags |= material.normalMap ? H3DU.Scene3D.NORMAL_ENABLED : 0;
+  flags |= material.normalMap ? H3DU.Scene3D.NORMAL_MAP_ENABLED : 0;
   flags |= material.texture ? H3DU.Scene3D.TEXTURE_ENABLED : 0;
   return flags;
 };
@@ -168,7 +174,7 @@ H3DU.Scene3D.ProgramCache.prototype.getProgram = function(flags, context) {
     defines += "#define SHADING\n";
   if((flags &amp; H3DU.Scene3D.SPECULAR_ENABLED) !== 0)
     defines += "#define SPECULAR\n";
-  if((flags &amp; H3DU.Scene3D.NORMAL_ENABLED) !== 0)
+  if((flags &amp; H3DU.Scene3D.NORMAL_MAP_ENABLED) !== 0)
     defines += "#define NORMAL_MAP\n";
   if((flags &amp; H3DU.Scene3D.TEXTURE_ENABLED) !== 0)
     defines += "#define TEXTURE\n";

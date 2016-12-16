@@ -170,6 +170,16 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
   }
   return this._bounds;
 };
+
+H3DU.MeshBuffer.prototype.getType = function() {
+  "use strict";
+  if((this.format &amp; H3DU.Mesh.LINES_BIT) !== 0)
+    return H3DU.Mesh.LINES;
+  if((this.format &amp; H3DU.Mesh.POINTS_BIT) !== 0)
+    return H3DU.Mesh.POINTS;
+  return H3DU.Mesh.TRIANGLES;
+};
+
 /** @private */
 H3DU.MeshBuffer.prototype.getFormat = function() {
   "use strict";

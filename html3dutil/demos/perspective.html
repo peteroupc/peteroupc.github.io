@@ -152,6 +152,7 @@ function frustumMesh(frustum){
   // to Scene3D.
   var scene=new H3DU.Scene3D(document.getElementById("canvas"));
   var sub=new H3DU.Batch3D();
+  sub.getLights().setDefaults();
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
   var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(10);
@@ -159,7 +160,8 @@ function frustumMesh(frustum){
   var mesh=frustumMesh(frustum);
   var spheres=new H3DU.ShapeGroup();
   var radius=0.3;
-  var sphere=new H3DU.Shape(H3DU.Meshes.createSphere(radius));
+  var sphereMesh=H3DU.Meshes.createSphere(radius);
+  var sphere=new H3DU.Shape(sphereMesh);
   for(var i=-10; i<=10;i++){
    var shape=sphere.copy().setPosition(1,-1,i)
    if(!H3DU.Math.frustumHasSphere(frustum,1,-1,i,radius)){
@@ -176,7 +178,7 @@ function frustumMesh(frustum){
    }
     spheres.addShape(shape);
   }
-  sub.addShape(new H3DU.Shape(mesh));
+  sub.addShape(new H3DU.Shape(mesh).setMaterialParams({basic:true}));
   sub.addShape(spheres);
   // Set up the render loop
   H3DU.renderLoop(function(){

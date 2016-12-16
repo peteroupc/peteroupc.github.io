@@ -162,6 +162,8 @@
       var x = this._size;
       while(x > 0) {
         var p = (x - 1) / 2 | 0;
+        // NOTE: comparer > 0, not comparer < 0, as
+        // in Doug Lea's implementation
         if(this.comparer(item, this.nodes[p]) > 0) {
           this.nodes[x] = this.nodes[p];
           x = p;
@@ -228,9 +230,9 @@
       }
     };
     this.prev = function() {
-      if(this.left !== null) {
+      if((typeof this.left !== "undefined" && this.left !== null)) {
         var r = this.left;
-        while(r.right !== null)r = r.right;
+        while((typeof r.right !== "undefined" && r.right !== null))r = r.right;
         return r;
       } else {
         var p = this.p;
@@ -244,9 +246,9 @@
       }
     };
     this.next = function() {
-      if(this.right !== null) {
+      if((typeof this.right !== "undefined" && this.right !== null)) {
         var r = this.right;
-        while(r.left !== null)r = r.left;
+        while((typeof r.left !== "undefined" && r.left !== null))r = r.left;
         return r;
       } else {
         var p = this.p;
@@ -277,31 +279,21 @@
     if(a === b)return 0;
     return a < b ? -1 : 1;
   };
-/**
- * Not documented yet.
- * @memberof! RedBlackTree#
-*/
+/** @private */
   RedBlackTree.prototype.first = function() {
     var r = this.root;
     if(r === null || typeof r === "undefined")return null;
-    while(r.left !== null)r = r.left;
+    while((typeof r.left !== "undefined" && r.left !== null))r = r.left;
     return r;
   };
-/**
- * Not documented yet.
- * @memberof! RedBlackTree#
-*/
+/** @private */
   RedBlackTree.prototype.last = function() {
     var r = this.root;
     if(r === null || typeof r === "undefined")return null;
-    while(r.right !== null)r = r.right;
+    while((typeof r.right !== "undefined" && r.right !== null))r = r.right;
     return r;
   };
-/**
- * Not documented yet.
- * @param {*} data
- * @memberof! RedBlackTree#
-*/
+/** @private */
   RedBlackTree.prototype.find = function(data) {
     var it = this.root;
     while(it !== null && typeof it !== "undefined") {
@@ -329,13 +321,9 @@
     root.setLink(!dir, RedBlackTree._single( root.link(!dir), !dir ));
     return RedBlackTree._single( root, dir );
   };
-/**
- * Not documented yet.
- * @param {*} data
- * @memberof! RedBlackTree#
-*/
+/** @private */
   RedBlackTree.prototype.erase = function(data) {
-    if( this.root !== null ) {
+    if((typeof this.root !== "undefined" && this.root !== null)) {
       var head = new RedBlackTreeNode(null); /* False tree root */
       var q, p, g; /* Helpers */
       var f = null;  /* Found item */
@@ -397,29 +385,25 @@
     /* Replace and remove the saved node */
       if( f !== null && typeof f !== "undefined" ) {
         f.data = q.data;
-        p.setLink(p.right === q, q.link(q.left === null));
+        p.setLink(p.right === q, q.link((typeof q.left === "undefined" || q.left === null)));
       }
 
     /* Update the root(it may be different) */
       this.root = head.right;
 
     /* Make the root black for simplified logic */
-      if( this.root !== null ) {
+      if((typeof this.root !== "undefined" && this.root !== null)) {
         this.root.p = null;
         this.root.red = false;
       }
       --this._size;
     }
   };
-/**
- * Not documented yet.
- * @param {*} data
- * @memberof! RedBlackTree#
-*/
+/** @private */
   RedBlackTree.prototype.insert = function(data) {
     if(!data)throw new Error();
     var retval = null;
-    if ( this.root === null ) {
+    if ((typeof this.root === "undefined" || this.root === null)) {
     /*
       We have an empty tree; attach the
       new node directly to the root
@@ -436,7 +420,8 @@
     /* Set up our helpers */
       t = head;
       g = p = null;
-      t.setLink(true, q = this.root);
+      q = this.root;
+      t.setLink(true, q);
 
     /* Search down the tree for a place to insert */
       for (;;) {
@@ -481,7 +466,7 @@
 
     /* Update the root (it may be different) */
       this.root = head.right;
-      if(this.root !== null)
+      if((typeof this.root !== "undefined" && this.root !== null))
         this.root.p = null;
     }
 
@@ -577,9 +562,7 @@
       return this.closedPolygons.size();
     };
   }
-/**
- * Not documented yet.
- */
+/** @private */
   Polygon.PointChain = function() {
     this.l = new LinkedList();
     this._closed = false;

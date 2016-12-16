@@ -87,7 +87,7 @@ H3DU.ShapeGroup.prototype.getMatrix = function() {
   var xform = this.getTransform();
   var thisIdentity = xform.isIdentity();
   var mat;
-  if(this.parent !== null) {
+  if((typeof this.parent !== "undefined" &amp;&amp; this.parent !== null)) {
     var pmat = this.parent.getMatrix();
     if(thisIdentity) {
       mat = H3DU.Math.mat4multiply(pmat, xform.getMatrix());

@@ -1,0 +1,92 @@
+<head>
+<meta charset=utf-8>
+<title>Spinning Box (based on a public-domain program courtesy of Brian Paul)</title>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<script id="demo">
+//<!--
+
+// Adapted by Peter O. from the public domain program
+// spin.c written by Brian Paul.
+
+function makeObject()
+{
+var mesh=new H3DU.Mesh();
+mesh.mode(H3DU.Mesh.LINE_STRIP );
+mesh.vertex3(1.0, 0.5, -0.4);
+  mesh.vertex3(1.0, -0.5, -0.4);
+  mesh.vertex3(-1.0, -0.5, -0.4);
+  mesh.vertex3(-1.0, 0.5, -0.4);
+  mesh.vertex3(1.0, 0.5, -0.4);
+mesh.mode(H3DU.Mesh.LINE_STRIP );
+mesh.vertex3(1.0, 0.5, 0.4);
+  mesh.vertex3(1.0, -0.5, 0.4);
+  mesh.vertex3(-1.0, -0.5, 0.4);
+  mesh.vertex3(-1.0, 0.5, 0.4);
+  mesh.vertex3(1.0, 0.5, 0.4);
+  mesh.mode(H3DU.Mesh.LINES);
+  mesh.vertex3(1.0, 0.5, 0.4);
+  mesh.vertex3(1.0, -0.5, 0.4);
+  mesh.vertex3(-1.0, -0.5, 0.4);
+  mesh.vertex3(-1.0, 0.5, 0.4);
+  mesh.vertex3(1.0, 0.5, 0.4);
+  mesh.mode(H3DU.Mesh.LINES);
+  mesh.vertex3(1.0, 0.5, -0.4);
+  mesh.vertex3(1.0, 0.5, 0.4);
+  mesh.vertex3(1.0, -0.5, -0.4);
+  mesh.vertex3(1.0, -0.5, 0.4);
+  mesh.vertex3(-1.0, -0.5, -0.4);
+  mesh.vertex3(-1.0, -0.5, 0.4);
+  mesh.vertex3(-1.0, 0.5, -0.4);
+mesh.vertex3(-1.0, 0.5, 0.4);
+return mesh;
+}
+
+window.onload=(function(){
+  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
+  var sub=new H3DU.Batch3D()
+  var Xrot=0,Xstep=0,Yrot=0,Ystep=0,Zrot=0,Zstep=0,Step=5,Scale=1;
+  Xstep=Step;
+// Here, the material parameter basic is
+// set to make the line pure white and unaffected
+// by shading (otherwise, the shading would
+// make the line look gray)
+var o=new H3DU.Shape(makeObject())
+     .setColor("white")
+     .setMaterialParams({basic:true});
+  sub.addShape(o);
+  scene.addShape(sub);
+  var view_rotx=20,view_roty=30,view_rotz=0;
+  var angle=0;
+  var info={}
+  H3DU.renderLoop(function(time){
+   var h=scene.getHeight()/scene.getWidth();
+   var view=new H3DU.Transform()
+    .setPosition(0,0,-10)
+    .setScale(Scale,Scale,Scale)
+    .setOrientation(Xrot,1,0,0)
+    .multOrientation(Yrot,0,1,0)
+    .multOrientation(Zrot,0,0,1);
+   sub.setProjectionMatrix(H3DU.Math.mat4frustum(
+     -1,1,-h,h,5,15));
+   sub.setViewMatrix(view.getMatrix());
+   scene.render(sub);
+   var frames=H3DU.newFrames(info,time);
+   Xrot+=Xstep*frames;
+   Yrot+=Ystep*frames;
+   Zrot+=Zstep*frames;
+   if(Xrot>=360.0){  Xrot=0; Xstep=0; Ystep=Step; }
+   else if(Yrot>=360.0){  Yrot=0; Ystep=0; Zstep=Step; }
+   else if(Zrot>=360.0){  Zrot=0; Zstep=0; Xstep=Step; }
+ });
+})
+//-->
+</script>
+<body>

@@ -254,7 +254,7 @@ H3DU.Batch3D.prototype.getViewMatrix = function() {
 /** @private */
 H3DU.Batch3D.prototype._getFrustum = function() {
   "use strict";
-  if(this._frustum === null) {
+  if((typeof this._frustum === "undefined" || this._frustum === null)) {
     var projView = H3DU.Math.mat4multiply(this._projectionMatrix, this._viewMatrix);
     this._frustum = H3DU.Math.mat4toFrustumPlanes(projView);
   }

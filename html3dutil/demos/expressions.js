@@ -15,7 +15,7 @@ var Extras = {
       if(fillOffset !== i && arr[i] !== null) {
         arr[fillOffset] = arr[i];
         fillOffset++;
-      } else if(arr[i] !== null) {
+      } else if(arr[i] !== null && typeof arr[i] !== "undefined") {
         fillOffset++;
       }
     }

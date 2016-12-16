@@ -324,7 +324,7 @@ H3DU.Shape.prototype.getMatrix = function() {
   var xform = this.getTransform();
   var thisIdentity = xform.isIdentity();
   var mat;
-  if(this.parent === null) {
+  if((typeof this.parent === "undefined" || this.parent === null)) {
     mat = xform.getMatrix();
   } else {
     var pmat = this.parent.getMatrix();
