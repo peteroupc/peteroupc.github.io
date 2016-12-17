@@ -243,6 +243,6 @@ function makeFloor(xStart, yStart, width, height, tileSize, z) {
 /* exported rotateVec */
 function rotateVec(vec, angle) {
   "use strict";
-  return H3DU.Math.mat4transformVec3(
+  return H3DU.Math.mat4projectVec3(
    H3DU.Math.mat4rotated(angle, 0, 0, 1), vec);
 }

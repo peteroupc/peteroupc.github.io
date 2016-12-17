@@ -6,15 +6,15 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global DataView, H3DU, Promise, console */
+/* global DataView, H3DU, Promise, console, index, sprites */
 
 /**
-* Represents a bitmap font.  This class supports
+* Represents a bitmap font, which supports drawing two-dimensional
+* text.  This class supports
 * traditional bitmap fonts and signed distance field fonts.<p>
 * Bitmap fonts consist of a font definition file and one
 * or more textures containing the shape of each font glyph.  The glyphs
-* are packed so that the glyphs don't
-* overlap each other.<p>
+* are packed so that the glyphs don't overlap each other.<p>
 * In a signed distance field font, each pixel's alpha value depends on the
 * distance from that location to the edge of the glyph.  A pixel alpha less
 * than 0.5 (127 in most image formats) means the pixel is outside the
@@ -650,7 +650,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
         view.getUint8(offset + 12)];
       info.outline = view.getUint8(offset + 13);
       info.fontName = utf8string(view, offset + 14, offset + size);
-      if((typeof info.fontName === "undefined" || info.fontName === null)) {
+      if(typeof info.fontName === "undefined" || info.fontName === null) {
         return null;
       }
       break;
@@ -910,3 +910,288 @@ H3DU.TextFont._textShader = function() {
   return shader;
 };
 H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textShader());
+
+/////////////////
+
+H3DU.TextureAtlas = function() {
+  "use strict";
+  this.sprites = {};
+  this.indexedSprites = [];
+  this.textures = [];
+  this.textureInfos = [];
+};
+H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
+  "use strict";
+  var meshes = [];
+  for(var i = 0;i < sprites.length;i++) {
+    if(!sprites[i])throw new Error();
+    this._makeSprite(sprites[i].name, sprites[i].x, sprites[i].y, meshes);
+  }
+  var group = new H3DU.ShapeGroup();
+  for(i = 0;i < meshes.length;i++) {
+    var mfp = meshes[i];
+    if(!mfp)continue;
+    var sh = new H3DU.Shape(mfp);
+    var material = new H3DU.Material().setParams({
+      "texture":this.textures[i],
+      "basic":true
+    });
+    sh.setMaterial(material);
+    group.addShape(sh);
+  }
+  return group;
+};
+H3DU.TextureAtlas.prototype._makeSprite = function(name, x, y, meshesForPage) {
+  "use strict";
+  var sprite = null;
+  if(typeof name === "number") {
+    if(this.indexedSprites[index] !== null && typeof this.indexedSprites[index] !== "undefined") {
+      sprite = this.indexedSprites[index];
+    }
+  } else if(this.Object.prototype.hasOwnProperty.call(sprites, name)) {
+    sprite = this.sprites[name];
+  }
+  var recipWidth = 1.0 / sprite.info.size[0];
+  var recipHeight = 1.0 / sprite.info.size[1];
+  var sx = sprite.xy[0] * recipWidth;
+  var sy = sprite.xy[1] * recipHeight;
+  var sx2 = (sprite.xy[0] + sprite.size[0]) * recipWidth;
+  var sy2 = (sprite.xy[1] + sprite.size[1]) * recipHeight;
+  var vx = x;
+  var vy = y;
+  var vx2 = vx + sprite.size[0];
+  var vy2 = vy + sprite.size[1];
+  if(sprite.size[0] > 0 && sprite.size[1] > 0) {
+    var chMesh = meshesForPage[sprite.info.index];
+    if(!chMesh) {
+      chMesh = new H3DU.Mesh();
+      meshesForPage[sprite.info.index] = chMesh;
+    }
+    chMesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
+     .texCoord2(sx, 1 - sy)
+     .vertex2(vx, vy)
+     .texCoord2(sx, 1 - sy2)
+     .vertex2(vx, vy2)
+     .texCoord2(sx2, 1 - sy)
+     .vertex2(vx2, vy)
+     .texCoord2(sx2, 1 - sy2)
+     .vertex2(vx2, vy2);
+  }
+
+};
+H3DU.TextureAtlas._checkSprite = function(sprite) {
+  "use strict";
+  if(!sprite)return false;
+  if(typeof sprite.xy === "undefined" || sprite.xy === null)return false;
+  if(typeof sprite.size === "undefined" || sprite.size === null)return false;
+  if(typeof sprite.orig === "undefined" || sprite.orig === null)return false;
+  if(typeof sprite.offset === "undefined" || sprite.offset === null)return false;
+  if(typeof sprite.rotate === "undefined" || sprite.rotate === null)return false;
+  if(sprite.rotate !== "false") {
+    throw new Error("rotate value not supported: " + sprite.rotate);
+  }
+  return true;
+};
+H3DU.TextureAtlas._loadText = function(data) {
+  "use strict";
+  var text = data.data;
+  var lines = text.split(/\r?\n/);
+  var textureInfo = null;
+  var state = 0;
+  var e = null;
+  var sprites = [];
+  var spriteHash = {};
+  var textureInfos = [];
+  var currentSprite = null;
+  for(var i = 0;i < lines.length;i++) {
+    switch(state) {
+    case 0: // File name
+      if((/^\s*$/).test(lines[i]))break;
+      if((/^\s+/).test(lines[i]))return null;
+      textureInfo = {
+        "name":lines[i].replace(/\s+$/, ""),
+        "index":textureInfos.length
+      };
+      textureInfos.push(textureInfo);
+      state = 1;
+      break;
+    case 1: // Texture info
+      e = (/^(\w+)\s*\:\s*(.*)/).exec(lines[i]);
+      if(e) {
+        var value = e[2].replace(/\s+$/, "");
+        if(e[1] === "size") {
+          var e1split = value.split(/\s*,\s*/);
+          if(e1split.length !== 2)return null;
+          if(!(/^-?\d+$/).test(e1split[0]) ||
+             !(/^-?\d+$/).test(e1split[1]))return null;
+          e1split[0] = parseInt(e1split[0], 10);
+          e1split[1] = parseInt(e1split[1], 10);
+          textureInfo[e[1]] = e1split;
+        } else if(e[1] === "filter") {
+          e1split = value.split(/\s*,\s*/);
+          if(e1split.length !== 2)return null;
+          textureInfo[e[1]] = e1split;
+        } else if(e[1] === "format" || e[1] === "repeat") {
+          textureInfo[e[1]] = value;
+          if(e[1] === "repeat" && value !== "none") {
+            throw new Error("repeat value not supported: " + value);
+          }
+        } else {
+          return null;
+        }
+        break;
+      }
+      e = (/^([^\:\s]+)\s*$/).exec(lines[i]);
+      if(e) { // Sprite name
+        state = 2;
+        currentSprite = {
+          "name":e[1].replace(/\s+$/, ""),
+          "info":textureInfo
+        };
+        break;
+      }
+      e = (/^\s*$/).exec(lines[i]);
+      if(e) {
+        currentSprite = null;
+        state = 0;
+        break;
+      }
+      return null;
+    case 2: // Sprite info
+      e = (/^([^\:\s]+)\s*$/).exec(lines[i]);
+      if(e) {
+        if(!H3DU.TextureAtlas._checkSprite(currentSprite))
+          return null;
+        sprites.push(currentSprite);
+        currentSprite = {
+          "name":e[1].replace(/\s+$/, ""),
+          "info":textureInfo
+        };
+        break;
+      }
+      e = (/^\s+(\w+)\s*\:\s*(.*)/).exec(lines[i]);
+      if(e) {
+        value = e[2].replace(/\s+$/, "");
+        if(e[1] === "size" || e[1] === "orig" || e[1] === "xy" || e[1] === "offset") {
+          e1split = value.split(/\s*,\s*/);
+          if(e1split.length === 1 && e[1] === "orig") {
+            e1split = value.split(/\s*x\s*/);
+          }
+          if(e1split.length !== 2)return null;
+          if(!(/^-?\d+$/).test(e1split[0]) ||
+             !(/^-?\d+$/).test(e1split[1]))return null;
+          e1split[0] = parseInt(e1split[0], 10);
+          e1split[1] = parseInt(e1split[1], 10);
+          currentSprite[e[1]] = e1split;
+        } else if(e[1] === "split") {
+          e1split = value.split(/\s*,\s*/);
+          if(e1split.length !== 4)return null;
+          var e1data = [];
+          for(var j = 0;j < e1split.length;j++) {
+            if(!(/^-?\d+$/).test(e1split[j]))return null;
+            e1data[j] = parseInt(e1split[j], 10);
+          }
+          currentSprite[e[1]] = e1data;
+        } else if(e[1] === "index") {
+          if(!(/^-?\d+$/).test(value))return null;
+          currentSprite[e[1]] = parseInt(value, 10);
+        } else if(e[1] === "rotate") {
+          currentSprite[e[1]] = value;
+        } else {
+          return null;
+        }
+        break;
+      }
+      e = (/^\s*$/).exec(lines[i]);
+      if(e) {
+        if(!H3DU.TextureAtlas._checkSprite(currentSprite))
+          return null;
+        sprites.push(currentSprite);
+        currentSprite = null;
+        state = 0;
+        break;
+      }
+      return null;
+    default:
+      return null;
+    }
+  }
+  if(currentSprite) {
+    if(!H3DU.TextureAtlas._checkSprite(currentSprite))
+      return null;
+    sprites.push(currentSprite);
+  }
+  spriteHash = {};
+  var ret = new H3DU.TextureAtlas();
+  for(i = 0;i < sprites.length;i++) {
+    var si = sprites[i];
+    spriteHash[si.name] = si;
+    if(typeof si.index !== "undefined" &&
+             si.index !== null && si.index >= 0) {
+      ret.indexedSprites[si.index] = si;
+    }
+  }
+  ret.pages = [];
+  for(i = 0;i < textureInfos.length;i++) {
+    ret.pages.push(textureInfos[i].name);
+  }
+  ret.sprites = spriteHash;
+  ret.textureInfos = textureInfos;
+  return ret;
+};
+H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
+  "use strict";
+  var textures = [];
+  for(var i = 0;i < this.pages.length;i++) {
+    if(!this.pages[i])throw new Error();
+    textures.push(this.pages[i]);
+  }
+  var that = this;
+  return textureLoader.loadTexturesAll(textures).then(function(r) {
+    for(var i = 0;i < r.length;i++) {
+      if(typeof that.textureInfos[i].size === "undefined" || that.textureInfos[i].size === null) {
+        that.textureInfos[i].size = [r[i].getWidth(), r[i].getHeight()];
+      }
+    }
+    return Promise.resolve(r);
+  });
+};
+H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
+  "use strict";
+  if(!textureLoader) {
+    throw new Error();
+  }
+  return H3DU.TextureAtlas.load(atlasFileName).then(function(atlas) {
+    return atlas.loadTextures(textureLoader).then(function(r) {
+      return Promise.resolve({
+        "url":atlas.fileUrl,
+        "atlas":atlas,
+        "textures":r
+      });
+    }, function(r) {
+      return Promise.reject({
+        "url":atlas.fileUrl,
+        "results":r
+      });
+    });
+  });
+};
+
+H3DU.TextureAtlas.load = function(fontFileName) {
+  "use strict";
+  return H3DU.loadFileFromUrl(fontFileName, "arraybuffer").then(
+   function(data) {
+     var view = new DataView(data.data);
+     var ret = H3DU.TextureAtlas._loadText({
+       "url":data.url,
+       "data":H3DU.TextFont._decodeUtf8(view, 0, view.byteLength)
+     });
+     if(!ret)return Promise.reject({"url":data.url});
+     for(var i = 0;i < ret.textures.length;i++) {
+       var p = ret.textures[i];
+       ret.textures[i] = H3DU.TextFont._resolvePath(data.url, p);
+     }
+     ret.fileUrl = data.url;
+     return Promise.resolve(ret);
+   });
+};

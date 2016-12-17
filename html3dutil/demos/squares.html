@@ -42,7 +42,7 @@ var currentFilter=null;
 
 function makeWaterpaint(context){
 // Adapted from Themaister's Waterpaint shader
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "vec4 compress(vec4 in_color, float threshold, float ratio)",
 "{",
 "  vec4 diff = in_color - vec4(threshold);",
@@ -80,7 +80,7 @@ return H3DU.ShaderProgram.makeEffect(context,[
 }
 
 function makePixelate(context){
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "uniform float coarseness;", // coarseness in pixels; 1 means normal
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " float g=max(coarseness,1.0);",
@@ -111,7 +111,7 @@ var atan2glsl=
 "}\n"
 
 function makeWarp(context){
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "uniform float coarseness;", // coarseness in pixels; 1 means normal
 atan2glsl,
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
@@ -144,7 +144,7 @@ function setKernelMatrix(program,matrix){
 }
 
 function makeKernelMatrix(context){
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "uniform mat3 matrix;",
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec2 pixel=1.0/textureSize;",
@@ -171,7 +171,7 @@ return H3DU.ShaderProgram.makeEffect(context,[
 }
 
 function makeWave(context){
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "uniform float time; // range [0,100)",
 "const float pi = 3.14159265;",
 "float interp(float t){",
@@ -188,7 +188,7 @@ return H3DU.ShaderProgram.makeEffect(context,[
 }
 
 function makeGrayscale(context){
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,uvCoord);",
 " float gray=(color.r+color.g+color.b)/3.0;",
@@ -197,7 +197,7 @@ return H3DU.ShaderProgram.makeEffect(context,[
 }
 
 function makeRedTint(context){
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,uvCoord);",
 " return vec4(color.r+0.3,color.g,color.b,color.a);",
@@ -205,7 +205,7 @@ return H3DU.ShaderProgram.makeEffect(context,[
 }
 
 function makeBlueTint(context){
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,uvCoord);",
 " return vec4(color.r,color.g,color.b+0.3,color.a);",
@@ -213,7 +213,7 @@ return H3DU.ShaderProgram.makeEffect(context,[
 }
 
 function makeMirror(context){
-return H3DU.ShaderProgram.makeEffect(context,[
+return H3DU.ShaderProgram.makeEffect(null,[
 "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
 " vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
 " return color;",
@@ -244,7 +244,7 @@ function link2a(){
 function link2(){
  if(scene){
 
-  currentFilter=H3DU.ShaderProgram.getInvertEffect(scene);
+  currentFilter=H3DU.ShaderProgram.getInvertEffect();
   renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
@@ -252,7 +252,7 @@ function link2(){
 function link3(){
  if(scene){
 
-  currentFilter=makeWave(scene);
+  currentFilter=makeWave();
   renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
@@ -267,15 +267,14 @@ function link4(){
 }
 function link5(){
  if(scene){
-
-  currentFilter=makePixelate(scene);
+  currentFilter=makePixelate();
   renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }
 function link6(){
  if(scene){
 
-  currentFilter=makeWaterpaint(scene);
+  currentFilter=makeWaterpaint();
   renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
  }
 }

@@ -230,9 +230,9 @@
       }
     };
     this.prev = function() {
-      if((typeof this.left !== "undefined" && this.left !== null)) {
+      if(typeof this.left !== "undefined" && this.left !== null) {
         var r = this.left;
-        while((typeof r.right !== "undefined" && r.right !== null))r = r.right;
+        while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
         return r;
       } else {
         var p = this.p;
@@ -246,9 +246,9 @@
       }
     };
     this.next = function() {
-      if((typeof this.right !== "undefined" && this.right !== null)) {
+      if(typeof this.right !== "undefined" && this.right !== null) {
         var r = this.right;
-        while((typeof r.left !== "undefined" && r.left !== null))r = r.left;
+        while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
         return r;
       } else {
         var p = this.p;
@@ -283,14 +283,14 @@
   RedBlackTree.prototype.first = function() {
     var r = this.root;
     if(r === null || typeof r === "undefined")return null;
-    while((typeof r.left !== "undefined" && r.left !== null))r = r.left;
+    while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
     return r;
   };
 /** @private */
   RedBlackTree.prototype.last = function() {
     var r = this.root;
     if(r === null || typeof r === "undefined")return null;
-    while((typeof r.right !== "undefined" && r.right !== null))r = r.right;
+    while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
     return r;
   };
 /** @private */
@@ -323,7 +323,7 @@
   };
 /** @private */
   RedBlackTree.prototype.erase = function(data) {
-    if((typeof this.root !== "undefined" && this.root !== null)) {
+    if(typeof this.root !== "undefined" && this.root !== null) {
       var head = new RedBlackTreeNode(null); /* False tree root */
       var q, p, g; /* Helpers */
       var f = null;  /* Found item */
@@ -385,14 +385,14 @@
     /* Replace and remove the saved node */
       if( f !== null && typeof f !== "undefined" ) {
         f.data = q.data;
-        p.setLink(p.right === q, q.link((typeof q.left === "undefined" || q.left === null)));
+        p.setLink(p.right === q, q.link(typeof q.left === "undefined" || q.left === null));
       }
 
     /* Update the root(it may be different) */
       this.root = head.right;
 
     /* Make the root black for simplified logic */
-      if((typeof this.root !== "undefined" && this.root !== null)) {
+      if(typeof this.root !== "undefined" && this.root !== null) {
         this.root.p = null;
         this.root.red = false;
       }
@@ -403,7 +403,7 @@
   RedBlackTree.prototype.insert = function(data) {
     if(!data)throw new Error();
     var retval = null;
-    if ((typeof this.root === "undefined" || this.root === null)) {
+    if (typeof this.root === "undefined" || this.root === null) {
     /*
       We have an empty tree; attach the
       new node directly to the root
@@ -466,7 +466,7 @@
 
     /* Update the root (it may be different) */
       this.root = head.right;
-      if((typeof this.root !== "undefined" && this.root !== null))
+      if(typeof this.root !== "undefined" && this.root !== null)
         this.root.p = null;
     }
 

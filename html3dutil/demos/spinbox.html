@@ -78,6 +78,8 @@ var o=new H3DU.Shape(makeObject())
      -1,1,-h,h,5,15));
    sub.setViewMatrix(view.getMatrix());
    scene.render(sub);
+   // Gets the number of "frames" it took between
+   // the previous call and the current one
    var frames=H3DU.newFrames(info,time);
    Xrot+=Xstep*frames;
    Yrot+=Ystep*frames;
