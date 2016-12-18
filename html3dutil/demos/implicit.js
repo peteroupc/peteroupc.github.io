@@ -10,7 +10,7 @@ at: http://peteroupc.github.io/
 
 /**
 * An evaluator for implicit surfaces.
-* @param {Object} func An object containing a single property,
+* @param {Object} func A <b>sampling object</b>. This object contains a single property,
 * "sample", which is a function that takes three parameters
 * specifying a 3-dimensional point:<ol>
 * <li>x - An X-coordinate.
@@ -593,15 +593,15 @@ ImplicitSurface.prototype._marchingTetrahedrons = function(mesh, fX, fY, fZ, fSc
 };
 /**
  * TODO: Not documented yet.
- * @param {*} xsize
- * @param {*} ysize
- * @param {*} zsize
- * @param {*} xmin
- * @param {*} xmax
- * @param {*} ymin
- * @param {*} ymax
- * @param {*} zmin
- * @param {*} zmax
+ * @param {Number} xsize Number of points along the X-axis. Must be 2 or greater.
+ * @param {Number} ysize Number of points along the Y-axis. Must be 2 or greater.
+ * @param {Number} zsize Number of points along the Z-axis. Must be 2 or greater.
+ * @param Number xmin
+ * @param Number xmax
+ * @param Number ymin
+ * @param Number ymax
+ * @param Number zmin
+ * @param Number zmax
  * @memberof! ImplicitSurface#
 */
 ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
@@ -640,24 +640,25 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
 };
 /**
  * TODO: Not documented yet.
- * @param {*} mesh
- * @param {*} xsize
- * @param {*} ysize
- * @param {*} zsize
- * @param {*} xmin
- * @param {*} xmax
- * @param {*} ymin
- * @param {*} ymax
- * @param {*} zmin
- * @param {*} zmax
+ * @param {H3DU.Mesh} mesh Mesh to store the points in.
+ * @param {Number} xsize Number of points along the X-axis. Must be 2 or greater.
+ * @param {Number} ysize Number of points along the Y-axis. Must be 2 or greater.
+ * @param {Number} zsize Number of points along the Z-axis. Must be 2 or greater.
+ * @param Number xmin
+ * @param Number xmax
+ * @param Number ymin
+ * @param Number ymax
+ * @param Number zmin
+ * @param Number zmax
  * @memberof! ImplicitSurface#
 */
 ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
+  if(xsize < 2 || ysize < 2 || zsize < 2)throw new Error();
   mesh.mode(H3DU.Mesh.POINTS);
-  var xstep = (xmax - xmin) / xsize;
-  var ystep = (ymax - ymin) / ysize;
-  var zstep = (zmax - zmin) / zsize;
+  var xstep = (xmax - xmin) / (xsize - 1);
+  var ystep = (ymax - ymin) / (ysize - 1);
+  var zstep = (zmax - zmin) / (zsize - 1);
   var x, y, z;
   var iX, iY, iZ;
   for(iX = 0, x = xmin;iX < xsize; iX += 1, x += xstep) {
@@ -672,16 +673,16 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
 };
 /**
  * TODO: Not documented yet.
- * @param {*} mesh
- * @param {*} xsize
- * @param {*} ysize
- * @param {*} zsize
- * @param {*} xmin
- * @param {*} xmax
- * @param {*} ymin
- * @param {*} ymax
- * @param {*} zmin
- * @param {*} zmax
+ * @param {H3DU.Mesh} mesh Mesh to store the points in.
+ * @param {Number} xsize Number of points along the X-axis. Must be 2 or greater.
+ * @param {Number} ysize Number of points along the Y-axis. Must be 2 or greater.
+ * @param {Number} zsize Number of points along the Z-axis. Must be 2 or greater.
+ * @param Number xmin
+ * @param Number xmax
+ * @param Number ymin
+ * @param Number ymax
+ * @param Number zmin
+ * @param Number zmax
  * @memberof! ImplicitSurface#
 */
 ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
@@ -711,9 +712,11 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
   }
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
- * @param {*} b
+ * Returns a sampling object for the union of
+* one surface and another.
+ * @param {Object} a A sampling object (see ImplicitSurface constructor) that defines an implicit surface.
+ * @param {Object} b A sampling object that defines another implicit surface.
+ * @returns A sampling object that defines surface "a" together with surface "b"
  */
 ImplicitSurface.union = function(a, b) {
   "use strict";
@@ -724,9 +727,11 @@ ImplicitSurface.union = function(a, b) {
   };
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
- * @param {*} b
+ * Returns a sampling object for the intersection of
+* one surface and another.
+ * @param {Object} a A sampling object (see ImplicitSurface constructor) that defines an implicit surface.
+ * @param {Object} b A sampling object that defines another implicit surface.
+ * @returns A sampling object that defines surface "a" intersected with surface "b"
  */
 ImplicitSurface.intersection = function(a, b) {
   "use strict";
@@ -737,9 +742,12 @@ ImplicitSurface.intersection = function(a, b) {
   };
 };
 /**
- * TODO: Not documented yet.
- * @param {*} a
- * @param {*} b
+ * Returns a sampling object for the difference between
+* one surface and another.
+ * @param {Object} a A sampling object (see ImplicitSurface constructor) that defines an implicit surface.
+ * @param {Object} b A sampling object that defines the surface
+ * to subtract from the first surface.
+ * @returns A sampling object that defines surface "a" with surface "b" subtracted from it.
  */
 ImplicitSurface.difference = function(a, b) {
   "use strict";

@@ -366,10 +366,9 @@ MtlData._loadMtl = function(str) {
     firstLine = false;
     var e = newmtlLine.exec(line);
     if(e) {
-
       currentMat = {};
       materials.push({
-        "name":"name",
+        "name":e[1],
         "data": currentMat
       });
       continue;

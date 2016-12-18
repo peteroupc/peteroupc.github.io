@@ -57,15 +57,14 @@ H3DU.Scene3D = function(canvasOrContext) {
   this._subScene.getLights().setDefaults();
   this._programs = new H3DU.Scene3D.ProgramCache();
   this.useDevicePixelRatio = false;
+  this._is3d = H3DU.is3DContext(this.context);
   this._pixelRatio = 1;
   this.autoResize = true;
   this.width = Math.ceil(this.context.canvas.clientWidth * 1.0);
   this.height = Math.ceil(this.context.canvas.clientHeight * 1.0);
   this.context.canvas.width = this.width;
   this.context.canvas.height = this.height;
-  this._is3d = H3DU.is3DContext(this.context);
   if(this._is3d) {
-
     var flags = H3DU.Scene3D.LIGHTING_ENABLED |
    H3DU.Scene3D.SPECULAR_ENABLED |
    H3DU.Scene3D.SPECULAR_MAP_ENABLED;
@@ -82,12 +81,12 @@ H3DU.Scene3D = function(canvasOrContext) {
   }
 };
 /**
- * TODO: Not documented yet.
+ * Gets the HTML canvas associated with this scene.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.getCanvas = function() {
   "use strict";
-  return this.context.canvas;
+  return this.context ? this.context.canvas : null;
 };
 
 /** @private */
@@ -638,14 +637,21 @@ H3DU.Scene3D.prototype._setClearColor = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
+ * Disposes all resources used by this object.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.dispose = function() {
   "use strict";
-  this._programs.dispose();
-  this._textureLoader.dispose();
-  this._meshLoader.dispose();
+  this.context = null;
+  if(this._programs)
+    this._programs.dispose();
+  if(this._textureLoader)
+    this._textureLoader.dispose();
+  if(this._meshLoader)
+    this._meshLoader.dispose();
+  this._programs = null;
+  this._textureLoader = null;
+  this._meshLoader = null;
 };
 /**
 * Sets the color used when clearing the screen each frame.
@@ -740,7 +746,9 @@ H3DU.Scene3D.prototype.loadAndMapTextures = function(textureFiles, resolve, reje
   return H3DU.getPromiseResults(promises, resolve, reject);
 };
 /**
- * TODO: Not documented yet.
+ * Clears the color, depth, and stencil buffers used in this scene,
+* if any
+* @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.clear = function() {
@@ -751,9 +759,11 @@ H3DU.Scene3D.prototype.clear = function() {
      this.context.DEPTH_BUFFER_BIT |
      this.context.STENCIL_BUFFER_BIT);
   }
+  return this;
 };
 /**
- * TODO: Not documented yet.
+ * Clears the depth buffer used in this scene, if any.
+* @returns {H3DU.Scene3D} This object.
  * @memberof! H3DU.Scene3D#
 */
 H3DU.Scene3D.prototype.clearDepth = function() {
@@ -761,6 +771,7 @@ H3DU.Scene3D.prototype.clearDepth = function() {
   if(this._is3d) {
     this.context.clear(this.context.DEPTH_BUFFER_BIT);
   }
+  return this;
 };
 /**
  * Gets the number of vertices composed by
@@ -1121,7 +1132,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

@@ -123,6 +123,253 @@ May be null or omitted, in which case "format" is set to 0.</dd>
 
     </div>
 
+        <h3 class="subsection-title">Members</h3>
+
+<h4 style="margin-bottom:0px" id=".BITANGENTS_BIT"><span style="font-weight:lighter">(constant) </span>.BITANGENTS_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1453">line 1453</a>
+     </i></small></p>
+
+<div class="description">
+    The mesh contains bitangent vectors for each vertex.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 16</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".COLORS_BIT"><span style="font-weight:lighter">(constant) </span>.COLORS_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1433">line 1433</a>
+     </i></small></p>
+
+<div class="description">
+    The mesh contains colors for each vertex.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 2</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".LINE_STRIP"><span style="font-weight:lighter">(constant) </span>.LINE_STRIP<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1536">line 1536</a>
+     </i></small></p>
+
+<div class="description">
+    Primitive mode for rendering connected line segments.
+The first 2 vertices make up the first line, and each additional
+line is made up of the last vertex and 1 new vertex.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 3</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".LINES"><span style="font-weight:lighter">(constant) </span>.LINES<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1505">line 1505</a>
+     </i></small></p>
+
+<div class="description">
+    Primitive mode for rendering line segments, made up
+of 2 vertices each.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".LINES_BIT"><span style="font-weight:lighter">(constant) </span>.LINES_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1460">line 1460</a>
+     </i></small></p>
+
+<div class="description">
+    The mesh consists of lines (2 vertices per line) instead
+of triangles (3 vertices per line).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 256</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".NORMALS_BIT"><span style="font-weight:lighter">(constant) </span>.NORMALS_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1427">line 1427</a>
+     </i></small></p>
+
+<div class="description">
+    The mesh contains normals for each vertex.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 1</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".POINTS"><span style="font-weight:lighter">(constant) </span>.POINTS<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1544">line 1544</a>
+     </i></small></p>
+
+<div class="description">
+    Primitive mode for rendering points, made up
+of 1 vertex each.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".POINTS_BIT"><span style="font-weight:lighter">(constant) </span>.POINTS_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1466">line 1466</a>
+     </i></small></p>
+
+<div class="description">
+    The mesh consists of points (1 vertex per line).
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 512</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".QUAD_STRIP"><span style="font-weight:lighter">(constant) </span>.QUAD_STRIP<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1487">line 1487</a>
+     </i></small></p>
+
+<div class="description">
+    Primitive mode for rendering a strip of quadrilaterals (quads).
+The first 4 vertices make up the first quad, and each additional
+quad is made up of the last 2 vertices of the previous quad and
+2 new vertices. Each quad is broken into two triangles: the first
+triangle consists of the first, second, and third vertices, in that order,
+and the second triangle consists of the third, second, and fourth
+vertices, in that order.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 8</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".QUADS"><span style="font-weight:lighter">(constant) </span>.QUADS<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1498">line 1498</a>
+     </i></small></p>
+
+<div class="description">
+    Primitive mode for rendering quadrilaterals, made up
+of 4 vertices each.  Each quadrilateral is broken into two triangles: the first
+triangle consists of the first, second, and third vertices, in that order,
+and the second triangle consists of the first, third, and fourth
+vertices, in that order.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 7</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".TANGENTS_BIT"><span style="font-weight:lighter">(constant) </span>.TANGENTS_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1446">line 1446</a>
+     </i></small></p>
+
+<div class="description">
+    The mesh contains tangent vectors for each vertex.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 8</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".TEXCOORDS_BIT"><span style="font-weight:lighter">(constant) </span>.TEXCOORDS_BIT<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1439">line 1439</a>
+     </i></small></p>
+
+<div class="description">
+    The mesh contains texture coordinates for each vertex.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 4</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".TRIANGLE_FAN"><span style="font-weight:lighter">(constant) </span>.TRIANGLE_FAN<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1515">line 1515</a>
+     </i></small></p>
+
+<div class="description">
+    Primitive mode for rendering a triangle fan.  The first 3
+vertices make up the first triangle, and each additional
+triangle is made up of the first vertex of the first triangle,
+the previous vertex, and 1 new vertex.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 6</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".TRIANGLE_STRIP"><span style="font-weight:lighter">(constant) </span>.TRIANGLE_STRIP<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1527">line 1527</a>
+     </i></small></p>
+
+<div class="description">
+    Primitive mode for rendering a triangle strip.  The first 3
+vertices make up the first triangle, and each additional
+triangle is made up of the last 2 vertices and 1
+new vertex.  For the second triangle in the strip, and
+every other triangle after that, the first and second
+vertices are swapped when generating that triangle.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 5</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".TRIANGLES"><span style="font-weight:lighter">(constant) </span>.TRIANGLES<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-mesh.js.html">h3du-mesh.js</a>, <a href="h3du-mesh.js.html#line1474">line 1474</a>
+     </i></small></p>
+
+<div class="description">
+    Primitive mode for rendering triangles, made up
+of 3 vertices each.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 4</dt>
+
+</dl>
+
         <h3 class="subsection-title">Methods</h3>
 
     <h4 style="margin-bottom:0px" id="bitangent3"><span style="font-weight:lighter"></span>H3DU.Mesh#bitangent3<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Mesh.html">H3DU.Mesh</a>}</span></h4>
@@ -1515,7 +1762,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

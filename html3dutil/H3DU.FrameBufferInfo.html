@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Tutorial: Examples of Creating Meshes on the Fly</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: FrameBufferInfo</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,129 +10,167 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Tutorial: Examples of Creating Meshes on the Fly</h1>
-    <section>
+    <h1>Class: FrameBufferInfo</h1>
+
+<section>
 
 <header>
 
-    <h2>Examples of Creating Meshes on the Fly</h2>
+        <h2>
+            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
+
+        FrameBufferInfo
+        </h2>
+
 </header>
 
 <article>
-    <p>This page contains source code for creating various kinds of 3D models on the fly.</p>
-<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Cone">Cone</a><br><a href="#Floor">Floor</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br><a href="#Miscellaneous">Miscellaneous</a><br></p>
-<h2>3D Line <a id=3D_Line></a></h2><p>This method creates a thin line-like 3D object.</p>
-<pre class="prettyprint source"><code>// point1, point2 - end points of the line
-// thickness - thickness of the line in units, default 1
-function create3DLine(point1,point2,thickness){
-  if(thickness==null)thickness=1
-  var vector=H3DU.Math.vec3sub(point1,point2);
-  var dist=H3DU.Math.vec3length(vector);
-  var normVector=H3DU.Math.vec3norm(vector);
-  var midPoint=H3DU.Math.vec3lerp(point1,point2,0.5);
-  var line=H3DU.Meshes.createCapsule(thickness/2,dist,6,4);
-  var matrix=H3DU.Math.quatToMat4(H3DU.Math.quatFromVectors([0,0,1],normVector));
-  matrix[12]=midPoint[0]
-  matrix[13]=midPoint[1]
-  matrix[14]=midPoint[2]
-  return line.transform(matrix);
-}</code></pre><h2>Cone <a id=Cone></a></h2><p>This method creates a cone that's closed at its base.</p>
-<p><img src="mesh1.png" alt="Image of a cone"></p>
-<pre class="prettyprint source"><code>function createClosedCone(radius,height,slices){
-  return H3DU.Meshes.createClosedCylinder(radius,0,height,slices,1);
-}</code></pre><h2>Floor <a id=Floor></a></h2><p>This method creates a flat tiled floor.</p>
-<p><img src="floor.png" alt="Image of a floor"></p>
-<pre class="prettyprint source"><code>// xStart, yStart - X and Y coordinates of the start of the floor
-// width, height - Width and height of the floor
-// tileSize - Size of each floor tile
-// z - Z-coordinate where the floor will be placed (optional,
-//  default 0)
-function makeFloor(xStart,yStart,width,height,tileSize,z){
- if(z==null)z=0.0
- var mesh=new H3DU.Mesh()
- var tilesX=Math.ceil(width/tileSize)
- var tilesY=Math.ceil(height/tileSize)
- var lastY=(height-(tilesY*tileSize))/tileSize
- var lastX=(width-(tilesX*tileSize))/tileSize
- if(lastY&lt;=0)lastY=1.0
- if(lastX&lt;=0)lastX=1.0
- mesh.normal3(0,0,1)
- for(var y=0;y&lt;tilesY;y++){
-  var endY=(y==tilesY-1) ? 1.0-lastY : 0.0
-  var endPosY=(y==tilesY-1) ? yStart+height : yStart+(y+1)*tileSize
-  for(var x=0;x&lt;tilesX;x++){
-   var endX=(x==tilesX-1) ? lastX : 1.0
-   var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
-   mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-     .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
-     .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
-     .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
-     .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
-  }
- }
- return mesh
-}</code></pre><h2>Striped Disk <a id=Striped_Disk></a></h2><p>This method creates a ring or disk striped in two colors.</p>
-<p><img src="mesh2.png" alt="Image of a disk striped in red and almost-white"></p>
-<pre class="prettyprint source"><code>// inner, outer - inner and outer radius of the disk
-// color1, color2 - colors of each stripe; for example:
-//   &quot;red&quot;, &quot;#223344&quot;, &quot;rgb(255,0,0)&quot;, [0,1,0]
-// sections - number of stripes
-// sectionCount - number of sections per stripe
-function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
- if(sectionCount==null)sectionCount=4
- var firstColor=true
- var ret=new Mesh()
- var sweep=360.0/sections;
- for(var i=0;i&lt;sections;i++){
-  var angle=360.0*(i*1.0/sections);
-  var mesh=H3DU.Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep)
-     .setColor3(firstColor ? color1 : color2)
-  firstColor=!firstColor
-  ret.merge(mesh);
- }
- return ret;
-}</code></pre><h2>Washer <a id=Washer></a></h2><p>This method creates a washer-shaped 3D model.</p>
-<p><img src="mesh3.png" alt="Image of a washer"></p>
-<pre class="prettyprint source"><code>function createWasher(inner,outer,height,slices){
-  var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
-  var outerCylinder=H3DU.Meshes.createCylinder(outer,outer,height,slices,1,false,false);
-  var base=H3DU.Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
-  var top=H3DU.Meshes.createDisk(inner,outer,slices,2,false);
-  // move the top disk to the top of the cylinder
-  top.transform(H3DU.Math.mat4translated(0,0,height));
-  // merge the base and the top
-  return innerCylinder.merge(outerCylinder).merge(base).merge(top);
-}</code></pre><h2>Miscellaneous <a id=Miscellaneous></a></h2><pre class="prettyprint source"><code>function extrudePath(path, zStart, zEnd, flatness){
- var lines=path.getLines(flatness)
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
- var z1=Math.min(zStart,zEnd)
- var z2=Math.max(zStart,zEnd)
- for(var i=0;i&lt;lines.length;i++){
-  var line=lines[i]
-  mesh.vertex3(line[0],line[1],z1)
-   .vertex3(line[0],line[1],z2)
-   .vertex3(line[2],line[3],z1)
-   .vertex3(line[2],line[3],z1)
-   .vertex3(line[0],line[1],z2)
-   .vertex3(line[2],line[3],z2)
- }
- mesh.recalcNormals()
- return mesh
-}
-// Demonstrates making a mesh plane from triangles
-function createPathDisk(path, z, flatness){
- if(z==null)z=0
- var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0,0,1);
- for(var i=0;i&lt;tris.length;i++){
-  var tri=tris[i]
-  mesh.vertex3(tri[0],tri[1],z)
-   .vertex3(tri[2],tri[3],z)
-   .vertex3(tri[4],tri[5],z)
- }
- return mesh
-}</code></pre>
+    <div class="container-overview">
+
+    <h4 style="margin-bottom:0px" id="FrameBufferInfo"><span style="font-weight:lighter"></span>new FrameBufferInfo<span class="signature">(width, height)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebufferinfo.js.html">h3du-framebufferinfo.js</a>, <a href="h3du-framebufferinfo.js.html#line16">line 16</a>
+     </i></small></p>
+
+<div class="description">
+    TODO: Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>width</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Width to use for the frame buffer.
+Throws an error if this value is less than 0.  The width will be set
+to this value rounded up.</dd>
+
+        <dt>
+
+                <code>height</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Height to use for the frame buffer.
+Throws an error if this value is less than 0.  The height will be set
+to this value rounded up.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="getHeight"><span style="font-weight:lighter"></span>H3DU.FrameBufferInfo#getHeight<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebufferinfo.js.html">h3du-framebufferinfo.js</a>, <a href="h3du-framebufferinfo.js.html#line54">line 54</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the height to use for the frame buffer.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Number</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getWidth"><span style="font-weight:lighter"></span>H3DU.FrameBufferInfo#getWidth<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebufferinfo.js.html">h3du-framebufferinfo.js</a>, <a href="h3du-framebufferinfo.js.html#line45">line 45</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the width to use for the frame buffer.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Number</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="resize"><span style="font-weight:lighter"></span>H3DU.FrameBufferInfo#resize<span class="signature">(width, height)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebufferinfo.js.html">h3du-framebufferinfo.js</a>, <a href="h3du-framebufferinfo.js.html#line32">line 32</a>
+     </i></small></p>
+
+<div class="description">
+    TODO: Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>width</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           New width to use for the frame buffer.
+Throws an error if this value is less than 0.  The width will be set
+to this value rounded up.</dd>
+
+        <dt>
+
+                <code>height</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           New height to use for the frame buffer.
+Throws an error if this value is less than 0.  The height will be set
+to this value rounded up.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
 </article>
 
 </section>

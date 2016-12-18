@@ -788,6 +788,7 @@ H3DU.TextFont._loadTextFontInner = function(data) {
 <li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
 in the order in which they are declared in the font data file.
 </ul>
+* @memberof! H3DU.TextFont
 */
 H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
   "use strict";
@@ -843,6 +844,7 @@ H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
 * @returns {Promise<H3DU.TextFont>} A promise that is resolved
 * when the font data is loaded successfully (the result will be
 * an H3DU.TextFont object), and is rejected when an error occurs.
+* @memberof! H3DU.TextFont
 */
 H3DU.TextFont.load = function(fontFileName) {
   "use strict";
@@ -919,7 +921,15 @@ H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textSha
 /////////////////
 
 /**
- * TODO: Not documented yet.
+ * A texture atlas specifies the location and size of images within a single
+* texture.  It is useful when multiple different images should be drawn at
+* once without having to load multiple textures or doing multiple texture
+* binds.  Instead, those images can be packed into one texture and the
+* application can draw different portions of that texture at once.  The
+* texture atlas can specify where those portions are found.<p>
+* This implementation supports the ".atlas" format.
+* NOTE: The constructor should not be called directly by applications.
+* Use the {@link H3DU.TextureAtlas.load} method to get an H3DU.TextureAtlas object.
 * @class
 * @alias H3DU.TextureAtlas
 */
@@ -930,8 +940,23 @@ H3DU.TextureAtlas = function() {
   this.textureInfos = [];
 };
 /**
- * TODO: Not documented yet.
- * @param {Array<Object>} sprites
+ * Makes a shape group used to display one or more sprites.
+* For the sprites to show upright, the coordinate system should have the
+* X-axis pointing right and the Y-axis pointing down (for example, an
+* orthographic projection where the left and top coordinates are less
+* than the right and bottom coordinates, respectively).  The size of each
+* sprite will be in pixels; therefore, for best results, the coordinate system
+* should be scaled so that one unit equals one pixel.
+ * @param {Array<Object>} sprites An array of objects whose keys have
+* the possibilities given below, and whose values are those
+* allowed for each key.<ul>
+* <li><code>name</code> - Name of the sprite.
+* <li><code>index</code> - If a sprite has multiple versions, use this index
+* parameter to distinguish them.  Index can't be less than 0.  If a sprite doesn't
+* have multiple versions, this value is not required.
+* <li><code>x</code> - X-coordinate of the sprite.
+* <li><code>y</code> - Y-coordinate of the sprite.
+* </ul>
  * @memberof! H3DU.TextureAtlas#
 */
 H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
@@ -1218,6 +1243,7 @@ H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
 <li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
 in the order in which they are declared in the font data file.
 </ul>
+* @memberof! H3DU.TextureAtlas
 */
 H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
   "use strict";
@@ -1247,6 +1273,7 @@ H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
 * @returns {Promise<H3DU.TextFont>} A promise that is resolved
 * when the texture atlas data is loaded successfully (the result will be
 * an H3DU.TextFont object), and is rejected when an error occurs.
+* @memberof! H3DU.TextureAtlas
  */
 H3DU.TextureAtlas.load = function(atlasFileName) {
   "use strict";

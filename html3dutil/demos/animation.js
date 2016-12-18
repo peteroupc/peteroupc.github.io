@@ -49,113 +49,51 @@ Animators.prototype._ensure = function(shape) {
   this.list.push(anim);
   return anim;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} time
- * @memberof! Animators#
-*/
+/** @private */
 Animators.prototype.startAt = function(time) {
   "use strict";
   this.curTime = time;
   return this;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} shape
- * @memberof! Animators#
-*/
+/** @private */
 Animators.prototype.thenShow = function(shape) {
   "use strict";
   this._ensure(shape).setVisibleAt(true, this.curTime);
   return this;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} shape
- * @param {*} x
- * @param {*} y
- * @param {*} z
- * @param {*} x2
- * @param {*} y2
- * @param {*} z2
- * @param {*} dur
- * @memberof! Animators#
-*/
+/** @private */
 Animators.prototype.thenShowAndMove = function(shape, x, y, z, x2, y2, z2, dur) {
   "use strict";
   return this.thenShow(shape).thenMove(shape, x, y, z, x2, y2, z2, dur);
 };
-/**
- * TODO: Not documented yet.
- * @param {*} shape
- * @param {*} x
- * @param {*} y
- * @param {*} z
- * @param {*} x2
- * @param {*} y2
- * @param {*} z2
- * @param {*} dur
- * @memberof! Animators#
-*/
+/** @private */
 Animators.prototype.thenMove = function(shape, x, y, z, x2, y2, z2, dur) {
   "use strict";
   this._ensure(shape).moveTo(x, y, z, x2, y2, z2, this.curTime, dur);
   this.curTime += dur;
   return this;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} time
- * @memberof! Animators#
-*/
+/** @private */
 Animators.prototype.thenPause = function(time) {
   "use strict";
   this.curTime += time;
   return this;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} time
- * @memberof! Animators#
-*/
+/** @private */
 Animators.prototype.update = function(time) {
   "use strict";
   for(var i = 0;i < this.list.length;i++) {
     this.list[i].update(time);
   }
 };
-/**
- * TODO: Not documented yet.
- * @param {*}
-  x
- * @param {*} y
- * @param {*} z
- * @param {*} x2
- * @param {*} y2
- * @param {*} z2
- * @param {*} startInMs
- * @param {*} durationInMs
- * @memberof! Animator#
-*/
+/** @private */
 Animator.prototype.showAndMoveTo = function(
   x, y, z, x2, y2, z2, startInMs, durationInMs) {
   "use strict";
   return this.setVisibleAt(true, startInMs)
    .moveTo(x, y, z, x2, y2, z2, startInMs, durationInMs);
 };
-/**
- * TODO: Not documented yet.
- * @param {*}
-  x
- * @param {*} y
- * @param {*} z
- * @param {*} x2
- * @param {*} y2
- * @param {*} z2
- * @param {*} startInMs
- * @param {*} durationInMs
- * @memberof! Animator#
-*/
+/** @private */
 Animator.prototype.moveTo = function(
   x, y, z, x2, y2, z2, startInMs, durationInMs) {
   "use strict";
@@ -163,22 +101,13 @@ Animator.prototype.moveTo = function(
   [x, y, z], [x2, y2, z2], startInMs, startInMs + durationInMs]);
   return this;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} vis
- * @param {*} timeInMs
- * @memberof! Animator#
-*/
+/** @private */
 Animator.prototype.setVisibleAt = function(vis, timeInMs) {
   "use strict";
   this.visibleAnim.push([!!vis, timeInMs]);
   return this;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} time
- * @memberof! Animator#
-*/
+/** @private */
 Animator.prototype.update = function(time) {
   "use strict";
   var a;

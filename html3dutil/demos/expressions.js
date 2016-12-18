@@ -159,18 +159,12 @@ Expression.isExpr = function(x) {
   if(!x || typeof x === "undefined")return false;
   return x instanceof Operation || x instanceof Variable || x instanceof Constant;
 };
-/**
- * TODO: Not documented yet.
- * @memberof! Expression#
-*/
+/** @private */
 Expression.prototype.simplify = function() {
   "use strict";
   return Expression.simplifyNodes(this.nodes);
 };
-/**
- * TODO: Not documented yet.
- * @param {*} nodes
- */
+/** @private */
 Expression.simplifyNodes = function(nodes) {
   "use strict";
   var negative;
@@ -301,10 +295,7 @@ Expression.prototype.toString = function() {
   return "[" + this.nodes + "]";
 };
 
-/**
- * TODO: Not documented yet.
- * @memberof! Operation#
-*/
+/** @private */
 Operation.prototype.length = function() {
   "use strict";
   return this.nodes.length;
@@ -355,10 +346,7 @@ Operation.prototype.equals = function(x) {
   }
   return true;
 };
-/**
- * TODO: Not documented yet.
- * @memberof! Operation#
-*/
+/** @private */
 Operation.prototype.simplify = function() {
   "use strict";
   var b, c, d;
@@ -716,7 +704,8 @@ Operation.prototype.divide = function(x) {
   return this.combineOp("div", x);
 };
 /**
- * TODO: Not documented yet.
+ * Converts this expression to a string that JavaScript can evaluate.
+ * @returns {String} Return value.
  * @memberof! Operation#
 */
 Operation.prototype.toJSString = function() {
