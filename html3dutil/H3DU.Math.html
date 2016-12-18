@@ -36,7 +36,7 @@
     A collection of math functions for working
 with vectors, matrices, quaternions, and other
 mathematical objects.<p>
-See the tutorial "<a href="tutorial-glmath.html">GLMath Math Library</a>" for more information.
+See the tutorial "<a href="tutorial-glmath.html">H3DU's Math Functions</a>" for more information.
 </div>
 
 <dl class="details">
@@ -45,7 +45,461 @@ See the tutorial "<a href="tutorial-glmath.html">GLMath Math Library</a>" for mo
 
     </div>
 
+        <h3 class="subsection-title">Members</h3>
+
+<h4 style="margin-bottom:0px" id=".HalfPi"><span style="font-weight:lighter">(constant) </span>.HalfPi<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2212">line 2212</a>
+     </i></small></p>
+
+<div class="description">
+    Closest approximation to pi divided by 2, or a 90-degree turn in radians.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 1.5707963267948966</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".Num180DividedByPi"><span style="font-weight:lighter">(constant) </span>.Num180DividedByPi<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2236">line 2236</a>
+     </i></small></p>
+
+<div class="description">
+    Closest approximation to 180 divided by pi, or the number of
+ degrees in a radian. Multiply by this number to convert radians to degrees.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 57.29577951308232</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".PiDividedBy180"><span style="font-weight:lighter">(constant) </span>.PiDividedBy180<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2220">line 2220</a>
+     </i></small></p>
+
+<div class="description">
+    Closest approximation to pi divided by 180, or the number
+ of radians in a degree. Multiply by this number to convert degrees to radians.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 0.017453292519943295</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".PitchRollYaw"><span style="font-weight:lighter">(constant) </span>.PitchRollYaw<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2248">line 2248</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".PitchYawRoll"><span style="font-weight:lighter">(constant) </span>.PitchYawRoll<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2242">line 2242</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".PiTimes2"><span style="font-weight:lighter">(constant) </span>.PiTimes2<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2205">line 2205</a>
+     </i></small></p>
+
+<div class="description">
+    Closest approximation to pi times 2, or a 360-degree turn in radians.
+</div>
+
+<dl class="details">
+
+    <dt class="tag-default">Default Value: 6.283185307179586</dt>
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".quatInverse"><span style="font-weight:lighter"></span>.quatInverse<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2280">line 2280</a>
+     </i></small></p>
+
+<div class="description">
+    Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
+Returns a new quaternion; same as the quatInverse method.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".RollPitchYaw"><span style="font-weight:lighter">(constant) </span>.RollPitchYaw<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2266">line 2266</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".RollYawPitch"><span style="font-weight:lighter">(constant) </span>.RollYawPitch<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2272">line 2272</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".YawPitchRoll"><span style="font-weight:lighter">(constant) </span>.YawPitchRoll<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2254">line 2254</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h4 style="margin-bottom:0px" id=".YawRollPitch"><span style="font-weight:lighter">(constant) </span>.YawRollPitch<span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2260">line 2260</a>
+     </i></small></p>
+
+<div class="description">
+    Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+</div>
+
+<dl class="details">
+
+</dl>
+
         <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id=".boxIsEmpty"><span style="font-weight:lighter">(static) </span>boxIsEmpty<span class="signature">(An)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2064">line 2064</a>
+     </i></small></p>
+
+<div class="description">
+    Determines whether a bounding box is empty.
+This is determined if the minimum coordinate
+is larger than the corresponding maximum coordinate.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>An</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           axis-aligned bounding
+box in world space, which is an array of six values.
+The first three values are the smallest X, Y, and Z coordinates,
+and the last three values are the largest X, Y, and Z
+coordinates.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    <code>true</code> if at least one
+of the minimum coordinates is greater than its
+corresponding maximum coordinate; otherwise, <code>false</code>.
+
+     (Type:
+<span class="param-type">Boolean</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".frustumHasBox"><span style="font-weight:lighter">(static) </span>frustumHasBox<span class="signature">(frustum, box)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2086">line 2086</a>
+     </i></small></p>
+
+<div class="description">
+    Determines whether an axis-aligned bounding box
+is at least partially inside a view frustum.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>frustum</code>
+
+                (
+<span class="param-type">Array.&lt;Array.&lt;Number>></span>
+
+)
+
+           </dt><dd>
+           An array of six
+4-element arrays representing the six clipping planes of the
+view frustum.  In order, they are the left, right, top,
+bottom, near, and far clipping planes.</dd>
+
+        <dt>
+
+                <code>box</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           An axis-aligned bounding
+box in world space, which is an array of six values.
+The first three values are the smallest X, Y, and Z coordinates,
+and the last three values are the largest X, Y, and Z
+coordinates.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    <code>true</code> if the box
+may be partially or totally
+inside the frustum; <code>false</code> if the box is
+definitely outside the frustum, or if the box is empty
+(see "boxIsEmpty").
+
+     (Type:
+<span class="param-type">Boolean</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".frustumHasPoint"><span style="font-weight:lighter">(static) </span>frustumHasPoint<span class="signature">(frustum, x, y, z)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2126">line 2126</a>
+     </i></small></p>
+
+<div class="description">
+    Determines whether a point is
+outside or inside a view frustum.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>frustum</code>
+
+                (
+<span class="param-type">Array.&lt;Array.&lt;Number>></span>
+
+)
+
+           </dt><dd>
+           An array of six
+4-element arrays representing the six clipping planes of the
+view frustum.  In order, they are the left, right, top,
+bottom, near, and far clipping planes.</dd>
+
+        <dt>
+
+                <code>x</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           X coordinate of a point
+in world space.</dd>
+
+        <dt>
+
+                <code>y</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Y coordinate of a point
+in world space.</dd>
+
+        <dt>
+
+                <code>z</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Z coordinate of a point
+in world space.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    true if the point is inside;
+otherwise false;
+
+     (Type:
+<span class="param-type">Boolean</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".frustumHasSphere"><span style="font-weight:lighter">(static) </span>frustumHasSphere<span class="signature">(frustum, x, y, z, radius)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2040">line 2040</a>
+     </i></small></p>
+
+<div class="description">
+    Determines whether a sphere is at least
+partially inside a view frustum.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>frustum</code>
+
+                (
+<span class="param-type">Array.&lt;Array.&lt;Number>></span>
+
+)
+
+           </dt><dd>
+           An array of six
+4-element arrays representing the six clipping planes of the
+view frustum.  In order, they are the left, right, top,
+bottom, near, and far clipping planes.</dd>
+
+        <dt>
+
+                <code>x</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           X coordinate of the sphere's center
+in world space.</dd>
+
+        <dt>
+
+                <code>y</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Y coordinate of the sphere's center
+in world space.</dd>
+
+        <dt>
+
+                <code>z</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Z coordinate of the sphere's center
+in world space.</dd>
+
+        <dt>
+
+                <code>radius</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Radius of the sphere
+in world-space units.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    <code>true</code> if the sphere
+is partially or totally
+inside the frustum; <code>false</code> otherwise.
+
+     (Type:
+<span class="param-type">Boolean</span>)
+
+</div>
 
     <h4 style="margin-bottom:0px" id=".mat3identity"><span style="font-weight:lighter">(static) </span>mat3identity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
@@ -1752,6 +2206,60 @@ Z axes.</dd>
 
 </div>
 
+    <h4 style="margin-bottom:0px" id=".mat4toFrustumPlanes"><span style="font-weight:lighter">(static) </span>mat4toFrustumPlanes<span class="signature">(matrix)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;Number>>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1974">line 1974</a>
+     </i></small></p>
+
+<div class="description">
+    Finds the six clipping planes of a view frustum defined
+by a 4x4 matrix. These six planes together form the
+shape of a "chopped-off" pyramid (or frustum).<p>
+In this model, the eye, or camera, is placed at the top
+of the pyramid (before being chopped off), four planes are placed at the pyramid's
+sides, one plane (the far plane) forms its base, and a
+final plane (the near plane) is the pyramid's chopped
+off top.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>matrix</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A 4x4 matrix.  This will
+usually be a projection-view matrix (projection matrix
+multiplied by view matrix).</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    An array of six
+4-element arrays representing the six clipping planes of the
+view frustum.  In order, they are the left, right, top,
+bottom, near, and far clipping planes.  All six planes
+will be unit vectors (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1).
+
+     (Type:
+<span class="param-type">Array.&lt;Array.&lt;Number>></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id=".mat4toMat3"><span style="font-weight:lighter">(static) </span>mat4toMat3<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1039">line 1039</a>
@@ -2221,6 +2729,105 @@ a new matrix.
 
 </div>
 
+    <h4 style="margin-bottom:0px" id=".planeNorm"><span style="font-weight:lighter">(static) </span>planeNorm<span class="signature">(plane)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1952">line 1952</a>
+     </i></small></p>
+
+<div class="description">
+    Normalizes this plane so that its normal is unit
+length (unless all the normal's components are 0).
+The plane's distance will be divided by the
+normal's length.  Returns a new plane.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>plane</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A four-element array
+defining the plane. The first three elements of the array
+are the X, Y, and Z components of the plane's normal vector, and
+the fourth element is the shortest distance from the plane
+to the origin, or if negative, from the origin to the plane,
+divided by the normal's length.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A normalized version of
+the plane.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".planeNormInPlace"><span style="font-weight:lighter">(static) </span>planeNormInPlace<span class="signature">(plane)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1922">line 1922</a>
+     </i></small></p>
+
+<div class="description">
+    Normalizes this plane so that its normal is a unit vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a> with a length of 1),
+unless all the normal's components are 0.
+The plane's distance will be divided by the
+current normal's length.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>plane</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A four-element array
+defining the plane. The first three elements of the array
+are the X, Y, and Z components of the plane's normal vector, and
+the fourth element is the shortest distance from the plane
+to the origin, or if negative, from the origin to the plane,
+divided by the normal's length.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "plane".
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id=".quatConjugate"><span style="font-weight:lighter">(static) </span>quatConjugate<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line585">line 585</a>
@@ -2261,6 +2868,84 @@ Returns a new quaternion.
 
      (Type:
 <span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".quatCopy"><span style="font-weight:lighter"></span>.quatCopy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2198">line 2198</a>
+     </i></small></p>
+
+<div class="description">
+    Returns a copy of a quaternion.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".quatDot"><span style="font-weight:lighter"></span>.quatDot<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2148">line 2148</a>
+     </i></small></p>
+
+<div class="description">
+    Finds the dot product of two quaternions.
+It's equal to the sum of the products of
+their components (for example, <b>a</b>'s X times <b>b</b>'s X).
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>a</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           The first quaternion.</dd>
+
+        <dt>
+
+                <code>b</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           The second quaternion.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Number</span>)
 
 </div>
 
@@ -2637,6 +3322,49 @@ Returns a new quaternion.
 
 </div>
 
+    <h4 style="margin-bottom:0px" id=".quatLength"><span style="font-weight:lighter"></span>.quatLength<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2182">line 2182</a>
+     </i></small></p>
+
+<div class="description">
+    Returns the distance of this quaternion from the origin.
+It's the same as the square root of the sum of the squares
+of its components.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>quat</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           The quaternion.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Number</span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id=".quatMultiply"><span style="font-weight:lighter">(static) </span>quatMultiply<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1729">line 1729</a>
@@ -2759,6 +3487,96 @@ closer to q1, and closer to 1 means closer to q2.</dd>
 <div class="param-desc">
     The interpolated quaternion,
 which will be unit vectors (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1).
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".quatNorm"><span style="font-weight:lighter"></span>.quatNorm<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2172">line 2172</a>
+     </i></small></p>
+
+<div class="description">
+    Converts a quaternion to its normalized version; returns a new quaternion.
+When a quaternion is normalized, the distance from the origin
+to that quaternion becomes 1 (unless all its components are 0).
+A quaternion is normalized by dividing each of its components
+by its length.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>quat</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A quaternion.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The normalized quaternion.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".quatNormInPlace"><span style="font-weight:lighter"></span>.quatNormInPlace<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2160">line 2160</a>
+     </i></small></p>
+
+<div class="description">
+    Converts a quaternion to its normalized version.
+When a quaternion is normalized, it describes the same orientation but the distance from the origin
+to that quaternion becomes 1 (unless all its components are 0).
+A quaternion is normalized by dividing each of its components
+by its length.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>quat</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A quaternion.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The parameter "quat".
 
      (Type:
 <span class="param-type">Array.&lt;Number></span>)
@@ -4547,7 +5365,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){
