@@ -6,7 +6,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global DataView, H3DU, Promise, console, index, sprites */
+/* global DataView, H3DU, Promise, console */
 
 /**
 * Represents a bitmap font, which supports drawing two-dimensional
@@ -913,19 +913,27 @@ H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textSha
 
 /////////////////
 
+/**
+* @class
+* @alias H3DU.TextureAtlas
+*/
 H3DU.TextureAtlas = function() {
   "use strict";
   this.sprites = {};
-  this.indexedSprites = [];
   this.textures = [];
   this.textureInfos = [];
 };
+/**
+ * Not documented yet.
+ * @param {*} sprites
+ * @memberof! H3DU.TextureAtlas#
+*/
 H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
   "use strict";
   var meshes = [];
   for(var i = 0;i < sprites.length;i++) {
     if(!sprites[i])throw new Error();
-    this._makeSprite(sprites[i].name, sprites[i].x, sprites[i].y, meshes);
+    this._makeSprite(sprites[i].name, sprites[i].index, sprites[i].x, sprites[i].y, meshes);
   }
   var group = new H3DU.ShapeGroup();
   for(i = 0;i < meshes.length;i++) {
@@ -941,24 +949,30 @@ H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
   }
   return group;
 };
-H3DU.TextureAtlas.prototype._makeSprite = function(name, x, y, meshesForPage) {
+/** @private */
+H3DU.TextureAtlas.prototype._makeSprite = function(name, index, x, y, meshesForPage) {
   "use strict";
   var sprite = null;
-  if(typeof name === "number") {
-    if(this.indexedSprites[index] !== null && typeof this.indexedSprites[index] !== "undefined") {
-      sprite = this.indexedSprites[index];
-    }
-  } else if(this.Object.prototype.hasOwnProperty.call(sprites, name)) {
+  if(name === null || typeof name === "undefined")return;
+  if(Object.prototype.hasOwnProperty.call(this.sprites, name)) {
     sprite = this.sprites[name];
+    if(sprite instanceof Array) {
+      if(index >= 0 && (index !== null && typeof index !== "undefined")) {
+        sprite = sprite[index] || null;
+      } else {
+        sprite = null;
+      }
+    }
   }
+  if(!sprite)return;
   var recipWidth = 1.0 / sprite.info.size[0];
   var recipHeight = 1.0 / sprite.info.size[1];
   var sx = sprite.xy[0] * recipWidth;
   var sy = sprite.xy[1] * recipHeight;
   var sx2 = (sprite.xy[0] + sprite.size[0]) * recipWidth;
   var sy2 = (sprite.xy[1] + sprite.size[1]) * recipHeight;
-  var vx = x;
-  var vy = y;
+  var vx = x + sprite.offset[0];
+  var vy = y + sprite.offset[1];
   var vx2 = vx + sprite.size[0];
   var vy2 = vy + sprite.size[1];
   if(sprite.size[0] > 0 && sprite.size[1] > 0) {
@@ -977,14 +991,19 @@ H3DU.TextureAtlas.prototype._makeSprite = function(name, x, y, meshesForPage) {
      .texCoord2(sx2, 1 - sy2)
      .vertex2(vx2, vy2);
   }
-
 };
+/** @private */
 H3DU.TextureAtlas._checkSprite = function(sprite) {
   "use strict";
   if(!sprite)return false;
+  // Location of the sprite in the texture
   if(typeof sprite.xy === "undefined" || sprite.xy === null)return false;
+  // Size of the sprite in the texture
   if(typeof sprite.size === "undefined" || sprite.size === null)return false;
+  // Original size of the sprite (before being truncated)
   if(typeof sprite.orig === "undefined" || sprite.orig === null)return false;
+  // Offset of the top left corner of the sprite relative to the original
+  // location (may be other than "0,0" if the sprite was truncated)
   if(typeof sprite.offset === "undefined" || sprite.offset === null)return false;
   if(typeof sprite.rotate === "undefined" || sprite.rotate === null)return false;
   if(sprite.rotate !== "false") {
@@ -992,6 +1011,7 @@ H3DU.TextureAtlas._checkSprite = function(sprite) {
   }
   return true;
 };
+/** @private */
 H3DU.TextureAtlas._loadText = function(data) {
   "use strict";
   var text = data.data;
@@ -1083,7 +1103,7 @@ H3DU.TextureAtlas._loadText = function(data) {
           e1split[0] = parseInt(e1split[0], 10);
           e1split[1] = parseInt(e1split[1], 10);
           currentSprite[e[1]] = e1split;
-        } else if(e[1] === "split") {
+        } else if(e[1] === "split" || e[1] === "pad") {
           e1split = value.split(/\s*,\s*/);
           if(e1split.length !== 4)return null;
           var e1data = [];
@@ -1125,10 +1145,21 @@ H3DU.TextureAtlas._loadText = function(data) {
   var ret = new H3DU.TextureAtlas();
   for(i = 0;i < sprites.length;i++) {
     var si = sprites[i];
-    spriteHash[si.name] = si;
-    if(typeof si.index !== "undefined" &&
-             si.index !== null && si.index >= 0) {
-      ret.indexedSprites[si.index] = si;
+    var index = si.index === null ? -1 : si.index;
+    if(spriteHash[si.name] === null || typeof spriteHash[si.name] === "undefined") {
+      if(index >= 0) {
+        spriteHash[si.name] = [];
+        spriteHash[si.name][index] = si;
+      } else {
+        spriteHash[si.name] = si;
+      }
+    } else if(index >= 0) {
+      if(!(spriteHash[si.name] instanceof Array))
+        return null;
+      spriteHash[si.name][index] = si;
+    } else {
+        // Sprite with that name is already defined
+      return null;
     }
   }
   ret.pages = [];
@@ -1139,6 +1170,11 @@ H3DU.TextureAtlas._loadText = function(data) {
   ret.textureInfos = textureInfos;
   return ret;
 };
+/**
+ * Not documented yet.
+ * @param {*} textureLoader
+ * @memberof! H3DU.TextureAtlas#
+*/
 H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
   "use strict";
   var textures = [];
@@ -1156,6 +1192,22 @@ H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
     return Promise.resolve(r);
   });
 };
+/**
+* Loads a texture atlas definition from a file along with the textures
+* it uses.
+* @param {String} atlasFileName The URL of the texture atlas to load.
+ * @param {H3DU.TextureLoader} textureLoader
+* @returns {Promise} A promise that is resolved
+* when the texture atlas data and textures are loaded successfully,
+* and is rejected when an error occurs.
+* If the promise is resolved, the result will be an object with the
+* following keys:<ul>
+<li><code>url</code> - The URL of the font data file.
+<li><code>atlas</code> - The font data in the form of an {@link H3DU.TextureAtlas} object.
+<li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
+in the order in which they are declared in the font data file.
+</ul>
+*/
 H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
   "use strict";
   if(!textureLoader) {
@@ -1176,7 +1228,10 @@ H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
     });
   });
 };
-
+/**
+ * Not documented yet.
+ * @param {*} fontFileName
+ */
 H3DU.TextureAtlas.load = function(fontFileName) {
   "use strict";
   return H3DU.loadFileFromUrl(fontFileName, "arraybuffer").then(
