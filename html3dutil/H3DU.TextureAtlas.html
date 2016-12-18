@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Tutorial: Texture Examples</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: TextureAtlas</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,61 +10,98 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Tutorial: Texture Examples</h1>
-    <section>
+    <h1>Class: TextureAtlas</h1>
+
+<section>
 
 <header>
 
-    <h2>Texture Examples</h2>
+        <h2>
+            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
+
+        TextureAtlas
+        </h2>
+
 </header>
 
 <article>
-    <h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Texture_Loaders">Texture Loaders</a><br><a href="#Sample_Code_for_Loading_Textures">Sample Code for Loading Textures</a><br>&nbsp;&nbsp;<a href="#Loading_a_single_texture">Loading a single texture</a><br>&nbsp;&nbsp;<a href="#Loading_multiple_textures">Loading multiple textures</a><br>&nbsp;&nbsp;<a href="#Demos">Demos</a><br></p>
-<h2>Texture Loaders <a id=Texture_Loaders></a></h2><p>A texture loader (TextureLoader) caches textures loaded and uploaded to WebGL contexts.</p>
-<h2>Sample Code for Loading Textures <a id=Sample_Code_for_Loading_Textures></a></h2><h3>Loading a single texture <a id=Loading_a_single_texture></a></h3><p>The <code>loadAndMapTexture</code> method of <code>TextureLoader</code> returns a promise, which will receive either
-the texture loaded or an error.  Loading a texture often happens asynchronously, so code that
-follows the <code>loadAndMapTexture</code> call (and its corresponding <code>then</code> calls) will generally run without
-waiting for the texture to finish loading.</p>
-<p>In the sample code below, the variable <code>textureURL</code> is the URL of the texture to load.</p>
-<pre class="prettyprint source"><code>  var loader=new H3DU.TextureLoader();
-  loader.loadAndMapTexture(textureURL, scene).then(function(tex){
-    // texture is loaded, the Texture object is in the &quot;tex&quot; parameter
-    // Now create a sphere
-    var mesh=H3DU.Meshes.createSphere(1);
-    // Make a shape using the texture
-    var shape=new H3DU.Shape(mesh).setTexture(texture);
-  }, function(error){
-    // an error occurred
-  });</code></pre><h3>Loading multiple textures <a id=Loading_multiple_textures></a></h3><p>If you need to load multiple textures, the <code>loadAndMapTexturesAll</code> method
-is much more convenient than <code>loadAndMapTexture</code> and also loads textures asynchronously.</p>
-<p>In the sample code below, The variables <code>textureURL1</code> and <code>textureURL2</code> are URL textures.</p>
-<pre class="prettyprint source"><code>  var loader=new H3DU.TextureLoader();
-  loader.loadAndMapTexturesAll([
-   textureURL1,
-   textureURL2
-  ], scene).then(function(res){
-      // All the textures have loaded successfully,
-      // read the textures from the array (they will
-      // appear in the same order given in the
-      // loadAndMapTexturesAll method).
-      for(var i=0;i&lt;res.length;i++){
-        var texture=res[i];
-        // deal with the texture (a Texture object)
-      }
-  }, function(res){
-   // Some or all of the textures failed to load
-   if(res.failures.length>0){
-     // We have some failing textures
-   }
-   if(res.successes.length>0){
-     // We have some succeeding textures
-   }
-  });</code></pre><h3>Demos <a id=Demos></a></h3><ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/textured.html">textured.html</a> - Demonstrates loading textures
-and applying them to 3D shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/gradient.html">gradient.html</a> - Demonstrates generating a custom
-texture -- a linear gradient from one color to another.</li>
-</ul>
+    <div class="container-overview">
+
+    <h4 style="margin-bottom:0px" id="TextureAtlas"><span style="font-weight:lighter"></span>new TextureAtlas<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line920">line 920</a>
+     </i></small></p>
+
+<dl class="details">
+
+</dl>
+
+    </div>
+
+        <h3 class="subsection-title">Methods</h3>
+
+    <h4 style="margin-bottom:0px" id="loadTextures"><span style="font-weight:lighter"></span>H3DU.TextureAtlas#loadTextures<span class="signature">(textureLoader)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1178">line 1178</a>
+     </i></small></p>
+
+<div class="description">
+    TODO: Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>textureLoader</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+    <h4 style="margin-bottom:0px" id="makeSprites"><span style="font-weight:lighter"></span>H3DU.TextureAtlas#makeSprites<span class="signature">(sprites)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line931">line 931</a>
+     </i></small></p>
+
+<div class="description">
+    TODO: Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>sprites</code>
+
+                (
+<span class="param-type">*</span>
+
+)
+
+           </dt><dd>
+           </dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
 </article>
 
 </section>

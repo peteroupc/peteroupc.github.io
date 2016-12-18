@@ -108,7 +108,7 @@ var Operator = function(name) {
   this.name = name;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operator#
 */
 Operator.prototype.toString = function() {
@@ -150,7 +150,7 @@ var Expression = function() {
   this.nodes = [];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  */
 Expression.isExpr = function(x) {
@@ -160,7 +160,7 @@ Expression.isExpr = function(x) {
   return x instanceof Operation || x instanceof Variable || x instanceof Constant;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Expression#
 */
 Expression.prototype.simplify = function() {
@@ -168,7 +168,7 @@ Expression.prototype.simplify = function() {
   return Expression.simplifyNodes(this.nodes);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} nodes
  */
 Expression.simplifyNodes = function(nodes) {
@@ -293,7 +293,7 @@ Expression.simplifyNodes = function(nodes) {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Expression#
 */
 Expression.prototype.toString = function() {
@@ -302,7 +302,7 @@ Expression.prototype.toString = function() {
 };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operation#
 */
 Operation.prototype.length = function() {
@@ -310,7 +310,7 @@ Operation.prototype.length = function() {
   return this.nodes.length;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} index
  * @memberof! Operation#
 */
@@ -319,7 +319,7 @@ Operation.prototype.get = function(index) {
   return this.nodes[index];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} op
  * @memberof! Operation#
 */
@@ -328,7 +328,7 @@ Operation.prototype.isOperation = function(op) {
   return this.operator === op;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
 */
@@ -356,7 +356,7 @@ Operation.prototype.equals = function(x) {
   return true;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operation#
 */
 Operation.prototype.simplify = function() {
@@ -513,7 +513,7 @@ Operation.prototype.simplify = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operation#
 */
 Operation.prototype.degen = function() {
@@ -532,7 +532,7 @@ Operation.prototype.degen = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operation#
 */
 Operation.prototype.constantValue = function() {
@@ -582,7 +582,7 @@ Operation.prototype.constantValue = function() {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} operation
  * @param {*} args
  */
@@ -597,7 +597,7 @@ Operation.func = function(operation) {
   return op.degen();
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} operation
  * @param {*} x
  * @memberof! Operation#
@@ -623,7 +623,7 @@ Operation.prototype.combineOp = function(operation, x) {
   return op.degen();
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operation#
 */
 Operation.prototype.copy = function() {
@@ -636,7 +636,7 @@ Operation.prototype.copy = function() {
   return op;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operation#
 */
 Operation.prototype.negate = function() {
@@ -661,7 +661,7 @@ Operation.prototype.negate = function() {
   return op.degen();
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
 */
@@ -670,7 +670,7 @@ Operation.prototype.subtract = function(x) {
   return this.add(typeof x === "number" ? -x : x.negate());
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
 */
@@ -679,7 +679,7 @@ Operation.prototype.add = function(x) {
   return this.combineOp("plus", x);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
 */
@@ -707,7 +707,7 @@ Operation.prototype.multiply = function(x) {
   return this.combineOp("mul", x);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
 */
@@ -716,7 +716,7 @@ Operation.prototype.divide = function(x) {
   return this.combineOp("div", x);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operation#
 */
 Operation.prototype.toJSString = function() {
@@ -776,7 +776,7 @@ Operation.prototype.toJSString = function() {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Operation#
 */
 Operation.prototype.toString = function() {
@@ -826,7 +826,7 @@ Operation.prototype.toString = function() {
 };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} op
  * @memberof! Variable#
 */
@@ -835,7 +835,7 @@ Variable.prototype.isOperation = function() {
   return false;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Variable#
 */
 Variable.prototype.copy = function() {
@@ -843,7 +843,7 @@ Variable.prototype.copy = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Variable#
 */
 Variable.prototype.constantValue = function() {
@@ -851,7 +851,7 @@ Variable.prototype.constantValue = function() {
   return null;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
 */
@@ -867,7 +867,7 @@ Variable.prototype.equals = function(x) {
   return this.name === x.name;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Variable#
 */
 Variable.prototype.toJSString = function() {
@@ -875,7 +875,7 @@ Variable.prototype.toJSString = function() {
   return this.toString();
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Variable#
 */
 Variable.prototype.toString = function() {
@@ -884,7 +884,7 @@ Variable.prototype.toString = function() {
   return (this.negative ? "-" : "") + this.name;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} operation
  * @param {*} x
  * @memberof! Variable#
@@ -915,7 +915,7 @@ Variable.prototype.combineOp = function(operation, x) {
   return op.degen();
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Variable#
 */
 Variable.prototype.degen = function() {
@@ -923,7 +923,7 @@ Variable.prototype.degen = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
 */
@@ -932,7 +932,7 @@ Variable.prototype.add = function(x) {
   return this.combineOp("plus", x);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Variable#
 */
 Variable.prototype.negate = function() {
@@ -944,7 +944,7 @@ Variable.prototype.negate = function() {
   return v;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
 */
@@ -954,7 +954,7 @@ Variable.prototype.subtract = function(x) {
   return this.add(typeof x === "number" ? -x : x.negate());
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
 */
@@ -963,7 +963,7 @@ Variable.prototype.multiply = function(x) {
   return this.combineOp("mul", x);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
 */
@@ -973,7 +973,7 @@ Variable.prototype.divide = function(x) {
 };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Constant#
 */
 Constant.prototype.copy = function() {
@@ -981,7 +981,7 @@ Constant.prototype.copy = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} op
  * @memberof! Constant#
 */
@@ -990,7 +990,7 @@ Constant.prototype.isOperation = function() {
   return false;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
 */
@@ -1003,7 +1003,7 @@ Constant.prototype.equals = function(x) {
   return this.value === x.value;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Constant#
 */
 Constant.prototype.constantValue = function() {
@@ -1011,7 +1011,7 @@ Constant.prototype.constantValue = function() {
   return this.value;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Constant#
 */
 Constant.prototype.degen = function() {
@@ -1019,7 +1019,7 @@ Constant.prototype.degen = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Constant#
 */
 Constant.prototype.toJSString = function() {
@@ -1031,7 +1031,7 @@ Constant.prototype.toJSString = function() {
   return vi;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Constant#
 */
 Constant.prototype.toString = function() {
@@ -1047,7 +1047,7 @@ Constant.prototype.toString = function() {
   return vi;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} operation
  * @param {*} x
  * @memberof! Constant#
@@ -1068,7 +1068,7 @@ Constant.prototype.combineOp = function(operation, x) {
   return op.degen();
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Constant#
 */
 Constant.prototype.negate = function() {
@@ -1076,7 +1076,7 @@ Constant.prototype.negate = function() {
   return new Constant(-this.value);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
 */
@@ -1089,7 +1089,7 @@ Constant.prototype.add = function(x) {
   return this.combineOp("plus", x);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
 */
@@ -1099,7 +1099,7 @@ Constant.prototype.subtract = function(x) {
   return this.add(typeof x === "number" ? -x : x.negate());
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
 */
@@ -1112,7 +1112,7 @@ Constant.prototype.multiply = function(x) {
   return this.combineOp("mul", x);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
 */

@@ -29,11 +29,13 @@
 
     <h4 style="margin-bottom:0px" id="ShapeGroup"><span style="font-weight:lighter"></span>new ShapeGroup<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line8">line 8</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line10">line 10</a>
      </i></small></p>
 
 <div class="description">
-    Represents a grouping of shapes.
+    Represents a grouping of shapes.  This object
+can hold both @{link H3DU.Shape} objects and
+other @{link H3DU.ShapeGroup} objects.
 </div>
 
 <dl class="details">
@@ -46,7 +48,7 @@
 
 <h4 style="margin-bottom:0px" id="shapes"><span style="font-weight:lighter">(readonly) </span>shapes<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line16">line 16</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line18">line 18</a>
      </i></small></p>
 
 <div class="description">
@@ -64,7 +66,7 @@ or replace shapes directly.
 
     <h4 style="margin-bottom:0px" id="addShape"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line28">line 28</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line30">line 30</a>
      </i></small></p>
 
 <div class="description">
@@ -109,20 +111,36 @@ will be stored in the list of shapes.
 
     <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#getBounds<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line171">line 171</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line183">line 183</a>
      </i></small></p>
 
 <div class="description">
-    Not documented yet.
+    Finds a bounding box that holds all vertices in this shape group.
+ The bounding box is not guaranteed to be the
+tightest, and the box will be transformed to world space
+using the transforms of the shapes this group contains.
 </div>
 
 <dl class="details">
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    An array of six numbers describing an
+axis-aligned bounding box
+that fits all vertices in the shape group. The first three numbers
+are the smallest-valued X, Y, and Z coordinates, and the
+last three are the largest-valued X, Y, and Z coordinates.
+If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
+-Inf, -Inf].
+
+</div>
+
     <h4 style="margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line69">line 69</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line71">line 71</a>
      </i></small></p>
 
 <div class="description">
@@ -146,7 +164,7 @@ this shape group's coordinates to world coordinates.
 
     <h4 style="margin-bottom:0px" id="getTransform"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#getTransform<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line59">line 59</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line61">line 61</a>
      </i></small></p>
 
 <div class="description">
@@ -169,7 +187,7 @@ this shape group's coordinates to world coordinates.
 
     <h4 style="margin-bottom:0px" id="getVisible"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#getVisible<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line50">line 50</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line52">line 52</a>
      </i></small></p>
 
 <div class="description">
@@ -192,7 +210,7 @@ this shape group's coordinates to world coordinates.
 
     <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line222">line 222</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line236">line 236</a>
      </i></small></p>
 
 <div class="description">
@@ -216,7 +234,7 @@ and points) composed by all shapes in this shape group.
 
     <h4 style="margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line157">line 157</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line159">line 159</a>
      </i></small></p>
 
 <div class="description">
@@ -260,7 +278,7 @@ and points) composed by all shapes in this shape group.
 
     <h4 style="margin-bottom:0px" id="setMaterial"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setMaterial<span class="signature">(material)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line106">line 106</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line108">line 108</a>
      </i></small></p>
 
 <div class="description">
@@ -291,7 +309,7 @@ and points) composed by all shapes in this shape group.
 
     <h4 style="margin-bottom:0px" id="setMaterialParams"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setMaterialParams<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line144">line 144</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line146">line 146</a>
      </i></small></p>
 
 <div class="description">
@@ -306,7 +324,7 @@ and points) composed by all shapes in this shape group.
 
     <h4 style="margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line243">line 243</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line257">line 257</a>
      </i></small></p>
 
 <div class="description">
@@ -379,7 +397,7 @@ or a 3-element position array, as specified in H3DU.Transform#setScale.</dd>
 
     <h4 style="margin-bottom:0px" id="setQuaternion"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line257">line 257</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line271">line 271</a>
      </i></small></p>
 
 <div class="description">
@@ -423,7 +441,7 @@ rather than the transform for each shape in the group.
 
     <h4 style="margin-bottom:0px" id="setScale"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line274">line 274</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line288">line 288</a>
      </i></small></p>
 
 <div class="description">
@@ -495,7 +513,7 @@ or a 3-element scaling array, as specified in H3DU.Transform#setScale.</dd>
 
     <h4 style="margin-bottom:0px" id="setShader"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setShader<span class="signature">(material)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line131">line 131</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line133">line 133</a>
      </i></small></p>
 
 <div class="description">
@@ -526,7 +544,7 @@ or a 3-element scaling array, as specified in H3DU.Transform#setScale.</dd>
 
     <h4 style="margin-bottom:0px" id="setTexture"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setTexture<span class="signature">(material)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line119">line 119</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line121">line 121</a>
      </i></small></p>
 
 <div class="description">
@@ -557,7 +575,7 @@ or a 3-element scaling array, as specified in H3DU.Transform#setScale.</dd>
 
     <h4 style="margin-bottom:0px" id="setTransform"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setTransform<span class="signature">(transform)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line96">line 96</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line98">line 98</a>
      </i></small></p>
 
 <div class="description">
@@ -591,7 +609,7 @@ with the child shape's transform as it renders the child shape.
 
     <h4 style="margin-bottom:0px" id="setVisible"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#setVisible<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line40">line 40</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line42">line 42</a>
      </i></small></p>
 
 <div class="description">
@@ -632,7 +650,7 @@ with the child shape's transform as it renders the child shape.
 
     <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>H3DU.ShapeGroup#vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line208">line 208</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shapegroup.js.html">h3du-shapegroup.js</a>, <a href="h3du-shapegroup.js.html#line222">line 222</a>
      </i></small></p>
 
 <div class="description">
@@ -677,7 +695,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

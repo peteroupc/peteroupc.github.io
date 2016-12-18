@@ -1595,7 +1595,7 @@ the path may contain several disconnected parts.
   };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} trans
  * @memberof! GraphicsPath#
 */

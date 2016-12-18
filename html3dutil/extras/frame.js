@@ -14,7 +14,7 @@ var FrameCounter = function() {
   this.frameCount = 0;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! FrameCounter#
 */
 FrameCounter.prototype.update = function() {
@@ -45,7 +45,7 @@ FrameCounter.prototype.update = function() {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! FrameCounter#
 */
 FrameCounter.prototype.getFPS = function() {
@@ -77,7 +77,7 @@ FrameCounterDiv._makeDiv = function(scene) {
   return div;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! FrameCounterDiv#
 */
 FrameCounterDiv.prototype.update = function() {
@@ -102,7 +102,7 @@ function PrimitiveCounter(scene) {
   this.scene = scene;
 }
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! PrimitiveCounter#
 */
 PrimitiveCounter.prototype.update = function() {

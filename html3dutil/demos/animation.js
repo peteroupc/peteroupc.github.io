@@ -50,7 +50,7 @@ Animators.prototype._ensure = function(shape) {
   return anim;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} time
  * @memberof! Animators#
 */
@@ -60,7 +60,7 @@ Animators.prototype.startAt = function(time) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} shape
  * @memberof! Animators#
 */
@@ -70,7 +70,7 @@ Animators.prototype.thenShow = function(shape) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} shape
  * @param {*} x
  * @param {*} y
@@ -86,7 +86,7 @@ Animators.prototype.thenShowAndMove = function(shape, x, y, z, x2, y2, z2, dur) 
   return this.thenShow(shape).thenMove(shape, x, y, z, x2, y2, z2, dur);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} shape
  * @param {*} x
  * @param {*} y
@@ -104,7 +104,7 @@ Animators.prototype.thenMove = function(shape, x, y, z, x2, y2, z2, dur) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} time
  * @memberof! Animators#
 */
@@ -114,7 +114,7 @@ Animators.prototype.thenPause = function(time) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} time
  * @memberof! Animators#
 */
@@ -125,7 +125,7 @@ Animators.prototype.update = function(time) {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*}
   x
  * @param {*} y
@@ -144,7 +144,7 @@ Animator.prototype.showAndMoveTo = function(
    .moveTo(x, y, z, x2, y2, z2, startInMs, durationInMs);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*}
   x
  * @param {*} y
@@ -164,7 +164,7 @@ Animator.prototype.moveTo = function(
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} vis
  * @param {*} timeInMs
  * @memberof! Animator#
@@ -175,7 +175,7 @@ Animator.prototype.setVisibleAt = function(vis, timeInMs) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} time
  * @memberof! Animator#
 */

@@ -49,7 +49,7 @@ See the tutorial "<a href="tutorial-glmath.html">GLMath Math Library</a>" for mo
 
     <h4 style="margin-bottom:0px" id=".mat3identity"><span style="font-weight:lighter">(static) </span>mat3identity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line411">line 411</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line409">line 409</a>
      </i></small></p>
 
 <div class="description">
@@ -72,7 +72,7 @@ See the tutorial "<a href="tutorial-glmath.html">GLMath Math Library</a>" for mo
 
     <h4 style="margin-bottom:0px" id=".mat3transform"><span style="font-weight:lighter">(static) </span>mat3transform<span class="signature">(mat, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1248">line 1248</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1285">line 1285</a>
      </i></small></p>
 
 <div class="description">
@@ -104,7 +104,7 @@ the transformed vector.
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -156,7 +156,7 @@ point, set Z to 1.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4copy"><span style="font-weight:lighter">(static) </span>mat4copy<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line432">line 432</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line430">line 430</a>
      </i></small></p>
 
 <div class="description">
@@ -197,7 +197,7 @@ point, set Z to 1.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4frustum"><span style="font-weight:lighter">(static) </span>mat4frustum<span class="signature">(l, r, b, t, near, far)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1604">line 1604</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1641">line 1641</a>
      </i></small></p>
 
 <div class="description">
@@ -319,7 +319,7 @@ to the far plane will have identical depth values.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4identity"><span style="font-weight:lighter">(static) </span>mat4identity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line418">line 418</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line416">line 416</a>
      </i></small></p>
 
 <div class="description">
@@ -342,7 +342,7 @@ to the far plane will have identical depth values.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4inverseTranspose3"><span style="font-weight:lighter">(static) </span>mat4inverseTranspose3<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1088">line 1088</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1086">line 1086</a>
      </i></small></p>
 
 <div class="description">
@@ -351,7 +351,7 @@ the given 4x4 matrix.<p>
 This is usually used to convert a model-view matrix to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the world matrix.  Normals are then
-transformed by this matrix and then converted to unit vectors  ("normalized" vectors with a length of 1).  But if the
+transformed by this matrix and then converted to unit vectors  (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1).  But if the
 input matrix uses only rotations, translations, and/or uniform scaling
 (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 be used instead of the inverse-transpose matrix to transform the normals.
@@ -392,7 +392,7 @@ can't be inverted, returns the identity 3x3 matrix.
 
     <h4 style="margin-bottom:0px" id=".mat4invert"><span style="font-weight:lighter">(static) </span>mat4invert<span class="signature">(m)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line502">line 502</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line500">line 500</a>
      </i></small></p>
 
 <div class="description">
@@ -434,7 +434,7 @@ Returns the identity matrix if this matrix is not invertible.
 
     <h4 style="margin-bottom:0px" id=".mat4isIdentity"><span style="font-weight:lighter">(static) </span>mat4isIdentity<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line487">line 487</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line485">line 485</a>
      </i></small></p>
 
 <div class="description">
@@ -475,7 +475,7 @@ Returns the identity matrix if this matrix is not invertible.
 
     <h4 style="margin-bottom:0px" id=".mat4lookat"><span style="font-weight:lighter">(static) </span>mat4lookat<span class="signature">(viewerPos, lookingAt<sub style="font-weight:lighter">opt</sub>, up<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1379">line 1379</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1416">line 1416</a>
      </i></small></p>
 
 <div class="description">
@@ -558,7 +558,7 @@ so it points perpendicular to the "camera"'s view direction.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4multiply"><span style="font-weight:lighter">(static) </span>mat4multiply<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1665">line 1665</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1702">line 1702</a>
      </i></small></p>
 
 <div class="description">
@@ -616,7 +616,7 @@ the effect of scaling then translation.
 
     <h4 style="margin-bottom:0px" id=".mat4ortho"><span style="font-weight:lighter">(static) </span>mat4ortho<span class="signature">(l, r, b, t, n, f)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1430">line 1430</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1467">line 1467</a>
      </i></small></p>
 
 <div class="description">
@@ -731,7 +731,7 @@ between n and f should be as small as the application can accept.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4ortho2d"><span style="font-weight:lighter">(static) </span>mat4ortho2d<span class="signature">(l, r, b, t)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1489">line 1489</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1526">line 1526</a>
      </i></small></p>
 
 <div class="description">
@@ -815,7 +815,7 @@ they increase upward.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4ortho2dAspect"><span style="font-weight:lighter">(static) </span>mat4ortho2dAspect<span class="signature">(l, r, b, t, aspect)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1515">line 1515</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1552">line 1552</a>
      </i></small></p>
 
 <div class="description">
@@ -917,7 +917,7 @@ they increase upward.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4orthoAspect"><span style="font-weight:lighter">(static) </span>mat4orthoAspect<span class="signature">(l, r, b, t, n, f, aspect)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1545">line 1545</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1582">line 1582</a>
      </i></small></p>
 
 <div class="description">
@@ -1045,7 +1045,7 @@ between n and f should be as small as the application can accept.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4perspective"><span style="font-weight:lighter">(static) </span>mat4perspective<span class="signature">(fovY, aspectRatio, near, far)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1349">line 1349</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1386">line 1386</a>
      </i></small></p>
 
 <div class="description">
@@ -1142,7 +1142,7 @@ to the far plane will have identical depth values.)</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4perspectiveHorizontal"><span style="font-weight:lighter">(static) </span>mat4perspectiveHorizontal<span class="signature">(fovX, aspectRatio, near, far)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1468">line 1468</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1505">line 1505</a>
      </i></small></p>
 
 <div class="description">
@@ -1238,9 +1238,94 @@ to the far plane will have identical depth values.)</dd>
 
 </div>
 
+    <h4 style="margin-bottom:0px" id=".mat4projectVec3"><span style="font-weight:lighter">(static) </span>mat4projectVec3<span class="signature">(mat, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1255">line 1255</a>
+     </i></small></p>
+
+<div class="description">
+    Transforms a 3-element vector with a 4x4 matrix and returns
+a perspective-correct transformation of the vector,
+using all the elements of the 4x4 matrix.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>mat</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+
+)
+
+           </dt><dd>
+           A 4x4 matrix.</dd>
+
+        <dt>
+
+                <code>v</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+|
+
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           X coordinate.
+If "vy", "vz", and "vw" are omitted, this value can instead
+be a 4-element array giving the X, Y, Z, and W coordinates.</dd>
+
+        <dt>
+
+                <code>vy</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Y coordinate.</dd>
+
+        <dt>
+
+                <code>vz</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Z coordinate. To transform a 2D
+point, set Z to 1.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The transformed 3x3 vector.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id=".mat4rotate"><span style="font-weight:lighter">(static) </span>mat4rotate<span class="signature">(mat, angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1722">line 1722</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1759">line 1759</a>
      </i></small></p>
 
 <div class="description">
@@ -1272,7 +1357,7 @@ and returns a new matrix.
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1294,7 +1379,7 @@ in a clockwise direction for left-handed systems.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1348,7 +1433,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4rotated"><span style="font-weight:lighter">(static) </span>mat4rotated<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1820">line 1820</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1857">line 1857</a>
      </i></small></p>
 
 <div class="description">
@@ -1367,7 +1452,7 @@ of rotation.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1389,7 +1474,7 @@ in a clockwise direction for left-handed systems.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1443,7 +1528,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4scale"><span style="font-weight:lighter">(static) </span>mat4scale<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1136">line 1136</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1134">line 1134</a>
      </i></small></p>
 
 <div class="description">
@@ -1462,7 +1547,7 @@ of rotation.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1514,7 +1599,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4scaled"><span style="font-weight:lighter">(static) </span>mat4scaled<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1165">line 1165</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1163">line 1163</a>
      </i></small></p>
 
 <div class="description">
@@ -1533,7 +1618,7 @@ Z axes.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1585,7 +1670,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4scaleInPlace"><span style="font-weight:lighter">(static) </span>mat4scaleInPlace<span class="signature">(mat, v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1628">line 1628</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1665">line 1665</a>
      </i></small></p>
 
 <div class="description">
@@ -1617,7 +1702,7 @@ scaling transformation.
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1669,7 +1754,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4toMat3"><span style="font-weight:lighter">(static) </span>mat4toMat3<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1041">line 1041</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1039">line 1039</a>
      </i></small></p>
 
 <div class="description">
@@ -1711,7 +1796,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4transform"><span style="font-weight:lighter">(static) </span>mat4transform<span class="signature">(mat, v, vy, vz, vw)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1187">line 1187</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1185">line 1185</a>
      </i></small></p>
 
 <div class="description">
@@ -1743,7 +1828,7 @@ the transformed vector.
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1808,12 +1893,21 @@ point, set Z and W to 1.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4transformVec3"><span style="font-weight:lighter">(static) </span>mat4transformVec3<span class="signature">(mat, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1219">line 1219</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1226">line 1226</a>
      </i></small></p>
 
 <div class="description">
     Transforms a 3-element vector with a 4x4 matrix and returns
-the transformed vector.
+the transformed vector.  The effect is as though elements
+3, 7, 11, and 15 (counting from 0) of the matrix
+were assumed to be (0, 0, 0, 1) instead of their actual values
+(those elements correspond to the last
+row of the matrix in column-major order) and as though the 3-element
+vector had a fourth element valued at 1.<p>
+For transforming 3-dimensional coordinates
+with a matrix that may be in a perspective
+projection (whose last row is not necessarily (0, 0, 0, 1)), use
+the <a href="H3DU.Math.html#.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method instead.
 </div>
 
     <h5>Parameters:</h5>
@@ -1840,14 +1934,14 @@ the transformed vector.
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
            X coordinate.
 If "vy", "vz", and "vw" are omitted, this value can instead
-be a 4-element array giving the X, Y, Z, and W coordinates.</dd>
+be a 4-element array giving the X, Y, and Z coordinates.</dd>
 
         <dt>
 
@@ -1883,7 +1977,7 @@ point, set Z to 1.</dd>
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    The transformed vector.
+    The transformed 3x3 vector.
 
      (Type:
 <span class="param-type">Array.&lt;Number></span>)
@@ -1892,7 +1986,7 @@ point, set Z to 1.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4translate"><span style="font-weight:lighter">(static) </span>mat4translate<span class="signature">(mat, v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1299">line 1299</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1336">line 1336</a>
      </i></small></p>
 
 <div class="description">
@@ -1923,7 +2017,7 @@ point, set Z to 1.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -1975,7 +2069,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4translated"><span style="font-weight:lighter">(static) </span>mat4translated<span class="signature">(v3, v3y, v3z)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1274">line 1274</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1311">line 1311</a>
      </i></small></p>
 
 <div class="description">
@@ -1994,7 +2088,7 @@ Z axes.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -2046,7 +2140,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4transpose"><span style="font-weight:lighter">(static) </span>mat4transpose<span class="signature">(m4)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1054">line 1054</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1052">line 1052</a>
      </i></small></p>
 
 <div class="description">
@@ -2087,7 +2181,7 @@ Z axes.</dd>
 
     <h4 style="margin-bottom:0px" id=".mat4transposeInPlace"><span style="font-weight:lighter">(static) </span>mat4transposeInPlace<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1064">line 1064</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1062">line 1062</a>
      </i></small></p>
 
 <div class="description">
@@ -2129,12 +2223,12 @@ a new matrix.
 
     <h4 style="margin-bottom:0px" id=".quatConjugate"><span style="font-weight:lighter">(static) </span>quatConjugate<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line587">line 587</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line585">line 585</a>
      </i></small></p>
 
 <div class="description">
     Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
-but without changing its length (the return value won't necessarily be a unit vector, a "normalized" vector with a length of 1).
+but without changing its length (the return value won't necessarily be a unit vector, a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a> with a length of 1).
 Returns a new quaternion.
 </div>
 
@@ -2172,12 +2266,12 @@ Returns a new quaternion.
 
     <h4 style="margin-bottom:0px" id=".quatFromAxisAngle"><span style="font-weight:lighter">(static) </span>quatFromAxisAngle<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line704">line 704</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line702">line 702</a>
      </i></small></p>
 
 <div class="description">
     Generates a quaternion from an angle and axis of rotation.
- (The axis of rotation is a ray that starts at the
+(The axis of rotation is a ray that starts at the
 origin (0,0,0) and points toward a 3D point.)
 </div>
 
@@ -2193,7 +2287,7 @@ origin (0,0,0) and points toward a 3D point.)
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -2212,7 +2306,7 @@ in degrees as the fourth element.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -2269,7 +2363,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id=".quatFromMat4"><span style="font-weight:lighter">(static) </span>quatFromMat4<span class="signature">(m)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line990">line 990</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line988">line 988</a>
      </i></small></p>
 
 <div class="description">
@@ -2312,7 +2406,7 @@ The results are undefined if the matrix includes shearing.
 
     <h4 style="margin-bottom:0px" id=".quatFromTaitBryan"><span style="font-weight:lighter">(static) </span>quatFromTaitBryan<span class="signature">(pitchDegrees, yawDegrees, rollDegrees, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line755">line 755</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line753">line 753</a>
      </i></small></p>
 
 <div class="description">
@@ -2406,7 +2500,7 @@ described as the effect of a roll, then pitch, then yaw (each rotation around th
 
     <h4 style="margin-bottom:0px" id=".quatFromVectors"><span style="font-weight:lighter">(static) </span>quatFromVectors<span class="signature">(vec1, vec2)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line673">line 673</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line671">line 671</a>
      </i></small></p>
 
 <div class="description">
@@ -2414,7 +2508,7 @@ described as the effect of a roll, then pitch, then yaw (each rotation around th
 two 3-element vectors.  The quaternion
 will describe the rotation required to rotate
 the ray described in the first vector toward the ray described
-in the second vector.  The vectors need not be unit vectors ("normalized" vectors with a length of 1).
+in the second vector.  The vectors need not be unit vectors (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1).
 </div>
 
     <h5>Parameters:</h5>
@@ -2455,7 +2549,7 @@ in the second vector.  The vectors need not be unit vectors ("normalized" vector
 
 <div class="param-desc">
     The generated quaternion, which
-will be unit vectors ("normalized" vectors with a length of 1).
+will be unit vectors (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1).
 
      (Type:
 <span class="param-type">Array.&lt;Number></span>)
@@ -2464,7 +2558,7 @@ will be unit vectors ("normalized" vectors with a length of 1).
 
     <h4 style="margin-bottom:0px" id=".quatIdentity"><span style="font-weight:lighter">(static) </span>quatIdentity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line424">line 424</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line422">line 422</a>
      </i></small></p>
 
 <div class="description">
@@ -2479,12 +2573,12 @@ will be unit vectors ("normalized" vectors with a length of 1).
 
     <h4 style="margin-bottom:0px" id=".quatInvert"><span style="font-weight:lighter">(static) </span>quatInvert<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line597">line 597</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line595">line 595</a>
      </i></small></p>
 
 <div class="description">
     Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
-and converts this quaternion to a unit vector (a "normalized" vector with a length of 1).
+and converts this quaternion to a unit vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a> with a length of 1).
 Returns a new quaternion.
 </div>
 
@@ -2522,7 +2616,7 @@ Returns a new quaternion.
 
     <h4 style="margin-bottom:0px" id=".quatIsIdentity"><span style="font-weight:lighter">(static) </span>quatIsIdentity<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line606">line 606</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line604">line 604</a>
      </i></small></p>
 
 <div class="description">
@@ -2545,7 +2639,7 @@ Returns a new quaternion.
 
     <h4 style="margin-bottom:0px" id=".quatMultiply"><span style="font-weight:lighter">(static) </span>quatMultiply<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1692">line 1692</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line1729">line 1729</a>
      </i></small></p>
 
 <div class="description">
@@ -2605,7 +2699,7 @@ multiplications can cause rounding errors.
 
     <h4 style="margin-bottom:0px" id=".quatNlerp"><span style="font-weight:lighter">(static) </span>quatNlerp<span class="signature">(q1, q2, factor)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line876">line 876</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line874">line 874</a>
      </i></small></p>
 
 <div class="description">
@@ -2627,7 +2721,7 @@ returns a new quaternion.
 )
 
            </dt><dd>
-           The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).</dd>
+           The first quaternion.  Should be a unit vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a> with a length of 1).</dd>
 
         <dt>
 
@@ -2664,7 +2758,7 @@ closer to q1, and closer to 1 means closer to q2.</dd>
 
 <div class="param-desc">
     The interpolated quaternion,
-which will be unit vectors ("normalized" vectors with a length of 1).
+which will be unit vectors (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1).
 
      (Type:
 <span class="param-type">Array.&lt;Number></span>)
@@ -2673,7 +2767,7 @@ which will be unit vectors ("normalized" vectors with a length of 1).
 
     <h4 style="margin-bottom:0px" id=".quatRotate"><span style="font-weight:lighter">(static) </span>quatRotate<span class="signature">(angle, v, vy, vz)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line959">line 959</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line957">line 957</a>
      </i></small></p>
 
 <div class="description">
@@ -2698,7 +2792,7 @@ return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -2720,7 +2814,7 @@ in a clockwise direction for left-handed systems.</dd>
 <span class="param-type">Array.&lt;Number></span>
 |
 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -2774,7 +2868,7 @@ of rotation.</dd>
 
     <h4 style="margin-bottom:0px" id=".quatSlerp"><span style="font-weight:lighter">(static) </span>quatSlerp<span class="signature">(q1, q2, factor)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line905">line 905</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line903">line 903</a>
      </i></small></p>
 
 <div class="description">
@@ -2798,7 +2892,7 @@ rotations they describe.
 )
 
            </dt><dd>
-           The first quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).</dd>
+           The first quaternion.  Should be a unit vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a> with a length of 1).</dd>
 
         <dt>
 
@@ -2843,7 +2937,7 @@ closer to q1, and closer to 1 means closer to q2.</dd>
 
     <h4 style="margin-bottom:0px" id=".quatToAxisAngle"><span style="font-weight:lighter">(static) </span>quatToAxisAngle<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line650">line 650</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line648">line 648</a>
      </i></small></p>
 
 <div class="description">
@@ -2866,7 +2960,7 @@ origin (0,0,0) and points toward a 3D point.)
 )
 
            </dt><dd>
-           A quaternion.  Must be unit vectors ("normalized" vectors with a length of 1).</dd>
+           A quaternion.  Must be unit vectors (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1).</dd>
 
     </dl>
 
@@ -2891,7 +2985,7 @@ in a clockwise direction for left-handed systems.
 
     <h4 style="margin-bottom:0px" id=".quatToMat4"><span style="font-weight:lighter">(static) </span>quatToMat4<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line616">line 616</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line614">line 614</a>
      </i></small></p>
 
 <div class="description">
@@ -2933,7 +3027,7 @@ described by this quaternion.
 
     <h4 style="margin-bottom:0px" id=".quatToTaitBryan"><span style="font-weight:lighter">(static) </span>quatToTaitBryan<span class="signature">(a, mode)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line807">line 807</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line805">line 805</a>
      </i></small></p>
 
 <div class="description">
@@ -2955,7 +3049,7 @@ in the form of pitch, yaw, and roll angles.
 )
 
            </dt><dd>
-           A quaternion.  Should be a unit vector (a "normalized" vector with a length of 1).</dd>
+           A quaternion.  Should be a unit vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a> with a length of 1).</dd>
 
         <dt>
 
@@ -2999,7 +3093,7 @@ in a clockwise direction for left-handed systems.
 
     <h4 style="margin-bottom:0px" id=".quatTransform"><span style="font-weight:lighter">(static) </span>quatTransform<span class="signature">(q, v)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line973">line 973</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line971">line 971</a>
      </i></small></p>
 
 <div class="description">
@@ -3055,7 +3149,7 @@ the transformed vector.
 
     <h4 style="margin-bottom:0px" id=".vec3add"><span style="font-weight:lighter">(static) </span>vec3add<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line111">line 111</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line109">line 109</a>
      </i></small></p>
 
 <div class="description">
@@ -3110,7 +3204,7 @@ is the same as adding each of their components.
 
     <h4 style="margin-bottom:0px" id=".vec3addInPlace"><span style="font-weight:lighter">(static) </span>vec3addInPlace<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line172">line 172</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line170">line 170</a>
      </i></small></p>
 
 <div class="description">
@@ -3165,7 +3259,7 @@ is the same as adding each of their components.
 
     <h4 style="margin-bottom:0px" id=".vec3assign"><span style="font-weight:lighter">(static) </span>vec3assign<span class="signature">(dst, src)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line461">line 461</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line459">line 459</a>
      </i></small></p>
 
 <div class="description">
@@ -3221,7 +3315,7 @@ values will be copied.</dd>
 
     <h4 style="margin-bottom:0px" id=".vec3copy"><span style="font-weight:lighter">(static) </span>vec3copy<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line440">line 440</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line438">line 438</a>
      </i></small></p>
 
 <div class="description">
@@ -3262,7 +3356,7 @@ values will be copied.</dd>
 
     <h4 style="margin-bottom:0px" id=".vec3cross"><span style="font-weight:lighter">(static) </span>vec3cross<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line62">line 62</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line61">line 61</a>
      </i></small></p>
 
 <div class="description">
@@ -3278,8 +3372,7 @@ If the cross product of A and B has a positive Z component, the triangle's point
 oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and the Y
 axis down, the reverse is
 true.)  The triangle's area is half of the cross product's length.
-<li>If A and B are unit length vectors,
-(via glmath.H3DU.Math.vec3norm), the absolute value
+<li>If A and B are unit vectors (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1), the absolute value
 of the sine of the shortest angle between them is equal to the length of their
 cross product. <small>(More formally, the length of the cross
 product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
@@ -3355,7 +3448,7 @@ calculate a triangle's normal vector and its area.</p>
 
     <h4 style="margin-bottom:0px" id=".vec3dot"><span style="font-weight:lighter">(static) </span>vec3dot<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line99">line 99</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line97">line 97</a>
      </i></small></p>
 
 <div class="description">
@@ -3364,8 +3457,7 @@ sum of the products of their components (for example, <b>a</b>'s X times
 <b>b</b>'s X).<p>
 The dot product has the following properties:
 <ul>
-<li>If both vectors are unit length
-(via glmath.H3DU.Math.vec3norm), the cosine
+<li>If both vectors are unit vectors (<a href="H3DU.Math.html#.vec3norm">"normalized" vectors</a> with a length of 1), the cosine
 of the angle between them is equal to their dot product.
 <small>(More formally, the dot
 product equals |<b>a</b>| * |<b>b</b>| * cos &theta;
@@ -3437,7 +3529,7 @@ if(H3DU.Math.vec3dot(vector, vector)&lt;20*20) {
 
     <h4 style="margin-bottom:0px" id=".vec3length"><span style="font-weight:lighter">(static) </span>vec3length<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line387">line 387</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line385">line 385</a>
      </i></small></p>
 
 <div class="description">
@@ -3480,7 +3572,7 @@ of its components.
 
     <h4 style="margin-bottom:0px" id=".vec3lerp"><span style="font-weight:lighter">(static) </span>vec3lerp<span class="signature">(v1, v2, factor)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line256">line 256</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line254">line 254</a>
      </i></small></p>
 
 <div class="description">
@@ -3547,7 +3639,7 @@ closer to v1, and closer to 1 means closer to v2.</dd>
 
     <h4 style="margin-bottom:0px" id=".vec3mul"><span style="font-weight:lighter">(static) </span>vec3mul<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line160">line 160</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line158">line 158</a>
      </i></small></p>
 
 <div class="description">
@@ -3602,7 +3694,7 @@ is the same as multiplying each of their components.
 
     <h4 style="margin-bottom:0px" id=".vec3mulInPlace"><span style="font-weight:lighter">(static) </span>vec3mulInPlace<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line210">line 210</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line208">line 208</a>
      </i></small></p>
 
 <div class="description">
@@ -3657,7 +3749,7 @@ is the same as multiplying each of their components.
 
     <h4 style="margin-bottom:0px" id=".vec3negate"><span style="font-weight:lighter">(static) </span>vec3negate<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line134">line 134</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line132">line 132</a>
      </i></small></p>
 
 <div class="description">
@@ -3700,7 +3792,7 @@ is the same as reversing the sign of each of its components.
 
     <h4 style="margin-bottom:0px" id=".vec3negateInPlace"><span style="font-weight:lighter">(static) </span>vec3negateInPlace<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line145">line 145</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line143">line 143</a>
      </i></small></p>
 
 <div class="description">
@@ -3743,7 +3835,7 @@ is the same as reversing the sign of each of its components.
 
     <h4 style="margin-bottom:0px" id=".vec3norm"><span style="font-weight:lighter">(static) </span>vec3norm<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line364">line 364</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line362">line 362</a>
      </i></small></p>
 
 <div class="description">
@@ -3788,7 +3880,7 @@ by its length.
 
     <h4 style="margin-bottom:0px" id=".vec3normInPlace"><span style="font-weight:lighter">(static) </span>vec3normInPlace<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line316">line 316</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line314">line 314</a>
      </i></small></p>
 
 <div class="description">
@@ -3833,7 +3925,7 @@ by its length.
 
     <h4 style="margin-bottom:0px" id=".vec3scale"><span style="font-weight:lighter">(static) </span>vec3scale<span class="signature">(a, scalar)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line243">line 243</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line241">line 241</a>
      </i></small></p>
 
 <div class="description">
@@ -3887,7 +3979,7 @@ and returns a new vector with the result.
 
     <h4 style="margin-bottom:0px" id=".vec3scaleInPlace"><span style="font-weight:lighter">(static) </span>vec3scaleInPlace<span class="signature">(a, scalar)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line228">line 228</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line226">line 226</a>
      </i></small></p>
 
 <div class="description">
@@ -3941,7 +4033,7 @@ and stores the result in that vector.
 
     <h4 style="margin-bottom:0px" id=".vec3sub"><span style="font-weight:lighter">(static) </span>vec3sub<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line123">line 123</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line121">line 121</a>
      </i></small></p>
 
 <div class="description">
@@ -3996,7 +4088,7 @@ is the same as subtracting each of their components.
 
     <h4 style="margin-bottom:0px" id=".vec3subInPlace"><span style="font-weight:lighter">(static) </span>vec3subInPlace<span class="signature">(a, b)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line191">line 191</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line189">line 189</a>
      </i></small></p>
 
 <div class="description">
@@ -4051,7 +4143,7 @@ is the same as subtracting each of their components.
 
     <h4 style="margin-bottom:0px" id=".vec4assign"><span style="font-weight:lighter">(static) </span>vec4assign<span class="signature">(src)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line475">line 475</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line473">line 473</a>
      </i></small></p>
 
 <div class="description">
@@ -4094,7 +4186,7 @@ values will be copied.</dd>
 
     <h4 style="margin-bottom:0px" id=".vec4copy"><span style="font-weight:lighter">(static) </span>vec4copy<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line448">line 448</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line446">line 446</a>
      </i></small></p>
 
 <div class="description">
@@ -4135,7 +4227,7 @@ values will be copied.</dd>
 
     <h4 style="margin-bottom:0px" id=".vec4dot"><span style="font-weight:lighter">(static) </span>vec4dot<span class="signature">(a, b)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line270">line 270</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line268">line 268</a>
      </i></small></p>
 
 <div class="description">
@@ -4179,7 +4271,7 @@ sum of the products of their components (for example, <b>a</b>'s X times <b>b</b
 
     <h4 style="margin-bottom:0px" id=".vec4length"><span style="font-weight:lighter">(static) </span>vec4length<span class="signature">(a)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line400">line 400</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line398">line 398</a>
      </i></small></p>
 
 <div class="description">
@@ -4222,7 +4314,7 @@ of its components.
 
     <h4 style="margin-bottom:0px" id=".vec4lerp"><span style="font-weight:lighter">(static) </span>vec4lerp<span class="signature">(v1, v2, factor)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line298">line 298</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line296">line 296</a>
      </i></small></p>
 
 <div class="description">
@@ -4289,7 +4381,7 @@ closer to v1, and closer to 1 means closer to v2.</dd>
 
     <h4 style="margin-bottom:0px" id=".vec4norm"><span style="font-weight:lighter">(static) </span>vec4norm<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line377">line 377</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line375">line 375</a>
      </i></small></p>
 
 <div class="description">
@@ -4334,7 +4426,7 @@ by its length.
 
     <h4 style="margin-bottom:0px" id=".vec4normInPlace"><span style="font-weight:lighter">(static) </span>vec4normInPlace<span class="signature">(vec)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line339">line 339</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line337">line 337</a>
      </i></small></p>
 
 <div class="description">
@@ -4379,7 +4471,7 @@ by its length.
 
     <h4 style="margin-bottom:0px" id=".vec4scaleInPlace"><span style="font-weight:lighter">(static) </span>vec4scaleInPlace<span class="signature">(a, scalar)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line281">line 281</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line279">line 279</a>
      </i></small></p>
 
 <div class="description">
@@ -4455,7 +4547,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

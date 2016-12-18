@@ -246,9 +246,9 @@
       }
     };
     this.prev = function() {
-      if((typeof this.left !== "undefined" &amp;&amp; this.left !== null)) {
+      if(typeof this.left !== "undefined" &amp;&amp; this.left !== null) {
         var r = this.left;
-        while((typeof r.right !== "undefined" &amp;&amp; r.right !== null))r = r.right;
+        while(typeof r.right !== "undefined" &amp;&amp; r.right !== null)r = r.right;
         return r;
       } else {
         var p = this.p;
@@ -262,9 +262,9 @@
       }
     };
     this.next = function() {
-      if((typeof this.right !== "undefined" &amp;&amp; this.right !== null)) {
+      if(typeof this.right !== "undefined" &amp;&amp; this.right !== null) {
         var r = this.right;
-        while((typeof r.left !== "undefined" &amp;&amp; r.left !== null))r = r.left;
+        while(typeof r.left !== "undefined" &amp;&amp; r.left !== null)r = r.left;
         return r;
       } else {
         var p = this.p;
@@ -299,14 +299,14 @@
   RedBlackTree.prototype.first = function() {
     var r = this.root;
     if(r === null || typeof r === "undefined")return null;
-    while((typeof r.left !== "undefined" &amp;&amp; r.left !== null))r = r.left;
+    while(typeof r.left !== "undefined" &amp;&amp; r.left !== null)r = r.left;
     return r;
   };
 /** @private */
   RedBlackTree.prototype.last = function() {
     var r = this.root;
     if(r === null || typeof r === "undefined")return null;
-    while((typeof r.right !== "undefined" &amp;&amp; r.right !== null))r = r.right;
+    while(typeof r.right !== "undefined" &amp;&amp; r.right !== null)r = r.right;
     return r;
   };
 /** @private */
@@ -339,7 +339,7 @@
   };
 /** @private */
   RedBlackTree.prototype.erase = function(data) {
-    if((typeof this.root !== "undefined" &amp;&amp; this.root !== null)) {
+    if(typeof this.root !== "undefined" &amp;&amp; this.root !== null) {
       var head = new RedBlackTreeNode(null); /* False tree root */
       var q, p, g; /* Helpers */
       var f = null;  /* Found item */
@@ -401,14 +401,14 @@
     /* Replace and remove the saved node */
       if( f !== null &amp;&amp; typeof f !== "undefined" ) {
         f.data = q.data;
-        p.setLink(p.right === q, q.link((typeof q.left === "undefined" || q.left === null)));
+        p.setLink(p.right === q, q.link(typeof q.left === "undefined" || q.left === null));
       }
 
     /* Update the root(it may be different) */
       this.root = head.right;
 
     /* Make the root black for simplified logic */
-      if((typeof this.root !== "undefined" &amp;&amp; this.root !== null)) {
+      if(typeof this.root !== "undefined" &amp;&amp; this.root !== null) {
         this.root.p = null;
         this.root.red = false;
       }
@@ -419,7 +419,7 @@
   RedBlackTree.prototype.insert = function(data) {
     if(!data)throw new Error();
     var retval = null;
-    if ((typeof this.root === "undefined" || this.root === null)) {
+    if (typeof this.root === "undefined" || this.root === null) {
     /*
       We have an empty tree; attach the
       new node directly to the root
@@ -482,7 +482,7 @@
 
     /* Update the root (it may be different) */
       this.root = head.right;
-      if((typeof this.root !== "undefined" &amp;&amp; this.root !== null))
+      if(typeof this.root !== "undefined" &amp;&amp; this.root !== null)
         this.root.p = null;
     }
 
@@ -656,7 +656,7 @@
     return false;
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} s
  * @memberof! Connector#
 */
@@ -686,7 +686,7 @@
     this.openPolygons.push(chain);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Connector#
 */
   Connector.prototype.toPolygon = function() {
@@ -716,7 +716,7 @@
   Clipper.SAME_TRANSITION = 2;
   Clipper.DIFFERENT_TRANSITION = 3;
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} pp
  * @param {*} b
  * @param {*} apl
@@ -750,7 +750,7 @@
     return Clipper._print(this);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} a
  * @param {*} b
  * @param {*} c
@@ -781,7 +781,7 @@
     return e1.above(e2.other.p);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e1
  * @param {*} e2
  */
@@ -813,7 +813,7 @@
     return Clipper.sweepEventComp(e1, e2);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e1
  * @param {*} e2
  */
@@ -822,7 +822,7 @@
     return Clipper.segmentComp(e1, e2) ? -1 : 1;
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e
  * @memberof! Clipper#
 */
@@ -841,7 +841,7 @@
          namesEventTypes[e.type] + " Polygon: " + (e.pl === Clipper.SUBJECT ? " (SUBJECT)" : " (CLIPPING)");
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} op
  * @memberof! Clipper#
 */
@@ -1020,7 +1020,7 @@
     return connector.toPolygon(result);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} s
  * @param {*} pl
  * @memberof! Clipper#
@@ -1044,7 +1044,7 @@
     this.eq.push(e2);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} a
  * @param {*} b
  * @param {*} e
@@ -1160,7 +1160,7 @@
   };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e1
  * @param {*} e2
  * @memberof! Clipper#
@@ -1242,7 +1242,7 @@
     this.divideSegment(sortedEvents[3].other, sortedEvents[2].p);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e
  * @param {*} p
  * @memberof! Clipper#
@@ -1389,7 +1389,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">GLMath Math Library</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

@@ -592,7 +592,7 @@ ImplicitSurface.prototype._marchingTetrahedrons = function(mesh, fX, fY, fZ, fSc
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} xsize
  * @param {*} ysize
  * @param {*} zsize
@@ -639,7 +639,7 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} mesh
  * @param {*} xsize
  * @param {*} ysize
@@ -671,7 +671,7 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} mesh
  * @param {*} xsize
  * @param {*} ysize
@@ -711,7 +711,7 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} a
  * @param {*} b
  */
@@ -724,7 +724,7 @@ ImplicitSurface.union = function(a, b) {
   };
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} a
  * @param {*} b
  */
@@ -737,7 +737,7 @@ ImplicitSurface.intersection = function(a, b) {
   };
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} a
  * @param {*} b
  */

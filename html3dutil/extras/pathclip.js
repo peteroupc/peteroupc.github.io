@@ -640,7 +640,7 @@
     return false;
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} s
  * @memberof! Connector#
 */
@@ -670,7 +670,7 @@
     this.openPolygons.push(chain);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Connector#
 */
   Connector.prototype.toPolygon = function() {
@@ -700,7 +700,7 @@
   Clipper.SAME_TRANSITION = 2;
   Clipper.DIFFERENT_TRANSITION = 3;
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} pp
  * @param {*} b
  * @param {*} apl
@@ -734,7 +734,7 @@
     return Clipper._print(this);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} a
  * @param {*} b
  * @param {*} c
@@ -765,7 +765,7 @@
     return e1.above(e2.other.p);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e1
  * @param {*} e2
  */
@@ -797,7 +797,7 @@
     return Clipper.sweepEventComp(e1, e2);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e1
  * @param {*} e2
  */
@@ -806,7 +806,7 @@
     return Clipper.segmentComp(e1, e2) ? -1 : 1;
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e
  * @memberof! Clipper#
 */
@@ -825,7 +825,7 @@
          namesEventTypes[e.type] + " Polygon: " + (e.pl === Clipper.SUBJECT ? " (SUBJECT)" : " (CLIPPING)");
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} op
  * @memberof! Clipper#
 */
@@ -1004,7 +1004,7 @@
     return connector.toPolygon(result);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} s
  * @param {*} pl
  * @memberof! Clipper#
@@ -1028,7 +1028,7 @@
     this.eq.push(e2);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} a
  * @param {*} b
  * @param {*} e
@@ -1144,7 +1144,7 @@
   };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e1
  * @param {*} e2
  * @memberof! Clipper#
@@ -1226,7 +1226,7 @@
     this.divideSegment(sortedEvents[3].other, sortedEvents[2].p);
   };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e
  * @param {*} p
  * @memberof! Clipper#

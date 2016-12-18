@@ -810,7 +810,7 @@ H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
   });
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} textureLoader
  * @memberof! H3DU.TextFont#
 */
@@ -924,7 +924,7 @@ H3DU.TextureAtlas = function() {
   this.textureInfos = [];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} sprites
  * @memberof! H3DU.TextureAtlas#
 */
@@ -1171,7 +1171,7 @@ H3DU.TextureAtlas._loadText = function(data) {
   return ret;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} textureLoader
  * @memberof! H3DU.TextureAtlas#
 */
@@ -1229,7 +1229,7 @@ H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
   });
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} fontFileName
  */
 H3DU.TextureAtlas.load = function(fontFileName) {

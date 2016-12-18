@@ -131,7 +131,7 @@ MtlData.prototype._resolveTextures = function() {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} name
  * @memberof! MtlData#
 */
@@ -214,7 +214,7 @@ MtlData._getMaterial = function(mtl) {
   return ret;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} url
  */
 ObjData.loadMtlFromUrl = function(url) {

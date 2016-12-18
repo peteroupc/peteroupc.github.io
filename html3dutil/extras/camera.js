@@ -152,7 +152,7 @@ function InputTracker(element) {
   }
 }
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! InputTracker#
 */
 InputTracker.prototype.dispose = function() {
@@ -171,7 +171,7 @@ InputTracker.prototype.dispose = function() {
 };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} func
  * @memberof! InputTracker#
 */
@@ -224,7 +224,7 @@ InputTracker.DELETE = 46;
 InputTracker.ADD = 107;
 InputTracker.SUBTRACT = 109;
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! InputTracker#
 */
 InputTracker.prototype.deltaXY = function() {
@@ -375,7 +375,7 @@ Camera._moveTrans = function(vec, quat, dist, x, y, z) {
   vec[0] += velocity[0]; vec[1] += velocity[1]; vec[2] += velocity[2];
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  *//** @private */
 Camera.prototype._distance = function() {
   "use strict";
@@ -401,7 +401,7 @@ Camera.prototype._updateView = function() {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} dist
  * @memberof! Camera#
 */
@@ -476,7 +476,7 @@ Camera.prototype._moveAngleFixedVertical = function(angleDegrees) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} angleDegrees
  * @memberof! Camera#
 */
@@ -490,7 +490,7 @@ Camera.prototype.moveAngleVertical = function(angleDegrees) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} angleDegrees
  * @memberof! Camera#
 */
@@ -504,7 +504,7 @@ Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} angleDegrees
  * @memberof! Camera#
 */
@@ -533,7 +533,7 @@ Camera.prototype.turnHorizontal = function(angleDegrees) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} cx
  * @param {*} cy
  * @param {*} cz
@@ -548,7 +548,7 @@ Camera.prototype.movePosition = function(cx, cy, cz) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} dist
  * @memberof! Camera#
 */
@@ -557,7 +557,7 @@ Camera.prototype.moveClose = function(dist) {
   return this.setDistance(this._distance() - dist);
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} dist
  * @memberof! Camera#
 */
@@ -570,7 +570,7 @@ Camera.prototype.moveForward = function(dist) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} dist
  * @memberof! Camera#
 */
@@ -583,7 +583,7 @@ Camera.prototype.moveCenterHorizontal = function(dist) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} dist
  * @memberof! Camera#
 */
@@ -596,7 +596,7 @@ Camera.prototype.moveCenterVertical = function(dist) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} dist
  * @memberof! Camera#
 */
@@ -609,7 +609,7 @@ Camera.prototype.moveHorizontal = function(dist) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} dist
  * @memberof! Camera#
 */
@@ -622,7 +622,7 @@ Camera.prototype.moveVertical = function(dist) {
   return this;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} e
  * @memberof! Camera#
 */
@@ -636,7 +636,7 @@ Camera.prototype.getPosition = function() {
   return pos;
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Camera#
 */
 Camera.prototype.getVectorFromCenter = function() {
@@ -654,7 +654,7 @@ Camera.prototype._mousewheel = function(e) {
 };
 
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @memberof! Camera#
 */
 Camera.prototype.update = function() {

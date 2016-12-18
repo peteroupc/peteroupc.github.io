@@ -77,7 +77,7 @@ H3DU._FrenetFrames = function(func) {
   }
 };
 /**
- * Not documented yet.
+ * TODO: Not documented yet.
  * @param {*} tangent
  */
 H3DU._FrenetFrames.normalFromTangent = function(tangent) {
