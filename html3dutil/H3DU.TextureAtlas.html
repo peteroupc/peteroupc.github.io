@@ -29,8 +29,12 @@
 
     <h4 style="margin-bottom:0px" id="TextureAtlas"><span style="font-weight:lighter"></span>new TextureAtlas<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line920">line 920</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line926">line 926</a>
      </i></small></p>
+
+<div class="description">
+    TODO: Not documented yet.
+</div>
 
 <dl class="details">
 
@@ -40,13 +44,13 @@
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="loadTextures"><span style="font-weight:lighter"></span>H3DU.TextureAtlas#loadTextures<span class="signature">(textureLoader)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="loadTextures"><span style="font-weight:lighter"></span>H3DU.TextureAtlas#loadTextures<span class="signature">(textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1178">line 1178</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1189">line 1189</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Loads the texture files used by this texture atlas.
 </div>
 
     <h5>Parameters:</h5>
@@ -58,12 +62,13 @@
                 <code>textureLoader</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type"><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></span>
 
 )
 
            </dt><dd>
-           </dd>
+           Texture loader object to use when
+loading the textures.</dd>
 
     </dl>
 
@@ -71,9 +76,22 @@
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise as described in
+<a href="H3DU.html#.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>.  If the promise
+resolves, each item in the resulting array will be a loaded
+<a href="H3DU.Texture.html">H3DU.Texture</a> object.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="makeSprites"><span style="font-weight:lighter"></span>H3DU.TextureAtlas#makeSprites<span class="signature">(sprites)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line931">line 931</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line937">line 937</a>
      </i></small></p>
 
 <div class="description">
@@ -89,7 +107,7 @@
                 <code>sprites</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Array.&lt;Object></span>
 
 )
 

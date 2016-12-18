@@ -47,7 +47,7 @@ to WebGL contexts.
 
     <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.TextureLoader#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line182">line 182</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line216">line 216</a>
      </i></small></p>
 
 <div class="description">
@@ -76,7 +76,7 @@ to WebGL contexts.
                 <code>name</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">String</span>
 
 )
 
@@ -100,13 +100,14 @@ if it doesn't exist.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="loadAndMapTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadAndMapTexture<span class="signature">(texture, context)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
+    <h4 style="margin-bottom:0px" id="loadAndMapTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadAndMapTexture<span class="signature">(name, context)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line93">line 93</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line112">line 112</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Loads the textures referred to in an array of URLs and
+uploads their texture data to a WebGL context.
 </div>
 
     <h5>Parameters:</h5>
@@ -115,7 +116,7 @@ if it doesn't exist.
 
         <dt>
 
-                <code>texture</code>
+                <code>name</code>
 
                 (
 <span class="param-type">String</span>
@@ -123,19 +124,27 @@ if it doesn't exist.
 )
 
            </dt><dd>
-           </dd>
+           URL of the texture data.  Images with a TGA
+extension that use the RGBA or grayscale format are supported.
+Images supported by the browser will be loaded via
+the JavaScript DOM's Image class.</dd>
 
         <dt>
 
                 <code>context</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">WebGLRenderingContext</span>
+|
+
+<span class="param-type">object</span>
 
 )
 
            </dt><dd>
-           </dd>
+           A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that
+implements a no-argument <code>getContext</code> method
+that returns a WebGL context.</dd>
 
     </dl>
 
@@ -155,13 +164,13 @@ and is rejected when an error occurs.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="loadAndMapTexturesAll"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadAndMapTexturesAll<span class="signature">(textures, context, resolve, reject)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
+    <h4 style="margin-bottom:0px" id="loadAndMapTexturesAll"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadAndMapTexturesAll<span class="signature">(textures, context, resolve<sub style="font-weight:lighter">opt</sub>, reject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line114">line 114</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line138">line 138</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Loads a texture by its URL and uploads its data to a WebGL context.
 </div>
 
     <h5>Parameters:</h5>
@@ -185,36 +194,47 @@ and is rejected when an error occurs.
                 <code>context</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">WebGLRenderingContext</span>
+|
+
+<span class="param-type">object</span>
 
 )
 
            </dt><dd>
-           </dd>
+           A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that
+implements a no-argument <code>getContext</code> method
+that returns a WebGL context.</dd>
 
         <dt>
 
                 <code>resolve</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">function</span>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           </dd>
+           A function called as each
+  individual texture is loaded.</dd>
 
         <dt>
 
                 <code>reject</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">function</span>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           </dd>
+           A function called as each
+  individual texture is loaded.</dd>
 
     </dl>
 
@@ -235,13 +255,13 @@ resolves, each item in the resulting array will be a loaded
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="loadTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadTexture<span class="signature">(name)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="loadTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadTexture<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line32">line 32</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line37">line 37</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Loads a texture by its URL and stores its data.
 </div>
 
     <h5>Parameters:</h5>
@@ -253,12 +273,15 @@ resolves, each item in the resulting array will be a loaded
                 <code>name</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">String</span>
 
 )
 
            </dt><dd>
-           </dd>
+           URL of the texture data.  Images with a TGA
+extension that use the RGBA or grayscale format are supported.
+Images supported by the browser will be loaded via
+the JavaScript DOM's Image class.</dd>
 
     </dl>
 
@@ -266,13 +289,25 @@ resolves, each item in the resulting array will be a loaded
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id="loadTexturesAll"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadTexturesAll<span class="signature">(textures, resolve, reject)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
+<h5>Returns:</h5>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line76">line 76</a>
+<div class="param-desc">
+    A promise that resolves when the texture
+is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="loadTexturesAll"><span style="font-weight:lighter"></span>H3DU.TextureLoader#loadTexturesAll<span class="signature">(textures, resolve<sub style="font-weight:lighter">opt</sub>, reject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line88">line 88</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Loads the textures referred to in an array of URLs and
+stores their texture data.
 </div>
 
     <h5>Parameters:</h5>
@@ -284,36 +319,46 @@ resolves, each item in the resulting array will be a loaded
                 <code>textures</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Array.&lt;String></span>
 
 )
 
            </dt><dd>
-           </dd>
+           An array of URLs of
+the texture data.  Images with a TGA
+extension that use the RGBA or grayscale format are supported.
+Images supported by the browser will be loaded via
+the JavaScript DOM's Image class.</dd>
 
         <dt>
 
                 <code>resolve</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">function</span>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           </dd>
+           A function called as each
+  individual texture is loaded.</dd>
 
         <dt>
 
                 <code>reject</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">function</span>
 
 )
 
+                    &lt;optional>
+
            </dt><dd>
-           </dd>
+           A function called as each
+  individual texture is loaded.</dd>
 
     </dl>
 
@@ -336,11 +381,11 @@ resolves, each item in the resulting array will be a loaded
 
     <h4 style="margin-bottom:0px" id="mapTexture"><span style="font-weight:lighter"></span>H3DU.TextureLoader#mapTexture<span class="signature">(texture, context)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line146">line 146</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line180">line 180</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Uploads a texture object to a WebGL context.
 </div>
 
     <h5>Parameters:</h5>
@@ -352,24 +397,31 @@ resolves, each item in the resulting array will be a loaded
                 <code>texture</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>
 
 )
 
            </dt><dd>
-           </dd>
+           The texture object to map.
+Each texture's data must already have been loaded.    If the texture has the
+same name as a texture already uploaded to the given context, it will be skipped.</dd>
 
         <dt>
 
                 <code>context</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">WebGLRenderingContext</span>
+|
+
+<span class="param-type">object</span>
 
 )
 
            </dt><dd>
-           </dd>
+           A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that
+implements a no-argument <code>getContext</code> method
+that returns a WebGL context.</dd>
 
     </dl>
 
@@ -387,13 +439,13 @@ resolves, each item in the resulting array will be a loaded
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="mapTextures"><span style="font-weight:lighter"></span>H3DU.TextureLoader#mapTextures<span class="signature">(textures, context)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id="mapTextures"><span style="font-weight:lighter"></span>H3DU.TextureLoader#mapTextures<span class="signature">(texture, context)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line131">line 131</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-textureloader.js.html">h3du-textureloader.js</a>, <a href="h3du-textureloader.js.html#line160">line 160</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Uploads an array of textures to a WebGL context.
 </div>
 
     <h5>Parameters:</h5>
@@ -402,27 +454,34 @@ resolves, each item in the resulting array will be a loaded
 
         <dt>
 
-                <code>textures</code>
+                <code>texture</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>
 
 )
 
            </dt><dd>
-           </dd>
+           An array of texture objects to upload.
+Each texture's data must already have been loaded.    Textures with the
+same name as textures already uploaded to the given context will be skipped.</dd>
 
         <dt>
 
                 <code>context</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">WebGLRenderingContext</span>
+|
+
+<span class="param-type">object</span>
 
 )
 
            </dt><dd>
-           </dd>
+           A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that
+implements a no-argument <code>getContext</code> method
+that returns a WebGL context.</dd>
 
     </dl>
 

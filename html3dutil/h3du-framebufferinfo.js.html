@@ -18,27 +18,42 @@
 // NOTE: FrameBufferInfo is independent of
 // any WebGL context or the WebGL API.
 
+/**
+ * TODO: Not documented yet.
+ * @param {Number} width Width to use for the frame buffer.
+ * Throws an error if this value is less than 0.  The width will be set
+ * to this value rounded up.
+ * @param {Number} height Height to use for the frame buffer.
+ * Throws an error if this value is less than 0.  The height will be set
+ * to this value rounded up.
+*/
 H3DU.FrameBufferInfo = function(width, height) {
   "use strict";
   if(width &lt; 0 || height &lt; 0)throw new Error("width or height negative");
-  this.width = width;
-  this.height = height;
+  this.width = Math.ceil(width);
+  this.height = Math.ceil(height);
 };
 /**
  * TODO: Not documented yet.
- * @param {*} width
- * @param {*} height
+ * @param {Number} width New width to use for the frame buffer.
+ * Throws an error if this value is less than 0.  The width will be set
+ * to this value rounded up.
+ * @param {Number} height New height to use for the frame buffer.
+ * Throws an error if this value is less than 0.  The height will be set
+ * to this value rounded up.
  * @memberof! H3DU.FrameBufferInfo#
 */
 H3DU.FrameBufferInfo.prototype.resize = function(width, height) {
   "use strict";
+  if(width &lt; 0 || height &lt; 0)throw new Error("width or height negative");
   width = Math.ceil(width);
   height = Math.ceil(height);
   this.width = width;
   this.height = height;
 };
 /**
- * TODO: Not documented yet.
+ * Gets the width to use for the frame buffer.
+* @return {Number} Return value.
  * @memberof! H3DU.FrameBufferInfo#
 */
 H3DU.FrameBufferInfo.prototype.getWidth = function() {
@@ -46,7 +61,8 @@ H3DU.FrameBufferInfo.prototype.getWidth = function() {
   return this.width;
 };
 /**
- * TODO: Not documented yet.
+ * Gets the height to use for the frame buffer.
+* @return {Number} Return value.
  * @memberof! H3DU.FrameBufferInfo#
 */
 H3DU.FrameBufferInfo.prototype.getHeight = function() {

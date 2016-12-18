@@ -29,6 +29,8 @@ at: http://peteroupc.github.io/
 * @class
 * @alias H3DU.MeshBuffer
 * @param {H3DU.Mesh} mesh A geometric mesh object.
+* A series of default attributes will be set based on that mesh's
+* data.
 */
 H3DU.MeshBuffer = function(mesh) {
   "use strict";
@@ -72,12 +74,23 @@ H3DU.MeshBuffer = function(mesh) {
   }
 };
 /**
- * TODO: Not documented yet.
- * @param {*} name
- * @param {*} buffer
- * @param {*} startIndex
- * @param {*} countPerVertex
- * @param {*} stride
+ * Adds information about a buffer attribute to this
+ * mesh buffer (or sets an
+ * existing attribute's information).  An attribute
+ * gives information about the per-vertex data used and
+ * stored in a vertex buffer.
+ * @param {String} name The name of the attribute.
+ * @param {Float32Array|Array} buffer The buffer where
+ * the per-vertex data is stored.
+ * @param {Number} startIndex The index into the array
+ * (starting from 0) where the first per-vertex
+ * item starts.
+ * @param {Number} countPerVertex The number of elements in each
+ * per-vertex item.  For example, if each vertex is a 3-element
+ * vector, this value is 3.
+ * @param {Number} stride The number of elements from the start of
+ * one per-vertex item to the start of the next.
+ * @return {H3DU.MeshBuffer} This object.
  * @memberof! H3DU.MeshBuffer#
 */
 H3DU.MeshBuffer.prototype.setAttribute = function(
@@ -96,6 +109,7 @@ H3DU.MeshBuffer.prototype.setAttribute = function(
   } else {
     this.attributes.push([name, startIndex, buffer, countPerVertex, stride]);
   }
+  return this;
 };
 
 /** @private */
@@ -116,7 +130,7 @@ H3DU.MeshBuffer.prototype._getAttribute = function(name) {
 /**
  * Gets the number of primitives (triangles, lines,
 * and points) composed by all shapes in this mesh.
-* @param {*} Return value.
+* @param {Number} Return value.
 * @memberof! H3DU.MeshBuffer#
 */
 H3DU.MeshBuffer.prototype.primitiveCount = function() {
@@ -171,10 +185,12 @@ H3DU.MeshBuffer.prototype.getBounds = function() {
   return this._bounds;
 };
 /**
- * TODO: Not documented yet.
+ * Gets the type of primitive stored in this mesh buffer.
+* @return {Number} Either {@link H3DU.Mesh.TRIANGLES},
+ {@link H3DU.Mesh.LINES}, or {@link H3DU.Mesh.POINTS}.
  * @memberof! H3DU.MeshBuffer#
 */
-H3DU.MeshBuffer.prototype.getType = function() {
+H3DU.MeshBuffer.prototype.primitiveType = function() {
   "use strict";
   if((this.format &amp; H3DU.Mesh.LINES_BIT) !== 0)
     return H3DU.Mesh.LINES;

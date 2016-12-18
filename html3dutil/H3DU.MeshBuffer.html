@@ -29,7 +29,7 @@
 
     <h4 style="margin-bottom:0px" id="MeshBuffer"><span style="font-weight:lighter"></span>new MeshBuffer<span class="signature">(mesh)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line17">line 17</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line19">line 19</a>
      </i></small></p>
 
 <div class="description">
@@ -50,7 +50,9 @@
 )
 
            </dt><dd>
-           A geometric mesh object.</dd>
+           A geometric mesh object.
+A series of default attributes will be set based on that mesh's
+data.</dd>
 
     </dl>
 
@@ -64,7 +66,7 @@
 
     <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#getBounds<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line127">line 127</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line141">line 141</a>
      </i></small></p>
 
 <div class="description">
@@ -90,22 +92,9 @@ If the mesh buffer is empty or has no attribute named
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="getType"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#getType<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line161">line 161</a>
-     </i></small></p>
-
-<div class="description">
-    TODO: Not documented yet.
-</div>
-
-<dl class="details">
-
-</dl>
-
     <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#primitiveCount<span class="signature">(Return)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line106">line 106</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line120">line 120</a>
      </i></small></p>
 
 <div class="description">
@@ -122,7 +111,7 @@ and points) composed by all shapes in this mesh.
                 <code>Return</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
@@ -135,13 +124,41 @@ and points) composed by all shapes in this mesh.
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id="setAttribute"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#setAttribute<span class="signature">(name, buffer, startIndex, countPerVertex, stride)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="primitiveType"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#primitiveType<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line67">line 67</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line177">line 177</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Gets the type of primitive stored in this mesh buffer.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Either <a href="H3DU.html#.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
+ <a href="H3DU.html#.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.html#.Mesh.POINTS">H3DU.Mesh.POINTS</a>.
+
+     (Type:
+<span class="param-type">Number</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="setAttribute"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#setAttribute<span class="signature">(name, buffer, startIndex, countPerVertex, stride)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line80">line 80</a>
+     </i></small></p>
+
+<div class="description">
+    Adds information about a buffer attribute to this
+mesh buffer (or sets an
+existing attribute's information).  An attribute
+gives information about the per-vertex data used and
+stored in a vertex buffer.
 </div>
 
     <h5>Parameters:</h5>
@@ -153,60 +170,69 @@ and points) composed by all shapes in this mesh.
                 <code>name</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">String</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The name of the attribute.</dd>
 
         <dt>
 
                 <code>buffer</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Float32Array</span>
+|
+
+<span class="param-type">Array</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The buffer where
+the per-vertex data is stored.</dd>
 
         <dt>
 
                 <code>startIndex</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The index into the array
+(starting from 0) where the first per-vertex
+item starts.</dd>
 
         <dt>
 
                 <code>countPerVertex</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The number of elements in each
+per-vertex item.  For example, if each vertex is a 3-element
+vector, this value is 3.</dd>
 
         <dt>
 
                 <code>stride</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Number</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The number of elements from the start of
+one per-vertex item to the start of the next.</dd>
 
     </dl>
 
@@ -214,9 +240,19 @@ and points) composed by all shapes in this mesh.
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    This object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#vertexCount<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line179">line 179</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line195">line 195</a>
      </i></small></p>
 
 <div class="description">

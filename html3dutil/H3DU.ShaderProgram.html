@@ -29,7 +29,7 @@
 
     <h4 style="margin-bottom:0px" id="ShaderProgram"><span style="font-weight:lighter"></span>new ShaderProgram<span class="signature">(context, vertexShader, fragmentShader)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line172">line 172</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line175">line 175</a>
      </i></small></p>
 
 <div class="description">
@@ -57,19 +57,24 @@ log is output to the JavaScript console.
                 <code>context</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">WebGLRenderingContext</span>
+|
+
+<span class="param-type">object</span>
 
 )
 
            </dt><dd>
-           </dd>
+           A WebGL context to associate with this scene, or an object, such as H3DU.Scene3D, that
+implements a no-argument <code>getContext</code> method
+that returns a WebGL context.</dd>
 
         <dt>
 
                 <code>vertexShader</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">String</span>
 
 )
 
@@ -81,7 +86,7 @@ log is output to the JavaScript console.
                 <code>fragmentShader</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">String</span>
 
 )
 
@@ -100,7 +105,7 @@ log is output to the JavaScript console.
 
     <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line248">line 248</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line251">line 251</a>
      </i></small></p>
 
 <div class="description">
@@ -113,7 +118,7 @@ log is output to the JavaScript console.
 
     <h4 style="margin-bottom:0px" id="get"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#get<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {number|WebGLUniformLocation|null}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line308">line 308</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line311">line 311</a>
      </i></small></p>
 
 <div class="description">
@@ -170,7 +175,7 @@ name, or null if it doesn't exist.
 
     <h4 style="margin-bottom:0px" id="getContext"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#getContext<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line263">line 263</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line266">line 266</a>
      </i></small></p>
 
 <div class="description">
@@ -181,9 +186,9 @@ name, or null if it doesn't exist.
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id="getUniform"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#getUniform<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {*}</span></h4>
+    <h4 style="margin-bottom:0px" id="getUniform"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#getUniform<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {Number|Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line323">line 323</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line326">line 326</a>
      </i></small></p>
 
 <div class="description">
@@ -222,13 +227,16 @@ vertex or fragment shader of this shader program.  See get().</dd>
 an attribute is named, not a uniform.
 
      (Type:
-<span class="param-type">*</span>)
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>)
 
 </div>
 
     <h4 style="margin-bottom:0px" id="setUniforms"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#setUniforms<span class="signature">(uniforms)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line384">line 384</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line387">line 387</a>
      </i></small></p>
 
 <div class="description">
@@ -244,7 +252,7 @@ an attribute is named, not a uniform.
                 <code>uniforms</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 )
 
@@ -259,7 +267,7 @@ an attribute is named, not a uniform.
 
     <h4 style="margin-bottom:0px" id="use"><span style="font-weight:lighter"></span>H3DU.ShaderProgram#use<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line364">line 364</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line367">line 367</a>
      </i></small></p>
 
 <div class="description">

@@ -564,40 +564,9 @@ to first vertex, in window coordinates (X and Y only), runs counterclockwise.
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="._FrenetFrames.normalFromTangent"><span style="font-weight:lighter">(static) </span>_FrenetFrames.normalFromTangent<span class="signature">(tangent)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_curvetube.js.html">extras/curvetube.js</a>, <a href="extras_curvetube.js.html#line83">line 83</a>
-     </i></small></p>
-
-<div class="description">
-    TODO: Not documented yet.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>tangent</code>
-
-                (
-<span class="param-type">*</span>
-
-)
-
-           </dt><dd>
-           </dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
     <h4 style="margin-bottom:0px" id=".Batch3D.forFilter"><span style="font-weight:lighter">(static) </span>Batch3D.forFilter<span class="signature">(scene, fbo, shader)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line420">line 420</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line416">line 416</a>
      </i></small></p>
 
 <div class="description">
@@ -625,7 +594,7 @@ to first vertex, in window coordinates (X and Y only), runs counterclockwise.
                 <code>fbo</code>
 
                 (
-<span class="param-type"><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></span>
+<span class="param-type"><a href="H3DU.html#.FrameBufferInfo">H3DU.FrameBufferInfo</a></span>
 
 )
 
@@ -1169,6 +1138,53 @@ This parameter can't be a negative number.</dd>
 
 </div>
 
+    <h4 style="margin-bottom:0px" id=".FrameBufferInfo"><span style="font-weight:lighter">(static) </span>FrameBufferInfo<span class="signature">(width, height)</span><span style="font-weight:lighter"></span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-framebufferinfo.js.html">h3du-framebufferinfo.js</a>, <a href="h3du-framebufferinfo.js.html#line14">line 14</a>
+     </i></small></p>
+
+<div class="description">
+    TODO: Not documented yet.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>width</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Width to use for the frame buffer.
+Throws an error if this value is less than 0.  The width will be set
+to this value rounded up.</dd>
+
+        <dt>
+
+                <code>height</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Height to use for the frame buffer.
+Throws an error if this value is less than 0.  The height will be set
+to this value rounded up.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
     <h4 style="margin-bottom:0px" id=".get3DContext"><span style="font-weight:lighter">(static) </span>get3DContext<span class="signature">(canvasElement, err)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line172">line 172</a>
@@ -1311,8 +1327,8 @@ its work.
                     &lt;optional>
 
            </dt><dd>
-           a function called as each
-  individual promise is resolved; optional</dd>
+           A function called as each
+  individual promise is resolved.</dd>
 
         <dt>
 
@@ -1326,8 +1342,8 @@ its work.
                     &lt;optional>
 
            </dt><dd>
-           a function called as each
-  individual promise is rejected; optional</dd>
+           A function called as each
+  individual promise is rejected.</dd>
 
     </dl>
 
@@ -1619,158 +1635,6 @@ from JSON.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id=".Material.forShader"><span style="font-weight:lighter">(static) </span>Material.forShader<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line314">line 314</a>
-     </i></small></p>
-
-<div class="description">
-    TODO: Not documented yet.
-</div>
-
-<dl class="details">
-
-</dl>
-
-    <h4 style="margin-bottom:0px" id=".Material.fromColor"><span style="font-weight:lighter">(static) </span>Material.fromColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line292">line 292</a>
-     </i></small></p>
-
-<div class="description">
-    Convenience method that returns an H3DU.Material
-object from an RGBA color.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>r</code>
-
-                (
-<span class="param-type">Array.&lt;Number></span>
-|
-
-<span class="param-type">number</span>
-|
-
-<span class="param-type">string</span>
-
-)
-
-           </dt><dd>
-           A <a href="H3DU.html#.toGLColor">color vector or string</a>,
-or the red color component (0-1).</dd>
-
-        <dt>
-
-                <code>g</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
-
-        <dt>
-
-                <code>b</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
-
-        <dt>
-
-                <code>a</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Alpha color component (0-1).
-If the "r" parameter is given and this parameter is null or omitted,
-this value is treated as 1.0.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    The resulting material object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".Material.fromTexture"><span style="font-weight:lighter">(static) </span>Material.fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line306">line 306</a>
-     </i></small></p>
-
-<div class="description">
-    Convenience method that returns an H3DU.Material
-object from a texture to apply to a 3D object's surface.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>texture</code>
-
-                (
-<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>
-|
-
-<span class="param-type">string</span>
-
-)
-
-           </dt><dd>
-           <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the
-URL of the texture data.  In the case of a string the texture will be loaded via
- the JavaScript DOM's Image class.  However, this constructor
- will not load that image yet.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    The resulting material object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>)
-
-</div>
-
     <h4 style="margin-bottom:0px" id=".Math.quatScaleInPlace"><span style="font-weight:lighter">(static) </span>Math.quatScaleInPlace<span class="signature">(a, scalar)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du-math.js.html">h3du-math.js</a>, <a href="h3du-math.js.html#line2191">line 2191</a>
@@ -1925,7 +1789,7 @@ milliseconds since the page was loaded.</dd>
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.getDefaultFragment"><span style="font-weight:lighter">(static) </span>ShaderProgram.getDefaultFragment<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line651">line 651</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line655">line 655</a>
      </i></small></p>
 
 <div class="description">
@@ -1952,7 +1816,7 @@ as SHADING is also enabled).
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.getDefaultVertex"><span style="font-weight:lighter">(static) </span>ShaderProgram.getDefaultVertex<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line597">line 597</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line601">line 601</a>
      </i></small></p>
 
 <div class="description">
@@ -1976,7 +1840,7 @@ at the start of the return value enables the lighting model.
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.getEdgeDetectEffect"><span style="font-weight:lighter">(static) </span>ShaderProgram.getEdgeDetectEffect<span class="signature">(context<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line535">line 535</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line539">line 539</a>
      </i></small></p>
 
 <div class="description">
@@ -1993,7 +1857,7 @@ the source texture's edges.
                 <code>context</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 )
 
@@ -2020,7 +1884,7 @@ the source texture's edges.
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.getInvertEffect"><span style="font-weight:lighter">(static) </span>ShaderProgram.getInvertEffect<span class="signature">(context<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line520">line 520</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line524">line 524</a>
      </i></small></p>
 
 <div class="description">
@@ -2036,7 +1900,7 @@ the source texture's edges.
                 <code>context</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 )
 
@@ -2063,7 +1927,7 @@ the source texture's edges.
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.makeCopyEffect"><span style="font-weight:lighter">(static) </span>ShaderProgram.makeCopyEffect<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line477">line 477</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line480">line 480</a>
      </i></small></p>
 
 <div class="description">
@@ -2076,7 +1940,7 @@ the source texture's edges.
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.makeEffect"><span style="font-weight:lighter">(static) </span>ShaderProgram.makeEffect<span class="signature">(context, functionCode)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line509">line 509</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line512">line 512</a>
      </i></small></p>
 
 <div class="description">
@@ -2093,7 +1957,7 @@ a raster effect (postprocessing effect) to a texture.
                 <code>context</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 )
 
@@ -2141,7 +2005,7 @@ constants, functions, and so on (but not another "main" function).</dd>
 
     <h4 style="margin-bottom:0px" id=".ShaderProgram.makeEffectFragment"><span style="font-weight:lighter">(static) </span>ShaderProgram.makeEffectFragment<span class="signature">(functionCode)</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line458">line 458</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line461">line 461</a>
      </i></small></p>
 
 <div class="description">
@@ -2183,7 +2047,7 @@ a raster effect to a texture.
 
     <h4 style="margin-bottom:0px" id=".TextFont.load"><span style="font-weight:lighter">(static) </span>TextFont.load<span class="signature">(fontFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextFont.html">H3DU.TextFont</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line842">line 842</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line847">line 847</a>
      </i></small></p>
 
 <div class="description">
@@ -2431,13 +2295,15 @@ is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id=".TextureAtlas.load"><span style="font-weight:lighter">(static) </span>TextureAtlas.load<span class="signature">(fontFileName)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id=".TextureAtlas.load"><span style="font-weight:lighter">(static) </span>TextureAtlas.load<span class="signature">(atlasFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextFont.html">H3DU.TextFont</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1235">line 1235</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1251">line 1251</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Loads a texture atlas definition from a file.
+Note that this method only loads the texture atlas data and not the bitmaps
+used by the texture atlas.
 </div>
 
     <h5>Parameters:</h5>
@@ -2446,15 +2312,15 @@ is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
 
         <dt>
 
-                <code>fontFileName</code>
+                <code>atlasFileName</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">String</span>
 
 )
 
            </dt><dd>
-           </dd>
+           The URL of the texture atlas to load.</dd>
 
     </dl>
 
@@ -2462,9 +2328,21 @@ is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that is resolved
+when the texture atlas data is loaded successfully (the result will be
+an H3DU.TextFont object), and is rejected when an error occurs.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextFont.html">H3DU.TextFont</a>></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id=".TextureAtlas.loadWithTextures"><span style="font-weight:lighter">(static) </span>TextureAtlas.loadWithTextures<span class="signature">(atlasFileName, textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1211">line 1211</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1222">line 1222</a>
      </i></small></p>
 
 <div class="description">

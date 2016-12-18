@@ -47,7 +47,7 @@ is not discussed in this page.</li>
 <li>A <em>view matrix</em> transforms coordinates in world space to <em>camera space</em> or <em>eye space</em>.</li>
 <li>A <em>projection matrix</em> transforms coordinates in camera space to <em>clip space</em>.</li>
 <li>Additionally, the graphics pipeline (outside the HTML 3D library) converts the
-clip space coordinates to <em>normalized device coordinates</em>, then <em>screen space</em>
+clip space coordinates to <em>normalized device coordinates</em>, then <em>window space</em>
 coordinates when drawing objects on the screen.</li>
 </ul>
 <h2>Projection Transform <a id=Projection_Transform></a></h2><p>A <em>projection matrix</em> transforms coordinates in camera space to <em>clip space</em>.</p>
@@ -182,15 +182,8 @@ This is optional.  The default is [0, 1, 0].</li>
 <ul>
 <li><code>matrix</code> - The 4x4 matrix to use.</li>
 </ul>
-<h2>Projection and View Matrices in the Graphics System <a id=Projection_and_View_Matrices_in_the_Graphics_System></a></h2><p>The concepts of <em>eye space</em> and <em>world space</em>, as well as the concepts of <em>projection</em>, <em>view</em>, <em>model-view</em>,
-and <em>world</em> matrices, are merely conventions, which exist for convenience in the HTML 3D Library and
-many other 3D graphics libraries.</p>
-<p>When the 3D canvas graphics system draws a triangle, line or point, all it really expects is the location of the figure's
-vertices in <em>clip space</em>, which is a normalized space with a fixed range.  A so-called <em>vertex shader</em>  communicates
-those locations to the graphics system using the input it's given.  Although the vertex shader can use projection,
-view, and world matrices to help it find a vertex's clip space coordinates, it doesn't have to, and can use a different
-paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already
-in clip space and just output those coordinates without transforming them.</p>
+<h2>Projection and View Matrices in the Graphics System <a id=Projection_and_View_Matrices_in_the_Graphics_System></a></h2><p>The concepts of <em>eye space</em>, <em>camera space</em>, and <em>world space</em>, as well as the concepts of <em>projection</em>, <em>view</em>, <em>model-view</em>, and <em>world</em> matrices, are merely conventions, which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.</p>
+<p>When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point, all it really expects is the location of that primitive's vertices in <em>clip space</em>, which is a normalized space with a fixed range.  A so-called <em>vertex shader</em>  communicates those locations to the graphics pipeline using the input it's given.  Although the vertex shader can use projection, view, and world matrices to help it find a vertex's clip space coordinates, it doesn't have to, and can use a different paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already in clip space and just output those coordinates without transforming them.</p>
 <h2>Other Pages <a id=Other_Pages></a></h2><p>The following pages of mine on CodeProject also discuss this library:</p>
 <ul>
 <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>

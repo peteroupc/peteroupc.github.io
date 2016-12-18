@@ -304,6 +304,7 @@ H3DU.Material.prototype.setParams = function(params) {
 * If the "r" parameter is given and this parameter is null or omitted,
 * this value is treated as 1.0.
 * @returns {H3DU.Material} The resulting material object.
+* @memberof! H3DU.Material
  */
 H3DU.Material.fromColor = function(r, g, b, a) {
   "use strict";
@@ -318,6 +319,7 @@ H3DU.Material.fromColor = function(r, g, b, a) {
 *  the JavaScript DOM's Image class.  However, this constructor
 *  will not load that image yet.
 * @returns {H3DU.Material} The resulting material object.
+ * @memberof! H3DU.Material
  */
 H3DU.Material.fromTexture = function(texture) {
   "use strict";
@@ -325,8 +327,12 @@ H3DU.Material.fromTexture = function(texture) {
 };
 
 /**
-* TODO: Not documented yet.
-*/
+ * Convenience method that returns an H3DU.Material
+ * object from a shader information object to use when drawing a 3D object.
+* @param {H3DU.ShaderInfo} shader Shader information object to use.
+* @returns {H3DU.Material} The resulting material object.
+ * @memberof! H3DU.Material
+ */
 H3DU.Material.forShader = function(shader) {
   "use strict";
   return new H3DU.Material().setParams({"shader":shader});

@@ -178,7 +178,7 @@ function frustumMesh(frustum){
    }
     spheres.addShape(shape);
   }
-  sub.addShape(new H3DU.Shape(mesh).setMaterialParams({basic:true}));
+  sub.addShape(new H3DU.Shape(mesh));
   sub.addShape(spheres);
   // Set up the render loop
   H3DU.renderLoop(function(){

@@ -51,7 +51,7 @@ the HTML 3D Library.  Example:<pre>
 
     <h4 style="margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(str)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1719">line 1719</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1725">line 1725</a>
      </i></small></p>
 
 <div class="description">
@@ -585,7 +585,7 @@ path's start position, if necessary.
 
     <h4 style="margin-bottom:0px" id="difference"><span style="font-weight:lighter"></span>GraphicsPath#difference<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1301">line 1301</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1245">line 1245</a>
      </i></small></p>
 
 <div class="description">
@@ -868,7 +868,7 @@ is 1.
 
     <h4 style="margin-bottom:0px" id="getTriangles"><span style="font-weight:lighter"></span>GraphicsPath#getTriangles<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;Number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line2344">line 2344</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line2350">line 2350</a>
      </i></small></p>
 
 <div class="description">
@@ -925,7 +925,7 @@ in that order).
 
     <h4 style="margin-bottom:0px" id="intersection"><span style="font-weight:lighter"></span>GraphicsPath#intersection<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1321">line 1321</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1265">line 1265</a>
      </i></small></p>
 
 <div class="description">
@@ -1243,7 +1243,7 @@ at this path's current position.
 
     <h4 style="margin-bottom:0px" id="rect"><span style="font-weight:lighter"></span>GraphicsPath#rect<span class="signature">(x, y, width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1672">line 1672</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1678">line 1678</a>
      </i></small></p>
 
 <div class="description">
@@ -1415,13 +1415,14 @@ See <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a>.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="transform"><span style="font-weight:lighter"></span>GraphicsPath#transform<span class="signature">(trans)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="transform"><span style="font-weight:lighter"></span>GraphicsPath#transform<span class="signature">(trans)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1602">line 1602</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1608">line 1608</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Returns a modified version of this path that is transformed
+according to the given affine transform.
 </div>
 
     <h5>Parameters:</h5>
@@ -1433,12 +1434,16 @@ See <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a>.
                 <code>trans</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type">Array.&lt;Number></span>
 
 )
 
            </dt><dd>
-           </dd>
+           An array of six numbers
+describing a 2-dimensional affine transformation.  For each
+point in the current path, its new X coordinate is `trans[0] * X +
+trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
+trans[3] * Y + trans[5]`.</dd>
 
     </dl>
 
@@ -1446,9 +1451,19 @@ See <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a>.
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The transformed version of this path.
+
+     (Type:
+<span class="param-type"><a href="GraphicsPath.html">GraphicsPath</a></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="union"><span style="font-weight:lighter"></span>GraphicsPath#union<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1281">line 1281</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1225">line 1225</a>
      </i></small></p>
 
 <div class="description">
@@ -1521,7 +1536,7 @@ value, given in units.  If null or omitted, default is 1.</dd>
 
     <h4 style="margin-bottom:0px" id="xor"><span style="font-weight:lighter"></span>GraphicsPath#xor<span class="signature">(path, flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1341">line 1341</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_pathclip.js.html">extras/pathclip.js</a>, <a href="extras_pathclip.js.html#line1285">line 1285</a>
      </i></small></p>
 
 <div class="description">

@@ -349,6 +349,187 @@ of each part of the material.
 
         <h3 class="subsection-title">Methods</h3>
 
+    <h4 style="margin-bottom:0px" id=".forShader"><span style="font-weight:lighter"></span>.forShader<span class="signature">(shader)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line320">line 320</a>
+     </i></small></p>
+
+<div class="description">
+    Convenience method that returns an H3DU.Material
+object from a shader information object to use when drawing a 3D object.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>shader</code>
+
+                (
+<span class="param-type"><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></span>
+
+)
+
+           </dt><dd>
+           Shader information object to use.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting material object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter"></span>.fromColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line293">line 293</a>
+     </i></small></p>
+
+<div class="description">
+    Convenience method that returns an H3DU.Material
+object from an RGBA color.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>r</code>
+
+                (
+<span class="param-type">Array.&lt;Number></span>
+|
+
+<span class="param-type">number</span>
+|
+
+<span class="param-type">string</span>
+
+)
+
+           </dt><dd>
+           A <a href="H3DU.html#.toGLColor">color vector or string</a>,
+or the red color component (0-1).</dd>
+
+        <dt>
+
+                <code>g</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Green color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
+
+        <dt>
+
+                <code>b</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+           </dt><dd>
+           Blue color component (0-1).
+May be null or omitted if a string or array is given as the "r" parameter.</dd>
+
+        <dt>
+
+                <code>a</code>
+
+                (
+<span class="param-type">Number</span>
+
+)
+
+                    &lt;optional>
+
+           </dt><dd>
+           Alpha color component (0-1).
+If the "r" parameter is given and this parameter is null or omitted,
+this value is treated as 1.0.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting material object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter"></span>.fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line308">line 308</a>
+     </i></small></p>
+
+<div class="description">
+    Convenience method that returns an H3DU.Material
+object from a texture to apply to a 3D object's surface.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>texture</code>
+
+                (
+<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>
+|
+
+<span class="param-type">string</span>
+
+)
+
+           </dt><dd>
+           <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the
+URL of the texture data.  In the case of a string the texture will be loaded via
+ the JavaScript DOM's Image class.  However, this constructor
+ will not load that image yet.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting material object.
+
+     (Type:
+<span class="param-type"><a href="H3DU.Material.html">H3DU.Material</a></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.Material#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line177">line 177</a>

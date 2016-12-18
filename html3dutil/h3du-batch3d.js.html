@@ -47,9 +47,7 @@ H3DU.Batch3D._PerspectiveView = function(scene, fov, near, far) {
   this.far = far;
   this.scene = scene;
   this.lastAspect = null;
-/**
- * TODO: Not documented yet.
- */
+/** @private */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect) {
@@ -71,9 +69,7 @@ H3DU.Batch3D._OrthoView = function(scene, a, b, c, d, e, f) {
   this.f = f;
   this.scene = scene;
   this.lastAspect = null;
-/**
- * TODO: Not documented yet.
- */
+/** @private */
   this.update = function(width, height) {
     var aspect = width * 1.0 / height;
     if(aspect !== this.lastAspect) {

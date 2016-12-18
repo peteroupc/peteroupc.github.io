@@ -243,10 +243,10 @@ var H3DU = {
  * resolves after the given list of promises finishes
  * its work.
  * @param {Array&lt;Promise>} promises - an array containing promise objects
- *  @param {Function} [progressResolve] - a function called as each
- *   individual promise is resolved; optional
- *  @param {Function} [progressReject] - a function called as each
- *   individual promise is rejected; optional
+ *  @param {Function} [progressResolve] A function called as each
+ *   individual promise is resolved.
+ *  @param {Function} [progressReject] A function called as each
+ *   individual promise is rejected.
  * @returns {Promise} A promise that is never rejected and resolves when
 * all of the promises are each resolved or rejected. The result
  * of the promise will be an object with

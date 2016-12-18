@@ -132,7 +132,8 @@ MtlData.prototype._resolveTextures = function() {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} name
+ * @param {String} name
+* @return {Object}
  * @memberof! MtlData#
 */
 MtlData.prototype.getMaterial = function(name) {
@@ -215,7 +216,7 @@ MtlData._getMaterial = function(mtl) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} url
+ * @param {String} url The URL to load the material data file from.
  */
 ObjData.loadMtlFromUrl = function(url) {
   "use strict";
@@ -240,7 +241,6 @@ ObjData.loadMtlFromUrl = function(url) {
  * material file, if available), along with the textures it uses,
  * asynchronously.
  * @param {String} url The URL to load.
- * @param {*} url
  * @param {TextureLoader} textureLoader An object to load
  * textures with.
  */

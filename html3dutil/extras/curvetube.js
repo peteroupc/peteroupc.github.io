@@ -7,6 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 /* global H3DU */
+/** @private */
 H3DU._FrenetFrames = function(func) {
   "use strict";
   this.func = func;
@@ -76,10 +77,7 @@ H3DU._FrenetFrames = function(func) {
     }
   }
 };
-/**
- * TODO: Not documented yet.
- * @param {*} tangent
- */
+/** @private */
 H3DU._FrenetFrames.normalFromTangent = function(tangent) {
   "use strict";
   var absx = Math.abs(tangent[0]);
@@ -102,6 +100,7 @@ H3DU._FrenetFrames.normalFromTangent = function(tangent) {
   }
   return H3DU.Math.vec3normInPlace(normal);
 };
+/** @private */
 H3DU._FrenetFrames._EPSILON = 0.000001;
 /** @private */
 H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {

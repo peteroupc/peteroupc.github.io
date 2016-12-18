@@ -64,7 +64,7 @@ H3DU.ShaderInfo.prototype.copy = function() {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} uniforms
+ * @param {Object} uniforms
  * @memberof! H3DU.ShaderInfo#
 */
 H3DU.ShaderInfo.prototype.setUniforms = function(uniforms) {
@@ -181,9 +181,12 @@ H3DU.ShaderInfo._setUniformsInternal = function(uniforms, outputUniforms, change
 * log is output to the JavaScript console.
  * @class
  * @alias H3DU.ShaderProgram
- * @param {*} context
- * @param {*} vertexShader
- * @param {*} fragmentShader
+ * @param {WebGLRenderingContext|object} context
+ * A WebGL context to associate with this scene, or an object, such as H3DU.Scene3D, that
+* implements a no-argument &lt;code>getContext&lt;/code> method
+* that returns a WebGL context.
+ * @param {String} vertexShader
+ * @param {String} fragmentShader
  */
 H3DU.ShaderProgram = function(context, vertexShader, fragmentShader) {
   "use strict";
@@ -332,7 +335,7 @@ H3DU.ShaderProgram.prototype.get = function(name) {
 * active program in the WebGL context.
 * @param {String} name The name of a uniform defined in either the
 * vertex or fragment shader of this shader program.  See get().
-* @returns {*} The uniform's value, or null if it doesn't exist or if
+* @returns {Number|Array&lt;Number>} The uniform's value, or null if it doesn't exist or if
 * an attribute is named, not a uniform.
 * @memberof! H3DU.ShaderProgram#
 */
@@ -394,7 +397,7 @@ H3DU.ShaderProgram.prototype._update = function() {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} uniforms
+ * @param {Object} uniforms
  * @memberof! H3DU.ShaderProgram#
 */
 H3DU.ShaderProgram.prototype.setUniforms = function(uniforms) {
@@ -507,7 +510,7 @@ H3DU.ShaderProgram.makeCopyEffect = function() {
 /**
 * Generates a shader program for applying
 * a raster effect (postprocessing effect) to a texture.
-* @param {*} context No longer used; ignored.
+* @param {Object} context No longer used; ignored.
 * @param {String} functionCode A string giving shader code
 * in OpenGL ES Shading Language (GLSL) that must contain
 * a function with the following signature:
@@ -523,6 +526,7 @@ H3DU.ShaderProgram.makeCopyEffect = function() {
 * @returns {H3DU.ShaderInfo} The resulting shader program.
 */
 H3DU.ShaderProgram.makeEffect = function(context, functionCode) {
+ // TODO: Maybe make it a one-argument method, optionally
   "use strict";
   return new H3DU.ShaderInfo(
    H3DU.ShaderProgram.getBasicVertex(),
@@ -530,7 +534,7 @@ H3DU.ShaderProgram.makeEffect = function(context, functionCode) {
 };
 /**
 * Generates a shader program that inverts the colors of a texture.
-* @param {*} [context] No longer used; ignored.
+* @param {Object} [context] No longer used; ignored.
 * @returns {H3DU.ShaderInfo} The resulting shader program.
 */
 H3DU.ShaderProgram.getInvertEffect = function() {
@@ -545,7 +549,7 @@ H3DU.ShaderProgram.getInvertEffect = function() {
 /**
 * Generates a shader program that generates a two-color texture showing
 * the source texture's edges.
-* @param {*} [context] No longer used; ignored.
+* @param {Object} [context] No longer used; ignored.
 * @returns {H3DU.ShaderInfo} The resulting shader program.
 */
 H3DU.ShaderProgram.getEdgeDetectEffect = function() {

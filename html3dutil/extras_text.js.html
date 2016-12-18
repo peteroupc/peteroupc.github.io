@@ -826,8 +826,13 @@ H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
   });
 };
 /**
- * TODO: Not documented yet.
- * @param {*} textureLoader
+ * Loads the texture files used by this font object.
+ * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
+ * loading the textures.
+ * @returns {Promise&lt;H3DU.Texture>} A promise as described in
+ * {@link H3DU.getPromiseResultsAll}.  If the promise
+ * resolves, each item in the resulting array will be a loaded
+ * {@link H3DU.Texture} object.
  * @memberof! H3DU.TextFont#
 */
 H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
@@ -930,6 +935,7 @@ H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textSha
 /////////////////
 
 /**
+ * TODO: Not documented yet.
 * @class
 * @alias H3DU.TextureAtlas
 */
@@ -941,7 +947,7 @@ H3DU.TextureAtlas = function() {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} sprites
+ * @param {Array&lt;Object>} sprites
  * @memberof! H3DU.TextureAtlas#
 */
 H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
@@ -1187,8 +1193,13 @@ H3DU.TextureAtlas._loadText = function(data) {
   return ret;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} textureLoader
+ * Loads the texture files used by this texture atlas.
+ * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
+ * loading the textures.
+ * @returns {Promise&lt;H3DU.Texture>} A promise as described in
+ * {@link H3DU.getPromiseResultsAll}.  If the promise
+ * resolves, each item in the resulting array will be a loaded
+ * {@link H3DU.Texture} object.
  * @memberof! H3DU.TextureAtlas#
 */
 H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
@@ -1245,12 +1256,17 @@ H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
   });
 };
 /**
- * TODO: Not documented yet.
- * @param {*} fontFileName
+* Loads a texture atlas definition from a file.
+* Note that this method only loads the texture atlas data and not the bitmaps
+* used by the texture atlas.
+* @param {String} atlasFileName The URL of the texture atlas to load.
+* @returns {Promise&lt;H3DU.TextFont>} A promise that is resolved
+* when the texture atlas data is loaded successfully (the result will be
+* an H3DU.TextFont object), and is rejected when an error occurs.
  */
-H3DU.TextureAtlas.load = function(fontFileName) {
+H3DU.TextureAtlas.load = function(atlasFileName) {
   "use strict";
-  return H3DU.loadFileFromUrl(fontFileName, "arraybuffer").then(
+  return H3DU.loadFileFromUrl(atlasFileName, "arraybuffer").then(
    function(data) {
      var view = new DataView(data.data);
      var ret = H3DU.TextureAtlas._loadText({

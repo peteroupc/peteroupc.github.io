@@ -79,13 +79,13 @@ the HTML 3D Library.  Example:<pre>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="loadTextures"><span style="font-weight:lighter"></span>H3DU.TextFont#loadTextures<span class="signature">(textureLoader)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="loadTextures"><span style="font-weight:lighter"></span>H3DU.TextFont#loadTextures<span class="signature">(textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line817">line 817</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line822">line 822</a>
      </i></small></p>
 
 <div class="description">
-    TODO: Not documented yet.
+    Loads the texture files used by this font object.
 </div>
 
     <h5>Parameters:</h5>
@@ -97,18 +97,32 @@ the HTML 3D Library.  Example:<pre>
                 <code>textureLoader</code>
 
                 (
-<span class="param-type">*</span>
+<span class="param-type"><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></span>
 
 )
 
            </dt><dd>
-           </dd>
+           Texture loader object to use when
+loading the textures.</dd>
 
     </dl>
 
 <dl class="details">
 
 </dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise as described in
+<a href="H3DU.html#.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>.  If the promise
+resolves, each item in the resulting array will be a loaded
+<a href="H3DU.Texture.html">H3DU.Texture</a> object.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>></span>)
+
+</div>
 
     <h4 style="margin-bottom:0px" id="makeTextMeshes"><span style="font-weight:lighter"></span>H3DU.TextFont#makeTextMeshes<span class="signature">(string, params)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Mesh>}</span></h4>
 

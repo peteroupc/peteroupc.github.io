@@ -639,11 +639,7 @@
     }
     return false;
   };
-/**
- * TODO: Not documented yet.
- * @param {*} s
- * @memberof! Connector#
-*/
+/** @private */
   Connector.prototype.add = function(s) {
     var j = this.openPolygons.first();
     while(j) {
@@ -669,10 +665,7 @@
     chain.init(s);
     this.openPolygons.push(chain);
   };
-/**
- * TODO: Not documented yet.
- * @memberof! Connector#
-*/
+/** @private */
   Connector.prototype.toPolygon = function() {
     var polygon = new Polygon(null);
     var j = this.closedPolygons.first();
@@ -699,14 +692,7 @@
   Clipper.NON_CONTRIBUTING = 1;
   Clipper.SAME_TRANSITION = 2;
   Clipper.DIFFERENT_TRANSITION = 3;
-/**
- * TODO: Not documented yet.
- * @param {*} pp
- * @param {*} b
- * @param {*} apl
- * @param {*} o
- * @param {*} t
- */
+/** @private */
   Clipper.SweepEvent = function(pp, b, apl, o, t) {
     this.p = pp;
     this.id = -1;
@@ -733,12 +719,7 @@
   Clipper.SweepEvent.prototype.toString = function() {
     return Clipper._print(this);
   };
-/**
- * TODO: Not documented yet.
- * @param {*} a
- * @param {*} b
- * @param {*} c
- */
+/** @private */
   Clipper.signedArea = function(a, b, c) {
     var xa = a[0] - c[0];
     var ya = a[1] - c[1];
@@ -764,11 +745,7 @@
   // Same point, both events are left endpoints or both are right endpoints. The event associate to the bottom segment is processed first
     return e1.above(e2.other.p);
   };
-/**
- * TODO: Not documented yet.
- * @param {*} e1
- * @param {*} e2
- */
+/** @private */
   Clipper.sweepEventCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.sweepEventComp(e1, e2) ? -1 : 1;
@@ -796,20 +773,12 @@
     }
     return Clipper.sweepEventComp(e1, e2);
   };
-/**
- * TODO: Not documented yet.
- * @param {*} e1
- * @param {*} e2
- */
+/** @private */
   Clipper.segmentCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.segmentComp(e1, e2) ? -1 : 1;
   };
-/**
- * TODO: Not documented yet.
- * @param {*} e
- * @memberof! Clipper#
-*/
+/** @private */
   Clipper.prototype.storeSweepEvent = function(e) {
     e.id = this.eventHolder.length;
     this.eventHolder.push(e);
@@ -824,11 +793,7 @@
          (e.inside ? " (Inside) " : " (Outside) ") +  (e.inOut ? " (In-Out) " : " (Out-In) ") + "Type: " +
          namesEventTypes[e.type] + " Polygon: " + (e.pl === Clipper.SUBJECT ? " (SUBJECT)" : " (CLIPPING)");
   };
-/**
- * TODO: Not documented yet.
- * @param {*} op
- * @memberof! Clipper#
-*/
+/** @private */
   Clipper.prototype.compute = function(op) {
   // Test 1 for trivial result case
     if(this.subject.ncontours() * this.clipping.ncontours() === 0) { // At least one of the polygons is empty
@@ -1003,12 +968,7 @@
     }
     return connector.toPolygon(result);
   };
-/**
- * TODO: Not documented yet.
- * @param {*} s
- * @param {*} pl
- * @memberof! Clipper#
-*/
+/** @private */
   Clipper.prototype.processSegment = function(s, pl) {
     if(Clipper._ptEq(s[0], s[1])) // if the two edge endpoints are equal the segment is dicarded
       return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
@@ -1027,13 +987,7 @@
     this.eq.push(e1);
     this.eq.push(e2);
   };
-/**
- * TODO: Not documented yet.
- * @param {*} a
- * @param {*} b
- * @param {*} e
- * @param {*} f
- */
+/** @private */
   Clipper.findIntersection = function(a, b, e, f) {
     var ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
   b[0][0], b[0][1], b[1][0], b[1][1]);
@@ -1143,12 +1097,7 @@
     return ret;
   };
 
-/**
- * TODO: Not documented yet.
- * @param {*} e1
- * @param {*} e2
- * @memberof! Clipper#
-*/
+/** @private */
   Clipper.prototype.possibleIntersection = function(e1, e2) {
 //  if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
 //    return false;
@@ -1225,12 +1174,7 @@
     sortedEvents[3].other.type = e1.inOut === e2.inOut ? Clipper.SAME_TRANSITION : Clipper.DIFFERENT_TRANSITION;
     this.divideSegment(sortedEvents[3].other, sortedEvents[2].p);
   };
-/**
- * TODO: Not documented yet.
- * @param {*} e
- * @param {*} p
- * @memberof! Clipper#
-*/
+/** @private */
   Clipper.prototype.divideSegment = function(e, p) {
   // "Right event" of the "left line segment" resulting from dividing e(the line segment associated to e)
     var r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
