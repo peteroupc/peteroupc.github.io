@@ -381,7 +381,7 @@ function blindsGroup(scene){
     new H3DU.RenderPass3D(subScene,{"frameBuffer":fbo}),
     new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo))
   ]
-  var fc=new FrameCounterDiv(scene)
+  var fc=new FrameCounterDiv()
   var blinds=blindsGroup(subScene)
   var platonic=platonicGroup(subScene)
   linknone();

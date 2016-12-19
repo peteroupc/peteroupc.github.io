@@ -107,7 +107,7 @@ var scene=new H3DU.Scene3D(document.getElementById("canvas"))
    // Move the camera back 40 units.
    .setLookAt([0,0,40]);
   sub.getLights().setDefaults();
-  var fc=new FrameCounterDiv(sub)
+  var fc=new FrameCounterDiv()
   // Generate a red-blue gradient texture
   var tex=horizontalGradient("red","blue");
    var mesh=H3DU.Meshes.createBox(10,20,20);

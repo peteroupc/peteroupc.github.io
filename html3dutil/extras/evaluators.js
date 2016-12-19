@@ -42,7 +42,8 @@ at: http://peteroupc.github.io/
 * Z-axis will be the axis of rotation.  This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
-* parameter need not be normalized to unit length.
+* parameter need not be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm}
+* with a length of 1).
 */
 var SurfaceOfRevolution = function(curve, minval, maxval, axis) {
   "use strict";
@@ -108,7 +109,8 @@ SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
-* parameter need not be normalized to unit length.
+* parameter need not be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm}
+* with a length of 1).
 * @returns {SurfaceOfRevolution} Return value.
  @example <caption>The following creates an evaluator for a cone
 * which starts at the origin and runs 10 units along the Z axis.</caption>
@@ -160,7 +162,8 @@ SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
 * This parameter is a 3-element array describing
 * the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
 * run in the direction from the origin to the point given in this parameter.  This
-* parameter need not be normalized to unit length.
+* parameter need not be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm}
+* with a length of 1).
 * @returns {SurfaceOfRevolution} Return value.*/
 SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
   "use strict";

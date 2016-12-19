@@ -168,7 +168,7 @@ addLink("Trochoid",function(){
   var sub=new H3DU.Batch3D()
   var camera=new Camera(sub,45,1,100, scene.getCanvas());
   camera.setDistance(5);
-  var pc=new PrimitiveCounter(sub)
+  var pc=new FrameCounterDiv()
   link0();
   sub.addShape(shapeGroup);
   H3DU.renderLoop(function(){

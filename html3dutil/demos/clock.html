@@ -116,7 +116,7 @@ function ClockShape(scene){
    .cullFace(H3DU.Scene3D.BACK)
   var sub=new H3DU.Batch3D();
   var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
-  var pc=new FrameCounterDiv(sub)
+  var pc=new FrameCounterDiv()
   var clock=new ClockShape(sub);
   document.getElementById("colorsetting").addEventListener("change",
    function(e){ clock.setColor(e.target.value) });

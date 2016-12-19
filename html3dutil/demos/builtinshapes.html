@@ -79,7 +79,7 @@ function sampleShape(num){
   var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
    .turnVertical(-90)
   var xyz=new H3DU.ShapeGroup();
-  var pc=new FrameCounterDiv(sub)
+  var pc=new FrameCounterDiv()
   var shape=null;
   var axisline=new H3DU.Shape(H3DU.Meshes.createCapsule(0.005,10,6,4));
   var zaxis=axisline.copy().setColor("blue")

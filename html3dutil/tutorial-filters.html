@@ -26,21 +26,25 @@ It also describes several examples of graphics filters.</p>
 <h2>Contents <a id=Contents></a></h2><p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Graphics_Filters">Graphics Filters</a><br><a href="#Writing_Graphics_Filters">Writing Graphics Filters</a><br><a href="#Using_Graphics_Filters">Using Graphics Filters</a><br><a href="#Sample_code">Sample code</a><br><a href="#Examples">Examples</a><br>&nbsp;&nbsp;<a href="#Grayscale">Grayscale</a><br>&nbsp;&nbsp;<a href="#Invert">Invert</a><br>&nbsp;&nbsp;<a href="#Red_Tint">Red Tint</a><br>&nbsp;&nbsp;<a href="#Mirror_Filter">Mirror Filter</a><br>&nbsp;&nbsp;<a href="#Matrix_Filter">Matrix Filter</a><br>&nbsp;&nbsp;<a href="#Pixelate_Filter">Pixelate Filter</a><br>&nbsp;&nbsp;<a href="#Wave_Filter">Wave Filter</a><br>&nbsp;&nbsp;<a href="#Waterpaint_Filter">Waterpaint Filter</a><br><a href="#Other_Pages">Other Pages</a><br></p>
 <h2>Graphics Filters <a id=Graphics_Filters></a></h2><p>In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame.  They are implemented in a language called GLSL, or GL
-Shading Language.  GLSL programs are called &quot;shaders&quot;, and they are compiled into code that runs on a GPU, or graphics processing unit.</p>
-<p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that process one pixel at a time.  GPUs can run shaders very fast because fragment shaders can process multiple pixels in parallel, without affecting the other pixels, and GPUs are often much better designed for parallel processing than CPUs.</p>
+Shading Language.  GLSL programs are called &quot;shaders&quot;, and they are compiled into code that runs on a
+GPU, or graphics processing unit.</p>
+<p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that process one pixel at a time.  GPUs
+can run shaders very fast because fragment shaders can process multiple pixels in parallel, without
+affecting the other pixels, and GPUs are often much better designed for parallel processing than CPUs.</p>
 <p>For graphics filters to work, the 3D scene must be rendered to an off-screen buffer called
 a <em>frame buffer</em>.  The frame buffer acts like a texture which will be rendered back to
 the screen with the help of the graphics filter's shader program.</p>
-<h2>Writing Graphics Filters <a id=Writing_Graphics_Filters></a></h2><p>In the HTML 3D Library, use the <code>makeEffect</code> method of the <code>H3DU.ShaderProgram</code> class to create
+<h2>Writing Graphics Filters <a id=Writing_Graphics_Filters></a></h2><p>In the HTML 3D Library, use the <code>makeEffect</code> method of the <code>H3DU.ShaderInfo</code> class to create
 graphics filters:</p>
 <ul>
-<li>The <code>H3DU.ShaderProgram</code> class holds data on shader programs.  Each shader program consists
-of a <em>vertex shader</em> and a <em>fragment shader</em>.  Graphics filters are essentially part of a fragment shader and thus process pixels.  (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)</li>
-<li>The <code>makeEffect</code> method creates a shader program and compiles it, using the graphics
-filter as part of the program's fragment shader.  Since shader programs must also have a vertex shader, the method also adds a very basic vertex shader for the graphics filter.</li>
+<li>The <code>H3DU.ShaderInfo</code> class holds data on shader programs.  Each shader program consists
+of a <em>vertex shader</em> and a <em>fragment shader</em>.  Graphics filters are essentially part of a fragment shader
+and thus process pixels.  (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)</li>
+<li>The <code>makeEffect</code> method generates the source code for a shader program, using the graphics
+filter as part of the program's fragment shader.  Since shader programs must also have a vertex shader, the method also adds a basic vertex shader for the graphics filter.</li>
 </ul>
 <p>The following is an example of a graphics filter.</p>
-<pre class="prettyprint source"><code>return H3DU.ShaderProgram.makeEffect(null,[
+<pre class="prettyprint source"><code>return H3DU.ShaderInfo.makeEffect([
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 // Read the current color from the sampler texture
 &quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
@@ -69,30 +73,44 @@ can be used in the <code>textureEffect</code> function.</p>
 <p>A detailed treatment of GLSL is outside the scope of this page.  More information about GLSL can
 be found by searching the Web; note that there are many versions of GLSL and the one used
 in HTML applications is relatively basic nowadays.  Also see below for more examples of graphics filters.</p>
-<h2>Using Graphics Filters <a id=Using_Graphics_Filters></a></h2><p>After a filter is created, follow these steps to apply it.</p>
-<p>TODO: Update this section to reflect major overhaul in use of graphics filters.</p>
-<p>It's simply set with the <code>useFilter</code> method of Scene3D.  After
-a filter is set, here's how it works:</p>
-<ul>
-<li>When the <code>useFilter</code> method is called to set a new graphics filter, the HTML 3D Library creates a <em>frame buffer</em>.  A frame buffer consists of a texture with the same size as the 3D canvas and a <em>renderbuffer</em>
-to use as the depth buffer.</li>
-<li>When the <code>render()</code> method is called each frame:<ul>
-<li>The library ensures that the frame buffer is the same size as the 3D canvas.</li>
-<li>The 3D library switches drawing to use the frame buffer rather than the 3D canvas, then
-switches the shader to the usual shaders for drawing the 3D scene.</li>
-<li>The current frame is rendered onto the frame buffer.  The frame buffer's texture will now contain a
-&quot;snapshot&quot; of the frame that can now be modified by graphics filters.</li>
-<li>The 3D library switches drawing back to the 3D canvas, then switches the shader
-to the graphics filter's shaders.</li>
-<li>A rectangle taking up the entire 3D canvas is drawn.  This is to allow each pixel of the texture to
-be passed to the graphics filter, and the filter's <code>textureEffect</code> method to be called for each pixel.
-Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.
-The graphics filter can either use the current pixel's color or change it for each pixel.
-As a result, a &quot;filtered&quot; version of the current frame will be drawn.</li>
-</ul>
-</li>
-</ul>
-<h2>Sample code <a id=Sample_code></a></h2><pre class="prettyprint source"><code>var currentFilter = /* create a graphics filter here */;
+<h2>Using Graphics Filters <a id=Using_Graphics_Filters></a></h2><p>To use a graphics filter, the application needs to prepare for its use by following these steps.</p>
+<p>First, create an object to hold information about a <em>frame buffer</em>.  A frame buffer is an array of
+pixels designed to be drawn off the screen.  This means that the scene's geometry is drawn
+not to the screen (or to the buffer the screen uses), but to a separate buffer, to be manipulated
+later by the application or re-drawn to the screen (or the screen buffer).  In the HTML 3D Library,
+each frame buffer consists of a texture of a given size and a <em>renderbuffer</em> of the same
+size to use as the depth buffer.</p>
+<pre class="prettyprint source"><code>var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());</code></pre><p>Note that we set the frame buffer's size to the current width and height of the scene.</p>
+<p>Then create an array of <em>rendering passes</em>.  The sample code below creates two
+passes: the first renders to a frame buffer, and the second renders the frame buffer's contents
+back to the screen.</p>
+<pre class="prettyprint source"><code>var renders = [
+  // The first batch renders the main batch's geometry to
+  // the frame buffer info we just created.
+  new H3DU.RenderPass3D(batch,{&quot;frameBuffer&quot;:fbo}),
+  // The next batch renders the frame buffer's contents
+  // back to the screen.
+  new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo))
+];</code></pre><p>And finally, pass the array of rendering passes to the <code>render</code> method each time
+the scene needs to be rendered.</p>
+<pre class="prettyprint source"><code>// Then, each time the scene needs to be rendered, call
+// this method
+scene.render(renders);</code></pre><p>When the <code>render()</code> method is called each frame using the rendering
+passes mentioned above, the following happens.</p>
+<pre class="prettyprint source"><code>* The 3D library renders the first pass.
+    * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
+       switches the shader to the usual shaders for drawing the 3D scene.
+    * The current frame is rendered onto the frame buffer.  The frame buffer's texture will now contain a
+      &quot;snapshot&quot; of the frame that can now be modified by graphics filters.
+ * Then, the library renders the second pass.
+    * The 3D library switches drawing back to the GL Canvas, then switches the shader
+       to the graphics filter's shaders.
+    * A rectangle taking up the entire GL Canvas is drawn.  This is to allow each pixel of the texture to
+       be passed to the graphics filter, and the filter's `textureEffect` method to be called for each pixel.
+      Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.
+      The graphics filter can either use the current pixel's color or change it for each pixel.
+      As a result, a &quot;filtered&quot; version of the current frame will be drawn.</code></pre><h2>Sample Code <a id=Sample_code></a></h2><p>Here is sample code for using a graphics filter.</p>
+<pre class="prettyprint source"><code>var currentFilter = /* create a graphics filter here */;
 // create a frame buffer info object
 var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());
 // create a batch containing the 3D objects
@@ -118,9 +136,9 @@ of graphics filters implemented as shaders.</p>
 <h3>Invert <a id=Invert></a></h3><p><img src="filters2.png" alt="Invert filtered image"></p>
 <p>The invert filter is built-in to the HTML 3D Library.  It inverts the colors of the screen so the effect looks
 like a film negative.</p>
-<p>This filter is implemented in the method <code>ShaderProgram.getInvertEffect()</code>:</p>
-<pre class="prettyprint source"><code>ShaderProgram.getInvertEffect=function(){
-return ShaderProgram.makeEffect(context,
+<p>This filter is implemented in the method <code>H3DU.ShaderInfo.getInvertEffect()</code>:</p>
+<pre class="prettyprint source"><code>H3DU.ShaderInfo.getInvertEffect=function(){
+return H3DU.ShaderInfo.makeEffect(context,
 [
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 &quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
@@ -129,7 +147,7 @@ return ShaderProgram.makeEffect(context,
 }</code></pre><h3>Red Tint <a id=Red_Tint></a></h3><p><img src="filters9.png" alt="Red Tint filtered image"></p>
 <p>The red tint filter adds a hint of red to the image.</p>
 <pre class="prettyprint source"><code>function makeRedTint(){
-return ShaderProgram.makeEffect(context,[
+return H3DU.ShaderInfo.makeEffect(context,[
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 &quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
 &quot; return vec4(color.r+0.3,color.g,color.b,color.a);&quot;,
@@ -139,7 +157,7 @@ return ShaderProgram.makeEffect(context,[
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
 the current X coordinate).</p>
 <pre class="prettyprint source"><code>function makeMirror(){
-return ShaderProgram.makeEffect(context,[
+return H3DU.ShaderInfo.makeEffect(context,[
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 &quot; vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));&quot;,
 &quot; return color;&quot;,
@@ -164,7 +182,7 @@ pixels, not just the current pixel, when implementing their effect.</p>
 This filter takes a uniform variable named <code>coarseness</code>, which indicates how many normal pixels
 each &quot;pixelated&quot; pixel takes up.</p>
 <pre class="prettyprint source"><code>function makePixelate(){
-return ShaderProgram.makeEffect(null,[
+return H3DU.ShaderInfo.makeEffect([
 &quot;uniform float coarseness;&quot;, // coarseness in pixels; 1 means normal
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 &quot; float g=max(coarseness,1.0);&quot;,
@@ -216,7 +234,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FrameCounterDiv">FrameCounterDiv</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

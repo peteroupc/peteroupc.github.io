@@ -8,7 +8,7 @@ at: http://peteroupc.github.io/
 */
 /* global H3DU, Promise */
 /**
-OBJ file.<p>
+WaveFront OBJ format.<p>
 * <p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
@@ -65,8 +65,9 @@ ObjData.prototype._gatherTextureNames = function() {
   return textures;
 };
 /**
- * Creates one or more 3D shapes from the named portion
- * of the data in this OBJ file.
+ * Creates one or more {@link H3DU.Shape} objects from the named portion
+ * of the data in this OBJ file.  If a MTL file was also loaded, the
+ * shape will have the corresponding material, if it uses one.
  * @param {String} name Name from the OBJ file of the portion
  * of the model to use.
  * @returns {H3DU.ShapeGroup} Group of shapes. The group
@@ -131,9 +132,9 @@ MtlData.prototype._resolveTextures = function() {
   }
 };
 /**
- * TODO: Not documented yet.
- * @param {String} name
-* @return {Object}
+ * Gets a material by name from this MTL file.
+ * @param {String} name Name of the material.
+ * @return {H3DU.Material} The material, or null if it doesn't exist.
  * @memberof! MtlData#
 */
 MtlData.prototype.getMaterial = function(name) {
@@ -215,8 +216,11 @@ MtlData._getMaterial = function(mtl) {
   return ret;
 };
 /**
- * TODO: Not documented yet.
- * @param {String} url The URL to load the material data file from.
+Loads a material (MTL) file asynchronously.
+@param {String} url The URL to load the material data file.
+@returns {Promise} A promise that resolves when
+the MTL file is loaded successfully (the result is an MtlData object),
+and is rejected when an error occurs when loading the MTL file.
  */
 ObjData.loadMtlFromUrl = function(url) {
   "use strict";

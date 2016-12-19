@@ -1,3 +1,4 @@
+/* global scene */
 /*
 Written by Peter O. in 2015.
 
@@ -5,6 +6,11 @@ Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
+*/
+/**
+* A class for finding the frame rate of an HTML rendering.
+* @class
+* @alias PrimitiveCounter
 */
 var FrameCounter = function() {
   "use strict";
@@ -14,7 +20,8 @@ var FrameCounter = function() {
   this.frameCount = 0;
 };
 /**
- * TODO: Not documented yet.
+ * Updates the state for determining the frame count.
+ * This method should be called once per frame.
  * @memberof! FrameCounter#
 */
 FrameCounter.prototype.update = function() {
@@ -45,15 +52,19 @@ FrameCounter.prototype.update = function() {
   }
 };
 /**
- * TODO: Not documented yet.
+ * Gets the calculated frames per second, based
+ * on how often the update method was called.
  * @memberof! FrameCounter#
-*/
+ */
 FrameCounter.prototype.getFPS = function() {
   "use strict";
   return this.fps;
 };
 
-function FrameCounterDiv(scene) {
+/**
+* A class that displays a frame counter HTML element.
+*/
+function FrameCounterDiv() {
   "use strict";
   this.div = FrameCounterDiv._makeDiv(scene);
   this.count = 0;
@@ -61,23 +72,20 @@ function FrameCounterDiv(scene) {
   this.fc = new FrameCounter();
 }
 /** @private */
-FrameCounterDiv._makeDiv = function(scene) {
+FrameCounterDiv._makeDiv = function() {
   "use strict";
   var referenceElement = document.documentElement;
-  if(scene.getContext) {
-    referenceElement = scene.getContext().canvas ||
-    document.documentElement;
-  }
   var div = document.createElement("div");
   div.style.backgroundColor = "white";
   div.style.position = "absolute";
+  div.style.zIndex = 10;
   div.style.left = referenceElement.offsetLeft + "px";
   div.style.top = referenceElement.offsetTop + "px";
   document.body.appendChild(div);
   return div;
 };
 /**
- * TODO: Not documented yet.
+ * Updates the frame counter HTML element.
  * @memberof! FrameCounterDiv#
 */
 FrameCounterDiv.prototype.update = function() {
@@ -95,21 +103,24 @@ FrameCounterDiv.prototype.update = function() {
   }
 };
 
-function PrimitiveCounter(scene) {
-  "use strict";
-  this.div = FrameCounterDiv._makeDiv(scene);
-  this.count = 0;
-  this.scene = scene;
-}
 /**
- * TODO: Not documented yet.
- * @memberof! PrimitiveCounter#
+* This class used to manage an HTML element
+* that displayed the number of primitives drawn.
+* @deprecated Will be removed in the future.
+* @class
+* @alias PrimitiveCounter
 */
-PrimitiveCounter.prototype.update = function() {
+/* exported PrimitiveCounter */
+var PrimitiveCounter = function() {
   "use strict";
-  if(this.scene.vertexCount) {
-    var v = this.scene.vertexCount();
-    var p = this.scene.primitiveCount();
-    this.div.innerHTML = v + " vertices, " + p + " primitives";
-  }
+  this.warned = false;
+ /**
+* This method used to update this object's state.
+* @deprecated Will be removed in the future.
+ * @memberof! PrimitiveCounter
+ */
+  this.update = function() {
+    if(!this.warned)console.warn("PrimitiveCounter is deprecated");
+    this.warned = true;
+  };
 };

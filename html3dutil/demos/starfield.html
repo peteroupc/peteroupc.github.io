@@ -65,7 +65,7 @@ function moveStarField(group, range,frames){
    .cullFace(H3DU.Scene3D.BACK);
   var sub=new H3DU.Batch3D();
   sub.getLights().setDefaults();
-  var fc=new FrameCounterDiv(sub);
+  var fc=new FrameCounterDiv();
   var timer={};
   var group=starField(scene,1000)
   sub.addShape(group);

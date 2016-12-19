@@ -108,7 +108,8 @@ var Operator = function(name) {
   this.name = name;
 };
 /**
- * TODO: Not documented yet.
+ * Converts this expression to a string.
+ * @returns {String} Return value.
  * @memberof! Operator#
 */
 Operator.prototype.toString = function() {
@@ -287,7 +288,8 @@ Expression.simplifyNodes = function(nodes) {
   }
 };
 /**
- * TODO: Not documented yet.
+ * Converts this expression to a string.
+ * @returns {String} Return value.
  * @memberof! Expression#
 */
 Expression.prototype.toString = function() {
@@ -520,7 +522,8 @@ Operation.prototype.degen = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
+ * Gets the value of this constant.
+ * @returns {String} The value of this constant, or null if this expression isn't a constant.
  * @memberof! Operation#
 */
 Operation.prototype.constantValue = function() {
@@ -765,7 +768,8 @@ Operation.prototype.toJSString = function() {
   }
 };
 /**
- * TODO: Not documented yet.
+ * Converts this expression to a string.
+ * @returns {String} Return value.
  * @memberof! Operation#
 */
 Operation.prototype.toString = function() {
@@ -832,7 +836,8 @@ Variable.prototype.copy = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
+ * Gets the value of this constant.
+ * @returns {String} Null, since variables are not constants.
  * @memberof! Variable#
 */
 Variable.prototype.constantValue = function() {
@@ -856,7 +861,8 @@ Variable.prototype.equals = function(x) {
   return this.name === x.name;
 };
 /**
- * TODO: Not documented yet.
+ * Converts this expression to a string that JavaScript can evaluate.
+ * @returns {String} Return value.
  * @memberof! Variable#
 */
 Variable.prototype.toJSString = function() {
@@ -992,7 +998,8 @@ Constant.prototype.equals = function(x) {
   return this.value === x.value;
 };
 /**
- * TODO: Not documented yet.
+ * Gets the value of this constant.
+ * @returns {String} Return value.
  * @memberof! Constant#
 */
 Constant.prototype.constantValue = function() {
@@ -1008,7 +1015,8 @@ Constant.prototype.degen = function() {
   return this;
 };
 /**
- * TODO: Not documented yet.
+ * Converts this expression to a string that JavaScript can evaluate.
+ * @returns {String} Return value.
  * @memberof! Constant#
 */
 Constant.prototype.toJSString = function() {
@@ -1020,7 +1028,8 @@ Constant.prototype.toJSString = function() {
   return vi;
 };
 /**
- * TODO: Not documented yet.
+ * Converts this expression to a string.
+ * @returns {String} Return value.
  * @memberof! Constant#
 */
 Constant.prototype.toString = function() {
