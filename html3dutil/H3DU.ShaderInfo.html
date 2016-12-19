@@ -29,7 +29,7 @@
 
     <h4 style="margin-bottom:0px" id="ShaderInfo"><span style="font-weight:lighter"></span>new ShaderInfo<span class="signature">(vertexShader<sub style="font-weight:lighter">opt</sub>, fragmentShader<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line27">line 27</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line27">line 27</a>
      </i></small></p>
 
 <div class="description">
@@ -87,9 +87,225 @@ If null, a default fragment shader is used instead.</dd>
 
         <h3 class="subsection-title">Methods</h3>
 
+    <h4 style="margin-bottom:0px" id=".getDefaultFragment"><span style="font-weight:lighter"></span>.getDefaultFragment<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line402">line 402</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the text of the default fragment shader.  Putting "#define SHADING\n"
+at the start of the return value enables the lighting model.
+Putting "#define SPECULAR\n"
+at the start of the return value enables specular highlights (as long
+as SHADING is also enabled).
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting shader text.
+
+     (Type:
+<span class="param-type">String</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".getDefaultVertex"><span style="font-weight:lighter"></span>.getDefaultVertex<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line347">line 347</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the text of the default vertex shader.  Putting "#define SHADING\n"
+at the start of the return value enables the lighting model.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting shader text.
+
+     (Type:
+<span class="param-type">String</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".makeCopyEffect"><span style="font-weight:lighter"></span>.makeCopyEffect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line226">line 226</a>
+     </i></small></p>
+
+<div class="description">
+    Generates source code for a shader program that copies the colors of a texture.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting shader program.
+
+     (Type:
+<span class="param-type"><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".makeEdgeDetectEffect"><span style="font-weight:lighter"></span>.makeEdgeDetectEffect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line284">line 284</a>
+     </i></small></p>
+
+<div class="description">
+    Generates source code for a shader program that generates a two-color texture showing
+the source texture's edges.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting shader program.
+
+     (Type:
+<span class="param-type"><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".makeEffect"><span style="font-weight:lighter"></span>.makeEffect<span class="signature">(functionCode)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line258">line 258</a>
+     </i></small></p>
+
+<div class="description">
+    Generates source code for a shader program for applying
+a raster effect (postprocessing effect) to a texture.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>functionCode</code>
+
+                (
+<span class="param-type">String</span>
+
+)
+
+           </dt><dd>
+           A string giving shader code
+in OpenGL ES Shading Language (GLSL) that must contain
+a function with the following signature:
+<pre>
+vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)
+</pre>
+where <code>sampler</code> is the texture sampler, <code>uvCoord</code>
+is the texture coordinates ranging from 0 to 1 in each component,
+<code>textureSize</code> is the dimensions of the texture in pixels,
+and the return value is the new color at the given texture coordinates.  Besides
+this requirement, the shader code is also free to define additional uniforms,
+constants, functions, and so on (but not another "main" function).</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting shader program.
+
+     (Type:
+<span class="param-type"><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".makeEffectFragment"><span style="font-weight:lighter"></span>.makeEffectFragment<span class="signature">(functionCode)</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line205">line 205</a>
+     </i></small></p>
+
+<div class="description">
+    Generates source code for a fragment shader for applying
+a raster effect to a texture.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>functionCode</code>
+
+                (
+<span class="param-type">String</span>
+
+)
+
+           </dt><dd>
+           See @{link H3DU.ShaderInfo.makeEffect}.</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The source text of the resulting fragment shader.
+
+     (Type:
+<span class="param-type">String</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".makeInvertEffect"><span style="font-weight:lighter"></span>.makeInvertEffect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line269">line 269</a>
+     </i></small></p>
+
+<div class="description">
+    Generates source code for a shader program that inverts the colors of a texture.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    The resulting shader program.
+
+     (Type:
+<span class="param-type"><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.ShaderInfo#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line45">line 45</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line63">line 63</a>
      </i></small></p>
 
 <div class="description">
@@ -111,9 +327,55 @@ copied to that object.
 
 </div>
 
+    <h4 style="margin-bottom:0px" id="getFragmentShader"><span style="font-weight:lighter"></span>H3DU.ShaderInfo#getFragmentShader<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line53">line 53</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the text of the fragment shader stored in this object.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    return value.
+
+     (Type:
+<span class="param-type">String</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getVertexShader"><span style="font-weight:lighter"></span>H3DU.ShaderInfo#getVertexShader<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line44">line 44</a>
+     </i></small></p>
+
+<div class="description">
+    Gets the text of the vertex shader stored in this object.
+</div>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    return value.
+
+     (Type:
+<span class="param-type">String</span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="setUniforms"><span style="font-weight:lighter"></span>H3DU.ShaderInfo#setUniforms<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderprog.js.html">h3du-shaderprog.js</a>, <a href="h3du-shaderprog.js.html#line69">line 69</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line87">line 87</a>
      </i></small></p>
 
 <div class="description">
@@ -188,7 +450,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FrameCounterDiv">FrameCounterDiv</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

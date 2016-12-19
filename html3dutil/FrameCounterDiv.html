@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: ObjData</title>
+<head><meta charset="utf-8"><title>JSDoc: Class: FrameCounterDiv</title>
 <meta name="viewport" content="width=device-width">
 <script src="mathml.js"></script>
 <link rel=stylesheet type="text/css" href="/style.css">
@@ -10,14 +10,14 @@
 <p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: ObjData</h1>
+    <h1>Class: FrameCounterDiv</h1>
 
 <section>
 
 <header>
 
         <h2>
-        ObjData
+        FrameCounterDiv
         </h2>
 
 </header>
@@ -25,20 +25,13 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="margin-bottom:0px" id="ObjData"><span style="font-weight:lighter"></span>new ObjData<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="FrameCounterDiv"><span style="font-weight:lighter"></span>new FrameCounterDiv<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line20">line 20</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_frame.js.html">extras/frame.js</a>, <a href="extras_frame.js.html#line68">line 68</a>
      </i></small></p>
 
 <div class="description">
-    WaveFront OBJ format.<p>
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library. <p>
-To use this class, you must include the script "extras/objmtl.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library.  Example:<pre>
-&lt;script type="text/javascript" src="extras/objmtl.js">&lt;/script></pre>
+    A class that displays a frame counter HTML element.
 </div>
 
 <dl class="details">
@@ -47,227 +40,20 @@ the HTML 3D Library.  Example:<pre>
 
     </div>
 
-        <h3 class="subsection-title">Members</h3>
-
-<h4 style="margin-bottom:0px" id="mtllib"><span style="font-weight:lighter"></span>mtllib<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line27">line 27</a>
-     </i></small></p>
-
-<div class="description">
-    An array of meshes.  Two or more meshes may have
-the same name (the "name" property in each mesh).  The "data"
-property holds data for each mesh.
-</div>
-
-<dl class="details">
-
-</dl>
-
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id=".loadMtlFromUrl"><span style="font-weight:lighter">(static) </span>loadMtlFromUrl<span class="signature">(url)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id="update"><span style="font-weight:lighter"></span>FrameCounterDiv#update<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line225">line 225</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_frame.js.html">extras/frame.js</a>, <a href="extras_frame.js.html#line91">line 91</a>
      </i></small></p>
 
 <div class="description">
-    Loads a material (MTL) file asynchronously.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>url</code>
-
-                (
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           The URL to load the material data file.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A promise that resolves when
-the MTL file is loaded successfully (the result is an MtlData object),
-and is rejected when an error occurs when loading the MTL file.
-
-     (Type:
-<span class="param-type"><a href="Promise.html">Promise</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".loadObjFromUrl"><span style="font-weight:lighter">(static) </span>loadObjFromUrl<span class="signature">(url)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line277">line 277</a>
-     </i></small></p>
-
-<div class="description">
-    Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available) asynchronously.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>url</code>
-
-                (
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           The URL to load.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A promise that resolves when
-the OBJ file is loaded successfully, whether or not its associated
-MTL is also loaded successfully (the result is an ObjData object),
-and is rejected when an error occurs when loading the OBJ file.
-
-     (Type:
-<span class="param-type"><a href="Promise.html">Promise</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".loadObjFromUrlWithTextures"><span style="font-weight:lighter">(static) </span>loadObjFromUrlWithTextures<span class="signature">(url, textureLoader)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line251">line 251</a>
-     </i></small></p>
-
-<div class="description">
-    Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available), along with the textures it uses,
-asynchronously.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>url</code>
-
-                (
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           The URL to load.</dd>
-
-        <dt>
-
-                <code>textureLoader</code>
-
-                (
-<span class="param-type">TextureLoader</span>
-
-)
-
-           </dt><dd>
-           An object to load
-textures with.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-    <h4 style="margin-bottom:0px" id="toShape"><span style="font-weight:lighter"></span>ObjData#toShape<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line42">line 42</a>
-     </i></small></p>
-
-<div class="description">
-    Creates one or more 3D shapes from the data
-in this OBJ file.
+    Updates the frame counter HTML element.
 </div>
 
 <dl class="details">
 
 </dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Group of shapes.
-
-     (Type:
-<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="toShapeFromName"><span style="font-weight:lighter"></span>ObjData#toShapeFromName<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line77">line 77</a>
-     </i></small></p>
-
-<div class="description">
-    Creates one or more <a href="H3DU.Shape.html">H3DU.Shape</a> objects from the named portion
-of the data in this OBJ file.  If a MTL file was also loaded, the
-shape will have the corresponding material, if it uses one.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>name</code>
-
-                (
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           Name from the OBJ file of the portion
-of the model to use.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Group of shapes. The group
-will be empty if no shapes with the given name exist.
-
-     (Type:
-<span class="param-type"><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></span>)
-
-</div>
 
 </article>
 

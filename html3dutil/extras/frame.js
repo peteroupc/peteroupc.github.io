@@ -1,4 +1,3 @@
-/* global scene */
 /*
 Written by Peter O. in 2015.
 
@@ -10,7 +9,7 @@ at: http://peteroupc.github.io/
 /**
 * A class for finding the frame rate of an HTML rendering.
 * @class
-* @alias PrimitiveCounter
+* @alias FrameCounter
 */
 var FrameCounter = function() {
   "use strict";
@@ -63,12 +62,13 @@ FrameCounter.prototype.getFPS = function() {
 
 /**
 * A class that displays a frame counter HTML element.
+* @class
+* @alias FrameCounterDiv
 */
 function FrameCounterDiv() {
   "use strict";
-  this.div = FrameCounterDiv._makeDiv(scene);
+  this.div = FrameCounterDiv._makeDiv();
   this.count = 0;
-  this.scene = scene;
   this.fc = new FrameCounter();
 }
 /** @private */
