@@ -129,10 +129,11 @@ true.)  The triangle's area is half of the cross product's length.
 /**
  * Subtracts the second vector from the first vector and returns a new
  * vector with the result. Subtracting two vectors
- * is the same as subtracting each of their components.
+ * is the same as subtracting each of their components.&lt;p>
  * @param {Array&lt;Number>} a The first 3-element vector.
  * @param {Array&lt;Number>} b The second 3-element vector.
  * @returns {Array&lt;Number>} The resulting 3-element vector.
+ * This is the vector &lt;i>to "a" from "b"&lt;/i>.
  */
   "vec3sub":function(a, b) {
     "use strict";
@@ -760,7 +761,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {Number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
- * @param {number|null} mode Specifies the order in which the rotations will occur (in terms of their effect).
+ * @param {number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
  * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
  * and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
@@ -806,7 +807,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
  * @param {Array&lt;Number>} a A quaternion.  Should be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
- * @param {number|null} mode Specifies the order in which the rotations will occur
+ * @param {number} [mode] Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
  * and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be
@@ -982,7 +983,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * @param {Array&lt;Number>} v A 3- or 4-element vector to
  * transform. The fourth element, if any, is ignored.
  * @returns {Array&lt;Number>} A 4-element vector representing
-* the transformed vector.
+* the transformed vector.  The fourth element will be 1.0.
+* If the input vector has 3 elements, a 3-element vector will
+  * be returned instead.
  */
   "quatTransform":function(q, v) {
     "use strict";
@@ -990,9 +993,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
     var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
     var t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
     var t4 = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
+    if(v.length === 3) {
+      return [t1 * q[3] - (t2 * q[2] - t3 * q[1]) + q[0] * t4,
+        t2 * q[3] - (t3 * q[0] - t1 * q[2]) + q[1] * t4,
+        t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4];
+    }
     return [t1 * q[3] - (t2 * q[2] - t3 * q[1]) + q[0] * t4,
       t2 * q[3] - (t3 * q[0] - t1 * q[2]) + q[1] * t4,
-      t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4, 1.0];
+      t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4, ];
   },
 /**
  * Generates a quaternion from the rotation described in a 4x4 matrix.
