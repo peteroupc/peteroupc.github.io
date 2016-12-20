@@ -8,6 +8,13 @@ at: http://peteroupc.github.io/
 */
 /**
 * A class for finding the frame rate of an HTML rendering.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/frame.js"; the
+ * class is not included in the "h3du_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
 * @class
 * @alias FrameCounter
 */
@@ -62,6 +69,13 @@ FrameCounter.prototype.getFPS = function() {
 
 /**
 * A class that displays a frame counter HTML element.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/frame.js"; the
+ * class is not included in the "h3du_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
 * @class
 * @alias FrameCounterDiv
 */

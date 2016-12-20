@@ -94,7 +94,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
  * drawn using this font.
 * @param {String} string The text string to measure.  Line breaks
 * ("\n", "\r", "\r\n") are recognized by this method.
-* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
+* @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
  * @returns {Array<Number>} An array of two numbers;
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
@@ -251,7 +251,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 };
 
 /**
-* Creates a shape containing the primitives needed to
+* Creates a group of shapes containing the primitives needed to
 * draw text in the given position, size, and color.
 * For the text to show upright, the coordinate system should have the
 * X-axis pointing right and the Y-axis pointing down (for example, an
@@ -260,7 +260,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 * @param {H3DU.TextFont} font The bitmap font to use when drawing the text.
 * @param {String} string The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
 * by this method.
-* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
+* @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
 * Can also contain the following keys:<ul>
 * <li><code>color</code> - A [color vector or string]{@link H3DU.toGLColor} giving
 * the color to draw the text with.
@@ -270,6 +270,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 * or a single {@link H3DU.Texture} if only one texture page is used.
 * If null or omitted, uses the default filenames for texture pages defined in this font.
 * </ul>
+* @returns {H3DU.ShapeGroup} The generated group of shapes.
 * @memberof! H3DU.TextFont#
 */
 H3DU.TextFont.prototype.textShape = function(str, params) {
@@ -301,8 +302,8 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
 /** @private */
 H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, xPos, yPos, params, extra, meshesForPage) {
   "use strict";
-//var height=((typeof params.lineHeight !== "undefined" &&
-//params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
+// var height=((typeof params.lineHeight !== "undefined" &&
+// params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
   var lastChar = -1;
   for(var i = startPos;i < endPos;i++) {
     var c = str.charCodeAt(i);
@@ -777,7 +778,8 @@ H3DU.TextFont._loadTextFontInner = function(data) {
 * <li>".bin": Binary</li>
 * <li>".fnt": Text or binary</li>
 * <li>All others: Text</li></ul>
- * @param {H3DU.TextureLoader} textureLoader
+ * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
+ * loading the textures.
 * @returns {Promise} A promise that is resolved
 * when the font data and textures are loaded successfully,
 * and is rejected when an error occurs.
@@ -918,7 +920,7 @@ H3DU.TextFont._textShader = function() {
 };
 H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textShader());
 
-/////////////////
+// ///////////////
 
 /**
  * A texture atlas specifies the location and size of images within a single
@@ -927,9 +929,16 @@ H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textSha
 * binds.  Instead, those images can be packed into one texture and the
 * application can draw different portions of that texture at once.  The
 * texture atlas can specify where those portions are found.<p>
-* This implementation supports the ".atlas" format.
+* This implementation supports the ".atlas" format.<p>
 * NOTE: The constructor should not be called directly by applications.
 * Use the {@link H3DU.TextureAtlas.load} method to get an H3DU.TextureAtlas object.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/text.js"; the
+ * class is not included in the "h3du_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
 * @class
 * @alias H3DU.TextureAtlas
 */
@@ -958,6 +967,7 @@ H3DU.TextureAtlas = function() {
  * <li><code>x</code> - X-coordinate of the sprite.
  * <li><code>y</code> - Y-coordinate of the sprite.
  * </ul>
+ * @returns {H3DU.ShapeGroup} The generated group of shapes.
  * @memberof! H3DU.TextureAtlas#
 */
 H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
@@ -1233,7 +1243,8 @@ H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
 * Loads a texture atlas definition from a file along with the textures
 * it uses.
 * @param {String} atlasFileName The URL of the texture atlas to load.
- * @param {H3DU.TextureLoader} textureLoader
+ * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
+ * loading the textures.
 * @returns {Promise} A promise that is resolved
 * when the texture atlas data and textures are loaded successfully,
 * and is rejected when an error occurs.

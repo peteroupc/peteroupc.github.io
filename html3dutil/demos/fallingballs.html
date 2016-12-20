@@ -9,7 +9,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global H3DU */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -35,27 +36,28 @@ at: http://peteroupc.github.io/
 * @param {number} timeStep Time step for integration.  This is usually
 * a fractional number of seconds.
 */
-H3DU.Math.integrateVerlet=function(particle, timeStep){
- var x=particle[0];
- var y=particle[1];
- var z=particle[2];
- var tssq=timeStep*timeStep;
- var oldTime=particle[9];
- if(oldTime==0 || timeStep==oldTime){
-  particle[0]+=particle[6]*tssq+(particle[0]-particle[3]);
-  particle[1]+=particle[7]*tssq+(particle[1]-particle[4]);
-  particle[2]+=particle[8]*tssq+(particle[2]-particle[5]);
- } else {
-  var correction=timeStep/oldTime;
-  particle[0]+=particle[6]*tssq+(particle[0]-particle[3])*correction;
-  particle[1]+=particle[7]*tssq+(particle[1]-particle[4])*correction;
-  particle[2]+=particle[8]*tssq+(particle[2]-particle[5])*correction;
- }
- particle[9]=timeStep;
- particle[3]=x;
- particle[4]=y;
- particle[5]=z;
-}
+H3DU.Math.integrateVerlet = function(particle, timeStep) {
+  "use strict";
+  var x = particle[0];
+  var y = particle[1];
+  var z = particle[2];
+  var tssq = timeStep * timeStep;
+  var oldTime = particle[9];
+  if(oldTime === 0 || timeStep === oldTime) {
+    particle[0] += particle[6] * tssq + (particle[0] - particle[3]);
+    particle[1] += particle[7] * tssq + (particle[1] - particle[4]);
+    particle[2] += particle[8] * tssq + (particle[2] - particle[5]);
+  } else {
+    var correction = timeStep / oldTime;
+    particle[0] += particle[6] * tssq + (particle[0] - particle[3]) * correction;
+    particle[1] += particle[7] * tssq + (particle[1] - particle[4]) * correction;
+    particle[2] += particle[8] * tssq + (particle[2] - particle[5]) * correction;
+  }
+  particle[9] = timeStep;
+  particle[3] = x;
+  particle[4] = y;
+  particle[5] = z;
+};
 /**
 * Initializes a particle's data for Verlet integration.
 * @param {Array<Number>} particle Array to hold
@@ -74,108 +76,119 @@ H3DU.Math.integrateVerlet=function(particle, timeStep){
 * @param {number} timeStep Optimal time step.
 * @return {Array<Number>} The parameter "particle".
 */
-H3DU.Math.initParticle=function(particle,
-  x, y, z, vx, vy, vz, ax, ay, az, timeStep){
- particle[0]=x;
- particle[1]=y;
- particle[2]=z;
- particle[6]=ax;
- particle[7]=ay;
- particle[8]=az;
- var ts=timeStep*timeStep*0.5;
- particle[3]=x-vx*timeStep+ax*ts;
- particle[4]=y-vy*timeStep+ay*ts;
- particle[5]=z-vz*timeStep+az*ts;
- particle[9]=timeStep;
- return particle;
-}
-H3DU.Math.constrainPointToBox=function(p, radius, pointIndex, bounds){
- var xmin=bounds[0]+radius;
- var xmax=bounds[3]-radius;
- var ymin=bounds[1]+radius;
- var ymax=bounds[4]-radius;
- var zmin=bounds[2]+radius;
- var zmax=bounds[5]-radius;
- p[pointIndex]=Math.min(xmax,Math.max(p[pointIndex],xmin));
- p[pointIndex+1]=Math.min(ymax,Math.max(p[pointIndex+1],ymin));
- p[pointIndex+2]=Math.min(zmax,Math.max(p[pointIndex+2],zmin));
-}
+H3DU.Math.initParticle = function(particle,
+  x, y, z, vx, vy, vz, ax, ay, az, timeStep) {
+  "use strict";
+  particle[0] = x;
+  particle[1] = y;
+  particle[2] = z;
+  particle[6] = ax;
+  particle[7] = ay;
+  particle[8] = az;
+  var ts = timeStep * timeStep * 0.5;
+  particle[3] = x - vx * timeStep + ax * ts;
+  particle[4] = y - vy * timeStep + ay * ts;
+  particle[5] = z - vz * timeStep + az * ts;
+  particle[9] = timeStep;
+  return particle;
+};
+H3DU.Math.constrainPointToBox = function(p, radius, pointIndex, bounds) {
+  "use strict";
+  var xmin = bounds[0] + radius;
+  var xmax = bounds[3] - radius;
+  var ymin = bounds[1] + radius;
+  var ymax = bounds[4] - radius;
+  var zmin = bounds[2] + radius;
+  var zmax = bounds[5] - radius;
+  p[pointIndex] = Math.min(xmax, Math.max(p[pointIndex], xmin));
+  p[pointIndex + 1] = Math.min(ymax, Math.max(p[pointIndex + 1], ymin));
+  p[pointIndex + 2] = Math.min(zmax, Math.max(p[pointIndex + 2], zmin));
+};
 
-function CubicBody(radius, mass, x, y, z){
- this.divmass=1.0/mass;
- this.particle=H3DU.Math.initParticle([],
-   x,y,z,
-   0,0,0,
-   0,CubicBody.GRAVITY,0,
-   1/60);
- this.radius=radius;
- this.mass=mass;
+function CubicBody(radius, mass, x, y, z) {
+  "use strict";
+  this.divmass = 1.0 / mass;
+  this.particle = H3DU.Math.initParticle([],
+   x, y, z,
+   0, 0, 0,
+   0, CubicBody.GRAVITY, 0,
+   1 / 60);
+  this.radius = radius;
+  this.mass = mass;
 }
 CubicBody.GRAVITY = -9.806;
-CubicBody.prototype.x=function(){
- return this.particle[0];
-}
-CubicBody.prototype.y=function(){
- return this.particle[1];
-}
-CubicBody.prototype.z=function(){
- return this.particle[2];
-}
-CubicBody.prototype.constrainToBox=function(bounds){
- H3DU.Math.constrainPointToBox(this.particle,this.radius,0,bounds);
-}
-CubicBody.prototype.integrate=function(timeStep){
- H3DU.Math.integrateVerlet(this.particle,timeStep);
-}
+CubicBody.prototype.x = function() {
+  "use strict";
+  return this.particle[0];
+};
+CubicBody.prototype.y = function() {
+  "use strict";
+  return this.particle[1];
+};
+CubicBody.prototype.z = function() {
+  "use strict";
+  return this.particle[2];
+};
+CubicBody.prototype.constrainToBox = function(bounds) {
+  "use strict";
+  H3DU.Math.constrainPointToBox(this.particle, this.radius, 0, bounds);
+};
+CubicBody.prototype.integrate = function(timeStep) {
+  "use strict";
+  H3DU.Math.integrateVerlet(this.particle, timeStep);
+};
 
-function Particles(scene,count,width,height){
- this.shapes=new H3DU.ShapeGroup();
- var sphere=new H3DU.Shape(H3DU.Meshes.createSphere(1,64,64));
- this.bodies=[];
- this.bounds=[0,0,-5000,width,height,5000];
- for(var i=0;i<count;i++){
-  var p=[];
-  var mass=Math.random()*6+1;
-  p[0]=Math.random()*width;
-  p[1]=Math.random()*height;
-  p[2]=0;
-  var scale=(width/100)*mass;
-  H3DU.Math.constrainPointToBox(p,scale,0,this.bounds);
-  this.bodies.push(new CubicBody(scale,mass,p[0],p[1],p[2]));
-  var shape=sphere.copy();
-  shape.setScale(scale,scale,scale);
-  shape.setPosition(p);
-  shape.setColor([Math.random(),Math.random(),Math.random()]);
-  this.shapes.addShape(shape);
- }
- scene.addShape(this.shapes);
- this.timeInfo={};
+function Particles(scene, count, width, height) {
+  "use strict";
+  this.shapes = new H3DU.ShapeGroup();
+  var sphere = new H3DU.Shape(H3DU.Meshes.createSphere(1, 64, 64));
+  this.bodies = [];
+  this.bounds = [0, 0, -5000, width, height, 5000];
+  for(var i = 0;i < count;i++) {
+    var p = [];
+    var mass = Math.random() * 6 + 1;
+    p[0] = Math.random() * width;
+    p[1] = Math.random() * height;
+    p[2] = 0;
+    var scale = width / 100 * mass;
+    H3DU.Math.constrainPointToBox(p, scale, 0, this.bounds);
+    this.bodies.push(new CubicBody(scale, mass, p[0], p[1], p[2]));
+    var shape = sphere.copy();
+    shape.setScale(scale, scale, scale);
+    shape.setPosition(p);
+    shape.setColor([Math.random(), Math.random(), Math.random()]);
+    this.shapes.addShape(shape);
+  }
+  scene.addShape(this.shapes);
+  this.timeInfo = {};
 }
-Particles.prototype.update=function(time){
- var timeStep=H3DU.newFrames(this.timeInfo,time)/60;
- for(var i=0;i<this.bodies.length;i++){
-  var body=this.bodies[i];
-  body.integrate(timeStep);
-  body.constrainToBox(this.bounds);
-  this.shapes.shapes[i].setPosition(body.x(),body.y(),body.z());
- }
-}
+Particles.prototype.update = function(time) {
+  "use strict";
+  var timeStep = H3DU.newFrames(this.timeInfo, time) / 60;
+  for(var i = 0;i < this.bodies.length;i++) {
+    var body = this.bodies[i];
+    body.integrate(timeStep);
+    body.constrainToBox(this.bounds);
+    this.shapes.shapes[i].setPosition(body.x(), body.y(), body.z());
+  }
+};
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
-   .setClearColor("white")
-   var sub=new H3DU.Batch3D();
-   sub.getLights().setDefaults();
-   sub.orthoAspect(0,12,0,9,-5000,5000);
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
+   .setClearColor("white");
+var sub = new H3DU.Batch3D();
+sub.getLights().setDefaults();
+sub.orthoAspect(0, 12, 0, 9, -5000, 5000);
   // 12 meters wide and 9 meters high
-  var tris=new Particles(sub,10,12,9);
+var tris = new Particles(sub, 10, 12, 9);
   // Set up the render loop
-  H3DU.renderLoop(function(time){
-   tris.update(time);
+H3DU.renderLoop(function(time) {
+  "use strict";
+  tris.update(time);
    // Render the scene
-   scene.render(sub);
-  });
-//-->
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

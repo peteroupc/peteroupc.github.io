@@ -16,7 +16,8 @@ Color: <input type=color value="#FFFFFF" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global Camera, FrameCounterDiv, H3DU, InputTracker */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -26,107 +27,113 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 
-function ClockShape(scene){
- var clock=new H3DU.ShapeGroup();
- var border=H3DU.Meshes.createTorus(0.1,1,16,64);
- var frontTransform=H3DU.Math.mat4translated(0,0,0.05);
- var front=H3DU.Meshes.createDisk(0,1,64).transform(frontTransform);
- var hourhand=H3DU.Meshes.createCapsule(0.01,0.5,6,4)
-   .transform(H3DU.Math.mat4translated(0,0,-0.25))
-   .transform(H3DU.Math.mat4rotated(90,1,0,0))
+function ClockShape(scene) {
+  "use strict";
+  var clock = new H3DU.ShapeGroup();
+  var border = H3DU.Meshes.createTorus(0.1, 1, 16, 64);
+  var frontTransform = H3DU.Math.mat4translated(0, 0, 0.05);
+  var front = H3DU.Meshes.createDisk(0, 1, 64).transform(frontTransform);
+  var hourhand = H3DU.Meshes.createCapsule(0.01, 0.5, 6, 4)
+   .transform(H3DU.Math.mat4translated(0, 0, -0.25))
+   .transform(H3DU.Math.mat4rotated(90, 1, 0, 0))
    .transform(frontTransform);
- var minutehand=H3DU.Meshes.createCapsule(0.0075,0.7,6,4)
-   .transform(H3DU.Math.mat4translated(0,0,-0.35))
-   .transform(H3DU.Math.mat4rotated(90,1,0,0))
+  var minutehand = H3DU.Meshes.createCapsule(0.0075, 0.7, 6, 4)
+   .transform(H3DU.Math.mat4translated(0, 0, -0.35))
+   .transform(H3DU.Math.mat4rotated(90, 1, 0, 0))
    .transform(frontTransform);
- var secondhand=H3DU.Meshes.createCapsule(0.005,0.9,6,4)
-   .transform(H3DU.Math.mat4translated(0,0,-0.30))
-   .transform(H3DU.Math.mat4rotated(90,1,0,0))
+  var secondhand = H3DU.Meshes.createCapsule(0.005, 0.9, 6, 4)
+   .transform(H3DU.Math.mat4translated(0, 0, -0.30))
+   .transform(H3DU.Math.mat4rotated(90, 1, 0, 0))
    .transform(frontTransform);
- var center=H3DU.Meshes.createSphere(0.03,4,4)
-   .transform(frontTransform)
- var twelveoclock=H3DU.Meshes.createSphere(0.03,4,4)
-   .transform(H3DU.Math.mat4translated(0,0.85,0))
-   .transform(frontTransform)
- var back=H3DU.Meshes.createDisk(0,1,64).reverseWinding().reverseNormals()
-   .transform(H3DU.Math.mat4translated(0,0,-0.05));
- clock.addShape(new H3DU.Shape(border));
- clock.addShape(new H3DU.Shape(front));
- clock.addShape(new H3DU.Shape(back));
- clock.addShape(new H3DU.Shape(hourhand));
- clock.addShape(new H3DU.Shape(minutehand));
- clock.addShape(new H3DU.Shape(secondhand));
- clock.addShape(new H3DU.Shape(center));
- clock.addShape(new H3DU.Shape(twelveoclock));
- scene.addShape(clock);
- this.shape=clock;
- this.hour=-1;
- this.minute=-1;
- this.second=-1;
- this.update=function(){
-  var time=new Date();
-  var timenum=time.getTime();
-  var hour=time.getHours();
-  var minute=time.getMinutes();
-  var second=time.getSeconds()+((timenum%1000)/1000)
-  if(this.hour!=hour || this.minute!=minute || this.second!=second){
-   this.hour=hour
-   this.minute=minute
-   this.second=second
-   var hms=(hour%12)*3600+minute*60+second;
-   var hourhand=360*hms/(3600*12);
-   var minutehand=360*(hms%3600)/(3600);
-   var secondhand=360*(hms%60)/(60);
-   this.shape.shapes[3].getTransform().setOrientation(-hourhand,0,0,1)
-   this.shape.shapes[4].getTransform().setOrientation(-minutehand,0,0,1)
-   this.shape.shapes[5].getTransform().setOrientation(-secondhand,0,0,1)
-  }
- }
- this.setColor=function(color){
-  var rgb=H3DU.toGLColor(color);
-  if((rgb[0]+rgb[1]+rgb[2])/3>=0.5){
-   var halftoneColor=H3DU.Math.vec3lerp(rgb.slice(0,4),[0,0,0],0.5);
-   this.shape.shapes[3].setColor("black")
-   this.shape.shapes[4].setColor("black")
-   this.shape.shapes[5].setColor(halftoneColor)
-   this.shape.shapes[6].setColor("black")
-   this.shape.shapes[7].setColor(halftoneColor)
-  } else {
-   var halftoneColor=H3DU.Math.vec3lerp(rgb.slice(0,4),[1,1,1],0.5);
-   this.shape.shapes[3].setColor("white")
-   this.shape.shapes[4].setColor("white")
-   this.shape.shapes[5].setColor(halftoneColor)
-   this.shape.shapes[6].setColor("white")
-   this.shape.shapes[7].setColor(halftoneColor)
-  }
-  var borderColor=H3DU.Math.vec3scaleInPlace(rgb.slice(0,4),0.5);
-  this.shape.shapes[0].setColor(borderColor);
-  var frontColor=H3DU.Math.vec3scaleInPlace(rgb.slice(0,4),1.0);
-  this.shape.shapes[1].setColor(frontColor);
-  var backColor=H3DU.Math.vec3scaleInPlace(rgb.slice(0,4),0.75);
-  this.shape.shapes[2].setColor(backColor);
- }
- this.setColor("#ffffff")
- this.update();
+  var center = H3DU.Meshes.createSphere(0.03, 4, 4)
+   .transform(frontTransform);
+  var twelveoclock = H3DU.Meshes.createSphere(0.03, 4, 4)
+   .transform(H3DU.Math.mat4translated(0, 0.85, 0))
+   .transform(frontTransform);
+  var back = H3DU.Meshes.createDisk(0, 1, 64).reverseWinding().reverseNormals()
+   .transform(H3DU.Math.mat4translated(0, 0, -0.05));
+  clock.addShape(new H3DU.Shape(border));
+  clock.addShape(new H3DU.Shape(front));
+  clock.addShape(new H3DU.Shape(back));
+  clock.addShape(new H3DU.Shape(hourhand));
+  clock.addShape(new H3DU.Shape(minutehand));
+  clock.addShape(new H3DU.Shape(secondhand));
+  clock.addShape(new H3DU.Shape(center));
+  clock.addShape(new H3DU.Shape(twelveoclock));
+  scene.addShape(clock);
+  this.shape = clock;
+  this.hour = -1;
+  this.minute = -1;
+  this.second = -1;
+  this.update = function() {
+    var time = new Date();
+    var timenum = time.getTime();
+    var hour = time.getHours();
+    var minute = time.getMinutes();
+    var second = time.getSeconds() + timenum % 1000 / 1000;
+    if(this.hour !== hour || this.minute !== minute || this.second !== second) {
+      this.hour = hour;
+      this.minute = minute;
+      this.second = second;
+      var hms = hour % 12 * 3600 + minute * 60 + second;
+      var hourhand = 360 * hms / (3600 * 12);
+      var minutehand = 360 * (hms % 3600) / 3600;
+      var secondhand = 360 * (hms % 60) / 60;
+      this.shape.shapes[3].getTransform().setOrientation(-hourhand, 0, 0, 1);
+      this.shape.shapes[4].getTransform().setOrientation(-minutehand, 0, 0, 1);
+      this.shape.shapes[5].getTransform().setOrientation(-secondhand, 0, 0, 1);
+    }
+  };
+  this.setColor = function(color) {
+    var rgb = H3DU.toGLColor(color);
+    if((rgb[0] + rgb[1] + rgb[2]) / 3 >= 0.5) {
+      var halftoneColor = H3DU.Math.vec3lerp(rgb.slice(0, 4), [0, 0, 0], 0.5);
+      this.shape.shapes[3].setColor("black");
+      this.shape.shapes[4].setColor("black");
+      this.shape.shapes[5].setColor(halftoneColor);
+      this.shape.shapes[6].setColor("black");
+      this.shape.shapes[7].setColor(halftoneColor);
+    } else {
+      halftoneColor = H3DU.Math.vec3lerp(rgb.slice(0, 4), [1, 1, 1], 0.5);
+      this.shape.shapes[3].setColor("white");
+      this.shape.shapes[4].setColor("white");
+      this.shape.shapes[5].setColor(halftoneColor);
+      this.shape.shapes[6].setColor("white");
+      this.shape.shapes[7].setColor(halftoneColor);
+    }
+    var borderColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 0.5);
+    this.shape.shapes[0].setColor(borderColor);
+    var frontColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 1.0);
+    this.shape.shapes[1].setColor(frontColor);
+    var backColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 0.75);
+    this.shape.shapes[2].setColor(backColor);
+  };
+  this.setColor("#ffffff");
+  this.update();
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white")
-   .cullFace(H3DU.Scene3D.BACK)
-  var sub=new H3DU.Batch3D();
-  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
-  var pc=new FrameCounterDiv()
-  var clock=new ClockShape(sub);
-  document.getElementById("colorsetting").addEventListener("change",
-   function(e){ clock.setColor(e.target.value) });
-  H3DU.renderLoop(function(){
-   clock.update();
-   pc.update();
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
-   scene.render(sub);
-  });
-//-->
+   .cullFace(H3DU.Scene3D.BACK);
+var sub = new H3DU.Batch3D();
+var camera = new Camera(sub, 45, 1, 1000).setDistance(5);
+var input = new InputTracker(scene.getCanvas());
+var pc = new FrameCounterDiv();
+var clock = new ClockShape(sub);
+document.getElementById("colorsetting").addEventListener("change",
+   function(e) {
+     "use strict";
+     clock.setColor(e.target.value);
+   });
+H3DU.renderLoop(function() {
+  "use strict";
+  clock.update();
+  pc.update();
+  camera.update(input.update());
+  sub.getLights().setDirectionalLight(0, camera.getPosition());
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

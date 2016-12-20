@@ -134,7 +134,7 @@ MtlData.prototype._resolveTextures = function() {
 /**
  * Gets a material by name from this MTL file.
  * @param {String} name Name of the material.
- * @return {H3DU.Material} The material, or null if it doesn't exist.
+ * @returns {H3DU.Material} The material, or null if it doesn't exist.
  * @memberof! MtlData#
 */
 MtlData.prototype.getMaterial = function(name) {

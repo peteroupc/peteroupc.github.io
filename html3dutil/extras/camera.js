@@ -8,18 +8,41 @@ at: http://peteroupc.github.io/
 */
 /* global H3DU */
 
-////////////////////////////////////////////
+// //////////////////////////////////////////
 
+/**
+* TODO: Not documented yet.
+* <p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. <p>
+* To use this class, you must include the script "extras/camera.js"; the
+ * class is not included in the "h3du_min.js" file which makes up
+ * the HTML 3D Library.  Example:<pre>
+ * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
+ * @param {HTMLElement|HTMLDocument} The HTML document
+ * or element to track keyboard and mouse events for.
+*  If null or omitted, uses the calling application's HTML document.
+* @class
+* @alias InputTracker
+*/
 function InputTracker(element) {
   "use strict";
   this.leftButton = false;
   this.rightButton = false;
   this.middleButton = false;
-  this.keys = {};
+  this.keys = [];
   this.lastClient = [];
+  this.deltas = {
+    "x":0,
+    "y":0,
+    "cx":0,
+    "cy":0,
+    "ticks":0
+  };
+  this.ticksDelta = 0;
   this.clientX = null;
   this.clientY = null;
-  this.element = element;
+  this.element = element || window.document;
   this.mouseWheelCallback = null;
   var that = this;
   this.handlers = [];
@@ -32,6 +55,7 @@ function InputTracker(element) {
       that.leftButton = false;
       that.rightButton = false;
       that.keys = {};
+      that.ticksDelta = 0;
     });
     addHandler(this.handlers, document, "keydown", function(e) {
       that.keys[e.keyCode] = true;
@@ -50,9 +74,10 @@ function InputTracker(element) {
       } else if (e.originalEvent && e.originalEvent.wheelDelta) {
         delta = e.originalEvent.wheelDelta;
       }
-  // delta of 120 represents 1 tick of the mouse wheel;
-  // positive values mean moving the mouse wheel up,
-  // negative values mean down
+      tracker.ticksDelta += delta / 120.0;
+     // delta of 120 represents 1 tick of the mouse wheel;
+     // positive values mean moving the mouse wheel up,
+     // negative values mean down
       if(tracker.mouseWheelCallback) {
         tracker.mouseWheelCallback({
           "target":e.target,
@@ -152,7 +177,7 @@ function InputTracker(element) {
   }
 }
 /**
- * TODO: Not documented yet.
+ * Disposes all resources used by this input tracker.
  * @memberof! InputTracker#
 */
 InputTracker.prototype.dispose = function() {
@@ -164,15 +189,32 @@ InputTracker.prototype.dispose = function() {
   this.handlers = [];
   this.element = null;
   this.mouseWheelCallback = null;
-  this.keys = {};
+  this.keys = [];
+  this.ticksDelta = 0;
   this.clientX = null;
   this.clientY = null;
   this.lastClient = [];
+  this.deltas = {};
 };
 
 /**
- * TODO: Not documented yet.
- * @param {*} func
+* Gets whether a key is pressed, as detected by this
+* input tracker.
+* @returns {Number} key Key code of the key to check.
+* @returns {Boolean} True if the key is currently pressed; otherwise, false.
+ * @memberof! InputTracker#
+*/
+InputTracker.prototype.getKey = function(key) {
+  "use strict";
+  return this.keys[key];
+};
+
+/**
+ * Sets a function to handle mouse wheel events.
+ * @deprecated Will be removed in the future.  Use the
+ * deltaTicks method to find out whether the user
+ * has rotated the mouse wheel.
+ * @param {Function} func A function.
  * @memberof! InputTracker#
 */
 InputTracker.prototype.mousewheel = function(func) {
@@ -224,36 +266,76 @@ InputTracker.DELETE = 46;
 InputTracker.ADD = 107;
 InputTracker.SUBTRACT = 109;
 /**
- * TODO: Not documented yet.
+ * Returns the current mouse position, delta
+ * mouse position, and delta mouse wheel
+ * position (see the "update" method).
+ * @returns {Object} An object containing the following keys:<ul>
+ *<li><code>cx</code> - X-coordinate of the current mouse
+ * position.
+ *<li><code>cx</code> - Y-coordinate of the current mouse
+ * position.
+ *<li><code>x</code> - X component of the delta mouse position.
+ *<li><code>y</code> - Y component of the delta mouse position.
+* <li><code>ticks</code> - The delta mouse wheel position.
+* </ul>
+* If this object's update method wasn't called, all these values
+* will be 0.
  * @memberof! InputTracker#
 */
 InputTracker.prototype.deltaXY = function() {
   "use strict";
+  return {
+    "x":this.deltas.x,
+    "y":this.deltas.y,
+    "cx":this.deltas.cx,
+    "cy":this.deltas.cy,
+    "ticks":this.deltas.ticks
+  };
+};
+/**
+* Retrieves the current position of the mouse within
+* the page's client area, as detected by the input
+* tracker and calculates the "delta mouse position",
+* or the difference between
+* those values and the values they had the last
+* time this method was called.  If this method wasn't
+* called before for this tracker, the delta mouse position is
+* (0, 0).  If the current position of the mouse is unknown,
+* it's (0, 0) instead.<p>
+* Also retrieves the "delta mouse wheel position", or the
+* offset, in "ticks", from the mouse wheel position at the
+* last time this method was called (or the time this tracker
+* was created if it wasn't) to the current mouse wheen position.
+ * @returns {InputTracker} This object.
+ * @memberof! InputTracker#
+*/
+InputTracker.prototype.update = function() {
+  "use strict";
   var deltaX = 0;
   var deltaY = 0;
   if(this.clientX === null || this.clientY === null) {
-    return {
-      "x":0,
-      "y":0,
-      "cx":0,
-      "cy":0
-    };
+    this.deltas.x = 0;
+    this.deltas.y = 0;
+    this.deltas.cx = 0;
+    this.deltas.cy = 0;
+  } else {
+    deltaX = this.lastClient.length === 0 ? 0 :
+     this.clientX - this.lastClient[0];
+    deltaY = this.lastClient.length === 0 ? 0 :
+     this.clientY - this.lastClient[1];
+    this.lastClient[0] = this.clientX;
+    this.lastClient[1] = this.clientY;
+    this.deltas.x = deltaX;
+    this.deltas.y = deltaY;
+    this.deltas.cx = this.clientX;
+    this.deltas.cy = this.clientY;
   }
-  deltaX = this.lastClient.length === 0 ? 0 :
-   this.clientX - this.lastClient[0];
-  deltaY = this.lastClient.length === 0 ? 0 :
-   this.clientY - this.lastClient[1];
-  this.lastClient[0] = this.clientX;
-  this.lastClient[1] = this.clientY;
-  return {
-    "x":deltaX,
-    "y":deltaY,
-    "cx":this.clientX,
-    "cy":this.clientY
-  };
+  this.deltas.ticks = this.ticksDelta;
+  this.ticksDelta = 0;
+  return this;
 };
 
-//////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////
 
 /**
 * A class for controlling the projection and
@@ -267,154 +349,35 @@ InputTracker.prototype.deltaXY = function() {
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
 * @class
 * @alias Camera
-* @param {*} scene A 3D scene to associate with this
+* @param {H3DU.Batch3D} batch A 3D scene to associate with this
 * camera object.
-* @param {*}  fov Vertical field of view, in degrees. Should be less
+* @param {Number} fov Vertical field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.)
-* @param {*} near The distance from the camera to
+* @param {Number} near The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
-* @param {*}  far The distance from the camera to
+* @param {Number}  far The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
-* @param {*} [canvas] A canvas to associate with this
-* camera object.
+* @param {HTMLCanvasElement} [canvas] A canvas to associate with this
+* camera object. <i>This argument is deprecated.</i>
 */
-function Camera(sub, fov, nearZ, farZ, canvas) {
+function Camera(batch, fov, nearZ, farZ, canvas) {
   "use strict";
   if(nearZ <= 0)throw new Error("invalid nearZ");
   this.near = nearZ;
-  this.persp = new Camera._Perspective(sub, fov, nearZ, farZ);
   this.rotation = H3DU.Math.quatIdentity();
   this.dolly = H3DU.Math.quatIdentity();
   this.position = [0, 0, 0];
   this.center = [0, 0, 0];
-  this.scene = sub;
+  this.scene = batch;
   this.trackballMode = true;
   this._updateView();
-  if(!canvas)canvas = this.scene.getCanvas();
+  batch.perspectiveAspect(fov, nearZ, farZ);
+  if(!canvas)canvas = document;
   this.input = new InputTracker(canvas);
-  this.input.mousewheel(this._mousewheel.bind(this));
 }
-
-/** @private */
-Camera._Perspective = function(scene, fov, nearZ, farZ) {
-  "use strict";
-  if(nearZ <= 0)throw new Error("invalid nearZ");
-  this.fov = fov;
-  this.scene = scene;
-  this.near = nearZ;
-  this.far = farZ;
-  if(this.scene instanceof H3DU.Scene3D) {
-    this.currentAspect = this.scene.getClientAspect();
-    this.scene.setPerspective(this.fov, this.currentAspect, this.near, this.far);
-  } else {
-    this.scene.perspectiveAspect(this.fov, this.near, this.far);
-  }
-};
-/** @private */
-Camera._Perspective.prototype.update = function() {
-  "use strict";
-  if(this.scene instanceof H3DU.Scene3D) {
-    var aspect = this.scene.getClientAspect();
-    if(aspect !== this.currentAspect) {
-      this.currentAspect = aspect;
-      this.scene.setPerspective(this.fov, this.currentAspect, this.near, this.far);
-    }
-  } else {
-    this.scene.perspectiveAspect(this.fov, this.near, this.far);
-  }
-};
-/** @private */
-Camera._normAsVec4 = function(x, y, z) {
-  "use strict";
-
-  var len = x * x + y * y + z * z;
-  if(len === 1) {
-    return [x, y, z, 1];
-  } else {
-    var n = H3DU.Math.vec3normInPlace([x, y, z]);
-    return [n[0], n[1], n[2], 1];
-  }
-};
-/** @private */
-Camera._quatRotateRelative = function(quat, angle, x, y, z) {
-  "use strict";
- // Rotate quaternion about a relative axis
-
-  var vec = Camera._normAsVec4(x, y, z);
-  var q = H3DU.Math.quatRotate(quat, angle, vec);
-  q = H3DU.Math.quatMultiply(H3DU.Math.quatFromAxisAngle(angle, vec), quat);
-  H3DU.Math.vec4assign(quat, q);
-};
-/** @private */
-Camera._quatRotateFixed = function(quat, angle, x, y, z) {
-  "use strict";
- // Rotate quaternion about a fixed axis
-
-  var vec = Camera._normAsVec4(x, y, z);
-  var q = H3DU.Math.quatRotate(quat, angle, vec);
-  q = H3DU.Math.quatMultiply(quat, H3DU.Math.quatFromAxisAngle(angle, vec));
-  H3DU.Math.vec4assign(quat, q);
-};
-/** @private */
-Camera._moveRelative = function(vec, quat, dist, x, y, z) {
-  "use strict";
-  var velocity = Camera._normAsVec4(x, y, z);
-  H3DU.Math.vec3scaleInPlace(velocity, dist);
-  vec[0] += velocity[0]; vec[1] += velocity[1]; vec[2] += velocity[2];
-};
-/** @private */
-Camera._moveTrans = function(vec, quat, dist, x, y, z) {
-  "use strict";
-  var velocity = Camera._normAsVec4(x, y, z);
-  velocity = H3DU.Math.quatTransform(
-   H3DU.Math.quatConjugate(quat), velocity);
-  H3DU.Math.vec3scaleInPlace(velocity, dist);
-  vec[0] += velocity[0]; vec[1] += velocity[1]; vec[2] += velocity[2];
-};
-/**
- * TODO: Not documented yet.
- *//** @private */
-Camera.prototype._distance = function() {
-  "use strict";
-  var rel = H3DU.Math.vec3sub(this.position, this.center);
-  return H3DU.Math.vec3length(rel);
-};
-/** @private */
-Camera.prototype._getView = function() {
-  "use strict";
-  var mat = H3DU.Math.quatToMat4(this.rotation);
-  var mat2 = H3DU.Math.mat4translated(-this.position[0],
-  -this.position[1], -this.position[2]);
-  mat = H3DU.Math.mat4multiply(mat2, mat);
-  mat = H3DU.Math.mat4translate(mat, -this.center[0],
-  -this.center[1], -this.center[2]);
-  return mat;
-};
-
-/** @private */
-Camera.prototype._updateView = function() {
-  "use strict";
-  this.scene.setViewMatrix(this._getView());
-  return this;
-};
-/**
- * TODO: Not documented yet.
- * @param {*} dist
- * @memberof! Camera#
-*/
-Camera.prototype.setDistance = function(dist) {
-  "use strict";
- // don't move closer than the near plane
-
-  dist = Math.max(this.near, dist);
-  var currentDist = this._distance();
-  var relDist = currentDist - dist;
-  this.moveForward(relDist);
-  return this;
-};
 
 /** @private */
 Camera.prototype._orbit = function(deltaMouseX, deltaMouseY, angleMultiplier) {
@@ -475,9 +438,101 @@ Camera.prototype._moveAngleFixedVertical = function(angleDegrees) {
   }
   return this;
 };
+/** @private */
+Camera._normAsVec4 = function(x, y, z) {
+  "use strict";
+  var len = x * x + y * y + z * z;
+  if(len === 1) {
+    return [x, y, z, 1];
+  } else {
+    var n = H3DU.Math.vec3normInPlace([x, y, z]);
+    return [n[0], n[1], n[2], 1];
+  }
+};
+/** @private */
+Camera._quatRotateRelative = function(quat, angle, x, y, z) {
+  "use strict";
+ // Rotate quaternion about a relative axis
+  var vec = Camera._normAsVec4(x, y, z);
+  var q = H3DU.Math.quatRotate(quat, angle, vec);
+  q = H3DU.Math.quatMultiply(H3DU.Math.quatFromAxisAngle(angle, vec), quat);
+  H3DU.Math.vec4assign(quat, q);
+};
+/** @private */
+Camera._quatRotateFixed = function(quat, angle, x, y, z) {
+  "use strict";
+ // Rotate quaternion about a fixed axis
+  var vec = Camera._normAsVec4(x, y, z);
+  var q = H3DU.Math.quatRotate(quat, angle, vec);
+  q = H3DU.Math.quatMultiply(quat, H3DU.Math.quatFromAxisAngle(angle, vec));
+  H3DU.Math.vec4assign(quat, q);
+};
+/** @private */
+Camera._moveRelative = function(vec, quat, dist, x, y, z) {
+  "use strict";
+  var velocity = Camera._normAsVec4(x, y, z);
+  H3DU.Math.vec3scaleInPlace(velocity, dist);
+  vec[0] += velocity[0]; vec[1] += velocity[1]; vec[2] += velocity[2];
+};
+/** @private */
+Camera._moveTrans = function(vec, quat, dist, x, y, z) {
+  "use strict";
+  var velocity = Camera._normAsVec4(x, y, z);
+  velocity = H3DU.Math.quatTransform(
+   H3DU.Math.quatConjugate(quat), velocity);
+  H3DU.Math.vec3scaleInPlace(velocity, dist);
+  vec[0] += velocity[0]; vec[1] += velocity[1]; vec[2] += velocity[2];
+};
+/** @private */
+Camera.prototype._distance = function() {
+  "use strict";
+  var rel = H3DU.Math.vec3sub(this.position, this.center);
+  return H3DU.Math.vec3length(rel);
+};
+/** @private */
+Camera.prototype._getView = function() {
+  "use strict";
+  var mat = H3DU.Math.quatToMat4(this.rotation);
+  var mat2 = H3DU.Math.mat4translated(-this.position[0],
+  -this.position[1], -this.position[2]);
+  mat = H3DU.Math.mat4multiply(mat2, mat);
+  mat = H3DU.Math.mat4translate(mat, -this.center[0],
+  -this.center[1], -this.center[2]);
+  return mat;
+};
+
+/** @private */
+Camera.prototype._updateView = function() {
+  "use strict";
+  if(isNaN(this.position[0]) ||
+    isNaN(this.position[1]) ||
+    isNaN(this.position[2]))throw new Error();
+  this.scene.setViewMatrix(this._getView());
+  return this;
+};
 /**
  * TODO: Not documented yet.
- * @param {*} angleDegrees
+ * @param {Number} dist
+ * @memberof! Camera#
+*/
+Camera.prototype.setDistance = function(dist) {
+  "use strict";
+ // don't move closer than the near plane
+  dist = Math.max(this.near, dist);
+  var currentDist = this._distance();
+  var relDist = currentDist - dist;
+  this.moveForward(relDist);
+  return this;
+};
+/**
+ * Rotates the camera about the axis that points rightward and through
+* the sides of the camera.
+ * @param {Number} angleDegrees The angle to rotate the camera,
+* in degrees. If the coordinate-system is right-handed, positive
+values rotate the camera upward, and
+negative values downward. If the coordinate-system is left-handed,
+vice versa.
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.moveAngleVertical = function(angleDegrees) {
@@ -490,8 +545,14 @@ Camera.prototype.moveAngleVertical = function(angleDegrees) {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} angleDegrees
+ * Rotates the camera about the axis that points upward and through the
+bottom and top of the camera.
+ * @param {Number} angleDegrees The angle to rotate the camera,
+* in degrees. If the coordinate-system is right-handed, positive
+values rotate the camera leftward, and
+negative values rightward. If the coordinate-system is left-handed,
+vice versa.
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
@@ -506,6 +567,7 @@ Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
 /**
  * TODO: Not documented yet.
  * @param {*} angleDegrees
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.turnVertical = function(angleDegrees) {
@@ -515,28 +577,19 @@ Camera.prototype.turnVertical = function(angleDegrees) {
     Camera._quatRotateRelative(this.dolly, angleDegrees, 1, 0, 0);
     Camera._quatRotateRelative(this.rotation, angleDegrees, 1, 0, 0);
     this.position[0] = this.center[0]; this.position[1] = this.center[1]; this.position[2] = this.center[2];
-    this.moveForward(-curDist);
-  }
-  return this;
-};
-/** @deprecated * @memberof! Camera#
-*/
-Camera.prototype.turnHorizontal = function(angleDegrees) {
-  "use strict";
-  if(angleDegrees !== 0) {
-    var curDist = this._distance();
-    Camera._quatRotateRelative(this.dolly, angleDegrees, 0, 1, 0);
-    Camera._quatRotateRelative(this.rotation, angleDegrees, 0, 1, 0);
-    this.position[0] = this.center[0]; this.position[1] = this.center[1]; this.position[2] = this.center[2];
+    if(isNaN(this.position[0]) ||
+    isNaN(this.position[1]) ||
+    isNaN(this.position[2]))throw new Error();
     this.moveForward(-curDist);
   }
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} cx
- * @param {*} cy
- * @param {*} cz
+ * Sets the position of the camera.
+ * @param {Number} cx The camera's new X-coordinate.
+ * @param {Number} cy The camera's new Y-coordinate.
+ * @param {Number} cz The camera's new Z-coordinate.
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.movePosition = function(cx, cy, cz) {
@@ -544,12 +597,32 @@ Camera.prototype.movePosition = function(cx, cy, cz) {
   this.position[0] = cx;
   this.position[1] = cy;
   this.position[2] = cz;
+  if(isNaN(this.position[0]) ||
+    isNaN(this.position[1]) ||
+    isNaN(this.position[2]))throw new Error();
   this._updateView();
   return this;
 };
+
+/**
+ * Gets the position of the camera.
+ * @returns {Array<Number>} An array of three numbers giving
+the X, Y, and Z coordinates of the camera's position, respectively.
+ * @memberof! Camera#
+*/
+Camera.prototype.getPosition = function() {
+  "use strict";
+  var pos = H3DU.Math.quatTransform(
+    H3DU.Math.quatConjugate(this.rotation),
+    [this.position[0], this.position[1], this.position[2], 1]);
+  pos[0] -= this.center[0]; pos[1] -= this.center[1]; pos[2] -= this.center[2];
+  return pos;
+};
+
 /**
  * TODO: Not documented yet.
- * @param {*} dist
+ * @param {Number} dist
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.moveClose = function(dist) {
@@ -558,7 +631,8 @@ Camera.prototype.moveClose = function(dist) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} dist
+ * @param {Number} dist
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.moveForward = function(dist) {
@@ -571,7 +645,7 @@ Camera.prototype.moveForward = function(dist) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} dist
+ * @param {Number} dist
  * @memberof! Camera#
 */
 Camera.prototype.moveCenterHorizontal = function(dist) {
@@ -584,7 +658,7 @@ Camera.prototype.moveCenterHorizontal = function(dist) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} dist
+ * @param {Number} dist
  * @memberof! Camera#
 */
 Camera.prototype.moveCenterVertical = function(dist) {
@@ -597,7 +671,8 @@ Camera.prototype.moveCenterVertical = function(dist) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} dist
+ * @param {Number} dist
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.moveHorizontal = function(dist) {
@@ -610,7 +685,8 @@ Camera.prototype.moveHorizontal = function(dist) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} dist
+ * @param {Number} dist
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.moveVertical = function(dist) {
@@ -623,44 +699,33 @@ Camera.prototype.moveVertical = function(dist) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} e
- * @memberof! Camera#
-*/
-Camera.prototype.getPosition = function() {
-  "use strict";
-  // var view=this._getView();
-  var pos = H3DU.Math.quatTransform(
-    H3DU.Math.quatConjugate(this.rotation),
-    [this.position[0], this.position[1], this.position[2], 1]);
-  pos[0] -= this.center[0]; pos[1] -= this.center[1]; pos[2] -= this.center[2];
-  return pos;
-};
-/**
- * TODO: Not documented yet.
  * @memberof! Camera#
 */
 Camera.prototype.getVectorFromCenter = function() {
   "use strict";
   return H3DU.Math.vec3normInPlace(this.getPosition());
 };
-
-/** @private */
-Camera.prototype._mousewheel = function(e) {
-  "use strict";
-  var ticks = e.delta / 120.0;
- // mousewheel up (negative) means move forward,
- // mousewheel down (positive) means move back
-  this.setDistance(this._distance() - 0.6 * ticks);
-};
-
 /**
- * TODO: Not documented yet.
+ * Updates information about this camera based
+ * on the state of an input tracker.
+ * @param {InputTracker} [input] An input tracker.  This
+ * method should be called right after the tracker's
+ * 'update' method was called. <i>Note that future versions
+ * may require this parameter.</i>
  * @memberof! Camera#
 */
-Camera.prototype.update = function() {
+Camera.prototype.update = function(input) {
   "use strict";
-  var delta = this.input.deltaXY();
-  if(this.input.leftButton) {
+  if(!input)input.update();
+  return this._updateNew(input || this.input);
+};
+/** @private */
+Camera.prototype._updateNew = function(input) {
+  "use strict";
+  if(!input)return this;
+  var delta = input.deltaXY();
+  var deltaTicks = delta.ticks;
+  if(input.leftButton) {
     if(this.trackballMode) {
       this._trackball(delta.x, delta.y, 0.3);
     } else {
@@ -669,13 +734,18 @@ Camera.prototype.update = function() {
   } else if(this.input.middleButton) {
     this._move(delta.x, delta.y, 0.3);
   }
-  if(this.input.keys[InputTracker.A + 22]) { // letter W
+  if(input.keys[InputTracker.A + 22]) { // letter W
     this.setDistance(this._distance() + 0.2);
   }
-  if(this.input.keys[InputTracker.A + 18]) { // letter S
+  if(input.keys[InputTracker.A + 18]) { // letter S
     this.setDistance(this._distance() - 0.2);
   }
-  this.persp.update();
+  if(deltaTicks !== 0) {
+   // mousewheel up (negative) means move forward,
+   // mousewheel down (positive) means move back
+    console.log(deltaTicks);
+    this.setDistance(this._distance() - 0.6 * deltaTicks);
+  }
   return this;
 };
-///////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////

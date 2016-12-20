@@ -1602,7 +1602,7 @@ the path may contain several disconnected parts.
  * point in the current path, its new X coordinate is `trans[0] * X +
  * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
  * trans[3] * Y + trans[5]`.
- * @return {GraphicsPath} The transformed version of this path.
+ * @returns {GraphicsPath} The transformed version of this path.
  * @memberof! GraphicsPath#
 */
   GraphicsPath.prototype.transform = function(trans) {

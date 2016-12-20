@@ -12,7 +12,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global Animators, FrameCounterDiv, H3DU, createWasher, makeFloor, rotateVec */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -24,52 +25,57 @@ at: http://peteroupc.github.io/
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas")).setClearColor("white");
-  var sub=new H3DU.Batch3D();
-  sub.getLights().setDirectionalLight(0,[0,-3,1.2])
-   .setParams(0,{"diffuse":"black"})
-   .setPointLight(1,[0,0,1])
-   .setParams(1,{"diffuse":"white","specular":"white","radius":3.2});
-  var shapes=[]
-  var shapecolors=["white","blue","red","green","brown","orange","purple"]
+  var scene = new H3DU.Scene3D(document.getElementById("canvas")).setClearColor("white");
+  var sub = new H3DU.Batch3D();
+  sub.getLights().setDirectionalLight(0, [0, -3, 1.2])
+   .setParams(0, {"diffuse":"black"})
+   .setPointLight(1, [0, 0, 1])
+   .setParams(1, {
+     "diffuse":"white",
+     "specular":"white",
+     "radius":3.2
+   });
+  var shapes = [];
+  var shapecolors = ["white", "blue", "red", "green", "brown", "orange", "purple"];
   // Outer radius of each washer
-  var shapesizes=[1,0.9,0.8,0.7,0.6,0.7,0.8]
-  var fc=new FrameCounterDiv()
-  var loader=new H3DU.TextureLoader();
+  var shapesizes = [1, 0.9, 0.8, 0.7, 0.6, 0.7, 0.8];
+  var fc = new FrameCounterDiv();
+  var loader = new H3DU.TextureLoader();
   // load the floor texture
   loader.loadAndMapTexturesAll([
     "461223191.jpg"
-  ],scene).then(function(textures){
+  ], scene).then(function(textures) {
+    "use strict";
    // create a stack of washers, each with different sizes
-   for(var i=0;i<shapecolors.length;i++){
-    var s=new H3DU.Shape(createWasher(0.5,shapesizes[i],0.1,32)).setColor(shapecolors[i])
-      .setVisible(false)
-    shapes.push(s)
-    sub.addShape(s)
-   }
-   sub.addShape(
-    new H3DU.Shape(makeFloor(-5,-5,10,10,1)).setTexture(textures[0]))
-   // Start the render loop
-  var anim=null
-  var timer={}
-  H3DU.renderLoop(function(time){
-   sub.perspectiveAspect(45,1,1000)
-   var angle=360*H3DU.getTimePosition(timer,time,6000)
-   sub.setLookAt(rotateVec([0,-3,1.2],angle),[0,0,0],[0,0,1])
-   fc.update();
-   if(!anim){
-    if(shapes.length>0){
-     anim=new Animators().startAt(time+200)
-     for(var i=0;i<shapes.length;i++){
-      anim.thenShowAndMove(shapes[i],0,0,4,0,0,0.1*i,1000)
-     }
+    for(var i = 0;i < shapecolors.length;i++) {
+      var s = new H3DU.Shape(createWasher(0.5, shapesizes[i], 0.1, 32)).setColor(shapecolors[i])
+      .setVisible(false);
+      shapes.push(s);
+      sub.addShape(s);
     }
-   } else {
-    anim.update(time)
-   }
-   scene.render(sub);
+    sub.addShape(
+    new H3DU.Shape(makeFloor(-5, -5, 10, 10, 1)).setTexture(textures[0]));
+   // Start the render loop
+    var anim = null;
+    var timer = {};
+    H3DU.renderLoop(function(time) {
+      sub.perspectiveAspect(45, 1, 1000);
+      var angle = 360 * H3DU.getTimePosition(timer, time, 6000);
+      sub.setLookAt(rotateVec([0, -3, 1.2], angle), [0, 0, 0], [0, 0, 1]);
+      fc.update();
+      if(!anim) {
+        if(shapes.length > 0) {
+          anim = new Animators().startAt(time + 200);
+          for(var i = 0;i < shapes.length;i++) {
+            anim.thenShowAndMove(shapes[i], 0, 0, 4, 0, 0, 0.1 * i, 1000);
+          }
+        }
+      } else {
+        anim.update(time);
+      }
+      scene.render(sub);
+    });
   });
-  })
-//-->
+// -->
 </script>
 </body>

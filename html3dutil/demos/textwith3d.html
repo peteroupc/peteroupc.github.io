@@ -16,7 +16,8 @@ Doug Miles and Earl Allen, and "Aileron" from http://dotcolon.net/font/aileron/
 <div id=links></div>
 </div>
 <script id="demo">
-//<!--
+/* global H3DU */
+// <!--
 /*
 Written by Peter O. in 2016.
 
@@ -29,55 +30,75 @@ at: http://peteroupc.github.io/
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
   //
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
+  var scene = new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("#f0f0f0");
-  var textSub=new H3DU.Batch3D()
-    .orthoAspect(0,640,480,0,-1,1);
-  var figureSub=new H3DU.Batch3D()
-    .perspectiveAspect(45,0.1,100)
-    .setLookAt([0,0,40]);
+  var textSub = new H3DU.Batch3D()
+    .orthoAspect(0, 640, 480, 0, -1, 1);
+  var figureSub = new H3DU.Batch3D()
+    .perspectiveAspect(45, 0.1, 100)
+    .setLookAt([0, 0, 40]);
   figureSub.getLights().setDefaults();
-  var mesh=H3DU.Meshes.createBox(10,20,20);
-  var shape2=new H3DU.Shape(mesh).setColor("#e0e0e0");
+  var mesh = H3DU.Meshes.createBox(10, 20, 20);
+  var shape2 = new H3DU.Shape(mesh).setColor("#e0e0e0");
   figureSub.addShape(shape2);
-  var passes=[
-   new H3DU.RenderPass3D(figureSub),
-   new H3DU.RenderPass3D(textSub,{"clearColor":false})
-  ]
-  var timer={}
-  var loader=new H3DU.TextureLoader();
+  var passes = [
+    new H3DU.RenderPass3D(figureSub),
+    new H3DU.RenderPass3D(textSub, {"clearColor":false})
+  ];
+  var timer = {};
+  var loader = new H3DU.TextureLoader();
   H3DU.getPromiseResultsAll([
-   H3DU.TextFont.loadWithTextures("black-chancery.fnt",loader),
-   H3DU.TextFont.loadWithTextures("aileron-bold-red.fnt",loader)
-  ]).then(function(results){
-   var shape=results[0].font.textShape("This is a signed distance field test.",
-    {x:0,y:50,lineHeight:100,width:640,align:"left",color:"blue",textures:results[0].textures});
-   textSub.addShape(shape);
-   var y=250;
-   var size=20;
-   for(var i=0;i<8;i++){
-    var text="Example text. Example text. Example text. Example text. Example text."
-    if(i==0){
-      text="Uses the public domain font Aileron from http://dotcolon.net/font/aileron/"
-    }
-    shape=results[1].font.textShape(text,
-      {x:0,y:y,lineHeight:size,width:640,textures:results[1].textures,align:"center"});
+    H3DU.TextFont.loadWithTextures("black-chancery.fnt", loader),
+    H3DU.TextFont.loadWithTextures("aileron-bold-red.fnt", loader)
+  ]).then(function(results) {
+    "use strict";
+    var shape = results[0].font.textShape("This is a signed distance field test.",
+      {
+        "x":0,
+        "y":50,
+        "lineHeight":100,
+        "width":640,
+        "align":"left",
+        "color":"blue",
+        "textures":results[0].textures
+      });
     textSub.addShape(shape);
-    y+=results[1].font.measure(text,{lineHeight:size,width:640})[1];
-    size+=10;
-   }
-   return true;
-  }).then(function(){
-  H3DU.renderLoop(function(time){
-   var q=H3DU.Math.quatFromTaitBryan(
-     360*H3DU.getTimePosition(timer,time,6000),
-     360*H3DU.getTimePosition(timer,time,12000),
+    var y = 250;
+    var size = 20;
+    for(var i = 0;i < 8;i++) {
+      var text = "Example text. Example text. Example text. Example text. Example text.";
+      if(i === 0) {
+        text = "Uses the public domain font Aileron from http://dotcolon.net/font/aileron/";
+      }
+      shape = results[1].font.textShape(text,
+        {
+          "x":0,
+          "y":y,
+          "lineHeight":size,
+          "width":640,
+          "textures":results[1].textures,
+          "align":"center"
+        });
+      textSub.addShape(shape);
+      y += results[1].font.measure(text, {
+        "lineHeight":size,
+        "width":640
+      })[1];
+      size += 10;
+    }
+    return true;
+  }).then(function() {
+    "use strict";
+    H3DU.renderLoop(function(time) {
+      var q = H3DU.Math.quatFromTaitBryan(
+     360 * H3DU.getTimePosition(timer, time, 6000),
+     360 * H3DU.getTimePosition(timer, time, 12000),
      0
    );
-   shape2.setQuaternion(q);
-   scene.render(passes);
+      shape2.setQuaternion(q);
+      scene.render(passes);
+    });
   });
-  });
-//-->
+// -->
 </script>
 </body>

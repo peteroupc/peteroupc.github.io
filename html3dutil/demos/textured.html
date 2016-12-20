@@ -12,7 +12,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <canvas id=canvas></canvas>
 <p>Texture courtesy of pdtextures.blogspot.com</p>
 <script id="demo">
-//<!--
+/* global FrameCounterDiv, H3DU */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -24,39 +25,40 @@ at: http://peteroupc.github.io/
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
+  var scene = new H3DU.Scene3D(document.getElementById("canvas"))
     .cullFace(H3DU.Scene3D.BACK);
-  var sub=new H3DU.Batch3D()
+  var sub = new H3DU.Batch3D()
    // Set the perspective view.  Camera has a 45-degree field of view
    // and will see objects from 0.1 to 100 units away.
-   .perspectiveAspect(45,0.1,100)
+   .perspectiveAspect(45, 0.1, 100)
    // Move the camera back 40 units.
-   .setLookAt([0,0,40]);
+   .setLookAt([0, 0, 40]);
   sub.getLights().setDefaults();
-  var fc=new FrameCounterDiv()
-  var loader=new H3DU.TextureLoader();
+  var fc = new FrameCounterDiv();
+  var loader = new H3DU.TextureLoader();
   loader.loadAndMapTexturesAll([
-   "461223191.jpg"
-   ],scene).then(function(tex){
-   var mesh=H3DU.Meshes.createBox(10,20,20);
-   var shape=new H3DU.Shape(mesh).setTexture(tex[0])
-   sub.addShape(shape);
+    "461223191.jpg"
+  ], scene).then(function(tex) {
+    "use strict";
+    var mesh = H3DU.Meshes.createBox(10, 20, 20);
+    var shape = new H3DU.Shape(mesh).setTexture(tex[0]);
+    sub.addShape(shape);
    // Create a timer
-   var timer={};
+    var timer = {};
   // Set up the render loop
-  H3DU.renderLoop(function(time){
+    H3DU.renderLoop(function(time) {
    // Update the shape's rotation
-   var q=H3DU.Math.quatFromTaitBryan(
-     360*H3DU.getTimePosition(timer,time,6000),
-     360*H3DU.getTimePosition(timer,time,12000),
+      var q = H3DU.Math.quatFromTaitBryan(
+     360 * H3DU.getTimePosition(timer, time, 6000),
+     360 * H3DU.getTimePosition(timer, time, 12000),
      0
    );
-   fc.update();
-   shape.setQuaternion(q);
+      fc.update();
+      shape.setQuaternion(q);
    // Render the scene
-   scene.render(sub);
+      scene.render(sub);
+    });
   });
- })
-//-->
+// -->
 </script>
 </body>

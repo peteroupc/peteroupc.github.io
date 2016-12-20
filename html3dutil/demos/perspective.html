@@ -12,7 +12,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global Camera, H3DU, InputTracker */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -39,23 +40,24 @@ at: http://peteroupc.github.io/
 * null if all three planes meet at a line or any two planes
 * are parallel.
 */
-H3DU.Math.planeIntersection=function(p1,p2,p3){
- var c23=H3DU.Math.vec3cross(p2,p3);
- var d=H3DU.Math.vec3dot(p1,c23);
- if(d==0){
+H3DU.Math.planeIntersection = function(p1, p2, p3) {
+  "use strict";
+  var c23 = H3DU.Math.vec3cross(p2, p3);
+  var d = H3DU.Math.vec3dot(p1, c23);
+  if(d === 0) {
   // no intersection point
-  return null;
- }
- var c12=H3DU.Math.vec3cross(p1,p2);
- var c31=H3DU.Math.vec3cross(p3,p1)
- H3DU.Math.vec3scaleInPlace(c23,-p1[3]);
- H3DU.Math.vec3scaleInPlace(c31,-p2[3]);
- H3DU.Math.vec3scaleInPlace(c12,-p3[3]);
- c23[0]+=c31[0]; c23[1]+=c31[1]; c23[2]+=c31[2];
- c23[0]+=c12[0]; c23[1]+=c12[1]; c23[2]+=c12[2];
- H3DU.Math.vec3scaleInPlace(c23,1.0/d);
- return c23;
-}
+    return null;
+  }
+  var c12 = H3DU.Math.vec3cross(p1, p2);
+  var c31 = H3DU.Math.vec3cross(p3, p1);
+  H3DU.Math.vec3scaleInPlace(c23, -p1[3]);
+  H3DU.Math.vec3scaleInPlace(c31, -p2[3]);
+  H3DU.Math.vec3scaleInPlace(c12, -p3[3]);
+  c23[0] += c31[0]; c23[1] += c31[1]; c23[2] += c31[2];
+  c23[0] += c12[0]; c23[1] += c12[1]; c23[2] += c12[2];
+  H3DU.Math.vec3scaleInPlace(c23, 1.0 / d);
+  return c23;
+};
 
 /**
 * Finds the coordinates of the corners
@@ -70,17 +72,18 @@ H3DU.Math.planeIntersection=function(p1,p2,p3){
 * bottom-left, top-right, and bottom-right corners,
 * respectively, of the near clipping plane.
 */
-H3DU.Math.frustumNearPlane=function(frustum){
- var topLeft=H3DU.Math.planeIntersection(
-  frustum[4],frustum[0],frustum[2]);
- var bottomLeft=H3DU.Math.planeIntersection(
-  frustum[4],frustum[0],frustum[3]);
- var topRight=H3DU.Math.planeIntersection(
-  frustum[4],frustum[1],frustum[2]);
- var bottomRight=H3DU.Math.planeIntersection(
-  frustum[4],frustum[1],frustum[3]);
- return [topLeft,bottomLeft,topRight,bottomRight];
-}
+H3DU.Math.frustumNearPlane = function(frustum) {
+  "use strict";
+  var topLeft = H3DU.Math.planeIntersection(
+  frustum[4], frustum[0], frustum[2]);
+  var bottomLeft = H3DU.Math.planeIntersection(
+  frustum[4], frustum[0], frustum[3]);
+  var topRight = H3DU.Math.planeIntersection(
+  frustum[4], frustum[1], frustum[2]);
+  var bottomRight = H3DU.Math.planeIntersection(
+  frustum[4], frustum[1], frustum[3]);
+  return [topLeft, bottomLeft, topRight, bottomRight];
+};
 /**
 * Finds the coordinates of the corners
 * of a view frustum's far clipping plane.
@@ -94,100 +97,107 @@ H3DU.Math.frustumNearPlane=function(frustum){
 * bottom-left, top-right, and bottom-right corners,
 * respectively, of the near clipping plane.
 */
-H3DU.Math.frustumFarPlane=function(frustum){
-  var topLeft=H3DU.Math.planeIntersection(
-  frustum[5],frustum[0],frustum[2]);
- var bottomLeft=H3DU.Math.planeIntersection(
-  frustum[5],frustum[0],frustum[3]);
- var topRight=H3DU.Math.planeIntersection(
-  frustum[5],frustum[1],frustum[2]);
- var bottomRight=H3DU.Math.planeIntersection(
-  frustum[5],frustum[1],frustum[3]);
- return [topLeft,bottomLeft,topRight,bottomRight];
+H3DU.Math.frustumFarPlane = function(frustum) {
+  "use strict";
+  var topLeft = H3DU.Math.planeIntersection(
+  frustum[5], frustum[0], frustum[2]);
+  var bottomLeft = H3DU.Math.planeIntersection(
+  frustum[5], frustum[0], frustum[3]);
+  var topRight = H3DU.Math.planeIntersection(
+  frustum[5], frustum[1], frustum[2]);
+  var bottomRight = H3DU.Math.planeIntersection(
+  frustum[5], frustum[1], frustum[3]);
+  return [topLeft, bottomLeft, topRight, bottomRight];
+};
+
+function perspectiveFrustum(fov, aspect, near, far, cameraPos, lookingAt) {
+  "use strict";
+  var proj = H3DU.Math.mat4perspective(fov, aspect, near, far);
+  var view = H3DU.Math.mat4lookat(cameraPos, lookingAt);
+  var projview = H3DU.Math.mat4multiply(proj, view);
+  var frustum = H3DU.Math.mat4toFrustumPlanes(projview);
+  return frustum;
 }
 
-function perspectiveFrustum(fov,aspect,near,far,cameraPos,lookingAt){
- var proj=H3DU.Math.mat4perspective(fov,aspect,near,far);
- var view=H3DU.Math.mat4lookat(cameraPos,lookingAt)
- var projview=H3DU.Math.mat4multiply(proj,view);
- var frustum=H3DU.Math.mat4toFrustumPlanes(projview);
- return frustum;
+function meshAddLine(mesh, point1, point2, thickness) {
+  "use strict";
+  var vector = H3DU.Math.vec3sub(point1, point2);
+  var dist = H3DU.Math.vec3length(vector);
+  var normVector = H3DU.Math.vec3norm(vector);
+  var midPoint = H3DU.Math.vec3lerp(point1, point2, 0.5);
+  var line = H3DU.Meshes.createCapsule(thickness / 2, dist, 6, 4);
+  var matrix = H3DU.Math.quatToMat4(H3DU.Math.quatFromVectors([0, 0, 1], normVector));
+  matrix[12] = midPoint[0];
+  matrix[13] = midPoint[1];
+  matrix[14] = midPoint[2];
+  return mesh.merge(line.transform(matrix));
 }
-
-function meshAddLine(mesh,point1,point2,thickness){
- var vector=H3DU.Math.vec3sub(point1,point2);
- var dist=H3DU.Math.vec3length(vector);
- var normVector=H3DU.Math.vec3norm(vector);
- var midPoint=H3DU.Math.vec3lerp(point1,point2,0.5);
- var line=H3DU.Meshes.createCapsule(thickness/2,dist,6,4);
- var matrix=H3DU.Math.quatToMat4(H3DU.Math.quatFromVectors([0,0,1],normVector));
- matrix[12]=midPoint[0]
- matrix[13]=midPoint[1]
- matrix[14]=midPoint[2]
- return mesh.merge(line.transform(matrix));
+function meshAddLineStrip(mesh, strip, thickness) {
+  "use strict";
+  for(var i = 0;i < strip.length - 1;i++) {
+    mesh = meshAddLine(mesh, strip[i], strip[i + 1], thickness);
+  }
+  return mesh;
 }
-function meshAddLineStrip(mesh,strip,thickness){
- for(var i=0;i<strip.length-1;i++){
-  mesh=meshAddLine(mesh,strip[i],strip[i+1],thickness)
- }
- return mesh
-}
-function frustumMesh(frustum){
- var mesh=new H3DU.Mesh();
- var nearRect=H3DU.Math.frustumNearPlane(frustum);
- var farRect=H3DU.Math.frustumFarPlane(frustum);
- var thickness=0.01
- meshAddLine(mesh,nearRect[0],farRect[0],thickness);
- meshAddLine(mesh,nearRect[1],farRect[1],thickness);
- meshAddLine(mesh,nearRect[2],farRect[2],thickness);
- meshAddLine(mesh,nearRect[3],farRect[3],thickness);
- meshAddLineStrip(mesh,[nearRect[0],nearRect[1],
-    nearRect[3],nearRect[2],nearRect[0]],thickness);
- meshAddLineStrip(mesh,[farRect[0],farRect[1],
-    farRect[3],farRect[2],farRect[0]],thickness);
- return mesh.setColor3("yellow");
+function frustumMesh(frustum) {
+  "use strict";
+  var mesh = new H3DU.Mesh();
+  var nearRect = H3DU.Math.frustumNearPlane(frustum);
+  var farRect = H3DU.Math.frustumFarPlane(frustum);
+  var thickness = 0.01;
+  meshAddLine(mesh, nearRect[0], farRect[0], thickness);
+  meshAddLine(mesh, nearRect[1], farRect[1], thickness);
+  meshAddLine(mesh, nearRect[2], farRect[2], thickness);
+  meshAddLine(mesh, nearRect[3], farRect[3], thickness);
+  meshAddLineStrip(mesh, [nearRect[0], nearRect[1],
+    nearRect[3], nearRect[2], nearRect[0]], thickness);
+  meshAddLineStrip(mesh, [farRect[0], farRect[1],
+    farRect[3], farRect[2], farRect[0]], thickness);
+  return mesh.setColor3("yellow");
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  var sub=new H3DU.Batch3D();
-  sub.getLights().setDefaults();
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+var sub = new H3DU.Batch3D();
+sub.getLights().setDefaults();
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
-  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(10);
-  var frustum=perspectiveFrustum(45,scene.getClientAspect(),2,10,[0,0,10],[0,0,0]);
-  var mesh=frustumMesh(frustum);
-  var spheres=new H3DU.ShapeGroup();
-  var radius=0.3;
-  var sphereMesh=H3DU.Meshes.createSphere(radius);
-  var sphere=new H3DU.Shape(sphereMesh);
-  for(var i=-10; i<=10;i++){
-   var shape=sphere.copy().setPosition(1,-1,i)
-   if(!H3DU.Math.frustumHasSphere(frustum,1,-1,i,radius)){
-    shape.setColor("red")
-   }
-    spheres.addShape(shape);
+var camera = new Camera(sub, 45, 1, 1000).setDistance(10);
+var input = new InputTracker(scene.getCanvas());
+var frustum = perspectiveFrustum(45, scene.getClientAspect(), 2, 10, [0, 0, 10], [0, 0, 0]);
+var mesh = frustumMesh(frustum);
+var spheres = new H3DU.ShapeGroup();
+var radius = 0.3;
+var sphereMesh = H3DU.Meshes.createSphere(radius);
+var sphere = new H3DU.Shape(sphereMesh);
+for(var i = -10; i <= 10;i++) {
+  var shape = sphere.copy().setPosition(1, -1, i);
+  if(!H3DU.Math.frustumHasSphere(frustum, 1, -1, i, radius)) {
+    shape.setColor("red");
   }
-  for(var i=-10; i<=10;i++){
-   var shape=sphere.copy().setPosition(2,2,i)
-   if(!H3DU.Math.frustumHasSphere(frustum,2,2,i,radius)){
-    shape.setColor("red")
-   } else {
-    shape.setColor("orange")
-   }
-    spheres.addShape(shape);
+  spheres.addShape(shape);
+}
+for(i = -10; i <= 10;i++) {
+  shape = sphere.copy().setPosition(2, 2, i);
+  if(!H3DU.Math.frustumHasSphere(frustum, 2, 2, i, radius)) {
+    shape.setColor("red");
+  } else {
+    shape.setColor("orange");
   }
-  sub.addShape(new H3DU.Shape(mesh));
-  sub.addShape(spheres);
+  spheres.addShape(shape);
+}
+sub.addShape(new H3DU.Shape(mesh));
+sub.addShape(spheres);
   // Set up the render loop
-  H3DU.renderLoop(function(){
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
+H3DU.renderLoop(function() {
+  "use strict";
+  camera.update(input.update());
+  sub.getLights().setDirectionalLight(0, camera.getPosition());
    // Render the scene
-   scene.render(sub);
-  });
-//-->
+  scene.render(sub);
+});
+// -->
 </script>
 <p>Controls: Drag with the mouse to move the scene; use the mouse
 wheel to move the camera forward and back.</p>

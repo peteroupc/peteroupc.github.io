@@ -16,7 +16,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <div id="settings" style="position:absolute;left:0;top:3em"></div>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global Camera, FrameCounterDiv, H3DU, ImplicitSurface, InputTracker, addLink, input, pushSettings */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -25,22 +26,26 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-   function makeMesh(func,resolution){
+/* exported makeMesh */
+   function makeMesh(func, resolution) {
+     "use strict";
     // Default resolution is 50
-    if(resolution==null)resolution=50
+     if(resolution === null || typeof resolution === "undefined")resolution = 50;
      // create a new mesh
-     var mesh=new H3DU.Mesh();
+     var mesh = new H3DU.Mesh();
      // define a color gradient evaluator for
      // demonstration purposes.  Instead of X, Y, and Z,
      // generate a Red/Green/Blue color based on
      // the same parameters U and V as the surface
      // function for 3D points.
-     var colorGradient={
-      "evaluate":function(u,v){ return [1-u,v,u]; }
-     }
+     var colorGradient = {
+       "evaluate":function(u, v) {
+         return [1 - u, v, u];
+       }
+     };
      // generate the parametric surface.
 
-     var ev=new H3DU.SurfaceEval()
+     new H3DU.SurfaceEval()
       .vertex(func)
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
@@ -54,170 +59,183 @@ at: http://peteroupc.github.io/
     // Instead of Mesh.TRIANGLES, we could use
     // Mesh.LINES to create a wireframe mesh,
     // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,resolution);
+      .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution, resolution);
     // Surface generated, return the mesh
-    return mesh;
-  }
+     return mesh;
+   }
 
-function Cylinder(radius){
- this.c=radius*radius;
- this.sample=function(x,y,z){
-  return (x*x)+(z*z)-this.c;
- }
-}
+   function Cylinder(radius) {
+     "use strict";
+     this.c = radius * radius;
+     this.sample = function(x, y, z) {
+       return x * x + z * z - this.c;
+     };
+   }
 
-function PlaneSurface(a,b,c,d){
- this.a=a;
- this.b=b;
- this.c=c;
- this.d=d;
- this.sample=function(x,y,z){
-  return a*x+b*y+c*z+d;
- }
-}
+/* exported PlaneSurface */
+   function PlaneSurface(a, b, c, d) {
+     "use strict";
+     this.a = a;
+     this.b = b;
+     this.c = c;
+     this.d = d;
+     this.sample = function(x, y, z) {
+       return a * x + b * y + c * z + d;
+     };
+   }
 
-function Ellipsoid(a,b,c){
- this.a=a*a;
- this.b=b*b;
- this.c=c*c;
- this.sample=function(x,y,z){
-  return (x*x/this.a)+(y*y/this.b)+(z*z/this.c)-1;
- }
-}
+   function Ellipsoid(a, b, c) {
+     "use strict";
+     this.a = a * a;
+     this.b = b * b;
+     this.c = c * c;
+     this.sample = function(x, y, z) {
+       return x * x / this.a + y * y / this.b + z * z / this.c - 1;
+     };
+   }
 
-function HyperboloidOneSheet(a,b,c){
- this.a=a*a;
- this.b=b*b;
- this.c=c*c;
- this.sample=function(x,y,z){
-  return (x*x/this.a)+(z*z/this.c)-(y*y/this.b)-1;
- }
-}
+   function HyperboloidOneSheet(a, b, c) {
+     "use strict";
+     this.a = a * a;
+     this.b = b * b;
+     this.c = c * c;
+     this.sample = function(x, y, z) {
+       return x * x / this.a + z * z / this.c - y * y / this.b - 1;
+     };
+   }
 
-function makeImplicit(func){
- var surf=new ImplicitSurface(func);
- var mesh=new H3DU.Mesh();
- mesh.color3("blue");
- surf.evalSurface(mesh,48,48,48,-5,5,-5,5,-5,5);
- return mesh;
-}
+   function makeImplicit(func) {
+     "use strict";
+     var surf = new ImplicitSurface(func);
+     var mesh = new H3DU.Mesh();
+     mesh.color3("blue");
+     surf.evalSurface(mesh, 48, 48, 48, -5, 5, -5, 5, -5, 5);
+     return mesh;
+   }
 
-var shapeGroup=new H3DU.ShapeGroup();
-var allsettings={}
-var link1=null;
-addLink("Ellipsoid",link1=function(){
-pushSettings(function(allsettings){
-  return makeImplicit(
+   var shapeGroup = new H3DU.ShapeGroup();
+
+   var link1 = null;
+   addLink("Ellipsoid", link1 = function() {
+     "use strict";
+     pushSettings(function(allsettings) {
+       return makeImplicit(
     new Ellipsoid(
       allsettings["superel-x"],
       allsettings["superel-y"],
       allsettings["superel-z"]
     ));
- },{
- "superel-x":["X radius",1,0.05,2.0,0.05],
- "superel-y":["Y radius",1,0.05,2.0,0.05],
- "superel-z":["Z radius",1,0.05,2.0,0.05]
- })
-})
+     }, {
+       "superel-x":["X radius", 1, 0.05, 2.0, 0.05],
+       "superel-y":["Y radius", 1, 0.05, 2.0, 0.05],
+       "superel-z":["Z radius", 1, 0.05, 2.0, 0.05]
+     });
+   });
 
-addLink("Hyperboloid of One Sheet",function(){
- pushSettings(function(allsettings){
-    return makeImplicit(
+   addLink("Hyperboloid of One Sheet", function() {
+     "use strict";
+     pushSettings(function(allsettings) {
+       return makeImplicit(
     new HyperboloidOneSheet(
       allsettings["hyp1-x"],
       allsettings["hyp1-y"],
       allsettings["hyp1-z"]
     ));
- },{
- "hyp1-x":["X radius",1,0.05,2.0,0.05],
- "hyp1-y":["Y radius",1,0.05,2.0,0.05],
- "hyp1-z":["Z radius",1,0.05,2.0,0.05]
- });
-})
-addLink("Cylinder",function(){
- pushSettings(function(allsettings){
-   var cyl=new Cylinder(
+     }, {
+       "hyp1-x":["X radius", 1, 0.05, 2.0, 0.05],
+       "hyp1-y":["Y radius", 1, 0.05, 2.0, 0.05],
+       "hyp1-z":["Z radius", 1, 0.05, 2.0, 0.05]
+     });
+   });
+   addLink("Cylinder", function() {
+     "use strict";
+     pushSettings(function(allsettings) {
+       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
-   )
-   return makeImplicit(cyl);
- },{
- "cylinder-rad":["Radius",1,0.05,2.0,0.05]
- })
-})
+   );
+       return makeImplicit(cyl);
+     }, {"cylinder-rad":["Radius", 1, 0.05, 2.0, 0.05]});
+   });
 
-addLink("Union: Cylinder and sphere",function(){
- pushSettings(function(allsettings){
-   var cyl=new Cylinder(
+   addLink("Union: Cylinder and sphere", function() {
+     "use strict";
+     pushSettings(function(allsettings) {
+       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
-   )
-   var erad=allsettings["sphere-rad"]
-   var ell=new Ellipsoid(erad,erad,erad)
-   return makeImplicit(
-     ImplicitSurface.union(cyl,ell));
- },{
- "cylinder-rad":["Cylinder radius",1,0.05,2.0,0.05],
- "sphere-rad":["Sphere radius",1.3,0.05,2.0,0.05]
- })
-})
-addLink("Intersection: Cylinder and sphere",function(){
- pushSettings(function(allsettings){
-   var cyl=new Cylinder(
+   );
+       var erad = allsettings["sphere-rad"];
+       var ell = new Ellipsoid(erad, erad, erad);
+       return makeImplicit(
+     ImplicitSurface.union(cyl, ell));
+     }, {
+       "cylinder-rad":["Cylinder radius", 1, 0.05, 2.0, 0.05],
+       "sphere-rad":["Sphere radius", 1.3, 0.05, 2.0, 0.05]
+     });
+   });
+   addLink("Intersection: Cylinder and sphere", function() {
+     "use strict";
+     pushSettings(function(allsettings) {
+       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
-   )
-   var erad=allsettings["sphere-rad"]
-   var ell=new Ellipsoid(erad,erad,erad)
-   return makeImplicit(
-     ImplicitSurface.intersection(cyl,ell));
- },{
- "cylinder-rad":["Cylinder radius",1,0.05,2.0,0.05],
- "sphere-rad":["Sphere radius",1.3,0.05,2.0,0.05]
- })
-})
-addLink("Cylinder minus sphere",function(){
- pushSettings(function(allsettings){
-   var cyl=new Cylinder(
+   );
+       var erad = allsettings["sphere-rad"];
+       var ell = new Ellipsoid(erad, erad, erad);
+       return makeImplicit(
+     ImplicitSurface.intersection(cyl, ell));
+     }, {
+       "cylinder-rad":["Cylinder radius", 1, 0.05, 2.0, 0.05],
+       "sphere-rad":["Sphere radius", 1.3, 0.05, 2.0, 0.05]
+     });
+   });
+   addLink("Cylinder minus sphere", function() {
+     "use strict";
+     pushSettings(function(allsettings) {
+       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
-   )
-   var erad=allsettings["sphere-rad"]
-   var ell=new Ellipsoid(erad,erad,erad)
-   return makeImplicit(
-     ImplicitSurface.difference(cyl,ell));
- },{
- "cylinder-rad":["Cylinder radius",1,0.05,2.0,0.05],
- "sphere-rad":["Sphere radius",1.3,0.05,2.0,0.05]
- })
-})
-addLink("Sphere minus cylinder",function(){
- pushSettings(function(allsettings){
-   var cyl=new Cylinder(
+   );
+       var erad = allsettings["sphere-rad"];
+       var ell = new Ellipsoid(erad, erad, erad);
+       return makeImplicit(
+     ImplicitSurface.difference(cyl, ell));
+     }, {
+       "cylinder-rad":["Cylinder radius", 1, 0.05, 2.0, 0.05],
+       "sphere-rad":["Sphere radius", 1.3, 0.05, 2.0, 0.05]
+     });
+   });
+   addLink("Sphere minus cylinder", function() {
+     "use strict";
+     pushSettings(function(allsettings) {
+       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
-   )
-   var erad=allsettings["sphere-rad"]
-   var ell=new Ellipsoid(erad,erad,erad)
-   return makeImplicit(
-     ImplicitSurface.difference(ell,cyl));
- },{
- "cylinder-rad":["Cylinder radius",1,0.05,2.0,0.05],
- "sphere-rad":["Sphere radius",1.3,0.05,2.0,0.05]
- })
-})
+   );
+       var erad = allsettings["sphere-rad"];
+       var ell = new Ellipsoid(erad, erad, erad);
+       return makeImplicit(
+     ImplicitSurface.difference(ell, cyl));
+     }, {
+       "cylinder-rad":["Cylinder radius", 1, 0.05, 2.0, 0.05],
+       "sphere-rad":["Sphere radius", 1.3, 0.05, 2.0, 0.05]
+     });
+   });
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white")
-  var sub=new H3DU.Batch3D()
-  var camera=new Camera(sub,45,1,100, scene.getCanvas());
-  camera.setDistance(5);
-  var pc=new FrameCounterDiv()
-  link1();
-  sub.addShape(shapeGroup);
-  H3DU.renderLoop(function(){
-   pc.update();
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
-   scene.render(sub);
-  });
-//-->
+   var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+   var input = new InputTracker(document);
+   scene.setClearColor("white");
+   var sub = new H3DU.Batch3D();
+   var camera = new Camera(sub, 45, 1, 100);
+   camera.setDistance(5);
+   var pc = new FrameCounterDiv();
+   link1();
+   sub.addShape(shapeGroup);
+   H3DU.renderLoop(function() {
+     "use strict";
+     pc.update();
+     camera.update(input.update());
+     sub.getLights().setDirectionalLight(0, camera.getPosition());
+     scene.render(sub);
+   });
+// -->
 </script>
 </body>

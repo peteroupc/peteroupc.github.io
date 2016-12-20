@@ -13,7 +13,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:link2()">Multicolor</a></p>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global H3DU */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -24,89 +25,94 @@ at: http://peteroupc.github.io/
 */
 
 // Generate a composite mesh representing an arrow
-function arrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
- var slices=32;
+function arrow(shaftLength, pointerLength, shaftRadius, pointerRadius) {
+  "use strict";
+  var slices = 32;
  // generate the four parts of the arrow
- var shaft=H3DU.Meshes.createCylinder(shaftRadius,shaftRadius,
-   shaftLength,slices);
- var pointer=H3DU.Meshes.createCylinder(pointerRadius,0,pointerLength,slices);
- var base=H3DU.Meshes.createDisk(0,shaftRadius,slices,1,true);
- var pointerBase=H3DU.Meshes.createDisk(shaftRadius,pointerRadius,slices,1,true);
+  var shaft = H3DU.Meshes.createCylinder(shaftRadius, shaftRadius,
+   shaftLength, slices);
+  var pointer = H3DU.Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
+  var base = H3DU.Meshes.createDisk(0, shaftRadius, slices, 1, true);
+  var pointerBase = H3DU.Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
  // move the pointer base to the top of the shaft
- pointerBase.transform(H3DU.Math.mat4translated(0,0,shaftLength));
+  pointerBase.transform(H3DU.Math.mat4translated(0, 0, shaftLength));
  // move the pointer to the top of the shaft
- pointer.transform(H3DU.Math.mat4translated(0,0,shaftLength));
+  pointer.transform(H3DU.Math.mat4translated(0, 0, shaftLength));
  // merge the four parts of the arrow
- return shaft.merge(base).merge(pointer).merge(pointerBase);
+  return shaft.merge(base).merge(pointer).merge(pointerBase);
 }
 
-function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadius){
- var slices=32;
+function multiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadius) {
+  "use strict";
+  var slices = 32;
  // generate the four parts of the arrow
- var shaft=H3DU.Meshes.createCylinder(shaftRadius,shaftRadius,
-   shaftLength,slices);
- var pointer=H3DU.Meshes.createCylinder(pointerRadius,0,pointerLength,slices);
- var base=H3DU.Meshes.createDisk(0,shaftRadius,slices,1,true);
- var pointerBase=H3DU.Meshes.createDisk(shaftRadius,pointerRadius,slices,1,true);
- shaft.setColor3("red");
- pointer.setColor3("blue");
- base.setColor3("red");
- pointerBase.setColor3("blue");
+  var shaft = H3DU.Meshes.createCylinder(shaftRadius, shaftRadius,
+   shaftLength, slices);
+  var pointer = H3DU.Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
+  var base = H3DU.Meshes.createDisk(0, shaftRadius, slices, 1, true);
+  var pointerBase = H3DU.Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
+  shaft.setColor3("red");
+  pointer.setColor3("blue");
+  base.setColor3("red");
+  pointerBase.setColor3("blue");
  // move the pointer base to the top of the shaft
- pointerBase.transform(H3DU.Math.mat4translated(0,0,shaftLength));
+  pointerBase.transform(H3DU.Math.mat4translated(0, 0, shaftLength));
  // move the pointer to the top of the shaft
- pointer.transform(H3DU.Math.mat4translated(0,0,shaftLength));
+  pointer.transform(H3DU.Math.mat4translated(0, 0, shaftLength));
  // merge the four parts of the arrow
- return shaft.merge(base).merge(pointer).merge(pointerBase);
+  return shaft.merge(base).merge(pointer).merge(pointerBase);
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
     .setClearColor("white");
-  var sub=new H3DU.Batch3D()
+var sub = new H3DU.Batch3D()
    // Set the perspective view.  Camera has a 45-degree field of view
    // and will see objects from 0.1 to 100 units away.
-   .perspectiveAspect(45,0.1,100)
+   .perspectiveAspect(45, 0.1, 100)
    // Move the camera back 40 units.
-   .setLookAt([0,0,40]);
-  sub.getLights().setDirectionalLight(0,[5,5,10]);
+   .setLookAt([0, 0, 40]);
+sub.getLights().setDirectionalLight(0, [5, 5, 10]);
   // Create an arrow mesh 10 units in size
-  var mesh1=multiColoredArrow(10,2,1,2);
-  var mesh2=arrow(10,2,1,2);
+var mesh1 = multiColoredArrow(10, 2, 1, 2);
+var mesh2 = arrow(10, 2, 1, 2);
   // Create a shape based on the mesh and give it a red color
-  var shape1=new H3DU.Shape(mesh1)
-  var shape2=new H3DU.Shape(mesh2).setColor("green")
+var shape1 = new H3DU.Shape(mesh1);
+var shape2 = new H3DU.Shape(mesh2).setColor("green");
   // Add the shape to the scene
-  sub.addShape(shape1);
-  // Set the starting rotation
-  var rotation=[0,0,0];
+sub.addShape(shape1);
   // Create a timer
-  var timer={};
+var timer = {};
   // Set up the render loop
-  H3DU.renderLoop(function(time){
+H3DU.renderLoop(function(time) {
+  "use strict";
    // Update the shape's rotation
-   var q=H3DU.Math.quatFromTaitBryan(
-     360*H3DU.getTimePosition(timer,time,6000),
-     360*H3DU.getTimePosition(timer,time,12000),
+  var q = H3DU.Math.quatFromTaitBryan(
+     360 * H3DU.getTimePosition(timer, time, 6000),
+     360 * H3DU.getTimePosition(timer, time, 12000),
      0
    );
-   shape1.setQuaternion(q);
-   shape2.setQuaternion(q);
+  shape1.setQuaternion(q);
+  shape2.setQuaternion(q);
    // Render the scene
-   scene.render(sub);
-  });
+  scene.render(sub);
+});
 
-function link1(){
- sub.removeShape(shape1);
- sub.addShape(shape2);
+/* exported link1 */
+function link1() {
+  "use strict";
+  sub.removeShape(shape1);
+  sub.addShape(shape2);
 }
 
-function link2(){
- sub.removeShape(shape2);
- sub.addShape(shape1);
+/* exported link2 */
+function link2() {
+  "use strict";
+  sub.removeShape(shape2);
+  sub.addShape(shape1);
 }
 
-//-->
+// -->
 </script>
 </body>

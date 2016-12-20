@@ -17,7 +17,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global FrameCounterDiv, H3DU, Uint8Array */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -29,101 +30,112 @@ at: http://peteroupc.github.io/
 
 // Generates a linear gradient in the horizontal direction.
 // This function demonstrates generating a custom texture.
-function horizontalGradient(color1,color2){
- color1=H3DU.toGLColor(color1);
- color2=H3DU.toGLColor(color2);
- var arr=[];
- var size=32;
- for(var i=0;i<size;i++){
-  arr.push(
-    H3DU.Math.vec4scaleInPlace(H3DU.Math.vec4lerp(color1,color2,i/(size-1)),255)
-  )
- }
- var gradient=[]
- var i=0;
- for(var y=0;y<size;y++){
-  for(var x=0;x<size;x++,i+=4){
-   gradient[i]=Math.round(arr[x][0])
-   gradient[i+1]=Math.round(arr[x][1])
-   gradient[i+2]=Math.round(arr[x][2])
-   gradient[i+3]=Math.round(arr[x][3])
+function horizontalGradient(color1, color2) {
+  "use strict";
+  color1 = H3DU.toGLColor(color1);
+  color2 = H3DU.toGLColor(color2);
+  var arr = [];
+  var size = 32;
+  for(var i = 0;i < size;i++) {
+    arr.push(
+    H3DU.Math.vec4scaleInPlace(H3DU.Math.vec4lerp(color1, color2, i / (size - 1)), 255)
+  );
   }
- }
- return H3DU.Texture.fromUint8Array(
-  new Uint8Array(gradient),size,size).setClamp(true);
+  var gradient = [];
+  i = 0;
+  for(var y = 0;y < size;y++) {
+    for(var x = 0;x < size;x++, i += 4) {
+      gradient[i] = Math.round(arr[x][0]);
+      gradient[i + 1] = Math.round(arr[x][1]);
+      gradient[i + 2] = Math.round(arr[x][2]);
+      gradient[i + 3] = Math.round(arr[x][3]);
+    }
+  }
+  return H3DU.Texture.fromUint8Array(
+  new Uint8Array(gradient), size, size).setClamp(true);
 }
 
 // Generates a radial gradient
-function radialGradient(colorCenter,colorEdges){
- colorCenter=H3DU.toGLColor(colorCenter);
- colorEdges=H3DU.toGLColor(colorEdges);
- var gradient=[]
- var arr=[];
- var size=32;
- for(var i=0;i<32;i++){
-  arr.push(
-    H3DU.Math.vec4scaleInPlace(H3DU.Math.vec4lerp(colorCenter,colorEdges,i/31),255)
-  )
- }
- var i=0
- var radius=(size-1)*0.5;
- var recipradius=1.0/radius;
- for (var y=0;y<size;y++){
-  for (var x=0;x<size;x++,i+=4){
-   var yy=(y-radius)*recipradius;
-   var xx=(x-radius)*recipradius;
-   var a=arr[Math.min(31,Math.floor(31 * Math.sqrt(xx * xx + yy * yy)))];
-   gradient[i]=Math.round(a[0])
-   gradient[i+1]=Math.round(a[1])
-   gradient[i+2]=Math.round(a[2])
-   gradient[i+3]=Math.round(a[3])
+function radialGradient(colorCenter, colorEdges) {
+  "use strict";
+  colorCenter = H3DU.toGLColor(colorCenter);
+  colorEdges = H3DU.toGLColor(colorEdges);
+  var gradient = [];
+  var arr = [];
+  var size = 32;
+  for(var i = 0;i < 32;i++) {
+    arr.push(
+    H3DU.Math.vec4scaleInPlace(H3DU.Math.vec4lerp(colorCenter, colorEdges, i / 31), 255)
+  );
   }
- }
- return H3DU.Texture.fromUint8Array(
-  new Uint8Array(gradient),size,size).setClamp(true);
+  i = 0;
+  var radius = (size - 1) * 0.5;
+  var recipradius = 1.0 / radius;
+  for (var y = 0;y < size;y++) {
+    for (var x = 0;x < size;x++, i += 4) {
+      var yy = (y - radius) * recipradius;
+      var xx = (x - radius) * recipradius;
+      var a = arr[Math.min(31, Math.floor(31 * Math.sqrt(xx * xx + yy * yy)))];
+      gradient[i] = Math.round(a[0]);
+      gradient[i + 1] = Math.round(a[1]);
+      gradient[i + 2] = Math.round(a[2]);
+      gradient[i + 3] = Math.round(a[3]);
+    }
+  }
+  return H3DU.Texture.fromUint8Array(
+  new Uint8Array(gradient), size, size).setClamp(true);
 }
-
-function link1(){
- shape.setTexture(horizontalGradient("red","blue"))
+var shape = null;
+/* exported link1 */
+function link1() {
+  "use strict";
+  shape.setTexture(horizontalGradient("red", "blue"));
 }
-function link2(){
- shape.setTexture(horizontalGradient("green","yellow"))
+/* exported link2 */
+function link2() {
+  "use strict";
+  shape.setTexture(horizontalGradient("green", "yellow"));
 }
-function link3(){
- shape.setTexture(radialGradient("red","blue"))
+/* exported link3 */
+function link3() {
+  "use strict";
+  shape.setTexture(radialGradient("red", "blue"));
 }
-function link4(){
- shape.setTexture(radialGradient("green","yellow"))
+/* exported link4 */
+function link4() {
+  "use strict";
+  shape.setTexture(radialGradient("green", "yellow"));
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-var scene=new H3DU.Scene3D(document.getElementById("canvas"))
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
     .setClearColor("white");
-  var sub=new H3DU.Batch3D()
+var sub = new H3DU.Batch3D()
    // Set the perspective view.  Camera has a 45-degree field of view
    // and will see objects from 0.1 to 100 units away.
-   .perspectiveAspect(45,0.1,100)
+   .perspectiveAspect(45, 0.1, 100)
    // Move the camera back 40 units.
-   .setLookAt([0,0,40]);
-  sub.getLights().setDefaults();
-  var fc=new FrameCounterDiv()
+   .setLookAt([0, 0, 40]);
+sub.getLights().setDefaults();
+var fc = new FrameCounterDiv();
   // Generate a red-blue gradient texture
-  var tex=horizontalGradient("red","blue");
-   var mesh=H3DU.Meshes.createBox(10,20,20);
-   var shape=new H3DU.Shape(mesh).setTexture(tex)
-   sub.addShape(shape);
-   var timer={};
-   H3DU.renderLoop(function(time){
-    fc.update();
-    var q=H3DU.Math.quatFromTaitBryan([
-      360*H3DU.getTimePosition(timer,time,6000),
-      360*H3DU.getTimePosition(timer,time,12000),
-      0
-    ]);
-    shape.setQuaternion(q);
-    scene.render(sub);
-   })
-//-->
+var tex = horizontalGradient("red", "blue");
+var mesh = H3DU.Meshes.createBox(10, 20, 20);
+shape = new H3DU.Shape(mesh).setTexture(tex);
+sub.addShape(shape);
+var timer = {};
+H3DU.renderLoop(function(time) {
+  "use strict";
+  fc.update();
+  var q = H3DU.Math.quatFromTaitBryan([
+    360 * H3DU.getTimePosition(timer, time, 6000),
+    360 * H3DU.getTimePosition(timer, time, 12000),
+    0
+  ]);
+  shape.setQuaternion(q);
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

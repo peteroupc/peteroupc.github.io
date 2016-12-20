@@ -1,9 +1,9 @@
 (function(globalContext) {
   "use strict";
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////
 //  Data structures
-////////////////////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////
 
   var LinkedListNode = function(item) {
     this.data = item;
@@ -768,7 +768,7 @@
     }
   // Segments are collinear. Just a consistent criterion is used
     if(Clipper._ptEq(e1.p, e2.p)) {
-   //console.log("collinear segments")
+   // console.log("collinear segments")
       return e1.id < e2.id;
     }
     return Clipper.sweepEventComp(e1, e2);
@@ -839,7 +839,7 @@
     var minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
     while(this.eq.size() > 0) {
       e = this.eq.pop();
-    //console.log("Process event:  "+e.toString())
+    // console.log("Process event:  "+e.toString())
     // optimization 1
       if(op === Clipper.INTERSECTION && e.p[0] > minMaxx ||
        op === Clipper.DIFFERENCE && e.p[0] > maxsubj[0]) {
@@ -870,7 +870,7 @@
        prev = null;
       // Compute the inside and inOut flags
         if(prev === null || typeof prev === "undefined") {           // there is not a previous line segment in S?
-      //console.log("prev is end")
+      // console.log("prev is end")
           e.inside = e.inOut = false;
         } else if(prev.data.type !== Clipper.NORMAL) {
           if(prev === S.first()) { // e overlaps with prev
@@ -910,7 +910,7 @@
         if(prev !== null && typeof prev !== "undefined")
           this.possibleIntersection(prev.data, e);
       } else { // the line segment must be removed from S
-      //console.log([e.other.p,e.other.id])
+      // console.log([e.other.p,e.other.id])
         next = prev = sli = e.other.poss;
       // Get the next and previous line segments to "e" in S
         next = next.next();
@@ -1084,7 +1084,7 @@
           ]];
         }
       } else {
-     //console.log("parallel")
+     // console.log("parallel")
       }
     } else {
       var t29 = t24 / t21;
@@ -1105,10 +1105,10 @@
     var ip1 = [];
     var ip2 = [];  // intersection points
     var nintersections;
-  //console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
+  // console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
     if(!(nintersections = Clipper.findIntersection(e1.segment(), e2.segment(), ip1, ip2)))
       return;
-  //console.log([ip1,ip2])
+  // console.log([ip1,ip2])
     if(nintersections === 1 && (Clipper._ptEq(e1.p, e2.p) || Clipper._ptEq(e1.other.p, e2.other.p)))
       return; // the line segments intersect at an endpoint of both line segments
 
@@ -1116,7 +1116,7 @@
       return; // the line segments overlap, but they belong to the same polygon
 
   // The line segments associated to e1 and e2 intersect
-  //nint += nintersections;
+  // nint += nintersections;
 
     if(nintersections === 1) {
       if(!Clipper._ptEq(e1.p, ip1) && !Clipper._ptEq(e1.other.p, ip1))  // if(ip1 is not an endpoint of the line segment associated to e1 then divide "e1"
@@ -1181,12 +1181,12 @@
   // "Left event" of the "right line segment" resulting from dividing e(the line segment associated to e)
     var l = this.storeSweepEvent(new Clipper.SweepEvent(p, true, e.pl, e.other, e.other.type));
     if(Clipper.sweepEventComp(l, e.other)) { // avoid a rounding error. The left event would be processed after the right event
-    //console.log("Oops")
+    // console.log("Oops")
       e.other.left = true;
       l.left = false;
     }
     if(Clipper.sweepEventComp(e, r)) { // avoid a rounding error. The left event would be processed after the right event
-    //console.log("Oops2")
+    // console.log("Oops2")
     }
     e.other.other = l;
     e.other = r;

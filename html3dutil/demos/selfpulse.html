@@ -10,7 +10,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global H3DU */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -22,41 +23,40 @@ at: http://peteroupc.github.io/
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  var sub=new H3DU.Batch3D()
+  var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+  var sub = new H3DU.Batch3D()
    // Set the perspective view.  Camera has a 45-degree field of view
    // and will see objects from 0.1 to 100 units away.
-   .perspectiveAspect(45,0.1,100)
+   .perspectiveAspect(45, 0.1, 100)
    // Move the camera back 40 units.
-   .setLookAt([0,0,40]);
+   .setLookAt([0, 0, 40]);
   sub.getLights().setDefaults();
   // Create a box mesh 10 units in size
-  var mesh=H3DU.Meshes.createBox(10,20,20);
+  var mesh = H3DU.Meshes.createBox(10, 20, 20);
   // Create a shape based on the mesh and give it a red color
-  var shape=new H3DU.Shape(mesh).setColor("red");
+  var shape = new H3DU.Shape(mesh).setColor("red");
   // Add the shape to the scene
   sub.addShape(shape);
   // Create a timer
-  var timer={};
+  var timer = {};
   // Set up the render loop
-  H3DU.renderLoop(function(time){
-   var emissivePos=H3DU.getTimePosition(timer,time,2000);
-   var emissive=(emissivePos<0.5) ?
-      0.6*emissivePos/0.5 :
-      0.6*((1.0-emissivePos))/0.5;
+  H3DU.renderLoop(function(time) {
+    "use strict";
+    var emissivePos = H3DU.getTimePosition(timer, time, 2000);
+    var emissive = emissivePos < 0.5 ?
+      0.6 * emissivePos / 0.5 :
+      0.6 * ((1.0 - emissivePos)) / 0.5;
    // Update the shape's rotation
-   var q=H3DU.Math.quatFromTaitBryan(
-     360*H3DU.getTimePosition(timer,time,6000),
-     360*H3DU.getTimePosition(timer,time,12000),
+    var q = H3DU.Math.quatFromTaitBryan(
+     360 * H3DU.getTimePosition(timer, time, 6000),
+     360 * H3DU.getTimePosition(timer, time, 12000),
      0
    );
-   shape.setQuaternion(q);
-   shape.setMaterialParams({
-    "emission":[emissive,emissive,emissive]
-   });
+    shape.setQuaternion(q);
+    shape.setMaterialParams({"emission":[emissive, emissive, emissive]});
    // Render the scene
-   scene.render(sub);
+    scene.render(sub);
   });
-//-->
+// -->
 </script>
 </body>

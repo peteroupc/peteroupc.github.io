@@ -18,7 +18,8 @@ Toboggan by Teh_Bucket, public domain, http://opengameart.org/content/toboggan<b
 Spot, a public domain model from Keenan Clark<br>
 </div>
 <script id="demo">
-//<!--
+/* global Camera, H3DU, InputTracker, ObjData, addLink */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -30,37 +31,41 @@ at: http://peteroupc.github.io/
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
+  var scene = new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new H3DU.Batch3D();
-  var loader=new H3DU.TextureLoader();
-  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5);
-  var startfunc=null
-  var shape=null
-  addLink("Toboggan",startfunc=function(){
-  ObjData.loadObjFromUrlWithTextures("toboggan.obj",loader)
-   .then(function(mesh){
-    sub.removeShape(shape)
-    sub.addShape(shape=mesh.toShape());
-    camera.setDistance(5)
-  })
-  })
-  addLink("Spot",function(){
-  H3DU.getPromiseResultsAll([
-    ObjData.loadObjFromUrl("spot_quadrangulated.obj"),
-    loader.loadTexture("spot_texture.png")
-  ]).then(function(results){
-    sub.removeShape(shape)
-    sub.addShape(shape=results[0].toShape().setTexture(results[1]));
-   camera.setDistance(3)
-  })
-  })
-  startfunc()
-  H3DU.renderLoop(function(){
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
-   scene.render(sub);
+  var sub = new H3DU.Batch3D();
+  var loader = new H3DU.TextureLoader();
+  var camera = new Camera(sub, 45, 1, 1000).setDistance(5);
+  var input = new InputTracker(document);
+  var startfunc = null;
+  var shape = null;
+  addLink("Toboggan", startfunc = function() {
+    "use strict";
+    ObjData.loadObjFromUrlWithTextures("toboggan.obj", loader)
+   .then(function(mesh) {
+     sub.removeShape(shape);
+     sub.addShape(shape = mesh.toShape());
+     camera.setDistance(5);
+   });
   });
-//-->
+  addLink("Spot", function() {
+    "use strict";
+    H3DU.getPromiseResultsAll([
+      ObjData.loadObjFromUrl("spot_quadrangulated.obj"),
+      loader.loadTexture("spot_texture.png")
+    ]).then(function(results) {
+      sub.removeShape(shape);
+      sub.addShape(shape = results[0].toShape().setTexture(results[1]));
+      camera.setDistance(3);
+    });
+  });
+  startfunc();
+  H3DU.renderLoop(function() {
+    "use strict";
+    camera.update(input.update());
+    sub.getLights().setDirectionalLight(0, camera.getPosition());
+    scene.render(sub);
+  });
+// -->
 </script>
 </body>

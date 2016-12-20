@@ -10,7 +10,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global H3DU */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -19,22 +20,23 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white")
-  var sub=new H3DU.Batch3D();
-  var mesh=new H3DU.Mesh()
+  var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white");
+  var sub = new H3DU.Batch3D();
+  var mesh = new H3DU.Mesh()
     .mode(H3DU.Mesh.TRIANGLES)
-    .normal3(0,0,1)
+    .normal3(0, 0, 1)
     .color3("red")
-    .vertex2(0,0.5)
+    .vertex2(0, 0.5)
     .color3("green")
-    .vertex2(0.5,-0.5)
+    .vertex2(0.5, -0.5)
     .color3("blue")
-    .vertex2(-0.5,-0.5)
-  sub.addShape(new H3DU.Shape(mesh).setMaterialParams({basic:true}));
-  H3DU.renderLoop(function(){
-   scene.render(sub);
+    .vertex2(-0.5, -0.5);
+  sub.addShape(new H3DU.Shape(mesh).setMaterialParams({"basic":true}));
+  H3DU.renderLoop(function() {
+    "use strict";
+    scene.render(sub);
   });
-//-->
+// -->
 </script>
 </body>

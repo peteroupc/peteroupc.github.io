@@ -30,7 +30,7 @@ function ImplicitSurface(func) {
   if(typeof func !== "object")throw new Error();
   this.sampler = func;
 }
-//a2fVertexOffset lists the positions, relative to vertex0, of each of the 8 vertices of a cube
+// a2fVertexOffset lists the positions, relative to vertex0, of each of the 8 vertices of a cube
 ImplicitSurface._a2fVertexOffset = [
         [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [1.0, 1.0, 0.0], [0.0, 1.0, 0.0],
         [0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 1.0], [0.0, 1.0, 1.0]
@@ -42,7 +42,7 @@ ImplicitSurface._a2fEdgeDirection = [
         [0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [0.0,  0.0, 1.0]
 ];
 
-//a2iEdgeConnection lists the index of the endpoint vertices for each of the 12 edges of the cube
+// a2iEdgeConnection lists the index of the endpoint vertices for each of the 12 edges of the cube
 ImplicitSurface._a2iEdgeConnection =
 [
         [0, 1], [1, 2], [2, 3], [3, 0],
@@ -79,13 +79,13 @@ ImplicitSurface._a2iTetrahedronTriangles = [
         [-1, -1, -1, -1, -1, -1, -1]
 ];
 
-//a2iTetrahedronEdgeConnection lists the index of the endpoint vertices for each of the 6 edges of the tetrahedron
+// a2iTetrahedronEdgeConnection lists the index of the endpoint vertices for each of the 6 edges of the tetrahedron
 ImplicitSurface._a2iTetrahedronEdgeConnection =
 [
         [0, 1],  [1, 2],  [2, 0],  [0, 3],  [1, 3],  [2, 3]
 ];
 
-//a2iTetrahedronEdgeConnection lists the index of verticies from a cube
+// a2iTetrahedronEdgeConnection lists the index of verticies from a cube
 // that made up each of the six tetrahedrons within the cube
 ImplicitSurface._a2iTetrahedronsInACube =
 [
@@ -113,27 +113,27 @@ ImplicitSurface._fGetOffset = function(a, b, desired) {
 };
 
 ImplicitSurface._TARGET_VALUE = 0;
-//vMarchTetrahedron performs the Marching Tetrahedrons algorithm on a single tetrahedron
+// vMarchTetrahedron performs the Marching Tetrahedrons algorithm on a single tetrahedron
 ImplicitSurface.prototype._vMarchTetrahedron = function(mesh, pasTetrahedronPosition, pafTetrahedronValue, tmpobj) {
   "use strict";
   var iEdge, iVert0, iVert1, iEdgeFlags, iTriangle, iCorner, iVertex,
     iFlagIndex = 0;
   var fOffset, fInvOffset;
-        //Find which vertices are inside of the surface and which are outside
+        // Find which vertices are inside of the surface and which are outside
   for(iVertex = 0; iVertex < 4; iVertex++) {
     if(pafTetrahedronValue[iVertex] <= ImplicitSurface._TARGET_VALUE)
       iFlagIndex |= 1 << iVertex;
   }
-        //Find which edges are intersected by the surface
+        // Find which edges are intersected by the surface
   iEdgeFlags = ImplicitSurface._aiTetrahedronEdgeFlags[iFlagIndex];
-        //If the tetrahedron is entirely inside or outside of the surface, then there will be no intersections
+        // If the tetrahedron is entirely inside or outside of the surface, then there will be no intersections
   if(iEdgeFlags === 0) {
     return;
   }
-        //Find the point of intersection of the surface with each edge
+        // Find the point of intersection of the surface with each edge
         // Then find the normal to the surface at those points
   for(iEdge = 0; iEdge < 6; iEdge++) {
-                //if there is an intersection on this edge
+                // if there is an intersection on this edge
     if(iEdgeFlags & 1 << iEdge) {
       iVert0 = ImplicitSurface._a2iTetrahedronEdgeConnection[iEdge][0];
       iVert1 = ImplicitSurface._a2iTetrahedronEdgeConnection[iEdge][1];
@@ -149,7 +149,7 @@ ImplicitSurface.prototype._vMarchTetrahedron = function(mesh, pasTetrahedronPosi
                            tmpobj.asEdgeVertex[iEdge][0], tmpobj.asEdgeVertex[iEdge][1], tmpobj.asEdgeVertex[iEdge][2]);
     }
   }
-        //Draw the triangles that were found.  There can be up to 2 per tetrahedron
+        // Draw the triangles that were found.  There can be up to 2 per tetrahedron
   for(iTriangle = 0; iTriangle < 2; iTriangle++) {
     if(ImplicitSurface._a2iTetrahedronTriangles[iFlagIndex][3 * iTriangle] < 0)
       break;
@@ -496,8 +496,8 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
 
   var mx = 0;
   var mn = 0;
-        //Make a local copy of the cube's corner positions;
-        //make a local copy of the cube's corner values
+        // Make a local copy of the cube's corner positions;
+        // make a local copy of the cube's corner values
   for(iVertex = 0; iVertex < 8; iVertex++) {
     var x, y, z, value;
     x = fX + ImplicitSurface._a2fVertexOffset[iVertex][0] * fScaleX;
@@ -509,22 +509,22 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
     tmpobj.afCubeValue[iVertex] = value;
   }
   if(mn > 0 || mx < 0)return;
-        //Find which vertices are inside of the surface and which are outside
+        // Find which vertices are inside of the surface and which are outside
   iFlagIndex = 0;
   for(iVertexTest = 0; iVertexTest < 8; iVertexTest++) {
     if(tmpobj.afCubeValue[iVertexTest] <= ImplicitSurface._TARGET_VALUE)
       iFlagIndex |= 1 << iVertexTest;
   }
 
-        //Find which edges are intersected by the surface
+        // Find which edges are intersected by the surface
   iEdgeFlags = ImplicitSurface._aiCubeEdgeFlags[iFlagIndex];
 
-        //If the cube is entirely inside or outside of the surface, then there will be no intersections
+        // If the cube is entirely inside or outside of the surface, then there will be no intersections
   if(iEdgeFlags === 0)return;
-        //Find the point of intersection of the surface with each edge
-        //Then find the normal to the surface at those points
+        // Find the point of intersection of the surface with each edge
+        // Then find the normal to the surface at those points
   for(iEdge = 0; iEdge < 12; iEdge++) {
-                //if there is an intersection on this edge
+                // if there is an intersection on this edge
     if(iEdgeFlags & 1 << iEdge) {
       fOffset = ImplicitSurface._fGetOffset(
                          tmpobj.afCubeValue[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ],
@@ -545,7 +545,7 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
     }
   }
 
-        //Draw the triangles that were found.  There can be up to five per cube
+        // Draw the triangles that were found.  There can be up to five per cube
   for(iTriangle = 0; iTriangle < 5; iTriangle++) {
     if(ImplicitSurface._a2iTriangleConnectionTable[iFlagIndex][3 * iTriangle] < 0)
       break;
@@ -558,14 +558,14 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
   }
 };
 
-//vMarchCube2 performs the Marching Tetrahedrons algorithm on a single cube by making six calls to vMarchTetrahedron
+// vMarchCube2 performs the Marching Tetrahedrons algorithm on a single cube by making six calls to vMarchTetrahedron
 ImplicitSurface.prototype._marchingTetrahedrons = function(mesh, fX, fY, fZ, fScaleX, fScaleY, fScaleZ, tmpobj) {
   "use strict";
   var iVertex, iTetrahedron, iVertexInACube;
   var mx = 0;
   var mn = 0;
-        //Make a local copy of the cube's corner positions;
-        //make a local copy of the cube's corner values
+        // Make a local copy of the cube's corner positions;
+        // make a local copy of the cube's corner values
   for(iVertex = 0; iVertex < 8; iVertex++) {
     var x, y, z, value;
     x = fX + ImplicitSurface._a2fVertexOffset[iVertex][0] * fScaleX;

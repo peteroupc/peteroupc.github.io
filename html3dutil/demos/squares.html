@@ -27,7 +27,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global FrameCounterDiv, H3DU, Polyhedra */
+// <!--
 /*
 
 Written by Peter O. in 2015.
@@ -37,381 +38,424 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-var scene3d=null;
-var currentFilter=null;
 
-function makeWaterpaint(context){
+var currentFilter = null;
+var scene = null,
+  renders = null,
+  fbo = null,
+  subScene = null,
+  platonic = false,
+  blinds = false;
+function makeWaterpaint() {
+  "use strict";
 // Adapted from Themaister's Waterpaint shader
-return H3DU.ShaderInfo.makeEffect([
-"vec4 compress(vec4 in_color, float threshold, float ratio)",
-"{",
-"  vec4 diff = in_color - vec4(threshold);",
-"  diff = clamp(diff, vec4(0.0), vec4(100.0));",
-"  return in_color - (diff * (1.0 - 1.0/ratio));",
-"}",
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" vec2 pixel=1.0/textureSize;",
-" vec2 xy0=uvCoord-pixel;",
-" xy0=vec2(max(xy0.x,0.0),max(xy0.y,0.0));",
-" vec2 xy1=uvCoord;",
-" vec2 xy2=uvCoord+pixel;",
-" xy2=vec2(min(xy2.x,1.0),min(xy2.y,1.0));",
-" vec4 mainColor=texture2D(sampler,uvCoord);",
-" vec4 c00=texture2D(sampler,xy0);",
-" vec4 c10=texture2D(sampler,vec2(xy1.x,xy0.y));",
-" vec4 c20=texture2D(sampler,vec2(xy2.x,xy0.y));",
-" vec4 c01=texture2D(sampler,vec2(xy0.x,xy1.y));",
-" vec4 c11=mainColor;",
-" vec4 c21=texture2D(sampler,vec2(xy2.x,xy1.y));",
-" vec4 c02=texture2D(sampler,vec2(xy0.x,xy2.y));",
-" vec4 c12=texture2D(sampler,vec2(xy1.x,xy2.y));",
-" vec4 c22=texture2D(sampler,xy2);",
-"  vec2 texsize = textureSize;",
-"  vec4 first = mix(c00, c20, fract(uvCoord.x * texsize.x + 0.5));",
-"  vec4 second = mix(c02, c22, fract(uvCoord.x * texsize.x + 0.5));",
-"  vec4 mid_horiz = mix(c01, c21, fract(uvCoord.x * texsize.x + 0.5));",
-"  vec4 mid_vert = mix(c10, c12, fract(uvCoord.y * texsize.y + 0.5));",
-"  vec4 res = mix(first, second, fract(uvCoord.y * texsize.y + 0.5));",
-"  vec4 final = 0.26 * (res + mid_horiz + mid_vert) + 3.5 * abs(res - mix(mid_horiz, mid_vert, 0.5));",
-"  final = compress(final, 0.8, 5.0);",
-"  final.a = mainColor.a;",
-"  return final;",
-"}"].join("\n"));
+  return H3DU.ShaderInfo.makeEffect([
+    "vec4 compress(vec4 in_color, float threshold, float ratio)",
+    "{",
+    "  vec4 diff = in_color - vec4(threshold);",
+    "  diff = clamp(diff, vec4(0.0), vec4(100.0));",
+    "  return in_color - (diff * (1.0 - 1.0/ratio));",
+    "}",
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " vec2 pixel=1.0/textureSize;",
+    " vec2 xy0=uvCoord-pixel;",
+    " xy0=vec2(max(xy0.x,0.0),max(xy0.y,0.0));",
+    " vec2 xy1=uvCoord;",
+    " vec2 xy2=uvCoord+pixel;",
+    " xy2=vec2(min(xy2.x,1.0),min(xy2.y,1.0));",
+    " vec4 mainColor=texture2D(sampler,uvCoord);",
+    " vec4 c00=texture2D(sampler,xy0);",
+    " vec4 c10=texture2D(sampler,vec2(xy1.x,xy0.y));",
+    " vec4 c20=texture2D(sampler,vec2(xy2.x,xy0.y));",
+    " vec4 c01=texture2D(sampler,vec2(xy0.x,xy1.y));",
+    " vec4 c11=mainColor;",
+    " vec4 c21=texture2D(sampler,vec2(xy2.x,xy1.y));",
+    " vec4 c02=texture2D(sampler,vec2(xy0.x,xy2.y));",
+    " vec4 c12=texture2D(sampler,vec2(xy1.x,xy2.y));",
+    " vec4 c22=texture2D(sampler,xy2);",
+    "  vec2 texsize = textureSize;",
+    "  vec4 first = mix(c00, c20, fract(uvCoord.x * texsize.x + 0.5));",
+    "  vec4 second = mix(c02, c22, fract(uvCoord.x * texsize.x + 0.5));",
+    "  vec4 mid_horiz = mix(c01, c21, fract(uvCoord.x * texsize.x + 0.5));",
+    "  vec4 mid_vert = mix(c10, c12, fract(uvCoord.y * texsize.y + 0.5));",
+    "  vec4 res = mix(first, second, fract(uvCoord.y * texsize.y + 0.5));",
+    "  vec4 final = 0.26 * (res + mid_horiz + mid_vert) + 3.5 * abs(res - mix(mid_horiz, mid_vert, 0.5));",
+    "  final = compress(final, 0.8, 5.0);",
+    "  final.a = mainColor.a;",
+    "  return final;",
+    "}"].join("\n"));
 }
 
-function makePixelate(context){
-return H3DU.ShaderInfo.makeEffect([
-"uniform float coarseness;", // coarseness in pixels; 1 means normal
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" float g=max(coarseness,1.0);",
-" float gridSizeX=textureSize.x/g;",
-" float gridSizeY=textureSize.y/g;",
-" float uv0=floor(uvCoord.x*gridSizeX)/gridSizeX;",
-" float uv1=floor(uvCoord.y*gridSizeY)/gridSizeY;",
-" vec4 c=texture2D(sampler,vec2(uv0,uv1));",
-" return c;",
-"}"].join("\n"));
+function makePixelate() {
+  "use strict";
+  return H3DU.ShaderInfo.makeEffect([
+    "uniform float coarseness;", // coarseness in pixels; 1 means normal
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " float g=max(coarseness,1.0);",
+    " float gridSizeX=textureSize.x/g;",
+    " float gridSizeY=textureSize.y/g;",
+    " float uv0=floor(uvCoord.x*gridSizeX)/gridSizeX;",
+    " float uv1=floor(uvCoord.y*gridSizeY)/gridSizeY;",
+    " vec4 c=texture2D(sampler,vec2(uv0,uv1));",
+    " return c;",
+    "}"].join("\n"));
 }
 
 // Public domain: http://www.dspguru.com/dsp/tricks/fixed-point-atan2-with-self-normalization
-var atan2glsl=
-"float arctan2(float y, float x){"+
-"   float abs_y = abs(y)+1e-10;"+
-"   float r, angle;"+
-"   float divisor = abs_y+abs(x);"+
-"   if (x>=0.0) {"+
-"      r = (x - abs_y) / divisor;"+
-"      angle = 0.78539816339745 - 0.78539816339745 * r;"+
-"    } else {"+
-"       r = (x + abs_y) / divisor;"+
-"       angle = 2.35619449019234 - 0.78539816339745 * r;"+
-"    }"+
-"    if (y < 0.0)return -angle;"+
-"    else return angle;"+
-"}\n"
+var atan2glsl =
+"float arctan2(float y, float x) {" +
+"   float abs_y = abs(y)+1e-10;" +
+"   float r, angle;" +
+"   float divisor = abs_y+abs(x);" +
+"   if (x>=0.0) {" +
+"      r = (x - abs_y) / divisor;" +
+"      angle = 0.78539816339745 - 0.78539816339745 * r;" +
+"    } else {" +
+"       r = (x + abs_y) / divisor;" +
+"       angle = 2.35619449019234 - 0.78539816339745 * r;" +
+"    }" +
+"    if (y < 0.0)return -angle;" +
+"    else return angle;" +
+"}\n";
 
-function makeWarp(context){
-return H3DU.ShaderInfo.makeEffect([
-"uniform float coarseness;", // coarseness in pixels; 1 means normal
-atan2glsl,
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" vec2 norm=uvCoord*2.0-1.0;",
-" float r=length(norm);",
+function makeWarp() {
+  "use strict";
+  return H3DU.ShaderInfo.makeEffect([
+    "uniform float coarseness;", // coarseness in pixels; 1 means normal
+    atan2glsl,
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " vec2 norm=uvCoord*2.0-1.0;",
+    " float r=length(norm);",
 // NOTE: GLSL 1.0 doesn't implement atan2
-" float phi=arctan2(norm.y,norm.x);",
-" r=sqrt(r);",
-" float x=((r*cos(phi))+1.0)*0.5;",
-" float y=((r*sin(phi))+1.0)*0.5;",
-" vec4 c=texture2D(sampler,vec2(x,y));",
-" return c;",
-"}"].join("\n"));
+    " float phi=arctan2(norm.y,norm.x);",
+    " r=sqrt(r);",
+    " float x=((r*cos(phi))+1.0)*0.5;",
+    " float y=((r*sin(phi))+1.0)*0.5;",
+    " vec4 c=texture2D(sampler,vec2(x,y));",
+    " return c;",
+    "}"].join("\n"));
 }
 
-function setKernelMatrix(program,matrix){
- var weight=matrix[0]+matrix[1]+matrix[2]+
-   matrix[3]+matrix[4]+matrix[5]+matrix[6]+
-   matrix[7]+matrix[8];
- if(weight<=0)weight=1.0;
- var mat=[];
+function setKernelMatrix(program, matrix) {
+  "use strict";
+  var weight = matrix[0] + matrix[1] + matrix[2] +
+   matrix[3] + matrix[4] + matrix[5] + matrix[6] +
+   matrix[7] + matrix[8];
+  if(weight <= 0)weight = 1.0;
+  var mat = [];
  // Ensure the sum of each matrix
  // element is 1
- for(var i=0;i<9;i++){
-  mat[i]=matrix[i]/weight;
- }
- program.setUniforms({
-   "matrix":mat
- })
-}
-
-function makeKernelMatrix(context){
-return H3DU.ShaderInfo.makeEffect([
-"uniform mat3 matrix;",
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" vec2 pixel=1.0/textureSize;",
-" vec2 xy0=uvCoord-pixel;",
-" xy0=vec2(max(xy0.x,0.0),max(xy0.y,0.0));",
-" vec2 xy1=uvCoord;",
-" vec2 xy2=uvCoord+pixel;",
-" xy2=vec2(min(xy2.x,1.0),min(xy2.y,1.0));",
-" vec4 mainColor=texture2D(sampler,uvCoord);",
-" // NOTE: Assumes row-major matrices; e.g. [0][0] means ",
-" // index 0, and [0][1] means index 1",
-" vec4 x0y0=texture2D(sampler,xy0)*matrix[0][0];",
-" vec4 x1y0=texture2D(sampler,vec2(xy1.x,xy0.y))*matrix[0][1];",
-" vec4 x2y0=texture2D(sampler,vec2(xy2.x,xy0.y))*matrix[0][2];",
-" vec4 x0y1=texture2D(sampler,vec2(xy0.x,xy1.y))*matrix[1][0];",
-" vec4 x1y1=mainColor*matrix[1][1];",
-" vec4 x2y1=texture2D(sampler,vec2(xy2.x,xy1.y))*matrix[1][2];",
-" vec4 x0y2=texture2D(sampler,vec2(xy0.x,xy2.y))*matrix[2][0];",
-" vec4 x1y2=texture2D(sampler,vec2(xy1.x,xy2.y))*matrix[2][1];",
-" vec4 x2y2=texture2D(sampler,xy2)*matrix[2][2];",
-" vec4 color=x0y0+x1y0+x2y0+x0y1+x1y1+x2y1+x0y2+x1y2+x2y2;",
-" return vec4(color.rgb,mainColor.a);",
-"}"].join("\n"));
-}
-
-function makeWave(context){
-return H3DU.ShaderInfo.makeEffect([
-"uniform float time; // range [0,100)",
-"const float pi = 3.14159265;",
-"float interp(float t){",
-" return sin(t*pi*2.0);",
-"}",
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" float t=float(time)/100.0;",
-" t=t+uvCoord.y;",
-" float offset=interp(fract(t*8.0));",
-" float x=clamp(uvCoord.x+offset*0.02,0.0,1.0);",
-" vec4 color=texture2D(sampler,vec2(x,uvCoord.y));",
-" return color;",
-"}"].join("\n"));
-}
-
-function makeGrayscale(context){
-return H3DU.ShaderInfo.makeEffect([
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" vec4 color=texture2D(sampler,uvCoord);",
-" float gray=(color.r+color.g+color.b)/3.0;",
-" return vec4(gray,gray,gray,color.a);",
-"}"].join("\n"));
-}
-
-function makeRedTint(context){
-return H3DU.ShaderInfo.makeEffect([
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" vec4 color=texture2D(sampler,uvCoord);",
-" return vec4(color.r+0.3,color.g,color.b,color.a);",
-"}"].join("\n"));
-}
-
-function makeBlueTint(context){
-return H3DU.ShaderInfo.makeEffect([
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" vec4 color=texture2D(sampler,uvCoord);",
-" return vec4(color.r,color.g,color.b+0.3,color.a);",
-"}"].join("\n"));
-}
-
-function makeMirror(context){
-return H3DU.ShaderInfo.makeEffect([
-"vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){",
-" vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
-" return color;",
-"}"].join("\n"));
-}
-
-function link1(){
- if(scene){
-
-  currentFilter=makeGrayscale(scene);
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-function link1a(){
- if(scene){
-  subScene.setProjectionMatrix(H3DU.Math.mat4ortho(-1,1,-1,1,-10,10));
-  subScene.removeShape(platonic);
-  subScene.addShape(blinds);
- }
-}
-function link2a(){
- if(scene){
-  subScene.orthoAspect(-20,20,-10,10,-20,20);
-  subScene.removeShape(blinds);
-  subScene.addShape(platonic);
- }
-}
-function link2(){
- if(scene){
-
-  currentFilter=H3DU.ShaderInfo.makeInvertEffect();
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-
-function link3(){
- if(scene){
-
-  currentFilter=makeWave();
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-
-function link4(){
- if(scene){
-
-  currentFilter=makeKernelMatrix(scene);
-  setKernelMatrix(currentFilter,[1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9])
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-function link5(){
- if(scene){
-  currentFilter=makePixelate();
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-function link6(){
- if(scene){
-
-  currentFilter=makeWaterpaint();
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-function link7(){
- if(scene){
-
-  currentFilter=makeMirror(scene);
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-function link8(){
- if(scene){
-
-  currentFilter=makeKernelMatrix(scene);
-  setKernelMatrix(currentFilter,[0,1,0,1,-4,1,0,1,0])
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-
-function link9(){
- if(scene){
-
-  currentFilter=makeRedTint(scene);
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-
-function link9a(){
- if(scene){
-
-  currentFilter=makeBlueTint(scene);
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-
-function link10(){
- if(scene){
-
-  currentFilter=makeWarp(scene);
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-function linknone(){
- if(scene){
-
-  currentFilter=null;
-  renders[1]=new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter));
- }
-}
-
-function shiny(color){
- return new H3DU.Material(color,color,"white",5);
-}
-
-function platonicGroup(scene){
-  var size=4.5;
-  var group=new H3DU.ShapeGroup();
-  var mesh=Polyhedra.hexahedron(size)
-  group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15,5,0))
-  mesh=Polyhedra.octahedron(size)
-  group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("blue")).setPosition(-5,5,0))
-  mesh=Polyhedra.icosahedron(size);
-  group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("lime")).setPosition(5,5,0))
-  mesh=Polyhedra.tetrahedron(size);
-  group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15,5,0))
-  mesh=Polyhedra.dodecahedron(size);
-  group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15,-5,0))
-  return group
-}
-
-function blindsGroup(scene){
-  var color=true;
-  var oddrow=false;
-  var group=new H3DU.ShapeGroup();
-  for(var x=-100;x<100;x+=20){
-   color=oddrow;
-   for(var y=-100;y<100;y+=20){
-    var xx=((x/100)+1)/2
-    var yy=((y/100)+1)/2
-    var mesh=H3DU.Meshes.createPlane(0.2,0.2);
-    group.addShape(new H3DU.Shape(mesh)
-      .setColor(color ? [0,xx,yy] : [1,0.7,0.7])
-      .setPosition(x/100+0.1,y/100+0.1,0));
-    color=!color;
-   }
-   oddrow=!oddrow
+  for(var i = 0;i < 9;i++) {
+    mat[i] = matrix[i] / weight;
   }
-  return group
+  program.setUniforms({"matrix":mat});
+}
+
+function makeKernelMatrix() {
+  "use strict";
+  return H3DU.ShaderInfo.makeEffect([
+    "uniform mat3 matrix;",
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " vec2 pixel=1.0/textureSize;",
+    " vec2 xy0=uvCoord-pixel;",
+    " xy0=vec2(max(xy0.x,0.0),max(xy0.y,0.0));",
+    " vec2 xy1=uvCoord;",
+    " vec2 xy2=uvCoord+pixel;",
+    " xy2=vec2(min(xy2.x,1.0),min(xy2.y,1.0));",
+    " vec4 mainColor=texture2D(sampler,uvCoord);",
+    " // NOTE: Assumes row-major matrices; e.g. [0][0] means ",
+    " // index 0, and [0][1] means index 1",
+    " vec4 x0y0=texture2D(sampler,xy0)*matrix[0][0];",
+    " vec4 x1y0=texture2D(sampler,vec2(xy1.x,xy0.y))*matrix[0][1];",
+    " vec4 x2y0=texture2D(sampler,vec2(xy2.x,xy0.y))*matrix[0][2];",
+    " vec4 x0y1=texture2D(sampler,vec2(xy0.x,xy1.y))*matrix[1][0];",
+    " vec4 x1y1=mainColor*matrix[1][1];",
+    " vec4 x2y1=texture2D(sampler,vec2(xy2.x,xy1.y))*matrix[1][2];",
+    " vec4 x0y2=texture2D(sampler,vec2(xy0.x,xy2.y))*matrix[2][0];",
+    " vec4 x1y2=texture2D(sampler,vec2(xy1.x,xy2.y))*matrix[2][1];",
+    " vec4 x2y2=texture2D(sampler,xy2)*matrix[2][2];",
+    " vec4 color=x0y0+x1y0+x2y0+x0y1+x1y1+x2y1+x0y2+x1y2+x2y2;",
+    " return vec4(color.rgb,mainColor.a);",
+    "}"].join("\n"));
+}
+
+function makeWave() {
+  "use strict";
+  return H3DU.ShaderInfo.makeEffect([
+    "uniform float time; // range [0,100)",
+    "const float pi = 3.14159265;",
+    "float interp(float t) {",
+    " return sin(t*pi*2.0);",
+    "}",
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " float t=float(time)/100.0;",
+    " t=t+uvCoord.y;",
+    " float offset=interp(fract(t*8.0));",
+    " float x=clamp(uvCoord.x+offset*0.02,0.0,1.0);",
+    " vec4 color=texture2D(sampler,vec2(x,uvCoord.y));",
+    " return color;",
+    "}"].join("\n"));
+}
+
+function makeGrayscale() {
+  "use strict";
+  return H3DU.ShaderInfo.makeEffect([
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " vec4 color=texture2D(sampler,uvCoord);",
+    " float gray=(color.r+color.g+color.b)/3.0;",
+    " return vec4(gray,gray,gray,color.a);",
+    "}"].join("\n"));
+}
+
+function makeRedTint() {
+  "use strict";
+  return H3DU.ShaderInfo.makeEffect([
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " vec4 color=texture2D(sampler,uvCoord);",
+    " return vec4(color.r+0.3,color.g,color.b,color.a);",
+    "}"].join("\n"));
+}
+
+function makeBlueTint() {
+  "use strict";
+  return H3DU.ShaderInfo.makeEffect([
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " vec4 color=texture2D(sampler,uvCoord);",
+    " return vec4(color.r,color.g,color.b+0.3,color.a);",
+    "}"].join("\n"));
+}
+
+function makeMirror() {
+  "use strict";
+  return H3DU.ShaderInfo.makeEffect([
+    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
+    " vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
+    " return color;",
+    "}"].join("\n"));
+}
+
+/* exported link1 */
+function link1() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeGrayscale(scene);
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+/* exported link1a */
+function link1a() {
+  "use strict";
+  if(scene) {
+    subScene.setProjectionMatrix(H3DU.Math.mat4ortho(-1, 1, -1, 1, -10, 10));
+    subScene.removeShape(platonic);
+    subScene.addShape(blinds);
+  }
+}
+function link2a() {
+  "use strict";
+  if(scene) {
+    subScene.orthoAspect(-20, 20, -10, 10, -20, 20);
+    subScene.removeShape(blinds);
+    subScene.addShape(platonic);
+  }
+}
+/* exported link2 */
+function link2() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = H3DU.ShaderInfo.makeInvertEffect();
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+
+/* exported link3 */
+function link3() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeWave();
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+
+/* exported link4 */
+function link4() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeKernelMatrix(scene);
+    setKernelMatrix(currentFilter, [1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9]);
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+/* exported link5 */
+function link5() {
+  "use strict";
+  if(scene) {
+    currentFilter = makePixelate();
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+/* exported link6 */
+function link6() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeWaterpaint();
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+/* exported link7 */
+function link7() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeMirror(scene);
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+/* exported link8 */
+function link8() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeKernelMatrix(scene);
+    setKernelMatrix(currentFilter, [0, 1, 0, 1, -4, 1, 0, 1, 0]);
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+
+/* exported link9 */
+function link9() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeRedTint(scene);
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+
+/* exported link9a */
+function link9a() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeBlueTint(scene);
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+
+/* exported link10 */
+function link10() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = makeWarp(scene);
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+function linknone() {
+  "use strict";
+  if(scene) {
+
+    currentFilter = null;
+    renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
+  }
+}
+
+function shiny(color) {
+  "use strict";
+  return new H3DU.Material(color, color, "white", 5);
+}
+
+function platonicGroup() {
+  "use strict";
+  var size = 4.5;
+  var group = new H3DU.ShapeGroup();
+  var mesh = Polyhedra.hexahedron(size);
+  group.addShape(
+    new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15, 5, 0));
+  mesh = Polyhedra.octahedron(size);
+  group.addShape(
+    new H3DU.Shape(mesh).setMaterial(shiny("blue")).setPosition(-5, 5, 0));
+  mesh = Polyhedra.icosahedron(size);
+  group.addShape(
+    new H3DU.Shape(mesh).setMaterial(shiny("lime")).setPosition(5, 5, 0));
+  mesh = Polyhedra.tetrahedron(size);
+  group.addShape(
+    new H3DU.Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15, 5, 0));
+  mesh = Polyhedra.dodecahedron(size);
+  group.addShape(
+    new H3DU.Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15, -5, 0));
+  return group;
+}
+
+function blindsGroup() {
+  "use strict";
+  var color = true;
+  var oddrow = false;
+  var group = new H3DU.ShapeGroup();
+  for(var x = -100;x < 100;x += 20) {
+    color = oddrow;
+    for(var y = -100;y < 100;y += 20) {
+      var xx = (x / 100 + 1) / 2;
+      var yy = (y / 100 + 1) / 2;
+      var mesh = H3DU.Meshes.createPlane(0.2, 0.2);
+      group.addShape(new H3DU.Shape(mesh)
+      .setColor(color ? [0, xx, yy] : [1, 0.7, 0.7])
+      .setPosition(x / 100 + 0.1, y / 100 + 0.1, 0));
+      color = !color;
+    }
+    oddrow = !oddrow;
+  }
+  return group;
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D((document.getElementById("canvas")));
-  var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());
-  scene.setClearColor("white")
-  var subScene=new H3DU.Batch3D()
-  subScene.getLights().setDefaults();
-  var renders=[
-    new H3DU.RenderPass3D(subScene,{"frameBuffer":fbo}),
-    new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo))
-  ]
-  var fc=new FrameCounterDiv()
-  var blinds=blindsGroup(subScene)
-  var platonic=platonicGroup(subScene)
-  linknone();
-  link2a();
-  var rotation=[0,0,0];
-  var timer={};
-  var c=[1,2,3,4,5,6,7,6,5,4,3,2]
-  var rot=0
-  H3DU.renderLoop(function(time){
-   fbo.resize(scene.getWidth(),scene.getHeight());
-   if(currentFilter){
+scene = new H3DU.Scene3D(document.getElementById("canvas"));
+fbo = new H3DU.FrameBufferInfo(scene.getWidth(), scene.getHeight());
+scene.setClearColor("white");
+subScene = new H3DU.Batch3D();
+subScene.getLights().setDefaults();
+renders = [
+  new H3DU.RenderPass3D(subScene, {"frameBuffer":fbo}),
+  new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo))
+];
+var fc = new FrameCounterDiv();
+blinds = blindsGroup(subScene);
+platonic = platonicGroup(subScene);
+linknone();
+link2a();
+var rotation = [0, 0, 0];
+var timer = {};
+var c = [1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2];
+var rot = 0;
+H3DU.renderLoop(function(time) {
+  "use strict";
+  fbo.resize(scene.getWidth(), scene.getHeight());
+  if(currentFilter) {
     currentFilter.setUniforms({
-      "coarseness":c[Math.floor(c.length*H3DU.getTimePosition(timer,time,1500))],
-      "time":100*H3DU.getTimePosition(timer,time,5000)
-    })
-   }
-   for(var i=0;i<blinds.shapes.length;i++){
+      "coarseness":c[Math.floor(c.length * H3DU.getTimePosition(timer, time, 1500))],
+      "time":100 * H3DU.getTimePosition(timer, time, 5000)
+    });
+  }
+  for(var i = 0;i < blinds.shapes.length;i++) {
     blinds.shapes[i].setQuaternion(
-      H3DU.Math.quatFromAxisAngle(rot,0,1,0));
-   }
-   for(var i=0;i<platonic.shapes.length;i++){
+      H3DU.Math.quatFromAxisAngle(rot, 0, 1, 0));
+  }
+  for(i = 0;i < platonic.shapes.length;i++) {
     platonic.shapes[i].setQuaternion(
       H3DU.Math.quatFromTaitBryan(rotation));
-   }
-   rot=360*H3DU.getTimePosition(timer,time,2000);
-   rotation[0]=360*H3DU.getTimePosition(timer,time,6000);
-   rotation[1]=360*H3DU.getTimePosition(timer,time,12000);
-   scene.render(renders);
-   fc.update();
-  });
-//-->
+  }
+  rot = 360 * H3DU.getTimePosition(timer, time, 2000);
+  rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);
+  rotation[1] = 360 * H3DU.getTimePosition(timer, time, 12000);
+  scene.render(renders);
+  fc.update();
+});
+// -->
 </script>
 </body>

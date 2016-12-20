@@ -19,7 +19,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <canvas id=canvas>
 </canvas>
 <script id="demo">
-//<!--
+/* global Camera, FrameCounterDiv, H3DU, InputTracker, SurfaceOfRevolution, addLink, makeMesh, pushSettings */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -28,232 +29,242 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-if(typeof Math.sign=="undefined"){
- Math.sign=function(x){
-  return (x<0) ? -1 : (x==0 ? 0 : 1);
- }
+if(typeof Math.sign === "undefined") {
+  Math.sign = function(x) {
+    "use strict";
+    return x < 0 ? -1 : x === 0 ? 0 : 1;
+  };
+}
+
+var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
+  "use strict";
+  this.xRadius = xRadius;
+  this.yRadius = yRadius;
+  this.zRadius = zRadius;
+ // exponent for the sines and cosines in U-axis
+  this.n = n === null || typeof n === "undefined" ? 1 : n;
+ // exponent for the sines and cosines in V-axis
+  this.m = m === null || typeof m === "undefined" ? 1 : m;
+  this.evaluate = function(u, v) {
+    u = 1 - u;
+    if(u === 1) {
+      u = Math.PI / 2;
+    } else {
+      u *= Math.PI;
+      u -= Math.PI / 2;
+    }
+    if(v === 1)v = 0;
+    v *= H3DU.Math.PiTimes2;
+    v -= Math.PI;
+    var cosu = Superellipsoid.cospow(u, this.n);
+    return [
+      Superellipsoid.cospow(v, this.m) * cosu * this.xRadius,
+      Superellipsoid.sinpow(v, this.m) * cosu * this.yRadius,
+      Superellipsoid.sinpow(u, this.n) * this.zRadius
+    ];
+  };
 };
 
-var Supertoroid=function(xRadius, yRadius, innerRadius, n, m){
- this.xRadius=xRadius;
- this.yRadius=yRadius;
- this.innerRadius=innerRadius;
+Superellipsoid.sinpow = function(x, n) {
+  "use strict";
+  var r = Math.sin(x);
+  return Math.sign(r) * Math.pow(Math.abs(r), n);
+};
+Superellipsoid.cospow = function(x, n) {
+  "use strict";
+  var r = Math.cos(x);
+  return Math.sign(r) * Math.pow(Math.abs(r), n);
+};
+
+var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
+  "use strict";
+  this.xRadius = xRadius;
+  this.yRadius = yRadius;
+  this.innerRadius = innerRadius;
  // exponent for the sines and cosines in U-axis
- this.n=(n==null) ? 1 : n;
+  this.n = n === null || typeof n === "undefined" ? 1 : n;
  // exponent for the sines and cosines in V-axis
- this.m=(m==null) ? 1 : m;
- this.evaluate=function(u,v){
-  u=1-u
-  if(u==1)u=0;
-  u*=H3DU.Math.PiTimes2;
-  if(v==1)v=0;
-  v*=H3DU.Math.PiTimes2;
-  var cosu=Superellipsoid.cospow(u,this.n);
-  return [
-   Superellipsoid.cospow(v,this.m)*(cosu*this.innerRadius+this.xRadius),
-   Superellipsoid.sinpow(v,this.m)*(cosu*this.innerRadius+this.yRadius),
-   Superellipsoid.sinpow(u,this.n)*this.innerRadius
-  ];
- }
-}
+  this.m = m === null || typeof m === "undefined" ? 1 : m;
+  this.evaluate = function(u, v) {
+    u = 1 - u;
+    if(u === 1)u = 0;
+    u *= H3DU.Math.PiTimes2;
+    if(v === 1)v = 0;
+    v *= H3DU.Math.PiTimes2;
+    var cosu = Superellipsoid.cospow(u, this.n);
+    return [
+      Superellipsoid.cospow(v, this.m) * (cosu * this.innerRadius + this.xRadius),
+      Superellipsoid.sinpow(v, this.m) * (cosu * this.innerRadius + this.yRadius),
+      Superellipsoid.sinpow(u, this.n) * this.innerRadius
+    ];
+  };
+};
 
-var Superellipsoid=function(xRadius, yRadius, zRadius, n, m){
- this.xRadius=xRadius;
- this.yRadius=yRadius;
- this.zRadius=zRadius;
- // exponent for the sines and cosines in U-axis
- this.n=(n==null) ? 1 : n;
- // exponent for the sines and cosines in V-axis
- this.m=(m==null) ? 1 : m;
- this.evaluate=function(u,v){
-  u=1-u
-  if(u==1){
-   u=Math.PI/2;
-  } else {
-   u*=Math.PI;
-   u-=Math.PI/2;
-  }
-  if(v==1)v=0;
-  v*=H3DU.Math.PiTimes2;
-  v-=Math.PI;
-  var cosu=Superellipsoid.cospow(u,this.n);
-  return [
-   Superellipsoid.cospow(v,this.m)*cosu*this.xRadius,
-   Superellipsoid.sinpow(v,this.m)*cosu*this.yRadius,
-   Superellipsoid.sinpow(u,this.n)*this.zRadius
-  ];
- }
-}
+var KleinBottle = function() {
+  "use strict";
+  this.evaluate = function(u, v) {
+    u *= H3DU.Math.PiTimes2;
+    v *= H3DU.Math.PiTimes2;
+    var x, y, z;
+    var cosu = Math.cos(u);
+    var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    var cosv = Math.cos(v);
+    var sinv = v >= 0 && v < 6.283185307179586 ? v <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v);
+    if(u < Math.PI) {
+      x = 3 * cosu * (1 + sinu) + 2 * (1 - cosu / 2) * cosu * cosv;
+      z = -8 * sinu - 2 * (1 - cosu / 2) * sinu * cosv;
+    } else {
+      x = 3 * cosu * (1 + sinu) + 2 * (1 - cosu / 2) * Math.cos(v + Math.PI);
+      z = -8 * sinu;
+    }
+    y = -2 * (1 - cosu / 2) * sinv;
+    return [x / 6, z / 6, y / 6];
+  };
+};
 
-Superellipsoid.sinpow=function(x,n){
-  var r=Math.sin(x);
-  return Math.sign(r)*Math.pow(Math.abs(r),n);
- }
-Superellipsoid.cospow=function(x,n){
-  var r=Math.cos(x);
-  return Math.sign(r)*Math.pow(Math.abs(r),n);
- }
+var MoebiusLikeStrip = function(maj, a, b) {
+  "use strict";
+  this.maj = maj === null || typeof maj === "undefined" ? 1.25 : maj;
+  this.a = a === null || typeof a === "undefined" ? 0.125 : a;
+  this.b = b === null || typeof b === "undefined" ? 0.5 : b;
+  this.evaluate = function(u, v) {
+    u *= Math.PI;
+    if(v === 1)v = 0;
+    v *= H3DU.Math.PiTimes2;
+    u = -u;
+    var x, y, z;
+    var cosu = Math.cos(u);
+    var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    var cosv = Math.cos(v);
+    var sinv = v >= 0 && v < 6.283185307179586 ? v <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v);
+    x = this.a * cosv * cosu - this.b * sinv * sinu;
+    z = this.a * cosv * sinu + this.b * sinv * cosu;
+    var cosu2 = Math.cos(u * 2);
+    var sinu2 = u * 2 >= 0 && u * 2 < 6.283185307179586 ? u * 2 <= 3.141592653589793 ? Math.sqrt(1.0 - cosu2 * cosu2) : -Math.sqrt(1.0 - cosu2 * cosu2) : Math.sin(u * 2);
+    y = (this.maj + x) * sinu2;
+    x = (this.maj + x) * cosu2;
+    return [x, z, y];
+  };
+};
 
-var KleinBottle=function(){
- this.evaluate=function(u,v){
-  var cospi;
-  u*=H3DU.Math.PiTimes2;
-  v*=H3DU.Math.PiTimes2;
-  var x, y, z;
-  var cosu = Math.cos(u);
-  var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
-  var cosv = Math.cos(v);
-  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
-  if(u<Math.PI){
-   x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * cosu * cosv;
-   z = -8 * sinu - 2 * (1 - cosu / 2) * sinu * cosv;
-  } else {
-   x = 3 * cosu * (1 + sinu) + (2 * (1 - cosu / 2)) * Math.cos(v + Math.PI)
-   z = -8 * sinu
-  }
-  y = -2 * (1 - cosu / 2) * sinv;
-  return [x/6,z/6,y/6];
- }
-}
+var MoebiusStrip = function(radius, width) {
+  "use strict";
+  this.radius = radius === null || typeof radius === "undefined" ? 1 : radius;
+  this.width = width === null || typeof width === "undefined" ? 0.5 : width;
+  this.evaluate = function(u, v) {
+    u = -this.width + this.width * 2 * u;
+    v *= H3DU.Math.PiTimes2;
+    var x, y, z;
+    var cosv = Math.cos(v === 1 ? 0 : v);
+    var sinv = (v === 1 ? 0 : v) >= 0 && (v === 1 ? 0 : v) < 6.283185307179586 ? (v === 1 ? 0 : v) <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v === 1 ? 0 : v);
+    var cosv2 = Math.cos(v / 2);
+    var sinv2 = v / 2 >= 0 && v / 2 < 6.283185307179586 ? v / 2 <= 3.141592653589793 ? Math.sqrt(1.0 - cosv2 * cosv2) : -Math.sqrt(1.0 - cosv2 * cosv2) : Math.sin(v / 2);
+    var tmp = u * cosv2 + this.radius;
+    x = cosv * tmp;
+    y = sinv * tmp;
+    z = sinv2 * u;
+    return [x, y, z];
+  };
+};
 
-var MoebiusLikeStrip=function(maj, a, b){
- this.maj=maj==null ? 1.25 : maj
- this.a=a==null ? 0.125 : a
- this.b=b==null ? 0.5 : b
- this.evaluate=function(u,v){
-  u*=Math.PI;
-  if(v==1)v=0;
-  v*=H3DU.Math.PiTimes2;
-  u=-u
-  var x, y, z;
-  var cosu = Math.cos(u);
-  var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
-  var cosv = Math.cos(v);
-  var sinv = (v>=0 && v<6.283185307179586) ? (v<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v);
-    x = this.a * cosv * cosu - this.b * sinv * sinu
-    z = this.a * cosv * sinu + this.b * sinv * cosu
-    var cosu2 = Math.cos(u*2);
-    var sinu2 = ((u*2)>=0 && (u*2)<6.283185307179586) ? ((u*2)<=3.141592653589793 ? Math.sqrt(1.0-cosu2*cosu2) : -Math.sqrt(1.0-cosu2*cosu2)) : Math.sin(u*2);
-    y = (this.maj + x) * sinu2
-    x = (this.maj + x) * cosu2
-  return [x,z,y]
- }
-}
+var shapeGroup = new H3DU.ShapeGroup();
 
-var MoebiusStrip=function(radius,width){
- this.radius=radius==null ? 1 : radius;
- this.width=width==null ? 0.5 : width;
- this.evaluate=function(u,v){
-  u=-this.width+(this.width*2)*u;
-  v*=H3DU.Math.PiTimes2;
-  var x, y, z;
-  var cosv = Math.cos(v==1 ? 0 : v);
-  var sinv = ((v==1 ? 0 : v)>=0 && (v==1 ? 0 : v)<6.283185307179586) ? ((v==1 ? 0 : v)<=3.141592653589793 ? Math.sqrt(1.0-cosv*cosv) : -Math.sqrt(1.0-cosv*cosv)) : Math.sin(v==1 ? 0 : v);
-  var cosv2 = Math.cos(v/2);
-  var sinv2 = ((v/2)>=0 && (v/2)<6.283185307179586) ? ((v/2)<=3.141592653589793 ? Math.sqrt(1.0-cosv2*cosv2) : -Math.sqrt(1.0-cosv2*cosv2)) : Math.sin(v/2);
-  var tmp=u*cosv2+this.radius;
-  x=cosv*tmp;
-  y=sinv*tmp;
-  z=sinv2*u;
-  return [x,y,z]
- }
-}
+var link0 = null;
 
-var shapeGroup=new H3DU.ShapeGroup();
-var allsettings={}
-var link0=null;
-
-addLink("Superellipsoid",link0=function(){
- pushSettings(function(allsettings){
-   var surf=new Superellipsoid(
+addLink("Superellipsoid", link0 = function() {
+  "use strict";
+  pushSettings(function(allsettings) {
+    var surf = new Superellipsoid(
       allsettings["superel-x"],
       allsettings["superel-y"],
       allsettings["superel-z"],
       allsettings["superel-n"],
       allsettings["superel-m"]
-    )
+    );
     return makeMesh(surf);
- },{
- "superel-x":["X radius",1.2,0.05,2.0,0.05],
- "superel-y":["Y radius",1,0.05,2.0,0.05],
- "superel-z":["Z radius",1,0.05,2.0,0.05],
- "superel-n":["N",1,0.05,3.0,0.05],
- "superel-m":["M",1,0.05,3.0,0.05]
+  }, {
+    "superel-x":["X radius", 1.2, 0.05, 2.0, 0.05],
+    "superel-y":["Y radius", 1, 0.05, 2.0, 0.05],
+    "superel-z":["Z radius", 1, 0.05, 2.0, 0.05],
+    "superel-n":["N", 1, 0.05, 3.0, 0.05],
+    "superel-m":["M", 1, 0.05, 3.0, 0.05]
   });
-})
+});
 
-addLink("Klein bottle",function(){
- pushSettings(function(allsettings){
-   return makeMesh(
+addLink("Klein bottle", function() {
+  "use strict";
+  pushSettings(function() {
+    return makeMesh(
    new KleinBottle());
- },{
- });
-})
-addLink("Surface of revolution for f(x) = sin x",function(){
- pushSettings(function(allsettings){
-    return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
-  return Math.sin(x)
- },-Math.PI,Math.PI,[1,0,0]))
- },{
- });
-})
-addLink("Surface of revolution for f(x) = x<sup>2</sup>",function(){
- pushSettings(function(allsettings){
- return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
-  return x*x
- },-1,1,[1,0,0]))
- },{
- });
-})
-addLink("...for f(x) = x<sup>2</sup>+0.01",function(){
- pushSettings(function(allsettings){
- return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
-  return x*x+0.01
- },-1,1,[1,0,0]))
- },{
- });
-})
-addLink("Cylinder",function(){
- pushSettings(function(allsettings){
-    return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
-  return 1
- },-1,1,[0,1,0]))
- },{
- });
-})
-addLink("Cone",function(){
- pushSettings(function(allsettings){
-    return makeMesh(SurfaceOfRevolution.fromFunction(function(x){
-  x+=-1
-  return x/2
- },-1,1,[0,1,0]))
- },{
- });
-})
-addLink("Torus as Surface of Revolution",function(){
- pushSettings(function(allsettings){
-    return makeMesh(SurfaceOfRevolution.torus(1,0.125))
- },{
- });
-})
-addLink("M&ouml;bius-like strip",function(){
- pushSettings(function(allsettings){
-   return makeMesh(
+  }, {});
+});
+addLink("Surface of revolution for f(x) = sin x", function() {
+  "use strict";
+  pushSettings(function() {
+    return makeMesh(SurfaceOfRevolution.fromFunction(function(x) {
+      return Math.sin(x);
+    }, -Math.PI, Math.PI, [1, 0, 0]));
+  }, {});
+});
+addLink("Surface of revolution for f(x) = x<sup>2</sup>", function() {
+  "use strict";
+  pushSettings(function() {
+    return makeMesh(SurfaceOfRevolution.fromFunction(function(x) {
+      return x * x;
+    }, -1, 1, [1, 0, 0]));
+  }, {});
+});
+addLink("...for f(x) = x<sup>2</sup>+0.01", function() {
+  "use strict";
+  pushSettings(function() {
+    return makeMesh(SurfaceOfRevolution.fromFunction(function(x) {
+      return x * x + 0.01;
+    }, -1, 1, [1, 0, 0]));
+  }, {});
+});
+addLink("Cylinder", function() {
+  "use strict";
+  pushSettings(function() {
+    return makeMesh(SurfaceOfRevolution.fromFunction(function() {
+      return 1;
+    }, -1, 1, [0, 1, 0]));
+  }, {});
+});
+addLink("Cone", function() {
+  "use strict";
+  pushSettings(function() {
+    return makeMesh(SurfaceOfRevolution.fromFunction(function(x) {
+      x += -1;
+      return x / 2;
+    }, -1, 1, [0, 1, 0]));
+  }, {});
+});
+addLink("Torus as Surface of Revolution", function() {
+  "use strict";
+  pushSettings(function() {
+    return makeMesh(SurfaceOfRevolution.torus(1, 0.125));
+  }, {});
+});
+addLink("M&ouml;bius-like strip", function() {
+  "use strict";
+  pushSettings(function(allsettings) {
+    return makeMesh(
     new MoebiusLikeStrip(
       allsettings["moeb-maj"],
       allsettings["moeb-a"],
       allsettings["moeb-b"]
     ));
- },{
-  "moeb-maj":["Size",1.25,0.05,3.0,0.05],
-  "moeb-a":["Height",0.125,0.05,2.0,0.05],
-  "moeb-b":["Thickness",0.05,0.05,1.0,0.05]
+  }, {
+    "moeb-maj":["Size", 1.25, 0.05, 3.0, 0.05],
+    "moeb-a":["Height", 0.125, 0.05, 2.0, 0.05],
+    "moeb-b":["Thickness", 0.05, 0.05, 1.0, 0.05]
   });
 });
 
-addLink("Supertoroid",function(){
- pushSettings(function(allsettings){
-   return makeMesh(
+addLink("Supertoroid", function() {
+  "use strict";
+  pushSettings(function(allsettings) {
+    return makeMesh(
     new Supertoroid(
       allsettings["superto-x"],
       allsettings["superto-y"],
@@ -261,67 +272,70 @@ addLink("Supertoroid",function(){
       allsettings["superto-n"],
       allsettings["superto-m"]
     ));
- },{
- "superto-x":["X radius",1,0.05,2.0,0.05],
- "superto-y":["Y radius",1,0.05,2.0,0.05],
- "superto-ir":["Inner radius",0.25,0.05,1.0,0.05],
- "superto-n":["N",1,0.05,3.0,0.05],
- "superto-m":["M",1,0.05,3.0,0.05]
+  }, {
+    "superto-x":["X radius", 1, 0.05, 2.0, 0.05],
+    "superto-y":["Y radius", 1, 0.05, 2.0, 0.05],
+    "superto-ir":["Inner radius", 0.25, 0.05, 1.0, 0.05],
+    "superto-n":["N", 1, 0.05, 3.0, 0.05],
+    "superto-m":["M", 1, 0.05, 3.0, 0.05]
   });
 });
 
-addLink("M&ouml;bius strip",function(){
- pushSettings(function(allsettings){
-   return makeMesh(
+addLink("M&ouml;bius strip", function() {
+  "use strict";
+  pushSettings(function(allsettings) {
+    return makeMesh(
     new MoebiusStrip(
       allsettings["moeb2-r"],
       allsettings["moeb2-w"]
     ));
- },{
-  "moeb2-r":["Radius",1,0.05,2,0.05],
-  "moeb2-w":["Width",0.25,0.05,2,0.05]
+  }, {
+    "moeb2-r":["Radius", 1, 0.05, 2, 0.05],
+    "moeb2-w":["Width", 0.25, 0.05, 2, 0.05]
   });
 });
 
-var bsplineSurf=null;
-addLink("B-Spline Surface",function(){
- pushSettings(function(allsettings){
-  var bspline=[]
-  for(var i=0;i<=5;i++){
-   var c=[]
-   for(var j=0;j<=5;j++){
-    var cp=[
-     (j*5.0/5)-2.5,
-     (i*5.0/5)-2.5,
-     Math.random()*2.5-1.25
-    ]
-    c.push(cp)
-   }
-   bspline.push(c)
-  }
-  if(!bsplineSurf)
-   bsplineSurf=H3DU.BSplineSurface.clamped(bspline,3,3)
-  return makeMesh(bsplineSurf);
- },{
-  });
-})
+var bsplineSurf = null;
+addLink("B-Spline Surface", function() {
+  "use strict";
+  pushSettings(function() {
+    var bspline = [];
+    for(var i = 0;i <= 5;i++) {
+      var c = [];
+      for(var j = 0;j <= 5;j++) {
+        var cp = [
+          j * 5.0 / 5 - 2.5,
+          i * 5.0 / 5 - 2.5,
+          Math.random() * 2.5 - 1.25
+        ];
+        c.push(cp);
+      }
+      bspline.push(c);
+    }
+    if(!bsplineSurf)
+      bsplineSurf = H3DU.BSplineSurface.clamped(bspline, 3, 3);
+    return makeMesh(bsplineSurf);
+  }, {});
+});
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white")
-  var sub=new H3DU.Batch3D()
-  var camera=new Camera(sub,45,1,100, scene.getCanvas());
-  camera.setDistance(5);
-  var pc=new FrameCounterDiv()
-  link0();
-  sub.addShape(shapeGroup);
-  H3DU.renderLoop(function(){
-   pc.update();
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
-   scene.render(sub);
-  });
-//-->
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+var input = new InputTracker(document);
+scene.setClearColor("white");
+var sub = new H3DU.Batch3D();
+var camera = new Camera(sub, 45, 1, 100);
+camera.setDistance(5);
+var pc = new FrameCounterDiv();
+link0();
+sub.addShape(shapeGroup);
+H3DU.renderLoop(function() {
+  "use strict";
+  pc.update();
+  camera.update(input.update());
+  sub.getLights().setDirectionalLight(0, camera.getPosition());
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

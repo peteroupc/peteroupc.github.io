@@ -23,7 +23,8 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global Camera, CurveTube, FrameCounterDiv, GraphicsPath, H3DU, InputTracker */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -34,124 +35,136 @@ at: http://peteroupc.github.io/
 */
 
 // Make a polygon with a hole
-var path=new GraphicsPath()
- .moveTo(-1,1,0)
- .lineTo(0,1)
- .arcTo(1,1,1,0,1)
- .lineTo(1,-1)
- .lineTo(0,-1)
- .arcTo(-1,-1,-1,0,1)
+var path = new GraphicsPath()
+ .moveTo(-1, 1, 0)
+ .lineTo(0, 1)
+ .arcTo(1, 1, 1, 0, 1)
+ .lineTo(1, -1)
+ .lineTo(0, -1)
+ .arcTo(-1, -1, -1, 0, 1)
  .closePath()
- .moveTo(-0.5,0.5,0)
- .lineTo(-0.5,0)
- .arcTo(-0.5,-0.5,0,-0.5,0.5)
- .lineTo(0.5,-0.5)
- .lineTo(0.5,0)
- .arcTo(0.5,0.5,0,0.5,0.5)
- .lineTo(-0.5,0.5)
- .closePath()
+ .moveTo(-0.5, 0.5, 0)
+ .lineTo(-0.5, 0)
+ .arcTo(-0.5, -0.5, 0, -0.5, 0.5)
+ .lineTo(0.5, -0.5)
+ .lineTo(0.5, 0)
+ .arcTo(0.5, 0.5, 0, 0.5, 0.5)
+ .lineTo(-0.5, 0.5)
+ .closePath();
 
-function pathClosedFigure(path, zBottom, zTop, flatness){
- var mesh=new H3DU.Mesh()
- mesh.merge(extrudePath(path,zBottom,zTop,flatness))
- mesh.merge(pathFloor(path,zTop,flatness))
- mesh.merge(pathFloor(path,zBottom,flatness).reverseWinding().reverseNormals())
- return mesh
-}
-
-function makeTubeFromPath(path,flatness,thickness,pathSection){
- var mesh=new H3DU.Mesh()
- var curves=path.getCurves(flatness)
- var resolution=Math.ceil((curves.getLength()/flatness)/10)
- var curveSection=(pathSection) ? pathSection.getCurves(flatness) : null
- new H3DU.SurfaceEval()
-    .vertex(new CurveTube(curves,thickness,curveSection))
+function makeTubeFromPath(path, flatness, thickness, pathSection) {
+  "use strict";
+  var mesh = new H3DU.Mesh();
+  var curves = path.getCurves(flatness);
+  var resolution = Math.ceil(curves.getLength() / flatness / 10);
+  var curveSection = pathSection ? pathSection.getCurves(flatness) : null;
+  new H3DU.SurfaceEval()
+    .vertex(new CurveTube(curves, thickness, curveSection))
     .setAutoNormal(true)
-    .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,
-      Math.ceil(2*thickness/flatness));
-  return mesh
+    .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
+      Math.ceil(2 * thickness / flatness));
+  return mesh;
 }
 
-function pathFloor(path, z, flatness){
- if(z==null)z=0
- var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0,0,1);
- for(var i=0;i<tris.length;i++){
-  var tri=tris[i]
-  mesh.vertex3(tri[0],tri[1],z)
-   .vertex3(tri[2],tri[3],z)
-   .vertex3(tri[4],tri[5],z)
- }
- return mesh
+function pathFloor(path, z, flatness) {
+  "use strict";
+  if(z === null || typeof z === "undefined")z = 0;
+  var tris = path.getTriangles(flatness);
+  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
+   .normal3(0, 0, 1);
+  for(var i = 0;i < tris.length;i++) {
+    var tri = tris[i];
+    mesh.vertex3(tri[0], tri[1], z)
+   .vertex3(tri[2], tri[3], z)
+   .vertex3(tri[4], tri[5], z);
+  }
+  return mesh;
 }
-function extrudePath(path, zStart, zEnd, flatness){
- var lines=path.getLines(flatness)
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
- var z1=Math.min(zStart,zEnd)
- var z2=Math.max(zStart,zEnd)
- for(var i=0;i<lines.length;i++){
-  var line=lines[i]
-  var dx=line[2]-line[0]
-  var dy=line[3]-line[1]
-  var dot=dx*dx+dy*dy
-  if(dot==0)continue;
-  mesh.vertex3(line[0],line[1],z1)
-   .vertex3(line[0],line[1],z2)
-   .vertex3(line[2],line[3],z1)
-   .vertex3(line[2],line[3],z1)
-   .vertex3(line[0],line[1],z2)
-   .vertex3(line[2],line[3],z2)
- }
- mesh.recalcNormals()
- return mesh
+function extrudePath(path, zStart, zEnd, flatness) {
+  "use strict";
+  var lines = path.getLines(flatness);
+  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES);
+  var z1 = Math.min(zStart, zEnd);
+  var z2 = Math.max(zStart, zEnd);
+  for(var i = 0;i < lines.length;i++) {
+    var line = lines[i];
+    var dx = line[2] - line[0];
+    var dy = line[3] - line[1];
+    var dot = dx * dx + dy * dy;
+    if(dot === 0)continue;
+    mesh.vertex3(line[0], line[1], z1)
+   .vertex3(line[0], line[1], z2)
+   .vertex3(line[2], line[3], z1)
+   .vertex3(line[2], line[3], z1)
+   .vertex3(line[0], line[1], z2)
+   .vertex3(line[2], line[3], z2);
+  }
+  mesh.recalcNormals();
+  return mesh;
 }
-function createSampleShape(index){
- switch(index){
+function pathClosedFigure(path, zBottom, zTop, flatness) {
+  "use strict";
+  var mesh = new H3DU.Mesh();
+  mesh.merge(extrudePath(path, zBottom, zTop, flatness));
+  mesh.merge(pathFloor(path, zTop, flatness));
+  mesh.merge(pathFloor(path, zBottom, flatness).reverseWinding().reverseNormals());
+  return mesh;
+}
+function createSampleShape(index) {
+  "use strict";
+  switch(index) {
   case 0:
-   return pathFloor(path,0,0.01);
+    return pathFloor(path, 0, 0.01);
   case 1:
-   return extrudePath(path,-0.2,0.2,0.01);
+    return extrudePath(path, -0.2, 0.2, 0.01);
   case 2:
-   return pathClosedFigure(path,-0.25,0.25,0.01);
+    return pathClosedFigure(path, -0.25, 0.25, 0.01);
   case 3:
-   return makeTubeFromPath(path,0.01,0.1);
+    return makeTubeFromPath(path, 0.01, 0.1);
   default:
-   return new H3DU.Mesh();
- }
+    return new H3DU.Mesh();
+  }
 }
-function sampleShape(num){
- if(shape)sub.removeShape(shape);
- var cs=document.getElementById("colorsetting").value
- sub.addShape(shape=new H3DU.Shape(createSampleShape(num)).setColor(cs))
+var sub = null;
+var shape = null;
+function sampleShape(num) {
+  "use strict";
+  if(shape)sub.removeShape(shape);
+  var cs = document.getElementById("colorsetting").value;
+  sub.addShape(shape = new H3DU.Shape(createSampleShape(num)).setColor(cs));
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white");
-  var sub=new H3DU.Batch3D();
-  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
-   .turnVertical(-90)
-  var xyz=new H3DU.ShapeGroup();
-  var pc=new FrameCounterDiv()
-  var shape=null;
-  var axisline=new H3DU.Shape(H3DU.Meshes.createCapsule(0.005,10,6,4));
-  var zaxis=axisline.copy().setColor("blue")
-  var yaxis=axisline.copy().setColor("green");
-  yaxis.getTransform().setOrientation(90,1,0,0);
-  var xaxis=axisline.copy().setColor("red");
-  xaxis.getTransform().setOrientation(90,0,1,0);
-  document.getElementById("colorsetting").addEventListener("change",
-   function(e){ if(shape)shape.setColor(e.target.value) });
-  xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
-  sub.addShape(xyz);
-  sampleShape(0);
-  H3DU.renderLoop(function(){
-   pc.update();
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
-   scene.render(sub);
-  });
-//-->
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+scene.setClearColor("white");
+sub = new H3DU.Batch3D();
+var input = new InputTracker(document);
+var camera = new Camera(sub, 45, 1, 1000).setDistance(5)
+   .turnVertical(-90);
+var xyz = new H3DU.ShapeGroup();
+var pc = new FrameCounterDiv();
+shape = null;
+var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(0.005, 10, 6, 4));
+var zaxis = axisline.copy().setColor("blue");
+var yaxis = axisline.copy().setColor("green");
+yaxis.getTransform().setOrientation(90, 1, 0, 0);
+var xaxis = axisline.copy().setColor("red");
+xaxis.getTransform().setOrientation(90, 0, 1, 0);
+document.getElementById("colorsetting").addEventListener("change",
+   function(e) {
+     "use strict";
+     if(shape)shape.setColor(e.target.value);
+   });
+xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
+sub.addShape(xyz);
+sampleShape(0);
+H3DU.renderLoop(function() {
+  "use strict";
+  pc.update();
+  camera.update(input.update());
+  sub.getLights().setDirectionalLight(0, camera.getPosition());
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

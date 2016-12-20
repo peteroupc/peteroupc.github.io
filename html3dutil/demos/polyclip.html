@@ -13,7 +13,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global FrameCounterDiv, GraphicsPath, H3DU */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -23,88 +24,91 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 
-function circle(path,x,y,radius){
- return path.moveTo(x,y-radius)
-   .arcTo(x+radius,y-radius,x+radius,y,radius)
-   .arcTo(x+radius,y+radius,x,y+radius,radius)
-   .arcTo(x-radius,y+radius,x-radius,y,radius)
-   .arcTo(x-radius,y-radius,x,y-radius,radius)
-   .closePath()
+function circle(path, x, y, radius) {
+  "use strict";
+  return path.moveTo(x, y - radius)
+   .arcTo(x + radius, y - radius, x + radius, y, radius)
+   .arcTo(x + radius, y + radius, x, y + radius, radius)
+   .arcTo(x - radius, y + radius, x - radius, y, radius)
+   .arcTo(x - radius, y - radius, x, y - radius, radius)
+   .closePath();
 }
-path=circle(new GraphicsPath(),15,15,15)
-path2=circle(new GraphicsPath(),30,15,15)
-path=path.union(path2,0.2)
-var curves=path.getCurves(0.2)
-function getPoints(curves, numPoints, offset){
- var points=[]
- for(var i=0;i<numPoints;i++){
-  var t=i/(numPoints-1)+offset
-  if(t>=0.0 && t<=1.0){
-   var ev=curves.evaluate(t)
-   points.push([ev[0],ev[1]])
+var path = circle(new GraphicsPath(), 15, 15, 15);
+var path2 = circle(new GraphicsPath(), 30, 15, 15);
+path = path.union(path2, 0.2);
+var curves = path.getCurves(0.2);
+function getPoints(curves, numPoints, offset) {
+  "use strict";
+  var points = [];
+  for(var i = 0;i < numPoints;i++) {
+    var t = i / (numPoints - 1) + offset;
+    if(t >= 0.0 && t <= 1.0) {
+      var ev = curves.evaluate(t);
+      points.push([ev[0], ev[1]]);
+    }
   }
- }
- return points
+  return points;
 }
 
-function pathFloor(path, z, flatness){
- if(z==null)z=0
- var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0,0,1);
- for(var i=0;i<tris.length;i++){
-  var tri=tris[i]
-  mesh.vertex3(tri[0],tri[1],z)
-   .vertex3(tri[2],tri[3],z)
-   .vertex3(tri[4],tri[5],z)
- }
- return mesh
+function pathFloor(path, z, flatness) {
+  "use strict";
+  if(z === null || typeof z === "undefined")z = 0;
+  var tris = path.getTriangles(flatness);
+  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
+   .normal3(0, 0, 1);
+  for(var i = 0;i < tris.length;i++) {
+    var tri = tris[i];
+    mesh.vertex3(tri[0], tri[1], z)
+   .vertex3(tri[2], tri[3], z)
+   .vertex3(tri[4], tri[5], z);
+  }
+  return mesh;
 }
 function pointMarch(
   group, // shape group containing the marching points
   curves, // curves of the path
   t // value from 0 to 1 specifying the point in time of the animation
-){
- var POINTCOUNT=50
- var adjust=(t*(1.0/(POINTCOUNT-1)))
- var pts=getPoints(curves,POINTCOUNT,adjust)
- for(var i=0;i<pts.length;i++){
-  if(!group.shapes[i])continue
-  group.shapes[i].setVisible(true).setPosition(pts[i][0],pts[i][1],0)
- }
- for(var j=pts.length;j<POINTCOUNT;j++){
-  if(!group.shapes[j])continue
-  group.shapes[j].setVisible(false)
- }
+) {
+  "use strict";
+  var POINTCOUNT = 50;
+  var adjust = t * (1.0 / (POINTCOUNT - 1));
+  var pts = getPoints(curves, POINTCOUNT, adjust);
+  for(var i = 0;i < pts.length;i++) {
+    if(!group.shapes[i])continue;
+    group.shapes[i].setVisible(true).setPosition(pts[i][0], pts[i][1], 0);
+  }
+  for(var j = pts.length;j < POINTCOUNT;j++) {
+    if(!group.shapes[j])continue;
+    group.shapes[j].setVisible(false);
+  }
 }
-var points=path.getPoints(50,0.2)
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+scene.setClearColor("white");
+var sub = new H3DU.Batch3D()
+   .perspectiveAspect(45, 1, 1000)
+   .setLookAt([22.5, 22.5 - 3 * 8, 1.2 * 50], [22.5, 22.5, 0], [0, 0, 1]);
+var fc = new FrameCounterDiv();
+var group = new H3DU.ShapeGroup();
+sub.getLights()
+    .setDirectionalLight(0, [0, -3, 1.2], [1, 1, 1])
+    .setDirectionalLight(1, [0, 3, 1.2], [0.6, 0.6, 0.6]);
 
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white");
-  var sub=new H3DU.Batch3D()
-   .perspectiveAspect(45,1,1000)
-   .setLookAt([22.5,22.5-3*8,1.2*50],[22.5,22.5,0],[0,0,1]);
-  var fc=new FrameCounterDiv()
-  var group=new H3DU.ShapeGroup()
-  sub.getLights()
-    .setDirectionalLight(0,[0,-3,1.2],[1,1,1])
-    .setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
-   var mesh=null
-   var sphere=new H3DU.Shape(H3DU.Meshes.createSphere(0.2,16,8)).setColor("blue")
-   for(var i=0;i<50;i++){
-    group.addShape(sphere.copy())
-   }
-   sub.addShape(
-    new H3DU.Shape(pathFloor(path)).setColor("#eeeeee"))
-   sub.addShape(group)
-  var anim=null
-  var timer={}
-  H3DU.renderLoop(function(time){
-   var t=H3DU.getTimePosition(timer,time,1000)
-   pointMarch(group,curves,t)
-   fc.update()
-   scene.render(sub);
-  });
-//-->
+var sphere = new H3DU.Shape(H3DU.Meshes.createSphere(0.2, 16, 8)).setColor("blue");
+for(var i = 0;i < 50;i++) {
+  group.addShape(sphere.copy());
+}
+sub.addShape(
+    new H3DU.Shape(pathFloor(path)).setColor("#eeeeee"));
+sub.addShape(group);
+
+var timer = {};
+H3DU.renderLoop(function(time) {
+  "use strict";
+  var t = H3DU.getTimePosition(timer, time, 1000);
+  pointMarch(group, curves, t);
+  fc.update();
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

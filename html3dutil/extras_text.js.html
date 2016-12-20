@@ -110,7 +110,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
  * drawn using this font.
 * @param {String} string The text string to measure.  Line breaks
 * ("\n", "\r", "\r\n") are recognized by this method.
-* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
+* @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
  * @returns {Array&lt;Number>} An array of two numbers;
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
@@ -267,7 +267,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 };
 
 /**
-* Creates a shape containing the primitives needed to
+* Creates a group of shapes containing the primitives needed to
 * draw text in the given position, size, and color.
 * For the text to show upright, the coordinate system should have the
 * X-axis pointing right and the Y-axis pointing down (for example, an
@@ -276,7 +276,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 * @param {H3DU.TextFont} font The bitmap font to use when drawing the text.
 * @param {String} string The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
 * by this method.
-* @param {Object} params An object described in {@link H3DU.TextFont.makeTextMeshes}.
+* @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
 * Can also contain the following keys:&lt;ul>
 * &lt;li>&lt;code>color&lt;/code> - A [color vector or string]{@link H3DU.toGLColor} giving
 * the color to draw the text with.
@@ -286,6 +286,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 * or a single {@link H3DU.Texture} if only one texture page is used.
 * If null or omitted, uses the default filenames for texture pages defined in this font.
 * &lt;/ul>
+* @returns {H3DU.ShapeGroup} The generated group of shapes.
 * @memberof! H3DU.TextFont#
 */
 H3DU.TextFont.prototype.textShape = function(str, params) {
@@ -317,8 +318,8 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
 /** @private */
 H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, xPos, yPos, params, extra, meshesForPage) {
   "use strict";
-//var height=((typeof params.lineHeight !== "undefined" &amp;&amp;
-//params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
+// var height=((typeof params.lineHeight !== "undefined" &amp;&amp;
+// params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
   var lastChar = -1;
   for(var i = startPos;i &lt; endPos;i++) {
     var c = str.charCodeAt(i);
@@ -793,7 +794,8 @@ H3DU.TextFont._loadTextFontInner = function(data) {
 * &lt;li>".bin": Binary&lt;/li>
 * &lt;li>".fnt": Text or binary&lt;/li>
 * &lt;li>All others: Text&lt;/li>&lt;/ul>
- * @param {H3DU.TextureLoader} textureLoader
+ * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
+ * loading the textures.
 * @returns {Promise} A promise that is resolved
 * when the font data and textures are loaded successfully,
 * and is rejected when an error occurs.
@@ -934,7 +936,7 @@ H3DU.TextFont._textShader = function() {
 };
 H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textShader());
 
-/////////////////
+// ///////////////
 
 /**
  * A texture atlas specifies the location and size of images within a single
@@ -943,9 +945,16 @@ H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textSha
 * binds.  Instead, those images can be packed into one texture and the
 * application can draw different portions of that texture at once.  The
 * texture atlas can specify where those portions are found.&lt;p>
-* This implementation supports the ".atlas" format.
+* This implementation supports the ".atlas" format.&lt;p>
 * NOTE: The constructor should not be called directly by applications.
 * Use the {@link H3DU.TextureAtlas.load} method to get an H3DU.TextureAtlas object.
+* &lt;p>This class is considered a supplementary class to the
+* Public Domain HTML 3D Library and is not considered part of that
+* library. &lt;p>
+* To use this class, you must include the script "extras/text.js"; the
+ * class is not included in the "h3du_min.js" file which makes up
+ * the HTML 3D Library.  Example:&lt;pre>
+ * &amp;lt;script type="text/javascript" src="extras/text.js">&amp;lt;/script>&lt;/pre>
 * @class
 * @alias H3DU.TextureAtlas
 */
@@ -974,6 +983,7 @@ H3DU.TextureAtlas = function() {
  * &lt;li>&lt;code>x&lt;/code> - X-coordinate of the sprite.
  * &lt;li>&lt;code>y&lt;/code> - Y-coordinate of the sprite.
  * &lt;/ul>
+ * @returns {H3DU.ShapeGroup} The generated group of shapes.
  * @memberof! H3DU.TextureAtlas#
 */
 H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
@@ -1249,7 +1259,8 @@ H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
 * Loads a texture atlas definition from a file along with the textures
 * it uses.
 * @param {String} atlasFileName The URL of the texture atlas to load.
- * @param {H3DU.TextureLoader} textureLoader
+ * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
+ * loading the textures.
 * @returns {Promise} A promise that is resolved
 * when the texture atlas data and textures are loaded successfully,
 * and is rejected when an error occurs.
@@ -1334,7 +1345,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

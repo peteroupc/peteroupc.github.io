@@ -14,7 +14,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global CurveTube, FrameCounterDiv, GraphicsPath, H3DU */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -26,72 +27,74 @@ at: http://peteroupc.github.io/
 
 // Path taken from a public domain SVG icon, which was
 // created by Jakub Steiner
-var path=GraphicsPath.fromString(
+var path = GraphicsPath.fromString(
 "M 44.155643,23.75 C 44.155643,45.413332 45.663332,43.905643 24,43.905643 2.3366679,43.905643 3.8443565,45.413332 3.8443565,23.75 3.8443565,2.0866679 2.3366679,3.5943565 24,3.5943565 c 21.663332,0 20.155643,-1.5076886 20.155643,20.1556435 z"
-)
-var curves=path.getCurves(0.2)
-function getPoints(curves, numPoints, offset){
- var points=[]
- for(var i=0;i<numPoints;i++){
-  var t=i/(numPoints-1)+offset
-  if(t>=0.0 && t<=1.0){
-   var ev=curves.evaluate(t)
-   points.push([ev[0],ev[1]])
+);
+  // var curves = path.getCurves(0.2);
+/* exported getPoints */
+function getPoints(curves, numPoints, offset) {
+  "use strict";
+  var points = [];
+  for(var i = 0;i < numPoints;i++) {
+    var t = i / (numPoints - 1) + offset;
+    if(t >= 0.0 && t <= 1.0) {
+      var ev = curves.evaluate(t);
+      points.push([ev[0], ev[1]]);
+    }
   }
- }
- return points
+  return points;
 }
 
-function pathFloor(path, z, flatness){
- if(z==null)z=0
- var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0,0,1);
- for(var i=0;i<tris.length;i++){
-  var tri=tris[i]
-  mesh.vertex3(tri[0],tri[1],z)
-   .vertex3(tri[2],tri[3],z)
-   .vertex3(tri[4],tri[5],z)
- }
- return mesh
+function pathFloor(path, z, flatness) {
+  "use strict";
+  if(z === null || typeof z === "undefined")z = 0;
+  var tris = path.getTriangles(flatness);
+  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
+   .normal3(0, 0, 1);
+  for(var i = 0;i < tris.length;i++) {
+    var tri = tris[i];
+    mesh.vertex3(tri[0], tri[1], z)
+   .vertex3(tri[2], tri[3], z)
+   .vertex3(tri[4], tri[5], z);
+  }
+  return mesh;
 }
 
-function makeTubeFromPath(path,flatness,thickness){
- var mesh=new H3DU.Mesh()
- var curves=path.getCurves(flatness)
- var resolution=Math.ceil(curves.getLength()*2/3)
- new H3DU.SurfaceEval()
-    .vertex(new CurveTube(curves,thickness))
+function makeTubeFromPath(path, flatness, thickness) {
+  "use strict";
+  var mesh = new H3DU.Mesh();
+  var curves = path.getCurves(flatness);
+  var resolution = Math.ceil(curves.getLength() * 2 / 3);
+  new H3DU.SurfaceEval()
+    .vertex(new CurveTube(curves, thickness))
     .setAutoNormal(true)
-    .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,
-      Math.ceil(2*thickness/flatness));
-  return mesh
+    .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
+      Math.ceil(2 * thickness / flatness));
+  return mesh;
 }
 
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white");
-  var sub=new H3DU.Batch3D()
-   .perspectiveAspect(45,1,1000)
-   .setLookAt([22.5,22.5-3*8,1.2*50],[22.5,22.5,0],[0,0,1])
-  var fc=new FrameCounterDiv()
-  var group=new H3DU.ShapeGroup()
-  sub.getLights()
-    .setDirectionalLight(0,[0,-3,1.2],[1,1,1])
-    .setDirectionalLight(1,[0,3,1.2],[.6,.6,.6])
-   var mesh=null
-   mesh=makeTubeFromPath(path,0.2,2)
-   sub.addShape(
-    new H3DU.Shape(mesh).setColor("blue"))
-   sub.addShape(
-    new H3DU.Shape(pathFloor(path)).setColor("#eeeeee"))
-   sub.addShape(group)
-  var anim=null
-  var timer={}
-  H3DU.renderLoop(function(time){
-   var t=H3DU.getTimePosition(timer,time,1000)
-   fc.update()
-   scene.render(sub);
-  });
-//-->
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+scene.setClearColor("white");
+var sub = new H3DU.Batch3D()
+   .perspectiveAspect(45, 1, 1000)
+   .setLookAt([22.5, 22.5 - 3 * 8, 1.2 * 50], [22.5, 22.5, 0], [0, 0, 1]);
+var fc = new FrameCounterDiv();
+var group = new H3DU.ShapeGroup();
+sub.getLights()
+    .setDirectionalLight(0, [0, -3, 1.2], [1, 1, 1])
+    .setDirectionalLight(1, [0, 3, 1.2], [0.6, 0.6, 0.6]);
+var mesh = null;
+mesh = makeTubeFromPath(path, 0.2, 2);
+sub.addShape(
+    new H3DU.Shape(mesh).setColor("blue"));
+sub.addShape(
+    new H3DU.Shape(pathFloor(path)).setColor("#eeeeee"));
+sub.addShape(group);
+H3DU.renderLoop(function() {
+  "use strict";
+  fc.update();
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

@@ -15,7 +15,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 Model: Marker Holder by theorbtwo, public domain, http://www.thingiverse.com/thing:5570
 </p>
 <script id="demo">
-//<!--
+/* global Camera, H3DU, InputTracker */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -27,18 +28,21 @@ at: http://peteroupc.github.io/
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
+  var scene = new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var sub=new H3DU.Batch3D();
-  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(80);
-  H3DU.loadStlFromUrl("holder.stl").then(function(mesh){
+  var input = new InputTracker(document);
+  var sub = new H3DU.Batch3D();
+  var camera = new Camera(sub, 45, 1, 1000).setDistance(80);
+  H3DU.loadStlFromUrl("holder.stl").then(function(mesh) {
+    "use strict";
     sub.addShape(new H3DU.Shape(mesh).setColor("red"));
-  })
-  H3DU.renderLoop(function(){
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
-   scene.render(sub);
   });
-//-->
+  H3DU.renderLoop(function() {
+    "use strict";
+    camera.update(input.update());
+    sub.getLights().setDirectionalLight(0, camera.getPosition());
+    scene.render(sub);
+  });
+// -->
 </script>
 </body>

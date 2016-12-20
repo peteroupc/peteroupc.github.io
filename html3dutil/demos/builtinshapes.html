@@ -28,7 +28,8 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global Camera, FrameCounterDiv, H3DU, InputTracker */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -38,66 +39,75 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 
-function createSampleShape(index){
- switch(index){
+function createSampleShape(index) {
+  "use strict";
+  switch(index) {
   case 0:
-   return H3DU.Meshes.createSphere(1);
+    return H3DU.Meshes.createSphere(1);
   case 1:
-   return H3DU.Meshes.createCylinder(0.5,0.5,1)
+    return H3DU.Meshes.createCylinder(0.5, 0.5, 1);
   case 2:
-   return H3DU.Meshes.createClosedCylinder(0.5,0.5,1)
+    return H3DU.Meshes.createClosedCylinder(0.5, 0.5, 1);
   case 3:
-   return H3DU.Meshes.createTorus(0.25,1,16,64)
+    return H3DU.Meshes.createTorus(0.25, 1, 16, 64);
   case 4:
-   return H3DU.Meshes.createCapsule(1,1);
+    return H3DU.Meshes.createCapsule(1, 1);
   case 5:
-   return H3DU.Meshes.createBox(1,1,1);
+    return H3DU.Meshes.createBox(1, 1, 1);
   case 6:
-   return H3DU.Meshes.createCylinder(1,0,2)
+    return H3DU.Meshes.createCylinder(1, 0, 2);
   case 7:
-   return H3DU.Meshes.createDisk(0.4,1);
+    return H3DU.Meshes.createDisk(0.4, 1);
   case 8:
-   return H3DU.Meshes.createPartialDisk(0.2,1,32,1,20,150);
+    return H3DU.Meshes.createPartialDisk(0.2, 1, 32, 1, 20, 150);
   case 9:
-   return H3DU.Meshes.createPointedStar(5,1.0,0.5);
+    return H3DU.Meshes.createPointedStar(5, 1.0, 0.5);
   case 10:
-   return H3DU.Meshes.createPointedStar(10,1.0,0.5);
+    return H3DU.Meshes.createPointedStar(10, 1.0, 0.5);
   default:
-   return new H3DU.Mesh();
- }
+    return new H3DU.Mesh();
+  }
 }
-function sampleShape(num){
- if(shape)sub.removeShape(shape);
- var cs=document.getElementById("colorsetting").value
- sub.addShape(shape=new H3DU.Shape(createSampleShape(num)).setColor(cs))
+var sub = null,
+  shape = null;
+function sampleShape(num) {
+  "use strict";
+  if(shape)sub.removeShape(shape);
+  var cs = document.getElementById("colorsetting").value;
+  sub.addShape(shape = new H3DU.Shape(createSampleShape(num)).setColor(cs));
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white");
-  var sub=new H3DU.Batch3D();
-  var camera=new Camera(sub,45,1,1000, scene.getCanvas()).setDistance(5)
-   .turnVertical(-90)
-  var xyz=new H3DU.ShapeGroup();
-  var pc=new FrameCounterDiv()
-  var shape=null;
-  var axisline=new H3DU.Shape(H3DU.Meshes.createCapsule(0.005,10,6,4));
-  var zaxis=axisline.copy().setColor("blue")
-  var yaxis=axisline.copy().setColor("green");
-  yaxis.getTransform().setOrientation(90,1,0,0);
-  var xaxis=axisline.copy().setColor("red");
-  xaxis.getTransform().setOrientation(90,0,1,0);
-  document.getElementById("colorsetting").addEventListener("change",
-   function(e){ if(shape)shape.setColor(e.target.value) });
-  xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
-  sub.addShape(xyz);
-  sampleShape(0);
-  H3DU.renderLoop(function(){
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
-   pc.update();
-   scene.render(sub);
-  });
-//-->
+sub = new H3DU.Batch3D();
+var input = new InputTracker(document);
+var camera = new Camera(sub, 45, 1, 1000).setDistance(5)
+   .turnVertical(-90);
+var xyz = new H3DU.ShapeGroup();
+var pc = new FrameCounterDiv();
+shape = null;
+var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(0.005, 10, 6, 4));
+var zaxis = axisline.copy().setColor("blue");
+var yaxis = axisline.copy().setColor("green");
+yaxis.getTransform().setOrientation(90, 1, 0, 0);
+var xaxis = axisline.copy().setColor("red");
+xaxis.getTransform().setOrientation(90, 0, 1, 0);
+document.getElementById("colorsetting").addEventListener("change",
+   function(e) {
+     "use strict";
+     if(shape)shape.setColor(e.target.value);
+   });
+xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
+sub.addShape(xyz);
+sampleShape(0);
+H3DU.renderLoop(function() {
+  "use strict";
+  camera.update(input.update());
+  sub.getLights().setDirectionalLight(0, camera.getPosition());
+  pc.update();
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

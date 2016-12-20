@@ -11,7 +11,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global FrameCounterDiv, H3DU */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -21,60 +22,66 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 
-function setStarPos(star, range){
-   var x=0,y=0,z=0
-   var centerZone=range/20;
+function setStarPos(star, range) {
+  "use strict";
+  var x = 0,
+    y = 0,
+    z = 0;
+  var centerZone = range / 20;
    // avoid stars too close to the center
-   while(Math.abs(x)<centerZone){
-    x=Math.random()*range-range/2;
-   }
+  while(Math.abs(x) < centerZone) {
+    x = Math.random() * range - range / 2;
+  }
    // avoid stars too close to the center
-   while(Math.abs(y)<centerZone){
-    y=Math.random()*range-range/2;
-   }
-   z=Math.random()*range-range/2;
-   return star.setPosition(x,y,z);
+  while(Math.abs(y) < centerZone) {
+    y = Math.random() * range - range / 2;
+  }
+  z = Math.random() * range - range / 2;
+  return star.setPosition(x, y, z);
 }
 
-function starField(scene, range){
-  var group=new H3DU.ShapeGroup();
+function starField(scene, range) {
+  "use strict";
+  var group = new H3DU.ShapeGroup();
   // use a crude white sphere to represent a star
-  var star=new H3DU.Shape(H3DU.Meshes.createSphere(range/1000,4,3)).setColor("white");
-  for(var i=0;i<200;i++){
-   group.addShape(setStarPos(star.copy(),range))
+  var star = new H3DU.Shape(H3DU.Meshes.createSphere(range / 1000, 4, 3)).setColor("white");
+  for(var i = 0;i < 200;i++) {
+    group.addShape(setStarPos(star.copy(), range));
   }
   return group;
 }
 
-function moveStarField(group, range,frames){
- for(var i=0;i<group.shapes.length;i++){
-  var pos=group.shapes[i].getMatrix()
-  if(pos[14]>range/2){
+function moveStarField(group, range, frames) {
+  "use strict";
+  for(var i = 0;i < group.shapes.length;i++) {
+    var pos = group.shapes[i].getMatrix();
+    if(pos[14] > range / 2) {
    // once the star is too close, move it elsewhere
-   setStarPos(group.shapes[i],range)
-   group.shapes[i].getTransform().movePosition(0,0,-range);
-  } else {
-   group.shapes[i].getTransform().movePosition(0,0,range/250*frames);
+      setStarPos(group.shapes[i], range);
+      group.shapes[i].getTransform().movePosition(0, 0, -range);
+    } else {
+      group.shapes[i].getTransform().movePosition(0, 0, range / 250 * frames);
+    }
   }
- }
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"))
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .cullFace(H3DU.Scene3D.BACK);
-  var sub=new H3DU.Batch3D();
-  sub.getLights().setDefaults();
-  var fc=new FrameCounterDiv();
-  var timer={};
-  var group=starField(scene,1000)
-  sub.addShape(group);
-   H3DU.renderLoop(function(time){
-    sub.perspectiveAspect(45,5,1000).setLookAt([0,0,500]);
-    moveStarField(group,1000,H3DU.newFrames(timer,time))
-    fc.update()
-    scene.render(sub);
-   })
-//-->
+var sub = new H3DU.Batch3D();
+sub.getLights().setDefaults();
+var fc = new FrameCounterDiv();
+var timer = {};
+var group = starField(scene, 1000);
+sub.addShape(group);
+H3DU.renderLoop(function(time) {
+  "use strict";
+  sub.perspectiveAspect(45, 5, 1000).setLookAt([0, 0, 500]);
+  moveStarField(group, 1000, H3DU.newFrames(timer, time));
+  fc.update();
+  scene.render(sub);
+});
+// -->
 </script>
 </body>

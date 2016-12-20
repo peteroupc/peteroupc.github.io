@@ -27,7 +27,8 @@
 
             <div class="description">The Public Domain HTML 3D Library contains classes and utility
 methods to ease the development of HTML 3D applications, such
-as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.<p>
+as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
+See the <a href="tutorial-overview.html">Library Overview</a> tutorial.<p>
 This page describes miscellaneous utility methods included in the
 library.</div>
 
@@ -128,93 +129,11 @@ library.</div>
             <dd></dd>
         </dl>
 
-        <h3 class="subsection-title">Members</h3>
-
-<h4 style="margin-bottom:0px" id=".Scene3D.BACK"><span style="font-weight:lighter">(static, constant) </span>Scene3D.BACK<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line186">line 186</a>
-     </i></small></p>
-
-<div class="description">
-    Back side of a triangle.  By default, triangles with clockwise winding are back-facing.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h4 style="margin-bottom:0px" id=".Scene3D.CCW"><span style="font-weight:lighter">(static, constant) </span>Scene3D.CCW<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line203">line 203</a>
-     </i></small></p>
-
-<div class="description">
-    Counterclockwise winding. A triangle has counterclockwise winding if
-its vertices are ordered such that the path from the first to second to third
-to first vertex, in window coordinates (X and Y only), runs counterclockwise.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h4 style="margin-bottom:0px" id=".Scene3D.CW"><span style="font-weight:lighter">(static, constant) </span>Scene3D.CW<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line208">line 208</a>
-     </i></small></p>
-
-<div class="description">
-    Clockwise winding, the opposite of counterclockwise winding.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h4 style="margin-bottom:0px" id=".Scene3D.FRONT"><span style="font-weight:lighter">(static, constant) </span>Scene3D.FRONT<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line191">line 191</a>
-     </i></small></p>
-
-<div class="description">
-    Front side of a triangle.  By default, triangles with counterclockwise winding are front-facing.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h4 style="margin-bottom:0px" id=".Scene3D.FRONT_AND_BACK"><span style="font-weight:lighter">(static, constant) </span>Scene3D.FRONT_AND_BACK<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line196">line 196</a>
-     </i></small></p>
-
-<div class="description">
-    Back and front sides of a triangle.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h4 style="margin-bottom:0px" id=".Scene3D.NONE"><span style="font-weight:lighter">(static, constant) </span>Scene3D.NONE<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line183">line 183</a>
-     </i></small></p>
-
-<div class="description">
-    No face culling.
-</div>
-
-<dl class="details">
-
-</dl>
-
         <h3 class="subsection-title">Methods</h3>
 
     <h4 style="margin-bottom:0px" id=".createCanvasElement"><span style="font-weight:lighter">(static) </span>createCanvasElement<span class="signature">(parent, width, height)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line77">line 77</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line78">line 78</a>
      </i></small></p>
 
 <div class="description">
@@ -299,7 +218,7 @@ This parameter can't be a negative number.</dd>
 
     <h4 style="margin-bottom:0px" id=".get3DContext"><span style="font-weight:lighter">(static) </span>get3DContext<span class="signature">(canvasElement, err)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line172">line 172</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line173">line 173</a>
      </i></small></p>
 
 <div class="description">
@@ -357,7 +276,7 @@ is null or not an HTML canvas element.
 
     <h4 style="margin-bottom:0px" id=".get3DOr2DContext"><span style="font-weight:lighter">(static) </span>get3DOr2DContext<span class="signature">(canvasElement)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line108">line 108</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line109">line 109</a>
      </i></small></p>
 
 <div class="description">
@@ -402,7 +321,7 @@ is null or not an HTML canvas element.
 
     <h4 style="margin-bottom:0px" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line246">line 246</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line247">line 247</a>
      </i></small></p>
 
 <div class="description">
@@ -485,7 +404,7 @@ True means success, and false means failure.</ul>
 
     <h4 style="margin-bottom:0px" id=".getPromiseResultsAll"><span style="font-weight:lighter">(static) </span>getPromiseResultsAll<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line213">line 213</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line214">line 214</a>
      </i></small></p>
 
 <div class="description">
@@ -563,7 +482,7 @@ will be an object as specified in <a href="H3DU.html#.getPromiseResults">H3DU.ge
 
     <h4 style="margin-bottom:0px" id=".getTimePosition"><span style="font-weight:lighter">(static) </span>getTimePosition<span class="signature">(timer, timeInMs, intervalInMs)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line393">line 393</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line394">line 394</a>
      </i></small></p>
 
 <div class="description">
@@ -657,7 +576,7 @@ value in milliseconds, such as the parameter of a
 
     <h4 style="margin-bottom:0px" id=".is3DContext"><span style="font-weight:lighter">(static) </span>is3DContext<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line192">line 192</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line193">line 193</a>
      </i></small></p>
 
 <div class="description">
@@ -680,7 +599,7 @@ value in milliseconds, such as the parameter of a
 
     <h4 style="margin-bottom:0px" id=".loadFileFromUrl"><span style="font-weight:lighter">(static) </span>loadFileFromUrl<span class="signature">(url, responseType)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line320">line 320</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line321">line 321</a>
      </i></small></p>
 
 <div class="description">
@@ -749,7 +668,7 @@ from JSON.
 
     <h4 style="margin-bottom:0px" id=".newFrames"><span style="font-weight:lighter">(static) </span>newFrames<span class="signature">(timer, timeInMs)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line419">line 419</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line420">line 420</a>
      </i></small></p>
 
 <div class="description">
@@ -811,7 +730,7 @@ initial time or last known time wasn't set, returns 0.
 
     <h4 style="margin-bottom:0px" id=".renderLoop"><span style="font-weight:lighter">(static) </span>renderLoop<span class="signature">(func)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line50">line 50</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line51">line 51</a>
      </i></small></p>
 
 <div class="description">
@@ -847,7 +766,7 @@ milliseconds since the page was loaded.</dd>
 
     <h4 style="margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line981">line 981</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line982">line 982</a>
      </i></small></p>
 
 <div class="description">
@@ -1004,7 +923,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
+<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
 </nav>
 <script>
 if(document.location.href.indexOf("file://")!=0){

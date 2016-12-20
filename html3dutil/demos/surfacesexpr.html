@@ -32,7 +32,8 @@ class, example:<br>
 </div>
 <canvas id=canvas></canvas>
 <script id="demo">
-//<!--
+/* global Camera, FrameCounterDiv, H3DU, InputTracker, addRange, getExpression, normalCalcExpr, updateShape */
+// <!--
 /*
 Written by Peter O. in 2015.
 
@@ -41,27 +42,31 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-if(typeof Math.sign=="undefined"){
- Math.sign=function(x){
-  return (x<0) ? -1 : (x==0 ? 0 : 1);
- }
-};
-   function makeMesh(func,resolution){
+if(typeof Math.sign === "undefined") {
+  Math.sign = function(x) {
+    "use strict";
+    return x < 0 ? -1 : x === 0 ? 0 : 1;
+  };
+}
+function makeMesh(func, resolution) {
+  "use strict";
     // Default resolution is 50
-    if(resolution==null)resolution=50
+  if(resolution === null || typeof resolution === "undefined")resolution = 50;
      // create a new mesh
-     var mesh=new H3DU.Mesh();
+  var mesh = new H3DU.Mesh();
      // define a color gradient evaluator for
      // demonstration purposes.  Instead of X, Y, and Z,
      // generate a Red/Green/Blue color based on
      // the same parameters U and V as the surface
      // function for 3D points.
-     var colorGradient={
-      "evaluate":function(u,v){ return [1-u,v,u]; }
-     }
+  var colorGradient = {
+    "evaluate":function(u, v) {
+      return [1 - u, v, u];
+    }
+  };
      // generate the parametric surface.
 
-     var ev=new H3DU.SurfaceEval()
+  new H3DU.SurfaceEval()
       .vertex(func)
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
@@ -75,28 +80,81 @@ if(typeof Math.sign=="undefined"){
     // Instead of Mesh.TRIANGLES, we could use
     // Mesh.LINES to create a wireframe mesh,
     // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh,H3DU.Mesh.TRIANGLES,resolution,resolution);
+      .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution, resolution);
     // Surface generated, return the mesh
-    var otherWinding=new H3DU.Mesh().merge(mesh).reverseWinding().reverseNormals();
-    return mesh.merge(otherWinding);
-  }
-
-var shapeGroup=new H3DU.ShapeGroup();
-var allsettings={
-"current":0,
-"custom-x":"cos(v)*cos(u)",
-"custom-y":"sin(v)*cos(u)",
-"custom-z":"sin(u)",
-"custom-minu":"-pi/2",
-"custom-maxu":"pi/2",
-"custom-minv":"pi",
-"custom-maxv":"-pi"
+  var otherWinding = new H3DU.Mesh().merge(mesh).reverseWinding().reverseNormals();
+  return mesh.merge(otherWinding);
 }
 
-function updateMesh(){
- switch(allsettings["current"]){
+function CustomSurface(x, y, z, minu, maxu, minv, maxv) {
+  "use strict";
+  var ranges = [
+    getExpression(minu).constantValue(),
+    getExpression(maxu).constantValue(),
+    getExpression(minv).constantValue(),
+    getExpression(maxv).constantValue()];
+  if(ranges[0] === null || ranges[1] === null ||
+  ranges[2] === null || ranges[3] === null) {
+    throw new Error("min/max must be a constant");
+  }
+  if(isNaN(ranges[0]) || isNaN(ranges[1]) ||
+  isNaN(ranges[2]) || isNaN(ranges[3])) {
+    throw new Error("min/max must be a constant");
+  }
+  var xe = getExpression(x);
+  var ye = getExpression(y);
+  var ze = getExpression(z);
+  var code = "" +
+  "u=" + ranges[0] + "+u*" + (ranges[1] - ranges[0]) + ";\n" +
+  "v=" + ranges[2] + "+v*" + (ranges[3] - ranges[2]) + ";\n" +
+  "return [" +
+  " " + getExpression(x).toJSString() + "," +
+  " " + getExpression(y).toJSString() + "," +
+  " " + getExpression(z).toJSString() + "];\n";
+  var normalExpr = normalCalcExpr([xe, ye, ze]);
+  var normalCode = "" +
+  "u=" + ranges[0] + "+u*" + (ranges[1] - ranges[0]) + ";\n" +
+  "v=" + ranges[2] + "+v*" + (ranges[3] - ranges[2]) + ";\n" +
+  "return [" +
+  " " + normalExpr[0].toJSString() + "," +
+  " " + normalExpr[1].toJSString() + "," +
+  " " + normalExpr[2].toJSString() + "];\n";
+  this.getCode = function() {
+    return "var evaluator=new H3DU.SurfaceEval().vertex({\n" +
+    "\"evaluate\":function(u) {\n" + code + "}})\n" +
+    ".normal({\n" +
+    "\"evaluate\":function(u) {\n" + normalCode + "}})\n";
+  };
+  this.evaluate = null;
+  try {
+    // NOTE: The code variable was generated from parsed and
+    // validated expressions, with a limited set of supported
+    // functions rather than arbitrary JavaScript code,
+    // so we disable the "no-new-func" rule here.
+    // eslint-disable-next-line no-new-func
+    this.evaluate = new Function("u", "v", code);
+  } catch(ex) {
+    this.evaluate = null;
+  }
+}
+
+var shapeGroup = new H3DU.ShapeGroup();
+var allsettings = {
+  "current":0,
+  "custom-x":"cos(v)*cos(u)",
+  "custom-y":"sin(v)*cos(u)",
+  "custom-z":"sin(u)",
+  "custom-minu":"-pi/2",
+  "custom-maxu":"pi/2",
+  "custom-minv":"pi",
+  "custom-maxv":"-pi"
+};
+
+function updateMesh() {
+  "use strict";
+  switch(allsettings.current) {
   case 0:
-   var cs=new CustomSurface(
+    var cs = new CustomSurface(
       allsettings["custom-x"],
       allsettings["custom-y"],
       allsettings["custom-z"],
@@ -105,134 +163,100 @@ function updateMesh(){
       allsettings["custom-minv"],
       allsettings["custom-maxv"]
    );
-       if(!cs.evaluate)return new H3DU.Mesh()
-   document.getElementById("sourceCode").value=cs.getCode();
-   return makeMesh(cs,70);
-    default:
-   return new H3DU.Mesh();
- }
-}
-
-function validateExpr(value){
- try {
-  getExpression(value).toJSString();
-  return true;
- } catch(e){
-  return false;
- }
-}
-function validateConst(value){
- try {
-  if(getExpression(value).constantValue()==null){
-   return false;
+    if(!cs.evaluate)return new H3DU.Mesh();
+    document.getElementById("sourceCode").value = cs.getCode();
+    return makeMesh(cs, 70);
+  default:
+    return new H3DU.Mesh();
   }
-  return true;
- } catch(e){
-  return false;
- }
 }
 
-function CustomSurface(x,y,z,minu,maxu,minv,maxv){
- var ranges=[
-  getExpression(minu).constantValue(),
-  getExpression(maxu).constantValue(),
-  getExpression(minv).constantValue(),
-  getExpression(maxv).constantValue()]
- if(ranges[0]==null || ranges[1]==null ||
-  ranges[2]==null || ranges[3]==null){
-  throw new Error("min/max must be a constant")
- }
- var xe=getExpression(x)
- var ye=getExpression(y)
- var ze=getExpression(z)
- var code=""+
-  "u="+ranges[0]+"+u*"+(ranges[1]-ranges[0])+";\n"+
-  "v="+ranges[2]+"+v*"+(ranges[3]-ranges[2])+";\n"+
-  "return ["+
-  " "+getExpression(x).toJSString()+","+
-  " "+getExpression(y).toJSString()+","+
-  " "+getExpression(z).toJSString()+"];\n"
- var normalExpr=normalCalcExpr([xe,ye,ze]);
- var normalCode=""+
-  "u="+ranges[0]+"+u*"+(ranges[1]-ranges[0])+";\n"+
-  "v="+ranges[2]+"+v*"+(ranges[3]-ranges[2])+";\n"+
-  "return ["+
-  " "+normalExpr[0].toJSString()+","+
-  " "+normalExpr[1].toJSString()+","+
-  " "+normalExpr[2].toJSString()+"];\n"
- this.getCode=function(){
-  return "var evaluator=new H3DU.SurfaceEval().vertex({\n"+
-    "\"evaluate\":function(u){\n"+code+"}})\n"+
-    ".normal({\n"+
-    "\"evaluate\":function(u){\n"+normalCode+"}})\n"
+function validateExpr(value) {
+  "use strict";
+  try {
+    getExpression(value).toJSString();
+    return true;
+  } catch(ex) {
+    return false;
   }
- this.evaluate=null
- try {
-   this.evaluate=new Function("u","v",code);
-  } catch(ex){ this.evaluate=null }
 }
-
-function pushSetting(ranges,name,label,min,max,step){
- ranges.push(addRange(label,min,max,step,allsettings[name],function(val){
-  allsettings[name]=val
-  updateShape(updateMesh);
- }))
-}
-function validateListener(id,key){
- var func=function(e){
-    var id=e.target.id
-    if(validateExpr(e.target.value)){
-     allsettings[key]=e.target.value
-     updateShape(updateMesh);
+function validateConst(value) {
+  "use strict";
+  try {
+    if(getExpression(value).constantValue() === null) {
+      return false;
     }
-   }
-   allsettings[key]=document.getElementById(id).value
-   document.getElementById(id).addEventListener("input",func)
-   document.getElementById(id).addEventListener("change",func)
-}
-function validateConstListener(id,key){
-   var func=function(e){
-    var id=e.target.id
-    if(validateConst(e.target.value)){
-     allsettings[key]=e.target.value
-     updateShape(updateMesh);
-    }
-   }
-   allsettings[key]=document.getElementById(id).value
-   document.getElementById(id).addEventListener("input",func)
-   document.getElementById(id).addEventListener("change",func)
-}
-function link0(){
-  var exprs=["xcoord","ycoord","zcoord"]
-  var ekeys=["custom-x","custom-y","custom-z"]
-  var consts=["minu","minv","maxu","maxv"]
-  var ckeys=["custom-minu","custom-minv","custom-maxu","custom-maxv"]
-  for(var i=0;i<exprs.length;i++){
-   validateListener(exprs[i],ekeys[i]);
+    return true;
+  } catch(ex) {
+    return false;
   }
-  for(var i=0;i<consts.length;i++){
-   validateConstListener(consts[i],ckeys[i]);
+}
+/* exported pushSetting */
+function pushSetting(ranges, name, label, min, max, step) {
+  "use strict";
+  ranges.push(addRange(label, min, max, step, allsettings[name], function(val) {
+    allsettings[name] = val;
+    updateShape(updateMesh);
+  }));
+}
+function validateListener(id, key) {
+  "use strict";
+  var func = function(e) {
+    if(validateExpr(e.target.value)) {
+      allsettings[key] = e.target.value;
+      updateShape(updateMesh);
+    }
+  };
+  allsettings[key] = document.getElementById(id).value;
+  document.getElementById(id).addEventListener("input", func);
+  document.getElementById(id).addEventListener("change", func);
+}
+function validateConstListener(id, key) {
+  "use strict";
+  var func = function(e) {
+    if(validateConst(e.target.value)) {
+      allsettings[key] = e.target.value;
+      updateShape(updateMesh);
+    }
+  };
+  allsettings[key] = document.getElementById(id).value;
+  document.getElementById(id).addEventListener("input", func);
+  document.getElementById(id).addEventListener("change", func);
+}
+function link0() {
+  "use strict";
+  var exprs = ["xcoord", "ycoord", "zcoord"];
+  var ekeys = ["custom-x", "custom-y", "custom-z"];
+  var consts = ["minu", "minv", "maxu", "maxv"];
+  var ckeys = ["custom-minu", "custom-minv", "custom-maxu", "custom-maxv"];
+  for(var i = 0;i < exprs.length;i++) {
+    validateListener(exprs[i], ekeys[i]);
+  }
+  for(i = 0;i < consts.length;i++) {
+    validateConstListener(consts[i], ckeys[i]);
   }
   updateShape(updateMesh);
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
-  var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-  scene.setClearColor("white")
-  scene.cullFace(H3DU.Scene3D.FRONT)
-  var sub=new H3DU.Batch3D()
-  var camera=new Camera(sub,45,1,100, scene.getCanvas());
-  camera.setDistance(5);
-  var pc=new FrameCounterDiv()
-  link0();
-  sub.addShape(shapeGroup);
-  H3DU.renderLoop(function(){
-   pc.update();
-   camera.update();
-   sub.getLights().setDirectionalLight(0,camera.getPosition());
-   scene.render(sub);
-  });
-//-->
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+var input = new InputTracker(document);
+scene.setClearColor("white");
+scene.cullFace(H3DU.Scene3D.FRONT);
+var sub = new H3DU.Batch3D();
+var camera = new Camera(sub, 45, 1, 100);
+camera.setDistance(5);
+var pc = new FrameCounterDiv();
+link0();
+sub.addShape(shapeGroup);
+H3DU.renderLoop(function() {
+  "use strict";
+  pc.update();
+  camera.update(input.update());
+  sub.getLights().setDirectionalLight(0, camera.getPosition());
+  scene.render(sub);
+});
+// -->
 </script>
 </body>
