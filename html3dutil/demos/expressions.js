@@ -151,9 +151,10 @@ var Expression = function() {
   this.nodes = [];
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
- */
+ * Determines whether the object is an operation, variable, or constant.
+ * @param {Object} x The object to check.
+ * @returns {Boolean} True if the object is an operation, variable, or constant; otherwise, false.
+*/
 Expression.isExpr = function(x) {
   "use strict";
 
@@ -303,9 +304,10 @@ Operation.prototype.length = function() {
   return this.nodes.length;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} index
+ * Gets an operand by index.
+ * @param {Number} index The zero-based index of the operand to get.
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.get = function(index) {
   "use strict";
@@ -315,6 +317,7 @@ Operation.prototype.get = function(index) {
  * TODO: Not documented yet.
  * @param {*} op
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.isOperation = function(op) {
   "use strict";
@@ -324,6 +327,7 @@ Operation.prototype.isOperation = function(op) {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.equals = function(x) {
   "use strict";
@@ -505,6 +509,7 @@ Operation.prototype.simplify = function() {
 /**
  * TODO: Not documented yet.
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.degen = function() {
   "use strict";
@@ -576,7 +581,8 @@ Operation.prototype.constantValue = function() {
  * TODO: Not documented yet.
  * @param {*} operation
  * @param {*} args
- */
+ * @returns {Object} Return value.
+*/
 Operation.func = function(operation) {
   "use strict";
   var op = null,
@@ -592,6 +598,7 @@ Operation.func = function(operation) {
  * @param {*} operation
  * @param {*} x
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.combineOp = function(operation, x) {
   "use strict";
@@ -616,6 +623,7 @@ Operation.prototype.combineOp = function(operation, x) {
 /**
  * TODO: Not documented yet.
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.copy = function() {
   "use strict";
@@ -629,6 +637,7 @@ Operation.prototype.copy = function() {
 /**
  * TODO: Not documented yet.
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.negate = function() {
   "use strict";
@@ -655,6 +664,7 @@ Operation.prototype.negate = function() {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.subtract = function(x) {
   "use strict";
@@ -664,6 +674,7 @@ Operation.prototype.subtract = function(x) {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.add = function(x) {
   "use strict";
@@ -673,6 +684,7 @@ Operation.prototype.add = function(x) {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.multiply = function(x) {
   "use strict";
@@ -701,6 +713,7 @@ Operation.prototype.multiply = function(x) {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Operation#
+ * @returns {Object} Return value.
 */
 Operation.prototype.divide = function(x) {
   "use strict";
@@ -822,6 +835,7 @@ Operation.prototype.toString = function() {
  * TODO: Not documented yet.
  * @param {*} op
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.isOperation = function() {
   "use strict";
@@ -830,6 +844,7 @@ Variable.prototype.isOperation = function() {
 /**
  * TODO: Not documented yet.
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.copy = function() {
   "use strict";
@@ -848,6 +863,7 @@ Variable.prototype.constantValue = function() {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.equals = function(x) {
   "use strict";
@@ -872,6 +888,7 @@ Variable.prototype.toJSString = function() {
 /**
  * TODO: Not documented yet.
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.toString = function() {
   "use strict";
@@ -883,6 +900,7 @@ Variable.prototype.toString = function() {
  * @param {*} operation
  * @param {*} x
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.combineOp = function(operation, x) {
   "use strict";
@@ -912,6 +930,7 @@ Variable.prototype.combineOp = function(operation, x) {
 /**
  * TODO: Not documented yet.
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.degen = function() {
   "use strict";
@@ -921,14 +940,16 @@ Variable.prototype.degen = function() {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.add = function(x) {
   "use strict";
   return this.combineOp("plus", x);
 };
 /**
- * TODO: Not documented yet.
+ * Returns a negated form of this variable
  * @memberof! Variable#
+ * @returns {Variable} Return value.
 */
 Variable.prototype.negate = function() {
   "use strict";
@@ -942,6 +963,7 @@ Variable.prototype.negate = function() {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.subtract = function(x) {
   "use strict";
@@ -949,9 +971,10 @@ Variable.prototype.subtract = function(x) {
   return this.add(typeof x === "number" ? -x : x.negate());
 };
 /**
- * TODO: Not documented yet.
+* Returns this variable multiplied by another expression.
  * @param {*} x
  * @memberof! Variable#
+ * @returns {Expression} Return value.
 */
 Variable.prototype.multiply = function(x) {
   "use strict";
@@ -961,6 +984,7 @@ Variable.prototype.multiply = function(x) {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Variable#
+ * @returns {Object} Return value.
 */
 Variable.prototype.divide = function(x) {
   "use strict";
@@ -970,6 +994,7 @@ Variable.prototype.divide = function(x) {
 /**
  * TODO: Not documented yet.
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.copy = function() {
   "use strict";
@@ -979,6 +1004,7 @@ Constant.prototype.copy = function() {
  * TODO: Not documented yet.
  * @param {*} op
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.isOperation = function() {
   "use strict";
@@ -988,6 +1014,7 @@ Constant.prototype.isOperation = function() {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.equals = function(x) {
   "use strict";
@@ -1009,6 +1036,7 @@ Constant.prototype.constantValue = function() {
 /**
  * TODO: Not documented yet.
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.degen = function() {
   "use strict";
@@ -1049,6 +1077,7 @@ Constant.prototype.toString = function() {
  * @param {*} operation
  * @param {*} x
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.combineOp = function(operation, x) {
   "use strict";
@@ -1068,6 +1097,7 @@ Constant.prototype.combineOp = function(operation, x) {
 /**
  * TODO: Not documented yet.
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.negate = function() {
   "use strict";
@@ -1077,6 +1107,7 @@ Constant.prototype.negate = function() {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.add = function(x) {
   "use strict";
@@ -1090,6 +1121,7 @@ Constant.prototype.add = function(x) {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.subtract = function(x) {
   "use strict";
@@ -1100,6 +1132,7 @@ Constant.prototype.subtract = function(x) {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.multiply = function(x) {
   "use strict";
@@ -1113,6 +1146,7 @@ Constant.prototype.multiply = function(x) {
  * TODO: Not documented yet.
  * @param {*} x
  * @memberof! Constant#
+ * @returns {Object} Return value.
 */
 Constant.prototype.divide = function(x) {
   "use strict";

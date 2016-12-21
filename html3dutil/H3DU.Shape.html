@@ -72,7 +72,7 @@ is deprecated.</i></dd>
 
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.Shape#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line200">line 200</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line201">line 201</a>
      </i></small></p>
 
 <div class="description">
@@ -98,9 +98,9 @@ The copied shape won't have a parent.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>H3DU.Shape#getBounds<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>H3DU.Shape#getBounds<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line233">line 233</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line234">line 234</a>
      </i></small></p>
 
 <div class="description">
@@ -125,11 +125,14 @@ last three are the largest-valued X, Y, and Z coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf].
 
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
+
 </div>
 
     <h4 style="margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>H3DU.Shape#getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line323">line 323</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line325">line 325</a>
      </i></small></p>
 
 <div class="description">
@@ -153,7 +156,7 @@ See H3DU.Transform#getMatrix.
 
     <h4 style="margin-bottom:0px" id="getTransform"><span style="font-weight:lighter"></span>H3DU.Shape#getTransform<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line215">line 215</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line216">line 216</a>
      </i></small></p>
 
 <div class="description">
@@ -318,7 +321,7 @@ this value is treated as 1.0.</dd>
 
     <h4 style="margin-bottom:0px" id="setMaterial"><span style="font-weight:lighter"></span>H3DU.Shape#setMaterial<span class="signature">(material)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line185">line 185</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line186">line 186</a>
      </i></small></p>
 
 <div class="description">
@@ -339,7 +342,7 @@ this value is treated as 1.0.</dd>
 )
 
            </dt><dd>
-           </dd>
+           The material object to use.</dd>
 
     </dl>
 
@@ -357,9 +360,9 @@ this value is treated as 1.0.</dd>
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="setMaterialParams"><span style="font-weight:lighter"></span>H3DU.Shape#setMaterialParams<span class="signature">(params, This)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="setMaterialParams"><span style="font-weight:lighter"></span>H3DU.Shape#setMaterialParams<span class="signature">(params, This)</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line143">line 143</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line144">line 144</a>
      </i></small></p>
 
 <div class="description">
@@ -400,9 +403,19 @@ this value is treated as 1.0.</dd>
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Object</span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>H3DU.Shape#setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line300">line 300</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line302">line 302</a>
      </i></small></p>
 
 <div class="description">
@@ -472,7 +485,7 @@ or a 3-element position array, as specified in H3DU.Transform#setScale.</dd>
 
     <h4 style="margin-bottom:0px" id="setQuaternion"><span style="font-weight:lighter"></span>H3DU.Shape#setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line312">line 312</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line314">line 314</a>
      </i></small></p>
 
 <div class="description">
@@ -514,7 +527,7 @@ See H3DU.Transform#setQuaternion.
 
     <h4 style="margin-bottom:0px" id="setScale"><span style="font-weight:lighter"></span>H3DU.Shape#setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line285">line 285</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line287">line 287</a>
      </i></small></p>
 
 <div class="description">
@@ -643,6 +656,9 @@ is deprecated.</i></dd>
                 <code>name</code>
 
                 (
+<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>
+|
+
 <span class="param-type">String</span>
 
 )
@@ -671,7 +687,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h4 style="margin-bottom:0px" id="setTextureAndColor"><span style="font-weight:lighter"></span>H3DU.Shape#setTextureAndColor<span class="signature">(name, r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line170">line 170</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line171">line 171</a>
      </i></small></p>
 
 <div class="description">
@@ -776,7 +792,7 @@ this value is treated as 1.0.</dd>
 
     <h4 style="margin-bottom:0px" id="setTransform"><span style="font-weight:lighter"></span>H3DU.Shape#setTransform<span class="signature">(transform)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line270">line 270</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line272">line 272</a>
      </i></small></p>
 
 <div class="description">
@@ -798,7 +814,8 @@ to a copy of the given transformation.
 )
 
            </dt><dd>
-           </dd>
+           The transformation to
+set to a copy of.</dd>
 
     </dl>
 

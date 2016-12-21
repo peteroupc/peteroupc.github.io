@@ -81,7 +81,7 @@ the HTML 3D Library.  Example:<pre>
 
     <h4 style="margin-bottom:0px" id=".load"><span style="font-weight:lighter"></span>.load<span class="signature">(fontFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextFont.html">H3DU.TextFont</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line851">line 851</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line856">line 856</a>
      </i></small></p>
 
 <div class="description">
@@ -132,7 +132,7 @@ an H3DU.TextFont object), and is rejected when an error occurs.
 
     <h4 style="margin-bottom:0px" id=".loadWithTextures"><span style="font-weight:lighter"></span>.loadWithTextures<span class="signature">(fontFileName, textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line795">line 795</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line800">line 800</a>
      </i></small></p>
 
 <div class="description">
@@ -202,7 +202,7 @@ in the order in which they are declared in the font data file.
 
     <h4 style="margin-bottom:0px" id="loadTextures"><span style="font-weight:lighter"></span>H3DU.TextFont#loadTextures<span class="signature">(textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line825">line 825</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line830">line 830</a>
      </i></small></p>
 
 <div class="description">
@@ -245,9 +245,9 @@ resolves, each item in the resulting array will be a loaded
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="makeTextMeshes"><span style="font-weight:lighter"></span>H3DU.TextFont#makeTextMeshes<span class="signature">(string, params)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Mesh>}</span></h4>
+    <h4 style="margin-bottom:0px" id="makeTextMeshes"><span style="font-weight:lighter"></span>H3DU.TextFont#makeTextMeshes<span class="signature">(str, params)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Mesh>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line389">line 389</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line394">line 394</a>
      </i></small></p>
 
 <div class="description">
@@ -261,7 +261,7 @@ needed to draw text with this font.
 
         <dt>
 
-                <code>string</code>
+                <code>str</code>
 
                 (
 <span class="param-type">String</span>
@@ -319,9 +319,9 @@ text uses a given page, the corresponding mesh will be null.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="measure"><span style="font-weight:lighter"></span>H3DU.TextFont#measure<span class="signature">(string, params)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 style="margin-bottom:0px" id="measure"><span style="font-weight:lighter"></span>H3DU.TextFont#measure<span class="signature">(str, params)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line104">line 104</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line110">line 110</a>
      </i></small></p>
 
 <div class="description">
@@ -335,7 +335,7 @@ drawn using this font.
 
         <dt>
 
-                <code>string</code>
+                <code>str</code>
 
                 (
 <span class="param-type">String</span>
@@ -377,9 +377,9 @@ U+000A, that break lines).
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="textShape"><span style="font-weight:lighter"></span>H3DU.TextFont#textShape<span class="signature">(font, string, params)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id="textShape"><span style="font-weight:lighter"></span>H3DU.TextFont#textShape<span class="signature">(str, params)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line276">line 276</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line281">line 281</a>
      </i></small></p>
 
 <div class="description">
@@ -397,19 +397,7 @@ than the right and bottom coordinates, respectively).
 
         <dt>
 
-                <code>font</code>
-
-                (
-<span class="param-type"><a href="H3DU.TextFont.html">H3DU.TextFont</a></span>
-
-)
-
-           </dt><dd>
-           The bitmap font to use when drawing the text.</dd>
-
-        <dt>
-
-                <code>string</code>
+                <code>str</code>
 
                 (
 <span class="param-type">String</span>

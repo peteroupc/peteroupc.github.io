@@ -1188,10 +1188,10 @@ the path may contain several disconnected parts.
 /**
  * Adds a cubic B&eacute;zier curve to this path starting
  * at this path's current position.
- * @param {Number} x
- * @param {Number} y
- * @param {Number} x2
- * @param {Number} y2
+ * @param {Number} x X-coordinate of the curve's first control point.
+ * @param {Number} y X-coordinate of the curve's first control point.
+ * @param {Number} x2 Y-coordinate of the curve's second control point.
+ * @param {Number} y2 Y-coordinate of the curve's second control point.
  * @param {Number} x3 X-coordinate of the curve's end point.
  * @param {Number} y3 Y-coordinate of the curve's end point.
  * @returns {GraphicsPath} This object.
@@ -1220,7 +1220,9 @@ the path may contain several disconnected parts.
     0.028531388628933663, 0.9747285559713095,
     0.0123412297999872, 0.9951872199970213
   ];
-/**
+/** @private */
+  GraphicsPath._numIntegrate = function(func, xmin, xmax) {
+/*
 * Estimates the integral of a function.  The integral
 * is the area between the function's graph and the X-axis,
 * where areas above the X axis add to the integral, and areas
@@ -1239,7 +1241,6 @@ the path may contain several disconnected parts.
 * @returns The approximate integral of _func_ between
 * _xmin_ and _xmax_.
 */
-  GraphicsPath._numIntegrate = function(func, xmin, xmax) {
     if(xmax === xmin)return 0;
     if(xmax < xmin) {
       return -GraphicsPath._numIntegrate(func, xmax, xmin);

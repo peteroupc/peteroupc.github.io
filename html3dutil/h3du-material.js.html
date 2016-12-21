@@ -68,7 +68,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  * color.&lt;p>
  * In the default shader program, if a mesh defines its own colors, those
  * colors are used for ambient color rather than this property.
- */
+*/
   this.ambient = ambient ? ambient.slice(0, 3) : [0.2, 0.2, 0.2];
  /**
  * Diffusion color of this material (also called "albedo"). This is the color seen when light passes through this material
@@ -87,7 +87,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  * colors are used for diffusion rather than this property.&lt;p>
  * This value can have an optional fourth element giving the alpha component
  * (0-1).  If this element is omitted, the default is 1.&lt;p>
- */
+*/
   this.diffuse = diffuse ? diffuse.slice(0, diffuse.length) : [0.8, 0.8, 0.8, 1.0];
  // TODO: Consider changing default value of specular to 1
  /**
@@ -116,7 +116,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
 * components.
 * For each of the three color components, positive values add to that component,
 * while negative values subtract from it. (0,0,0), the default, means no additive color.
- */
+*/
   this.emission = emission ? emission.slice(0, 3) : [0, 0, 0];
 /**
 * H3DU.Texture for this material.  Each color in the texture
@@ -174,12 +174,12 @@ A strong tilt indicates strong relief detail at that point.&lt;p>
  * If true, only the "diffuse" and "texture" properties of this object are used
  * when processing objects that use this material.
 * @default
- */
+*/
   this.basic = false;
  /**
  * Shader program to use when rendering objects with this material.
  * @default
- */
+*/
   this.shader = null;
 };
 /**
@@ -305,7 +305,7 @@ H3DU.Material.prototype.setParams = function(params) {
 * this value is treated as 1.0.
 * @returns {H3DU.Material} The resulting material object.
 * @memberof! H3DU.Material
- */
+*/
 H3DU.Material.fromColor = function(r, g, b, a) {
   "use strict";
   var color = H3DU.toGLColor(r, g, b, a);
@@ -320,7 +320,7 @@ H3DU.Material.fromColor = function(r, g, b, a) {
 *  will not load that image yet.
 * @returns {H3DU.Material} The resulting material object.
  * @memberof! H3DU.Material
- */
+*/
 H3DU.Material.fromTexture = function(texture) {
   "use strict";
   return new H3DU.Material().setParams({"texture":texture});
@@ -332,7 +332,7 @@ H3DU.Material.fromTexture = function(texture) {
 * @param {H3DU.ShaderInfo} shader Shader information object to use.
 * @returns {H3DU.Material} The resulting material object.
  * @memberof! H3DU.Material
- */
+*/
 H3DU.Material.forShader = function(shader) {
   "use strict";
   return new H3DU.Material().setParams({"shader":shader});

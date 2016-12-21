@@ -25,7 +25,7 @@
 <article>
     <div class="container-overview">
 
-    <h4 style="margin-bottom:0px" id="InputTracker"><span style="font-weight:lighter"></span>new InputTracker<span class="signature">(The)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="InputTracker"><span style="font-weight:lighter"></span>new InputTracker<span class="signature">(element)</span><span style="font-weight:lighter"></span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line29">line 29</a>
      </i></small></p>
@@ -48,7 +48,7 @@ the HTML 3D Library.  Example:<pre>
 
         <dt>
 
-                <code>The</code>
+                <code>element</code>
 
                 (
 <span class="param-type">HTMLElement</span>
@@ -59,7 +59,7 @@ the HTML 3D Library.  Example:<pre>
 )
 
            </dt><dd>
-           HTML document
+           The HTML document
 or element to track keyboard and mouse events for.
  If null or omitted, uses the calling application's HTML document.</dd>
 
@@ -75,7 +75,7 @@ or element to track keyboard and mouse events for.
 
     <h4 style="margin-bottom:0px" id="deltaXY"><span style="font-weight:lighter"></span>InputTracker#deltaXY<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line286">line 286</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line289">line 289</a>
      </i></small></p>
 
 <div class="description">
@@ -108,9 +108,9 @@ will be 0.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>InputTracker#dispose<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>InputTracker#dispose<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line184">line 184</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line185">line 185</a>
      </i></small></p>
 
 <div class="description">
@@ -121,15 +121,40 @@ will be 0.
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id="getKey"><span style="font-weight:lighter"></span>InputTracker#getKey<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number|Boolean}</span></h4>
+<h5>Returns:</h5>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line208">line 208</a>
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Object</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id="getKey"><span style="font-weight:lighter"></span>InputTracker#getKey<span class="signature">(key)</span><span style="font-weight:lighter"> &rarr; {Number|Boolean}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line210">line 210</a>
      </i></small></p>
 
-<div class="description">
-    Gets whether a key is pressed, as detected by this
-input tracker.
-</div>
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>key</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           Description of key.
+Gets whether a key is pressed, as detected by this
+input tracker.</dd>
+
+    </dl>
 
 <dl class="details">
 
@@ -160,9 +185,9 @@ input tracker.
 </li>
     </ul>
 
-    <h4 style="margin-bottom:0px" id="mousewheel"><span style="font-weight:lighter"></span>InputTracker#mousewheel<span class="signature">(func)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id="mousewheel"><span style="font-weight:lighter"></span>InputTracker#mousewheel<span class="signature">(func)</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line221">line 221</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line224">line 224</a>
      </i></small></p>
 
         <p><b>Deprecated: Will be removed in the future.  Use the
@@ -195,9 +220,19 @@ has rotated the mouse wheel.</b><p>
 
 </dl>
 
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Object</span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="update"><span style="font-weight:lighter"></span>InputTracker#update<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="InputTracker.html">InputTracker</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line313">line 313</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line316">line 316</a>
      </i></small></p>
 
 <div class="description">

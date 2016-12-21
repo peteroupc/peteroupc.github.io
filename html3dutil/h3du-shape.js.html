@@ -127,7 +127,7 @@ H3DU.Shape.prototype.setColor = function(r, g, b, a) {
 };
 /**
  * Sets material parameters that give the shape a texture with the given URL.
- * @param {String} name {@link H3DU.Texture} object, or a string with the
+ * @param {H3DU.Texture|String} name {@link H3DU.Texture} object, or a string with the
 * URL of the texture data.  In the case of a string the texture will be loaded via
 *  the JavaScript DOM's Image class.  However, this method
 *  will not load that image if it hasn't been loaded yet.
@@ -155,6 +155,7 @@ H3DU.Shape.prototype.setShader = function(shader) {
  * @param {Object} params An object described in {@link H3DU.Material#setParams}.
  * @param {H3DU.Shape} This object.
  * @memberof! H3DU.Shape#
+ * @returns {Object} Return value.
 */
 H3DU.Shape.prototype.setMaterialParams = function(params) {
   "use strict";
@@ -194,7 +195,7 @@ H3DU.Shape.prototype.setTextureAndColor = function(name, r, g, b, a) {
 };
 /**
 * Sets this shape's material parameters.
-* @param {Material} material
+* @param {Material} material The material object to use.
  * @returns {H3DU.Shape} This object.
 * @memberof! H3DU.Shape#
 */
@@ -237,7 +238,7 @@ H3DU.Shape.prototype.getTransform = function() {
  The bounding box is not guaranteed to be the
 * tightest, and the box will be transformed to world space
 * using this object's transform.
-* @returns An array of six numbers describing an
+* @returns {Array&lt;Number>} An array of six numbers describing an
 * axis-aligned bounding box
 * that fits all vertices in the shape. The first three numbers
 * are the smallest-valued X, Y, and Z coordinates, and the
@@ -279,7 +280,8 @@ H3DU.Shape.prototype.isCulled = function(frustum) {
 /**
  * Sets this shape's transformation
  * to a copy of the given transformation.
- * @param {H3DU.Transform} transform
+ * @param {H3DU.Transform} transform The transformation to
+ * set to a copy of.
  * @memberof! H3DU.Shape#
  * @returns {H3DU.Shape} This object.
 */

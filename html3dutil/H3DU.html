@@ -133,7 +133,7 @@ library.</div>
 
     <h4 style="margin-bottom:0px" id=".createCanvasElement"><span style="font-weight:lighter">(static) </span>createCanvasElement<span class="signature">(parent, width, height)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line78">line 78</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line79">line 79</a>
      </i></small></p>
 
 <div class="description">
@@ -218,7 +218,7 @@ This parameter can't be a negative number.</dd>
 
     <h4 style="margin-bottom:0px" id=".get3DContext"><span style="font-weight:lighter">(static) </span>get3DContext<span class="signature">(canvasElement, err)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line173">line 173</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line174">line 174</a>
      </i></small></p>
 
 <div class="description">
@@ -276,7 +276,7 @@ is null or not an HTML canvas element.
 
     <h4 style="margin-bottom:0px" id=".get3DOr2DContext"><span style="font-weight:lighter">(static) </span>get3DOr2DContext<span class="signature">(canvasElement)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line109">line 109</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line110">line 110</a>
      </i></small></p>
 
 <div class="description">
@@ -321,7 +321,7 @@ is null or not an HTML canvas element.
 
     <h4 style="margin-bottom:0px" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line247">line 247</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line250">line 250</a>
      </i></small></p>
 
 <div class="description">
@@ -404,7 +404,7 @@ True means success, and false means failure.</ul>
 
     <h4 style="margin-bottom:0px" id=".getPromiseResultsAll"><span style="font-weight:lighter">(static) </span>getPromiseResultsAll<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line214">line 214</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line217">line 217</a>
      </i></small></p>
 
 <div class="description">
@@ -482,7 +482,7 @@ will be an object as specified in <a href="H3DU.html#.getPromiseResults">H3DU.ge
 
     <h4 style="margin-bottom:0px" id=".getTimePosition"><span style="font-weight:lighter">(static) </span>getTimePosition<span class="signature">(timer, timeInMs, intervalInMs)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line394">line 394</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line397">line 397</a>
      </i></small></p>
 
 <div class="description">
@@ -574,14 +574,29 @@ value in milliseconds, such as the parameter of a
 
     <pre class="prettyprint"><code>var angle = 360 * H3DU.getTimePosition(timer, time, 5000);</code></pre>
 
-    <h4 style="margin-bottom:0px" id=".is3DContext"><span style="font-weight:lighter">(static) </span>is3DContext<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
+    <h4 style="margin-bottom:0px" id=".is3DContext"><span style="font-weight:lighter">(static) </span>is3DContext<span class="signature">(context)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line193">line 193</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line196">line 196</a>
      </i></small></p>
 
-<div class="description">
-    Returns whether the given object is a 3D rendering context.
-</div>
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>context</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           Description of context.
+Returns whether the given object is a 3D rendering context.</dd>
+
+    </dl>
 
 <dl class="details">
 
@@ -599,7 +614,7 @@ value in milliseconds, such as the parameter of a
 
     <h4 style="margin-bottom:0px" id=".loadFileFromUrl"><span style="font-weight:lighter">(static) </span>loadFileFromUrl<span class="signature">(url, responseType)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line321">line 321</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line324">line 324</a>
      </i></small></p>
 
 <div class="description">
@@ -668,7 +683,7 @@ from JSON.
 
     <h4 style="margin-bottom:0px" id=".newFrames"><span style="font-weight:lighter">(static) </span>newFrames<span class="signature">(timer, timeInMs)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line420">line 420</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line423">line 423</a>
      </i></small></p>
 
 <div class="description">
@@ -728,9 +743,9 @@ initial time or last known time wasn't set, returns 0.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id=".renderLoop"><span style="font-weight:lighter">(static) </span>renderLoop<span class="signature">(func)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id=".renderLoop"><span style="font-weight:lighter">(static) </span>renderLoop<span class="signature">(func)</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line51">line 51</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line52">line 52</a>
      </i></small></p>
 
 <div class="description">
@@ -764,9 +779,65 @@ milliseconds since the page was loaded.</dd>
 
 </dl>
 
-    <h4 style="margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
+<h5>Returns:</h5>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line982">line 982</a>
+<div class="param-desc">
+    Return value.
+
+     (Type:
+<span class="param-type">Object</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".Scene3D.supportsDerivatives"><span style="font-weight:lighter">(static) </span>Scene3D.supportsDerivatives<span class="signature">(context)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line1120">line 1120</a>
+     </i></small></p>
+
+<div class="description">
+    Returns whether the WebGL context supports
+derivative functions in GLSL shaders.
+</div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>context</code>
+
+                (
+<span class="param-type">WebGLRenderingContext</span>
+|
+
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           A WebGL context, or an object, such as H3DU.Scene3D, that
+implements a no-argument <code>getContext</code> method</dd>
+
+    </dl>
+
+<dl class="details">
+
+</dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    True if the context supports derivatives; false otherwise.
+
+     (Type:
+<span class="param-type">Boolean</span>)
+
+</div>
+
+    <h4 style="margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line985">line 985</a>
      </i></small></p>
 
 <div class="description">
@@ -892,10 +963,13 @@ this value is treated as 1.0.</dd>
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    the color as a 4-element array; if the color is
+    The color as a 4-element array; if the color is
 invalid, returns [0,0,0,0] (transparent black). Numbers less
 than 0 are clamped to 0, and numbers greater than 1 are
 clamped to 1.
+
+     (Type:
+<span class="param-type">Array.&lt;Number></span>)
 
 </div>
 

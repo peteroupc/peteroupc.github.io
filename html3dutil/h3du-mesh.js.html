@@ -1130,9 +1130,9 @@ H3DU.Mesh.prototype.enumPrimitives = function(func) {
 };
 
 /**
-* Finds the tightest
+* Finds the tightest axis-aligned
 * bounding box that holds all vertices in the mesh.
-* @returns An array of six numbers describing the tightest
+* @returns {Array&lt;Number>} An array of six numbers describing the tightest
 * axis-aligned bounding box
 * that fits all vertices in the mesh. The first three numbers
 * are the smallest-valued X, Y, and Z coordinates, and the
@@ -1428,11 +1428,9 @@ H3DU.Mesh._texCoordOffset = function(format) {
   "use strict";
   return [-1, -1, -1, -1, 3, 6, 6, 9][format &amp; (H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT | H3DU.Mesh.TEXCOORDS_BIT)];
 };
-/**
- @private */
+/** @private */
 H3DU.Mesh.ATTRIBUTES_BITS = 255;
-/**
- @private */
+/** @private */
 H3DU.Mesh.PRIMITIVES_BITS = 768;
 /** The mesh contains normals for each vertex.
  @const

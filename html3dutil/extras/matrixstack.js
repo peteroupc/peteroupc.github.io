@@ -22,7 +22,7 @@ only element is the identity matrix.
  * &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre>
  @alias H3DU.MatrixStack
  @class
- */
+*/
 H3DU.MatrixStack = function() {
   "use strict";
   this.stack = [

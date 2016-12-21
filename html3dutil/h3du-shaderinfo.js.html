@@ -86,7 +86,7 @@ H3DU.ShaderInfo.prototype.copy = function() {
 * Sets the values of one or more uniforms used by this shader program.
 * Since this object doesn't store a WebGL context, or receive one as input,
 * the uniforms won't be associated with a WebGL context.
-* @param {Object} name An object whose keys are the names of uniforms
+* @param {Object} uniforms An object whose keys are the names of uniforms
 * defined in either the
 * vertex or fragment shader of this shader program.  If the uniform
 * is an array, each element in the array is named as in these examples:
@@ -330,7 +330,11 @@ H3DU.ShaderInfo.makeEdgeDetectEffect = function() {
 ].join("\n"));
 };
 
-/** @private */
+/**
+* Gets the text of a basic vertex shader.
+* @returns {String} The resulting shader text.
+* @memberof! H3DU.ShaderInfo
+ */
 H3DU.ShaderInfo.getBasicVertex = function() {
   "use strict";
   var shader = "" +

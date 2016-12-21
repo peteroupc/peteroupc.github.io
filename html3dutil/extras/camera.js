@@ -20,7 +20,7 @@ at: http://peteroupc.github.io/
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
- * @param {HTMLElement|HTMLDocument} The HTML document
+ * @param {HTMLElement|HTMLDocument} element The HTML document
  * or element to track keyboard and mouse events for.
 *  If null or omitted, uses the calling application's HTML document.
 * @class
@@ -180,6 +180,7 @@ function InputTracker(element) {
 /**
  * Disposes all resources used by this input tracker.
  * @memberof! InputTracker#
+ * @returns {Object} Return value.
 */
 InputTracker.prototype.dispose = function() {
   "use strict";
@@ -199,6 +200,7 @@ InputTracker.prototype.dispose = function() {
 };
 
 /**
+ * @param {Object} key Description of key.
 * Gets whether a key is pressed, as detected by this
 * input tracker.
 * @returns {Number} key Key code of the key to check.
@@ -217,6 +219,7 @@ InputTracker.prototype.getKey = function(key) {
  * has rotated the mouse wheel.
  * @param {Function} func A function.
  * @memberof! InputTracker#
+ * @returns {Object} Return value.
 */
 InputTracker.prototype.mousewheel = function(func) {
   "use strict";
@@ -314,7 +317,12 @@ InputTracker.prototype.update = function() {
   "use strict";
   var deltaX = 0;
   var deltaY = 0;
-  if(this.clientX === null || this.clientY === null) {
+  if(typeof this.clientX === "undefined" || this.clientX === null) {
+    this.deltas.x = 0;
+    this.deltas.y = 0;
+    this.deltas.cx = 0;
+    this.deltas.cy = 0;
+  } else if(typeof this.clientY === "undefined" || this.clientY === null) {
     this.deltas.x = 0;
     this.deltas.y = 0;
     this.deltas.cx = 0;
@@ -359,10 +367,10 @@ InputTracker.prototype.update = function() {
 * @param {Number} fov Vertical field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.)
-* @param {Number} near The distance from the camera to
+* @param {Number} nearZ The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
-* @param {Number}  far The distance from the camera to
+* @param {Number}  farZ The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
 * @param {HTMLCanvasElement} [canvas] A canvas to associate with this
@@ -662,7 +670,8 @@ Camera.prototype.moveCenterHorizontal = function(dist) {
 /**
  * Moves the camera toward or away from the camera's up vector.
  * @deprecated Use "moveVertical" instead.
- * @param {Number} dist
+ * @param {Number} dist Distance to move the camera.
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.moveCenterVertical = function(dist) {
@@ -725,6 +734,7 @@ Camera.prototype.getVectorFromCenter = function() {
  * 'update' method was called. <i>Note that future versions
  * may require this parameter.</i>
  * @memberof! Camera#
+ * @returns {Object} Return value.
 */
 Camera.prototype.update = function(input) {
   "use strict";

@@ -144,7 +144,7 @@ H3DU.MeshBuffer.prototype.primitiveCount = function() {
 /**
 * Finds the tightest
 * bounding box that holds all vertices in the mesh buffer.
-* @returns An array of six numbers describing the tightest
+* @returns {Array&lt;Number>} An array of six numbers describing the tightest
 * axis-aligned bounding box
 * that fits all vertices in the mesh. The first three numbers
 * are the smallest-valued X, Y, and Z coordinates, and the
@@ -199,7 +199,11 @@ H3DU.MeshBuffer.prototype.primitiveType = function() {
   return H3DU.Mesh.TRIANGLES;
 };
 
-/** @private */
+/**
+ * @param {Object} name Description of name.
+ * @memberof! H3DU.MeshBuffer#
+ * @returns {Object} Return value.
+*/
 H3DU.MeshBuffer.prototype.getFormat = function() {
   "use strict";
   return this.format;

@@ -127,7 +127,9 @@ H3DU.BufferedMesh.prototype.getContext = function() {
   "use strict";
   return this.context;
 };
-/** @private */
+/** @private
+ * @returns {Object} Return value.
+*/
 H3DU.BufferedMesh.prototype.getFormat = function() {
   "use strict";
   return this.smb.format;
@@ -136,6 +138,7 @@ H3DU.BufferedMesh.prototype.getFormat = function() {
 /**
 * Deletes the vertex and index buffers associated with this object.
 * @memberof! H3DU.BufferedMesh#
+ * @returns {Object} Return value.
 */
 H3DU.BufferedMesh.prototype.dispose = function() {
   "use strict";
@@ -177,8 +180,7 @@ H3DU.BufferedMesh.prototype._getAttribLocations = function(program) {
   return false;
 };
 
-/**
- * @private */
+/** @private */
 H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
   "use strict";
   var rebind = this._getAttribLocations(program, context);
@@ -212,6 +214,7 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
 * the IDs from for attributes named "position", "normal",
 * "colorAttr", and "uv", and the "useColorAttr" uniform.
 * @memberof! H3DU.BufferedMesh#
+ * @returns {Object} Return value.
 */
 H3DU.BufferedMesh.prototype.draw = function(program) {
   "use strict";

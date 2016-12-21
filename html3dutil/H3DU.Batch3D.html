@@ -48,7 +48,7 @@ position, and light sources to illuminate the 3D scene.
 
     <h4 style="margin-bottom:0px" id=".forFilter"><span style="font-weight:lighter"></span>.forFilter<span class="signature">(scene, fbo, shader)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line422">line 422</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line425">line 425</a>
      </i></small></p>
 
 <div class="description">
@@ -72,7 +72,8 @@ See the <a href="tutorial-filters.html">Graphics Filters</a> tutorial.
 )
 
            </dt><dd>
-           </dd>
+           Scene to associate
+with the returned batch.</dd>
 
         <dt>
 
@@ -109,7 +110,7 @@ the shader to use when rendering the contents of the frame buffer</dd>
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    Return value.
+    The created batch.
 
      (Type:
 <span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>)
@@ -118,7 +119,7 @@ the shader to use when rendering the contents of the frame buffer</dd>
 
     <h4 style="margin-bottom:0px" id="addShape"><span style="font-weight:lighter"></span>H3DU.Batch3D#addShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line288">line 288</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line289">line 289</a>
      </i></small></p>
 
 <div class="description">
@@ -164,7 +165,7 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="getLights"><span style="font-weight:lighter"></span>H3DU.Batch3D#getLights<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Lights.html">H3DU.Lights</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line275">line 275</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line276">line 276</a>
      </i></small></p>
 
 <div class="description">
@@ -187,7 +188,7 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="getProjectionMatrix"><span style="font-weight:lighter"></span>H3DU.Batch3D#getProjectionMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line248">line 248</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line249">line 249</a>
      </i></small></p>
 
 <div class="description">
@@ -201,7 +202,8 @@ Its parent will be set to no parent.
 <h5>Returns:</h5>
 
 <div class="param-desc">
-    Return value.
+    A 4x4 matrix used as the current
+projection matrix.
 
      (Type:
 <span class="param-type">Array.&lt;Number></span>)
@@ -210,7 +212,7 @@ Its parent will be set to no parent.
 
     <h4 style="margin-bottom:0px" id="getViewMatrix"><span style="font-weight:lighter"></span>H3DU.Batch3D#getViewMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line257">line 257</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line258">line 258</a>
      </i></small></p>
 
 <div class="description">
@@ -500,7 +502,7 @@ see @{link H3DU.Math.mat4perspective}.
 
     <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>H3DU.Batch3D#primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line315">line 315</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line316">line 316</a>
      </i></small></p>
 
 <div class="description">
@@ -524,7 +526,7 @@ and points) composed by all shapes in this batch of shapes.
 
     <h4 style="margin-bottom:0px" id="removeShape"><span style="font-weight:lighter"></span>H3DU.Batch3D#removeShape<span class="signature">(shape)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line330">line 330</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line331">line 331</a>
      </i></small></p>
 
 <div class="description">
@@ -566,14 +568,32 @@ and points) composed by all shapes in this batch of shapes.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="render"><span style="font-weight:lighter"></span>H3DU.Batch3D#render<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id="render"><span style="font-weight:lighter"></span>H3DU.Batch3D#render<span class="signature">(scene)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line399">line 399</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line401">line 401</a>
      </i></small></p>
 
 <div class="description">
     Renders this batch using the given scene object.
 </div>
+
+    <h5>Parameters:</h5>
+
+<dl>
+
+        <dt>
+
+                <code>scene</code>
+
+                (
+<span class="param-type">Object</span>
+
+)
+
+           </dt><dd>
+           Description of scene.</dd>
+
+    </dl>
 
 <dl class="details">
 
@@ -669,7 +689,7 @@ so it points perpendicular to the camera's view direction.)</dd>
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="setProjectionMatrix"><span style="font-weight:lighter"></span>H3DU.Batch3D#setProjectionMatrix<span class="signature">(matrix)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
+    <h4 style="margin-bottom:0px" id="setProjectionMatrix"><span style="font-weight:lighter"></span>H3DU.Batch3D#setProjectionMatrix<span class="signature">(mat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Batch3D.html">H3DU.Batch3D</a>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line132">line 132</a>
      </i></small></p>
@@ -684,7 +704,7 @@ so it points perpendicular to the camera's view direction.)</dd>
 
         <dt>
 
-                <code>matrix</code>
+                <code>mat</code>
 
                 (
 <span class="param-type">Array.&lt;Number></span>
@@ -733,7 +753,7 @@ so it points perpendicular to the camera's view direction.)</dd>
 )
 
            </dt><dd>
-           </dd>
+           A 4x4 matrix to use as the view matrix.</dd>
 
     </dl>
 
@@ -753,7 +773,7 @@ so it points perpendicular to the camera's view direction.)</dd>
 
     <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>H3DU.Batch3D#vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line301">line 301</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-batch3d.js.html">h3du-batch3d.js</a>, <a href="h3du-batch3d.js.html#line302">line 302</a>
      </i></small></p>
 
 <div class="description">

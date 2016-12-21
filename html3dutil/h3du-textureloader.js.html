@@ -112,7 +112,7 @@ H3DU.TextureLoader.prototype.loadTexturesAll = function(textures, resolve, rejec
 /**
  * Loads the textures referred to in an array of URLs and
  * uploads their texture data to a WebGL context.
-* @param {String} name URL of the texture data.  Images with a TGA
+* @param {String} texture URL of the texture data.  Images with a TGA
 * extension that use the RGBA or grayscale format are supported.
 * Images supported by the browser will be loaded via
 * the JavaScript DOM's Image class.
@@ -135,8 +135,11 @@ H3DU.TextureLoader.prototype.loadAndMapTexture = function(texture, context) {
   });
 };
 /**
- * Loads a texture by its URL and uploads its data to a WebGL context.
- * @param {Array&lt;String>} textures
+ * Loads one or more textures by their URL and uploads their data to a WebGL context.
+ * @param {Array&lt;String>} textures Arrays of URLs of the texture data.  Images with a TGA
+* extension that use the RGBA or grayscale format are supported.
+* Images supported by the browser will be loaded via
+* the JavaScript DOM's Image class.
  * @param {WebGLRenderingContext|object} context
  * A WebGL context to associate with this scene, or an object, such as {@link H3DU.Scene3D}, that
 * implements a no-argument &lt;code>getContext&lt;/code> method
@@ -163,7 +166,7 @@ H3DU.TextureLoader.prototype.loadAndMapTexturesAll = function(textures, context,
 };
 /**
  * Uploads an array of textures to a WebGL context.
- * @param {H3DU.Texture} texture An array of texture objects to upload.
+ * @param {Array&lt;H3DU.Texture>} textures An array of texture objects to upload.
  * Each texture's data must already have been loaded.    Textures with the
 * same name as textures already uploaded to the given context will be skipped.
  * @param {WebGLRenderingContext|object} context
@@ -228,6 +231,7 @@ H3DU.TextureLoader.prototype.unbindFrameBuffer = function(info, context) {
 /**
  * Disposes all resources used by this texture loader.
  * @memberof! H3DU.TextureLoader#
+* @returns {void} Return value.
 */
 H3DU.TextureLoader.prototype.dispose = function() {
   "use strict";

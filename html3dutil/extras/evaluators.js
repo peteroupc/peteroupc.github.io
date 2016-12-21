@@ -164,7 +164,8 @@ SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm}
 * with a length of 1).
-* @returns {SurfaceOfRevolution} Return value.*/
+* @returns {SurfaceOfRevolution} Return value.
+*/
 SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
   "use strict";
   if(!curve)curve = {
@@ -235,7 +236,8 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter) {
  * fits the given radius.
  * @function
  * @param {Number} radius Desired radius of the curve.
- * @returns {Hypotrochoid} Return value. */
+ * @returns {Hypotrochoid} Return value.
+*/
   this.scaleTo = function(radius) {
     var oi = this.outer - this.inner;
     var mx = Math.abs(Math.max(
@@ -342,7 +344,8 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter) {
  * fits the given radius.
  * @function
  * @param {Number} radius Desired radius of the curve.
- * @returns {Epitrochoid} Return value. */
+ * @returns {Epitrochoid} Return value.
+*/
   this.scaleTo = function(radius) {
     var oi = this.outer + this.inner;
     var mx = Math.abs(Math.max(

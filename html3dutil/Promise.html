@@ -20,20 +20,20 @@
         Promise
         </h2>
 
-            <div class="class-description">A promise - value to be resolved in the future.
-Implements the "Promises/A+ 1.1" specification.</div>
-
 </header>
 
 <article>
     <div class="container-overview">
 
-    <h2>Constructor</h2>
-
     <h4 style="margin-bottom:0px" id="Promise"><span style="font-weight:lighter"></span>new Promise<span class="signature">(resolver<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="promise.js.html">promise.js</a>, <a href="promise.js.html#line36">line 36</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="promise.js.html">promise.js</a>, <a href="promise.js.html#line40">line 40</a>
      </i></small></p>
+
+<div class="description">
+    A promise - value to be resolved in the future.
+Implements the "Promises/A+ 1.1" specification.
+</div>
 
     <h5>Parameters:</h5>
 
@@ -51,7 +51,10 @@ Implements the "Promises/A+ 1.1" specification.</div>
                     &lt;optional>
 
            </dt><dd>
-           </dd>
+           Function that takes
+two arguments: the first is a function to call when
+resolving the promise, and the second is a function
+to call when rejecting the promise.</dd>
 
     </dl>
 
@@ -65,7 +68,7 @@ Implements the "Promises/A+ 1.1" specification.</div>
 
 <h4 style="margin-bottom:0px" id=".all"><span style="font-weight:lighter">(static) </span>all<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="promise.js.html">promise.js</a>, <a href="promise.js.html#line68">line 68</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="promise.js.html">promise.js</a>, <a href="promise.js.html#line74">line 74</a>
      </i></small></p>
 
 <div class="description">
@@ -80,7 +83,7 @@ Implements the "Promises/A+ 1.1" specification.</div>
 
     <h4 style="margin-bottom:0px" id="catch"><span style="font-weight:lighter"></span>catch<span class="signature">(onRejected)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="promise.js.html">promise.js</a>, <a href="promise.js.html#line226">line 226</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="promise.js.html">promise.js</a>, <a href="promise.js.html#line232">line 232</a>
      </i></small></p>
 
     <h5>Parameters:</h5>
@@ -107,9 +110,17 @@ Implements the "Promises/A+ 1.1" specification.</div>
 
 <h5>Returns:</h5>
 
+<div class="param-desc">
+    A promise.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
+
+</div>
+
     <h4 style="margin-bottom:0px" id="then"><span style="font-weight:lighter"></span>then<span class="signature">(onFulfilled, onRejected)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="promise.js.html">promise.js</a>, <a href="promise.js.html#line102">line 102</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="promise.js.html">promise.js</a>, <a href="promise.js.html#line108">line 108</a>
      </i></small></p>
 
     <h5>Parameters:</h5>
@@ -147,6 +158,14 @@ Implements the "Promises/A+ 1.1" specification.</div>
 </dl>
 
 <h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
+
+</div>
 
 </article>
 

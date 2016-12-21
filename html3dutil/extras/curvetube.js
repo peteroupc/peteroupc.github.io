@@ -262,4 +262,5 @@ H3DU.CurveTube.prototype.evaluate = function(u, v) {
   return [sx, sy, sz];
 };
 /** @alias CurveTube
- @deprecated Use H3DU.CurveTube instead. */
+ @deprecated Use H3DU.CurveTube instead.
+*/

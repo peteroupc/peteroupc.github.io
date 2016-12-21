@@ -111,7 +111,7 @@ and is rejected when an error occurs when loading the MTL file.
 
     <h4 style="margin-bottom:0px" id=".loadObjFromUrl"><span style="font-weight:lighter">(static) </span>loadObjFromUrl<span class="signature">(url)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line277">line 277</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line281">line 281</a>
      </i></small></p>
 
 <div class="description">
@@ -154,9 +154,9 @@ and is rejected when an error occurs when loading the OBJ file.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id=".loadObjFromUrlWithTextures"><span style="font-weight:lighter">(static) </span>loadObjFromUrlWithTextures<span class="signature">(url, textureLoader)</span><span style="font-weight:lighter"></span></h4>
+    <h4 style="margin-bottom:0px" id=".loadObjFromUrlWithTextures"><span style="font-weight:lighter">(static) </span>loadObjFromUrlWithTextures<span class="signature">(url, textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line251">line 251</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_objmtl.js.html">extras/objmtl.js</a>, <a href="extras_objmtl.js.html#line256">line 256</a>
      </i></small></p>
 
 <div class="description">
@@ -199,6 +199,20 @@ textures with.</dd>
 <dl class="details">
 
 </dl>
+
+<h5>Returns:</h5>
+
+<div class="param-desc">
+    A promise that resolves when
+the OBJ file and textures are loaded successfully, whether or not the associated
+MTL is also loaded successfully (the result is an ObjData object),
+and is rejected when an error occurs when loading the OBJ file or any of
+its textures.
+
+     (Type:
+<span class="param-type"><a href="Promise.html">Promise</a></span>)
+
+</div>
 
     <h4 style="margin-bottom:0px" id="toShape"><span style="font-weight:lighter"></span>ObjData#toShape<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>}</span></h4>
 

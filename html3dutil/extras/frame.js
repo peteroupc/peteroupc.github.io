@@ -29,6 +29,7 @@ var FrameCounter = function() {
  * Updates the state for determining the frame count.
  * This method should be called once per frame.
  * @memberof! FrameCounter#
+ * @returns {Object} Return value.
 */
 FrameCounter.prototype.update = function() {
   "use strict";
@@ -61,7 +62,8 @@ FrameCounter.prototype.update = function() {
  * Gets the calculated frames per second, based
  * on how often the update method was called.
  * @memberof! FrameCounter#
- */
+ * @returns {Object} Return value.
+*/
 FrameCounter.prototype.getFPS = function() {
   "use strict";
   return this.fps;
@@ -101,6 +103,7 @@ FrameCounterDiv._makeDiv = function() {
 /**
  * Updates the frame counter HTML element.
  * @memberof! FrameCounterDiv#
+ * @returns {Object} Return value.
 */
 FrameCounterDiv.prototype.update = function() {
   "use strict";
@@ -128,11 +131,12 @@ FrameCounterDiv.prototype.update = function() {
 var PrimitiveCounter = function() {
   "use strict";
   this.warned = false;
- /**
+/**
 * This method used to update this object's state.
 * @deprecated Will be removed in the future.
  * @memberof! PrimitiveCounter
- */
+ * @returns {Object} Return value.
+*/
   this.update = function() {
     if(!this.warned)console.warn("PrimitiveCounter is deprecated");
     this.warned = true;

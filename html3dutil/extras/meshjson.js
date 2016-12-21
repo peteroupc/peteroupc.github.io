@@ -17,7 +17,6 @@ at: http://peteroupc.github.io/
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/meshjson.js">&lt;/script></pre>
 * @class
-*
 */
 var MeshJSON = {};
 
@@ -249,7 +248,7 @@ MeshJSON._Model = function(mesh) {
 };
 /**
 * Loads a mesh from JSON format.
-* @param {H3DU.Mesh} mesh A mesh object, as used
+* @param {String} url URL to a JSON mesh object, as used
 * in the Public Domain HTML 3D Library.
 * @returns {Promise} A promise that, when resolved, exposes an object
 * that implements the following property:

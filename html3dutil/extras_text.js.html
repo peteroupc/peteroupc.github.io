@@ -64,8 +64,14 @@ at: http://peteroupc.github.io/
 * @class
 * @alias H3DU.TextFont
 */
-H3DU.TextFont = function(fontinfo, chars, pages, kernings, common, fileUrl) {
+H3DU.TextFont = function() {
   "use strict";
+  var fontinfo = arguments[0];
+  var chars = arguments[1];
+  var pages = arguments[2];
+  var kernings = arguments[3];
+  var common = arguments[4];
+  var fileUrl = arguments[5];
   this.info = fontinfo;
   this.common = common;
   if(this.info) {
@@ -108,7 +114,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
 /**
  * Calculates the width and height of a text string when
  * drawn using this font.
-* @param {String} string The text string to measure.  Line breaks
+* @param {String} str The text string to measure.  Line breaks
 * ("\n", "\r", "\r\n") are recognized by this method.
 * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
  * @returns {Array&lt;Number>} An array of two numbers;
@@ -273,8 +279,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 * X-axis pointing right and the Y-axis pointing down (for example, an
 * orthographic projection where the left and top coordinates are less
 * than the right and bottom coordinates, respectively).
-* @param {H3DU.TextFont} font The bitmap font to use when drawing the text.
-* @param {String} string The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
+* @param {String} str The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
 * by this method.
 * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
 * Can also contain the following keys:&lt;ul>
@@ -377,7 +382,7 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
 /**
  * Creates an array of meshes containing the primitives
  * needed to draw text with this font.
-* @param {String} string The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized
+* @param {String} str The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized
 * by this method.
 * @param {Object} params An object whose keys have
 * the possibilities given below, and whose values are those

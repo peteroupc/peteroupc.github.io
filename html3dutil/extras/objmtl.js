@@ -247,10 +247,14 @@ ObjData.loadMtlFromUrl = function(url) {
  * @param {String} url The URL to load.
  * @param {TextureLoader} textureLoader An object to load
  * textures with.
- */
+@returns {Promise} A promise that resolves when
+the OBJ file and textures are loaded successfully, whether or not the associated
+MTL is also loaded successfully (the result is an ObjData object),
+and is rejected when an error occurs when loading the OBJ file or any of
+its textures.
+*/
 ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
   "use strict";
-
   return ObjData.loadObjFromUrl(url).then(function(obj) {
     var o = obj;
     return textureLoader.loadTexturesAll(o._gatherTextureNames())
