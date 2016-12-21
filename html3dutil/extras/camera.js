@@ -6,12 +6,13 @@ http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
-/* global H3DU, angle */
+/* global H3DU */
 
 // //////////////////////////////////////////
 
 /**
-* TODO: Not documented yet.
+* A class for tracking key press, mouse, touch, and mouse wheel
+* events.
 * <p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
@@ -340,6 +341,10 @@ InputTracker.prototype.update = function() {
 /**
 * A class for controlling the projection and
 * view of a 3D scene, in the nature of an abstract "camera".
+* This class uses the concept of a "camera's position", or where
+* the camera is located in world space, as well
+* as a "reference point", or the point in world space that the camera
+* is looking at.
 * <p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
@@ -368,15 +373,19 @@ function Camera(batch, fov, nearZ, farZ, canvas) {
   if(nearZ <= 0)throw new Error("invalid nearZ");
   this.near = nearZ;
   this.center = [0, 0, 0];
-  this.position = [0, 0, 0];
+  this.position = [0, 0, nearZ];
   this.up = [0, 1, 0];
   this.scene = batch;
   this.trackballMode = true;
+  this.lat = 90;
+  this.lon = 270;
   this._updateView();
   batch.perspectiveAspect(fov, nearZ, farZ);
+ // NOTE: For compatibility only, may be removed in the future
   if(!canvas) {
     canvas = document.getElementsByTagName("canvas")[0] || document;
   }
+ // NOTE: For compatibility only, may be removed in the future
   this.input = new InputTracker(canvas);
 }
 
@@ -385,23 +394,22 @@ Camera.prototype._orbit = function(deltaMouseX, deltaMouseY, angleMultiplier) {
   "use strict";
   var x = deltaMouseX * angleMultiplier;
   var y = deltaMouseY * angleMultiplier;
-  var vec = H3DU.Math.quatTransform(
-    H3DU.Math.quatConjugate(this.rotationFromCenter), Camera._normAsVec4(0, 0, 1));
-  var lat = Math.atan2(Math.sqrt(vec[2] * vec[2] + vec[0] * vec[0]), vec[1]);
-
-  y *= H3DU.Math.PiDividedBy180;
-  lat -= y;
-  var pi2 = Math.PI - 0.00001;
-  if(lat < 0.00001) {
-    y -= 0.00001 - lat;
-    lat = 0.00001;
-  } else if(lat > pi2) {
-    y += lat - pi2;
-    lat = pi2;
-  }
-  this.moveAngleVertical(y * H3DU.Math.Num180DividedByPi);
-  // TODO: Implement this
-  this._moveAngleFixedHorizontal(x);
+  this.lat += y;
+  if(this.lat < 0.001)this.lat = 0.001;
+  if(this.lat > 179.999)this.lat = 179.999;
+  this.lon += x;
+  this.lon = this.lon >= 0 && this.lon < 360 ? this.lon : this.lon % 360 + (this.lon < 0 ? 360 : 0);
+  var a = (this.lat - 90) * Math.PI / 180;
+  var b = (this.lon - 180) * Math.PI / 180;
+  var ca = Math.cos(a);
+  var sa = (a>=0 && a<6.283185307179586) ? (a<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(a);
+  var cb = Math.cos(b);
+  var sb = (b>=0 && b<6.283185307179586) ? (b<=3.141592653589793 ? Math.sqrt(1.0-cb*cb) : -Math.sqrt(1.0-cb*cb)) : Math.sin(b);
+  var dist = this.getDistance();
+  x = ca * cb * dist + this.center[0];
+  var z = ca * sb * dist + this.center[1];
+  y = sa * dist + this.center[2];
+  this.setPosition(x, y, z);
 };
 
 /** @private */
@@ -421,35 +429,6 @@ Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
   this.moveVertical(y);
 };
 /** @private */
-Camera.prototype._moveAngleFixedHorizontal = function(angleDegrees) {
-  "use strict";
-  if(angleDegrees !== 0) {
-    Camera._quatRotateFixed(this.rotationFromCenter, angleDegrees, 0, 1, 0);
-    this._updateView();
-  }
-  return this;
-};
-/** @private */
-Camera._normAsVec4 = function(x, y, z) {
-  "use strict";
-  var len = x * x + y * y + z * z;
-  if(len === 1) {
-    return [x, y, z, 1];
-  } else {
-    var n = H3DU.Math.vec3normInPlace([x, y, z]);
-    return [n[0], n[1], n[2], 1];
-  }
-};
-/** @private */
-Camera._quatRotateFixed = function(quat, angle, x, y, z) {
-  "use strict";
- // Rotate quaternion about a fixed axis
-  var vec = Camera._normAsVec4(x, y, z);
-  var q = H3DU.Math.quatRotate(quat, angle, vec);
-  q = H3DU.Math.quatMultiply(quat, H3DU.Math.quatFromAxisAngle(angle, vec));
-  H3DU.Math.vec4assign(quat, q);
-};
-/** @private */
 Camera.prototype._updateView = function() {
   "use strict";
   var mat = H3DU.Math.mat4lookat(
@@ -457,18 +436,32 @@ Camera.prototype._updateView = function() {
   this.scene.setViewMatrix(mat);
   return this;
 };
+/** @private */
+Camera._velocity = function(toVec, fromVec) {
+  "use strict";
+  var velocity = H3DU.Math.vec3norm( H3DU.Math.vec3sub(toVec, fromVec));
+  if(velocity[0] === 0 && velocity[1] === 0 && velocity[2] === 0) {
+   // Both vectors are likely the same, so return a default vector
+    return [0, 0, 1];
+  }
+  return velocity;
+};
 /**
- * Sets the dist
+ * Moves the camera a given distance from the reference
+* point without changing its orientation.
  * @param {Number} dist Positive number giving the distance.
  * If this is less than the near plane distance, the distance will
-* be equal to the near plane distance.
+* be equal to the near plane distance.  Does nothing if the
+* distance is 0 or less.
+* @returns {Camera} This object.
  * @memberof! Camera#
 */
 Camera.prototype.setDistance = function(dist) {
   "use strict";
+  if(dist <= 0)return this;
  // don't move closer than the near plane
   dist = Math.max(this.near, dist);
-  var velocity = H3DU.Math.vec3norm(H3DU.Math.vec3sub(this.position, this.center));
+  var velocity = Camera._velocity(this.position, this.center);
   H3DU.Math.vec3scaleInPlace(velocity, dist);
   this.position = H3DU.Math.vec3add(this.center, velocity);
   this._updateView();
@@ -485,7 +478,7 @@ Camera.prototype.getDistance = function() {
   return H3DU.Math.vec3length(
     H3DU.Math.vec3sub(this.position, this.center));
 };
-
+/** @private */
 Camera._transformRel = function(quat, point, origin) {
   "use strict";
   var rotPoint = H3DU.Math.vec3sub(point, origin);
@@ -507,9 +500,9 @@ vice versa.
 Camera.prototype.moveAngleVertical = function(angleDegrees) {
   "use strict";
   if(angleDegrees !== 0) {
-    var viewVector = H3DU.Math.vec3norm(H3DU.Math.vec3sub(this.center, this.position));
+    var viewVector = Camera._velocity(this.center, this.position);
     var orthoVector = H3DU.Math.vec3norm(H3DU.Math.vec3cross(viewVector, this.up));
-    var quat = H3DU.Math.quatFromAxisAngle(angle, orthoVector);
+    var quat = H3DU.Math.quatFromAxisAngle(-angleDegrees, orthoVector);
     this.position = Camera._transformRel(quat, this.position, this.center);
     this.up = H3DU.Math.vec3normInPlace(Camera._transformRel(quat, this.up, [0, 0, 0]));
     this._updateView();
@@ -530,7 +523,7 @@ vice versa.
 Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
   "use strict";
   if(angleDegrees !== 0) {
-    var quat = H3DU.Math.quatFromAxisAngle(angle, this.up);
+    var quat = H3DU.Math.quatFromAxisAngle(-angleDegrees, this.up);
     this.position = Camera._transformRel(quat, this.position, this.center);
     this._updateView();
   }
@@ -541,8 +534,8 @@ Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
 *  the same distance from a reference point.
  * @param {Number} angleDegrees The angle to rotate the camera,
 * in degrees. If the coordinate-system is right-handed, positive
-values rotate the camera [TODO: Leftward or rightward?], and
-negative values [TODO: Leftward or rightward?]. If the coordinate-system is left-handed,
+values rotate the camera rightward, and
+negative values leftward. If the coordinate-system is left-handed,
 vice versa.
 * @returns {Camera} This object.
  * @memberof! Camera#
@@ -550,8 +543,9 @@ vice versa.
 Camera.prototype.turnHorizontal = function(angleDegrees) {
   "use strict";
   if(angleDegrees !== 0) {
-    var quat = H3DU.Math.quatFromAxisAngle(angle, this.up);
-    this.center = H3DU.Math.quatTransform(quat, this.center);
+    var quat = H3DU.Math.quatFromAxisAngle(angleDegrees, this.up);
+    this.center = Camera._transformRel(quat, this.center, this.position);
+    this._updateView();
   }
   return this;
 };
@@ -560,8 +554,8 @@ Camera.prototype.turnHorizontal = function(angleDegrees) {
 *  the same distance from a reference point.
  * @param {Number} angleDegrees The angle to rotate the camera,
 * in degrees. If the coordinate-system is right-handed, positive
-values rotate the camera [TODO: Upward or downward?], and
-negative values [TODO: Upward or downward?]. If the coordinate-system is left-handed,
+values rotate the camera upward, and
+negative values downward. If the coordinate-system is left-handed,
 vice versa.
 * @returns {Camera} This object.
  * @memberof! Camera#
@@ -569,31 +563,49 @@ vice versa.
 Camera.prototype.turnVertical = function(angleDegrees) {
   "use strict";
   if(angleDegrees !== 0) {
-    var viewVector = H3DU.Math.vec3norm(H3DU.Math.vec3sub(this.center, this.position));
+    var viewVector = Camera._velocity(this.center, this.position);
     var orthoVector = H3DU.Math.vec3norm(H3DU.Math.vec3cross(viewVector, this.up));
-    var quat = H3DU.Math.quatFromAxisAngle(angle, orthoVector);
+    var quat = H3DU.Math.quatFromAxisAngle(angleDegrees, orthoVector);
     this.center = Camera._transformRel(quat, this.center, this.position);
     this.up = H3DU.Math.vec3normInPlace(Camera._transformRel(quat, this.up, [0, 0, 0]));
+    this._updateView();
   }
   return this;
 };
+/**
+ * Sets the position of the camera.
+ * @param {Number} cx The camera's new X-coordinate,
+* or a 3-element vector containing the X, Y, and Z coordinates.
+* In the latter case, "cy" and "cz" can be omitted.
+ * @param {Number} [cy] The camera's new Y-coordinate.
+ * @param {Number} [cz] The camera's new Z-coordinate.
+* @returns {Camera} This object.
+ * @memberof! Camera#
+*/
+Camera.prototype.setPosition = function(cx, cy, cz) {
+  "use strict";
+  if(typeof cx === "number") {
+    if(isNaN(cx) || isNaN(cy) || isNaN(cz))throw new Error();
+    this.position[0] = cx;
+    this.position[1] = cy;
+    this.position[2] = cz;
+    this._updateView();
+    return this;
+  } else {
+    return this.setPosition(cx[0], cy[1], cz[2]);
+  }
+};
+
 /**
  * Sets the position of the camera.
  * @param {Number} cx The camera's new X-coordinate.
  * @param {Number} cy The camera's new Y-coordinate.
  * @param {Number} cz The camera's new Z-coordinate.
 * @returns {Camera} This object.
+* @deprecated Renamed to "setPosition".
  * @memberof! Camera#
 */
-Camera.prototype.movePosition = function(cx, cy, cz) {
-  "use strict";
-  if(isNaN(cx) || isNaN(cy) || isNaN(cz))throw new Error();
-  this.position[0] = cx;
-  this.position[1] = cy;
-  this.position[2] = cz;
-  this._updateView();
-  return this;
-};
+Camera.prototype.movePosition =  Camera.prototype.setPosition;
 
 /**
  * Gets the position of the camera.
@@ -616,7 +628,7 @@ Camera.prototype.getPosition = function() {
 */
 Camera.prototype.moveClose = function(dist) {
   "use strict";
-  return this.setDistance(this._distance() - dist);
+  return this.setDistance(this.getDistance() - dist);
 };
 /**
  * Moves the camera forward the given distance.
@@ -628,7 +640,7 @@ Camera.prototype.moveClose = function(dist) {
 Camera.prototype.moveForward = function(dist) {
   "use strict";
   if(dist !== 0) {
-    var velocity = H3DU.Math.vec3norm(H3DU.Math.vec3sub(this.center, this.position));
+    var velocity = Camera._velocity(this.center, this.position);
     H3DU.Math.vec3scaleInPlace(velocity, dist);
     H3DU.Math.vec3addInPlace(this.position, velocity);
     H3DU.Math.vec3addInPlace(this.center, velocity);
@@ -666,7 +678,7 @@ Camera.prototype.moveCenterVertical = function(dist) {
 Camera.prototype.moveHorizontal = function(dist) {
   "use strict";
   if(dist !== 0) {
-    var viewVector = H3DU.Math.vec3norm(H3DU.Math.vec3sub(this.center, this.position));
+    var viewVector = Camera._velocity(this.center, this.position);
     var orthoVector = H3DU.Math.vec3norm(H3DU.Math.vec3cross(viewVector, this.up));
     H3DU.Math.vec3scaleInPlace(orthoVector, dist);
     H3DU.Math.vec3addInPlace(this.position, orthoVector);
@@ -697,6 +709,7 @@ Camera.prototype.moveVertical = function(dist) {
  * point to the camera's position.
  * @returns {Array<Number>} The return value as a unit
  * vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
+* Returns (0,0,0) if the reference point is the same as the camera's position.
  * @memberof! Camera#
 */
 Camera.prototype.getVectorFromCenter = function() {
@@ -734,16 +747,16 @@ Camera.prototype._updateNew = function(input) {
     this._move(delta.x, delta.y, 0.3);
   }
   if(input.keys[InputTracker.A + 22]) { // letter W
-    this.setDistance(this._distance() + 0.2);
+    this.setDistance(this.getDistance() + 0.2);
   }
   if(input.keys[InputTracker.A + 18]) { // letter S
-    this.setDistance(this._distance() - 0.2);
+    this.setDistance(this.getDistance() - 0.2);
   }
   if(deltaTicks !== 0) {
    // mousewheel up (negative) means move forward,
    // mousewheel down (positive) means move back
     console.log(deltaTicks);
-    this.setDistance(this._distance() - 0.6 * deltaTicks);
+    this.setDistance(this.getDistance() - 0.6 * deltaTicks);
   }
   return this;
 };

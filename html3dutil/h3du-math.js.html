@@ -133,7 +133,7 @@ true.)  The triangle's area is half of the cross product's length.
  * @param {Array&lt;Number>} a The first 3-element vector.
  * @param {Array&lt;Number>} b The second 3-element vector.
  * @returns {Array&lt;Number>} The resulting 3-element vector.
- * This is the vector &lt;i>to "a" from "b"&lt;/i>.
+ * This is the vector &lt;i>to &lt;code>a&lt;/code> from &lt;code>b&lt;/code>&lt;/i>.
  */
   "vec3sub":function(a, b) {
     "use strict";
@@ -761,7 +761,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * May be null or omitted if "pitchDegrees" is an array.
  * @param {Number} rollDegrees Rotation about the z-axis (swaying side by side), in degrees.
  * May be null or omitted if "pitchDegrees" is an array.
- * @param {number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
+ * @param {Number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
  * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
  * and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be
  * described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).
@@ -807,7 +807,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * Converts this quaternion to the same version of the rotation
  * in the form of pitch, yaw, and roll angles.
  * @param {Array&lt;Number>} a A quaternion.  Should be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
- * @param {number} [mode] Specifies the order in which the rotations will occur
+ * @param {Number} [mode] Specifies the order in which the rotations will occur
  * (in terms of their effect, not in terms of how they will be returned by this method).
  * Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll
  * and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be
