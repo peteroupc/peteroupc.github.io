@@ -28,12 +28,18 @@ H3DU.FrameBufferLoader.prototype.mapFrameBuffer = function(info, context) {
   for(var i = 0;i &lt; this._frameBuffers.length;i++) {
     fb = this._frameBuffers[i];
     if(fb[0] === info &amp;&amp; fb[1] === context) {
-      // TODO: Remap if width/height changes
+      if(info.width !== fb[3] || info.height !== fb[4]) {
+         // Width and height change, rebuild frame buffer
+        fb[2].dispose();
+        fb[2] = new H3DU.FrameBuffer(fb[1], info.width, info.height);
+        fb[3] = info.width;
+        fb[4] = info.height;
+      }
       return fb[2];
     }
   }
   fb = new H3DU.FrameBuffer(context, info.width, info.height);
-  this._frameBuffers.push([info, context, fb]);
+  this._frameBuffers.push([info, context, fb, info.width, info.height]);
   return fb;
 };
 /** @private */

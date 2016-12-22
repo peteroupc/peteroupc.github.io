@@ -41,7 +41,7 @@ at: http://peteroupc.github.io/
 */
 H3DU.BufferedMesh = function(mesh, context) {
   "use strict";
-  context = H3DU._toContext(context);
+  context = context.getContext ? context.getContext() : context;
   if(mesh instanceof H3DU.MeshBuffer) {
     this._bounds = mesh._bounds;
   } else {

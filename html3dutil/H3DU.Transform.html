@@ -47,7 +47,7 @@ from one coordinate system to another.
 
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.Transform#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line415">line 415</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line419">line 419</a>
      </i></small></p>
 
 <div class="description">
@@ -72,14 +72,18 @@ position, and matrix data.
 
     <h4 style="margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>H3DU.Transform#getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line368">line 368</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-transform.js.html">h3du-transform.js</a>, <a href="h3du-transform.js.html#line372">line 372</a>
      </i></small></p>
 
 <div class="description">
-    Gets the transformation matrix used by an object.  It is a combination
-of the scale, position, and rotation properties,
-unless a matrix was defined with H3DU.Transform#setMatrix
+    Gets the transformation matrix used by an object.  Depending
+on the state of this object, will return either:<ul>
+<li>The 4x4 matrix passed to H3DU.Transform#setMatrix, if the
+matrix was defined with that method
 and the transform wasn't reset yet with H3DU.Transform#resetTransform.
+<li>The matrix resulting from the position, rotation, and scale properties,
+multiplied in that order, otherwise.
+</ul>
 </div>
 
 <dl class="details">

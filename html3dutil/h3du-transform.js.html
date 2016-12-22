@@ -374,10 +374,14 @@ H3DU.Transform.prototype.multOrientation = function(angle, v, vy, vz) {
   return this.multQuaternion(H3DU.Math.quatFromAxisAngle(angle, v, vy, vz));
 };
 /**
- * Gets the transformation matrix used by an object.  It is a combination
- * of the scale, position, and rotation properties,
- * unless a matrix was defined with {@link H3DU.Transform#setMatrix}
+ * Gets the transformation matrix used by an object.  Depending
+ * on the state of this object, will return either:&lt;ul>
+* &lt;li>The 4x4 matrix passed to {@link H3DU.Transform#setMatrix}, if the
+* matrix was defined with that method
  * and the transform wasn't reset yet with {@link H3DU.Transform#resetTransform}.
+* &lt;li>The matrix resulting from the position, rotation, and scale properties,
+* multiplied in that order, otherwise.
+* &lt;/ul>
  * @returns {Array&lt;Number>} Return value.
 * @memberof! H3DU.Transform#
 */

@@ -426,9 +426,9 @@ Camera.prototype._orbit = function(deltaMouseX, deltaMouseY, angleMultiplier) {
   var a = (this.lat - 90) * Math.PI / 180;
   var b = (this.lon - 180) * Math.PI / 180;
   var ca = Math.cos(a);
-  var sa = (a>=0 && a<6.283185307179586) ? (a<=3.141592653589793 ? Math.sqrt(1.0-ca*ca) : -Math.sqrt(1.0-ca*ca)) : Math.sin(a);
+  var sa = a >= 0 &amp;&amp; a &lt; 6.283185307179586 ? a &lt;= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(a);
   var cb = Math.cos(b);
-  var sb = (b>=0 && b<6.283185307179586) ? (b<=3.141592653589793 ? Math.sqrt(1.0-cb*cb) : -Math.sqrt(1.0-cb*cb)) : Math.sin(b);
+  var sb = b >= 0 &amp;&amp; b &lt; 6.283185307179586 ? b &lt;= 3.141592653589793 ? Math.sqrt(1.0 - cb * cb) : -Math.sqrt(1.0 - cb * cb) : Math.sin(b);
   var dist = this.getDistance();
   x = ca * cb * dist + this.center[0];
   var z = ca * sb * dist + this.center[1];

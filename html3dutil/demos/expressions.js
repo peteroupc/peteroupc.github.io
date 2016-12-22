@@ -117,6 +117,12 @@ Operator.prototype.toString = function() {
   return this.name;
 };
 
+/**
+* Represents a variable with a given name.
+* @param {String} name Name of the variable.
+* @class
+* @alias Variable
+*/
 var Variable = function(name) {
   "use strict";
   this.name = name;
@@ -290,7 +296,7 @@ Expression.simplifyNodes = function(nodes) {
 };
 /**
  * Converts this expression to a string.
- * @returns {String} Return value.
+ * @returns {String} This expresion converted to a string.
  * @memberof! Expression#
 */
 Expression.prototype.toString = function() {
@@ -298,7 +304,11 @@ Expression.prototype.toString = function() {
   return "[" + this.nodes + "]";
 };
 
-/** @private */
+/**
+ * Gets the number of operands in this operation.
+ * @memberof! Operation#
+ * @return {Number} Return value.
+ */
 Operation.prototype.length = function() {
   "use strict";
   return this.nodes.length;
@@ -506,11 +516,7 @@ Operation.prototype.simplify = function() {
   }
   return this;
 };
-/**
- * TODO: Not documented yet.
- * @memberof! Operation#
- * @returns {Object} Return value.
-*/
+/** @private */
 Operation.prototype.degen = function() {
   "use strict";
   var cv = null;
@@ -577,12 +583,7 @@ Operation.prototype.constantValue = function() {
     return null;
   }
 };
-/**
- * TODO: Not documented yet.
- * @param {*} operation
- * @param {*} args
- * @returns {Object} Return value.
-*/
+/** @private */
 Operation.func = function(operation) {
   "use strict";
   var op = null,
@@ -593,13 +594,7 @@ Operation.func = function(operation) {
   }
   return op.degen();
 };
-/**
- * TODO: Not documented yet.
- * @param {*} operation
- * @param {*} x
- * @memberof! Operation#
- * @returns {Object} Return value.
-*/
+/** @private */
 Operation.prototype.combineOp = function(operation, x) {
   "use strict";
   var op = null;
@@ -621,9 +616,9 @@ Operation.prototype.combineOp = function(operation, x) {
   return op.degen();
 };
 /**
- * TODO: Not documented yet.
+ * Does a deep copy of this object and its operands
  * @memberof! Operation#
- * @returns {Object} Return value.
+ * @returns {Operation} A deep copy of this object.
 */
 Operation.prototype.copy = function() {
   "use strict";
@@ -635,9 +630,9 @@ Operation.prototype.copy = function() {
   return op;
 };
 /**
- * TODO: Not documented yet.
+ * Returns the negated form of this object.
  * @memberof! Operation#
- * @returns {Object} Return value.
+ * @returns {Operation} The negated form of this object.
 */
 Operation.prototype.negate = function() {
   "use strict";
@@ -661,30 +656,30 @@ Operation.prototype.negate = function() {
   return op.degen();
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns an expression equal to this operation minus another expression.
+ * @param {Expression} x An expression.
  * @memberof! Operation#
- * @returns {Object} Return value.
+ * @returns {Expression} Return value.
 */
 Operation.prototype.subtract = function(x) {
   "use strict";
   return this.add(typeof x === "number" ? -x : x.negate());
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns an expression equal to this operation plus another expression.
+ * @param {Expression} x An expression.
  * @memberof! Operation#
- * @returns {Object} Return value.
+ * @returns {Expression} Return value.
 */
 Operation.prototype.add = function(x) {
   "use strict";
   return this.combineOp("plus", x);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns an expression equal to this operation times another expression.
+ * @param {Expression} x An expression.
  * @memberof! Operation#
- * @returns {Object} Return value.
+ * @returns {Expression} Return value.
 */
 Operation.prototype.multiply = function(x) {
   "use strict";
@@ -710,10 +705,10 @@ Operation.prototype.multiply = function(x) {
   return this.combineOp("mul", x);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns an expression equal to this operation divided by another expression.
+ * @param {Expression} x An expression.
  * @memberof! Operation#
- * @returns {Object} Return value.
+ * @returns {Expression} Return value.
 */
 Operation.prototype.divide = function(x) {
   "use strict";
@@ -832,19 +827,18 @@ Operation.prototype.toString = function() {
 };
 
 /**
- * TODO: Not documented yet.
- * @param {*} op
+ * Returns whether this variable is an operation.
  * @memberof! Variable#
- * @returns {Object} Return value.
+ * @returns {Boolean} Always false.
 */
 Variable.prototype.isOperation = function() {
   "use strict";
   return false;
 };
 /**
- * TODO: Not documented yet.
+ * Returns a copy of this object
  * @memberof! Variable#
- * @returns {Object} Return value.
+ * @returns {Variable} This object (which is currently treated as immutable).
 */
 Variable.prototype.copy = function() {
   "use strict";
@@ -1002,9 +996,8 @@ Constant.prototype.copy = function() {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} op
  * @memberof! Constant#
- * @returns {Object} Return value.
+ * @returns {Boolean} Always false.
 */
 Constant.prototype.isOperation = function() {
   "use strict";
@@ -1033,11 +1026,7 @@ Constant.prototype.constantValue = function() {
   "use strict";
   return this.value;
 };
-/**
- * TODO: Not documented yet.
- * @memberof! Constant#
- * @returns {Object} Return value.
-*/
+/** @private */
 Constant.prototype.degen = function() {
   "use strict";
   return this;
