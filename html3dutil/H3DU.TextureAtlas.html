@@ -59,7 +59,7 @@ the HTML 3D Library.  Example:<pre>
 
         <h3 class="subsection-title">Methods</h3>
 
-    <h4 style="margin-bottom:0px" id=".load"><span style="font-weight:lighter"></span>.load<span class="signature">(atlasFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextFont.html">H3DU.TextFont</a>>}</span></h4>
+    <h4 style="margin-bottom:0px" id=".load"><span style="font-weight:lighter"></span>.load<span class="signature">(atlasFileName)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a>>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1295">line 1295</a>
      </i></small></p>
@@ -97,10 +97,10 @@ used by the texture atlas.
 <div class="param-desc">
     A promise that is resolved
 when the texture atlas data is loaded successfully (the result will be
-an H3DU.TextFont object), and is rejected when an error occurs.
+an H3DU.TextureAtlas object), and is rejected when an error occurs.
 
      (Type:
-<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextFont.html">H3DU.TextFont</a>></span>)
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a>></span>)
 
 </div>
 
@@ -157,8 +157,8 @@ when the texture atlas data and textures are loaded successfully,
 and is rejected when an error occurs.
 If the promise is resolved, the result will be an object with the
 following keys:<ul>
-<li><code>url</code> - The URL of the font data file.
-<li><code>atlas</code> - The font data in the form of an <a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a> object.
+<li><code>url</code> - The URL of the texture atlas data file.
+<li><code>atlas</code> - The texture atlas data in the form of an <a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a> object.
 <li><code>textures</code> - An array of <a href="H3DU.Texture.html">H3DU.Texture</a> objects used by the font,
 in the order in which they are declared in the font data file.
 </ul>
@@ -168,7 +168,7 @@ in the order in which they are declared in the font data file.
 
 </div>
 
-    <h4 style="margin-bottom:0px" id="loadTextures"><span style="font-weight:lighter"></span>H3DU.TextureAtlas#loadTextures<span class="signature">(textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>}</span></h4>
+    <h4 style="margin-bottom:0px" id="loadTextures"><span style="font-weight:lighter"></span>H3DU.TextureAtlas#loadTextures<span class="signature">(textureLoader)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>>}</span></h4>
 
      <p style="margin-top:0px"><small><i>Source: <a href="extras_text.js.html">extras/text.js</a>, <a href="extras_text.js.html#line1230">line 1230</a>
      </i></small></p>
@@ -209,7 +209,7 @@ resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.html">H3DU.Texture</a> object.
 
      (Type:
-<span class="param-type"><a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>></span>)
+<span class="param-type"><a href="Promise.html">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>>></span>)
 
 </div>
 

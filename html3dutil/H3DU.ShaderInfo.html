@@ -29,7 +29,7 @@
 
     <h4 style="margin-bottom:0px" id="ShaderInfo"><span style="font-weight:lighter"></span>new ShaderInfo<span class="signature">(vertexShader<sub style="font-weight:lighter">opt</sub>, fragmentShader<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line27">line 27</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line29">line 29</a>
      </i></small></p>
 
 <div class="description">
@@ -39,7 +39,9 @@ and a fragment shader (which processes pixels).  Shader programs
 are specially designed for running on a graphics processing unit,
 or GPU.<p>
 This class also stores uniform values associated with the shader
-source code.
+source code.<p>
+Note that this class is not associated with any WebGL context, so the
+uniform values this object stores is not set for any WebGL context.
 </div>
 
     <h5>Parameters:</h5>
@@ -89,7 +91,7 @@ If null, a default fragment shader is used instead.</dd>
 
     <h4 style="margin-bottom:0px" id=".getBasicVertex"><span style="font-weight:lighter"></span>.getBasicVertex<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line322">line 322</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line324">line 324</a>
      </i></small></p>
 
 <div class="description">
@@ -112,7 +114,7 @@ If null, a default fragment shader is used instead.</dd>
 
     <h4 style="margin-bottom:0px" id=".getDefaultFragment"><span style="font-weight:lighter"></span>.getDefaultFragment<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line406">line 406</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line408">line 408</a>
      </i></small></p>
 
 <div class="description">
@@ -139,7 +141,7 @@ as SHADING is also enabled).
 
     <h4 style="margin-bottom:0px" id=".getDefaultVertex"><span style="font-weight:lighter"></span>.getDefaultVertex<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line351">line 351</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line353">line 353</a>
      </i></small></p>
 
 <div class="description">
@@ -163,7 +165,7 @@ at the start of the return value enables the lighting model.
 
     <h4 style="margin-bottom:0px" id=".makeCopyEffect"><span style="font-weight:lighter"></span>.makeCopyEffect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line226">line 226</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line228">line 228</a>
      </i></small></p>
 
 <div class="description">
@@ -186,7 +188,7 @@ at the start of the return value enables the lighting model.
 
     <h4 style="margin-bottom:0px" id=".makeEdgeDetectEffect"><span style="font-weight:lighter"></span>.makeEdgeDetectEffect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line284">line 284</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line286">line 286</a>
      </i></small></p>
 
 <div class="description">
@@ -210,7 +212,7 @@ the source texture's edges.
 
     <h4 style="margin-bottom:0px" id=".makeEffect"><span style="font-weight:lighter"></span>.makeEffect<span class="signature">(functionCode)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line258">line 258</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line260">line 260</a>
      </i></small></p>
 
 <div class="description">
@@ -263,7 +265,7 @@ constants, functions, and so on (but not another "main" function).</dd>
 
     <h4 style="margin-bottom:0px" id=".makeEffectFragment"><span style="font-weight:lighter"></span>.makeEffectFragment<span class="signature">(functionCode)</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line205">line 205</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line207">line 207</a>
      </i></small></p>
 
 <div class="description">
@@ -305,7 +307,7 @@ a raster effect to a texture.
 
     <h4 style="margin-bottom:0px" id=".makeInvertEffect"><span style="font-weight:lighter"></span>.makeInvertEffect<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line269">line 269</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line271">line 271</a>
      </i></small></p>
 
 <div class="description">
@@ -328,7 +330,7 @@ a raster effect to a texture.
 
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.ShaderInfo#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line63">line 63</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line65">line 65</a>
      </i></small></p>
 
 <div class="description">
@@ -352,7 +354,7 @@ copied to that object.
 
     <h4 style="margin-bottom:0px" id="getFragmentShader"><span style="font-weight:lighter"></span>H3DU.ShaderInfo#getFragmentShader<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line53">line 53</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line55">line 55</a>
      </i></small></p>
 
 <div class="description">
@@ -375,7 +377,7 @@ copied to that object.
 
     <h4 style="margin-bottom:0px" id="getVertexShader"><span style="font-weight:lighter"></span>H3DU.ShaderInfo#getVertexShader<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line44">line 44</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line46">line 46</a>
      </i></small></p>
 
 <div class="description">
@@ -398,7 +400,7 @@ copied to that object.
 
     <h4 style="margin-bottom:0px" id="setUniforms"><span style="font-weight:lighter"></span>H3DU.ShaderInfo#setUniforms<span class="signature">(uniforms)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line87">line 87</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shaderinfo.js.html">h3du-shaderinfo.js</a>, <a href="h3du-shaderinfo.js.html#line89">line 89</a>
      </i></small></p>
 
 <div class="description">

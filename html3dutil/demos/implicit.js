@@ -593,10 +593,11 @@ ImplicitSurface.prototype._marchingTetrahedrons = function(mesh, fX, fY, fZ, fSc
   }
 };
 /**
- * TODO: Not documented yet.
- * @param {Number} xsize Number of points along the X-axis. Must be 2 or greater.
- * @param {Number} ysize Number of points along the Y-axis. Must be 2 or greater.
- * @param {Number} zsize Number of points along the Z-axis. Must be 2 or greater.
+ * Finds a tight bounding box within the given three-dimensional
+ * area that encloses this implicit surface.
+ * @param {Number} xsize Number of grid points along the X-axis. Must be 2 or greater.
+ * @param {Number} ysize Number of grid points along the Y-axis. Must be 2 or greater.
+ * @param {Number} zsize Number of grid points along the Z-axis. Must be 2 or greater.
  * @param {Number} xmin Smallest value along the X-axis.
  * @param {Number} xmax Greatest value along the X-axis.
  * @param {Number} ymin Smallest value along the Y-axis.
@@ -604,14 +605,22 @@ ImplicitSurface.prototype._marchingTetrahedrons = function(mesh, fX, fY, fZ, fSc
  * @param {Number} zmin Smallest value along the Z-axis.
  * @param {Number} zmax Greatest value along the Z-axis.
  * @memberof! ImplicitSurface#
-* @returns {ImplicitSurface} This object.
+* @returns {Array<Number>} An array of six numbers describing a tight
+* axis-aligned bounding box
+* that fits this implicit surface within the given area. The first three numbers
+* are the smallest-valued X, Y, and Z coordinates, and the
+* last three are the largest-valued X, Y, and Z coordinates.
+* If no part of the boundary of the surface lies within the given
+* area, returns the array [Inf, Inf, Inf, -Inf,
+* -Inf, -Inf].
 */
 ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   var xstep = (xmax - xmin) / xsize;
   var ystep = (ymax - ymin) / ysize;
   var zstep = (zmax - zmin) / zsize;
-  var bounds = [0, 0, 0, 0, 0, 0];
+  var inf = Number.POSITIVE_INFINITY;
+  var bounds = [inf, inf, inf, -inf, -inf, -inf];
   var first = true;
   var x, y, z;
   var iX, iY, iZ;
@@ -639,14 +648,17 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
       }
     }
   }
-  return this;
+  return bounds;
 };
 /**
- * TODO: Not documented yet.
+ * Evaluates the grid points of the given three-dimensional area and adds to the
+ * given mesh those points that are on or close to the boundary of this
+ * implicit surface
+ * within the given area.
  * @param {H3DU.Mesh} mesh Mesh to store the points in.
- * @param {Number} xsize Number of points along the X-axis. Must be 2 or greater.
- * @param {Number} ysize Number of points along the Y-axis. Must be 2 or greater.
- * @param {Number} zsize Number of points along the Z-axis. Must be 2 or greater.
+ * @param {Number} xsize Number of grid points along the X-axis. Must be 2 or greater.
+ * @param {Number} ysize Number of grid points along the Y-axis. Must be 2 or greater.
+ * @param {Number} zsize Number of grid points along the Z-axis. Must be 2 or greater.
  * @param {Number} xmin Smallest value along the X-axis.
  * @param {Number} xmax Greatest value along the X-axis.
  * @param {Number} ymin Smallest value along the Y-axis.
@@ -677,11 +689,13 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
   return this;
 };
 /**
- * TODO: Not documented yet.
+ * Evaluates the grid points of the given three-dimensional area and adds to the
+ * given mesh the triangles and normals that make up the boundary of
+ * this implicit surface within the given area.
  * @param {H3DU.Mesh} mesh Mesh to store the points in.
- * @param {Number} xsize Number of points along the X-axis. Must be 2 or greater.
- * @param {Number} ysize Number of points along the Y-axis. Must be 2 or greater.
- * @param {Number} zsize Number of points along the Z-axis. Must be 2 or greater.
+ * @param {Number} xsize Number of grid points along the X-axis. Must be 2 or greater.
+ * @param {Number} ysize Number of grid points along the Y-axis. Must be 2 or greater.
+ * @param {Number} zsize Number of grid points along the Z-axis. Must be 2 or greater.
  * @param {Number} xmin Smallest value along the X-axis.
  * @param {Number} xmax Greatest value along the X-axis.
  * @param {Number} ymin Smallest value along the Y-axis.

@@ -66,8 +66,6 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  * and (1,1,1) means total ambient color.&lt;p>
  * Setting ambient color and diffusion color to the same value usually defines an object's
  * color.&lt;p>
- * In the default shader program, if a mesh defines its own colors, those
- * colors are used for ambient color rather than this property.
 */
   this.ambient = ambient ? ambient.slice(0, 3) : [0.2, 0.2, 0.2];
  /**
@@ -75,7 +73,7 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  * and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
  * differently depending
  * on how directly they face diffuse lights, diffusion can contribute
- * much of the 3D effect of that object.&lt;p>
+ * much of the 3D appearance of that object.&lt;p>
  * This value is a 4-element array giving the red, green, blue, and
  * alpha components of the diffusion; the final diffusion color depends
  * on the diffusion colors of lights that shine on the material.
@@ -89,7 +87,6 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  * (0-1).  If this element is omitted, the default is 1.&lt;p>
 */
   this.diffuse = diffuse ? diffuse.slice(0, diffuse.length) : [0.8, 0.8, 0.8, 1.0];
- // TODO: Consider changing default value of specular to 1
  /**
  * Specular highlight reflection of this material.
  * Specular reflection is a reflection in the opposite direction from the direction
@@ -102,9 +99,10 @@ H3DU.Material = function(ambient, diffuse, specular, shininess, emission) {
  * (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
  * The specular color is usually grayscale
  * (all three components are the same), but can be colored if the material represents an
-* uncoated metal of some sort. If this element is omitted, the default is (0,0,0).&lt;p>
+* uncoated metal of some sort. If this element is omitted, the default is (1,1,1).&lt;p>
+* NOTE: Before version 2.0, the default was (0,0,0).
 */
-  this.specular = specular ? specular.slice(0, 3) : [0, 0, 0];
+  this.specular = specular ? specular.slice(0, 3) : [1.0, 1.0, 1.0];
  /**
 * Additive color emitted by objects with this material.
 * Used for objects that glow on their own, among other things.
@@ -316,7 +314,7 @@ H3DU.Material.fromColor = function(r, g, b, a) {
  * object from a texture to apply to a 3D object's surface.
 * @param {H3DU.Texture|string} texture {@link H3DU.Texture} object, or a string with the
 * URL of the texture data.  In the case of a string the texture will be loaded via
-*  the JavaScript DOM's Image class.  However, this constructor
+*  the JavaScript DOM's Image class.  However, this method
 *  will not load that image yet.
 * @returns {H3DU.Material} The resulting material object.
  * @memberof! H3DU.Material

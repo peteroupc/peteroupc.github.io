@@ -126,7 +126,7 @@ see the H3DU.Material#setParams method.</i>
 
 <h4 style="margin-bottom:0px" id="ambient"><span style="font-weight:lighter"></span>ambient<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line56">line 56</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line54">line 54</a>
      </i></small></p>
 
 <div class="description">
@@ -145,8 +145,6 @@ on the ambient color of the scene.
 and (1,1,1) means total ambient color.<p>
 Setting ambient color and diffusion color to the same value usually defines an object's
 color.<p>
-In the default shader program, if a mesh defines its own colors, those
-colors are used for ambient color rather than this property.
 </div>
 
 <dl class="details">
@@ -155,7 +153,7 @@ colors are used for ambient color rather than this property.
 
 <h4 style="margin-bottom:0px" id="basic"><span style="font-weight:lighter"></span>basic<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line162">line 162</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line160">line 160</a>
      </i></small></p>
 
 <div class="description">
@@ -169,7 +167,7 @@ when processing objects that use this material.
 
 <h4 style="margin-bottom:0px" id="diffuse"><span style="font-weight:lighter"></span>diffuse<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line75">line 75</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line73">line 73</a>
      </i></small></p>
 
 <div class="description">
@@ -177,7 +175,7 @@ when processing objects that use this material.
 and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
 differently depending
 on how directly they face diffuse lights, diffusion can contribute
-much of the 3D effect of that object.<p>
+much of the 3D appearance of that object.<p>
 This value is a 4-element array giving the red, green, blue, and
 alpha components of the diffusion; the final diffusion color depends
 on the diffusion colors of lights that shine on the material.
@@ -197,7 +195,7 @@ This value can have an optional fourth element giving the alpha component
 
 <h4 style="margin-bottom:0px" id="emission"><span style="font-weight:lighter"></span>emission<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line104">line 104</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line102">line 102</a>
      </i></small></p>
 
 <div class="description">
@@ -219,7 +217,7 @@ while negative values subtract from it. (0,0,0), the default, means no additive 
 
 <h4 style="margin-bottom:0px" id="normalMap"><span style="font-weight:lighter"></span>normalMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line156">line 156</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line154">line 154</a>
      </i></small></p>
 
 <div class="description">
@@ -259,7 +257,7 @@ method can calculate the tangents and bitangents appropriate for normal mapping.
 
 <h4 style="margin-bottom:0px" id="shader"><span style="font-weight:lighter"></span>shader<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line167">line 167</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line165">line 165</a>
      </i></small></p>
 
 <div class="description">
@@ -289,7 +287,7 @@ Ranges from 0 through 128.
 
 <h4 style="margin-bottom:0px" id="specular"><span style="font-weight:lighter"></span>specular<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line91">line 91</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line89">line 89</a>
      </i></small></p>
 
 <div class="description">
@@ -304,7 +302,8 @@ on the specular color of lights that shine on the material.
 (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
 The specular color is usually grayscale
 (all three components are the same), but can be colored if the material represents an
-uncoated metal of some sort. If this element is omitted, the default is (0,0,0).<p>
+uncoated metal of some sort. If this element is omitted, the default is (1,1,1).<p>
+NOTE: Before version 2.0, the default was (0,0,0).
 </div>
 
 <dl class="details">
@@ -313,7 +312,7 @@ uncoated metal of some sort. If this element is omitted, the default is (0,0,0).
 
 <h4 style="margin-bottom:0px" id="specularMap"><span style="font-weight:lighter"></span>specularMap<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line124">line 124</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line122">line 122</a>
      </i></small></p>
 
 <div class="description">
@@ -334,7 +333,7 @@ specular factors in certain areas.
 
 <h4 style="margin-bottom:0px" id="texture"><span style="font-weight:lighter"></span>texture<span style="font-weight:lighter"></span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line111">line 111</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line109">line 109</a>
      </i></small></p>
 
 <div class="description">
@@ -351,7 +350,7 @@ of each part of the material.
 
     <h4 style="margin-bottom:0px" id=".forShader"><span style="font-weight:lighter"></span>.forShader<span class="signature">(shader)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line320">line 320</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line318">line 318</a>
      </i></small></p>
 
 <div class="description">
@@ -393,7 +392,7 @@ object from a shader information object to use when drawing a 3D object.
 
     <h4 style="margin-bottom:0px" id=".fromColor"><span style="font-weight:lighter"></span>.fromColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line293">line 293</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line291">line 291</a>
      </i></small></p>
 
 <div class="description">
@@ -484,7 +483,7 @@ this value is treated as 1.0.</dd>
 
     <h4 style="margin-bottom:0px" id=".fromTexture"><span style="font-weight:lighter"></span>.fromTexture<span class="signature">(texture)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line308">line 308</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line306">line 306</a>
      </i></small></p>
 
 <div class="description">
@@ -511,7 +510,7 @@ object from a texture to apply to a 3D object's surface.
            </dt><dd>
            <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the
 URL of the texture data.  In the case of a string the texture will be loaded via
- the JavaScript DOM's Image class.  However, this constructor
+ the JavaScript DOM's Image class.  However, this method
  will not load that image yet.</dd>
 
     </dl>
@@ -532,7 +531,7 @@ URL of the texture data.  In the case of a string the texture will be loaded via
 
     <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.Material#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line177">line 177</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line175">line 175</a>
      </i></small></p>
 
 <div class="description">
@@ -558,7 +557,7 @@ to the same object will be used.
 
     <h4 style="margin-bottom:0px" id="setParams"><span style="font-weight:lighter"></span>H3DU.Material#setParams<span class="signature">(params)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Material.html">H3DU.Material</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line225">line 225</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-material.js.html">h3du-material.js</a>, <a href="h3du-material.js.html#line223">line 223</a>
      </i></small></p>
 
 <div class="description">

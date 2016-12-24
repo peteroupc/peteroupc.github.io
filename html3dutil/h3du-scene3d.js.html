@@ -138,11 +138,7 @@ H3DU.Scene3D.ProgramCache.prototype.dispose = function() {
   this._customPrograms = [];
   this._programs = [];
 };
-/** @private
- * @param {Object} info Description of info.
- * @param {Object} context Description of context.
- * @returns {Object} Return value.
-*/
+/** @private */
 H3DU.Scene3D.ProgramCache.prototype.getCustomProgram = function(info, context) {
   "use strict";
   if(!context)throw new Error();
@@ -356,7 +352,7 @@ H3DU.Scene3D.prototype.getClearColor = function() {
 * and prepared this object for the new program.)
 * @deprecated Instead of this method, use the "setShader" program of individual shapes
 * to set the shader programs they use.
-* @param {H3DU.ShaderProgram} program The shader program to use.
+* @param {H3DU.ShaderProgram|null} program No longer used.
 * @returns {H3DU.Scene3D} This object.
 * @memberof! H3DU.Scene3D#
 */

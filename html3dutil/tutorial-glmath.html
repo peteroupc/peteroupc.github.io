@@ -27,7 +27,7 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 to each other.  As such, a vector can symbolize a position, a direction,
 a ray, a color, or anything else.  The methods in this class treat arrays
 as vectors.  Functions dealing with vectors begin with &quot;vec&quot;.
-Many of GLMath's functions use 3- or 4-element vectors.</p>
+Many of H3DU.Math's functions use 3- or 4-element vectors.</p>
 <p>If a 4-element vector describes a position, direction,
 or normal, the elements are given as X, Y, Z, and W, in that order.</p>
 <p>If a 4-element vector describes a color, the elements are given as red, green,
@@ -76,16 +76,14 @@ before the translations (shifts) take place.</p>
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.</p>
 <h2>Quaternions <a id=Quaternions></a></h2><p>A quaternion is a 4-element array that describes a
-3D rotation.  It works like a vector in many cases.
-The first three elements (X, Y, and Z), represent
-an axis of rotation, and the fourth element is
-the W component. Functions dealing with quaternions begin with
-&quot;quat&quot;.  A quaternion is generated as follows:</p>
+3D rotation.  Functions dealing with quaternions begin with
+&quot;quat&quot;.  A quaternion's:</p>
 <ul>
-<li>Set X, Y, and Z to the (normalized) axis of rotation multiplied by the sine of
-half the angle.  This results in the same axis of rotation as before,
-but in a different form.</li>
-<li>Set W to the cosine of half the angle.</li>
+<li>first three elements (X, Y, Z) describe a 3D point, where the
+direction from the origin (0, 0, 0) to that point is the <em>axis of rotation</em>,
+and the distance from the origin to that point is the sine
+of half the rotation angle.</li>
+<li>fourth element (W) is the cosine of half the rotation angle.</li>
 </ul>
 <h3>Multiplying quaternions <a id=Multiplying_quaternions></a></h3><p>The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
@@ -130,11 +128,11 @@ Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 <h2>Planes <a id=Planes></a></h2><p>A 4-element array can describe a 3D plane in the following manner:</p>
 <ul>
-<li>The 4 elements, labeled A, B, C, and D in that order, describe a plane
-whose points satisfy the equation:
-<blockquote>Ax + By + Cz + D = 0</blockquote>
-where x, y, and z are the
-coordinates of any point lying on the plane.</li>
+<li><p>The 4 elements, labeled A, B, C, and D in that order, describe a plane
+whose points satisfy the equation:</p>
+<pre class="prettyprint source"><code>  Ax + By + Cz + D = 0</code></pre><p>where x, y, and z are the
+coordinates of any point lying on the plane.</p>
+</li>
 <li>A, B, and C are
 the X, Y, and Z components of the plane's normal vector.</li>
 <li>D is the distance in the normal's direction from the plane to the origin,
@@ -145,7 +143,7 @@ plane's normal and any point on the plane.</li>
 <p>There is one method that deals with planes:</p>
 <ul>
 <li><a href="H3DU.Math.html#.planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
-Converts the plane to a form in which its normal is unit length.</li>
+Converts the plane to a form in which its normal has a length of 1.</li>
 </ul>
 <h2>Coordinate Systems <a id=Coordinate_Systems></a></h2><p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
 <ul>

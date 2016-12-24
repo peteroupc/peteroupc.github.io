@@ -26,7 +26,7 @@ at: http://peteroupc.github.io/
 /**
 * A geometric mesh in the form of buffer objects.
 * @deprecated This class is likely to become a private class.
-* Use the MeshBuffer class instead, which is not coupled to WebGL
+* Use the {@link H3DU.MeshBuffer} class instead, which is not coupled to WebGL
 * contexts.
 * @class
 * @alias H3DU.BufferedMesh
@@ -210,6 +210,7 @@ H3DU.BufferedMesh.prototype._prepareDraw = function(program, context) {
 * Binds the buffers in this object to attributes according
 * to their data format, and draws the elements in this mesh
 * according to the data in its buffers.
+* @deprecated
 * @param {H3DU.ShaderProgram} program A shader program object to get
 * the IDs from for attributes named "position", "normal",
 * "colorAttr", and "uv", and the "useColorAttr" uniform.
