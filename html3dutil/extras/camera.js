@@ -370,7 +370,7 @@ InputTracker.prototype.update = function() {
 * @param {Number} nearZ The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
-* @param {Number}  farZ The distance from the camera to
+* @param {Number} farZ The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
 * @param {HTMLCanvasElement} [canvas] A canvas to associate with this

@@ -476,17 +476,17 @@ H3DU.MatrixStack.prototype.ortho2d = function(l, r, b, t) {
  * a matrix that defines a perspective projection.<p>
  * This method assumes a right-handed coordinate system, such as
  * OpenGL's.
-* @param {Number}  fov Vertical field of view, in degrees. Should be less
+* @param {Number} fov Vertical field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,
 * zoom can be implemented by multiplying field of view by an
 * additional factor.)
-* @param {Number}  aspect The ratio of width to height of the viewport, usually
+* @param {Number} aspect The ratio of width to height of the viewport, usually
 *  the scene's aspect ratio.
 * @param {Number} n The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
-* @param {Number}  f The distance from the camera to
+* @param {Number} f The distance from the camera to
 * the far clipping plane. Objects beyond this distance will be too far
 * to be seen.
  * @returns {H3DU.MatrixStack} This object.
