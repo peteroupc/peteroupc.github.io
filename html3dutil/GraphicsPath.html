@@ -51,7 +51,7 @@ the HTML 3D Library.  Example:<pre>
 
     <h4 style="margin-bottom:0px" id=".fromString"><span style="font-weight:lighter">(static) </span>fromString<span class="signature">(str)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1726">line 1726</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1730">line 1730</a>
      </i></small></p>
 
 <div class="description">
@@ -133,7 +133,7 @@ from an SVG string describing a polyline.</p>
 
     <h4 style="margin-bottom:0px" id="arc"><span style="font-weight:lighter"></span>GraphicsPath#arc<span class="signature">(x, y, radius, startAngle, endAngle, ccw)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1128">line 1128</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1132">line 1132</a>
      </i></small></p>
 
 <div class="description">
@@ -240,7 +240,7 @@ down under the coordinate system).</dd>
 
     <h4 style="margin-bottom:0px" id="arcSvgTo"><span style="font-weight:lighter"></span>GraphicsPath#arcSvgTo<span class="signature">(rx, ry, rot, largeArc, sweep, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1398">line 1398</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1402">line 1402</a>
      </i></small></p>
 
 <div class="description">
@@ -362,7 +362,7 @@ down under the coordinate system); if false, counterclockwise.</dd>
 
     <h4 style="margin-bottom:0px" id="arcTo"><span style="font-weight:lighter"></span>GraphicsPath#arcTo<span class="signature">(x1, y1, x2, y2, radius)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1085">line 1085</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1089">line 1089</a>
      </i></small></p>
 
 <div class="description">
@@ -389,7 +389,8 @@ HTML Canvas 2D Context.
 current end point, forms a tangent line.  The point where the
 circle touches this tangent line is the start point of the arc, and if the
 point isn't the same as the current end point, this method adds
-a line segment connecting the two points.</dd>
+a line segment connecting the two points. (Note that the start point
+of the arc is not necessarily the same as (x1, y1) or the current end point.)</dd>
 
         <dt>
 
@@ -415,7 +416,10 @@ a line segment connecting the two points.</dd>
            </dt><dd>
            X-coordinate of a point that, along with the
 point (x1, y1), forms a tangent line.  The point where the
-circle touches this tangent line is the end point of the arc.</dd>
+circle touches this tangent line is the end point of the arc. (Note that the
+end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
+When this method returns, the current end point will be set to the end
+point of the arc.</dd>
 
         <dt>
 
@@ -459,7 +463,7 @@ circle touches this tangent line is the end point of the arc.</dd>
 
     <h4 style="margin-bottom:0px" id="bezierCurveTo"><span style="font-weight:lighter"></span>GraphicsPath#bezierCurveTo<span class="signature">(x, y, x2, y2, x3, y3)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1200">line 1200</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1204">line 1204</a>
      </i></small></p>
 
 <div class="description">
@@ -868,7 +872,7 @@ is 1.
 
     <h4 style="margin-bottom:0px" id="getTriangles"><span style="font-weight:lighter"></span>GraphicsPath#getTriangles<span class="signature">(flatness<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Array.&lt;Number>>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line2351">line 2351</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line2355">line 2355</a>
      </i></small></p>
 
 <div class="description">
@@ -1165,7 +1169,7 @@ in units.
 
     <h4 style="margin-bottom:0px" id="quadraticCurveTo"><span style="font-weight:lighter"></span>GraphicsPath#quadraticCurveTo<span class="signature">(x, y, x2, y2)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1180">line 1180</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1184">line 1184</a>
      </i></small></p>
 
 <div class="description">
@@ -1243,7 +1247,7 @@ at this path's current position.
 
     <h4 style="margin-bottom:0px" id="rect"><span style="font-weight:lighter"></span>GraphicsPath#rect<span class="signature">(x, y, width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1679">line 1679</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1683">line 1683</a>
      </i></small></p>
 
 <div class="description">
@@ -1417,7 +1421,7 @@ See <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a>.
 
     <h4 style="margin-bottom:0px" id="transform"><span style="font-weight:lighter"></span>GraphicsPath#transform<span class="signature">(trans)</span><span style="font-weight:lighter"> &rarr; {<a href="GraphicsPath.html">GraphicsPath</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1609">line 1609</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_path.js.html">extras/path.js</a>, <a href="extras_path.js.html#line1613">line 1613</a>
      </i></small></p>
 
 <div class="description">
@@ -1479,8 +1483,8 @@ or holes.  Subpaths that are holes have the opposite winding
 order (clockwise or counterclockwise) from the subpath
 that contains them.
 <li>To use this method, you must include the script "extras/pathclip.js";
-this is in addition to "extras/pathclip.js".  Example:<pre>
-&lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
+this is in addition to "extras/path.js".  Example:<pre>
+&lt;script type="text/javascript" src="extras/path.js">&lt;/script>
 &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
 </ul>
 </div>

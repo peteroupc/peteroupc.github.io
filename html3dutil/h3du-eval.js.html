@@ -864,15 +864,16 @@ at: http://peteroupc.github.io/
 * the function used for vertex calculation (we'll call it &lt;b>F&lt;/b>) with
 * respect to u, then find the partial derivative of &lt;b>F&lt;/b> with respect to
 * v, then take their &lt;a href="http://en.wikipedia.org/wiki/Cross_product">cross
-* product&lt;/a> (e.g., {@link H3DU.Math.vec3cross}), then normalize the result to unit length.
+* product&lt;/a> (e.g., {@link H3DU.Math.vec3cross}), then convert the result to a unit vector
+* (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
 * In mathematical notation, this looks like:
-* &lt;b>c&lt;/b> = &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>u&lt;/i> &amp;times;
-* &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>v&lt;/i>; &lt;b>n&lt;/b> = &lt;b>c&lt;/b> / |&lt;b>c&lt;/b>|.&lt;p>
+* &lt;b>c&lt;/b> = &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202;&lt;i>u&lt;/i> &amp;times;
+* &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202;&lt;i>v&lt;/i>; &lt;b>n&lt;/b> = &lt;b>c&lt;/b> / |&lt;b>c&lt;/b>|.&lt;p>
 * If autonormal is enabled (see setAutoNormal()), H3DU.SurfaceEval uses an approximation to this approach,
 * as the H3DU.SurfaceEval class doesn't know the implementation of the method used
 * for vertex calculation.&lt;p>
-* (Note: &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>u&lt;/i> is also called the &lt;i>bitangent&lt;/i>
-* or &lt;i>binormal vector&lt;/i>, and &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202&lt;i>v&lt;/i> is also
+* (Note: &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202;&lt;i>u&lt;/i> is also called the &lt;i>bitangent&lt;/i>
+* or &lt;i>binormal vector&lt;/i>, and &amp;#x2202;&lt;b>F&lt;/b>/&amp;#x2202;&lt;i>v&lt;/i> is also
 * called the &lt;i>tangent vector&lt;/i>.)
 * @param {Object} evaluator An object that must contain a function
 * named "evaluate", giving 3 values as a result.  See {@link H3DU.SurfaceEval#vertex}.

@@ -57,7 +57,7 @@ See the <a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfac
 
     <h4 style="margin-bottom:0px" id="color"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#color<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line903">line 903</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line904">line 904</a>
      </i></small></p>
 
 <div class="description">
@@ -100,7 +100,7 @@ named "evaluate", giving 3 values as a result.  See H3DU.SurfaceEval#vertex.
 
     <h4 style="margin-bottom:0px" id="evalOne"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#evalOne<span class="signature">(mesh, u, v)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line941">line 941</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line942">line 942</a>
      </i></small></p>
 
 <div class="description">
@@ -169,7 +169,7 @@ started.</dd>
 
     <h4 style="margin-bottom:0px" id="evalSurface"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#evalSurface<span class="signature">(mesh, mode<sub style="font-weight:lighter">opt</sub>, un<sub style="font-weight:lighter">opt</sub>, vn<sub style="font-weight:lighter">opt</sub>, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>, v1<sub style="font-weight:lighter">opt</sub>, v2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line1095">line 1095</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line1096">line 1096</a>
      </i></small></p>
 
 <div class="description">
@@ -323,7 +323,7 @@ Default is 1.</dd>
 
     <h4 style="margin-bottom:0px" id="normal"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#normal<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line891">line 891</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line892">line 892</a>
      </i></small></p>
 
 <div class="description">
@@ -335,15 +335,16 @@ cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">pa
 the function used for vertex calculation (we'll call it <b>F</b>) with
 respect to u, then find the partial derivative of <b>F</b> with respect to
 v, then take their <a href="http://en.wikipedia.org/wiki/Cross_product">cross
-product</a> (e.g., <a href="H3DU.Math.html#.vec3cross">H3DU.Math.vec3cross</a>), then normalize the result to unit length.
+product</a> (e.g., <a href="H3DU.Math.html#.vec3cross">H3DU.Math.vec3cross</a>), then convert the result to a unit vector
+(a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a> with a length of 1).
 In mathematical notation, this looks like:
-<b>c</b> = &#x2202;<b>F</b>/&#x2202<i>u</i> &times;
-&#x2202;<b>F</b>/&#x2202<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
+<b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
+&#x2202;<b>F</b>/&#x2202;<i>v</i>; <b>n</b> = <b>c</b> / |<b>c</b>|.<p>
 If autonormal is enabled (see setAutoNormal()), H3DU.SurfaceEval uses an approximation to this approach,
 as the H3DU.SurfaceEval class doesn't know the implementation of the method used
 for vertex calculation.<p>
-(Note: &#x2202;<b>F</b>/&#x2202<i>u</i> is also called the <i>bitangent</i>
-or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202<i>v</i> is also
+(Note: &#x2202;<b>F</b>/&#x2202;<i>u</i> is also called the <i>bitangent</i>
+or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202;<i>v</i> is also
 called the <i>tangent vector</i>.)
 </div>
 
@@ -456,7 +457,7 @@ will automatically be generated; false means they won't.</dd>
 
     <h4 style="margin-bottom:0px" id="texCoord"><span style="font-weight:lighter"></span>H3DU.SurfaceEval#texCoord<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line921">line 921</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line922">line 922</a>
      </i></small></p>
 
 <div class="description">

@@ -125,18 +125,18 @@ shape.setPosition(1,0,0);
 batch.addShape(shape);</code></pre><p>The appearance of a 3D shape is known in the 3D graphics world as a &quot;material&quot;. It includes textures (images), colors, and light reflection parameters. The <a href="http://peteroupc.github.io/html3dutil/H3DU.Material.html"><code>Material</code></a> class holds data on some of these parameters, and is part of the definition of a shape.</p>
 <p>Here are details on some of the <code>Shape</code> class's methods.</p>
 <ul>
-<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setPosition(x, y, z)</code></dfn>
+<li><dfn><code>shape.setPosition(x, y, z)</code></dfn>
 <br>Sets the shape's position to the given coordinates.</li>
-<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setScale(x, y, z)</code></dfn>
+<li><dfn><code>shape.setScale(x, y, z)</code></dfn>
 <br>Sets the shape's scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.</li>
-<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.getTransform().setOrientation(angle, x, y, z)</code></dfn>
+<li><dfn><code>shape.getTransform().setOrientation(angle, x, y, z)</code></dfn>
 <br>Sets the shape's rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).</li>
-<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setColor(color)</code></dfn>
+<li><dfn><code>shape.setColor(color)</code></dfn>
 <br>Gives the shape a particular color. <code>color</code> can be an HTML color (&quot;#ff0000&quot;), CSS color (&quot;red&quot;), RGB color(&quot;rgb(20, 30, 40)&quot;) or HSL color(&quot;hsl(20, 50%, 50%)&quot;), or a set of values from 0 to 1 (example: <code>[1.0,0.5,0.0]</code>).
 See my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html">colors tutorial</a>.</li>
-<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.setTexture(name)</code></dfn>
+<li><dfn><code>shape.setTexture(name)</code></dfn>
 <br>Gives the shape a particular texture, with the URL <code>name</code>. The texture should be in the same origin as the Web page (which usually means the same directory).</li>
-<li><dfn><code>&lt;i&gt;shape&lt;/i&gt;.copy()</code></dfn>
+<li><dfn><code>shape.copy()</code></dfn>
 <br>Creates a copy of this shape. Can be more efficient than calling <code>new H3DU.Shape</code> if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.</li>
 </ul>
 <h3>The Render Loop <a id=The_Render_Loop></a></h3><p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many &quot;frames&quot; a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the <code>H3DU.Scene3D.render()</code> method, passing a batch of shapes to render. Render loops are created using the <code>H3DU.renderLoop()</code> method. Here is an example of a render loop.</p>

@@ -267,10 +267,8 @@ MeshJSON._Model = function(mesh) {
 * @param {String} url URL to a JSON mesh object, as used
 * in the Public Domain HTML 3D Library.
 * @returns {Promise} A promise that, when resolved, exposes an object
-* that implements the following property:
-* &lt;ul>&lt;li>&lt;code>toShape()&lt;/code> - Gets a {@link H3DU.ShapeGroup}
-* describing the 3D mesh.
-* &lt;/ul>
+* that implements a property named &lt;code>toShape&lt;/code>, which is
+* a method that gets a {@link H3DU.ShapeGroup} describing the 3D mesh.
 */
 MeshJSON.loadJSON = function(url) {
   "use strict";

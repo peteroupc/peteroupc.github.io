@@ -1088,11 +1088,15 @@ the path may contain several disconnected parts.
  * current end point, forms a tangent line.  The point where the
  * circle touches this tangent line is the start point of the arc, and if the
  * point isn't the same as the current end point, this method adds
- * a line segment connecting the two points.
+ * a line segment connecting the two points. (Note that the start point
+ * of the arc is not necessarily the same as (x1, y1) or the current end point.)
  * @param {Number} y1 Y-coordinate of the point described under "x1".
  * @param {Number} x2 X-coordinate of a point that, along with the
  * point (x1, y1), forms a tangent line.  The point where the
- * circle touches this tangent line is the end point of the arc.
+ * circle touches this tangent line is the end point of the arc. (Note that the
+ * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
+ * When this method returns, the current end point will be set to the end
+ * point of the arc.
  * @param {Number} y2 Y-coordinate of the point described under "x2".
  * @param {Number} radius Radius of the circle the arc forms a part of.
  * @returns {GraphicsPath} This object.

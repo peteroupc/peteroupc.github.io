@@ -51,7 +51,7 @@ the HTML 3D Library.  Example:<pre>
 
     <h4 style="margin-bottom:0px" id=".loadJSON"><span style="font-weight:lighter">(static) </span>loadJSON<span class="signature">(url)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_meshjson.js.html">extras/meshjson.js</a>, <a href="extras_meshjson.js.html#line259">line 259</a>
+     <p style="margin-top:0px"><small><i>Source: <a href="extras_meshjson.js.html">extras/meshjson.js</a>, <a href="extras_meshjson.js.html#line257">line 257</a>
      </i></small></p>
 
 <div class="description">
@@ -85,10 +85,8 @@ in the Public Domain HTML 3D Library.</dd>
 
 <div class="param-desc">
     A promise that, when resolved, exposes an object
-that implements the following property:
-<ul><li><code>toShape()</code> - Gets a <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>
-describing the 3D mesh.
-</ul>
+that implements a property named <code>toShape</code>, which is
+a method that gets a <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> describing the 3D mesh.
 
      (Type:
 <span class="param-type"><a href="Promise.html">Promise</a></span>)
