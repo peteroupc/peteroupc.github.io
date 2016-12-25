@@ -1,859 +1,286 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Namespace: H3DU</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Namespace: H3DU</h1>
+<h1>H3DU</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>H3DU <a id='H3DU'></a></h3>
 
-        <h2>
-        H3DU
-        </h2>
-
-</header>
-
-<article>
-    <div class="container-overview">
-
-            <div class="description">The Public Domain HTML 3D Library contains classes and utility
+<p>The Public Domain HTML 3D Library contains classes and utility
 methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
-See the <a href="tutorial-overview.html">Library Overview</a> tutorial.<p>
-This page describes miscellaneous utility methods included in the
-library.</div>
+See the <a href="tutorial-overview.md">Library Overview</a> tutorial.</p>
 
-<dl class="details">
+<p>This page describes miscellaneous utility methods included in the
+library.</p>
 
-</dl>
+<h3>Methods</h3>
 
-    </div>
+<ul>
+<li><a href="#H3DU_createCanvasElement">createCanvasElement</a></li>
+<li><a href="#H3DU_get3DContext">get3DContext</a></li>
+<li><a href="#H3DU_get3DOr2DContext">get3DOr2DContext</a></li>
+<li><a href="#H3DU_getPromiseResults">getPromiseResults</a></li>
+<li><a href="#H3DU_getPromiseResultsAll">getPromiseResultsAll</a></li>
+<li><a href="#H3DU_getTimePosition">getTimePosition</a></li>
+<li><a href="#H3DU_is3DContext">is3DContext</a></li>
+<li><a href="#H3DU_loadFileFromUrl">loadFileFromUrl</a></li>
+<li><a href="#H3DU_newFrames">newFrames</a></li>
+<li><a href="#H3DU_renderLoop">renderLoop</a></li>
+<li><a href="#H3DU_toGLColor">toGLColor</a></li>
+</ul>
 
-        <h3 class="subsection-title">Classes</h3>
+<h3>(static) H3DU.createCanvasElement(parent, width, height) <a id='H3DU_createCanvasElement'></a></h3>
 
-        <dl>
-            <dt><a href="H3DU.Batch3D.html">Batch3D</a></dt>
-            <dd></dd>
+<p>Creates an HTML canvas element, optionally appending
+it to an existing HTML element.</p>
 
-            <dt><a href="H3DU.BezierCurve.html">BezierCurve</a></dt>
-            <dd></dd>
+<h4>Parameters</h4>
 
-            <dt><a href="H3DU.BezierSurface.html">BezierSurface</a></dt>
-            <dd></dd>
+<ul>
+<li><code>parent</code> (Type: HTMLElement | null)<br>
+If non-null, the parent element of the new HTML canvas element. The element will be appended as a child of this parent.</li>
+<li><code>width</code> (Type: number | null)<br>
+Width of the new canvas element, or if null, the width a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up. This parameter can&#39;t be a negative number.</li>
+<li><code>height</code> (Type: number | null)<br>
+Height of the new canvas element, or if null, the height a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up. This parameter can&#39;t be a negative number.</li>
+</ul>
 
-            <dt><a href="H3DU.BSplineCurve.html">BSplineCurve</a></dt>
-            <dd></dd>
+<h4>Return Value</h4>
 
-            <dt><a href="H3DU.BSplineSurface.html">BSplineSurface</a></dt>
-            <dd></dd>
+<p>The resulting canvas element. (Type: HTMLCanvasElement)</p>
 
-            <dt><a href="H3DU.BufferedMesh.html">BufferedMesh</a></dt>
-            <dd></dd>
+<h3>(static) H3DU.get3DContext(canvasElement, err) <a id='H3DU_get3DContext'></a></h3>
 
-            <dt><a href="H3DU.CurveEval.html">CurveEval</a></dt>
-            <dd></dd>
+<p>Creates a 3D rendering context from an HTML canvas element.</p>
 
-            <dt><a href="H3DU.FrameBuffer.html">FrameBuffer</a></dt>
-            <dd></dd>
+<h4>Parameters</h4>
 
-            <dt><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></dt>
-            <dd></dd>
+<ul>
+<li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>
+An HTML canvas element.</li>
+<li><code>err</code> (Type: function)<br>
+A function to call if an error occurs in creating the context. The function takes one parameter consisting of a human- readable error message. If &quot;err&quot; is null, window.alert() will be used instead.</li>
+</ul>
 
-            <dt><a href="H3DU.Lights.html">Lights</a></dt>
-            <dd></dd>
+<h4>Return Value</h4>
 
-            <dt><a href="H3DU.LightSource.html">LightSource</a></dt>
-            <dd></dd>
+<p>A 3D rendering context, or null
+if an error occurred in creating the context. Returns null if &quot;canvasElement&quot;
+is null or not an HTML canvas element. (Type: WebGLRenderingContext)</p>
 
-            <dt><a href="H3DU.Material.html">Material</a></dt>
-            <dd></dd>
+<h3>(static) H3DU.get3DOr2DContext(canvasElement) <a id='H3DU_get3DOr2DContext'></a></h3>
 
-            <dt><a href="H3DU.Math.html">Math</a></dt>
-            <dd></dd>
+<p>Creates a 3D rendering context from an HTML canvas element,
+falling back to a 2D context if that fails.</p>
 
-            <dt><a href="H3DU.MatrixStack.html">MatrixStack</a></dt>
-            <dd></dd>
+<h4>Parameters</h4>
 
-            <dt><a href="H3DU.Mesh.html">Mesh</a></dt>
-            <dd></dd>
+<ul>
+<li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>
+An HTML canvas element.</li>
+</ul>
 
-            <dt><a href="H3DU.MeshBuffer.html">MeshBuffer</a></dt>
-            <dd></dd>
+<h4>Return Value</h4>
 
-            <dt><a href="H3DU.Meshes.html">Meshes</a></dt>
-            <dd></dd>
+<p>A 3D or 2D rendering context, or null
+if an error occurred in creating the context. Returns null if &quot;canvasElement&quot;
+is null or not an HTML canvas element. (Type: WebGLRenderingContext)</p>
 
-            <dt><a href="H3DU.RenderPass3D.html">RenderPass3D</a></dt>
-            <dd></dd>
+<h3>(static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject]) <a id='H3DU_getPromiseResults'></a></h3>
 
-            <dt><a href="H3DU.Scene3D.html">Scene3D</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.ShaderInfo.html">ShaderInfo</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.ShaderProgram.html">ShaderProgram</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.Shape.html">Shape</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.ShapeGroup.html">ShapeGroup</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.SurfaceEval.html">SurfaceEval</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.TextFont.html">TextFont</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.Texture.html">Texture</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.TextureAtlas.html">TextureAtlas</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.TextureLoader.html">TextureLoader</a></dt>
-            <dd></dd>
-
-            <dt><a href="H3DU.Transform.html">Transform</a></dt>
-            <dd></dd>
-        </dl>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="margin-bottom:0px" id=".createCanvasElement"><span style="font-weight:lighter">(static) </span>createCanvasElement<span class="signature">(parent, width, height)</span><span style="font-weight:lighter"> &rarr; {HTMLCanvasElement}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line79">line 79</a>
-     </i></small></p>
-
-<div class="description">
-    Creates an HTML canvas element, optionally appending
-it to an existing HTML element.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>parent</code>
-
-                (
-<span class="param-type">HTMLElement</span>
-|
-
-<span class="param-type">null</span>
-
-)
-
-           </dt><dd>
-           If non-null, the parent
-element of the new HTML canvas element. The element will be
-appended as a child of this parent.</dd>
-
-        <dt>
-
-                <code>width</code>
-
-                (
-<span class="param-type">number</span>
-|
-
-<span class="param-type">null</span>
-
-)
-
-           </dt><dd>
-           Width of the new canvas
-element, or if null, the width a <code>canvas</code>
-element would ordinarily have
-under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up.
-This parameter can't be a negative number.</dd>
-
-        <dt>
-
-                <code>height</code>
-
-                (
-<span class="param-type">number</span>
-|
-
-<span class="param-type">null</span>
-
-)
-
-           </dt><dd>
-           Height of the new canvas
-element, or if null, the height a <code>canvas</code>
-element would ordinarily have
-under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up.
-This parameter can't be a negative number.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    The resulting canvas element.
-
-     (Type:
-<span class="param-type">HTMLCanvasElement</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".get3DContext"><span style="font-weight:lighter">(static) </span>get3DContext<span class="signature">(canvasElement, err)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line174">line 174</a>
-     </i></small></p>
-
-<div class="description">
-    Creates a 3D rendering context from an HTML canvas element.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>canvasElement</code>
-
-                (
-<span class="param-type">HTMLCanvasElement</span>
-
-)
-
-           </dt><dd>
-           An HTML
-canvas element.</dd>
-
-        <dt>
-
-                <code>err</code>
-
-                (
-<span class="param-type">function</span>
-
-)
-
-           </dt><dd>
-           A function to call if an error occurs in creating
-the context.  The function takes one parameter consisting of a human-
-readable error message.  If "err" is null, window.alert() will be used instead.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A 3D rendering context, or null
-if an error occurred in creating the context.  Returns null if "canvasElement"
-is null or not an HTML canvas element.
-
-     (Type:
-<span class="param-type">WebGLRenderingContext</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".get3DOr2DContext"><span style="font-weight:lighter">(static) </span>get3DOr2DContext<span class="signature">(canvasElement)</span><span style="font-weight:lighter"> &rarr; {WebGLRenderingContext}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line110">line 110</a>
-     </i></small></p>
-
-<div class="description">
-    Creates a 3D rendering context from an HTML canvas element,
-falling back to a 2D context if that fails.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>canvasElement</code>
-
-                (
-<span class="param-type">HTMLCanvasElement</span>
-
-)
-
-           </dt><dd>
-           An HTML
-canvas element.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A 3D or 2D rendering context, or null
-if an error occurred in creating the context. Returns null if "canvasElement"
-is null or not an HTML canvas element.
-
-     (Type:
-<span class="param-type">WebGLRenderingContext</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".getPromiseResults"><span style="font-weight:lighter">(static) </span>getPromiseResults<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line250">line 250</a>
-     </i></small></p>
-
-<div class="description">
-    Utility function that returns a promise that
+<p>Utility function that returns a promise that
 resolves after the given list of promises finishes
-its work.
-</div>
+its work.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>promises</code> (Type: Array.&lt;<a href="Promise.md">Promise</a>&gt;)<br>
+an array containing promise objects</li>
+<li><code>progressResolve</code> (Type: function) (optional)<br>
+A function called as each individual promise is resolved.</li>
+<li><code>progressReject</code> (Type: function) (optional)<br>
+A function called as each individual promise is rejected.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>promises</code>
-
-                (
-<span class="param-type">Array.&lt;<a href="Promise.html">Promise</a>></span>
-
-)
-
-           </dt><dd>
-           an array containing promise objects</dd>
-
-        <dt>
-
-                <code>progressResolve</code>
-
-                (
-<span class="param-type">function</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           A function called as each
-  individual promise is resolved.</dd>
-
-        <dt>
-
-                <code>progressReject</code>
-
-                (
-<span class="param-type">function</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           A function called as each
-  individual promise is rejected.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A promise that is never rejected and resolves when
+<p>A promise that is never rejected and resolves when
 all of the promises are each resolved or rejected. The result
 of the promise will be an object with
 three keys:<ul>
- <li>"successes" - contains a list of results from the
+ <li>&quot;successes&quot; - contains a list of results from the
  promises that succeeded, in the order in which those promises were listed.
- <li>"failures" - contains a list of results from the
+ <li>&quot;failures&quot; - contains a list of results from the
  promises that failed, in the order in which those promises were listed.
- <li>"results" - contains a list of boolean values for each
+ <li>&quot;results&quot; - contains a list of boolean values for each
 promise, in the order in which the promises were listed.
-True means success, and false means failure.</ul>
+True means success, and false means failure.</ul> (Type: <a href="Promise.md">Promise</a>)</p>
 
-     (Type:
-<span class="param-type"><a href="Promise.html">Promise</a></span>)
+<h3>(static) H3DU.getPromiseResultsAll(promises, [progressResolve], [progressReject]) <a id='H3DU_getPromiseResultsAll'></a></h3>
 
-</div>
-
-    <h4 style="margin-bottom:0px" id=".getPromiseResultsAll"><span style="font-weight:lighter">(static) </span>getPromiseResultsAll<span class="signature">(promises, progressResolve<sub style="font-weight:lighter">opt</sub>, progressReject<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line217">line 217</a>
-     </i></small></p>
-
-<div class="description">
-    Utility function that returns a promise that
+<p>Utility function that returns a promise that
 resolves or is rejected after the given list of promises finishes
-its work.
-</div>
+its work.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>promises</code> (Type: Array.&lt;<a href="Promise.md">Promise</a>&gt;)<br>
+an array containing promise objects</li>
+<li><code>progressResolve</code> (Type: function) (optional)<br>
+a function called as each individual promise is resolved; optional</li>
+<li><code>progressReject</code> (Type: function) (optional)<br>
+a function called as each individual promise is rejected; optional</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>promises</code>
-
-                (
-<span class="param-type">Array.&lt;<a href="Promise.html">Promise</a>></span>
-
-)
-
-           </dt><dd>
-           an array containing promise objects</dd>
-
-        <dt>
-
-                <code>progressResolve</code>
-
-                (
-<span class="param-type">function</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           a function called as each
-  individual promise is resolved; optional</dd>
-
-        <dt>
-
-                <code>progressReject</code>
-
-                (
-<span class="param-type">function</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           a function called as each
-  individual promise is rejected; optional</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A promise that is resolved when
+<p>A promise that is resolved when
 all of the promises are each resolved; the result will
 be an array of results from those promises,
 in the order in which those promises were listed.
 Will be rejected if any of the promises is rejected; the result
-will be an object as specified in <a href="H3DU.html#.getPromiseResults">H3DU.getPromiseResults</a>.</ul>
+will be an object as specified in <a href="H3DU.md#H3DU_getPromiseResults">H3DU.getPromiseResults</a>.</ul> (Type: <a href="Promise.md">Promise</a>)</p>
 
-     (Type:
-<span class="param-type"><a href="Promise.html">Promise</a></span>)
+<h3>(static) H3DU.getTimePosition(timer, timeInMs, intervalInMs) <a id='H3DU_getTimePosition'></a></h3>
 
-</div>
-
-    <h4 style="margin-bottom:0px" id=".getTimePosition"><span style="font-weight:lighter">(static) </span>getTimePosition<span class="signature">(timer, timeInMs, intervalInMs)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line396">line 396</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the position of a time value within an interval.
+<p>Gets the position of a time value within an interval.
 This is useful for doing animation cycles lasting a certain number
 of seconds, such as rotating a shape in a 5-second cycle.
-This method may be called any number of times each frame.
-</div>
+This method may be called any number of times each frame.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
-
-        <dt>
-
-                <code>timer</code>
-
-                (
-<span class="param-type">Object</span>
-
-)
-
-           </dt><dd>
-           An object that will hold two
-properties:<ul>
-<li>"time" - initial time value, in milliseconds.
-<li>"lastTime" - last known time value, in milliseconds.
-Will be set to the value given in "timeInMs" before returning.
+<ul>
+<li><code>timer</code> (Type: Object)<br>
+An object that will hold two properties:<ul> <li>&quot;time&quot; - initial time value, in milliseconds. <li>&quot;lastTime&quot; - last known time value, in milliseconds. Will be set to the value given in &quot;timeInMs&quot; before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.</li>
+<li><code>timeInMs</code> (Type: Number)<br>
+A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.</li>
+<li><code>intervalInMs</code> (Type: Number)<br>
+The length of the interval (animation cycle), in milliseconds.</li>
 </ul>
-The object should be initialized using the idiom <code>{}</code>
-or <code>new Object()</code>.</dd>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>timeInMs</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           A time value, in milliseconds.
-This could be the parameter received in a
-<code>requestAnimationFrame()</code> callback method.</dd>
-
-        <dt>
-
-                <code>intervalInMs</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The length of the interval
-(animation cycle), in milliseconds.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A value in the range [0, 1), where closer
-to 0 means "timeInMs" lies
+<p>A value in the range [0, 1), where closer
+to 0 means &quot;timeInMs&quot; lies
 closer to the start, and closer to 1 means closer
-to the end of the interval.  If an initial time wasn't set, returns 0.
+to the end of the interval. If an initial time wasn&#39;t set, returns 0. (Type: Number)</p>
 
-     (Type:
-<span class="param-type">Number</span>)
+<h4>Example</h4>
 
-</div>
-
-    <h5>Example</h5>
-
-        <p class="code-caption">The following code sets an angle of
+<p>The following code sets an angle of
 rotation, in degrees, such that an object rotated with the
 angle does a 360-degree turn in 5 seconds (5000 milliseconds).
 The variable <code>time</code> is assumed to be a time
 value in milliseconds, such as the parameter of a
-<code>requestAnimationFrame()</code> callback method.
-</p>
+<code>requestAnimationFrame()</code> callback method.</p>
 
-    <pre class="prettyprint"><code>var angle = 360 * H3DU.getTimePosition(timer, time, 5000);</code></pre>
+<pre><code>var angle = 360 \* H3DU.getTimePosition(timer, time, 5000);
+</code></pre>
 
-    <h4 style="margin-bottom:0px" id=".is3DContext"><span style="font-weight:lighter">(static) </span>is3DContext<span class="signature">(context)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
+<h3>(static) H3DU.is3DContext(context) <a id='H3DU_is3DContext'></a></h3>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line196">line 196</a>
-     </i></small></p>
+<h4>Parameters</h4>
 
-    <h5>Parameters:</h5>
+<ul>
+<li><code>context</code> (Type: Object)<br>
+Description of context. Returns whether the given object is a 3D rendering context.</li>
+</ul>
 
-<dl>
+<h4>Return Value</h4>
 
-        <dt>
+<p>Return value. (Type: Boolean)</p>
 
-                <code>context</code>
+<h3>(static) H3DU.loadFileFromUrl(url, responseType) <a id='H3DU_loadFileFromUrl'></a></h3>
 
-                (
-<span class="param-type">Object</span>
+<p>Loads a file from a URL asynchronously, using XMLHttpRequest.</p>
 
-)
+<h4>Parameters</h4>
 
-           </dt><dd>
-           Description of context.
-Returns whether the given object is a 3D rendering context.</dd>
+<ul>
+<li><code>url</code> (Type: String)<br>
+URL of the file to load.</li>
+<li><code>responseType</code> (Type: string | null)<br>
+Expected data type of the file. Can be &quot;json&quot;, &quot;xml&quot;, &quot;text&quot;, or &quot;arraybuffer&quot;. If null or omitted, the default is &quot;text&quot;.</li>
+</ul>
 
-    </dl>
+<h4>Return Value</h4>
 
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Boolean</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".loadFileFromUrl"><span style="font-weight:lighter">(static) </span>loadFileFromUrl<span class="signature">(url, responseType)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line324">line 324</a>
-     </i></small></p>
-
-<div class="description">
-    Loads a file from a URL asynchronously, using XMLHttpRequest.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>url</code>
-
-                (
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           URL of the file to load.</dd>
-
-        <dt>
-
-                <code>responseType</code>
-
-                (
-<span class="param-type">string</span>
-|
-
-<span class="param-type">null</span>
-
-)
-
-           </dt><dd>
-           Expected data type of
-the file.  Can be "json", "xml", "text", or "arraybuffer".
-If null or omitted, the default is "text".</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A promise that resolves when the data
+<p>A promise that resolves when the data
 file is loaded successfully (the result will be an object with
-two properties: "url", the URL of the file, and "data", the
-file's text or data), as given below, and is rejected when an error occurs (the
+two properties: &quot;url&quot;, the URL of the file, and &quot;data&quot;, the
+file&#39;s text or data), as given below, and is rejected when an error occurs (the
 result may be an object with
-one property: "url", the URL of the file).  If the promise resolves,
-the parameter's "data" property will be:<ul>
-<li>For response type "xml", an XML document object.
-<li>For response type "arraybuffer", an ArrayBuffer object.
-<li>For response type "json", the JavaScript object decoded
+one property: &quot;url&quot;, the URL of the file). If the promise resolves,
+the parameter&#39;s &quot;data&quot; property will be:<ul>
+<li>For response type &quot;xml&quot;, an XML document object.
+<li>For response type &quot;arraybuffer&quot;, an ArrayBuffer object.
+<li>For response type &quot;json&quot;, the JavaScript object decoded
 from JSON.
-<li>For any other type, a string of the file's text.</ul>
+<li>For any other type, a string of the file&#39;s text.</ul> (Type: <a href="Promise.md">Promise</a>)</p>
 
-     (Type:
-<span class="param-type"><a href="Promise.html">Promise</a></span>)
+<h3>(static) H3DU.newFrames(timer, timeInMs) <a id='H3DU_newFrames'></a></h3>
 
-</div>
+<p>Returns the number of frame-length intervals that occurred since
+the last known time, where a frame&#39;s length is 1/60 of a second.
+This method should be called only once each frame.</p>
 
-    <h4 style="margin-bottom:0px" id=".newFrames"><span style="font-weight:lighter">(static) </span>newFrames<span class="signature">(timer, timeInMs)</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
+<h4>Parameters</h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line422">line 422</a>
-     </i></small></p>
+<ul>
+<li><code>timer</code> (Type: Object)<br>
+An object described in <a href="H3DU.md#H3DU_getTimePosition">H3DU.getTimePosition</a>.</li>
+<li><code>timeInMs</code> (Type: Number)<br>
+A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</li>
+</ul>
 
-<div class="description">
-    Returns the number of frame-length intervals that occurred since
-the last known time, where a frame's length is 1/60 of a second.
-This method should be called only once each frame.
-</div>
+<h4>Return Value</h4>
 
-    <h5>Parameters:</h5>
+<p>The number of frame-length intervals relative to
+the last known time held in the parameter &quot;timer&quot;.
+The number can include fractional frames. If an
+initial time or last known time wasn&#39;t set, returns 0. (Type: Number)</p>
 
-<dl>
+<h3>(static) H3DU.renderLoop(func) <a id='H3DU_renderLoop'></a></h3>
 
-        <dt>
-
-                <code>timer</code>
-
-                (
-<span class="param-type">Object</span>
-
-)
-
-           </dt><dd>
-           An object described
-in <a href="H3DU.html#.getTimePosition">H3DU.getTimePosition</a>.</dd>
-
-        <dt>
-
-                <code>timeInMs</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           A time value, in milliseconds.
-This could be the parameter received in a
-<code>requestAnimationFrame()</code> callback method.
-</code>.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    The number of frame-length intervals relative to
-the last known time held in the parameter "timer".
-The number can include fractional frames.  If an
-initial time or last known time wasn't set, returns 0.
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".renderLoop"><span style="font-weight:lighter">(static) </span>renderLoop<span class="signature">(func)</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line52">line 52</a>
-     </i></small></p>
-
-<div class="description">
-    This method will call a function once before returning,
+<p>This method will call a function once before returning,
 and queue requests to call that function once per frame,
 using <code>window.requestAnimationFrame</code>
-or a "polyfill" method.
-</div>
+or a &quot;polyfill&quot; method.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>func</code> (Type: function)<br>
+The function to call. The function takes one parameter, &quot;time&quot;, which is the number of milliseconds since the page was loaded.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>func</code>
+<p>Return value. (Type: Object)</p>
 
-                (
-<span class="param-type">function</span>
+<h3>(static) H3DU.toGLColor(r, g, b, [a]) <a id='H3DU_toGLColor'></a></h3>
 
-)
-
-           </dt><dd>
-           The function to call.  The function
-takes one parameter, "time", which is the number of
-milliseconds since the page was loaded.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Object</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".Scene3D.supportsDerivatives"><span style="font-weight:lighter">(static) </span>Scene3D.supportsDerivatives<span class="signature">(context)</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-scene3d.js.html">h3du-scene3d.js</a>, <a href="h3du-scene3d.js.html#line1116">line 1116</a>
-     </i></small></p>
-
-<div class="description">
-    Returns whether the WebGL context supports
-derivative functions in GLSL shaders.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>context</code>
-
-                (
-<span class="param-type">WebGLRenderingContext</span>
-|
-
-<span class="param-type">Object</span>
-
-)
-
-           </dt><dd>
-           A WebGL context, or an object, such as H3DU.Scene3D, that
-implements a no-argument <code>getContext</code> method</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    True if the context supports derivatives; false otherwise.
-
-     (Type:
-<span class="param-type">Boolean</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".toGLColor"><span style="font-weight:lighter">(static) </span>toGLColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du.js.html">h3du.js</a>, <a href="h3du.js.html#line984">line 984</a>
-     </i></small></p>
-
-<div class="description">
-    Creates a 4-element array representing a color.  Each element
+<p>Creates a 4-element array representing a color. Each element
 can range from 0 to 1 and specifies the red, green, blue or alpha
 component, respectively.
 This method also converts HTML and CSS colors to 4-element RGB
-colors.  The following lists the kinds of colors accepted:
+colors. The following lists the kinds of colors accepted:</p>
+
 <ul>
 <li>HTML colors with the syntax <code>#RRGGBB</code> or <code>#RRGGBBAA</code>, where
 RR is the hexadecimal form of the red component (00-FF), GG
 is the hexadecimal green component, BB is the hexadecimal
-blue component, and AA is the hexadecimal alpha component.  Example: #88DFE0.
+blue component, and AA is the hexadecimal alpha component. Example: #88DFE0.
 <li>HTML colors with the syntax <code>#RGB</code> or <code>#RGBA</code>, where
 R is the hexadecimal form of the red component (0-F), G
 is the hexadecimal green component, B is the hexadecimal
-blue component, and A is the hexadecimal alpha component.  Example: #8DE.
+blue component, and A is the hexadecimal alpha component. Example: #8DE.
 <li>CSS colors with the syntax <code>rgb(red, green, blue)</code> or
 <code>rgba(red, green, blue, alpha)</code> where
 <code>red</code>, <code>green</code>, and <code>blue</code>
@@ -876,112 +303,34 @@ Examples: <code>rgb(255,0,0)</code>,
 and so on, including the newly added <code>rebeccapurple</code>.
 <li>The value <code>transparent</code>, meaning transparent black.
 </ul>
-For more information, see the "<a href="tutorial-colors.html">Color Strings</a>" tutorial.
-</div>
 
-    <h5>Parameters:</h5>
+<p>For more information, see the &quot;<a href="tutorial-colors.md">Color Strings</a>&quot; tutorial.</p>
 
-<dl>
+<h4>Parameters</h4>
 
-        <dt>
-
-                <code>r</code>
-
-                (
-<span class="param-type">Array.&lt;Number></span>
-|
-
-<span class="param-type">number</span>
-|
-
-<span class="param-type">string</span>
-
-)
-
-           </dt><dd>
-           One of the following:<ul>
-<li>A <b>color vector or string</b>, which can be one of these:<ul>
-<li>An array of three color components, each of which ranges from 0 to 1.
-The three components are red, green, and blue in that order.</li>
-<li>An array of four color components, each of which ranges from 0 to 1.
-The three components are red, green, blue, and alpha in that order.</li>
-<li>A string specifying an HTML or CSS color, in one of the formats mentioned
-above in the method description.</li></ul></li>
-<li>A number specifying the red component.  Must range from 0 to 1.</li>
+<ul>
+<li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
+One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.</li>
+<li><code>g</code> (Type: Number)<br>
+Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: Number)<br>
+Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: Number) (optional)<br>
+Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
 </ul>
-Returns (0,0,0,0) if this value is null.</dd>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>g</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
-
-        <dt>
-
-                <code>b</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
-
-        <dt>
-
-                <code>a</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Alpha color component (0-1).
-If the "r" parameter is given and this parameter is null or omitted,
-this value is treated as 1.0.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    The color as a 4-element array; if the color is
+<p>The color as a 4-element array; if the color is
 invalid, returns [0,0,0,0], or transparent black. Numbers less
 than 0 are clamped to 0, and numbers greater than 1 are
-clamped to 1.
-
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
-
-</div>
-
-</article>
-
-</section>
-
+clamped to 1. (Type: Array.&lt;Number&gt;)</p>
 </div>
 <nav id="navigation">
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -996,9 +345,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -1014,5 +361,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

@@ -1,50 +1,111 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>FrameCounter</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.FrameBuffer</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>FrameCounter</h1>
+<h1>H3DU.FrameBuffer</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>FrameCounter() <a id='FrameCounter'></a></h3>
+<h3>H3DU.FrameBuffer(context, width, height) <a id='H3DU_FrameBuffer'></a></h3>
 
-<p>A class for finding the frame rate of an HTML rendering.</p>
+<p><b>Deprecated: This class is likely to become a private class.
+Use the FrameBufferInfo class instead, which is not coupled to WebGL
+contexts.</b></p>
 
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
+<p>Represents an off-screen frame buffer.</p>
 
-<p>To use this class, you must include the script &quot;extras/frame.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
+<p>When H3DU.FrameBuffer&#39;s
+constructor is called, it will create a texture buffer with the given
+width and height and a depth buffer with the same dimensions,
+and will bind both to the frame buffer. The frame buffer currently
+bound to the WebGL context will remain unchanged.</p>
 
-<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/frame.js&quot;&gt;&amp;lt;/script&gt;
-</code></pre>
+<h4>Parameters</h4>
+
+<ul>
+<li><code>context</code> (Type: WebGLRenderingContext | object)<br>
+WebGL context to associate with this buffer, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
+<li><code>width</code> (Type: Number)<br>
+Width, in pixels, of the frame buffer. Fractional values are rounded up.</li>
+<li><code>height</code> (Type: Number)<br>
+Height, in pixels, of the frame buffer. Fractional values are rounded up.</li>
+</ul>
+
+<h3>Members</h3>
+
+<ul>
+<li><a href="#H3DU_FrameBuffer_this_height">this.height</a></li>
+<li><a href="#H3DU_FrameBuffer_this_width">this.width</a></li>
+</ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#FrameCounter_FrameCounter_getFPS">getFPS</a></li>
-<li><a href="#FrameCounter_FrameCounter_update">update</a></li>
+<li><a href="#H3DU_FrameBuffer_H3DU_FrameBuffer_bind">bind</a></li>
+<li><a href="#H3DU_FrameBuffer_H3DU_FrameBuffer_dispose">dispose</a></li>
+<li><a href="#H3DU_FrameBuffer_H3DU_FrameBuffer_getContext">getContext</a></li>
+<li><a href="#H3DU_FrameBuffer_H3DU_FrameBuffer_resize">resize</a></li>
+<li><a href="#H3DU_FrameBuffer_H3DU_FrameBuffer_unbind">unbind</a></li>
 </ul>
 
-<h3>FrameCounter#getFPS() <a id='FrameCounter_FrameCounter_getFPS'></a></h3>
+<h3>H3DU.FrameBuffer.this.height <a id='H3DU_FrameBuffer_this_height'></a></h3>
 
-<p>Gets the calculated frames per second, based
-on how often the update method was called.</p>
+<p>The frame buffer&#39;s height.</p>
+
+<h3>H3DU.FrameBuffer.this.width <a id='H3DU_FrameBuffer_this_width'></a></h3>
+
+<p>The frame buffer&#39;s width.</p>
+
+<h3>H3DU.FrameBuffer#bind() <a id='H3DU_FrameBuffer_H3DU_FrameBuffer_bind'></a></h3>
+
+<p>Has no effect. (Previously, bound this frame buffer to the WebGL context associated with
+it.)</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Object)</p>
+<p>This object. (Type: <a href="H3DU_FrameBuffer.md">H3DU.FrameBuffer</a>)</p>
 
-<h3>FrameCounter#update() <a id='FrameCounter_FrameCounter_update'></a></h3>
+<h3>H3DU.FrameBuffer#dispose() <a id='H3DU_FrameBuffer_H3DU_FrameBuffer_dispose'></a></h3>
 
-<p>Updates the state for determining the frame count.
-This method should be called once per frame.</p>
+<p>Disposes all resources from this frame buffer object.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Object)</p>
+<p>Return value. (Type: void)</p>
+
+<h3>H3DU.FrameBuffer#getContext() <a id='H3DU_FrameBuffer_H3DU_FrameBuffer_getContext'></a></h3>
+
+<p>Gets the WebGL context associated with this frame buffer.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: WebGLRenderingContext)</p>
+
+<h3>H3DU.FrameBuffer#resize(width, height) <a id='H3DU_FrameBuffer_H3DU_FrameBuffer_resize'></a></h3>
+
+<p>Resizes the frame buffer to a new width and height,
+if either differs from the current width or height.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>width</code> (Type: Number)<br>
+New width, in pixels, of the frame buffer. Fractional values are rounded up.</li>
+<li><code>height</code> (Type: Number)<br>
+New height, in pixels, of the frame buffer. Fractional values are rounded up.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_FrameBuffer.md">H3DU.FrameBuffer</a>)</p>
+
+<h3>H3DU.FrameBuffer#unbind() <a id='H3DU_FrameBuffer_H3DU_FrameBuffer_unbind'></a></h3>
+
+<p>Has no effect. (Previously, unbound this frame buffer from its associated WebGL context.)</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: void)</p>
 </div>
 <nav id="navigation">
 <p>

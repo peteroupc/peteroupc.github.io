@@ -1,0 +1,229 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.TextFont</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.TextFont</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<h3>H3DU.TextFont() <a id='H3DU_TextFont'></a></h3>
+
+<p>Represents a bitmap font, which supports drawing two-dimensional
+text. This class supports
+traditional bitmap fonts and signed distance field fonts.</p>
+
+<p>Bitmap fonts consist of a font definition file and one
+or more textures containing the shape of each font glyph. The glyphs
+are packed so that the glyphs don&#39;t overlap each other.</p>
+
+<p>In a signed distance field font, each pixel&#39;s alpha value depends on the
+distance from that location to the edge of the glyph. A pixel alpha less
+than 0.5 (127 in most image formats) means the pixel is outside the
+glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
+outside the glyph) and 1 (for inside the glyph) means the pixel is
+outside a buffer zone formed by the glyph&#39;s outline. Each glyph is usually
+given extra space to accommodate the signed distance field information.</p>
+
+<p>The font definition file formats supported are text (&quot;.fnt&quot;),
+JSON (&quot;.json&quot;), binary (&quot;.fnt&quot; or &quot;.bin&quot;), and XML (&quot;.xml&quot;).
+The text and binary file formats are specified at
+<a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
+page</a>. The XML format is very similar to the text file format.
+The JSON format is described at
+<a href="https://github.com/Jam3/load-bmfont/blob/master/json-spec.md">this
+page</a>.</p>
+
+<p>See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
+for a list of bitmap font generation tools. (No one tool is recommended over any
+other, and the mention of this link is not an endorsement or sponsorship
+of any particular tool.)</p>
+
+<p>NOTE: The constructor should not be called directly by applications.
+Use the <a href="H3DU_TextFont.md#H3DU_TextFont_load">H3DU.TextFont.load</a> method to get an H3DU.TextFont object. This
+constructor&#39;s parameters are undocumented and are subject to change.</p>
+
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this class, you must include the script &quot;extras/text.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/text.js&quot;&gt;&amp;lt;/script&gt;
+</code></pre>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU_TextFont_load">.load</a></li>
+<li><a href="#H3DU_TextFont_loadWithTextures">.loadWithTextures</a></li>
+<li><a href="#H3DU_TextFont_H3DU_TextFont_loadTextures">loadTextures</a></li>
+<li><a href="#H3DU_TextFont_H3DU_TextFont_makeTextMeshes">makeTextMeshes</a></li>
+<li><a href="#H3DU_TextFont_H3DU_TextFont_measure">measure</a></li>
+<li><a href="#H3DU_TextFont_H3DU_TextFont_textShape">textShape</a></li>
+</ul>
+
+<h3>H3DU.TextFont.load(fontFileName) <a id='H3DU_TextFont_load'></a></h3>
+
+<p>Loads a bitmap font definition from a file.
+Note that this method only loads the font data and not the bitmaps
+used to represent the font.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>fontFileName</code> (Type: String)<br>
+The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>&quot;.xml&quot;: XML</li> <li>&quot;.json&quot;: JSON</li> <li>&quot;.bin&quot;: Binary</li> <li>&quot;.fnt&quot;: Text or binary</li> <li>All others: Text</li></ul></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that is resolved
+when the font data is loaded successfully (the result will be
+an H3DU.TextFont object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU_TextFont.md">H3DU.TextFont</a>&gt;)</p>
+
+<h3>H3DU.TextFont.loadWithTextures(fontFileName, textureLoader) <a id='H3DU_TextFont_loadWithTextures'></a></h3>
+
+<p>Loads a bitmap font definition from a file along with the textures
+used by that font.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>fontFileName</code> (Type: String)<br>
+The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>&quot;.xml&quot;: XML</li> <li>&quot;.json&quot;: JSON</li> <li>&quot;.bin&quot;: Binary</li> <li>&quot;.fnt&quot;: Text or binary</li> <li>All others: Text</li></ul></li>
+<li><code>textureLoader</code> (Type: <a href="H3DU_TextureLoader.md">H3DU.TextureLoader</a>)<br>
+Texture loader object to use when loading the textures.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that is resolved
+when the font data and textures are loaded successfully,
+and is rejected when an error occurs.
+If the promise is resolved, the result will be an object with the
+following keys:<ul>
+<li><code>url</code> - The URL of the font data file.
+<li><code>font</code> - The font data in the form of an <a href="H3DU_TextFont.md">H3DU.TextFont</a> object.
+<li><code>textures</code> - An array of <a href="H3DU_Texture.md">H3DU.Texture</a> objects used by the font,
+in the order in which they are declared in the font data file.
+</ul> (Type: <a href="Promise.md">Promise</a>)</p>
+
+<h3>H3DU.TextFont#loadTextures(textureLoader) <a id='H3DU_TextFont_H3DU_TextFont_loadTextures'></a></h3>
+
+<p>Loads the texture files used by this font object.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>textureLoader</code> (Type: <a href="H3DU_TextureLoader.md">H3DU.TextureLoader</a>)<br>
+Texture loader object to use when loading the textures.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise as described in
+<a href="H3DU.md#H3DU_getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
+resolves, each item in the resulting array will be a loaded
+<a href="H3DU_Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU_Texture.md">H3DU.Texture</a>&gt;)</p>
+
+<h3>H3DU.TextFont#makeTextMeshes(str, params) <a id='H3DU_TextFont_H3DU_TextFont_makeTextMeshes'></a></h3>
+
+<p>Creates an array of meshes containing the primitives
+needed to draw text with this font.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>str</code> (Type: String)<br>
+The text to draw. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
+<li><code>params</code> (Type: Object)<br>
+An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>x</code> - X-coordinate of the top left corner of the text. If null or omitted, uses 0. For the text to show upright, the coordinate system should have the X-axis pointing right and the Y-axis pointing down (for example, an orthographic projection where the left and top coordinates are less than the right and bottom coordinates, respectively). <li><code>y</code> - Y-coordinate of the top left corner of the text. If null or omitted, uses 0. <li><code>lineHeight</code> - Height of each line of the text in units. If null or omitted, uses the line height given in the font. <li><code>width</code> - Maximum width of each line. Lines that exceed this width will be wrapped. <li><code>align</code> - Horizontal text alignment. Can be &quot;left&quot;, &quot;center&quot;, or &quot;right&quot; (all strings). </ul></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of meshes representing the text.
+There is one mesh for each texture page of the font. If none of the
+text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;Mesh&gt;)</p>
+
+<h3>H3DU.TextFont#measure(str, params) <a id='H3DU_TextFont_H3DU_TextFont_measure'></a></h3>
+
+<p>Calculates the width and height of a text string when
+drawn using this font.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>str</code> (Type: String)<br>
+The text string to measure. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
+<li><code>params</code> (Type: Object)<br>
+An object described in H3DU.TextFont#makeTextMeshes.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of two numbers;
+the first is the width of the string, and the second is the
+height of the string (taking into account line feed characters,
+U+000A, that break lines). (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.TextFont#textShape(str, params) <a id='H3DU_TextFont_H3DU_TextFont_textShape'></a></h3>
+
+<p>Creates a group of shapes containing the primitives needed to
+draw text in the given position, size, and color.
+For the text to show upright, the coordinate system should have the
+X-axis pointing right and the Y-axis pointing down (for example, an
+orthographic projection where the left and top coordinates are less
+than the right and bottom coordinates, respectively).</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>str</code> (Type: String)<br>
+The text to draw. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
+<li><code>params</code> (Type: Object)<br>
+An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU_Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU_Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The generated group of shapes. (Type: <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)</p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

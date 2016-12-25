@@ -1,885 +1,332 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: Camera</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Camera</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: Camera</h1>
+<h1>Camera</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>Camera(batch, fov, nearZ, farZ, [canvas]) <a id='Camera'></a></h3>
 
-        <h2>
-        Camera
-        </h2>
-
-</header>
-
-<article>
-    <div class="container-overview">
-
-    <h4 style="margin-bottom:0px" id="Camera"><span style="font-weight:lighter"></span>new Camera<span class="signature">(batch, fov, nearZ, farZ, canvas<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line379">line 379</a>
-     </i></small></p>
-
-<div class="description">
-    A class for controlling the projection and
-view of a 3D scene, in the nature of an abstract "camera".
-This class uses the concept of a "camera's position", or where
+<p>A class for controlling the projection and
+view of a 3D scene, in the nature of an abstract &quot;camera&quot;.
+This class uses the concept of a &quot;camera&#39;s position&quot;, or where
 the camera is located in world space, as well
-as a "reference point", or the point in world space that the camera
-is looking at.
+as a &quot;reference point&quot;, or the point in world space that the camera
+is looking at.</p>
+
 <p>This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
-library. <p>
-To use this class, you must include the script "extras/camera.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library.  Example:<pre>
-&lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
-</div>
+library.</p>
 
-    <h5>Parameters:</h5>
+<p>To use this class, you must include the script &quot;extras/camera.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
 
-<dl>
+<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/camera.js&quot;&gt;&amp;lt;/script&gt;
+</code></pre>
 
-        <dt>
+<h4>Parameters</h4>
 
-                <code>batch</code>
+<ul>
+<li><code>batch</code> (Type: <a href="H3DU_Batch3D.md">H3DU.Batch3D</a>)<br>
+A 3D scene to associate with this camera object.</li>
+<li><code>fov</code> (Type: Number)<br>
+Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.)</li>
+<li><code>nearZ</code> (Type: Number)<br>
+The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. This should be slightly greater than 0.</li>
+<li><code>farZ</code> (Type: Number)<br>
+The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+<li><code>canvas</code> (Type: HTMLCanvasElement) (optional)<br>
+A canvas to associate with this camera object. <i>This argument is deprecated.</i></li>
+</ul>
 
-                (
-<span class="param-type"><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></span>
+<h3>Methods</h3>
 
-)
+<ul>
+<li><a href="#Camera_Camera_getDistance">getDistance</a></li>
+<li><a href="#Camera_Camera_getPosition">getPosition</a></li>
+<li><a href="#Camera_Camera_getVectorFromCenter">getVectorFromCenter</a></li>
+<li><a href="#Camera_Camera_moveAngleHorizontal">moveAngleHorizontal</a></li>
+<li><a href="#Camera_Camera_moveAngleVertical">moveAngleVertical</a></li>
+<li><a href="#Camera_Camera_moveCenterHorizontal">moveCenterHorizontal</a></li>
+<li><a href="#Camera_Camera_moveCenterVertical">moveCenterVertical</a></li>
+<li><a href="#Camera_Camera_moveClose">moveClose</a></li>
+<li><a href="#Camera_Camera_moveForward">moveForward</a></li>
+<li><a href="#Camera_Camera_moveHorizontal">moveHorizontal</a></li>
+<li><a href="#Camera_Camera_movePosition">movePosition</a></li>
+<li><a href="#Camera_Camera_moveVertical">moveVertical</a></li>
+<li><a href="#Camera_Camera_setDistance">setDistance</a></li>
+<li><a href="#Camera_Camera_setPosition">setPosition</a></li>
+<li><a href="#Camera_Camera_turnHorizontal">turnHorizontal</a></li>
+<li><a href="#Camera_Camera_turnVertical">turnVertical</a></li>
+<li><a href="#Camera_Camera_update">update</a></li>
+</ul>
 
-           </dt><dd>
-           A 3D scene to associate with this
-camera object.</dd>
+<h3>Camera#getDistance() <a id='Camera_Camera_getDistance'></a></h3>
 
-        <dt>
+<p>Finds the distance from the camera&#39;s position to the reference point.</p>
 
-                <code>fov</code>
+<h4>Return Value</h4>
 
-                (
-<span class="param-type">Number</span>
+<p>Return value. (Type: Number)</p>
 
-)
+<h3>Camera#getPosition() <a id='Camera_Camera_getPosition'></a></h3>
 
-           </dt><dd>
-           Vertical field of view, in degrees. Should be less
-than 180 degrees. (The smaller
-this number, the bigger close objects appear to be.)</dd>
+<p>Gets the position of the camera.</p>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>nearZ</code>
+<p>An array of three numbers giving
+the X, Y, and Z coordinates of the camera&#39;s position, respectively. (Type: Array.&lt;Number&gt;)</p>
 
-                (
-<span class="param-type">Number</span>
+<h3>Camera#getVectorFromCenter() <a id='Camera_Camera_getVectorFromCenter'></a></h3>
 
-)
+<p>Gets the 3-element vector that points from the reference
+point to the camera&#39;s position.</p>
 
-           </dt><dd>
-           The distance from the camera to
-the near clipping plane. Objects closer than this distance won't be
-seen. This should be slightly greater than 0.</dd>
+<h4>Return Value</h4>
 
-        <dt>
+<p>The return value as a unit
+vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">&quot;normalized&quot; vector</a> with a length of 1).
+Returns (0,0,0) if the reference point is the same as the camera&#39;s position. (Type: Array.&lt;Number&gt;)</p>
 
-                <code>farZ</code>
+<h3>Camera#moveAngleHorizontal(angleDegrees) <a id='Camera_Camera_moveAngleHorizontal'></a></h3>
 
-                (
-<span class="param-type">Number</span>
+<p>Moves the camera to the left or right so that it faces
+the same reference point at the same distance.</p>
 
-)
+<h4>Parameters</h4>
 
-           </dt><dd>
-           The distance from the camera to
-the far clipping plane. Objects beyond this distance will be too far
-to be seen.</dd>
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>canvas</code>
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-                (
-<span class="param-type">HTMLCanvasElement</span>
+<h3>Camera#moveAngleVertical(angleDegrees) <a id='Camera_Camera_moveAngleVertical'></a></h3>
 
-)
+<p>Moves the camera upward or downward so that it faces
+the same reference point at the same distance.</p>
 
-                    &lt;optional>
+<h4>Parameters</h4>
 
-           </dt><dd>
-           A canvas to associate with this
-camera object. <i>This argument is deprecated.</i></dd>
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
 
-    </dl>
+<h4>Return Value</h4>
 
-<dl class="details">
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-</dl>
+<h3>Camera#moveCenterHorizontal(dist) <a id='Camera_Camera_moveCenterHorizontal'></a></h3>
 
-    </div>
+<p><b>Deprecated: Use &quot;moveHorizontal&quot; instead.</b></p>
 
-        <h3 class="subsection-title">Methods</h3>
+<p>Moves the camera horizontally relative to the camera&#39;s up vector.</p>
 
-    <h4 style="margin-bottom:0px" id="getDistance"><span style="font-weight:lighter"></span>Camera#getDistance<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
+<h4>Parameters</h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line484">line 484</a>
-     </i></small></p>
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Distance to move the camera.</li>
+</ul>
 
-<div class="description">
-    Finds the distance from the camera's position to the reference point.
-</div>
+<h4>Return Value</h4>
 
-<dl class="details">
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-</dl>
+<h3>Camera#moveCenterVertical(dist) <a id='Camera_Camera_moveCenterVertical'></a></h3>
 
-<h5>Returns:</h5>
+<p><b>Deprecated: Use &quot;moveVertical&quot; instead.</b></p>
 
-<div class="param-desc">
-    Return value.
+<p>Moves the camera toward or away from the camera&#39;s up vector.</p>
 
-     (Type:
-<span class="param-type">Number</span>)
+<h4>Parameters</h4>
 
-</div>
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Distance to move the camera.</li>
+</ul>
 
-    <h4 style="margin-bottom:0px" id="getPosition"><span style="font-weight:lighter"></span>Camera#getPosition<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+<h4>Return Value</h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line625">line 625</a>
-     </i></small></p>
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-<div class="description">
-    Gets the position of the camera.
-</div>
+<h3>Camera#moveClose(dist) <a id='Camera_Camera_moveClose'></a></h3>
 
-<dl class="details">
+<p>Moves the camera the given distance, but not too close
+to the reference point.</p>
 
-</dl>
+<h4>Parameters</h4>
 
-<h5>Returns:</h5>
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+The distance to move. Positive values mean forward, and negative distances mean back.</li>
+</ul>
 
-<div class="param-desc">
-    An array of three numbers giving
-the X, Y, and Z coordinates of the camera's position, respectively.
+<h4>Return Value</h4>
 
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-</div>
+<h3>Camera#moveForward(dist) <a id='Camera_Camera_moveForward'></a></h3>
 
-    <h4 style="margin-bottom:0px" id="getVectorFromCenter"><span style="font-weight:lighter"></span>Camera#getVectorFromCenter<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+<p>Moves the camera forward the given distance.</p>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line725">line 725</a>
-     </i></small></p>
+<h4>Parameters</h4>
 
-<div class="description">
-    Gets the 3-element vector that points from the reference
-point to the camera's position.
-</div>
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+The distance to move. Positive values mean forward, and negative distances mean back.</li>
+</ul>
 
-<dl class="details">
+<h4>Return Value</h4>
 
-</dl>
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-<h5>Returns:</h5>
+<h3>Camera#moveHorizontal(dist) <a id='Camera_Camera_moveHorizontal'></a></h3>
 
-<div class="param-desc">
-    The return value as a unit
-vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a> with a length of 1).
-Returns (0,0,0) if the reference point is the same as the camera's position.
+<p>Moves the camera horizontally relative to the camera&#39;s up vector.</p>
 
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
+<h4>Parameters</h4>
 
-</div>
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Distance to move the camera.</li>
+</ul>
 
-    <h4 style="margin-bottom:0px" id="moveAngleHorizontal"><span style="font-weight:lighter"></span>Camera#moveAngleHorizontal<span class="signature">(angleDegrees)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
+<h4>Return Value</h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line531">line 531</a>
-     </i></small></p>
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-<div class="description">
-    Moves the camera to the left or right so that it faces
-the same reference point at the same distance.
-</div>
+<h3>Camera#movePosition(cx, cy, cz) <a id='Camera_Camera_movePosition'></a></h3>
 
-    <h5>Parameters:</h5>
+<p><b>Deprecated: Renamed to &quot;setPosition&quot;.</b></p>
 
-<dl>
+<p>Sets the position of the camera.</p>
 
-        <dt>
+<h4>Parameters</h4>
 
-                <code>angleDegrees</code>
+<ul>
+<li><code>cx</code> (Type: Number)<br>
+The camera&#39;s new X-coordinate.</li>
+<li><code>cy</code> (Type: Number)<br>
+The camera&#39;s new Y-coordinate.</li>
+<li><code>cz</code> (Type: Number)<br>
+The camera&#39;s new Z-coordinate.</li>
+</ul>
 
-                (
-<span class="param-type">Number</span>
+<h4>Return Value</h4>
 
-)
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-           </dt><dd>
-           The angle to rotate the camera,
-in degrees. If the coordinate-system is right-handed, positive
-values rotate the camera leftward, and
-negative values rightward. If the coordinate-system is left-handed,
-vice versa.</dd>
+<h3>Camera#moveVertical(dist) <a id='Camera_Camera_moveVertical'></a></h3>
 
-    </dl>
+<p>Moves the camera toward or away from the camera&#39;s up vector.</p>
 
-<dl class="details">
+<h4>Parameters</h4>
 
-</dl>
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Distance to move the camera.</li>
+</ul>
 
-<h5>Returns:</h5>
+<h4>Return Value</h4>
 
-<div class="param-desc">
-    This object.
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
+<h3>Camera#setDistance(dist) <a id='Camera_Camera_setDistance'></a></h3>
 
-</div>
+<p>Moves the camera a given distance from the reference
+point without changing its orientation.</p>
 
-    <h4 style="margin-bottom:0px" id="moveAngleVertical"><span style="font-weight:lighter"></span>Camera#moveAngleVertical<span class="signature">(angleDegrees)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
+<h4>Parameters</h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line508">line 508</a>
-     </i></small></p>
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Positive number giving the distance. If this is less than the near plane distance, the distance will be equal to the near plane distance. Does nothing if the distance is 0 or less.</li>
+</ul>
 
-<div class="description">
-    Moves the camera upward or downward so that it faces
-the same reference point at the same distance.
-</div>
+<h4>Return Value</h4>
 
-    <h5>Parameters:</h5>
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-<dl>
+<h3>Camera#setPosition(cx, [cy], [cz]) <a id='Camera_Camera_setPosition'></a></h3>
 
-        <dt>
+<p>Sets the position of the camera.</p>
 
-                <code>angleDegrees</code>
+<h4>Parameters</h4>
 
-                (
-<span class="param-type">Number</span>
+<ul>
+<li><code>cx</code> (Type: Number)<br>
+The camera&#39;s new X-coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, &quot;cy&quot; and &quot;cz&quot; can be omitted.</li>
+<li><code>cy</code> (Type: Number) (optional)<br>
+The camera&#39;s new Y-coordinate.</li>
+<li><code>cz</code> (Type: Number) (optional)<br>
+The camera&#39;s new Z-coordinate.</li>
+</ul>
 
-)
+<h4>Return Value</h4>
 
-           </dt><dd>
-           The angle to rotate the camera,
-in degrees. If the coordinate-system is right-handed, positive
-values rotate the camera upward, and
-negative values downward. If the coordinate-system is left-handed,
-vice versa.</dd>
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-    </dl>
+<h3>Camera#turnHorizontal(angleDegrees) <a id='Camera_Camera_turnHorizontal'></a></h3>
 
-<dl class="details">
+<p>Turns the camera to the left or right so that it faces
+ the same distance from a reference point.</p>
 
-</dl>
+<h4>Parameters</h4>
 
-<h5>Returns:</h5>
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera rightward, and negative values leftward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
 
-<div class="param-desc">
-    This object.
+<h4>Return Value</h4>
 
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-</div>
+<h3>Camera#turnVertical(angleDegrees) <a id='Camera_Camera_turnVertical'></a></h3>
 
-    <h4 style="margin-bottom:0px" id="moveCenterHorizontal"><span style="font-weight:lighter"></span>Camera#moveCenterHorizontal<span class="signature">(dist)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
+<p>Turns the camera upward or downward so that it faces
+ the same distance from a reference point.</p>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line667">line 667</a>
-     </i></small></p>
+<h4>Parameters</h4>
 
-        <p><b>Deprecated: Use "moveHorizontal" instead.</b><p>
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
 
-<div class="description">
-    Moves the camera horizontally relative to the camera's up vector.
-</div>
+<h4>Return Value</h4>
 
-    <h5>Parameters:</h5>
+<p>This object. (Type: <a href="Camera.md">Camera</a>)</p>
 
-<dl>
+<h3>Camera#update([input]) <a id='Camera_Camera_update'></a></h3>
 
-        <dt>
+<p>Updates information about this camera based
+on the state of an input tracker.</p>
 
-                <code>dist</code>
+<h4>Parameters</h4>
 
-                (
-<span class="param-type">Number</span>
+<ul>
+<li><code>input</code> (Type: <a href="InputTracker.md">InputTracker</a>) (optional)<br>
+An input tracker. This method should be called right after the tracker&#39;s &#39;update&#39; method was called. <i>Note that future versions may require this parameter.</i></li>
+</ul>
 
-)
+<h4>Return Value</h4>
 
-           </dt><dd>
-           Distance to move the camera.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="moveCenterVertical"><span style="font-weight:lighter"></span>Camera#moveCenterVertical<span class="signature">(dist)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line678">line 678</a>
-     </i></small></p>
-
-        <p><b>Deprecated: Use "moveVertical" instead.</b><p>
-
-<div class="description">
-    Moves the camera toward or away from the camera's up vector.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>dist</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Distance to move the camera.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="moveClose"><span style="font-weight:lighter"></span>Camera#moveClose<span class="signature">(dist)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line638">line 638</a>
-     </i></small></p>
-
-<div class="description">
-    Moves the camera the given distance, but not too close
-to the reference point.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>dist</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The distance to move.  Positive
-values mean forward, and negative distances mean back.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="moveForward"><span style="font-weight:lighter"></span>Camera#moveForward<span class="signature">(dist)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line649">line 649</a>
-     </i></small></p>
-
-<div class="description">
-    Moves the camera forward the given distance.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>dist</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The distance to move.  Positive
-values mean forward, and negative distances mean back.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="moveHorizontal"><span style="font-weight:lighter"></span>Camera#moveHorizontal<span class="signature">(dist)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line688">line 688</a>
-     </i></small></p>
-
-<div class="description">
-    Moves the camera horizontally relative to the camera's up vector.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>dist</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Distance to move the camera.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="movePosition"><span style="font-weight:lighter"></span>Camera#movePosition<span class="signature">(cx, cy, cz)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line617">line 617</a>
-     </i></small></p>
-
-        <p><b>Deprecated: Renamed to "setPosition".</b><p>
-
-<div class="description">
-    Sets the position of the camera.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>cx</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The camera's new X-coordinate.</dd>
-
-        <dt>
-
-                <code>cy</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The camera's new Y-coordinate.</dd>
-
-        <dt>
-
-                <code>cz</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The camera's new Z-coordinate.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="moveVertical"><span style="font-weight:lighter"></span>Camera#moveVertical<span class="signature">(dist)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line706">line 706</a>
-     </i></small></p>
-
-<div class="description">
-    Moves the camera toward or away from the camera's up vector.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>dist</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Distance to move the camera.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setDistance"><span style="font-weight:lighter"></span>Camera#setDistance<span class="signature">(dist)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line467">line 467</a>
-     </i></small></p>
-
-<div class="description">
-    Moves the camera a given distance from the reference
-point without changing its orientation.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>dist</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Positive number giving the distance.
-If this is less than the near plane distance, the distance will
-be equal to the near plane distance.  Does nothing if the
-distance is 0 or less.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>Camera#setPosition<span class="signature">(cx, cy<sub style="font-weight:lighter">opt</sub>, cz<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line593">line 593</a>
-     </i></small></p>
-
-<div class="description">
-    Sets the position of the camera.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>cx</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The camera's new X-coordinate,
-or a 3-element vector containing the X, Y, and Z coordinates.
-In the latter case, "cy" and "cz" can be omitted.</dd>
-
-        <dt>
-
-                <code>cy</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           The camera's new Y-coordinate.</dd>
-
-        <dt>
-
-                <code>cz</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           The camera's new Z-coordinate.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="turnHorizontal"><span style="font-weight:lighter"></span>Camera#turnHorizontal<span class="signature">(angleDegrees)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line551">line 551</a>
-     </i></small></p>
-
-<div class="description">
-    Turns the camera to the left or right so that it faces
- the same distance from a reference point.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>angleDegrees</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The angle to rotate the camera,
-in degrees. If the coordinate-system is right-handed, positive
-values rotate the camera rightward, and
-negative values leftward. If the coordinate-system is left-handed,
-vice versa.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="turnVertical"><span style="font-weight:lighter"></span>Camera#turnVertical<span class="signature">(angleDegrees)</span><span style="font-weight:lighter"> &rarr; {<a href="Camera.html">Camera</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line571">line 571</a>
-     </i></small></p>
-
-<div class="description">
-    Turns the camera upward or downward so that it faces
- the same distance from a reference point.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>angleDegrees</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The angle to rotate the camera,
-in degrees. If the coordinate-system is right-handed, positive
-values rotate the camera upward, and
-negative values downward. If the coordinate-system is left-handed,
-vice versa.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="Camera.html">Camera</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="update"><span style="font-weight:lighter"></span>Camera#update<span class="signature">(input<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_camera.js.html">extras/camera.js</a>, <a href="extras_camera.js.html#line740">line 740</a>
-     </i></small></p>
-
-<div class="description">
-    Updates information about this camera based
-on the state of an input tracker.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>input</code>
-
-                (
-<span class="param-type"><a href="InputTracker.html">InputTracker</a></span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           An input tracker.  This
-method should be called right after the tracker's
-'update' method was called. <i>Note that future versions
-may require this parameter.</i></dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Object</span>)
-
-</div>
-
-</article>
-
-</section>
-
+<p>Return value. (Type: Object)</p>
 </div>
 <nav id="navigation">
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -894,9 +341,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -912,5 +357,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

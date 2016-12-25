@@ -1,50 +1,91 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>FrameCounter</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.BufferedMesh</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>FrameCounter</h1>
+<h1>H3DU.BufferedMesh</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>FrameCounter() <a id='FrameCounter'></a></h3>
+<h3>H3DU.BufferedMesh(mesh, context) <a id='H3DU_BufferedMesh'></a></h3>
 
-<p>A class for finding the frame rate of an HTML rendering.</p>
+<p><b>Deprecated: This class is likely to become a private class.
+Use the <a href="H3DU_MeshBuffer.md">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
+contexts.</b></p>
 
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
+<p>A geometric mesh in the form of buffer objects.</p>
 
-<p>To use this class, you must include the script &quot;extras/frame.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
+<h4>Parameters</h4>
 
-<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/frame.js&quot;&gt;&amp;lt;/script&gt;
-</code></pre>
+<ul>
+<li><code>mesh</code> (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a> | <a href="H3DU_MeshBuffer.md">H3DU.MeshBuffer</a>)<br>
+A geometric mesh object. Cannot be null.</li>
+<li><code>context</code> (Type: WebGLRenderingContext | object)<br>
+A WebGL context to create a buffer from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context. (Note that this constructor uses a WebGL context rather than a shader program because buffer objects are not specific to shader programs.)</li>
+</ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#FrameCounter_FrameCounter_getFPS">getFPS</a></li>
-<li><a href="#FrameCounter_FrameCounter_update">update</a></li>
+<li><a href="#H3DU_BufferedMesh_H3DU_BufferedMesh_dispose">dispose</a></li>
+<li><a href="#H3DU_BufferedMesh_H3DU_BufferedMesh_draw">draw</a></li>
+<li><a href="#H3DU_BufferedMesh_H3DU_BufferedMesh_getContext">getContext</a></li>
+<li><a href="#H3DU_BufferedMesh_H3DU_BufferedMesh_primitiveCount">primitiveCount</a></li>
+<li><a href="#H3DU_BufferedMesh_H3DU_BufferedMesh_vertexCount">vertexCount</a></li>
 </ul>
 
-<h3>FrameCounter#getFPS() <a id='FrameCounter_FrameCounter_getFPS'></a></h3>
+<h3>H3DU.BufferedMesh#dispose() <a id='H3DU_BufferedMesh_H3DU_BufferedMesh_dispose'></a></h3>
 
-<p>Gets the calculated frames per second, based
-on how often the update method was called.</p>
+<p>Deletes the vertex and index buffers associated with this object.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+
+<h3>H3DU.BufferedMesh#draw(program) <a id='H3DU_BufferedMesh_H3DU_BufferedMesh_draw'></a></h3>
+
+<p><b>Deprecated: Yes</b></p>
+
+<p>Binds the buffers in this object to attributes according
+to their data format, and draws the elements in this mesh
+according to the data in its buffers.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>program</code> (Type: <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a>)<br>
+A shader program object to get the IDs from for attributes named &quot;position&quot;, &quot;normal&quot;, &quot;colorAttr&quot;, and &quot;uv&quot;, and the &quot;useColorAttr&quot; uniform.</li>
+</ul>
 
 <h4>Return Value</h4>
 
 <p>Return value. (Type: Object)</p>
 
-<h3>FrameCounter#update() <a id='FrameCounter_FrameCounter_update'></a></h3>
+<h3>H3DU.BufferedMesh#getContext() <a id='H3DU_BufferedMesh_H3DU_BufferedMesh_getContext'></a></h3>
 
-<p>Updates the state for determining the frame count.
-This method should be called once per frame.</p>
+<p><b>Deprecated: Yes</b></p>
+
+<p>Returns the WebGL context associated with this object.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Object)</p>
+<p>Return value. (Type: WebGLRenderingContext)</p>
+
+<h3>H3DU.BufferedMesh#primitiveCount() <a id='H3DU_BufferedMesh_H3DU_BufferedMesh_primitiveCount'></a></h3>
+
+<p>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this mesh.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
+
+<h3>H3DU.BufferedMesh#vertexCount() <a id='H3DU_BufferedMesh_H3DU_BufferedMesh_vertexCount'></a></h3>
+
+<p>Gets the number of vertices composed by all shapes in this mesh.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
 </div>
 <nav id="navigation">
 <p>

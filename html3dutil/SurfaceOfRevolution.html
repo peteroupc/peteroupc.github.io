@@ -1,367 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: SurfaceOfRevolution</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>SurfaceOfRevolution</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: SurfaceOfRevolution</h1>
+<h1>SurfaceOfRevolution</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>SurfaceOfRevolution(curve, minval, maxval, [axis]) <a id='SurfaceOfRevolution'></a></h3>
 
-        <h2>
-        SurfaceOfRevolution
-        </h2>
+<p>Parametric evaluator for a surface of revolution, which results by revolving
+an X/Y curve around an axis.</p>
 
-</header>
-
-<article>
-    <div class="container-overview">
-
-    <h4 style="margin-bottom:0px" id="SurfaceOfRevolution"><span style="font-weight:lighter"></span>new SurfaceOfRevolution<span class="signature">(curve, minval, maxval, axis<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line48">line 48</a>
-     </i></small></p>
-
-<div class="description">
-    Parametric evaluator for a surface of revolution, which results by revolving
-an X/Y curve around an axis.
 <p>This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
-library. <p>
-To use this class, you must include the script "extras/evaluators.js"; the
-class is not included in the "h3du_min.js" file which makes up
-the HTML 3D Library.  Example:<pre>
-&lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
-</div>
+library.</p>
 
-    <h5>Parameters:</h5>
+<p>To use this class, you must include the script &quot;extras/evaluators.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
 
-<dl>
+<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&amp;lt;/script&gt;
+</code></pre>
 
-        <dt>
+<h4>Parameters</h4>
 
-                <code>curve</code>
+<ul>
+<li><p><code>curve</code> (Type: function)<br>
+Curve to rotate about the axis of rotation, as specified in the &quot;axis&quot; parameter. The curve function must contain a function named &quot;evaluate&quot;, which takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of at least 2 elements: the first element is the X coordinate of the curve&#39;s position (corresponding to elevation), and the second element is the Y coordinate (corresponding to radius).</p>
 
-                (
-<span class="param-type">function</span>
-
-)
-
-           </dt><dd>
-           Curve to rotate about the axis of rotation, as
-specified in the "axis" parameter.
-The curve function must contain a function
-named "evaluate", which takes the following parameter:<ul>
-<li><code>u</code> - A curve coordinate, generally from 0 to 1.
+<p>If the curve function draws a curve that goes around the axis of rotation, such as a circle or ellipse, the V-coordinates given in <em>minval</em> and <em>maxval</em> must restrict the curve definition to no more than half of the curve.</p></li>
+<li><code>minval</code> (Type: Number)<br>
+Smallest V-coordinate.</li>
+<li><code>maxval</code> (Type: Number)<br>
+Largest V-coordinate. If <em>minval</em> is greater than <em>maxval</em>, both values will be swapped.</li>
+<li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
-The evaluator function returns an array of at least 2 elements: the first
-element is the X coordinate of the curve's position (corresponding to
-elevation), and the second
-element is the Y coordinate (corresponding to
-radius).<p>
-If the curve function draws a curve that goes around the axis of rotation, such
-as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must
-restrict the curve definition to no more than half of the curve.</dd>
 
-        <dt>
+<h3>Methods</h3>
 
-                <code>minval</code>
+<ul>
+<li><a href="#SurfaceOfRevolution_fromFunction">fromFunction</a></li>
+<li><a href="#SurfaceOfRevolution_torus">torus</a></li>
+</ul>
 
-                (
-<span class="param-type">Number</span>
+<h3>(static) SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis]) <a id='SurfaceOfRevolution_fromFunction'></a></h3>
 
-)
-
-           </dt><dd>
-           Smallest V-coordinate.</dd>
-
-        <dt>
-
-                <code>maxval</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Largest V-coordinate.   If _minval_ is greater than
-_maxval_, both values will be swapped.</dd>
-
-        <dt>
-
-                <code>axis</code>
-
-                (
-<span class="param-type">Array.&lt;Number></span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Axis of rotation, around which the curve
-will be rotated to generate the surface of revolution.  If null or omitted, the positive
-Z-axis will be the axis of rotation.  This parameter is a 3-element array describing
-the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
-run in the direction from the origin to the point given in this parameter.  This
-parameter need not be a unit vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a>
-with a length of 1).</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="margin-bottom:0px" id=".fromFunction"><span style="font-weight:lighter">(static) </span>fromFunction<span class="signature">(func, minval, maxval, axis<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line134">line 134</a>
-     </i></small></p>
-
-<div class="description">
-    Creates a parametric evaluator for a surface of revolution
+<p>Creates a parametric evaluator for a surface of revolution
 whose curve is the graph of a single-variable function.
 The resulting surface will have a circular cross section
 along its length.
 Examples of surfaces generated by this technique are
 cones, frustums, cylinders, spheres, and spheroids (the
-bases of these surfaces won't be generated).
-</div>
+bases of these surfaces won&#39;t be generated).</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>func</code> (Type: function)<br>
+Function whose graph will be rotated about the axis of rotation, as specified in the &quot;axis&quot; parameter. The function takes a number as a single parameter and returns a number. The return value is effectively the radius of each part of the surface from beginning to end.</li>
+<li><code>minval</code> (Type: Number)<br>
+Smallest parameter of the function. This is a number of units from the origin along the axis of rotation.</li>
+<li><code>maxval</code> (Type: Number)<br>
+Largest parameter of the function. This is a number of units from the origin along the axis of rotation. If <em>minval</em> is greater than <em>maxval</em>, both values will be swapped.</li>
+<li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>func</code>
+<p>Return value. (Type: <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a>)</p>
 
-                (
-<span class="param-type">function</span>
+<h4>Example</h4>
 
-)
-
-           </dt><dd>
-           Function whose graph will be
-rotated about the axis of rotation, as
-specified in the "axis" parameter.  The function takes a number
-as a single parameter and returns a number.  The return
-value is effectively the radius of each part of the surface
-from beginning to end.</dd>
-
-        <dt>
-
-                <code>minval</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Smallest parameter of the function.
-This is a number of units from the origin along the axis of rotation.</dd>
-
-        <dt>
-
-                <code>maxval</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Largest parameter of the function.
-This is a number of units from the origin along the axis of rotation.
-If _minval_ is greater than _maxval_, both values will be swapped.</dd>
-
-        <dt>
-
-                <code>axis</code>
-
-                (
-<span class="param-type">Array.&lt;Number></span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Axis of rotation, around which the
-function graph will be rotated to generate the surface of revolution.
-If null or omitted, the positive Z-axis will be the axis of rotation.
-This parameter is a 3-element array describing
-the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
-run in the direction from the origin to the point given in this parameter.  This
-parameter need not be a unit vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a>
-with a length of 1).</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type"><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></span>)
-
-</div>
-
-    <h5>Examples</h5>
-
-        <p class="code-caption">The following creates an evaluator for a cone
+<p>The following creates an evaluator for a cone
 which starts at the origin and runs 10 units along the Z axis.</p>
 
-    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction(
+<pre><code>var surf=SurfaceOfRevolution.fromFunction(
  function(x) {
-"use strict";  return x/2; }, // use a constantly increasing function
-0, 10);</code></pre>
+&quot;use strict&quot;; return x/2; }, // use a constantly increasing function
+0, 10);
+</code></pre>
 
-        <p class="code-caption">This is an evaluator for the same cone, but
+<p>This is an evaluator for the same cone, but
 shifted 3 units back.</p>
 
-    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction(
+<pre><code>var surf=SurfaceOfRevolution.fromFunction(
  function(x) {
-"use strict";  x+=3; return x/2; },
--3,7);</code></pre>
+&quot;use strict&quot;; x+=3; return x/2; },
+-3,7);
+</code></pre>
 
-        <p class="code-caption">The following creates an evaluator for a cylinder
+<p>The following creates an evaluator for a cylinder
 which runs from 5 to 10 units, and with a radius of 2 units.</p>
 
-    <pre class="prettyprint"><code>var surf=SurfaceOfRevolution.fromFunction(
+<pre><code>var surf=SurfaceOfRevolution.fromFunction(
  function(x) {
-"use strict";  return 2; }, // use a constant radius
-5, 10);</code></pre>
+&quot;use strict&quot;; return 2; }, // use a constant radius
+5, 10);
+</code></pre>
 
-    <h4 style="margin-bottom:0px" id=".torus"><span style="font-weight:lighter">(static) </span>torus<span class="signature">(outerRadius, innerRadius, curve<sub style="font-weight:lighter">opt</sub>, axis<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>}</span></h4>
+<h3>(static) SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis]) <a id='SurfaceOfRevolution_torus'></a></h3>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="extras_evaluators.js.html">extras/evaluators.js</a>, <a href="extras_evaluators.js.html#line169">line 169</a>
-     </i></small></p>
+<p>Parametric evaluator for a torus, a special case of a surface of revolution.</p>
 
-<div class="description">
-    Parametric evaluator for a torus, a special case of a surface of revolution.
-</div>
+<h4>Parameters</h4>
 
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>outerRadius</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Radius from the center to the innermost
-part of the torus.</dd>
-
-        <dt>
-
-                <code>innerRadius</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Radius from the inner edge to the innermost
-part of the torus.</dd>
-
-        <dt>
-
-                <code>curve</code>
-
-                (
-<span class="param-type">function</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Object describing
-a curve to serve as the cross section of the torus.
-The curve need not be closed; in fact, certain special surfaces can result
-by leaving the ends open.
-The curve function must contain a function
-named "evaluate", which takes the following parameter:<ul>
-<li><code>u</code> - A curve coordinate, generally from 0 to 1.
+<ul>
+<li><code>outerRadius</code> (Type: Number)<br>
+Radius from the center to the innermost part of the torus.</li>
+<li><code>innerRadius</code> (Type: Number)<br>
+Radius from the inner edge to the innermost part of the torus.</li>
+<li><code>curve</code> (Type: function) (optional)<br>
+Object describing a curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. The curve function must contain a function named &quot;evaluate&quot;, which takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of at least 2 elements: the first element is the X coordinate of the curve&#39;s position, and the second element is the Y coordinate. If null or omitted, uses a circular cross section.</li>
+<li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+Axis of rotation, which the torus will pass through. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
-The evaluator function returns an array of at least 2 elements: the first
-element is the X coordinate of the curve's position, and the second
-element is the Y coordinate.  If null or omitted, uses a circular cross section.</dd>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>axis</code>
-
-                (
-<span class="param-type">Array.&lt;Number></span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Axis of rotation, which the torus
-will pass through.
-If null or omitted, the positive Z-axis will be the axis of rotation.
-This parameter is a 3-element array describing
-the X, Y, and Z coordinates, respectively, of a 3D point.  The axis of rotation will
-run in the direction from the origin to the point given in this parameter.  This
-parameter need not be a unit vector (a <a href="H3DU.Math.html#.vec3norm">"normalized" vector</a>
-with a length of 1).</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type"><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></span>)
-
-</div>
-
-</article>
-
-</section>
-
+<p>Return value. (Type: <a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a>)</p>
 </div>
 <nav id="navigation">
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -376,9 +140,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -394,5 +156,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

@@ -1,32 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Tutorial: Texture Examples</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Texture Examples</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Tutorial: Texture Examples</h1>
-    <section>
+<h1>Texture Examples</h1>
 
-<header>
+<h2>Contents <a id=Contents></a></h2>
 
-    <h2>Texture Examples</h2>
-</header>
+<p><a href="#Contents">Contents</a><br><a href="#Texture_Loaders">Texture Loaders</a><br><a href="#Sample_Code_for_Loading_Textures">Sample Code for Loading Textures</a><br>&nbsp;&nbsp;<a href="#Loading_a_single_texture">Loading a single texture</a><br>&nbsp;&nbsp;<a href="#Loading_multiple_textures">Loading multiple textures</a><br>&nbsp;&nbsp;<a href="#Demos">Demos</a><br></p>
 
-<article>
-    <h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Texture_Loaders">Texture Loaders</a><br><a href="#Sample_Code_for_Loading_Textures">Sample Code for Loading Textures</a><br>&nbsp;&nbsp;<a href="#Loading_a_single_texture">Loading a single texture</a><br>&nbsp;&nbsp;<a href="#Loading_multiple_textures">Loading multiple textures</a><br>&nbsp;&nbsp;<a href="#Demos">Demos</a><br></p>
-<h2>Texture Loaders <a id=Texture_Loaders></a></h2><p>A texture loader (TextureLoader) caches textures loaded and uploaded to WebGL contexts.</p>
-<h2>Sample Code for Loading Textures <a id=Sample_Code_for_Loading_Textures></a></h2><h3>Loading a single texture <a id=Loading_a_single_texture></a></h3><p>The <code>loadAndMapTexture</code> method of <code>TextureLoader</code> returns a promise, which will receive either
+<h2>Texture Loaders <a id=Texture_Loaders></a></h2>
+
+<p>A texture loader (TextureLoader) caches textures loaded and uploaded to WebGL contexts.</p>
+
+<h2>Sample Code for Loading Textures <a id=Sample_Code_for_Loading_Textures></a></h2>
+
+<h3>Loading a single texture <a id=Loading_a_single_texture></a></h3>
+
+<p>The <code>loadAndMapTexture</code> method of <code>TextureLoader</code> returns a promise, which will receive either
 the texture loaded or an error.  Loading a texture often happens asynchronously, so code that
 follows the <code>loadAndMapTexture</code> call (and its corresponding <code>then</code> calls) will generally run without
 waiting for the texture to finish loading.</p>
+
 <p>In the sample code below, the variable <code>textureURL</code> is the URL of the texture to load.</p>
-<pre class="prettyprint source"><code>  var loader=new H3DU.TextureLoader();
+
+<pre><code>  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexture(textureURL, scene).then(function(tex){
     // texture is loaded, the Texture object is in the &quot;tex&quot; parameter
     // Now create a sphere
@@ -35,10 +32,17 @@ waiting for the texture to finish loading.</p>
     var shape=new H3DU.Shape(mesh).setTexture(texture);
   }, function(error){
     // an error occurred
-  });</code></pre><h3>Loading multiple textures <a id=Loading_multiple_textures></a></h3><p>If you need to load multiple textures, the <code>loadAndMapTexturesAll</code> method
+  });
+</code></pre>
+
+<h3>Loading multiple textures <a id=Loading_multiple_textures></a></h3>
+
+<p>If you need to load multiple textures, the <code>loadAndMapTexturesAll</code> method
 is much more convenient than <code>loadAndMapTexture</code> and also loads textures asynchronously.</p>
+
 <p>In the sample code below, The variables <code>textureURL1</code> and <code>textureURL2</code> are URL textures.</p>
-<pre class="prettyprint source"><code>  var loader=new H3DU.TextureLoader();
+
+<pre><code>  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexturesAll([
    textureURL1,
    textureURL2
@@ -53,28 +57,29 @@ is much more convenient than <code>loadAndMapTexture</code> and also loads textu
       }
   }, function(res){
    // Some or all of the textures failed to load
-   if(res.failures.length>0){
+   if(res.failures.length&gt;0){
      // We have some failing textures
    }
-   if(res.successes.length>0){
+   if(res.successes.length&gt;0){
      // We have some succeeding textures
    }
-  });</code></pre><h3>Demos <a id=Demos></a></h3><ul>
+  });
+</code></pre>
+
+<h3>Demos <a id=Demos></a></h3>
+
+<ul>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/textured.html">textured.html</a> - Demonstrates loading textures
 and applying them to 3D shapes.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/gradient.html">gradient.html</a> - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.</li>
 </ul>
-</article>
-
-</section>
-
 </div>
 <nav id="navigation">
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -89,9 +94,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -107,5 +110,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

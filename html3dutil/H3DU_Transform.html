@@ -1,0 +1,336 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.Transform</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.Transform</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<h3>H3DU.Transform() <a id='H3DU_Transform'></a></h3>
+
+<p>A class offering a convenient way to set a transformation
+from one coordinate system to another.</p>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU_Transform_H3DU_Transform_copy">copy</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_getMatrix">getMatrix</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_getPosition">getPosition</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_getQuaternion">getQuaternion</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_getScale">getScale</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_isIdentity">isIdentity</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_movePosition">movePosition</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_multOrientation">multOrientation</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_multQuaternion">multQuaternion</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_reset">reset</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_resetTransform">resetTransform</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_setMatrix">setMatrix</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_setOrientation">setOrientation</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_setPosition">setPosition</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_setQuaternion">setQuaternion</a></li>
+<li><a href="#H3DU_Transform_H3DU_Transform_setScale">setScale</a></li>
+</ul>
+
+<h3>H3DU.Transform#copy() <a id='H3DU_Transform_H3DU_Transform_copy'></a></h3>
+
+<p>Makes a copy of this object. The copied object
+will have its own version of the rotation, scale,
+position, and matrix data.</p>
+
+<h4>Return Value</h4>
+
+<p>A copy of this object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h3>H3DU.Transform#getMatrix() <a id='H3DU_Transform_H3DU_Transform_getMatrix'></a></h3>
+
+<p>Gets the transformation matrix used by an object. Depending
+on the state of this object, will return either:<ul>
+<li>The 4x4 matrix passed to H3DU.Transform#setMatrix, if the
+matrix was defined with that method
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.
+<li>The matrix resulting from the position, rotation, and scale properties,
+multiplied in that order, otherwise.
+</ul></p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Transform#getPosition() <a id='H3DU_Transform_H3DU_Transform_getPosition'></a></h3>
+
+<p>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+of an object relative to its original position.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Transform#getQuaternion() <a id='H3DU_Transform_H3DU_Transform_getQuaternion'></a></h3>
+
+<p>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.md">quaternion</a>.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Transform#getScale() <a id='H3DU_Transform_H3DU_Transform_getScale'></a></h3>
+
+<p>Returns a copy of a three-element array giving the scaling for an object&#39;s width,
+height, and depth, respectively.
+For each component, 1 means no scaling.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Transform#isIdentity() <a id='H3DU_Transform_H3DU_Transform_isIdentity'></a></h3>
+
+<p>Returns whether this transform is the identity transform.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Boolean)</p>
+
+<h3>H3DU.Transform#movePosition(x, y, z) <a id='H3DU_Transform_H3DU_Transform_movePosition'></a></h3>
+
+<p>Moves the relative position of an object from its original
+position. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: Array.&lt;Number&gt; | number)<br>
+Number to add to the X-coordinate, If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.</li>
+<li><code>y</code> (Type: Number)<br>
+Number to add to the Y-coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: Number)<br>
+Number to add to the Z-coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h3>H3DU.Transform#multOrientation(angle, v, vy, vz) <a id='H3DU_Transform_H3DU_Transform_multOrientation'></a></h3>
+
+<p>Combines an object&#39;s current rotation with another rotation
+in the form of an angle and an axis of
+rotation. The combined rotation will have the
+same effect as the new rotation followed by the existing rotation.
+ Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angle</code> (Type: Array.&lt;Number&gt; | number)<br>
+The desired angle to rotate in degrees. See H3DU.Transform#setOrientation.</li>
+<li><code>v</code> (Type: Array.&lt;Number&gt; | number)<br>
+X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
+<li><code>vy</code> (Type: Number)<br>
+Y-component of the point lying on the axis of rotation.</li>
+<li><code>vz</code> (Type: Number)<br>
+Z-component of the point lying on the axis of rotation.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h3>H3DU.Transform#multQuaternion(quat) <a id='H3DU_Transform_H3DU_Transform_multQuaternion'></a></h3>
+
+<p>Combines an object&#39;s current rotation with another rotation
+described by a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+for describing 3D rotations). The combined rotation will have the
+same effect as the new rotation followed by the existing rotation.
+ Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
+A four-element array describing the rotation. A quaternion is returned from the methods glmath.H3DU.Math.quatFromAxisAngle or glmath.H3DU.Math.quatFromTaitBryan.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h4>Example</h4>
+
+<pre><code>// Combine an object&#39;s orientation with a rotation 20 degrees about the X-axis
+transform.multQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
+// Combine an object&#39;s orientation with identity (no rotation)
+transform.multQuaternion(H3DU.Math.quatIdentity());
+// Combine an object&#39;s orientation with 30 degree pitch multiplied
+// by 40 degree roll
+transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
+</code></pre>
+
+<h3>H3DU.Transform#reset() <a id='H3DU_Transform_H3DU_Transform_reset'></a></h3>
+
+<p>Resets this shape to the untransformed state.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+
+<h3>H3DU.Transform#resetTransform() <a id='H3DU_Transform_H3DU_Transform_resetTransform'></a></h3>
+
+<p><b>Deprecated: Use the &quot;reset&quot; method instead.</b></p>
+
+<p>Resets this transform to the untransformed state.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h3>H3DU.Transform#setMatrix(value) <a id='H3DU_Transform_H3DU_Transform_setMatrix'></a></h3>
+
+<p>Sets this shape&#39;s transformation matrix. This method
+will set the position, rotation, and scale properties
+accordingly to the matrix given.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>value</code> (Type: Array.&lt;Number&gt;)<br>
+A 4x4 matrix. This method will copy the value of this parameter.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h3>H3DU.Transform#setOrientation(angle, v, vy, vz) <a id='H3DU_Transform_H3DU_Transform_setOrientation'></a></h3>
+
+<p>Sets this object&#39;s orientation in the form of an angle and an axis of
+rotation. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angle</code> (Type: Array.&lt;Number&gt; | number)<br>
+The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
+<li><code>v</code> (Type: Array.&lt;Number&gt; | number)<br>
+X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
+<li><code>vy</code> (Type: Number)<br>
+Y-component of the point lying on the axis of rotation.</li>
+<li><code>vz</code> (Type: Number)<br>
+Z-component of the point lying on the axis of rotation.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h3>H3DU.Transform#setPosition(x, y, z) <a id='H3DU_Transform_H3DU_Transform_setPosition'></a></h3>
+
+<p>Sets the relative position of an object from its original
+position. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: Array.&lt;Number&gt; | number)<br>
+The X-coordinate. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: Number)<br>
+The Y-coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: Number)<br>
+The Z-coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h3>H3DU.Transform#setQuaternion(quat) <a id='H3DU_Transform_H3DU_Transform_setQuaternion'></a></h3>
+
+<p>Sets this object&#39;s orientation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+for describing 3D rotations). Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
+A four-element array describing the rotation. A quaternion is returned from the methods glmath.H3DU.Math.quatFromAxisAngle and glmath.H3DU.Math.quatFromTaitBryan, among others.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+
+<h4>Example</h4>
+
+<pre><code>// Set an object&#39;s orientation to 30 degrees about the X-axis
+transform.setQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
+// Set an object&#39;s orientation to identity (no rotation)
+transform.setQuaternion(H3DU.Math.quatIdentity());
+// Set an object&#39;s orientation to 30 degree pitch multiplied
+// by 40 degree roll
+transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
+</code></pre>
+
+<h3>H3DU.Transform#setScale(x, y, z) <a id='H3DU_Transform_H3DU_Transform_setScale'></a></h3>
+
+<p>Sets the scale of an object relative to its original
+size. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: number | Array.&lt;Number&gt;)<br>
+Scaling factor for this object&#39;s width. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the scaling factors for width, height, and depth, respectively, or a single number giving the scaling factor for all three dimensions.</li>
+<li><code>y</code> (Type: Number)<br>
+Scaling factor for this object&#39;s height.</li>
+<li><code>z</code> (Type: Number)<br>
+Scaling factor for this object&#39;s depth.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

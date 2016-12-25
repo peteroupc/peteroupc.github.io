@@ -1,90 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Tutorial: 2-Dimensional Graphics Paths</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>2-Dimensional Graphics Paths</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Tutorial: 2-Dimensional Graphics Paths</h1>
-    <section>
+<h1>2-Dimensional Graphics Paths</h1>
 
-<header>
+<h2>Introduction <a id=Introduction></a></h2>
 
-    <h2>2-Dimensional Graphics Paths</h2>
-</header>
+<p>This article describes two-dimensional paths.  This is an extra included in the HTML 3D Library.</p>
 
-<article>
-    <h2>Introduction <a id=Introduction></a></h2><p>This article describes two-dimensional paths.  This is an extra included in the HTML 3D Library.</p>
 <p><strong>Download the latest version of the Public Domain HTML 3D
-Library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library's Releases page</a>.</strong></p>
-<h2>Contents <a id=Contents></a></h2><p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Paths">Paths</a><br><a href="#How_to_Use">How to Use</a><br><a href="#Creating_Paths">Creating Paths</a><br>&nbsp;&nbsp;<a href="#SVG_Path_String">SVG Path String</a><br>&nbsp;&nbsp;<a href="#Building_Paths">Building Paths</a><br>&nbsp;&nbsp;<a href="#Using_Paths">Using Paths</a><br><a href="#Path_Segments">Path Segments</a><br><a href="#Methods">Methods</a><br></p>
-<h2>Paths <a id=Paths></a></h2><p>A path is a collection of two-dimensional line segments and/or curves.  Many paths describe
+Library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
+
+<h2>Contents <a id=Contents></a></h2>
+
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Paths">Paths</a><br><a href="#How_to_Use">How to Use</a><br><a href="#Creating_Paths">Creating Paths</a><br>&nbsp;&nbsp;<a href="#SVG_Path_String">SVG Path String</a><br>&nbsp;&nbsp;<a href="#Building_Paths">Building Paths</a><br>&nbsp;&nbsp;<a href="#Using_Paths">Using Paths</a><br><a href="#Path_Segments">Path Segments</a><br><a href="#Methods">Methods</a><br></p>
+
+<h2>Paths <a id=Paths></a></h2>
+
+<p>A path is a collection of two-dimensional line segments and/or curves.  Many paths describe
 closed figures or connected strings of lines and curves. The <code>GraphicsPath</code> class
 currently supports line segments, quadratic and cubic B&eacute;zier curves, and elliptical arcs,
 as well as closed figures made from several path segments.</p>
-<h2>How to Use <a id=How_to_Use></a></h2><p>2D paths are implemented in a class called <code>GraphicsPath</code>, found in the file <em>extras/path.js</em> in
+
+<h2>How to Use <a id=How_to_Use></a></h2>
+
+<p>2D paths are implemented in a class called <code>GraphicsPath</code>, found in the file <em>extras/path.js</em> in
 the HTML 3D Library download.  To use this class, you must include the script &quot;extras/path.js&quot;,
 as in this example.</p>
-<pre class="prettyprint source"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;>&lt;/script>
-&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;>&lt;/script></code></pre><h2>Creating Paths <a id=Creating_Paths></a></h2><p>There are two ways to create paths: using an SVG path string, or by calling methods that add
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<h2>Creating Paths <a id=Creating_Paths></a></h2>
+
+<p>There are two ways to create paths: using an SVG path string, or by calling methods that add
 its segments.</p>
-<h3>SVG Path String <a id=SVG_Path_String></a></h3><p>If you've worked with SVG, you may be familiar with this format for describing 2D paths.  An
+
+<h3>SVG Path String <a id=SVG_Path_String></a></h3>
+
+<p>If you&#39;ve worked with SVG, you may be familiar with this format for describing 2D paths.  An
 SVG path string consists of one or more path commands that start with a single letter.
 The following are examples of SVG path strings:</p>
-<pre class="prettyprint source"><code>M50,50L100,100,100,150,150,200
+
+<pre><code>M50,50L100,100,100,150,150,200
 
 M50,20C230,245,233,44,22,44
 
-M50,50H80V60H50V70H50</code></pre><p>The &quot;M&quot; command moves the current position, the &quot;L&quot;, &quot;H&quot;, and &quot;V&quot; commands create
+M50,50H80V60H50V70H50
+</code></pre>
+
+<p>The &quot;M&quot; command moves the current position, the &quot;L&quot;, &quot;H&quot;, and &quot;V&quot; commands create
 lines, the &quot;Q&quot;, &quot;C&quot;, &quot;S&quot;, and &quot;T&quot; commands create B&eacute;zier curves, the &quot;A&quot; command
 creates elliptical arcs, and the &quot;Z&quot; command closes the path. If the letters are
 lower-cased, X and Y coordinates are relative to the current position.</p>
-<p>For more information, see the <a href="GraphicsPath.html#.fromString">GraphicsPath.fromString</a> method documentation.
+
+<p>For more information, see the <a href="GraphicsPath.md#GraphicsPath_fromString">GraphicsPath.fromString</a> method documentation.
 That method is also how you create a 2D path from an SVG path string, as in this
 example:</p>
-<pre class="prettyprint source"><code>var path = GraphicsPath.fromString(&quot;M50,20C230,245,233,44,22,44&quot;)</code></pre><h3>Building Paths <a id=Building_Paths></a></h3><p>The other way to make paths is to call the <code>GraphicsPath</code> constructor and call methods
+
+<pre><code>var path = GraphicsPath.fromString(&quot;M50,20C230,245,233,44,22,44&quot;)
+</code></pre>
+
+<h3>Building Paths <a id=Building_Paths></a></h3>
+
+<p>The other way to make paths is to call the <code>GraphicsPath</code> constructor and call methods
 to add path segments to the path.</p>
+
 <p>The <code>GraphicsPath</code> object stores a current position and a starting position, and many methods
-don't have you specify a starting position, to cover the common case of drawing a series
+don&#39;t have you specify a starting position, to cover the common case of drawing a series
 of connected lines and curves.</p>
+
 <ul>
 <li><em>.moveTo(x, y)</em> - Moves the starting position and current position.</li>
 <li><em>.lineTo(x, y)</em> - Adds a line segment from the current position to a new ending position.</li>
 <li><em>.closePath()</em> - Closes the path by drawing a line to the starting point, if needed.</li>
 </ul>
+
 <p>To be completed.</p>
-<h3>Using Paths <a id=Using_Paths></a></h3><h2>Path Segments <a id=Path_Segments></a></h2><p>Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
+
+<h3>Using Paths <a id=Using_Paths></a></h3>
+
+<h2>Path Segments <a id=Path_Segments></a></h2>
+
+<p>Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
 Line segments are relatively easy to understand.  The other two kinds of segments
 deserve some discussion.</p>
+
 <p>A <em>B&eacute;zier curve</em> is a parametric curve based on a polynomial formula.  In this kind of
 curve the endpoints are defined as they are, but the other points, the <em>control points</em>, define
-the shape of the curve, which generally doesn't pass through the control points but still
+the shape of the curve, which generally doesn&#39;t pass through the control points but still
 follows them.  A quadratic B&eacute;zier curve uses 3 points (for the three coefficients of the
 quadratic polynomial in each dimension), one of which is the control point.  A cubic B&eacute;zier
 curve uses 4 points, two of which are control points.</p>
+
 <p>An <em>elliptic arc</em> is a curve which forms part of an ellipse.  There are several ways to
 parameterize an elliptic arc, as seen in the <em>.arc()</em>, <em>.arcTo()</em>, and <em>.arcSvgTo()</em> methods
 of the <code>GraphicsPath</code> class.</p>
-<h2>Methods <a id=Methods></a></h2><ul>
+
+<h2>Methods <a id=Methods></a></h2>
+
+<ul>
 <li>The <em>.getLength()</em> method finds the approximate length of a path.</li>
 <li>The <em>.getBounds()</em> method finds the axis-aligned bounding box of a path.</li>
 </ul>
+
 <p>To be completed.</p>
-</article>
-
-</section>
-
 </div>
 <nav id="navigation">
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -99,9 +126,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -117,5 +142,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

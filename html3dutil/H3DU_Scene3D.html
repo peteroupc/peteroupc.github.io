@@ -1,0 +1,926 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.Scene3D</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.Scene3D</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<h3>H3DU.Scene3D(canvasOrContext) <a id='H3DU_Scene3D'></a></h3>
+
+<p>An object that holds a rendering context for rendering
+3D objects.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>canvasOrContext</code> (Type: WebGLRenderingContext | object)<br>
+A WebGL context to associate with this scene, or an HTML canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
+</ul>
+
+<h3>Members</h3>
+
+<ul>
+<li><a href="#H3DU_Scene3D_BACK">.BACK</a></li>
+<li><a href="#H3DU_Scene3D_CCW">.CCW</a></li>
+<li><a href="#H3DU_Scene3D_CW">.CW</a></li>
+<li><a href="#H3DU_Scene3D_FRONT">.FRONT</a></li>
+<li><a href="#H3DU_Scene3D_FRONT_AND_BACK">.FRONT_AND_BACK</a></li>
+<li><a href="#H3DU_Scene3D_NONE">.NONE</a></li>
+<li><a href="#H3DU_Scene3D_shapes">shapes</a></li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU_Scene3D_supportsDerivatives">.supportsDerivatives</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_addShape">addShape</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_clear">clear</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_clearDepth">clearDepth</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_createBuffer">createBuffer</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_cullFace">cullFace</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_dispose">dispose</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_frontFace">frontFace</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getAspect">getAspect</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getCanvas">getCanvas</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getClearColor">getClearColor</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getClientAspect">getClientAspect</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getContext">getContext</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getHeight">getHeight</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getProjectionMatrix">getProjectionMatrix</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getViewMatrix">getViewMatrix</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_getWidth">getWidth</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_loadAndMapTexture">loadAndMapTexture</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_loadAndMapTextures">loadAndMapTextures</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_loadTexture">loadTexture</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_makeShape">makeShape</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_primitiveCount">primitiveCount</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_removeShape">removeShape</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_render">render</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setAmbient">setAmbient</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setAutoResize">setAutoResize</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setClearColor">setClearColor</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setDimensions">setDimensions</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setDirectionalLight">setDirectionalLight</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setFrustum">setFrustum</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setLightParams">setLightParams</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setLookAt">setLookAt</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setOrtho">setOrtho</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setOrtho2D">setOrtho2D</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setOrtho2DAspect">setOrtho2DAspect</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setOrthoAspect">setOrthoAspect</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setPerspective">setPerspective</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setPointLight">setPointLight</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setProjectionMatrix">setProjectionMatrix</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setUseDevicePixelRatio">setUseDevicePixelRatio</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_setViewMatrix">setViewMatrix</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_useFilter">useFilter</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_useProgram">useProgram</a></li>
+<li><a href="#H3DU_Scene3D_H3DU_Scene3D_vertexCount">vertexCount</a></li>
+</ul>
+
+<h3>H3DU.Scene3D.BACK <a id='H3DU_Scene3D_BACK'></a> (constant)</h3>
+
+<p>Back side of a triangle. By default, triangles with clockwise winding are back-facing.</p>
+
+<h3>H3DU.Scene3D.CCW <a id='H3DU_Scene3D_CCW'></a> (constant)</h3>
+
+<p>Counterclockwise winding. A triangle has counterclockwise winding if
+its vertices are ordered such that the path from the first to second to third
+to first vertex, in window coordinates (X and Y only), runs counterclockwise.</p>
+
+<h3>H3DU.Scene3D.CW <a id='H3DU_Scene3D_CW'></a> (constant)</h3>
+
+<p>Clockwise winding, the opposite of counterclockwise winding.</p>
+
+<h3>H3DU.Scene3D.FRONT <a id='H3DU_Scene3D_FRONT'></a> (constant)</h3>
+
+<p>Front side of a triangle. By default, triangles with counterclockwise winding are front-facing.</p>
+
+<h3>H3DU.Scene3D.FRONT_AND_BACK <a id='H3DU_Scene3D_FRONT_AND_BACK'></a> (constant)</h3>
+
+<p>Back and front sides of a triangle.</p>
+
+<h3>H3DU.Scene3D.NONE <a id='H3DU_Scene3D_NONE'></a> (constant)</h3>
+
+<p>No face culling.</p>
+
+<h3>H3DU.Scene3D#shapes <a id='H3DU_Scene3D_shapes'></a></h3>
+
+<p><b>Deprecated: Shapes should now be managed in H3DU.Batch3D objects,
+ rather than through this class.</b></p>
+
+<p>An array of shapes that are part of the scene.</p>
+
+<h3>H3DU.Scene3D.supportsDerivatives(context) <a id='H3DU_Scene3D_supportsDerivatives'></a></h3>
+
+<p>Returns whether the WebGL context supports
+derivative functions in GLSL shaders.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>context</code> (Type: WebGLRenderingContext | Object)<br>
+A WebGL context, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>True if the context supports derivatives; false otherwise. (Type: Boolean)</p>
+
+<h3>H3DU.Scene3D#addShape(shape) <a id='H3DU_Scene3D_H3DU_Scene3D_addShape'></a></h3>
+
+<p><b>Deprecated: Use the addShape method of individual H3DU.Batch3D instances
+instead. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom
+H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Adds a 3D shape to this scene. Its reference, not a copy,
+will be stored in the 3D scene&#39;s list of shapes.
+Its parent will be set to no parent.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>shape</code> (Type: <a href="H3DU_Shape.md">H3DU.Shape</a> | <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
+A 3D shape.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#clear() <a id='H3DU_Scene3D_H3DU_Scene3D_clear'></a></h3>
+
+<p>Clears the color, depth, and stencil buffers used in this scene,
+if any</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#clearDepth() <a id='H3DU_Scene3D_H3DU_Scene3D_clearDepth'></a></h3>
+
+<p>Clears the depth buffer used in this scene, if any.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#createBuffer() <a id='H3DU_Scene3D_H3DU_Scene3D_createBuffer'></a></h3>
+
+<p>Creates a frame buffer object associated with this scene.</p>
+
+<h4>Return Value</h4>
+
+<p>A buffer with the same size as this scene. (Type: <a href="H3DU_FrameBuffer.md">H3DU.FrameBuffer</a>)</p>
+
+<h3>H3DU.Scene3D#cullFace(value) <a id='H3DU_Scene3D_H3DU_Scene3D_cullFace'></a></h3>
+
+<p>Specifies which kinds of triangle faces are culled (not drawn)
+when rendering this scene.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>value</code> (Type: Number)<br>
+If this is <a href="H3DU_Scene3D.md#H3DU_Scene3D_BACK">H3DU.Scene3D.BACK</a>, <a href="H3DU_Scene3D.md#H3DU_Scene3D_FRONT">H3DU.Scene3D.FRONT</a>, or <a href="H3DU_Scene3D.md#H3DU_Scene3D_FRONT_AND_BACK">H3DU.Scene3D.FRONT_AND_BACK</a>, enables face culling of the specified faces. For any other value, disables face culling. By default, face culling is disabled.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#dispose() <a id='H3DU_Scene3D_H3DU_Scene3D_dispose'></a></h3>
+
+<p>Disposes all resources used by this object.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+
+<h3>H3DU.Scene3D#frontFace(value) <a id='H3DU_Scene3D_H3DU_Scene3D_frontFace'></a></h3>
+
+<p>Specifies the winding of front faces.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>value</code> (Type: Number)<br>
+If this is <a href="H3DU_Scene3D.md#H3DU_Scene3D_CW">H3DU.Scene3D.CW</a>, clockwise triangles are front-facing. For any other value, counterclockwise triangles are front-facing, which is the default behavior. If using a left-handed coordinate system, set this value to <a href="H3DU_Scene3D.md#H3DU_Scene3D_CW">H3DU.Scene3D.CW</a>.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#getAspect() <a id='H3DU_Scene3D_H3DU_Scene3D_getAspect'></a></h3>
+
+<p>Gets the ratio of width to height for this scene (getWidth()
+divided by getHeight()).
+Note that if auto-resizing is enabled, this value may change
+after each call to the render() method.</p>
+
+<h4>Return Value</h4>
+
+<p>Aspect ratio, or 1 if height is 0. (Type: Number)</p>
+
+<h3>H3DU.Scene3D#getCanvas() <a id='H3DU_Scene3D_H3DU_Scene3D_getCanvas'></a></h3>
+
+<p>Gets the HTML canvas associated with this scene.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+
+<h3>H3DU.Scene3D#getClearColor() <a id='H3DU_Scene3D_H3DU_Scene3D_getClearColor'></a></h3>
+
+<p>Gets the color used when clearing the screen each frame.</p>
+
+<h4>Return Value</h4>
+
+<p>An array of four numbers, from 0 through
+ 1, specifying the red, green, blue, and alpha components of the color. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Scene3D#getClientAspect() <a id='H3DU_Scene3D_H3DU_Scene3D_getClientAspect'></a></h3>
+
+<p>Gets the ratio of width to height for this scene,
+as actually displayed on the screen.</p>
+
+<h4>Return Value</h4>
+
+<p>Aspect ratio, or 1 if height is 0. (Type: Number)</p>
+
+<h3>H3DU.Scene3D#getContext() <a id='H3DU_Scene3D_H3DU_Scene3D_getContext'></a></h3>
+
+<p>Returns the WebGL context associated with this scene.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: WebGLRenderingContext)</p>
+
+<h3>H3DU.Scene3D#getHeight() <a id='H3DU_Scene3D_H3DU_Scene3D_getHeight'></a></h3>
+
+<p>Gets the viewport height for this scene.
+Note that if auto-resizing is enabled, this value may change
+after each call to the render() method.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
+
+<h3>H3DU.Scene3D#getProjectionMatrix() <a id='H3DU_Scene3D_H3DU_Scene3D_getProjectionMatrix'></a></h3>
+
+<p><b>Deprecated: Use H3DU.Batch3D instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Gets the current projection matrix for this scene.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Scene3D#getViewMatrix() <a id='H3DU_Scene3D_H3DU_Scene3D_getViewMatrix'></a></h3>
+
+<p><b>Deprecated: Use H3DU.Batch3D instead. To get the view matrix of a Batch3D, call its getViewMatrix method. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Gets the current view matrix for this scene.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Scene3D#getWidth() <a id='H3DU_Scene3D_H3DU_Scene3D_getWidth'></a></h3>
+
+<p>Gets the viewport width for this scene.
+Note that if auto-resizing is enabled, this value may change
+after each call to the render() method.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
+
+<h3>H3DU.Scene3D#loadAndMapTexture(texture) <a id='H3DU_Scene3D_H3DU_Scene3D_loadAndMapTexture'></a></h3>
+
+<p><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</b></p>
+
+<p>Loads a texture from an image URL and uploads it
+to a texture buffer object.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>texture</code> (Type: string | <a href="H3DU_Texture.md">H3DU.Texture</a>)<br>
+String giving the URL of the image to load, or an H3DU.Texture object whose data may or may not be loaded.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that is resolved when
+the image is loaded successfully and uploaded
+to a texture buffer (the result will be an H3DU.Texture
+object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>)</p>
+
+<h3>H3DU.Scene3D#loadAndMapTextures(textureFiles, [resolve], [reject]) <a id='H3DU_Scene3D_H3DU_Scene3D_loadAndMapTextures'></a></h3>
+
+<p><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</b></p>
+
+<p>Loads one or more textures from an image URL and uploads each of them
+to a texture buffer object.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>textureFiles</code> (Type: Array.&lt;String&gt;)<br>
+A list of URLs of the image to load.</li>
+<li><code>resolve</code> (Type: function) (optional)<br>
+Called for each URL that is loaded successfully and uploaded to a texture buffer (the argument will be an H3DU.Texture object.)</li>
+<li><code>reject</code> (Type: function) (optional)<br>
+Called for each URL for which an error occurs (the argument will be the data passed upon rejection).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that is resolved when
+all the URLs in the textureFiles array are either resolved or rejected.
+The result will be an object with three properties:
+&quot;successes&quot;, &quot;failures&quot;, and &quot;results&quot;.
+See <a href="H3DU.md#H3DU_getPromiseResults">H3DU.getPromiseResults</a>. (Type: <a href="Promise.md">Promise</a>)</p>
+
+<h3>H3DU.Scene3D#loadTexture(name) <a id='H3DU_Scene3D_H3DU_Scene3D_loadTexture'></a></h3>
+
+<p><b>Deprecated: Use the H3DU.TextureLoader method loadTexture or
+loadTexturesAll instead.</b></p>
+
+<p>Loads a texture from an image URL.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>name</code> (Type: String)<br>
+URL of the image to load.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that is resolved when
+the image is loaded successfully (the result will be an H3DU.Texture
+object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>)</p>
+
+<h3>H3DU.Scene3D#makeShape(mesh) <a id='H3DU_Scene3D_H3DU_Scene3D_makeShape'></a></h3>
+
+<p><b>Deprecated: Use the H3DU.Shape constructor instead.</b></p>
+
+<p>Creates a buffer from a geometric mesh and
+returns a shape object.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mesh</code> (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)<br>
+A geometric mesh object. The shape created will use the mesh in its current state and won&#39;t track future changes.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The generated shape object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+
+<h3>H3DU.Scene3D#primitiveCount() <a id='H3DU_Scene3D_H3DU_Scene3D_primitiveCount'></a></h3>
+
+<p><b>Deprecated: Use the <code>primitiveCount</code> method of H3DU.Batch3D objects instead. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this scene.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
+
+<h3>H3DU.Scene3D#removeShape(shape) <a id='H3DU_Scene3D_H3DU_Scene3D_removeShape'></a></h3>
+
+<p>Removes all instances of a 3D shape from this scene.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>shape</code> (Type: <a href="H3DU_Shape.md">H3DU.Shape</a> | <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
+The 3D shape to remove.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#render(renderPasses) <a id='H3DU_Scene3D_H3DU_Scene3D_render'></a></h3>
+
+<p>Renders all shapes added to this scene.
+ This is usually called in a render loop, such
+ as <a href="H3DU.md#H3DU_renderLoop">H3DU.renderLoop</a>.</p>
+
+<p>NOTE: For compatibility, the &quot;render&quot; function with a null or omitted parameter will clear the color
+buffer and depth buffer. This compatibility option may be dropped in the future.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>renderPasses</code> (Type: Array.&lt;<a href="H3DU_RenderPass3D.md">H3DU.RenderPass3D</a>&gt; | <a href="H3DU_Batch3D.md">H3DU.Batch3D</a>)<br>
+An array of scenes to draw, or a single batch to render. Can be null.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setAmbient(r, g, b, [a]) <a id='H3DU_Scene3D_H3DU_Scene3D_setAmbient'></a></h3>
+
+<p><b>Deprecated: Use the Lights method setAmbient instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets the color of the scene&#39;s ambient light.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
+Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.md#H3DU_toGLColor">HTML or CSS color</a>.</li>
+<li><code>g</code> (Type: Number)<br>
+Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: Number)<br>
+Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: Number) (optional)<br>
+Alpha color component (0-1). Currently not used.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setAutoResize(value) <a id='H3DU_Scene3D_H3DU_Scene3D_setAutoResize'></a></h3>
+
+<p>Sets whether to check whether to resize the canvas
+when the render() method is called.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>value</code> (Type: Boolean)<br>
+If true, will check whether to resize the canvas when the render() method is called. Default is true.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setClearColor(r, g, b, [a]) <a id='H3DU_Scene3D_H3DU_Scene3D_setClearColor'></a></h3>
+
+<p>Sets the color used when clearing the screen each frame.
+This color is black by default.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
+Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.md#H3DU_toGLColor">HTML or CSS color</a>.</li>
+<li><code>g</code> (Type: Number)<br>
+Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: Number)<br>
+Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: Number) (optional)<br>
+Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setDimensions(width, height) <a id='H3DU_Scene3D_H3DU_Scene3D_setDimensions'></a></h3>
+
+<p>Sets the viewport width and height for this scene.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>width</code> (Type: Number)<br>
+Width of the scene, in pixels. Will be rounded up.</li>
+<li><code>height</code> (Type: Number)<br>
+Height of the scene, in pixels. Will be rounded up.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
+
+<h3>H3DU.Scene3D#setDirectionalLight(index, position, [diffuse], [specular]) <a id='H3DU_Scene3D_H3DU_Scene3D_setDirectionalLight'></a></h3>
+
+<p><b>Deprecated: Use the Lights method setDirectionalLight instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets a light source in this scene to a directional light.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>index</code> (Type: Number)<br>
+Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn&#39;t exist.</li>
+<li><code>position</code> (Type: Array.&lt;Number&gt;)<br>
+A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively. May be null, in which case the default is (0, 0, 1).</li>
+<li><code>diffuse</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
+<li><code>specular</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setFrustum(left, right, bottom, top, near, far) <a id='H3DU_Scene3D_H3DU_Scene3D_setFrustum'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU_Math.md#H3DU_Math_mat4frustum">H3DU.Math.mat4frustum</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets this scene&#39;s projection matrix to a perspective projection that defines
+the view frustum, or the limits in the camera&#39;s view.</p>
+
+<p>For considerations when choosing the &quot;near&quot; and &quot;far&quot; parameters,
+see <a href="H3DU_Math.md#H3DU_Math_mat4perspective">H3DU.Math.mat4perspective</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>left</code> (Type: Number)<br>
+X-coordinate of the point where the left clipping plane meets the near clipping plane.</li>
+<li><code>right</code> (Type: Number)<br>
+X-coordinate of the point where the right clipping plane meets the near clipping plane.</li>
+<li><code>bottom</code> (Type: Number)<br>
+Y-coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
+<li><code>top</code> (Type: Number)<br>
+Y-coordinate of the point where the top clipping plane meets the near clipping plane.</li>
+<li><code>near</code> (Type: Number)<br>
+The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
+<li><code>far</code> (Type: Number)<br>
+The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setLightParams(index, params) <a id='H3DU_Scene3D_H3DU_Scene3D_setLightParams'></a></h3>
+
+<p><b>Deprecated: Use the Lights method setParams instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets parameters for a light in this scene.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>index</code> (Type: Number)<br>
+Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn&#39;t exist.</li>
+<li><code>params</code> (Type: Object)<br>
+An object as described in H3DU.LightSource.setParams.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setLookAt(eye, [center], [up]) <a id='H3DU_Scene3D_H3DU_Scene3D_setLookAt'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setLookAt. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets this scene&#39;s view matrix to represent a camera view.
+This method takes a camera&#39;s position (<code>eye</code>), and the point the camera is viewing
+(<code>center</code>).</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>eye</code> (Type: Array.&lt;Number&gt;)<br>
+A 3-element vector specifying the camera position in world space.</li>
+<li><code>center</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+A 3-element vector specifying the point in world space that the camera is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).</li>
+<li><code>up</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+A 3-element vector specifying the direction from the center of the camera to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the camera is held upright. This vector must not point in the same or opposite direction as the camera&#39;s view direction. (For best results, rotate the vector (0, 1, 0) so it points perpendicular to the camera&#39;s view direction.)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setOrtho(left, right, bottom, top, near, far) <a id='H3DU_Scene3D_H3DU_Scene3D_setOrtho'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU_Math.md#H3DU_Math_mat4ortho">H3DU.Math.mat4ortho</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets this scene&#39;s projection matrix to an orthographic projection.
+In this projection, the left clipping plane is parallel to the right clipping
+plane and the top to the bottom.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>left</code> (Type: Number)<br>
+Leftmost coordinate of the 3D view.</li>
+<li><code>right</code> (Type: Number)<br>
+Rightmost coordinate of the 3D view. (Note that right can be greater than left or vice versa.)</li>
+<li><code>bottom</code> (Type: Number)<br>
+Bottommost coordinate of the 3D view.</li>
+<li><code>top</code> (Type: Number)<br>
+Topmost coordinate of the 3D view. (Note that top can be greater than bottom or vice versa.)</li>
+<li><code>near</code> (Type: Number)<br>
+Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
+<li><code>far</code> (Type: Number)<br>
+Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setOrtho2D(left, right, bottom, top) <a id='H3DU_Scene3D_H3DU_Scene3D_setOrtho2D'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU_Math.md#H3DU_Math_mat4ortho2d">H3DU.Math.mat4ortho2d</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets this scene&#39;s projection matrix to a 2D orthographic projection.
+The near and far clipping planes will be set to -1 and 1, respectively.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>left</code> (Type: Number)<br>
+Leftmost coordinate of the 2D view.</li>
+<li><code>right</code> (Type: Number)<br>
+Rightmost coordinate of the 2D view. (Note that right can be greater than left or vice versa.)</li>
+<li><code>bottom</code> (Type: Number)<br>
+Bottommost coordinate of the 2D view.</li>
+<li><code>top</code> (Type: Number)<br>
+Topmost coordinate of the 2D view. (Note that top can be greater than bottom or vice versa.)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setOrtho2DAspect(left, right, bottom, top, [aspect]) <a id='H3DU_Scene3D_H3DU_Scene3D_setOrtho2DAspect'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU_Math.md#H3DU_Math_mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets this scene&#39;s projection matrix to a 2D orthographic projection.
+The near and far clipping planes will be set to -1 and 1, respectively.</p>
+
+<p>If the view rectangle&#39;s aspect ratio doesn&#39;t match the desired aspect
+ratio, the view rectangle will be centered on the 3D scene&#39;s viewport
+or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+or squishing it.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>left</code> (Type: Number)<br>
+Leftmost coordinate of the view rectangle.</li>
+<li><code>right</code> (Type: Number)<br>
+Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
+<li><code>bottom</code> (Type: Number)<br>
+Bottommost coordinate of the view rectangle.</li>
+<li><code>top</code> (Type: Number)<br>
+Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
+<li><code>aspect</code> (Type: Number) (optional)<br>
+Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene&#39;s aspect ratio instead.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setOrthoAspect(left, right, bottom, top, near, far, [aspect]) <a id='H3DU_Scene3D_H3DU_Scene3D_setOrthoAspect'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU_Math.md#H3DU_Math_mat4orthoAspect">H3DU.Math.mat4orthoAspect</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets this scene&#39;s projection matrix to an orthographic projection.
+In this projection, the left clipping plane is parallel to the right clipping
+plane and the top to the bottom.</p>
+
+<p>If the view rectangle&#39;s aspect ratio doesn&#39;t match the desired aspect
+ratio, the view rectangle will be centered on the 3D scene&#39;s viewport
+or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
+or squishing it.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>left</code> (Type: Number)<br>
+Leftmost coordinate of the view rectangle.</li>
+<li><code>right</code> (Type: Number)<br>
+Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
+<li><code>bottom</code> (Type: Number)<br>
+Bottommost coordinate of the view rectangle.</li>
+<li><code>top</code> (Type: Number)<br>
+Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
+<li><code>near</code> (Type: Number)<br>
+Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
+<li><code>far</code> (Type: Number)<br>
+Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.</li>
+<li><code>aspect</code> (Type: Number) (optional)<br>
+Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene&#39;s aspect ratio instead.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setPerspective(fov, aspect, near, far) <a id='H3DU_Scene3D_H3DU_Scene3D_setPerspective'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix in conjunction with <a href="H3DU_Math.md#H3DU_Math_mat4perspective">H3DU.Math.mat4perspective</a>. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets this scene&#39;s projection matrix to a perspective projection.</p>
+
+<p>For considerations when choosing the &quot;near&quot; and &quot;far&quot; parameters,
+see <a href="H3DU_Math.md#H3DU_Math_mat4perspective">H3DU.Math.mat4perspective</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>fov</code> (Type: Number)<br>
+Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
+<li><code>aspect</code> (Type: Number)<br>
+The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio (getAspect() or getClientAspect()).</li>
+<li><code>near</code> (Type: Number)<br>
+The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
+<li><code>far</code> (Type: Number)<br>
+The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h4>Example</h4>
+
+<pre><code>// Set the perspective projection. Camera has a 45-degree field of view
+// and will see objects from 0.1 to 100 units away.
+scene.setPerspective(45,scene.getClientAspect(),0.1,100);
+</code></pre>
+
+<h3>H3DU.Scene3D#setPointLight(index, position, [diffuse], [specular]) <a id='H3DU_Scene3D_H3DU_Scene3D_setPointLight'></a></h3>
+
+<p><b>Deprecated: Use the LightSource method setPointLight instead and the H3DU.Batch3D method getLights. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets a light source in this scene to a point light.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>index</code> (Type: Number)<br>
+Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on.</li>
+<li><code>position</code> (Type: Array.&lt;Number&gt;)<br>
+Light position. (See <a href="H3DU_LightSource.md#H3DU_LightSource_position">H3DU.LightSource#position</a>.)</li>
+<li><code>diffuse</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
+<li><code>specular</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setProjectionMatrix(matrix) <a id='H3DU_Scene3D_H3DU_Scene3D_setProjectionMatrix'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setProjectionMatrix. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets the projection matrix for this object. The projection
+matrix can also be set using the H3DU.Scene3D#setFrustum, H3DU.Scene3D#setOrtho,
+H3DU.Scene3D#setOrtho2D, and H3DU.Scene3D#setPerspective methods.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>matrix</code> (Type: Array.&lt;Number&gt;)<br>
+A 16-element matrix (4x4).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setUseDevicePixelRatio(value) <a id='H3DU_Scene3D_H3DU_Scene3D_setUseDevicePixelRatio'></a></h3>
+
+<p>Sets whether to use the device&#39;s pixel ratio (if supported by
+the browser) in addition to the canvas&#39;s size when setting
+the viewport&#39;s dimensions.</p>
+
+<p>When this value changes, the H3DU.Scene3D will automatically
+adjust the viewport.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>value</code> (Type: Boolean)<br>
+If true, use the device&#39;s pixel ratio when setting the viewport&#39;s dimensions. Default is true.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#setViewMatrix(matrix) <a id='H3DU_Scene3D_H3DU_Scene3D_setViewMatrix'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use H3DU.Batch3D#setViewMatrix in conjunction with <a href="H3DU_Math.md#H3DU_Math_mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Sets this scene&#39;s view matrix. The view matrix can also
+be set using the H3DU.Scene3D#setLookAt method.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>matrix</code> (Type: Array.&lt;Number&gt;)<br>
+A 16-element matrix (4x4).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#useFilter(filterProgram) <a id='H3DU_Scene3D_H3DU_Scene3D_useFilter'></a></h3>
+
+<p><b>Deprecated: Use the <a href="H3DU_Batch3D.md#H3DU_Batch3D_forFilter">H3DU.Batch3D.forFilter</a> method to create a batch
+for rendering filter effects from a frame buffer.</b></p>
+
+<p>Has no effect. (Previously, used a shader program to apply a texture filter after the
+scene is rendered.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>filterProgram</code> (Type: <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a> | string | null)<br>
+Not used.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#useProgram(program) <a id='H3DU_Scene3D_H3DU_Scene3D_useProgram'></a></h3>
+
+<p><b>Deprecated: Instead of this method, use the &quot;setShader&quot; program of individual shapes
+to set the shader programs they use.</b></p>
+
+<p>Has no effect. (In previous versions, this method changed
+the active shader program for this scene
+and prepared this object for the new program.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>program</code> (Type: <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a> | null)<br>
+No longer used.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+
+<h3>H3DU.Scene3D#vertexCount() <a id='H3DU_Scene3D_H3DU_Scene3D_vertexCount'></a></h3>
+
+<p><b>Deprecated: Use the vertexCount method of H3DU.Batch3D objects instead. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+
+<p>Gets the number of vertices composed by
+all shapes in this scene.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

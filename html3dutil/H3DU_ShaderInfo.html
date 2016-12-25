@@ -1,0 +1,216 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.ShaderInfo</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.ShaderInfo</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<h3>H3DU.ShaderInfo([vertexShader], [fragmentShader]) <a id='H3DU_ShaderInfo'></a></h3>
+
+<p>Holds source code for a WebGL shader program. A shader program in
+WebGL consists of a vertex shader (which processes vertices),
+and a fragment shader (which processes pixels). Shader programs
+are specially designed for running on a graphics processing unit,
+or GPU.</p>
+
+<p>This class also stores uniform values associated with the shader
+source code.</p>
+
+<p>Note that this class is not associated with any WebGL context, so the
+uniform values this object stores is not set for any WebGL context.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertexShader</code> (Type: String) (optional)<br>
+Source text of a vertex shader, in OpenGL ES Shading Language (GLSL). If null, a default vertex shader is used instead.</li>
+<li><code>fragmentShader</code> (Type: String) (optional)<br>
+Source text of a fragment shader in GLSL. If null, a default fragment shader is used instead.</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU_ShaderInfo_getBasicVertex">.getBasicVertex</a></li>
+<li><a href="#H3DU_ShaderInfo_getDefaultFragment">.getDefaultFragment</a></li>
+<li><a href="#H3DU_ShaderInfo_getDefaultVertex">.getDefaultVertex</a></li>
+<li><a href="#H3DU_ShaderInfo_makeCopyEffect">.makeCopyEffect</a></li>
+<li><a href="#H3DU_ShaderInfo_makeEdgeDetectEffect">.makeEdgeDetectEffect</a></li>
+<li><a href="#H3DU_ShaderInfo_makeEffect">.makeEffect</a></li>
+<li><a href="#H3DU_ShaderInfo_makeEffectFragment">.makeEffectFragment</a></li>
+<li><a href="#H3DU_ShaderInfo_makeInvertEffect">.makeInvertEffect</a></li>
+<li><a href="#H3DU_ShaderInfo_H3DU_ShaderInfo_copy">copy</a></li>
+<li><a href="#H3DU_ShaderInfo_H3DU_ShaderInfo_getFragmentShader">getFragmentShader</a></li>
+<li><a href="#H3DU_ShaderInfo_H3DU_ShaderInfo_getVertexShader">getVertexShader</a></li>
+<li><a href="#H3DU_ShaderInfo_H3DU_ShaderInfo_setUniforms">setUniforms</a></li>
+</ul>
+
+<h3>H3DU.ShaderInfo.getBasicVertex() <a id='H3DU_ShaderInfo_getBasicVertex'></a></h3>
+
+<p>Gets the text of a basic vertex shader.</p>
+
+<h4>Return Value</h4>
+
+<p>The resulting shader text. (Type: String)</p>
+
+<h3>H3DU.ShaderInfo.getDefaultFragment() <a id='H3DU_ShaderInfo_getDefaultFragment'></a></h3>
+
+<p>Gets the text of the default fragment shader. Putting &quot;#define SHADING\n&quot;
+at the start of the return value enables the lighting model.
+Putting &quot;#define SPECULAR\n&quot;
+at the start of the return value enables specular highlights (as long
+as SHADING is also enabled).</p>
+
+<h4>Return Value</h4>
+
+<p>The resulting shader text. (Type: String)</p>
+
+<h3>H3DU.ShaderInfo.getDefaultVertex() <a id='H3DU_ShaderInfo_getDefaultVertex'></a></h3>
+
+<p>Gets the text of the default vertex shader. Putting &quot;#define SHADING\n&quot;
+at the start of the return value enables the lighting model.</p>
+
+<h4>Return Value</h4>
+
+<p>The resulting shader text. (Type: String)</p>
+
+<h3>H3DU.ShaderInfo.makeCopyEffect() <a id='H3DU_ShaderInfo_makeCopyEffect'></a></h3>
+
+<p>Generates source code for a shader program that copies the colors of a texture.</p>
+
+<h4>Return Value</h4>
+
+<p>The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)</p>
+
+<h3>H3DU.ShaderInfo.makeEdgeDetectEffect() <a id='H3DU_ShaderInfo_makeEdgeDetectEffect'></a></h3>
+
+<p>Generates source code for a shader program that generates a two-color texture showing
+the source texture&#39;s edges.</p>
+
+<h4>Return Value</h4>
+
+<p>The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)</p>
+
+<h3>H3DU.ShaderInfo.makeEffect(functionCode) <a id='H3DU_ShaderInfo_makeEffect'></a></h3>
+
+<p>Generates source code for a shader program for applying
+a raster effect (postprocessing effect) to a texture.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><p><code>functionCode</code> (Type: String)<br>
+A string giving shader code in OpenGL ES Shading Language (GLSL) that must contain a function with the following signature:</p>
+
+<p>vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)</p>
+
+<p>where <code>sampler</code> is the texture sampler, <code>uvCoord</code> is the texture coordinates ranging from 0 to 1 in each component, <code>textureSize</code> is the dimensions of the texture in pixels, and the return value is the new color at the given texture coordinates. Besides this requirement, the shader code is also free to define additional uniforms, constants, functions, and so on (but not another &quot;main&quot; function).</p></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)</p>
+
+<h3>H3DU.ShaderInfo.makeEffectFragment(functionCode) <a id='H3DU_ShaderInfo_makeEffectFragment'></a></h3>
+
+<p>Generates source code for a fragment shader for applying
+a raster effect to a texture.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>functionCode</code> (Type: String)<br>
+See @{link H3DU.ShaderInfo.makeEffect}.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The source text of the resulting fragment shader. (Type: String)</p>
+
+<h3>H3DU.ShaderInfo.makeInvertEffect() <a id='H3DU_ShaderInfo_makeInvertEffect'></a></h3>
+
+<p>Generates source code for a shader program that inverts the colors of a texture.</p>
+
+<h4>Return Value</h4>
+
+<p>The resulting shader program. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)</p>
+
+<h3>H3DU.ShaderInfo#copy() <a id='H3DU_ShaderInfo_H3DU_ShaderInfo_copy'></a></h3>
+
+<p>Returns a new shader info object with the information in this object
+copied to that object.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)</p>
+
+<h3>H3DU.ShaderInfo#getFragmentShader() <a id='H3DU_ShaderInfo_H3DU_ShaderInfo_getFragmentShader'></a></h3>
+
+<p>Gets the text of the fragment shader stored in this object.</p>
+
+<h4>Return Value</h4>
+
+<p>return value. (Type: String)</p>
+
+<h3>H3DU.ShaderInfo#getVertexShader() <a id='H3DU_ShaderInfo_H3DU_ShaderInfo_getVertexShader'></a></h3>
+
+<p>Gets the text of the vertex shader stored in this object.</p>
+
+<h4>Return Value</h4>
+
+<p>return value. (Type: String)</p>
+
+<h3>H3DU.ShaderInfo#setUniforms(uniforms) <a id='H3DU_ShaderInfo_H3DU_ShaderInfo_setUniforms'></a></h3>
+
+<p>Sets the values of one or more uniforms used by this shader program.
+Since this object doesn&#39;t store a WebGL context, or receive one as input,
+the uniforms won&#39;t be associated with a WebGL context.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>uniforms</code> (Type: Object)<br>
+An object whose keys are the names of uniforms defined in either the vertex or fragment shader of this shader program. If the uniform is an array, each element in the array is named as in these examples: &quot;unif[0]&quot;, &quot;unif[1]&quot;. If it&#39;s a struct, each member in the struct is named as in these examples: &quot;unif.member1&quot;, &quot;unif.member2&quot;. If it&#39;s an array of struct, each member is named as in these examples: &quot;unif[0].member1&quot;, &quot;unif[0].member2&quot;. The value of each key depends on the data type expected for the uniform named by that key. The value can be a 3-, 4-, 9-, or 16-element array if the uniform is a &quot;vec3&quot;, &quot;vec4&quot;, &quot;mat3&quot;, or &quot;mat4&quot;, respectively, or a Number if the uniform is a &quot;float&quot; or &quot;int&quot;.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)</p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

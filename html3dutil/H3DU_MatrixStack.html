@@ -1,0 +1,419 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.MatrixStack</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.MatrixStack</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<h3>H3DU.MatrixStack() <a id='H3DU_MatrixStack'></a></h3>
+
+<p>H3DU.MatrixStack is a class that implements a stack
+of 4x4 transformation matrices.</p>
+
+<p>When the constructor is called, it will create a stack whose
+only element is the identity matrix.</p>
+
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this class, you must include the script &quot;extras/matrixstack.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/matrixstack.js&quot;&gt;&amp;lt;/script&gt;
+</code></pre>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_frustum">frustum</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_get">get</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_loadIdentity">loadIdentity</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_loadMatrix">loadMatrix</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_loadTransposeMatrix">loadTransposeMatrix</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_lookAt">lookAt</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_multMatrix">multMatrix</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_multTransposeMatrix">multTransposeMatrix</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_ortho">ortho</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_ortho2d">ortho2d</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_perspective">perspective</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_pickMatrix">pickMatrix</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_popMatrix">popMatrix</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_pushMatrix">pushMatrix</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_rotate">rotate</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_scale">scale</a></li>
+<li><a href="#H3DU_MatrixStack_H3DU_MatrixStack_translate">translate</a></li>
+</ul>
+
+<h3>H3DU.MatrixStack#frustum(l, r, b, t, n, f) <a id='H3DU_MatrixStack_H3DU_MatrixStack_frustum'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a frustum matrix.
+This method assumes a right-handed coordinate system, such as
+OpenGL&#39;s.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>l</code> (Type: Number)<br>
+X-coordinate of the point where the left clipping plane meets the near clipping plane.</li>
+<li><code>r</code> (Type: Number)<br>
+X-coordinate of the point where the right clipping plane meets the near clipping plane.</li>
+<li><code>b</code> (Type: Number)<br>
+Y-coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
+<li><code>t</code> (Type: Number)<br>
+Y-coordinate of the point where the top clipping plane meets the near clipping plane.</li>
+<li><code>n</code> (Type: Number)<br>
+The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. This should be slightly greater than 0.</li>
+<li><code>f</code> (Type: Number)<br>
+The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#get() <a id='H3DU_MatrixStack_H3DU_MatrixStack_get'></a></h3>
+
+<p>Gets a copy of the matrix at the top of this stack.</p>
+
+<h4>Return Value</h4>
+
+<p>. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.MatrixStack#loadIdentity() <a id='H3DU_MatrixStack_H3DU_MatrixStack_loadIdentity'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by replacing it with the identity matrix.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#loadMatrix(mat) <a id='H3DU_MatrixStack_H3DU_MatrixStack_loadMatrix'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by replacing it with the given matrix.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
+A matrix to replace the top of the stack with.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#loadTransposeMatrix(mat) <a id='H3DU_MatrixStack_H3DU_MatrixStack_loadTransposeMatrix'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by replacing it with the
+transpose of the given matrix.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
+A matrix whose transpose will replace the top of the stack.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz) <a id='H3DU_MatrixStack_H3DU_MatrixStack_lookAt'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a matrix representing a camera view.
+This method assumes a right-handed coordinate system, such as
+OpenGL&#39;s.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ex</code> (Type: Number)<br>
+X coordinate of the camera position in world space.</li>
+<li><code>ey</code> (Type: Number)<br>
+Y coordinate of the camera position.</li>
+<li><code>ez</code> (Type: Number)<br>
+Z coordinate of the camera position.</li>
+<li><code>cx</code> (Type: Number)<br>
+X coordinate of the position in world space that the camera is looking at.</li>
+<li><code>cy</code> (Type: Number)<br>
+Y coordinate of the position looked at.</li>
+<li><code>cz</code> (Type: Number)<br>
+Z coordinate of the position looked at.</li>
+<li><code>ux</code> (Type: Number)<br>
+X coordinate of the up direction vector. This vector must not point in the same or opposite direction as the camera&#39;s view direction.</li>
+<li><code>uy</code> (Type: Number)<br>
+Y coordinate of the up vector.</li>
+<li><code>uz</code> (Type: Number)<br>
+Z coordinate of the up vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#multMatrix(mat) <a id='H3DU_MatrixStack_H3DU_MatrixStack_multMatrix'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by another matrix.
+The matrices are multiplied such that the transformations
+they describe happen in reverse order. For example, if the matrix
+at the top of the stack describes a translation and the matrix
+passed to this method describes a scaling, the multiplied matrix will describe
+the effect of scaling then translation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
+A matrix to multiply the current one by.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#multTransposeMatrix(mat) <a id='H3DU_MatrixStack_H3DU_MatrixStack_multTransposeMatrix'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by the transpose of
+another matrix.
+The matrices are multiplied such that the transformations
+they describe happen in the order given. For example, if the matrix
+at the top of the stack describes a translation and the matrix
+passed to this method describes a scaling, the multiplied matrix will describe
+the effect of translation then scaling.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
+A matrix whose transpose the current matrix will be multiplied by.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#ortho(l, r, b, t, n, f) <a id='H3DU_MatrixStack_H3DU_MatrixStack_ortho'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+an orthographic projection.
+In this projection, the left clipping plane is parallel to the right clipping
+plane and the top to the bottom.</p>
+
+<p>This method assumes a right-handed coordinate system, such as
+OpenGL&#39;s.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>l</code> (Type: Number)<br>
+Leftmost coordinate of the 3D view.</li>
+<li><code>r</code> (Type: Number)<br>
+Rightmost coordinate of the 3D view. (Note that r can be greater than l or vice versa.)</li>
+<li><code>b</code> (Type: Number)<br>
+Bottommost coordinate of the 3D view.</li>
+<li><code>t</code> (Type: Number)<br>
+Topmost coordinate of the 3D view. (Note that t can be greater than b or vice versa.)</li>
+<li><code>n</code> (Type: Number)<br>
+Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
+<li><code>f</code> (Type: Number)<br>
+Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#ortho2d(l, r, b, t) <a id='H3DU_MatrixStack_H3DU_MatrixStack_ortho2d'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a 2D orthographic projection.
+This method assumes a right-handed coordinate system, such as
+OpenGL&#39;s.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>l</code> (Type: Number)<br>
+Leftmost coordinate of the 2D view.</li>
+<li><code>r</code> (Type: Number)<br>
+Rightmost coordinate of the 2D view. (Note that r can be greater than l or vice versa.)</li>
+<li><code>b</code> (Type: Number)<br>
+Bottommost coordinate of the 2D view.</li>
+<li><code>t</code> (Type: Number)<br>
+Topmost coordinate of the 2D view. (Note that t can be greater than b or vice versa.)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#perspective(fov, aspect, n, f) <a id='H3DU_MatrixStack_H3DU_MatrixStack_perspective'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a matrix that defines a perspective projection.</p>
+
+<p>This method assumes a right-handed coordinate system, such as
+OpenGL&#39;s.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>fov</code> (Type: Number)<br>
+Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zoom can be implemented by multiplying field of view by an additional factor.)</li>
+<li><code>aspect</code> (Type: Number)<br>
+The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
+<li><code>n</code> (Type: Number)<br>
+The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. This should be slightly greater than 0.</li>
+<li><code>f</code> (Type: Number)<br>
+The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#pickMatrix(wx, wy, ww, wh, vp) <a id='H3DU_MatrixStack_H3DU_MatrixStack_pickMatrix'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a matrix that transforms the view to a portion of the viewport.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>wx</code> (Type: Number)<br>
+X-coordinate of the center of the desired viewport portion.</li>
+<li><code>wy</code> (Type: Number)<br>
+Y-coordinate of the center of the desired viewport portion.</li>
+<li><code>ww</code> (Type: Number)<br>
+Width of the desired viewport portion.</li>
+<li><code>wh</code> (Type: Number)<br>
+Height of the desired viewport portion.</li>
+<li><code>vp</code> (Type: Array.&lt;Number&gt;)<br>
+A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#popMatrix() <a id='H3DU_MatrixStack_H3DU_MatrixStack_popMatrix'></a></h3>
+
+<p>Removes the matrix at the top of this stack, making
+the matrix beneath it the new top matrix. Has no
+effect if the stack has only one matrix.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#pushMatrix() <a id='H3DU_MatrixStack_H3DU_MatrixStack_pushMatrix'></a></h3>
+
+<p>Makes a copy of the matrix at the top of this stack
+and puts the copy on top of the stack.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#rotate(angle, x, y, z) <a id='H3DU_MatrixStack_H3DU_MatrixStack_rotate'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angle</code> (Type: Number)<br>
+The desired angle to rotate in degrees. If the axis of rotation points toward the viewer, the angle&#39;s value is increasing in a counterclockwise direction.</li>
+<li><code>x</code> (Type: Number)<br>
+X-component of the axis of rotation.</li>
+<li><code>y</code> (Type: Number)<br>
+Y-component of the axis of rotation.</li>
+<li><code>z</code> (Type: Number)<br>
+Z-component of the axis of rotation.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#scale(x, y, z) <a id='H3DU_MatrixStack_H3DU_MatrixStack_scale'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by a
+scaling transformation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: Number)<br>
+Scale factor along the X axis.</li>
+<li><code>y</code> (Type: Number)<br>
+Scale factor along the Y axis.</li>
+<li><code>z</code> (Type: Number)<br>
+Scale factor along the Z axis.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+
+<h3>H3DU.MatrixStack#translate(x, y, z) <a id='H3DU_MatrixStack_H3DU_MatrixStack_translate'></a></h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by a
+translation transformation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: Number)<br>
+Translation along the X axis.</li>
+<li><code>y</code> (Type: Number)<br>
+Translation along the Y axis.</li>
+<li><code>z</code> (Type: Number)<br>
+Translation along the Z axis.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_MatrixStack.md">H3DU.MatrixStack</a>)</p>
+</div>
+<nav id="navigation">
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

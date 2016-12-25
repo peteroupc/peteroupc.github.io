@@ -1,124 +1,97 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>InputTracker</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.LightSource</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>InputTracker</h1>
+<h1>H3DU.LightSource</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>InputTracker(element) <a id='InputTracker'></a></h3>
+<h3>H3DU.LightSource([position], [ambient], [diffuse], [specular]) <a id='H3DU_LightSource'></a></h3>
 
-<p>A class for tracking key press, mouse, touch, and mouse wheel
-events.</p>
-
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
-
-<p>To use this class, you must include the script &quot;extras/camera.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
-
-<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/camera.js&quot;&gt;&amp;lt;/script&gt;
-</code></pre>
+<p>Specifies parameters for light sources.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>element</code> (Type: HTMLElement | HTMLDocument)<br>
-The HTML document or element to track keyboard and mouse events for. If null or omitted, uses the calling application&#39;s HTML document.</li>
+<li><code>position</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+See &quot;position&quot; property.</li>
+<li><code>ambient</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+See &quot;ambient&quot; property.</li>
+<li><code>diffuse</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+See &quot;diffuse&quot; property.</li>
+<li><code>specular</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+See &quot;specular&quot; property.</li>
+</ul>
+
+<h3>Members</h3>
+
+<ul>
+<li><a href="#H3DU_LightSource_ambient">ambient</a></li>
+<li><a href="#H3DU_LightSource_diffuse">diffuse</a></li>
+<li><a href="#H3DU_LightSource_position">position</a></li>
+<li><a href="#H3DU_LightSource_radius">radius</a></li>
+<li><a href="#H3DU_LightSource_specular">specular</a></li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#InputTracker_InputTracker_deltaXY">deltaXY</a></li>
-<li><a href="#InputTracker_InputTracker_dispose">dispose</a></li>
-<li><a href="#InputTracker_InputTracker_getKey">getKey</a></li>
-<li><a href="#InputTracker_InputTracker_mousewheel">mousewheel</a></li>
-<li><a href="#InputTracker_InputTracker_update">update</a></li>
+<li><a href="#H3DU_LightSource_H3DU_LightSource_setParams">setParams</a></li>
 </ul>
 
-<h3>InputTracker#deltaXY() <a id='InputTracker_InputTracker_deltaXY'></a></h3>
+<h3>H3DU.LightSource#ambient <a id='H3DU_LightSource_ambient'></a></h3>
 
-<p>Returns the current mouse position, delta
-mouse position, and delta mouse wheel
-position (see the &quot;update&quot; method).</p>
+<p>A 4-element vector giving an additional color to multiply with the ambient
+color of each object, in the red, green,
+and blue components respectively.
+The default is (0,0,0,1), or black. Not used in the default shader program.</p>
 
-<h4>Return Value</h4>
+<h3>H3DU.LightSource#diffuse <a id='H3DU_LightSource_diffuse'></a></h3>
 
-<p>An object containing the following keys:<ul>
-<li><code>cx</code> - X-coordinate of the current mouse
-position.
-<li><code>cx</code> - Y-coordinate of the current mouse
-position.
-<li><code>x</code> - X component of the delta mouse position.
-<li><code>y</code> - Y component of the delta mouse position.
-<li><code>ticks</code> - The delta mouse wheel position.
-</ul>
-If this object&#39;s update method wasn&#39;t called, all these values
-will be 0. (Type: Object)</p>
+<p>A 4-element vector giving an additional color to multiply with the diffusion
+color of each object (which is also called &quot;albedo&quot;), in the red, green,
+and blue components respectively. Diffuse color is the color
+seen when light passes through a material and bounces back (diffusion). Each component ranges from 0 to 1.
+The simulated diffusion scatters evenly, in every direction.
+The default is (1,1,1,1), or white.</p>
 
-<h3>InputTracker#dispose() <a id='InputTracker_InputTracker_dispose'></a></h3>
+<h3>H3DU.LightSource#position <a id='H3DU_LightSource_position'></a></h3>
 
-<p>Disposes all resources used by this input tracker.</p>
+<p>Light position. An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
+<li> If W is 0, then X, Y, and Z specify a 3-element vector giving the direction from the origin toward the light; the light will shine everywhere in the given direction.
+ <li> If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul></p>
 
-<h4>Return Value</h4>
+<h3>H3DU.LightSource#radius <a id='H3DU_LightSource_radius'></a></h3>
 
-<p>Return value. (Type: Object)</p>
+<p>Radius of the light source. If 0, the light&#39;s intensity doesn&#39;t change
+with distance.</p>
 
-<h3>InputTracker#getKey(key) <a id='InputTracker_InputTracker_getKey'></a></h3>
+<p>Default Value: <code>0</code></p>
+
+<h3>H3DU.LightSource#specular <a id='H3DU_LightSource_specular'></a></h3>
+
+<p>A 3-element vector giving the color of the light when it causes a specular
+reflection, in the red, green,
+and blue components respectively. Each component ranges from 0 to 1.
+A specular reflection is a reflection in the opposite direction from the direction
+the light reaches the object in, like a mirror. Specular reflections can cause shiny
+highlights depending on the viewing angle.
+The default is (1,1,1), or white.</p>
+
+<h3>H3DU.LightSource#setParams(params) <a id='H3DU_LightSource_H3DU_LightSource_setParams'></a></h3>
+
+<p>Sets parameters for this material object.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>key</code> (Type: Object)<br>
-Description of key. Gets whether a key is pressed, as detected by this input tracker.</li>
+<li><code>params</code> (Type: Object)<br>
+An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>position</code> - Light position. (See <a href="H3DU_LightSource.md#H3DU_LightSource_position">H3DU.LightSource#position</a>.) <li><code>ambient</code> - Not used in the default shader program. <li><code>diffuse</code> - A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion color of each object (which is also called &quot;albedo&quot;). The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise. <li><code>specular</code> - A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise. </ul> If a value is null or undefined, it is ignored.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>key Key code of the key to check. (Type: Number)</p>
-
-<h3>InputTracker#mousewheel(func) <a id='InputTracker_InputTracker_mousewheel'></a></h3>
-
-<p><b>Deprecated: Will be removed in the future. Use the
-deltaTicks method to find out whether the user
-has rotated the mouse wheel.</b></p>
-
-<p>Sets a function to handle mouse wheel events.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>func</code> (Type: function)<br>
-A function.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: Object)</p>
-
-<h3>InputTracker#update() <a id='InputTracker_InputTracker_update'></a></h3>
-
-<p>Retrieves the current position of the mouse within
-the page&#39;s client area, as detected by the input
-tracker and calculates the &quot;delta mouse position&quot;,
-or the difference between
-those values and the values they had the last
-time this method was called. If this method wasn&#39;t
-called before for this tracker, the delta mouse position is
-(0, 0). If the current position of the mouse is unknown,
-it&#39;s (0, 0) instead.</p>
-
-<p>Also retrieves the &quot;delta mouse wheel position&quot;, or the
-offset, in &quot;ticks&quot;, from the mouse wheel position at the
-last time this method was called (or the time this tracker
-was created if it wasn&#39;t) to the current mouse wheen position.</p>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="InputTracker.md">InputTracker</a>)</p>
+<p>This object. (Type: <a href="H3DU_Material.md">H3DU.Material</a>)</p>
 </div>
 <nav id="navigation">
 <p>

@@ -1,50 +1,66 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>FrameCounter</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.FrameBufferInfo</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>FrameCounter</h1>
+<h1>H3DU.FrameBufferInfo</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>FrameCounter() <a id='FrameCounter'></a></h3>
+<h3>H3DU.FrameBufferInfo(width, height) <a id='H3DU_FrameBufferInfo'></a></h3>
 
-<p>A class for finding the frame rate of an HTML rendering.</p>
+<p>Describes a frame buffer. In the HTML 3D Library,
+each frame buffer consists of a texture of a given size and a <i>renderbuffer</i> of the same
+size to use as the depth buffer.</p>
 
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
+<h4>Parameters</h4>
 
-<p>To use this class, you must include the script &quot;extras/frame.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
-
-<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/frame.js&quot;&gt;&amp;lt;/script&gt;
-</code></pre>
+<ul>
+<li><code>width</code> (Type: Number)<br>
+Width to use for the frame buffer. Throws an error if this value is less than 0. The width will be set to this value rounded up.</li>
+<li><code>height</code> (Type: Number)<br>
+Height to use for the frame buffer. Throws an error if this value is less than 0. The height will be set to this value rounded up.</li>
+</ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#FrameCounter_FrameCounter_getFPS">getFPS</a></li>
-<li><a href="#FrameCounter_FrameCounter_update">update</a></li>
+<li><a href="#H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_getHeight">getHeight</a></li>
+<li><a href="#H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_getWidth">getWidth</a></li>
+<li><a href="#H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_resize">resize</a></li>
 </ul>
 
-<h3>FrameCounter#getFPS() <a id='FrameCounter_FrameCounter_getFPS'></a></h3>
+<h3>H3DU.FrameBufferInfo#getHeight() <a id='H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_getHeight'></a></h3>
 
-<p>Gets the calculated frames per second, based
-on how often the update method was called.</p>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: Object)</p>
-
-<h3>FrameCounter#update() <a id='FrameCounter_FrameCounter_update'></a></h3>
-
-<p>Updates the state for determining the frame count.
-This method should be called once per frame.</p>
+<p>Gets the height to use for the frame buffer.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Object)</p>
+<p>Return value. (Type: Number)</p>
+
+<h3>H3DU.FrameBufferInfo#getWidth() <a id='H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_getWidth'></a></h3>
+
+<p>Gets the width to use for the frame buffer.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
+
+<h3>H3DU.FrameBufferInfo#resize(width, height) <a id='H3DU_FrameBufferInfo_H3DU_FrameBufferInfo_resize'></a></h3>
+
+<p>Changes the width and height of this frame buffer information object.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>width</code> (Type: Number)<br>
+New width to use for the frame buffer. Throws an error if this value is less than 0. The width will be set to this value rounded up.</li>
+<li><code>height</code> (Type: Number)<br>
+New height to use for the frame buffer. Throws an error if this value is less than 0. The height will be set to this value rounded up.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU_FrameBufferInfo.md">H3DU.FrameBufferInfo</a>)</p>
 </div>
 <nav id="navigation">
 <p>

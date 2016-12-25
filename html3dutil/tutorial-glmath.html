@@ -1,83 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Tutorial: H3DU's Math Functions</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU&#39;s Math Functions</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Tutorial: H3DU's Math Functions</h1>
-    <section>
+<h1>H3DU&#39;s Math Functions</h1>
 
-<header>
-
-    <h2>H3DU's Math Functions</h2>
-</header>
-
-<article>
-    <p>The HTML 3D library includes a collection
+<p>The HTML 3D library includes a collection
 of math functions for working with vectors, matrices, and quaternions.</p>
+
 <p>Here is an overview of these three data types.</p>
-<h2>Contents <a id=Contents></a></h2><p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br></p>
-<h2>Vectors <a id=Vectors></a></h2><p>A vector is simply an array of elements that are related
+
+<h2>Contents <a id=Contents></a></h2>
+
+<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br></p>
+
+<h2>Vectors <a id=Vectors></a></h2>
+
+<p>A vector is simply an array of elements that are related
 to each other.  As such, a vector can symbolize a position, a direction,
 a ray, a color, or anything else.  The methods in this class treat arrays
 as vectors.  Functions dealing with vectors begin with &quot;vec&quot;.
-Many of H3DU.Math's functions use 3- or 4-element vectors.</p>
+Many of H3DU.Math&#39;s functions use 3- or 4-element vectors.</p>
+
 <p>If a 4-element vector describes a position, direction,
 or normal, the elements are given as X, Y, Z, and W, in that order.</p>
+
 <p>If a 4-element vector describes a color, the elements are given as red, green,
 blue, and alpha, in that order (where each element ranges from 0-1).</p>
+
 <p>If a 3D <em>position</em> (point) is used in a 4-element vector function (one beginning
 with &quot;vec4&quot;), use 1 as the fourth element of the vector.  If a 3D <em>direction</em>
 is used in a 4-element vector function, use 0 as the fourth element.</p>
-<h2>Matrices <a id=Matrices></a></h2><p>A matrix is a 16- or 9-element array that describes a
+
+<h2>Matrices <a id=Matrices></a></h2>
+
+<p>A matrix is a 16- or 9-element array that describes a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with &quot;mat&quot;.
-For more details, see the <a href="tutorial-matrixdetails.html">Matrix Details</a> tutorial.</p>
-<h3>Translation <a id=Translation></a></h3><p>A translation is a shifting of an object's position.</p>
-<p>To create a translation matrix, use <a href="H3DU.Math.html#.mat4translated">H3DU.Math.mat4translated()</a>,
+For more details, see the <a href="tutorial-matrixdetails.md">Matrix Details</a> tutorial.</p>
+
+<h3>Translation <a id=Translation></a></h3>
+
+<p>A translation is a shifting of an object&#39;s position.</p>
+
+<p>To create a translation matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4translated">H3DU.Math.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
+
 <p>To multiply an existing matrix by a translation, use
-<a href="H3DU.Math.html#.mat4translate">H3DU.Math.mat4translate()</a>.  This will put the translation
+<a href="H3DU_Math.md#H3DU_Math_mat4translate">H3DU.Math.mat4translate()</a>.  This will put the translation
 before the other transformations.</p>
-<h3>Scaling <a id=Scaling></a></h3><p>Scaling changes an object's size.</p>
-<p>To create a scaling matrix, use <a href="H3DU.Math.html#.mat4scaled">H3DU.Math.mat4scaled()</a>,
+
+<h3>Scaling <a id=Scaling></a></h3>
+
+<p>Scaling changes an object&#39;s size.</p>
+
+<p>To create a scaling matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4scaled">H3DU.Math.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
-factors to change the object's size.  For example, a Y-factor of 2 doubles an object's height.</p>
+factors to change the object&#39;s size.  For example, a Y-factor of 2 doubles an object&#39;s height.</p>
+
 <p>To multiply an existing matrix by a scaling, use
-<a href="H3DU.Math.html#.mat4scale">H3DU.Math.mat4scale()</a>.  This will put the scaling
+<a href="H3DU_Math.md#H3DU_Math_mat4scale">H3DU.Math.mat4scale()</a>.  This will put the scaling
 before the other transformations.</p>
-<h3>Rotation <a id=Rotation></a></h3><p>Rotation changes an object's orientation.</p>
-<p>To create a rotation matrix, use <a href="H3DU.Math.html#.mat4rotated">H3DU.Math.mat4rotated()</a>,
+
+<h3>Rotation <a id=Rotation></a></h3>
+
+<p>Rotation changes an object&#39;s orientation.</p>
+
+<p>To create a rotation matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4rotated">H3DU.Math.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
 origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
+
 <p>To multiply an existing matrix by a rotation, use
-<a href="H3DU.Math.html#.mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
+<a href="H3DU_Math.md#H3DU_Math_mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
 before the other transformations.</p>
-<h3>Combining Transforms <a id=Combining_Transforms></a></h3><p>The order in which you do transforms is important.  In general, scaling then translating is
+
+<h3>Combining Transforms <a id=Combining_Transforms></a></h3>
+
+<p>The order in which you do transforms is important.  In general, scaling then translating is
 not the same as translating then scaling.  Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:</p>
+
 <ul>
 <li>Call <code>H3DU.Math.mat4identity()</code>, creating a matrix without a transformation.</li>
 <li>Do your translations if needed, using <code>mat4translate()</code>.</li>
 <li>Do your rotations if needed, using <code>mat4rotate()</code>.</li>
 <li>Do your scalings if needed, using <code>mat4scale()</code>.</li>
 </ul>
-<p>This way, the scalings and rotations will affect the object while it's still centered, and
+
+<p>This way, the scalings and rotations will affect the object while it&#39;s still centered, and
 before the translations (shifts) take place.</p>
-<p>You can also multiply transforms using <a href="H3DU.Math.html#.mat4multiply">H3DU.Math.mat4multiply()</a>.
+
+<p>You can also multiply transforms using <a href="H3DU_Math.md#H3DU_Math_mat4multiply">H3DU.Math.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
-of doing the second matrix's transform, then the first matrix's transform.</p>
-<h2>Quaternions <a id=Quaternions></a></h2><p>A quaternion is a 4-element array that describes a
+of doing the second matrix&#39;s transform, then the first matrix&#39;s transform.</p>
+
+<h2>Quaternions <a id=Quaternions></a></h2>
+
+<p>A quaternion is a 4-element array that describes a
 3D rotation.  Functions dealing with quaternions begin with
-&quot;quat&quot;.  A quaternion's:</p>
+&quot;quat&quot;.  A quaternion&#39;s:</p>
+
 <ul>
 <li>first three elements (X, Y, Z) describe a 3D point, where the
 direction from the origin (0, 0, 0) to that point is the <em>axis of rotation</em>,
@@ -85,14 +108,21 @@ and the distance from the origin to that point is the sine
 of half the rotation angle.</li>
 <li>fourth element (W) is the cosine of half the rotation angle.</li>
 </ul>
-<h3>Multiplying quaternions <a id=Multiplying_quaternions></a></h3><p>The methods quatMultiply and quatFromTaitBryan, among others, involve
+
+<h3>Multiplying quaternions <a id=Multiplying_quaternions></a></h3>
+
+<p>The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
 before the first rotation.  Like matrix multiplication, the
 order in which you multiply quaternions is important. This multiplication behavior
 is opposite to that in the D3DX and DirectXMath libraries.</p>
-<h3>Using Quaternions <a id=Using_Quaternions></a></h3><p>For best results when using quaternions:</p>
+
+<h3>Using Quaternions <a id=Using_Quaternions></a></h3>
+
+<p>For best results when using quaternions:</p>
+
 <ul>
 <li>Store the orientation of each object as a single quaternion, created
 with <code>quatIdentity()</code>.</li>
@@ -103,8 +133,12 @@ for that object.</li>
 <li>Normalize the orientation quaternion (using <code>quatNorm()</code> or <code>quatNormInPlace()</code>)
 every few frames.</li>
 </ul>
-<h3>Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a></h3><p>Tait-Bryan angles (pitch, yaw, and roll angles) can also be used to describe 3D
+
+<h3>Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a></h3>
+
+<p>Tait-Bryan angles (pitch, yaw, and roll angles) can also be used to describe 3D
 rotations, but they have disadvantages:</p>
+
 <ul>
 <li>In general, the order of Tait-Bryan angle rotations is important. For example, a 30-degree
 pitch followed by a 20-degree roll is not the same as a 20-degree pitch followed
@@ -119,85 +153,113 @@ pitch followed by a 20-degree roll.</li>
 one axis (say, a pitch) can cause a vector to be parallel to another axis (say, the roll
 axis), so that a rotation along that axis will do nothing.</li>
 </ul>
+
 <p>Related functions:</p>
+
 <ul>
-<li><a href="H3DU.Math.html#.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan()</a> -
+<li><a href="H3DU_Math.md#H3DU_Math_quatFromTaitBryan">H3DU.Math.quatFromTaitBryan()</a> -
 Converts from Tait-Bryan angles to a quaternion</li>
-<li><a href="H3DU.Math.html#.quatToTaitBryan">H3DU.Math.quatToTaitBryan()</a> -
+<li><a href="H3DU_Math.md#H3DU_Math_quatToTaitBryan">H3DU.Math.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
-<h2>Planes <a id=Planes></a></h2><p>A 4-element array can describe a 3D plane in the following manner:</p>
+
+<h2>Planes <a id=Planes></a></h2>
+
+<p>A 4-element array can describe a 3D plane in the following manner:</p>
+
 <ul>
 <li><p>The 4 elements, labeled A, B, C, and D in that order, describe a plane
 whose points satisfy the equation:</p>
-<pre class="prettyprint source"><code>  Ax + By + Cz + D = 0</code></pre><p>where x, y, and z are the
-coordinates of any point lying on the plane.</p>
-</li>
+
+<pre><code>  Ax + By + Cz + D = 0
+</code></pre>
+
+<p>where x, y, and z are the
+coordinates of any point lying on the plane.</p></li>
 <li>A, B, and C are
-the X, Y, and Z components of the plane's normal vector.</li>
-<li>D is the distance in the normal's direction from the plane to the origin,
+the X, Y, and Z components of the plane&#39;s normal vector.</li>
+<li>D is the distance in the normal&#39;s direction from the plane to the origin,
 or if negative, in the opposite direction from the origin to the plane, divided
-by the normal's length.  Alternatively, D is the negative dot product of the
-plane's normal and any point on the plane.</li>
+by the normal&#39;s length.  Alternatively, D is the negative dot product of the
+plane&#39;s normal and any point on the plane.</li>
 </ul>
+
 <p>There is one method that deals with planes:</p>
+
 <ul>
-<li><a href="H3DU.Math.html#.planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
+<li><a href="H3DU_Math.md#H3DU_Math_planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
 Converts the plane to a form in which its normal has a length of 1.</li>
 </ul>
-<h2>Coordinate Systems <a id=Coordinate_Systems></a></h2><p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
+
+<h2>Coordinate Systems <a id=Coordinate_Systems></a></h2>
+
+<p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
+
 <ul>
 <li>In a <em>left-handed</em> coordinate system, like in legacy Direct3D, the z-axis points <em>away from
 the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
 <li>In a <em>right-handed</em> coordinate system, like in OpenGL, the z-axis points <em>toward
 the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
 </ul>
+
 <p>If an <code>H3DU.Math</code> method works differently in left- and right-handed coordinate systems,
 its description will note this. (In the absence of z-axis transformations, the coordinate
 system is effectively left-handed.)  The differences are also noted below.</p>
-<h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3><p><strong>3D Vectors</strong></p>
-<p>If a 3D vector's Z component is positive, it points toward the viewer (outward) in a
+
+<h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3>
+
+<p><strong>3D Vectors</strong></p>
+
+<p>If a 3D vector&#39;s Z component is positive, it points toward the viewer (outward) in a
 right-handed coordinate system, and away from the viewer (inward) in a left-handed
 system. The reverse is true if the Z component is negative.</p>
+
 <p><strong>Cross product (<code>vec3cross(A, B)</code>):</strong></p>
+
 <p>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 Assume the X axis points to the right and the Y axis points up.
-If the cross product of A and B has a positive Z component, the triangle's points are
+If the cross product of A and B has a positive Z component, the triangle&#39;s points are
 oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and
 the Y axis down, the reverse is true.)</p>
+
 <p><strong>Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>):</strong></p>
+
 <p>Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
 indices 8, 9, 10, and 11).</p>
+
 <p><strong>Look-at matrix (<code>mat4lookat</code>):</strong></p>
+
 <p>Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14).</p>
+
 <p><strong>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>):</strong></p>
+
 <p>If the axis of rotation points toward the viewer, the angle runs:</p>
+
 <ul>
-<li>Right handed: Counterclockwise if the angle's value is positive, clockwise if negative.</li>
-<li>Left handed: Clockwise if the angle's value is positive, counterclockwise if negative.</li>
+<li>Right handed: Counterclockwise if the angle&#39;s value is positive, clockwise if negative.</li>
+<li>Left handed: Clockwise if the angle&#39;s value is positive, counterclockwise if negative.</li>
 </ul>
+
 <p><strong>Normals and triangle orientation</strong></p>
+
 <p>The orientation of a triangle formed by points A, B, and C can be found by applying the rules
 for the cross product of the two vectors (A minus C) and (B minus C),
 in that order.</p>
-<p>The resulting cross product is that triangle's <em>normal</em>.  For each normal
+
+<p>The resulting cross product is that triangle&#39;s <em>normal</em>.  For each normal
 to point outward, as it usually is, each triangle should be oriented
 counterclockwise for right-handed coordinate systems and clockwise for left-handed
 systems.</p>
-</article>
-
-</section>
-
 </div>
 <nav id="navigation">
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -212,9 +274,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -230,5 +290,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>
