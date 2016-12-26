@@ -1,424 +1,160 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: CurveEval</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.CurveEval</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: CurveEval</h1>
+<h1>H3DU.CurveEval</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>H3DU.CurveEval() <a id='H3DU.CurveEval'></a></h3>
 
-        <h2>
-            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
+<p>An evaluator of parametric curve functions for generating
+vertex positions and colors of a curve.</p>
 
-        CurveEval
-        </h2>
-
-</header>
-
-<article>
-    <div class="container-overview">
-
-    <h4 style="margin-bottom:0px" id="CurveEval"><span style="font-weight:lighter"></span>new CurveEval<span class="signature">()</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line619">line 619</a>
-     </i></small></p>
-
-<div class="description">
-    An evaluator of parametric curve functions for generating
-vertex positions and colors of a curve.<p>
-A parametric curve is a curve whose points are based on a
-parametric curve function.  A curve function takes a number
+<p>A parametric curve is a curve whose points are based on a
+parametric curve function. A curve function takes a number
 (U) and returns a point (in 1, 2, 3 or more dimensions, but
-usually 2 or 3) that lies on the curve.  For example, in 3
-dimensions, a curve function has the following form:<p>
-<b>F</b>(u) = [ x(u), y(u), z(u) ]<p>
-where x(u) returns an X coordinate, y(u) a Y coordinate,
-and z(u) returns a Z coordinate.<p>
-For more information, see the <a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a> tutorial.
-</div>
+usually 2 or 3) that lies on the curve. For example, in 3
+dimensions, a curve function has the following form:</p>
 
-<dl class="details">
+<p><b>F</b>(u) = [ x(u), y(u), z(u) ]</p>
 
-</dl>
+<p>where x(u) returns an X coordinate, y(u) a Y coordinate,
+and z(u) returns a Z coordinate.</p>
 
-    </div>
+<p>For more information, see the <a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a> tutorial.</p>
 
-        <h3 class="subsection-title">Methods</h3>
+<h3>Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="color"><span style="font-weight:lighter"></span>H3DU.CurveEval#color<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.CurveEval.html">H3DU.CurveEval</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line669">line 669</a>
-     </i></small></p>
-
-<div class="description">
-    Specifies a parametric curve function for generating color values.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>evaluator</code>
-
-                (
-<span class="param-type">Object</span>
-
-)
-
-           </dt><dd>
-           An object that must contain a function
-named "evaluate", giving 3 values as a result.  See H3DU.CurveEval#vertex.
-</ul></dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="evalCurve"><span style="font-weight:lighter"></span>H3DU.CurveEval#evalCurve<span class="signature">(mesh, mode<sub style="font-weight:lighter">opt</sub>, n<sub style="font-weight:lighter">opt</sub>, u1<sub style="font-weight:lighter">opt</sub>, u2<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.CurveEval.html">H3DU.CurveEval</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line771">line 771</a>
-     </i></small></p>
-
-<div class="description">
-    Generates vertices and attribute values that follow a parametric curve
-function.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>mesh</code>
-
-                (
-<span class="param-type"><a href="H3DU.Mesh.html">H3DU.Mesh</a></span>
-
-)
-
-           </dt><dd>
-           A geometric mesh where the vertices will be
-generated.</dd>
-
-        <dt>
-
-                <code>mode</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           If this value is H3DU.Mesh.LINES, or is null
-or omitted, generates
-a series of lines defining the curve. If this value is H3DU.Mesh.POINTS,
-generates a series of points along the curve.  For any other value,
-this method has no effect.</dd>
-
-        <dt>
-
-                <code>n</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Number of subdivisions of the curve to be drawn.
-May be omitted; default is 24.</dd>
-
-        <dt>
-
-                <code>u1</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Starting point of the curve (within the range
-given in the <code>vector</code>, <code>normal</code>,
-<code>color</code>, and <code>texCoord</code> methods).
-May be omitted; default is 0.</dd>
-
-        <dt>
-
-                <code>u2</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Ending point of the curve (within the range
-given in the <code>vector</code>, <code>normal</code>,
-<code>color</code>, and <code>texCoord</code> methods).
-May be omitted; default is 1.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="evalOne"><span style="font-weight:lighter"></span>H3DU.CurveEval#evalOne<span class="signature">(mesh, u)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.CurveEval.html">H3DU.CurveEval</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line696">line 696</a>
-     </i></small></p>
-
-<div class="description">
-    Generates vertex positions and attributes based on a point
-in a parametric curve.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>mesh</code>
-
-                (
-<span class="param-type"><a href="H3DU.Mesh.html">H3DU.Mesh</a></span>
-
-)
-
-           </dt><dd>
-           H3DU.Mesh where vertex positions and attributes
-will be generated.  When this method returns, the current color, normal,
-and texture coordinates will be the same as they were before the method
-started.</dd>
-
-        <dt>
-
-                <code>u</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Point of the curve to evaluate.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="normal"><span style="font-weight:lighter"></span>H3DU.CurveEval#normal<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.CurveEval.html">H3DU.CurveEval</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line657">line 657</a>
-     </i></small></p>
-
-        <p><b>Deprecated: May be removed in the future; it makes little sense
-to generate normals for a curve.</b><p>
-
-<div class="description">
-    Specifies a parametric curve function for generating normals.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>evaluator</code>
-
-                (
-<span class="param-type">Object</span>
-
-)
-
-           </dt><dd>
-           An object that must contain a function
-named "evaluate", giving 3 values as a result.  See H3DU.CurveEval#vertex.
-</ul></dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="texCoord"><span style="font-weight:lighter"></span>H3DU.CurveEval#texCoord<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.CurveEval.html">H3DU.CurveEval</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line681">line 681</a>
-     </i></small></p>
-
-<div class="description">
-    Specifies a parametric curve function for generating texture coordinates.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>evaluator</code>
-
-                (
-<span class="param-type">Object</span>
-
-)
-
-           </dt><dd>
-           An object that must contain a function
-named "evaluate", giving 2 values as a result.  See H3DU.CurveEval#vertex.
-</ul></dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="vertex"><span style="font-weight:lighter"></span>H3DU.CurveEval#vertex<span class="signature">(evaluator)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.CurveEval.html">H3DU.CurveEval</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line643">line 643</a>
-     </i></small></p>
-
-<div class="description">
-    Specifies a parametric curve function for generating vertex positions.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>evaluator</code>
-
-                (
-<span class="param-type">Object</span>
-
-)
-
-           </dt><dd>
-           An object that must contain a function
-named "evaluate".  It takes the following parameter:<ul>
-<li><code>u</code> - A curve coordinate, generally from 0 to 1.
+<ul>
+<li><a href="#H3DU.CurveEval_H3DU.CurveEval_color">color</a></li>
+<li><a href="#H3DU.CurveEval_H3DU.CurveEval_evalCurve">evalCurve</a></li>
+<li><a href="#H3DU.CurveEval_H3DU.CurveEval_evalOne">evalOne</a></li>
+<li><a href="#H3DU.CurveEval_H3DU.CurveEval_normal">normal</a></li>
+<li><a href="#H3DU.CurveEval_H3DU.CurveEval_texCoord">texCoord</a></li>
+<li><a href="#H3DU.CurveEval_H3DU.CurveEval_vertex">vertex</a></li>
 </ul>
-The evaluator function returns an array of the result of the evaluation.</dd>
 
-    </dl>
+<h3>H3DU.CurveEval#color(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_color'></a></h3>
 
-<dl class="details">
+<p>Specifies a parametric curve function for generating color values.</p>
 
-</dl>
+<h4>Parameters</h4>
 
-<h5>Returns:</h5>
+<ul>
+<li><code>evaluator</code> (Type: Object)<br>
+An object that must contain a function named &quot;evaluate&quot;, giving 3 values as a result. See H3DU.CurveEval#vertex. </ul></li>
+</ul>
 
-<div class="param-desc">
-    This object.
+<h4>Return Value</h4>
 
-     (Type:
-<span class="param-type"><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></span>)
+<p>This object. (Type: <a href="H3DU.CurveEval.html">H3DU.CurveEval</a>)</p>
 
-</div>
+<h3>H3DU.CurveEval#evalCurve(mesh, [mode], [n], [u1], [u2]) <a id='H3DU.CurveEval_H3DU.CurveEval_evalCurve'></a></h3>
 
-    <h5>Example</h5>
+<p>Generates vertices and attribute values that follow a parametric curve
+function.</p>
 
-        <p class="code-caption">The following function sets a circle as the curve
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
+A geometric mesh where the vertices will be generated.</li>
+<li><code>mode</code> (Type: Number) (optional)<br>
+If this value is H3DU.Mesh.LINES, or is null or omitted, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.</li>
+<li><code>n</code> (Type: Number) (optional)<br>
+Number of subdivisions of the curve to be drawn. May be omitted; default is 24.</li>
+<li><code>u1</code> (Type: Number) (optional)<br>
+Starting point of the curve (within the range given in the <code>vector</code>, <code>normal</code>, <code>color</code>, and <code>texCoord</code> methods). May be omitted; default is 0.</li>
+<li><code>u2</code> (Type: Number) (optional)<br>
+Ending point of the curve (within the range given in the <code>vector</code>, <code>normal</code>, <code>color</code>, and <code>texCoord</code> methods). May be omitted; default is 1.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.CurveEval.html">H3DU.CurveEval</a>)</p>
+
+<h3>H3DU.CurveEval#evalOne(mesh, u) <a id='H3DU.CurveEval_H3DU.CurveEval_evalOne'></a></h3>
+
+<p>Generates vertex positions and attributes based on a point
+in a parametric curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
+H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
+<li><code>u</code> (Type: Number)<br>
+Point of the curve to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.CurveEval.html">H3DU.CurveEval</a>)</p>
+
+<h3>H3DU.CurveEval#normal(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_normal'></a></h3>
+
+<p><b>Deprecated: May be removed in the future; it makes little sense
+to generate normals for a curve.</b></p>
+
+<p>Specifies a parametric curve function for generating normals.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>evaluator</code> (Type: Object)<br>
+An object that must contain a function named &quot;evaluate&quot;, giving 3 values as a result. See H3DU.CurveEval#vertex. </ul></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.CurveEval.html">H3DU.CurveEval</a>)</p>
+
+<h3>H3DU.CurveEval#texCoord(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_texCoord'></a></h3>
+
+<p>Specifies a parametric curve function for generating texture coordinates.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>evaluator</code> (Type: Object)<br>
+An object that must contain a function named &quot;evaluate&quot;, giving one or two values as a result. See H3DU.CurveEval#vertex. </ul></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.CurveEval.html">H3DU.CurveEval</a>)</p>
+
+<h3>H3DU.CurveEval#vertex(evaluator) <a id='H3DU.CurveEval_H3DU.CurveEval_vertex'></a></h3>
+
+<p>Specifies a parametric curve function for generating vertex positions.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>evaluator</code> (Type: Object)<br>
+An object that must contain a function named &quot;evaluate&quot;. It takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of the result of the evaluation.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.CurveEval.html">H3DU.CurveEval</a>)</p>
+
+<h4>Example</h4>
+
+<p>The following function sets a circle as the curve
 to use for generating vertex positions.</p>
 
-    <pre class="prettyprint"><code>// "u" can range from 0 to 2*Math.PI
-curveEval.vertex({"evaluate":function(u) {
-"use strict";
+<pre><code>// &quot;u&quot; can range from 0 to 2\*Math.PI
+curveEval.vertex({&quot;evaluate&quot;:function(u) {
+&quot;use strict&quot;;
  return [Math.cos(u),Math.sin(u),0]
-}});</code></pre>
-
-</article>
-
-</section>
-
-</div>
-<nav id="navigation">
-<p>
+}});
+</code></pre>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -433,9 +169,67 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -451,5 +245,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

@@ -1,362 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: BSplineSurface</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.BSplineSurface</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: BSplineSurface</h1>
+<h1>H3DU.BSplineSurface</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits]) <a id='H3DU.BSplineSurface'></a></h3>
 
-        <h2>
-            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
+<p>A parametric evaluator for B-spline (basis spline) surfaces.</p>
 
-        BSplineSurface
-        </h2>
+<h4>Parameters</h4>
 
-</header>
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
+<li><code>knotsU</code> (Type: Array.&lt;Number&gt;)<br>
+Knot vector of the curve, along the U-axis. For more information, see <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>.</li>
+<li><code>knotsV</code> (Type: Array.&lt;Number&gt;)<br>
+Knot vector of the curve, along the V-axis.</li>
+<li><code>bits</code> (Type: Boolean) (optional)<br>
+Bits for defining input and controlling output. Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT, H3DU.BSplineCurve.HOMOGENEOUS_BIT, and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</li>
+</ul>
 
-<article>
-    <div class="container-overview">
+<h3>Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="BSplineSurface"><span style="font-weight:lighter"></span>new BSplineSurface<span class="signature">(controlPoints, knotsU, knotsV, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
+<ul>
+<li><a href="#H3DU.BSplineSurface.clamped">.clamped</a></li>
+<li><a href="#H3DU.BSplineSurface.uniform">.uniform</a></li>
+<li><a href="#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate">evaluate</a></li>
+</ul>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line372">line 372</a>
-     </i></small></p>
+<h3>H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits]) <a id='H3DU.BSplineSurface.clamped'></a></h3>
 
-<div class="description">
-    A parametric evaluator for B-spline (basis spline) surfaces.
-</div>
+<p>Creates a B-spline surface with uniform knots, except that
+the surface&#39;s edges lie on the edges of the control point array.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;Number&gt;&gt;&gt;)<br>
+Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
+<li><code>degreeU</code> (Type: Number) (optional)<br>
+Degree of the B-Spline surface along the U-axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>degreeV</code> (Type: Number) (optional)<br>
+Degree of the B-Spline surface along the V-axis If null or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: Number) (optional)<br>
+Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>controlPoints</code>
+<p>Return value. (Type: <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>)</p>
 
-                (
-<span class="param-type">Array.&lt;Array.&lt;Number>></span>
+<h3>H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits]) <a id='H3DU.BSplineSurface.uniform'></a></h3>
 
-)
+<p>Creates a B-spline surface with uniform knots.</p>
 
-           </dt><dd>
-           An array of control point
-arrays, which in turn contain a number of control points.  Each
-control point is an array with the same length as the other control points.
-It is assumed that:<ul>
-<li>The length of this parameter is the number of control points in each row of
-the V axis.
-<li>The length of the first control point array is the number of control points in
-each column of the U axis.
-<li>The first control point's length represents the size of all the control
-points.
-</ul></dd>
+<h4>Parameters</h4>
 
-        <dt>
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;Number&gt;&gt;&gt;)<br>
+Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
+<li><code>degreeU</code> (Type: Number) (optional)<br>
+Degree of the B-Spline surface along the U-axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>degreeV</code> (Type: Number) (optional)<br>
+Degree of the B-Spline surface along the V-axis If null or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: Number) (optional)<br>
+Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
+</ul>
 
-                <code>knotsU</code>
+<h4>Return Value</h4>
 
-                (
-<span class="param-type">Array.&lt;Number></span>
+<p>Return value. (Type: <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>)</p>
 
-)
+<h3>H3DU.BSplineSurface#evaluate(u, v) <a id='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a></h3>
 
-           </dt><dd>
-           Knot vector of the curve, along the U-axis.
-For more information, see <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>.</dd>
+<p>Evaluates the surface function based on a point
+in a B-spline surface.</p>
 
-        <dt>
+<h4>Parameters</h4>
 
-                <code>knotsV</code>
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U-coordinate of the surface to evaluate (from 0 through 1).</li>
+<li><code>v</code> (Type: Number)<br>
+V-coordinate of the surface to evaluate.</li>
+</ul>
 
-                (
-<span class="param-type">Array.&lt;Number></span>
+<h4>Return Value</h4>
 
-)
-
-           </dt><dd>
-           Knot vector of the curve, along the V-axis.</dd>
-
-        <dt>
-
-                <code>bits</code>
-
-                (
-<span class="param-type">Boolean</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Bits for defining input
-and controlling output.  Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
-H3DU.BSplineCurve.HOMOGENEOUS_BIT,
-and H3DU.BSplineCurve.DIVIDE_BIT.  If null or omitted, no bits are set.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="margin-bottom:0px" id=".clamped"><span style="font-weight:lighter"></span>.clamped<span class="signature">(controlPoints, degreeU<sub style="font-weight:lighter">opt</sub>, degreeV<sub style="font-weight:lighter">opt</sub>, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line449">line 449</a>
-     </i></small></p>
-
-<div class="description">
-    Creates a B-spline surface with uniform knots, except that
-the surface's edges lie on the edges of the control point array.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>controlPoints</code>
-
-                (
-<span class="param-type">Array.&lt;Array.&lt;Array.&lt;Number>>></span>
-
-)
-
-           </dt><dd>
-           Array of
-control point arrays as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</dd>
-
-        <dt>
-
-                <code>degreeU</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Degree of the B-Spline
-surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
-If null or omitted, the default is 3.</dd>
-
-        <dt>
-
-                <code>degreeV</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Degree of the B-Spline
-surface along the V-axis
-If null or omitted, the default is 3.</dd>
-
-        <dt>
-
-                <code>bits</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type"><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".uniform"><span style="font-weight:lighter"></span>.uniform<span class="signature">(controlPoints, degreeU<sub style="font-weight:lighter">opt</sub>, degreeV<sub style="font-weight:lighter">opt</sub>, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line468">line 468</a>
-     </i></small></p>
-
-<div class="description">
-    Creates a B-spline surface with uniform knots.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>controlPoints</code>
-
-                (
-<span class="param-type">Array.&lt;Array.&lt;Array.&lt;Number>>></span>
-
-)
-
-           </dt><dd>
-           Array of
-control point arrays as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</dd>
-
-        <dt>
-
-                <code>degreeU</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Degree of the B-Spline
-surface along the U-axis.  For example, 3 means a degree-3 (cubic) curve.
-If null or omitted, the default is 3.</dd>
-
-        <dt>
-
-                <code>degreeV</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Degree of the B-Spline
-surface along the V-axis
-If null or omitted, the default is 3.</dd>
-
-        <dt>
-
-                <code>bits</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type"><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>H3DU.BSplineSurface#evaluate<span class="signature">(u, v)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line535">line 535</a>
-     </i></small></p>
-
-<div class="description">
-    Evaluates the surface function based on a point
-in a B-spline surface.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>u</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           U-coordinate of the surface to evaluate (from 0 through 1).</dd>
-
-        <dt>
-
-                <code>v</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           V-coordinate of the surface to evaluate.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    An array of the result of
-the evaluation.  Its length will be equal to the
-length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor.
-
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
-
-</div>
-
-</article>
-
-</section>
-
-</div>
-<nav id="navigation">
-<p>
+<p>An array of the result of
+the evaluation. Its length will be equal to the
+length of a control point (minus 1 if if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -371,9 +111,67 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -389,5 +187,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

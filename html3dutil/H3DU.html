@@ -19,20 +19,20 @@ library.</p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU_createCanvasElement">createCanvasElement</a></li>
-<li><a href="#H3DU_get3DContext">get3DContext</a></li>
-<li><a href="#H3DU_get3DOr2DContext">get3DOr2DContext</a></li>
-<li><a href="#H3DU_getPromiseResults">getPromiseResults</a></li>
-<li><a href="#H3DU_getPromiseResultsAll">getPromiseResultsAll</a></li>
-<li><a href="#H3DU_getTimePosition">getTimePosition</a></li>
-<li><a href="#H3DU_is3DContext">is3DContext</a></li>
-<li><a href="#H3DU_loadFileFromUrl">loadFileFromUrl</a></li>
-<li><a href="#H3DU_newFrames">newFrames</a></li>
-<li><a href="#H3DU_renderLoop">renderLoop</a></li>
-<li><a href="#H3DU_toGLColor">toGLColor</a></li>
+<li><a href="#H3DU.createCanvasElement">createCanvasElement</a></li>
+<li><a href="#H3DU.get3DContext">get3DContext</a></li>
+<li><a href="#H3DU.get3DOr2DContext">get3DOr2DContext</a></li>
+<li><a href="#H3DU.getPromiseResults">getPromiseResults</a></li>
+<li><a href="#H3DU.getPromiseResultsAll">getPromiseResultsAll</a></li>
+<li><a href="#H3DU.getTimePosition">getTimePosition</a></li>
+<li><a href="#H3DU.is3DContext">is3DContext</a></li>
+<li><a href="#H3DU.loadFileFromUrl">loadFileFromUrl</a></li>
+<li><a href="#H3DU.newFrames">newFrames</a></li>
+<li><a href="#H3DU.renderLoop">renderLoop</a></li>
+<li><a href="#H3DU.toGLColor">toGLColor</a></li>
 </ul>
 
-<h3>(static) H3DU.createCanvasElement(parent, width, height) <a id='H3DU_createCanvasElement'></a></h3>
+<h3>(static) H3DU.createCanvasElement(parent, width, height) <a id='H3DU.createCanvasElement'></a></h3>
 
 <p>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</p>
@@ -52,7 +52,7 @@ Height of the new canvas element, or if null, the height a <code>canvas</code> e
 
 <p>The resulting canvas element. (Type: HTMLCanvasElement)</p>
 
-<h3>(static) H3DU.get3DContext(canvasElement, err) <a id='H3DU_get3DContext'></a></h3>
+<h3>(static) H3DU.get3DContext(canvasElement, err) <a id='H3DU.get3DContext'></a></h3>
 
 <p>Creates a 3D rendering context from an HTML canvas element.</p>
 
@@ -71,7 +71,7 @@ A function to call if an error occurs in creating the context. The function take
 if an error occurred in creating the context. Returns null if &quot;canvasElement&quot;
 is null or not an HTML canvas element. (Type: WebGLRenderingContext)</p>
 
-<h3>(static) H3DU.get3DOr2DContext(canvasElement) <a id='H3DU_get3DOr2DContext'></a></h3>
+<h3>(static) H3DU.get3DOr2DContext(canvasElement) <a id='H3DU.get3DOr2DContext'></a></h3>
 
 <p>Creates a 3D rendering context from an HTML canvas element,
 falling back to a 2D context if that fails.</p>
@@ -89,7 +89,7 @@ An HTML canvas element.</li>
 if an error occurred in creating the context. Returns null if &quot;canvasElement&quot;
 is null or not an HTML canvas element. (Type: WebGLRenderingContext)</p>
 
-<h3>(static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject]) <a id='H3DU_getPromiseResults'></a></h3>
+<h3>(static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject]) <a id='H3DU.getPromiseResults'></a></h3>
 
 <p>Utility function that returns a promise that
 resolves after the given list of promises finishes
@@ -120,7 +120,7 @@ three keys:<ul>
 promise, in the order in which the promises were listed.
 True means success, and false means failure.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
 
-<h3>(static) H3DU.getPromiseResultsAll(promises, [progressResolve], [progressReject]) <a id='H3DU_getPromiseResultsAll'></a></h3>
+<h3>(static) H3DU.getPromiseResultsAll(promises, [progressResolve], [progressReject]) <a id='H3DU.getPromiseResultsAll'></a></h3>
 
 <p>Utility function that returns a promise that
 resolves or is rejected after the given list of promises finishes
@@ -144,9 +144,9 @@ all of the promises are each resolved; the result will
 be an array of results from those promises,
 in the order in which those promises were listed.
 Will be rejected if any of the promises is rejected; the result
-will be an object as specified in <a href="H3DU.md#H3DU_getPromiseResults">H3DU.getPromiseResults</a>.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
+will be an object as specified in <a href="H3DU.md#H3DU.getPromiseResults">H3DU.getPromiseResults</a>.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
 
-<h3>(static) H3DU.getTimePosition(timer, timeInMs, intervalInMs) <a id='H3DU_getTimePosition'></a></h3>
+<h3>(static) H3DU.getTimePosition(timer, timeInMs, intervalInMs) <a id='H3DU.getTimePosition'></a></h3>
 
 <p>Gets the position of a time value within an interval.
 This is useful for doing animation cycles lasting a certain number
@@ -183,7 +183,7 @@ value in milliseconds, such as the parameter of a
 <pre><code>var angle = 360 \* H3DU.getTimePosition(timer, time, 5000);
 </code></pre>
 
-<h3>(static) H3DU.is3DContext(context) <a id='H3DU_is3DContext'></a></h3>
+<h3>(static) H3DU.is3DContext(context) <a id='H3DU.is3DContext'></a></h3>
 
 <h4>Parameters</h4>
 
@@ -196,7 +196,7 @@ Description of context. Returns whether the given object is a 3D rendering conte
 
 <p>Return value. (Type: Boolean)</p>
 
-<h3>(static) H3DU.loadFileFromUrl(url, responseType) <a id='H3DU_loadFileFromUrl'></a></h3>
+<h3>(static) H3DU.loadFileFromUrl(url, responseType) <a id='H3DU.loadFileFromUrl'></a></h3>
 
 <p>Loads a file from a URL asynchronously, using XMLHttpRequest.</p>
 
@@ -224,7 +224,7 @@ the parameter&#39;s &quot;data&quot; property will be:<ul>
 from JSON.
 <li>For any other type, a string of the file&#39;s text.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
 
-<h3>(static) H3DU.newFrames(timer, timeInMs) <a id='H3DU_newFrames'></a></h3>
+<h3>(static) H3DU.newFrames(timer, timeInMs) <a id='H3DU.newFrames'></a></h3>
 
 <p>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame&#39;s length is 1/60 of a second.
@@ -234,7 +234,7 @@ This method should be called only once each frame.</p>
 
 <ul>
 <li><code>timer</code> (Type: Object)<br>
-An object described in <a href="H3DU.md#H3DU_getTimePosition">H3DU.getTimePosition</a>.</li>
+An object described in <a href="H3DU.md#H3DU.getTimePosition">H3DU.getTimePosition</a>.</li>
 <li><code>timeInMs</code> (Type: Number)<br>
 A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</li>
 </ul>
@@ -246,7 +246,7 @@ the last known time held in the parameter &quot;timer&quot;.
 The number can include fractional frames. If an
 initial time or last known time wasn&#39;t set, returns 0. (Type: Number)</p>
 
-<h3>(static) H3DU.renderLoop(func) <a id='H3DU_renderLoop'></a></h3>
+<h3>(static) H3DU.renderLoop(func) <a id='H3DU.renderLoop'></a></h3>
 
 <p>This method will call a function once before returning,
 and queue requests to call that function once per frame,
@@ -264,7 +264,7 @@ The function to call. The function takes one parameter, &quot;time&quot;, which 
 
 <p>Return value. (Type: Object)</p>
 
-<h3>(static) H3DU.toGLColor(r, g, b, [a]) <a id='H3DU_toGLColor'></a></h3>
+<h3>(static) H3DU.toGLColor(r, g, b, [a]) <a id='H3DU.toGLColor'></a></h3>
 
 <p>Creates a 4-element array representing a color. Each element
 can range from 0 to 1 and specifies the red, green, blue or alpha
@@ -325,9 +325,7 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 invalid, returns [0,0,0,0], or transparent black. Numbers less
 than 0 are clamped to 0, and numbers greater than 1 are
 clamped to 1. (Type: Array.&lt;Number&gt;)</p>
-</div>
-<nav id="navigation">
-<p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">
@@ -345,6 +343,66 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {

@@ -45,36 +45,36 @@ For more details, see the <a href="tutorial-matrixdetails.html">Matrix Details</
 
 <p>A translation is a shifting of an object&#39;s position.</p>
 
-<p>To create a translation matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4translated">H3DU.Math.mat4translated()</a>,
+<p>To create a translation matrix, use <a href="H3DU.Math.md#H3DU.Math.mat4translated">H3DU.Math.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 
 <p>To multiply an existing matrix by a translation, use
-<a href="H3DU_Math.md#H3DU_Math_mat4translate">H3DU.Math.mat4translate()</a>.  This will put the translation
+<a href="H3DU.Math.md#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a>.  This will put the translation
 before the other transformations.</p>
 
 <h3>Scaling <a id=Scaling></a></h3>
 
 <p>Scaling changes an object&#39;s size.</p>
 
-<p>To create a scaling matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4scaled">H3DU.Math.mat4scaled()</a>,
+<p>To create a scaling matrix, use <a href="H3DU.Math.md#H3DU.Math.mat4scaled">H3DU.Math.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
 factors to change the object&#39;s size.  For example, a Y-factor of 2 doubles an object&#39;s height.</p>
 
 <p>To multiply an existing matrix by a scaling, use
-<a href="H3DU_Math.md#H3DU_Math_mat4scale">H3DU.Math.mat4scale()</a>.  This will put the scaling
+<a href="H3DU.Math.md#H3DU.Math.mat4scale">H3DU.Math.mat4scale()</a>.  This will put the scaling
 before the other transformations.</p>
 
 <h3>Rotation <a id=Rotation></a></h3>
 
 <p>Rotation changes an object&#39;s orientation.</p>
 
-<p>To create a rotation matrix, use <a href="H3DU_Math.md#H3DU_Math_mat4rotated">H3DU.Math.mat4rotated()</a>,
+<p>To create a rotation matrix, use <a href="H3DU.Math.md#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
 origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
 
 <p>To multiply an existing matrix by a rotation, use
-<a href="H3DU_Math.md#H3DU_Math_mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
+<a href="H3DU.Math.md#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
 before the other transformations.</p>
 
 <h3>Combining Transforms <a id=Combining_Transforms></a></h3>
@@ -93,7 +93,7 @@ not the same as translating then scaling.  Assuming your geometry is centered at
 <p>This way, the scalings and rotations will affect the object while it&#39;s still centered, and
 before the translations (shifts) take place.</p>
 
-<p>You can also multiply transforms using <a href="H3DU_Math.md#H3DU_Math_mat4multiply">H3DU.Math.mat4multiply()</a>.
+<p>You can also multiply transforms using <a href="H3DU.Math.md#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
 of doing the second matrix&#39;s transform, then the first matrix&#39;s transform.</p>
 
@@ -118,8 +118,7 @@ multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
 before the first rotation.  Like matrix multiplication, the
-order in which you multiply quaternions is important. This multiplication behavior
-is opposite to that in the D3DX and DirectXMath libraries.</p>
+order in which you multiply quaternions is important.</p>
 
 <h3>Using Quaternions <a id=Using_Quaternions></a></h3>
 
@@ -159,9 +158,9 @@ axis), so that a rotation along that axis will do nothing.</li>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_quatFromTaitBryan">H3DU.Math.quatFromTaitBryan()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan()</a> -
 Converts from Tait-Bryan angles to a quaternion</li>
-<li><a href="H3DU_Math.md#H3DU_Math_quatToTaitBryan">H3DU.Math.quatToTaitBryan()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.quatToTaitBryan">H3DU.Math.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 
@@ -189,7 +188,7 @@ plane&#39;s normal and any point on the plane.</li>
 <p>There is one method that deals with planes:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
 Converts the plane to a form in which its normal has a length of 1.</li>
 </ul>
 
@@ -252,14 +251,14 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 for the cross product of the two vectors (A minus C) and (B minus C),
 in that order.</p>
 
-<p>The resulting cross product is that triangle&#39;s <em>normal</em>.  For each normal
+<p>The resulting cross product is that triangle&#39;s <em>normal</em> (a vector that points away from
+the triangle&#39;s surface).  For each normal
 to point outward, as it usually is, each triangle should be oriented
 counterclockwise for right-handed coordinate systems and clockwise for left-handed
-systems.
+systems. A triangle with an outward-pointing normal is called a <em>front face</em>,
+and any other triangle is a <em>back face</em>.
 <a href="index.html">Back to documentation index.</a></p>
-</div>
-<nav id="navigation">
-<p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">
@@ -277,6 +276,66 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {

@@ -19,7 +19,7 @@ library.</p>
 class is not included in the &quot;h3du_min.js&quot; file which makes up
 the HTML 3D Library. Example:</p>
 
-<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&amp;lt;/script&gt;
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
 <h4>Parameters</h4>
@@ -34,17 +34,17 @@ Smallest V-coordinate.</li>
 <li><code>maxval</code> (Type: Number)<br>
 Largest V-coordinate. If <em>minval</em> is greater than <em>maxval</em>, both values will be swapped.</li>
 <li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#SurfaceOfRevolution_fromFunction">fromFunction</a></li>
-<li><a href="#SurfaceOfRevolution_torus">torus</a></li>
+<li><a href="#SurfaceOfRevolution.fromFunction">fromFunction</a></li>
+<li><a href="#SurfaceOfRevolution.torus">torus</a></li>
 </ul>
 
-<h3>(static) SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis]) <a id='SurfaceOfRevolution_fromFunction'></a></h3>
+<h3>(static) SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis]) <a id='SurfaceOfRevolution.fromFunction'></a></h3>
 
 <p>Creates a parametric evaluator for a surface of revolution
 whose curve is the graph of a single-variable function.
@@ -64,7 +64,7 @@ Smallest parameter of the function. This is a number of units from the origin al
 <li><code>maxval</code> (Type: Number)<br>
 Largest parameter of the function. This is a number of units from the origin along the axis of rotation. If <em>minval</em> is greater than <em>maxval</em>, both values will be swapped.</li>
 <li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -100,7 +100,7 @@ which runs from 5 to 10 units, and with a radius of 2 units.</p>
 5, 10);
 </code></pre>
 
-<h3>(static) SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis]) <a id='SurfaceOfRevolution_torus'></a></h3>
+<h3>(static) SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis]) <a id='SurfaceOfRevolution.torus'></a></h3>
 
 <p>Parametric evaluator for a torus, a special case of a surface of revolution.</p>
 
@@ -114,15 +114,13 @@ Radius from the inner edge to the innermost part of the torus.</li>
 <li><code>curve</code> (Type: function) (optional)<br>
 Object describing a curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. The curve function must contain a function named &quot;evaluate&quot;, which takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of at least 2 elements: the first element is the X coordinate of the curve&#39;s position, and the second element is the Y coordinate. If null or omitted, uses a circular cross section.</li>
 <li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-Axis of rotation, which the torus will pass through. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU_Math.md#H3DU_Math_vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+Axis of rotation, which the torus will pass through. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>Return value. (Type: <a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a>)</p>
-</div>
-<nav id="navigation">
-<p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">
@@ -140,6 +138,66 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {

@@ -1,358 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: Texture</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.Texture</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: Texture</h1>
+<h1>H3DU.Texture</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>H3DU.Texture(name) <a id='H3DU.Texture'></a></h3>
 
-        <h2>
-            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
-
-        Texture
-        </h2>
-
-</header>
-
-<article>
-    <div class="container-overview">
-
-    <h4 style="margin-bottom:0px" id="Texture"><span style="font-weight:lighter"></span>new Texture<span class="signature">(name)</span><span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line16">line 16</a>
-     </i></small></p>
-
-<div class="description">
-    Specifies a texture, which can serve as image data applied to
+<p>Specifies a texture, which can serve as image data applied to
  the surface of a shape, or even a 2-dimensional array of pixels
  used for some other purpose, such as a depth map, a height map,
- a bump map, a specular map, and so on.<p>
-By default, texture coordinates go from (0,0) at the lower left corner
-to (1,1) at the upper right corner.
-</div>
+ a bump map, a specular map, and so on.</p>
 
-    <h5>Parameters:</h5>
+<p>By default, texture coordinates go from (0,0) at the lower left corner
+to (1,1) at the upper right corner.</p>
 
-<dl>
+<h4>Parameters</h4>
 
-        <dt>
+<ul>
+<li><code>name</code> (Type: String)<br>
+URL of the texture data. Based on the URL, the texture may be loaded via the JavaScript DOM&#39;s Image class. However, this constructor will not load that image yet.</li>
+</ul>
 
-                <code>name</code>
+<h3>Methods</h3>
 
-                (
-<span class="param-type">String</span>
+<ul>
+<li><a href="#H3DU.Texture.fromUint8Array">.fromUint8Array</a></li>
+<li><a href="#H3DU.Texture.loadTexture">.loadTexture</a></li>
+<li><a href="#H3DU.Texture_H3DU.Texture_dispose">dispose</a></li>
+<li><a href="#H3DU.Texture_H3DU.Texture_getHeight">getHeight</a></li>
+<li><a href="#H3DU.Texture_H3DU.Texture_getName">getName</a></li>
+<li><a href="#H3DU.Texture_H3DU.Texture_getWidth">getWidth</a></li>
+<li><a href="#H3DU.Texture_H3DU.Texture_setClamp">setClamp</a></li>
+</ul>
 
-)
+<h3>H3DU.Texture.fromUint8Array(array, width, height) <a id='H3DU.Texture.fromUint8Array'></a></h3>
 
-           </dt><dd>
-           URL of the texture data.  Based on the
-URL, the texture may be loaded via the JavaScript DOM's Image
-class.  However, this constructor will not load that image yet.</dd>
+<p>Creates a texture from a byte array specifying the texture data.</p>
 
-    </dl>
+<h4>Parameters</h4>
 
-<dl class="details">
+<ul>
+<li><code>array</code> (Type: Uint8Array)<br>
+A byte array containing the texture data, with the pixels arranged in left-to-right rows from top to bottom. Each pixel takes 4 bytes, where the bytes are the red, green, blue, and alpha components, in that order.</li>
+<li><code>width</code> (Type: Uint8Array)<br>
+Width, in pixels, of the texture.</li>
+<li><code>height</code> (Type: Uint8Array)<br>
+Height, in pixels, of the texture.</li>
+</ul>
 
-</dl>
+<h4>Return Value</h4>
 
-    </div>
+<p>The new H3DU.Texture object. (Type: <a href="H3DU.Texture.html">H3DU.Texture</a>)</p>
 
-        <h3 class="subsection-title">Methods</h3>
+<h3>H3DU.Texture.loadTexture(name, [textureCache]) <a id='H3DU.Texture.loadTexture'></a></h3>
 
-    <h4 style="margin-bottom:0px" id=".fromUint8Array"><span style="font-weight:lighter"></span>.fromUint8Array<span class="signature">(array, width, height)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Texture.html">H3DU.Texture</a>}</span></h4>
+<p>Loads a texture by its URL.</p>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line112">line 112</a>
-     </i></small></p>
+<h4>Parameters</h4>
 
-<div class="description">
-    Creates a texture from a byte array specifying the texture data.
-</div>
+<ul>
+<li><code>name</code> (Type: String)<br>
+URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM&#39;s Image class.</li>
+<li><code>textureCache</code> (Type: Object) (optional)<br>
+An object whose keys are the names of textures already loaded. This will help avoid loading the same texture more than once. This parameter is optional and may be omitted.</li>
+</ul>
 
-    <h5>Parameters:</h5>
+<h4>Return Value</h4>
 
-<dl>
+<p>A promise that resolves when the texture
+is fully loaded. If it resolves, the result will be an H3DU.Texture object. (Type: <a href="Promise.html">Promise</a>)</p>
 
-        <dt>
+<h3>H3DU.Texture#dispose() <a id='H3DU.Texture_H3DU.Texture_dispose'></a></h3>
 
-                <code>array</code>
+<p>Disposes resources used by this texture.</p>
 
-                (
-<span class="param-type">Uint8Array</span>
+<h4>Return Value</h4>
 
-)
+<p>Return value. (Type: Object)</p>
 
-           </dt><dd>
-           A byte array containing the texture data,
-with the pixels arranged in left-to-right rows from top to bottom.
-Each pixel takes 4 bytes, where the bytes are the red, green, blue,
-and alpha components, in that order.</dd>
+<h3>H3DU.Texture#getHeight() <a id='H3DU.Texture_H3DU.Texture_getHeight'></a></h3>
 
-        <dt>
+<p>Gets this texture&#39;s known height.</p>
 
-                <code>width</code>
+<h4>Return Value</h4>
 
-                (
-<span class="param-type">Uint8Array</span>
+<p>This texture&#39;s height in pixels.
+Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)</p>
 
-)
+<h3>H3DU.Texture#getName() <a id='H3DU.Texture_H3DU.Texture_getName'></a></h3>
 
-           </dt><dd>
-           Width, in pixels, of the texture.</dd>
+<p>Gets the name of this texture.</p>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>height</code>
+<p>Return value. (Type: String)</p>
 
-                (
-<span class="param-type">Uint8Array</span>
+<h3>H3DU.Texture#getWidth() <a id='H3DU.Texture_H3DU.Texture_getWidth'></a></h3>
 
-)
+<p>Gets this texture&#39;s known width.</p>
 
-           </dt><dd>
-           Height, in pixels, of the texture.</dd>
+<h4>Return Value</h4>
 
-    </dl>
+<p>This texture&#39;s width in pixels.
+Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)</p>
 
-<dl class="details">
+<h3>H3DU.Texture#setClamp(clamp) <a id='H3DU.Texture_H3DU.Texture_setClamp'></a></h3>
 
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    The new H3DU.Texture object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".loadTexture"><span style="font-weight:lighter"></span>.loadTexture<span class="signature">(name, textureCache<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="Promise.html">Promise</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line81">line 81</a>
-     </i></small></p>
-
-<div class="description">
-    Loads a texture by its URL.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>name</code>
-
-                (
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           URL of the texture data.  Images with a TGA
-extension that use the RGBA or grayscale format are supported.
-Images supported by the browser will be loaded via
-the JavaScript DOM's Image class.</dd>
-
-        <dt>
-
-                <code>textureCache</code>
-
-                (
-<span class="param-type">Object</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           An object whose keys
-are the names of textures already loaded.  This will help avoid loading
-the same texture more than once.  This parameter is optional
-and may be omitted.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A promise that resolves when the texture
-is fully loaded.  If it resolves, the result will be an H3DU.Texture object.
-
-     (Type:
-<span class="param-type"><a href="Promise.html">Promise</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="dispose"><span style="font-weight:lighter"></span>H3DU.Texture#dispose<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line261">line 261</a>
-     </i></small></p>
-
-<div class="description">
-    Disposes resources used by this texture.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Object</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getHeight"><span style="font-weight:lighter"></span>H3DU.Texture#getHeight<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line41">line 41</a>
-     </i></small></p>
-
-<div class="description">
-    Gets this texture's known height.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This texture's height in pixels.
-Will be 0 if the texture's image data wasn't loaded yet.
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getName"><span style="font-weight:lighter"></span>H3DU.Texture#getName<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {String}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line284">line 284</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the name of this texture.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">String</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getWidth"><span style="font-weight:lighter"></span>H3DU.Texture#getWidth<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line31">line 31</a>
-     </i></small></p>
-
-<div class="description">
-    Gets this texture's known width.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This texture's width in pixels.
-Will be 0 if the texture's image data wasn't loaded yet.
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setClamp"><span style="font-weight:lighter"></span>H3DU.Texture#setClamp<span class="signature">(clamp)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Texture.html">H3DU.Texture</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-texture.js.html">h3du-texture.js</a>, <a href="h3du-texture.js.html#line61">line 61</a>
-     </i></small></p>
-
-<div class="description">
-    Sets the wrapping behavior of texture coordinates that
-fall out of range when using this texture.  This setting
+<p>Sets the wrapping behavior of texture coordinates that
+fall out of range when using this texture. This setting
 will only have an effect on textures whose width and height
-are both powers of two.  For other textures, this setting
+are both powers of two. For other textures, this setting
 is ignored and out-of-range texture coordinates are
-always clamped.
-</div>
+always clamped.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>clamp</code> (Type: Boolean)<br>
+If true, the texture&#39;s texture coordinates will be clamped to the range [0, 1]. If false, the fractional parts of the texture coordinates&#39; be used as the coordinates (causing wraparound). The default is false.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>clamp</code>
-
-                (
-<span class="param-type">Boolean</span>
-
-)
-
-           </dt><dd>
-           If true, the texture's texture
-coordinates will be clamped to the range [0, 1].  If false,
-the fractional parts of the texture coordinates'
-be used as the coordinates (causing wraparound).
-The default is false.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>)
-
-</div>
-
-</article>
-
-</section>
-
-</div>
-<nav id="navigation">
-<p>
+<p>This object. (Type: <a href="H3DU.Texture.html">H3DU.Texture</a>)</p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -367,9 +143,67 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -385,5 +219,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

@@ -1,913 +1,320 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: Shape</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.Shape</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: Shape</h1>
+<h1>H3DU.Shape</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>H3DU.Shape(mesh) <a id='H3DU.Shape'></a></h3>
 
-        <h2>
-            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
+<p>An object that associates a geometric mesh (the shape of the object) with
+ material data (which defines what is seen on the object&#39;s surface)
+and a transformation matrix (which defines the object&#39;s position and size).
+See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.</p>
 
-        Shape
-        </h2>
+<h4>Parameters</h4>
 
-</header>
+<ul>
+<li><code>mesh</code> (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>
+A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.html">H3DU.Mesh</a> objects, the <a href="H3DU.Material.html">H3DU.Material</a> created will use the mesh in its current state and won&#39;t track future changes. <i>Using <a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i></li>
+</ul>
 
-<article>
-    <div class="container-overview">
+<h3>Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="Shape"><span style="font-weight:lighter"></span>new Shape<span class="signature">(mesh)</span><span style="font-weight:lighter"></span></h4>
+<ul>
+<li><a href="#H3DU.Shape_H3DU.Shape_copy">copy</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_getBounds">getBounds</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_getMatrix">getMatrix</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_getTransform">getTransform</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_getVisible">getVisible</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_primitiveCount">primitiveCount</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setColor">setColor</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setMaterial">setMaterial</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setMaterialParams">setMaterialParams</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setPosition">setPosition</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setQuaternion">setQuaternion</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setScale">setScale</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setShader">setShader</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setTexture">setTexture</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setTextureAndColor">setTextureAndColor</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setTransform">setTransform</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setVisible">setVisible</a></li>
+<li><a href="#H3DU.Shape_H3DU.Shape_vertexCount">vertexCount</a></li>
+</ul>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line16">line 16</a>
-     </i></small></p>
+<h3>H3DU.Shape#copy() <a id='H3DU.Shape_H3DU.Shape_copy'></a></h3>
 
-<div class="description">
-    An object that associates a geometric mesh (the shape of the object) with
- material data (which defines what is seen on the object's surface)
-and a transformation matrix (which defines the object's position and size).
-See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>mesh</code>
-
-                (
-<span class="param-type"><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></span>
-
-)
-
-           </dt><dd>
-           A mesh in the form of a buffer object.
-Cannot be null. For <a href="H3DU.Mesh.html">H3DU.Mesh</a> objects, the <a href="H3DU.Material.html">H3DU.Material</a>
-created will use the mesh in its current state and won't
-track future changes.  <i>Using <a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a> objects as the
-parameter
-is deprecated.</i></dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="margin-bottom:0px" id="copy"><span style="font-weight:lighter"></span>H3DU.Shape#copy<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line201">line 201</a>
-     </i></small></p>
-
-<div class="description">
-    Makes a copy of this object.  The copied object
+<p>Makes a copy of this object. The copied object
 will have its own version of the transform and
 material data, but any texture
 image data and mesh buffers will not be duplicated,
 but rather just references to them will be used.
-The copied shape won't have a parent.
-</div>
+The copied shape won&#39;t have a parent.</p>
 
-<dl class="details">
+<h4>Return Value</h4>
 
-</dl>
+<p>A copy of this object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<h5>Returns:</h5>
+<h3>H3DU.Shape#getBounds() <a id='H3DU.Shape_H3DU.Shape_getBounds'></a></h3>
 
-<div class="param-desc">
-    A copy of this object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>H3DU.Shape#getBounds<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line234">line 234</a>
-     </i></small></p>
-
-<div class="description">
-    Finds a bounding box that holds all vertices in this shape.
+<p>Finds a bounding box that holds all vertices in this shape.
  The bounding box is not guaranteed to be the
 tightest, and the box will be transformed to world space
-using this object's transform.
-</div>
+using this object&#39;s transform.</p>
 
-<dl class="details">
+<h4>Return Value</h4>
 
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    An array of six numbers describing an
+<p>An array of six numbers describing an
 axis-aligned bounding box
 that fits all vertices in the shape. The first three numbers
 are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
--Inf, -Inf].
+-Inf, -Inf]. (Type: Array.&lt;Number&gt;)</p>
 
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
+<h3>H3DU.Shape#getMatrix() <a id='H3DU.Shape_H3DU.Shape_getMatrix'></a></h3>
 
-</div>
+<p>Gets the transformation matrix used by this shape.
+See H3DU.Transform#getMatrix.</p>
 
-    <h4 style="margin-bottom:0px" id="getMatrix"><span style="font-weight:lighter"></span>H3DU.Shape#getMatrix<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
+<h4>Return Value</h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line325">line 325</a>
-     </i></small></p>
+<p>The current transformation matrix. (Type: Array.&lt;Number&gt;)</p>
 
-<div class="description">
-    Gets the transformation matrix used by this shape.
-See H3DU.Transform#getMatrix.
-</div>
+<h3>H3DU.Shape#getTransform() <a id='H3DU.Shape_H3DU.Shape_getTransform'></a></h3>
 
-<dl class="details">
+<p>Returns the transform used by this shape object.
+The transform won&#39;t be copied.</p>
 
-</dl>
+<h4>Return Value</h4>
 
-<h5>Returns:</h5>
+<p>Return value. (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)</p>
 
-<div class="param-desc">
-    The current transformation matrix.
+<h3>H3DU.Shape#getVisible() <a id='H3DU.Shape_H3DU.Shape_getVisible'></a></h3>
 
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
+<p>Gets whether this shape will be drawn on rendering.</p>
 
-</div>
+<h4>Return Value</h4>
 
-    <h4 style="margin-bottom:0px" id="getTransform"><span style="font-weight:lighter"></span>H3DU.Shape#getTransform<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Transform.html">H3DU.Transform</a>}</span></h4>
+<p>True if this shape will be visible; otherwise, false. (Type: Boolean)</p>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line216">line 216</a>
-     </i></small></p>
+<h3>H3DU.Shape#primitiveCount() <a id='H3DU.Shape_H3DU.Shape_primitiveCount'></a></h3>
 
-<div class="description">
-    Returns the transform used by this shape object.
-The transform won't be copied.
-</div>
+<p>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this scene.</p>
 
-<dl class="details">
+<h4>Return Value</h4>
 
-</dl>
+<p>Return value. (Type: Number)</p>
 
-<h5>Returns:</h5>
+<h3>H3DU.Shape#setColor(r, g, b, [a]) <a id='H3DU.Shape_H3DU.Shape_setColor'></a></h3>
 
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Transform.html">H3DU.Transform</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="getVisible"><span style="font-weight:lighter"></span>H3DU.Shape#getVisible<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Boolean}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line82">line 82</a>
-     </i></small></p>
-
-<div class="description">
-    Gets whether this shape will be drawn on rendering.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    True if this shape will be visible; otherwise, false.
-
-     (Type:
-<span class="param-type">Boolean</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>H3DU.Shape#primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line62">line 62</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the number of primitives (triangles, lines,
-and points) composed by all shapes in this scene.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setColor"><span style="font-weight:lighter"></span>H3DU.Shape#setColor<span class="signature">(r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line104">line 104</a>
-     </i></small></p>
-
-<div class="description">
-    Sets material parameters that give the shape a certain color.
+<p>Sets material parameters that give the shape a certain color.
 (If a material is already defined, sets its ambient and diffusion
 colors.)
 However, if the mesh defines its own colors, those colors will take
-precedence over the color given in this method.
-</div>
+precedence over the color given in this method.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
+A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
+<li><code>g</code> (Type: Number)<br>
+Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: Number)<br>
+Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: Number) (optional)<br>
+Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>r</code>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-                (
-<span class="param-type">Array.&lt;Number></span>
-|
+<h3>H3DU.Shape#setMaterial(material) <a id='H3DU.Shape_H3DU.Shape_setMaterial'></a></h3>
 
-<span class="param-type">number</span>
-|
+<p>Sets this shape&#39;s material parameters.</p>
 
-<span class="param-type">string</span>
+<h4>Parameters</h4>
 
-)
+<ul>
+<li><code>material</code> (Type: Material)<br>
+The material object to use.</li>
+</ul>
 
-           </dt><dd>
-           A <a href="H3DU.html#.toGLColor">color vector or string</a>,
-or the red color component (0-1).</dd>
+<h4>Return Value</h4>
 
-        <dt>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-                <code>g</code>
+<h3>H3DU.Shape#setMaterialParams(params) <a id='H3DU.Shape_H3DU.Shape_setMaterialParams'></a></h3>
 
-                (
-<span class="param-type">Number</span>
+<p>Sets parameters of this shape&#39;s material.</p>
 
-)
+<h4>Parameters</h4>
 
-           </dt><dd>
-           Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
+<ul>
+<li><code>params</code> (Type: Object)<br>
+An object described in H3DU.Material#setParams.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>b</code>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-                (
-<span class="param-type">Number</span>
+<h3>H3DU.Shape#setPosition(x, y, z) <a id='H3DU.Shape_H3DU.Shape_setPosition'></a></h3>
 
-)
+<p>Sets the relative position of this shape from its original
+position. See H3DU.Transform#setPosition</p>
 
-           </dt><dd>
-           Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
+<h4>Parameters</h4>
 
-        <dt>
+<ul>
+<li><code>x</code> (Type: number | Array.&lt;Number&gt;)<br>
+X coordinate or a 3-element position array, as specified in H3DU.Transform#setScale.</li>
+<li><code>y</code> (Type: Number)<br>
+Y-coordinate.</li>
+<li><code>z</code> (Type: Number)<br>
+Z-coordinate.</li>
+</ul>
 
-                <code>a</code>
+<h4>Return Value</h4>
 
-                (
-<span class="param-type">Number</span>
+<p>This object. (Type: <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>)</p>
 
-)
+<h3>H3DU.Shape#setQuaternion(quat) <a id='H3DU.Shape_H3DU.Shape_setQuaternion'></a></h3>
 
-                    &lt;optional>
+<p>Sets this object&#39;s orientation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
+See H3DU.Transform#setQuaternion.</p>
 
-           </dt><dd>
-           Alpha color component (0-1).
-If the "r" parameter is given and this parameter is null or omitted,
-this value is treated as 1.0.</dd>
+<h4>Parameters</h4>
 
-    </dl>
+<ul>
+<li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
+A four-element array describing the rotation.</li>
+</ul>
 
-<dl class="details">
+<h4>Return Value</h4>
 
-</dl>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<h5>Returns:</h5>
+<h3>H3DU.Shape#setScale(x, y, z) <a id='H3DU.Shape_H3DU.Shape_setScale'></a></h3>
 
-<div class="param-desc">
-    This object.
+<p>Sets the scale of this shape relative to its original
+size. See H3DU.Transform#setScale</p>
 
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
+<h4>Parameters</h4>
 
-</div>
+<ul>
+<li><code>x</code> (Type: number | Array.&lt;Number&gt;)<br>
+Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in H3DU.Transform#setScale.</li>
+<li><code>y</code> (Type: Number)<br>
+Scaling factor for this object&#39;s height.</li>
+<li><code>z</code> (Type: Number)<br>
+Scaling factor for this object&#39;s depth.</li>
+</ul>
 
-    <h4 style="margin-bottom:0px" id="setMaterial"><span style="font-weight:lighter"></span>H3DU.Shape#setMaterial<span class="signature">(material)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
+<h4>Return Value</h4>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line186">line 186</a>
-     </i></small></p>
+<p>This object. (Type: <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>)</p>
 
-<div class="description">
-    Sets this shape's material parameters.
-</div>
+<h3>H3DU.Shape#setShader(shader) <a id='H3DU.Shape_H3DU.Shape_setShader'></a></h3>
 
-    <h5>Parameters:</h5>
+<p>Sets this shape&#39;s material to a shader with the given URL.</p>
 
-<dl>
+<h4>Parameters</h4>
 
-        <dt>
+<ul>
+<li><code>shader</code> (Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>)<br>
+Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> here is deprecated.</i></li>
+</ul>
 
-                <code>material</code>
+<h4>Return Value</h4>
 
-                (
-<span class="param-type">Material</span>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-)
+<h3>H3DU.Shape#setTexture(name) <a id='H3DU.Shape_H3DU.Shape_setTexture'></a></h3>
 
-           </dt><dd>
-           The material object to use.</dd>
+<p>Sets material parameters that give the shape a texture with the given URL.</p>
 
-    </dl>
+<h4>Parameters</h4>
 
-<dl class="details">
+<ul>
+<li><code>name</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | String)<br>
+<a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet.</li>
+</ul>
 
-</dl>
+<h4>Return Value</h4>
 
-<h5>Returns:</h5>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<div class="param-desc">
-    This object.
+<h3>H3DU.Shape#setTextureAndColor(name, r, g, b, [a]) <a id='H3DU.Shape_H3DU.Shape_setTextureAndColor'></a></h3>
 
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
+<p>Sets this shape&#39;s material to the given texture and color.</p>
 
-</div>
+<h4>Parameters</h4>
 
-    <h4 style="margin-bottom:0px" id="setMaterialParams"><span style="font-weight:lighter"></span>H3DU.Shape#setMaterialParams<span class="signature">(params, This)</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
+<ul>
+<li><code>name</code> (Type: String)<br>
+<a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet.</li>
+<li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
+A <a href="H3DU.md#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
+<li><code>g</code> (Type: Number)<br>
+Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: Number)<br>
+Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: Number) (optional)<br>
+Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
+</ul>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line144">line 144</a>
-     </i></small></p>
+<h4>Return Value</h4>
 
-<div class="description">
-    Sets parameters of this shape's material.
-</div>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-    <h5>Parameters:</h5>
+<h3>H3DU.Shape#setTransform(transform) <a id='H3DU.Shape_H3DU.Shape_setTransform'></a></h3>
 
-<dl>
+<p>Sets this shape&#39;s transformation
+to a copy of the given transformation.</p>
 
-        <dt>
+<h4>Parameters</h4>
 
-                <code>params</code>
+<ul>
+<li><code>transform</code> (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)<br>
+The transformation to set to a copy of.</li>
+</ul>
 
-                (
-<span class="param-type">Object</span>
+<h4>Return Value</h4>
 
-)
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-           </dt><dd>
-           An object described in H3DU.Material#setParams.</dd>
+<h3>H3DU.Shape#setVisible(value) <a id='H3DU.Shape_H3DU.Shape_setVisible'></a></h3>
 
-        <dt>
+<p>Sets whether this shape will be drawn on rendering.</p>
 
-                <code>This</code>
+<h4>Parameters</h4>
 
-                (
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>
+<ul>
+<li><code>value</code> (Type: Boolean)<br>
+True if this shape will be visible; otherwise, false.</li>
+</ul>
 
-)
+<h4>Return Value</h4>
 
-           </dt><dd>
-           object.</dd>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-    </dl>
+<h3>H3DU.Shape#vertexCount() <a id='H3DU.Shape_H3DU.Shape_vertexCount'></a></h3>
 
-<dl class="details">
+<p>Gets the number of vertices composed by
+all shapes in this scene.</p>
 
-</dl>
+<h4>Return Value</h4>
 
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Object</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setPosition"><span style="font-weight:lighter"></span>H3DU.Shape#setPosition<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line302">line 302</a>
-     </i></small></p>
-
-<div class="description">
-    Sets the relative position of this shape from its original
-position.  See H3DU.Transform#setPosition
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>x</code>
-
-                (
-<span class="param-type">number</span>
-|
-
-<span class="param-type">Array.&lt;Number></span>
-
-)
-
-           </dt><dd>
-           X coordinate
-or a 3-element position array, as specified in H3DU.Transform#setScale.</dd>
-
-        <dt>
-
-                <code>y</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Y-coordinate.</dd>
-
-        <dt>
-
-                <code>z</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Z-coordinate.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setQuaternion"><span style="font-weight:lighter"></span>H3DU.Shape#setQuaternion<span class="signature">(quat)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line314">line 314</a>
-     </i></small></p>
-
-<div class="description">
-    Sets this object's orientation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
-See H3DU.Transform#setQuaternion.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>quat</code>
-
-                (
-<span class="param-type">Array.&lt;Number></span>
-
-)
-
-           </dt><dd>
-           A four-element array describing the rotation.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setScale"><span style="font-weight:lighter"></span>H3DU.Shape#setScale<span class="signature">(x, y, z)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Scene3D.html">H3DU.Scene3D</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line287">line 287</a>
-     </i></small></p>
-
-<div class="description">
-    Sets the scale of this shape relative to its original
-size. See H3DU.Transform#setScale
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>x</code>
-
-                (
-<span class="param-type">number</span>
-|
-
-<span class="param-type">Array.&lt;Number></span>
-
-)
-
-           </dt><dd>
-           Scaling factor for this object's width,
-or a 3-element scaling array, as specified in H3DU.Transform#setScale.</dd>
-
-        <dt>
-
-                <code>y</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Scaling factor for this object's height.</dd>
-
-        <dt>
-
-                <code>z</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Scaling factor for this object's depth.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setShader"><span style="font-weight:lighter"></span>H3DU.Shape#setShader<span class="signature">(shader)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line133">line 133</a>
-     </i></small></p>
-
-<div class="description">
-    Sets this shape's material to a shader with the given URL.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>shader</code>
-
-                (
-<span class="param-type"><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></span>
-
-)
-
-           </dt><dd>
-           Source code for a WebGL
-shader program. <i>Using a <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> here
-is deprecated.</i></dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setTexture"><span style="font-weight:lighter"></span>H3DU.Shape#setTexture<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line121">line 121</a>
-     </i></small></p>
-
-<div class="description">
-    Sets material parameters that give the shape a texture with the given URL.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>name</code>
-
-                (
-<span class="param-type"><a href="H3DU.Texture.html">H3DU.Texture</a></span>
-|
-
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the
-URL of the texture data.  In the case of a string the texture will be loaded via
- the JavaScript DOM's Image class.  However, this method
- will not load that image if it hasn't been loaded yet.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setTextureAndColor"><span style="font-weight:lighter"></span>H3DU.Shape#setTextureAndColor<span class="signature">(name, r, g, b, a<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line171">line 171</a>
-     </i></small></p>
-
-<div class="description">
-    Sets this shape's material to the given texture and color.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>name</code>
-
-                (
-<span class="param-type">String</span>
-
-)
-
-           </dt><dd>
-           <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the
-URL of the texture data.  In the case of a string the texture will be loaded via
- the JavaScript DOM's Image class.  However, this method
- will not load that image if it hasn't been loaded yet.</dd>
-
-        <dt>
-
-                <code>r</code>
-
-                (
-<span class="param-type">Array.&lt;Number></span>
-|
-
-<span class="param-type">number</span>
-|
-
-<span class="param-type">string</span>
-
-)
-
-           </dt><dd>
-           A <a href="H3DU.html#.toGLColor">color vector or string</a>,
-or the red color component (0-1).</dd>
-
-        <dt>
-
-                <code>g</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Green color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
-
-        <dt>
-
-                <code>b</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Blue color component (0-1).
-May be null or omitted if a string or array is given as the "r" parameter.</dd>
-
-        <dt>
-
-                <code>a</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Alpha color component (0-1).
-If the "r" parameter is given and this parameter is null or omitted,
-this value is treated as 1.0.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setTransform"><span style="font-weight:lighter"></span>H3DU.Shape#setTransform<span class="signature">(transform)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line272">line 272</a>
-     </i></small></p>
-
-<div class="description">
-    Sets this shape's transformation
-to a copy of the given transformation.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>transform</code>
-
-                (
-<span class="param-type"><a href="H3DU.Transform.html">H3DU.Transform</a></span>
-
-)
-
-           </dt><dd>
-           The transformation to
-set to a copy of.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setVisible"><span style="font-weight:lighter"></span>H3DU.Shape#setVisible<span class="signature">(value)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.Shape.html">H3DU.Shape</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line72">line 72</a>
-     </i></small></p>
-
-<div class="description">
-    Sets whether this shape will be drawn on rendering.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>value</code>
-
-                (
-<span class="param-type">Boolean</span>
-
-)
-
-           </dt><dd>
-           True if this shape will be visible; otherwise, false.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.Shape.html">H3DU.Shape</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>H3DU.Shape#vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-shape.js.html">h3du-shape.js</a>, <a href="h3du-shape.js.html#line52">line 52</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the number of vertices composed by
-all shapes in this scene.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-</article>
-
-</section>
-
-</div>
-<nav id="navigation">
-<p>
+<p>Return value. (Type: Number)</p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -922,9 +329,67 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -940,5 +405,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

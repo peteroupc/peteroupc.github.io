@@ -18,7 +18,7 @@ library.</p>
 class is not included in the &quot;h3du_min.js&quot; file which makes up
 the HTML 3D Library. Example:</p>
 
-<pre><code>&amp;lt;script type=&quot;text/javascript&quot; src=&quot;extras/objmtl.js&quot;&gt;&amp;lt;/script&gt;
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/objmtl.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
 <h4>Parameters</h4>
@@ -34,9 +34,9 @@ the HTML 3D Library. Example:</p>
 <ul>
 <li><a href="#ObjData_ObjData_toShape">toShape</a></li>
 <li><a href="#ObjData_ObjData_toShapeFromName">toShapeFromName</a></li>
-<li><a href="#ObjData_loadMtlFromUrl">loadMtlFromUrl</a></li>
-<li><a href="#ObjData_loadObjFromUrl">loadObjFromUrl</a></li>
-<li><a href="#ObjData_loadObjFromUrlWithTextures">loadObjFromUrlWithTextures</a></li>
+<li><a href="#ObjData.loadMtlFromUrl">loadMtlFromUrl</a></li>
+<li><a href="#ObjData.loadObjFromUrl">loadObjFromUrl</a></li>
+<li><a href="#ObjData.loadObjFromUrlWithTextures">loadObjFromUrlWithTextures</a></li>
 </ul>
 
 <h3>ObjData#mtllib <a id='ObjData_mtllib'></a></h3>
@@ -52,11 +52,11 @@ in this OBJ file.</p>
 
 <h4>Return Value</h4>
 
-<p>Group of shapes. (Type: <a href="H3DU_ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
+<p>Group of shapes. (Type: <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
 
 <h3>ObjData#toShapeFromName(name) <a id='ObjData_ObjData_toShapeFromName'></a></h3>
 
-<p>Creates one or more <a href="H3DU_Shape.html">H3DU.Shape</a> objects from the named portion
+<p>Creates one or more <a href="H3DU.Shape.html">H3DU.Shape</a> objects from the named portion
 of the data in this OBJ file. If a MTL file was also loaded, the
 shape will have the corresponding material, if it uses one.</p>
 
@@ -70,9 +70,9 @@ Name from the OBJ file of the portion of the model to use.</li>
 <h4>Return Value</h4>
 
 <p>Group of shapes. The group
-will be empty if no shapes with the given name exist. (Type: <a href="H3DU_ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
+will be empty if no shapes with the given name exist. (Type: <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
 
-<h3>(static) ObjData.loadMtlFromUrl(url) <a id='ObjData_loadMtlFromUrl'></a></h3>
+<h3>(static) ObjData.loadMtlFromUrl(url) <a id='ObjData.loadMtlFromUrl'></a></h3>
 
 <p>Loads a material (MTL) file asynchronously.</p>
 
@@ -89,7 +89,7 @@ The URL to load the material data file.</li>
 the MTL file is loaded successfully (the result is an MtlData object),
 and is rejected when an error occurs when loading the MTL file. (Type: <a href="Promise.html">Promise</a>)</p>
 
-<h3>(static) ObjData.loadObjFromUrl(url) <a id='ObjData_loadObjFromUrl'></a></h3>
+<h3>(static) ObjData.loadObjFromUrl(url) <a id='ObjData.loadObjFromUrl'></a></h3>
 
 <p>Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available) asynchronously.</p>
@@ -108,7 +108,7 @@ the OBJ file is loaded successfully, whether or not its associated
 MTL is also loaded successfully (the result is an ObjData object),
 and is rejected when an error occurs when loading the OBJ file. (Type: <a href="Promise.html">Promise</a>)</p>
 
-<h3>(static) ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='ObjData_loadObjFromUrlWithTextures'></a></h3>
+<h3>(static) ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='ObjData.loadObjFromUrlWithTextures'></a></h3>
 
 <p>Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available), along with the textures it uses,
@@ -130,9 +130,7 @@ the OBJ file and textures are loaded successfully, whether or not the associated
 MTL is also loaded successfully (the result is an ObjData object),
 and is rejected when an error occurs when loading the OBJ file or any of
 its textures. (Type: <a href="Promise.html">Promise</a>)</p>
-</div>
-<nav id="navigation">
-<p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">
@@ -150,6 +148,66 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {

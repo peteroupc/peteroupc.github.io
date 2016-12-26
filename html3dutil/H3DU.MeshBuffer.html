@@ -1,320 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: MeshBuffer</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.MeshBuffer</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: MeshBuffer</h1>
+<h1>H3DU.MeshBuffer</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>H3DU.MeshBuffer(mesh) <a id='H3DU.MeshBuffer'></a></h3>
 
-        <h2>
-            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
+<p>A geometric mesh in the form of buffer objects.</p>
 
-        MeshBuffer
-        </h2>
+<h4>Parameters</h4>
 
-</header>
+<ul>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
+A geometric mesh object. A series of default attributes will be set based on that mesh&#39;s data.</li>
+</ul>
 
-<article>
-    <div class="container-overview">
+<h3>Methods</h3>
 
-    <h4 style="margin-bottom:0px" id="MeshBuffer"><span style="font-weight:lighter"></span>new MeshBuffer<span class="signature">(mesh)</span><span style="font-weight:lighter"></span></h4>
+<ul>
+<li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds">getBounds</a></li>
+<li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_getFormat">getFormat</a></li>
+<li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount">primitiveCount</a></li>
+<li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveType">primitiveType</a></li>
+<li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute">setAttribute</a></li>
+<li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount">vertexCount</a></li>
+</ul>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line19">line 19</a>
-     </i></small></p>
+<h3>H3DU.MeshBuffer#getBounds() <a id='H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds'></a></h3>
 
-<div class="description">
-    A geometric mesh in the form of buffer objects.
-</div>
+<p>Finds the tightest
+bounding box that holds all vertices in the mesh buffer.</p>
 
-    <h5>Parameters:</h5>
+<h4>Return Value</h4>
 
-<dl>
-
-        <dt>
-
-                <code>mesh</code>
-
-                (
-<span class="param-type"><a href="H3DU.Mesh.html">H3DU.Mesh</a></span>
-
-)
-
-           </dt><dd>
-           A geometric mesh object.
-A series of default attributes will be set based on that mesh's
-data.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Methods</h3>
-
-    <h4 style="margin-bottom:0px" id="getBounds"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#getBounds<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line141">line 141</a>
-     </i></small></p>
-
-<div class="description">
-    Finds the tightest
-bounding box that holds all vertices in the mesh buffer.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    An array of six numbers describing the tightest
+<p>An array of six numbers describing the tightest
 axis-aligned bounding box
 that fits all vertices in the mesh. The first three numbers
 are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
 If the mesh buffer is empty or has no attribute named
-"position", returns the array [Inf, Inf, Inf, -Inf,
--Inf, -Inf].
+&quot;position&quot;, returns the array [Inf, Inf, Inf, -Inf,
+-Inf, -Inf]. (Type: Array.&lt;Number&gt;)</p>
 
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
+<h3>H3DU.MeshBuffer#getFormat(name) <a id='H3DU.MeshBuffer_H3DU.MeshBuffer_getFormat'></a></h3>
 
-</div>
+<h4>Parameters</h4>
 
-    <h4 style="margin-bottom:0px" id="getFormat"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#getFormat<span class="signature">(name)</span><span style="font-weight:lighter"> &rarr; {Object}</span></h4>
+<ul>
+<li><code>name</code> (Type: Object)<br>
+Description of name.</li>
+</ul>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line191">line 191</a>
-     </i></small></p>
+<h4>Return Value</h4>
 
-    <h5>Parameters:</h5>
+<p>Return value. (Type: Object)</p>
 
-<dl>
+<h3>H3DU.MeshBuffer#primitiveCount() <a id='H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount'></a></h3>
 
-        <dt>
+<p>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this mesh.</p>
 
-                <code>name</code>
+<h4>Return Value</h4>
 
-                (
-<span class="param-type">Object</span>
+<p>Return value. (Type: Number)</p>
 
-)
+<h3>H3DU.MeshBuffer#primitiveType() <a id='H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveType'></a></h3>
 
-           </dt><dd>
-           Description of name.</dd>
+<p>Gets the type of primitive stored in this mesh buffer.</p>
 
-    </dl>
+<h4>Return Value</h4>
 
-<dl class="details">
+<p>Either <a href="H3DU.Mesh.md#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
+ <a href="H3DU.Mesh.md#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.md#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: Number)</p>
 
-</dl>
+<h3>H3DU.MeshBuffer#setAttribute(name, buffer, startIndex, countPerVertex, stride) <a id='H3DU.MeshBuffer_H3DU.MeshBuffer_setAttribute'></a></h3>
 
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Object</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="primitiveCount"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#primitiveCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line120">line 120</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the number of primitives (triangles, lines,
-and points) composed by all shapes in this mesh.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="primitiveType"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#primitiveType<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line177">line 177</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the type of primitive stored in this mesh buffer.
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Either <a href="H3DU.Mesh.html#.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
- <a href="H3DU.Mesh.html#.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#.POINTS">H3DU.Mesh.POINTS</a>.
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="setAttribute"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#setAttribute<span class="signature">(name, buffer, startIndex, countPerVertex, stride)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line80">line 80</a>
-     </i></small></p>
-
-<div class="description">
-    Adds information about a buffer attribute to this
+<p>Adds information about a buffer attribute to this
 mesh buffer (or sets an
-existing attribute's information).  An attribute
+existing attribute&#39;s information). An attribute
 gives information about the per-vertex data used and
-stored in a vertex buffer.
-</div>
+stored in a vertex buffer.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>name</code> (Type: String)<br>
+The name of the attribute.</li>
+<li><code>buffer</code> (Type: Float32Array | Array)<br>
+The buffer where the per-vertex data is stored.</li>
+<li><code>startIndex</code> (Type: Number)<br>
+The index into the array (starting from 0) where the first per-vertex item starts.</li>
+<li><code>countPerVertex</code> (Type: Number)<br>
+The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3.</li>
+<li><code>stride</code> (Type: Number)<br>
+The number of elements from the start of one per-vertex item to the start of the next.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>name</code>
+<p>This object. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
-                (
-<span class="param-type">String</span>
+<h3>H3DU.MeshBuffer#vertexCount() <a id='H3DU.MeshBuffer_H3DU.MeshBuffer_vertexCount'></a></h3>
 
-)
+<p>Gets the number of vertices in this mesh buffer</p>
 
-           </dt><dd>
-           The name of the attribute.</dd>
+<h4>Return Value</h4>
 
-        <dt>
-
-                <code>buffer</code>
-
-                (
-<span class="param-type">Float32Array</span>
-|
-
-<span class="param-type">Array</span>
-
-)
-
-           </dt><dd>
-           The buffer where
-the per-vertex data is stored.</dd>
-
-        <dt>
-
-                <code>startIndex</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The index into the array
-(starting from 0) where the first per-vertex
-item starts.</dd>
-
-        <dt>
-
-                <code>countPerVertex</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The number of elements in each
-per-vertex item.  For example, if each vertex is a 3-element
-vector, this value is 3.</dd>
-
-        <dt>
-
-                <code>stride</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           The number of elements from the start of
-one per-vertex item to the start of the next.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    This object.
-
-     (Type:
-<span class="param-type"><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="vertexCount"><span style="font-weight:lighter"></span>H3DU.MeshBuffer#vertexCount<span class="signature">()</span><span style="font-weight:lighter"> &rarr; {Number}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-meshbuffer.js.html">h3du-meshbuffer.js</a>, <a href="h3du-meshbuffer.js.html#line200">line 200</a>
-     </i></small></p>
-
-<div class="description">
-    Gets the number of vertices in this mesh buffer
-</div>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type">Number</span>)
-
-</div>
-
-</article>
-
-</section>
-
-</div>
-<nav id="navigation">
-<p>
+<p>Return value. (Type: Number)</p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -329,9 +127,67 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -347,5 +203,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>

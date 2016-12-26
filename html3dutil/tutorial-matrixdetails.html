@@ -17,7 +17,7 @@ Functions dealing with matrices begin with &quot;mat&quot;.</p>
 
 <h2>Contents <a id=Contents></a></h2>
 
-<p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br>&nbsp;&nbsp;<a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br></p>
+<p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br><a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br></p>
 
 <h2>Arrangement <a id=Arrangement></a></h2>
 
@@ -88,7 +88,7 @@ into the matrix arrays passed to <code>H3DU.Math</code>&#39;s matrix methods.</p
 </mfenced>
 </math>
 
-<h3>Transforming Points <a id=Transforming_Points></a></h3>
+<h2>Transforming Points <a id=Transforming_Points></a></h2>
 
 <p>The transformation formula multiplies a matrix by a 3D point to change that point&#39;s
 position:</p>
@@ -114,9 +114,9 @@ vector&#39;s W component to 1.</li>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4transform">H3DU.Math.mat4transform()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4transform">H3DU.Math.mat4transform()</a> -
 Transforms a 4-element vector with a 4x4 matrix</li>
-<li><a href="H3DU_Math.md#H3DU_Math_mat3transform">H3DU.Math.mat3transform()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat3transform">H3DU.Math.mat3transform()</a> -
 Transforms a 3-element vector with a 3x3 matrix</li>
 </ul>
 
@@ -172,9 +172,9 @@ remains unchanged.  Likewise for y and z.</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4translated">H3DU.Math.mat4translated()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4translated">H3DU.Math.mat4translated()</a> -
 Returns a translation matrix</li>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4translate">H3DU.Math.mat4translate()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a> -
 Multiplies a matrix by a translation.</li>
 </ul>
 
@@ -236,15 +236,15 @@ is equal to the output vector.</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4identity">H3DU.Math.mat4identity()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4identity">H3DU.Math.mat4identity()</a> -
 Returns a 4x4 identity matrix</li>
-<li><a href="H3DU_Math.md#H3DU_Math_mat3identity">H3DU.Math.mat3identity()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat3identity">H3DU.Math.mat3identity()</a> -
 Returns a 3x3 identity matrix</li>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4scaled">H3DU.Math.mat4scaled()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4scaled">H3DU.Math.mat4scaled()</a> -
 Returns a scaling matrix</li>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4scale">H3DU.Math.mat4scale()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4scale">H3DU.Math.mat4scale()</a> -
 Multiplies a matrix by a scaling.</li>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4scaleInPlace">H3DU.Math.mat4scaleInPlace()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4scaleInPlace">H3DU.Math.mat4scaleInPlace()</a> -
 Multiplies a matrix in place by a scaling.</li>
 </ul>
 
@@ -408,9 +408,9 @@ point 60 degrees about the X axis.</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4rotated">H3DU.Math.mat4rotated()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a> -
 Returns a rotation matrix</li>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4rotate">H3DU.Math.mat4rotate()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a> -
 Multiplies a matrix by a translation.</li>
 </ul>
 
@@ -434,7 +434,7 @@ mat4rotate involve multiplying 4x4 matrices.</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4multiply">H3DU.Math.mat4multiply()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a> -
 Multiplies two matrices</li>
 </ul>
 
@@ -461,9 +461,9 @@ X, Y, and Z by its W to get the vector&#39;s <em>normalized device coordinates</
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4frustum">H3DU.Math.mat4frustum()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum()</a> -
 Returns a frustum matrix</li>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4perspective">H3DU.Math.mat4perspective()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective()</a> -
 Returns a field-of-view perspective matrix</li>
 </ul>
 
@@ -494,13 +494,11 @@ matrix is too complicated to discuss here.</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU_Math.md#H3DU_Math_mat4invert">H3DU.Math.mat4invert()</a> -
+<li><a href="H3DU.Math.md#H3DU.Math.mat4invert">H3DU.Math.mat4invert()</a> -
 Inverts a matrix
 <a href="index.html">Back to documentation index.</a></li>
 </ul>
-</div>
-<nav id="navigation">
-<p>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">
@@ -518,6 +516,66 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {

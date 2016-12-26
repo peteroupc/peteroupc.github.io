@@ -1,504 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><title>JSDoc: Class: BSplineCurve</title>
-<meta name="viewport" content="width=device-width">
-<script src="mathml.js"></script>
-<link rel=stylesheet type="text/css" href="/style.css">
-</head>
-<body style="margin-top:0px">
-<div class="header">
-<p><a href="#navigation">Menu</a> - <a href="/">Home</a> -
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.BSplineCurve</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-    <h1>Class: BSplineCurve</h1>
+<h1>H3DU.BSplineCurve</h1>
 
-<section>
+<p><a href="index.html">Back to documentation index.</a></p>
 
-<header>
+<h3>H3DU.BSplineCurve(controlPoints, knots, [bits]) <a id='H3DU.BSplineCurve'></a></h3>
 
-        <h2>
-            <span class="ancestors"><a href="H3DU.html">H3DU</a>.</span>
+<p>A parametric evaluator for B-spline (basis spline) curves.</p>
 
-        BSplineCurve
-        </h2>
+<h4>Parameters</h4>
 
-</header>
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point&#39;s length represents the size of all the control points.</li>
+<li><p><code>knots</code> (Type: Array.&lt;Number&gt;)<br>
+Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.</p>
 
-<article>
-    <div class="container-overview">
+<p>The length of this parameter minus 1, minus the number of control points, represents the degree of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains 4 more knots than the number of control points. A degree of 1 results in straight line segments.</p>
 
-    <h4 style="margin-bottom:0px" id="BSplineCurve"><span style="font-weight:lighter"></span>new BSplineCurve<span class="signature">(controlPoints, knots, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"></span></h4>
+<p>The knot vector must be a monotonically nondecreasing sequence and the first knot must not equal the last.</p>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line165">line 165</a>
-     </i></small></p>
+<p>If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i> B-spline curve.</p>
 
-<div class="description">
-    A parametric evaluator for B-spline (basis spline) curves.
-</div>
+<p>If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve, in which the first and last control points match the curve&#39;s end points.</p></li>
+<li><p><code>bits</code> (Type: Boolean) (optional)<br>
+Bits for defining input and controlling output. Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT, H3DU.BSplineCurve.HOMOGENEOUS_BIT, and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</p></li>
+</ul>
 
-    <h5>Parameters:</h5>
+<h3>Members</h3>
 
-<dl>
+<ul>
+<li><a href="#H3DU.BSplineCurve.DIVIDE_BIT">.DIVIDE_BIT</a></li>
+<li><a href="#H3DU.BSplineCurve.HOMOGENEOUS_BIT">.HOMOGENEOUS_BIT</a></li>
+<li><a href="#H3DU.BSplineCurve.WEIGHTED_BIT">.WEIGHTED_BIT</a></li>
+<li><a href="#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS">.WEIGHTED_DIVIDE_BITS</a></li>
+</ul>
 
-        <dt>
+<h3>Methods</h3>
 
-                <code>controlPoints</code>
+<ul>
+<li><a href="#H3DU.BSplineCurve.clamped">.clamped</a></li>
+<li><a href="#H3DU.BSplineCurve.clampedKnots">.clampedKnots</a></li>
+<li><a href="#H3DU.BSplineCurve.uniform">.uniform</a></li>
+<li><a href="#H3DU.BSplineCurve.uniformKnots">.uniformKnots</a></li>
+<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate">evaluate</a></li>
+</ul>
 
-                (
-<span class="param-type">Array.&lt;Array.&lt;Number>></span>
+<h3>H3DU.BSplineCurve.DIVIDE_BIT <a id='H3DU.BSplineCurve.DIVIDE_BIT'></a> (constant)</h3>
 
-)
-
-           </dt><dd>
-           An array of control points.  Each
-control point is an array with the same length as the other control points.
-It is assumed that the first control point's length represents the size of all the control
-points.</dd>
-
-        <dt>
-
-                <code>knots</code>
-
-                (
-<span class="param-type">Array.&lt;Number></span>
-
-)
-
-           </dt><dd>
-           Knot vector of the curve.
-Its size must be at least 2 plus the number of control
-points and not more than twice the number of control points.<p>
-The length of this parameter minus 1, minus the number
-of control points, represents the degree of the B-spline
-curve.  For example, a degree-3 (cubic) B-spline curve contains 4 more
-knots than the number of control points.  A degree of 1
-results in straight line segments.<p>
-The knot vector must be a monotonically nondecreasing sequence and
-the first knot must not equal the last.<p>
-If the difference between one knot and the next isn't the same,
-the curve is considered a <i>non-uniform</i>
-B-spline curve.<p>
-If there are N times 2 knots with the first N knots equal to 0 and the rest
-equal to 1, where N is the number of control points,
-the control points describe a <i>B&eacute;zier</i> curve, in which the
-first and last control points match the curve's end points.<p></dd>
-
-        <dt>
-
-                <code>bits</code>
-
-                (
-<span class="param-type">Boolean</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Bits for defining input
-and controlling output.  Zero or more of H3DU.BSplineCurve.WEIGHTED_BIT,
-H3DU.BSplineCurve.HOMOGENEOUS_BIT,
-and H3DU.BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-    </div>
-
-        <h3 class="subsection-title">Members</h3>
-
-<h4 style="margin-bottom:0px" id=".DIVIDE_BIT"><span style="font-weight:lighter">(constant) </span>.DIVIDE_BIT<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line209">line 209</a>
-     </i></small></p>
-
-<div class="description">
-    Indicates to divide each other coordinate of the returned point
+<p>Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
-coordinate.  This is used with WEIGHTED_BIT to convert
+coordinate. This is used with WEIGHTED_BIT to convert
 homogeneous coordinates to conventional coordinates.
-If this bit is set, the length of each control point must be at least 2.
-</div>
+If this bit is set, the length of each control point must be at least 2.</p>
 
-<dl class="details">
+<p>Default Value: <code>2</code></p>
 
-    <dt class="tag-default">Default Value: 2</dt>
+<h3>H3DU.BSplineCurve.HOMOGENEOUS_BIT <a id='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a> (constant)</h3>
 
-</dl>
-
-<h4 style="margin-bottom:0px" id=".HOMOGENEOUS_BIT"><span style="font-weight:lighter">(constant) </span>.HOMOGENEOUS_BIT<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line219">line 219</a>
-     </i></small></p>
-
-<div class="description">
-    Indicates that each other coordinate of each control point
+<p>Indicates that each other coordinate of each control point
 was premultiplied by the last coordinate of the point, that is,
 each control point is in homogeneous coordinates.
-Only used with WEIGHTED_BIT.
-</div>
+Only used with WEIGHTED_BIT.</p>
 
-<dl class="details">
+<p>Default Value: <code>4</code></p>
 
-    <dt class="tag-default">Default Value: 4</dt>
+<h3>H3DU.BSplineCurve.WEIGHTED_BIT <a id='H3DU.BSplineCurve.WEIGHTED_BIT'></a> (constant)</h3>
 
-</dl>
-
-<h4 style="margin-bottom:0px" id=".WEIGHTED_BIT"><span style="font-weight:lighter">(constant) </span>.WEIGHTED_BIT<span style="font-weight:lighter"></span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line198">line 198</a>
-     </i></small></p>
-
-<div class="description">
-    Indicates whether the last coordinate of each control point is a
-weight.  If some of the weights differ, the curve is
+<p>Indicates whether the last coordinate of each control point is a
+weight. If some of the weights differ, the curve is
 considered a <i>rational</i> B-spline curve.
 If this bit is set, the length of each control point must be at least 2,
-and points returned by the curve's <code>evaluate</code>
-method will be in homogeneous coordinates.
-</div>
+and points returned by the curve&#39;s <code>evaluate</code>
+method will be in homogeneous coordinates.</p>
 
-<dl class="details">
+<p>Default Value: <code>1</code></p>
 
-    <dt class="tag-default">Default Value: 1</dt>
+<h3>H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS <a id='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a> (constant)</h3>
 
-</dl>
+<p>Combination of WEIGHTED_BIT and DIVIDE_BIT.</p>
 
-<h4 style="margin-bottom:0px" id=".WEIGHTED_DIVIDE_BITS"><span style="font-weight:lighter">(constant) </span>.WEIGHTED_DIVIDE_BITS<span style="font-weight:lighter"></span></h4>
+<h3>H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits]) <a id='H3DU.BSplineCurve.clamped'></a></h3>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line225">line 225</a>
-     </i></small></p>
+<p>Creates a B-spline curve with uniform knots, except that
+the curve will start and end at the first and last control points.</p>
 
-<div class="description">
-    Combination of WEIGHTED_BIT and DIVIDE_BIT.
-</div>
+<h4>Parameters</h4>
 
-<dl class="details">
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><code>degree</code> (Type: Number) (optional)<br>
+Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: Number) (optional)<br>
+Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+</ul>
 
-</dl>
+<h4>Return Value</h4>
 
-        <h3 class="subsection-title">Methods</h3>
+<p>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
-    <h4 style="margin-bottom:0px" id=".clamped"><span style="font-weight:lighter"></span>.clamped<span class="signature">(controlPoints, degree<sub style="font-weight:lighter">opt</sub>, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>}</span></h4>
+<h3>H3DU.BSplineCurve.clampedKnots(controlPoints, degree) <a id='H3DU.BSplineCurve.clampedKnots'></a></h3>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line415">line 415</a>
-     </i></small></p>
-
-<div class="description">
-    Creates a B-spline curve with uniform knots, except that
-the curve will start and end at the first and last control points.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>controlPoints</code>
-
-                (
-<span class="param-type">Array.&lt;Array.&lt;Number>></span>
-
-)
-
-           </dt><dd>
-           Array of
-control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</dd>
-
-        <dt>
-
-                <code>degree</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Degree of the B-Spline
-curve.  For example, 3 means a degree-3 (cubic) curve.
-If null or omitted, the default is 3.</dd>
-
-        <dt>
-
-                <code>bits</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type"><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".clampedKnots"><span style="font-weight:lighter"></span>.clampedKnots<span class="signature">(controlPoints, degree)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line504">line 504</a>
-     </i></small></p>
-
-<div class="description">
-    Generates a knot vector with uniform knots, to be
-passed to the @{link H3DU.BSplineCurve} or @{link H3DU.BSplineCurve} constructor,
+<p>Generates a knot vector with uniform knots, to be
+passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
 except that with the knot vector, the curve will start and end at the
-first and last control points.
-</div>
+first and last control points.</p>
 
-    <h5>Parameters:</h5>
+<h4>Parameters</h4>
 
-<dl>
+<ul>
+<li><code>controlPoints</code> (Type: Number)<br>
+Number of control points the curve will have.</li>
+<li><code>degree</code> (Type: Number)<br>
+Degree of the curve.</li>
+</ul>
 
-        <dt>
+<h4>Return Value</h4>
 
-                <code>controlPoints</code>
+<p>A clamped uniform knot vector. (Type: Array.&lt;Number&gt;)</p>
 
-                (
-<span class="param-type">Number</span>
+<h3>H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits]) <a id='H3DU.BSplineCurve.uniform'></a></h3>
 
-)
+<p>Creates a B-spline curve with uniform knots.</p>
 
-           </dt><dd>
-           Number of control points the curve will have.</dd>
+<h4>Parameters</h4>
 
-        <dt>
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><code>degree</code> (Type: Number) (optional)<br>
+Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: Number) (optional)<br>
+Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+</ul>
 
-                <code>degree</code>
+<h4>Return Value</h4>
 
-                (
-<span class="param-type">Number</span>
+<p>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
-)
+<h3>H3DU.BSplineCurve.uniformKnots(controlPoints, degree) <a id='H3DU.BSplineCurve.uniformKnots'></a></h3>
 
-           </dt><dd>
-           Degree of the curve.</dd>
+<p>Generates a knot vector with uniform knots, to be
+passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</p>
 
-    </dl>
+<h4>Parameters</h4>
 
-<dl class="details">
+<ul>
+<li><code>controlPoints</code> (Type: Number)<br>
+Number of control points the curve will have.</li>
+<li><code>degree</code> (Type: Number)<br>
+Degree of the curve.</li>
+</ul>
 
-</dl>
+<h4>Return Value</h4>
 
-<h5>Returns:</h5>
+<p>A uniform knot vector. (Type: Array.&lt;Number&gt;)</p>
 
-<div class="param-desc">
-    A clamped uniform knot vector.
+<h3>H3DU.BSplineCurve#evaluate(u) <a id='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a></h3>
 
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
+<p>Evaluates the curve function based on a point
+in a B-spline curve.</p>
 
-</div>
+<h4>Parameters</h4>
 
-    <h4 style="margin-bottom:0px" id=".uniform"><span style="font-weight:lighter"></span>.uniform<span class="signature">(controlPoints, degree<sub style="font-weight:lighter">opt</sub>, bits<sub style="font-weight:lighter">opt</sub>)</span><span style="font-weight:lighter"> &rarr; {<a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>}</span></h4>
+<ul>
+<li><code>u</code> (Type: Number)<br>
+Point on the curve to evaluate (from 0 through 1).</li>
+</ul>
 
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line430">line 430</a>
-     </i></small></p>
+<h4>Return Value</h4>
 
-<div class="description">
-    Creates a B-spline curve with uniform knots.
-</div>
+<p>An array of the result of
+the evaluation. Its length will be equal to the
+length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 
-    <h5>Parameters:</h5>
+<h4>Example</h4>
 
-<dl>
-
-        <dt>
-
-                <code>controlPoints</code>
-
-                (
-<span class="param-type">Array.&lt;Array.&lt;Number>></span>
-
-)
-
-           </dt><dd>
-           Array of
-control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</dd>
-
-        <dt>
-
-                <code>degree</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Degree of the B-Spline
-curve.  For example, 3 means a degree-3 (cubic) curve.
-If null or omitted, the default is 3.</dd>
-
-        <dt>
-
-                <code>bits</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-                    &lt;optional>
-
-           </dt><dd>
-           Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    Return value.
-
-     (Type:
-<span class="param-type"><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id=".uniformKnots"><span style="font-weight:lighter"></span>.uniformKnots<span class="signature">(controlPoints, degree)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line481">line 481</a>
-     </i></small></p>
-
-<div class="description">
-    Generates a knot vector with uniform knots, to be
-passed to the @{link H3DU.BSplineCurve} or @{link H3DU.BSplineCurve} constructor.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>controlPoints</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Number of control points the curve will have.</dd>
-
-        <dt>
-
-                <code>degree</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Degree of the curve.</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    A uniform knot vector.
-
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
-
-</div>
-
-    <h4 style="margin-bottom:0px" id="evaluate"><span style="font-weight:lighter"></span>H3DU.BSplineCurve#evaluate<span class="signature">(u)</span><span style="font-weight:lighter"> &rarr; {Array.&lt;Number>}</span></h4>
-
-     <p style="margin-top:0px"><small><i>Source: <a href="h3du-eval.js.html">h3du-eval.js</a>, <a href="h3du-eval.js.html#line297">line 297</a>
-     </i></small></p>
-
-<div class="description">
-    Evaluates the curve function based on a point
-in a B-spline curve.
-</div>
-
-    <h5>Parameters:</h5>
-
-<dl>
-
-        <dt>
-
-                <code>u</code>
-
-                (
-<span class="param-type">Number</span>
-
-)
-
-           </dt><dd>
-           Point on the curve to evaluate (from 0 through 1).</dd>
-
-    </dl>
-
-<dl class="details">
-
-</dl>
-
-<h5>Returns:</h5>
-
-<div class="param-desc">
-    An array of the result of
-the evaluation.  Its length will be equal to the
-length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor.
-
-     (Type:
-<span class="param-type">Array.&lt;Number></span>)
-
-</div>
-
-    <h5>Example</h5>
-
-    <pre class="prettyprint"><code>// Generate 11 points forming the B-spline curve.
+<pre><code>// Generate 11 points forming the B-spline curve.
 var points=[];
 for(var i=0;i&lt;=10;i++) {
  points.push(curve.evaluate(i/10.0));
-}</code></pre>
-
-</article>
-
-</section>
-
-</div>
-<nav id="navigation">
-<p>
+}
+</code></pre>
+</div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>upokecenter.dreamhosters.com/articles/donate-now-2</b></p>
-<div class=noprint>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
@@ -513,9 +203,67 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
 </p>
 </div>
-<h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CurveTube.html">CurveTube</a></li><li><a href="Epitrochoid.html">Epitrochoid</a></li><li><a href="FrameCounter.html">FrameCounter</a></li><li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li><li><a href="GraphicsPath.html">GraphicsPath</a></li><li><a href="H3DU.Batch3D.html">Batch3D</a></li><li><a href="H3DU.BezierCurve.html">BezierCurve</a></li><li><a href="H3DU.BezierSurface.html">BezierSurface</a></li><li><a href="H3DU.BSplineCurve.html">BSplineCurve</a></li><li><a href="H3DU.BSplineSurface.html">BSplineSurface</a></li><li><a href="H3DU.BufferedMesh.html">BufferedMesh</a></li><li><a href="H3DU.CurveEval.html">CurveEval</a></li><li><a href="H3DU.FrameBuffer.html">FrameBuffer</a></li><li><a href="H3DU.FrameBufferInfo.html">FrameBufferInfo</a></li><li><a href="H3DU.Lights.html">Lights</a></li><li><a href="H3DU.LightSource.html">LightSource</a></li><li><a href="H3DU.Material.html">Material</a></li><li><a href="H3DU.Math.html">Math</a></li><li><a href="H3DU.MatrixStack.html">MatrixStack</a></li><li><a href="H3DU.Mesh.html">Mesh</a></li><li><a href="H3DU.MeshBuffer.html">MeshBuffer</a></li><li><a href="H3DU.Meshes.html">Meshes</a></li><li><a href="H3DU.RenderPass3D.html">RenderPass3D</a></li><li><a href="H3DU.Scene3D.html">Scene3D</a></li><li><a href="H3DU.ShaderInfo.html">ShaderInfo</a></li><li><a href="H3DU.ShaderProgram.html">ShaderProgram</a></li><li><a href="H3DU.Shape.html">Shape</a></li><li><a href="H3DU.ShapeGroup.html">ShapeGroup</a></li><li><a href="H3DU.SurfaceEval.html">SurfaceEval</a></li><li><a href="H3DU.TextFont.html">TextFont</a></li><li><a href="H3DU.Texture.html">Texture</a></li><li><a href="H3DU.TextureAtlas.html">TextureAtlas</a></li><li><a href="H3DU.TextureLoader.html">TextureLoader</a></li><li><a href="H3DU.Transform.html">Transform</a></li><li><a href="Hypotrochoid.html">Hypotrochoid</a></li><li><a href="InputTracker.html">InputTracker</a></li><li><a href="MeshJSON.html">MeshJSON</a></li><li><a href="ObjData.html">ObjData</a></li><li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li><li><a href="Promise.html">Promise</a></li><li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li><li><a href="Trochoid.html">Trochoid</a></li></ul><h3>Namespaces</h3><ul><li><a href="H3DU.html">H3DU</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-camera_.html">The "Camera" and the Projection and View Transforms</a></li><li><a href="tutorial-colors.html">Color Strings</a></li><li><a href="tutorial-filters.html">Graphics Filters</a></li><li><a href="tutorial-glmath.html">H3DU's Math Functions</a></li><li><a href="tutorial-history.html">Older Version History</a></li><li><a href="tutorial-matrixdetails.html">Matrix Details</a></li><li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li><li><a href="tutorial-overview.html">Library Overview</a></li><li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li><li><a href="tutorial-shapes.html">Creating Shapes</a></li><li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li><li><a href="tutorial-textures.html">Texture Examples</a></li></ul>
-</nav>
-<script>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.md">Camera</a></li>
+<li><a href="CurveTube.md">CurveTube</a></li>
+<li><a href="Epitrochoid.md">Epitrochoid</a></li>
+<li><a href="FrameCounter.md">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.md">GraphicsPath</a></li>
+<li><a href="H3DU.md">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.md">H3DU.Material</a></li>
+<li><a href="H3DU.Math.md">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
+<li><a href="InputTracker.md">InputTracker</a></li>
+<li><a href="MeshJSON.md">MeshJSON</a></li>
+<li><a href="ObjData.md">ObjData</a></li>
+<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
+<li><a href="Promise.md">Promise</a></li>
+<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.md">Trochoid</a></li>
+<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.md">Color Strings</a></li>
+<li><a href="tutorial-filters.md">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.md">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.md">Library Overview</a></li>
+<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.md">Texture Examples</a></li>
+</ul>
+</nav><script>
 if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -531,5 +279,4 @@ if(document.location.href.indexOf("file://")!=0){
 }(document, 'script', 'facebook-jssdk'));
 }
 </script>
-</body>
-</html>
+</body></html>
