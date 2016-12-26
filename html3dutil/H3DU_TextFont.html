@@ -30,7 +30,7 @@ The text and binary file formats are specified at
 <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
 page</a>. The XML format is very similar to the text file format.
 The JSON format is described at
-<a href="https://github.com/Jam3/load-bmfont/blob/master/json-spec.md">this
+<a href="https://github.com/Jam3/load-bmfont/blob/master/json-spec.html">this
 page</a>.</p>
 
 <p>See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
@@ -81,7 +81,7 @@ The URL of the font data file to load. The following file extensions are read as
 
 <p>A promise that is resolved
 when the font data is loaded successfully (the result will be
-an H3DU.TextFont object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU_TextFont.md">H3DU.TextFont</a>&gt;)</p>
+an H3DU.TextFont object), and is rejected when an error occurs. (Type: <a href="Promise.html">Promise</a>.&lt;<a href="H3DU_TextFont.html">H3DU.TextFont</a>&gt;)</p>
 
 <h3>H3DU.TextFont.loadWithTextures(fontFileName, textureLoader) <a id='H3DU_TextFont_loadWithTextures'></a></h3>
 
@@ -93,7 +93,7 @@ used by that font.</p>
 <ul>
 <li><code>fontFileName</code> (Type: String)<br>
 The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>&quot;.xml&quot;: XML</li> <li>&quot;.json&quot;: JSON</li> <li>&quot;.bin&quot;: Binary</li> <li>&quot;.fnt&quot;: Text or binary</li> <li>All others: Text</li></ul></li>
-<li><code>textureLoader</code> (Type: <a href="H3DU_TextureLoader.md">H3DU.TextureLoader</a>)<br>
+<li><code>textureLoader</code> (Type: <a href="H3DU_TextureLoader.html">H3DU.TextureLoader</a>)<br>
 Texture loader object to use when loading the textures.</li>
 </ul>
 
@@ -105,10 +105,10 @@ and is rejected when an error occurs.
 If the promise is resolved, the result will be an object with the
 following keys:<ul>
 <li><code>url</code> - The URL of the font data file.
-<li><code>font</code> - The font data in the form of an <a href="H3DU_TextFont.md">H3DU.TextFont</a> object.
-<li><code>textures</code> - An array of <a href="H3DU_Texture.md">H3DU.Texture</a> objects used by the font,
+<li><code>font</code> - The font data in the form of an <a href="H3DU_TextFont.html">H3DU.TextFont</a> object.
+<li><code>textures</code> - An array of <a href="H3DU_Texture.html">H3DU.Texture</a> objects used by the font,
 in the order in which they are declared in the font data file.
-</ul> (Type: <a href="Promise.md">Promise</a>)</p>
+</ul> (Type: <a href="Promise.html">Promise</a>)</p>
 
 <h3>H3DU.TextFont#loadTextures(textureLoader) <a id='H3DU_TextFont_H3DU_TextFont_loadTextures'></a></h3>
 
@@ -117,7 +117,7 @@ in the order in which they are declared in the font data file.
 <h4>Parameters</h4>
 
 <ul>
-<li><code>textureLoader</code> (Type: <a href="H3DU_TextureLoader.md">H3DU.TextureLoader</a>)<br>
+<li><code>textureLoader</code> (Type: <a href="H3DU_TextureLoader.html">H3DU.TextureLoader</a>)<br>
 Texture loader object to use when loading the textures.</li>
 </ul>
 
@@ -126,7 +126,7 @@ Texture loader object to use when loading the textures.</li>
 <p>A promise as described in
 <a href="H3DU.md#H3DU_getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
-<a href="H3DU_Texture.md">H3DU.Texture</a> object. (Type: <a href="Promise.md">Promise</a>.&lt;<a href="H3DU_Texture.md">H3DU.Texture</a>&gt;)</p>
+<a href="H3DU_Texture.html">H3DU.Texture</a> object. (Type: <a href="Promise.html">Promise</a>.&lt;<a href="H3DU_Texture.html">H3DU.Texture</a>&gt;)</p>
 
 <h3>H3DU.TextFont#makeTextMeshes(str, params) <a id='H3DU_TextFont_H3DU_TextFont_makeTextMeshes'></a></h3>
 
@@ -184,12 +184,12 @@ than the right and bottom coordinates, respectively).</p>
 <li><code>str</code> (Type: String)<br>
 The text to draw. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
 <li><code>params</code> (Type: Object)<br>
-An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU_Texture.md">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU_Texture.md">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul></li>
+An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU_Texture.html">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU_Texture.html">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>The generated group of shapes. (Type: <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)</p>
+<p>The generated group of shapes. (Type: <a href="H3DU_ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
 </div>
 <nav id="navigation">
 <p>

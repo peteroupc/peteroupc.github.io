@@ -23,7 +23,7 @@ dimensions, a surface function has the following form:</p>
 <p>where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
 and z(u, v) returns a Z coordinate.</p>
 
-<p>See the <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a> tutorial for more information.</p>
+<p>See the <a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a> tutorial for more information.</p>
 
 <h3>Methods</h3>
 
@@ -50,7 +50,7 @@ An object that must contain a function named &quot;evaluate&quot;, giving 3 valu
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_SurfaceEval.md">H3DU.SurfaceEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
 <h3>H3DU.SurfaceEval#evalOne(mesh, u, v) <a id='H3DU_SurfaceEval_H3DU_SurfaceEval_evalOne'></a></h3>
 
@@ -60,7 +60,7 @@ in a parametric surface.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)<br>
+<li><code>mesh</code> (Type: <a href="H3DU_Mesh.html">H3DU.Mesh</a>)<br>
 H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
 <li><code>u</code> (Type: Number)<br>
 U-coordinate of the curve to evaluate</li>
@@ -70,7 +70,7 @@ V-coordinate of the curve to evaluate.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_SurfaceEval.md">H3DU.SurfaceEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
 <h3>H3DU.SurfaceEval#evalSurface(mesh, [mode], [un], [vn], [u1], [u2], [v1], [v2]) <a id='H3DU_SurfaceEval_H3DU_SurfaceEval_evalSurface'></a></h3>
 
@@ -80,7 +80,7 @@ surface.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)<br>
+<li><code>mesh</code> (Type: <a href="H3DU_Mesh.html">H3DU.Mesh</a>)<br>
 H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
 <li><code>mode</code> (Type: Number) (optional)<br>
 If this value is H3DU.Mesh.TRIANGLES, or is null or omitted, generates a series of triangles defining the surface. If this value is H3DU.Mesh.LINES, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.</li>
@@ -100,7 +100,7 @@ Ending U-coordinate of the surface to evaluate. Default is 1.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_SurfaceEval.md">H3DU.SurfaceEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
 <h3>H3DU.SurfaceEval#normal(evaluator) <a id='H3DU_SurfaceEval_H3DU_SurfaceEval_normal'></a></h3>
 
@@ -135,7 +135,7 @@ An object that must contain a function named &quot;evaluate&quot;, giving 3 valu
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_SurfaceEval.md">H3DU.SurfaceEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
 <h4>Example</h4>
 
@@ -188,7 +188,7 @@ Either true or false. True means normals will automatically be generated; false 
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_SurfaceEval.md">H3DU.SurfaceEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
 <h3>H3DU.SurfaceEval#texCoord(evaluator) <a id='H3DU_SurfaceEval_H3DU_SurfaceEval_texCoord'></a></h3>
 
@@ -203,7 +203,7 @@ An object that must contain a function named &quot;evaluate&quot;, giving 2 valu
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_SurfaceEval.md">H3DU.SurfaceEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
 <h4>Example</h4>
 
@@ -229,7 +229,7 @@ An object that must contain a function named &quot;evaluate&quot;. It takes the 
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_SurfaceEval.md">H3DU.SurfaceEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 </div>
 <nav id="navigation">
 <p>

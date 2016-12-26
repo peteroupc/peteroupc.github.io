@@ -141,13 +141,13 @@ Its parent will be set to no parent.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>shape</code> (Type: <a href="H3DU_Shape.md">H3DU.Shape</a> | <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
+<li><code>shape</code> (Type: <a href="H3DU_Shape.html">H3DU.Shape</a> | <a href="H3DU_ShapeGroup.html">H3DU.ShapeGroup</a>)<br>
 A 3D shape.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#clear() <a id='H3DU_Scene3D_H3DU_Scene3D_clear'></a></h3>
 
@@ -156,7 +156,7 @@ if any</p>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#clearDepth() <a id='H3DU_Scene3D_H3DU_Scene3D_clearDepth'></a></h3>
 
@@ -164,7 +164,7 @@ if any</p>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#createBuffer() <a id='H3DU_Scene3D_H3DU_Scene3D_createBuffer'></a></h3>
 
@@ -172,7 +172,7 @@ if any</p>
 
 <h4>Return Value</h4>
 
-<p>A buffer with the same size as this scene. (Type: <a href="H3DU_FrameBuffer.md">H3DU.FrameBuffer</a>)</p>
+<p>A buffer with the same size as this scene. (Type: <a href="H3DU_FrameBuffer.html">H3DU.FrameBuffer</a>)</p>
 
 <h3>H3DU.Scene3D#cullFace(value) <a id='H3DU_Scene3D_H3DU_Scene3D_cullFace'></a></h3>
 
@@ -188,7 +188,7 @@ If this is <a href="H3DU_Scene3D.md#H3DU_Scene3D_BACK">H3DU.Scene3D.BACK</a>, <a
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#dispose() <a id='H3DU_Scene3D_H3DU_Scene3D_dispose'></a></h3>
 
@@ -211,7 +211,7 @@ If this is <a href="H3DU_Scene3D.md#H3DU_Scene3D_CW">H3DU.Scene3D.CW</a>, clockw
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#getAspect() <a id='H3DU_Scene3D_H3DU_Scene3D_getAspect'></a></h3>
 
@@ -309,7 +309,7 @@ to a texture buffer object.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>texture</code> (Type: string | <a href="H3DU_Texture.md">H3DU.Texture</a>)<br>
+<li><code>texture</code> (Type: string | <a href="H3DU_Texture.html">H3DU.Texture</a>)<br>
 String giving the URL of the image to load, or an H3DU.Texture object whose data may or may not be loaded.</li>
 </ul>
 
@@ -318,7 +318,7 @@ String giving the URL of the image to load, or an H3DU.Texture object whose data
 <p>A promise that is resolved when
 the image is loaded successfully and uploaded
 to a texture buffer (the result will be an H3DU.Texture
-object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>)</p>
+object), and is rejected when an error occurs. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <h3>H3DU.Scene3D#loadAndMapTextures(textureFiles, [resolve], [reject]) <a id='H3DU_Scene3D_H3DU_Scene3D_loadAndMapTextures'></a></h3>
 
@@ -345,7 +345,7 @@ Called for each URL for which an error occurs (the argument will be the data pas
 all the URLs in the textureFiles array are either resolved or rejected.
 The result will be an object with three properties:
 &quot;successes&quot;, &quot;failures&quot;, and &quot;results&quot;.
-See <a href="H3DU.md#H3DU_getPromiseResults">H3DU.getPromiseResults</a>. (Type: <a href="Promise.md">Promise</a>)</p>
+See <a href="H3DU.md#H3DU_getPromiseResults">H3DU.getPromiseResults</a>. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <h3>H3DU.Scene3D#loadTexture(name) <a id='H3DU_Scene3D_H3DU_Scene3D_loadTexture'></a></h3>
 
@@ -365,7 +365,7 @@ URL of the image to load.</li>
 
 <p>A promise that is resolved when
 the image is loaded successfully (the result will be an H3DU.Texture
-object), and is rejected when an error occurs. (Type: <a href="Promise.md">Promise</a>)</p>
+object), and is rejected when an error occurs. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <h3>H3DU.Scene3D#makeShape(mesh) <a id='H3DU_Scene3D_H3DU_Scene3D_makeShape'></a></h3>
 
@@ -377,13 +377,13 @@ returns a shape object.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)<br>
+<li><code>mesh</code> (Type: <a href="H3DU_Mesh.html">H3DU.Mesh</a>)<br>
 A geometric mesh object. The shape created will use the mesh in its current state and won&#39;t track future changes.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>The generated shape object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>The generated shape object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Scene3D#primitiveCount() <a id='H3DU_Scene3D_H3DU_Scene3D_primitiveCount'></a></h3>
 
@@ -403,13 +403,13 @@ and points) composed by all shapes in this scene.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>shape</code> (Type: <a href="H3DU_Shape.md">H3DU.Shape</a> | <a href="H3DU_ShapeGroup.md">H3DU.ShapeGroup</a>)<br>
+<li><code>shape</code> (Type: <a href="H3DU_Shape.html">H3DU.Shape</a> | <a href="H3DU_ShapeGroup.html">H3DU.ShapeGroup</a>)<br>
 The 3D shape to remove.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#render(renderPasses) <a id='H3DU_Scene3D_H3DU_Scene3D_render'></a></h3>
 
@@ -423,13 +423,13 @@ buffer and depth buffer. This compatibility option may be dropped in the future.
 <h4>Parameters</h4>
 
 <ul>
-<li><code>renderPasses</code> (Type: Array.&lt;<a href="H3DU_RenderPass3D.md">H3DU.RenderPass3D</a>&gt; | <a href="H3DU_Batch3D.md">H3DU.Batch3D</a>)<br>
+<li><code>renderPasses</code> (Type: Array.&lt;<a href="H3DU_RenderPass3D.html">H3DU.RenderPass3D</a>&gt; | <a href="H3DU_Batch3D.html">H3DU.Batch3D</a>)<br>
 An array of scenes to draw, or a single batch to render. Can be null.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setAmbient(r, g, b, [a]) <a id='H3DU_Scene3D_H3DU_Scene3D_setAmbient'></a></h3>
 
@@ -452,7 +452,7 @@ Alpha color component (0-1). Currently not used.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setAutoResize(value) <a id='H3DU_Scene3D_H3DU_Scene3D_setAutoResize'></a></h3>
 
@@ -468,7 +468,7 @@ If true, will check whether to resize the canvas when the render() method is cal
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setClearColor(r, g, b, [a]) <a id='H3DU_Scene3D_H3DU_Scene3D_setClearColor'></a></h3>
 
@@ -490,7 +490,7 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setDimensions(width, height) <a id='H3DU_Scene3D_H3DU_Scene3D_setDimensions'></a></h3>
 
@@ -530,7 +530,7 @@ A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color o
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setFrustum(left, right, bottom, top, near, far) <a id='H3DU_Scene3D_H3DU_Scene3D_setFrustum'></a></h3>
 
@@ -561,7 +561,7 @@ The distance from the camera to the far clipping plane. Objects beyond this dist
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setLightParams(index, params) <a id='H3DU_Scene3D_H3DU_Scene3D_setLightParams'></a></h3>
 
@@ -580,7 +580,7 @@ An object as described in H3DU.LightSource.setParams.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setLookAt(eye, [center], [up]) <a id='H3DU_Scene3D_H3DU_Scene3D_setLookAt'></a></h3>
 
@@ -603,7 +603,7 @@ A 3-element vector specifying the direction from the center of the camera to its
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setOrtho(left, right, bottom, top, near, far) <a id='H3DU_Scene3D_H3DU_Scene3D_setOrtho'></a></h3>
 
@@ -632,7 +632,7 @@ Distance from the camera to the far clipping plane. A positive value means the p
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setOrtho2D(left, right, bottom, top) <a id='H3DU_Scene3D_H3DU_Scene3D_setOrtho2D'></a></h3>
 
@@ -656,7 +656,7 @@ Topmost coordinate of the 2D view. (Note that top can be greater than bottom or 
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setOrtho2DAspect(left, right, bottom, top, [aspect]) <a id='H3DU_Scene3D_H3DU_Scene3D_setOrtho2DAspect'></a></h3>
 
@@ -687,7 +687,7 @@ Desired aspect ratio of the viewport (ratio of width to height). If null or omit
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setOrthoAspect(left, right, bottom, top, near, far, [aspect]) <a id='H3DU_Scene3D_H3DU_Scene3D_setOrthoAspect'></a></h3>
 
@@ -723,7 +723,7 @@ Desired aspect ratio of the viewport (ratio of width to height). If null or omit
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setPerspective(fov, aspect, near, far) <a id='H3DU_Scene3D_H3DU_Scene3D_setPerspective'></a></h3>
 
@@ -749,7 +749,7 @@ The distance from the camera to the far clipping plane. Objects beyond this dist
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h4>Example</h4>
 
@@ -779,7 +779,7 @@ A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a> giving the color o
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setProjectionMatrix(matrix) <a id='H3DU_Scene3D_H3DU_Scene3D_setProjectionMatrix'></a></h3>
 
@@ -798,7 +798,7 @@ A 16-element matrix (4x4).</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setUseDevicePixelRatio(value) <a id='H3DU_Scene3D_H3DU_Scene3D_setUseDevicePixelRatio'></a></h3>
 
@@ -818,7 +818,7 @@ If true, use the device&#39;s pixel ratio when setting the viewport&#39;s dimens
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#setViewMatrix(matrix) <a id='H3DU_Scene3D_H3DU_Scene3D_setViewMatrix'></a></h3>
 
@@ -836,7 +836,7 @@ A 16-element matrix (4x4).</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#useFilter(filterProgram) <a id='H3DU_Scene3D_H3DU_Scene3D_useFilter'></a></h3>
 
@@ -849,13 +849,13 @@ scene is rendered.)</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>filterProgram</code> (Type: <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a> | string | null)<br>
+<li><code>filterProgram</code> (Type: <a href="H3DU_ShaderProgram.html">H3DU.ShaderProgram</a> | string | null)<br>
 Not used.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#useProgram(program) <a id='H3DU_Scene3D_H3DU_Scene3D_useProgram'></a></h3>
 
@@ -869,13 +869,13 @@ and prepared this object for the new program.)</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>program</code> (Type: <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a> | null)<br>
+<li><code>program</code> (Type: <a href="H3DU_ShaderProgram.html">H3DU.ShaderProgram</a> | null)<br>
 No longer used.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Scene3D#vertexCount() <a id='H3DU_Scene3D_H3DU_Scene3D_vertexCount'></a></h3>
 

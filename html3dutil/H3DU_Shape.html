@@ -11,13 +11,13 @@
 <p>An object that associates a geometric mesh (the shape of the object) with
  material data (which defines what is seen on the object&#39;s surface)
 and a transformation matrix (which defines the object&#39;s position and size).
-See the &quot;<a href="tutorial-shapes.md">Creating Shapes</a>&quot; tutorial.</p>
+See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU_MeshBuffer.md">H3DU.MeshBuffer</a>)<br>
-A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU_Mesh.md">H3DU.Mesh</a> objects, the <a href="H3DU_Material.md">H3DU.Material</a> created will use the mesh in its current state and won&#39;t track future changes. <i>Using <a href="H3DU_BufferedMesh.md">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i></li>
+<li><code>mesh</code> (Type: <a href="H3DU_MeshBuffer.html">H3DU.MeshBuffer</a>)<br>
+A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU_Mesh.html">H3DU.Mesh</a> objects, the <a href="H3DU_Material.html">H3DU.Material</a> created will use the mesh in its current state and won&#39;t track future changes. <i>Using <a href="H3DU_BufferedMesh.html">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i></li>
 </ul>
 
 <h3>Methods</h3>
@@ -54,7 +54,7 @@ The copied shape won&#39;t have a parent.</p>
 
 <h4>Return Value</h4>
 
-<p>A copy of this object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>A copy of this object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#getBounds() <a id='H3DU_Shape_H3DU_Shape_getBounds'></a></h3>
 
@@ -89,7 +89,7 @@ The transform won&#39;t be copied.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)</p>
+<p>Return value. (Type: <a href="H3DU_Transform.html">H3DU.Transform</a>)</p>
 
 <h3>H3DU.Shape#getVisible() <a id='H3DU_Shape_H3DU_Shape_getVisible'></a></h3>
 
@@ -131,7 +131,7 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#setMaterial(material) <a id='H3DU_Shape_H3DU_Shape_setMaterial'></a></h3>
 
@@ -146,7 +146,7 @@ The material object to use.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#setMaterialParams(params) <a id='H3DU_Shape_H3DU_Shape_setMaterialParams'></a></h3>
 
@@ -161,7 +161,7 @@ An object described in H3DU.Material#setParams.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#setPosition(x, y, z) <a id='H3DU_Shape_H3DU_Shape_setPosition'></a></h3>
 
@@ -181,11 +181,11 @@ Z-coordinate.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Shape#setQuaternion(quat) <a id='H3DU_Shape_H3DU_Shape_setQuaternion'></a></h3>
 
-<p>Sets this object&#39;s orientation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+<p>Sets this object&#39;s orientation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
 See H3DU.Transform#setQuaternion.</p>
 
 <h4>Parameters</h4>
@@ -197,7 +197,7 @@ A four-element array describing the rotation.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#setScale(x, y, z) <a id='H3DU_Shape_H3DU_Shape_setScale'></a></h3>
 
@@ -217,7 +217,7 @@ Scaling factor for this object&#39;s depth.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Scene3D.md">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU_Scene3D.html">H3DU.Scene3D</a>)</p>
 
 <h3>H3DU.Shape#setShader(shader) <a id='H3DU_Shape_H3DU_Shape_setShader'></a></h3>
 
@@ -226,13 +226,13 @@ Scaling factor for this object&#39;s depth.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>shader</code> (Type: <a href="H3DU_ShaderInfo.md">H3DU.ShaderInfo</a>)<br>
-Source code for a WebGL shader program. <i>Using a <a href="H3DU_ShaderProgram.md">H3DU.ShaderProgram</a> here is deprecated.</i></li>
+<li><code>shader</code> (Type: <a href="H3DU_ShaderInfo.html">H3DU.ShaderInfo</a>)<br>
+Source code for a WebGL shader program. <i>Using a <a href="H3DU_ShaderProgram.html">H3DU.ShaderProgram</a> here is deprecated.</i></li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#setTexture(name) <a id='H3DU_Shape_H3DU_Shape_setTexture'></a></h3>
 
@@ -241,13 +241,13 @@ Source code for a WebGL shader program. <i>Using a <a href="H3DU_ShaderProgram.m
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: <a href="H3DU_Texture.md">H3DU.Texture</a> | String)<br>
-<a href="H3DU_Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet.</li>
+<li><code>name</code> (Type: <a href="H3DU_Texture.html">H3DU.Texture</a> | String)<br>
+<a href="H3DU_Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#setTextureAndColor(name, r, g, b, [a]) <a id='H3DU_Shape_H3DU_Shape_setTextureAndColor'></a></h3>
 
@@ -257,7 +257,7 @@ Source code for a WebGL shader program. <i>Using a <a href="H3DU_ShaderProgram.m
 
 <ul>
 <li><code>name</code> (Type: String)<br>
-<a href="H3DU_Texture.md">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet.</li>
+<a href="H3DU_Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet.</li>
 <li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
 A <a href="H3DU.md#H3DU_toGLColor">color vector or string</a>, or the red color component (0-1).</li>
 <li><code>g</code> (Type: Number)<br>
@@ -270,7 +270,7 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#setTransform(transform) <a id='H3DU_Shape_H3DU_Shape_setTransform'></a></h3>
 
@@ -280,13 +280,13 @@ to a copy of the given transformation.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>transform</code> (Type: <a href="H3DU_Transform.md">H3DU.Transform</a>)<br>
+<li><code>transform</code> (Type: <a href="H3DU_Transform.html">H3DU.Transform</a>)<br>
 The transformation to set to a copy of.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#setVisible(value) <a id='H3DU_Shape_H3DU_Shape_setVisible'></a></h3>
 
@@ -301,7 +301,7 @@ True if this shape will be visible; otherwise, false.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_Shape.md">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU_Shape.html">H3DU.Shape</a>)</p>
 
 <h3>H3DU.Shape#vertexCount() <a id='H3DU_Shape_H3DU_Shape_vertexCount'></a></h3>
 

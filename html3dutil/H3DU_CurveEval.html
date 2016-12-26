@@ -22,7 +22,7 @@ dimensions, a curve function has the following form:</p>
 <p>where x(u) returns an X coordinate, y(u) a Y coordinate,
 and z(u) returns a Z coordinate.</p>
 
-<p>For more information, see the <a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a> tutorial.</p>
+<p>For more information, see the <a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a> tutorial.</p>
 
 <h3>Methods</h3>
 
@@ -48,7 +48,7 @@ An object that must contain a function named &quot;evaluate&quot;, giving 3 valu
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_CurveEval.md">H3DU.CurveEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_CurveEval.html">H3DU.CurveEval</a>)</p>
 
 <h3>H3DU.CurveEval#evalCurve(mesh, [mode], [n], [u1], [u2]) <a id='H3DU_CurveEval_H3DU_CurveEval_evalCurve'></a></h3>
 
@@ -58,7 +58,7 @@ function.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)<br>
+<li><code>mesh</code> (Type: <a href="H3DU_Mesh.html">H3DU.Mesh</a>)<br>
 A geometric mesh where the vertices will be generated.</li>
 <li><code>mode</code> (Type: Number) (optional)<br>
 If this value is H3DU.Mesh.LINES, or is null or omitted, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.</li>
@@ -72,7 +72,7 @@ Ending point of the curve (within the range given in the <code>vector</code>, <c
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_CurveEval.md">H3DU.CurveEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_CurveEval.html">H3DU.CurveEval</a>)</p>
 
 <h3>H3DU.CurveEval#evalOne(mesh, u) <a id='H3DU_CurveEval_H3DU_CurveEval_evalOne'></a></h3>
 
@@ -82,7 +82,7 @@ in a parametric curve.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU_Mesh.md">H3DU.Mesh</a>)<br>
+<li><code>mesh</code> (Type: <a href="H3DU_Mesh.html">H3DU.Mesh</a>)<br>
 H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
 <li><code>u</code> (Type: Number)<br>
 Point of the curve to evaluate.</li>
@@ -90,7 +90,7 @@ Point of the curve to evaluate.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_CurveEval.md">H3DU.CurveEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_CurveEval.html">H3DU.CurveEval</a>)</p>
 
 <h3>H3DU.CurveEval#normal(evaluator) <a id='H3DU_CurveEval_H3DU_CurveEval_normal'></a></h3>
 
@@ -108,7 +108,7 @@ An object that must contain a function named &quot;evaluate&quot;, giving 3 valu
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_CurveEval.md">H3DU.CurveEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_CurveEval.html">H3DU.CurveEval</a>)</p>
 
 <h3>H3DU.CurveEval#texCoord(evaluator) <a id='H3DU_CurveEval_H3DU_CurveEval_texCoord'></a></h3>
 
@@ -123,7 +123,7 @@ An object that must contain a function named &quot;evaluate&quot;, giving 2 valu
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_CurveEval.md">H3DU.CurveEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_CurveEval.html">H3DU.CurveEval</a>)</p>
 
 <h3>H3DU.CurveEval#vertex(evaluator) <a id='H3DU_CurveEval_H3DU_CurveEval_vertex'></a></h3>
 
@@ -138,7 +138,7 @@ An object that must contain a function named &quot;evaluate&quot;. It takes the 
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU_CurveEval.md">H3DU.CurveEval</a>)</p>
+<p>This object. (Type: <a href="H3DU_CurveEval.html">H3DU.CurveEval</a>)</p>
 
 <h4>Example</h4>
 
