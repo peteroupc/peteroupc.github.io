@@ -135,6 +135,7 @@ var PrimitiveCounter = function() {
 * This method used to update this object's state.
 * @deprecated Will be removed in the future.
  * @memberof! PrimitiveCounter
+ @alias update
  * @returns {Object} Return value.
 */
   this.update = function() {

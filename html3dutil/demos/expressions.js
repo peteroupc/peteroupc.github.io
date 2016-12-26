@@ -307,7 +307,7 @@ Expression.prototype.toString = function() {
 /**
  * Gets the number of operands in this operation.
  * @memberof! Operation#
- * @return {Number} Return value.
+ * @returns {Number} Return value.
  */
 Operation.prototype.length = function() {
   "use strict";
