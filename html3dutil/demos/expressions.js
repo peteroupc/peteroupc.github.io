@@ -324,10 +324,10 @@ Operation.prototype.get = function(index) {
   return this.nodes[index];
 };
 /**
- * TODO: Not documented yet.
- * @param {*} op
+ * Returns whether this operation is of the given type.
+ * @param {String} op An operation type such as "plus" or "pow".
  * @memberof! Operation#
- * @returns {Object} Return value.
+ * @returns {Boolean} True if this operation is of the given type; otherwise, false.
 */
 Operation.prototype.isOperation = function(op) {
   "use strict";
@@ -836,7 +836,7 @@ Variable.prototype.isOperation = function() {
   return false;
 };
 /**
- * Returns a copy of this object
+ * Returns a copy of this object.
  * @memberof! Variable#
  * @returns {Variable} This object (which is currently treated as immutable).
 */
@@ -845,7 +845,7 @@ Variable.prototype.copy = function() {
   return this;
 };
 /**
- * Gets the value of this constant.
+ * Gets the value of this variable.
  * @returns {String} Null, since variables are not constants.
  * @memberof! Variable#
 */
@@ -880,22 +880,16 @@ Variable.prototype.toJSString = function() {
   return this.toString();
 };
 /**
- * TODO: Not documented yet.
+ * Converts this expression to a string.
+ * @returns {String} Return value.
  * @memberof! Variable#
- * @returns {Object} Return value.
 */
 Variable.prototype.toString = function() {
   "use strict";
 
   return (this.negative ? "-" : "") + this.name;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} operation
- * @param {*} x
- * @memberof! Variable#
- * @returns {Object} Return value.
-*/
+/** @private */
 Variable.prototype.combineOp = function(operation, x) {
   "use strict";
   var op = null,
@@ -921,20 +915,16 @@ Variable.prototype.combineOp = function(operation, x) {
   }
   return op.degen();
 };
-/**
- * TODO: Not documented yet.
- * @memberof! Variable#
- * @returns {Object} Return value.
-*/
+/** @private */
 Variable.prototype.degen = function() {
   "use strict";
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns an expression equal to this operation plus another expression.
+ * @param {Expression} x An expression.
  * @memberof! Variable#
- * @returns {Object} Return value.
+ * @returns {Expression} Return value.
 */
 Variable.prototype.add = function(x) {
   "use strict";
@@ -954,10 +944,10 @@ Variable.prototype.negate = function() {
   return v;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns an expression equal to this operation minus another expression.
+ * @param {Expression} x An expression.
  * @memberof! Variable#
- * @returns {Object} Return value.
+ * @returns {Expression} Return value.
 */
 Variable.prototype.subtract = function(x) {
   "use strict";
@@ -975,10 +965,10 @@ Variable.prototype.multiply = function(x) {
   return this.combineOp("mul", x);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns an expression equal to this operation divided by another expression.
+ * @param {Expression} x An expression.
  * @memberof! Variable#
- * @returns {Object} Return value.
+ * @returns {Expression} Return value.
 */
 Variable.prototype.divide = function(x) {
   "use strict";
@@ -986,16 +976,16 @@ Variable.prototype.divide = function(x) {
 };
 
 /**
- * TODO: Not documented yet.
- * @memberof! Constant#
- * @returns {Object} Return value.
+ * Returns a copy Constant this object.
+ * @memberof! Variable#
+ * @returns {Constant} This object (which is currently treated as immutable).
 */
 Constant.prototype.copy = function() {
   "use strict";
   return this;
 };
 /**
- * TODO: Not documented yet.
+ * Returns whether this constant is an operation.
  * @memberof! Constant#
  * @returns {Boolean} Always false.
 */
@@ -1061,13 +1051,7 @@ Constant.prototype.toString = function() {
   }
   return vi;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} operation
- * @param {*} x
- * @memberof! Constant#
- * @returns {Object} Return value.
-*/
+/** @private */
 Constant.prototype.combineOp = function(operation, x) {
   "use strict";
   var op = null;
