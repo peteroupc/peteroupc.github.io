@@ -171,7 +171,7 @@ mathematical objects.</p>
 
 <p>Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).</p>
 
-<h3>H3DU.Math.quatCopy() <a id='H3DU.Math.quatCopy'></a></h3>
+<h3>(static) H3DU.Math.quatCopy() <a id='H3DU.Math.quatCopy'></a></h3>
 
 <p>Returns a copy of a quaternion.</p>
 
@@ -181,9 +181,9 @@ mathematical objects.</p>
 
 <h4>See Also</h4>
 
-<p><a href="H3DU.Math.md#H3DU.Math.vec4copy">H3DU.Math.vec4copy</a></p>
+<p><a href="H3DU.Math.html#H3DU.Math.vec4copy">H3DU.Math.vec4copy</a></p>
 
-<h3>H3DU.Math.quatDot(a, b) <a id='H3DU.Math.quatDot'></a></h3>
+<h3>(static) H3DU.Math.quatDot(a, b) <a id='H3DU.Math.quatDot'></a></h3>
 
 <p>Finds the dot product of two quaternions.
 It&#39;s equal to the sum of the products of
@@ -204,11 +204,11 @@ The second quaternion.</li>
 
 <h4>See Also</h4>
 
-<p><a href="H3DU.Math.md#H3DU.Math.vec4dot">H3DU.Math.vec4dot</a></p>
+<p><a href="H3DU.Math.html#H3DU.Math.vec4dot">H3DU.Math.vec4dot</a></p>
 
-<h3>H3DU.Math.quatInverse(quat) <a id='H3DU.Math.quatInverse'></a></h3>
+<h3>(static) H3DU.Math.quatInverse(quat) <a id='H3DU.Math.quatInverse'></a></h3>
 
-<p><b>Deprecated: Use <a href="H3DU.Math.md#H3DU.Math.quatInvert">H3DU.Math.quatInvert</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.Math.html#H3DU.Math.quatInvert">H3DU.Math.quatInvert</a> instead.</b></p>
 
 <p>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation.
 Returns a new quaternion; same as the quatInverse method.</p>
@@ -224,7 +224,7 @@ A quaternion, containing four elements.</li>
 
 <p>Return value. (Type: Array.&lt;Number&gt;)</p>
 
-<h3>H3DU.Math.quatLength(quat) <a id='H3DU.Math.quatLength'></a></h3>
+<h3>(static) H3DU.Math.quatLength(quat) <a id='H3DU.Math.quatLength'></a></h3>
 
 <p>Returns the distance of this quaternion from the origin.
 It&#39;s the same as the square root of the sum of the squares
@@ -243,9 +243,9 @@ The quaternion.</li>
 
 <h4>See Also</h4>
 
-<p><a href="H3DU.Math.md#H3DU.Math.vec4length">H3DU.Math.vec4length</a></p>
+<p><a href="H3DU.Math.html#H3DU.Math.vec4length">H3DU.Math.vec4length</a></p>
 
-<h3>H3DU.Math.quatNorm(quat) <a id='H3DU.Math.quatNorm'></a></h3>
+<h3>(static) H3DU.Math.quatNorm(quat) <a id='H3DU.Math.quatNorm'></a></h3>
 
 <p>Converts a quaternion to its normalized version; returns a new quaternion.
 When a quaternion is normalized, the distance from the origin
@@ -266,9 +266,9 @@ A quaternion.</li>
 
 <h4>See Also</h4>
 
-<p><a href="H3DU.Math.md#H3DU.Math.vec4norm">H3DU.Math.vec4norm</a></p>
+<p><a href="H3DU.Math.html#H3DU.Math.vec4norm">H3DU.Math.vec4norm</a></p>
 
-<h3>H3DU.Math.quatNormInPlace(quat) <a id='H3DU.Math.quatNormInPlace'></a></h3>
+<h3>(static) H3DU.Math.quatNormInPlace(quat) <a id='H3DU.Math.quatNormInPlace'></a></h3>
 
 <p>Converts a quaternion to its normalized version.
 When a quaternion is normalized, it describes the same orientation but the distance from the origin
@@ -289,9 +289,9 @@ A quaternion.</li>
 
 <h4>See Also</h4>
 
-<p><a href="H3DU.Math.md#H3DU.Math.vec4normInPlace">H3DU.Math.vec4normInPlace</a></p>
+<p><a href="H3DU.Math.html#H3DU.Math.vec4normInPlace">H3DU.Math.vec4normInPlace</a></p>
 
-<h3>H3DU.Math.quatScale(a, scalar) <a id='H3DU.Math.quatScale'></a></h3>
+<h3>(static) H3DU.Math.quatScale(a, scalar) <a id='H3DU.Math.quatScale'></a></h3>
 
 <p>Multiplies each element of a quaternion by a factor
 and returns the result as a new quaternion.</p>
@@ -311,9 +311,9 @@ A factor to multiply.</li>
 
 <h4>See Also</h4>
 
-<p><a href="H3DU.Math.md#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a></p>
+<p><a href="H3DU.Math.html#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a></p>
 
-<h3>H3DU.Math.quatScaleInPlace(a, scalar) <a id='H3DU.Math.quatScaleInPlace'></a></h3>
+<h3>(static) H3DU.Math.quatScaleInPlace(a, scalar) <a id='H3DU.Math.quatScaleInPlace'></a></h3>
 
 <p>Multiplies each element of a quaternion by a factor
 and stores the result in that quaternion.</p>
@@ -333,7 +333,7 @@ A factor to multiply.</li>
 
 <h4>See Also</h4>
 
-<p><a href="H3DU.Math.md#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a></p>
+<p><a href="H3DU.Math.html#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a></p>
 
 <h3>(static) H3DU.Math.boxIsEmpty(box) <a id='H3DU.Math.boxIsEmpty'></a></h3>
 
@@ -526,7 +526,8 @@ the given 4x4 matrix.</p>
 <p>This is usually used to convert a model-view matrix to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the world matrix. Normals are then
-transformed by this matrix and then converted to unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1). But if the
+transformed by this matrix and then converted to unit vectors
+(<a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1). But if the
 input matrix uses only rotations, translations, and/or uniform scaling
 (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
 be used instead of the inverse-transpose matrix to transform the normals.</p>
@@ -606,7 +607,9 @@ The matrices are multiplied such that the transformations
 they describe happen in reverse order. For example, if the first
 matrix (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will describe
-the effect of scaling then translation.</p>
+the effect of scaling then translation. (Multiplying the first matrix
+by the second is the same as multiplying the second matrix
+by the first matrix&#39;s transpose.)</p>
 
 <h4>Parameters</h4>
 
@@ -824,13 +827,20 @@ The distance from the &quot;camera&quot; to the far clipping plane. Objects beyo
 a perspective-correct transformation of the vector,
 using all the elements of the 4x4 matrix.</p>
 
+<p>The transformation involves
+multiplying the matrix by a 4-element vector with the same X,
+Y, and Z coordinates, but with a W coordinate equal to 1, and
+then dividing X, Y, and Z of the resulting 4-element
+vector by that vector&#39;s W (a <i>perspective division</i>),
+then returning that vector&#39;s new X, Y, and Z.</p>
+
 <h4>Parameters</h4>
 
 <ul>
 <li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
 A 4x4 matrix.</li>
 <li><code>v</code> (Type: Array.&lt;Number&gt; | Number)<br>
-X coordinate. If &quot;vy&quot;, &quot;vz&quot;, and &quot;vw&quot; are omitted, this value can instead be a 4-element array giving the X, Y, Z, and W coordinates.</li>
+X coordinate. If &quot;vy&quot; and &quot;vz&quot; are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.</li>
 <li><code>vy</code> (Type: Number)<br>
 Y coordinate.</li>
 <li><code>vz</code> (Type: Number)<br>
@@ -972,8 +982,8 @@ A 4x4 matrix. This will usually be a projection-view matrix (projection matrix m
 <p>An array of six
 4-element arrays representing the six clipping planes of the
 view frustum. In order, they are the left, right, top,
-bottom, near, and far clipping planes. The normals of all six planes
-will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1). (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
+bottom, near, and far clipping planes. All six planes
+will be normalized (see <a href="H3DU.Math.html#H3DU.Math.planeNormInPlace">H3DU.Math.planeNormInPlace</a>). (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
 
 <h3>(static) H3DU.Math.mat4toMat3(m4) <a id='H3DU.Math.mat4toMat3'></a></h3>
 
@@ -1017,8 +1027,12 @@ W coordinate. To transform a 3D point, set W to 1; to transform a 2D point, set 
 
 <h3>(static) H3DU.Math.mat4transformVec3(mat, v, vy, vz) <a id='H3DU.Math.mat4transformVec3'></a></h3>
 
-<p>Transforms a 3-element vector with a 4x4 matrix and returns
-the transformed vector. The effect is as though elements
+<p>Transforms a 3-element vector with the first three rows
+of a 4x4 matrix and returns the transformed vector.
+This method assumes the matrix describes an affine
+transformation, without perspective.</p>
+
+<p>The effect is as though elements
 3, 7, 11, and 15 (counting from 0) of the matrix
 were assumed to be (0, 0, 0, 1) instead of their actual values
 (those elements correspond to the last
@@ -1028,7 +1042,7 @@ vector had a fourth element valued at 1.</p>
 <p>For transforming 3-dimensional coordinates
 with a matrix that may be in a perspective
 projection (whose last row is not necessarily (0, 0, 0, 1)), use
-the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method instead.</p>
+the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method instead.</p>
 
 <h4>Parameters</h4>
 
@@ -1036,7 +1050,7 @@ the <a href="H3DU.Math.md#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</
 <li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
 A 4x4 matrix.</li>
 <li><code>v</code> (Type: Array.&lt;Number&gt; | Number)<br>
-X coordinate. If &quot;vy&quot;, &quot;vz&quot;, and &quot;vw&quot; are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.</li>
+X coordinate. If &quot;vy&quot; and &quot;vz&quot; are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.</li>
 <li><code>vy</code> (Type: Number)<br>
 Y coordinate.</li>
 <li><code>vz</code> (Type: Number)<br>
@@ -1139,7 +1153,7 @@ the plane. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.planeNormInPlace(plane) <a id='H3DU.Math.planeNormInPlace'></a></h3>
 
-<p>Normalizes this plane so that its normal is a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1),
+<p>Normalizes this plane so that its normal is a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1),
 unless all the normal&#39;s components are 0.
 The plane&#39;s distance will be divided by the
 current normal&#39;s length.</p>
@@ -1158,7 +1172,7 @@ A four-element array defining the plane. The first three elements of the array a
 <h3>(static) H3DU.Math.quatConjugate(quat) <a id='H3DU.Math.quatConjugate'></a></h3>
 
 <p>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
-but without changing its length (the return value won&#39;t necessarily be a unit vector, a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).
+but without changing its length (the return value won&#39;t necessarily be a unit vector, a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).
 Returns a new quaternion.</p>
 
 <h4>Parameters</h4>
@@ -1245,7 +1259,7 @@ Specifies the order in which the rotations will occur (in terms of their effect)
 two 3-element vectors. The quaternion
 will describe the rotation required to rotate
 the ray described in the first vector toward the ray described
-in the second vector. The vectors need not be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1).</p>
+in the second vector. The vectors need not be unit vectors (<a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1).</p>
 
 <h4>Parameters</h4>
 
@@ -1259,7 +1273,7 @@ The second 3-element vector.</li>
 <h4>Return Value</h4>
 
 <p>The generated quaternion, which
-will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1). (Type: Array.&lt;Number&gt;)</p>
+will be unit vectors (<a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1). (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.quatIdentity() <a id='H3DU.Math.quatIdentity'></a></h3>
 
@@ -1272,7 +1286,7 @@ will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized
 <h3>(static) H3DU.Math.quatInvert(quat) <a id='H3DU.Math.quatInvert'></a></h3>
 
 <p>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
-and converts this quaternion to a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).
+and converts this quaternion to a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).
 Returns a new quaternion.</p>
 
 <h4>Parameters</h4>
@@ -1288,7 +1302,7 @@ A quaternion, containing four elements.</li>
 
 <h4>See Also</h4>
 
-<p><a href="H3DU.Math.md#H3DU.Math.quatConjugate">H3DU.Math.quatConjugate</a></p>
+<p><a href="H3DU.Math.html#H3DU.Math.quatConjugate">H3DU.Math.quatConjugate</a></p>
 
 <h3>(static) H3DU.Math.quatIsIdentity(quat) <a id='H3DU.Math.quatIsIdentity'></a></h3>
 
@@ -1330,16 +1344,24 @@ The second quaternion.</li>
 
 <h3>(static) H3DU.Math.quatNlerp(q1, q2, factor) <a id='H3DU.Math.quatNlerp'></a></h3>
 
-<p>Does a linear interpolation between two quaternions;
-returns a new quaternion.</p>
+<p>Returns a quaternion that lies along the shortest path between the
+given two quaternion rotations, using a linear interpolation function, and converts
+it to a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec4norm">&quot;normalized&quot; vector</a> with a length of 1).
+This is called a normalized linear interpolation, or &quot;nlerp&quot;.</p>
+
+<p>Because the shortest path is curved, not straight, this method
+will generally not interpolate at constant velocity;
+however, the difference in this velocity when interpolating is
+rarely noticeable and this method is generally faster than
+the <a href="H3DU.Math.html#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a> method.</p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>q1</code> (Type: Array.&lt;Number&gt;)<br>
-The first quaternion. Should be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+The first quaternion. Must be a unit vector.</li>
 <li><code>q2</code> (Type: Array.&lt;Number&gt;)<br>
-The second quaternion. Should be a unit vector.</li>
+The second quaternion. Must be a unit vector.</li>
 <li><code>factor</code> (Type: Number)<br>
 A value from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.</li>
 </ul>
@@ -1347,7 +1369,7 @@ A value from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means 
 <h4>Return Value</h4>
 
 <p>The interpolated quaternion,
-which will be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1). (Type: Array.&lt;Number&gt;)</p>
+which will be a unit vector. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.quatRotate(quat, angle, v, vy, vz) <a id='H3DU.Math.quatRotate'></a></h3>
 
@@ -1382,18 +1404,28 @@ Z-component of the point lying on the axis of rotation.</li>
 
 <h3>(static) H3DU.Math.quatSlerp(q1, q2, factor) <a id='H3DU.Math.quatSlerp'></a></h3>
 
-<p>Does a spherical linear interpolation between two quaternions;
-returns a new quaternion.
-This method is useful for smoothly animating between the two
-rotations they describe.</p>
+<p>Returns a quaternion that lies along the shortest path between the
+given two quaternion rotations, using a spherical interpolation function.
+This is called spherical linear interpolation, or &quot;slerp&quot;. (A spherical
+interpolation finds the angle between the two quaternions -- which
+are treated as 4D vectors -- and then finds a vector with a smaller angle
+between it and the first quaternion. The &quot;factor&quot; parameter specifies
+how small the new angle will be relative to the original angle.)</p>
+
+<p>This method will generally interpolate at constant velocity; however,
+this method is commutative (the order in which the quaternions are given
+matters), unlike <a href="H3DU.Math.html#H3DU.Math.quatNlerp">quatNlerp</a>, making it
+unsuitable for blending multiple quaternion rotations,
+and this method is generally more computationally expensive
+than the <a href="H3DU.Math.html#H3DU.Math.quatNlerp">quatNlerp</a> method.</p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>q1</code> (Type: Array.&lt;Number&gt;)<br>
-The first quaternion. Should be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+The first quaternion. Must be a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec4norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 <li><code>q2</code> (Type: Array.&lt;Number&gt;)<br>
-The second quaternion. Should be a unit vector.</li>
+The second quaternion. Must be a unit vector.</li>
 <li><code>factor</code> (Type: Number)<br>
 A value from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.</li>
 </ul>
@@ -1401,6 +1433,11 @@ A value from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means 
 <h4>Return Value</h4>
 
 <p>The interpolated quaternion. (Type: Array.&lt;Number&gt;)</p>
+
+<h4>See Also</h4>
+
+<p><a href="http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/">&quot;Understanding Slerp, Then Not Using It&quot;, Jonathan Blow</a>,
+for additional background</p>
 
 <h3>(static) H3DU.Math.quatToAxisAngle(a) <a id='H3DU.Math.quatToAxisAngle'></a></h3>
 
@@ -1412,7 +1449,7 @@ origin (0,0,0) and points toward a 3D point.)</p>
 
 <ul>
 <li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
-A quaternion. Must be unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1).</li>
+A quaternion. Must be a unit vector (<a href="H3DU.Math.html#H3DU.Math.vec3norm">a &quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1449,7 +1486,7 @@ in the form of pitch, yaw, and roll angles.</p>
 
 <ul>
 <li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
-A quaternion. Should be a unit vector (a <a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+A quaternion. Should be a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 <li><code>mode</code> (Type: Number) (optional)<br>
 Specifies the order in which the rotations will occur (in terms of their effect, not in terms of how they will be returned by this method). Is one of the H3DU.Math constants such as H3DU.Math.PitchYawRoll and H3DU.Math.RollYawPitch. If null or omitted, the rotation will be described as the effect of a roll, then pitch, then yaw (each rotation around the original axes).</li>
 </ul>
@@ -1569,7 +1606,7 @@ If the cross product of A and B has a positive Z component, the triangle&#39;s p
 oriented counterclockwise; otherwise, clockwise. (If the X axis points right and the Y
 axis down, the reverse is
 true.) The triangle&#39;s area is half of the cross product&#39;s length.
-<li>If A and B are unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1), the absolute value
+<li>If A and B are unit vectors (<a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1), the absolute value
 of the sine of the shortest angle between them is equal to the length of their
 cross product. <small>(More formally, the length of the cross
 product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
@@ -1577,9 +1614,9 @@ where |<b>x</b>| is the length of vector <b>x</b>.)</small></ul>
 The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
 follows:</p>
 
-<pre><code>&lt;b&gt;c&lt;/b&gt;.x = &lt;b&gt;a&lt;/b&gt;.y \* &lt;b&gt;b&lt;/b&gt;.z - &lt;b&gt;a&lt;/b&gt;.z \* &lt;b&gt;b&lt;/b&gt;.y
-&lt;b&gt;c&lt;/b&gt;.y = &lt;b&gt;a&lt;/b&gt;.z \* &lt;b&gt;b&lt;/b&gt;.x - &lt;b&gt;a&lt;/b&gt;.x \* &lt;b&gt;b&lt;/b&gt;.z
-&lt;b&gt;c&lt;/b&gt;.z = &lt;b&gt;a&lt;/b&gt;.x \* &lt;b&gt;b&lt;/b&gt;.y - &lt;b&gt;a&lt;/b&gt;.y \* &lt;b&gt;b&lt;/b&gt;.x
+<pre><code>&lt;b&gt;c&lt;/b&gt;.x = &lt;b&gt;a&lt;/b&gt;.y * &lt;b&gt;b&lt;/b&gt;.z - &lt;b&gt;a&lt;/b&gt;.z * &lt;b&gt;b&lt;/b&gt;.y
+&lt;b&gt;c&lt;/b&gt;.y = &lt;b&gt;a&lt;/b&gt;.z * &lt;b&gt;b&lt;/b&gt;.x - &lt;b&gt;a&lt;/b&gt;.x * &lt;b&gt;b&lt;/b&gt;.z
+&lt;b&gt;c&lt;/b&gt;.z = &lt;b&gt;a&lt;/b&gt;.x * &lt;b&gt;b&lt;/b&gt;.y - &lt;b&gt;a&lt;/b&gt;.y * &lt;b&gt;b&lt;/b&gt;.x
 </code></pre>
 
 <h4>Parameters</h4>
@@ -1610,7 +1647,7 @@ calculate a triangle&#39;s normal vector and its area.</p>
  // The triangle&#39;s normal is the cross product of da and db
  var normal=H3DU.Math.vec3cross(da,db);
  // Find the triangle&#39;s area
- var area=H3DU.Math.vec3length(normal)\*0.5;
+ var area=H3DU.Math.vec3length(normal)*0.5;
 </code></pre>
 
 <h3>(static) H3DU.Math.vec3dot(a, b) <a id='H3DU.Math.vec3dot'></a></h3>
@@ -1622,7 +1659,7 @@ sum of the products of their components (for example, <b>a</b>&#39;s X times
 <p>The dot product has the following properties:</p>
 
 <ul>
-<li>If both vectors are unit vectors (<a href="H3DU.Math.md#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1), the cosine
+<li>If both vectors are unit vectors (<a href="H3DU.Math.html#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1), the cosine
 of the angle between them is equal to their dot product.
 <small>(More formally, the dot
 product equals |<b>a</b>| \* |<b>b</b>| \* cos &theta;
@@ -1656,7 +1693,7 @@ The second vector.</li>
 a vector&#39;s length using the dot product.</p>
 
 <pre><code>// Check if the vector&#39;s length squared is less than 20 units squared
-if(H3DU.Math.vec3dot(vector, vector)&lt;20\*20) {
+if(H3DU.Math.vec3dot(vector, vector)&lt;20*20) {
  // The vector&#39;s length is shorter than 20 units
 }
 </code></pre>
@@ -2069,62 +2106,62 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="Camera.md">Camera</a></li>
-<li><a href="CurveTube.md">CurveTube</a></li>
-<li><a href="Epitrochoid.md">Epitrochoid</a></li>
-<li><a href="FrameCounter.md">FrameCounter</a></li>
-<li><a href="FrameCounterDiv.md">FrameCounterDiv</a></li>
-<li><a href="GraphicsPath.md">GraphicsPath</a></li>
-<li><a href="H3DU.md">H3DU</a></li>
-<li><a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a></li>
-<li><a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a></li>
-<li><a href="H3DU.Batch3D.md">H3DU.Batch3D</a></li>
-<li><a href="H3DU.BezierCurve.md">H3DU.BezierCurve</a></li>
-<li><a href="H3DU.BezierSurface.md">H3DU.BezierSurface</a></li>
-<li><a href="H3DU.BufferedMesh.md">H3DU.BufferedMesh</a></li>
-<li><a href="H3DU.CurveEval.md">H3DU.CurveEval</a></li>
-<li><a href="H3DU.FrameBuffer.md">H3DU.FrameBuffer</a></li>
-<li><a href="H3DU.FrameBufferInfo.md">H3DU.FrameBufferInfo</a></li>
-<li><a href="H3DU.LightSource.md">H3DU.LightSource</a></li>
-<li><a href="H3DU.Lights.md">H3DU.Lights</a></li>
-<li><a href="H3DU.Material.md">H3DU.Material</a></li>
-<li><a href="H3DU.Math.md">H3DU.Math</a></li>
-<li><a href="H3DU.MatrixStack.md">H3DU.MatrixStack</a></li>
-<li><a href="H3DU.Mesh.md">H3DU.Mesh</a></li>
-<li><a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a></li>
-<li><a href="H3DU.Meshes.md">H3DU.Meshes</a></li>
-<li><a href="H3DU.RenderPass3D.md">H3DU.RenderPass3D</a></li>
-<li><a href="H3DU.Scene3D.md">H3DU.Scene3D</a></li>
-<li><a href="H3DU.ShaderInfo.md">H3DU.ShaderInfo</a></li>
-<li><a href="H3DU.ShaderProgram.md">H3DU.ShaderProgram</a></li>
-<li><a href="H3DU.Shape.md">H3DU.Shape</a></li>
-<li><a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a></li>
-<li><a href="H3DU.SurfaceEval.md">H3DU.SurfaceEval</a></li>
-<li><a href="H3DU.TextFont.md">H3DU.TextFont</a></li>
-<li><a href="H3DU.Texture.md">H3DU.Texture</a></li>
-<li><a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a></li>
-<li><a href="H3DU.TextureLoader.md">H3DU.TextureLoader</a></li>
-<li><a href="H3DU.Transform.md">H3DU.Transform</a></li>
-<li><a href="Hypotrochoid.md">Hypotrochoid</a></li>
-<li><a href="InputTracker.md">InputTracker</a></li>
-<li><a href="MeshJSON.md">MeshJSON</a></li>
-<li><a href="ObjData.md">ObjData</a></li>
-<li><a href="PrimitiveCounter.md">PrimitiveCounter</a></li>
-<li><a href="Promise.md">Promise</a></li>
-<li><a href="SurfaceOfRevolution.md">SurfaceOfRevolution</a></li>
-<li><a href="Trochoid.md">Trochoid</a></li>
-<li><a href="tutorial-camera.md">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
-<li><a href="tutorial-colors.md">Color Strings</a></li>
-<li><a href="tutorial-filters.md">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.md">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.md">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.md">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.md">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.md">Library Overview</a></li>
-<li><a href="tutorial-paths.md">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.md">Creating Shapes</a></li>
-<li><a href="tutorial-surfaces.md">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.md">Texture Examples</a></li>
+<li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="FrameCounter.html">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
+<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
+<li><a href="InputTracker.html">InputTracker</a></li>
+<li><a href="MeshJSON.html">MeshJSON</a></li>
+<li><a href="ObjData.html">ObjData</a></li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.html">Trochoid</a></li>
+<li><a href="tutorial-camera.html">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-colors.html">Color Strings</a></li>
+<li><a href="tutorial-filters.html">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.html">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.html">Library Overview</a></li>
+<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){
