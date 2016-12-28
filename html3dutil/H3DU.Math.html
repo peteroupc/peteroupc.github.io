@@ -110,6 +110,7 @@ mathematical objects.</p>
 <li><a href="#H3DU.Math.vec3scaleInPlace">vec3scaleInPlace</a></li>
 <li><a href="#H3DU.Math.vec3sub">vec3sub</a></li>
 <li><a href="#H3DU.Math.vec3subInPlace">vec3subInPlace</a></li>
+<li><a href="#H3DU.Math.vec3toScreenPoint">vec3toScreenPoint</a></li>
 <li><a href="#H3DU.Math.vec4assign">vec4assign</a></li>
 <li><a href="#H3DU.Math.vec4copy">vec4copy</a></li>
 <li><a href="#H3DU.Math.vec4dot">vec4dot</a></li>
@@ -824,23 +825,33 @@ The distance from the &quot;camera&quot; to the far clipping plane. Objects beyo
 <h3>(static) H3DU.Math.mat4projectVec3(mat, v, vy, vz) <a id='H3DU.Math.mat4projectVec3'></a></h3>
 
 <p>Transforms a 3-element vector with a 4x4 matrix and returns
-a perspective-correct transformation of the vector,
-using all the elements of the 4x4 matrix.</p>
+a transformation of the vector in <i>normalized device coordinates</i>.</p>
 
 <p>The transformation involves
-multiplying the matrix by a 4-element vector with the same X,
+multiplying the matrix by a 4-element column vector with the same X,
 Y, and Z coordinates, but with a W coordinate equal to 1, and
 then dividing X, Y, and Z of the resulting 4-element
-vector by that vector&#39;s W (a <i>perspective division</i>),
+vector by that vector&#39;s W (a <i>perspective divide</i>),
 then returning that vector&#39;s new X, Y, and Z.</p>
+
+<p><b>About normalized device coordinates</b></p>
+
+<p>In normalized device coordinates, a 3D point located on or within
+the viewport (visible area) ranges from -1 to 1 in the X and Y coordinates.
+and the coordinates increase from left to right and from front to back.</p>
+
+<p>In OpenGL by default, the Z coordinates located on or within the
+viewport range from -1 to 1, and the Y coordinates increase
+from bottom to top. For Y coordinates that increase from top to bottom,
+reverse the sign of the Y coordinate of this method&#39;s return value.</p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
-A 4x4 matrix.</li>
+A 4x4 matrix to use to transform the vector to normalized device coordinates. This will generally be a projection-view matrix, that is, the projection matrix multiplied by the view matrix, in that order, if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, a projection-view matrix multiplied by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>.</li>
 <li><code>v</code> (Type: Array.&lt;Number&gt; | Number)<br>
-X coordinate. If &quot;vy&quot; and &quot;vz&quot; are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.</li>
+X coordinate of a 3D point to transform. If &quot;vy&quot; and &quot;vz&quot; are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.</li>
 <li><code>vy</code> (Type: Number)<br>
 Y coordinate.</li>
 <li><code>vz</code> (Type: Number)<br>
@@ -849,7 +860,9 @@ Z coordinate. To transform a 2D point, set Z to 1.</li>
 
 <h4>Return Value</h4>
 
-<p>The transformed 3x3 vector. (Type: Array.&lt;Number&gt;)</p>
+<p>The transformed 3-element vector
+in normalized device coordinates. The elements, in order, are
+the transformed vector&#39;s X, Y, and Z coordinates. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.mat4rotate(mat, angle, v, vy, vz) <a id='H3DU.Math.mat4rotate'></a></h3>
 
@@ -1028,7 +1041,7 @@ W coordinate. To transform a 3D point, set W to 1; to transform a 2D point, set 
 <h3>(static) H3DU.Math.mat4transformVec3(mat, v, vy, vz) <a id='H3DU.Math.mat4transformVec3'></a></h3>
 
 <p>Transforms a 3-element vector with the first three rows
-of a 4x4 matrix and returns the transformed vector.
+of a 4x4 matrix (in column-major order) and returns the transformed vector.
 This method assumes the matrix describes an affine
 transformation, without perspective.</p>
 
@@ -1059,7 +1072,7 @@ Z coordinate. To transform a 2D point, set Z to 1.</li>
 
 <h4>Return Value</h4>
 
-<p>The transformed 3x3 vector. (Type: Array.&lt;Number&gt;)</p>
+<p>The transformed 3-element vector. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.mat4translate(mat, v3, v3y, v3z) <a id='H3DU.Math.mat4translate'></a></h3>
 
@@ -1921,6 +1934,40 @@ The second 3-element vector.</li>
 <h4>Return Value</h4>
 
 <p>The parameter &quot;a&quot; (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec3toScreenPoint(vector, matrix, viewport, [yUp]) <a id='H3DU.Math.vec3toScreenPoint'></a></h3>
+
+<p>Transforms the 3D point specified in this 3-element vector to its X
+and Y coordinates in <i>screen space</i>, and its normalized device Z coordinate,
+using the given transformation matrix and viewport
+width and height. The X coordinates in this screen space increase
+rightward, the Y coordinates in this space increase upward
+or downward depending on the &quot;yUp&quot; parameter, and the Z
+coordinates increase away from the viewer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vector</code> (Type: Array.&lt;Number&gt;)<br>
+A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.</li>
+<li><code>matrix</code> (Type: Array.&lt;Number&gt;)<br>
+A 4x4 matrix to use to transform the vector to normalized device coordinates. This will generally be a projection-view matrix, that is, the projection matrix multiplied by the view matrix, in that order, if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, a projection-view matrix multiplied by the model (world) matrix, in that order, if the vector is in <i>model (object) space</i>. The rest of the method will transform the normalized device coordinates to screen space.</li>
+<li><code>viewport</code> (Type: Array.&lt;Number&gt;)<br>
+A 4-element array specifying the starting position and size of the viewport in screen space units (such as pixels). In order, the four elements are the starting position&#39;s X coordinate, its Y coordinate, the viewport&#39;s width, and the viewport&#39;s height. Throws an error if the width or height is less than 0.</li>
+<li><code>yUp</code> (Type: Boolean) (optional)<br>
+If true, the viewport&#39;s starting position is at the lower left corner and Y coordinates in screen space increase upward. If false, null, or omitted, the viewport&#39;s starting position is at the upper left corner and Y coordinates in screen space increase downward.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A 3-element array giving the X and Y
+coordinates, both in screen space, and the normalized device
+Z coordinate, in that order. (Type: Array.&lt;Number&gt;)</p>
+
+<h4>See Also</h4>
+
+<p><a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a>, for more information
+on normalized device coordinates.</p>
 
 <h3>(static) H3DU.Math.vec4assign(dst, src) <a id='H3DU.Math.vec4assign'></a></h3>
 

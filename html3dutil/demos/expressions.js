@@ -163,7 +163,6 @@ var Expression = function() {
 */
 Expression.isExpr = function(x) {
   "use strict";
-
   if(!x || typeof x === "undefined")return false;
   return x instanceof Operation || x instanceof Variable || x instanceof Constant;
 };
@@ -334,10 +333,10 @@ Operation.prototype.isOperation = function(op) {
   return this.operator === op;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns whether this object is equal to another.
+ * @param {Object} x Another object.
  * @memberof! Operation#
- * @returns {Object} Return value.
+ * @returns {Boolean} True if both objects are operations and have the same properties.
 */
 Operation.prototype.equals = function(x) {
   "use strict";
@@ -854,10 +853,10 @@ Variable.prototype.constantValue = function() {
   return null;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns whether this object is equal to another.
+ * @param {Object} x Another object.
  * @memberof! Variable#
- * @returns {Object} Return value.
+ * @returns {Boolean} True if both objects are variables and have the same name and sign.
 */
 Variable.prototype.equals = function(x) {
   "use strict";
@@ -956,7 +955,7 @@ Variable.prototype.subtract = function(x) {
 };
 /**
 * Returns this variable multiplied by another expression.
- * @param {*} x
+ * @param {Expression} x Another expression.
  * @memberof! Variable#
  * @returns {Expression} Return value.
 */
@@ -965,7 +964,7 @@ Variable.prototype.multiply = function(x) {
   return this.combineOp("mul", x);
 };
 /**
- * Returns an expression equal to this operation divided by another expression.
+ * Returns an expression equal to this variable divided by another expression.
  * @param {Expression} x An expression.
  * @memberof! Variable#
  * @returns {Expression} Return value.
@@ -994,10 +993,10 @@ Constant.prototype.isOperation = function() {
   return false;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns whether this object is equal to another.
+ * @param {Object} x Another object.
  * @memberof! Constant#
- * @returns {Object} Return value.
+ * @returns {Boolean} True if both objects are constants and have the same value.
 */
 Constant.prototype.equals = function(x) {
   "use strict";
@@ -1068,7 +1067,7 @@ Constant.prototype.combineOp = function(operation, x) {
   return op.degen();
 };
 /**
- * TODO: Not documented yet.
+ * Returns a constant with the negated value of this one.
  * @memberof! Constant#
  * @returns {Object} Return value.
 */
@@ -1077,10 +1076,11 @@ Constant.prototype.negate = function() {
   return new Constant(-this.value);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns a constant with the given value added to this one,
+ * or an expression that adds this constant and the given operation.
+ * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
- * @returns {Object} Return value.
+ * @returns {Operation} Return value.
 */
 Constant.prototype.add = function(x) {
   "use strict";
@@ -1091,8 +1091,9 @@ Constant.prototype.add = function(x) {
   return this.combineOp("plus", x);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns a constant with the given value subtracted from this one,
+ * or an expression that subtracts the given operation from this constant.
+ * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
  * @returns {Object} Return value.
 */
@@ -1102,8 +1103,9 @@ Constant.prototype.subtract = function(x) {
   return this.add(typeof x === "number" ? -x : x.negate());
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns a constant with the given value multiplied by this one,
+ * or an expression that multiplies this constant and the given operation.
+ * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
  * @returns {Object} Return value.
 */
@@ -1116,8 +1118,9 @@ Constant.prototype.multiply = function(x) {
   return this.combineOp("mul", x);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x
+ * Returns a constant with the given value divided by this one,
+ * or an expression that divides this constant and the given operation.
+ * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
  * @returns {Object} Return value.
 */

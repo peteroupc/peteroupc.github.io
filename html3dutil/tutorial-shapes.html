@@ -8,7 +8,7 @@
 
 <h2>Introduction <a id=Introduction></a></h2>
 
-<p>This article explains how my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>
+<p>This page explains how my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
 shapes.</p>
 
@@ -54,20 +54,20 @@ examples of 3D models that can be created using the Mesh class and built-in shap
 
 <h3>Built-In Shapes <a id=Built_In_Shapes></a></h3>
 
-<p>The <a href="H3DU.Meshes.html"><code>Meshes</code></a> class includes several handy methods for creating built-in shapes.
-All methods described below return a <code>Mesh</code> object that describes the triangles they
+<p>The <a href="H3DU.Meshes.html"><code>H3DU.Meshes</code></a> class includes several handy methods for creating built-in shapes.
+All methods described below return a <code>H3DU.Mesh</code> object that describes the triangles they
 are composed of.  See &quot;Custom Shapes&quot; below for more on meshes.</p>
 
 <p><strong>3D Figures:</strong></p>
 
 <ul>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createBox">Meshes.createBox()</a> - Creates a cube or box.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createBox">H3DU.Meshes.createBox()</a> - Creates a cube or box.</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCylinder">H3DU.Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
 or top.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createTorus">Meshes.createTorus()</a> - Creates a torus (doughnut shape).</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createSphere">Meshes.createSphere()</a> - Creates a sphere.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createClosedCylinder">H3DU.Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createTorus">H3DU.Meshes.createTorus()</a> - Creates a torus (doughnut shape).</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createSphere">H3DU.Meshes.createSphere()</a> - Creates a sphere.</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCapsule">H3DU.Meshes.createCapsule()</a> - Creates a capsule shape.</li>
 </ul>
 
 <p><strong>2D Figures:</strong></p>
@@ -82,7 +82,7 @@ with a hole where the middle of the complete disk would be.</li>
 
 <h3>Custom Shapes <a id=Custom_Shapes></a></h3>
 
-<p>Also included is a <code>Mesh</code> class for defining shapes not given among the built-in ones.
+<p>Also included is a <code>H3DU.Mesh</code> class for defining shapes not given among the built-in ones.
 Shapes can consist of triangles, lines, or points.</p>
 
 <p>There are two ways for specifying shapes:  through the Mesh constructor, or through
@@ -90,7 +90,7 @@ methods that specify the mesh&#39;s data vertex by vertex.</p>
 
 <h3>The Mesh Constructor <a id=The_Mesh_Constructor></a></h3>
 
-<p>The Mesh constructor lets you define a shape from a predefined array of vertex data.
+<p>The <code>H3DU.Mesh</code> constructor lets you define a shape from a predefined array of vertex data.
 Here&#39;s how.</p>
 
 <p>(1) Create an array of numbers giving the X, Y, and Z coordinate for each vertex:</p>
@@ -133,30 +133,30 @@ line segment.</p>
 
 <p>(3) Call the mesh constructor with the vertex and index arrays.</p>
 
-<pre><code>var bits = Mesh.NORMALS_BIT; // Assumes we used the vertex array with normals
-var mesh = new Mesh(vertices, indices, bits);
+<pre><code>var bits = H3DU.Mesh.NORMALS_BIT; // Assumes we used the vertex array with normals
+var mesh = new H3DU.Mesh(vertices, indices, bits);
 </code></pre>
 
 <p>Note that you must include a set of bits indicating what kind of data the vertex
 array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; parameter.) The bits are:</p>
 
 <ul>
-<li><code>Mesh.NORMALS_BIT</code> - if you included normals for each vertex (3 elements)</li>
-<li><code>Mesh.COLORS_BIT</code> - if you included colors for each vertex (3 elements)</li>
-<li><code>Mesh.TEXCOORDS_BIT</code> - if you included texture coordinates for each vertex (2 elements)</li>
-<li><code>Mesh.LINES_BIT</code> - if the mesh defines a set of lines rather than triangles</li>
-<li><code>Mesh.POINTS_BIT</code> - if the mesh defines a set of points (you can&#39;t set both <code>LINES_BIT</code> and
+<li><code>H3DU.Mesh.NORMALS_BIT</code> - if you included normals for each vertex (3 elements)</li>
+<li><code>H3DU.Mesh.COLORS_BIT</code> - if you included colors for each vertex (3 elements)</li>
+<li><code>H3DU.Mesh.TEXCOORDS_BIT</code> - if you included texture coordinates for each vertex (2 elements)</li>
+<li><code>H3DU.Mesh.LINES_BIT</code> - if the mesh defines a set of lines rather than triangles</li>
+<li><code>H3DU.Mesh.POINTS_BIT</code> - if the mesh defines a set of points (you can&#39;t set both <code>LINES_BIT</code> and
 <code>POINTS_BIT</code>).</li>
 </ul>
 
 <p>The bits may be combined as in the following example:</p>
 
-<pre><code>var bits = Mesh.NORMALS_BIT | Mesh.COLORS_BIT;
+<pre><code>var bits = H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT;
 </code></pre>
 
-<p>Alternatively, you can call the Mesh constructor with no arguments:</p>
+<p>Alternatively, you can call the <code>H3DU.Mesh</code> constructor with no arguments:</p>
 
-<pre><code>var mesh = new Mesh();
+<pre><code>var mesh = new H3DU.Mesh();
 </code></pre>
 
 <p>Doing so will create a mesh with no vertices.</p>
@@ -166,8 +166,8 @@ array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; 
 <p>Alternatively, or in addition, to the method described above,
 you can specify the mesh&#39;s shape by calling methods that give each vertex&#39;s position and parameters:</p>
 
-<p>(1) Call the <code>mode()</code> method and choose a primitive mode, such as <code>Mesh.TRIANGLES</code>
-or <code>Mesh.QUAD_STRIP</code>:</p>
+<p>(1) Call the <code>mode()</code> method and choose a primitive mode, such as <code>H3DU.Mesh.TRIANGLES</code>
+or <code>H3DU.Mesh.QUAD_STRIP</code>:</p>
 
 <pre><code>mesh.mode(H3DU.Mesh.TRIANGLES);
 </code></pre>
@@ -218,7 +218,8 @@ were given:</p>
 the same mode.  What this does is reset the state of the primitive so that future vertices
 won&#39;t depend on previous vertices.  For example, if you define a <code>TRIANGLE_FAN</code>, and
 you call <code>mesh.mode(H3DU.Mesh.TRIANGLE_FAN)</code>, the newly defined <code>TRIANGLE_FAN</code> will be
-&quot;disconnected&quot; from the previous one as far as the mesh object is concerned.</p>
+&quot;disconnected&quot; from the previous one as far as the mesh object is concerned.  However,
+a single <code>Mesh</code> can contain only one kind of primitive (triangles, lines, or points) at a time.</p>
 
 <h3>Transforming the Mesh <a id=Transforming_the_Mesh></a></h3>
 
@@ -283,14 +284,15 @@ mesh = mesh.recalcNormals();
 
 <h2>Binding Shapes <a id=Binding_Shapes></a></h2>
 
-<p>Once you have a mesh of a 3D shape, you still need to bind it to the 3D scene
-in order to have it drawn.  This is where the <a href="H3DU.Shape.html"><code>H3DU.Shape</code></a> class comes into
+<p>Once you have a mesh of a 3D shape, you still need to attach it to a shape
+and a batch of shapes in order for the renderer to draw it.  This is where
+the <a href="H3DU.Shape.html"><code>H3DU.Shape</code></a> class comes into
 play; this class associates a 3D mesh with its location and orientation in the scene,
 as well as its color and appearance.  To attach a mesh to a 3D scene:</p>
 
-<p>(1) Create a <code>Shape</code> object by passing the mesh to the 3D scene&#39;s <code>makeShape()</code> method:</p>
+<p>(1) Create a <code>Shape</code> object by passing the mesh to the <code>H3DU.Shape</code> constructor:</p>
 
-<pre><code>var shape = scene3d.makeShape(mesh);
+<pre><code>var shape = new H3DU.Shape(mesh);
 </code></pre>
 
 <p>(2) You may also set the <code>Shape</code>&#39;s color, appearance, and position, using the examples below:</p>
@@ -309,7 +311,7 @@ shape.setMaterial(new H3DU.Material(&quot;blue&quot;,&quot;blue&quot;,&quot;whit
 shape.setMaterial(new H3DU.Material(&quot;lime&quot;,&quot;lime&quot;,&quot;white&quot;,30,[0.2,0.2,0.2]));
 // set a texture; this requires the mesh to have texture
 // coordinates assigned to each vertex
-shape.setMaterial(H3DU.Material.fromTexture(&quot;texture.png&quot;));
+shape.setTexture(&quot;texture.png&quot;);
 </code></pre>
 
 <p>Examples for setting position:</p>
@@ -334,13 +336,13 @@ shape.setScale([2,2,2]);
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.</p>
 
-<p>(3) Add the shape to the 3D scene:</p>
+<p>(3) Add the shape to a 3D batch (<a href="H3DU.Batch3D.html">`H3DU.Batch3D</a>):</p>
 
-<pre><code>scene3d.addShape(shape);
+<pre><code>batch3d.addShape(shape);
 </code></pre>
 
-<p>Now, the next time <code>scene3d.render()</code> is called, the <a href="H3DU.Scene3D.html"><code>H3DU.Scene3D</code></a> will render the
-given shape to the scene.</p>
+<p>Now, the next time <code>scene3d.render(batch)</code> is called, the <a href="H3DU.Scene3D.html"><code>H3DU.Scene3D</code></a> will render the
+given shape to the scene through the 3D batch.</p>
 
 <h2>Shape Groups <a id=Shape_Groups></a></h2>
 

@@ -27,29 +27,82 @@ function shiny(color) {
   return new H3DU.Material(color, color, "white", 5);
 }
 
+// Class that positions an HTML text element
+function Label(text, pos) {
+  "use strict";
+  this.label = document.createElement("div");
+  this.label.innerHTML = text;
+  this.label.style.width = "150px";
+  this.label.style.textAlign = "center";
+  this.label.style.display = "none";
+  this.label.style.position = "absolute";
+  this.label.style.overflow = "hidden";
+  document.body.appendChild(this.label);
+  this.pos = pos;
+  this.update = function(matrix, width, height) {
+    var pos = H3DU.Math.vec3toScreenPoint(this.pos, matrix, [0, 0, width, height]);
+    if(pos[2] < -1 || pos[2] > 1) {
+      // Too close, too far, or behind the camera
+      this.label.style.display = "none";
+    } else {
+      this.label.style.display = "block";
+      this.label.style.left = pos[0] - 75 + "px";
+      this.label.style.top = pos[1] + "px";
+    }
+  };
+}
+
+function Labels(scene, batch) {
+  "use strict";
+  this.labels = [];
+  this.batch = batch;
+  this.scene = scene;
+  this.add = function(text, pos) {
+    this.labels.push(new Label(text, pos));
+  };
+  this.update = function() {
+    if(this.labels.length === 0)return;
+    var proj = this.batch.getProjectionMatrix();
+    var view = this.batch.getViewMatrix();
+    var width = this.scene.getClientWidth();
+    var height = this.scene.getClientHeight();
+    proj = H3DU.Math.mat4multiply(proj, view);
+    for(var i = 0;i < this.labels.length;i++) {
+      this.labels[i].update(proj, width, height);
+    }
+  };
+}
+
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
 var scene = new H3DU.Scene3D(document.getElementById("canvas"))
-   .cullFace(H3DU.Scene3D.BACK);
+   .cullFace(H3DU.Scene3D.BACK)
+   .setClearColor("white");
 var sub = new H3DU.Batch3D()
    .orthoAspect(-20, 20, -10, 10, -20, 20);
 sub.getLights().setDefaults();
+var labels = new Labels(scene, sub);
 var mesh;
 mesh = Polyhedra.hexahedron(4.5, 0);
-sub.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15, 5, 0));
+var shape = new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15, 5, 0);
+sub.addShape(shape);
+labels.add("Cube", [-15, 5, 0]);
 mesh = Polyhedra.octahedron(4.5, 0);
 sub.addShape(
     new H3DU.Shape(mesh).setMaterial(shiny("blue")).setPosition(-5, 5, 0));
+labels.add("Octahedron", [-5, 5, 0]);
 mesh = Polyhedra.icosahedron(4.5, 0);
 sub.addShape(
     new H3DU.Shape(mesh).setMaterial(shiny("lime")).setPosition(5, 5, 0));
+labels.add("Icosahedron", [5, 5, 0]);
 mesh = Polyhedra.tetrahedron(4.5, 0);
 sub.addShape(
     new H3DU.Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15, 5, 0));
+labels.add("Tetrahedron", [15, 5, 0]);
 mesh = Polyhedra.dodecahedron(4.5, 0);
 sub.addShape(
     new H3DU.Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15, -5, 0));
+labels.add("Dodecahedron", [-15, -5, 0]);
 var rotation = [0, 0, 0];
 var timer = {};
 H3DU.renderLoop(function(time) {
@@ -60,6 +113,7 @@ H3DU.renderLoop(function(time) {
   }
   rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);
   rotation[1] = 360 * H3DU.getTimePosition(timer, time, 12000);
+  labels.update();
   scene.render(sub);
 });
 // -->
