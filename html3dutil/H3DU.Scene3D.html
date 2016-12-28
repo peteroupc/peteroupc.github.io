@@ -33,7 +33,6 @@ A WebGL context to associate with this scene, or an HTML canvas element to creat
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Scene3D.supportsDerivatives">.supportsDerivatives</a></li>
 <li><a href="#H3DU.Scene3D_H3DU.Scene3D_addShape">addShape</a></li>
 <li><a href="#H3DU.Scene3D_H3DU.Scene3D_clear">clear</a></li>
 <li><a href="#H3DU.Scene3D_H3DU.Scene3D_clearDepth">clearDepth</a></li>
@@ -112,22 +111,6 @@ to first vertex, in window coordinates (X and Y only), runs counterclockwise.</p
  rather than through this class.</b></p>
 
 <p>An array of shapes that are part of the scene.</p>
-
-<h3>H3DU.Scene3D.supportsDerivatives(context) <a id='H3DU.Scene3D.supportsDerivatives'></a></h3>
-
-<p>Returns whether the WebGL context supports
-derivative functions in GLSL shaders.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>context</code> (Type: WebGLRenderingContext | Object)<br>
-A WebGL context, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>True if the context supports derivatives; false otherwise. (Type: Boolean)</p>
 
 <h3>H3DU.Scene3D#addShape(shape) <a id='H3DU.Scene3D_H3DU.Scene3D_addShape'></a></h3>
 

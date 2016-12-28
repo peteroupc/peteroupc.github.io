@@ -8,8 +8,9 @@
 
 <h2>Introduction <a id=Introduction></a></h2>
 
-<p>This tip describes projection and view transforms commonly used in 3D graphics,
-especially when using my <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.</p>
+<p>This page describes conventions for specifying projection and
+view transforms in 3D graphics, especially when using my
+<a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.</p>
 
 <p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
 
@@ -50,8 +51,11 @@ is not discussed in this page.</li>
 <li>A <em>projection matrix</em> transforms coordinates in camera space to <em>clip space</em>.</li>
 </ul>
 
-<p>Additionally, the graphics pipeline (outside the HTML 3D library) converts the
-clip space coordinates to <em>normalized device coordinates</em>, then <em>window space</em>
+<p>As <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System">explained later</a> on this page,
+however, these transformations and matrices are
+merely for the convenience of the library; all the graphics pipeline expects is the clip
+space coordinates of the things it draws.  Once it gets those coordinates, the pipeline
+converts them to <em>normalized device coordinates</em>, then <em>window space</em>
 coordinates when drawing objects on the screen.</p>
 
 <h2>Projection Transform <a id=Projection_Transform></a></h2>
@@ -97,7 +101,7 @@ near clipping plane will be located at the chopped-off top, and the far clipping
 </ul>
 
 <p>The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also
-known as <em>clip coordinates</em>.  However, this is not the whole story, since in general, nearly all lines that are parallel in world space will generally not appear parallel in a perspective transformation, so additional math is needed to achieve the perspective effect. The graphics pipeline (outside the HTML 3D library) does this by dividing the X, Y, and Z components by the W component to get the 3D point&#39;s <em>normalized device coordinates</em>.</p>
+known as <em>homogeneous coordinates</em> in <em>clip space</em>.  However, this is not the whole story, since in general, nearly all lines that are parallel in world space will generally not appear parallel in a perspective transformation, so additional math is needed to achieve the perspective effect. The graphics pipeline (outside the HTML 3D library) does this by dividing the X, Y, and Z components by the W component to get the 3D point&#39;s <em>normalized device coordinates</em>.</p>
 
 <p>The following methods define a perspective projection.</p>
 
@@ -189,7 +193,7 @@ the <code>Batch3D</code> is rendered, and the method&#39;s six parameters are th
 
 <p>There are other kinds of possible projections, such as oblique projections
 or isometric projections.  For these
-and other projections, you can specify a custom projection matrix to the 3D scene using the
+and other projections, you can specify a custom projection matrix using the
 <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.setProjectionMatrix"><code>setProjectionMatrix()</code></a>
 method.</p>
 
@@ -241,9 +245,19 @@ This is optional.  The default is [0, 1, 0].</li>
 
 <h2>Vertex Coordinates in the Graphics System <a id=Vertex_Coordinates_in_the_Graphics_System></a></h2>
 
-<p>The concepts of <em>eye space</em>, <em>camera space</em>, and <em>world space</em>, as well as the concepts of <em>projection</em>, <em>view</em>, <em>model-view</em>, and <em>world</em> matrices, are merely conventions, which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.</p>
+<p>The concepts of <em>eye space</em>, <em>camera space</em>, and <em>world space</em>, as well as
+the use of transformations and matrices, such as <em>projection</em>, <em>view</em>, <em>model-view</em>,
+and <em>world</em> matrices, are merely conventions,
+which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.</p>
 
-<p>When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point, all it really expects is the location of that primitive&#39;s vertices in <em>clip space</em>.  A so-called <em>vertex shader</em>  communicates those locations to the graphics pipeline using the input it&#39;s given.  Although the vertex shader can use projection, view, and world matrices to help the pipeline find a vertex&#39;s clip space coordinates, it doesn&#39;t have to, and can use a different paradigm for this purpose.  For example, the vertex shader can be passed vertex coordinates that are already in clip space and just output those coordinates without transforming them.</p>
+<p>When the graphics pipeline (outside of the HTML 3D Library) draws a triangle, line or point,
+all it really expects is the location of that primitive&#39;s vertices in <em>clip space</em>.  A
+so-called <em>vertex shader</em>  communicates those locations to the graphics pipeline using
+the input it&#39;s given.  Although the vertex shader can use projection, view, and world
+matrices to help the pipeline find a vertex&#39;s clip space coordinates, it doesn&#39;t have to,
+and can use a different paradigm for this purpose.  For example, the vertex shader can
+be passed vertex coordinates that are already in clip space and just output those coordinates
+without transforming them.</p>
 
 <h2>Other Pages <a id=Other_Pages></a></h2>
 

@@ -455,7 +455,7 @@ vector is transformed with this matrix, its W component is generated as follows:
 <p><small>The graphics system (outside of this JavaScript library) uses this W component
 to help achieve the perspective rendering effect.  Assuming the transformed vector
 is a set of device coordinates returned by a vertex shader
-(a so-called <em>clip space</em> vector), the system will divide the vector&#39;s
+(a so-called <em>clip space</em> vector in <em>homogeneous coordinates</em>), the system will divide the vector&#39;s
 X, Y, and Z by its W to get the vector&#39;s <em>normalized device coordinates</em>.</small></p>
 
 <p>Related functions:</p>
