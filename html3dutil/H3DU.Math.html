@@ -111,6 +111,7 @@ mathematical objects.</p>
 <li><a href="#H3DU.Math.vec3sub">vec3sub</a></li>
 <li><a href="#H3DU.Math.vec3subInPlace">vec3subInPlace</a></li>
 <li><a href="#H3DU.Math.vec3toScreenPoint">vec3toScreenPoint</a></li>
+<li><a href="#H3DU.Math.vec3triple">vec3triple</a></li>
 <li><a href="#H3DU.Math.vec4assign">vec4assign</a></li>
 <li><a href="#H3DU.Math.vec4copy">vec4copy</a></li>
 <li><a href="#H3DU.Math.vec4dot">vec4dot</a></li>
@@ -1607,8 +1608,7 @@ A 3-element vector.</li>
 <h3>(static) H3DU.Math.vec3cross(a, b) <a id='H3DU.Math.vec3cross'></a></h3>
 
 <p>Finds the cross product of two 3-element vectors (called A and B).
-The following are properties of
-the cross product:<ul>
+The following are properties of the cross product:<ul>
 <li>The cross product will be a vector that is perpendicular to both A and B.
 <li>Switching the order of A and B results in a cross product
 vector with the same length but opposite direction.
@@ -1623,7 +1623,10 @@ true.) The triangle&#39;s area is half of the cross product&#39;s length.
 of the sine of the shortest angle between them is equal to the length of their
 cross product. <small>(More formally, the length of the cross
 product equals |<b>a</b>| * |<b>b</b>| * |sin &theta;|;
-where |<b>x</b>| is the length of vector <b>x</b>.)</small></ul>
+where |<b>x</b>| is the length of vector <b>x</b>.)</small>
+<li>If A and B are unit vectors, the cross product will be a unit vector only if A is perpendicular
+ to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
+</ul>
 The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
 follows:</p>
 
@@ -1632,13 +1635,16 @@ follows:</p>
 &lt;b&gt;c&lt;/b&gt;.z = &lt;b&gt;a&lt;/b&gt;.x * &lt;b&gt;b&lt;/b&gt;.y - &lt;b&gt;a&lt;/b&gt;.y * &lt;b&gt;b&lt;/b&gt;.x
 </code></pre>
 
+<p>Another useful function, the <i>triple product</i>, can be expressed as the dot
+product of two vectors, one of which is a cross product.</p>
+
 <h4>Parameters</h4>
 
 <ul>
 <li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
-The first vector.</li>
+The first 3-element vector.</li>
 <li><code>b</code> (Type: Array.&lt;Number&gt;)<br>
-The second vector.</li>
+The second 3-element vector.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1669,7 +1675,7 @@ calculate a triangle&#39;s normal vector and its area.</p>
 sum of the products of their components (for example, <b>a</b>&#39;s X times
 <b>b</b>&#39;s X).</p>
 
-<p>The dot product has the following properties:</p>
+<p>The following are properties of the dot product:</p>
 
 <ul>
 <li>If both vectors are unit vectors (<a href="H3DU.Math.html#H3DU.Math.vec3norm">"normalized" vectors</a> with a length of 1), the cosine
@@ -1691,9 +1697,9 @@ the vector's length squared. This is illustrated in the example.
 
 <ul>
 <li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
-The first vector.</li>
+The first 3-element vector.</li>
 <li><code>b</code> (Type: Array.&lt;Number&gt;)<br>
-The second vector.</li>
+The second 3-element vector.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1968,6 +1974,71 @@ Z coordinate, in that order. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a>, for more information
 on normalized device coordinates.</p>
+
+<h3>(static) H3DU.Math.vec3triple(a, b, c) <a id='H3DU.Math.vec3triple'></a></h3>
+
+<p>Finds the scalar triple product of three vectors (A, B, and C). The triple
+product is the <a href="H3DU.Math.html#H3DU.Math.vec3dot">dot product</a> of both A and the
+<a href="H3DU.Math.html#H3DU.Math.vec3cross">cross product</a>
+of B and C. The following are properties of the scalar triple product
+(called triple product in what follows):<ul>
+<li>Switching the order of B and C, A and C, or A and B results in a triple product
+with its sign reversed. Moving all three parameters to different positions, though,
+results in the same triple product.
+<li>The triple product&#39;s absolute value is the volume of a parallelepiped (skewed
+box) where three of its sides having a vertex in common are
+defined by A, B, and C, in any order.
+<li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
+<li>The triple product is the same as the <i>determinant</i> of a 3x3 matrix whose
+rows or columns are the vectors A, B, and C, in that order.
+<li>Assume A is a unit vector and perpendicular to vectors B and C. If the triple product
+ is negative (resp. positive), then A points directly away from (resp. points at) the cross product of
+ B and C -- which will be perpendicular -- and the angle from B to C, when rotated
+ about vector A, is negative (resp. positive). (See the example below.)</ul>
+ (A unit vector is a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a>
+ with a length of 1.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The first 3-element vector.</li>
+<li><code>b</code> (Type: Array.&lt;Number&gt;)<br>
+The second 3-element vector, or the first parameter to the cross product.</li>
+<li><code>c</code> (Type: Array.&lt;Number&gt;)<br>
+The third 3-element vector, or the second parameter to the cross product.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A number giving the triple product. (Type: Number)</p>
+
+<h4>Example</h4>
+
+<p>The following example finds the signed angle of
+two vectors that lie on a plane with the given normal.</p>
+
+<pre><code>// The following example uses the positive Z-axis as the normal
+// vector, since it&#39;s known to be perpendicular to vectorB and vectorC
+var normalVector = [0, 0, 1];
+var vectorB = [4, 2, 0];
+var vectorC = [5, 0, 0];
+vectorB=H3DU.Math.vec3normInPlace(vectorB);
+vectorC=H3DU.Math.vec3normInPlace(vectorC);
+normalVector=H3DU.Math.vec3normInPlace(normalVector);
+var dot=H3DU.Math.dot(vectorB,vectorC);
+// adjust dot for robustness
+dot=(dot&lt;-1 ? -1 : (dot&gt;1 ? 1 : dot));
+// acos will always return a positive angle here
+var angle=Math.acos(dot);
+var triple=H3DU.Math.vec3triple(normalVector,vectorB,vectorC);
+// The angle is negative if triple product is negative.
+// NOTE: If the &quot;normalVector&quot; points toward the viewer,
+// a positive value for the angle means the angle runs in
+// a counterclockwise direction for right-handed coordinate systems
+// and in a clockwise direction for left-handed systems.
+angle*=(triple&lt;0 ? -1.0 : 1.0);
+</code></pre>
 
 <h3>(static) H3DU.Math.vec4assign(dst, src) <a id='H3DU.Math.vec4assign'></a></h3>
 
