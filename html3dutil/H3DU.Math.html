@@ -839,7 +839,8 @@ then returning that vector&#39;s new X, Y, and Z.</p>
 
 <p>In normalized device coordinates, a 3D point located on or within
 the viewport (visible area) ranges from -1 to 1 in the X and Y coordinates,
-and the coordinates increase from left to right and from front to back.</p>
+and the X and Z coordinates increase from left to right
+and from front to back.</p>
 
 <p>In OpenGL by default, the Z coordinates located on or within the
 viewport also range from -1 to 1, and the Y coordinates increase
@@ -1994,9 +1995,11 @@ rows or columns are the vectors A, B, and C, in that order.
 <li>Assume A is a unit vector and perpendicular to vectors B and C. If the triple product
  is negative (resp. positive), then A points directly away from (resp. points at) the cross product of
  B and C -- which will be perpendicular -- and the angle from B to C, when rotated
- about vector A, is negative (resp. positive). (See the example below.)</ul>
- (A unit vector is a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a>
- with a length of 1.)</p>
+ about vector A, is negative (resp. positive). (See the example below. A unit vector is
+ a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1.)
+<li>If A, B, and C are the X, Y, and Z axes (basis vectors) of a coordinate system, the
+system is &quot;right-handed&quot; if the triple product is positive, and &quot;left-handed&quot; if negative.
+</ul></p>
 
 <h4>Parameters</h4>
 
