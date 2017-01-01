@@ -268,8 +268,7 @@ H3DU.MatrixStack.prototype.popMatrix = function() {
  * an orthographic projection.
  * In this projection, the left clipping plane is parallel to the right clipping
  * plane and the top to the bottom.<p>
- * This method assumes a right-handed coordinate system, such as
- * OpenGL's.
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * @param {Number} l Leftmost coordinate of the 3D view.
  * @param {Number} r Rightmost coordinate of the 3D view.
  * (Note that r can be greater than l or vice versa.)
@@ -309,8 +308,7 @@ H3DU.MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
  * a frustum matrix.
- * This method assumes a right-handed coordinate system, such as
- * OpenGL's.
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * @param {Number} l X-coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {Number} r X-coordinate of the point where the right
@@ -355,8 +353,7 @@ H3DU.MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
  * a matrix representing a camera view.
- * This method assumes a right-handed coordinate system, such as
- * OpenGL's.
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * @param {Number} ex X coordinate of the camera position in world space.
  * @param {Number} ey Y coordinate of the camera position.
  * @param {Number} ez Z coordinate of the camera position.
@@ -441,8 +438,7 @@ H3DU.MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz)
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
  * a 2D orthographic projection.
- * This method assumes a right-handed coordinate system, such as
- * OpenGL's.
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
  * @param {Number} l Leftmost coordinate of the 2D view.
  * @param {Number} r Rightmost coordinate of the 2D view.
  * (Note that r can be greater than l or vice versa.)
@@ -474,8 +470,7 @@ H3DU.MatrixStack.prototype.ortho2d = function(l, r, b, t) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
  * a matrix that defines a perspective projection.<p>
- * This method assumes a right-handed coordinate system, such as
- * OpenGL's.
+ * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
 * @param {Number} fov Vertical field of view, in degrees. Should be less
 * than 180 degrees.  (The smaller
 * this number, the bigger close objects appear to be.  As a result,

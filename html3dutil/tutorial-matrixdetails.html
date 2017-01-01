@@ -445,7 +445,7 @@ Multiplies two matrices</li>
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the <code>H3DU.Math</code> library.</p>
 
-<p>One example of such a transformation is the frustum matrix.  When a 4-element
+<p>One example of such a transformation is the perspective projection matrix.  When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:</p>
 
 <ul>
@@ -453,10 +453,7 @@ vector is transformed with this matrix, its W component is generated as follows:
 </ul>
 
 <p><small>The graphics system (outside of this JavaScript library) uses this W component
-to help achieve the perspective rendering effect.  Assuming the transformed vector
-is a set of device coordinates returned by a vertex shader
-(a so-called <em>clip space</em> vector in <em>homogeneous coordinates</em>), the system will divide the vector&#39;s
-X, Y, and Z by its W to get the vector&#39;s <em>normalized device coordinates</em>.</small></p>
+to help achieve the perspective rendering effect (see <a href="tutorial-camera.html"><em>The &quot;Camera&quot; and Geometric Transforms</em></a>).</small></p>
 
 <p>Related functions:</p>
 
@@ -564,7 +561,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
 <li><a href="tutorial-colors.html">Color Strings</a></li>
 <li><a href="tutorial-filters.html">Graphics Filters</a></li>
 <li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>

@@ -40,7 +40,7 @@ function Label(text, pos) {
   document.body.appendChild(this.label);
   this.pos = pos;
   this.update = function(matrix, width, height) {
-    var pos = H3DU.Math.vec3toScreenPoint(this.pos, matrix, [0, 0, width, height]);
+    var pos = H3DU.Math.vec3toWindowPoint(this.pos, matrix, [0, 0, width, height]);
     if(pos[2] < -1 || pos[2] > 1) {
       // Too close, too far, or behind the camera
       this.label.style.display = "none";

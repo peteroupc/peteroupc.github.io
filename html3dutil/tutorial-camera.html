@@ -1,8 +1,8 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The &quot;Camera&quot; and the Projection and View Transforms</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The &quot;Camera&quot; and Geometric Transforms</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>The &quot;Camera&quot; and the Projection and View Transforms</h1>
+<h1>The &quot;Camera&quot; and Geometric Transforms</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
@@ -10,7 +10,9 @@
 
 <p>This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
-<a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.</p>
+<a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>,
+and explains how the GL pipeline transforms vertices to help
+it draw triangles, lines, and other graphics primitives.</p>
 
 <p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
 
@@ -18,7 +20,7 @@ view transforms in 3D graphics, especially when using my
 
 <p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#The_Camera_and_the_Projection_and_View_Transforms">The &quot;Camera&quot; and the Projection and View Transforms</a><br>&nbsp;&nbsp;<a href="#Overview_of_Transformations">Overview of Transformations</a><br><a href="#Projection_Transform">Projection Transform</a><br>&nbsp;&nbsp;<a href="#Perspective_Projection">Perspective Projection</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Demo">Demo</a><br>&nbsp;&nbsp;<a href="#Orthographic_Projection">Orthographic Projection</a><br>&nbsp;&nbsp;<a href="#Other_Projections">Other Projections</a><br><a href="#View_Transform">View Transform</a><br><a href="#Vertex_Coordinates_in_the_Graphics_System">Vertex Coordinates in the Graphics System</a><br><a href="#Other_Pages">Other Pages</a><br></p>
 
-<h2>The &quot;Camera&quot; and the Projection and View Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a></h2>
+<h2>The &quot;Camera&quot; and Geometric Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a></h2>
 
 <p>The <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html"><code>Batch3D</code></a> class
 of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;.
@@ -54,9 +56,8 @@ is not discussed in this page.</li>
 <p>As <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System">explained later</a> on this page,
 however, these transformations and matrices are
 merely for the convenience of the library; all the graphics pipeline expects is the clip
-space coordinates of the things it draws.  Once it gets those coordinates, the pipeline
-converts them to <em>normalized device coordinates</em>, then <em>window space</em>
-coordinates when drawing objects on the screen.</p>
+space coordinates of the things it draws.  The pipeline uses those coordinates
+and their transformed <em>window coordinates</em> when rendering things on the screen.</p>
 
 <h2>Projection Transform <a id=Projection_Transform></a></h2>
 
@@ -100,12 +101,14 @@ the vertical visibility range.</li>
 near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.</li>
 </ul>
 
-<p>The perspective projection converts 3D coordinates to 4-element vectors in the form (X, Y, Z, W), also
-known as <em>homogeneous coordinates</em> in <em>clip space</em>.  However, this is not the whole story, since in general, nearly all lines that are parallel in world space will generally not appear parallel in a perspective transformation, so additional math is needed to achieve the perspective effect. The graphics pipeline (outside the HTML 3D library) does this by dividing the X, Y, and Z components by the W component to get the 3D point&#39;s <em>normalized device coordinates</em>.</p>
+<p>The perspective projection converts 3D coordinates to 4-element vectors in <em>clip space</em>.
+However, this is not the whole story, since in general, nearly all lines that are parallel in world space
+will generally not appear parallel in a perspective projection, so additional math is needed to
+achieve the perspective effect. This will be <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System">explained later</a>.</p>
 
 <p>The following methods define a perspective projection.</p>
 
-<p><strong><a href="http://peteroupc.github.io/html3dutil/H3DU.Math.html#.mat4perspective"><code>H3DU.Math.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
+<p><strong><a href="H3DU.Math.html#H3DU.Math.mat4perspective"><code>H3DU.Math.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
 
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -118,7 +121,7 @@ to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> 
 <li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
 </ul>
 
-<p><strong><code>batch3d.perspectiveAspect(fov near, far)</code></strong></p>
+<p><strong>[<code>batch3d.perspectiveAspect(fov near, far)</code>]{H3DU.Batch3D#perspectiveAspect</strong></p>
 
 <p>This method of the <code>H3DU.Batch3D</code> class sets the projection matrix to a perspective
 projection.  The <code>fov</code>, <code>near</code>, and <code>far</code> parameters are the same as for <code>mat4perspective</code>,
@@ -246,7 +249,7 @@ This is optional.  The default is [0, 1, 0].</li>
 <h2>Vertex Coordinates in the Graphics System <a id=Vertex_Coordinates_in_the_Graphics_System></a></h2>
 
 <p>The concepts of <em>eye space</em>, <em>camera space</em>, and <em>world space</em>, as well as
-the use of transformations and matrices, such as <em>projection</em>, <em>view</em>, <em>model-view</em>,
+the use of matrices related to them, such as <em>projection</em>, <em>view</em>, <em>model-view</em>,
 and <em>world</em> matrices, are merely conventions,
 which exist for convenience in the HTML 3D Library and many other 3D graphics libraries.</p>
 
@@ -258,6 +261,20 @@ matrices to help the pipeline find a vertex&#39;s clip space coordinates, it doe
 and can use a different paradigm for this purpose.  For example, the vertex shader can
 be passed vertex coordinates that are already in clip space and just output those coordinates
 without transforming them.</p>
+
+<p>As the name suggests, clip space coordinates are used for clipping primitives to the
+screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
+X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W.  The
+perspective matrix returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, for example,
+transforms W to the negative Z coordinate in eye space.</p>
+
+<p>To take perspective into account, the clip space X, Y, and Z coordinates are
+divided by the clip space W, and then converted to <em>window coordinates</em>,
+which correspond roughly to the location of the triangle or other primitive
+on the screen or frame buffer (off-screen buffer).  The window coordinates
+will have the same range as the current <em>viewport</em>. A viewport is a rectangle
+whose size and position are generally expressed in pixels; to set the viewport&#39;s
+size, call the <code>setDimensions</code> method of <code>Scene3D</code>.</p>
 
 <h2>Other Pages <a id=Other_Pages></a></h2>
 
@@ -334,7 +351,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
 <li><a href="tutorial-colors.html">Color Strings</a></li>
 <li><a href="tutorial-filters.html">Graphics Filters</a></li>
 <li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>

@@ -38,7 +38,7 @@ by the fourth.)</p>
 
 <h2>Matrices <a id=Matrices></a></h2>
 
-<p>A matrix is a 16- or 9-element array that describes a
+<p>A matrix is a 16- or 9-element array that can describe a
 transformation from one coordinate system to another. Transformations
 include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with &quot;mat&quot;.
@@ -102,18 +102,22 @@ of doing the second matrix&#39;s transform, then the first matrix&#39;s transfor
 
 <h2>Quaternions <a id=Quaternions></a></h2>
 
-<p>A quaternion is a 4-element array that describes a
+<p>A quaternion is a 4-element array that can describe a
 3D rotation.  Functions dealing with quaternions begin with
 &quot;quat&quot;.  A quaternion&#39;s:</p>
 
 <ul>
-<li>first three elements (X, Y, Z) describe a 3D point, where the
+<li>...first three elements (X, Y, Z) describe a 3D point, where the
 direction from the origin (0, 0, 0) to that point is the <em>axis of rotation</em>,
 and the distance from the origin to that point is the sine
-of half the rotation angle. <small> (The distance is 0 at 0 and 360 degrees, and 1 at 180 degrees.)</small></li>
-<li>fourth element (W) is the cosine of half the rotation angle.
+of half the rotation angle. <small> (The distance is 0 at 0 and 360
+degrees, and 1 at 180 degrees.)</small></li>
+<li>...fourth element (W) is the cosine of half the rotation angle.
 <small>(W is 1 at 0 degrees, 0 at 180 and -1 at 360 degrees.)</small></li>
 </ul>
+
+<p>Quaternions that describe a 3D rotation should be <em>unit vectors</em>
+(<a href="H3DU.Math.html#H3DU.Math.quatNorm">&quot;normalized&quot; vectors</a> with a length of 1).</p>
 
 <h3>Multiplying quaternions <a id=Multiplying_quaternions></a></h3>
 
@@ -139,22 +143,23 @@ for that object.</li>
 every few frames.</li>
 </ul>
 
-<h3>Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a></h3>
+<h3>Tait-Bryan angles and their disadvantages</h3>
 
-<p>Tait-Bryan angles (pitch, yaw, and roll angles) can also be used to describe 3D
-rotations, but they have disadvantages:</p>
+<p>Pitch-yaw-roll angles (called Tait-Bryan angles, depending on the
+reference coordinate system) can also be used to describe 3D rotations, but
+they have disadvantages:</p>
 
 <ul>
-<li>In general, the order of Tait-Bryan angle rotations is important. For example, a 30-degree
+<li>In general, the order of pitch, yaw, and roll rotations is important. For example, a 30-degree
 pitch followed by a 20-degree roll is not the same as a 20-degree pitch followed
 by a 30-degree roll.</li>
 <li>There are multiple conventions for Tait-Bryan angles, such as the order of
 rotations; pitch then yaw, or yaw then pitch?</li>
-<li>Tait-Bryan angle rotations are not easily reversible when the same order
+<li>Pitch-yaw-roll angle rotations are not easily reversible when the same order
 of angles is used. For example, a negative 30-degree
 pitch followed by a negative 20-degree roll does not undo a 30-degree
 pitch followed by a 20-degree roll.</li>
-<li>Tait-Bryan angles can cause a problem called &quot;gimbal lock&quot;, in which a rotation along
+<li>Pitch-yaw-roll angles can cause a problem called &quot;gimbal lock&quot;, in which a rotation along
 one axis (say, a pitch) can cause a vector to be parallel to another axis (say, the roll
 axis), so that a rotation along that axis will do nothing.</li>
 </ul>
@@ -183,7 +188,7 @@ whose points satisfy the equation:</p>
 coordinates of any point lying on the plane.</p></li>
 <li>A, B, and C are
 the X, Y, and Z components of the plane&#39;s normal vector.</li>
-<li>D is the distance in the normal&#39;s direction from the plane to the origin,
+<li>D is the distance in the normal&#39;s direction from the plane to the origin (0,0,0),
 or if negative, in the opposite direction from the origin to the plane, divided
 by the normal&#39;s length.  Alternatively, D is the negative dot product of the
 plane&#39;s normal and any point on the plane.</li>
@@ -201,15 +206,14 @@ Converts the plane to a form in which its normal has a length of 1.</li>
 <p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
 
 <ul>
-<li>In a <em>left-handed</em> coordinate system, like in legacy Direct3D, the z-axis points <em>away from
+<li>In a <em>left-handed</em> coordinate system, the z-axis points <em>away from
 the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
-<li>In a <em>right-handed</em> coordinate system, like in OpenGL, the z-axis points <em>toward
+<li>In a <em>right-handed</em> coordinate system, the z-axis points <em>toward
 the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
 </ul>
 
 <p>If an <code>H3DU.Math</code> method works differently in left- and right-handed coordinate systems,
-its description will note this. (In the absence of z-axis transformations, the coordinate
-system is effectively left-handed.)  The differences are also noted below.</p>
+its description will note this. The differences are also noted below.</p>
 
 <h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3>
 
@@ -218,14 +222,6 @@ system is effectively left-handed.)  The differences are also noted below.</p>
 <p>If a 3D vector&#39;s Z component is positive, it points toward the viewer (outward) in a
 right-handed coordinate system, and away from the viewer (inward) in a left-handed
 system. The reverse is true if the Z component is negative.</p>
-
-<p><strong>Cross product (<code>vec3cross(A, B)</code>):</strong></p>
-
-<p>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-Assume the X axis points to the right and the Y axis points up.
-If the cross product of A and B has a positive Z component, the triangle&#39;s points are
-oriented counterclockwise; otherwise, clockwise.  (If the X axis points right and
-the Y axis down, the reverse is true.)</p>
 
 <p><strong>Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>):</strong></p>
 
@@ -242,25 +238,51 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
 <p><strong>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>):</strong></p>
 
-<p>If the axis of rotation points toward the viewer, the angle runs:</p>
+<p>Whenever the axis of rotation points toward the viewer, if the coordinate system is...</p>
 
 <ul>
-<li>Right handed: Counterclockwise if the angle&#39;s value is positive, clockwise if negative.</li>
-<li>Left handed: Clockwise if the angle&#39;s value is positive, counterclockwise if negative.</li>
+<li>...right handed, and the angle&#39;s value is positive (resp. negative), then the angle runs counterclockwise (resp. clockwise).</li>
+<li>...left handed, and the angle&#39;s value is positive (resp. negative), then the angle runs clockwise (resp. counterclockwise).</li>
 </ul>
 
-<p><strong>Normals and triangle orientation</strong></p>
+<p><strong>Cross product (<code>vec3cross(A, B)</code>) and normals</strong></p>
 
-<p>The orientation of a triangle formed by points A, B, and C can be found by applying the rules
-for the cross product of the two vectors (A minus C) and (B minus C),
-in that order.</p>
+<p>Given a triangle formed by points A, B, and C, the <a href="a%20href=%22H3DU.Math.html#H3DU.Math.vec3cross%22%3EH3DU.Math.vec3cross%3C/a">cross product</a>
+of the two vectors (A minus C) and (B minus C), in that order, is a <em>normal</em> of that triangle (a vector that points away from
+the triangle&#39;s surface).  The cross product normal will be such that, whenever it points toward the viewer,
+the triangle&#39;s vertices are oriented counterclockwise for right-handed coordinate systems, or
+clockwise for left-handed systems. (In general, there are two possible choices for normals, which each
+point in opposite directions.)</p>
 
-<p>The resulting cross product is that triangle&#39;s <em>normal</em> (a vector that points away from
-the triangle&#39;s surface).  For each normal
-to point outward, as it usually is, each triangle should be oriented
-counterclockwise for right-handed coordinate systems and clockwise for left-handed
-systems. A triangle with an outward-pointing normal is called a <em>front face</em>,
-and any other triangle is a <em>back face</em>.</p>
+<p>It follows from this that the cross product of A and B will behave like the cross product normal of the
+triangle formed by point A, point B, and the point (0,0,0) in that order (since A minus (0,0,0) is A,
+and B minus (0,0,0) is B).</p>
+
+<p><strong>Orientation and face classification</strong></p>
+
+<p>To find the orientation of a triangle, apply the following formula:</p>
+
+<pre><code>(X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
+</code></pre>
+
+<p>(Half of the result will be the triangle&#39;s signed area.)</p>
+
+<p>If the window space X axis points right and the Y axis points...</p>
+
+<ul>
+<li>...up (which is the case in WebGL), and the result is positive (resp. negative), then the triangle&#39;s vertices
+are oriented counterclockwise (resp. clockwise).</li>
+<li>...down, and the result is positive (resp. negative), then the vertices are oriented clockwise (resp. counterclockwise).</li>
+</ul>
+
+<p>Note that finding the orientation is done on the triangle&#39;s two-dimensional projection in
+<em>window coordinates</em> (which roughly correspond to the triangle&#39;s
+location on the screen or frame buffer),  since a three-dimensional triangle doesn&#39;t
+really have clockwise or counterclockwise orientation without more.</p>
+
+<p>By default, counterclockwise oriented triangles are <em>front faces</em>, and
+other triangles are <em>back faces</em>.  To change which kinds of triangles are
+front faces, call the <code>frontFace</code> method of Scene3D.</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
@@ -328,7 +350,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and the Projection and View Transforms</a></li>
+<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
 <li><a href="tutorial-colors.html">Color Strings</a></li>
 <li><a href="tutorial-filters.html">Graphics Filters</a></li>
 <li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
