@@ -962,7 +962,7 @@ and returns a new matrix.</p>
 <li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
 A 4x4 matrix to multiply.</li>
 <li><code>angle</code> (Type: Array.&lt;Number&gt; | Number)<br>
-The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. Whenever the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
+The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. While the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
 <li><code>v</code> (Type: Array.&lt;Number&gt; | Number)<br>
 X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
 <li><code>vy</code> (Type: Number)<br>
@@ -983,7 +983,7 @@ Z-component of the point lying on the axis of rotation.</li>
 
 <ul>
 <li><code>angle</code> (Type: Array.&lt;Number&gt; | Number)<br>
-The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. Whenever the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
+The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. While the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
 <li><code>v</code> (Type: Array.&lt;Number&gt; | Number)<br>
 X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
 <li><code>vy</code> (Type: Number)<br>
@@ -1299,7 +1299,7 @@ origin (0,0,0) and points toward a 3D point.)</p>
 <li><code>angle</code> (Type: Array.&lt;Number&gt; | Number)<br>
 The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element.</li>
 <li><code>v</code> (Type: Array.&lt;Number&gt; | Number)<br>
-X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively. Whenever the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems. The axis of rotation need not be a unit vector (<a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively. While the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems. The axis of rotation need not be a unit vector (<a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 <li><code>vy</code> (Type: Number)<br>
 Y-component of the point lying on the axis of rotation.</li>
 <li><code>vz</code> (Type: Number)<br>
@@ -1491,7 +1491,7 @@ rotation happens before the quaternion&#39;s rotation.</p>
 <li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
 Quaternion to rotate.</li>
 <li><code>angle</code> (Type: Array.&lt;Number&gt; | Number)<br>
-The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. Whenever the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
+The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. While the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
 <li><code>v</code> (Type: Array.&lt;Number&gt; | Number)<br>
 X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
 <li><code>vy</code> (Type: Number)<br>
@@ -1558,7 +1558,7 @@ A quaternion. Must be a unit vector (<a href="H3DU.Math.html#H3DU.Math.vec3norm"
 
 <p>A 4-element array giving the axis
 of rotation as the first three elements, followed by the angle
-in degrees as the fourth element. Whenever the axis of rotation
+in degrees as the fourth element. While the axis of rotation
 points toward the viewer, a positive value means the angle runs in
 a counterclockwise direction for right-handed coordinate systems and
 in a clockwise direction for left-handed systems. (Type: Array.&lt;Number&gt;)</p>
@@ -1702,7 +1702,20 @@ The following are properties of the cross product:<ul>
 vector with the same length but opposite direction.
 <li>If the cross product&#39;s length is 0, then A and B are parallel vectors.
 <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-The cross product vector will be such that, whenever the vector points toward the viewer,
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+
+<h1>The cross product vector will be such that, while the vector points toward the viewer,</h1>
+
+<p>The cross product vector will be such that, whenever the vector points toward the viewer,</p>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>46648dcbdc510ab994e4eb259cdce8eae656c30c
 the triangle&#39;s vertices are oriented counterclockwise for right-handed coordinate systems,
 or clockwise for left-handed systems. The triangle&#39;s area is half of the cross product&#39;s length.
 <li>If A and B are unit vectors (<a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1), the absolute value
@@ -1715,6 +1728,13 @@ where |<b>x</b>| is the length of vector <b>x</b>.)</small>
 </ul>
 The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
 follows:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 
 <pre><code>&lt;b&gt;c&lt;/b&gt;.x = &lt;b&gt;a&lt;/b&gt;.y * &lt;b&gt;b&lt;/b&gt;.z - &lt;b&gt;a&lt;/b&gt;.z * &lt;b&gt;b&lt;/b&gt;.y
 &lt;b&gt;c&lt;/b&gt;.y = &lt;b&gt;a&lt;/b&gt;.z * &lt;b&gt;b&lt;/b&gt;.x - &lt;b&gt;a&lt;/b&gt;.x * &lt;b&gt;b&lt;/b&gt;.z
@@ -1992,7 +2012,7 @@ A 3-element vector.</li>
 <h4>Return Value</h4>
 
 <p>A perpendicular 3-element
-vector. Returns a nonzero vector if &quot;vec&quot; is (0,0,0). (Type: Array.&lt;Number&gt;)</p>
+vector. Returns (0,0,0) if &quot;vec&quot; is (0,0,0). (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU.Math.vec3scale'></a></h3>
 
@@ -2156,7 +2176,7 @@ dot=(dot&lt;-1 ? -1 : (dot&gt;1 ? 1 : dot));
 var angle=Math.acos(dot);
 var triple=H3DU.Math.vec3triple(normalVector,vectorB,vectorC);
 // The angle is negative if triple product is negative.
-// NOTE: Whenever the &quot;normalVector&quot; points toward the viewer,
+// NOTE: While the &quot;normalVector&quot; points toward the viewer,
 // a positive value for the angle means the angle runs in
 // a counterclockwise direction for right-handed coordinate systems
 // and in a clockwise direction for left-handed systems.

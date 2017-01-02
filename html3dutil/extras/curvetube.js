@@ -38,10 +38,12 @@ H3DU._FrenetFrames = function(func) {
     }
     nextSample = i === res ? e0 : func.evaluate((i + 1) / res);
     samples.push(e0);
- // firstSample=e0;
     var tangent = H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3sub(e01, e0));
     if(t === 1) {
+      // This is the endpoint.
+      // Since we evaluated backward in this case, the tangent
+      // will be backward; negate it here
       H3DU.Math.vec3scaleInPlace(tangent, -1);
     }
     var normal;
@@ -80,25 +82,7 @@ H3DU._FrenetFrames = function(func) {
 /** @private */
 H3DU._FrenetFrames.normalFromTangent = function(tangent) {
   "use strict";
-  var absx = Math.abs(tangent[0]);
-  var absy = Math.abs(tangent[1]);
-  var absz = Math.abs(tangent[2]);
-  var mx = Math.max(absx, absy, absz);
-  var normal = [0, 0, 0];
-  if(mx === absx) {
-    normal[0] = tangent[1];
-    normal[1] = -tangent[0];
-    normal[2] = 0;
-  } else if(mx === absy) {
-    normal[0] = 0;
-    normal[1] = tangent[2];
-    normal[2] = -tangent[1];
-  } else {
-    normal[0] = -tangent[2];
-    normal[1] = 0;
-    normal[2] = tangent[0];
-  }
-  return H3DU.Math.vec3normInPlace(normal);
+  return H3DU.Math.vec3normInPlace(H3DU.Math.vec3perp(tangent));
 };
 /** @private */
 H3DU._FrenetFrames._EPSILON = 0.000001;
@@ -261,6 +245,10 @@ H3DU.CurveTube.prototype.evaluate = function(u, v) {
   }
   return [sx, sy, sz];
 };
-/** @alias CurveTube
- @deprecated Use H3DU.CurveTube instead.
+/* exported CurveTube */
+/**
+@class
+@alias CurveTube
+ @deprecated Use {@link H3DU.CurveTube} instead.
 */
+var CurveTube = H3DU.CurveTube;

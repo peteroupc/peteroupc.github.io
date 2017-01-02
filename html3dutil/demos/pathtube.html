@@ -30,7 +30,6 @@ at: http://peteroupc.github.io/
 var path = GraphicsPath.fromString(
 "M 44.155643,23.75 C 44.155643,45.413332 45.663332,43.905643 24,43.905643 2.3366679,43.905643 3.8443565,45.413332 3.8443565,23.75 3.8443565,2.0866679 2.3366679,3.5943565 24,3.5943565 c 21.663332,0 20.155643,-1.5076886 20.155643,20.1556435 z"
 );
-  // var curves = path.getCurves(0.2);
 /* exported getPoints */
 function getPoints(curves, numPoints, offset) {
   "use strict";
@@ -73,7 +72,6 @@ function makeTubeFromPath(path, flatness, thickness) {
   return mesh;
 }
 
-// TODO: Curvetube doesn't appear closed
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 scene.setClearColor("white");
 var sub = new H3DU.Batch3D()
