@@ -83,7 +83,7 @@ var scene = new H3DU.Scene3D(document.getElementById("canvas"))
 sub = new H3DU.Batch3D();
 var input = new InputTracker(document);
 var camera = new Camera(sub, 45, 1, 1000).setDistance(5)
-   .turnVertical(-90);
+    .moveAngleVertical(-90);
 var xyz = new H3DU.ShapeGroup();
 var pc = new FrameCounterDiv();
 shape = null;

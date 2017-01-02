@@ -19,7 +19,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <canvas id=canvas>
 </canvas>
 <script id="demo">
-/* global Camera, CurveTube, Epitrochoid, FrameCounterDiv, H3DU, Hypotrochoid, InputTracker, Trochoid, addLink, makeMesh, pushSettings */
+/* global Camera, Epitrochoid, FrameCounterDiv, H3DU, Hypotrochoid, InputTracker, Trochoid, addLink, makeMesh, pushSettings */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -50,6 +50,7 @@ var EpicycloidSeal={create:function(radius,points) {
  return Epicycloid.create(radius,radius/points);
 }}
 */
+var allsettings = {};
 function TorusKnot(p, q, outerRadius, innerRadius) {
   "use strict";
   this.period = p;
@@ -85,7 +86,7 @@ TorusKnot.getFlatCurve = function(period, outerRadius, innerRadius) {
 };
 function makeThinCurveMesh(curve) {
   "use strict";
-  var surface = new CurveTube(curve, 0.025);
+  var surface = new H3DU.CurveTube(curve, 0.025);
   return makeMesh(surface, 150, 20);
 }
 
@@ -95,7 +96,7 @@ var link0 = null;
 
 addLink("Torus knot", link0 = function() {
   "use strict";
-  pushSettings(function(allsettings) {
+  pushSettings(allsettings, function(allsettings) {
     return makeMesh(
     new H3DU.CurveTube(new TorusKnot(
       allsettings["torusknot-p"],
@@ -109,7 +110,7 @@ addLink("Torus knot", link0 = function() {
 
 addLink("Swept torus knot", function() {
   "use strict";
-  pushSettings(function(allsettings) {
+  pushSettings(allsettings, function(allsettings) {
     return makeMesh(
     new H3DU.CurveTube(new TorusKnot(
       allsettings["torusknot-p"],
@@ -123,7 +124,7 @@ addLink("Swept torus knot", function() {
 
 addLink("Flattened torus knot", function() {
   "use strict";
-  pushSettings(function(allsettings) {
+  pushSettings(allsettings, function(allsettings) {
     return makeMesh(
     new H3DU.CurveTube(TorusKnot.getFlatCurve(
       allsettings["torusknot-p"]
@@ -133,7 +134,7 @@ addLink("Flattened torus knot", function() {
 
 addLink("Hypotrochoid", function() {
   "use strict";
-  pushSettings(function(allsettings) {
+  pushSettings(allsettings, function(allsettings) {
     return makeThinCurveMesh(
     new Hypotrochoid(
       allsettings["ht-outer"],
@@ -149,7 +150,7 @@ addLink("Hypotrochoid", function() {
 
 addLink("Epitrochoid", function() {
   "use strict";
-  pushSettings(function(allsettings) {
+  pushSettings(allsettings, function(allsettings) {
     return makeThinCurveMesh(
     new Epitrochoid(
       allsettings["et-outer"],
@@ -165,7 +166,7 @@ addLink("Epitrochoid", function() {
 
 addLink("Trochoid", function() {
   "use strict";
-  pushSettings(function(allsettings) {
+  pushSettings(allsettings, function(allsettings) {
     return makeThinCurveMesh(
     new Trochoid(
       allsettings["et-inner"],

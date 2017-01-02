@@ -14,7 +14,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global CurveTube, FrameCounterDiv, GraphicsPath, H3DU */
+/* global FrameCounterDiv, GraphicsPath, H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -66,13 +66,14 @@ function makeTubeFromPath(path, flatness, thickness) {
   var curves = path.getCurves(flatness);
   var resolution = Math.ceil(curves.getLength() * 2 / 3);
   new H3DU.SurfaceEval()
-    .vertex(new CurveTube(curves, thickness))
+    .vertex(new H3DU.CurveTube(curves, thickness))
     .setAutoNormal(true)
     .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
       Math.ceil(2 * thickness / flatness));
   return mesh;
 }
 
+// TODO: Curvetube doesn't appear closed
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 scene.setClearColor("white");
 var sub = new H3DU.Batch3D()

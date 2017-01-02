@@ -13,7 +13,7 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 
 <h2>Contents <a id=Contents></a></h2>
 
-<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br></p>
+<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3D_Vectors">3D Vectors</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Projection_matrix_such_as_mat4perspective_mat4ortho">Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Look_at_matrix_mat4lookat">Look-at matrix (<code>mat4lookat</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Cross_product_vec3cross_A_B_and_normals">Cross product (<code>vec3cross(A, B)</code>) and normals</a><br>&nbsp;&nbsp;<a href="#Orientation_and_face_classification">Orientation and face classification</a><br></p>
 
 <h2>Vectors <a id=Vectors></a></h2>
 
@@ -143,10 +143,9 @@ for that object.</li>
 every few frames.</li>
 </ul>
 
-<h3>Tait-Bryan angles and their disadvantages</h3>
+<h3>Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a></h3>
 
-<p>Pitch-yaw-roll angles (called Tait-Bryan angles, depending on the
-reference coordinate system) can also be used to describe 3D rotations, but
+<p>Pitch-yaw-roll angles (also called Tait-Bryan angles) can also be used to describe 3D rotations, but
 they have disadvantages:</p>
 
 <ul>
@@ -217,26 +216,26 @@ its description will note this. The differences are also noted below.</p>
 
 <h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3>
 
-<p><strong>3D Vectors</strong></p>
+<h4>3D Vectors <a id=3D_Vectors></a></h4>
 
 <p>If a 3D vector&#39;s Z component is positive, it points toward the viewer (outward) in a
 right-handed coordinate system, and away from the viewer (inward) in a left-handed
 system. The reverse is true if the Z component is negative.</p>
 
-<p><strong>Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>):</strong></p>
+<h4>Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>) <a id=Projection_matrix_such_as_mat4perspective_mat4ortho></a></h4>
 
 <p>Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
 indices 8, 9, 10, and 11).</p>
 
-<p><strong>Look-at matrix (<code>mat4lookat</code>):</strong></p>
+<h4>Look-at matrix (<code>mat4lookat</code>) <a id=Look_at_matrix_mat4lookat></a></h4>
 
 <p>Returns a result for right-handed coordinate systems.  For left-handed systems,
 reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14).</p>
 
-<p><strong>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>):</strong></p>
+<h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>) <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a></h4>
 
 <p>Whenever the axis of rotation points toward the viewer, if the coordinate system is...</p>
 
@@ -245,7 +244,7 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 <li>...left handed, and the angle&#39;s value is positive (resp. negative), then the angle runs clockwise (resp. counterclockwise).</li>
 </ul>
 
-<p><strong>Cross product (<code>vec3cross(A, B)</code>) and normals</strong></p>
+<h4>Cross product (<code>vec3cross(A, B)</code>) and normals <a id=Cross_product_vec3cross_A_B_and_normals></a></h4>
 
 <p>Given a triangle formed by points A, B, and C, the <a href="a%20href=%22H3DU.Math.html#H3DU.Math.vec3cross%22%3EH3DU.Math.vec3cross%3C/a">cross product</a>
 of the two vectors (A minus C) and (B minus C), in that order, is a <em>normal</em> of that triangle (a vector that points away from
@@ -258,7 +257,7 @@ point in opposite directions.)</p>
 triangle formed by point A, point B, and the point (0,0,0) in that order (since A minus (0,0,0) is A,
 and B minus (0,0,0) is B).</p>
 
-<p><strong>Orientation and face classification</strong></p>
+<h3>Orientation and face classification <a id=Orientation_and_face_classification></a></h3>
 
 <p>To find the orientation of a triangle, apply the following formula:</p>
 
@@ -277,8 +276,7 @@ are oriented counterclockwise (resp. clockwise).</li>
 
 <p>Note that finding the orientation is done on the triangle&#39;s two-dimensional projection in
 <em>window coordinates</em> (which roughly correspond to the triangle&#39;s
-location on the screen or frame buffer),  since a three-dimensional triangle doesn&#39;t
-really have clockwise or counterclockwise orientation without more.</p>
+location on the screen or frame buffer).</p>
 
 <p>By default, counterclockwise oriented triangles are <em>front faces</em>, and
 other triangles are <em>back faces</em>.  To change which kinds of triangles are

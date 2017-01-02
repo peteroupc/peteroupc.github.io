@@ -18,9 +18,9 @@ it draw triangles, lines, and other graphics primitives.</p>
 
 <h2>Contents <a id=Contents></a></h2>
 
-<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#The_Camera_and_the_Projection_and_View_Transforms">The &quot;Camera&quot; and the Projection and View Transforms</a><br>&nbsp;&nbsp;<a href="#Overview_of_Transformations">Overview of Transformations</a><br><a href="#Projection_Transform">Projection Transform</a><br>&nbsp;&nbsp;<a href="#Perspective_Projection">Perspective Projection</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Demo">Demo</a><br>&nbsp;&nbsp;<a href="#Orthographic_Projection">Orthographic Projection</a><br>&nbsp;&nbsp;<a href="#Other_Projections">Other Projections</a><br><a href="#View_Transform">View Transform</a><br><a href="#Vertex_Coordinates_in_the_Graphics_System">Vertex Coordinates in the Graphics System</a><br><a href="#Other_Pages">Other Pages</a><br></p>
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#The_Camera_and_Geometric_Transforms">The &quot;Camera&quot; and Geometric Transforms</a><br>&nbsp;&nbsp;<a href="#Overview_of_Transformations">Overview of Transformations</a><br><a href="#Projection_Transform">Projection Transform</a><br>&nbsp;&nbsp;<a href="#Perspective_Projection">Perspective Projection</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Demo">Demo</a><br>&nbsp;&nbsp;<a href="#Orthographic_Projection">Orthographic Projection</a><br>&nbsp;&nbsp;<a href="#Other_Projections">Other Projections</a><br><a href="#View_Transform">View Transform</a><br><a href="#Vertex_Coordinates_in_the_Graphics_System">Vertex Coordinates in the Graphics System</a><br><a href="#Other_Pages">Other Pages</a><br></p>
 
-<h2>The &quot;Camera&quot; and Geometric Transforms <a id=The_Camera_and_the_Projection_and_View_Transforms></a></h2>
+<h2>The &quot;Camera&quot; and Geometric Transforms <a id=The_Camera_and_Geometric_Transforms></a></h2>
 
 <p>The <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html"><code>Batch3D</code></a> class
 of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;.
@@ -169,6 +169,16 @@ to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> 
 <li><code>top</code> - Bottommost coordinate of the 3D view.</li>
 <li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.  Either value
 can be negative.</li>
+</ul>
+
+<p><strong><code>H3DU.Math.mat4ortho2d(left, right, bottom, top)</code></strong></p>
+
+<p>This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection.  This is a convenience method that is useful for showing a two-dimensional view.
+  The resulting matrix can be passed
+to the <code>setProjectionMatrix</code> method of the <code>H3DU.Batch3D</code> class. The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively.  This choice of values makes a Z-coordinate of 0 especially appropriate for this projection.</p>
+
+<ul>
+<li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Same as in <code>mat4ortho</code>.</li>
 </ul>
 
 <p><strong><code>H3DU.Math.mat4orthoAspect(left, right, bottom, top, near, far, aspect)</code></strong></p>

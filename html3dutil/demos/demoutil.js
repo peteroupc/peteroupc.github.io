@@ -1,4 +1,4 @@
-/* global H3DU, MeshJSON, alert, allsettings, shapeGroup */
+/* global H3DU, MeshJSON, alert, shapeGroup */
 /* exported formulaEditorHelp */
 function formulaEditorHelp() {
   "use strict";
@@ -108,7 +108,7 @@ function saveString(string, type, filename) {
   document.body.removeChild(a);
 }
 
-function updateShape(func) {
+function updateShape(func, allsettings) {
   "use strict";
   var settings = document.getElementById("settings-link");
   if(!settings) {
@@ -139,12 +139,12 @@ function updateShape(func) {
 }
 
 /* exported pushSettings */
-function pushSettings(updateMeshFunc, settings) {
+function pushSettings(allsettings, updateMeshFunc, settings) {
   "use strict";
   function settingOnChange(name, updateMeshFunc) {
     return function(val) {
       allsettings[name] = val;
-      updateShape(updateMeshFunc);
+      updateShape(updateMeshFunc, allsettings);
     };
   }
   var ranges = [];
@@ -164,7 +164,7 @@ function pushSettings(updateMeshFunc, settings) {
     }
   }
   setRanges(ranges);
-  updateShape(updateMeshFunc);
+  updateShape(updateMeshFunc, allsettings);
 }
 
 /* exported makeMesh */

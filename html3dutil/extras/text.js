@@ -907,7 +907,13 @@ H3DU.TextFont._textShader = function() {
   shader += "#ifdef GL_OES_standard_derivatives\n";
   shader += "#extension GL_OES_standard_derivatives : enable\n";
   shader += "#endif\n";
-  shader += H3DU.ShaderProgram.fragmentShaderHeader() +
+  shader += "#ifdef GL_ES\n" +
+"#ifndef GL_FRAGMENT_PRECISION_HIGH\n" +
+"precision mediump float;\n" +
+"#else\n" +
+"precision highp float;\n" +
+"#endif\n" +
+"#endif\n" +
 "uniform vec4 md;\n" +
 "uniform sampler2D sampler;\n" +
 "varying vec2 uvVar;\n" +

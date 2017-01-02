@@ -186,7 +186,7 @@ function pushSetting(ranges, name, label, min, max, step) {
   "use strict";
   ranges.push(addRange(label, min, max, step, allsettings[name], function(val) {
     allsettings[name] = val;
-    updateShape(updateMesh);
+    updateShape(updateMesh, allsettings);
   }));
 }
 function validateListener(id, key) {
@@ -194,7 +194,7 @@ function validateListener(id, key) {
   var func = function(e) {
     if(validateExpr(e.target.value)) {
       allsettings[key] = e.target.value;
-      updateShape(updateMesh);
+      updateShape(updateMesh, allsettings);
     }
   };
   allsettings[key] = document.getElementById(id).value;
@@ -206,7 +206,7 @@ function validateConstListener(id, key) {
   var func = function(e) {
     if(validateConst(e.target.value)) {
       allsettings[key] = e.target.value;
-      updateShape(updateMesh);
+      updateShape(updateMesh, allsettings);
     }
   };
   allsettings[key] = document.getElementById(id).value;
@@ -225,7 +225,7 @@ function link0() {
   for(i = 0;i < consts.length;i++) {
     validateConstListener(consts[i], ckeys[i]);
   }
-  updateShape(updateMesh);
+  updateShape(updateMesh, allsettings);
 }
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
@@ -234,8 +234,7 @@ var input = new InputTracker(document);
 scene.setClearColor("white");
 scene.cullFace(H3DU.Scene3D.FRONT);
 var sub = new H3DU.Batch3D();
-var camera = new Camera(sub, 45, 1, 100);
-camera.setDistance(5);
+var camera = new Camera(sub, 45, 1, 100).setDistance(5);
 var pc = new FrameCounterDiv();
 link0();
 sub.addShape(shapeGroup);
