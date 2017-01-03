@@ -12,7 +12,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global Camera, H3DU, InputTracker */
+/* global H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -163,8 +163,8 @@ var sub = new H3DU.Batch3D();
 sub.getLights().setDefaults();
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
-var camera = new Camera(sub, 45, 1, 1000).setDistance(10);
-var input = new InputTracker(scene.getCanvas());
+var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(10);
+var input = new H3DU.InputTracker(scene.getCanvas());
 var frustum = perspectiveFrustum(45, scene.getClientAspect(), 2, 10, [0, 0, 10], [0, 0, 0]);
 var mesh = frustumMesh(frustum);
 var spheres = new H3DU.ShapeGroup();

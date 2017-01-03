@@ -30,7 +30,7 @@ at: http://peteroupc.github.io/
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @alias GraphicsPath
+ * @alias H3DU.GraphicsPath
 * @class
 */
   function GraphicsPath() {
@@ -53,7 +53,7 @@ at: http://peteroupc.github.io/
 * closePath command, or another path segment
 * is added to the path.
 * @returns {Boolean} Return value.
-* @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.isIncomplete = function() {
     return this.incomplete;
@@ -283,10 +283,10 @@ at: http://peteroupc.github.io/
   };
 /**
  * Returns this path in the form of a string in SVG path format.
- * See {@link GraphicsPath.fromString}.
+ * See {@link H3DU.GraphicsPath.fromString}.
  * @returns {String} A string describing the path in the SVG path
   format.
-* @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.toString = function() {
     var oldpos = null;
@@ -378,7 +378,7 @@ at: http://peteroupc.github.io/
 * @param {Number} [flatness] No longer used by this method.
  * @returns {Number} Approximate length of this path
  * in units.
- * @memberof! GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.pathLength = function(flatness) {
     if(this.segments.length === 0)return 0;
@@ -402,7 +402,7 @@ at: http://peteroupc.github.io/
 * Each line segment is an array of four numbers: the X and
 * Y coordinates of the start point, respectively, then the X and
 * Y coordinates of the end point, respectively.
-* @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.getLines = function(flatness) {
     var ret = [];
@@ -431,9 +431,9 @@ at: http://peteroupc.github.io/
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
-* @returns {GraphicsPath} A path consisting only of line
+* @returns {H3DU.GraphicsPath} A path consisting only of line
 * segments and close commands.
- * @memberof! GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.toLinePath = function(flatness) {
     var ret = [];
@@ -553,7 +553,7 @@ at: http://peteroupc.github.io/
 * the lowest X and Y coordinates, and the last two are
 * the highest X and Y coordinates.  If the path is empty,
 * returns the array (Infinity, Infinity, -Infinity, -Infinity).
-* @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.getBounds = function() {
     var inf = Number.POSITIVE_INFINITY;
@@ -645,9 +645,9 @@ at: http://peteroupc.github.io/
 
 /**
 * Returns a path that reverses the course of this path.
-* @returns {GraphicsPath} A GraphicsPath
+* @returns {H3DU.GraphicsPath} A GraphicsPath
 * object with its path segments reversed.
-* @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.reverse = function() {
     var lastptx = 0;
@@ -906,7 +906,7 @@ Note that calling this "evaluate" method is only
 recommended when drawing the path as a set of points, not lines, since
 the path may contain several disconnected parts.
 </ul>
-* @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.getCurves = function(flatness) {
     var subpaths = [];
@@ -982,7 +982,7 @@ the path may contain several disconnected parts.
 * an empty array if <i>numPoints</i> is less than 1.  Returns
 * an array consisting of the start point if <i>numPoints</i>
 * is 1.
-* @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.getPoints = function(numPoints, flatness) {
     if(numPoints < 1)return [];
@@ -1004,8 +1004,8 @@ the path may contain several disconnected parts.
 /**
  * Makes this path closed.  Adds a line segment to the
  * path's start position, if necessary.
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.closePath = function() {
     if(this.startPos[0] !== this.endPos[0] ||
@@ -1022,8 +1022,8 @@ the path may contain several disconnected parts.
  * Moves the current start position and end position to the given position.
  * @param {Number} x X-coordinate of the position.
  * @param {Number} y Y-coordinate of the position.
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.moveTo = function(x, y) {
     this.startPos[0] = x;
@@ -1039,8 +1039,8 @@ the path may contain several disconnected parts.
  * sets the end position to the end of the segment.
  * @param {Number} x X-coordinate of the end of the line segment.
  * @param {Number} y Y-coordinate of the end of the line segment.
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.lineTo = function(x, y) {
     this.segments.push([GraphicsPath.LINE,
@@ -1083,8 +1083,8 @@ the path may contain several disconnected parts.
  * point of the arc.
  * @param {Number} y2 Y-coordinate of the point described under "x2".
  * @param {Number} radius Radius of the circle the arc forms a part of.
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
     if(radius < 0) {
@@ -1126,8 +1126,8 @@ the path may contain several disconnected parts.
  * @param {Boolean} ccw Whether the arc runs counterclockwise
  * (assuming the X axis points right and the Y axis points
  * down under the coordinate system).
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
     if(radius < 0) {
@@ -1178,8 +1178,8 @@ the path may contain several disconnected parts.
  * @param {Number} y Y-coordinate of the curve's control point.
  * @param {Number} x2 X-coordinate of the curve's end point.
  * @param {Number} y2 Y-coordinate of the curve's end point.
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
     this.segments.push([GraphicsPath.QUAD,
@@ -1198,8 +1198,8 @@ the path may contain several disconnected parts.
  * @param {Number} y2 Y-coordinate of the curve's second control point.
  * @param {Number} x3 X-coordinate of the curve's end point.
  * @param {Number} y3 Y-coordinate of the curve's end point.
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
     this.segments.push([GraphicsPath.CUBIC,
@@ -1396,8 +1396,8 @@ the path may contain several disconnected parts.
  * down under the coordinate system); if false, counterclockwise.
  * @param {Number} x2 X-coordinate of the arc's end point.
  * @param {Number} y2 Y-coordinate of the arc's end point.
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2) {
     if(rx === 0 || ry === 0) {
@@ -1607,8 +1607,8 @@ the path may contain several disconnected parts.
  * point in the current path, its new X coordinate is `trans[0] * X +
  * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
  * trans[3] * Y + trans[5]`.
- * @returns {GraphicsPath} The transformed version of this path.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} The transformed version of this path.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.transform = function(trans) {
     var ret = new GraphicsPath();
@@ -1677,8 +1677,8 @@ the path may contain several disconnected parts.
  * @param {Number} y Y-coordinate of a corner of the rectangle.
  * @param {Number} width X-offset (width) to another corner of the rectangle.
  * @param {Number} height Y-offset (height) to another corner of the rectangle.
- * @returns {GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.rect = function(x, y, width, height) {
     return this.moveTo(x, y).lineTo(x + width, y).lineTo(x + width, y + height)
@@ -1720,7 +1720,7 @@ the path may contain several disconnected parts.
 * introduce ambiguity.  All commands set the current point
 * to the end of the path segment (including Z/z, which adds a line
 * segment if needed).
-* @returns {GraphicsPath} The resulting path.  If an error
+* @returns {H3DU.GraphicsPath} The resulting path.  If an error
 * occurs while parsing the path, the path's "isIncomplete() method
 * will return <code>true</code>.
 * @example <caption>The following example creates a graphics path
@@ -2350,7 +2350,7 @@ the path may contain several disconnected parts.
 * array, the first two, next two, and last two numbers each
 * describe a vertex position of that triangle (X and Y coordinates
 * in that order).
-* @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath#
 */
   GraphicsPath.prototype.getTriangles = function(flatness) {
     var subpaths = this._getSubpaths(flatness);
@@ -2481,6 +2481,14 @@ the path may contain several disconnected parts.
     }
     tris.push(tri);
   };
-  exports.GraphicsPath = GraphicsPath;
+  exports.H3DU.GraphicsPath = H3DU.GraphicsPath;
 
+/* exported GraphicsPath */
+/**
+Alias for the {@link H3DU.GraphicsPath} class.
+@class
+@alias GraphicsPath
+ @deprecated Use {@link H3DU.GraphicsPath} instead.
+*/
+  exports.GraphicsPath = H3DU.GraphicsPath;
 }));

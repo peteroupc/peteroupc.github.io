@@ -47,51 +47,69 @@ A set of bit flags depending on the kind of data each vertex contains. Each vert
 <h3>Members</h3>
 
 <ul>
-<li><a href="#H3DU.Mesh.BITANGENTS_BIT">.BITANGENTS_BIT</a></li>
-<li><a href="#H3DU.Mesh.COLORS_BIT">.COLORS_BIT</a></li>
-<li><a href="#H3DU.Mesh.LINES">.LINES</a></li>
-<li><a href="#H3DU.Mesh.LINES_BIT">.LINES_BIT</a></li>
-<li><a href="#H3DU.Mesh.LINE_STRIP">.LINE_STRIP</a></li>
-<li><a href="#H3DU.Mesh.NORMALS_BIT">.NORMALS_BIT</a></li>
-<li><a href="#H3DU.Mesh.POINTS">.POINTS</a></li>
-<li><a href="#H3DU.Mesh.POINTS_BIT">.POINTS_BIT</a></li>
-<li><a href="#H3DU.Mesh.QUADS">.QUADS</a></li>
-<li><a href="#H3DU.Mesh.QUAD_STRIP">.QUAD_STRIP</a></li>
-<li><a href="#H3DU.Mesh.TANGENTS_BIT">.TANGENTS_BIT</a></li>
-<li><a href="#H3DU.Mesh.TEXCOORDS_BIT">.TEXCOORDS_BIT</a></li>
-<li><a href="#H3DU.Mesh.TRIANGLES">.TRIANGLES</a></li>
-<li><a href="#H3DU.Mesh.TRIANGLE_FAN">.TRIANGLE_FAN</a></li>
-<li><a href="#H3DU.Mesh.TRIANGLE_STRIP">.TRIANGLE_STRIP</a></li>
+<li><a href="#H3DU.Mesh.BITANGENTS_BIT">.BITANGENTS_BIT</a><br>The mesh contains bitangent vectors for each vertex.</li>
+<li><a href="#H3DU.Mesh.COLORS_BIT">.COLORS_BIT</a><br>The mesh contains colors for each vertex.</li>
+<li><a href="#H3DU.Mesh.LINES">.LINES</a><br>Primitive mode for rendering line segments, made up
+of 2 vertices each.</li>
+<li><a href="#H3DU.Mesh.LINES_BIT">.LINES_BIT</a><br>The mesh consists of lines (2 vertices per line) instead
+of triangles (3 vertices per line).</li>
+<li><a href="#H3DU.Mesh.LINE_STRIP">.LINE_STRIP</a><br>Primitive mode for rendering connected line segments.</li>
+<li><a href="#H3DU.Mesh.NORMALS_BIT">.NORMALS_BIT</a><br>The mesh contains normals for each vertex.</li>
+<li><a href="#H3DU.Mesh.POINTS">.POINTS</a><br>Primitive mode for rendering points, made up
+of 1 vertex each.</li>
+<li><a href="#H3DU.Mesh.POINTS_BIT">.POINTS_BIT</a><br>The mesh consists of points (1 vertex per line).</li>
+<li><a href="#H3DU.Mesh.QUADS">.QUADS</a><br>Primitive mode for rendering quadrilaterals, made up
+of 4 vertices each.</li>
+<li><a href="#H3DU.Mesh.QUAD_STRIP">.QUAD_STRIP</a><br>Primitive mode for rendering a strip of quadrilaterals (quads).</li>
+<li><a href="#H3DU.Mesh.TANGENTS_BIT">.TANGENTS_BIT</a><br>The mesh contains tangent vectors for each vertex.</li>
+<li><a href="#H3DU.Mesh.TEXCOORDS_BIT">.TEXCOORDS_BIT</a><br>The mesh contains texture coordinates for each vertex.</li>
+<li><a href="#H3DU.Mesh.TRIANGLES">.TRIANGLES</a><br>Primitive mode for rendering triangles, made up
+of 3 vertices each.</li>
+<li><a href="#H3DU.Mesh.TRIANGLE_FAN">.TRIANGLE_FAN</a><br>Primitive mode for rendering a triangle fan.</li>
+<li><a href="#H3DU.Mesh.TRIANGLE_STRIP">.TRIANGLE_STRIP</a><br>Primitive mode for rendering a triangle strip.</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_bitangent3">bitangent3</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_color3">color3</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_enumPrimitives">enumPrimitives</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_getBoundingBox">getBoundingBox</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_getVertex">getVertex</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_getVertexNormal">getVertexNormal</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_merge">merge</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_mode">mode</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_normal3">normal3</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_normalizeNormals">normalizeNormals</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_primitiveCount">primitiveCount</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_recalcNormals">recalcNormals</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_recalcTangents">recalcTangents</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_reverseNormals">reverseNormals</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_reverseWinding">reverseWinding</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_setColor3">setColor3</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_setVertex">setVertex</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_setVertexNormal">setVertexNormal</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_tangent3">tangent3</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_texCoord2">texCoord2</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_toWireFrame">toWireFrame</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_transform">transform</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_vertex2">vertex2</a></li>
-<li><a href="#H3DU.Mesh_H3DU.Mesh_vertex3">vertex3</a></li>
-<li><a href="#H3DU.Mesh_vertexCount">vertexCount</a></li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_bitangent3">bitangent3</a><br>Sets the current bitangent vector for this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_color3">color3</a><br>Sets the current color for this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_enumPrimitives">enumPrimitives</a><br>Enumerates the primitives (lines, triangles, and points) included
+in this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_getBoundingBox">getBoundingBox</a><br>Finds the tightest axis-aligned
+bounding box that holds all vertices in the mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_getVertex">getVertex</a><br>Gets the position of the vertex with the given
+index in this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_getVertexNormal">getVertexNormal</a><br>Gets the normal of the vertex with the given
+index in this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_merge">merge</a><br>Merges the vertices from another mesh into this one.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_mode">mode</a><br>Changes the primitive mode for this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_normal3">normal3</a><br>Sets the current normal for this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_normalizeNormals">normalizeNormals</a><br>Modifies this mesh by normalizing the normals it defines
+to unit length.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
+or points) composed by all shapes in this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_recalcNormals">recalcNormals</a><br>Recalculates the normal vectors for triangles
+in this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_recalcTangents">recalcTangents</a><br>Recalculates the tangent vectors for triangles
+in this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_reverseNormals">reverseNormals</a><br>Modifies this mesh by reversing the sign of normals it defines.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_reverseWinding">reverseWinding</a><br>Reverses the winding order of the triangles in this mesh
+by swapping the second and third vertex indices of each one.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_setColor3">setColor3</a><br>Sets all the vertices in this mesh to the given color.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_setVertex">setVertex</a><br>Sets the X, Y, and Z coordinates of the vertex with the
+given index.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_setVertexNormal">setVertexNormal</a><br>Sets the normal associated with the vertex with the
+given index.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_tangent3">tangent3</a><br>Sets the current tangent vector for this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_texCoord2">texCoord2</a><br>Sets the current texture coordinates for this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_toWireFrame">toWireFrame</a><br>Converts this mesh to a new mesh with triangles converted
+to line segments.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
+in this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_vertex2">vertex2</a><br>Adds a new vertex to this mesh.</li>
+<li><a href="#H3DU.Mesh_H3DU.Mesh_vertex3">vertex3</a><br>Adds a new vertex to this mesh.</li>
+<li><a href="#H3DU.Mesh_vertexCount">vertexCount</a><br>Gets the number of vertices included in this mesh.</li>
 </ul>
 
 <h3>H3DU.Mesh.BITANGENTS_BIT <a id='H3DU.Mesh.BITANGENTS_BIT'></a> (constant)</h3>
@@ -715,50 +733,57 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a></li>
-<li><a href="FrameCounter.html">FrameCounter</a></li>
-<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
-<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
-<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
-<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
-<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
-<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
-<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
-<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
-<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
-<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
-<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
-<li><a href="H3DU.Material.html">H3DU.Material</a></li>
-<li><a href="H3DU.Math.html">H3DU.Math</a></li>
-<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
-<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
-<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
-<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
-<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
-<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
-<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
-<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
-<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
-<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
-<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
-<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
-<li><a href="InputTracker.html">InputTracker</a></li>
-<li><a href="MeshJSON.html">MeshJSON</a></li>
-<li><a href="ObjData.html">ObjData</a></li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
-<li><a href="Trochoid.html">Trochoid</a></li>
+<li><a href="CurveTube.html">CurveTube</a><br><b>Deprecated: Use H3DU.CurveTube instead.</b></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a><br><b>Deprecated: Use H3DU.Epitrochoid instead.</b></li>
+<li><a href="FrameCounter.html">FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.</li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a><br>A class that displays a frame counter HTML element.</li>
+<li><a href="GraphicsPath.html">GraphicsPath</a><br><b>Deprecated: Use H3DU.GraphicsPath instead.</b></li>
+<li><a href="H3DU.html">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility</li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a><br>A parametric evaluator for B-spline (basis spline) curves.</li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a><br>A parametric evaluator for B-spline (basis spline) surfaces.</li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a><br>A <code>Batch3D</code> represents a so-called &quot;scene graph&quot;.</li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a><br>A parametric evaluator for B&eacute;zier curves.</li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a><br>A parametric evaluator for B&eacute;zier surfaces.</li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.Camera.html">H3DU.Camera</a><br>A class for controlling the projection and</li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a><br>An evaluator of parametric curve functions for generating</li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a><br>Evaluator for a parametric surface in the form</li>
+<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a><br>Parametric evaluator for a</li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.</li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.</li>
+<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a><br>Parametric evaluator for a</li>
+<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel</li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a><br>Specifies parameters for light sources.</li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a><br>A collection of light sources.</li>
+<li><a href="H3DU.Material.html">H3DU.Material</a><br>Specifies parameters for geometry materials, which describe the appearance of a</li>
+<li><a href="H3DU.Math.html">H3DU.Math</a><br>A collection of math functions for working</li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a><br>H3DU.MatrixStack is a class that implements a stack</li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a><br>Specifies the triangles, lines, or points that make up a geometric shape.</li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.</li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a><br>Contains methods that create meshes</li>
+<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for</li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering</li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a><br>Holds source code for a WebGL shader program.</li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with</li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a><br>Represents a grouping of shapes.</li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating</li>
+<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a><br>Parametric evaluator for a surface of revolution, which results by revolving</li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional</li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a><br>Specifies a texture, which can serve as image data applied to</li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single</li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a><br>An object that caches loaded textures and uploads them</li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a><br>A class offering a convenient way to set a transformation</li>
+<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a><br>Parametric evaluator for a</li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a><br><b>Deprecated: Use H3DU.Hypotrochoid instead.</b></li>
+<li><a href="InputTracker.html">InputTracker</a><br><b>Deprecated: Use H3DU.Camera instead.</b></li>
+<li><a href="MeshJSON.html">MeshJSON</a><br>JSON exporter of graphics meshes.</li>
+<li><a href="ObjData.html">ObjData</a><br>WaveFront OBJ format.</li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a><br><b>Deprecated: Will be removed in the future.</b></li>
+<li><a href="Promise.html">Promise</a><br>A promise holds a value to be resolved in the future.</li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a><br><b>Deprecated: Use H3DU.SurfaceOfRevolution instead.</b></li>
+<li><a href="Trochoid.html">Trochoid</a><br><b>Deprecated: Use H3DU.Trochoid instead.</b></li>
 <li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
 <li><a href="tutorial-colors.html">Color Strings</a></li>
 <li><a href="tutorial-filters.html">Graphics Filters</a></li>

@@ -181,7 +181,7 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
 * @class
-* @alias CurveTube
+* @alias H3DU.CurveTube
 * @param {Object} func An object that must contain a function
 * named "evaluate", which takes the following parameter:<ul>
 * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
@@ -247,6 +247,7 @@ H3DU.CurveTube.prototype.evaluate = function(u, v) {
 };
 /* exported CurveTube */
 /**
+Alias for the {@link H3DU.CurveTube} class.
 @class
 @alias CurveTube
  @deprecated Use {@link H3DU.CurveTube} instead.

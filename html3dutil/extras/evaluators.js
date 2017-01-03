@@ -19,7 +19,7 @@ at: http://peteroupc.github.io/
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
 * @class
-* @alias SurfaceOfRevolution
+* @alias H3DU.SurfaceOfRevolution
 * @param {Function} curve Curve to rotate about the axis of rotation, as
 * specified in the "axis" parameter.
 * The curve function must contain a function
@@ -45,7 +45,7 @@ at: http://peteroupc.github.io/
 * parameter need not be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm}
 * with a length of 1).
 */
-var SurfaceOfRevolution = function(curve, minval, maxval, axis) {
+H3DU.SurfaceOfRevolution = function(curve, minval, maxval, axis) {
   "use strict";
   this.curve = curve;
   this.minval = Math.min(minval, maxval);
@@ -68,13 +68,13 @@ var SurfaceOfRevolution = function(curve, minval, maxval, axis) {
     var z = cp0;
     var ret = [x, y, z];
     if(this._axisQuat) {
-      SurfaceOfRevolution._quatTransformInPlace(this._axisQuat, ret);
+      H3DU.SurfaceOfRevolution._quatTransformInPlace(this._axisQuat, ret);
     }
     return ret;
   };
 };
 /** @private */
-SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
+H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
   "use strict";
   var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
   var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
@@ -111,29 +111,30 @@ SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm}
 * with a length of 1).
-* @returns {SurfaceOfRevolution} Return value.
+* @returns {H3DU.SurfaceOfRevolution} Return value.
+* @memberof! H3DU.SurfaceOfRevolution
  @example <caption>The following creates an evaluator for a cone
 * which starts at the origin and runs 10 units along the Z axis.</caption>
-* var surf=SurfaceOfRevolution.fromFunction(
+* var surf=H3DU.SurfaceOfRevolution.fromFunction(
 *  function(x) {
 "use strict";  return x/2; }, // use a constantly increasing function
 * 0, 10);
 * @example <caption>This is an evaluator for the same cone, but
 * shifted 3 units back.</caption>
-* var surf=SurfaceOfRevolution.fromFunction(
+* var surf=H3DU.SurfaceOfRevolution.fromFunction(
 *  function(x) {
 "use strict";  x+=3; return x/2; },
 * -3,7);
 * @example <caption>The following creates an evaluator for a cylinder
 * which runs from 5 to 10 units, and with a radius of 2 units.</caption>
-* var surf=SurfaceOfRevolution.fromFunction(
+* var surf=H3DU.SurfaceOfRevolution.fromFunction(
 *  function(x) {
 "use strict";  return 2; }, // use a constant radius
 * 5, 10);
 */
-SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
+H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
   "use strict";
-  return new SurfaceOfRevolution({
+  return new H3DU.SurfaceOfRevolution({
     "evaluate":function(u) {
       return [u, func(u), 0];
     }
@@ -164,9 +165,10 @@ SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
 * run in the direction from the origin to the point given in this parameter.  This
 * parameter need not be a unit vector (a ["normalized" vector]{@link H3DU.Math.vec3norm}
 * with a length of 1).
-* @returns {SurfaceOfRevolution} Return value.
+* @returns {H3DU.SurfaceOfRevolution} Return value.
+* @memberof! H3DU.SurfaceOfRevolution
 */
-SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
+H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
   "use strict";
   if(!curve)curve = {
     "evaluate":function(u) {
@@ -174,7 +176,7 @@ SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
       return [Math.cos(u), Math.sin(u)];
     }
   };
-  return new SurfaceOfRevolution({
+  return new H3DU.SurfaceOfRevolution({
     "evaluate":function(u) {
       var curvept = curve.evaluate(u);
       var x = innerRadius * curvept[1];
@@ -183,6 +185,15 @@ SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
     }
   }, 0, Math.PI, axis);
 };
+
+/* exported SurfaceOfRevolution */
+/**
+Alias for the {@link H3DU.SurfaceOfRevolution} class.
+@class
+@alias SurfaceOfRevolution
+ @deprecated Use {@link H3DU.SurfaceOfRevolution} instead.
+*/
+var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
 
 /**
 * Parametric evaluator for a
@@ -204,8 +215,7 @@ SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
 * rolling circle to the drawing pen.. A prolate hypotrochoid results when
 * distFromInnerCenter is greater than innerRadius.
 */
-/* exported Hypotrochoid */
-function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter) {
+H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   "use strict";
   this.outer = outerRadius;
   this.inner = innerRadius;
@@ -236,7 +246,7 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter) {
  * fits the given radius.
  * @function
  * @param {Number} radius Desired radius of the curve.
- * @returns {Hypotrochoid} Return value.
+ * @returns {H3DU.Hypotrochoid} Return value.
 */
   this.scaleTo = function(radius) {
     var oi = this.outer - this.inner;
@@ -246,12 +256,12 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter) {
    oi - this.distFromInner,
    oi + this.distFromInner));
     var ratio = radius / mx;
-    return new Hypotrochoid(
+    return new H3DU.Hypotrochoid(
    this.outer * ratio,
    this.inner * ratio,
    this.distFromInner * ratio);
   };
-}
+};
 
 /**
 * Parametric evaluator for a
@@ -268,8 +278,7 @@ function Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter) {
 * @param {Number} distFromCenter Distance from the center of the
 * rolling circle to the drawing pen.
 */
-/* exported Trochoid */
-function Trochoid(radius, distFromCenter) {
+H3DU.Trochoid = function(radius, distFromCenter) {
   "use strict";
   this.inner = radius;
   this.distFromCenter = distFromCenter;
@@ -290,7 +299,7 @@ function Trochoid(radius, distFromCenter) {
       0
     ];
   };
-}
+};
 
 /**
 * Parametric evaluator for a
@@ -312,8 +321,7 @@ function Trochoid(radius, distFromCenter) {
 * rolling circle to the drawing pen. A prolate epitrochoid results when
 * distFromInnerCenter is greater than innerRadius.
 */
-/* exported Epitrochoid */
-function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter) {
+H3DU.Epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   "use strict";
   this.outer = outerRadius;
   this.inner = innerRadius;
@@ -344,7 +352,7 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter) {
  * fits the given radius.
  * @function
  * @param {Number} radius Desired radius of the curve.
- * @returns {Epitrochoid} Return value.
+ * @returns {H3DU.Epitrochoid} Return value.
 */
   this.scaleTo = function(radius) {
     var oi = this.outer + this.inner;
@@ -354,9 +362,36 @@ function Epitrochoid(outerRadius, innerRadius, distFromInnerCenter) {
    oi - this.distFromInner,
    oi + this.distFromInner));
     var ratio = radius / mx;
-    return new Epitrochoid(
+    return new H3DU.Epitrochoid(
    this.outer * ratio,
    this.inner * ratio,
    this.distFromInner * ratio);
   };
-}
+};
+
+/* exported Hypotrochoid */
+/**
+Alias for the {@link H3DU.Hypotrochoid} class.
+@class
+@alias Hypotrochoid
+ @deprecated Use {@link H3DU.Hypotrochoid} instead.
+*/
+var Hypotrochoid = H3DU.Hypotrochoid;
+
+/* exported Trochoid */
+/**
+Alias for the {@link H3DU.Trochoid} class.
+@class
+@alias Trochoid
+ @deprecated Use {@link H3DU.Trochoid} instead.
+*/
+var Trochoid = H3DU.Trochoid;
+
+/* exported Epitrochoid */
+/**
+Alias for the {@link H3DU.Epitrochoid} class.
+@class
+@alias Epitrochoid
+ @deprecated Use {@link H3DU.Epitrochoid} instead.
+*/
+var Epitrochoid = H3DU.Epitrochoid;

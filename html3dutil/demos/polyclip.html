@@ -13,7 +13,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global FrameCounterDiv, GraphicsPath, H3DU */
+/* global FrameCounterDiv, H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -33,8 +33,8 @@ function circle(path, x, y, radius) {
    .arcTo(x - radius, y - radius, x, y - radius, radius)
    .closePath();
 }
-var path = circle(new GraphicsPath(), 15, 15, 15);
-var path2 = circle(new GraphicsPath(), 30, 15, 15);
+var path = circle(new H3DU.GraphicsPath(), 15, 15, 15);
+var path2 = circle(new H3DU.GraphicsPath(), 30, 15, 15);
 path = path.union(path2, 0.2);
 var curves = path.getCurves(0.2);
 function getPoints(curves, numPoints, offset) {

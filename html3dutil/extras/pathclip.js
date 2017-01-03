@@ -1237,10 +1237,9 @@
     this.eq.push(r);
   };
 
-  if(globalContext.GraphicsPath) {
-/** @lends GraphicsPath
-*/
-    GraphicsPath = globalContext.GraphicsPath;
+  if(globalContext.H3DU.GraphicsPath) {
+/** @lends GraphicsPath */
+    GraphicsPath = globalContext.H3DU.GraphicsPath;
 /**
  * Computes the combination of this path's shape with another
  * path's shape. The following points apply to this method:<ul>
@@ -1255,16 +1254,16 @@
  * that contains them.
  * <li>To use this method, you must include the script "extras/pathclip.js";
  * this is in addition to "extras/pathclip.js".  Example:<pre>
- * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
- * @param {GraphicsPath} path A path to combine with this one.
+ * @param {H3DU.GraphicsPath} path A path to combine with this one.
 * @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
-* @returns {GraphicsPath} The union of the two paths.
- * @memberof! GraphicsPath#
+* @returns {H3DU.GraphicsPath} The union of the two paths.
+* @memberof! H3DU.GraphicsPath
 */
     GraphicsPath.prototype.union = function(path, flatness) {
       if(path === null || typeof path === "undefined")return this;
@@ -1275,16 +1274,16 @@
     };
 /**
  * Computes the difference between this path's shape and another
- * path's shape. The points given in the {@link GraphicsPath#union} method
+ * path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
- * @param {GraphicsPath} path A path to combine with this one.
+ * @param {H3DU.GraphicsPath} path A path to combine with this one.
 * @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
- * @returns {GraphicsPath} The difference between this path
+ * @returns {H3DU.GraphicsPath} The difference between this path
  * and the other path.
- * @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath
 */
     GraphicsPath.prototype.difference = function(path, flatness) {
       if(path === null || typeof path === "undefined")return this;
@@ -1295,16 +1294,16 @@
     };
 /**
  * Computes the intersection, or the area common to both this path's shape
- * and another path's shape. The points given in the {@link GraphicsPath#union} method
+ * and another path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
- * @param {GraphicsPath} path A path to combine with this one.
+ * @param {H3DU.GraphicsPath} path A path to combine with this one.
 * @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
- * @returns {GraphicsPath} A path whose shape is contained in
+ * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * both paths.
- * @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath
 */
     GraphicsPath.prototype.intersection = function(path, flatness) {
       if(path === null || typeof path === "undefined")return this;
@@ -1315,16 +1314,16 @@
     };
 /**
  * Computes the shape contained in either this path or another path,
- * but not both. The points given in the {@link GraphicsPath#union} method
+ * but not both. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
- * @param {GraphicsPath} path A path to combine with this one.
+ * @param {H3DU.GraphicsPath} path A path to combine with this one.
 * @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
 * value, given in units.  If null or omitted, default is 1.
- * @returns {GraphicsPath} A path whose shape is contained in
+ * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * only one of the two paths.
- * @memberof! GraphicsPath#
+* @memberof! H3DU.GraphicsPath
 */
     GraphicsPath.prototype.xor = function(path, flatness) {
       if(path === null || typeof path === "undefined")return this;

@@ -37,7 +37,7 @@ Example:<br>
 </div>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global Camera, FrameCounterDiv, H3DU, InputTracker, addRange, getExpression, updateShape */
+/* global FrameCounterDiv, H3DU, addRange, getExpression, updateShape */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -230,11 +230,11 @@ function link0() {
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
-var input = new InputTracker(document);
+var input = new H3DU.InputTracker(document);
 scene.setClearColor("white");
 scene.cullFace(H3DU.Scene3D.FRONT);
 var sub = new H3DU.Batch3D();
-var camera = new Camera(sub, 45, 1, 100).setDistance(5);
+var camera = new H3DU.Camera(sub, 45, 1, 100).setDistance(5);
 var pc = new FrameCounterDiv();
 link0();
 sub.addShape(shapeGroup);

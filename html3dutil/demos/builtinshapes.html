@@ -28,7 +28,7 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global Camera, FrameCounterDiv, H3DU, InputTracker */
+/* global FrameCounterDiv, H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -81,8 +81,8 @@ function sampleShape(num) {
 var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white");
 sub = new H3DU.Batch3D();
-var input = new InputTracker(document);
-var camera = new Camera(sub, 45, 1, 1000).setDistance(5)
+var input = new H3DU.InputTracker(document);
+var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(5)
     .moveAngleVertical(-90);
 var xyz = new H3DU.ShapeGroup();
 var pc = new FrameCounterDiv();

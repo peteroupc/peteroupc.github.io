@@ -19,7 +19,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <canvas id=canvas>
 </canvas>
 <script id="demo">
-/* global Camera, Epitrochoid, FrameCounterDiv, H3DU, Hypotrochoid, InputTracker, Trochoid, addLink, makeMesh, pushSettings */
+/* global FrameCounterDiv, H3DU, addLink, makeMesh, pushSettings */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -30,26 +30,6 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
 */
 
-/*
-var Hypocycloid = {
-  "create":function(outerRadius, innerRadius) {
-    "use strict";
-    return new Hypotrochoid(outerRadius, innerRadius, innerRadius);
-  }
-};
-var Epicycloid = {
-  "create":function(outerRadius, innerRadius) {
-    "use strict";
-    return new Epitrochoid(outerRadius, innerRadius, innerRadius);
-  }
-};
-var HypocycloidSeal={create:function(radius,points) {
- return Hypocycloid.create(radius,radius/points);
-}}
-var EpicycloidSeal={create:function(radius,points) {
- return Epicycloid.create(radius,radius/points);
-}}
-*/
 var allsettings = {};
 function TorusKnot(p, q, outerRadius, innerRadius) {
   "use strict";
@@ -136,7 +116,7 @@ addLink("Hypotrochoid", function() {
   "use strict";
   pushSettings(allsettings, function(allsettings) {
     return makeThinCurveMesh(
-    new Hypotrochoid(
+    new H3DU.Hypotrochoid(
       allsettings["ht-outer"],
       allsettings["ht-inner"],
       allsettings["ht-dist"]
@@ -152,7 +132,7 @@ addLink("Epitrochoid", function() {
   "use strict";
   pushSettings(allsettings, function(allsettings) {
     return makeThinCurveMesh(
-    new Epitrochoid(
+    new H3DU.Epitrochoid(
       allsettings["et-outer"],
       allsettings["et-inner"],
       allsettings["et-dist"]
@@ -168,7 +148,7 @@ addLink("Trochoid", function() {
   "use strict";
   pushSettings(allsettings, function(allsettings) {
     return makeThinCurveMesh(
-    new Trochoid(
+    new H3DU.Trochoid(
       allsettings["et-inner"],
       allsettings["et-dist"]
     ));
@@ -181,10 +161,10 @@ addLink("Trochoid", function() {
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
-var input = new InputTracker(document);
+var input = new H3DU.InputTracker(document);
 scene.setClearColor("white");
 var sub = new H3DU.Batch3D();
-var camera = new Camera(sub, 45, 1, 100);
+var camera = new H3DU.Camera(sub, 45, 1, 100);
 camera.setDistance(5);
 var pc = new FrameCounterDiv();
 link0();

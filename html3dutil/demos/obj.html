@@ -18,7 +18,7 @@ Toboggan by Teh_Bucket, public domain, http://opengameart.org/content/toboggan<b
 Spot, a public domain model from Keenan Clark<br>
 </div>
 <script id="demo">
-/* global Camera, H3DU, InputTracker, ObjData, addLink */
+/* global H3DU, ObjData, addLink */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -35,8 +35,8 @@ at: http://peteroupc.github.io/
   scene.setClearColor("white");
   var sub = new H3DU.Batch3D();
   var loader = new H3DU.TextureLoader();
-  var camera = new Camera(sub, 45, 1, 1000).setDistance(5);
-  var input = new InputTracker(document);
+  var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(5);
+  var input = new H3DU.InputTracker(document);
   var startfunc = null;
   var shape = null;
   addLink("Toboggan", startfunc = function() {

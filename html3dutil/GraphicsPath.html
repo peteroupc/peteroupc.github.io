@@ -8,574 +8,9 @@
 
 <h3>GraphicsPath() <a id='GraphicsPath'></a></h3>
 
-<p>Represents a two-dimensional path.</p>
+<p><b>Deprecated: Use <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a> instead.</b></p>
 
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
-
-<p>To use this class, you must include the script &quot;extras/path.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
-
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-
-<h4>Parameters</h4>
-
-<h3>Methods</h3>
-
-<ul>
-<li><a href="#GraphicsPath_GraphicsPath_arc">arc</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_arcSvgTo">arcSvgTo</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_arcTo">arcTo</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_bezierCurveTo">bezierCurveTo</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_closePath">closePath</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_difference">difference</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_getBounds">getBounds</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_getCurves">getCurves</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_getLines">getLines</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_getPoints">getPoints</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_getTriangles">getTriangles</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_intersection">intersection</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_isIncomplete">isIncomplete</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_lineTo">lineTo</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_moveTo">moveTo</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_pathLength">pathLength</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_quadraticCurveTo">quadraticCurveTo</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_rect">rect</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_reverse">reverse</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_toLinePath">toLinePath</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_toString">toString</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_transform">transform</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_union">union</a></li>
-<li><a href="#GraphicsPath_GraphicsPath_xor">xor</a></li>
-<li><a href="#GraphicsPath.fromString">fromString</a></li>
-</ul>
-
-<h3>GraphicsPath#arc(x, y, radius, startAngle, endAngle, ccw) <a id='GraphicsPath_GraphicsPath_arc'></a></h3>
-
-<p>Adds path segments in the form of a circular arc to this path,
-using the parameterization specified in the &quot;arc&quot; method of the
-HTML Canvas 2D Context.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>x</code> (Type: Number)<br>
-X-coordinate of the center of the circle that the arc forms a part of.</li>
-<li><code>y</code> (Type: Number)<br>
-Y-coordinate of the circle&#39;s center.</li>
-<li><code>radius</code> (Type: Number)<br>
-Radius of the circle.</li>
-<li><code>startAngle</code> (Type: Number)<br>
-Starting angle of the arc, in radians. 0 means the positive X-axis, &pi;/2 means the positive Y-axis, &pi; means the negative X-axis, and &pi;*1.5 means the negative Y-axis.</li>
-<li><code>endAngle</code> (Type: Number)<br>
-Ending angle of the arc, in radians.</li>
-<li><code>ccw</code> (Type: Boolean)<br>
-Whether the arc runs counterclockwise (assuming the X axis points right and the Y axis points down under the coordinate system).</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#arcSvgTo(rx, ry, rot, largeArc, sweep, x2, y2) <a id='GraphicsPath_GraphicsPath_arcSvgTo'></a></h3>
-
-<p>Adds path segments in the form of an elliptical arc to this path,
-using the parameterization used by the SVG specification.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>rx</code> (Type: Number)<br>
-X-axis radius of the ellipse that the arc will be formed from.</li>
-<li><code>ry</code> (Type: Number)<br>
-Y-axis radius of the ellipse that the arc will be formed from.</li>
-<li><code>rot</code> (Type: Number)<br>
-Rotation of the ellipse in degrees (clockwise assuming the X axis points right and the Y axis points down under the coordinate system).</li>
-<li><code>largeArc</code> (Type: Boolean)<br>
-In general, there are four possible solutions for arcs given the start and end points, rotation, and x- and y-radii. If true, chooses an arc solution with the larger arc length; if false, smaller.</li>
-<li><code>sweep</code> (Type: Boolean)<br>
-If true, the arc solution chosen will run clockwise (assuming the X axis points right and the Y axis points down under the coordinate system); if false, counterclockwise.</li>
-<li><code>x2</code> (Type: Number)<br>
-X-coordinate of the arc&#39;s end point.</li>
-<li><code>y2</code> (Type: Number)<br>
-Y-coordinate of the arc&#39;s end point.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#arcTo(x1, y1, x2, y2, radius) <a id='GraphicsPath_GraphicsPath_arcTo'></a></h3>
-
-<p>Adds path segments in the form of a circular arc to this path,
-using the parameterization specified in the &quot;arcTo&quot; method of the
-HTML Canvas 2D Context.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>x1</code> (Type: Number)<br>
-X-coordinate of a point that, along with the current end point, forms a tangent line. The point where the circle touches this tangent line is the start point of the arc, and if the point isn&#39;t the same as the current end point, this method adds a line segment connecting the two points. (Note that the start point of the arc is not necessarily the same as (x1, y1) or the current end point.)</li>
-<li><code>y1</code> (Type: Number)<br>
-Y-coordinate of the point described under &quot;x1&quot;.</li>
-<li><code>x2</code> (Type: Number)<br>
-X-coordinate of a point that, along with the point (x1, y1), forms a tangent line. The point where the circle touches this tangent line is the end point of the arc. (Note that the end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).) When this method returns, the current end point will be set to the end point of the arc.</li>
-<li><code>y2</code> (Type: Number)<br>
-Y-coordinate of the point described under &quot;x2&quot;.</li>
-<li><code>radius</code> (Type: Number)<br>
-Radius of the circle the arc forms a part of.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#bezierCurveTo(x, y, x2, y2, x3, y3) <a id='GraphicsPath_GraphicsPath_bezierCurveTo'></a></h3>
-
-<p>Adds a cubic B&eacute;zier curve to this path starting
-at this path&#39;s current position.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>x</code> (Type: Number)<br>
-X-coordinate of the curve&#39;s first control point.</li>
-<li><code>y</code> (Type: Number)<br>
-X-coordinate of the curve&#39;s first control point.</li>
-<li><code>x2</code> (Type: Number)<br>
-Y-coordinate of the curve&#39;s second control point.</li>
-<li><code>y2</code> (Type: Number)<br>
-Y-coordinate of the curve&#39;s second control point.</li>
-<li><code>x3</code> (Type: Number)<br>
-X-coordinate of the curve&#39;s end point.</li>
-<li><code>y3</code> (Type: Number)<br>
-Y-coordinate of the curve&#39;s end point.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#closePath() <a id='GraphicsPath_GraphicsPath_closePath'></a></h3>
-
-<p>Makes this path closed. Adds a line segment to the
-path&#39;s start position, if necessary.</p>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#difference(path, [flatness]) <a id='GraphicsPath_GraphicsPath_difference'></a></h3>
-
-<p>Computes the difference between this path&#39;s shape and another
-path&#39;s shape. The points given in the GraphicsPath#union method
-apply to this method.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>path</code> (Type: <a href="GraphicsPath.html">GraphicsPath</a>)<br>
-A path to combine with this one.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The difference between this path
-and the other path. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#getBounds() <a id='GraphicsPath_GraphicsPath_getBounds'></a></h3>
-
-<p>Calculates an axis-aligned bounding box that tightly
-fits this graphics path.</p>
-
-<h4>Return Value</h4>
-
-<p>An array of four numbers
-describing the bounding box. The first two are
-the lowest X and Y coordinates, and the last two are
-the highest X and Y coordinates. If the path is empty,
-returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;Number&gt;)</p>
-
-<h3>GraphicsPath#getCurves([flatness]) <a id='GraphicsPath_GraphicsPath_getCurves'></a></h3>
-
-<p>Gets an object for the curves described by this path.
-The resulting object can be used to retrieve the points
-that lie on the path or as a parameter for one of
-the <a href="H3DU.CurveEval.html">H3DU.CurveEval</a> methods, in the
-<a href="CurveTube.html">CurveTube</a> class, or any other class that
-accepts parametric curves.</p>
-
-<p>The return value doesn&#39;t track changes to the path.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1. This is only used to make the arc-length parameterization more accurate if the path contains curves or arcs.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>An object that implements
-the following methods:<ul>
-<li><code>getCurves()</code> - Returns a list of curves described
-by this path. The list will contain one object for each disconnected
-portion of the path. For example, if the path contains one polygon, the list will contain
-one curve object. And if the path is empty, the list will be empty too.</p>
-
-<p>Each object will have the following methods:<ul>
-<li><code>getLength()</code> - Returns the approximate total length of the curve,
-in units.
-<li><code>evaluate(u)</code> - Takes one parameter, &quot;u&quot;, which
-ranges from 0 to 1, depending on how far the point is from the start or
-the end of the path (similar to arc-length parameterization).
-The function returns a 3-element array containing
-the X, Y, and Z coordinates of the point lying on the curve at the given
-&quot;u&quot; position (however, the z will always be 0 since paths can currently
-only be 2-dimensional).
-</ul>
-<li><code>getLength()</code> - Returns the approximate total length of the path,
-in units.
-<li><code>evaluate(u)</code> - Has the same effect as the &quot;evaluate&quot;
-method for each curve, but applies to the path as a whole.
-Note that calling this &quot;evaluate&quot; method is only
-recommended when drawing the path as a set of points, not lines, since
-the path may contain several disconnected parts.
-</ul> (Type: Object)</p>
-
-<h3>GraphicsPath#getLines([flatness]) <a id='GraphicsPath_GraphicsPath_getLines'></a></h3>
-
-<p>Gets an array of line segments approximating
-the path.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Array of line segments.
-Each line segment is an array of four numbers: the X and
-Y coordinates of the start point, respectively, then the X and
-Y coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
-
-<h3>GraphicsPath#getPoints(numPoints, [flatness]) <a id='GraphicsPath_GraphicsPath_getPoints'></a></h3>
-
-<p>Gets an array of points evenly spaced across the length
-of the path.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>numPoints</code> (Type: Number)<br>
-Number of points to return.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Array of points lying on
-the path and evenly spaced across the length of the path,
-starting and ending with the path&#39;s endpoints. Returns
-an empty array if <i>numPoints</i> is less than 1. Returns
-an array consisting of the start point if <i>numPoints</i>
-is 1. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
-
-<h3>GraphicsPath#getTriangles([flatness]) <a id='GraphicsPath_GraphicsPath_getTriangles'></a></h3>
-
-<p>Converts the subpaths in this path to triangles.
-Treats each subpath as a polygon even if it isn&#39;t closed.
-Each subpath should not contain self-intersections or
-duplicate vertices, except duplicate vertices that appear
-consecutively or at the start and end.</p>
-
-<p>The path can contain holes. In this case, subpaths
-whose winding order (counterclockwise or clockwise)
-differs from the first subpath&#39;s winding order can be holes.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Array of six-element
-arrays each describing a single triangle. For each six-element
-array, the first two, next two, and last two numbers each
-describe a vertex position of that triangle (X and Y coordinates
-in that order). (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
-
-<h3>GraphicsPath#intersection(path, [flatness]) <a id='GraphicsPath_GraphicsPath_intersection'></a></h3>
-
-<p>Computes the intersection, or the area common to both this path&#39;s shape
-and another path&#39;s shape. The points given in the GraphicsPath#union method
-apply to this method.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>path</code> (Type: <a href="GraphicsPath.html">GraphicsPath</a>)<br>
-A path to combine with this one.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A path whose shape is contained in
-both paths. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#isIncomplete() <a id='GraphicsPath_GraphicsPath_isIncomplete'></a></h3>
-
-<p>Returns whether the curve path is incomplete
-because of an error in parsing the curve string.
-This flag will be reset if a moveTo command,
-closePath command, or another path segment
-is added to the path.</p>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: Boolean)</p>
-
-<h3>GraphicsPath#lineTo(x, y) <a id='GraphicsPath_GraphicsPath_lineTo'></a></h3>
-
-<p>Adds a line segment to the path, starting
-at the path&#39;s end position, then
-sets the end position to the end of the segment.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>x</code> (Type: Number)<br>
-X-coordinate of the end of the line segment.</li>
-<li><code>y</code> (Type: Number)<br>
-Y-coordinate of the end of the line segment.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#moveTo(x, y) <a id='GraphicsPath_GraphicsPath_moveTo'></a></h3>
-
-<p>Moves the current start position and end position to the given position.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>x</code> (Type: Number)<br>
-X-coordinate of the position.</li>
-<li><code>y</code> (Type: Number)<br>
-Y-coordinate of the position.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#pathLength([flatness]) <a id='GraphicsPath_GraphicsPath_pathLength'></a></h3>
-
-<p>Finds the approximate length of this path.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-No longer used by this method.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Approximate length of this path
-in units. (Type: Number)</p>
-
-<h3>GraphicsPath#quadraticCurveTo(x, y, x2, y2) <a id='GraphicsPath_GraphicsPath_quadraticCurveTo'></a></h3>
-
-<p>Adds a quadratic B&eacute;zier curve to this path starting
-at this path&#39;s current position.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>x</code> (Type: Number)<br>
-X-coordinate of the curve&#39;s control point.</li>
-<li><code>y</code> (Type: Number)<br>
-Y-coordinate of the curve&#39;s control point.</li>
-<li><code>x2</code> (Type: Number)<br>
-X-coordinate of the curve&#39;s end point.</li>
-<li><code>y2</code> (Type: Number)<br>
-Y-coordinate of the curve&#39;s end point.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#rect(x, y, width, height) <a id='GraphicsPath_GraphicsPath_rect'></a></h3>
-
-<p>Adds four lines in an axis-aligned rectangle shape to the path.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>x</code> (Type: Number)<br>
-X-coordinate of a corner of the rectangle.</li>
-<li><code>y</code> (Type: Number)<br>
-Y-coordinate of a corner of the rectangle.</li>
-<li><code>width</code> (Type: Number)<br>
-X-offset (width) to another corner of the rectangle.</li>
-<li><code>height</code> (Type: Number)<br>
-Y-offset (height) to another corner of the rectangle.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#reverse() <a id='GraphicsPath_GraphicsPath_reverse'></a></h3>
-
-<p>Returns a path that reverses the course of this path.</p>
-
-<h4>Return Value</h4>
-
-<p>A GraphicsPath
-object with its path segments reversed. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#toLinePath([flatness]) <a id='GraphicsPath_GraphicsPath_toLinePath'></a></h3>
-
-<p>Creates a path in which curves and arcs are decomposed
-to line segments.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A path consisting only of line
-segments and close commands. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#toString() <a id='GraphicsPath_GraphicsPath_toString'></a></h3>
-
-<p>Returns this path in the form of a string in SVG path format.
-See <a href="GraphicsPath.html#GraphicsPath.fromString">GraphicsPath.fromString</a>.</p>
-
-<h4>Return Value</h4>
-
-<p>A string describing the path in the SVG path
- format. (Type: String)</p>
-
-<h3>GraphicsPath#transform(trans) <a id='GraphicsPath_GraphicsPath_transform'></a></h3>
-
-<p>Returns a modified version of this path that is transformed
-according to the given affine transform.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>trans</code> (Type: Array.&lt;Number&gt;)<br>
-An array of six numbers describing a 2-dimensional affine transformation. For each point in the current path, its new X coordinate is <code>trans[0] \* X + trans[2] \* Y + trans[4]</code>, and its new Y coordinate is <code>trans[1] \* X + trans[3] \* Y + trans[5]</code>.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The transformed version of this path. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#union(path, [flatness]) <a id='GraphicsPath_GraphicsPath_union'></a></h3>
-
-<p>Computes the combination of this path&#39;s shape with another
-path&#39;s shape. The following points apply to this method:<ul>
-<li>This method treats unclosed subpaths as implicitly closed
-by connecting their endpoints with their start points.
-<li>Currently, the algorithm supports only polygons made up
-of line segments, so curves and arcs are converted to line
-segments before applying the operation.
-<li>Each polygon can be concave or have self-intersections
-or holes. Subpaths that are holes have the opposite winding
-order (clockwise or counterclockwise) from the subpath
-that contains them.
-<li>To use this method, you must include the script &quot;extras/pathclip.js&quot;;
-this is in addition to &quot;extras/pathclip.js&quot;. Example:</p>
-
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/pathclip.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;extras/pathclip.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-
-<p></ul></p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>path</code> (Type: <a href="GraphicsPath.html">GraphicsPath</a>)<br>
-A path to combine with this one.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The union of the two paths. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>GraphicsPath#xor(path, [flatness]) <a id='GraphicsPath_GraphicsPath_xor'></a></h3>
-
-<p>Computes the shape contained in either this path or another path,
-but not both. The points given in the GraphicsPath#union method
-apply to this method.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>path</code> (Type: <a href="GraphicsPath.html">GraphicsPath</a>)<br>
-A path to combine with this one.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
-When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A path whose shape is contained in
-only one of the two paths. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h3>(static) GraphicsPath.fromString(str) <a id='GraphicsPath.fromString'></a></h3>
-
-<p>Creates a graphics path from a string whose format follows
-the SVG specification.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>str</code> (Type: String)<br>
-A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). &quot;largeArc&quot; and &quot;sweep&quot; are flags, &quot;0&quot; for false and &quot;1&quot; for true. &quot;rot&quot; is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lower-case letters mean any X and Y coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn&#39;t introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed).</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The resulting path. If an error
-occurs while parsing the path, the path&#39;s &quot;isIncomplete() method
-will return <code>true</code>. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
-
-<h4>Example</h4>
-
-<p>The following example creates a graphics path
-from an SVG string describing a polyline.</p>
-
-<pre><code>var path=GraphicsPath.fromString(&quot;M10,20L40,30,24,32,55,22&quot;)
-</code></pre>
+<p>Alias for the <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a> class.</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -597,50 +32,57 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a></li>
-<li><a href="FrameCounter.html">FrameCounter</a></li>
-<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
-<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
-<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
-<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
-<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
-<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
-<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
-<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
-<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
-<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
-<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
-<li><a href="H3DU.Material.html">H3DU.Material</a></li>
-<li><a href="H3DU.Math.html">H3DU.Math</a></li>
-<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
-<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
-<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
-<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
-<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
-<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
-<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
-<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
-<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
-<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
-<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
-<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
-<li><a href="InputTracker.html">InputTracker</a></li>
-<li><a href="MeshJSON.html">MeshJSON</a></li>
-<li><a href="ObjData.html">ObjData</a></li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
-<li><a href="Trochoid.html">Trochoid</a></li>
+<li><a href="CurveTube.html">CurveTube</a><br><b>Deprecated: Use H3DU.CurveTube instead.</b></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a><br><b>Deprecated: Use H3DU.Epitrochoid instead.</b></li>
+<li><a href="FrameCounter.html">FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.</li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a><br>A class that displays a frame counter HTML element.</li>
+<li><a href="GraphicsPath.html">GraphicsPath</a><br><b>Deprecated: Use H3DU.GraphicsPath instead.</b></li>
+<li><a href="H3DU.html">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility</li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a><br>A parametric evaluator for B-spline (basis spline) curves.</li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a><br>A parametric evaluator for B-spline (basis spline) surfaces.</li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a><br>A <code>Batch3D</code> represents a so-called &quot;scene graph&quot;.</li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a><br>A parametric evaluator for B&eacute;zier curves.</li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a><br>A parametric evaluator for B&eacute;zier surfaces.</li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.Camera.html">H3DU.Camera</a><br>A class for controlling the projection and</li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a><br>An evaluator of parametric curve functions for generating</li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a><br>Evaluator for a parametric surface in the form</li>
+<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a><br>Parametric evaluator for a</li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.</li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.</li>
+<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a><br>Parametric evaluator for a</li>
+<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel</li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a><br>Specifies parameters for light sources.</li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a><br>A collection of light sources.</li>
+<li><a href="H3DU.Material.html">H3DU.Material</a><br>Specifies parameters for geometry materials, which describe the appearance of a</li>
+<li><a href="H3DU.Math.html">H3DU.Math</a><br>A collection of math functions for working</li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a><br>H3DU.MatrixStack is a class that implements a stack</li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a><br>Specifies the triangles, lines, or points that make up a geometric shape.</li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.</li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a><br>Contains methods that create meshes</li>
+<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for</li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering</li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a><br>Holds source code for a WebGL shader program.</li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with</li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a><br>Represents a grouping of shapes.</li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating</li>
+<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a><br>Parametric evaluator for a surface of revolution, which results by revolving</li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional</li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a><br>Specifies a texture, which can serve as image data applied to</li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single</li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a><br>An object that caches loaded textures and uploads them</li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a><br>A class offering a convenient way to set a transformation</li>
+<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a><br>Parametric evaluator for a</li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a><br><b>Deprecated: Use H3DU.Hypotrochoid instead.</b></li>
+<li><a href="InputTracker.html">InputTracker</a><br><b>Deprecated: Use H3DU.Camera instead.</b></li>
+<li><a href="MeshJSON.html">MeshJSON</a><br>JSON exporter of graphics meshes.</li>
+<li><a href="ObjData.html">ObjData</a><br>WaveFront OBJ format.</li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a><br><b>Deprecated: Will be removed in the future.</b></li>
+<li><a href="Promise.html">Promise</a><br>A promise holds a value to be resolved in the future.</li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a><br><b>Deprecated: Use H3DU.SurfaceOfRevolution instead.</b></li>
+<li><a href="Trochoid.html">Trochoid</a><br><b>Deprecated: Use H3DU.Trochoid instead.</b></li>
 <li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
 <li><a href="tutorial-colors.html">Color Strings</a></li>
 <li><a href="tutorial-filters.html">Graphics Filters</a></li>

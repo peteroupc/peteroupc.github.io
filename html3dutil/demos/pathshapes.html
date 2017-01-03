@@ -23,7 +23,7 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global Camera, CurveTube, FrameCounterDiv, GraphicsPath, H3DU, InputTracker */
+/* global CurveTube, FrameCounterDiv, H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -35,7 +35,7 @@ at: http://peteroupc.github.io/
 */
 
 // Make a polygon with a hole
-var path = new GraphicsPath()
+var path = new H3DU.GraphicsPath()
  .moveTo(-1, 1, 0)
  .lineTo(0, 1)
  .arcTo(1, 1, 1, 0, 1)
@@ -138,9 +138,9 @@ function sampleShape(num) {
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 scene.setClearColor("white");
 sub = new H3DU.Batch3D();
-var camera = new Camera(sub, 45, 1, 1000).setDistance(5)
+var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(5)
    .moveAngleVertical(-90);
-var input = new InputTracker(document);
+var input = new H3DU.InputTracker(document);
 var xyz = new H3DU.ShapeGroup();
 var pc = new FrameCounterDiv();
 shape = null;

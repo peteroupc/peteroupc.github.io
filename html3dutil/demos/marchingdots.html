@@ -12,7 +12,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global FrameCounterDiv, GraphicsPath, H3DU */
+/* global FrameCounterDiv, H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -25,7 +25,7 @@ at: http://peteroupc.github.io/
 
 // Path taken from a public domain SVG icon, which was
 // created by Jakub Steiner
-var path = GraphicsPath.fromString(
+var path = H3DU.GraphicsPath.fromString(
 "M 44.155643,23.75 C 44.155643,45.413332 45.663332,43.905643 24,43.905643 2.3366679,43.905643 3.8443565,45.413332 3.8443565,23.75 3.8443565,2.0866679 2.3366679,3.5943565 24,3.5943565 c 21.663332,0 20.155643,-1.5076886 20.155643,20.1556435 z"
 );
 var curves = path.getCurves(0.2);

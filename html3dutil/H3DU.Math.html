@@ -17,134 +17,214 @@ mathematical objects.</p>
 <h3>Members</h3>
 
 <ul>
-<li><a href="#H3DU.Math.GlobalPitchRollYaw">.GlobalPitchRollYaw</a></li>
-<li><a href="#H3DU.Math.GlobalPitchYawRoll">.GlobalPitchYawRoll</a></li>
-<li><a href="#H3DU.Math.GlobalRollPitchYaw">.GlobalRollPitchYaw</a></li>
-<li><a href="#H3DU.Math.GlobalRollYawPitch">.GlobalRollYawPitch</a></li>
-<li><a href="#H3DU.Math.GlobalYawPitchRoll">.GlobalYawPitchRoll</a></li>
-<li><a href="#H3DU.Math.GlobalYawRollPitch">.GlobalYawRollPitch</a></li>
-<li><a href="#H3DU.Math.HalfPi">.HalfPi</a></li>
-<li><a href="#H3DU.Math.LocalPitchRollYaw">.LocalPitchRollYaw</a></li>
-<li><a href="#H3DU.Math.LocalPitchYawRoll">.LocalPitchYawRoll</a></li>
-<li><a href="#H3DU.Math.LocalRollPitchYaw">.LocalRollPitchYaw</a></li>
-<li><a href="#H3DU.Math.LocalRollYawPitch">.LocalRollYawPitch</a></li>
-<li><a href="#H3DU.Math.LocalYawPitchRoll">.LocalYawPitchRoll</a></li>
-<li><a href="#H3DU.Math.LocalYawRollPitch">.LocalYawRollPitch</a></li>
-<li><a href="#H3DU.Math.Num180DividedByPi">.Num180DividedByPi</a></li>
-<li><a href="#H3DU.Math.PiDividedBy180">.PiDividedBy180</a></li>
-<li><a href="#H3DU.Math.PiTimes2">.PiTimes2</a></li>
-<li><a href="#H3DU.Math.PitchRollYaw">.PitchRollYaw</a></li>
-<li><a href="#H3DU.Math.PitchYawRoll">.PitchYawRoll</a></li>
-<li><a href="#H3DU.Math.RollPitchYaw">.RollPitchYaw</a></li>
-<li><a href="#H3DU.Math.RollYawPitch">.RollYawPitch</a></li>
-<li><a href="#H3DU.Math.ToDegrees">.ToDegrees</a></li>
-<li><a href="#H3DU.Math.ToRadians">.ToRadians</a></li>
-<li><a href="#H3DU.Math.YawPitchRoll">.YawPitchRoll</a></li>
-<li><a href="#H3DU.Math.YawRollPitch">.YawRollPitch</a></li>
+<li><a href="#H3DU.Math.GlobalPitchRollYaw">.GlobalPitchRollYaw</a><br>Indicates that a rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).</li>
+<li><a href="#H3DU.Math.GlobalPitchYawRoll">.GlobalPitchYawRoll</a><br>Indicates that a rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes),
+or in the reverse order around</li>
+<li><a href="#H3DU.Math.GlobalRollPitchYaw">.GlobalRollPitchYaw</a><br>Indicates that a rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).</li>
+<li><a href="#H3DU.Math.GlobalRollYawPitch">.GlobalRollYawPitch</a><br>Indicates that a rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).</li>
+<li><a href="#H3DU.Math.GlobalYawPitchRoll">.GlobalYawPitchRoll</a><br>Indicates that a rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).</li>
+<li><a href="#H3DU.Math.GlobalYawRollPitch">.GlobalYawRollPitch</a><br>Indicates that a rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).</li>
+<li><a href="#H3DU.Math.HalfPi">.HalfPi</a><br>Closest approximation to pi divided by 2, or a 90-degree turn in radians.</li>
+<li><a href="#H3DU.Math.LocalPitchRollYaw">.LocalPitchRollYaw</a><br>Indicates that a rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
+occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
+<li><a href="#H3DU.Math.LocalPitchYawRoll">.LocalPitchYawRoll</a><br>Indicates that a rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
+occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
+<li><a href="#H3DU.Math.LocalRollPitchYaw">.LocalRollPitchYaw</a><br>Indicates that a rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
+occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
+<li><a href="#H3DU.Math.LocalRollYawPitch">.LocalRollYawPitch</a><br>Indicates that a rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
+occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
+<li><a href="#H3DU.Math.LocalYawPitchRoll">.LocalYawPitchRoll</a><br>Indicates that a rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
+occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
+<li><a href="#H3DU.Math.LocalYawRollPitch">.LocalYawRollPitch</a><br>Indicates that a rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
+occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
+<li><a href="#H3DU.Math.Num180DividedByPi">.Num180DividedByPi</a><br>Closest approximation to 180 divided by pi, or the number of
+degrees in a radian.</li>
+<li><a href="#H3DU.Math.PiDividedBy180">.PiDividedBy180</a><br>Closest approximation to pi divided by 180, or the number
+of radians in a degree.</li>
+<li><a href="#H3DU.Math.PiTimes2">.PiTimes2</a><br>Closest approximation to pi times 2, or a 360-degree turn in radians.</li>
+<li><a href="#H3DU.Math.PitchRollYaw">.PitchRollYaw</a><br><b>Deprecated: This constant&#39;s name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalPitchRollYaw instead.</b></li>
+<li><a href="#H3DU.Math.PitchYawRoll">.PitchYawRoll</a><br><b>Deprecated: This constant&#39;s name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalPitchYawRoll instead.</b></li>
+<li><a href="#H3DU.Math.RollPitchYaw">.RollPitchYaw</a><br><b>Deprecated: This constant&#39;s name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalRollPitchYaw instead.</b></li>
+<li><a href="#H3DU.Math.RollYawPitch">.RollYawPitch</a><br><b>Deprecated: This constant&#39;s name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalRollYawPitch instead.</b></li>
+<li><a href="#H3DU.Math.ToDegrees">.ToDegrees</a><br>Closest approximation to 180 divided by pi, or the number of
+degrees in a radian.</li>
+<li><a href="#H3DU.Math.ToRadians">.ToRadians</a><br>Closest approximation to pi divided by 180, or the number
+of radians in a degree.</li>
+<li><a href="#H3DU.Math.YawPitchRoll">.YawPitchRoll</a><br><b>Deprecated: This constant&#39;s name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalYawPitchRoll instead.</b></li>
+<li><a href="#H3DU.Math.YawRollPitch">.YawRollPitch</a><br><b>Deprecated: This constant&#39;s name is ambiguous between local and global rotations.
+Use H3DU.Math.GlobalYawRollPitch instead.</b></li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Math.quatCopy">.quatCopy</a></li>
-<li><a href="#H3DU.Math.quatDot">.quatDot</a></li>
-<li><a href="#H3DU.Math.quatInverse">.quatInverse</a></li>
-<li><a href="#H3DU.Math.quatLength">.quatLength</a></li>
-<li><a href="#H3DU.Math.quatNorm">.quatNorm</a></li>
-<li><a href="#H3DU.Math.quatNormInPlace">.quatNormInPlace</a></li>
-<li><a href="#H3DU.Math.quatScale">.quatScale</a></li>
-<li><a href="#H3DU.Math.quatScaleInPlace">.quatScaleInPlace</a></li>
-<li><a href="#H3DU.Math.boxCenter">boxCenter</a></li>
-<li><a href="#H3DU.Math.boxDimensions">boxDimensions</a></li>
-<li><a href="#H3DU.Math.boxIsEmpty">boxIsEmpty</a></li>
-<li><a href="#H3DU.Math.frustumHasBox">frustumHasBox</a></li>
-<li><a href="#H3DU.Math.frustumHasPoint">frustumHasPoint</a></li>
-<li><a href="#H3DU.Math.frustumHasSphere">frustumHasSphere</a></li>
-<li><a href="#H3DU.Math.mat3identity">mat3identity</a></li>
-<li><a href="#H3DU.Math.mat3transform">mat3transform</a></li>
-<li><a href="#H3DU.Math.mat4copy">mat4copy</a></li>
-<li><a href="#H3DU.Math.mat4frustum">mat4frustum</a></li>
-<li><a href="#H3DU.Math.mat4identity">mat4identity</a></li>
-<li><a href="#H3DU.Math.mat4inverseTranspose3">mat4inverseTranspose3</a></li>
-<li><a href="#H3DU.Math.mat4invert">mat4invert</a></li>
-<li><a href="#H3DU.Math.mat4isIdentity">mat4isIdentity</a></li>
-<li><a href="#H3DU.Math.mat4lookat">mat4lookat</a></li>
-<li><a href="#H3DU.Math.mat4multiply">mat4multiply</a></li>
-<li><a href="#H3DU.Math.mat4ortho">mat4ortho</a></li>
-<li><a href="#H3DU.Math.mat4ortho2d">mat4ortho2d</a></li>
-<li><a href="#H3DU.Math.mat4ortho2dAspect">mat4ortho2dAspect</a></li>
-<li><a href="#H3DU.Math.mat4orthoAspect">mat4orthoAspect</a></li>
-<li><a href="#H3DU.Math.mat4perspective">mat4perspective</a></li>
-<li><a href="#H3DU.Math.mat4perspectiveHorizontal">mat4perspectiveHorizontal</a></li>
-<li><a href="#H3DU.Math.mat4projectVec3">mat4projectVec3</a></li>
-<li><a href="#H3DU.Math.mat4rotate">mat4rotate</a></li>
-<li><a href="#H3DU.Math.mat4rotated">mat4rotated</a></li>
-<li><a href="#H3DU.Math.mat4scale">mat4scale</a></li>
-<li><a href="#H3DU.Math.mat4scaleInPlace">mat4scaleInPlace</a></li>
-<li><a href="#H3DU.Math.mat4scaled">mat4scaled</a></li>
-<li><a href="#H3DU.Math.mat4toFrustumPlanes">mat4toFrustumPlanes</a></li>
-<li><a href="#H3DU.Math.mat4toMat3">mat4toMat3</a></li>
-<li><a href="#H3DU.Math.mat4transform">mat4transform</a></li>
-<li><a href="#H3DU.Math.mat4transformVec3">mat4transformVec3</a></li>
-<li><a href="#H3DU.Math.mat4translate">mat4translate</a></li>
-<li><a href="#H3DU.Math.mat4translated">mat4translated</a></li>
-<li><a href="#H3DU.Math.mat4transpose">mat4transpose</a></li>
-<li><a href="#H3DU.Math.mat4transposeInPlace">mat4transposeInPlace</a></li>
-<li><a href="#H3DU.Math.planeNorm">planeNorm</a></li>
-<li><a href="#H3DU.Math.planeNormInPlace">planeNormInPlace</a></li>
-<li><a href="#H3DU.Math.quatConjugate">quatConjugate</a></li>
-<li><a href="#H3DU.Math.quatFromAxisAngle">quatFromAxisAngle</a></li>
-<li><a href="#H3DU.Math.quatFromMat4">quatFromMat4</a></li>
-<li><a href="#H3DU.Math.quatFromTaitBryan">quatFromTaitBryan</a></li>
-<li><a href="#H3DU.Math.quatFromVectors">quatFromVectors</a></li>
-<li><a href="#H3DU.Math.quatIdentity">quatIdentity</a></li>
-<li><a href="#H3DU.Math.quatInvert">quatInvert</a></li>
+<li><a href="#H3DU.Math.quatCopy">.quatCopy</a><br>Returns a copy of a quaternion.</li>
+<li><a href="#H3DU.Math.quatDot">.quatDot</a><br>Finds the dot product of two quaternions.</li>
+<li><a href="#H3DU.Math.quatInverse">.quatInverse</a><br><b>Deprecated: Use H3DU.Math.quatInvert instead.</b></li>
+<li><a href="#H3DU.Math.quatLength">.quatLength</a><br>Returns the distance of this quaternion from the origin.</li>
+<li><a href="#H3DU.Math.quatNorm">.quatNorm</a><br>Converts a quaternion to its normalized version; returns a new quaternion.</li>
+<li><a href="#H3DU.Math.quatNormInPlace">.quatNormInPlace</a><br>Converts a quaternion to its normalized version.</li>
+<li><a href="#H3DU.Math.quatScale">.quatScale</a><br>Multiplies each element of a quaternion by a factor
+and returns the result as a new quaternion.</li>
+<li><a href="#H3DU.Math.quatScaleInPlace">.quatScaleInPlace</a><br>Multiplies each element of a quaternion by a factor
+and stores the result in that quaternion.</li>
+<li><a href="#H3DU.Math.boxCenter">boxCenter</a><br>Finds the center of a 3D bounding box.</li>
+<li><a href="#H3DU.Math.boxDimensions">boxDimensions</a><br>Finds the dimensions of a 3D bounding box.</li>
+<li><a href="#H3DU.Math.boxIsEmpty">boxIsEmpty</a><br>Determines whether a 3D bounding box is empty.</li>
+<li><a href="#H3DU.Math.frustumHasBox">frustumHasBox</a><br>Determines whether an axis-aligned bounding box
+is at least partially inside a view frustum.</li>
+<li><a href="#H3DU.Math.frustumHasPoint">frustumHasPoint</a><br>Determines whether a point is
+outside or inside a view frustum.</li>
+<li><a href="#H3DU.Math.frustumHasSphere">frustumHasSphere</a><br>Determines whether a sphere is at least
+partially inside a view frustum.</li>
+<li><a href="#H3DU.Math.mat3identity">mat3identity</a><br>Returns the identity 3x3 matrix (a matrix that keeps
+vectors unchanged when they are transformed with this matrix).</li>
+<li><a href="#H3DU.Math.mat3transform">mat3transform</a><br>Transforms a 3-element vector with a 3x3 matrix and returns
+the transformed vector.</li>
+<li><a href="#H3DU.Math.mat4copy">mat4copy</a><br>Returns a copy of a 4x4 matrix.</li>
+<li><a href="#H3DU.Math.mat4frustum">mat4frustum</a><br>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>
+in the form of a view frustum, or the limits in the &quot;camera&quot;&#39;s view.</li>
+<li><a href="#H3DU.Math.mat4identity">mat4identity</a><br>Returns the identity 4x4 matrix (a matrix that keeps
+vectors unchanged when they are transformed with this matrix).</li>
+<li><a href="#H3DU.Math.mat4inverseTranspose3">mat4inverseTranspose3</a><br>Returns the transposed result of the inverted 3x3 upper left corner of
+the given 4x4 matrix.</li>
+<li><a href="#H3DU.Math.mat4invert">mat4invert</a><br>Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.</li>
+<li><a href="#H3DU.Math.mat4isIdentity">mat4isIdentity</a><br>Returns whether a 4x4 matrix is the identity matrix.</li>
+<li><a href="#H3DU.Math.mat4lookat">mat4lookat</a><br>Returns a 4x4 matrix representing a camera view.</li>
+<li><a href="#H3DU.Math.mat4multiply">mat4multiply</a><br>Multiplies two 4x4 matrices.</li>
+<li><a href="#H3DU.Math.mat4ortho">mat4ortho</a><br>Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>.</li>
+<li><a href="#H3DU.Math.mat4ortho2d">mat4ortho2d</a><br>Returns a 4x4 matrix representing a 2D orthographic projection.</li>
+<li><a href="#H3DU.Math.mat4ortho2dAspect">mat4ortho2dAspect</a><br>Returns a 4x4 matrix representing a 2D orthographic projection,
+retaining the view rectangle&#39;s aspect ratio.</li>
+<li><a href="#H3DU.Math.mat4orthoAspect">mat4orthoAspect</a><br>Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>,
+retaining the view rectangle&#39;s aspect ratio.</li>
+<li><a href="#H3DU.Math.mat4perspective">mat4perspective</a><br>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.</li>
+<li><a href="#H3DU.Math.mat4perspectiveHorizontal">mat4perspectiveHorizontal</a><br>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
+given an X-axis field of view.</li>
+<li><a href="#H3DU.Math.mat4projectVec3">mat4projectVec3</a><br>Transforms a 3-element vector with a 4x4 matrix and returns
+a perspective-correct version of the vector as a 3D point.</li>
+<li><a href="#H3DU.Math.mat4rotate">mat4rotate</a><br>Multiplies a 4x4 matrix by a rotation transformation,
+and returns a new matrix.</li>
+<li><a href="#H3DU.Math.mat4rotated">mat4rotated</a><br>Returns a 4x4 matrix representing a rotation transformation.</li>
+<li><a href="#H3DU.Math.mat4scale">mat4scale</a><br>Multiplies a 4x4 matrix by a scaling transformation.</li>
+<li><a href="#H3DU.Math.mat4scaleInPlace">mat4scaleInPlace</a><br>Modifies a 4x4 matrix by multiplying it by a
+scaling transformation.</li>
+<li><a href="#H3DU.Math.mat4scaled">mat4scaled</a><br>Returns a 4x4 matrix representing a scaling transformation.</li>
+<li><a href="#H3DU.Math.mat4toFrustumPlanes">mat4toFrustumPlanes</a><br>Finds the six clipping planes of a view frustum defined
+by a 4x4 matrix.</li>
+<li><a href="#H3DU.Math.mat4toMat3">mat4toMat3</a><br>Returns the upper-left part of a 4x4 matrix as a new
+3x3 matrix.</li>
+<li><a href="#H3DU.Math.mat4transform">mat4transform</a><br>Transforms a 4-element vector with a 4x4 matrix and returns
+the transformed vector.</li>
+<li><a href="#H3DU.Math.mat4transformVec3">mat4transformVec3</a><br>Transforms a 3-element vector with the first three rows
+of a 4x4 matrix (in column-major order) and returns the transformed vector.</li>
+<li><a href="#H3DU.Math.mat4translate">mat4translate</a><br>Multiplies a 4x4 matrix by a translation transformation.</li>
+<li><a href="#H3DU.Math.mat4translated">mat4translated</a><br>Returns a 4x4 matrix representing a translation.</li>
+<li><a href="#H3DU.Math.mat4transpose">mat4transpose</a><br>Returns the transpose of a 4x4 matrix.</li>
+<li><a href="#H3DU.Math.mat4transposeInPlace">mat4transposeInPlace</a><br>Transposes a 4x4 matrix in place without creating
+a new matrix.</li>
+<li><a href="#H3DU.Math.planeNorm">planeNorm</a><br>Normalizes this plane so that its normal is a unit vector (a &quot;normalized&quot; vector with a length of 1),
+unless all the normal&#39;s components are 0.</li>
+<li><a href="#H3DU.Math.planeNormInPlace">planeNormInPlace</a><br>Normalizes this plane so that its normal is a unit vector (a &quot;normalized&quot; vector with a length of 1),
+unless all the normal&#39;s components are 0.</li>
+<li><a href="#H3DU.Math.quatConjugate">quatConjugate</a><br>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation; this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion&#39;s axis of rotation).</li>
+<li><a href="#H3DU.Math.quatFromAxisAngle">quatFromAxisAngle</a><br>Generates a quaternion from an angle and axis of rotation.</li>
+<li><a href="#H3DU.Math.quatFromMat4">quatFromMat4</a><br>Generates a quaternion from the rotation described in a 4x4 matrix.</li>
+<li><a href="#H3DU.Math.quatFromTaitBryan">quatFromTaitBryan</a><br>Generates a quaternion from pitch, yaw and roll angles (or <i>Tait-Bryan angles</i>).</li>
+<li><a href="#H3DU.Math.quatFromVectors">quatFromVectors</a><br>Generates a quaternion describing a rotation between
+two 3-element vectors.</li>
+<li><a href="#H3DU.Math.quatIdentity">quatIdentity</a><br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).</li>
+<li><a href="#H3DU.Math.quatInvert">quatInvert</a><br>Inverts the rotation given in this quaternion, describing a rotation that undoes the given rotation,
+and converts this quaternion to a unit vector (a &quot;normalized&quot; vector with a length of 1).</li>
 <li><a href="#H3DU.Math.quatIsIdentity">quatIsIdentity</a></li>
-<li><a href="#H3DU.Math.quatMultiply">quatMultiply</a></li>
-<li><a href="#H3DU.Math.quatNlerp">quatNlerp</a></li>
-<li><a href="#H3DU.Math.quatRotate">quatRotate</a></li>
-<li><a href="#H3DU.Math.quatSlerp">quatSlerp</a></li>
-<li><a href="#H3DU.Math.quatToAxisAngle">quatToAxisAngle</a></li>
-<li><a href="#H3DU.Math.quatToMat4">quatToMat4</a></li>
-<li><a href="#H3DU.Math.quatToTaitBryan">quatToTaitBryan</a></li>
-<li><a href="#H3DU.Math.quatTransform">quatTransform</a></li>
-<li><a href="#H3DU.Math.vec3abs">vec3abs</a></li>
-<li><a href="#H3DU.Math.vec3absInPlace">vec3absInPlace</a></li>
-<li><a href="#H3DU.Math.vec3add">vec3add</a></li>
-<li><a href="#H3DU.Math.vec3addInPlace">vec3addInPlace</a></li>
-<li><a href="#H3DU.Math.vec3assign">vec3assign</a></li>
-<li><a href="#H3DU.Math.vec3copy">vec3copy</a></li>
-<li><a href="#H3DU.Math.vec3cross">vec3cross</a></li>
-<li><a href="#H3DU.Math.vec3dist">vec3dist</a></li>
-<li><a href="#H3DU.Math.vec3dot">vec3dot</a></li>
-<li><a href="#H3DU.Math.vec3length">vec3length</a></li>
-<li><a href="#H3DU.Math.vec3lerp">vec3lerp</a></li>
-<li><a href="#H3DU.Math.vec3mul">vec3mul</a></li>
-<li><a href="#H3DU.Math.vec3mulInPlace">vec3mulInPlace</a></li>
-<li><a href="#H3DU.Math.vec3negate">vec3negate</a></li>
-<li><a href="#H3DU.Math.vec3negateInPlace">vec3negateInPlace</a></li>
-<li><a href="#H3DU.Math.vec3norm">vec3norm</a></li>
-<li><a href="#H3DU.Math.vec3normInPlace">vec3normInPlace</a></li>
-<li><a href="#H3DU.Math.vec3perp">vec3perp</a></li>
-<li><a href="#H3DU.Math.vec3scale">vec3scale</a></li>
-<li><a href="#H3DU.Math.vec3scaleInPlace">vec3scaleInPlace</a></li>
-<li><a href="#H3DU.Math.vec3sub">vec3sub</a></li>
-<li><a href="#H3DU.Math.vec3subInPlace">vec3subInPlace</a></li>
-<li><a href="#H3DU.Math.vec3toWindowPoint">vec3toWindowPoint</a></li>
-<li><a href="#H3DU.Math.vec3triple">vec3triple</a></li>
-<li><a href="#H3DU.Math.vec4abs">vec4abs</a></li>
-<li><a href="#H3DU.Math.vec4absInPlace">vec4absInPlace</a></li>
-<li><a href="#H3DU.Math.vec4assign">vec4assign</a></li>
-<li><a href="#H3DU.Math.vec4copy">vec4copy</a></li>
-<li><a href="#H3DU.Math.vec4dot">vec4dot</a></li>
-<li><a href="#H3DU.Math.vec4length">vec4length</a></li>
-<li><a href="#H3DU.Math.vec4lerp">vec4lerp</a></li>
-<li><a href="#H3DU.Math.vec4negate">vec4negate</a></li>
-<li><a href="#H3DU.Math.vec4negateInPlace">vec4negateInPlace</a></li>
-<li><a href="#H3DU.Math.vec4norm">vec4norm</a></li>
-<li><a href="#H3DU.Math.vec4normInPlace">vec4normInPlace</a></li>
-<li><a href="#H3DU.Math.vec4scale">vec4scale</a></li>
-<li><a href="#H3DU.Math.vec4scaleInPlace">vec4scaleInPlace</a></li>
+<li><a href="#H3DU.Math.quatMultiply">quatMultiply</a><br>Multiplies two quaternions, creating a composite rotation.</li>
+<li><a href="#H3DU.Math.quatNlerp">quatNlerp</a><br>Returns a quaternion that lies along the shortest path between the
+given two quaternion rotations, using a linear interpolation function, and converts
+it to a unit vector (a &quot;normalized&quot; vector with a length of 1).</li>
+<li><a href="#H3DU.Math.quatRotate">quatRotate</a><br>Multiplies a quaternion by a rotation transformation
+described as an angle and axis of rotation.</li>
+<li><a href="#H3DU.Math.quatSlerp">quatSlerp</a><br>Returns a quaternion that lies along the shortest path between the
+given two quaternion rotations, using a spherical interpolation function.</li>
+<li><a href="#H3DU.Math.quatToAxisAngle">quatToAxisAngle</a><br>Calculates the angle and axis of rotation for this
+quaternion.</li>
+<li><a href="#H3DU.Math.quatToMat4">quatToMat4</a><br>Generates a 4x4 matrix describing the rotation
+described by this quaternion.</li>
+<li><a href="#H3DU.Math.quatToTaitBryan">quatToTaitBryan</a><br>Converts this quaternion to the same version of the rotation
+in the form of pitch, yaw, and roll angles (or <i>Tait-Bryan angles</i>).</li>
+<li><a href="#H3DU.Math.quatTransform">quatTransform</a><br>Transforms a 3- or 4-element vector using a quaternion&#39;s rotation.</li>
+<li><a href="#H3DU.Math.vec3abs">vec3abs</a><br>Returns a new 3-element
+vector with the absolute value of each of its components.</li>
+<li><a href="#H3DU.Math.vec3absInPlace">vec3absInPlace</a><br>Sets each component of the given 3-element
+vector to its absolute value.</li>
+<li><a href="#H3DU.Math.vec3add">vec3add</a><br>Adds two 3-element vectors and returns a new
+vector with the result.</li>
+<li><a href="#H3DU.Math.vec3addInPlace">vec3addInPlace</a><br>Adds two 3-element vectors and stores
+the result in the first vector.</li>
+<li><a href="#H3DU.Math.vec3assign">vec3assign</a><br>Assigns the values of a 3-element vector into another
+3-element vector.</li>
+<li><a href="#H3DU.Math.vec3copy">vec3copy</a><br>Returns a copy of a 3-element vector.</li>
+<li><a href="#H3DU.Math.vec3cross">vec3cross</a><br>Finds the cross product of two 3-element vectors (called A and B).</li>
+<li><a href="#H3DU.Math.vec3dist">vec3dist</a><br>Finds the cartesian distance from one three-element vector
+to another, treating both as 3D points.</li>
+<li><a href="#H3DU.Math.vec3dot">vec3dot</a><br>Finds the dot product of two 3-element vectors.</li>
+<li><a href="#H3DU.Math.vec3length">vec3length</a><br>Returns the distance of this 3-element vector from the origin.</li>
+<li><a href="#H3DU.Math.vec3lerp">vec3lerp</a><br>Does a linear interpolation between two 3-element vectors;
+returns a new vector.</li>
+<li><a href="#H3DU.Math.vec3mul">vec3mul</a><br>Multiplies two vectors and returns a new
+vector with the result.</li>
+<li><a href="#H3DU.Math.vec3mulInPlace">vec3mulInPlace</a><br>Multiplies two 3-element vectors and stores
+the result in the first vector.</li>
+<li><a href="#H3DU.Math.vec3negate">vec3negate</a><br>Negates a 3-element vector and returns a new
+vector with the result, which is generally a vector with
+the same length but opposite direction.</li>
+<li><a href="#H3DU.Math.vec3negateInPlace">vec3negateInPlace</a><br>Negates a 3-element vector in place.</li>
+<li><a href="#H3DU.Math.vec3norm">vec3norm</a><br>Returns a normalized version of a 3-element vector.</li>
+<li><a href="#H3DU.Math.vec3normInPlace">vec3normInPlace</a><br>Converts a 3-element vector to its normalized version.</li>
+<li><a href="#H3DU.Math.vec3perp">vec3perp</a><br>Returns an arbitrary 3-element vector that is perpendicular
+(orthogonal) to the given 3-element vector.</li>
+<li><a href="#H3DU.Math.vec3scale">vec3scale</a><br>Multiplies a 3-element vector by a factor
+(thus multiplying that vector&#39;s length by that factor)
+and returns a new vector with the result.</li>
+<li><a href="#H3DU.Math.vec3scaleInPlace">vec3scaleInPlace</a><br>Multiplies each element of a 3-element vector by a factor
+(thus multiplying that vector&#39;s length by that factor)
+and stores the result in that vector.</li>
+<li><a href="#H3DU.Math.vec3sub">vec3sub</a><br>Subtracts the second vector from the first vector and returns a new
+vector with the result.</li>
+<li><a href="#H3DU.Math.vec3subInPlace">vec3subInPlace</a><br>Subtracts the second vector from the first vector and stores
+the result in the first vector.</li>
+<li><a href="#H3DU.Math.vec3toWindowPoint">vec3toWindowPoint</a><br>Transforms the 3D point specified in this 3-element vector to its X
+and Y <i>window coordinates</i>, and its projected Z coordinate,
+using the given transformation matrix and viewport
+width and height.</li>
+<li><a href="#H3DU.Math.vec3triple">vec3triple</a><br>Finds the scalar triple product of three vectors (A, B, and C).</li>
+<li><a href="#H3DU.Math.vec4abs">vec4abs</a><br>Returns a new 4-element
+vector with the absolute value of each of its components.</li>
+<li><a href="#H3DU.Math.vec4absInPlace">vec4absInPlace</a><br>Sets each component of the given 4-element
+vector to its absolute value.</li>
+<li><a href="#H3DU.Math.vec4assign">vec4assign</a><br>Assigns the values of a 4-element vector into another
+4-element vector.</li>
+<li><a href="#H3DU.Math.vec4copy">vec4copy</a><br>Returns a copy of a 4-element vector.</li>
+<li><a href="#H3DU.Math.vec4dot">vec4dot</a><br>Finds the dot product of two 4-element vectors.</li>
+<li><a href="#H3DU.Math.vec4length">vec4length</a><br>Returns the distance of this 4-element vector from the origin.</li>
+<li><a href="#H3DU.Math.vec4lerp">vec4lerp</a><br>Does a linear interpolation between two 4-element vectors;
+returns a new vector.</li>
+<li><a href="#H3DU.Math.vec4negate">vec4negate</a><br>Negates a 4-element vector and returns a new
+vector with the result, which is generally a vector with
+the same length but opposite direction.</li>
+<li><a href="#H3DU.Math.vec4negateInPlace">vec4negateInPlace</a><br>Negates a 4-element vector in place.</li>
+<li><a href="#H3DU.Math.vec4norm">vec4norm</a><br>Returns a normalized version of a 4-element vector.</li>
+<li><a href="#H3DU.Math.vec4normInPlace">vec4normInPlace</a><br>Converts a 4-element vector to its normalized version.</li>
+<li><a href="#H3DU.Math.vec4scale">vec4scale</a><br>Multiplies each element of a 4-element vector by a factor
+(thus multiplying that vector&#39;s length by that factor)
+and returns a new vector with the result.</li>
+<li><a href="#H3DU.Math.vec4scaleInPlace">vec4scaleInPlace</a><br>Multiplies each element of a 4-element vector by a factor
+(thus multiplying that vector&#39;s length by that factor)
+and stores the result in that vector.</li>
 </ul>
 
 <h3>H3DU.Math.GlobalPitchRollYaw <a id='H3DU.Math.GlobalPitchRollYaw'></a> (constant)</h3>
@@ -619,7 +699,7 @@ A 4x4 matrix.</li>
 
 <h3>(static) H3DU.Math.mat4frustum(l, r, b, t, near, far) <a id='H3DU.Math.mat4frustum'></a></h3>
 
-<p>Returns a 4x4 matrix representing a perspective projection
+<p>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>
 in the form of a view frustum, or the limits in the &quot;camera&quot;&#39;s view.</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
@@ -771,7 +851,7 @@ The second matrix.</li>
 
 <h3>(static) H3DU.Math.mat4ortho(l, r, b, t, n, f) <a id='H3DU.Math.mat4ortho'></a></h3>
 
-<p>Returns a 4x4 matrix representing an orthographic projection.
+<p>Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>.
 In this projection, the left clipping plane is parallel to the right clipping
 plane and the top to the bottom.</p>
 
@@ -866,7 +946,7 @@ The ratio of width to height of the viewport, usually the scene&#39;s aspect rat
 
 <h3>(static) H3DU.Math.mat4orthoAspect(l, r, b, t, n, f, aspect) <a id='H3DU.Math.mat4orthoAspect'></a></h3>
 
-<p>Returns a 4x4 matrix representing an orthographic projection,
+<p>Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>,
 retaining the view rectangle&#39;s aspect ratio.</p>
 
 <p>If the view rectangle&#39;s aspect ratio doesn&#39;t match the desired aspect
@@ -904,7 +984,7 @@ The ratio of width to height of the viewport, usually the scene&#39;s aspect rat
 
 <h3>(static) H3DU.Math.mat4perspective(fovY, aspectRatio, near, far) <a id='H3DU.Math.mat4perspective'></a></h3>
 
-<p>Returns a 4x4 matrix representing a perspective projection.</p>
+<p>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
@@ -935,7 +1015,7 @@ The distance from the &quot;camera&quot; to the far clipping plane. Objects beyo
 
 <h3>(static) H3DU.Math.mat4perspectiveHorizontal(fovX, aspectRatio, near, far) <a id='H3DU.Math.mat4perspectiveHorizontal'></a></h3>
 
-<p>Returns a 4x4 matrix representing a perspective projection,
+<p>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
 given an X-axis field of view.
 This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
@@ -2501,50 +2581,57 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a></li>
-<li><a href="FrameCounter.html">FrameCounter</a></li>
-<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
-<li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
-<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
-<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
-<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
-<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
-<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
-<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
-<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
-<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
-<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
-<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
-<li><a href="H3DU.Material.html">H3DU.Material</a></li>
-<li><a href="H3DU.Math.html">H3DU.Math</a></li>
-<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
-<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
-<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
-<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
-<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
-<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
-<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
-<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
-<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
-<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
-<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
-<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
-<li><a href="InputTracker.html">InputTracker</a></li>
-<li><a href="MeshJSON.html">MeshJSON</a></li>
-<li><a href="ObjData.html">ObjData</a></li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
-<li><a href="Promise.html">Promise</a></li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
-<li><a href="Trochoid.html">Trochoid</a></li>
+<li><a href="CurveTube.html">CurveTube</a><br><b>Deprecated: Use H3DU.CurveTube instead.</b></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a><br><b>Deprecated: Use H3DU.Epitrochoid instead.</b></li>
+<li><a href="FrameCounter.html">FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.</li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a><br>A class that displays a frame counter HTML element.</li>
+<li><a href="GraphicsPath.html">GraphicsPath</a><br><b>Deprecated: Use H3DU.GraphicsPath instead.</b></li>
+<li><a href="H3DU.html">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility</li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a><br>A parametric evaluator for B-spline (basis spline) curves.</li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a><br>A parametric evaluator for B-spline (basis spline) surfaces.</li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a><br>A <code>Batch3D</code> represents a so-called &quot;scene graph&quot;.</li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a><br>A parametric evaluator for B&eacute;zier curves.</li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a><br>A parametric evaluator for B&eacute;zier surfaces.</li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.Camera.html">H3DU.Camera</a><br>A class for controlling the projection and</li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a><br>An evaluator of parametric curve functions for generating</li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a><br>Evaluator for a parametric surface in the form</li>
+<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a><br>Parametric evaluator for a</li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.</li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.</li>
+<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a><br>Parametric evaluator for a</li>
+<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel</li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a><br>Specifies parameters for light sources.</li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a><br>A collection of light sources.</li>
+<li><a href="H3DU.Material.html">H3DU.Material</a><br>Specifies parameters for geometry materials, which describe the appearance of a</li>
+<li><a href="H3DU.Math.html">H3DU.Math</a><br>A collection of math functions for working</li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a><br>H3DU.MatrixStack is a class that implements a stack</li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a><br>Specifies the triangles, lines, or points that make up a geometric shape.</li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.</li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a><br>Contains methods that create meshes</li>
+<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for</li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering</li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a><br>Holds source code for a WebGL shader program.</li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a><br><b>Deprecated: This class is likely to become a private class.</li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with</li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a><br>Represents a grouping of shapes.</li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating</li>
+<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a><br>Parametric evaluator for a surface of revolution, which results by revolving</li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional</li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a><br>Specifies a texture, which can serve as image data applied to</li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single</li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a><br>An object that caches loaded textures and uploads them</li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a><br>A class offering a convenient way to set a transformation</li>
+<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a><br>Parametric evaluator for a</li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a><br><b>Deprecated: Use H3DU.Hypotrochoid instead.</b></li>
+<li><a href="InputTracker.html">InputTracker</a><br><b>Deprecated: Use H3DU.Camera instead.</b></li>
+<li><a href="MeshJSON.html">MeshJSON</a><br>JSON exporter of graphics meshes.</li>
+<li><a href="ObjData.html">ObjData</a><br>WaveFront OBJ format.</li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a><br><b>Deprecated: Will be removed in the future.</b></li>
+<li><a href="Promise.html">Promise</a><br>A promise holds a value to be resolved in the future.</li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a><br><b>Deprecated: Use H3DU.SurfaceOfRevolution instead.</b></li>
+<li><a href="Trochoid.html">Trochoid</a><br><b>Deprecated: Use H3DU.Trochoid instead.</b></li>
 <li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
 <li><a href="tutorial-colors.html">Color Strings</a></li>
 <li><a href="tutorial-filters.html">Graphics Filters</a></li>
