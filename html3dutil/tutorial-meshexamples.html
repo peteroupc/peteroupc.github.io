@@ -96,7 +96,7 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
 function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
  if(sectionCount==null)sectionCount=4
  var firstColor=true
- var ret=new Mesh()
+ var ret=new H3DU.Mesh()
  var sweep=360.0/sections;
  for(var i=0;i&lt;sections;i++){
   var angle=360.0*(i*1.0/sections);
@@ -159,6 +159,19 @@ function createPathDisk(path, z, flatness){
    .vertex3(tri[4],tri[5],z)
  }
  return mesh
+}
+
+function setBoxSizeAndBounds(shape,box){
+ shape.setPosition(H3DU.Math.boxCenter(box))
+ shape.setScale(H3DU.Math.boxDimensions(box))
+ return shape
+}
+function wireBox(box, color){
+  if(!color)color=&quot;gray&quot;;
+ var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
+ var shape=new H3DU.Shape(boxMesh).setColor(color)
+    .setMaterialParams({&quot;basic&quot;:true})
+ return setBoxSizeAndBounds(shape,box)
 }
 </code></pre>
 

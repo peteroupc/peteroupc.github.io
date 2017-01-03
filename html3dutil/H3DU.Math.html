@@ -54,6 +54,8 @@ mathematical objects.</p>
 <li><a href="#H3DU.Math.quatNormInPlace">.quatNormInPlace</a></li>
 <li><a href="#H3DU.Math.quatScale">.quatScale</a></li>
 <li><a href="#H3DU.Math.quatScaleInPlace">.quatScaleInPlace</a></li>
+<li><a href="#H3DU.Math.boxCenter">boxCenter</a></li>
+<li><a href="#H3DU.Math.boxDimensions">boxDimensions</a></li>
 <li><a href="#H3DU.Math.boxIsEmpty">boxIsEmpty</a></li>
 <li><a href="#H3DU.Math.frustumHasBox">frustumHasBox</a></li>
 <li><a href="#H3DU.Math.frustumHasPoint">frustumHasPoint</a></li>
@@ -106,6 +108,8 @@ mathematical objects.</p>
 <li><a href="#H3DU.Math.quatToMat4">quatToMat4</a></li>
 <li><a href="#H3DU.Math.quatToTaitBryan">quatToTaitBryan</a></li>
 <li><a href="#H3DU.Math.quatTransform">quatTransform</a></li>
+<li><a href="#H3DU.Math.vec3abs">vec3abs</a></li>
+<li><a href="#H3DU.Math.vec3absInPlace">vec3absInPlace</a></li>
 <li><a href="#H3DU.Math.vec3add">vec3add</a></li>
 <li><a href="#H3DU.Math.vec3addInPlace">vec3addInPlace</a></li>
 <li><a href="#H3DU.Math.vec3assign">vec3assign</a></li>
@@ -128,12 +132,15 @@ mathematical objects.</p>
 <li><a href="#H3DU.Math.vec3subInPlace">vec3subInPlace</a></li>
 <li><a href="#H3DU.Math.vec3toWindowPoint">vec3toWindowPoint</a></li>
 <li><a href="#H3DU.Math.vec3triple">vec3triple</a></li>
+<li><a href="#H3DU.Math.vec4abs">vec4abs</a></li>
+<li><a href="#H3DU.Math.vec4absInPlace">vec4absInPlace</a></li>
 <li><a href="#H3DU.Math.vec4assign">vec4assign</a></li>
 <li><a href="#H3DU.Math.vec4copy">vec4copy</a></li>
 <li><a href="#H3DU.Math.vec4dot">vec4dot</a></li>
 <li><a href="#H3DU.Math.vec4length">vec4length</a></li>
 <li><a href="#H3DU.Math.vec4lerp">vec4lerp</a></li>
 <li><a href="#H3DU.Math.vec4negate">vec4negate</a></li>
+<li><a href="#H3DU.Math.vec4negateInPlace">vec4negateInPlace</a></li>
 <li><a href="#H3DU.Math.vec4norm">vec4norm</a></li>
 <li><a href="#H3DU.Math.vec4normInPlace">vec4normInPlace</a></li>
 <li><a href="#H3DU.Math.vec4scale">vec4scale</a></li>
@@ -437,9 +444,46 @@ A factor to multiply.</li>
 
 <p><a href="H3DU.Math.html#H3DU.Math.vec4scaleInPlace">H3DU.Math.vec4scaleInPlace</a></p>
 
+<h3>(static) H3DU.Math.boxCenter(box) <a id='H3DU.Math.boxCenter'></a></h3>
+
+<p>Finds the center of a 3D bounding box.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>box</code> (Type: Array.&lt;Number&gt;)<br>
+An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A 3-element array containing the
+X, Y, and Z coordinates, respectively, of the bounding box&#39;s
+center. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.boxDimensions(box) <a id='H3DU.Math.boxDimensions'></a></h3>
+
+<p>Finds the dimensions of a 3D bounding box. This is done by subtracting
+the first three values of the given array with its last three values.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>box</code> (Type: Array.&lt;Number&gt;)<br>
+An axis-aligned bounding box, which is an array of six values. The first three values are the smallest X, Y, and Z coordinates, and the last three values are the largest X, Y, and Z coordinates.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A 3-element array containing the
+width, height, and depth of the bounding box, respectively. If
+at least one of the minimum coordinates is greater than its
+corresponding maximum coordinate, the array can contain
+negative values. (Type: Array.&lt;Number&gt;)</p>
+
 <h3>(static) H3DU.Math.boxIsEmpty(box) <a id='H3DU.Math.boxIsEmpty'></a></h3>
 
-<p>Determines whether a bounding box is empty.
+<p>Determines whether a 3D bounding box is empty.
 This is determined if the minimum coordinate
 is larger than the corresponding maximum coordinate.</p>
 
@@ -1622,6 +1666,38 @@ the transformed vector. The fourth element will be 1.0.
 If the input vector has 3 elements, a 3-element vector will
 be returned instead. (Type: Array.&lt;Number&gt;)</p>
 
+<h3>(static) H3DU.Math.vec3abs(a) <a id='H3DU.Math.vec3abs'></a></h3>
+
+<p>Returns a new 3-element
+vector with the absolute value of each of its components.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+A 3-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting 3-element vector. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec3absInPlace(a) <a id='H3DU.Math.vec3absInPlace'></a></h3>
+
+<p>Sets each component of the given 3-element
+vector to its absolute value.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+A 3-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The vector &quot;a&quot;. (Type: Array.&lt;Number&gt;)</p>
+
 <h3>(static) H3DU.Math.vec3add(a, b) <a id='H3DU.Math.vec3add'></a></h3>
 
 <p>Adds two 3-element vectors and returns a new
@@ -1702,20 +1778,7 @@ The following are properties of the cross product:<ul>
 vector with the same length but opposite direction.
 <li>If the cross product&#39;s length is 0, then A and B are parallel vectors.
 <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
-
-<h1>The cross product vector will be such that, while the vector points toward the viewer,</h1>
-
-<p>The cross product vector will be such that, whenever the vector points toward the viewer,</p>
-
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>46648dcbdc510ab994e4eb259cdce8eae656c30c
+The cross product vector will be such that, while the vector points toward the viewer,
 the triangle&#39;s vertices are oriented counterclockwise for right-handed coordinate systems,
 or clockwise for left-handed systems. The triangle&#39;s area is half of the cross product&#39;s length.
 <li>If A and B are unit vectors (<a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vectors</a> with a length of 1), the absolute value
@@ -1728,13 +1791,6 @@ where |<b>x</b>| is the length of vector <b>x</b>.)</small>
 </ul>
 The cross product (<b>c</b>) of vectors <b>a</b> and <b>b</b> is found as
 follows:</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
 
 <pre><code>&lt;b&gt;c&lt;/b&gt;.x = &lt;b&gt;a&lt;/b&gt;.y * &lt;b&gt;b&lt;/b&gt;.z - &lt;b&gt;a&lt;/b&gt;.z * &lt;b&gt;b&lt;/b&gt;.y
 &lt;b&gt;c&lt;/b&gt;.y = &lt;b&gt;a&lt;/b&gt;.z * &lt;b&gt;b&lt;/b&gt;.x - &lt;b&gt;a&lt;/b&gt;.x * &lt;b&gt;b&lt;/b&gt;.z
@@ -2183,6 +2239,38 @@ var triple=H3DU.Math.vec3triple(normalVector,vectorB,vectorC);
 angle*=(triple&lt;0 ? -1.0 : 1.0);
 </code></pre>
 
+<h3>(static) H3DU.Math.vec4abs(a) <a id='H3DU.Math.vec4abs'></a></h3>
+
+<p>Returns a new 4-element
+vector with the absolute value of each of its components.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+A 4-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting 4-element vector. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec4absInPlace(a) <a id='H3DU.Math.vec4absInPlace'></a></h3>
+
+<p>Sets each component of the given 4-element
+vector to its absolute value.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+A 4-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The vector &quot;a&quot;. (Type: Array.&lt;Number&gt;)</p>
+
 <h3>(static) H3DU.Math.vec4assign(dst, src) <a id='H3DU.Math.vec4assign'></a></h3>
 
 <p>Assigns the values of a 4-element vector into another
@@ -2299,6 +2387,23 @@ A 4-element vector.</li>
 <h4>Return Value</h4>
 
 <p>The resulting 4-element vector. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec4negateInPlace(a) <a id='H3DU.Math.vec4negateInPlace'></a></h3>
+
+<p>Negates a 4-element vector in place.
+Negating a vector
+is the same as reversing the sign of each of its components.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+A 4-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The parameter &quot;a&quot;. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.vec4norm(vec) <a id='H3DU.Math.vec4norm'></a></h3>
 

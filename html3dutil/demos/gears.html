@@ -122,11 +122,12 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
   }
   return mesh;
 }
-// TODO: Back of gears looks speckled
+
 window.onload = function() {
   "use strict";
   var scene = new H3DU.Scene3D(document.getElementById("canvas"));
   var sub = new H3DU.Batch3D();
+  scene.cullFace(H3DU.Scene3D.BACK);
   sub.getLights().setDirectionalLight(0, [5, 5, 10]);
   var gear1 = createGear(1.0, 4.0, 1.0, 20, 0.7);
   var gear2 = createGear(0.5, 2.0, 2.0, 10, 0.7);
@@ -134,7 +135,7 @@ window.onload = function() {
   gear1 = new H3DU.Shape(gear1).setColor("red");
   gear2 = new H3DU.Shape(gear2).setColor("lime");
   gear3 = new H3DU.Shape(gear3).setColor("blue");
-  scene.addShape(gear1).addShape(gear2).addShape(gear3);
+  sub.addShape(gear1).addShape(gear2).addShape(gear3);
   var viewRotx = 20;
   var viewRoty = 30;
   var viewRotz = 0;
@@ -147,9 +148,9 @@ window.onload = function() {
     .setOrientation(viewRotx, 1, 0, 0)
     .multOrientation(viewRoty, 0, 1, 0)
     .multOrientation(viewRotz, 0, 0, 1);
-    scene.setProjectionMatrix(H3DU.Math.mat4frustum(
+    sub.setProjectionMatrix(H3DU.Math.mat4frustum(
      -1, 1, -h, h, 5, 60));
-    scene.setViewMatrix(view.getMatrix());
+    sub.setViewMatrix(view.getMatrix());
     gear1.getTransform()
      .setPosition(-3, -2, 0)
      .setOrientation(angle, 0, 0, 1);
@@ -159,7 +160,7 @@ window.onload = function() {
     gear3.getTransform()
      .setPosition(-3.1, 4.2, 0)
      .setOrientation(-2 * angle - 25, 0, 0, 1);
-    scene.render();
+    scene.render(sub);
     var frames = H3DU.newFrames(info, time);
     angle += 4 / 2.0 * frames;
     viewRotx += 3 / 2.0 * frames;
