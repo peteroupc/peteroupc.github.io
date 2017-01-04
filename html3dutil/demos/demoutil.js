@@ -1,4 +1,4 @@
-/* global H3DU, MeshJSON, alert, shapeGroup */
+/* global H3DU, alert, shapeGroup */
 /* exported formulaEditorHelp */
 function formulaEditorHelp() {
   "use strict";
@@ -120,7 +120,7 @@ function updateShape(func, allsettings) {
       a.id = "settings-link";
       a.innerHTML = "Save this model (JSON)";
       a.addEventListener("click", function() {
-        var json = MeshJSON.toJSON(func(allsettings));
+        var json = H3DU.MeshJSON.toJSON(func(allsettings));
         saveString(json, "application/json", "model.json");
       });
       div.appendChild(a);

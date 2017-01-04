@@ -6,321 +6,11 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>Camera(batch, fov, nearZ, farZ, [canvas]) <a id='Camera'></a></h3>
+<h3>Camera() <a id='Camera'></a></h3>
 
-<p>A class for controlling the projection and
-view of a 3D scene, in the nature of an abstract &quot;camera&quot;.
-This class uses the concept of a &quot;camera&#39;s position&quot;, or where
-the camera is located in world space, as well
-as a &quot;reference point&quot;, or the point in world space that the camera
-is looking at.</p>
+<p><b>Deprecated: Use <a href="H3DU.Camera.html">H3DU.Camera</a> instead.</b></p>
 
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
-
-<p>To use this class, you must include the script &quot;extras/camera.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
-
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/camera.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>
-A 3D scene to associate with this camera object.</li>
-<li><code>fov</code> (Type: Number)<br>
-Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</li>
-<li><code>nearZ</code> (Type: Number)<br>
-The distance from the camera to the near clipping plane. See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. seen. This should be slightly greater than 0.</li>
-<li><code>farZ</code> (Type: Number)<br>
-The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</li>
-<li><code>canvas</code> (Type: HTMLCanvasElement) (optional)<br>
-A canvas to associate with this camera object. <i>This argument is deprecated.</i></li>
-</ul>
-
-<h3>Methods</h3>
-
-<ul>
-<li><a href="#Camera_Camera_getDistance">getDistance</a></li>
-<li><a href="#Camera_Camera_getPosition">getPosition</a></li>
-<li><a href="#Camera_Camera_getVectorFromCenter">getVectorFromCenter</a></li>
-<li><a href="#Camera_Camera_moveAngleHorizontal">moveAngleHorizontal</a></li>
-<li><a href="#Camera_Camera_moveAngleVertical">moveAngleVertical</a></li>
-<li><a href="#Camera_Camera_moveCenterHorizontal">moveCenterHorizontal</a></li>
-<li><a href="#Camera_Camera_moveCenterVertical">moveCenterVertical</a></li>
-<li><a href="#Camera_Camera_moveClose">moveClose</a></li>
-<li><a href="#Camera_Camera_moveForward">moveForward</a></li>
-<li><a href="#Camera_Camera_moveHorizontal">moveHorizontal</a></li>
-<li><a href="#Camera_Camera_movePosition">movePosition</a></li>
-<li><a href="#Camera_Camera_moveVertical">moveVertical</a></li>
-<li><a href="#Camera_Camera_setDistance">setDistance</a></li>
-<li><a href="#Camera_Camera_setPosition">setPosition</a></li>
-<li><a href="#Camera_Camera_turnHorizontal">turnHorizontal</a></li>
-<li><a href="#Camera_Camera_turnVertical">turnVertical</a></li>
-<li><a href="#Camera_Camera_update">update</a></li>
-</ul>
-
-<h3>Camera#getDistance() <a id='Camera_Camera_getDistance'></a></h3>
-
-<p>Finds the distance from the camera&#39;s position to the reference point.</p>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: Number)</p>
-
-<h3>Camera#getPosition() <a id='Camera_Camera_getPosition'></a></h3>
-
-<p>Gets the position of the camera.</p>
-
-<h4>Return Value</h4>
-
-<p>An array of three numbers giving
-the X, Y, and Z coordinates of the camera&#39;s position, respectively. (Type: Array.&lt;Number&gt;)</p>
-
-<h3>Camera#getVectorFromCenter() <a id='Camera_Camera_getVectorFromCenter'></a></h3>
-
-<p>Gets the 3-element vector that points from the reference
-point to the camera&#39;s position.</p>
-
-<h4>Return Value</h4>
-
-<p>The return value as a unit
-vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).
-Returns (0,0,0) if the reference point is the same as the camera&#39;s position. (Type: Array.&lt;Number&gt;)</p>
-
-<h3>Camera#moveAngleHorizontal(angleDegrees) <a id='Camera_Camera_moveAngleHorizontal'></a></h3>
-
-<p>Moves the camera to the left or right so that it faces
-the same reference point at the same distance.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>angleDegrees</code> (Type: Number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#moveAngleVertical(angleDegrees) <a id='Camera_Camera_moveAngleVertical'></a></h3>
-
-<p>Moves the camera upward or downward so that it faces
-the same reference point at the same distance.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>angleDegrees</code> (Type: Number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#moveCenterHorizontal(dist) <a id='Camera_Camera_moveCenterHorizontal'></a></h3>
-
-<p><b>Deprecated: Use &quot;moveHorizontal&quot; instead.</b></p>
-
-<p>Moves the camera horizontally relative to the camera&#39;s up vector.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>dist</code> (Type: Number)<br>
-Distance to move the camera.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#moveCenterVertical(dist) <a id='Camera_Camera_moveCenterVertical'></a></h3>
-
-<p><b>Deprecated: Use &quot;moveVertical&quot; instead.</b></p>
-
-<p>Moves the camera toward or away from the camera&#39;s up vector.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>dist</code> (Type: Number)<br>
-Distance to move the camera.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#moveClose(dist) <a id='Camera_Camera_moveClose'></a></h3>
-
-<p>Moves the camera the given distance, but not too close
-to the reference point.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>dist</code> (Type: Number)<br>
-The distance to move. Positive values mean forward, and negative distances mean back.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#moveForward(dist) <a id='Camera_Camera_moveForward'></a></h3>
-
-<p>Moves the camera forward the given distance.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>dist</code> (Type: Number)<br>
-The distance to move. Positive values mean forward, and negative distances mean back.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#moveHorizontal(dist) <a id='Camera_Camera_moveHorizontal'></a></h3>
-
-<p>Moves the camera horizontally relative to the camera&#39;s up vector.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>dist</code> (Type: Number)<br>
-Distance to move the camera.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#movePosition(cx, cy, cz) <a id='Camera_Camera_movePosition'></a></h3>
-
-<p><b>Deprecated: Renamed to &quot;setPosition&quot;.</b></p>
-
-<p>Sets the position of the camera.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>cx</code> (Type: Number)<br>
-The camera&#39;s new X-coordinate.</li>
-<li><code>cy</code> (Type: Number)<br>
-The camera&#39;s new Y-coordinate.</li>
-<li><code>cz</code> (Type: Number)<br>
-The camera&#39;s new Z-coordinate.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#moveVertical(dist) <a id='Camera_Camera_moveVertical'></a></h3>
-
-<p>Moves the camera toward or away from the camera&#39;s up vector.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>dist</code> (Type: Number)<br>
-Distance to move the camera.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#setDistance(dist) <a id='Camera_Camera_setDistance'></a></h3>
-
-<p>Moves the camera a given distance from the reference
-point without changing its orientation.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>dist</code> (Type: Number)<br>
-Positive number giving the distance. If this is less than the near plane distance, the distance will be equal to the near plane distance. Does nothing if the distance is 0 or less.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#setPosition(cx, [cy], [cz]) <a id='Camera_Camera_setPosition'></a></h3>
-
-<p>Sets the position of the camera.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>cx</code> (Type: Number)<br>
-The camera&#39;s new X-coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, &quot;cy&quot; and &quot;cz&quot; can be omitted.</li>
-<li><code>cy</code> (Type: Number) (optional)<br>
-The camera&#39;s new Y-coordinate.</li>
-<li><code>cz</code> (Type: Number) (optional)<br>
-The camera&#39;s new Z-coordinate.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#turnHorizontal(angleDegrees) <a id='Camera_Camera_turnHorizontal'></a></h3>
-
-<p>Turns the camera to the left or right so that it faces
- the same distance from a reference point.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>angleDegrees</code> (Type: Number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera rightward, and negative values leftward. If the coordinate-system is left-handed, vice versa.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#turnVertical(angleDegrees) <a id='Camera_Camera_turnVertical'></a></h3>
-
-<p>Turns the camera upward or downward so that it faces
- the same distance from a reference point.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>angleDegrees</code> (Type: Number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="Camera.html">Camera</a>)</p>
-
-<h3>Camera#update([input]) <a id='Camera_Camera_update'></a></h3>
-
-<p>Updates information about this camera based
-on the state of an input tracker.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>input</code> (Type: <a href="H3DU.InputTracker.html">H3DU.InputTracker</a>) (optional)<br>
-An input tracker. This method should be called right after the tracker&#39;s &#39;update&#39; method was called. <i>Note that future versions may require this parameter.</i></li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: Object)</p>
+<p>Alias for the <a href="H3DU.Camera.html">H3DU.Camera</a> class.</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -342,8 +32,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="Camera.html">Camera</a></li>
 <li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="FrameCounter.html">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
@@ -370,7 +63,9 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
 <li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
@@ -387,6 +82,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="InputTracker.html">InputTracker</a></li>
+<li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="MeshJSON.html">MeshJSON</a></li>
 <li><a href="ObjData.html">ObjData</a></li>
 <li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>

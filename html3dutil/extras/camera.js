@@ -956,7 +956,7 @@ H3DU.Camera.prototype._updateNew = function(input) {
 /**
 Alias for the  {@link H3DU.Camera} class.
 @class
-@alias InputTracker
+@alias Camera
  @deprecated Use {@link H3DU.Camera} instead.
 */
 var Camera = H3DU.Camera;

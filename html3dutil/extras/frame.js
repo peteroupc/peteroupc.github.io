@@ -151,7 +151,7 @@ Alias for the  {@link H3DU.FrameCounter} class.
 @alias FrameCounter
  @deprecated Use {@link H3DU.FrameCounter} instead.
 */
-
+var FrameCounter = H3DU.FrameCounter;
 /* exported FrameCounterDiv */
 /**
 Alias for the  {@link H3DU.FrameCounterDiv} class.
@@ -159,4 +159,4 @@ Alias for the  {@link H3DU.FrameCounterDiv} class.
 @alias FrameCounterDiv
  @deprecated Use {@link H3DU.FrameCounterDiv} instead.
 */
- // InputTracker = H3DU.FrameCounterDiv;
+var FrameCounterDiv = H3DU.FrameCounterDiv;

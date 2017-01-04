@@ -17,29 +17,32 @@ WaveFront OBJ format.<p>
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/objmtl.js">&lt;/script></pre>
 @class */
-function ObjData() {
-  /** URL of the OBJ file */
+H3DU.ObjData = function() {
   "use strict";
+  /** URL of the OBJ file. */
   this.url = null;
   /** An array of meshes.  Two or more meshes may have
 the same name (the "name" property in each mesh).  The "data"
-property holds data for each mesh. */
+property holds data for each mesh.
+@deprecated This property is not meant to be public.
+  */
   this.mtllib = null;
   this.mtl = null;
   this.meshes = [];
-}
-function MtlData() {
+};
+/** @private */
+H3DU.ObjData._MtlData = function() {
   "use strict";
   this.url = null;
   this.list = [];
-}
+};
 /**
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
  * @returns {H3DU.ShapeGroup} Group of shapes.
- * @memberof! ObjData#
+ * @memberof! H3DU.ObjData#
 */
-ObjData.prototype.toShape = function() {
+H3DU.ObjData.prototype.toShape = function() {
   "use strict";
   var multi = new H3DU.ShapeGroup();
   for(var i = 0;i < this.meshes.length;i++) {
@@ -51,7 +54,7 @@ ObjData.prototype.toShape = function() {
   return multi;
 };
 /** @private */
-ObjData.prototype._gatherTextureNames = function() {
+H3DU.ObjData.prototype._gatherTextureNames = function() {
   "use strict";
   var textures = [];
   if(this.mtl) {
@@ -72,9 +75,9 @@ ObjData.prototype._gatherTextureNames = function() {
  * of the model to use.
  * @returns {H3DU.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
- * @memberof! ObjData#
+ * @memberof! H3DU.ObjData#
 */
-ObjData.prototype.toShapeFromName = function(name) {
+H3DU.ObjData.prototype.toShapeFromName = function(name) {
   "use strict";
   var multi = new H3DU.ShapeGroup();
   for(var i = 0;i < this.meshes.length;i++) {
@@ -87,7 +90,7 @@ ObjData.prototype.toShapeFromName = function(name) {
   return multi;
 };
 /** @private */
-ObjData._resolvePath = function(path, name) {
+H3DU.ObjData._resolvePath = function(path, name) {
   "use strict";
  // Relatively dumb for a relative path
  // resolver, but sufficient here, as it will
@@ -105,7 +108,7 @@ ObjData._resolvePath = function(path, name) {
 };
 
 /** @private */
-ObjData.prototype._getMaterial = function(mesh) {
+H3DU.ObjData.prototype._getMaterial = function(mesh) {
   "use strict";
   if(!this.mtl || !mesh) {
     return new H3DU.Material();
@@ -119,25 +122,30 @@ ObjData.prototype._getMaterial = function(mesh) {
 };
 
 /** @private */
-MtlData.prototype._resolveTextures = function() {
+H3DU.ObjData._MtlData.prototype._resolveTextures = function() {
   "use strict";
   for(var i = 0;i < this.list.length;i++) {
     var mtl = this.list[i].data;
     if(mtl.texture) {
-      var resolvedName = ObjData._resolvePath(
+      var resolvedName = H3DU.ObjData._resolvePath(
        this.url, mtl.texture);
       this.list[i].data = mtl.copy()
        .setParams({"texture":resolvedName});
     }
   }
 };
-/**
- * Gets a material by name from this MTL file.
- * @param {String} name Name of the material.
- * @returns {H3DU.Material} The material, or null if it doesn't exist.
- * @memberof! MtlData#
-*/
-MtlData.prototype.getMaterial = function(name) {
+/** @private */
+H3DU.ObjData._MtlData.prototype.getMaterialNames = function() {
+  "use strict";
+  var names = [];
+  for(var i = 0;i < this.list.length;i++) {
+    names.push(this.list[i].name);
+  }
+  return names;
+};
+
+/** @private */
+H3DU.ObjData._MtlData.prototype.getMaterial = function(name) {
   "use strict";
   for(var i = 0;i < this.list.length;i++) {
     if(this.list[i].name === name) {
@@ -147,7 +155,7 @@ MtlData.prototype.getMaterial = function(name) {
   return null;
 };
 /** @private */
-MtlData._getMaterial = function(mtl) {
+H3DU.ObjData._MtlData._getMaterial = function(mtl) {
   "use strict";
   var shininess = 1.0;
   var ambient = null;
@@ -219,14 +227,22 @@ MtlData._getMaterial = function(mtl) {
 Loads a material (MTL) file asynchronously.
 @param {String} url The URL to load the material data file.
 @returns {Promise} A promise that resolves when
-the MTL file is loaded successfully (the result is an MtlData object),
+the MTL file is loaded successfully,
 and is rejected when an error occurs when loading the MTL file.
+If the promise resolves, the result is an object that implements
+the following methods: <ul>
+<li><code>getMaterial(name)</code> - Gets a material by name; <code>name</code> is the name of the material.
+Returns the material as {@link H3DU.Material}, or null if it doesn't exist.
+<li><code>getMaterialNames()</code> - Gets an array of names of all the materials included in this MTL file.
+</li>
+</ul>
+@memberof! H3DU.ObjData
  */
-ObjData.loadMtlFromUrl = function(url) {
+H3DU.ObjData.loadMtlFromUrl = function(url) {
   "use strict";
   return H3DU.loadFileFromUrl(url).then(
    function(e) {
-     var mtl = MtlData._loadMtl(e.data);
+     var mtl = H3DU.ObjData._MtlData._loadMtl(e.data);
      if(mtl.error)return Promise.reject({
        "url":e.url,
        "error": mtl.error
@@ -249,13 +265,13 @@ ObjData.loadMtlFromUrl = function(url) {
  * textures with.
 @returns {Promise} A promise that resolves when
 the OBJ file and textures are loaded successfully, whether or not the associated
-MTL is also loaded successfully (the result is an ObjData object),
+MTL is also loaded successfully (the result is an H3DU.ObjData object),
 and is rejected when an error occurs when loading the OBJ file or any of
 its textures.
 */
-ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
+H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
   "use strict";
-  return ObjData.loadObjFromUrl(url).then(function(obj) {
+  return H3DU.ObjData.loadObjFromUrl(url).then(function(obj) {
     var o = obj;
     return textureLoader.loadTexturesAll(o._gatherTextureNames())
      .then(function() {
@@ -275,15 +291,15 @@ material file, if available) asynchronously.
 @param {String} url The URL to load.
 @returns {Promise} A promise that resolves when
 the OBJ file is loaded successfully, whether or not its associated
-MTL is also loaded successfully (the result is an ObjData object),
+MTL is also loaded successfully (the result is an H3DU.ObjData object),
 and is rejected when an error occurs when loading the OBJ file.
 */
-ObjData.loadObjFromUrl = function(url) {
+H3DU.ObjData.loadObjFromUrl = function(url) {
   "use strict";
   return H3DU.loadFileFromUrl(url).then(
    function(e) {
      var obj;
-     obj = ObjData._loadObj(e.data);
+     obj = H3DU.ObjData._loadObj(e.data);
      if(obj.error)return Promise.reject({
        "url":e.url,
        "error":obj.error
@@ -292,8 +308,8 @@ ObjData.loadObjFromUrl = function(url) {
      obj.url = e.url;
      if(obj.mtllib) {
        // load the material file if available
-       var mtlURL = ObjData._resolvePath(e.url, obj.mtllib);
-       return ObjData.loadMtlFromUrl(mtlURL).then(
+       var mtlURL = H3DU.ObjData._resolvePath(e.url, obj.mtllib);
+       return H3DU.ObjData.loadMtlFromUrl(mtlURL).then(
         function(result) {
           obj.mtl = result;
           return Promise.resolve(obj);
@@ -312,7 +328,7 @@ ObjData.loadObjFromUrl = function(url) {
    });
 };
 /** @private */
-MtlData._loadMtl = function(str) {
+H3DU.ObjData._MtlData._loadMtl = function(str) {
   "use strict";
   function xyzToRgb(xyz) {
   // convert CIE XYZ to RGB
@@ -434,15 +450,15 @@ MtlData._loadMtl = function(str) {
     }
     return {"error": new Error("unsupported line: " + line)};
   }
-  var mtl = new MtlData();
+  var mtl = new H3DU.ObjData._MtlData();
   mtl.list = materials;
   for(i = 0;i < mtl.list.length;i++) {
-    mtl.list[i].data = MtlData._getMaterial(mtl.list[i].data);
+    mtl.list[i].data = H3DU.ObjData._MtlData._getMaterial(mtl.list[i].data);
   }
   return {"success": mtl};
 };
 /** @private */
-ObjData._refIndex = function(idxstr, arr) {
+H3DU.ObjData._refIndex = function(idxstr, arr) {
   "use strict";
   var ret = parseInt(idxstr, 10);
   ret = ret < 0 ? arr.length - ret : ret - 1;
@@ -450,7 +466,7 @@ ObjData._refIndex = function(idxstr, arr) {
   return ret;
 };
 /** @private */
-ObjData._loadObj = function(str) {
+H3DU.ObjData._loadObj = function(str) {
   "use strict";
   var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
   var signedInteger = "(-?\\d+)";
@@ -477,7 +493,7 @@ ObjData._loadObj = function(str) {
 
   var usemtl = null;
 
-  var ret = new ObjData();
+  var ret = new H3DU.ObjData();
   var lastPrimitiveSeen = -1;
   var haveNormals = false;
   var vertexKind = -1;
@@ -562,7 +578,7 @@ ObjData._loadObj = function(str) {
           if(vertexKind !== 0 || lastPrimitiveSeen !== prim) {
             vertexKind = 0; // position only
           }
-          vtx = ObjData._refIndex(e[1], vertices);
+          vtx = H3DU.ObjData._refIndex(e[1], vertices);
           mesh.normal3(0, 0, 0).texCoord2(0, 0)
         .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
           line = line.substr(e[0].length);
@@ -573,8 +589,8 @@ ObjData._loadObj = function(str) {
           if(vertexKind !== 1) {
             vertexKind = 1; // position/normal
           }
-          vtx = ObjData._refIndex(e[1], vertices);
-          norm = ObjData._refIndex(e[2], normals);
+          vtx = H3DU.ObjData._refIndex(e[1], vertices);
+          norm = H3DU.ObjData._refIndex(e[2], normals);
           haveNormals = true;
           mesh.normal3(normals[norm][0], normals[norm][1],
          normals[norm][2])
@@ -588,8 +604,8 @@ ObjData._loadObj = function(str) {
           if(vertexKind !== 2 || lastPrimitiveSeen !== prim) {
             vertexKind = 2; // position/UV
           }
-          vtx = ObjData._refIndex(e[1], vertices);
-          uv = ObjData._refIndex(e[2], uvs);
+          vtx = H3DU.ObjData._refIndex(e[1], vertices);
+          uv = H3DU.ObjData._refIndex(e[2], uvs);
           mesh.normal3(0, 0, 0)
         .texCoord2(uvs[uv][0], uvs[uv][1])
         .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
@@ -601,9 +617,9 @@ ObjData._loadObj = function(str) {
           if(vertexKind !== 3 || lastPrimitiveSeen !== prim) {
             vertexKind = 3; // position/UV/normal
           }
-          vtx = ObjData._refIndex(e[1], vertices);
-          uv = ObjData._refIndex(e[2], uvs);
-          norm = ObjData._refIndex(e[3], normals);
+          vtx = H3DU.ObjData._refIndex(e[1], vertices);
+          uv = H3DU.ObjData._refIndex(e[2], uvs);
+          norm = H3DU.ObjData._refIndex(e[3], normals);
           haveNormals = true;
           mesh.normal3(normals[norm][0], normals[norm][1],
          normals[norm][2])
@@ -687,3 +703,12 @@ ObjData._loadObj = function(str) {
   });
   return {"success": ret};
 };
+
+/* exported ObjData */
+/**
+Alias for the {@link H3DU.ObjData} class.
+@class
+@alias ObjData
+ @deprecated Use {@link H3DU.ObjData} instead.
+*/
+var ObjData = H3DU.ObjData;

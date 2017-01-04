@@ -1,16 +1,78 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Epitrochoid</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.Epitrochoid</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>Epitrochoid</h1>
+<h1>H3DU.Epitrochoid</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>Epitrochoid() <a id='Epitrochoid'></a></h3>
+<h3>H3DU.Epitrochoid(outerRadius, innerRadius, distFromInnerCenter) <a id='H3DU.Epitrochoid'></a></h3>
 
-<p><b>Deprecated: Use <a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a> instead.</b></p>
+<p>Parametric evaluator for a
+curve drawn by a circle that rolls along the outside
+of another circle, whose position is fixed, with a center of (0,0).</p>
 
-<p>Alias for the <a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a> class.</p>
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this class, you must include the script &quot;extras/evaluators.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>outerRadius</code> (Type: Number)<br>
+Radius of the circle whose position is fixed.</li>
+<li><code>innerRadius</code> (Type: Number)<br>
+Radius of the rolling circle. An epicycloid results when outerRadius=innerRadius.</li>
+<li><code>distFromInnerCenter</code> (Type: Number)<br>
+Distance from the center of the rolling circle to the drawing pen. A prolate epitrochoid results when distFromInnerCenter is greater than innerRadius.</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU.Epitrochoid_evaluate">evaluate</a><br>Generates a point on the curve from the given u coordinate.</li>
+<li><a href="#H3DU.Epitrochoid_scaleTo">scaleTo</a><br>Creates a modified version of this curve so that it
+fits the given radius.</li>
+</ul>
+
+<h3>H3DU.Epitrochoid#evaluate(u) <a id='H3DU.Epitrochoid_evaluate'></a></h3>
+
+<p>Generates a point on the curve from the given u coordinate.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A 3-element array specifying a 3D point.
+Only the X and Y coordinates will be other than 0. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Epitrochoid#scaleTo(radius) <a id='H3DU.Epitrochoid_scaleTo'></a></h3>
+
+<p>Creates a modified version of this curve so that it
+fits the given radius.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>radius</code> (Type: Number)<br>
+Desired radius of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a>)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

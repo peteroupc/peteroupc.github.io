@@ -1,0 +1,477 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.Camera</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.Camera</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<h3>H3DU.Camera(batch, fov, nearZ, farZ, [canvas]) <a id='H3DU.Camera'></a></h3>
+
+<p>A class for controlling the projection and
+view of a 3D scene, in the nature of an abstract &quot;camera&quot;.
+This class uses the concept of a &quot;camera&#39;s position&quot;, or where
+the camera is located in world space, as well
+as a &quot;reference point&quot;, or the point in world space that the camera
+is looking at.</p>
+
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this class, you must include the script &quot;extras/camera.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/camera.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>
+A 3D batch to associate with this camera object. <i>Using a <a href="H3DU.Scene3D.html">H3DU.Scene3D</a> here is deprecated.</i></li>
+<li><code>fov</code> (Type: Number)<br>
+Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</li>
+<li><code>nearZ</code> (Type: Number)<br>
+The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. This should be slightly greater than 0.</li>
+<li><code>farZ</code> (Type: Number)<br>
+The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</li>
+<li><code>canvas</code> (Type: HTMLCanvasElement) (optional)<br>
+A canvas to associate with this camera object. <i>This argument is deprecated.</i></li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU.Camera_H3DU.Camera_getDistance">getDistance</a><br>Finds the distance from the camera&#39;s position to the reference point.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_getPosition">getPosition</a><br>Gets the position of the camera.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_getVectorFromCenter">getVectorFromCenter</a><br>Gets the 3-element vector that points from the reference
+point to the camera&#39;s position.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_moveAngleHorizontal">moveAngleHorizontal</a><br>Moves the camera to the left or right so that it faces
+the same reference point at the same distance.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_moveAngleVertical">moveAngleVertical</a><br>Moves the camera upward or downward so that it faces
+the same reference point at the same distance.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_moveCenterHorizontal">moveCenterHorizontal</a><br><b>Deprecated: Use &quot;moveHorizontal&quot; instead.</b></li>
+<li><a href="#H3DU.Camera_H3DU.Camera_moveCenterVertical">moveCenterVertical</a><br><b>Deprecated: Use &quot;moveVertical&quot; instead.</b></li>
+<li><a href="#H3DU.Camera_H3DU.Camera_moveClose">moveClose</a><br>Moves the camera the given distance, but not too close
+to the reference point.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_moveForward">moveForward</a><br>Moves the camera forward the given distance.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_moveHorizontal">moveHorizontal</a><br>Moves the camera horizontally relative to the camera&#39;s up vector.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_movePosition">movePosition</a><br><b>Deprecated: Renamed to &quot;setPosition&quot;.</b></li>
+<li><a href="#H3DU.Camera_H3DU.Camera_moveVertical">moveVertical</a><br>Moves the camera toward or away from the camera&#39;s up vector.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_setDistance">setDistance</a><br>Moves the camera a given distance from the reference
+point without changing its orientation.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_setPosition">setPosition</a><br>Sets the position of the camera.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_turnAngleHorizontal">turnAngleHorizontal</a><br>Turns the camera to the left or right so that it faces
+the same distance from a reference point.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_turnAngleVertical">turnAngleVertical</a><br>Turns the camera upward or downward so that it faces
+the same distance from a reference point.</li>
+<li><a href="#H3DU.Camera_H3DU.Camera_turnHorizontal">turnHorizontal</a><br><b>Deprecated: Renamed to &quot;moveAngleHorizontal&quot;.</b></li>
+<li><a href="#H3DU.Camera_H3DU.Camera_turnVertical">turnVertical</a><br><b>Deprecated: Renamed to &quot;moveAngleVertical&quot;.</b></li>
+<li><a href="#H3DU.Camera_H3DU.Camera_update">update</a><br>Updates information about this camera based
+on the state of an input tracker.</li>
+</ul>
+
+<h3>H3DU.Camera#getDistance() <a id='H3DU.Camera_H3DU.Camera_getDistance'></a></h3>
+
+<p>Finds the distance from the camera&#39;s position to the reference point.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Number)</p>
+
+<h3>H3DU.Camera#getPosition() <a id='H3DU.Camera_H3DU.Camera_getPosition'></a></h3>
+
+<p>Gets the position of the camera.</p>
+
+<h4>Return Value</h4>
+
+<p>An array of three numbers giving
+the X, Y, and Z coordinates of the camera&#39;s position, respectively. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Camera#getVectorFromCenter() <a id='H3DU.Camera_H3DU.Camera_getVectorFromCenter'></a></h3>
+
+<p>Gets the 3-element vector that points from the reference
+point to the camera&#39;s position.</p>
+
+<h4>Return Value</h4>
+
+<p>The return value as a unit
+vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).
+Returns (0,0,0) if the reference point is the same as the camera&#39;s position. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>H3DU.Camera#moveAngleHorizontal(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_moveAngleHorizontal'></a></h3>
+
+<p>Moves the camera to the left or right so that it faces
+the same reference point at the same distance.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#moveAngleVertical(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_moveAngleVertical'></a></h3>
+
+<p>Moves the camera upward or downward so that it faces
+the same reference point at the same distance.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#moveCenterHorizontal(dist) <a id='H3DU.Camera_H3DU.Camera_moveCenterHorizontal'></a></h3>
+
+<p><b>Deprecated: Use &quot;moveHorizontal&quot; instead.</b></p>
+
+<p>Moves the camera horizontally relative to the camera&#39;s up vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Distance to move the camera.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#moveCenterVertical(dist) <a id='H3DU.Camera_H3DU.Camera_moveCenterVertical'></a></h3>
+
+<p><b>Deprecated: Use &quot;moveVertical&quot; instead.</b></p>
+
+<p>Moves the camera toward or away from the camera&#39;s up vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Distance to move the camera.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#moveClose(dist) <a id='H3DU.Camera_H3DU.Camera_moveClose'></a></h3>
+
+<p>Moves the camera the given distance, but not too close
+to the reference point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+The distance to move. Positive values mean forward, and negative distances mean back.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#moveForward(dist) <a id='H3DU.Camera_H3DU.Camera_moveForward'></a></h3>
+
+<p>Moves the camera forward the given distance.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+The distance to move. Positive values mean forward, and negative distances mean back.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#moveHorizontal(dist) <a id='H3DU.Camera_H3DU.Camera_moveHorizontal'></a></h3>
+
+<p>Moves the camera horizontally relative to the camera&#39;s up vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Distance to move the camera.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#movePosition(cx, cy, cz) <a id='H3DU.Camera_H3DU.Camera_movePosition'></a></h3>
+
+<p><b>Deprecated: Renamed to &quot;setPosition&quot;.</b></p>
+
+<p>Sets the position of the camera.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>cx</code> (Type: Number)<br>
+The camera&#39;s new X-coordinate.</li>
+<li><code>cy</code> (Type: Number)<br>
+The camera&#39;s new Y-coordinate.</li>
+<li><code>cz</code> (Type: Number)<br>
+The camera&#39;s new Z-coordinate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#moveVertical(dist) <a id='H3DU.Camera_H3DU.Camera_moveVertical'></a></h3>
+
+<p>Moves the camera toward or away from the camera&#39;s up vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Distance to move the camera.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#setDistance(dist) <a id='H3DU.Camera_H3DU.Camera_setDistance'></a></h3>
+
+<p>Moves the camera a given distance from the reference
+point without changing its orientation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: Number)<br>
+Positive number giving the distance. If this is less than the near plane distance, the distance will be equal to the near plane distance. Does nothing if the distance is 0 or less.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#setPosition(cx, [cy], [cz]) <a id='H3DU.Camera_H3DU.Camera_setPosition'></a></h3>
+
+<p>Sets the position of the camera.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>cx</code> (Type: Number)<br>
+The camera&#39;s new X-coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, &quot;cy&quot; and &quot;cz&quot; can be omitted.</li>
+<li><code>cy</code> (Type: Number) (optional)<br>
+The camera&#39;s new Y-coordinate.</li>
+<li><code>cz</code> (Type: Number) (optional)<br>
+The camera&#39;s new Z-coordinate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#turnAngleHorizontal(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnAngleHorizontal'></a></h3>
+
+<p>Turns the camera to the left or right so that it faces
+ the same distance from a reference point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera rightward, and negative values leftward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#turnAngleVertical(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnAngleVertical'></a></h3>
+
+<p>Turns the camera upward or downward so that it faces
+ the same distance from a reference point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#turnHorizontal(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnHorizontal'></a></h3>
+
+<p><b>Deprecated: Renamed to &quot;moveAngleHorizontal&quot;.</b></p>
+
+<p>Moves the camera to the left or right so that it faces
+the same reference point at the same distance.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#turnVertical(angleDegrees) <a id='H3DU.Camera_H3DU.Camera_turnVertical'></a></h3>
+
+<p><b>Deprecated: Renamed to &quot;moveAngleVertical&quot;.</b></p>
+
+<p>Moves the camera upward or downward so that it faces
+the same reference point at the same distance.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: Number)<br>
+The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Camera.html">H3DU.Camera</a>)</p>
+
+<h3>H3DU.Camera#update([input]) <a id='H3DU.Camera_H3DU.Camera_update'></a></h3>
+
+<p>Updates information about this camera based
+on the state of an input tracker.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>input</code> (Type: <a href="H3DU.InputTracker.html">H3DU.InputTracker</a>) (optional)<br>
+An input tracker. This method should be called right after the tracker&#39;s &#39;update&#39; method was called. <i>Note that future versions may require this parameter.</i></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+</div><nav id="navigation"><p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="FrameCounter.html">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
+<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
+<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
+<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
+<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
+<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
+<li><a href="InputTracker.html">InputTracker</a></li>
+<li><a href="MatrixStack.html">MatrixStack</a></li>
+<li><a href="MeshJSON.html">MeshJSON</a></li>
+<li><a href="ObjData.html">ObjData</a></li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.html">Trochoid</a></li>
+<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
+<li><a href="tutorial-colors.html">Color Strings</a></li>
+<li><a href="tutorial-filters.html">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.html">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.html">Library Overview</a></li>
+<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.html">Texture Examples</a></li>
+</ul>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

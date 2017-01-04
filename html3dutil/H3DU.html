@@ -19,6 +19,13 @@ library.</p>
 <h3>Methods</h3>
 
 <ul>
+<li><a href="#H3DU.MeshJSON.loadJSON">MeshJSON.loadJSON</a><br>Loads a mesh from JSON format.</li>
+<li><a href="#H3DU.MeshJSON.toJSON">MeshJSON.toJSON</a><br>Converts a mesh to JSON format.</li>
+<li><a href="#H3DU.ObjData.loadObjFromUrl">ObjData.loadObjFromUrl</a><br>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available) asynchronously.</li>
+<li><a href="#H3DU.ObjData.loadObjFromUrlWithTextures">ObjData.loadObjFromUrlWithTextures</a><br>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available), along with the textures it uses,
+asynchronously.</li>
 <li><a href="#H3DU.createCanvasElement">createCanvasElement</a><br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</li>
 <li><a href="#H3DU.get3DContext">get3DContext</a><br>Creates a 3D rendering context from an HTML canvas element.</li>
@@ -41,6 +48,80 @@ using <code>window.requestAnimationFrame</code>
 or a &quot;polyfill&quot; method.</li>
 <li><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
 </ul>
+
+<h3>(static) H3DU.MeshJSON.loadJSON(url) <a id='H3DU.MeshJSON.loadJSON'></a></h3>
+
+<p>Loads a mesh from JSON format.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>url</code> (Type: String)<br>
+URL to a JSON mesh object, as used in the Public Domain HTML 3D Library.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that, when resolved, exposes an object
+that implements a property named <code>toShape</code>, which is
+a method that gets a <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> describing the 3D mesh. (Type: <a href="Promise.html">Promise</a>)</p>
+
+<h3>(static) H3DU.MeshJSON.toJSON(mesh) <a id='H3DU.MeshJSON.toJSON'></a></h3>
+
+<p>Converts a mesh to JSON format.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
+A mesh object, as used in the Public Domain HTML 3D Library.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A JSON string describing the mesh. (Type: String)</p>
+
+<h3>(static) H3DU.ObjData.loadObjFromUrl(url) <a id='H3DU.ObjData.loadObjFromUrl'></a></h3>
+
+<p>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available) asynchronously.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>url</code> (Type: String)<br>
+The URL to load.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that resolves when
+the OBJ file is loaded successfully, whether or not its associated
+MTL is also loaded successfully (the result is an H3DU.ObjData object),
+and is rejected when an error occurs when loading the OBJ file. (Type: <a href="Promise.html">Promise</a>)</p>
+
+<h3>(static) H3DU.ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='H3DU.ObjData.loadObjFromUrlWithTextures'></a></h3>
+
+<p>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available), along with the textures it uses,
+asynchronously.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>url</code> (Type: String)<br>
+The URL to load.</li>
+<li><code>textureLoader</code> (Type: TextureLoader)<br>
+An object to load textures with.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that resolves when
+the OBJ file and textures are loaded successfully, whether or not the associated
+MTL is also loaded successfully (the result is an H3DU.ObjData object),
+and is rejected when an error occurs when loading the OBJ file or any of
+its textures. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <h3>(static) H3DU.createCanvasElement(parent, width, height) <a id='H3DU.createCanvasElement'></a></h3>
 
@@ -356,8 +437,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="Camera.html">Camera</a></li>
 <li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="FrameCounter.html">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
@@ -384,7 +468,9 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
 <li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
@@ -401,6 +487,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="InputTracker.html">InputTracker</a></li>
+<li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="MeshJSON.html">MeshJSON</a></li>
 <li><a href="ObjData.html">ObjData</a></li>
 <li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>

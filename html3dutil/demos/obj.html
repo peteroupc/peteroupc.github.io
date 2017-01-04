@@ -18,7 +18,7 @@ Toboggan by Teh_Bucket, public domain, http://opengameart.org/content/toboggan<b
 Spot, a public domain model from Keenan Clark<br>
 </div>
 <script id="demo">
-/* global H3DU, ObjData, addLink */
+/* global H3DU, addLink */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -41,7 +41,7 @@ at: http://peteroupc.github.io/
   var shape = null;
   addLink("Toboggan", startfunc = function() {
     "use strict";
-    ObjData.loadObjFromUrlWithTextures("toboggan.obj", loader)
+    H3DU.ObjData.loadObjFromUrlWithTextures("toboggan.obj", loader)
    .then(function(mesh) {
      sub.removeShape(shape);
      sub.addShape(shape = mesh.toShape());
@@ -51,7 +51,7 @@ at: http://peteroupc.github.io/
   addLink("Spot", function() {
     "use strict";
     H3DU.getPromiseResultsAll([
-      ObjData.loadObjFromUrl("spot_quadrangulated.obj"),
+      H3DU.ObjData.loadObjFromUrl("spot_quadrangulated.obj"),
       loader.loadTexture("spot_texture.png")
     ]).then(function(results) {
       sub.removeShape(shape);

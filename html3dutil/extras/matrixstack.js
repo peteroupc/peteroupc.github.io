@@ -531,3 +531,12 @@ H3DU.MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
    .scale(scaleX * 2, -scaleY * 2, 1)
    .multMatrix([0.5, 0, 0, 0, 0, -0.5, 0, 0, 0, 0, 1, 0, 0.5, -0.5, 0, 1]);
 };
+
+/* exported MatrixStack */
+/**
+Alias for the  {@link H3DU.MatrixStack} class.
+@class
+@alias MatrixStack
+ @deprecated Use {@link H3DU.MatrixStack} instead.
+*/
+var MatrixStack = H3DU.MatrixStack;

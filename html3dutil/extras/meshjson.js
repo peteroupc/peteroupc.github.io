@@ -18,10 +18,10 @@ at: http://peteroupc.github.io/
  * &lt;script type="text/javascript" src="extras/meshjson.js">&lt;/script></pre>
 * @class
 */
-var MeshJSON = {};
+H3DU.MeshJSON = {};
 
 /** @private */
-MeshJSON._resolvePath = function(path, name) {
+H3DU.MeshJSON._resolvePath = function(path, name) {
   "use strict";
  // Relatively dumb for a relative path
  // resolver, but sufficient here, as it will
@@ -43,7 +43,7 @@ MeshJSON._resolvePath = function(path, name) {
 * in the Public Domain HTML 3D Library.
 * @returns {String} A JSON string describing the mesh.
 */
-MeshJSON.toJSON = function(mesh) {
+H3DU.MeshJSON.toJSON = function(mesh) {
   "use strict";
   function colorToHex(x) {
     var r = Math.round(x[0] * 255);
@@ -163,16 +163,16 @@ MeshJSON.toJSON = function(mesh) {
   return JSON.stringify(json);
 };
 /** @private */
-MeshJSON._checkPath = function(path, file) {
+H3DU.MeshJSON._checkPath = function(path, file) {
   "use strict";
   if((/(?![\/\\])([^\:\?\#\t\r\n]+)/).test(file)) {
-    return MeshJSON._resolvePath(path, file);
+    return H3DU.MeshJSON._resolvePath(path, file);
   } else {
     return null;
   }
 };
 /** @private */
-MeshJSON._getJsonMaterial = function(mtl, path) {
+H3DU.MeshJSON._getJsonMaterial = function(mtl, path) {
   "use strict";
   var shininess = 1.0;
   var ambient = null;
@@ -192,13 +192,13 @@ MeshJSON._getJsonMaterial = function(mtl, path) {
     ambient = mtl.colorAmbient;
   }
   if(Object.prototype.hasOwnProperty.call(mtl, "mapDiffuse")) {
-    textureName = MeshJSON._checkPath(path, mtl.mapDiffuse);
+    textureName = H3DU.MeshJSON._checkPath(path, mtl.mapDiffuse);
   }
   if(Object.prototype.hasOwnProperty.call(mtl, "mapSpecular")) {
-    specularName = MeshJSON._checkPath(path, mtl.mapSpecular);
+    specularName = H3DU.MeshJSON._checkPath(path, mtl.mapSpecular);
   }
   if(Object.prototype.hasOwnProperty.call(mtl, "mapNormal")) {
-    normalName = MeshJSON._checkPath(path, mtl.mapNormal);
+    normalName = H3DU.MeshJSON._checkPath(path, mtl.mapNormal);
   }
   if(Object.prototype.hasOwnProperty.call(mtl, "colorEmissive")) {
     var ke = mtl.colorEmissive;
@@ -225,7 +225,7 @@ MeshJSON._getJsonMaterial = function(mtl, path) {
   return ret;
 };
 /** @private */
-MeshJSON._Model = function(mesh) {
+H3DU.MeshJSON._Model = function(mesh) {
   "use strict";
   this.meshes = [mesh];
   this.materials = [null];
@@ -254,7 +254,7 @@ MeshJSON._Model = function(mesh) {
 * that implements a property named <code>toShape</code>, which is
 * a method that gets a {@link H3DU.ShapeGroup} describing the 3D mesh.
 */
-MeshJSON.loadJSON = function(url) {
+H3DU.MeshJSON.loadJSON = function(url) {
   "use strict";
   function convHexColor(c) {
     if(typeof c === "number") {
@@ -279,10 +279,10 @@ MeshJSON.loadJSON = function(url) {
           verts.push(json.normals[i + 1]);
           verts.push(json.normals[i + 2]);
         }
-        ret = new MeshJSON._Model(new H3DU.Mesh(verts, json.indices, H3DU.Mesh.NORMALS_BIT));
+        ret = new H3DU.MeshJSON._Model(new H3DU.Mesh(verts, json.indices, H3DU.Mesh.NORMALS_BIT));
         return ret;
       } else {
-        return new MeshJSON._Model(new H3DU.Mesh(json.vertices, json.indices));
+        return new H3DU.MeshJSON._Model(new H3DU.Mesh(json.vertices, json.indices));
       }
     } else if(json.faces) {
       var meshes = [];
@@ -290,7 +290,7 @@ MeshJSON.loadJSON = function(url) {
       var materials = [];
       if(json.materials && json.materials.length > 0) {
         for(i = 0;i < json.materials.length;i++) {
-          materials.push(MeshJSON._getJsonMaterial(f.url, json.materials[i]));
+          materials.push(H3DU.MeshJSON._getJsonMaterial(f.url, json.materials[i]));
           meshes[i] = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES);
         }
       } else {
@@ -364,10 +364,19 @@ MeshJSON.loadJSON = function(url) {
         json.vertices[idx + 2]);
         }
       }
-      ret = new MeshJSON._Model(null)._setMeshes(meshes, materials);
+      ret = new H3DU.MeshJSON._Model(null)._setMeshes(meshes, materials);
       return ret;
     } else {
       return Promise.reject(new Error("invalid JSON: no indices"));
     }
   });
 };
+
+/* exported MeshJSON */
+/**
+Alias for the {@link H3DU.MeshJSON} class.
+@class
+@alias MeshJSON
+ @deprecated Use {@link H3DU.MeshJSON} instead.
+*/
+var MeshJSON = H3DU.MeshJSON;
