@@ -19,12 +19,12 @@ canvas { width:100%; height:100%; overflow: hidden; }
 /* global H3DU, ImplicitSurface, addLink, pushSettings */
 // <!--
 /*
-Written by Peter O. in 2015.
-
-Any copyright is dedicated to the Public Domain.
-http://creativecommons.org/publicdomain/zero/1.0/
-If you like this, you should donate to Peter O.
-at: http://peteroupc.github.io/
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
 */
   var allsettings = {};
 /* exported makeMesh */
@@ -119,7 +119,7 @@ at: http://peteroupc.github.io/
   var link1 = null;
   addLink("Ellipsoid", link1 = function() {
     "use strict";
-    pushSettings(allsettings, function(allsettings) {
+    pushSettings(allsettings, shapeGroup, function(allsettings) {
       return makeImplicit(
     new Ellipsoid(
       allsettings["superel-x"],
@@ -135,7 +135,7 @@ at: http://peteroupc.github.io/
 
   addLink("Hyperboloid of One Sheet", function() {
     "use strict";
-    pushSettings(allsettings, function(allsettings) {
+    pushSettings(allsettings, shapeGroup, function(allsettings) {
       return makeImplicit(
     new HyperboloidOneSheet(
       allsettings["hyp1-x"],
@@ -150,7 +150,7 @@ at: http://peteroupc.github.io/
   });
   addLink("Cylinder", function() {
     "use strict";
-    pushSettings(allsettings, function(allsettings) {
+    pushSettings(allsettings, shapeGroup, function(allsettings) {
       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
    );
@@ -160,7 +160,7 @@ at: http://peteroupc.github.io/
 
   addLink("Union: Cylinder and sphere", function() {
     "use strict";
-    pushSettings(allsettings, function(allsettings) {
+    pushSettings(allsettings, shapeGroup, function(allsettings) {
       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
    );
@@ -175,7 +175,7 @@ at: http://peteroupc.github.io/
   });
   addLink("Intersection: Cylinder and sphere", function() {
     "use strict";
-    pushSettings(allsettings, function(allsettings) {
+    pushSettings(allsettings, shapeGroup, function(allsettings) {
       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
    );
@@ -190,7 +190,7 @@ at: http://peteroupc.github.io/
   });
   addLink("Cylinder minus sphere", function() {
     "use strict";
-    pushSettings(allsettings, function(allsettings) {
+    pushSettings(allsettings, shapeGroup, function(allsettings) {
       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
    );
@@ -205,7 +205,7 @@ at: http://peteroupc.github.io/
   });
   addLink("Sphere minus cylinder", function() {
     "use strict";
-    pushSettings(allsettings, function(allsettings) {
+    pushSettings(allsettings, shapeGroup, function(allsettings) {
       var cyl = new Cylinder(
       allsettings["cylinder-rad"]
    );

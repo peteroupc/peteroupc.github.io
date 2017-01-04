@@ -25,12 +25,66 @@ Function that takes two arguments: the first is a function to call when resolvin
 <h3>Methods</h3>
 
 <ul>
+<li><a href="#Promise_Promise_catch">catch</a><br>Creates a promise that calls a function if
+this promise is rejected.</li>
+<li><a href="#Promise_Promise_then">then</a><br>Creates a promise that calls a function depending on whether
+this promise resolves or is rejected.</li>
+<li><a href="#Promise_Promise.race">Promise.race</a><br>Creates a promise that resolves or is rejected when one of those promises
+resolves or is rejected.</li>
 <li><a href="#Promise.all">all</a><br>Wait for all these promises to complete.</li>
-<li><a href="#Promise_catch">catch</a></li>
 <li><a href="#Promise.reject">reject</a><br>Returns a promise that is rejected.</li>
 <li><a href="#Promise.resolve">resolve</a><br>Returns a promise that resolves.</li>
-<li><a href="#Promise_then">then</a></li>
 </ul>
+
+<h3>Promise#catch(onRejected) <a id='Promise_Promise_catch'></a></h3>
+
+<p>Creates a promise that calls a function if
+this promise is rejected.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>onRejected</code> (Type: function)<br>
+To be called once this promise gets rejected</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise. (Type: <a href="Promise.html">Promise</a>)</p>
+
+<h3>Promise#then(onFulfilled, [onRejected]) <a id='Promise_Promise_then'></a></h3>
+
+<p>Creates a promise that calls a function depending on whether
+this promise resolves or is rejected.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>onFulfilled</code> (Type: function)<br>
+To be called once this promise gets fulfilled</li>
+<li><code>onRejected</code> (Type: function) (optional)<br>
+To be called once this promise gets rejected</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise. (Type: <a href="Promise.html">Promise</a>)</p>
+
+<h3>Promise#Promise.race(all) <a id='Promise_Promise.race'></a></h3>
+
+<p>Creates a promise that resolves or is rejected when one of those promises
+resolves or is rejected.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>all</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>
+An array of promises.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that is resolved when all promises have resolved. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <h3>(static) Promise.all(all) <a id='Promise.all'></a></h3>
 
@@ -46,19 +100,6 @@ An array of promises.</li>
 <h4>Return Value</h4>
 
 <p>A promise that is resolved when all promises have resolved. (Type: <a href="Promise.html">Promise</a>)</p>
-
-<h3>Promise#catch(onRejected) <a id='Promise_catch'></a></h3>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>onRejected</code> (Type: function)<br>
-To be called once this promise gets rejected</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <h3>(static) Promise.reject(value) <a id='Promise.reject'></a></h3>
 
@@ -91,21 +132,6 @@ The value associated with the promise.</li>
 
 <p>A promise that resolves and takes the given value
 as its argument. (Type: <a href="Promise.html">Promise</a>)</p>
-
-<h3>Promise#then(onFulfilled, onRejected) <a id='Promise_then'></a></h3>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>onFulfilled</code> (Type: function)<br>
-To be called once this promise gets fulfilled</li>
-<li><code>onRejected</code> (Type: function)<br>
-To be called once this promise gets rejected</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise. (Type: <a href="Promise.html">Promise</a>)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

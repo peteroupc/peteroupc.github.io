@@ -1,4 +1,12 @@
-/* global H3DU, alert, shapeGroup */
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
+/* global H3DU, alert */
 /* exported formulaEditorHelp */
 function formulaEditorHelp() {
   "use strict";
@@ -108,7 +116,7 @@ function saveString(string, type, filename) {
   document.body.removeChild(a);
 }
 
-function updateShape(func, allsettings) {
+function updateShape(func, allsettings, shapeGroup) {
   "use strict";
   var settings = document.getElementById("settings-link");
   if(!settings) {
@@ -139,12 +147,12 @@ function updateShape(func, allsettings) {
 }
 
 /* exported pushSettings */
-function pushSettings(allsettings, updateMeshFunc, settings) {
+function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
   "use strict";
   function settingOnChange(name, updateMeshFunc) {
     return function(val) {
       allsettings[name] = val;
-      updateShape(updateMeshFunc, allsettings);
+      updateShape(updateMeshFunc, allsettings, shapeGroup);
     };
   }
   var ranges = [];
@@ -164,7 +172,7 @@ function pushSettings(allsettings, updateMeshFunc, settings) {
     }
   }
   setRanges(ranges);
-  updateShape(updateMeshFunc, allsettings);
+  updateShape(updateMeshFunc, allsettings, shapeGroup);
 }
 
 /* exported makeMesh */

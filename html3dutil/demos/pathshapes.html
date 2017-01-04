@@ -23,15 +23,15 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global CurveTube, H3DU */
+/* global H3DU */
 // <!--
 /*
-Written by Peter O. in 2015.
-
-Any copyright is dedicated to the Public Domain.
-http://creativecommons.org/publicdomain/zero/1.0/
-If you like this, you should donate to Peter O.
-at: http://peteroupc.github.io/
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
 */
 
 // Make a polygon with a hole
@@ -59,7 +59,7 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
   var resolution = Math.ceil(curves.getLength() / flatness / 10);
   var curveSection = pathSection ? pathSection.getCurves(flatness) : null;
   new H3DU.SurfaceEval()
-    .vertex(new CurveTube(curves, thickness, curveSection))
+    .vertex(new H3DU.CurveTube(curves, thickness, curveSection))
     .setAutoNormal(true)
     .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
       Math.ceil(2 * thickness / flatness));
