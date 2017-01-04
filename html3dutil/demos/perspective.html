@@ -160,7 +160,7 @@ function frustumMesh(frustum) {
   // to Scene3D.
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 var sub = new H3DU.Batch3D();
-sub.getLights().setDefaults();
+sub.getLights().setBasic();
   // Set the perspective view.  Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
 var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(10);

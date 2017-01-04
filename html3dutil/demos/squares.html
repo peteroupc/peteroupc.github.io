@@ -27,7 +27,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global FrameCounterDiv, H3DU, Polyhedra */
+/* global H3DU, Polyhedra */
 // <!--
 /*
 
@@ -419,12 +419,12 @@ scene = new H3DU.Scene3D(document.getElementById("canvas"));
 fbo = new H3DU.FrameBufferInfo(scene.getWidth(), scene.getHeight());
 scene.setClearColor("white");
 subScene = new H3DU.Batch3D();
-subScene.getLights().setDefaults();
+subScene.getLights().setBasic();
 renders = [
   new H3DU.RenderPass3D(subScene, {"frameBuffer":fbo}),
   new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo))
 ];
-var fc = new FrameCounterDiv();
+var fc = new H3DU.FrameCounterDiv();
 blinds = blindsGroup(subScene);
 platonic = platonicGroup(subScene);
 linknone();

@@ -26,7 +26,7 @@ at: http://peteroupc.github.io/
   var scene = new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
   var sub = new H3DU.Batch3D();
-  sub.getLights().setDefaults();
+  sub.getLights().setBasic();
   sub.orthoAspect(
    -20, 20,
    -10, 10,

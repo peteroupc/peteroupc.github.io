@@ -1,3 +1,4 @@
+/* global H3DU */
 /*
 Written by Peter O. in 2015.
 
@@ -16,9 +17,9 @@ at: http://peteroupc.github.io/
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
 * @class
-* @alias FrameCounter
+* @alias H3DU.FrameCounter
 */
-var FrameCounter = function() {
+H3DU.FrameCounter = function() {
   "use strict";
   this.fps = -1;
   this.lastFrame = -1;
@@ -28,10 +29,10 @@ var FrameCounter = function() {
 /**
  * Updates the state for determining the frame count.
  * This method should be called once per frame.
- * @memberof! FrameCounter#
+ * @memberof! H3DU.FrameCounter#
  * @returns {Object} Return value.
 */
-FrameCounter.prototype.update = function() {
+H3DU.FrameCounter.prototype.update = function() {
   "use strict";
   var now = "performance" in window ?
    window.performance.now() : new Date().getTime() * 1000;
@@ -61,10 +62,10 @@ FrameCounter.prototype.update = function() {
 /**
  * Gets the calculated frames per second, based
  * on how often the update method was called.
- * @memberof! FrameCounter#
+ * @memberof! H3DU.FrameCounter#
  * @returns {Object} Return value.
 */
-FrameCounter.prototype.getFPS = function() {
+H3DU.FrameCounter.prototype.getFPS = function() {
   "use strict";
   return this.fps;
 };
@@ -79,16 +80,16 @@ FrameCounter.prototype.getFPS = function() {
  * the HTML 3D Library.  Example:<pre>
  * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
 * @class
-* @alias FrameCounterDiv
+* @alias H3DU.FrameCounterDiv
 */
-function FrameCounterDiv() {
+H3DU.FrameCounterDiv = function() {
   "use strict";
-  this.div = FrameCounterDiv._makeDiv();
+  this.div = H3DU.FrameCounterDiv._makeDiv();
   this.count = 0;
-  this.fc = new FrameCounter();
-}
+  this.fc = new H3DU.FrameCounter();
+};
 /** @private */
-FrameCounterDiv._makeDiv = function() {
+H3DU.FrameCounterDiv._makeDiv = function() {
   "use strict";
   var referenceElement = document.documentElement;
   var div = document.createElement("div");
@@ -102,10 +103,10 @@ FrameCounterDiv._makeDiv = function() {
 };
 /**
  * Updates the frame counter HTML element.
- * @memberof! FrameCounterDiv#
+ * @memberof! H3DU.FrameCounterDiv#
  * @returns {Object} Return value.
 */
-FrameCounterDiv.prototype.update = function() {
+H3DU.FrameCounterDiv.prototype.update = function() {
   "use strict";
   this.fc.update();
   this.count += 1;
@@ -143,3 +144,19 @@ var PrimitiveCounter = function() {
     this.warned = true;
   };
 };
+/* exported FrameCounter */
+/**
+Alias for the  {@link H3DU.FrameCounter} class.
+@class
+@alias FrameCounter
+ @deprecated Use {@link H3DU.FrameCounter} instead.
+*/
+
+/* exported FrameCounterDiv */
+/**
+Alias for the  {@link H3DU.FrameCounterDiv} class.
+@class
+@alias FrameCounterDiv
+ @deprecated Use {@link H3DU.FrameCounterDiv} instead.
+*/
+ // InputTracker = H3DU.FrameCounterDiv;

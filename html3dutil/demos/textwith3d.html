@@ -37,7 +37,7 @@ at: http://peteroupc.github.io/
   var figureSub = new H3DU.Batch3D()
     .perspectiveAspect(45, 0.1, 100)
     .setLookAt([0, 0, 40]);
-  figureSub.getLights().setDefaults();
+  figureSub.getLights().setBasic();
   var mesh = H3DU.Meshes.createBox(10, 20, 20);
   var shape2 = new H3DU.Shape(mesh).setColor("#e0e0e0");
   figureSub.addShape(shape2);

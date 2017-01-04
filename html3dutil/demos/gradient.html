@@ -17,7 +17,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global FrameCounterDiv, H3DU, Uint8Array */
+/* global H3DU, Uint8Array */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -117,8 +117,8 @@ var sub = new H3DU.Batch3D()
    .perspectiveAspect(45, 0.1, 100)
    // Move the camera back 40 units.
    .setLookAt([0, 0, 40]);
-sub.getLights().setDefaults();
-var fc = new FrameCounterDiv();
+sub.getLights().setBasic();
+var fc = new H3DU.FrameCounterDiv();
   // Generate a red-blue gradient texture
 var tex = horizontalGradient("red", "blue");
 var mesh = H3DU.Meshes.createBox(10, 20, 20);

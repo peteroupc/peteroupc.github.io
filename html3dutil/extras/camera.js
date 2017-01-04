@@ -477,8 +477,8 @@ var InputTracker = H3DU.InputTracker;
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
 * @class
 * @alias H3DU.Camera
-* @param {H3DU.Batch3D} batch A 3D scene to associate with this
-* camera object.
+* @param {H3DU.Batch3D} batch A 3D batch to associate with this
+* camera object. <i>Using a {@link H3DU.Scene3D} here is deprecated.</i>
 * @param {Number} fov Vertical field of view, in degrees. Should be less
 * than 180 degrees. (The smaller
 * this number, the bigger close objects appear to be.) See {@link H3DU.Math.mat4perspective}.
@@ -503,7 +503,18 @@ H3DU.Camera = function(batch, fov, nearZ, farZ, canvas) {
   this.lat = 90;
   this.lon = 270;
   this._updateView();
-  batch.perspectiveAspect(fov, nearZ, farZ);
+  this.perspectiveParams = {};
+  if(batch instanceof H3DU.Scene3D) {
+    console.warn("Using Scene3D in the Camera constructor is deprecated");
+    batch.setPerspective(fov, batch.getClientAspect(), nearZ, farZ);
+    this.perspectiveParams = {
+      "fov":fov,
+      "nearZ":nearZ,
+      "farZ":farZ
+    };
+  } else {
+    batch.perspectiveAspect(fov, nearZ, farZ);
+  }
  // NOTE: For compatibility only, may be removed in the future
   if(!canvas) {
     canvas = document.getElementsByTagName("canvas")[0] || document;
@@ -632,6 +643,22 @@ H3DU.Camera.prototype.moveAngleVertical = function(angleDegrees) {
   }
   return this;
 };
+
+/**
+ * Moves the camera upward or downward so that it faces
+* the same reference point at the same distance.
+ * @param {Number} angleDegrees The angle to rotate the camera,
+* in degrees. If the coordinate-system is right-handed, positive
+values rotate the camera upward, and
+negative values downward. If the coordinate-system is left-handed,
+vice versa.
+@method
+@deprecated Renamed to "moveAngleVertical".
+* @returns {H3DU.Camera} This object.
+ * @memberof! H3DU.Camera#
+*/
+H3DU.Camera.prototype.turnVertical = H3DU.Camera.prototype.moveAngleVertical;
+
 /**
  * Moves the camera to the left or right so that it faces
 * the same reference point at the same distance.
@@ -652,6 +679,22 @@ H3DU.Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
   }
   return this;
 };
+
+/**
+ * Moves the camera to the left or right so that it faces
+* the same reference point at the same distance.
+ * @param {Number} angleDegrees The angle to rotate the camera,
+* in degrees. If the coordinate-system is right-handed, positive
+values rotate the camera leftward, and
+negative values rightward. If the coordinate-system is left-handed,
+vice versa.
+@method
+@deprecated Renamed to "moveAngleHorizontal".
+* @returns {H3DU.Camera} This object.
+ * @memberof! H3DU.Camera#
+*/
+H3DU.Camera.prototype.turnHorizontal = H3DU.Camera.prototype.moveAngleHorizontal;
+
 /**
  * Turns the camera to the left or right so that it faces
 *  the same distance from a reference point.
@@ -663,7 +706,7 @@ vice versa.
 * @returns {H3DU.Camera} This object.
  * @memberof! H3DU.Camera#
 */
-H3DU.Camera.prototype.turnHorizontal = function(angleDegrees) {
+H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
   "use strict";
   if(angleDegrees !== 0) {
     var quat = H3DU.Math.quatFromAxisAngle(angleDegrees, this.up);
@@ -683,7 +726,7 @@ vice versa.
 * @returns {H3DU.Camera} This object.
  * @memberof! H3DU.Camera#
 */
-H3DU.Camera.prototype.turnVertical = function(angleDegrees) {
+H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
   "use strict";
   if(angleDegrees !== 0) {
     var viewVector = H3DU.Camera._velocity(this.center, this.position);
@@ -718,6 +761,18 @@ H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
     return this.setPosition(cx[0], cy[1], cz[2]);
   }
 };
+
+/**
+ * Sets the position of the camera.
+ * @param {Number} cx The camera's new X-coordinate.
+ * @param {Number} cy The camera's new Y-coordinate.
+ * @param {Number} cz The camera's new Z-coordinate.
+* @returns {H3DU.Camera} This object.
+* @method
+* @deprecated Renamed to "setPosition".
+ * @memberof! H3DU.Camera#
+*/
+H3DU.Camera.prototype.movePosition =  H3DU.Camera.prototype.setPosition;
 
 /**
  * Sets the position of the camera.
@@ -854,7 +909,16 @@ H3DU.Camera.prototype.getVectorFromCenter = function() {
 */
 H3DU.Camera.prototype.update = function(input) {
   "use strict";
-  if(!input)input.update();
+  if(!input) {
+    this.input.update();
+  }
+  if(this.scene instanceof H3DU.Scene3D) {
+    // Update the perspective matrix for compatibility
+    this.scene.setPerspective(this.perspectiveParams.fov,
+      this.scene.getClientAspect(),
+     this.perspectiveParams.nearZ,
+     this.perspectiveParams.farZ);
+  }
   return this._updateNew(input || this.input);
 };
 /** @private */

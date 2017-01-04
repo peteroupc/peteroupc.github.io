@@ -19,7 +19,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <canvas id=canvas>
 </canvas>
 <script id="demo">
-/* global FrameCounterDiv, H3DU, addLink, makeMesh, pushSettings */
+/* global H3DU, addLink, makeMesh, pushSettings */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -166,7 +166,7 @@ scene.setClearColor("white");
 var sub = new H3DU.Batch3D();
 var camera = new H3DU.Camera(sub, 45, 1, 100);
 camera.setDistance(5);
-var pc = new FrameCounterDiv();
+var pc = new H3DU.FrameCounterDiv();
 link0();
 sub.addShape(shapeGroup);
 H3DU.renderLoop(function() {

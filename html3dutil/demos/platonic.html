@@ -80,7 +80,7 @@ var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white");
 var sub = new H3DU.Batch3D()
    .orthoAspect(-20, 20, -10, 10, -20, 20);
-sub.getLights().setDefaults();
+sub.getLights().setBasic();
 var labels = new Labels(scene, sub);
 var mesh;
 mesh = Polyhedra.hexahedron(4.5, 0);

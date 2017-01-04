@@ -8,6 +8,43 @@
 
 <h2>Version History <a id=Version_History></a></h2>
 
+<p>Version 2.0.0-beta1:</p>
+
+<p>There are many, many changes to version 2.0.0-beta1 from version 1.5.1.  Here are some of them, including the most important ones.</p>
+
+<ul>
+<li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now <a href="H3DU.Shape.html">H3DU.Shape</a> and <code>Mesh</code> is now <a href="H3DU.Mesh.html">H3DU.Mesh</a>.  Many classes in the &quot;extras&quot; directory are also moved to the <code>H3DU</code> namespace.</li>
+<li><code>Scene3D</code>, now <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, is no longer meant to be a scene graph of objects to draw.  That job now belongs to the new <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> class.  Scene3D&#39;s <code>render</code> method now takes an array of <code>Batch3D</code>s to render.  For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as <code>makeShape</code> and <code>setPerspective</code>, can still be used until <code>H3DU.Scene3D</code> renders a custom <code>H3DU.Batch3D</code>. This compatibility behavior may be dropped in the future.</li>
+<li>Alpha is disabled in WebGL contexts created with the <a href="H3DU.html#H3DU.get3DOr2DContext">H3DU.get3DOr2DContext</a> method.</li>
+<li>The <code>Scene3D</code> H3DU.Scene3D#useProgram method was deprecated and now does nothing.</li>
+<li>New <a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a> class holds information about how a batch of 3D models is to be rendered.   It replaces the <code>Scene3D</code> H3DU.Scene3D#useFilter method, which now does nothing.</li>
+<li>New <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a> class holds information about a frame buffer; it replaces <a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a>.</li>
+<li>The <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code> classes are deprecated because they are too tightly coupled with a particular WebGL context.  Instead, use <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>, <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a>, and <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>, respectively, which are not coupled to WebGL contexts.</li>
+<li>Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.</li>
+<li>The <a href="H3DU.Shape.html">H3DU.Shape</a> object is no longer coupled to vertex buffers.</li>
+<li>The <a href="H3DU.LightSource.html">H3DU.LightSource</a> class now supports a radius of the light.</li>
+<li>The <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a> class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code>, which are tied to the WebGL context.</li>
+<li><code>GLMath</code>, now <a href="H3DU.Math.html">H3DU.Math</a>, was expanded with many new methods.  The documentation for it is now very detailed.  New methods include <a href="H3DU.Math.html#H3DU.Math.vec3perp">H3DU.Math.vec3perp</a>,  <a href="H3DU.Math.html#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a>, and  <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a>.</li>
+<li>Two new classes in the &quot;extras&quot; folder support 2D text rendering and texture atlases (as sprite sheets), namely, <a href="H3DU.TextFont.html">H3DU.TextFont</a> and <a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a>.</li>
+<li>The &quot;doc&quot; folder contains the documentation to the library in the form of Markdown text files.</li>
+<li>The Camera class, now <a href="H3DU.Camera.html">H3DU.Camera</a>, was rewritten.</li>
+<li>A build script was included in the repository.  This build includes a style checker which is run on the library&#39;s JavaScript files.</li>
+<li>Many methods were added to many classes.  Some methods that didn&#39;t return a value now return the value of the object called on, for example, the <code>clear</code> method of <code>H3DU.Scene3D</code>.</li>
+<li>New demos, including <em>spinbox.html</em> and <em>quatlerp.html</em>.  For example, the <em>gears.html</em> demo was moved from the separate &quot;html-gears&quot; repository to here.  Other demos were expanded or rewritten.  Viewport <code>meta</code> tags were added to the demos.</li>
+<li>The underlying code used in <code>H3DU.toGLColor</code> was rewritten.  In particular, the &quot;#RRGGBBAA&quot; format is now supported.</li>
+<li>The JavaScript source code better conforms to a uniform code style.</li>
+<li>The experimental 2D canvas renderer in <em>surfaces2d.html</em>, was abandoned.</li>
+<li>Added <code>dispose</code> method to <code>H3DU.Scene3D</code>.</li>
+<li>Added <code>createPointedStar</code> and <code>createLathe</code> methods to <code>H3DU.Meshes</code>.</li>
+<li>Added <code>getBounds</code> and <code>toLinePath</code> methods to <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>, an extra, as well
+as an extra that adds methods that compute the intersection, difference, union, and XOR of two
+polygons.  Path triangulation now supports polygons with holes.</li>
+<li>The default light configuration is no lights when creating a <a href="H3DU.LightSource.html">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.html">H3DU.Scene3D</a> without rendering a custom <code>Batch3D</code>, in which case the default is one light source with its default values.</li>
+<li>The Mesh class no longer supports multiple primitive types (lines, triangles, points).  Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.</li>
+<li>Many of the tutorials were edited heavily to accommodate the new version.  The <code>GraphicsPath</code> tutorial was added.</li>
+<li>There were also numerous bug fixes.</li>
+</ul>
+
 <p>Version 1.5.1:</p>
 
 <ul>
@@ -196,57 +233,57 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="CurveTube.html">CurveTube</a><br><b>Deprecated: Use H3DU.CurveTube instead.</b></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a><br><b>Deprecated: Use H3DU.Epitrochoid instead.</b></li>
-<li><a href="FrameCounter.html">FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.</li>
-<li><a href="FrameCounterDiv.html">FrameCounterDiv</a><br>A class that displays a frame counter HTML element.</li>
-<li><a href="GraphicsPath.html">GraphicsPath</a><br><b>Deprecated: Use H3DU.GraphicsPath instead.</b></li>
-<li><a href="H3DU.html">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility</li>
-<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a><br>A parametric evaluator for B-spline (basis spline) curves.</li>
-<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a><br>A parametric evaluator for B-spline (basis spline) surfaces.</li>
-<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a><br>A <code>Batch3D</code> represents a so-called &quot;scene graph&quot;.</li>
-<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a><br>A parametric evaluator for B&eacute;zier curves.</li>
-<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a><br>A parametric evaluator for B&eacute;zier surfaces.</li>
-<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.</li>
-<li><a href="H3DU.Camera.html">H3DU.Camera</a><br>A class for controlling the projection and</li>
-<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a><br>An evaluator of parametric curve functions for generating</li>
-<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a><br>Evaluator for a parametric surface in the form</li>
-<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a><br>Parametric evaluator for a</li>
-<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a><br><b>Deprecated: This class is likely to become a private class.</li>
-<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.</li>
-<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.</li>
-<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a><br>Parametric evaluator for a</li>
-<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel</li>
-<li><a href="H3DU.LightSource.html">H3DU.LightSource</a><br>Specifies parameters for light sources.</li>
-<li><a href="H3DU.Lights.html">H3DU.Lights</a><br>A collection of light sources.</li>
-<li><a href="H3DU.Material.html">H3DU.Material</a><br>Specifies parameters for geometry materials, which describe the appearance of a</li>
-<li><a href="H3DU.Math.html">H3DU.Math</a><br>A collection of math functions for working</li>
-<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a><br>H3DU.MatrixStack is a class that implements a stack</li>
-<li><a href="H3DU.Mesh.html">H3DU.Mesh</a><br>Specifies the triangles, lines, or points that make up a geometric shape.</li>
-<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.</li>
-<li><a href="H3DU.Meshes.html">H3DU.Meshes</a><br>Contains methods that create meshes</li>
-<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for</li>
-<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering</li>
-<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a><br>Holds source code for a WebGL shader program.</li>
-<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a><br><b>Deprecated: This class is likely to become a private class.</li>
-<li><a href="H3DU.Shape.html">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with</li>
-<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a><br>Represents a grouping of shapes.</li>
-<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a><br>An evaluator of parametric functions for generating</li>
-<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a><br>Parametric evaluator for a surface of revolution, which results by revolving</li>
-<li><a href="H3DU.TextFont.html">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional</li>
-<li><a href="H3DU.Texture.html">H3DU.Texture</a><br>Specifies a texture, which can serve as image data applied to</li>
-<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single</li>
-<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a><br>An object that caches loaded textures and uploads them</li>
-<li><a href="H3DU.Transform.html">H3DU.Transform</a><br>A class offering a convenient way to set a transformation</li>
-<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a><br>Parametric evaluator for a</li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a><br><b>Deprecated: Use H3DU.Hypotrochoid instead.</b></li>
-<li><a href="InputTracker.html">InputTracker</a><br><b>Deprecated: Use H3DU.Camera instead.</b></li>
-<li><a href="MeshJSON.html">MeshJSON</a><br>JSON exporter of graphics meshes.</li>
-<li><a href="ObjData.html">ObjData</a><br>WaveFront OBJ format.</li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a><br><b>Deprecated: Will be removed in the future.</b></li>
-<li><a href="Promise.html">Promise</a><br>A promise holds a value to be resolved in the future.</li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a><br><b>Deprecated: Use H3DU.SurfaceOfRevolution instead.</b></li>
-<li><a href="Trochoid.html">Trochoid</a><br><b>Deprecated: Use H3DU.Trochoid instead.</b></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
+<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
+<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
+<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
+<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
+<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
+<li><a href="InputTracker.html">InputTracker</a></li>
+<li><a href="MeshJSON.html">MeshJSON</a></li>
+<li><a href="ObjData.html">ObjData</a></li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.html">Trochoid</a></li>
 <li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
 <li><a href="tutorial-colors.html">Color Strings</a></li>
 <li><a href="tutorial-filters.html">Graphics Filters</a></li>

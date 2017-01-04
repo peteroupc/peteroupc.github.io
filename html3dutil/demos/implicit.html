@@ -16,7 +16,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <div id="settings" style="position:absolute;left:0;top:3em"></div>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global FrameCounterDiv, H3DU, ImplicitSurface, addLink, input, pushSettings */
+/* global H3DU, ImplicitSurface, addLink, pushSettings */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -227,7 +227,7 @@ at: http://peteroupc.github.io/
   var sub = new H3DU.Batch3D();
   var camera = new H3DU.Camera(sub, 45, 1, 100);
   camera.setDistance(5);
-  var pc = new FrameCounterDiv();
+  var pc = new H3DU.FrameCounterDiv();
   link1();
   sub.addShape(shapeGroup);
   H3DU.renderLoop(function() {

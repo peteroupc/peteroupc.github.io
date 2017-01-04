@@ -16,7 +16,7 @@ Color: <input type=color value="#FFFFFF" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global FrameCounterDiv, H3DU */
+/* global H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -119,7 +119,7 @@ var scene = new H3DU.Scene3D(document.getElementById("canvas"))
 var sub = new H3DU.Batch3D();
 var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(5);
 var input = new H3DU.InputTracker(scene.getCanvas());
-var pc = new FrameCounterDiv();
+var pc = new H3DU.FrameCounterDiv();
 var clock = new ClockShape(sub);
 document.getElementById("colorsetting").addEventListener("change",
    function(e) {

@@ -32,7 +32,7 @@ class, example:<br>
 </div>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global FrameCounterDiv, H3DU, addRange, getExpression, normalCalcExpr, updateShape */
+/* global H3DU, addRange, getExpression, normalCalcExpr, updateShape */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -247,7 +247,7 @@ scene.cullFace(H3DU.Scene3D.FRONT);
 var sub = new H3DU.Batch3D();
 var camera = new H3DU.Camera(sub, 45, 1, 100);
 camera.setDistance(5);
-var pc = new FrameCounterDiv();
+var pc = new H3DU.FrameCounterDiv();
 link0();
 sub.addShape(shapeGroup);
 H3DU.renderLoop(function() {

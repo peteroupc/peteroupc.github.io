@@ -13,7 +13,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global FrameCounterDiv, H3DU */
+/* global H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -87,7 +87,7 @@ scene.setClearColor("white");
 var sub = new H3DU.Batch3D()
    .perspectiveAspect(45, 1, 1000)
    .setLookAt([22.5, 22.5 - 3 * 8, 1.2 * 50], [22.5, 22.5, 0], [0, 0, 1]);
-var fc = new FrameCounterDiv();
+var fc = new H3DU.FrameCounterDiv();
 var group = new H3DU.ShapeGroup();
 sub.getLights()
     .setDirectionalLight(0, [0, -3, 1.2], [1, 1, 1])

@@ -18,7 +18,7 @@ at: http://peteroupc.github.io/
   }
 }(this, function (exports) {
   "use strict";
-  if (exports.GraphicsPath) {
+  if (exports.H3DU && exports.H3DU.GraphicsPath) {
     return;
   }
 /**
@@ -2481,7 +2481,7 @@ the path may contain several disconnected parts.
     }
     tris.push(tri);
   };
-  exports.H3DU.GraphicsPath = H3DU.GraphicsPath;
+  exports.H3DU.GraphicsPath = GraphicsPath;
 
 /* exported GraphicsPath */
 /**
@@ -2490,5 +2490,5 @@ Alias for the {@link H3DU.GraphicsPath} class.
 @alias GraphicsPath
  @deprecated Use {@link H3DU.GraphicsPath} instead.
 */
-  exports.GraphicsPath = H3DU.GraphicsPath;
+  exports.GraphicsPath = GraphicsPath;
 }));

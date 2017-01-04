@@ -178,7 +178,7 @@ Particles.prototype.update = function(time) {
 var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white");
 var sub = new H3DU.Batch3D();
-sub.getLights().setDefaults();
+sub.getLights().setBasic();
 sub.orthoAspect(0, 12, 0, 9, -5000, 5000);
   // 12 meters wide and 9 meters high
 var tris = new Particles(sub, 10, 12, 9);

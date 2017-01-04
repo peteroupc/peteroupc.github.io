@@ -23,7 +23,7 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global CurveTube, FrameCounterDiv, H3DU */
+/* global CurveTube, H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -142,7 +142,7 @@ var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(5)
    .moveAngleVertical(-90);
 var input = new H3DU.InputTracker(document);
 var xyz = new H3DU.ShapeGroup();
-var pc = new FrameCounterDiv();
+var pc = new H3DU.FrameCounterDiv();
 shape = null;
 var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(0.005, 10, 6, 4));
 var zaxis = axisline.copy().setColor("blue");

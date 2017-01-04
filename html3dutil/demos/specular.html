@@ -12,7 +12,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <canvas id=canvas></canvas>
 <p>Texture courtesy of pdtextures.blogspot.com</p>
 <script id="demo">
-/* global FrameCounterDiv, H3DU */
+/* global H3DU */
 // <!--
 /*
 Written by Peter O. in 2015.
@@ -33,8 +33,8 @@ at: http://peteroupc.github.io/
    .perspectiveAspect(45, 0.1, 100)
    // Move the camera back 40 units.
    .setLookAt([0, 0, 40]);
-  sub.getLights().setDefaults();
-  var fc = new FrameCounterDiv();
+  sub.getLights().setBasic();
+  var fc = new H3DU.FrameCounterDiv();
   var loader = new H3DU.TextureLoader();
   loader.loadAndMapTexturesAll([
     "461223191.jpg",
