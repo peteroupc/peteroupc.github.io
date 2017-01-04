@@ -40,7 +40,7 @@
 as an extra that adds methods that compute the intersection, difference, union, and XOR of two
 polygons.  Path triangulation now supports polygons with holes.</li>
 <li>The default light configuration is no lights when creating a <a href="H3DU.LightSource.html">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.html">H3DU.Scene3D</a> without rendering a custom <code>Batch3D</code>, in which case the default is one light source with its default values.</li>
-<li>The default value for specular materials (<a href="H3DU.Material.html">H3DU.Material</a>) is now (0.1, 0.1, 0.1).</li>
+<li>The default value for specular materials (<a href="H3DU.Material.html">H3DU.Material</a>) is now (0.1, 0.1, 0.1).  The default value for shininess is now 32.</li>
 <li>The Mesh class no longer supports multiple primitive types (lines, triangles, points).  Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.</li>
 <li>Many of the tutorials were edited heavily to accommodate the new version.  The <code>GraphicsPath</code> tutorial was added.</li>
 <li>There were also numerous bug fixes.</li>
