@@ -133,6 +133,7 @@ Animator.prototype.update = function(time) {
     } else {
    // in progress
       var t = (time - a[2]) / (a[3] - a[2]);
+      t = t * t * (3 - 2 * t); // smoothstep
       this.shape.setPosition(H3DU.Math.vec3lerp(a[0], a[1], t));
     }
   }
