@@ -2004,8 +2004,12 @@ The first vector to interpolate. The interpolation will occur on each component 
 <li><code>v2</code> (Type: Array.&lt;Number&gt;)<br>
 The second vector to interpolate.</li>
 <li><code>factor</code> (Type: Number)<br>
-A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from 0 through 1 and returns a value from 0 through 1, and pass the result of that function to this method. For an inverted version of an interpolation function, set the factor to 1 minus that factor, then to 1 minus the result of the interpolation function with that factor, then pass that factor to this method. See the examples below.</li>
+A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2.</li>
 </ul>
+
+<p>For a nonlinear interpolation, define a function that takes a value from 0 through 1 and returns a value generally ranging from 0 through 1, and pass the result of that function to this method.</p>
+
+<p>The following are examples of interpolation functions. See also the code examples following this list.<ul> <li>Linear: <code>factor</code>. Constant speed. <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0. For example, N=2 means a square, N=3 means cube, N=1/2 means square root, and N=1/3 means cube root. If N &gt; 1, this function eases in, that is, it starts slow and ends fast. If N &lt; 1, this function eases out, that is, it starts fast and ends slow. <li>Sine: <code>Math.sin(Math.PI*0.5*factor)</code>. This function eases in. <li>Smoothstep: <code>(3.0-2.0*factor)*factor*factor</code>. This function starts and ends slow, and speeds up in the middle. <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>, where <code>INTF(x)</code> is another interpolation function. This function reverses the speed behavior; for example, a function that eased in now eases out. <li>Ease: <code>factor &lt; 0.5 ? INTF(factor*2)*0.5 : 1.0-(INTF((1.0-factor)*2)*0.5)</code>, where <code>INTF(x)</code> is another interpolation function. Depending on the underlying function, this function eases in, then eases out, or vice versa. </ul></p>
 
 <h4>Return Value</h4>
 
@@ -2035,7 +2039,7 @@ interpolation. This time, vectors are interpolated fast then very slowly.</p>
  interpolation called &quot;smoothstep&quot;. It slows down at the beginning
  and end, and speeds up in the middle.</p>
 
-<pre><code>factor = factor*factor*(3.0-2.0*factor); // smoothstep interpolation
+<pre><code>factor = (3.0-2.0*factor)*factor*factor; // smoothstep interpolation
  var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
 </code></pre>
 
@@ -2451,7 +2455,7 @@ The first vector to interpolate. The interpolation will occur on each component 
 <li><code>v2</code> (Type: Array.&lt;Number&gt;)<br>
 The second vector to interpolate.</li>
 <li><code>factor</code> (Type: Number)<br>
-A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from 0 through 1 and returns a value from 0 through 1, and pass the result of that function to this method. For an inverted version of an interpolation function, set the factor to 1 minus that factor, then to 1 minus the result of the interpolation function with that factor, then pass that factor to this method. See the examples in the documentation for <a href="H3DU.Math.html#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a>.</li>
+A value from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2. For a nonlinear interpolation, define a function that takes a value from 0 through 1 and returns a value from 0 through 1, and pass the result of that function to this method. See the examples in the documentation for <a href="H3DU.Math.html#H3DU.Math.vec3lerp">H3DU.Math.vec3lerp</a> for examples of interpolation functions.</li>
 </ul>
 
 <h4>Return Value</h4>
