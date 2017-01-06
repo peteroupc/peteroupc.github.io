@@ -36,6 +36,31 @@ fourth element is anything other than 0, the vector is in <em>homogeneous
 coordinates</em>, where the 3D position equals the first three elements divided
 by the fourth.)</p>
 
+<h3>Axis of Rotation</h3>
+
+<p>A rotation can be described using an <em>angle</em> and an <em>axis of rotation</em>.</p>
+
+<p>An axis of rotation is a 3-element vector or three numbers that describe a ray
+that starts at the origin (0,0,0) and points toward a 3D point. Here are examples.</p>
+
+<ul>
+<li>The X-axis of rotation (upward or downward turn) is (1, 0, 0).</li>
+<li>The Y-axis of rotation (leftward or rightward turn) is (0, 1, 0).</li>
+<li>The Z-axis of rotation (side-by-side sway) is (0, 0, 1).</li>
+</ul>
+
+<p>While the axis of rotation points toward the viewer, if the angle&#39;s value
+is positive (resp. negative) and the <a href="#Coordinate_Systems">coordinate system</a> is...</p>
+
+<ul>
+<li>...right handed, then the angle runs counterclockwise (resp. clockwise).</li>
+<li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
+</ul>
+
+<p>Unless stated otherwise, an axis of rotation passed to an <code>H3DU.Math</code>
+method need not be a unit vector (a [&quot;normalized&quot;
+vector]<a href="H3DU.Math.html#H3DU.Math.vec3norm">H3DU.Math.vec3norm</a> with a length of 1).</p>
+
 <h2>Matrices <a id=Matrices></a></h2>
 
 <p>A matrix is a 16- or 9-element array that can describe a
@@ -73,8 +98,7 @@ before the other transformations.</p>
 <p>Rotation changes an object&#39;s orientation.</p>
 
 <p>To create a rotation matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
-and specify the angle (in degrees) to rotate, and the axis of rotation (a ray that starts at the
-origin and points toward a 3D point given as three parameters).  For example, specifying (45, 1, 0, 0) means a 45-degree rotation around the X-axis, and (80, 0, 2, 3) means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
+and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation">axis of rotation</a>.  For example, specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation around the X-axis, and <code>(80, [0, 2, 3])</code> means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
 
 <p>To multiply an existing matrix by a rotation, use
 <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
@@ -108,7 +132,7 @@ of doing the second matrix&#39;s transform, then the first matrix&#39;s transfor
 
 <ul>
 <li>...first three elements (X, Y, Z) describe a 3D point, where the
-direction from the origin (0, 0, 0) to that point is the <em>axis of rotation</em>,
+direction from the origin (0, 0, 0) to that point is the <a href="#Axis_of_Rotation">axis of rotation</a>,
 and the distance from the origin to that point is the sine
 of half the rotation angle. <small> (The distance is 0 at 0 and 360
 degrees, and 1 at 180 degrees.)</small></li>
@@ -125,8 +149,8 @@ degrees, and 1 at 180 degrees.)</small></li>
 multiplying quaternions, combining multiple rotations into a single
 rotation.  In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
-before the first rotation.  Like matrix multiplication, the
-order in which you multiply quaternions is important.</p>
+before the first rotation (when applied in the global coordinate frame).
+Like matrix multiplication, the order in which you multiply quaternions is important.</p>
 
 <h3>Using Quaternions <a id=Using_Quaternions></a></h3>
 
@@ -237,11 +261,12 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
 <h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>) <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a></h4>
 
-<p>Whenever the axis of rotation points toward the viewer, if the coordinate system is...</p>
+<p>While the <a href="#Axis_of_Rotation">axis of rotation</a> points toward the viewer, if the angle&#39;s value
+is positive (resp. negative) and the coordinate system is...</p>
 
 <ul>
-<li>...right handed, and the angle&#39;s value is positive (resp. negative), then the angle runs counterclockwise (resp. clockwise).</li>
-<li>...left handed, and the angle&#39;s value is positive (resp. negative), then the angle runs clockwise (resp. counterclockwise).</li>
+<li>...right handed, then the angle runs counterclockwise (resp. clockwise).</li>
+<li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
 </ul>
 
 <h4>Cross product (<code>vec3cross(A, B)</code>) and normals <a id=Cross_product_vec3cross_A_B_and_normals></a></h4>
@@ -259,28 +284,27 @@ and B minus (0,0,0) is B).</p>
 
 <h3>Orientation and face classification <a id=Orientation_and_face_classification></a></h3>
 
-<p>To find the orientation of a triangle, apply the following formula:</p>
-
-<pre><code>(X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
-</code></pre>
-
-<p>(Half of the result will be the triangle&#39;s signed area.)</p>
-
-<p>If the window space X axis points right and the Y axis points...</p>
-
-<ul>
-<li>...up (which is the case in WebGL), and the result is positive (resp. negative), then the triangle&#39;s vertices
-are oriented counterclockwise (resp. clockwise).</li>
-<li>...down, and the result is positive (resp. negative), then the vertices are oriented clockwise (resp. counterclockwise).</li>
-</ul>
-
-<p>Note that finding the orientation is done on the triangle&#39;s two-dimensional projection in
-<em>window coordinates</em> (which roughly correspond to the triangle&#39;s
-location on the screen or frame buffer).</p>
+<p>A triangle has counterclockwise <em>orientation</em> if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle&#39;s two-dimensional projection in <em>window coordinates</em> (which roughly correspond to its location on the screen or frame buffer). Otherwise, the triangle has clockwise orientation.</p>
 
 <p>By default, counterclockwise oriented triangles are <em>front faces</em>, and
 other triangles are <em>back faces</em>.  To change which kinds of triangles are
 front faces, call the <code>frontFace</code> method of Scene3D.</p>
+
+<h4>Finding Orientation</h4>
+
+<p>To find a triangle&#39;s orientation, do the following calculation (X1-3 and Y1-3 are the window coordinates of its vertices). Note that half of the result will be the triangle&#39;s signed area.</p>
+
+<pre><code>(X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
+</code></pre>
+
+<p>If the result is positive (resp. negative), and the window space X
+axis points right and the Y axis points...</p>
+
+<ul>
+<li>...up (which is the case in WebGL), then the triangle&#39;s vertices
+are oriented counterclockwise (resp. clockwise).</li>
+<li>...down, then the vertices are oriented clockwise (resp. counterclockwise).</li>
+</ul>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
