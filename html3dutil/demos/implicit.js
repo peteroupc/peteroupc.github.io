@@ -11,23 +11,24 @@
 // source code by Cory Gene Bloyd.
 
 /**
-* An evaluator for implicit surfaces.
-* @param {Object} func A <b>sampling object</b>. This object contains a single property,
-* "sample", which is a function that takes three parameters
-* specifying a 3-dimensional point:<ol>
-* <li>x - An X coordinate.
-* <li>y - A Y coordinate.
-* <li>z - A Z coordinate.</ol>
-* and returns a number. If the implicit surface function returns 0, that
-* means the point lies on the surface.
-* @example <caption>The following defines an implicit surface
-* function for a sphere.</caption>
-* var surface=new ImplicitSurface({"sample":function(x, y, z) {
-"use strict";
-* return x*x+y*y+z*z-1;
-* }});
+ * An evaluator for implicit surfaces.
+ * @param {Object} func A <b>sampling object</b>. This object contains a single property,
+ * "sample", which is a function that takes three parameters
+ * specifying a 3-dimensional point:<ol>
+ * <li>x - An X coordinate.
+ * <li>y - A Y coordinate.
+ * <li>z - A Z coordinate.</ol>
+ * and returns a number. If the implicit surface function returns 0, that
+ * means the point lies on the surface.
+ * @example <caption>The following defines an implicit surface
+ * function for a sphere.</caption>
+ * var surface=new ImplicitSurface({"sample":function(x, y, z) {
+ * "use strict";
+ * return x*x+y*y+z*z-1;
+ * }});
+
  * @returns {Object} Return value.
-*/
+ */
 function ImplicitSurface(func) {
   "use strict";
   if(typeof func !== "object")throw new Error();
@@ -607,15 +608,15 @@ ImplicitSurface.prototype._marchingTetrahedrons = function(mesh, fX, fY, fZ, fSc
  * @param {Number} zmin Smallest value along the Z axis.
  * @param {Number} zmax Greatest value along the Z axis.
  * @memberof! ImplicitSurface#
-* @returns {Array<Number>} An array of six numbers describing a tight
-* axis-aligned bounding box
-* that fits this implicit surface within the given area. The first three numbers
-* are the smallest-valued X, Y, and Z coordinates, and the
-* last three are the largest-valued X, Y, and Z coordinates.
-* If no part of the boundary of the surface lies within the given
-* area, returns the array [Inf, Inf, Inf, -Inf,
-* -Inf, -Inf].
-*/
+ * @returns {Array<Number>} An array of six numbers describing a tight
+ * axis-aligned bounding box
+ * that fits this implicit surface within the given area. The first three numbers
+ * are the smallest-valued X, Y, and Z coordinates, and the
+ * last three are the largest-valued X, Y, and Z coordinates.
+ * If no part of the boundary of the surface lies within the given
+ * area, returns the array [Inf, Inf, Inf, -Inf,
+ * -Inf, -Inf].
+ */
 ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   var xstep = (xmax - xmin) / xsize;
@@ -667,9 +668,9 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
  * @param {Number} ymax Greatest value along the Y axis.
  * @param {Number} zmin Smallest value along the Z axis.
  * @param {Number} zmax Greatest value along the Z axis.
-* @returns {ImplicitSurface} This object.
+ * @returns {ImplicitSurface} This object.
  * @memberof! ImplicitSurface#
-*/
+ */
 ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   if(xsize < 2 || ysize < 2 || zsize < 2)throw new Error();
@@ -705,8 +706,8 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
  * @param {Number} zmin Smallest value along the Z axis.
  * @param {Number} zmax Greatest value along the Z axis.
  * @memberof! ImplicitSurface#
-* @returns {ImplicitSurface} This object.
-*/
+ * @returns {ImplicitSurface} This object.
+ */
 ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   mesh.mode(H3DU.Mesh.TRIANGLES);
@@ -736,7 +737,7 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
 };
 /**
  * Returns a sampling object for the union of
-* one surface and another.
+ * one surface and another.
  * @param {Object} a A sampling object (see ImplicitSurface constructor) that defines an implicit surface.
  * @param {Object} b A sampling object that defines another implicit surface.
  * @returns {Object} A sampling object that defines surface "a" together with surface "b"
@@ -752,7 +753,7 @@ ImplicitSurface.union = function(a, b) {
 };
 /**
  * Returns a sampling object for the intersection of
-* one surface and another.
+ * one surface and another.
  * @param {Object} a A sampling object (see ImplicitSurface constructor) that defines an implicit surface.
  * @param {Object} b A sampling object that defines another implicit surface.
  * @returns {Object} A sampling object that defines surface "a" intersected with surface "b"
@@ -768,7 +769,7 @@ ImplicitSurface.intersection = function(a, b) {
 };
 /**
  * Returns a sampling object for the difference between
-* one surface and another.
+ * one surface and another.
  * @param {Object} a A sampling object (see ImplicitSurface constructor) that defines an implicit surface.
  * @param {Object} b A sampling object that defines the surface
  * to subtract from the first surface.

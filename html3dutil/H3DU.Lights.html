@@ -122,7 +122,7 @@ values, and the default value for <code>sceneAmbient</code>.</p>
 <li><code>index</code> (Type: Number)<br>
 Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
 <li><code>direction</code> (Type: Array.&lt;Number&gt;)<br>
-A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively.</li>
+A 3-element array giving the X, Y, and Z world space components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector&#39;s direction from the origin (0, 0, 0).</li>
 <li><code>diffuse</code> (Type: Array.&lt;Number&gt;) (optional)<br>
 A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
 <li><code>specular</code> (Type: Array.&lt;Number&gt;) (optional)<br>
@@ -160,7 +160,7 @@ An object as described in H3DU.LightSource.setParams.</li>
 <li><code>index</code> (Type: Number)<br>
 Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
 <li><code>position</code> (Type: Array.&lt;Number&gt;)<br>
-A 3-element vector giving the X, Y, and Z coordinates, respectively, of the light, in world coordinates.</li>
+A 3-element array giving the X, Y, and Z world space coordinates, respectively, of the light&#39;s position.</li>
 <li><code>diffuse</code> (Type: Array.&lt;Number&gt;) (optional)<br>
 Diffuse color, as described in H3DU.Lights.setDirectionalLight.</li>
 <li><code>specular</code> (Type: Array.&lt;Number&gt;) (optional)<br>

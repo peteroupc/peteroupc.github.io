@@ -23,7 +23,7 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global H3DU */
+/* global H3DU, makeAxisLines */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -133,6 +133,7 @@ function sampleShape(num) {
   var cs = document.getElementById("colorsetting").value;
   sub.addShape(shape = new H3DU.Shape(createSampleShape(num)).setColor(cs));
 }
+
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
@@ -141,22 +142,14 @@ sub = new H3DU.Batch3D();
 var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(5)
    .moveAngleVertical(-90);
 var input = new H3DU.InputTracker(document);
-var xyz = new H3DU.ShapeGroup();
 var pc = new H3DU.FrameCounterDiv();
 shape = null;
-var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(0.005, 10, 6, 4));
-var zaxis = axisline.copy().setColor("blue");
-var yaxis = axisline.copy().setColor("green");
-yaxis.getTransform().setOrientation(90, 1, 0, 0);
-var xaxis = axisline.copy().setColor("red");
-xaxis.getTransform().setOrientation(90, 0, 1, 0);
 document.getElementById("colorsetting").addEventListener("change",
    function(e) {
      "use strict";
      if(shape)shape.setColor(e.target.value);
    });
-xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
-sub.addShape(xyz);
+sub.addShape(makeAxisLines());
 sampleShape(3);
 H3DU.renderLoop(function() {
   "use strict";

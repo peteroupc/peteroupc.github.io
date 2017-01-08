@@ -8,24 +8,24 @@
 */
 /* global H3DU, Promise */
 /**
-WaveFront OBJ format.<p>
-* <p>This class is considered a supplementary class to the
-* Public Domain HTML 3D Library and is not considered part of that
-* library. <p>
-* To use this class, you must include the script "extras/objmtl.js"; the
+ * WaveFront OBJ format.<p>
+ * <p>This class is considered a supplementary class to the
+ * Public Domain HTML 3D Library and is not considered part of that
+ * library. <p>
+ * To use this class, you must include the script "extras/objmtl.js"; the
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/objmtl.js">&lt;/script></pre>
-@class */
+ * @class */
 H3DU.ObjData = function() {
   "use strict";
   /** URL of the OBJ file. */
   this.url = null;
   /** An array of meshes. Two or more meshes may have
-the same name (the "name" property in each mesh).  The "data"
-property holds data for each mesh.
-@deprecated This property is not meant to be public.
-  */
+   * the same name (the "name" property in each mesh).  The "data"
+   * property holds data for each mesh.
+   * @deprecated This property is not meant to be public.
+   */
   this.mtllib = null;
   this.mtl = null;
   this.meshes = [];
@@ -41,7 +41,7 @@ H3DU.ObjData._MtlData = function() {
  * in this OBJ file.
  * @returns {H3DU.ShapeGroup} Group of shapes.
  * @memberof! H3DU.ObjData#
-*/
+ */
 H3DU.ObjData.prototype.toShape = function() {
   "use strict";
   var multi = new H3DU.ShapeGroup();
@@ -76,7 +76,7 @@ H3DU.ObjData.prototype._gatherTextureNames = function() {
  * @returns {H3DU.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
  * @memberof! H3DU.ObjData#
-*/
+ */
 H3DU.ObjData.prototype.toShapeFromName = function(name) {
   "use strict";
   var multi = new H3DU.ShapeGroup();
@@ -224,19 +224,19 @@ H3DU.ObjData._MtlData._getMaterial = function(mtl) {
   return ret;
 };
 /**
-Loads a material (MTL) file asynchronously.
-@param {String} url The URL to load the material data file.
-@returns {Promise} A promise that resolves when
-the MTL file is loaded successfully,
-and is rejected when an error occurs when loading the MTL file.
-If the promise resolves, the result is an object that implements
-the following methods: <ul>
-<li><code>getMaterial(name)</code> - Gets a material by name; <code>name</code> is the name of the material.
-Returns the material as {@link H3DU.Material}, or null if it doesn't exist.
-<li><code>getMaterialNames()</code> - Gets an array of names of all the materials included in this MTL file.
-</li>
-</ul>
-@memberof! H3DU.ObjData
+ * Loads a material (MTL) file asynchronously.
+ * @param {String} url The URL to load the material data file.
+ * @returns {Promise} A promise that resolves when
+ * the MTL file is loaded successfully,
+ * and is rejected when an error occurs when loading the MTL file.
+ * If the promise resolves, the result is an object that implements
+ * the following methods: <ul>
+ * <li><code>getMaterial(name)</code> - Gets a material by name; <code>name</code> is the name of the material.
+ * Returns the material as {@link H3DU.Material}, or null if it doesn't exist.
+ * <li><code>getMaterialNames()</code> - Gets an array of names of all the materials included in this MTL file.
+ * </li>
+ * </ul>
+ * @memberof! H3DU.ObjData
  */
 H3DU.ObjData.loadMtlFromUrl = function(url) {
   "use strict";
@@ -263,12 +263,12 @@ H3DU.ObjData.loadMtlFromUrl = function(url) {
  * @param {String} url The URL to load.
  * @param {TextureLoader} textureLoader An object to load
  * textures with.
-@returns {Promise} A promise that resolves when
-the OBJ file and textures are loaded successfully, whether or not the associated
-MTL is also loaded successfully (the result is an H3DU.ObjData object),
-and is rejected when an error occurs when loading the OBJ file or any of
-its textures.
-*/
+ * @returns {Promise} A promise that resolves when
+ * the OBJ file and textures are loaded successfully, whether or not the associated
+ * MTL is also loaded successfully (the result is an H3DU.ObjData object),
+ * and is rejected when an error occurs when loading the OBJ file or any of
+ * its textures.
+ */
 H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
   "use strict";
   return H3DU.ObjData.loadObjFromUrl(url).then(function(obj) {
@@ -286,14 +286,14 @@ H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
 };
 
 /**
-Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available) asynchronously.
-@param {String} url The URL to load.
-@returns {Promise} A promise that resolves when
-the OBJ file is loaded successfully, whether or not its associated
-MTL is also loaded successfully (the result is an H3DU.ObjData object),
-and is rejected when an error occurs when loading the OBJ file.
-*/
+ * Loads a WaveFront OBJ file (along with its associated MTL, or
+ * material file, if available) asynchronously.
+ * @param {String} url The URL to load.
+ * @returns {Promise} A promise that resolves when
+ * the OBJ file is loaded successfully, whether or not its associated
+ * MTL is also loaded successfully (the result is an H3DU.ObjData object),
+ * and is rejected when an error occurs when loading the OBJ file.
+ */
 H3DU.ObjData.loadObjFromUrl = function(url) {
   "use strict";
   return H3DU.loadFileFromUrl(url).then(
@@ -706,9 +706,9 @@ H3DU.ObjData._loadObj = function(str) {
 
 /* exported ObjData */
 /**
-Alias for the {@link H3DU.ObjData} class.
-@class
-@alias ObjData
+ * Alias for the {@link H3DU.ObjData} class.
+ * @class
+ * @alias ObjData
  * @deprecated Use {@link H3DU.ObjData} instead.
-*/
+ */
 var ObjData = H3DU.ObjData;

@@ -8,11 +8,11 @@
 */
 /* global H3DU */
 /**
-* An evaluator that calculates a knot in the form of the Fourier series<p>
-* <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).<p>
-* @param {Array<Array<Number>>} a The cosine coefficients.
-* @param {Array<Array<Number>>} b The sine coefficients.
-*/
+ * An evaluator that calculates a knot in the form of the Fourier series<p>
+ * <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).<p>
+ * @param {Array<Array<Number>>} a The cosine coefficients.
+ * @param {Array<Array<Number>>} b The sine coefficients.
+ */
 /* exported FourierKnot */
 function FourierKnot(a, b) {
   "use strict";

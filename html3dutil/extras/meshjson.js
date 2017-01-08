@@ -8,16 +8,16 @@
 */
 /* global H3DU, JSON, Promise */
 /**
-* JSON exporter of graphics meshes.
-* <p>This class is considered a supplementary class to the
-* Public Domain HTML 3D Library and is not considered part of that
-* library. <p>
-* To use this class, you must include the script "extras/meshjson.js"; the
+ * JSON exporter of graphics meshes.
+ * <p>This class is considered a supplementary class to the
+ * Public Domain HTML 3D Library and is not considered part of that
+ * library. <p>
+ * To use this class, you must include the script "extras/meshjson.js"; the
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/meshjson.js">&lt;/script></pre>
-* @class
-*/
+ * @class
+ */
 H3DU.MeshJSON = {};
 
 /** @private */
@@ -38,11 +38,11 @@ H3DU.MeshJSON._resolvePath = function(path, name) {
   return ret;
 };
 /**
-* Converts a mesh to JSON format.
-* @param {H3DU.Mesh} mesh A mesh object, as used
-* in the Public Domain HTML 3D Library.
-* @returns {String} A JSON string describing the mesh.
-*/
+ * Converts a mesh to JSON format.
+ * @param {H3DU.Mesh} mesh A mesh object, as used
+ * in the Public Domain HTML 3D Library.
+ * @returns {String} A JSON string describing the mesh.
+ */
 H3DU.MeshJSON.toJSON = function(mesh) {
   "use strict";
   function colorToHex(x) {
@@ -247,13 +247,13 @@ H3DU.MeshJSON._Model = function(mesh) {
   };
 };
 /**
-* Loads a mesh from JSON format.
-* @param {String} url URL to a JSON mesh object, as used
-* in the Public Domain HTML 3D Library.
-* @returns {Promise} A promise that, when resolved, exposes an object
-* that implements a property named <code>toShape</code>, which is
-* a method that gets a {@link H3DU.ShapeGroup} describing the 3D mesh.
-*/
+ * Loads a mesh from JSON format.
+ * @param {String} url URL to a JSON mesh object, as used
+ * in the Public Domain HTML 3D Library.
+ * @returns {Promise} A promise that, when resolved, exposes an object
+ * that implements a property named <code>toShape</code>, which is
+ * a method that gets a {@link H3DU.ShapeGroup} describing the 3D mesh.
+ */
 H3DU.MeshJSON.loadJSON = function(url) {
   "use strict";
   function convHexColor(c) {
@@ -374,9 +374,9 @@ H3DU.MeshJSON.loadJSON = function(url) {
 
 /* exported MeshJSON */
 /**
-Alias for the {@link H3DU.MeshJSON} class.
-@class
-@alias MeshJSON
+ * Alias for the {@link H3DU.MeshJSON} class.
+ * @class
+ * @alias MeshJSON
  * @deprecated Use {@link H3DU.MeshJSON} instead.
-*/
+ */
 var MeshJSON = H3DU.MeshJSON;

@@ -111,18 +111,18 @@ var Operator = function(name) {
  * Converts this expression to a string.
  * @returns {String} Return value.
  * @memberof! Operator#
-*/
+ */
 Operator.prototype.toString = function() {
   "use strict";
   return this.name;
 };
 
 /**
-* Represents a variable with a given name.
-* @param {String} name Name of the variable.
-* @class
-* @alias Variable
-*/
+ * Represents a variable with a given name.
+ * @param {String} name Name of the variable.
+ * @class
+ * @alias Variable
+ */
 var Variable = function(name) {
   "use strict";
   this.name = name;
@@ -160,7 +160,7 @@ var Expression = function() {
  * Determines whether the object is an operation, variable, or constant.
  * @param {Object} x The object to check.
  * @returns {Boolean} True if the object is an operation, variable, or constant; otherwise, false.
-*/
+ */
 Expression.isExpr = function(x) {
   "use strict";
   if(!x || typeof x === "undefined")return false;
@@ -297,7 +297,7 @@ Expression.simplifyNodes = function(nodes) {
  * Converts this expression to a string.
  * @returns {String} This expresion converted to a string.
  * @memberof! Expression#
-*/
+ */
 Expression.prototype.toString = function() {
   "use strict";
   return "[" + this.nodes + "]";
@@ -316,8 +316,9 @@ Operation.prototype.length = function() {
  * Gets an operand by index.
  * @param {Number} index The zero-based index of the operand to get.
  * @memberof! Operation#
+
  * @returns {Object} Return value.
-*/
+ */
 Operation.prototype.get = function(index) {
   "use strict";
   return this.nodes[index];
@@ -327,7 +328,7 @@ Operation.prototype.get = function(index) {
  * @param {String} op An operation type such as "plus" or "pow".
  * @memberof! Operation#
  * @returns {Boolean} True if this operation is of the given type; otherwise, false.
-*/
+ */
 Operation.prototype.isOperation = function(op) {
   "use strict";
   return this.operator === op;
@@ -337,7 +338,7 @@ Operation.prototype.isOperation = function(op) {
  * @param {Object} x Another object.
  * @memberof! Operation#
  * @returns {Boolean} True if both objects are operations and have the same properties.
-*/
+ */
 Operation.prototype.equals = function(x) {
   "use strict";
   var i = null;
@@ -535,7 +536,7 @@ Operation.prototype.degen = function() {
  * Gets the value of this constant.
  * @returns {String} The value of this constant, or null if this expression isn't a constant.
  * @memberof! Operation#
-*/
+ */
 Operation.prototype.constantValue = function() {
   "use strict";
   var b, c,
@@ -618,7 +619,7 @@ Operation.prototype.combineOp = function(operation, x) {
  * Does a deep copy of this object and its operands
  * @memberof! Operation#
  * @returns {Operation} A deep copy of this object.
-*/
+ */
 Operation.prototype.copy = function() {
   "use strict";
   var op = new Operation(this.operator);
@@ -632,7 +633,7 @@ Operation.prototype.copy = function() {
  * Returns the negated form of this object.
  * @memberof! Operation#
  * @returns {Operation} The negated form of this object.
-*/
+ */
 Operation.prototype.negate = function() {
   "use strict";
   var op = null,
@@ -659,7 +660,7 @@ Operation.prototype.negate = function() {
  * @param {Expression} x An expression.
  * @memberof! Operation#
  * @returns {Expression} Return value.
-*/
+ */
 Operation.prototype.subtract = function(x) {
   "use strict";
   return this.add(typeof x === "number" ? -x : x.negate());
@@ -669,7 +670,7 @@ Operation.prototype.subtract = function(x) {
  * @param {Expression} x An expression.
  * @memberof! Operation#
  * @returns {Expression} Return value.
-*/
+ */
 Operation.prototype.add = function(x) {
   "use strict";
   return this.combineOp("plus", x);
@@ -679,7 +680,7 @@ Operation.prototype.add = function(x) {
  * @param {Expression} x An expression.
  * @memberof! Operation#
  * @returns {Expression} Return value.
-*/
+ */
 Operation.prototype.multiply = function(x) {
   "use strict";
 
@@ -708,7 +709,7 @@ Operation.prototype.multiply = function(x) {
  * @param {Expression} x An expression.
  * @memberof! Operation#
  * @returns {Expression} Return value.
-*/
+ */
 Operation.prototype.divide = function(x) {
   "use strict";
   return this.combineOp("div", x);
@@ -717,7 +718,7 @@ Operation.prototype.divide = function(x) {
  * Converts this expression to a string that JavaScript can evaluate.
  * @returns {String} Return value.
  * @memberof! Operation#
-*/
+ */
 Operation.prototype.toJSString = function() {
   "use strict";
   var b, c, d,
@@ -778,7 +779,7 @@ Operation.prototype.toJSString = function() {
  * Converts this expression to a string.
  * @returns {String} Return value.
  * @memberof! Operation#
-*/
+ */
 Operation.prototype.toString = function() {
   "use strict";
   var b, c, d,
@@ -829,7 +830,7 @@ Operation.prototype.toString = function() {
  * Returns whether this variable is an operation.
  * @memberof! Variable#
  * @returns {Boolean} Always false.
-*/
+ */
 Variable.prototype.isOperation = function() {
   "use strict";
   return false;
@@ -838,7 +839,7 @@ Variable.prototype.isOperation = function() {
  * Returns a copy of this object.
  * @memberof! Variable#
  * @returns {Variable} This object (which is currently treated as immutable).
-*/
+ */
 Variable.prototype.copy = function() {
   "use strict";
   return this;
@@ -847,7 +848,7 @@ Variable.prototype.copy = function() {
  * Gets the value of this variable.
  * @returns {String} Null, since variables are not constants.
  * @memberof! Variable#
-*/
+ */
 Variable.prototype.constantValue = function() {
   "use strict";
   return null;
@@ -857,7 +858,7 @@ Variable.prototype.constantValue = function() {
  * @param {Object} x Another object.
  * @memberof! Variable#
  * @returns {Boolean} True if both objects are variables and have the same name and sign.
-*/
+ */
 Variable.prototype.equals = function(x) {
   "use strict";
 
@@ -873,7 +874,7 @@ Variable.prototype.equals = function(x) {
  * Converts this expression to a string that JavaScript can evaluate.
  * @returns {String} Return value.
  * @memberof! Variable#
-*/
+ */
 Variable.prototype.toJSString = function() {
   "use strict";
   return this.toString();
@@ -882,7 +883,7 @@ Variable.prototype.toJSString = function() {
  * Converts this expression to a string.
  * @returns {String} Return value.
  * @memberof! Variable#
-*/
+ */
 Variable.prototype.toString = function() {
   "use strict";
 
@@ -924,7 +925,7 @@ Variable.prototype.degen = function() {
  * @param {Expression} x An expression.
  * @memberof! Variable#
  * @returns {Expression} Return value.
-*/
+ */
 Variable.prototype.add = function(x) {
   "use strict";
   return this.combineOp("plus", x);
@@ -933,7 +934,7 @@ Variable.prototype.add = function(x) {
  * Returns a negated form of this variable
  * @memberof! Variable#
  * @returns {Variable} Return value.
-*/
+ */
 Variable.prototype.negate = function() {
   "use strict";
   var v = null;
@@ -947,18 +948,18 @@ Variable.prototype.negate = function() {
  * @param {Expression} x An expression.
  * @memberof! Variable#
  * @returns {Expression} Return value.
-*/
+ */
 Variable.prototype.subtract = function(x) {
   "use strict";
 
   return this.add(typeof x === "number" ? -x : x.negate());
 };
 /**
-* Returns this variable multiplied by another expression.
+ * Returns this variable multiplied by another expression.
  * @param {Expression} x Another expression.
  * @memberof! Variable#
  * @returns {Expression} Return value.
-*/
+ */
 Variable.prototype.multiply = function(x) {
   "use strict";
   return this.combineOp("mul", x);
@@ -968,7 +969,7 @@ Variable.prototype.multiply = function(x) {
  * @param {Expression} x An expression.
  * @memberof! Variable#
  * @returns {Expression} Return value.
-*/
+ */
 Variable.prototype.divide = function(x) {
   "use strict";
   return this.combineOp("div", x);
@@ -978,7 +979,7 @@ Variable.prototype.divide = function(x) {
  * Returns a copy Constant this object.
  * @memberof! Variable#
  * @returns {Constant} This object (which is currently treated as immutable).
-*/
+ */
 Constant.prototype.copy = function() {
   "use strict";
   return this;
@@ -987,7 +988,7 @@ Constant.prototype.copy = function() {
  * Returns whether this constant is an operation.
  * @memberof! Constant#
  * @returns {Boolean} Always false.
-*/
+ */
 Constant.prototype.isOperation = function() {
   "use strict";
   return false;
@@ -997,7 +998,7 @@ Constant.prototype.isOperation = function() {
  * @param {Object} x Another object.
  * @memberof! Constant#
  * @returns {Boolean} True if both objects are constants and have the same value.
-*/
+ */
 Constant.prototype.equals = function(x) {
   "use strict";
 
@@ -1010,7 +1011,7 @@ Constant.prototype.equals = function(x) {
  * Gets the value of this constant.
  * @returns {String} Return value.
  * @memberof! Constant#
-*/
+ */
 Constant.prototype.constantValue = function() {
   "use strict";
   return this.value;
@@ -1024,7 +1025,7 @@ Constant.prototype.degen = function() {
  * Converts this expression to a string that JavaScript can evaluate.
  * @returns {String} Return value.
  * @memberof! Constant#
-*/
+ */
 Constant.prototype.toJSString = function() {
   "use strict";
   var vi = this.value.toString();
@@ -1037,7 +1038,7 @@ Constant.prototype.toJSString = function() {
  * Converts this expression to a string.
  * @returns {String} Return value.
  * @memberof! Constant#
-*/
+ */
 Constant.prototype.toString = function() {
   "use strict";
   var vi = null;
@@ -1069,8 +1070,9 @@ Constant.prototype.combineOp = function(operation, x) {
 /**
  * Returns a constant with the negated value of this one.
  * @memberof! Constant#
+
  * @returns {Object} Return value.
-*/
+ */
 Constant.prototype.negate = function() {
   "use strict";
   return new Constant(-this.value);
@@ -1081,7 +1083,7 @@ Constant.prototype.negate = function() {
  * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
  * @returns {Operation} Return value.
-*/
+ */
 Constant.prototype.add = function(x) {
   "use strict";
 
@@ -1095,8 +1097,9 @@ Constant.prototype.add = function(x) {
  * or an expression that subtracts the given operation from this constant.
  * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
+
  * @returns {Object} Return value.
-*/
+ */
 Constant.prototype.subtract = function(x) {
   "use strict";
 
@@ -1107,8 +1110,9 @@ Constant.prototype.subtract = function(x) {
  * or an expression that multiplies this constant and the given operation.
  * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
+
  * @returns {Object} Return value.
-*/
+ */
 Constant.prototype.multiply = function(x) {
   "use strict";
 
@@ -1122,8 +1126,9 @@ Constant.prototype.multiply = function(x) {
  * or an expression that divides this constant and the given operation.
  * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
+
  * @returns {Object} Return value.
-*/
+ */
 Constant.prototype.divide = function(x) {
   "use strict";
 

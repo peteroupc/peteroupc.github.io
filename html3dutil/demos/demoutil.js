@@ -244,4 +244,19 @@ window.addEventListener("load", function() {
   });
 });
 
+/* exported makeAxisLines */
+function makeAxisLines(width) {
+  "use strict";
+  if(width === null || typeof width === "undefined")width = 0.01;
+  var xyz = new H3DU.ShapeGroup();
+  var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(width / 2.0, 50, 6, 4));
+  var zaxis = axisline.copy().setColor("blue");
+  var yaxis = axisline.copy().setColor("green");
+  yaxis.getTransform().setOrientation(90, 1, 0, 0);
+  var xaxis = axisline.copy().setColor("red");
+  xaxis.getTransform().setOrientation(90, 0, 1, 0);
+  xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
+  return xyz;
+}
+
 document.write("<script src='../extras/meshjson.js'></script>");

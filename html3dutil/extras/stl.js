@@ -14,22 +14,20 @@
   }
   H3DU._StlData = {};
 /**
-* Loads a .STL file asynchronously.
-* <p>This method is considered a supplementary method to the
-* Public Domain HTML 3D Library and is not considered part of that
-* library. <p>
-* To use this method, you must include the script "extras/stl.js"; the
+ * Loads a .STL file asynchronously.
+ * <p>This method is considered a supplementary method to the
+ * Public Domain HTML 3D Library and is not considered part of that
+ * library. <p>
+ * To use this method, you must include the script "extras/stl.js"; the
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
-@alias H3DU.loadStlFromUrl
-@param {String} url The URL to load.
-@returns {Promise} A promise that:
-- Resolves when:
-The .STL file is loaded successfully. The result is an {@link H3DU.Mesh} object.
-- Is rejected when:
-An error occurs when loading the .STL file.
-*/
+ * @alias H3DU.loadStlFromUrl
+ * @param {String} url The URL to load.
+ * @returns {Promise} A promise that resolves when the
+ * .STL file is loaded successfully (the result will be an {@link H3DU.Mesh} object),
+ * and is rejected when an error occurs when loading the .STL file.
+ */
   H3DU.loadStlFromUrl = function(url) {
     return H3DU.loadFileFromUrl(url).then(
    function(e) {

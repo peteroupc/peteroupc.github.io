@@ -13,7 +13,7 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 
 <h2>Contents <a id=Contents></a></h2>
 
-<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br>&nbsp;&nbsp;<a href="#Unit_Vectors">Unit Vectors</a><br>&nbsp;&nbsp;<a href="#Axis_of_Rotation">Axis of Rotation</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Makeup_of_Quaternions">Makeup of Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Boxes">Boxes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Projection_and_view_matrices">Projection and view matrices</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Cross_product_vec3cross_A_B_and_normals">Cross product (<code>vec3cross(A, B)</code>) and normals</a><br>&nbsp;&nbsp;<a href="#Orientation_and_face_classification">Orientation and face classification</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Finding_Orientation">Finding Orientation</a><br></p>
+<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br>&nbsp;&nbsp;<a href="#Unit_Vectors">Unit Vectors</a><br>&nbsp;&nbsp;<a href="#Axis_of_Rotation">Axis of Rotation</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Makeup_of_Quaternions">Makeup of Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Boxes">Boxes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Projection_and_view_matrices">Projection and view matrices</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Cross_product_vec3cross_and_normals">Cross product (<code>vec3cross</code>) and normals</a><br>&nbsp;&nbsp;<a href="#Orientation_and_face_classification">Orientation and face classification</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Finding_Orientation">Finding Orientation</a><br></p>
 
 <h2>Vectors <a id=Vectors></a></h2>
 
@@ -38,7 +38,7 @@ by the fourth.)</p>
 
 <h3>Unit Vectors <a id=Unit_Vectors></a></h3>
 
-<p>A unit vector is a vector with a length of 1. (A vector&#39;s <em>length</em> is the square root
+<p>A <em>unit vector</em> is a vector with a length of 1. (A vector&#39;s <em>length</em> is the square root
 of the sum of the squares of its components.) A vector can be &quot;normalized&quot; to
 a unit vector by dividing each of its components by its length.</p>
 
@@ -166,7 +166,7 @@ every few frames.</li>
 
 <h3>Makeup of Quaternions <a id=Makeup_of_Quaternions></a></h3>
 
-<p>A quaternion&#39;s:</p>
+<p>A quaternion&#39;s...</p>
 
 <ul>
 <li>...first three elements (X, Y, Z) describe a 3D point, where the
@@ -313,18 +313,20 @@ is positive (resp. negative) and the coordinate system is...</p>
 <li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
 </ul>
 
-<h4>Cross product (<code>vec3cross(A, B)</code>) and normals <a id=Cross_product_vec3cross_A_B_and_normals></a></h4>
+<h4>Cross product (<code>vec3cross</code>) and normals <a id=Cross_product_vec3cross_and_normals></a></h4>
 
-<p>Given a triangle formed by points A, B, and C, the <a href="a%20href=%22H3DU.Math.html#H3DU.Math.vec3cross%22%3EH3DU.Math.vec3cross%3C/a">cross product</a>
-of the two vectors (A minus C) and (B minus C), in that order, is a <em>normal</em> of that triangle (a vector that points away from
-the triangle&#39;s surface). The cross product normal will be such that, whenever it points toward the viewer,
-the triangle&#39;s vertices are oriented counterclockwise for right-handed coordinate systems, or
+<ul>
+<li>Given a triangle formed by points A, B, and C, in that order, the <a href="a%20href=%22H3DU.Math.html#H3DU.Math.vec3cross%22%3EH3DU.Math.vec3cross%3C/a">cross product</a>
+of the vector (A minus C) with (B minus C), in that order, is a <em>normal</em> of that triangle (a vector that points away
+from the triangle&#39;s surface).</li>
+<li>By extension, given a triangle formed by point A, point B, and point (0,0,0), in that order, the cross product of A
+with B, in that order, is a normal of that triangle.</li>
+</ul>
+
+<p>In either case, whenever this particular normal points toward the viewer, the triangle&#39;s vertices
+are oriented counterclockwise for right-handed coordinate systems, or
 clockwise for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)</p>
-
-<p>It follows from this that the cross product of A and B will behave like the cross product normal of the
-triangle formed by point A, point B, and the point (0,0,0) in that order (since A minus (0,0,0) is A,
-and B minus (0,0,0) is B).</p>
 
 <h3>Orientation and face classification <a id=Orientation_and_face_classification></a></h3>
 

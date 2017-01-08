@@ -171,40 +171,40 @@ H3DU._FrenetFrames._distSq = function(a, b) {
   return dx * dx + dy * dy + dz * dz;
 };
 /**
-* Evaluator for a parametric surface in the form
-* of a tube extruded from a parametric curve.
-* <p>This class is considered a supplementary class to the
-* Public Domain HTML 3D Library and is not considered part of that
-* library. <p>
-* To use this class, you must include the script "extras/curvetube.js"; the
+ * Evaluator for a parametric surface in the form
+ * of a tube extruded from a parametric curve.
+ * <p>This class is considered a supplementary class to the
+ * Public Domain HTML 3D Library and is not considered part of that
+ * library. <p>
+ * To use this class, you must include the script "extras/curvetube.js"; the
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
-* @class
-* @alias H3DU.CurveTube
-* @param {Object} func An object that must contain a function
-* named "evaluate", which takes the following parameter:<ul>
-* <li><code>u</code> - A curve coordinate, generally from 0 to 1.
-* </ul>
-* The evaluator function returns a 3-element array: the first
-* element is the X coordinate of the curve's position, the second
-* element is the Y coordinate, and the third is the Z coordinate.
-* @param {Number} [thickness] Radius of the
-* extruded tube. If this parameter is null or omitted, the default is 0.125.
-* @param {Object} [sweptCurve] Object describing
-* a two-dimensional curve to serve as the cross section of the extruded shape,
-* corresponding to the V coordinate of the CurveTube's
-* "evaluate" method.
-* If this parameter is null or omitted, uses a circular cross section
-* in which the V coordinate ranges from 0 through
-* 1. The curve object must contain a function
-* named "evaluate", with the same meaning as for the "func" parameter,
-* except the third element, if any, of the return value is ignored.<p>
-* The curve need not be closed.<p>
-* The cross section will generally have a radius of 1 unit; bigger
-* or smaller cross sections will affect the meaning of the "thickness"
-* parameter.
-*/
+ * @class
+ * @alias H3DU.CurveTube
+ * @param {Object} func An object that must contain a function
+ * named "evaluate", which takes the following parameter:<ul>
+ * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
+ * </ul>
+ * The evaluator function returns a 3-element array: the first
+ * element is the X coordinate of the curve's position, the second
+ * element is the Y coordinate, and the third is the Z coordinate.
+ * @param {Number} [thickness] Radius of the
+ * extruded tube. If this parameter is null or omitted, the default is 0.125.
+ * @param {Object} [sweptCurve] Object describing
+ * a two-dimensional curve to serve as the cross section of the extruded shape,
+ * corresponding to the V coordinate of the CurveTube's
+ * "evaluate" method.
+ * If this parameter is null or omitted, uses a circular cross section
+ * in which the V coordinate ranges from 0 through
+ * 1. The curve object must contain a function
+ * named "evaluate", with the same meaning as for the "func" parameter,
+ * except the third element, if any, of the return value is ignored.<p>
+ * The curve need not be closed.<p>
+ * The cross section will generally have a radius of 1 unit; bigger
+ * or smaller cross sections will affect the meaning of the "thickness"
+ * parameter.
+ */
 H3DU.CurveTube = function(func, thickness, sweptCurve) {
   "use strict";
   this.thickness = thickness === null || typeof thickness === "undefined" ? 0.125 : thickness;
@@ -214,13 +214,13 @@ H3DU.CurveTube = function(func, thickness, sweptCurve) {
 };
 
 /**
-* Generates a point on the extruded tube from the given u and v coordinates.
-* @param {Number} u U coordinate. This will run the length of the curve.
-* @param {Number} v V coordinate. This will sweep around the extruded
-* tube.
-* @returns {Array<Number>} A 3-element array specifying a 3D point.
-* @memberof! H3DU.CurveTube#
-*/
+ * Generates a point on the extruded tube from the given u and v coordinates.
+ * @param {Number} u U coordinate. This will run the length of the curve.
+ * @param {Number} v V coordinate. This will sweep around the extruded
+ * tube.
+ * @returns {Array<Number>} A 3-element array specifying a 3D point.
+ * @memberof! H3DU.CurveTube#
+ */
 H3DU.CurveTube.prototype.evaluate = function(u, v) {
   "use strict";
   var basisVectors = this.tangentFinder.getSampleAndBasisVectors(u);
@@ -247,9 +247,9 @@ H3DU.CurveTube.prototype.evaluate = function(u, v) {
 };
 /* exported CurveTube */
 /**
-Alias for the {@link H3DU.CurveTube} class.
-@class
-@alias CurveTube
+ * Alias for the {@link H3DU.CurveTube} class.
+ * @class
+ * @alias CurveTube
  * @deprecated Use {@link H3DU.CurveTube} instead.
-*/
+ */
 var CurveTube = H3DU.CurveTube;

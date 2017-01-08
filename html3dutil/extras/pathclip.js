@@ -291,8 +291,9 @@
     return a < b ? -1 : 1;
   };
 /** @private
+
  * @returns {Object} Return value.
-*/
+ */
   RedBlackTree.prototype.first = function() {
     var r = this.root;
     if(r === null || typeof r === "undefined")return null;
@@ -576,8 +577,9 @@
     };
   }
 /** @private
+
  * @returns {Object} Return value.
-*/
+ */
   Polygon.PointChain = function() {
     this.l = new LinkedList();
     this._closed = false;
@@ -656,8 +658,9 @@
   };
 /** @private
  * @param {Object} s Description of s.
+
  * @returns {Object} Return value.
-*/
+ */
   Connector.prototype.add = function(s) {
     var j = this.openPolygons.first();
     while(j) {
@@ -741,8 +744,9 @@
  * @param {Object} a Description of a.
  * @param {Object} b Description of b.
  * @param {Object} c Description of c.
+
  * @returns {Object} Return value.
-*/
+ */
   Clipper.signedArea = function(a, b, c) {
     var xa = a[0] - c[0];
     var ya = a[1] - c[1];
@@ -771,8 +775,9 @@
 /** @private
  * @param {Object} e1 Description of e1.
  * @param {Object} e2 Description of e2.
+
  * @returns {Object} Return value.
-*/
+ */
   Clipper.sweepEventCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.sweepEventComp(e1, e2) ? -1 : 1;
@@ -803,16 +808,18 @@
 /** @private
  * @param {Object} e1 Description of e1.
  * @param {Object} e2 Description of e2.
+
  * @returns {Object} Return value.
-*/
+ */
   Clipper.segmentCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.segmentComp(e1, e2) ? -1 : 1;
   };
 /** @private
  * @param {Object} e Description of e.
+
  * @returns {Object} Return value.
-*/
+ */
   Clipper.prototype.storeSweepEvent = function(e) {
     e.id = this.eventHolder.length;
     this.eventHolder.push(e);
@@ -829,8 +836,9 @@
   };
 /** @private
  * @param {Object} op Description of op.
+
  * @returns {Object} Return value.
-*/
+ */
   Clipper.prototype.compute = function(op) {
   // Test 1 for trivial result case
     if(this.subject.ncontours() * this.clipping.ncontours() === 0) { // At least one of the polygons is empty
@@ -1008,8 +1016,9 @@
 /** @private
  * @param {Object} s Description of s.
  * @param {Object} pl Description of pl.
+
  * @returns {Object} Return value.
-*/
+ */
   Clipper.prototype.processSegment = function(s, pl) {
     if(Clipper._ptEq(s[0], s[1])) // if the two edge endpoints are equal the segment is dicarded
       return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
@@ -1033,8 +1042,9 @@
  * @param {Object} b Description of b.
  * @param {Object} e Description of e.
  * @param {Object} f Description of f.
+
  * @returns {Object} Return value.
-*/
+ */
   Clipper.findIntersection = function(a, b, e, f) {
     var ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
   b[0][0], b[0][1], b[1][0], b[1][1]);
@@ -1147,8 +1157,9 @@
 /** @private
  * @param {Object} e1 Description of e1.
  * @param {Object} e2 Description of e2.
+
  * @returns {Object} Return value.
-*/
+ */
   Clipper.prototype.possibleIntersection = function(e1, e2) {
 // if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
 // return false;
@@ -1266,13 +1277,13 @@
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
-* @param {Number} [flatness] When curves and arcs
-* are decomposed to line segments, the
-* segments will be close to the true path of the curve by this
-* value, given in units. If null or omitted, default is 1.
-* @returns {H3DU.GraphicsPath} The union of the two paths.
-* @memberof! H3DU.GraphicsPath
-*/
+ * @param {Number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null or omitted, default is 1.
+ * @returns {H3DU.GraphicsPath} The union of the two paths.
+ * @memberof! H3DU.GraphicsPath
+ */
     GraphicsPath.prototype.union = function(path, flatness) {
       if(path === null || typeof path === "undefined")return this;
       var polygon1 = new Polygon(this, flatness);
@@ -1285,14 +1296,14 @@
  * path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
-* @param {Number} [flatness] When curves and arcs
-* are decomposed to line segments, the
-* segments will be close to the true path of the curve by this
-* value, given in units. If null or omitted, default is 1.
+ * @param {Number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} The difference between this path
  * and the other path.
-* @memberof! H3DU.GraphicsPath
-*/
+ * @memberof! H3DU.GraphicsPath
+ */
     GraphicsPath.prototype.difference = function(path, flatness) {
       if(path === null || typeof path === "undefined")return this;
       var polygon1 = new Polygon(this, flatness);
@@ -1305,14 +1316,14 @@
  * and another path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
-* @param {Number} [flatness] When curves and arcs
-* are decomposed to line segments, the
-* segments will be close to the true path of the curve by this
-* value, given in units. If null or omitted, default is 1.
+ * @param {Number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * both paths.
-* @memberof! H3DU.GraphicsPath
-*/
+ * @memberof! H3DU.GraphicsPath
+ */
     GraphicsPath.prototype.intersection = function(path, flatness) {
       if(path === null || typeof path === "undefined")return this;
       var polygon1 = new Polygon(this, flatness);
@@ -1325,14 +1336,14 @@
  * but not both. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
-* @param {Number} [flatness] When curves and arcs
-* are decomposed to line segments, the
-* segments will be close to the true path of the curve by this
-* value, given in units. If null or omitted, default is 1.
+ * @param {Number} [flatness] When curves and arcs
+ * are decomposed to line segments, the
+ * segments will be close to the true path of the curve by this
+ * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * only one of the two paths.
-* @memberof! H3DU.GraphicsPath
-*/
+ * @memberof! H3DU.GraphicsPath
+ */
     GraphicsPath.prototype.xor = function(path, flatness) {
       if(path === null || typeof path === "undefined")return this;
       var polygon1 = new Polygon(this, flatness);
