@@ -33,7 +33,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 * for Verlet integration, but makes the integration more accurate
 * in the face of differing time steps, see http://lonesock.net/article/verlet.html ).
 * </ul>
-* @param {number} timeStep Time step for integration.  This is usually
+* @param {number} timeStep Time step for integration. This is usually
 * a fractional number of seconds.
 */
 H3DU.Math.integrateVerlet = function(particle, timeStep) {
@@ -62,14 +62,14 @@ H3DU.Math.integrateVerlet = function(particle, timeStep) {
 * Initializes a particle's data for Verlet integration.
 * @param {Array<Number>} particle Array to hold
 * the data for Verlet integration.
-* @param {number} x Starting X-coordinate of the particle.
-* @param {number} y Starting Y-coordinate of the particle.
-* @param {number} z Starting Z-coordinate of the particle.
+* @param {number} x Starting X coordinate of the particle.
+* @param {number} y Starting Y coordinate of the particle.
+* @param {number} z Starting Z coordinate of the particle.
 * @param {number} vx X component of the velocity.
 * @param {number} vy Y component of the velocity.
 * @param {number} vz Z component of the velocity.
 * @param {number} ax X component of the acceleration
-* (force divided by mass).  The acceleration vector for gravity
+* (force divided by mass). The acceleration vector for gravity
 * is usually (0, 0, -9.806) or (0, -9.806, 0).
 * @param {number} ay Y component of the acceleration.
 * @param {number} az Z component of the acceleration.

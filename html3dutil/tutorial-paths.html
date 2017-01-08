@@ -8,7 +8,7 @@
 
 <h2>Introduction <a id=Introduction></a></h2>
 
-<p>This article describes two-dimensional paths.  This is an extra included in the HTML 3D Library.</p>
+<p>This article describes two-dimensional paths. This is an extra included in the HTML 3D Library.</p>
 
 <p><strong>Download the latest version of the Public Domain HTML 3D
 Library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
@@ -19,7 +19,7 @@ Library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3
 
 <h2>Paths <a id=Paths></a></h2>
 
-<p>A path is a collection of two-dimensional line segments and/or curves.  Many paths describe
+<p>A path is a collection of two-dimensional line segments and/or curves. Many paths describe
 closed figures or connected strings of lines and curves. The <code>GraphicsPath</code> class
 currently supports line segments, quadratic and cubic B&eacute;zier curves, and elliptical arcs,
 as well as closed figures made from several path segments.</p>
@@ -41,7 +41,7 @@ its segments.</p>
 
 <h3>SVG Path String <a id=SVG_Path_String></a></h3>
 
-<p>If you&#39;ve worked with SVG, you may be familiar with this format for describing 2D paths.  An
+<p>If you&#39;ve worked with SVG, you may be familiar with this format for describing 2D paths. An
 SVG path string consists of one or more path commands that start with a single letter.
 The following are examples of SVG path strings:</p>
 
@@ -82,17 +82,17 @@ of connected lines and curves.</p>
 <h2>Path Segments <a id=Path_Segments></a></h2>
 
 <p>Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
-Line segments are relatively easy to understand.  The other two kinds of segments
+Line segments are relatively easy to understand. The other two kinds of segments
 deserve some discussion.</p>
 
-<p>A <em>B&eacute;zier curve</em> is a parametric curve based on a polynomial formula.  In this kind of
+<p>A <em>B&eacute;zier curve</em> is a parametric curve based on a polynomial formula. In this kind of
 curve the endpoints are defined as they are, but the other points, the <em>control points</em>, define
 the shape of the curve, which generally doesn&#39;t pass through the control points but still
-follows them.  A quadratic B&eacute;zier curve uses 3 points (for the three coefficients of the
-quadratic polynomial in each dimension), one of which is the control point.  A cubic B&eacute;zier
+follows them. A quadratic B&eacute;zier curve uses 3 points (for the three coefficients of the
+quadratic polynomial in each dimension), one of which is the control point. A cubic B&eacute;zier
 curve uses 4 points, two of which are control points.</p>
 
-<p>An <em>elliptic arc</em> is a curve which forms part of an ellipse.  There are several ways to
+<p>An <em>elliptic arc</em> is a curve which forms part of an ellipse. There are several ways to
 parameterize an elliptic arc, as seen in the <em>.arc()</em>, <em>.arcTo()</em>, and <em>.arcSvgTo()</em> methods
 of the <code>H3DU.GraphicsPath</code> class.</p>
 

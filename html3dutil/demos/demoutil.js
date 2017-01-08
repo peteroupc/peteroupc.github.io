@@ -186,7 +186,7 @@ function makeMesh(func, resolutionU, resolutionV) {
      // create a new mesh
   var mesh = new H3DU.Mesh();
      // define a color gradient evaluator for
-     // demonstration purposes.  Instead of X, Y, and Z,
+     // demonstration purposes. Instead of X, Y, and Z,
      // generate a Red/Green/Blue color based on
      // the same parameters U and V as the surface
      // function for 3D points.

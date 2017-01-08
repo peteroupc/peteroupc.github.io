@@ -18,11 +18,11 @@
 * library. <p>
 * To use this class, you must include the script "extras/camera.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
  * @param {HTMLElement|HTMLDocument} element The HTML document
  * or element to track keyboard and mouse events for.
-*  If null or omitted, uses the calling application's HTML document.
+* If null or omitted, uses the calling application's HTML document.
 * @class
 * @alias H3DU.InputTracker
 */
@@ -213,7 +213,7 @@ H3DU.InputTracker.prototype.getKey = function(key) {
 
 /**
  * Sets a function to handle mouse wheel events.
- * @deprecated Will be removed in the future.  Use the
+ * @deprecated Will be removed in the future. Use the
  * deltaTicks method to find out whether the user
  * has rotated the mouse wheel.
  * @param {Function} func A function.
@@ -247,14 +247,14 @@ H3DU.InputTracker._getPageY = function(o) {
   }
   return x;
 };
-/** Key code for the A key.  Add 1 through 25 to get
+/** Key code for the A key. Add 1 through 25 to get
 the keys for the other letters of the English alphabet.
 @const
 @default
 @memberof! H3DU.InputTracker
 */
 H3DU.InputTracker.A = 65;
-/** Key code for the 0 key.  Add 1 through 9 to get
+/** Key code for the 0 key. Add 1 through 9 to get
 the keys for the other basic digits 1 through 9.
 @const
 @default
@@ -380,9 +380,9 @@ H3DU.InputTracker.SUBTRACT = 109;
  * mouse position, and delta mouse wheel
  * position (see the "update" method).
  * @returns {Object} An object containing the following keys:<ul>
- *<li><code>cx</code> - X-coordinate of the current mouse
+ *<li><code>cx</code> - X coordinate of the current mouse
  * position.
- *<li><code>cx</code> - Y-coordinate of the current mouse
+ *<li><code>cx</code> - Y coordinate of the current mouse
  * position.
  *<li><code>x</code> - X component of the delta mouse position.
  *<li><code>y</code> - Y component of the delta mouse position.
@@ -408,9 +408,9 @@ H3DU.InputTracker.prototype.deltaXY = function() {
 * tracker and calculates the "delta mouse position",
 * or the difference between
 * those values and the values they had the last
-* time this method was called.  If this method wasn't
+* time this method was called. If this method wasn't
 * called before for this tracker, the delta mouse position is
-* (0, 0).  If the current position of the mouse is unknown,
+* (0, 0). If the current position of the mouse is unknown,
 * it's (0, 0) instead.<p>
 * Also retrieves the "delta mouse wheel position", or the
 * offset, in "ticks", from the mouse wheel position at the
@@ -452,10 +452,10 @@ H3DU.InputTracker.prototype.update = function() {
 
 /* exported InputTracker */
 /**
-Alias for the  {@link H3DU.InputTracker} class.
+Alias for the {@link H3DU.InputTracker} class.
 @class
 @alias InputTracker
- @deprecated Use {@link H3DU.InputTracker} instead.
+ * @deprecated Use {@link H3DU.InputTracker} instead.
 */
 var InputTracker = H3DU.InputTracker;
 
@@ -473,7 +473,7 @@ var InputTracker = H3DU.InputTracker;
 * library. <p>
 * To use this class, you must include the script "extras/camera.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
 * @class
 * @alias H3DU.Camera
@@ -585,7 +585,7 @@ H3DU.Camera._velocity = function(toVec, fromVec) {
 * point without changing its orientation.
  * @param {Number} dist Positive number giving the distance.
  * If this is less than the near plane distance, the distance will
-* be equal to the near plane distance.  Does nothing if the
+* be equal to the near plane distance. Does nothing if the
 * distance is 0 or less.
 * @returns {H3DU.Camera} This object.
  * @memberof! H3DU.Camera#
@@ -603,7 +603,7 @@ H3DU.Camera.prototype.setDistance = function(dist) {
 };
 
 /**
-*  Finds the distance from the camera's position to the reference point.
+* Finds the distance from the camera's position to the reference point.
 * @returns {Number} Return value.
  * @memberof! H3DU.Camera#
 */
@@ -697,7 +697,7 @@ H3DU.Camera.prototype.turnHorizontal = H3DU.Camera.prototype.moveAngleHorizontal
 
 /**
  * Turns the camera to the left or right so that it faces
-*  the same distance from a reference point.
+* the same distance from a reference point.
  * @param {Number} angleDegrees The angle to rotate the camera,
 * in degrees. If the coordinate-system is right-handed, positive
 values rotate the camera rightward, and
@@ -717,7 +717,7 @@ H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
 };
 /**
  * Turns the camera upward or downward so that it faces
-*  the same distance from a reference point.
+* the same distance from a reference point.
  * @param {Number} angleDegrees The angle to rotate the camera,
 * in degrees. If the coordinate-system is right-handed, positive
 values rotate the camera upward, and
@@ -740,11 +740,11 @@ H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
 };
 /**
  * Sets the position of the camera.
- * @param {Number} cx The camera's new X-coordinate,
+ * @param {Number} cx The camera's new X coordinate,
 * or a 3-element vector containing the X, Y, and Z coordinates.
 * In the latter case, "cy" and "cz" can be omitted.
- * @param {Number} [cy] The camera's new Y-coordinate.
- * @param {Number} [cz] The camera's new Z-coordinate.
+ * @param {Number} [cy] The camera's new Y coordinate.
+ * @param {Number} [cz] The camera's new Z coordinate.
 * @returns {H3DU.Camera} This object.
  * @memberof! H3DU.Camera#
 */
@@ -764,27 +764,27 @@ H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
 
 /**
  * Sets the position of the camera.
- * @param {Number} cx The camera's new X-coordinate.
- * @param {Number} cy The camera's new Y-coordinate.
- * @param {Number} cz The camera's new Z-coordinate.
+ * @param {Number} cx The camera's new X coordinate.
+ * @param {Number} cy The camera's new Y coordinate.
+ * @param {Number} cz The camera's new Z coordinate.
 * @returns {H3DU.Camera} This object.
 * @method
 * @deprecated Renamed to "setPosition".
  * @memberof! H3DU.Camera#
 */
-H3DU.Camera.prototype.movePosition =  H3DU.Camera.prototype.setPosition;
+H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
 
 /**
  * Sets the position of the camera.
- * @param {Number} cx The camera's new X-coordinate.
- * @param {Number} cy The camera's new Y-coordinate.
- * @param {Number} cz The camera's new Z-coordinate.
+ * @param {Number} cx The camera's new X coordinate.
+ * @param {Number} cy The camera's new Y coordinate.
+ * @param {Number} cz The camera's new Z coordinate.
 * @returns {H3DU.Camera} This object.
 * @method
 * @deprecated Renamed to "setPosition".
  * @memberof! H3DU.Camera#
 */
-H3DU.Camera.prototype.movePosition =  H3DU.Camera.prototype.setPosition;
+H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
 
 /**
  * Gets the position of the camera.
@@ -800,7 +800,7 @@ H3DU.Camera.prototype.getPosition = function() {
 /**
  * Moves the camera the given distance, but not too close
 * to the reference point.
- * @param {Number} dist The distance to move.  Positive
+ * @param {Number} dist The distance to move. Positive
 * values mean forward, and negative distances mean back.
 * @returns {H3DU.Camera} This object.
  * @memberof! H3DU.Camera#
@@ -811,7 +811,7 @@ H3DU.Camera.prototype.moveClose = function(dist) {
 };
 /**
  * Moves the camera forward the given distance.
- * @param {Number} dist The distance to move.  Positive
+ * @param {Number} dist The distance to move. Positive
 * values mean forward, and negative distances mean back.
 * @returns {H3DU.Camera} This object.
  * @memberof! H3DU.Camera#
@@ -900,7 +900,7 @@ H3DU.Camera.prototype.getVectorFromCenter = function() {
 /**
  * Updates information about this camera based
  * on the state of an input tracker.
- * @param {H3DU.InputTracker} [input] An input tracker.  This
+ * @param {H3DU.InputTracker} [input] An input tracker. This
  * method should be called right after the tracker's
  * 'update' method was called. <i>Note that future versions
  * may require this parameter.</i>
@@ -954,9 +954,9 @@ H3DU.Camera.prototype._updateNew = function(input) {
 
 /* exported Camera */
 /**
-Alias for the  {@link H3DU.Camera} class.
+Alias for the {@link H3DU.Camera} class.
 @class
 @alias Camera
- @deprecated Use {@link H3DU.Camera} instead.
+ * @deprecated Use {@link H3DU.Camera} instead.
 */
 var Camera = H3DU.Camera;

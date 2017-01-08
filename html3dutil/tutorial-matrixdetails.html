@@ -122,7 +122,7 @@ Transforms a 3-element vector with a 3x3 matrix</li>
 
 <h3>Translation <a id=Translation></a></h3>
 
-<p>A translation is a shifting of an object&#39;s position.  In a transformation matrix,
+<p>A translation is a shifting of an object&#39;s position. In a transformation matrix,
 this shifting effectively happens after all other transformations such as scaling and rotation.
 It uses the 13th, 14th, and 15th elements of the matrix as seen here:</p>
 
@@ -157,8 +157,8 @@ It uses the 13th, 14th, and 15th elements of the matrix as seen here:</p>
 </mfenced>
 </math>
 
-<p>where <code>tx</code> is added to the x-coordinate, <code>ty</code> is added to the y-coordinate, and
-<code>tz</code> is added to the z-coordinate.  The transformation formulas would look like:</p>
+<p>where <code>tx</code> is added to the X coordinate, <code>ty</code> is added to the Y coordinate, and
+<code>tz</code> is added to the Z coordinate. The transformation formulas would look like:</p>
 
 <ul>
 <li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + tx</li>
@@ -166,8 +166,8 @@ It uses the 13th, 14th, and 15th elements of the matrix as seen here:</p>
 <li><strong>a&prime;</strong><sub><em>z</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 1 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + tz</li>
 </ul>
 
-<p>For example, we add the input x and <code>tx</code> to get the output x.  If <code>tx</code> is 0, x
-remains unchanged.  Likewise for y and z.</p>
+<p>For example, we add the input x and <code>tx</code> to get the output x. If <code>tx</code> is 0, x
+remains unchanged. Likewise for y and z.</p>
 
 <p>Related functions:</p>
 
@@ -180,7 +180,7 @@ Multiplies a matrix by a translation.</li>
 
 <h3>Scaling <a id=Scaling></a></h3>
 
-<p>Scaling changes an object&#39;s size.  Scaling uses the 1st,
+<p>Scaling changes an object&#39;s size. Scaling uses the 1st,
 6th, and 11th elements of the matrix as seen here:</p>
 
 <math>
@@ -214,8 +214,8 @@ Multiplies a matrix by a translation.</li>
 </mfenced>
 </math>
 
-<p>where the x-coordinate is multiplied by <code>sx</code>, the y-coordinate is multiplied by <code>sy</code>, and
-the z-coordinate is multiplied by <code>sz</code>.</p>
+<p>where the X coordinate is multiplied by <code>sx</code>, the Y coordinate is multiplied by <code>sy</code>, and
+the Z coordinate is multiplied by <code>sz</code>.</p>
 
 <p>The scaling formula would look like:</p>
 
@@ -225,8 +225,8 @@ the z-coordinate is multiplied by <code>sz</code>.</p>
 <li><strong>a&prime;</strong><sub><em>z</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + sz &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
 </ul>
 
-<p>For example, we multiply the input x by <code>sx</code> to get the output x.  If <code>sx</code> is 1, x
-remains unchanged.  Likewise for y and z.</p>
+<p>For example, we multiply the input x by <code>sx</code> to get the output x. If <code>sx</code> is 1, x
+remains unchanged. Likewise for y and z.</p>
 
 <p>If <code>sx</code>, <code>sy</code>, or <code>sz</code> is -1, that coordinate is <em>reflected</em> along the corresponding axis.</p>
 
@@ -250,8 +250,8 @@ Multiplies a matrix in place by a scaling.</li>
 
 <h3>Rotation <a id=Rotation></a></h3>
 
-<p>Rotation changes an object&#39;s orientation.  Rotation uses the upper-left
-corner of a matrix.  Given an angle of rotation, &theta; (in radians; multiply
+<p>Rotation changes an object&#39;s orientation. Rotation uses the upper-left
+corner of a matrix. Given an angle of rotation, &theta; (in radians; multiply
 degrees by &pi; and divide by 180), the transformation matrix is as follows.</p>
 
 <figure>
@@ -366,10 +366,10 @@ which would look like:</p>
 
 <ul>
 <li>When we rotate a point about the X axis, the X coordinate is unchanged
-and the Y and Z coordinates are adjusted in the rotation.  For rotations about the
+and the Y and Z coordinates are adjusted in the rotation. For rotations about the
 Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.</li>
 <li>If the axis of rotation points toward the viewer, positive rotations mean
-counterclockwise rotation in right-handed coordinate systems.  For example,
+counterclockwise rotation in right-handed coordinate systems. For example,
 60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.</li>
@@ -418,13 +418,13 @@ Multiplies a matrix by a translation.</li>
 
 <p>Two matrices can be combined into a single transformation. To do so,
 the matrices are multiplied such that the transformations
-they describe happen in reverse order.  For example, if the first matrix
+they describe happen in reverse order. For example, if the first matrix
 (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will
 describe the effect of scaling then translation.</p>
 
 <p>Matrix multiplication is not commutative; the order
-of multiplying matrices is important.  This multiplication
+of multiplying matrices is important. This multiplication
 behavior in the HTML 3D Utility Library follows that of OpenGL and is opposite to that in the
 D3DX and DirectXMath libraries.</p>
 
@@ -441,11 +441,11 @@ Multiplies two matrices</li>
 <h3>Other Transformations <a id=Other_Transformations></a></h3>
 
 <p>In all the transformations described above, the last row in the transformation matrix is
-(0, 0, 0, 1).  (Such transformations are called <em>affine transformations</em>, those that
+(0, 0, 0, 1). (Such transformations are called <em>affine transformations</em>, those that
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the <code>H3DU.Math</code> library.</p>
 
-<p>One example of such a transformation is the perspective projection matrix.  When a 4-element
+<p>One example of such a transformation is the perspective projection matrix. When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:</p>
 
 <ul>
@@ -466,12 +466,12 @@ Returns a field-of-view perspective matrix</li>
 
 <h3>Matrix Inversions <a id=Matrix_Inversions></a></h3>
 
-<p>An inverted matrix describes a transformation that undoes another transformation.  For
+<p>An inverted matrix describes a transformation that undoes another transformation. For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
 size.</p>
 
 <p>To invert a <strong>translation</strong>, reverse the sign of the translation elements <code>tx</code>, <code>ty</code>, and <code>tz</code>
-and generate a new translation matrix with the new translation elements.  For example,
+and generate a new translation matrix with the new translation elements. For example,
 to invert the translation (5, 2, -3), use the translation (-5, -2, 3).</p>
 
 <p>To invert a <strong>scaling</strong>, use the reciprocal of <code>sx</code>, <code>sy</code>, and <code>sz</code>
@@ -480,12 +480,12 @@ For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).</
 
 <p>To invert a <strong>rotation</strong>, swap the 2nd and 5th elements of the matrix, the 3rd and 9th
 elements, and the 7th and 10th elements of the matrix (zero-based elements 1, 4, 2, 8,
-6, and 9 respectively).  The effect is like reversing the angle of the rotation to reset an object
+6, and 9 respectively). The effect is like reversing the angle of the rotation to reset an object
 to its original orientation.</p>
 
 <p>Matrices that use some combination of translation, scaling, and rotation
 as well as other kinds of matrices are more complicated
-to invert.  In fact, some matrices can&#39;t be inverted at all.  The formula for inverting a general
+to invert. In fact, some matrices can&#39;t be inverted at all. The formula for inverting a general
 matrix is too complicated to discuss here.</p>
 
 <p>Related functions:</p>

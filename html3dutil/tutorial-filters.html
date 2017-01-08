@@ -21,16 +21,16 @@ It also describes several examples of graphics filters.</p>
 <h2>Graphics Filters <a id=Graphics_Filters></a></h2>
 
 <p>In the HTML 3D Library, graphics filters are functions used to modify the appearance
-of the screen after each frame.  They are implemented in a language called GLSL, or GL
+of the screen after each frame. They are implemented in a language called GLSL, or GL
 Shading Language.  GLSL programs are called &quot;shaders&quot;, and they are compiled into code that runs on a
 GPU, or graphics processing unit.</p>
 
-<p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that process one pixel at a time.  GPUs
+<p>Graphics filters are considered &quot;fragment shaders&quot;, or shaders that process one pixel at a time. GPUs
 can run shaders very fast because fragment shaders can process multiple pixels in parallel, without
 affecting the other pixels, and GPUs are often much better designed for parallel processing than CPUs.</p>
 
 <p>For graphics filters to work, the 3D scene must be rendered to an off-screen buffer called
-a <em>frame buffer</em>.  The frame buffer acts like a texture which will be rendered back to
+a <em>frame buffer</em>. The frame buffer acts like a texture which will be rendered back to
 the screen with the help of the graphics filter&#39;s shader program.</p>
 
 <h2>Writing Graphics Filters <a id=Writing_Graphics_Filters></a></h2>
@@ -39,11 +39,11 @@ the screen with the help of the graphics filter&#39;s shader program.</p>
 graphics filters:</p>
 
 <ul>
-<li>The <code>H3DU.ShaderInfo</code> class holds data on shader programs.  Each shader program consists
-of a <em>vertex shader</em> and a <em>fragment shader</em>.  Graphics filters are essentially part of a fragment shader
-and thus process pixels.  (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)</li>
+<li>The <code>H3DU.ShaderInfo</code> class holds data on shader programs. Each shader program consists
+of a <em>vertex shader</em> and a <em>fragment shader</em>. Graphics filters are essentially part of a fragment shader
+and thus process pixels. (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)</li>
 <li>The <code>makeEffect</code> method generates the source code for a shader program, using the graphics
-filter as part of the program&#39;s fragment shader.  Since shader programs must also have a vertex shader, the method also adds a basic vertex shader for the graphics filter.</li>
+filter as part of the program&#39;s fragment shader. Since shader programs must also have a vertex shader, the method also adds a basic vertex shader for the graphics filter.</li>
 </ul>
 
 <p>The following is an example of a graphics filter.</p>
@@ -52,9 +52,9 @@ filter as part of the program&#39;s fragment shader.  Since shader programs must
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 // Read the current color from the sampler texture
 &quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
-// Convert the color to a shade of gray.  It gets
+// Convert the color to a shade of gray. It gets
 // the current color&#39;s red, green, and blue components,
-// adds them, and divides by 3.  Thus, the gray color
+// adds them, and divides by 3. Thus, the gray color
 // will be an average of the red/green/blue components.
 &quot; float gray=(color.r+color.g+color.b)/3.0;&quot;,
 // Return the gray color (using the color&#39;s original alpha)
@@ -67,33 +67,33 @@ filter as part of the program&#39;s fragment shader.  Since shader programs must
 <p>The <code>textureEffect</code> function takes these parameters:</p>
 
 <ul>
-<li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame.  To read from the texture, use the <code>texture2D</code> function, as shown in the example above.</li>
+<li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame. To read from the texture, use the <code>texture2D</code> function, as shown in the example above.</li>
 <li><code>vec2 uvCoord</code>: Texture coordinates of the current pixel.  <code>uvCoord.x</code> ranges from 0 on the left side to 1 on the right side.  <code>uvCoord.y</code> ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the bottom-left corner, not the top left, that is, textures are &quot;bottom up&quot;,
 not &quot;top down&quot;).</li>
-<li><code>vec2 textureSize</code>: Size of the screenshot, pointed to by <code>sampler</code>, in pixels.  <code>textureSize.x</code> is the
+<li><code>vec2 textureSize</code>: Size of the screenshot, pointed to by <code>sampler</code>, in pixels. <code>textureSize.x</code> is the
 width, and <code>textureSize.y</code> is the height.</li>
 </ul>
 
 <p>The <code>textureEffect</code> function returns a <code>vec4</code> (4-element vector) giving the color that the current pixel should
-be.  The example above reads the current pixel&#39;s color, turns it to a shade of gray, and returns a new color
-with that shade of gray.  Thus, the filter will convert the screen to grayscale tones.</p>
+be. The example above reads the current pixel&#39;s color, turns it to a shade of gray, and returns a new color
+with that shade of gray. Thus, the filter will convert the screen to grayscale tones.</p>
 
-<p>The shader can also define custom parameters called &quot;uniforms&quot;.  They are declared by using a line like
-<code>uniform [type] [name];</code> at the top of the shader.  Example: <code>uniform float time;</code>  Uniforms, once declared,
+<p>The shader can also define custom parameters called &quot;uniforms&quot;. They are declared by using a line like
+<code>uniform [type] [name];</code> at the top of the shader. Example: <code>uniform float time;</code> Uniforms, once declared,
 can be used in the <code>textureEffect</code> function.</p>
 
-<p>A detailed treatment of GLSL is outside the scope of this page.  More information about GLSL can
+<p>A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
 be found by searching the Web; note that there are many versions of GLSL and the one used
-in HTML applications is relatively basic nowadays.  Also see below for more examples of graphics filters.</p>
+in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
 
 <h2>Using Graphics Filters <a id=Using_Graphics_Filters></a></h2>
 
 <p>To use a graphics filter, the application needs to prepare for its use by following these steps.</p>
 
-<p>First, create an object to hold information about a <em>frame buffer</em>.  A frame buffer is an array of
-pixels designed to be drawn off the screen.  This means that the scene&#39;s geometry is drawn
+<p>First, create an object to hold information about a <em>frame buffer</em>. A frame buffer is an array of
+pixels designed to be drawn off the screen. This means that the scene&#39;s geometry is drawn
 not to the screen (or to the buffer the screen uses), but to a separate buffer, to be manipulated
-later by the application or re-drawn to the screen (or the screen buffer).  In the HTML 3D Library,
+later by the application or re-drawn to the screen (or the screen buffer). In the HTML 3D Library,
 each frame buffer consists of a texture of a given size and a <em>renderbuffer</em> of the same
 size to use as the depth buffer.</p>
 
@@ -102,7 +102,7 @@ size to use as the depth buffer.</p>
 
 <p>Note that we set the frame buffer&#39;s size to the current width and height of the scene.</p>
 
-<p>Then create an array of <em>rendering passes</em>.  The sample code below creates two
+<p>Then create an array of <em>rendering passes</em>. The sample code below creates two
 passes: the first renders to a frame buffer, and the second renders the frame buffer&#39;s contents
 back to the screen.</p>
 
@@ -130,12 +130,12 @@ passes mentioned above, the following happens.</p>
 <pre><code>* The 3D library renders the first pass.
     * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
        switches the shader to the usual shaders for drawing the 3D scene.
-    * The current frame is rendered onto the frame buffer.  The frame buffer&#39;s texture will now contain a
+    * The current frame is rendered onto the frame buffer. The frame buffer&#39;s texture will now contain a
       &quot;snapshot&quot; of the frame that can now be modified by graphics filters.
  * Then, the library renders the second pass.
     * The 3D library switches drawing back to the GL Canvas, then switches the shader
        to the graphics filter&#39;s shaders.
-    * A rectangle taking up the entire GL Canvas is drawn.  This is to allow each pixel of the texture to
+    * A rectangle taking up the entire GL Canvas is drawn. This is to allow each pixel of the texture to
        be passed to the graphics filter, and the filter&#39;s `textureEffect` method to be called for each pixel.
       Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.
       The graphics filter can either use the current pixel&#39;s color or change it for each pixel.
@@ -185,7 +185,7 @@ of graphics filters implemented as shaders.</p>
 
 <p><img src="filters2.png" alt="Invert filtered image"></p>
 
-<p>The invert filter is built-in to the HTML 3D Library.  It inverts the colors of the screen so the effect looks
+<p>The invert filter is built-in to the HTML 3D Library. It inverts the colors of the screen so the effect looks
 like a film negative.</p>
 
 <p>This filter is implemented in the method <code>H3DU.ShaderInfo.getInvertEffect()</code>:</p>
@@ -219,7 +219,7 @@ return H3DU.ShaderInfo.makeEffect(context,[
 
 <p><img src="filters7.png" alt="Mirror filtered image"></p>
 
-<p>This filter does a horizontal flip of its pixels.  Note that the filter, given below, reads not from
+<p>This filter does a horizontal flip of its pixels. Note that the filter, given below, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
 the current X coordinate).</p>
 
@@ -240,23 +240,23 @@ return H3DU.ShaderInfo.makeEffect(context,[
 <img src="filters8.png" alt="Edge detect filtered image"></p>
 
 <p>This filter enables a family of image processing filters, such as blurring, sharpening,
-edge detection, and embossing, that process each pixel and its neighbors.  This filter takes
-a 3x3 matrix called a <em>convolution kernel</em>, which gives the contribution of each pixel&#39;s color to the final color.  All the numbers in the matrix usually add up to 1.</p>
+edge detection, and embossing, that process each pixel and its neighbors. This filter takes
+a 3x3 matrix called a <em>convolution kernel</em>, which gives the contribution of each pixel&#39;s color to the final color. All the numbers in the matrix usually add up to 1.</p>
 
 <p>Note that the <code>uniform</code> given below is a <code>mat3</code>, meaning a 3x3 matrix.</p>
 
 <p>An example of a convolution kernel:</p>
 
-<pre><code>[  0,  1/8, 0,
+<pre><code>[ 0, 1/8, 0,
   1/8, 1/2, 1/8,
-  0,   1/8, 0  ]
+  0, 1/8, 0 ]
 </code></pre>
 
 <p>This filter means that the destination pixel will have 1/2 of the original pixel&#39;s color, and 1/8 of the
-colors of its 4 adjacent pixels.  Note that this example adds up to 1.</p>
+colors of its 4 adjacent pixels. Note that this example adds up to 1.</p>
 
-<p>This filter is implemented in the function <code>makeKernelMatrix</code> in the demo.  It is used for
-the &quot;blur&quot; and &quot;edge detect&quot; effects.  The filter shows how it&#39;s possible for filters to read neighboring
+<p>This filter is implemented in the function <code>makeKernelMatrix</code> in the demo. It is used for
+the &quot;blur&quot; and &quot;edge detect&quot; effects. The filter shows how it&#39;s possible for filters to read neighboring
 pixels, not just the current pixel, when implementing their effect.</p>
 
 <h3>Pixelate Filter <a id=Pixelate_Filter></a></h3>
@@ -290,7 +290,7 @@ return H3DU.ShaderInfo.makeEffect([
 <p><img src="filters3.png" alt="Wave filtered image"></p>
 
 <p>This filter shifts the pixels in each row horizontally to cause the screen to undulate
-vertically.  This filter takes a uniform variable named <code>time</code>, which indicates the animation
+vertically. This filter takes a uniform variable named <code>time</code>, which indicates the animation
 frame for the undulation effect.</p>
 
 <p>This filter is implemented in the function <code>makeWave</code> in the demo.</p>

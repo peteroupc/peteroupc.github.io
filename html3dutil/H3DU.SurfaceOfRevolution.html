@@ -34,7 +34,7 @@ Smallest V-coordinate.</li>
 <li><code>maxval</code> (Type: Number)<br>
 Largest V-coordinate. If <em>minval</em> is greater than <em>maxval</em>, both values will be swapped.</li>
 <li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
 
 <h3>Methods</h3>
@@ -65,7 +65,7 @@ Smallest parameter of the function. This is a number of units from the origin al
 <li><code>maxval</code> (Type: Number)<br>
 Largest parameter of the function. This is a number of units from the origin along the axis of rotation. If <em>minval</em> is greater than <em>maxval</em>, both values will be swapped.</li>
 <li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -78,7 +78,7 @@ Axis of rotation, around which the function graph will be rotated to generate th
 which starts at the origin and runs 10 units along the Z axis.</p>
 
 <pre><code>var surf=H3DU.SurfaceOfRevolution.fromFunction(
- function(x) {
+function(x) {
 &quot;use strict&quot;; return x/2; }, // use a constantly increasing function
 0, 10);
 </code></pre>
@@ -87,7 +87,7 @@ which starts at the origin and runs 10 units along the Z axis.</p>
 shifted 3 units back.</p>
 
 <pre><code>var surf=H3DU.SurfaceOfRevolution.fromFunction(
- function(x) {
+function(x) {
 &quot;use strict&quot;; x+=3; return x/2; },
 -3,7);
 </code></pre>
@@ -96,7 +96,7 @@ shifted 3 units back.</p>
 which runs from 5 to 10 units, and with a radius of 2 units.</p>
 
 <pre><code>var surf=H3DU.SurfaceOfRevolution.fromFunction(
- function(x) {
+function(x) {
 &quot;use strict&quot;; return 2; }, // use a constant radius
 5, 10);
 </code></pre>
@@ -115,7 +115,7 @@ Radius from the inner edge to the innermost part of the torus.</li>
 <li><code>curve</code> (Type: function) (optional)<br>
 Object describing a curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. The curve function must contain a function named &quot;evaluate&quot;, which takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of at least 2 elements: the first element is the X coordinate of the curve&#39;s position, and the second element is the Y coordinate. If null or omitted, uses a circular cross section.</li>
 <li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-Axis of rotation, which the torus will pass through. If null or omitted, the positive Z-axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
+Axis of rotation, which the torus will pass through. If null or omitted, the positive Z axis will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a unit vector (a <a href="H3DU.Math.html#H3DU.Math.vec3norm">&quot;normalized&quot; vector</a> with a length of 1).</li>
 </ul>
 
 <h4>Return Value</h4>

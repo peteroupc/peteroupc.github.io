@@ -178,7 +178,7 @@ H3DU._FrenetFrames._distSq = function(a, b) {
 * library. <p>
 * To use this class, you must include the script "extras/curvetube.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
 * @class
 * @alias H3DU.CurveTube
@@ -190,14 +190,14 @@ H3DU._FrenetFrames._distSq = function(a, b) {
 * element is the X coordinate of the curve's position, the second
 * element is the Y coordinate, and the third is the Z coordinate.
 * @param {Number} [thickness] Radius of the
-* extruded tube.  If this parameter is null or omitted, the default is 0.125.
+* extruded tube. If this parameter is null or omitted, the default is 0.125.
 * @param {Object} [sweptCurve] Object describing
 * a two-dimensional curve to serve as the cross section of the extruded shape,
 * corresponding to the V coordinate of the CurveTube's
 * "evaluate" method.
 * If this parameter is null or omitted, uses a circular cross section
 * in which the V coordinate ranges from 0 through
-* 1.  The curve object must contain a function
+* 1. The curve object must contain a function
 * named "evaluate", with the same meaning as for the "func" parameter,
 * except the third element, if any, of the return value is ignored.<p>
 * The curve need not be closed.<p>
@@ -215,8 +215,8 @@ H3DU.CurveTube = function(func, thickness, sweptCurve) {
 
 /**
 * Generates a point on the extruded tube from the given u and v coordinates.
-* @param {Number} u U coordinate.  This will run the length of the curve.
-* @param {Number} v V coordinate.  This will sweep around the extruded
+* @param {Number} u U coordinate. This will run the length of the curve.
+* @param {Number} v V coordinate. This will sweep around the extruded
 * tube.
 * @returns {Array<Number>} A 3-element array specifying a 3D point.
 * @memberof! H3DU.CurveTube#
@@ -250,6 +250,6 @@ H3DU.CurveTube.prototype.evaluate = function(u, v) {
 Alias for the {@link H3DU.CurveTube} class.
 @class
 @alias CurveTube
- @deprecated Use {@link H3DU.CurveTube} instead.
+ * @deprecated Use {@link H3DU.CurveTube} instead.
 */
 var CurveTube = H3DU.CurveTube;

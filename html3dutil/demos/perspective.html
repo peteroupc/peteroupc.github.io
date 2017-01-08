@@ -65,7 +65,7 @@ H3DU.Math.planeIntersection = function(p1, p2, p3) {
 * @private
 * @param {Array<Array<number>>} An array of six
 * 4-element arrays representing the six clipping planes of the
-* view frustum.  In order, they are the left, right, top,
+* view frustum. In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
 * @return {Array<number>} A 4-element array
 * containing the 3-element points for the top-left,
@@ -90,7 +90,7 @@ H3DU.Math.frustumNearPlane = function(frustum) {
 * @private
 * @param {Array<Array<number>>} An array of six
 * 4-element arrays representing the six clipping planes of the
-* view frustum.  In order, they are the left, right, top,
+* view frustum. In order, they are the left, right, top,
 * bottom, near, and far clipping planes.
 * @return {Array<number>} A 4-element array
 * containing the 3-element points for the top-left,
@@ -161,7 +161,7 @@ function frustumMesh(frustum) {
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 var sub = new H3DU.Batch3D();
 sub.getLights().setBasic();
-  // Set the perspective view.  Camera has a 45-degree field of view
+  // Set the perspective view. Camera has a 45-degree field of view
   // and will see objects from 0.1 to 100 units away.
 var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(10);
 var input = new H3DU.InputTracker(scene.getCanvas());
@@ -204,12 +204,12 @@ H3DU.renderLoop(function() {
 wheel to move the camera forward and back.</p>
 <p>This demo contains a wireframe view volume of a perspective
 projection and two rows of
-spheres.  Note that initially, the spheres approach the center of the
-screen as their depth increases.  As you move the scene with
+spheres. Note that initially, the spheres approach the center of the
+screen as their depth increases. As you move the scene with
 your mouse, you will see how the spheres are placed in relation
-to the projected view volume.  (Note that the view volume shown
+to the projected view volume. (Note that the view volume shown
 is smaller than the one that results by the scene's actual projection,
-in order to show the effect better.)  Some of the spheres would be clipped
+in order to show the effect better.) Some of the spheres would be clipped
 out by the wireframe volume.</p>
 </div>
 </body>

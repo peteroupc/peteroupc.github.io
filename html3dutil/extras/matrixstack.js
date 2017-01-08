@@ -18,10 +18,10 @@ only element is the identity matrix.
 * library. <p>
 * To use this class, you must include the script "extras/matrixstack.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/matrixstack.js">&lt;/script></pre>
- @alias H3DU.MatrixStack
- @class
+ * @alias H3DU.MatrixStack
+ * @class
 */
 H3DU.MatrixStack = function() {
   "use strict";
@@ -98,7 +98,7 @@ H3DU.MatrixStack.prototype.multMatrix = function(mat) {
   for(var i = 0; i < 16; i += 4) {
     for(var j = 0; j < 4; j++) {
       dst[i + j] =
-        mat[i]   * curmat[j]   +
+        mat[i] * curmat[j] +
         mat[i + 1] * curmat[j + 4] +
         mat[i + 2] * curmat[j + 8] +
         mat[i + 3] * curmat[j + 12];
@@ -127,7 +127,7 @@ H3DU.MatrixStack.prototype.multTransposeMatrix = function(mat) {
   for(var i = 0; i < 16; i += 4) {
     for(var j = 0; j < 4; j++) {
       dst[i + j] =
-        curmat[i]   * mat[j]   +
+        curmat[i] * mat[j] +
         curmat[i + 1] * mat[j + 4] +
         curmat[i + 2] * mat[j + 8] +
         curmat[i + 3] * mat[j + 12];
@@ -251,7 +251,7 @@ H3DU.MatrixStack.prototype.pushMatrix = function() {
 };
 /**
  * Removes the matrix at the top of this stack, making
- * the matrix beneath it the new top matrix.  Has no
+ * the matrix beneath it the new top matrix. Has no
  * effect if the stack has only one matrix.
  * @returns {H3DU.MatrixStack} This object.
  * @memberof! H3DU.MatrixStack#
@@ -276,9 +276,9 @@ H3DU.MatrixStack.prototype.popMatrix = function() {
  * @param {Number} t Topmost coordinate of the 3D view.
  * (Note that t can be greater than b or vice versa.)
  * @param {Number} n Distance from the camera to the near clipping
- * plane.  A positive value means the plane is in front of the viewer.
+ * plane. A positive value means the plane is in front of the viewer.
  * @param {Number} f Distance from the camera to the far clipping
- * plane.  A positive value means the plane is in front of the viewer.
+ * plane. A positive value means the plane is in front of the viewer.
  * @returns {H3DU.MatrixStack} This object.
  * @memberof! H3DU.MatrixStack#
 */
@@ -309,13 +309,13 @@ H3DU.MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
  * Modifies the matrix at the top of this stack by multiplying it by
  * a frustum matrix.
  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * @param {Number} l X-coordinate of the point where the left
+ * @param {Number} l X coordinate of the point where the left
  * clipping plane meets the near clipping plane.
- * @param {Number} r X-coordinate of the point where the right
+ * @param {Number} r X coordinate of the point where the right
  * clipping plane meets the near clipping plane.
- * @param {Number} b Y-coordinate of the point where the bottom
+ * @param {Number} b Y coordinate of the point where the bottom
  * clipping plane meets the near clipping plane.
- * @param {Number} t Y-coordinate of the point where the top
+ * @param {Number} t Y coordinate of the point where the top
  * clipping plane meets the near clipping plane.
 * @param {Number} n The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
@@ -358,7 +358,7 @@ H3DU.MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
  * @param {Number} ey Y coordinate of the camera position.
  * @param {Number} ez Z coordinate of the camera position.
  * @param {Number} cx X coordinate of the position in world space that
-*  the camera is looking at.
+* the camera is looking at.
  * @param {Number} cy Y coordinate of the position looked at.
  * @param {Number} cz Z coordinate of the position looked at.
  * @param {Number} ux X coordinate of the up direction vector.
@@ -472,12 +472,12 @@ H3DU.MatrixStack.prototype.ortho2d = function(l, r, b, t) {
  * a matrix that defines a perspective projection.<p>
  * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
 * @param {Number} fov Vertical field of view, in degrees. Should be less
-* than 180 degrees.  (The smaller
-* this number, the bigger close objects appear to be.  As a result,
+* than 180 degrees. (The smaller
+* this number, the bigger close objects appear to be. As a result,
 * zoom can be implemented by multiplying field of view by an
 * additional factor.)
 * @param {Number} aspect The ratio of width to height of the viewport, usually
-*  the scene's aspect ratio.
+* the scene's aspect ratio.
 * @param {Number} n The distance from the camera to
 * the near clipping plane. Objects closer than this distance won't be
 * seen. This should be slightly greater than 0.
@@ -508,8 +508,8 @@ H3DU.MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
  * a matrix that transforms the view to a portion of the viewport.
- * @param {Number} wx X-coordinate of the center of the desired viewport portion.
- * @param {Number} wy Y-coordinate of the center of the desired viewport portion.
+ * @param {Number} wx X coordinate of the center of the desired viewport portion.
+ * @param {Number} wy Y coordinate of the center of the desired viewport portion.
  * @param {Number} ww Width of the desired viewport portion.
  * @param {Number} wh Height of the desired viewport portion.
  * @param {Array<Number>} vp A 4-element array giving the X and Y coordinates
@@ -534,9 +534,9 @@ H3DU.MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
 
 /* exported MatrixStack */
 /**
-Alias for the  {@link H3DU.MatrixStack} class.
+Alias for the {@link H3DU.MatrixStack} class.
 @class
 @alias MatrixStack
- @deprecated Use {@link H3DU.MatrixStack} instead.
+ * @deprecated Use {@link H3DU.MatrixStack} instead.
 */
 var MatrixStack = H3DU.MatrixStack;

@@ -15,16 +15,16 @@
 * @param {Object} func A <b>sampling object</b>. This object contains a single property,
 * "sample", which is a function that takes three parameters
 * specifying a 3-dimensional point:<ol>
-* <li>x - An X-coordinate.
-* <li>y - A Y-coordinate.
-* <li>z - A Z-coordinate.</ol>
-* and returns a number.  If the implicit surface function returns 0, that
+* <li>x - An X coordinate.
+* <li>y - A Y coordinate.
+* <li>z - A Z coordinate.</ol>
+* and returns a number. If the implicit surface function returns 0, that
 * means the point lies on the surface.
 * @example <caption>The following defines an implicit surface
 * function for a sphere.</caption>
 * var surface=new ImplicitSurface({"sample":function(x, y, z) {
 "use strict";
-*  return x*x+y*y+z*z-1;
+* return x*x+y*y+z*z-1;
 * }});
  * @returns {Object} Return value.
 */
@@ -42,7 +42,7 @@ ImplicitSurface._a2fVertexOffset = [
 ImplicitSurface._a2fEdgeDirection = [
         [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, -1.0, 0.0],
         [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, -1.0, 0.0],
-        [0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [0.0,  0.0, 1.0]
+        [0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [0.0, 0.0, 1.0], [0.0, 0.0, 1.0]
 ];
 
 // a2iEdgeConnection lists the index of the endpoint vertices for each of the 12 edges of the cube
@@ -58,34 +58,34 @@ ImplicitSurface._aiTetrahedronEdgeFlags = [
 ];
 
 // For each of the possible vertex states listed in aiTetrahedronEdgeFlags there is a specific triangulation
-// of the edge intersection points.  a2iTetrahedronTriangles lists all of them in the form of
+// of the edge intersection points. a2iTetrahedronTriangles lists all of them in the form of
 // 0-2 edge triples with the list terminated by the invalid value -1.
 ImplicitSurface._a2iTetrahedronTriangles = [
         [-1, -1, -1, -1, -1, -1, -1],
-        [0,  3,  2, -1, -1, -1, -1],
-        [0,  1,  4, -1, -1, -1, -1],
-        [1,  4,  2,  2,  4,  3, -1],
+        [0, 3, 2, -1, -1, -1, -1],
+        [0, 1, 4, -1, -1, -1, -1],
+        [1, 4, 2, 2, 4, 3, -1],
 
-        [1,  2,  5, -1, -1, -1, -1],
-        [0,  3,  5,  0,  5,  1, -1],
-        [0,  2,  5,  0,  5,  4, -1],
-        [5,  4,  3, -1, -1, -1, -1],
+        [1, 2, 5, -1, -1, -1, -1],
+        [0, 3, 5, 0, 5, 1, -1],
+        [0, 2, 5, 0, 5, 4, -1],
+        [5, 4, 3, -1, -1, -1, -1],
 
-        [3,  4,  5, -1, -1, -1, -1],
-        [4,  5,  0,  5,  2,  0, -1],
-        [1,  5,  0,  5,  3,  0, -1],
-        [5,  2,  1, -1, -1, -1, -1],
+        [3, 4, 5, -1, -1, -1, -1],
+        [4, 5, 0, 5, 2, 0, -1],
+        [1, 5, 0, 5, 3, 0, -1],
+        [5, 2, 1, -1, -1, -1, -1],
 
-        [3,  4,  2,  2,  4,  1, -1],
-        [4,  1,  0, -1, -1, -1, -1],
-        [2,  3,  0, -1, -1, -1, -1],
+        [3, 4, 2, 2, 4, 1, -1],
+        [4, 1, 0, -1, -1, -1, -1],
+        [2, 3, 0, -1, -1, -1, -1],
         [-1, -1, -1, -1, -1, -1, -1]
 ];
 
 // a2iTetrahedronEdgeConnection lists the index of the endpoint vertices for each of the 6 edges of the tetrahedron
 ImplicitSurface._a2iTetrahedronEdgeConnection =
 [
-        [0, 1],  [1, 2],  [2, 0],  [0, 3],  [1, 3],  [2, 3]
+        [0, 1], [1, 2], [2, 0], [0, 3], [1, 3], [2, 3]
 ];
 
 // a2iTetrahedronEdgeConnection lists the index of verticies from a cube
@@ -144,33 +144,33 @@ ImplicitSurface.prototype._vMarchTetrahedron = function(mesh, pasTetrahedronPosi
                            ImplicitSurface._TARGET_VALUE);
       fInvOffset = 1.0 - fOffset;
 
-      tmpobj.asEdgeVertex[iEdge][0] = fInvOffset * pasTetrahedronPosition[iVert0][0]  +  fOffset * pasTetrahedronPosition[iVert1][0];
-      tmpobj.asEdgeVertex[iEdge][1] = fInvOffset * pasTetrahedronPosition[iVert0][1]  +  fOffset * pasTetrahedronPosition[iVert1][1];
-      tmpobj.asEdgeVertex[iEdge][2] = fInvOffset * pasTetrahedronPosition[iVert0][2]  +  fOffset * pasTetrahedronPosition[iVert1][2];
+      tmpobj.asEdgeVertex[iEdge][0] = fInvOffset * pasTetrahedronPosition[iVert0][0] + fOffset * pasTetrahedronPosition[iVert1][0];
+      tmpobj.asEdgeVertex[iEdge][1] = fInvOffset * pasTetrahedronPosition[iVert0][1] + fOffset * pasTetrahedronPosition[iVert1][1];
+      tmpobj.asEdgeVertex[iEdge][2] = fInvOffset * pasTetrahedronPosition[iVert0][2] + fOffset * pasTetrahedronPosition[iVert1][2];
 
       this._getNormal(tmpobj.asEdgeNorm[iEdge],
                            tmpobj.asEdgeVertex[iEdge][0], tmpobj.asEdgeVertex[iEdge][1], tmpobj.asEdgeVertex[iEdge][2]);
     }
   }
-        // Draw the triangles that were found.  There can be up to 2 per tetrahedron
+        // Draw the triangles that were found. There can be up to 2 per tetrahedron
   for(iTriangle = 0; iTriangle < 2; iTriangle++) {
     if(ImplicitSurface._a2iTetrahedronTriangles[iFlagIndex][3 * iTriangle] < 0)
       break;
 
     for(iCorner = 0; iCorner < 3; iCorner++) {
       iVertex = ImplicitSurface._a2iTetrahedronTriangles[iFlagIndex][3 * iTriangle + iCorner];
-      mesh.normal3(tmpobj.asEdgeNorm[iVertex][0],   tmpobj.asEdgeNorm[iVertex][1],   tmpobj.asEdgeNorm[iVertex][2]);
+      mesh.normal3(tmpobj.asEdgeNorm[iVertex][0], tmpobj.asEdgeNorm[iVertex][1], tmpobj.asEdgeNorm[iVertex][2]);
       mesh.vertex3(tmpobj.asEdgeVertex[iVertex][0], tmpobj.asEdgeVertex[iVertex][1], tmpobj.asEdgeVertex[iVertex][2]);
     }
   }
 };
 
 // For any edge, if one vertex is inside of the surface and the other is outside of the surface
-//  then the edge intersects the surface
+// then the edge intersects the surface
 // For each of the 8 vertices of the cube can be two possible states : either inside or outside of the surface
 // For any cube the are 2^8=256 possible sets of vertex states
 // This table lists the edges intersected by the surface for all 256 possible vertex states
-// There are 12 edges.  For each entry in the table, if edge #n is intersected, then bit #n is set to 1
+// There are 12 edges. For each entry in the table, if edge #n is intersected, then bit #n is set to 1
 
 ImplicitSurface._aiCubeEdgeFlags = [
   0x000, 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c, 0x80c, 0x905, 0xa0f, 0xb06, 0xc0a, 0xd03, 0xe09, 0xf00,
@@ -191,11 +191,11 @@ ImplicitSurface._aiCubeEdgeFlags = [
   0xf00, 0xe09, 0xd03, 0xc0a, 0xb06, 0xa0f, 0x905, 0x80c, 0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x000
 ];
 
-//  For each of the possible vertex states listed in aiCubeEdgeFlags there is a specific triangulation
-//  of the edge intersection points.  a2iTriangleConnectionTable lists all of them in the form of
-//  0-5 edge triples with the list terminated by the invalid value -1.
-//  For example: a2iTriangleConnectionTable[3] list the 2 triangles formed when corner[0]
-//  and corner[1] are inside of the surface, but the rest of the cube is not.
+// For each of the possible vertex states listed in aiCubeEdgeFlags there is a specific triangulation
+// of the edge intersection points. a2iTriangleConnectionTable lists all of them in the form of
+// 0-5 edge triples with the list terminated by the invalid value -1.
+// For example: a2iTriangleConnectionTable[3] list the 2 triangles formed when corner[0]
+// and corner[1] are inside of the surface, but the rest of the cube is not.
 // NOTE: This is the public domain table from Geoffrey Heller.
 ImplicitSurface._a2iTriangleConnectionTable = [
    [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -534,11 +534,11 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
                                                      tmpobj.afCubeValue[ ImplicitSurface._a2iEdgeConnection[iEdge][1] ],
                   ImplicitSurface._TARGET_VALUE);
 
-      tmpobj.asEdgeVertex[iEdge][0] = fX + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][0]  +
+      tmpobj.asEdgeVertex[iEdge][0] = fX + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][0] +
                   fOffset * ImplicitSurface._a2fEdgeDirection[iEdge][0]) * fScaleX;
-      tmpobj.asEdgeVertex[iEdge][1] = fY + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][1]  +
+      tmpobj.asEdgeVertex[iEdge][1] = fY + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][1] +
                   fOffset * ImplicitSurface._a2fEdgeDirection[iEdge][1]) * fScaleY;
-      tmpobj.asEdgeVertex[iEdge][2] = fZ + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][2]  +
+      tmpobj.asEdgeVertex[iEdge][2] = fZ + (ImplicitSurface._a2fVertexOffset[ ImplicitSurface._a2iEdgeConnection[iEdge][0] ][2] +
                   fOffset * ImplicitSurface._a2fEdgeDirection[iEdge][2]) * fScaleZ;
 
       this._getNormal(tmpobj.asEdgeNorm[iEdge],
@@ -548,14 +548,14 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
     }
   }
 
-        // Draw the triangles that were found.  There can be up to five per cube
+        // Draw the triangles that were found. There can be up to five per cube
   for(iTriangle = 0; iTriangle < 5; iTriangle++) {
     if(ImplicitSurface._a2iTriangleConnectionTable[iFlagIndex][3 * iTriangle] < 0)
       break;
 
     for(iCorner = 0; iCorner < 3; iCorner++) {
       iVertex = ImplicitSurface._a2iTriangleConnectionTable[iFlagIndex][3 * iTriangle + iCorner];
-      mesh.normal3(tmpobj.asEdgeNorm[iVertex][0],   tmpobj.asEdgeNorm[iVertex][1],   tmpobj.asEdgeNorm[iVertex][2]);
+      mesh.normal3(tmpobj.asEdgeNorm[iVertex][0], tmpobj.asEdgeNorm[iVertex][1], tmpobj.asEdgeNorm[iVertex][2]);
       mesh.vertex3(tmpobj.asEdgeVertex[iVertex][0], tmpobj.asEdgeVertex[iVertex][1], tmpobj.asEdgeVertex[iVertex][2]);
     }
   }
@@ -597,15 +597,15 @@ ImplicitSurface.prototype._marchingTetrahedrons = function(mesh, fX, fY, fZ, fSc
 /**
  * Finds a tight bounding box within the given three-dimensional
  * area that encloses this implicit surface.
- * @param {Number} xsize Number of grid points along the X-axis. Must be 2 or greater.
- * @param {Number} ysize Number of grid points along the Y-axis. Must be 2 or greater.
- * @param {Number} zsize Number of grid points along the Z-axis. Must be 2 or greater.
- * @param {Number} xmin Smallest value along the X-axis.
- * @param {Number} xmax Greatest value along the X-axis.
- * @param {Number} ymin Smallest value along the Y-axis.
- * @param {Number} ymax Greatest value along the Y-axis.
- * @param {Number} zmin Smallest value along the Z-axis.
- * @param {Number} zmax Greatest value along the Z-axis.
+ * @param {Number} xsize Number of grid points along the X axis. Must be 2 or greater.
+ * @param {Number} ysize Number of grid points along the Y axis. Must be 2 or greater.
+ * @param {Number} zsize Number of grid points along the Z axis. Must be 2 or greater.
+ * @param {Number} xmin Smallest value along the X axis.
+ * @param {Number} xmax Greatest value along the X axis.
+ * @param {Number} ymin Smallest value along the Y axis.
+ * @param {Number} ymax Greatest value along the Y axis.
+ * @param {Number} zmin Smallest value along the Z axis.
+ * @param {Number} zmax Greatest value along the Z axis.
  * @memberof! ImplicitSurface#
 * @returns {Array<Number>} An array of six numbers describing a tight
 * axis-aligned bounding box
@@ -658,15 +658,15 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
  * implicit surface
  * within the given area.
  * @param {H3DU.Mesh} mesh Mesh to store the points in.
- * @param {Number} xsize Number of grid points along the X-axis. Must be 2 or greater.
- * @param {Number} ysize Number of grid points along the Y-axis. Must be 2 or greater.
- * @param {Number} zsize Number of grid points along the Z-axis. Must be 2 or greater.
- * @param {Number} xmin Smallest value along the X-axis.
- * @param {Number} xmax Greatest value along the X-axis.
- * @param {Number} ymin Smallest value along the Y-axis.
- * @param {Number} ymax Greatest value along the Y-axis.
- * @param {Number} zmin Smallest value along the Z-axis.
- * @param {Number} zmax Greatest value along the Z-axis.
+ * @param {Number} xsize Number of grid points along the X axis. Must be 2 or greater.
+ * @param {Number} ysize Number of grid points along the Y axis. Must be 2 or greater.
+ * @param {Number} zsize Number of grid points along the Z axis. Must be 2 or greater.
+ * @param {Number} xmin Smallest value along the X axis.
+ * @param {Number} xmax Greatest value along the X axis.
+ * @param {Number} ymin Smallest value along the Y axis.
+ * @param {Number} ymax Greatest value along the Y axis.
+ * @param {Number} zmin Smallest value along the Z axis.
+ * @param {Number} zmax Greatest value along the Z axis.
 * @returns {ImplicitSurface} This object.
  * @memberof! ImplicitSurface#
 */
@@ -695,15 +695,15 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
  * given mesh the triangles and normals that make up the boundary of
  * this implicit surface within the given area.
  * @param {H3DU.Mesh} mesh Mesh to store the points in.
- * @param {Number} xsize Number of grid points along the X-axis. Must be 2 or greater.
- * @param {Number} ysize Number of grid points along the Y-axis. Must be 2 or greater.
- * @param {Number} zsize Number of grid points along the Z-axis. Must be 2 or greater.
- * @param {Number} xmin Smallest value along the X-axis.
- * @param {Number} xmax Greatest value along the X-axis.
- * @param {Number} ymin Smallest value along the Y-axis.
- * @param {Number} ymax Greatest value along the Y-axis.
- * @param {Number} zmin Smallest value along the Z-axis.
- * @param {Number} zmax Greatest value along the Z-axis.
+ * @param {Number} xsize Number of grid points along the X axis. Must be 2 or greater.
+ * @param {Number} ysize Number of grid points along the Y axis. Must be 2 or greater.
+ * @param {Number} zsize Number of grid points along the Z axis. Must be 2 or greater.
+ * @param {Number} xmin Smallest value along the X axis.
+ * @param {Number} xmax Greatest value along the X axis.
+ * @param {Number} ymin Smallest value along the Y axis.
+ * @param {Number} ymax Greatest value along the Y axis.
+ * @param {Number} zmin Smallest value along the Z axis.
+ * @param {Number} zmax Greatest value along the Z axis.
  * @memberof! ImplicitSurface#
 * @returns {ImplicitSurface} This object.
 */

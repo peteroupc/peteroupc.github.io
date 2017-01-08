@@ -10,23 +10,23 @@
 
 /**
 * Represents a bitmap font, which supports drawing two-dimensional
-* text.  This class supports
+* text. This class supports
 * traditional bitmap fonts and signed distance field fonts.<p>
 * Bitmap fonts consist of a font definition file and one
-* or more textures containing the shape of each font glyph.  The glyphs
+* or more textures containing the shape of each font glyph. The glyphs
 * are packed so that the glyphs don't overlap each other.<p>
 * In a signed distance field font, each pixel's alpha value depends on the
-* distance from that location to the edge of the glyph.  A pixel alpha less
+* distance from that location to the edge of the glyph. A pixel alpha less
 * than 0.5 (127 in most image formats) means the pixel is outside the
 * glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
 * outside the glyph) and 1 (for inside the glyph) means the pixel is
-* outside a buffer zone formed by the glyph's outline.  Each glyph is usually
+* outside a buffer zone formed by the glyph's outline. Each glyph is usually
 * given extra space to accommodate the signed distance field information.<p>
 * The font definition file formats supported are text (".fnt"),
 * JSON (".json"), binary (".fnt" or ".bin"), and XML (".xml").
 * The text and binary file formats are specified at
 * <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
-* page</a>.  The XML format is very similar to the text file format.
+* page</a>. The XML format is very similar to the text file format.
 * The JSON format is described at
 * <a href="https://github.com/Jam3/load-bmfont/blob/master/json-spec.md">this
 * page</a>.
@@ -36,14 +36,14 @@
 * other, and the mention of this link is not an endorsement or sponsorship
 * of any particular tool.)<p>
 * NOTE: The constructor should not be called directly by applications.
-* Use the {@link H3DU.TextFont.load} method to get an H3DU.TextFont object.  This
+* Use the {@link H3DU.TextFont.load} method to get an H3DU.TextFont object. This
 * constructor's parameters are undocumented and are subject to change.
 * <p>This class is considered a supplementary class to the
 * Public Domain HTML 3D Library and is not considered part of that
 * library. <p>
 * To use this class, you must include the script "extras/text.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
 * @class
 * @alias H3DU.TextFont
@@ -98,7 +98,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
 /**
  * Calculates the width and height of a text string when
  * drawn using this font.
-* @param {String} str The text string to measure.  Line breaks
+* @param {String} str The text string to measure. Line breaks
 * ("\n", "\r", "\r\n") are recognized by this method.
 * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
  * @returns {Array<Number>} An array of two numbers;
@@ -260,7 +260,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 * Creates a group of shapes containing the primitives needed to
 * draw text in the given position, size, and color.
 * For the text to show upright, the coordinate system should have the
-* X-axis pointing right and the Y-axis pointing down (for example, an
+* X axis pointing right and the Y axis pointing down (for example, an
 * orthographic projection where the left and top coordinates are less
 * than the right and bottom coordinates, respectively).
 * @param {String} str The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
@@ -371,23 +371,23 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
 * @param {Object} params An object whose keys have
 * the possibilities given below, and whose values are those
 * allowed for each key.<ul>
-* <li><code>x</code> - X-coordinate of the top left corner of the text.
+* <li><code>x</code> - X coordinate of the top left corner of the text.
 * If null or omitted, uses 0.
 * For the text to show upright, the coordinate system should have the
-* X-axis pointing right and the Y-axis pointing down (for example, an
+* X axis pointing right and the Y axis pointing down (for example, an
 * orthographic projection where the left and top coordinates are less
 * than the right and bottom coordinates, respectively).
-* <li><code>y</code> - Y-coordinate of the top left corner of the text.
+* <li><code>y</code> - Y coordinate of the top left corner of the text.
 * If null or omitted, uses 0.
 * <li><code>lineHeight</code> - Height of each line of the text in units.
 * If null or omitted, uses the line height given in the font.
-* <li><code>width</code> - Maximum width of each line.  Lines
+* <li><code>width</code> - Maximum width of each line. Lines
 * that exceed this width will be wrapped.
 * <li><code>align</code> - Horizontal text alignment.  Can be "left",
 * "center", or "right" (all strings).
 * </ul>
 * @returns {Array<Mesh>} An array of meshes representing the text.
-* There is one mesh for each texture page of the font.  If none of the
+* There is one mesh for each texture page of the font. If none of the
 * text uses a given page, the corresponding mesh will be null.
  * @memberof! H3DU.TextFont#
 */
@@ -777,7 +777,7 @@ H3DU.TextFont._loadTextFontInner = function(data) {
 * Loads a bitmap font definition from a file along with the textures
 * used by that font.
 * @param {String} fontFileName The URL of the font data file
-* to load.  The following file extensions are read as the following formats:<ul>
+* to load. The following file extensions are read as the following formats:<ul>
 * <li>".xml": XML</li>
 * <li>".json": JSON</li>
 * <li>".bin": Binary</li>
@@ -822,7 +822,7 @@ H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
  * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
  * loading the textures.
  * @returns {Promise<H3DU.Texture>} A promise as described in
- * {@link H3DU.getPromiseResultsAll}.  If the promise
+ * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
  * @memberof! H3DU.TextFont#
@@ -842,7 +842,7 @@ H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
 * Note that this method only loads the font data and not the bitmaps
 * used to represent the font.
 * @param {String} fontFileName The URL of the font data file
-* to load.  The following file extensions are read as the following formats:<ul>
+* to load. The following file extensions are read as the following formats:<ul>
 * <li>".xml": XML</li>
 * <li>".json": JSON</li>
 * <li>".bin": Binary</li>
@@ -935,10 +935,10 @@ H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textSha
 
 /**
  * A texture atlas specifies the location and size of images within a single
-* texture.  It is useful when multiple different images should be drawn at
+* texture. It is useful when multiple different images should be drawn at
 * once without having to load multiple textures or doing multiple texture
-* binds.  Instead, those images can be packed into one texture and the
-* application can draw different portions of that texture at once.  The
+* binds. Instead, those images can be packed into one texture and the
+* application can draw different portions of that texture at once. The
 * texture atlas can specify where those portions are found.<p>
 * This implementation supports the ".atlas" format.<p>
 * NOTE: The constructor should not be called directly by applications.
@@ -948,7 +948,7 @@ H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textSha
 * library. <p>
 * To use this class, you must include the script "extras/text.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
 * @class
 * @alias H3DU.TextureAtlas
@@ -962,9 +962,9 @@ H3DU.TextureAtlas = function() {
 /**
  * Makes a shape group used to display one or more sprites.
  * For the sprites to show upright, the coordinate system should have the
- * X-axis pointing right and the Y-axis pointing down (for example, an
+ * X axis pointing right and the Y axis pointing down (for example, an
  * orthographic projection where the left and top coordinates are less
- * than the right and bottom coordinates, respectively).  The size of each
+ * than the right and bottom coordinates, respectively). The size of each
  * sprite will be in pixels; therefore, for best results, the coordinate system
  * should be scaled so that one unit equals one pixel.
  * @param {Array<Object>} sprites An array of objects whose keys have
@@ -973,10 +973,10 @@ H3DU.TextureAtlas = function() {
  * <li><code>name</code> - Name of the sprite, as listed in this texture
  * atlas.
  * <li><code>index</code> - If a sprite has multiple versions, use this index
- * parameter to distinguish them.  Index can't be less than 0.  If a sprite doesn't
+ * parameter to distinguish them. Index can't be less than 0. If a sprite doesn't
  * have multiple versions, this value is not required.
- * <li><code>x</code> - X-coordinate of the sprite.
- * <li><code>y</code> - Y-coordinate of the sprite.
+ * <li><code>x</code> - X coordinate of the sprite.
+ * <li><code>y</code> - Y coordinate of the sprite.
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
  * @memberof! H3DU.TextureAtlas#
@@ -1228,7 +1228,7 @@ H3DU.TextureAtlas._loadText = function(data) {
  * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
  * loading the textures.
  * @returns {Promise<Array<H3DU.Texture>>} A promise as described in
- * {@link H3DU.getPromiseResultsAll}.  If the promise
+ * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
  * @memberof! H3DU.TextureAtlas#

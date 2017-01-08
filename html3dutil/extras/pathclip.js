@@ -10,7 +10,7 @@
   "use strict";
 
 // //////////////////////////////////////////////////////////////////////////////////////////////
-//  Data structures
+// Data structures
 // //////////////////////////////////////////////////////////////////////////////////////////////
 
 /** @private */
@@ -248,7 +248,7 @@
       } else {
         var p = this.p;
         var that = this;
-        var tmp  = that;
+        var tmp = that;
         while(p !== null && typeof p !== "undefined" && tmp === p.left) {
           tmp = p;
           p = p.p;
@@ -339,7 +339,7 @@
     if(typeof this.root !== "undefined" && this.root !== null) {
       var head = new RedBlackTreeNode(null); /* False tree root */
       var q, p, g; /* Helpers */
-      var f = null;  /* Found item */
+      var f = null; /* Found item */
       var dir = true;
 
     /* Set up our helpers */
@@ -425,8 +425,8 @@
       retval = this.root;
     } else {
       var head = new RedBlackTreeNode(null); /* False tree root */
-      var g, t;     /* Grandparent & parent */
-      var p, q;     /* Iterator & parent */
+      var g, t; /* Grandparent & parent */
+      var p, q; /* Iterator & parent */
       var dir = false,
         last = false;
 
@@ -757,11 +757,11 @@
 // Compare two sweep events
 // Return true means that e1 is placed at the event queue after e2, i.e,, e1 is processed by the algorithm after e2
   Clipper.sweepEventComp = function(e1, e2) {
-    if(e1.p[0] > e2.p[0]) // Different x-coordinate
+    if(e1.p[0] > e2.p[0]) // Different X coordinate
       return true;
-    if(e2.p[0] > e1.p[0]) // Different x-coordinate
+    if(e2.p[0] > e1.p[0]) // Different X coordinate
       return false;
-    if(!Clipper._ptEq(e1.p, e2.p)) // Different points, but same x-coordinate. The event with lower y-coordinate is processed first
+    if(!Clipper._ptEq(e1.p, e2.p)) // Different points, but same X coordinate. The event with lower Y coordinate is processed first
       return e1.p[1] > e2.p[1];
     if(e1.left !== e2.left) // Same point, but one is a left endpoint and the other a right endpoint. The right endpoint is processed first
       return e1.left;
@@ -788,7 +788,7 @@
         return e1.below(e2.other.p);
 
     // Different points
-      if(Clipper.sweepEventComp(e1, e2))  // has the line segment associated to e1 been inserted into S after the line segment associated to e2 ?
+      if(Clipper.sweepEventComp(e1, e2)) // has the line segment associated to e1 been inserted into S after the line segment associated to e2 ?
         return e2.above(e1.p);
     // The line segment associated to e2 has been inserted into S after the line segment associated to e1
       return e1.below(e2.p);
@@ -906,30 +906,30 @@
         else
        prev = null;
       // Compute the inside and inOut flags
-        if(prev === null || typeof prev === "undefined") {           // there is not a previous line segment in S?
+        if(prev === null || typeof prev === "undefined") { // there is not a previous line segment in S?
       // console.log("prev is end")
           e.inside = e.inOut = false;
         } else if(prev.data.type !== Clipper.NORMAL) {
           if(prev === S.first()) { // e overlaps with prev
             e.inside = true; // it is not relevant to set true or false
             e.inOut = false;
-          } else {   // the previous two line segments in S are overlapping line segments
+          } else { // the previous two line segments in S are overlapping line segments
             sli = prev;
             sli = sli.prev();
             if(prev.data.pl === e.pl) {
-              e.inOut  = !prev.data.inOut;
+              e.inOut = !prev.data.inOut;
               e.inside = !sli.data.inOut;
             } else {
-              e.inOut  = !sli.data.inOut;
+              e.inOut = !sli.data.inOut;
               e.inside = !prev.data.inOut;
             }
           }
         } else if(e.pl === prev.data.pl) { // previous line segment in S belongs to the same polygon that "e" belongs to
           e.inside = prev.data.inside;
-          e.inOut  = !prev.data.inOut;
+          e.inOut = !prev.data.inOut;
         } else {                          // previous line segment in S belongs to a different polygon that "e" belongs to
           e.inside = !prev.data.inOut;
-          e.inOut  = prev.data.inside;
+          e.inOut = prev.data.inside;
         }
       /*
       console.log("Status line after insertion:")
@@ -1150,11 +1150,11 @@
  * @returns {Object} Return value.
 */
   Clipper.prototype.possibleIntersection = function(e1, e2) {
-//  if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
-//    return false;
+// if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
+// return false;
 
     var ip1 = [];
-    var ip2 = [];  // intersection points
+    var ip2 = []; // intersection points
     var nintersections;
   // console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
     if(!(nintersections = Clipper.findIntersection(e1.segment(), e2.segment(), ip1, ip2)))
@@ -1205,9 +1205,9 @@
     }
     if(sortedEvents.length === 3) { // the line segments share an endpoint
       sortedEvents[1].type = sortedEvents[1].other.type = Clipper.NON_CONTRIBUTING;
-      if(sortedEvents[0])         // is the right endpoint the shared point?
+      if(sortedEvents[0]) // is the right endpoint the shared point?
         sortedEvents[0].other.type = e1.inOut === e2.inOut ? Clipper.SAME_TRANSITION : Clipper.DIFFERENT_TRANSITION;
-      else                 // the shared point is the left endpoint
+      else // the shared point is the left endpoint
       sortedEvents[2].other.type = e1.inOut === e2.inOut ? Clipper.SAME_TRANSITION : Clipper.DIFFERENT_TRANSITION;
       this._divideSegment(sortedEvents[0] ? sortedEvents[0] : sortedEvents[2].other, sortedEvents[1].p);
       return;
@@ -1257,11 +1257,11 @@
  * of line segments, so curves and arcs are converted to line
  * segments before applying the operation.
  * <li>Each polygon can be concave or have self-intersections
- * or holes.  Subpaths that are holes have the opposite winding
+ * or holes. Subpaths that are holes have the opposite winding
  * order (clockwise or counterclockwise) from the subpath
  * that contains them.
  * <li>To use this method, you must include the script "extras/pathclip.js";
- * this is in addition to "extras/pathclip.js".  Example:<pre>
+ * this is in addition to "extras/pathclip.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
@@ -1269,7 +1269,7 @@
 * @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
-* value, given in units.  If null or omitted, default is 1.
+* value, given in units. If null or omitted, default is 1.
 * @returns {H3DU.GraphicsPath} The union of the two paths.
 * @memberof! H3DU.GraphicsPath
 */
@@ -1288,7 +1288,7 @@
 * @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
-* value, given in units.  If null or omitted, default is 1.
+* value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} The difference between this path
  * and the other path.
 * @memberof! H3DU.GraphicsPath
@@ -1308,7 +1308,7 @@
 * @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
-* value, given in units.  If null or omitted, default is 1.
+* value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * both paths.
 * @memberof! H3DU.GraphicsPath
@@ -1328,7 +1328,7 @@
 * @param {Number} [flatness] When curves and arcs
 * are decomposed to line segments, the
 * segments will be close to the true path of the curve by this
-* value, given in units.  If null or omitted, default is 1.
+* value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * only one of the two paths.
 * @memberof! H3DU.GraphicsPath

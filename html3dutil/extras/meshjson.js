@@ -14,7 +14,7 @@
 * library. <p>
 * To use this class, you must include the script "extras/meshjson.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/meshjson.js">&lt;/script></pre>
 * @class
 */
@@ -377,6 +377,6 @@ H3DU.MeshJSON.loadJSON = function(url) {
 Alias for the {@link H3DU.MeshJSON} class.
 @class
 @alias MeshJSON
- @deprecated Use {@link H3DU.MeshJSON} instead.
+ * @deprecated Use {@link H3DU.MeshJSON} instead.
 */
 var MeshJSON = H3DU.MeshJSON;

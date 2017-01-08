@@ -9,17 +9,17 @@
 <p>The HTML 3D library includes a collection
 of math functions for working with vectors, matrices, and quaternions.</p>
 
-<p>Here is an overview of these three data types.</p>
+<p>Here is an overview of these data types.</p>
 
 <h2>Contents <a id=Contents></a></h2>
 
-<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3D_Vectors">3D Vectors</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Projection_matrix_such_as_mat4perspective_mat4ortho">Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Look_at_matrix_mat4lookat">Look-at matrix (<code>mat4lookat</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Cross_product_vec3cross_A_B_and_normals">Cross product (<code>vec3cross(A, B)</code>) and normals</a><br>&nbsp;&nbsp;<a href="#Orientation_and_face_classification">Orientation and face classification</a><br></p>
+<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br>&nbsp;&nbsp;<a href="#Unit_Vectors">Unit Vectors</a><br>&nbsp;&nbsp;<a href="#Axis_of_Rotation">Axis of Rotation</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Makeup_of_Quaternions">Makeup of Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Boxes">Boxes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Projection_and_view_matrices">Projection and view matrices</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Cross_product_vec3cross_A_B_and_normals">Cross product (<code>vec3cross(A, B)</code>) and normals</a><br>&nbsp;&nbsp;<a href="#Orientation_and_face_classification">Orientation and face classification</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Finding_Orientation">Finding Orientation</a><br></p>
 
 <h2>Vectors <a id=Vectors></a></h2>
 
 <p>A vector is simply an array of elements that are related
-to each other.  As such, a vector can symbolize a position, a direction,
-a ray, a color, or anything else.  The methods in this class treat arrays
+to each other. As such, a vector can describe a position, a direction,
+a ray, a color, or anything else. The methods in this class treat arrays
 as vectors.  Functions dealing with vectors begin with &quot;vec&quot;.
 Many of H3DU.Math&#39;s functions use 3- or 4-element vectors.</p>
 
@@ -30,23 +30,40 @@ or normal, the elements are given as X, Y, Z, and W, in that order.</p>
 blue, and alpha, in that order (where each element ranges from 0-1).</p>
 
 <p>If a 3D <em>direction</em> is used in a 4-element vector function (one beginning with &quot;vec4&quot;),
-use 0 as the fourth element.  If a 3D <em>position</em> (point) is used in a 4-element vector
-function, the fourth element is generally 1.   (If the
+use 0 as the fourth element. If a 3D <em>position</em> (point) is used in a 4-element vector
+function, the fourth element is generally 1. (If the
 fourth element is anything other than 0, the vector is in <em>homogeneous
 coordinates</em>, where the 3D position equals the first three elements divided
 by the fourth.)</p>
 
-<h3>Axis of Rotation</h3>
+<h3>Unit Vectors <a id=Unit_Vectors></a></h3>
 
-<p>A rotation can be described using an <em>angle</em> and an <em>axis of rotation</em>.</p>
+<p>A unit vector is a vector with a length of 1. (A vector&#39;s <em>length</em> is the square root
+of the sum of the squares of its components.) A vector can be &quot;normalized&quot; to
+a unit vector by dividing each of its components by its length.</p>
 
-<p>An axis of rotation is a 3-element vector or three numbers that describe a ray
-that starts at the origin (0,0,0) and points toward a 3D point. Here are examples.</p>
+<p>The following functions normalize vectors and find their length.</p>
 
 <ul>
-<li>The X-axis of rotation (upward or downward turn) is (1, 0, 0).</li>
-<li>The Y-axis of rotation (leftward or rightward turn) is (0, 1, 0).</li>
-<li>The Z-axis of rotation (side-by-side sway) is (0, 0, 1).</li>
+<li><a href="H3DU.Math.html#H3DU.Math.vec3norm">H3DU.Math.vec3norm</a> - Converts a 3-element vector to a unit vector.</li>
+<li><a href="H3DU.Math.html#H3DU.Math.vec4norm">H3DU.Math.vec4norm</a> - Converts a 4-element vector to a unit vector.</li>
+<li><a href="H3DU.Math.html#H3DU.Math.vec3length">H3DU.Math.vec3length</a> - Finds a 3-element vector&#39;s length.</li>
+<li><a href="H3DU.Math.html#H3DU.Math.vec4length">H3DU.Math.vec4length</a> - Finds a 4-element vector&#39;s length.</li>
+</ul>
+
+<h3>Axis of Rotation <a id=Axis_of_Rotation></a></h3>
+
+<p>A rotation can be described using an <em>angle</em> and an <em>axis of rotation</em>,
+for example, in the <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate</a> method.</p>
+
+<p>An axis of rotation is a 3-element vector or three numbers that describe a ray
+that starts at the origin (0,0,0) and points toward a 3D point. The vector&#39;s elements are
+the X, Y, and Z coordinates of that point, in that order. Here are examples.</p>
+
+<ul>
+<li>The X axis of rotation (upward or downward turn) is (1, 0, 0).</li>
+<li>The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).</li>
+<li>The Z axis of rotation (side-by-side sway) is (0, 0, 1).</li>
 </ul>
 
 <p>While the axis of rotation points toward the viewer, if the angle&#39;s value
@@ -57,9 +74,11 @@ is positive (resp. negative) and the <a href="#Coordinate_Systems">coordinate sy
 <li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
 </ul>
 
+<p>Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
+describe the same axis of rotation.</p>
+
 <p>Unless stated otherwise, an axis of rotation passed to an <code>H3DU.Math</code>
-method need not be a unit vector (a [&quot;normalized&quot;
-vector]<a href="H3DU.Math.html#H3DU.Math.vec3norm">H3DU.Math.vec3norm</a> with a length of 1).</p>
+method need not be a <a href="#Unit_Vectors">unit vector</a>.</p>
 
 <h2>Matrices <a id=Matrices></a></h2>
 
@@ -74,11 +93,11 @@ For more details, see the <a href="tutorial-matrixdetails.html">Matrix Details</
 <p>A translation is a shifting of an object&#39;s position.</p>
 
 <p>To create a translation matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4translated">H3DU.Math.mat4translated()</a>,
-and specify the X-offset, the Y-offset, and the Z-offset.  For example, an X-offset of 1 moves
+and specify the X-offset, the Y-offset, and the Z-offset. For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 
 <p>To multiply an existing matrix by a translation, use
-<a href="H3DU.Math.html#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a>.  This will put the translation
+<a href="H3DU.Math.html#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a>. This will put the translation
 before the other transformations.</p>
 
 <h3>Scaling <a id=Scaling></a></h3>
@@ -86,11 +105,11 @@ before the other transformations.</p>
 <p>Scaling changes an object&#39;s size.</p>
 
 <p>To create a scaling matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4scaled">H3DU.Math.mat4scaled()</a>,
-and specify the scaling factors for the X, Y, and Z axis.  Each point is multiplied by the scaling
-factors to change the object&#39;s size.  For example, a Y-factor of 2 doubles an object&#39;s height.</p>
+and specify the scaling factors for the X, Y, and Z axis. Each point is multiplied by the scaling
+factors to change the object&#39;s size. For example, a Y-factor of 2 doubles an object&#39;s height.</p>
 
 <p>To multiply an existing matrix by a scaling, use
-<a href="H3DU.Math.html#H3DU.Math.mat4scale">H3DU.Math.mat4scale()</a>.  This will put the scaling
+<a href="H3DU.Math.html#H3DU.Math.mat4scale">H3DU.Math.mat4scale()</a>. This will put the scaling
 before the other transformations.</p>
 
 <h3>Rotation <a id=Rotation></a></h3>
@@ -98,37 +117,56 @@ before the other transformations.</p>
 <p>Rotation changes an object&#39;s orientation.</p>
 
 <p>To create a rotation matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
-and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation">axis of rotation</a>.  For example, specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation around the X-axis, and <code>(80, [0, 2, 3])</code> means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
+and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation">axis of rotation</a>. For example, specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation around the X axis, and <code>(80, [0, 2, 3])</code> means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
 
 <p>To multiply an existing matrix by a rotation, use
-<a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>.  This will put the rotation
+<a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>. This will put the rotation
 before the other transformations.</p>
 
 <h3>Combining Transforms <a id=Combining_Transforms></a></h3>
 
-<p>The order in which you do transforms is important.  In general, scaling then translating is
-not the same as translating then scaling.  Assuming your geometry is centered at the origin
+<p>The order in which you do transforms is important. In general, scaling then translating is
+not the same as translating then scaling. Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:</p>
 
 <ul>
-<li>Call <code>H3DU.Math.mat4identity()</code>, creating a matrix without a transformation.</li>
-<li>Do your translations if needed, using <code>mat4translate()</code>.</li>
-<li>Do your rotations if needed, using <code>mat4rotate()</code>.</li>
-<li>Do your scalings if needed, using <code>mat4scale()</code>.</li>
+<li>Call <a href="H3DU.Math.html#H3DU.Math.mat4identity"><code>H3DU.Math.mat4identity()</code></a>, creating a matrix without a transformation.</li>
+<li>Do your translations if needed, using <a href="H3DU.Math.html#H3DU.Math.mat4translate"><code>mat4translate()</code></a>.</li>
+<li>Do your rotations if needed, using <a href="H3DU.Math.html#H3DU.Math.mat4rotate"><code>mat4rotate()</code></a>.</li>
+<li>Do your scalings if needed, using <a href="H3DU.Math.html#H3DU.Math.mat4scale"><code>mat4scale()</code></a>.</li>
 </ul>
 
 <p>This way, the scalings and rotations will affect the object while it&#39;s still centered, and
 before the translations (shifts) take place.</p>
 
 <p>You can also multiply transforms using <a href="H3DU.Math.html#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a>.
-This takes two matrices and returns one combined matrix.  The combined matrix will have the effect
+This takes two matrices and returns one combined matrix. The combined matrix will have the effect
 of doing the second matrix&#39;s transform, then the first matrix&#39;s transform.</p>
 
 <h2>Quaternions <a id=Quaternions></a></h2>
 
 <p>A quaternion is a 4-element array that can describe a
-3D rotation.  Functions dealing with quaternions begin with
-&quot;quat&quot;.  A quaternion&#39;s:</p>
+3D rotation. Functions dealing with quaternions begin with
+&quot;quat&quot;.</p>
+
+<h3>Using Quaternions <a id=Using_Quaternions></a></h3>
+
+<p>For best results when using quaternions:</p>
+
+<ul>
+<li>Store the orientation of each object as a single quaternion, created
+with <a href="H3DU.Math.html#H3DU.Math.quatIdentity">H3DU.Math.quatIdentity</a>.</li>
+<li>As rotations happen each frame, convert the rotation (which may be
+in pitch/yaw/roll or another form, depending on the input device) to a quaternion
+and <a href="H3DU.Math.html#H3DU.Math.quatMultiply">multiply</a> that quaternion by the current orientation to get a new orientation
+for that object.</li>
+<li>Normalize the orientation quaternion (using <code>quatNorm()</code> or <code>quatNormInPlace()</code>)
+every few frames.</li>
+</ul>
+
+<h3>Makeup of Quaternions <a id=Makeup_of_Quaternions></a></h3>
+
+<p>A quaternion&#39;s:</p>
 
 <ul>
 <li>...first three elements (X, Y, Z) describe a 3D point, where the
@@ -140,32 +178,16 @@ degrees, and 1 at 180 degrees.)</small></li>
 <small>(W is 1 at 0 degrees, 0 at 180 and -1 at 360 degrees.)</small></li>
 </ul>
 
-<p>Quaternions that describe a 3D rotation should be <em>unit vectors</em>
-(<a href="H3DU.Math.html#H3DU.Math.quatNorm">&quot;normalized&quot; vectors</a> with a length of 1).</p>
+<p>Quaternions that describe a 3D rotation should be <a href="#Unit_Vectors">unit vectors</a>.</p>
 
 <h3>Multiplying quaternions <a id=Multiplying_quaternions></a></h3>
 
 <p>The methods quatMultiply and quatFromTaitBryan, among others, involve
 multiplying quaternions, combining multiple rotations into a single
-rotation.  In these methods, multiplying one rotation by another
+rotation. In these methods, multiplying one rotation by another
 creates a combined rotation in which the second rotation happens
 before the first rotation (when applied in the global coordinate frame).
 Like matrix multiplication, the order in which you multiply quaternions is important.</p>
-
-<h3>Using Quaternions <a id=Using_Quaternions></a></h3>
-
-<p>For best results when using quaternions:</p>
-
-<ul>
-<li>Store the orientation of each object as a single quaternion, created
-with <code>quatIdentity()</code>.</li>
-<li>As rotations happen each frame, convert the rotation (which may be
-in pitch/yaw/roll or another form, depending on the input device) to a quaternion
-and multiply that quaternion by the current orientation to get a new orientation
-for that object.</li>
-<li>Normalize the orientation quaternion (using <code>quatNorm()</code> or <code>quatNormInPlace()</code>)
-every few frames.</li>
-</ul>
 
 <h3>Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a></h3>
 
@@ -213,48 +235,70 @@ coordinates of any point lying on the plane.</p></li>
 the X, Y, and Z components of the plane&#39;s normal vector.</li>
 <li>D is the distance in the normal&#39;s direction from the plane to the origin (0,0,0),
 or if negative, in the opposite direction from the origin to the plane, divided
-by the normal&#39;s length.  Alternatively, D is the negative dot product of the
+by the normal&#39;s length. Alternatively, D is the negative dot product of the
 plane&#39;s normal and any point on the plane.</li>
 </ul>
 
 <p>There is one method that deals with planes:</p>
 
 <ul>
-<li><a href="H3DU.Math.html#H3DU.Math.planeNormInPlace">H3DU.Math.planeNormInPlace()</a> -
-Converts the plane to a form in which its normal has a length of 1.</li>
+<li><a href="H3DU.Math.html#H3DU.Math.planeNormInPlace">H3DU.Math.planeNormInPlace</a> - Converts the plane to a form in which
+its normal has a length of 1.</li>
+</ul>
+
+<h2>Boxes <a id=Boxes></a></h2>
+
+<p>An array of six numbers can describe an axis-aligned bounding box (AABB).
+If it does, the first three numbers are the box&#39;s minimum X, Y, and Z coordinates,
+and the last three numbers are the box&#39;s maximum X, Y, and Z coordinates.</p>
+
+<p>If a minimum coordinate is greater than a maximum coordinate, then the
+box is considered empty.</p>
+
+<p>Methods that deal with boxes include:</p>
+
+<ul>
+<li><a href="H3DU.Math.html#H3DU.Math.boxCenter">H3DU.Math.boxCenter</a> - Finds a box&#39;s center.</li>
+<li><a href="H3DU.Math.html#H3DU.Math.boxDimensions">H3DU.Math.boxDimensions</a> - Finds a box&#39;s dimensions.</li>
+<li><a href="H3DU.Math.html#H3DU.Math.boxIsEmpty">H3DU.Math.boxIsEmpty</a> - Determines whether a box is empty.</li>
 </ul>
 
 <h2>Coordinate Systems <a id=Coordinate_Systems></a></h2>
 
-<p>There are two conventions of 3D coordinate systems, left-handed and right-handed:</p>
+<p>There are two conventions of 3D coordinate systems, left-handed and
+right-handed:</p>
 
 <ul>
-<li>In a <em>left-handed</em> coordinate system, the z-axis points <em>away from
-the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
-<li>In a <em>right-handed</em> coordinate system, the z-axis points <em>toward
-the viewer</em> whenever the x-axis points to the right and the y-axis points up.</li>
+<li>In a <em>left-handed</em> coordinate system, the Z axis points <em>away from
+the viewer</em> whenever the X axis points to the right and the Y axis points up.</li>
+<li>In a <em>right-handed</em> coordinate system, the Z axis points <em>toward
+the viewer</em> whenever the X axis points to the right and the Y axis points up.</li>
 </ul>
-
-<p>If an <code>H3DU.Math</code> method works differently in left- and right-handed coordinate systems,
-its description will note this. The differences are also noted below.</p>
 
 <h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3>
 
-<h4>3D Vectors <a id=3D_Vectors></a></h4>
+<h4>Projection and view matrices <a id=Projection_and_view_matrices></a></h4>
 
-<p>If a 3D vector&#39;s Z component is positive, it points toward the viewer (outward) in a
-right-handed coordinate system, and away from the viewer (inward) in a left-handed
-system. The reverse is true if the Z component is negative.</p>
+<p>The difference between a left-handed and right-handed coordinate system
+lies in how 3D points are transformed, mainly due to the projection and view
+matrices.</p>
 
-<h4>Projection matrix (such as <code>mat4perspective</code>, <code>mat4ortho</code>) <a id=Projection_matrix_such_as_mat4perspective_mat4ortho></a></h4>
+<p>The following methods return <strong>projection matrices</strong> for a right-handed coordinate system.
+To adjust the matrices for a left-handed system, reverse the sign of the 9th, 10th, 11th, and
+12th elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 
-<p>Returns a result for right-handed coordinate systems.  For left-handed systems,
-reverse the sign of the 9th, 10th, 11th, and 12th elements of the result (zero-based
-indices 8, 9, 10, and 11).</p>
+<ul>
+<li><a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>,
+<a href="H3DU.Math.html#H3DU.Math.mat4perspectiveHorizontal">H3DU.Math.mat4perspectiveHorizontal</a>,
+<a href="H3DU.Math.html#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>,
+<a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>,
+<a href="H3DU.Math.html#H3DU.Math.mat4ortho2d">H3DU.Math.mat4ortho2d</a>,
+<a href="H3DU.Math.html#H3DU.Math.mat4orthoAspect">H3DU.Math.mat4orthoAspect</a>,
+<a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>.</li>
+</ul>
 
-<h4>Look-at matrix (<code>mat4lookat</code>) <a id=Look_at_matrix_mat4lookat></a></h4>
-
-<p>Returns a result for right-handed coordinate systems.  For left-handed systems,
+<p>The <a href="H3DU.Math.html#H3DU.Math.mat4lookat">H3DU.Math.mat4lookat</a> method returns a <strong>view matrix</strong> for a right-handed
+coordinate system. To adjust the matrix for a left-handed system,
 reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14).</p>
@@ -273,7 +317,7 @@ is positive (resp. negative) and the coordinate system is...</p>
 
 <p>Given a triangle formed by points A, B, and C, the <a href="a%20href=%22H3DU.Math.html#H3DU.Math.vec3cross%22%3EH3DU.Math.vec3cross%3C/a">cross product</a>
 of the two vectors (A minus C) and (B minus C), in that order, is a <em>normal</em> of that triangle (a vector that points away from
-the triangle&#39;s surface).  The cross product normal will be such that, whenever it points toward the viewer,
+the triangle&#39;s surface). The cross product normal will be such that, whenever it points toward the viewer,
 the triangle&#39;s vertices are oriented counterclockwise for right-handed coordinate systems, or
 clockwise for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)</p>
@@ -287,18 +331,17 @@ and B minus (0,0,0) is B).</p>
 <p>A triangle has counterclockwise <em>orientation</em> if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle&#39;s two-dimensional projection in <em>window coordinates</em> (which roughly correspond to its location on the screen or frame buffer). Otherwise, the triangle has clockwise orientation.</p>
 
 <p>By default, counterclockwise oriented triangles are <em>front faces</em>, and
-other triangles are <em>back faces</em>.  To change which kinds of triangles are
+other triangles are <em>back faces</em>. To change which kinds of triangles are
 front faces, call the <code>frontFace</code> method of Scene3D.</p>
 
-<h4>Finding Orientation</h4>
+<h4>Finding Orientation <a id=Finding_Orientation></a></h4>
 
-<p>To find a triangle&#39;s orientation, do the following calculation (X1-3 and Y1-3 are the window coordinates of its vertices). Note that half of the result will be the triangle&#39;s signed area.</p>
+<p>To find a triangle&#39;s orientation, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle&#39;s signed area.</p>
 
 <pre><code>(X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
 </code></pre>
 
-<p>If the result is positive (resp. negative), and the window space X
-axis points right and the Y axis points...</p>
+<p>If the result is positive (resp. negative), and the window space X axis points right and the Y axis points...</p>
 
 <ul>
 <li>...up (which is the case in WebGL), then the triangle&#39;s vertices

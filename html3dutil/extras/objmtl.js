@@ -14,14 +14,14 @@ WaveFront OBJ format.<p>
 * library. <p>
 * To use this class, you must include the script "extras/objmtl.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/objmtl.js">&lt;/script></pre>
 @class */
 H3DU.ObjData = function() {
   "use strict";
   /** URL of the OBJ file. */
   this.url = null;
-  /** An array of meshes.  Two or more meshes may have
+  /** An array of meshes. Two or more meshes may have
 the same name (the "name" property in each mesh).  The "data"
 property holds data for each mesh.
 @deprecated This property is not meant to be public.
@@ -69,7 +69,7 @@ H3DU.ObjData.prototype._gatherTextureNames = function() {
 };
 /**
  * Creates one or more {@link H3DU.Shape} objects from the named portion
- * of the data in this OBJ file.  If a MTL file was also loaded, the
+ * of the data in this OBJ file. If a MTL file was also loaded, the
  * shape will have the corresponding material, if it uses one.
  * @param {String} name Name from the OBJ file of the portion
  * of the model to use.
@@ -709,6 +709,6 @@ H3DU.ObjData._loadObj = function(str) {
 Alias for the {@link H3DU.ObjData} class.
 @class
 @alias ObjData
- @deprecated Use {@link H3DU.ObjData} instead.
+ * @deprecated Use {@link H3DU.ObjData} instead.
 */
 var ObjData = H3DU.ObjData;

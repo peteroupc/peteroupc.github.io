@@ -14,7 +14,7 @@
 * library. <p>
 * To use this class, you must include the script "extras/frame.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
 * @class
 * @alias H3DU.FrameCounter
@@ -77,7 +77,7 @@ H3DU.FrameCounter.prototype.getFPS = function() {
 * library. <p>
 * To use this class, you must include the script "extras/frame.js"; the
  * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library.  Example:<pre>
+ * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
 * @class
 * @alias H3DU.FrameCounterDiv
@@ -136,7 +136,7 @@ var PrimitiveCounter = function() {
 * This method used to update this object's state.
 * @deprecated Will be removed in the future.
  * @memberof! PrimitiveCounter
- @alias update
+ * @alias update
  * @returns {Object} Return value.
 */
   this.update = function() {
@@ -146,17 +146,17 @@ var PrimitiveCounter = function() {
 };
 /* exported FrameCounter */
 /**
-Alias for the  {@link H3DU.FrameCounter} class.
+Alias for the {@link H3DU.FrameCounter} class.
 @class
 @alias FrameCounter
- @deprecated Use {@link H3DU.FrameCounter} instead.
+ * @deprecated Use {@link H3DU.FrameCounter} instead.
 */
 var FrameCounter = H3DU.FrameCounter;
 /* exported FrameCounterDiv */
 /**
-Alias for the  {@link H3DU.FrameCounterDiv} class.
+Alias for the {@link H3DU.FrameCounterDiv} class.
 @class
 @alias FrameCounterDiv
- @deprecated Use {@link H3DU.FrameCounterDiv} instead.
+ * @deprecated Use {@link H3DU.FrameCounterDiv} instead.
 */
 var FrameCounterDiv = H3DU.FrameCounterDiv;

@@ -125,7 +125,7 @@ to set the shader programs they use.</b></li>
 <h3>H3DU.Scene3D#shapes <a id='H3DU.Scene3D_shapes'></a></h3>
 
 <p><b>Deprecated: Shapes should now be managed in <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> objects,
- rather than through this class.</b></p>
+rather than through this class.</b></p>
 
 <p>An array of shapes that are part of the scene.</p>
 
@@ -240,7 +240,7 @@ after each call to the render() method.</p>
 <h4>Return Value</h4>
 
 <p>An array of four numbers, from 0 through
- 1, specifying the red, green, blue, and alpha components of the color. (Type: Array.&lt;Number&gt;)</p>
+1, specifying the red, green, blue, and alpha components of the color. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>H3DU.Scene3D#getClientAspect() <a id='H3DU.Scene3D_H3DU.Scene3D_getClientAspect'></a></h3>
 
@@ -431,8 +431,8 @@ The 3D shape to remove.</li>
 <h3>H3DU.Scene3D#render(renderPasses) <a id='H3DU.Scene3D_H3DU.Scene3D_render'></a></h3>
 
 <p>Renders all shapes added to this scene.
- This is usually called in a render loop, such
- as <a href="H3DU.html#H3DU.renderLoop">H3DU.renderLoop</a>.</p>
+This is usually called in a render loop, such
+as <a href="H3DU.html#H3DU.renderLoop">H3DU.renderLoop</a>.</p>
 
 <p>NOTE: For compatibility, the &quot;render&quot; function with a null or omitted parameter will clear the color
 buffer and depth buffer. This compatibility option may be dropped in the future.</p>
@@ -563,13 +563,13 @@ see <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective
 
 <ul>
 <li><code>left</code> (Type: Number)<br>
-X-coordinate of the point where the left clipping plane meets the near clipping plane.</li>
+X coordinate of the point where the left clipping plane meets the near clipping plane.</li>
 <li><code>right</code> (Type: Number)<br>
-X-coordinate of the point where the right clipping plane meets the near clipping plane.</li>
+X coordinate of the point where the right clipping plane meets the near clipping plane.</li>
 <li><code>bottom</code> (Type: Number)<br>
-Y-coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
+Y coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
 <li><code>top</code> (Type: Number)<br>
-Y-coordinate of the point where the top clipping plane meets the near clipping plane.</li>
+Y coordinate of the point where the top clipping plane meets the near clipping plane.</li>
 <li><code>near</code> (Type: Number)<br>
 The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
 <li><code>far</code> (Type: Number)<br>
@@ -755,7 +755,7 @@ see <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective
 
 <ul>
 <li><code>fov</code> (Type: Number)<br>
-Y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
+Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
 <li><code>aspect</code> (Type: Number)<br>
 The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio (getAspect() or getClientAspect()).</li>
 <li><code>near</code> (Type: Number)<br>

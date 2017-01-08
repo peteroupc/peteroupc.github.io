@@ -113,11 +113,11 @@ and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <ul>
 <li><code>x</code> (Type: Array.&lt;Number&gt; | number)<br>
-Number to add to the X-coordinate, If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.</li>
+Number to add to the X coordinate, If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.</li>
 <li><code>y</code> (Type: Number)<br>
-Number to add to the Y-coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+Number to add to the Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 <li><code>z</code> (Type: Number)<br>
-Number to add to the Z-coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+Number to add to the Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -130,7 +130,7 @@ Number to add to the Z-coordinate. If &quot;x&quot; is an array, this parameter 
 in the form of an angle and an axis of
 rotation. The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
- Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+Has no effect if a matrix was defined with H3DU.Transform#setMatrix
 and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
@@ -156,14 +156,14 @@ Z-component of the point lying on the axis of rotation.</li>
 described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
 for describing 3D rotations). The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
- Has no effect if a matrix was defined with H3DU.Transform#setMatrix
+Has no effect if a matrix was defined with H3DU.Transform#setMatrix
 and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
-A four-element array describing the rotation. A quaternion is returned from the methods glmath.H3DU.Math.quatFromAxisAngle or glmath.H3DU.Math.quatFromTaitBryan.</li>
+A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> or <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -172,7 +172,7 @@ A four-element array describing the rotation. A quaternion is returned from the 
 
 <h4>Example</h4>
 
-<pre><code>// Combine an object&#39;s orientation with a rotation 20 degrees about the X-axis
+<pre><code>// Combine an object&#39;s orientation with a rotation 20 degrees about the X axis
 transform.multQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
 // Combine an object&#39;s orientation with identity (no rotation)
 transform.multQuaternion(H3DU.Math.quatIdentity());
@@ -249,11 +249,11 @@ and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <ul>
 <li><code>x</code> (Type: Array.&lt;Number&gt; | number)<br>
-The X-coordinate. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+The X coordinate. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
 <li><code>y</code> (Type: Number)<br>
-The Y-coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 <li><code>z</code> (Type: Number)<br>
-The Z-coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -270,7 +270,7 @@ and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <ul>
 <li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
-A four-element array describing the rotation. A quaternion is returned from the methods glmath.H3DU.Math.quatFromAxisAngle and glmath.H3DU.Math.quatFromTaitBryan, among others.</li>
+A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> and <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>, among others.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -279,7 +279,7 @@ A four-element array describing the rotation. A quaternion is returned from the 
 
 <h4>Example</h4>
 
-<pre><code>// Set an object&#39;s orientation to 30 degrees about the X-axis
+<pre><code>// Set an object&#39;s orientation to 30 degrees about the X axis
 transform.setQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
 // Set an object&#39;s orientation to identity (no rotation)
 transform.setQuaternion(H3DU.Math.quatIdentity());
