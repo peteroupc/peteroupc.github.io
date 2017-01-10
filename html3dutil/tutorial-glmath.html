@@ -13,7 +13,7 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 
 <h2>Contents <a id=Contents></a></h2>
 
-<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br>&nbsp;&nbsp;<a href="#Unit_Vectors">Unit Vectors</a><br>&nbsp;&nbsp;<a href="#Axis_of_Rotation">Axis of Rotation</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;<a href="#Makeup_of_Quaternions">Makeup of Quaternions</a><br>&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles_and_their_disadvantages">Tait-Bryan angles and their disadvantages</a><br><a href="#Planes">Planes</a><br><a href="#Boxes">Boxes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Projection_and_view_matrices">Projection and view matrices</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Cross_product_vec3cross_and_normals">Cross product (<code>vec3cross</code>) and normals</a><br>&nbsp;&nbsp;<a href="#Orientation_and_face_classification">Orientation and face classification</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Finding_Orientation">Finding Orientation</a><br></p>
+<p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br>&nbsp;&nbsp;<a href="#Unit_Vectors">Unit Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Describing_Rotations">Describing Rotations</a><br>&nbsp;&nbsp;<a href="#Axis_of_Rotation">Axis of Rotation</a><br>&nbsp;&nbsp;<a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Makeup_of_Quaternions">Makeup of Quaternions</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Multiplying_quaternions">Multiplying quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles">Tait-Bryan angles</a><br><a href="#Planes">Planes</a><br><a href="#Boxes">Boxes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Projection_and_view_matrices">Projection and view matrices</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Cross_product_vec3cross_and_normals">Cross product (<code>vec3cross</code>) and normals</a><br>&nbsp;&nbsp;<a href="#Winding_and_face_classification">Winding and face classification</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Finding_a_triangle_s_winding">Finding a triangle&#39;s winding</a><br></p>
 
 <h2>Vectors <a id=Vectors></a></h2>
 
@@ -51,34 +51,8 @@ a unit vector by dividing each of its components by its length.</p>
 <li><a href="H3DU.Math.html#H3DU.Math.vec4length">H3DU.Math.vec4length</a> - Finds a 4-element vector&#39;s length.</li>
 </ul>
 
-<h3>Axis of Rotation <a id=Axis_of_Rotation></a></h3>
-
-<p>A rotation can be described using an <em>angle</em> and an <em>axis of rotation</em>,
-for example, in the <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate</a> method.</p>
-
-<p>An axis of rotation is a 3-element vector or three numbers that describe a ray
-that starts at the origin (0,0,0) and points toward a 3D point. The vector&#39;s elements are
-the X, Y, and Z coordinates of that point, in that order. Here are examples.</p>
-
-<ul>
-<li>The X axis of rotation (upward or downward turn) is (1, 0, 0).</li>
-<li>The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).</li>
-<li>The Z axis of rotation (side-by-side sway) is (0, 0, 1).</li>
-</ul>
-
-<p>While the axis of rotation points toward the viewer, if the angle&#39;s value
-is positive (resp. negative) and the <a href="#Coordinate_Systems">coordinate system</a> is...</p>
-
-<ul>
-<li>...right handed, then the angle runs counterclockwise (resp. clockwise).</li>
-<li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
-</ul>
-
-<p>Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
-describe the same axis of rotation.</p>
-
-<p>Unless stated otherwise, an axis of rotation passed to an <code>H3DU.Math</code>
-method need not be a <a href="#Unit_Vectors">unit vector</a>.</p>
+<p>Note that due to rounding error, normalizing a vector with an <code>H3DU.Math</code> method
+might not necessarily result in a vector with a length of 1.</p>
 
 <h2>Matrices <a id=Matrices></a></h2>
 
@@ -143,28 +117,62 @@ before the translations (shifts) take place.</p>
 This takes two matrices and returns one combined matrix. The combined matrix will have the effect
 of doing the second matrix&#39;s transform, then the first matrix&#39;s transform.</p>
 
-<h2>Quaternions <a id=Quaternions></a></h2>
+<h2>Describing Rotations <a id=Describing_Rotations></a></h2>
 
-<p>A quaternion is a 4-element array that can describe a
+<p>Rotations in 3D space can be described in many ways, including
+quaternions, Tait-Bryan angles, and an angle and axis.</p>
+
+<h3>Axis of Rotation <a id=Axis_of_Rotation></a></h3>
+
+<p>A rotation can be described using an <em>angle</em> and an <em>axis of rotation</em>,
+for example, in the <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate</a> method.</p>
+
+<p>An axis of rotation is a 3-element vector or three numbers that describe a ray
+that starts at the origin (0,0,0) and points toward a 3D point. The vector&#39;s elements are
+the X, Y, and Z coordinates of that point, in that order. Here are examples.</p>
+
+<ul>
+<li>The X axis of rotation (upward or downward turn) is (1, 0, 0).</li>
+<li>The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).</li>
+<li>The Z axis of rotation (side-by-side sway) is (0, 0, 1).</li>
+</ul>
+
+<p>While the axis of rotation points toward the viewer, if the angle&#39;s value
+is positive (resp. negative) and the <a href="#Coordinate_Systems">coordinate system</a> is...</p>
+
+<ul>
+<li>...right handed, then the angle runs counterclockwise (resp. clockwise).</li>
+<li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
+</ul>
+
+<p>Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
+describe the same axis of rotation.</p>
+
+<p>Unless stated otherwise, an axis of rotation passed to an <code>H3DU.Math</code>
+method need not be a <a href="#Unit_Vectors">unit vector</a>.</p>
+
+<h3>Quaternions <a id=Quaternions></a></h3>
+
+<p>A quaternion is a 4-element vector that can describe a
 3D rotation. Functions dealing with quaternions begin with
 &quot;quat&quot;.</p>
 
-<h3>Using Quaternions <a id=Using_Quaternions></a></h3>
+<h4>Using Quaternions <a id=Using_Quaternions></a></h4>
 
 <p>For best results when using quaternions:</p>
 
 <ul>
-<li>Store the orientation of each object as a single quaternion, created
+<li>Store the rotation of each object as a single quaternion, created
 with <a href="H3DU.Math.html#H3DU.Math.quatIdentity">H3DU.Math.quatIdentity</a>.</li>
 <li>As rotations happen each frame, convert the rotation (which may be
 in pitch/yaw/roll or another form, depending on the input device) to a quaternion
-and <a href="H3DU.Math.html#H3DU.Math.quatMultiply">multiply</a> that quaternion by the current orientation to get a new orientation
-for that object.</li>
-<li>Normalize the orientation quaternion (using <code>quatNorm()</code> or <code>quatNormInPlace()</code>)
+and <a href="H3DU.Math.html#H3DU.Math.quatMultiply">multiply</a> that quaternion by the current
+quaternion to get the object&#39;s new rotation.</li>
+<li>Normalize the rotation quaternion (using <code>quatNorm()</code> or <code>quatNormInPlace()</code>)
 every few frames.</li>
 </ul>
 
-<h3>Makeup of Quaternions <a id=Makeup_of_Quaternions></a></h3>
+<h4>Makeup of Quaternions <a id=Makeup_of_Quaternions></a></h4>
 
 <p>A quaternion&#39;s...</p>
 
@@ -180,30 +188,26 @@ degrees, and 1 at 180 degrees.)</small></li>
 
 <p>Quaternions that describe a 3D rotation should be <a href="#Unit_Vectors">unit vectors</a>.</p>
 
-<h3>Multiplying quaternions <a id=Multiplying_quaternions></a></h3>
+<h4>Multiplying quaternions <a id=Multiplying_quaternions></a></h4>
 
-<p>The methods quatMultiply and quatFromTaitBryan, among others, involve
-multiplying quaternions, combining multiple rotations into a single
-rotation. In these methods, multiplying one rotation by another
-creates a combined rotation in which the second rotation happens
+<p>When two quaternions are multiplied (for example, with {@H3DU.Math.quatMultiply}),
+the result is a combined rotation in which the second rotation happens
 before the first rotation (when applied in the global coordinate frame).
 Like matrix multiplication, the order in which you multiply quaternions is important.</p>
 
-<h3>Tait-Bryan angles and their disadvantages <a id=Tait_Bryan_angles_and_their_disadvantages></a></h3>
+<h3>Tait-Bryan angles <a id=Tait_Bryan_angles></a></h3>
 
-<p>Pitch-yaw-roll angles (also called Tait-Bryan angles) can also be used to describe 3D rotations, but
-they have disadvantages:</p>
+<p>Pitch-yaw-roll angles (also called Tait-Bryan angles) describe three different rotations
+around three different axes, called the pitch, yaw, and roll axes (or the X, Y, Z axes,
+respectively), which occur one after the other.  However:</p>
 
 <ul>
-<li>In general, the order of pitch, yaw, and roll rotations is important. For example, a 30-degree
-pitch followed by a 20-degree roll is not the same as a 20-degree pitch followed
-by a 30-degree roll.</li>
-<li>There are multiple conventions for Tait-Bryan angles, such as the order of
-rotations; pitch then yaw, or yaw then pitch?</li>
-<li>Pitch-yaw-roll angle rotations are not easily reversible when the same order
-of angles is used. For example, a negative 30-degree
-pitch followed by a negative 20-degree roll does not undo a 30-degree
-pitch followed by a 20-degree roll.</li>
+<li>There are multiple conventions for pitch-yaw-roll angles, including the order of
+rotations (for example: pitch-roll-yaw, roll-pitch-yaw), and whether the rotations occur
+around the object&#39;s original axes (&quot;extrinsic&quot;) or its new axes (&quot;intrinsic&quot;).</li>
+<li>Rotations are multiplied like in quaternions and matrices, so the order the rotations
+occur is important.  For example, a 30-degree pitch followed by a 20-degree
+roll is not the same as a 20-degree pitch followed by a 30-degree roll.</li>
 <li>Pitch-yaw-roll angles can cause a problem called &quot;gimbal lock&quot;, in which a rotation along
 one axis (say, a pitch) can cause a vector to be parallel to another axis (say, the roll
 axis), so that a rotation along that axis will do nothing.</li>
@@ -220,7 +224,7 @@ Converts from a quaternion to Tait-Bryan angles</li>
 
 <h2>Planes <a id=Planes></a></h2>
 
-<p>A 4-element array can describe a 3D plane in the following manner:</p>
+<p>A 4-element array can describe a plane in the following manner:</p>
 
 <ul>
 <li><p>The 4 elements, labeled A, B, C, and D in that order, describe a plane
@@ -323,22 +327,21 @@ from the triangle&#39;s surface).</li>
 with B, in that order, is a normal of that triangle.</li>
 </ul>
 
-<p>In either case, whenever this particular normal points toward the viewer, the triangle&#39;s vertices
-are oriented counterclockwise for right-handed coordinate systems, or
-clockwise for left-handed systems. (In general, there are two possible choices for normals, which each
+<p>In either case, while this particular normal points toward the viewer, the triangle&#39;s vertices
+run in a counterclockwise path for right-handed coordinate systems, or a clockwise path for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)</p>
 
-<h3>Orientation and face classification <a id=Orientation_and_face_classification></a></h3>
+<h3>Winding and face classification <a id=Winding_and_face_classification></a></h3>
 
-<p>A triangle has counterclockwise <em>orientation</em> if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle&#39;s two-dimensional projection in <em>window coordinates</em> (which roughly correspond to its location on the screen or frame buffer). Otherwise, the triangle has clockwise orientation.</p>
+<p>A two-dimensional triangle has counterclockwise <em>winding</em> if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex. Otherwise, it has clockwise winding. If the triangle is in 3D space, it&#39;s first transformed into 2D <em>window coordinates</em> before its winding is found. (Window coordinates roughly correspond to screen pixels.)</p>
 
-<p>By default, counterclockwise oriented triangles are <em>front faces</em>, and
+<p>By default, triangles with counterclockwise winding are <em>front faces</em>, and
 other triangles are <em>back faces</em>. To change which kinds of triangles are
 front faces, call the <code>frontFace</code> method of Scene3D.</p>
 
-<h4>Finding Orientation <a id=Finding_Orientation></a></h4>
+<h4>Finding a triangle&#39;s winding <a id=Finding_a_triangle_s_winding></a></h4>
 
-<p>To find a triangle&#39;s orientation, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle&#39;s signed area.</p>
+<p>To find a triangle&#39;s winding, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle&#39;s signed area.</p>
 
 <pre><code>(X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
 </code></pre>
@@ -346,9 +349,9 @@ front faces, call the <code>frontFace</code> method of Scene3D.</p>
 <p>If the result is positive (resp. negative), and the window space X axis points right and the Y axis points...</p>
 
 <ul>
-<li>...up (which is the case in WebGL), then the triangle&#39;s vertices
-are oriented counterclockwise (resp. clockwise).</li>
-<li>...down, then the vertices are oriented clockwise (resp. counterclockwise).</li>
+<li>...up (which is the case in WebGL), then the triangle
+has counterclockwise (resp. clockwise) winding.</li>
+<li>...down, then the triangle has clockwise (resp. counterclockwise) winding.</li>
 </ul>
 
 <p><a href="index.html">Back to documentation index.</a></p>

@@ -290,10 +290,7 @@
     if(a === b)return 0;
     return a < b ? -1 : 1;
   };
-/** @private
-
- * @returns {Object} Return value.
- */
+/** @private */
   RedBlackTree.prototype.first = function() {
     var r = this.root;
     if(r === null || typeof r === "undefined")return null;
@@ -577,7 +574,6 @@
     };
   }
 /** @private
-
  * @returns {Object} Return value.
  */
   Polygon.PointChain = function() {
@@ -658,7 +654,6 @@
   };
 /** @private
  * @param {Object} s Description of s.
-
  * @returns {Object} Return value.
  */
   Connector.prototype.add = function(s) {
@@ -740,13 +735,7 @@
   Clipper.SweepEvent.prototype.toString = function() {
     return Clipper._print(this);
   };
-/** @private
- * @param {Object} a Description of a.
- * @param {Object} b Description of b.
- * @param {Object} c Description of c.
-
- * @returns {Object} Return value.
- */
+/** @private */
   Clipper.signedArea = function(a, b, c) {
     var xa = a[0] - c[0];
     var ya = a[1] - c[1];
@@ -775,7 +764,6 @@
 /** @private
  * @param {Object} e1 Description of e1.
  * @param {Object} e2 Description of e2.
-
  * @returns {Object} Return value.
  */
   Clipper.sweepEventCompNum = function(e1, e2) {
@@ -808,7 +796,6 @@
 /** @private
  * @param {Object} e1 Description of e1.
  * @param {Object} e2 Description of e2.
-
  * @returns {Object} Return value.
  */
   Clipper.segmentCompNum = function(e1, e2) {
@@ -817,7 +804,6 @@
   };
 /** @private
  * @param {Object} e Description of e.
-
  * @returns {Object} Return value.
  */
   Clipper.prototype.storeSweepEvent = function(e) {
@@ -836,7 +822,6 @@
   };
 /** @private
  * @param {Object} op Description of op.
-
  * @returns {Object} Return value.
  */
   Clipper.prototype.compute = function(op) {
@@ -1016,7 +1001,6 @@
 /** @private
  * @param {Object} s Description of s.
  * @param {Object} pl Description of pl.
-
  * @returns {Object} Return value.
  */
   Clipper.prototype.processSegment = function(s, pl) {
@@ -1042,7 +1026,6 @@
  * @param {Object} b Description of b.
  * @param {Object} e Description of e.
  * @param {Object} f Description of f.
-
  * @returns {Object} Return value.
  */
   Clipper.findIntersection = function(a, b, e, f) {
@@ -1157,7 +1140,6 @@
 /** @private
  * @param {Object} e1 Description of e1.
  * @param {Object} e2 Description of e2.
-
  * @returns {Object} Return value.
  */
   Clipper.prototype.possibleIntersection = function(e1, e2) {

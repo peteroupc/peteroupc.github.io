@@ -30,7 +30,6 @@ H3DU.FrameCounter = function() {
  * Updates the state for determining the frame count.
  * This method should be called once per frame.
  * @memberof! H3DU.FrameCounter#
-
  * @returns {Object} Return value.
  */
 H3DU.FrameCounter.prototype.update = function() {
@@ -64,7 +63,6 @@ H3DU.FrameCounter.prototype.update = function() {
  * Gets the calculated frames per second, based
  * on how often the update method was called.
  * @memberof! H3DU.FrameCounter#
-
  * @returns {Object} Return value.
  */
 H3DU.FrameCounter.prototype.getFPS = function() {
@@ -106,7 +104,6 @@ H3DU.FrameCounterDiv._makeDiv = function() {
 /**
  * Updates the frame counter HTML element.
  * @memberof! H3DU.FrameCounterDiv#
-
  * @returns {Object} Return value.
  */
 H3DU.FrameCounterDiv.prototype.update = function() {
@@ -140,7 +137,6 @@ var PrimitiveCounter = function() {
  * @deprecated Will be removed in the future.
  * @memberof! PrimitiveCounter
  * @alias update
-
  * @returns {Object} Return value.
  */
   this.update = function() {

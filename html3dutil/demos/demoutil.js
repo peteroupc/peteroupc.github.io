@@ -178,7 +178,6 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
 /* exported makeMesh */
 function makeMesh(func, resolutionU, resolutionV) {
     // Default resolution is 50
-
   "use strict";
   if(resolutionV === null || typeof resolutionV === "undefined")resolutionV = resolutionU;
   if(resolutionU === null || typeof resolutionU === "undefined")resolutionU = 50;
@@ -196,7 +195,6 @@ function makeMesh(func, resolutionU, resolutionV) {
     }
   };
      // generate the parametric surface.
-
   new H3DU.SurfaceEval()
       .vertex(func)
     // Specify the color gradient evaluator defined above
@@ -255,8 +253,7 @@ function makeAxisLines(width) {
   yaxis.getTransform().setOrientation(90, 1, 0, 0);
   var xaxis = axisline.copy().setColor("red");
   xaxis.getTransform().setOrientation(90, 0, 1, 0);
-  xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
-  return xyz;
+  return xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
 }
 
 document.write("<script src='../extras/meshjson.js'></script>");

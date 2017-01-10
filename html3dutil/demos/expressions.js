@@ -316,7 +316,6 @@ Operation.prototype.length = function() {
  * Gets an operand by index.
  * @param {Number} index The zero-based index of the operand to get.
  * @memberof! Operation#
-
  * @returns {Object} Return value.
  */
 Operation.prototype.get = function(index) {
@@ -1070,7 +1069,6 @@ Constant.prototype.combineOp = function(operation, x) {
 /**
  * Returns a constant with the negated value of this one.
  * @memberof! Constant#
-
  * @returns {Object} Return value.
  */
 Constant.prototype.negate = function() {
@@ -1097,7 +1095,6 @@ Constant.prototype.add = function(x) {
  * or an expression that subtracts the given operation from this constant.
  * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
-
  * @returns {Object} Return value.
  */
 Constant.prototype.subtract = function(x) {
@@ -1110,7 +1107,6 @@ Constant.prototype.subtract = function(x) {
  * or an expression that multiplies this constant and the given operation.
  * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
-
  * @returns {Object} Return value.
  */
 Constant.prototype.multiply = function(x) {
@@ -1126,7 +1122,6 @@ Constant.prototype.multiply = function(x) {
  * or an expression that divides this constant and the given operation.
  * @param {Number|Expression} x A number or an expression.
  * @memberof! Constant#
-
  * @returns {Object} Return value.
  */
 Constant.prototype.divide = function(x) {

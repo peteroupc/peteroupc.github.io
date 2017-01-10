@@ -26,7 +26,6 @@
  * "use strict";
  * return x*x+y*y+z*z-1;
  * }});
-
  * @returns {Object} Return value.
  */
 function ImplicitSurface(func) {

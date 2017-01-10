@@ -273,8 +273,9 @@ is shaded from the inside; otherwise, <code>false</code>.</li>
 </ul>
 
 <p>For normal calculation to properly affect shading, each triangle in
-the mesh must have its vertices ordered in the same orientation throughout. If the
-vertices are oriented in the wrong order, use the <code>reverseWinding()</code>
+the mesh must have its vertices ordered in the same winding (counterclockwise or
+clockwise) throughout. If the
+vertices have the wrong order, use the <code>reverseWinding()</code>
 method to change their order.</p>
 
 <blockquote>
@@ -282,7 +283,7 @@ method to change their order.</p>
 for example, the <code>Batch3D.perspectiveAspect()</code> method,
 if the mesh describes a closed convex surface (such as a sphere or cube),
 each triangle&#39;s vertices (as they appear when the triangle&#39;s front side is seen)
-must be oriented counterclockwise for the shape to be shaded from the outside.</p>
+must be ordered counterclockwise for the shape to be shaded from the outside.</p>
 </blockquote>
 
 <p>Example:</p>
@@ -298,8 +299,9 @@ mesh = mesh.recalcNormals();
 <p>Once you have a mesh of a 3D shape, you still need to attach it to a shape
 and a batch of shapes in order for the renderer to draw it. This is where
 the <a href="H3DU.Shape.html"><code>H3DU.Shape</code></a> class comes into
-play; this class associates a 3D mesh with its location and orientation in the scene,
-as well as its color and appearance. To attach a mesh to a 3D scene:</p>
+play; this class associates a 3D mesh with its location in the scene,
+as well as its color, its appearance, and how its vertices will be transformed.
+To attach a mesh to a 3D scene:</p>
 
 <p>(1) Create a <code>Shape</code> object by passing the mesh to the <code>H3DU.Shape</code> constructor:</p>
 

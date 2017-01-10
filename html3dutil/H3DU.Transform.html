@@ -33,11 +33,11 @@ for describing 3D rotations).</li>
 <li><a href="#H3DU.Transform_H3DU.Transform_reset">reset</a><br>Resets this transform to the untransformed state.</li>
 <li><a href="#H3DU.Transform_H3DU.Transform_resetTransform">resetTransform</a><br><b>Deprecated: Use the &quot;reset&quot; method instead.</b></li>
 <li><a href="#H3DU.Transform_H3DU.Transform_setMatrix">setMatrix</a><br>Sets this transform&#39;s transformation matrix.</li>
-<li><a href="#H3DU.Transform_H3DU.Transform_setOrientation">setOrientation</a><br>Sets this transform&#39;s orientation in the form of an angle and an axis of
+<li><a href="#H3DU.Transform_H3DU.Transform_setOrientation">setOrientation</a><br>Sets this transform&#39;s rotation in the form of an angle and an axis of
 rotation.</li>
 <li><a href="#H3DU.Transform_H3DU.Transform_setPosition">setPosition</a><br>Sets the relative position of an object from its original
 position.</li>
-<li><a href="#H3DU.Transform_H3DU.Transform_setQuaternion">setQuaternion</a><br>Sets this transform&#39;s orientation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+<li><a href="#H3DU.Transform_H3DU.Transform_setQuaternion">setQuaternion</a><br>Sets this transform&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
 for describing 3D rotations).</li>
 <li><a href="#H3DU.Transform_H3DU.Transform_setScale">setScale</a><br>Sets the scale of an object relative to its original
 size.</li>
@@ -172,11 +172,11 @@ A four-element array describing the rotation. A quaternion is returned from the 
 
 <h4>Example</h4>
 
-<pre><code>// Combine an object&#39;s orientation with a rotation 20 degrees about the X axis
+<pre><code>// Combine an object&#39;s rotation with a rotation 20 degrees about the X axis
 transform.multQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
-// Combine an object&#39;s orientation with identity (no rotation)
+// Combine an object&#39;s rotation with identity
 transform.multQuaternion(H3DU.Math.quatIdentity());
-// Combine an object&#39;s orientation with 30 degree pitch multiplied
+// Combine an object&#39;s rotation with 30 degree pitch multiplied
 // by 40 degree roll
 transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 </code></pre>
@@ -218,7 +218,7 @@ A 4x4 matrix. This method will copy the value of this parameter.</li>
 
 <h3>H3DU.Transform#setOrientation(angle, v, vy, vz) <a id='H3DU.Transform_H3DU.Transform_setOrientation'></a></h3>
 
-<p>Sets this transform&#39;s orientation in the form of an angle and an axis of
+<p>Sets this transform&#39;s rotation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with H3DU.Transform#setMatrix
 and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
@@ -262,7 +262,7 @@ The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</
 
 <h3>H3DU.Transform#setQuaternion(quat) <a id='H3DU.Transform_H3DU.Transform_setQuaternion'></a></h3>
 
-<p>Sets this transform&#39;s orientation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+<p>Sets this transform&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with H3DU.Transform#setMatrix
 and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
@@ -279,11 +279,11 @@ A four-element array describing the rotation. A quaternion is returned from the 
 
 <h4>Example</h4>
 
-<pre><code>// Set an object&#39;s orientation to 30 degrees about the X axis
+<pre><code>// Set an object&#39;s rotation to 30 degrees about the X axis
 transform.setQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
-// Set an object&#39;s orientation to identity (no rotation)
+// Set an object&#39;s rotation to identity (the object isn&#39;t transformed)
 transform.setQuaternion(H3DU.Math.quatIdentity());
-// Set an object&#39;s orientation to 30 degree pitch multiplied
+// Set an object&#39;s rotation to 30 degree pitch multiplied
 // by 40 degree roll
 transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 </code></pre>

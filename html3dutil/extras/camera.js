@@ -180,7 +180,6 @@ H3DU.InputTracker = function(element) {
 /**
  * Disposes all resources used by this input tracker.
  * @memberof! H3DU.InputTracker#
-
  * @returns {Object} Return value.
  */
 H3DU.InputTracker.prototype.dispose = function() {
@@ -219,7 +218,6 @@ H3DU.InputTracker.prototype.getKey = function(key) {
  * has rotated the mouse wheel.
  * @param {Function} func A function.
  * @memberof! H3DU.InputTracker#
-
  * @returns {Object} Return value.
  */
 H3DU.InputTracker.prototype.mousewheel = function(func) {
@@ -907,7 +905,6 @@ H3DU.Camera.prototype.getVectorFromCenter = function() {
  * 'update' method was called. <i>Note that future versions
  * may require this parameter.</i>
  * @memberof! H3DU.Camera#
-
  * @returns {Object} Return value.
  */
 H3DU.Camera.prototype.update = function(input) {

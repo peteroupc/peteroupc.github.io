@@ -1601,7 +1601,8 @@
 
 /**
  * Returns a modified version of this path that is transformed
- * according to the given affine transform.
+ * according to the given affine transformation (a transformation
+ * that keeps straight lines straight and parallel lines parallel).
  * @param {Array<Number>} trans An array of six numbers
  * describing a 2-dimensional affine transformation. For each
  * point in the current path, its new X coordinate is `trans[0] * X +
@@ -2214,7 +2215,7 @@
     }
     this.maxXNode = maxXNode;
     this.bounds = bounds;
- // Find the prevailing orientation of the polygon
+ // Find the prevailing winding of the polygon
     var ori = 0;
     var vert = this.vertexList.first();
     var firstVert = vert.data;
@@ -2223,7 +2224,7 @@
       ori += vert.data[0] * vn[1] - vert.data[1] * vn[0];
       vert = vert.next;
     }
-    this.orientation = ori === 0 ? 0 : ori < 0 ? -1 : 1;
+    this.winding = ori === 0 ? 0 : ori < 0 ? -1 : 1;
   };
   Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     var vert = this.vertexList.first();
@@ -2297,7 +2298,7 @@
         var iterPrev = iterVert.prev ? iterVert.prev : lastVert;
         var iterNext = iterVert.next ? iterVert.next : firstVert;
         var orient = Triangulate._triOrient(iterPrev.data, iterVert.data, iterNext.data);
-        if(orient !== 0 && orient !== this.vertexList.orientation) {
+        if(orient !== 0 && orient !== this.vertexList.winding) {
       // This is a reflex vertex
           var pointIn = Triangulate._pointInTri(
        triangle1, triangle2, nextVert.data, iterVert.data);
@@ -2361,12 +2362,12 @@
     var i, j;
     for(i = 0;i < subpaths.length;i++) {
       var contour = new Triangulate._Contour(subpaths[i]);
-  // NOTE: Ignores contours with orientation 0
+  // NOTE: Ignores contours with winding 0
   // (empty, zero area, sometimes self-intersecting)
-      if(contour.orientation > 0) {
+      if(contour.winding > 0) {
         if(firstOrient === 0)firstOrient = 1;
         contours1.push(contour);
-      } else if(contour.orientation < 0) {
+      } else if(contour.winding < 0) {
         if(firstOrient === 0)firstOrient = -1;
         contours2.push(contour);
       }
@@ -2431,8 +2432,8 @@
 /** @private */
   Triangulate._triangulate = function(contour, tris) {
     var t1, tri;
-    if(!contour || contour.vertexCount < 3 || contour.orientation === 0) {
-  // too few vertices, or the orientation
+    if(!contour || contour.vertexCount < 3 || contour.winding === 0) {
+  // too few vertices, or the winding
   // suggests a zero area or even a certain
   // self-intersecting polygon
       return;
@@ -2457,7 +2458,7 @@
     vert = contour.vertexList.first();
     while(contour.vertexCount > 3) {
       var vertexClass = Triangulate._vertClass(vert,
-    contour.orientation);
+    contour.winding);
       var nextVert = vert.next;
       if(vertexClass === Triangulate._EAR) {
         tri = [vert.prev.data[0], vert.prev.data[1],
