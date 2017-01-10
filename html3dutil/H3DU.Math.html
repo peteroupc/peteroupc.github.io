@@ -190,12 +190,10 @@ the same length but opposite direction.</li>
 <li><a href="#H3DU.Math.vec3normInPlace">vec3normInPlace</a><br>Converts a 3-element vector to a <a href="tutorial-glmath.html">unit vector</a>.</li>
 <li><a href="#H3DU.Math.vec3perp">vec3perp</a><br>Returns an arbitrary 3-element vector that is perpendicular
 (orthogonal) to the given 3-element vector.</li>
-<li><a href="#H3DU.Math.vec3scale">vec3scale</a><br>Multiplies a 3-element vector by a factor
-(thus multiplying that vector&#39;s length by that factor)
-and returns a new vector with the result.</li>
-<li><a href="#H3DU.Math.vec3scaleInPlace">vec3scaleInPlace</a><br>Multiplies each element of a 3-element vector by a factor
-(thus multiplying that vector&#39;s length by that factor)
-and stores the result in that vector.</li>
+<li><a href="#H3DU.Math.vec3scale">vec3scale</a><br>Multiplies a 3-element vector by a factor.</li>
+<li><a href="#H3DU.Math.vec3scaleInPlace">vec3scaleInPlace</a><br>Multiplies a 3-element vector by a factor, so
+that the vector points in the same direction
+but its length is multiplied by the given factor.</li>
 <li><a href="#H3DU.Math.vec3sub">vec3sub</a><br>Subtracts the second vector from the first vector and returns a new
 vector with the result.</li>
 <li><a href="#H3DU.Math.vec3subInPlace">vec3subInPlace</a><br>Subtracts the second vector from the first vector and stores
@@ -2215,9 +2213,9 @@ vector. Returns (0,0,0) if &quot;vec&quot; is (0,0,0). (Type: Array.&lt;Number&g
 
 <h3>(static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU.Math.vec3scale'></a></h3>
 
-<p>Multiplies a 3-element vector by a factor
-(thus multiplying that vector&#39;s length by that factor)
-and returns a new vector with the result.</p>
+<p>Multiplies a 3-element vector by a factor. Returns
+a new vector that will point in the same direction
+but with its length multiplied by the given factor.</p>
 
 <h4>Parameters</h4>
 
@@ -2225,7 +2223,7 @@ and returns a new vector with the result.</p>
 <li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
 A 3-element vector.</li>
 <li><code>scalar</code> (Type: Number)<br>
-A factor to multiply.</li>
+A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -2234,9 +2232,9 @@ A factor to multiply.</li>
 
 <h3>(static) H3DU.Math.vec3scaleInPlace(a, scalar) <a id='H3DU.Math.vec3scaleInPlace'></a></h3>
 
-<p>Multiplies each element of a 3-element vector by a factor
-(thus multiplying that vector&#39;s length by that factor)
-and stores the result in that vector.</p>
+<p>Multiplies a 3-element vector by a factor, so
+that the vector points in the same direction
+but its length is multiplied by the given factor.</p>
 
 <h4>Parameters</h4>
 
@@ -2244,7 +2242,7 @@ and stores the result in that vector.</p>
 <li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
 A 3-element vector.</li>
 <li><code>scalar</code> (Type: Number)<br>
-A factor to multiply.</li>
+A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.</li>
 </ul>
 
 <h4>Return Value</h4>

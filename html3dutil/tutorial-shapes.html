@@ -25,9 +25,11 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 <li>Shape groups, or combinations of several shapes</li>
 </ul>
 
+<p>NOTE: This page will largely discuss the 2.0.0-beta1 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the library&#39;s <a href="tutorial-history.html">change history</a> for more information.)</p>
+
 <h2>Contents <a id=Contents></a></h2>
 
-<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Creating_Shapes">Creating Shapes</a><br>&nbsp;&nbsp;<a href="#Built_In_Shapes">Built-In Shapes</a><br>&nbsp;&nbsp;<a href="#Custom_Shapes">Custom Shapes</a><br>&nbsp;&nbsp;<a href="#The_Mesh_Constructor">The Mesh Constructor</a><br>&nbsp;&nbsp;<a href="#Vertex_Methods">Vertex Methods</a><br>&nbsp;&nbsp;<a href="#Transforming_the_Mesh">Transforming the Mesh</a><br>&nbsp;&nbsp;<a href="#Normals">Normals</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#What_Are_Normals">What Are Normals?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Normals_on_Built_in_Shapes">Normals on Built-in Shapes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#recalcNormals">recalcNormals()</a><br><a href="#Binding_Shapes">Binding Shapes</a><br><a href="#Shape_Groups">Shape Groups</a><br><a href="#Other_Pages">Other Pages</a><br></p>
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Creating_Shapes">Creating Shapes</a><br>&nbsp;&nbsp;<a href="#Built_In_Shapes">Built-In Shapes</a><br>&nbsp;&nbsp;<a href="#Custom_Shapes">Custom Shapes</a><br>&nbsp;&nbsp;<a href="#The_Mesh_Constructor">The Mesh Constructor</a><br>&nbsp;&nbsp;<a href="#Vertex_Methods">Vertex Methods</a><br>&nbsp;&nbsp;<a href="#Transforming_the_Mesh">Transforming the Mesh</a><br>&nbsp;&nbsp;<a href="#Texture_Coordinates">Texture Coordinates</a><br>&nbsp;&nbsp;<a href="#Normals">Normals</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#What_Are_Normals">What Are Normals?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Normals_on_Built_in_Shapes">Normals on Built-in Shapes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#recalcNormals">recalcNormals()</a><br><a href="#Binding_Shapes">Binding Shapes</a><br><a href="#Shape_Groups">Shape Groups</a><br><a href="#Other_Pages">Other Pages</a><br></p>
 
 <h2>Creating Shapes <a id=Creating_Shapes></a></h2>
 
@@ -93,12 +95,13 @@ methods that specify the mesh&#39;s data vertex by vertex.</p>
 <p>The <code>H3DU.Mesh</code> constructor lets you define a shape from a predefined array of vertex data.
 Here&#39;s how.</p>
 
-<p>(1) Create an array of numbers giving the X, Y, and Z coordinate for each vertex:</p>
+<ol>
+<li><p>Create an array of numbers giving the X, Y, and Z coordinate for each vertex:</p>
 
 <pre><code>var vertices = [x1, y1, z1, x2, y2, z2, ... ];
 </code></pre>
 
-<p>If you also specify normals, colors, or texture coordinates for each vertex, you must add
+<p>If you also specify <a href="#Normals">normals</a>, colors, or <a href="#Texture_Coordinates">texture coordinates</a> for each vertex, you must add
 them after each vertex position in this order: normals first, colors second, and texture
 coordinates last. If you don&#39;t specify normals, colors, and/or texture coordinates per
 vertex, you can omit them. The following are examples of this:</p>
@@ -116,9 +119,8 @@ var vertices = [
  x2, y2, z2, cr2, cg2, cb2, u2, v2,
  ...
 ];
-</code></pre>
-
-<p>(2) Create a second array of numbers giving the indices to vertices defined in the
+</code></pre></li>
+<li><p>Create a second array of numbers giving the indices to vertices defined in the
 previous step:</p>
 
 <pre><code>var indices = [0, 1, 2, 1, 2, 3, ... ];
@@ -129,9 +131,8 @@ consists of (a vertex with just coordinates will use 3 array elements).</p>
 
 <p>If you are defining a set of triangles, there should be 3 indices for each triangle,
 and if you are defining a set of line segments, there should be 2 indices for each
-line segment.</p>
-
-<p>(3) Call the mesh constructor with the vertex and index arrays.</p>
+line segment.</p></li>
+<li><p>Call the mesh constructor with the vertex and index arrays.</p>
 
 <pre><code>var bits = H3DU.Mesh.NORMALS_BIT; // Assumes we used the vertex array with normals
 var mesh = new H3DU.Mesh(vertices, indices, bits);
@@ -141,13 +142,12 @@ var mesh = new H3DU.Mesh(vertices, indices, bits);
 array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; parameter.) The bits are:</p>
 
 <ul>
-<li><code>H3DU.Mesh.NORMALS_BIT</code> - if you included normals for each vertex (3 elements)</li>
+<li><code>H3DU.Mesh.NORMALS_BIT</code> - if you included <a href="#Normals">normals</a> for each vertex (3 elements)</li>
 <li><code>H3DU.Mesh.COLORS_BIT</code> - if you included colors for each vertex (3 elements)</li>
-<li><code>H3DU.Mesh.TEXCOORDS_BIT</code> - if you included texture coordinates for each vertex (2 elements)</li>
+<li><code>H3DU.Mesh.TEXCOORDS_BIT</code> - if you included <a href="#Texture_Coordinates">texture coordinates</a> for each vertex (2 elements)</li>
 <li><code>H3DU.Mesh.LINES_BIT</code> - if the mesh defines a set of lines rather than triangles</li>
-<li><code>H3DU.Mesh.POINTS_BIT</code> - if the mesh defines a set of points (you can&#39;t set both <code>LINES_BIT</code> and
-<code>POINTS_BIT</code>).</li>
-</ul>
+<li><p><code>H3DU.Mesh.POINTS_BIT</code> - if the mesh defines a set of points (you can&#39;t set both <code>LINES_BIT</code> and
+<code>POINTS_BIT</code>).</p>
 
 <p>The bits may be combined as in the following example:</p>
 
@@ -159,14 +159,17 @@ array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; 
 <pre><code>var mesh = new H3DU.Mesh();
 </code></pre>
 
-<p>Doing so will create a mesh with no vertices.</p>
+<p>Doing so will create a mesh with no vertices.</p></li>
+</ul></li>
+</ol>
 
 <h3>Vertex Methods <a id=Vertex_Methods></a></h3>
 
 <p>Alternatively, or in addition, to the method described above,
 you can specify the mesh&#39;s shape by calling methods that give each vertex&#39;s position and parameters:</p>
 
-<p>(1) Call the <code>mode()</code> method and choose a primitive mode, such as <code>H3DU.Mesh.TRIANGLES</code>
+<ol>
+<li><p>Call the <code>mode()</code> method and choose a primitive mode, such as <code>H3DU.Mesh.TRIANGLES</code>
 or <code>H3DU.Mesh.QUAD_STRIP</code>:</p>
 
 <pre><code>mesh.mode(H3DU.Mesh.TRIANGLES);
@@ -194,9 +197,8 @@ quad is made up of the last 2 vertices of the previous quad and
 2 new vertices.</li>
 <li><code>H3DU.Mesh.LINE_STRIP</code> - A series of points making up a connected line segment path.</li>
 <li><code>H3DU.Mesh.POINTS</code> - A series of points.</li>
-</ul>
-
-<p>(2) Call the <code>normal3()</code>, <code>color3()</code>, and <code>texCoord2()</code> methods, as needed, to set the
+</ul></li>
+<li><p>Call the <code>normal3()</code>, <code>color3()</code>, and <code>texCoord2()</code> methods, as needed, to set the
 next vertex&#39;s parameters. You don&#39;t need to do this for each vertex if multiple
 consecutive vertices will share the same normal, color, or texture coordinates.</p>
 
@@ -205,14 +207,14 @@ mesh.color3(0.1,0.6,1); // Set the red, green, and blue of the color.
 mesh.color3(&quot;red&quot;); // Set a CSS color.
 mesh.color3(&quot;#123FE8&quot;); // Set an HTML color.
 mesh.texCoord3(0.5,0.5); // Set the texture coordinates.
-</code></pre>
-
-<p>(3) Call the <code>vertex3()</code> method to add a new vertex and set its position. The vertex will
+</code></pre></li>
+<li><p>Call the <code>vertex3()</code> method to add a new vertex and set its position. The vertex will
 have the last normal, color, and texture coordinates defined on the mesh, if any
 were given:</p>
 
 <pre><code>mesh.vertex3(x, y, z);
-</code></pre>
+</code></pre></li>
+</ol>
 
 <p>You can also call the <code>mode()</code> method any time to change the primitive mode, even to
 the same mode. What this does is reset the state of the primitive so that future vertices
@@ -234,6 +236,18 @@ Example:</p>
 mesh = mesh.transform(matrix);
 </code></pre>
 
+<h3>Texture Coordinates <a id=Texture_Coordinates></a></h3>
+
+<p>If the mesh has a texture associated with it, you must specify texture coordinates
+for each vertex in the mesh.  A texture coordinate is a set of two numbers,
+called U and V, that map to a specific point in the texture.  Each texture coordinate
+ranges from 0 to 1. U coordinates start at the left of the texture (0) and increase to the right
+(1), and V coordinates start at the bottom of the texture (0) and
+increase to the top (1).</p>
+
+<p>For example, texture coordinates (0, 1) indicate the top left corner of the texture,
+and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
+
 <h3>Normals <a id=Normals></a></h3>
 
 <p>For lighting and shading to work correctly, you must specify normals for all the
@@ -246,8 +260,8 @@ a normal&#39;s direction is perpendicular to a surface&#39;s edges, and points
 away from the surface.</p>
 
 <p>Normals are important in the lighting and shading model. When light
-hits an object&#39;s surface, the surface will shine depending on how directly the
-light points to the surface. It will shine the most if the light
+hits an object&#39;s surface, how brightly the surface will be lit depends on how directly the
+light points to the surface. It will be lit the most brightly if the light
 is directly opposite to its normal, and not at all if the light is perpendicular to the
 normal or in the same direction as the normal.</p>
 
@@ -303,12 +317,12 @@ play; this class associates a 3D mesh with its location in the scene,
 as well as its color, its appearance, and how its vertices will be transformed.
 To attach a mesh to a 3D scene:</p>
 
-<p>(1) Create a <code>Shape</code> object by passing the mesh to the <code>H3DU.Shape</code> constructor:</p>
+<ol>
+<li><p>Create a <code>Shape</code> object by passing the mesh to the <code>H3DU.Shape</code> constructor:</p>
 
 <pre><code>var shape = new H3DU.Shape(mesh);
-</code></pre>
-
-<p>(2) You may also set the <code>Shape</code>&#39;s color, appearance, and position, using the examples below:</p>
+</code></pre></li>
+<li><p>You may also set the <code>Shape</code>&#39;s color, appearance, and position, using the examples below:</p>
 
 <p>Examples for setting appearance:</p>
 
@@ -327,7 +341,7 @@ shape.setMaterial(new H3DU.Material(&quot;lime&quot;,&quot;lime&quot;,&quot;whit
 shape.setTexture(&quot;texture.png&quot;);
 </code></pre>
 
-<p>Examples for setting position:</p>
+<p>Examples for setting position and transformation:</p>
 
 <pre><code>// move the shape 2 units along X axis, 4 units along Y axis,
 // and 5 units along Z axis
@@ -352,15 +366,15 @@ in the shape &quot;on the fly&quot; when it comes time to draw it each frame.</p
 
 <p>If <code>setMatrix</code> wasn&#39;t called, then when the shape is rendered, it will generate
 a transformation matrix that has the effect of scaling, then rotating,
-then translating (shifting) the shape in 3D space.</p>
-
-<p>(3) Add the shape to a 3D batch (<a href="H3DU.Batch3D.html">`H3DU.Batch3D</a>):</p>
+then translating (shifting) the shape in 3D space.</p></li>
+<li><p>Add the shape to a 3D batch (<a href="H3DU.Batch3D.html">`H3DU.Batch3D</a>):</p>
 
 <pre><code>batch3d.addShape(shape);
 </code></pre>
 
 <p>Now, the next time <code>scene3d.render(batch)</code> is called, the <a href="H3DU.Scene3D.html"><code>H3DU.Scene3D</code></a> will render the
-given shape to the scene through the 3D batch.</p>
+given shape to the scene through the 3D batch.</p></li>
+</ol>
 
 <h2>Shape Groups <a id=Shape_Groups></a></h2>
 
