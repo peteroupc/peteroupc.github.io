@@ -79,9 +79,9 @@ window.onload = function() {
     var view = new H3DU.Transform()
     .setPosition(0, 0, -10)
     .setScale(Scale, Scale, Scale)
-    .setOrientation(Xrot, 1, 0, 0)
-    .multOrientation(Yrot, 0, 1, 0)
-    .multOrientation(Zrot, 0, 0, 1);
+    .setRotation(Xrot, 1, 0, 0)
+    .multRotation(Yrot, 0, 1, 0)
+    .multRotation(Zrot, 0, 0, 1);
     sub.setProjectionMatrix(H3DU.Math.mat4frustum(
      -1, 1, -h, h, 5, 15));
     sub.setViewMatrix(view.getMatrix());

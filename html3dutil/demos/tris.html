@@ -49,7 +49,7 @@ TriangleParticles.prototype.update = function(time) {
     } else {
       var trans = this.group.shapes[i].getTransform();
       trans.movePosition(H3DU.Math.vec3scale(this.tris[i].movement, frames));
-      trans.multOrientation(this.tris[i].rotation * frames, 0, 0, 1);
+      trans.multRotation(this.tris[i].rotation * frames, 0, 0, 1);
     }
   }
 };

@@ -250,9 +250,9 @@ function makeAxisLines(width) {
   var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(width / 2.0, 50, 6, 4));
   var zaxis = axisline.copy().setColor("blue");
   var yaxis = axisline.copy().setColor("green");
-  yaxis.getTransform().setOrientation(90, 1, 0, 0);
+  yaxis.getTransform().setRotation(90, 1, 0, 0);
   var xaxis = axisline.copy().setColor("red");
-  xaxis.getTransform().setOrientation(90, 0, 1, 0);
+  xaxis.getTransform().setRotation(90, 0, 1, 0);
   return xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
 }
 

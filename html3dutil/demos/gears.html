@@ -145,21 +145,21 @@ window.onload = function() {
     var h = scene.getHeight() / scene.getWidth();
     var view = new H3DU.Transform()
     .setPosition(0, 0, -40)
-    .setOrientation(viewRotx, 1, 0, 0)
-    .multOrientation(viewRoty, 0, 1, 0)
-    .multOrientation(viewRotz, 0, 0, 1);
+    .setRotation(viewRotx, 1, 0, 0)
+    .multRotation(viewRoty, 0, 1, 0)
+    .multRotation(viewRotz, 0, 0, 1);
     sub.setProjectionMatrix(H3DU.Math.mat4frustum(
      -1, 1, -h, h, 5, 60));
     sub.setViewMatrix(view.getMatrix());
     gear1.getTransform()
      .setPosition(-3, -2, 0)
-     .setOrientation(angle, 0, 0, 1);
+     .setRotation(angle, 0, 0, 1);
     gear2.getTransform()
      .setPosition(3.1, -2, 0)
-     .setOrientation(-2 * angle - 9, 0, 0, 1);
+     .setRotation(-2 * angle - 9, 0, 0, 1);
     gear3.getTransform()
      .setPosition(-3.1, 4.2, 0)
-     .setOrientation(-2 * angle - 25, 0, 0, 1);
+     .setRotation(-2 * angle - 25, 0, 0, 1);
     scene.render(sub);
     var frames = H3DU.newFrames(info, time);
     angle += 4 / 2.0 * frames;

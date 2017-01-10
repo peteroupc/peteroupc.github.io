@@ -79,9 +79,9 @@ function ClockShape(scene) {
       var hourhand = 360 * hms / (3600 * 12);
       var minutehand = 360 * (hms % 3600) / 3600;
       var secondhand = 360 * (hms % 60) / 60;
-      this.shape.shapes[3].getTransform().setOrientation(-hourhand, 0, 0, 1);
-      this.shape.shapes[4].getTransform().setOrientation(-minutehand, 0, 0, 1);
-      this.shape.shapes[5].getTransform().setOrientation(-secondhand, 0, 0, 1);
+      this.shape.shapes[3].getTransform().setRotation(-hourhand, 0, 0, 1);
+      this.shape.shapes[4].getTransform().setRotation(-minutehand, 0, 0, 1);
+      this.shape.shapes[5].getTransform().setRotation(-secondhand, 0, 0, 1);
     }
   };
   this.setColor = function(color) {
