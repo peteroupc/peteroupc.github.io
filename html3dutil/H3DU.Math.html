@@ -84,6 +84,8 @@ outside or inside a view frustum.</li>
 partially inside a view frustum.</li>
 <li><a href="#H3DU.Math.mat3identity">mat3identity</a><br>Returns the identity 3x3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).</li>
+<li><a href="#H3DU.Math.mat3invert">mat3invert</a><br>Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.</li>
+<li><a href="#H3DU.Math.mat3multiply">mat3multiply</a><br>Multiplies two 3x3 matrices.</li>
 <li><a href="#H3DU.Math.mat3transform">mat3transform</a><br>Transforms a 3-element vector with a 3x3 matrix and returns
 the transformed vector.</li>
 <li><a href="#H3DU.Math.mat4copy">mat4copy</a><br>Returns a copy of a 4x4 matrix.</li>
@@ -185,11 +187,15 @@ the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec3negate">vec3negate</a><br>Negates a 3-element vector and returns a new
 vector with the result, which is generally a vector with
 the same length but opposite direction.</li>
-<li><a href="#H3DU.Math.vec3negateInPlace">vec3negateInPlace</a><br>Negates a 3-element vector in place.</li>
-<li><a href="#H3DU.Math.vec3norm">vec3norm</a><br>Converts 3-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.</li>
+<li><a href="#H3DU.Math.vec3negateInPlace">vec3negateInPlace</a><br>Negates a 3-element vector in place, generally resulting in a vector with
+the same length but opposite direction.</li>
+<li><a href="#H3DU.Math.vec3norm">vec3norm</a><br>Converts a 3-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.</li>
 <li><a href="#H3DU.Math.vec3normInPlace">vec3normInPlace</a><br>Converts a 3-element vector to a <a href="tutorial-glmath.html">unit vector</a>.</li>
 <li><a href="#H3DU.Math.vec3perp">vec3perp</a><br>Returns an arbitrary 3-element vector that is perpendicular
 (orthogonal) to the given 3-element vector.</li>
+<li><a href="#H3DU.Math.vec3proj">vec3proj</a><br>Returns the projection of a 3-element vector on the given
+reference vector.</li>
+<li><a href="#H3DU.Math.vec3reflect">vec3reflect</a><br>Returns a vector that reflects off a surface.</li>
 <li><a href="#H3DU.Math.vec3scale">vec3scale</a><br>Multiplies each element of a 3-element vector by a factor.</li>
 <li><a href="#H3DU.Math.vec3scaleInPlace">vec3scaleInPlace</a><br>Multiplies each element of a 3-element vector by a factor, so
 that the vector points in the same direction
@@ -207,6 +213,10 @@ width and height.</li>
 vector with the absolute value of each of its components.</li>
 <li><a href="#H3DU.Math.vec4absInPlace">vec4absInPlace</a><br>Sets each component of the given 4-element
 vector to its absolute value.</li>
+<li><a href="#H3DU.Math.vec4add">vec4add</a><br>Adds two 4-element vectors and returns a new
+vector with the result.</li>
+<li><a href="#H3DU.Math.vec4addInPlace">vec4addInPlace</a><br>Adds two 4-element vectors and stores
+the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec4assign">vec4assign</a><br>Assigns the values of a 4-element vector into another
 4-element vector.</li>
 <li><a href="#H3DU.Math.vec4copy">vec4copy</a><br>Returns a copy of a 4-element vector.</li>
@@ -218,13 +228,20 @@ returns a new vector.</li>
 <li><a href="#H3DU.Math.vec4negate">vec4negate</a><br>Negates a 4-element vector and returns a new
 vector with the result, which is generally a vector with
 the same length but opposite direction.</li>
-<li><a href="#H3DU.Math.vec4negateInPlace">vec4negateInPlace</a><br>Negates a 4-element vector in place.</li>
-<li><a href="#H3DU.Math.vec4norm">vec4norm</a><br>Converts 4-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.</li>
+<li><a href="#H3DU.Math.vec4negateInPlace">vec4negateInPlace</a><br>Negates a 4-element vector in place, generally resulting in a vector with
+the same length but opposite direction.</li>
+<li><a href="#H3DU.Math.vec4norm">vec4norm</a><br>Converts a 4-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.</li>
 <li><a href="#H3DU.Math.vec4normInPlace">vec4normInPlace</a><br>Converts a 4-element vector to a <a href="tutorial-glmath.html">unit vector</a>.</li>
+<li><a href="#H3DU.Math.vec4proj">vec4proj</a><br>Returns the projection of a 4-element vector on the given
+reference vector.</li>
 <li><a href="#H3DU.Math.vec4scale">vec4scale</a><br>Multiplies each element of a 4-element vector by a factor.</li>
 <li><a href="#H3DU.Math.vec4scaleInPlace">vec4scaleInPlace</a><br>Multiplies each element of a 4-element vector by a factor, so
 that the vector points in the same direction
 but its length is multiplied by the given factor.</li>
+<li><a href="#H3DU.Math.vec4sub">vec4sub</a><br>Subtracts the second vector from the first vector and returns a new
+vector with the result.</li>
+<li><a href="#H3DU.Math.vec4subInPlace">vec4subInPlace</a><br>Subtracts the second vector from the first vector and stores
+the result in the first vector.</li>
 </ul>
 
 <h3>H3DU.Math.GlobalPitchRollYaw <a id='H3DU.Math.GlobalPitchRollYaw'></a> (constant)</h3>
@@ -662,6 +679,47 @@ vectors unchanged when they are transformed with this matrix).</p>
 
 <p>Return value. (Type: Array.&lt;Number&gt;)</p>
 
+<h3>(static) H3DU.Math.mat3invert(m) <a id='H3DU.Math.mat3invert'></a></h3>
+
+<p>Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>m</code> (Type: Array.&lt;Number&gt;)<br>
+A 3x3 matrix.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting 3x3 matrix.
+Returns the identity matrix if this matrix is not invertible. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.mat3multiply(a, b) <a id='H3DU.Math.mat3multiply'></a></h3>
+
+<p>Multiplies two 3x3 matrices. A new matrix is returned.
+The matrices are multiplied such that the transformations
+they describe happen in reverse order. For example, if the first
+matrix (input matrix) describes a translation and the second
+matrix describes a scaling, the multiplied matrix will describe
+the effect of scaling then translation. (Multiplying the first matrix
+by the second is the same as multiplying the second matrix
+by the first matrix&#39;s transpose; a transpose is a matrix whose rows
+are converted to columns and vice versa.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The first matrix.</li>
+<li><code>b</code> (Type: Array.&lt;Number&gt;)<br>
+The second matrix.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting 3x3 matrix. (Type: Array.&lt;Number&gt;)</p>
+
 <h3>(static) H3DU.Math.mat3transform(mat, v, vy, vz) <a id='H3DU.Math.mat3transform'></a></h3>
 
 <p>Transforms a 3-element vector with a 3x3 matrix and returns
@@ -677,7 +735,7 @@ X coordinate. If &quot;vy&quot;, and &quot;vz&quot; are omitted, this value can 
 <li><code>vy</code> (Type: Number)<br>
 Y coordinate.</li>
 <li><code>vz</code> (Type: Number)<br>
-Z coordinate. To transform a 2D point, set Z to 1.</li>
+Z coordinate. To transform a 2D point, set Z to 1, and divide the result&#39;s X and Y by the result&#39;s Z.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -713,22 +771,22 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 
 <ul>
 <li><code>l</code> (Type: Number)<br>
-X coordinate of the point where the left clipping plane meets the near clipping plane.</li>
+X coordinate of the point in eye space where the left clipping plane meets the near clipping plane.</li>
 <li><code>r</code> (Type: Number)<br>
-X coordinate of the point where the right clipping plane meets the near clipping plane. (If l is greater than r, X coordinates increase leftward; otherwise, they increase rightward.)</li>
+X coordinate of the point in eye space where the right clipping plane meets the near clipping plane. (If l is greater than r, X coordinates increase leftward; otherwise, they increase rightward.)</li>
 <li><code>b</code> (Type: Number)<br>
-Y coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
+Y coordinate of the point in eye space where the bottom clipping plane meets the near clipping plane.</li>
 <li><code>t</code> (Type: Number)<br>
-Y coordinate of the point where the top clipping plane meets the near clipping plane. (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)</li>
+Y coordinate of the point in eye space where the top clipping plane meets the near clipping plane. (If t is greater than b, Y coordinates increase upward [as they do in WebGL when just this matrix is used to transform vertices]; otherwise, they increase downward.)</li>
 <li><code>near</code> (Type: Number)<br>
-The distance from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
+The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
 </ul>
 
 <p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
 
 <ul>
 <li><code>far</code> (Type: Number)<br>
-The distance from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than &quot;near&quot;, should be greater than 0, and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept.<br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that &quot;far&quot; is greater than &quot;near&quot;, are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)</li>
+The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than &quot;near&quot;, should be greater than 0, and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept.<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -832,7 +890,7 @@ A 3-element vector specifying the &quot;camera&quot; position in world space.</l
 <li><code>lookingAt</code> (Type: Array.&lt;Number&gt;) (optional)<br>
 A 3-element vector specifying the point in world space that the &quot;camera&quot; is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).</li>
 <li><code>up</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-A 3-element vector specifying the direction from the center of the &quot;camera&quot; to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the &quot;camera&quot; is held upright.<br> This vector must not point in the same or opposite direction as the view direction (the direction from &quot;viewerPos&quot; to &quot;lookingAt&quot;). (See the example for one way to ensure this.)<br></li>
+A 3-element vector specifying the direction from the center of the &quot;camera&quot; to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the &quot;camera&quot; is held upright.<br> This vector must not be parallel to the view direction (the direction from &quot;viewerPos&quot; to &quot;lookingAt&quot;). (See the example for one way to ensure this.)<br></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1027,14 +1085,14 @@ Y axis field of view, in degrees, that is, the shortest angle between the top an
 <li><code>aspectRatio</code> (Type: Number)<br>
 The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
 <li><code>near</code> (Type: Number)<br>
-The distance from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
+The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
 </ul>
 
 <p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
 
 <ul>
 <li><code>far</code> (Type: Number)<br>
-The distance from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than &quot;near&quot;, should be greater than 0, and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept.<br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that &quot;far&quot; is greater than &quot;near&quot;, are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)</li>
+The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than &quot;near&quot;, should be greater than 0, and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept.<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1058,14 +1116,14 @@ X axis field of view, in degrees, that is, the shortest angle between the left a
 <li><code>aspectRatio</code> (Type: Number)<br>
 The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
 <li><code>near</code> (Type: Number)<br>
-The distance from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
+The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
 </ul>
 
 <p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
 
 <ul>
 <li><code>far</code> (Type: Number)<br>
-The distance from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than &quot;near&quot;, should be greater than 0, and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept.<br> (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel, which, in the usual case that &quot;far&quot; is greater than &quot;near&quot;, are more spread out toward the far clipping plane than toward the near plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more the values spread out, and the more likely two objects close to the far plane will have identical depth values.)</li>
+The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value is usually greater than &quot;near&quot;, should be greater than 0, and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept.<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1094,7 +1152,7 @@ X coordinate of a 3D point to transform. If &quot;vy&quot; and &quot;vz&quot; ar
 <li><code>vy</code> (Type: Number)<br>
 Y coordinate.</li>
 <li><code>vz</code> (Type: Number)<br>
-Z coordinate. To transform a 2D point, set Z to 1.</li>
+Z coordinate. To transform a 2D point, set Z to 0.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1274,7 +1332,7 @@ Y coordinate.</li>
 <li><code>vz</code> (Type: Number)<br>
 Z coordinate.</li>
 <li><code>vw</code> (Type: Number)<br>
-W coordinate. To transform a 3D point, set W to 1; to transform a 2D point, set Z and W to 1.</li>
+W coordinate. To transform a 3D point, set W to 1 and divide the result&#39;s X, Y, and Z by the result&#39;s W. To transform a 2D point, set Z to 0 and W to 1 and divide the result&#39;s X and Y by the result&#39;s W.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1310,7 +1368,7 @@ X coordinate. If &quot;vy&quot; and &quot;vz&quot; are omitted, this value can i
 <li><code>vy</code> (Type: Number)<br>
 Y coordinate.</li>
 <li><code>vz</code> (Type: Number)<br>
-Z coordinate. To transform a 2D point, set Z to 1.</li>
+Z coordinate. To transform a 2D point, set Z to 0.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1464,8 +1522,8 @@ Z-component of the point lying on the axis of rotation.</li>
 
 <p>The generated quaternion.
 A quaternion&#39;s first three elements (X, Y, Z) describe an
-<a href="tutorial-glmath.html">axis of rotation</a> whose length is the sine of &quot;angle&quot;,
-and is fourth element (W) is the cosine of &quot;angle&quot;. (Type: Array.&lt;Number&gt;)</p>
+<a href="tutorial-glmath.html">axis of rotation</a> whose length is the sine of half of &quot;angle&quot;,
+and its fourth element (W) is the cosine of half of &quot;angle&quot;. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.quatFromMat4(m) <a id='H3DU.Math.quatFromMat4'></a></h3>
 
@@ -1663,7 +1721,7 @@ Z-component of the point lying on the axis of rotation.</li>
 <p>Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a spherical interpolation function.
 This is called spherical linear interpolation, or &quot;slerp&quot;. (A spherical
-interpolation finds the angle between the two quaternions -- which
+interpolation finds the shortest angle between the two quaternions -- which
 are treated as 4D vectors -- and then finds a vector with a smaller angle
 between it and the first quaternion. The &quot;factor&quot; parameter specifies
 how small the new angle will be relative to the original angle.)</p>
@@ -1806,7 +1864,9 @@ A 3-element vector.</li>
 
 <p>Adds two 3-element vectors and returns a new
 vector with the result. Adding two vectors
-is the same as adding each of their components.</p>
+is the same as adding each of their components.
+The resulting vector describes a straight-line path for the
+combined paths described by the given vectors, in either order.</p>
 
 <h4>Parameters</h4>
 
@@ -1825,7 +1885,9 @@ The second 3-element vector.</li>
 
 <p>Adds two 3-element vectors and stores
 the result in the first vector. Adding two vectors
-is the same as adding each of their components.</p>
+is the same as adding each of their components.
+The resulting vector describes a straight-line path for the
+combined paths described by the given vectors, in either order.</p>
 
 <h4>Parameters</h4>
 
@@ -1970,7 +2032,7 @@ degrees apart, making them <i>orthogonal</i>
 <li>A dot product greater than 0 means less than 90 degrees apart.
 <li>A dot product less than 0 means greater than 90 degrees apart.
 <li>If both vectors are <a href="tutorial-glmath.html">unit vectors</a>, the cosine
-of the angle between them is equal to their dot product.
+of the shortest angle between them is equal to their dot product.
 However, <code>Math.acos</code> won't return a negative angle
 from that cosine, so the dot product can't
 be used to determine if one vector is "ahead of" or "behind" another
@@ -2043,7 +2105,7 @@ The first vector to interpolate. The interpolation will occur on each component 
 <li><code>v2</code> (Type: Array.&lt;Number&gt;)<br>
 The second vector to interpolate.</li>
 <li><code>factor</code> (Type: Number)<br>
-A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns a value generally ranging from 0 through 1, and pass the result of that function to this method.<br> The following are examples of interpolation functions. See also the code examples following this list.<ul> <li>Linear: <code>factor</code>. Constant speed. <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0. For example, N=2 means a square, N=3 means cube, N=1/2 means square root, and N=1/3 means cube root. If N &gt; 1, this function eases in, that is, it starts slow and ends fast. If N &lt; 1, this function eases out, that is, it starts fast and ends slow. <li>Sine: <code>Math.sin(Math.PI*0.5*factor)</code>. This function eases in. <li>Smoothstep: <code>(3.0-2.0*factor)*factor*factor</code>. This function starts and ends slow, and speeds up in the middle. <li>Discrete-step timing, where N is a number of steps greater than 0:<ul> <li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor*N))/N)</code>.</li> <li>Position end: <code>Math.floor(factor*N)/N</code>.</li></ul> <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>, where <code>INTF(x)</code> is another interpolation function. This function reverses the speed behavior; for example, a function that eased in now eases out. <li>Ease: <code>factor &lt; 0.5 ? INTF(factor*2)*0.5 : 1.0-(INTF((1.0-factor)*2)*0.5)</code>, where <code>INTF(x)</code> is another interpolation function. Depending on the underlying function, this function eases in, then eases out, or vice versa. </ul></li>
+A value that usually ranges from 0 through 1. Closer to 0 means closer to v1, and closer to 1 means closer to v2.<br>For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and returns a value generally ranging from 0 through 1, and pass the result of that function to this method.<br> The following are examples of interpolation functions. See also the code examples following this list.<ul> <li>Linear: <code>factor</code>. Constant speed. <li>Powers: <code>Math.pow(factor, N)</code>, where N &gt; 0. For example, N=2 means a square, N=3 means cube, N=1/2 means square root, and N=1/3 means cube root. If N &gt; 1, this function starts slow and ends fast. If N &lt; 1, this function starts fast and ends slow. <li>Sine: <code>Math.sin(Math.PI*0.5*factor)</code>. This function starts fast and ends slow. <li>Smoothstep: <code>(3.0-2.0*factor)*factor*factor</code>. This function starts and ends slow, and speeds up in the middle. <li>Perlin&#39;s &quot;Smootherstep&quot;: <code>(10+factor*(factor*6-15))*factor*factor*factor</code>. This function starts and ends slow, and speeds up in the middle. <li>Discrete-step timing, where N is a number of steps greater than 0:<ul> <li>Position start: <code>factor &lt; 0 ? 0 : Math.max(1.0,(1.0+Math.floor(factor*N))/N)</code>.</li> <li>Position end: <code>Math.floor(factor*N)/N</code>.</li></ul> <li>Inverted interpolation: <code>1.0-INTF(1.0-factor)</code>, where <code>INTF(x)</code> is another interpolation function. This function reverses the speed behavior; for example, a function that started fast now starts slow. <li>Ease: <code>factor &lt; 0.5 ? INTF(factor*2)*0.5 : 1.0-(INTF((1.0-factor)*2)*0.5)</code>, where <code>INTF(x)</code> is another interpolation function. Depending on the underlying function, this function eases in, then eases out, or vice versa. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -2136,7 +2198,8 @@ A 3-element vector.</li>
 
 <h3>(static) H3DU.Math.vec3negateInPlace(a) <a id='H3DU.Math.vec3negateInPlace'></a></h3>
 
-<p>Negates a 3-element vector in place.
+<p>Negates a 3-element vector in place, generally resulting in a vector with
+the same length but opposite direction.
 Negating a vector
 is the same as reversing the sign of each of its components.</p>
 
@@ -2153,7 +2216,7 @@ A 3-element vector.</li>
 
 <h3>(static) H3DU.Math.vec3norm(vec) <a id='H3DU.Math.vec3norm'></a></h3>
 
-<p>Converts 3-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.
+<p>Converts a 3-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
@@ -2225,6 +2288,51 @@ A 3-element vector.</li>
 
 <p>A perpendicular 3-element
 vector. Returns (0,0,0) if &quot;vec&quot; is (0,0,0). (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec3proj(vec, refVec) <a id='H3DU.Math.vec3proj'></a></h3>
+
+<p>Returns the projection of a 3-element vector on the given
+reference vector. Assuming both vectors
+start at the same point, the resulting vector
+will be parallel to the
+reference vector but will make the closest
+approach possible to the projected vector&#39;s
+endpoint. The difference between the projected
+vector and the return value will be perpendicular
+to the reference vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vec</code> (Type: Array.&lt;Number&gt;)<br>
+The vector to project.</li>
+<li><code>refVec</code> (Type: Array.&lt;Number&gt;)<br>
+The reference vector whose length will be adjusted.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The projection of
+&quot;vec&quot; on &quot;refVec&quot;. Returns (0,0,0) if &quot;refVec&quot;&#39;s
+length is 0 or extremely close to 0. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec3reflect(incident, normal) <a id='H3DU.Math.vec3reflect'></a></h3>
+
+<p>Returns a vector that reflects off a surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>incident</code> (Type: Array.&lt;Number&gt;)<br>
+Incident vector, or a vector headed in the direction of the surface, as a 3-element vector.</li>
+<li><code>normal</code> (Type: Array.&lt;Number&gt;)<br>
+Surface normal vector, or a vector that&#39;s perpendicular to the surface, as a 3-element vector. Should be a <a href="tutorial-glmath.html">unit vector</a>.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A vector that has the same length
+as &quot;incident&quot; but is reflected away from the surface. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.vec3scale(a, scalar) <a id='H3DU.Math.vec3scale'></a></h3>
 
@@ -2301,7 +2409,8 @@ The second 3-element vector.</li>
 
 <h4>Return Value</h4>
 
-<p>The parameter &quot;a&quot; (Type: Array.&lt;Number&gt;)</p>
+<p>The parameter &quot;a&quot;
+This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.vec3toWindowPoint(vector, matrix, viewport, [yUp]) <a id='H3DU.Math.vec3toWindowPoint'></a></h3>
 
@@ -2346,10 +2455,11 @@ defined by A, B, and C, in any order.
 <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
 <li>The triple product is the same as the <i>determinant</i> of a 3x3 matrix whose
 rows or columns are the vectors A, B, and C, in that order.
-<li>Assume A is a <a href="tutorial-glmath.html">unit vector</a> and perpendicular to vectors B and C. If the triple product
-is negative (resp. positive), then A points directly away from (resp. points at) the cross product of
+<li>Assume A is perpendicular to vectors B and C. If the triple product
+is positive (resp. negative), then A points at (resp.
+points directly away from) the cross product of
 B and C -- which will be perpendicular -- and the angle from B to C, when rotated
-about vector A, is negative (resp. positive). (See the example below.)
+about vector A, is positive (resp. negative). (See the example below.)
 </ul></p>
 
 <h4>Parameters</h4>
@@ -2425,6 +2535,49 @@ A 4-element vector.</li>
 <h4>Return Value</h4>
 
 <p>The vector &quot;a&quot;. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec4add(a, b) <a id='H3DU.Math.vec4add'></a></h3>
+
+<p>Adds two 4-element vectors and returns a new
+vector with the result. Adding two vectors
+is the same as adding each of their components.
+The resulting vector describes a straight-line path for the
+combined paths described by the given vectors, in either order.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The first 4-element vector.</li>
+<li><code>b</code> (Type: Array.&lt;Number&gt;)<br>
+The second 4-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting 4-element vector. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec4addInPlace(a, b) <a id='H3DU.Math.vec4addInPlace'></a></h3>
+
+<p>Adds two 4-element vectors and stores
+the result in the first vector. Adding two vectors
+is the same as adding each of their components.
+The resulting vector describes a straight-line path for the
+combined paths described by the given vectors, in either order.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The first 4-element vector.</li>
+<li><code>b</code> (Type: Array.&lt;Number&gt;)<br>
+The second 4-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The parameter &quot;a&quot;
+This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.vec4assign(dst, src) <a id='H3DU.Math.vec4assign'></a></h3>
 
@@ -2540,7 +2693,8 @@ A 4-element vector.</li>
 
 <h3>(static) H3DU.Math.vec4negateInPlace(a) <a id='H3DU.Math.vec4negateInPlace'></a></h3>
 
-<p>Negates a 4-element vector in place.
+<p>Negates a 4-element vector in place, generally resulting in a vector with
+the same length but opposite direction.
 Negating a vector
 is the same as reversing the sign of each of its components.</p>
 
@@ -2557,7 +2711,7 @@ A 4-element vector.</li>
 
 <h3>(static) H3DU.Math.vec4norm(vec) <a id='H3DU.Math.vec4norm'></a></h3>
 
-<p>Converts 4-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.
+<p>Converts a 4-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
@@ -2594,6 +2748,33 @@ A 4-element vector.</li>
 
 <p>The parameter &quot;vec&quot;.
 Note that due to rounding error, the vector&#39;s length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec4proj(vec, refVec) <a id='H3DU.Math.vec4proj'></a></h3>
+
+<p>Returns the projection of a 4-element vector on the given
+reference vector. Assuming both vectors
+start at the same point, the resulting vector
+will be parallel to the
+reference vector but will make the closest
+approach possible to the projected vector&#39;s
+endpoint. The difference between the projected
+vector and the return value will be perpendicular
+to the reference vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vec</code> (Type: Array.&lt;Number&gt;)<br>
+The vector to project.</li>
+<li><code>refVec</code> (Type: Array.&lt;Number&gt;)<br>
+The reference vector whose length will be adjusted.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The projection of
+&quot;vec&quot; on &quot;refVec&quot;. Returns (0,0,0,0) if &quot;refVec&quot;&#39;s
+length is 0 or extremely close to 0. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.vec4scale(a, scalar) <a id='H3DU.Math.vec4scale'></a></h3>
 
@@ -2632,6 +2813,45 @@ A factor to multiply. To divide a vector by a number, the factor will be 1 divid
 <h4>Return Value</h4>
 
 <p>The parameter &quot;a&quot;. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec4sub(a, b) <a id='H3DU.Math.vec4sub'></a></h3>
+
+<p>Subtracts the second vector from the first vector and returns a new
+vector with the result. Subtracting two vectors
+is the same as subtracting each of their components.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The first 4-element vector.</li>
+<li><code>b</code> (Type: Array.&lt;Number&gt;)<br>
+The second 4-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting 4-element vector.
+This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;Number&gt;)</p>
+
+<h3>(static) H3DU.Math.vec4subInPlace(a, b) <a id='H3DU.Math.vec4subInPlace'></a></h3>
+
+<p>Subtracts the second vector from the first vector and stores
+the result in the first vector. Subtracting two vectors
+is the same as subtracting each of their components.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The first 4-element vector.</li>
+<li><code>b</code> (Type: Array.&lt;Number&gt;)<br>
+The second 4-element vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The parameter &quot;a&quot; (Type: Array.&lt;Number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

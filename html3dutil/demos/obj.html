@@ -36,7 +36,7 @@ Spot, a public domain model from Keenan Clark<br>
   var sub = new H3DU.Batch3D();
   var loader = new H3DU.TextureLoader();
   var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(5);
-  var input = new H3DU.InputTracker(document);
+  var input = new H3DU.InputTracker(scene.getCanvas());
   var startfunc = null;
   var shape = null;
   addLink("Toboggan", startfunc = function() {

@@ -141,7 +141,7 @@ scene.setClearColor("white");
 sub = new H3DU.Batch3D();
 var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(5)
    .moveAngleVertical(-90);
-var input = new H3DU.InputTracker(document);
+var input = new H3DU.InputTracker(scene.getCanvas());
 var pc = new H3DU.FrameCounterDiv();
 shape = null;
 document.getElementById("colorsetting").addEventListener("change",

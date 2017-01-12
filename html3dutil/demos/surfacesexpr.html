@@ -121,9 +121,9 @@ function CustomSurface(x, y, z, minu, maxu, minv, maxv) {
   " " + normalExpr[2].toJSString() + "];\n";
   this.getCode = function() {
     return "var evaluator=new H3DU.SurfaceEval().vertex({\n" +
-    "\"evaluate\":function(u) {\n" + code + "}})\n" +
+    "\"evaluate\":function(u, v) {\n" + code + "}})\n" +
     ".normal({\n" +
-    "\"evaluate\":function(u) {\n" + normalCode + "}})\n";
+    "\"evaluate\":function(u, v) {\n" + normalCode + "}})\n";
   };
   this.evaluate = null;
   try {
@@ -241,7 +241,7 @@ function link0() {
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
-var input = new H3DU.InputTracker(document);
+var input = new H3DU.InputTracker(scene.getCanvas());
 scene.setClearColor("white");
 scene.cullFace(H3DU.Scene3D.FRONT);
 var sub = new H3DU.Batch3D();

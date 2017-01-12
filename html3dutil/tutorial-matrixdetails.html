@@ -97,17 +97,13 @@ position:</p>
 <li><strong>a&prime;</strong><sub><em>x</em></sub> = matrix[0] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[4] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[8] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[12]</li>
 <li><strong>a&prime;</strong><sub><em>y</em></sub> = matrix[1] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[5] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[9] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[13]</li>
 <li><strong>a&prime;</strong><sub><em>z</em></sub> = matrix[2] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[6] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[10] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[14]</li>
+<li><strong>a&prime;</strong><sub><em>w</em></sub> = matrix[3] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[7] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[11] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[15]</li>
 </ul>
 
-<p>Note that:</p>
-
-<ul>
-<li>For the purpose of transforming 3D points, the last row of the matrix above can be ignored,
-since it doesn&#39;t transform x, y, or z. (It would correspond to the W component of the
-output.)</li>
-<li>To make the formula equivalent to multiplying by a 4-component vector, set the input
-vector&#39;s W component to 1.</li>
-</ul>
+<p>If <strong>a&prime;</strong><sub><em>w</em></sub> is other than 1, divide <strong>a&prime;</strong><sub><em>x</em></sub>, <strong>a&prime;</strong><sub><em>y</em></sub>,
+and <strong>a&prime;</strong><sub><em>z</em></sub> by <strong>a&prime;</strong><sub><em>w</em></sub>. (See <a href="#Other_Transformations">&quot;Other Transformations&quot;</a>.
+For most of the discussion that follows, the last row of the matrix is ignored and we assume
+<strong>a&prime;</strong><sub><em>w</em></sub> is always 1.)</p>
 
 <p>The following sections describe different kinds of matrix transformations in more detail.</p>
 
@@ -118,6 +114,8 @@ vector&#39;s W component to 1.</li>
 Transforms a 4-element vector with a 4x4 matrix</li>
 <li><a href="H3DU.Math.html#H3DU.Math.mat3transform">H3DU.Math.mat3transform()</a> -
 Transforms a 3-element vector with a 3x3 matrix</li>
+<li>H3DU.Math.mat3projectVec3 -
+Does a perspective-correct transformation of a 3D point with a 4x4 matrix</li>
 </ul>
 
 <h3>Translation <a id=Translation></a></h3>

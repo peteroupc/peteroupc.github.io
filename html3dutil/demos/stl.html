@@ -30,7 +30,7 @@ Model: Marker Holder by theorbtwo, public domain, http://www.thingiverse.com/thi
   // to Scene3D.
   var scene = new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
-  var input = new H3DU.InputTracker(document);
+  var input = new H3DU.InputTracker(scene.getCanvas());
   var sub = new H3DU.Batch3D();
   var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(80);
   H3DU.loadStlFromUrl("holder.stl").then(function(mesh) {
