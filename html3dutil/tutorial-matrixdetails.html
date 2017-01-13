@@ -17,7 +17,7 @@ Functions dealing with matrices begin with &quot;mat&quot;.</p>
 
 <h2>Contents <a id=Contents></a></h2>
 
-<p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br><a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br></p>
+<p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br>&nbsp;&nbsp;<a href="#A_Matrix_Transforms_Between_Coordinate_Systems">A Matrix Transforms Between Coordinate Systems</a><br><a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br></p>
 
 <h2>Arrangement <a id=Arrangement></a></h2>
 
@@ -88,6 +88,46 @@ into the matrix arrays passed to <code>H3DU.Math</code>&#39;s matrix methods.</p
 </mfenced>
 </math>
 
+<h3>A Matrix Transforms Between Coordinate Systems <a id=A_Matrix_Transforms_Between_Coordinate_Systems></a></h3>
+
+<p>A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate
+system.  These are four 3-element vectors that describe how the three axes and the center map
+to the new coordinate system in relation to the old coordinate system.</p>
+
+<p>The following depiction of a 4x4 matrix illustrates the meaning of each of its elements. To keep things
+simple, this matrix&#39;s transformation is one that keeps straight lines straight and parallel lines parallel.</p>
+
+<math>
+<mfenced open="[" close="]">
+ <mtable>
+ <mtr>
+ <mtd><mi>[0] X-axis X</mi></mtd>
+ <mtd><mi>[4] Y-axis X</mi></mtd>
+ <mtd><mi>[8] Z-axis X</mi></mtd>
+ <mtd><mi>[12] Center X</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>[1] X-axis Y</mi></mtd>
+ <mtd><mi>[2] Y-axis Y</mi></mtd>
+ <mtd><mi>[3] Z-axis Y</mi></mtd>
+ <mtd><mi>[13] Center Y</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>[2] X-axis Z</mi></mtd>
+ <mtd><mi>[6] Y-axis Z</mi></mtd>
+ <mtd><mi>[10] Z-axis Z</mi></mtd>
+ <mtd><mi>[14] Center Z</mi></mtd>
+ </mtr>
+ <mtr>
+ <mtd><mi>[3] 0</mi></mtd>
+ <mtd><mi>[7] 0</mi></mtd>
+ <mtd><mi>[11] 0</mi></mtd>
+ <mtd><mi>[15] 1</mi></mtd>
+ </mtr>
+</mtable>
+</mfenced>
+</math>
+
 <h2>Transforming Points <a id=Transforming_Points></a></h2>
 
 <p>The transformation formula multiplies a matrix by a 3D point to change that point&#39;s
@@ -97,13 +137,13 @@ position:</p>
 <li><strong>a&prime;</strong><sub><em>x</em></sub> = matrix[0] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[4] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[8] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[12]</li>
 <li><strong>a&prime;</strong><sub><em>y</em></sub> = matrix[1] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[5] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[9] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[13]</li>
 <li><strong>a&prime;</strong><sub><em>z</em></sub> = matrix[2] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[6] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[10] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[14]</li>
-<li><strong>a&prime;</strong><sub><em>w</em></sub> = matrix[3] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[7] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[11] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[15]</li>
+<li><strong>w</strong> = matrix[3] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[7] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[11] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[15]</li>
 </ul>
 
-<p>If <strong>a&prime;</strong><sub><em>w</em></sub> is other than 1, divide <strong>a&prime;</strong><sub><em>x</em></sub>, <strong>a&prime;</strong><sub><em>y</em></sub>,
-and <strong>a&prime;</strong><sub><em>z</em></sub> by <strong>a&prime;</strong><sub><em>w</em></sub>. (See <a href="#Other_Transformations">&quot;Other Transformations&quot;</a>.
+<p>If <strong>w</strong> is other than 1, divide <strong>a&prime;</strong><sub><em>x</em></sub>, <strong>a&prime;</strong><sub><em>y</em></sub>,
+and <strong>a&prime;</strong><sub><em>z</em></sub> by <strong>w</strong>. (See <a href="#Other_Transformations">&quot;Other Transformations&quot;</a>.
 For most of the discussion that follows, the last row of the matrix is ignored and we assume
-<strong>a&prime;</strong><sub><em>w</em></sub> is always 1.)</p>
+<strong>w</strong> is always 1.)</p>
 
 <p>The following sections describe different kinds of matrix transformations in more detail.</p>
 
@@ -414,10 +454,9 @@ Multiplies a matrix by a translation.</li>
 
 <h3>Matrix Multiplication <a id=Matrix_Multiplication></a></h3>
 
-<p>Two matrices can be combined into a single transformation. To do so,
-the matrices are multiplied such that the transformations
-they describe happen in reverse order. For example, if the first matrix
-(input matrix) describes a translation and the second
+<p>When two matrices are multiplied, the combined matrix will be such
+that the transformations they describe happen in reverse
+order. For example, if the first matrix (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will
 describe the effect of scaling then translation.</p>
 
@@ -443,7 +482,7 @@ Multiplies two matrices</li>
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the <code>H3DU.Math</code> library.</p>
 
-<p>One example of such a transformation is the perspective projection matrix. When a 4-element
+<p>One example of such a transformation is found in a <em>perspective projection</em> matrix. When a 4-element
 vector is transformed with this matrix, its W component is generated as follows:</p>
 
 <ul>
