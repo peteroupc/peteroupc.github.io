@@ -366,7 +366,7 @@ function linknone() {
 
 function shiny(color) {
   "use strict";
-  return new H3DU.Material(color, color, "white", 5);
+  return new H3DU.PbrMaterial({"diffuse":color});
 }
 
 function platonicGroup() {

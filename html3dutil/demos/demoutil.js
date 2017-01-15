@@ -139,7 +139,7 @@ function updateShape(func, allsettings, shapeGroup) {
     shapeGroup.removeShape(shapeGroup.shapes[0]);
   }
   shapeGroup.addShape(new H3DU.Shape(func(allsettings)).setMaterial(
-    new H3DU.Material().setParams({
+    new H3DU.PbrMaterial({
       "diffuse":"black",
       "specular":"white",
       "shininess":32

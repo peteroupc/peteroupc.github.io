@@ -26,6 +26,7 @@ material file, if available) asynchronously.</li>
 <li><a href="#H3DU.ObjData.loadObjFromUrlWithTextures">ObjData.loadObjFromUrlWithTextures</a><br>Loads a WaveFront OBJ file (along with its associated MTL, or
 material file, if available), along with the textures it uses,
 asynchronously.</li>
+<li><a href="#H3DU.PbrMaterial">PbrMaterial</a><br>A material for physically-based rendering.</li>
 <li><a href="#H3DU.createCanvasElement">createCanvasElement</a><br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</li>
 <li><a href="#H3DU.get3DContext">get3DContext</a><br>Creates a 3D rendering context from an HTML canvas element.</li>
@@ -122,6 +123,19 @@ the OBJ file and textures are loaded successfully, whether or not the associated
 MTL is also loaded successfully (the result is an H3DU.ObjData object),
 and is rejected when an error occurs when loading the OBJ file or any of
 its textures. (Type: <a href="Promise.html">Promise</a>)</p>
+
+<h3>(static) H3DU.PbrMaterial([params]) <a id='H3DU.PbrMaterial'></a></h3>
+
+<p>A material for physically-based rendering. Specifies parameters for geometry materials,
+which describe the appearance of a 3D object. This includes how an object
+scatters, reflects, or absorbs light.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>params</code> (Type: Object) (optional)<br>
+An object described in H3DU.PbrMaterial.setParams.</li>
+</ul>
 
 <h3>(static) H3DU.createCanvasElement(parent, width, height) <a id='H3DU.createCanvasElement'></a></h3>
 
