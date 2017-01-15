@@ -434,14 +434,16 @@ var c = [1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2];
 var rot = 0;
 H3DU.renderLoop(function(time) {
   "use strict";
+  var i;
   fbo.resize(scene.getWidth(), scene.getHeight());
   if(currentFilter) {
     currentFilter.setUniforms({
       "coarseness":c[Math.floor(c.length * H3DU.getTimePosition(timer, time, 1500))],
-      "time":100 * H3DU.getTimePosition(timer, time, 5000)
+      "time":100 * H3DU.getTimePosition(timer, time, 5000),
+      "globalTime":Math.PI * 2 * H3DU.getTimePosition(timer, time, 5000)
     });
   }
-  for(var i = 0;i < blinds.shapes.length;i++) {
+  for(i = 0;i < blinds.shapes.length;i++) {
     blinds.shapes[i].setQuaternion(
       H3DU.Math.quatFromAxisAngle(rot, 0, 1, 0));
   }

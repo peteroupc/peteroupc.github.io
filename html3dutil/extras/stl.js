@@ -93,7 +93,6 @@
       e = outerloop.exec(line);
       if(e && state === H3DU._StlData.IN_FACET) {
         state = H3DU._StlData.IN_OUTER_LOOP;
- // vertexCount=0;
         continue;
       }
       e = vertex.exec(line);

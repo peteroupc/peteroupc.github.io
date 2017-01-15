@@ -49,8 +49,8 @@ batch3d.setLookAt([0,0,30], [0,2,0]);
 <li>A <em>world matrix</em> transforms an object&#39;s own coordinates to <em>world space</em>,
 the coordinate system shared by every object in the scene. The world matrix
 is not discussed in this page.</li>
-<li>A <em>view matrix</em> transforms coordinates in world space to <em>camera space</em>.</li>
-<li>A <em>projection matrix</em> transforms coordinates in camera space to <em>clip space</em>.</li>
+<li>A <em>view matrix</em> transforms coordinates in world space to <em>eye space</em>.</li>
+<li>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.</li>
 </ul>
 
 <p>As <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System">explained later</a> on this page,
@@ -61,7 +61,7 @@ and their transformed <em>window coordinates</em> when rendering things on the s
 
 <h2>Projection Transform <a id=Projection_Transform></a></h2>
 
-<p>A <em>projection matrix</em> transforms coordinates in camera space to <em>clip space</em>.</p>
+<p>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.</p>
 
 <p>Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below.</p>
@@ -220,8 +220,8 @@ method.</p>
 
 <h2>View Transform <a id=View_Transform></a></h2>
 
-<p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to coordinates in <em>camera space</em>
-(also called <em>eye space</em> or <em>view space</em>), in which the &quot;camera&quot; is located at the center of the coordinate system: (0, 0, 0).
+<p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to coordinates in <em>eye space</em>
+(also called <em>camera space</em> or <em>view space</em>), in which the &quot;camera&quot; is located at the center of the coordinate system: (0, 0, 0).
 A view matrix essentially rotates the camera and moves it to a given position in world space. Specifically:</p>
 
 <ul>

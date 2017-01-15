@@ -487,7 +487,6 @@ H3DU.ObjData._loadObj = function(str) {
   var pointStart = new RegExp("^p\\s+");
   var lines = str.split(/\r?\n/);
   var vertices = [];
-  // var currentMesh=new H3DU.Mesh();
   var normals = [];
   var uvs = [];
 

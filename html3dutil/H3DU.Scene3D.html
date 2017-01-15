@@ -92,7 +92,9 @@ the browser) in addition to the canvas&#39;s size when setting
 the viewport&#39;s dimensions.</li>
 <li><a href="#H3DU.Scene3D_H3DU.Scene3D_setViewMatrix">setViewMatrix</a><br><b>Deprecated: Instead of this method, use H3DU.Batch3D#setViewMatrix in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_H3DU.Scene3D_useFilter">useFilter</a><br><b>Deprecated: Use the <a href="H3DU.Batch3D.html#H3DU.Batch3D.forFilter">H3DU.Batch3D.forFilter</a> method to create a batch
-for rendering filter effects from a frame buffer.</b></li>
+for rendering filter effects from a frame buffer, or use the H3DU.Batch3D.useShader
+method. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method
+until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_H3DU.Scene3D_useProgram">useProgram</a><br><b>Deprecated: Instead of this method, use the &quot;setShader&quot; program of individual shapes
 to set the shader programs they use.</b></li>
 <li><a href="#H3DU.Scene3D_H3DU.Scene3D_vertexCount">vertexCount</a><br><b>Deprecated: Use the vertexCount method of <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
@@ -858,16 +860,18 @@ A 16-element matrix (4x4).</li>
 <h3>H3DU.Scene3D#useFilter(filterProgram) <a id='H3DU.Scene3D_H3DU.Scene3D_useFilter'></a></h3>
 
 <p><b>Deprecated: Use the <a href="H3DU.Batch3D.html#H3DU.Batch3D.forFilter">H3DU.Batch3D.forFilter</a> method to create a batch
-for rendering filter effects from a frame buffer.</b></p>
+for rendering filter effects from a frame buffer, or use the H3DU.Batch3D.useShader
+method. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method
+until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
-<p>Has no effect. (Previously, used a shader program to apply a texture filter after the
-scene is rendered.)</p>
+<p>Uses a shader program to apply a texture filter after the
+scene is rendered.</p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>filterProgram</code> (Type: <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> | string | null)<br>
-Not used.</li>
+The shader program to use.</li>
 </ul>
 
 <h4>Return Value</h4>

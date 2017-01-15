@@ -13,7 +13,9 @@
 as well as a texture image to apply on that object&#39;s surface.</p>
 
 <p><i>For more information on this constructor&#39;s parameters,
-see the H3DU.Material#setParams method.</i></p>
+see the H3DU.Material#setParams method. NOTE: It is preferred
+to set a material&#39;s parameters with the H3DU.Material#setParams method, rather than this
+constructor.</i></p>
 
 <h4>Parameters</h4>
 
@@ -45,7 +47,7 @@ when processing objects that use this material.</li>
 <li><a href="#H3DU.Material_specularMap">specularMap</a><br>Specular map texture, where each pixel is an additional factor to multiply the specular color by, for
 each part of the object&#39;s surface (note that the material must have a specular color of other
 than the default black for this to have an effect).</li>
-<li><a href="#H3DU.Material_texture">texture</a><br>H3DU.Texture for this material.</li>
+<li><a href="#H3DU.Material_texture">texture</a><br>Texture for this material.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -83,6 +85,8 @@ and (1,1,1) means total ambient color.</p>
 <p>Setting ambient color and diffusion color to the same value usually defines an object&#39;s
 color.</p>
 
+<p>Default Value: <code>&quot;[0.2,0.2,0.2]&quot;</code></p>
+
 <h3>H3DU.Material#basic <a id='H3DU.Material_basic'></a></h3>
 
 <p>If true, only the &quot;diffuse&quot; and &quot;texture&quot; properties of this object are used
@@ -94,8 +98,7 @@ when processing objects that use this material.</p>
 
 <p>Diffusion color of this material (also called &quot;albedo&quot;). This is the color seen when light passes through this material
 and bounces back; it scatters equally in all directions. Because different parts of an object are shaded
-differently depending
-on how directly they face diffuse lights, diffusion can contribute
+more brightly the more directly they face diffuse lights, diffusion can contribute
 much of the 3D appearance of that object.</p>
 
 <p>This value is a 4-element array giving the red, green, blue, and
@@ -113,6 +116,10 @@ colors are used for diffusion rather than this property.</p>
 <p>This value can have an optional fourth element giving the alpha component
 (0-1). If this element is omitted, the default is 1.</p>
 
+<p>Type: Array.&lt;Number&gt;</p>
+
+<p>Default Value: <code>&quot;[0.8,0.8,0.8,1]&quot;</code></p>
+
 <h3>H3DU.Material#emission <a id='H3DU.Material_emission'></a></h3>
 
 <p>Additive color emitted by objects with this material.
@@ -126,6 +133,10 @@ is called, disabling lighting calculations).</p>
 components.
 For each of the three color components, positive values add to that component,
 while negative values subtract from it. (0,0,0), the default, means no additive color.</p>
+
+<p>Type: Array.&lt;Number&gt;</p>
+
+<p>Default Value: <code>&quot;[0,0,0]&quot;</code></p>
 
 <h3>H3DU.Material#normalMap <a id='H3DU.Material_normalMap'></a></h3>
 
@@ -176,7 +187,9 @@ method can calculate the tangents and bitangents appropriate for normal mapping.
 The greater the number, the more concentrated the specular
 highlights are (and the smoother the material behaves).
 The lower the number, the more extended the highlights are (and the rougher the material behaves).
-Ranges from 0 through 128. Default is 32.</p>
+Ranges from 0 through 128.</p>
+
+<p>Default Value: <code>32</code></p>
 
 <h3>H3DU.Material#specular <a id='H3DU.Material_specular'></a></h3>
 
@@ -192,9 +205,13 @@ on the specular color of lights that shine on the material.
 (0,0,0) means no specular reflection and (1,1,1) means total specular reflection,
 The specular color is usually grayscale
 (all three components are the same), but can be colored if the material represents an
-uncoated metal of some sort. If this element is omitted, the default is (0.2,0.2,0.2).</p>
+uncoated metal of some sort.</p>
 
 <p>NOTE: Before version 2.0, the default was (0,0,0).</p>
+
+<p>Type: Array.&lt;Number&gt;</p>
+
+<p>Default Value: <code>&quot;[0.2,0.2,0.2]&quot;</code></p>
 
 <h3>H3DU.Material#specularMap <a id='H3DU.Material_specularMap'></a></h3>
 
@@ -214,9 +231,11 @@ specular factors in certain areas.</p>
 
 <h3>H3DU.Material#texture <a id='H3DU.Material_texture'></a></h3>
 
-<p>H3DU.Texture for this material. Each color in the texture
+<p>Texture for this material. Each color in the texture
 sets the diffusion (also called &quot;albedo&quot;)
 of each part of the material.</p>
+
+<p>Type: <a href="H3DU.Texture.html">H3DU.Texture</a></p>
 
 <p>Default Value: <code>null</code></p>
 
