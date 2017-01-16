@@ -237,7 +237,6 @@ function makeMirror() {
 function link1() {
   "use strict";
   if(scene) {
-
     currentFilter = makeGrayscale(scene);
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
@@ -263,7 +262,6 @@ function link2a() {
 function link2() {
   "use strict";
   if(scene) {
-
     currentFilter = H3DU.ShaderInfo.makeInvertEffect();
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
@@ -273,7 +271,6 @@ function link2() {
 function link3() {
   "use strict";
   if(scene) {
-
     currentFilter = makeWave();
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
@@ -283,7 +280,6 @@ function link3() {
 function link4() {
   "use strict";
   if(scene) {
-
     currentFilter = makeKernelMatrix(scene);
     setKernelMatrix(currentFilter, [1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9]);
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
@@ -301,7 +297,6 @@ function link5() {
 function link6() {
   "use strict";
   if(scene) {
-
     currentFilter = makeWaterpaint();
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
@@ -310,7 +305,6 @@ function link6() {
 function link7() {
   "use strict";
   if(scene) {
-
     currentFilter = makeMirror(scene);
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
@@ -319,7 +313,6 @@ function link7() {
 function link8() {
   "use strict";
   if(scene) {
-
     currentFilter = makeKernelMatrix(scene);
     setKernelMatrix(currentFilter, [0, 1, 0, 1, -4, 1, 0, 1, 0]);
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
@@ -330,7 +323,6 @@ function link8() {
 function link9() {
   "use strict";
   if(scene) {
-
     currentFilter = makeRedTint(scene);
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
@@ -340,7 +332,6 @@ function link9() {
 function link9a() {
   "use strict";
   if(scene) {
-
     currentFilter = makeBlueTint(scene);
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
@@ -350,7 +341,6 @@ function link9a() {
 function link10() {
   "use strict";
   if(scene) {
-
     currentFilter = makeWarp(scene);
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
@@ -358,7 +348,6 @@ function link10() {
 function linknone() {
   "use strict";
   if(scene) {
-
     currentFilter = null;
     renders[1] = new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }

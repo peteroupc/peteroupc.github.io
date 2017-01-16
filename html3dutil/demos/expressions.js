@@ -689,7 +689,6 @@ Operation.prototype.multiply = function(x) {
     }
   }
   if (this.operator === "mul") {
-
     for(var i = 0;i < this.nodes.length;i++) {
       if(this.nodes[i].equals(x)) {
         var c = this.copy();
