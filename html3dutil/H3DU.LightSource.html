@@ -6,21 +6,21 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>H3DU.LightSource([position], [ambient], [diffuse], [specular]) <a id='H3DU.LightSource'></a></h3>
+<h3>H3DU.LightSource([params], [ambient], [diffuse], [specular]) <a id='H3DU.LightSource'></a></h3>
 
 <p>Specifies parameters for light sources.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>position</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-See &quot;position&quot; property.</li>
+<li><code>params</code> (Type: Object | Array.&lt;Number&gt;) (optional)<br>
+An object as described in &quot;setParams&quot;. <i>Using this parameter as described in the &quot;position&quot; property is deprecated since version 2.0.</i></li>
 <li><code>ambient</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-See &quot;ambient&quot; property.</li>
+See &quot;ambient&quot; property. <i>This parameter is deprecated.</i></li>
 <li><code>diffuse</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-See &quot;diffuse&quot; property.</li>
+See &quot;diffuse&quot; property. <i>This parameter is deprecated.</i></li>
 <li><code>specular</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-See &quot;specular&quot; property.</li>
+See &quot;specular&quot; property. <i>This parameter is deprecated.</i></li>
 </ul>
 
 <h3>Members</h3>
@@ -52,6 +52,8 @@ color of each object, in the red, green,
 and blue components respectively.
 The default is (0,0,0,1), or black. Not used in the default shader program.</p>
 
+<p>Default Value: <code>&quot;[0,0,0,1]&quot;</code></p>
+
 <h3>H3DU.LightSource#diffuse <a id='H3DU.LightSource_diffuse'></a></h3>
 
 <p>A 4-element vector giving an additional color to multiply with the diffusion
@@ -62,12 +64,16 @@ Each component ranges from 0 to 1.
 The simulated diffusion scatters evenly, in every direction.
 The default is (1,1,1,1), or white.</p>
 
+<p>Default Value: <code>&quot;[1,1,1,1]&quot;</code></p>
+
 <h3>H3DU.LightSource#position <a id='H3DU.LightSource_position'></a></h3>
 
 <p>Light position. An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
 <li> If W is 0, then X, Y, and Z specify a vector in world space; the light will shine the brightest on surfaces that face the light in
 this vector&#39;s direction from the origin (0, 0, 0).
 <li> If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul></p>
+
+<p>Default Value: <code>&quot;[0,0,1,0]&quot;</code></p>
 
 <h3>H3DU.LightSource#radius <a id='H3DU.LightSource_radius'></a></h3>
 
@@ -88,6 +94,8 @@ The default is (1,1,1), or white.</p>
 
 <p>NOTE: <i>The default shader uses this only for <a href="H3DU.Material.html">H3DU.Material</a>, not
 for <a href="H3DU.html#H3DU.PbrMaterial">H3DU.PbrMaterial</a>.</i></p>
+
+<p>Default Value: <code>&quot;[1,1,1]&quot;</code></p>
 
 <h3>H3DU.LightSource#setParams(params) <a id='H3DU.LightSource_H3DU.LightSource_setParams'></a></h3>
 
