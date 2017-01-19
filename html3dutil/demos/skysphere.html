@@ -1,0 +1,54 @@
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="../extras/stl.js"></script>
+<script type="text/javascript" src="../extras/camera.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="skysphere.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<p style="position:absolute;left:0;top:1em">
+Model: Marker Holder by theorbtwo, public domain, http://www.thingiverse.com/thing:5570<br>
+Background is a scaled-down version of the file LyonvilleSpring__AndrewPerry__CC0.jpg, which was released to
+the public domain under CC0.
+</p>
+<script id="demo">
+/* global H3DU, createSkysphere */
+// <!--
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+  var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+  scene.setClearColor("white");
+  var input = new H3DU.InputTracker(scene.getCanvas());
+  var sub = new H3DU.Batch3D();
+  var camera = new H3DU.Camera(sub, 45, 1, 1000).setDistance(80);
+  var skysphere = createSkysphere(100, new H3DU.Texture("lyonvillesmall.jpg"));
+  H3DU.loadStlFromUrl("holder.stl").then(function(mesh) {
+    "use strict";
+    sub.addShape(new H3DU.Shape(mesh).setColor("red"));
+    sub.addShape(skysphere);
+  }).then(function() {
+    "use strict";
+    H3DU.renderLoop(function() {
+      camera.update(input.update());
+      sub.getLights().setDirectionalLight(0, camera.getPosition());
+      scene.render(sub);
+    });
+  });
+// -->
+</script>
+</body>

@@ -10,6 +10,9 @@
 
 <p>Specifies parameters for light sources.</p>
 
+<p>NOTE: The default shader program assumes that all colors specified in this object are in
+the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).</p>
+
 <h4>Parameters</h4>
 
 <ul>
@@ -50,7 +53,9 @@ and blue components respectively.</li>
 <p>A 4-element vector giving an additional color to multiply with the ambient
 color of each object, in the red, green,
 and blue components respectively.
-The default is (0,0,0,1), or black. Not used in the default shader program.</p>
+The default is (0,0,0,1), or black.</p>
+
+<p>NOTE: This property is not used in the default shader program.</p>
 
 <p>Default Value: <code>&quot;[0,0,0,1]&quot;</code></p>
 

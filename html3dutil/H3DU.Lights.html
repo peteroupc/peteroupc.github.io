@@ -12,6 +12,9 @@
 ambient color as well as data on one or more light sources.
 When constructed, the list of light sources will be empty.</p>
 
+<p>NOTE: The default shader program assumes that all colors specified in this object are in
+the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).</p>
+
 <h3>Members</h3>
 
 <ul>
@@ -55,6 +58,9 @@ phenomenon is sunlight reaching an indoor room without
 directly hitting it, such that the sunlight bounces off the walls
 and so illuminates most of the room pretty much uniformly.
 Ambient lights simulate this phenomenon.</small></p>
+
+<p>NOTE: In the default shader program, this property is
+only used on objects that use <a href="H3DU.Material.html">H3DU.Material</a>, not <a href="H3DU.html#H3DU.PbrMaterial">H3DU.PbrMaterial</a>.</p>
 
 <p>Default Value: <code>&quot;[0.2,0.2,0.2]&quot;</code></p>
 
