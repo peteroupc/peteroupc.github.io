@@ -134,9 +134,9 @@ of a 4x4 matrix (in column-major order) and returns the transformed vector.</li>
 <li><a href="#H3DU.Math.mat4transposeInPlace">mat4transposeInPlace</a><br>Transposes a 4x4 matrix in place without creating
 a new matrix.</li>
 <li><a href="#H3DU.Math.planeNorm">planeNorm</a><br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.html">unit vector</a>,
-unless all the normal&#39;s components are 0.</li>
+unless all the normal&#39;s components are 0, and returns a new plane with the result.</li>
 <li><a href="#H3DU.Math.planeNormInPlace">planeNormInPlace</a><br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.html">unit vector</a>,
-unless all the normal&#39;s components are 0.</li>
+unless all the normal&#39;s components are 0, and sets this plane to the result.</li>
 <li><a href="#H3DU.Math.quatConjugate">quatConjugate</a><br>Returns a quaternion that describes a rotation that undoes the given rotation (an &quot;inverted&quot; rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion&#39;s <a href="tutorial-glmath.html">axis of rotation</a>).</li>
 <li><a href="#H3DU.Math.quatFromAxisAngle">quatFromAxisAngle</a><br>Generates a quaternion from an angle and <a href="tutorial-glmath.html">axis of rotation</a>.</li>
 <li><a href="#H3DU.Math.quatFromMat4">quatFromMat4</a><br>Generates a quaternion from the rotation described in a 4x4 matrix.</li>
@@ -234,7 +234,9 @@ the same length but opposite direction.</li>
 <li><a href="#H3DU.Math.vec4normInPlace">vec4normInPlace</a><br>Converts a 4-element vector to a <a href="tutorial-glmath.html">unit vector</a>.</li>
 <li><a href="#H3DU.Math.vec4proj">vec4proj</a><br>Returns the projection of a 4-element vector on the given
 reference vector.</li>
-<li><a href="#H3DU.Math.vec4scale">vec4scale</a><br>Multiplies each element of a 4-element vector by a factor.</li>
+<li><a href="#H3DU.Math.vec4scale">vec4scale</a><br>Multiplies each element of a 4-element vector by a factor, returning
+a new vector that will point in the same direction
+but with its length multiplied by the given factor.</li>
 <li><a href="#H3DU.Math.vec4scaleInPlace">vec4scaleInPlace</a><br>Multiplies each element of a 4-element vector by a factor, so
 that the vector points in the same direction
 but its length is multiplied by the given factor.</li>
@@ -1457,7 +1459,7 @@ A 4x4 matrix.</li>
 <h3>(static) H3DU.Math.planeNorm(plane) <a id='H3DU.Math.planeNorm'></a></h3>
 
 <p>Normalizes this plane so that its normal is a <a href="tutorial-glmath.html">unit vector</a>,
-unless all the normal&#39;s components are 0.
+unless all the normal&#39;s components are 0, and returns a new plane with the result.
 The plane&#39;s distance will be divided by the
 normal&#39;s length. Returns a new plane.</p>
 
@@ -1477,7 +1479,7 @@ Note that due to rounding error, the length of the plane&#39;s normal might not 
 <h3>(static) H3DU.Math.planeNormInPlace(plane) <a id='H3DU.Math.planeNormInPlace'></a></h3>
 
 <p>Normalizes this plane so that its normal is a <a href="tutorial-glmath.html">unit vector</a>,
-unless all the normal&#39;s components are 0.
+unless all the normal&#39;s components are 0, and sets this plane to the result.
 The plane&#39;s distance will be divided by the
 current normal&#39;s length.</p>
 
@@ -1950,7 +1952,7 @@ A 3-element vector.</li>
 The following are properties of the cross product:<ul>
 <li>The cross product will be a vector that is <i>orthogonal</i> (perpendicular) to both A and B.
 <li>Switching the order of A and B results in a cross product
-vector with the same length but opposite direction.
+vector with the same length but opposite direction. (Thus, the cross product is not <i>commutative</i>.)
 <li>If the cross product&#39;s <a href="H3DU.Math.html#H3DU.Math.vec3length">length</a> is 0, then A and B are parallel vectors.
 <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
 While the cross product of A and B points toward the viewer,
@@ -2052,6 +2054,8 @@ that the two vectors are parallel (and the vectors are 0 or
 </ul></li>
 <li>If the two vectors are the same, the return value indicates
 the vector's length squared. This is illustrated in the example.
+<li>Switching the order of the two vectors results in the
+same cross product. (Thus, the dot product is <i>commutative</i>.)
 </ul>
 
 <h4>Parameters</h4>
@@ -2799,7 +2803,7 @@ length is 0 or extremely close to 0. (Type: Array.&lt;Number&gt;)</p>
 
 <h3>(static) H3DU.Math.vec4scale(a, scalar) <a id='H3DU.Math.vec4scale'></a></h3>
 
-<p>Multiplies each element of a 4-element vector by a factor. Returns
+<p>Multiplies each element of a 4-element vector by a factor, returning
 a new vector that will point in the same direction
 but with its length multiplied by the given factor.</p>
 
@@ -2908,6 +2912,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
@@ -2928,6 +2933,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

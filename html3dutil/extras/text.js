@@ -62,7 +62,6 @@ H3DU.TextFont = function() {
     this.info.padding = H3DU.TextFont._toArray(this.info.padding, 4);
     this.info.spacing = H3DU.TextFont._toArray(this.info.spacing, 2);
   }
-  this.textShader = H3DU.TextFont._textShader();
   this.fileUrl = fileUrl;
   this.chars = chars;
   this.pages = pages;
@@ -271,6 +270,8 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * the color to draw the text with.
  * If this value is given, the bitmap font is assumed to be a signed distance field
  * font.
+ * <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field
+ * font.
  * <li><code>texture</code> - An array of textures ({@link H3DU.Texture}) to use with this font,
  * or a single {@link H3DU.Texture} if only one texture page is used.
  * If null or omitted, uses the default filenames for texture pages defined in this font.
@@ -281,13 +282,18 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 H3DU.TextFont.prototype.textShape = function(str, params) {
   "use strict";
   var group = new H3DU.ShapeGroup();
+  var msdf = typeof params.msdf !== "undefined" && params.msdf !== null ? params.msdf : false;
   var color = typeof params.color !== "undefined" && params.color !== null ? params.color : null;
   var textures = typeof params.textures !== "undefined" && params.textures !== null ?
    params.textures : null;
   if(textures && textures instanceof H3DU.Texture) {
     textures = [textures];
   }
+  var shader = null;
   var hasColor = color !== null && typeof color !== "undefined";
+  if(hasColor) {
+    shader = new H3DU.ShaderInfo(null, H3DU.TextFont._textShader(msdf));
+  }
   color = hasColor ? color : [0, 0, 0, 0];
   var meshesForPage = this.makeTextMeshes(str, params);
   for(var i = 0;i < meshesForPage.length;i++) {
@@ -297,7 +303,7 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
     var material = new H3DU.Material(color, color).setParams({
       "texture":textures ? textures[i] : this.pages[i],
       "basic":true,
-      "shader": hasColor ? H3DU.TextFont._textShaderInfo : null
+      "shader": shader
     });
     sh.setMaterial(material);
     group.addShape(sh);
@@ -746,6 +752,8 @@ H3DU.TextFont._loadTextFontInner = function(data) {
         value = value.substring(1, value.length - 1);
       } else if(value.match(/^-?\d+$/)) {
         value = parseInt(value, 10) | 0;
+      } else if((key === "xoffset" || key === "yoffset" || key === "xadvance") && value.match(/^-?\d+\.\d+$/)) {
+        value = parseFloat(value);
       }
       hash[key] = value;
       rest = rest.substr(e[1].length);
@@ -900,36 +908,38 @@ H3DU.TextFont.load = function(fontFileName) {
   }
 };
 /** @private */
-H3DU.TextFont._textShader = function() {
+H3DU.TextFont._textShader = function(msdf) {
   "use strict";
-
-  var shader = "";
-  shader += "#ifdef GL_OES_standard_derivatives\n";
-  shader += "#extension GL_OES_standard_derivatives : enable\n";
-  shader += "#endif\n";
-  shader += "#ifdef GL_ES\n" +
-"#ifndef GL_FRAGMENT_PRECISION_HIGH\n" +
-"precision mediump float;\n" +
-"#else\n" +
-"precision highp float;\n" +
-"#endif\n" +
-"#endif\n" +
-"uniform vec4 md;\n" +
-"uniform sampler2D sampler;\n" +
-"varying vec2 uvVar;\n" +
-"varying vec3 colorAttrVar;\n" +
-"void main() {\n" +
-" float d=texture2D(sampler, uvVar).a;\n";
-  shader += "#ifdef GL_OES_standard_derivatives\n";
-  shader += " float dsmooth=length(vec2(dFdx(d),dFdy(d)))*0.75;\n";
-  shader += "#else\n";
-  shader += " float dsmooth=0.06;\n";
-  shader += "#endif\n";
-  shader += " gl_FragColor=vec4(md.rgb,md.a*smoothstep(0.5-dsmooth,0.5+dsmooth,d));\n" +
-"}";
+  var shader = [
+    "#ifdef GL_OES_standard_derivatives",
+    "#extension GL_OES_standard_derivatives : enable",
+    "#endif",
+    "#ifdef GL_ES",
+    "#ifndef GL_FRAGMENT_PRECISION_HIGH",
+    "precision mediump float;",
+    "#else",
+    "precision highp float;",
+    "#endif",
+    "#endif",
+    "uniform vec4 md;",
+    "uniform sampler2D sampler;",
+    "uniform vec2 textureSize;",
+    "varying vec2 uvVar;",
+    "varying vec3 colorAttrVar;",
+    "void main() {",
+    " vec4 d=texture2D(sampler, uvVar);",
+    msdf ? " float df=1.0-max(min(d.r,d.g),min(d.b,max(d.g,d.r)));" : "float df=d.a;",
+    "#ifdef GL_OES_standard_derivatives",
+    " float dsmooth=length(vec2(dFdx(df),dFdy(df)))*0.7;",
+    " float o=smoothstep(0.5-dsmooth,0.5+dsmooth,df);",
+    "#else",
+    " float dsmooth=0.06;",
+    " float o=smoothstep(0.5-dsmooth,0.5+dsmooth,df);",
+    "#endif",
+    " gl_FragColor=vec4(md.rgb,pow(md.a*o,0.4545));",
+    "}"].join("\n");
   return shader;
 };
-H3DU.TextFont._textShaderInfo = new H3DU.ShaderInfo(null, H3DU.TextFont._textShader());
 
 // ///////////////
 

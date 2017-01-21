@@ -129,7 +129,7 @@ passes mentioned above, the following happens.</p>
 
 <pre><code>* The 3D library renders the first pass.
     * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
-       switches the shader to the usual shaders for drawing the 3D scene.
+        uses the usual shaders for drawing the 3D scene.
     * The current frame is rendered onto the frame buffer. The frame buffer&#39;s texture will now contain a
       &quot;snapshot&quot; of the frame that can now be modified by graphics filters.
  * Then, the library renders the second pass.
@@ -280,28 +280,7 @@ black and white and shades of gray.</p>
 ]
 </code></pre>
 
-<p>The following is an implementation of this filter.</p>
-
-<pre><code>function makeColorMatrix() {
-  &quot;use strict&quot;;
-  return H3DU.ShaderInfo.makeEffect([
-    &quot;uniform mat4 colorMatrix;&quot;,
-    &quot;uniform float t;&quot;, // ranges from 0 to 1
-    &quot;#define tolinear(c) pow(c, vec3(2.2))&quot;,
-    &quot;#define fromlinear(c) pow(c, vec3(0.45454545))&quot;,
-    &quot;vec3 mylerp(vec3 a, vec3 b, float t){&quot;,
-    &quot; return a + (b - a) * t;&quot;,
-    &quot;}&quot;,
-    &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {&quot;,
-    &quot; vec4 tex=texture2D(sampler,uvCoord);&quot;,
-    &quot; vec3 texRgb=tolinear(tex.rgb);&quot;,
-    &quot; vec4 color=colorMatrix*vec4(texRgb,1.0);&quot;,
-    &quot; vec3 colorRgb=mylerp(texRgb,color.rgb/color.a,t);&quot;,
-    &quot; colorRgb=fromlinear(colorRgb);&quot;,
-    &quot; return vec4(clamp(fromlinear(colorRgb),0.0,1.0),tex.a);&quot;,
-    &quot;}&quot;].join(&quot;\n&quot;));
-}
-</code></pre>
+<p>This filter is implemented in the function <code>makeColorMatrix</code> in the demo.</p>
 
 <h3>Pixelate Filter <a id=Pixelate_Filter></a></h3>
 
@@ -395,6 +374,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
@@ -415,6 +395,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

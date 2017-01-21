@@ -32,6 +32,11 @@ the HTML 3D Library. Example:</p>
 
 <ul>
 <li><a href="#H3DU.ObjData.loadMtlFromUrl">.loadMtlFromUrl</a><br>Loads a material (MTL) file asynchronously.</li>
+<li><a href="#H3DU.ObjData.loadObjFromUrl">.loadObjFromUrl</a><br>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available) asynchronously.</li>
+<li><a href="#H3DU.ObjData.loadObjFromUrlWithTextures">.loadObjFromUrlWithTextures</a><br>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available), along with the textures it uses,
+asynchronously.</li>
 <li><a href="#H3DU.ObjData_H3DU.ObjData_toShape">toShape</a><br>Creates one or more 3D shapes from the data
 in this OBJ file.</li>
 <li><a href="#H3DU.ObjData_H3DU.ObjData_toShapeFromName">toShapeFromName</a><br>Creates one or more <a href="H3DU.Shape.html">H3DU.Shape</a> objects from the named portion
@@ -73,6 +78,48 @@ Returns the material as <a href="H3DU.Material.html">H3DU.Material</a>, or null 
 <li><code>getMaterialNames()</code> - Gets an array of names of all the materials included in this MTL file.
 </li>
 </ul> (Type: <a href="Promise.html">Promise</a>)</p>
+
+<h3>H3DU.ObjData.loadObjFromUrl(url) <a id='H3DU.ObjData.loadObjFromUrl'></a></h3>
+
+<p>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available) asynchronously.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>url</code> (Type: String)<br>
+The URL to load.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that resolves when
+the OBJ file is loaded successfully, whether or not its associated
+MTL is also loaded successfully (the result is an H3DU.ObjData object),
+and is rejected when an error occurs when loading the OBJ file. (Type: <a href="Promise.html">Promise</a>)</p>
+
+<h3>H3DU.ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='H3DU.ObjData.loadObjFromUrlWithTextures'></a></h3>
+
+<p>Loads a WaveFront OBJ file (along with its associated MTL, or
+material file, if available), along with the textures it uses,
+asynchronously.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>url</code> (Type: String)<br>
+The URL to load.</li>
+<li><code>textureLoader</code> (Type: TextureLoader)<br>
+An object to load textures with.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that resolves when
+the OBJ file and textures are loaded successfully, whether or not the associated
+MTL is also loaded successfully (the result is an H3DU.ObjData object),
+and is rejected when an error occurs when loading the OBJ file or any of
+its textures. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <h3>H3DU.ObjData#toShape() <a id='H3DU.ObjData_H3DU.ObjData_toShape'></a></h3>
 
@@ -135,6 +182,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
@@ -155,6 +203,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

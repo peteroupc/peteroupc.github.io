@@ -188,7 +188,7 @@ than the right and bottom coordinates, respectively).</p>
 <li><code>str</code> (Type: String)<br>
 The text to draw. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
 <li><code>params</code> (Type: Object)<br>
-An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.html">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.html">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul></li>
+An object described in H3DU.TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.html">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.html">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -229,6 +229,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
@@ -249,6 +250,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

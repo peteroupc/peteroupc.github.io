@@ -19,15 +19,6 @@ library.</p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.CubeMap">CubeMap</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.MeshJSON.loadJSON">MeshJSON.loadJSON</a><br>Loads a mesh from JSON format.</li>
-<li><a href="#H3DU.MeshJSON.toJSON">MeshJSON.toJSON</a><br>Converts a mesh to JSON format.</li>
-<li><a href="#H3DU.ObjData.loadObjFromUrl">ObjData.loadObjFromUrl</a><br>Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available) asynchronously.</li>
-<li><a href="#H3DU.ObjData.loadObjFromUrlWithTextures">ObjData.loadObjFromUrlWithTextures</a><br>Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available), along with the textures it uses,
-asynchronously.</li>
-<li><a href="#H3DU.PbrMaterial">PbrMaterial</a><br>A material for physically-based rendering.</li>
 <li><a href="#H3DU.createCanvasElement">createCanvasElement</a><br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</li>
 <li><a href="#H3DU.get3DContext">get3DContext</a><br>Creates a 3D rendering context from an HTML canvas element.</li>
@@ -49,107 +40,6 @@ and queue requests to call that function once per frame,
 using <code>window.requestAnimationFrame</code>
 or a &quot;polyfill&quot; method.</li>
 <li><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
-</ul>
-
-<h3>(static) H3DU.CubeMap(name) <a id='H3DU.CubeMap'></a></h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>name</code> (Type: Array.&lt;(String|Texture)&gt;)<br>
-An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet. The six images are, in order, the image seen when looking toward the positive X axis, the negative X axis, positive Y, negative Y, positive Z, and negative Z.</li>
-</ul>
-
-<h3>(static) H3DU.MeshJSON.loadJSON(url) <a id='H3DU.MeshJSON.loadJSON'></a></h3>
-
-<p>Loads a mesh from JSON format.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>url</code> (Type: String)<br>
-URL to a JSON mesh object, as used in the Public Domain HTML 3D Library.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that, when resolved, exposes an object
-that implements a property named <code>toShape</code>, which is
-a method that gets a <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> describing the 3D mesh. (Type: <a href="Promise.html">Promise</a>)</p>
-
-<h3>(static) H3DU.MeshJSON.toJSON(mesh) <a id='H3DU.MeshJSON.toJSON'></a></h3>
-
-<p>Converts a mesh to JSON format.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
-A mesh object, as used in the Public Domain HTML 3D Library.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A JSON string describing the mesh. (Type: String)</p>
-
-<h3>(static) H3DU.ObjData.loadObjFromUrl(url) <a id='H3DU.ObjData.loadObjFromUrl'></a></h3>
-
-<p>Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available) asynchronously.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>url</code> (Type: String)<br>
-The URL to load.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that resolves when
-the OBJ file is loaded successfully, whether or not its associated
-MTL is also loaded successfully (the result is an H3DU.ObjData object),
-and is rejected when an error occurs when loading the OBJ file. (Type: <a href="Promise.html">Promise</a>)</p>
-
-<h3>(static) H3DU.ObjData.loadObjFromUrlWithTextures(url, textureLoader) <a id='H3DU.ObjData.loadObjFromUrlWithTextures'></a></h3>
-
-<p>Loads a WaveFront OBJ file (along with its associated MTL, or
-material file, if available), along with the textures it uses,
-asynchronously.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>url</code> (Type: String)<br>
-The URL to load.</li>
-<li><code>textureLoader</code> (Type: TextureLoader)<br>
-An object to load textures with.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that resolves when
-the OBJ file and textures are loaded successfully, whether or not the associated
-MTL is also loaded successfully (the result is an H3DU.ObjData object),
-and is rejected when an error occurs when loading the OBJ file or any of
-its textures. (Type: <a href="Promise.html">Promise</a>)</p>
-
-<h3>(static) H3DU.PbrMaterial([params]) <a id='H3DU.PbrMaterial'></a></h3>
-
-<p>A material for physically-based rendering. Specifies parameters for geometry materials,
-which describe the appearance of a 3D object. This includes how an object
-scatters, reflects, or absorbs light.</p>
-
-<p>NOTE: The default shader program assumes that all colors and the albedo map specified in this object are in
-the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>params</code> (Type: Object) (optional)<br>
-An object described in H3DU.PbrMaterial.setParams.</li>
 </ul>
 
 <h3>(static) H3DU.createCanvasElement(parent, width, height) <a id='H3DU.createCanvasElement'></a></h3>
@@ -480,6 +370,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
@@ -500,6 +391,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

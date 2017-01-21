@@ -268,6 +268,7 @@ H3DU.ObjData.loadMtlFromUrl = function(url) {
  * MTL is also loaded successfully (the result is an H3DU.ObjData object),
  * and is rejected when an error occurs when loading the OBJ file or any of
  * its textures.
+ * @memberof! H3DU.ObjData
  */
 H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
   "use strict";
@@ -293,6 +294,7 @@ H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
  * the OBJ file is loaded successfully, whether or not its associated
  * MTL is also loaded successfully (the result is an H3DU.ObjData object),
  * and is rejected when an error occurs when loading the OBJ file.
+ * @memberof! H3DU.ObjData
  */
 H3DU.ObjData.loadObjFromUrl = function(url) {
   "use strict";

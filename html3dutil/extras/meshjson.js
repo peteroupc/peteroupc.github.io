@@ -42,6 +42,7 @@ H3DU.MeshJSON._resolvePath = function(path, name) {
  * @param {H3DU.Mesh} mesh A mesh object, as used
  * in the Public Domain HTML 3D Library.
  * @returns {String} A JSON string describing the mesh.
+ * @memberof! H3DU.Mesh
  */
 H3DU.MeshJSON.toJSON = function(mesh) {
   "use strict";
@@ -253,6 +254,7 @@ H3DU.MeshJSON._Model = function(mesh) {
  * @returns {Promise} A promise that, when resolved, exposes an object
  * that implements a property named <code>toShape</code>, which is
  * a method that gets a {@link H3DU.ShapeGroup} describing the 3D mesh.
+ * @memberof! H3DU.Mesh
  */
 H3DU.MeshJSON.loadJSON = function(url) {
   "use strict";

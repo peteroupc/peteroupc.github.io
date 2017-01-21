@@ -29,9 +29,9 @@ Function that takes two arguments: the first is a function to call when resolvin
 this promise is rejected.</li>
 <li><a href="#Promise_Promise_then">then</a><br>Creates a promise that calls a function depending on whether
 this promise resolves or is rejected.</li>
-<li><a href="#Promise_Promise.race">Promise.race</a><br>Creates a promise that resolves or is rejected when one of those promises
-resolves or is rejected.</li>
 <li><a href="#Promise.all">all</a><br>Wait for all these promises to complete.</li>
+<li><a href="#Promise.race">race</a><br>Creates a promise that resolves or is rejected when one of those promises
+resolves or is rejected.</li>
 <li><a href="#Promise.reject">reject</a><br>Returns a promise that is rejected.</li>
 <li><a href="#Promise.resolve">resolve</a><br>Returns a promise that resolves.</li>
 </ul>
@@ -70,10 +70,9 @@ To be called once this promise gets rejected</li>
 
 <p>A promise. (Type: <a href="Promise.html">Promise</a>)</p>
 
-<h3>Promise#Promise.race(all) <a id='Promise_Promise.race'></a></h3>
+<h3>(static) Promise.all(all) <a id='Promise.all'></a></h3>
 
-<p>Creates a promise that resolves or is rejected when one of those promises
-resolves or is rejected.</p>
+<p>Wait for all these promises to complete. One failed =&gt; this fails too.</p>
 
 <h4>Parameters</h4>
 
@@ -86,9 +85,10 @@ An array of promises.</li>
 
 <p>A promise that is resolved when all promises have resolved. (Type: <a href="Promise.html">Promise</a>)</p>
 
-<h3>(static) Promise.all(all) <a id='Promise.all'></a></h3>
+<h3>(static) Promise.race(all) <a id='Promise.race'></a></h3>
 
-<p>Wait for all these promises to complete. One failed =&gt; this fails too.</p>
+<p>Creates a promise that resolves or is rejected when one of those promises
+resolves or is rejected.</p>
 
 <h4>Parameters</h4>
 
@@ -167,6 +167,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
@@ -187,6 +188,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
