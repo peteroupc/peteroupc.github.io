@@ -1,119 +1,57 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.LightSource</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.CubeMap</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>H3DU.LightSource</h1>
+<h1>H3DU.CubeMap</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>H3DU.LightSource([params], [ambient], [diffuse], [specular]) <a id='H3DU.LightSource'></a></h3>
+<h3>H3DU.CubeMap(name) <a id='H3DU.CubeMap'></a></h3>
 
-<p>Specifies parameters for light sources.</p>
-
-<p>NOTE: The default shader program assumes that all colors specified in this object are in
-the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
+<p>TODO: Not documented yet.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>params</code> (Type: Object | Array.&lt;Number&gt;) (optional)<br>
-An object as described in &quot;setParams&quot;. <i>Using this parameter as described in the &quot;position&quot; property is deprecated since version 2.0.</i></li>
-<li><code>ambient</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-See &quot;ambient&quot; property. <i>This parameter is deprecated.</i></li>
-<li><code>diffuse</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-See &quot;diffuse&quot; property. <i>This parameter is deprecated.</i></li>
-<li><code>specular</code> (Type: Array.&lt;Number&gt;) (optional)<br>
-See &quot;specular&quot; property. <i>This parameter is deprecated.</i></li>
-</ul>
-
-<h3>Members</h3>
-
-<ul>
-<li><a href="#H3DU.LightSource_ambient">ambient</a><br>A 4-element vector giving an additional color to multiply with the ambient
-color of each object, in the red, green,
-and blue components respectively.</li>
-<li><a href="#H3DU.LightSource_diffuse">diffuse</a><br>A 4-element vector giving an additional color to multiply with the diffuse
-or albedo color (base color) of each object, in the red, green,
-and blue components respectively.</li>
-<li><a href="#H3DU.LightSource_position">position</a><br>Light position.</li>
-<li><a href="#H3DU.LightSource_radius">radius</a><br>Radius of the light source.</li>
-<li><a href="#H3DU.LightSource_specular">specular</a><br>A 3-element vector giving the color of the light when it causes a specular
-reflection, in the red, green,
-and blue components respectively.</li>
+<li><code>name</code> (Type: Array.&lt;(String|Texture)&gt;)<br>
+An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet. The six images are, in order, the image seen when looking toward the positive X axis, the negative X axis, positive Y, negative Y, positive Z, and negative Z.</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.LightSource_H3DU.LightSource_setParams">setParams</a><br>Sets parameters for this material object.</li>
+<li><a href="#H3DU.CubeMap_H3DU.CubeMap_getHeight">getHeight</a><br>Gets this texture&#39;s known height.</li>
+<li><a href="#H3DU.CubeMap_H3DU.CubeMap_getTextures">getTextures</a><br>Gets a reference to the array of textures used by this cube
+map.</li>
+<li><a href="#H3DU.CubeMap_H3DU.CubeMap_getWidth">getWidth</a><br>Gets this texture&#39;s known width.</li>
 </ul>
 
-<h3>H3DU.LightSource#ambient <a id='H3DU.LightSource_ambient'></a></h3>
+<h3>H3DU.CubeMap#getHeight() <a id='H3DU.CubeMap_H3DU.CubeMap_getHeight'></a></h3>
 
-<p>A 4-element vector giving an additional color to multiply with the ambient
-color of each object, in the red, green,
-and blue components respectively.
-The default is (0,0,0,1), or black.</p>
-
-<p>NOTE: This property is not used in the default shader program.</p>
-
-<p>Default Value: <code>&quot;[0,0,0,1]&quot;</code></p>
-
-<h3>H3DU.LightSource#diffuse <a id='H3DU.LightSource_diffuse'></a></h3>
-
-<p>A 4-element vector giving an additional color to multiply with the diffuse
-or albedo color (base color) of each object, in the red, green,
-and blue components respectively. See also <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>.
-Each component ranges from 0 to 1.
-The default is (1,1,1,1), or white.</p>
-
-<p>Default Value: <code>&quot;[1,1,1,1]&quot;</code></p>
-
-<h3>H3DU.LightSource#position <a id='H3DU.LightSource_position'></a></h3>
-
-<p>Light position. An array of four numbers, where the first three numbers are the X, Y, and Z components and the fourth number is the W component.<ul>
-<li> If W is 0, then X, Y, and Z specify a vector in world space; the light will shine the brightest on surfaces that face the light in
-this vector&#39;s direction from the origin (0, 0, 0).
-<li> If W is 1, then X, Y, and Z specify the position of the light in world space; the light will shine brightest, and in every direction, at the given position.</ul></p>
-
-<p>Default Value: <code>&quot;[0,0,1,0]&quot;</code></p>
-
-<h3>H3DU.LightSource#radius <a id='H3DU.LightSource_radius'></a></h3>
-
-<p>Radius of the light source. If 0, the light&#39;s intensity doesn&#39;t change
-with distance.</p>
-
-<p>Default Value: <code>0</code></p>
-
-<h3>H3DU.LightSource#specular <a id='H3DU.LightSource_specular'></a></h3>
-
-<p>A 3-element vector giving the color of the light when it causes a specular
-reflection, in the red, green,
-and blue components respectively. Each component ranges from 0 to 1.
-A specular reflection is a reflection in the opposite direction from the direction
-the light reaches the object in, like a mirror. Specular reflections can cause shiny
-highlights depending on the viewing angle.
-The default is (1,1,1), or white.</p>
-
-<p>NOTE: <i>The default shader uses this only for <a href="H3DU.Material.html">H3DU.Material</a>, not
-for <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>.</i></p>
-
-<p>Default Value: <code>&quot;[1,1,1]&quot;</code></p>
-
-<h3>H3DU.LightSource#setParams(params) <a id='H3DU.LightSource_H3DU.LightSource_setParams'></a></h3>
-
-<p>Sets parameters for this material object.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>params</code> (Type: Object)<br>
-An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>position</code> - Light position. (See <a href="H3DU.LightSource.html#H3DU.LightSource_position">H3DU.LightSource#position</a>.) <li><code>ambient</code> - Not used in the default shader program. <li><code>diffuse</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion color of each object (which is also called &quot;albedo&quot;). The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise. <li><code>specular</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise. <li><code>radius</code> - Radius of the light source. If 0, the light&#39;s intensity doesn&#39;t change with distance. </ul> If a value is null or undefined, it is ignored.</li>
-</ul>
+<p>Gets this texture&#39;s known height.</p>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Material.html">H3DU.Material</a>)</p>
+<p>This texture&#39;s height in pixels.
+Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)</p>
+
+<h3>H3DU.CubeMap#getTextures() <a id='H3DU.CubeMap_H3DU.CubeMap_getTextures'></a></h3>
+
+<p>Gets a reference to the array of textures used by this cube
+map. TODO: Reference or copy?</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
+<h3>H3DU.CubeMap#getWidth() <a id='H3DU.CubeMap_H3DU.CubeMap_getWidth'></a></h3>
+
+<p>Gets this texture&#39;s known width.</p>
+
+<h4>Return Value</h4>
+
+<p>This texture&#39;s width in pixels.
+Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

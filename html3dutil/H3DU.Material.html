@@ -13,7 +13,7 @@
 as well as a texture image to apply on that object&#39;s surface.</p>
 
 <p>NOTE: The default shader program assumes that all colors and the diffuse texture specified in this object are in
-the sRGB color space (linear RGB with a gamma correction exponent of 1/2.2).</p>
+the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -49,8 +49,6 @@ when processing objects that use this material.</li>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Material.forShader">.forShader</a><br>Convenience method that returns an <a href="H3DU.Material.html">H3DU.Material</a>
-object from a shader information object to use when drawing a 3D object.</li>
 <li><a href="#H3DU.Material.fromColor">.fromColor</a><br>Convenience method that returns an <a href="H3DU.Material.html">H3DU.Material</a>
 object from an RGBA color.</li>
 <li><a href="#H3DU.Material.fromTexture">.fromTexture</a><br>Convenience method that returns an <a href="H3DU.Material.html">H3DU.Material</a>
@@ -95,7 +93,7 @@ when processing objects that use this material.</p>
 <p>Diffusion color of this material (also called &quot;albedo&quot;).
 This is the generally perceived color of the material when
 specular highlights are absent on the material&#39;s surface.
-See also H3DU.PbrMaterial#diffuse; this property corresponds
+See also <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>; this property corresponds
 more closely to that in the metallic workflow rather than the specular
 workflow.</p>
 
@@ -162,22 +160,6 @@ of each part of the material.</p>
 <p>Type: <a href="H3DU.Texture.html">H3DU.Texture</a></p>
 
 <p>Default Value: <code>null</code></p>
-
-<h3>H3DU.Material.forShader(shader) <a id='H3DU.Material.forShader'></a></h3>
-
-<p>Convenience method that returns an <a href="H3DU.Material.html">H3DU.Material</a>
-object from a shader information object to use when drawing a 3D object.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>shader</code> (Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>)<br>
-Shader information object to use.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The resulting material object. (Type: <a href="H3DU.Material.html">H3DU.Material</a>)</p>
 
 <h3>H3DU.Material.fromColor(r, g, b, [a]) <a id='H3DU.Material.fromColor'></a></h3>
 

@@ -145,14 +145,11 @@ function makeColorMatrix() {
     "uniform float t;", // ranges from 0 to 1
     "#define tolinear(c) pow(c, vec3(2.2))",
     "#define fromlinear(c) pow(c, vec3(0.45454545))",
-    "vec3 mylerp(vec3 a, vec3 b, float t) {",
-    " return a + (b - a) * t;",
-    "}",
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
     " vec4 tex=texture2D(sampler,uvCoord);",
     " vec3 texRgb=tolinear(tex.rgb);",
     " vec4 color=colorMatrix*vec4(texRgb,1.0);",
-    " vec3 colorRgb=mylerp(texRgb,color.rgb/color.a,t);",
+    " vec3 colorRgb=mix(texRgb,color.rgb/color.a,t);",
     " colorRgb=fromlinear(colorRgb);",
     " return vec4(clamp(colorRgb,0.0,1.0),tex.a);",
     "}"].join("\n"));

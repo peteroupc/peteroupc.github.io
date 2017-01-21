@@ -1,0 +1,404 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.PbrMaterial</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.PbrMaterial</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<h3>H3DU.PbrMaterial([params]) <a id='H3DU.PbrMaterial'></a></h3>
+
+<p>A material for physically-based rendering. Specifies parameters for geometry materials,
+which describe the appearance of a 3D object. This includes how an object
+scatters, reflects, or absorbs light.</p>
+
+<p>NOTE: The default shader program assumes that all colors, as well as the albedo and
+specular map, specified in this object are in
+the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>params</code> (Type: Object) (optional)<br>
+An object described in H3DU.PbrMaterial.setParams.</li>
+</ul>
+
+<h3>Members</h3>
+
+<ul>
+<li><a href="#H3DU.PbrMaterial_albedo">albedo</a><br>Albedo (or base color) of this material.</li>
+<li><a href="#H3DU.PbrMaterial_albedoMap">albedoMap</a><br>A texture indicating the albedo (or base color) of each part of the texture,
+in the red, green, blue, and alpha channels.</li>
+<li><a href="#H3DU.PbrMaterial_emission">emission</a><br>Additive color emitted by objects with this material.</li>
+<li><a href="#H3DU.PbrMaterial_environmentMap">environmentMap</a><br>TODO</li>
+<li><a href="#H3DU.PbrMaterial_invertRoughness">invertRoughness</a><br>TODO</li>
+<li><a href="#H3DU.PbrMaterial_metalness">metalness</a><br>A value indicating whether objects described by this material are metals.</li>
+<li><a href="#H3DU.PbrMaterial_metalnessMap">metalnessMap</a><br>A texture indicating the metalness of each part of the texture,
+as specified in the texture&#39;s red channel.</li>
+<li><a href="#H3DU.PbrMaterial_normalMap">normalMap</a><br>Normal map (bump map) texture.</li>
+<li><a href="#H3DU.PbrMaterial_occlusionMap">occlusionMap</a><br>TODO</li>
+<li><a href="#H3DU.PbrMaterial_roughness">roughness</a><br>Describes the roughness of the surface described
+by this material.</li>
+<li><a href="#H3DU.PbrMaterial_roughnessMap">roughnessMap</a><br>A texture indicating the roughness of each part of the texture,
+as specified in the texture&#39;s red channel.</li>
+<li><a href="#H3DU.PbrMaterial_shader">shader</a><br>Shader program to use when rendering objects with this material.</li>
+<li><a href="#H3DU.PbrMaterial_specular">specular</a><br>Specular highlight reflection of this material.</li>
+<li><a href="#H3DU.PbrMaterial_specularMap">specularMap</a><br>A texture where each pixel identifies the &quot;specular&quot; property of that
+part of the texture, as specified in the texture&#39;s red, green, and blue channels
+(in the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>).</li>
+<li><a href="#H3DU.PbrMaterial_workflow">workflow</a><br>TODO</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU.PbrMaterial_H3DU.PbrMaterial_copy">copy</a><br>Clones this object&#39;s parameters to a new <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>
+object and returns that object.</li>
+<li><a href="#H3DU.PbrMaterial_H3DU.PbrMaterial_setParams">setParams</a><br>Sets parameters for this material object.</li>
+</ul>
+
+<h3>H3DU.PbrMaterial#albedo <a id='H3DU.PbrMaterial_albedo'></a></h3>
+
+<p>Albedo (or base color) of this material.</p>
+
+<p>This value is a 4-element array giving the red, green, blue, and
+alpha components of the albedo (in the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>). (0,0,0,1) means an
+albedo value of black, and (1,1,1,1) means an albedo value of white.</p>
+
+<p>In the <b>metallic workflow</b>, this color specifies the amount
+of light that is reflected by this material&#39;s surface. For both metals and nonmetals, this color
+is the generally observed color of the surface.</p>
+
+<p>In the <b>specular workflow</b>, this color specifies the amount
+of light that passes through the material and bounces back (<i>diffuse</i> color). For most nonmetals, this color
+is the generally observed color of the surface, though somewhat desaturated. Most metals reflect
+all the light that passes through them,
+so for most metals, this color should generally be black or a very
+dark shade of gray. (In physically-based rendering, the sum of albedo and specular
+colors should not exceed 1.0 in each <a href="H3DU.Math.html#H3DU.Math.colorToLinear">linear RGB</a> channel.)</p>
+
+<p>In <b>both workflows in physically-based rendering, the albedo
+color should not have any added lighting.</p>
+
+<p>This value can have an optional fourth element giving the alpha component
+(0-1). If this element is omitted, the default is 1.</p>
+
+<p>In the default shader program, if a mesh defines its own colors, those
+colors are used rather than this property to set the color defined here.</p>
+
+<p>Type: Array.&lt;Number&gt;</p>
+
+<p>Default Value: <code>&quot;[0.8,0.8,0.8,1]&quot;</code></p>
+
+<h3>H3DU.PbrMaterial#albedoMap <a id='H3DU.PbrMaterial_albedoMap'></a></h3>
+
+<p>A texture indicating the albedo (or base color) of each part of the texture,
+in the red, green, blue, and alpha channels.</p>
+
+<p>Type: Number</p>
+
+<p>Default Value: <code>null</code></p>
+
+<h3>H3DU.PbrMaterial#emission <a id='H3DU.PbrMaterial_emission'></a></h3>
+
+<p>Additive color emitted by objects with this material.
+Used for objects that glow on their own, among other things.
+This additive color is unaffected by lighting or shading.</p>
+
+<p>This value is a 3-element array giving the red, green, and blue
+components.
+For each of the three color components, positive values add to that component,
+while negative values subtract from it. (0,0,0), the default, means no additive color.</p>
+
+<p>Type: Array.&lt;Number&gt;</p>
+
+<p>Default Value: <code>&quot;[0,0,0]&quot;</code></p>
+
+<h3>H3DU.PbrMaterial#environmentMap <a id='H3DU.PbrMaterial_environmentMap'></a></h3>
+
+<p>TODO</p>
+
+<p>Default Value: <code>null</code></p>
+
+<h3>H3DU.PbrMaterial#invertRoughness <a id='H3DU.PbrMaterial_invertRoughness'></a></h3>
+
+<p>TODO</p>
+
+<p>Default Value: <code>false</code></p>
+
+<h3>H3DU.PbrMaterial#metalness <a id='H3DU.PbrMaterial_metalness'></a></h3>
+
+<p>A value indicating whether objects described by this material are metals.
+This value ranges from 0 through 1. If 0, the surface is a nonmetal; if 1,
+the surface is a metal. Values in between
+0 and 1 are rather rare and generally appear in transitions between metals and nonmetals.
+This value is only used in the <b>metallic workflow</b>.</p>
+
+<p>Type: Number</p>
+
+<p>Default Value: <code>0</code></p>
+
+<h3>H3DU.PbrMaterial#metalnessMap <a id='H3DU.PbrMaterial_metalnessMap'></a></h3>
+
+<p>A texture indicating the metalness of each part of the texture,
+as specified in the texture&#39;s red channel.
+This value is only used in the <b>metallic workflow</b>.
+Any texture used for this map should not be in JPEG format or any other
+format that uses lossy compression, as compression artifacts can result in inaccurate
+specular factors in certain areas.</p>
+
+<p>Type: Number</p>
+
+<p>Default Value: <code>null</code></p>
+
+<h3>H3DU.PbrMaterial#normalMap <a id='H3DU.PbrMaterial_normalMap'></a></h3>
+
+<p>Normal map (bump map) texture. Normal maps are used either to add
+a sense of roughness to an otherwise flat surface or to give an object a highly-detailed
+appearance with fewer polygons.</p>
+
+<p>In a normal map texture, each pixel is a vector in which
+each component (which usually ranges from 0-255 in most image formats) is scaled to
+the range [-1, 1], where:</p>
+
+<ul>
+<li>The pixel's red component is the vector's X component.
+<li>The pixel's green component is the vector's Y component.
+<li>The pixel's blue component is the vector's Z component.
+<li>An unchanged normal vector will have the value (0, 0, 1), which is usually
+the value (127, 127, 255) in most image formats.
+<li>The vector is normalized so its length is about equal to 1.
+<li>The vector is expressed in tangent space, where the Z axis points outward
+and away from the surface's edges.
+</ul>
+
+<p>Each pixel indicates a tilt from the vector (0, 0, 1), or positive Z axis,
+to the vector given in that pixel. This tilt adjusts the normals used for the
+purpose of calculating lighting effects at that part of the surface.
+A strong tilt indicates strong relief detail at that point.</p>
+
+<p>Any texture used for normal maps should not be in JPEG format or any other
+format that uses lossy compression, as compression artifacts can result in inaccurate
+normals in certain areas.</p>
+
+<p>For normal mapping to work, an object&#39;s mesh must include normals,
+tangents, bitangents, and texture coordinates, though if a <code>H3DU.Mesh</code>
+object only has normals and texture coordinates, the <code>recalcTangents()</code>
+method can calculate the tangents and bitangents appropriate for normal mapping.</p>
+
+<p>Default Value: <code>null</code></p>
+
+<h3>H3DU.PbrMaterial#occlusionMap <a id='H3DU.PbrMaterial_occlusionMap'></a></h3>
+
+<p>TODO</p>
+
+<p>Default Value: <code>null</code></p>
+
+<h3>H3DU.PbrMaterial#roughness <a id='H3DU.PbrMaterial_roughness'></a></h3>
+
+<p>Describes the roughness of the surface described
+by this material. The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>,
+which equals 1 minus roughness. To make this property equivalent to glossiness
+or smoothness, set the <code>invertRoughness</code> property to <code>true</code>.</p>
+
+<p>Type: Number</p>
+
+<p>Default Value: <code>0.35</code></p>
+
+<h3>H3DU.PbrMaterial#roughnessMap <a id='H3DU.PbrMaterial_roughnessMap'></a></h3>
+
+<p>A texture indicating the roughness of each part of the texture,
+as specified in the texture&#39;s red channel.
+The inverse of roughness is <i>glossiness</i> or <i>smoothness</i>;
+to convert a texture to a glossiness or smoothness map, set the
+<code>invertRoughness</code> property to <code>true</code>.
+Any texture used for this map should not be in JPEG format or any other
+format that uses lossy compression, as compression artifacts can result in inaccurate
+specular factors in certain areas.</p>
+
+<p>Type: Number</p>
+
+<p>Default Value: <code>null</code></p>
+
+<h3>H3DU.PbrMaterial#shader <a id='H3DU.PbrMaterial_shader'></a></h3>
+
+<p>Shader program to use when rendering objects with this material.</p>
+
+<p>Default Value: <code>null</code></p>
+
+<h3>H3DU.PbrMaterial#specular <a id='H3DU.PbrMaterial_specular'></a></h3>
+
+<p>Specular highlight reflection of this material.
+Specular reflection is a reflection in the opposite direction from the direction
+the light reaches the material in, similar to a mirror. As a result, depending
+on the viewing angle, specular reflection can give off
+shiny highlights on the material.</p>
+
+<p>This value is a 3-element array giving the red, green, and blue
+components of the surface&#39;s base reflectivity when looking directly at the surface
+(base reflectivity at 0 degree incidence, or F<sub>0</sub>).
+For most nonmetals, this is a shade of gray ranging from
+(0.15, 0.15, 0.15) to (0.32, 0.32, 0.32) in sRGB. For most metals,
+this is a very bright version of the surface&#39;s color.</p>
+
+<p>This value is only used in the <b>specular workflow</b>.</p>
+
+<p>Type: Array.&lt;Number&gt;</p>
+
+<p>Default Value: <code>&quot;[0.2,0.2,0.2]&quot;</code></p>
+
+<h3>H3DU.PbrMaterial#specularMap <a id='H3DU.PbrMaterial_specularMap'></a></h3>
+
+<p>A texture where each pixel identifies the &quot;specular&quot; property of that
+part of the texture, as specified in the texture&#39;s red, green, and blue channels
+(in the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>).</p>
+
+<p>This value is only used in the <b>specular workflow</b>.</p>
+
+<p>Any texture used for this map should not be in JPEG format or any other
+format that uses lossy compression, as compression artifacts can result in inaccurate
+specular factors in certain areas.</p>
+
+<p>Type: Number</p>
+
+<p>Default Value: <code>null</code></p>
+
+<h3>H3DU.PbrMaterial#workflow <a id='H3DU.PbrMaterial_workflow'></a></h3>
+
+<p>TODO</p>
+
+<h3>H3DU.PbrMaterial#copy() <a id='H3DU.PbrMaterial_H3DU.PbrMaterial_copy'></a></h3>
+
+<p>Clones this object&#39;s parameters to a new <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>
+object and returns that object. The material&#39;s texture
+maps and shader info, if any, won&#39;t be cloned, but rather, a reference
+to the same object will be used.</p>
+
+<h4>Return Value</h4>
+
+<p>A copy of this object. (Type: <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
+
+<h3>H3DU.PbrMaterial#setParams(params) <a id='H3DU.PbrMaterial_H3DU.PbrMaterial_setParams'></a></h3>
+
+<p>Sets parameters for this material object.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>params</code> (Type: Object)<br>
+An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>workflow</code> - Either H3DU.PbrMaterial.Specular or H3DU.PbrMaterial.Metalness <li><code>invertRoughness</code> - TODO. <li><code>environmentMap</code> - <a href="H3DU.CubeMap.html">H3DU.CubeMap</a> object of an environment map texture (see <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_environmentMap">H3DU.PbrMaterial#environmentMap</a>). <li><code>diffuse</code> or <code>albedo</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffusion color (also called &quot;albedo&quot;). (See H3DU.PbrMaterial#diffuse.) The default is (0.8, 0.8, 0.8). <li><code>specular</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the specular reflection. (See <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_specular">H3DU.PbrMaterial#specular</a>.) The default is (0,0,0), meaning no specular highlights. <li><code>roughness</code> - Roughness. <li><code>emission</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the additive color. (See <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_emission">H3DU.PbrMaterial#emission</a>.) If this is an array, its numbers can range from -1 to 1. The default is (0,0,0). <li><code>texture</code> or <code>albedoMap</code> - <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture to use. <li><code>specularMap</code> - <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL, of a specular map texture (see <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_specularMap">H3DU.PbrMaterial#specularMap</a>). <li><code>normalMap</code> - <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL, of a normal map (bump map) texture (see <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_normalMap">H3DU.PbrMaterial#normalMap</a>). <li><code>metalnessMap</code> - <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL, of a metalness texture (see <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_metalnessMap">H3DU.PbrMaterial#metalnessMap</a>). <li><code>roughnessMap</code> - <a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL, of a roughness texture (see <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_roughnessMap">H3DU.PbrMaterial#roughnessMap</a>). <li><code>shader</code> - <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a> object for a WebGL shader program to use when rendering objects with this material. <i>Using <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> objects in this parameter is deprecated.</i> </ul> Any or all of these keys can exist in the parameters object. If a value is null or undefined, it is ignored.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
+</div><nav id="navigation"><p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="FrameCounter.html">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
+<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
+<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
+<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
+<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
+<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
+<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
+<li><a href="InputTracker.html">InputTracker</a></li>
+<li><a href="MatrixStack.html">MatrixStack</a></li>
+<li><a href="MeshJSON.html">MeshJSON</a></li>
+<li><a href="ObjData.html">ObjData</a></li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.html">Trochoid</a></li>
+<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
+<li><a href="tutorial-colors.html">Color Strings</a></li>
+<li><a href="tutorial-filters.html">Graphics Filters</a></li>
+<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
+<li><a href="tutorial-history.html">Older Version History</a></li>
+<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
+<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
+<li><a href="tutorial-overview.html">Library Overview</a></li>
+<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
+<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
+<li><a href="tutorial-textures.html">Texture Examples</a></li>
+</ul>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>
