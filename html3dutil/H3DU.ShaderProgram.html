@@ -51,11 +51,11 @@ Source text of a fragment shader in GLSL. If null, a default fragment shader is 
 <li><a href="#H3DU.ShaderProgram.makeCopyEffect">.makeCopyEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.makeEffect">.makeEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.makeEffectFragment">.makeEffectFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic">setSemantic</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_dispose">dispose</a><br>Disposes resources from this shader program.</li>
 <li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_get">get</a><br>Gets the location of the given uniform or attribute&#39;s name in this program.</li>
 <li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_getContext">getContext</a><br>Gets the WebGL context associated with this shader program object.</li>
 <li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_getUniform">getUniform</a><br>Gets the value of the given uniform in this program.</li>
-<li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_setSemantic">setSemantic</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_setUniforms">setUniforms</a><br>Sets the values of one or more uniforms in this program.</li>
 <li><p><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_use">use</a><br>Makes this program the active program in the WebGL
 context associated with it.</p>
@@ -187,6 +187,24 @@ See H3DU.ShaderProgram.makeEffect().</li>
 
 <p>The source text of the resulting fragment shader. (Type: String)</p>
 
+<p><a name='H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic'></a></p>
+
+<h3>H3DU.ShaderInfo#setSemantic(name, sem, index)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>name</code> (Type: *)</li>
+<li><code>sem</code> (Type: *)</li>
+<li><code>index</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
 <p><a name='H3DU.ShaderProgram_H3DU.ShaderProgram_dispose'></a></p>
 
 <h3>H3DU.ShaderProgram#dispose()</h3>
@@ -247,24 +265,6 @@ The name of a uniform defined in either the vertex or fragment shader of this sh
 
 <p>The uniform&#39;s value, or null if it doesn&#39;t exist or if
 an attribute is named, not a uniform. (Type: Number | Array.&lt;Number&gt;)</p>
-
-<p><a name='H3DU.ShaderProgram_H3DU.ShaderProgram_setSemantic'></a></p>
-
-<h3>H3DU.ShaderProgram#setSemantic(name, sem, index)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>name</code> (Type: *)</li>
-<li><code>sem</code> (Type: *)</li>
-<li><code>index</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
 
 <p><a name='H3DU.ShaderProgram_H3DU.ShaderProgram_setUniforms'></a></p>
 

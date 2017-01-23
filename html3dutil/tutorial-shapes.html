@@ -6,10 +6,7 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a id=Introduction></a>
-<a id=Introduction></a>
-<a id=Introduction></a>
-<a id=Introduction></a></p>
+<p><a id=Introduction></a></p>
 
 <h2>Introduction</h2>
 
@@ -32,10 +29,7 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 
 <p>NOTE: This page will largely discuss the 2.0.0-beta1 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the library&#39;s <a href="tutorial-history.html">change history</a> for more information.)</p>
 
-<p><a id=Contents></a>
-<a id=Contents></a>
-<a id=Contents></a>
-<a id=Contents></a></p>
+<p><a id=Contents></a></p>
 
 <h2>Contents</h2>
 
@@ -64,10 +58,7 @@ platonic solids. Demonstrates how vertex and index arrays are built up to create
 <p>See <a href="https://peteroupc.github.io/html3dutil/tutorial.meshexamples.html">Examples of Creating Meshes on the Fly</a> for
 examples of 3D models that can be created using the Mesh class and built-in shapes.</p>
 
-<p><a id=Built_In_Shapes></a>
-<a id=Built_In_Shapes></a>
-<a id=Built_In_Shapes></a>
-<a id=Built_In_Shapes></a></p>
+<p><a id=Built_In_Shapes></a></p>
 
 <h3>Built-In Shapes</h3>
 
@@ -97,10 +88,7 @@ with a hole where the middle of the complete disk would be.</li>
 <li><a href="H3DU.Meshes.html#H3DU.Meshes.createPlane">Meshes.createPlane()</a> - Creates a rectangle.</li>
 </ul>
 
-<p><a id=Custom_Shapes></a>
-<a id=Custom_Shapes></a>
-<a id=Custom_Shapes></a>
-<a id=Custom_Shapes></a></p>
+<p><a id=Custom_Shapes></a></p>
 
 <h3>Custom Shapes</h3>
 
@@ -110,10 +98,7 @@ Shapes can consist of triangles, lines, or points.</p>
 <p>There are two ways for specifying shapes: through the Mesh constructor, or through
 methods that specify the mesh&#39;s data vertex by vertex.</p>
 
-<p><a id=The_Mesh_Constructor></a>
-<a id=The_Mesh_Constructor></a>
-<a id=The_Mesh_Constructor></a>
-<a id=The_Mesh_Constructor></a></p>
+<p><a id=The_Mesh_Constructor></a></p>
 
 <h3>The Mesh Constructor</h3>
 
@@ -188,10 +173,7 @@ array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; 
 </ul></li>
 </ol>
 
-<p><a id=Vertex_Methods></a>
-<a id=Vertex_Methods></a>
-<a id=Vertex_Methods></a>
-<a id=Vertex_Methods></a></p>
+<p><a id=Vertex_Methods></a></p>
 
 <h3>Vertex Methods</h3>
 
@@ -253,10 +235,7 @@ you call <code>mesh.mode(H3DU.Mesh.TRIANGLE_FAN)</code>, the newly defined <code
 &quot;disconnected&quot; from the previous one as far as the mesh object is concerned. However,
 a single <code>Mesh</code> can contain only one kind of primitive (triangles, lines, or points) at a time.</p>
 
-<p><a id=Transforming_the_Mesh></a>
-<a id=Transforming_the_Mesh></a>
-<a id=Transforming_the_Mesh></a>
-<a id=Transforming_the_Mesh></a></p>
+<p><a id=Transforming_the_Mesh></a></p>
 
 <h3>Transforming the Mesh</h3>
 
@@ -271,10 +250,7 @@ Example:</p>
 mesh = mesh.transform(matrix);
 </code></pre>
 
-<p><a id=Texture_Coordinates></a>
-<a id=Texture_Coordinates></a>
-<a id=Texture_Coordinates></a>
-<a id=Texture_Coordinates></a></p>
+<p><a id=Texture_Coordinates></a></p>
 
 <h3>Texture Coordinates</h3>
 
@@ -288,20 +264,14 @@ increase to the top (1).</p>
 <p>For example, texture coordinates (0, 1) indicate the top left corner of the texture,
 and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
 
-<p><a id=Normals></a>
-<a id=Normals></a>
-<a id=Normals></a>
-<a id=Normals></a></p>
+<p><a id=Normals></a></p>
 
 <h3>Normals</h3>
 
 <p>For lighting and shading to work correctly, you must specify normals for all the
 vertices in the mesh.</p>
 
-<p><a id=What_Are_Normals></a>
-<a id=What_Are_Normals></a>
-<a id=What_Are_Normals></a>
-<a id=What_Are_Normals></a></p>
+<p><a id=What_Are_Normals></a></p>
 
 <h4>What Are Normals?</h4>
 
@@ -315,20 +285,14 @@ light points to the surface. It will be lit the most brightly if the light
 is directly opposite to its normal, and not at all if the light is perpendicular to the
 normal or in the same direction as the normal.</p>
 
-<p><a id=Normals_on_Built_in_Shapes></a>
-<a id=Normals_on_Built_in_Shapes></a>
-<a id=Normals_on_Built_in_Shapes></a>
-<a id=Normals_on_Built_in_Shapes></a></p>
+<p><a id=Normals_on_Built_in_Shapes></a></p>
 
 <h4>Normals on Built-in Shapes</h4>
 
 <p>The <code>Meshes</code> class includes built-in methods that will automatically
 specify the proper normals.</p>
 
-<p><a id=recalcNormals></a>
-<a id=recalcNormals></a>
-<a id=recalcNormals></a>
-<a id=recalcNormals></a></p>
+<p><a id=recalcNormals></a></p>
 
 <h4>recalcNormals()</h4>
 
@@ -368,10 +332,7 @@ mesh = mesh.recalcNormals(true, false);
 mesh = mesh.recalcNormals();
 </code></pre>
 
-<p><a id=Binding_Shapes></a>
-<a id=Binding_Shapes></a>
-<a id=Binding_Shapes></a>
-<a id=Binding_Shapes></a></p>
+<p><a id=Binding_Shapes></a></p>
 
 <h2>Binding Shapes</h2>
 
@@ -441,10 +402,7 @@ then translating (shifting) the shape in 3D space.</p></li>
 given shape to the scene through the 3D batch.</p></li>
 </ol>
 
-<p><a id=Shape_Groups></a>
-<a id=Shape_Groups></a>
-<a id=Shape_Groups></a>
-<a id=Shape_Groups></a></p>
+<p><a id=Shape_Groups></a></p>
 
 <h2>Shape Groups</h2>
 
@@ -485,10 +443,7 @@ call <code>new H3DU.Shape(shape)</code>. Note that you can only add shapes, not 
 to a shape group, just as for a 3D batch (<code>H3DU.Batch3D</code>). A shape group, though, is perfectly allowed to contain
 other shape groups.</p>
 
-<p><a id=Other_Pages></a>
-<a id=Other_Pages></a>
-<a id=Other_Pages></a>
-<a id=Other_Pages></a></p>
+<p><a id=Other_Pages></a></p>
 
 <h2>Other Pages</h2>
 

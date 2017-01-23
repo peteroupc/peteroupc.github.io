@@ -6,10 +6,7 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a id=Introduction></a>
-<a id=Introduction></a>
-<a id=Introduction></a>
-<a id=Introduction></a></p>
+<p><a id=Introduction></a></p>
 
 <h2>Introduction</h2>
 
@@ -17,11 +14,9 @@
 public domain <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.
 It also describes several examples of graphics filters.</p>
 
-<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong>
-<a id=Contents></a>
-<a id=Contents></a>
-<a id=Contents></a>
-<a id=Contents></a></p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
+
+<p><a id=Contents></a></p>
 
 <h2>Contents</h2>
 
@@ -42,10 +37,7 @@ affecting the other pixels, and GPUs are often much better designed for parallel
 a <em>frame buffer</em>. The frame buffer acts like a texture which will be rendered back to
 the screen with the help of the graphics filter&#39;s shader program.</p>
 
-<p><a id=Writing_Graphics_Filters></a>
-<a id=Writing_Graphics_Filters></a>
-<a id=Writing_Graphics_Filters></a>
-<a id=Writing_Graphics_Filters></a></p>
+<p><a id=Writing_Graphics_Filters></a></p>
 
 <h2>Writing Graphics Filters</h2>
 
@@ -100,10 +92,7 @@ can be used in the <code>textureEffect</code> function.</p>
 be found by searching the Web; note that there are many versions of GLSL and the one used
 in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
 
-<p><a id=Using_Graphics_Filters></a>
-<a id=Using_Graphics_Filters></a>
-<a id=Using_Graphics_Filters></a>
-<a id=Using_Graphics_Filters></a></p>
+<p><a id=Using_Graphics_Filters></a></p>
 
 <h2>Using Graphics Filters</h2>
 
@@ -161,10 +150,7 @@ passes mentioned above, the following happens.</p>
       As a result, a &quot;filtered&quot; version of the current frame will be drawn.
 </code></pre>
 
-<p><a id=Sample_Code></a>
-<a id=Sample_Code></a>
-<a id=Sample_Code></a>
-<a id=Sample_Code></a></p>
+<p><a id=Sample_Code></a></p>
 
 <h2>Sample Code</h2>
 
@@ -188,10 +174,7 @@ var renders=[
 scene.render(renders);
 </code></pre>
 
-<p><a id=Examples></a>
-<a id=Examples></a>
-<a id=Examples></a>
-<a id=Examples></a></p>
+<p><a id=Examples></a></p>
 
 <h2>Examples</h2>
 
@@ -204,10 +187,7 @@ of graphics filters implemented as shaders.</p>
 
 <p>Here are more details on some of the filters it includes.</p>
 
-<p><a id=Grayscale></a>
-<a id=Grayscale></a>
-<a id=Grayscale></a>
-<a id=Grayscale></a></p>
+<p><a id=Grayscale></a></p>
 
 <h3>Grayscale</h3>
 
@@ -216,10 +196,7 @@ of graphics filters implemented as shaders.</p>
 <p>The grayscale filter converts the screen to black and white. This is currently
 implemented using the color matrix filter, described later, rather than the code already given above.</p>
 
-<p><a id=Invert></a>
-<a id=Invert></a>
-<a id=Invert></a>
-<a id=Invert></a></p>
+<p><a id=Invert></a></p>
 
 <h3>Invert</h3>
 
@@ -241,10 +218,7 @@ return H3DU.ShaderInfo.makeEffect(context,
 }
 </code></pre>
 
-<p><a id=Red_Tint></a>
-<a id=Red_Tint></a>
-<a id=Red_Tint></a>
-<a id=Red_Tint></a></p>
+<p><a id=Red_Tint></a></p>
 
 <h3>Red Tint</h3>
 
@@ -263,10 +237,7 @@ return H3DU.ShaderInfo.makeEffect(context,[
 }
 </code></pre>
 
-<p><a id=Mirror_Filter></a>
-<a id=Mirror_Filter></a>
-<a id=Mirror_Filter></a>
-<a id=Mirror_Filter></a></p>
+<p><a id=Mirror_Filter></a></p>
 
 <h3>Mirror Filter</h3>
 
@@ -287,10 +258,7 @@ return H3DU.ShaderInfo.makeEffect(context,[
 
 <p>With a simple change, this filter can be modified to do a vertical flip (<code>1.0-uvCoord.y</code>) or even both flips.</p>
 
-<p><a id=Matrix_Filter></a>
-<a id=Matrix_Filter></a>
-<a id=Matrix_Filter></a>
-<a id=Matrix_Filter></a></p>
+<p><a id=Matrix_Filter></a></p>
 
 <h3>Matrix Filter</h3>
 
@@ -317,10 +285,7 @@ colors of its 4 adjacent pixels. Note that this example adds up to 1.</p>
 the &quot;blur&quot; and &quot;edge detect&quot; effects. The filter shows how it&#39;s possible for filters to read neighboring
 pixels, not just the current pixel, when implementing their effect.</p>
 
-<p><a id=Color_Matrix_Filter></a>
-<a id=Color_Matrix_Filter></a>
-<a id=Color_Matrix_Filter></a>
-<a id=Color_Matrix_Filter></a></p>
+<p><a id=Color_Matrix_Filter></a></p>
 
 <h3>Color Matrix Filter</h3>
 
@@ -341,10 +306,7 @@ black and white and shades of gray.</p>
 
 <p>This filter is implemented in the function <code>makeColorMatrix</code> in the demo.</p>
 
-<p><a id=Pixelate_Filter></a>
-<a id=Pixelate_Filter></a>
-<a id=Pixelate_Filter></a>
-<a id=Pixelate_Filter></a></p>
+<p><a id=Pixelate_Filter></a></p>
 
 <h3>Pixelate Filter</h3>
 
@@ -372,10 +334,7 @@ return H3DU.ShaderInfo.makeEffect([
 
 <p>The demo changes the &quot;coarseness&quot; parameter with time to animate the pixelation effect.</p>
 
-<p><a id=Wave_Filter></a>
-<a id=Wave_Filter></a>
-<a id=Wave_Filter></a>
-<a id=Wave_Filter></a></p>
+<p><a id=Wave_Filter></a></p>
 
 <h3>Wave Filter</h3>
 
@@ -387,10 +346,7 @@ frame for the undulation effect.</p>
 
 <p>This filter is implemented in the function <code>makeWave</code> in the demo.</p>
 
-<p><a id=Waterpaint_Filter></a>
-<a id=Waterpaint_Filter></a>
-<a id=Waterpaint_Filter></a>
-<a id=Waterpaint_Filter></a></p>
+<p><a id=Waterpaint_Filter></a></p>
 
 <h3>Waterpaint Filter</h3>
 
@@ -401,10 +357,7 @@ named &quot;Themaister&quot;.</p>
 
 <p>This filter is implemented in the function <code>makeWaterpaint</code> in the demo.</p>
 
-<p><a id=Other_Pages></a>
-<a id=Other_Pages></a>
-<a id=Other_Pages></a>
-<a id=Other_Pages></a></p>
+<p><a id=Other_Pages></a></p>
 
 <h2>Other Pages</h2>
 

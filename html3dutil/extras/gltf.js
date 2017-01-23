@@ -74,154 +74,256 @@ function gltfResolvePath(path, name) {
   }
   return ret;
 }
+/** @private */
+function GltfState(gltf, promiseResults, promiseKinds, promiseNames) {
+  "use strict";
+  this.buffers = {};
+  this.shaders = {};
+  this.meshes = {};
+  this.error = "";
+  for(var i = 0;i < promiseKinds.length;i++) {
+    if(promiseKinds[i] === 0) {
+      this.buffers[promiseNames[i]] = promiseResults[i].data;
+    } else if(promiseKinds[i] === 1) {
+      this.shaders[promiseNames[i]] = promiseResults[i].data;
+    }
+  }
+  this.programs = this.preparePrograms();
+  this.gltf = gltf;
+  this.batch = new H3DU.Batch3D();
+}
+/** @private */
+GltfState.prototype.preparePrograms = function() {
+  "use strict";
+  var ret = {};
+  for(var programKey in this.gltf.programs || {})
+    if(Object.prototype.hasOwnProperty.call(Object, this.gltf.programs, programKey)) {
+      var programValue = this.gltf.programs[programKey];
+      if(typeof programValue.vertexShader === "undefined" || programValue.vertexShader === null) {
+        this.error = "no vertex shader";
+        return null;
+      }
+      if(typeof programValue.fragmentShader === "undefined" || programValue.fragmentShader === null) {
+        this.error = "no fragment shader";
+        return null;
+      }
+      var vs = this.shaders[programValue.vertexShader];
+      var fs = this.shaders[programValue.fragmentShader];
+      if(vs === null || typeof vs === "undefined" || (fs === null || typeof fs === "undefined")) {
+        this.error = Promise.reject("missing shader");
+        return null;
+      }
+      ret[programKey] = new H3DU.ShaderInfo(vs, fs);
+    }
+  return ret;
+};
+/** @private */
+GltfState.prototype.readTechnique = function(technique) {
+  "use strict";
+  if(typeof technique.program === "undefined" || technique.program === null) {
+    return null;
+  }
+  if(typeof this.programs[technique.program] === "undefined" || this.programs[technique.program] === null) {
+    return null;
+  }
+  var program = this.programs[technique.program];
+  var shader = program.copy();
+  var params = technique.params || {};
+  var paramValues = {};
+  for(var uniformKey in technique.uniforms || {})
+    if(Object.prototype.hasOwnProperty.call(Object, technique.uniforms, uniformKey)) {
+      var uniformValue = technique.uniforms[uniformKey];
+      if(typeof params[uniformValue] === "undefined" || params[uniformValue] === null) {
+        return null;
+      }
+      var param = params[uniformValue];
+      if(typeof param.type === "undefined" || param.type === null) {
+        return null;
+      }
+      if(typeof param.value !== "undefined" && param.value !== null) {
+        shader.setUniforms({"uniformKey":param.value});
+      }
+      if(!paramValues[uniformValue]) {
+        paramValues[uniformValue] = [uniformKey];
+      } else {
+        paramValues[uniformValue].push(uniformKey);
+      }
+    }
+  for(var attributeKey in technique.attributes || {})
+    if(Object.prototype.hasOwnProperty.call(Object, technique.attributes, attributeKey)) {
+      if(typeof params[uniformValue] === "undefined" || params[uniformValue] === null) {
+        return null;
+      }
+      param = params[uniformValue];
+      if(typeof param.type === "undefined" || param.type === null) {
+        return null;
+      }
+      var semantic = param.semantic || null;
+      if(semantic !== null && typeof semantic !== "undefined") {
+        shader.setSemantic(attributeKey, semantic);
+      }
+    }
+  return {
+    "shader":shader,
+    "paramValues":paramValues
+  };
+};
+/** @private */
+GltfState.prototype.readMaterialValues = function(material, techInfo) {
+  "use strict";
+  for(var materialKey in material.values || {})
+    if(Object.prototype.hasOwnProperty.call(Object, material.values, materialKey)) {
+      var materialValue = material.values[materialKey];
+      if(typeof techInfo.paramValues[materialKey] === "undefined" || techInfo.paramValues[materialKey] === null) {
+        return null;
+      }
+      var uniforms = techInfo.paramValues[materialKey];
+      for(var i = 0;i < uniforms.length;i++) {
+        techInfo.shader.setUniforms({"ui":materialValue});
+      }
+    }
+  return this;
+};
+/** @private */
+GltfState.prototype.readScenes = function() {
+  "use strict";
+  for(var sceneKey in this.gltf.scenes || {})
+    if(Object.prototype.hasOwnProperty.call(Object, this.gltf.scenes, sceneKey)) {
+      var scene = this.gltf.scenes[sceneKey];
+      for(var nodeKey in scene.nodes || {})
+        if(Object.prototype.hasOwnProperty.call(Object, scene.nodes, nodeKey)) {
+          var node = this.gltf.nodes[scene.nodes[nodeKey]];
+          var nodeShapeGroup = new H3DU.ShapeGroup();
+          for(var meshName in node.meshes || {})
+            if(Object.prototype.hasOwnProperty.call(Object, node.meshes, meshName)) {
+              var mesh = this.gltf.meshes[node.meshes[meshName]];
+              if(this.meshes[meshName]) {
+                nodeShapeGroup.addShape(this.meshes[meshName].copy());
+                continue;
+              }
+              var firstShape = null;
+              var shapeGroup = new H3DU.ShapeGroup();
+              var prims = mesh.primitives || [];
+              for(var p = 0;p < prims.length;p++) {
+                var prim = prims[p];
+                var meshBuffer = new H3DU.MeshBuffer(new H3DU.Mesh());
+                var array;
+                var itemSize;
+                var maxCount = 0;
+                for(var attributeName in prim.attributes || {})
+                  if(Object.prototype.hasOwnProperty.call(Object, prim.attributes, attributeName)) {
+                    var attrAcc = this.gltf.accessors[attributeName];
+                    if(!attrAcc) {
+                      this.error = "Can't find accessor for " + attributeName; return null;
+                    }
+                    maxCount = Math.max(maxCount, attrAcc.count);
+                    var attrView = this.gltf.bufferViews[attrAcc.bufferView];
+                    array = gltfArrayFromAccessor(this.buffers, attrAcc, attrView);
+                    if(!array) {
+                      this.error = "Can't create array for " + attributeName; return null;
+                    }
+                    itemSize = gltfItemSize(attrAcc.type);
+                    if(itemSize === 0) {
+                      this.error = "Unsupported item type"; return null;
+                    }
+                    meshBuffer.setAttribute(attributeName, 0, array, 0,
+         itemSize, itemSize);
+                  }
+                if(typeof prim.indices !== "undefined" && prim.indices !== null) {
+                  var indices = this.gltf.accessors[prim.indices];
+                  var indicesView = this.gltf.bufferViews[indices.bufferView];
+                  itemSize = gltfItemSize(indices.type);
+                  if(itemSize !== 1) {
+                    this.error = "nonscalar indices not supported"; return null;
+                  }
+                  array = gltfArrayFromAccessor(this.buffers, indices, indicesView);
+                  if(!array) {
+                    this.error = "Can't create indices"; return null;
+                  }
+                  meshBuffer.setIndices(array, gltfComponentSize(indices.componentType));
+                } else {
+     // Synthesize a list of indices
+                  var indexArray = [];
+                  for(var k = 0;k < maxCount;k++) {
+                    indexArray.push(k);
+                  }
+                  meshBuffer.setIndices(
+           maxCount < 65536 ? new Uint16Array(indexArray) :
+          new Uint32Array(indexArray),
+        maxCount < 65536 ? 2 : 4);
+                }
+                var shape = gltfMakeShape(meshBuffer);
+                var material = this.gltf.materials[prim.material];
+                if(typeof material.technique !== "undefined" && material.technique !== null) {
+                  var technique = this.gltf.techniques[material.technique];
+                  var techInfo = this.readTechnique(technique);
+                  if(!techInfo)return null;
+                  if(!this.readMaterialValues(material, techInfo)) {
+                    return null;
+                  }
+                  material.setParams({"shader":techInfo.shader});
+                }
+                shapeGroup.addShape(shape);
+                if(p === 0)firstShape = shape;
+              }
+              var meshShape = prims.length === 1 ? firstShape : shapeGroup;
+              this.meshes[meshName] = meshShape;
+              nodeShapeGroup.addShape(meshShape);
+            }
+          if(typeof node.matrix !== "undefined" && node.matrix !== null) {
+            nodeShapeGroup.setMatrix(node.matrix);
+          } else {
+            if(typeof node.translation !== "undefined" && node.translation !== null) {
+              var tr = node.translation;
+              nodeShapeGroup.getTransform().setPosition(tr[0], tr[1], tr[2]);
+            }
+            if(typeof node.rotation !== "undefined" && node.rotation !== null) {
+              tr = node.rotation;
+              nodeShapeGroup.getTransform().setQuaternion(node.rotation);
+            }
+            if(typeof node.scale !== "undefined" && node.scale !== null) {
+              tr = node.scale;
+              nodeShapeGroup.getTransform().setScale(tr[0], tr[1], tr[2]);
+            }
+          }
+          this.batch.addShape(nodeShapeGroup);
+        }
+    }
+  return this;
+};
 
 function readGltf(gltf, path) {
   "use strict";
   var promises = [];
   var promiseKinds = [];
   var promiseNames = [];
-  if(typeof gltf.buffers !== "undefined" && gltf.buffers !== null) {
-    var bufferNames = Object.keys(gltf.buffers);
-    for(var i = 0;i < bufferNames.length;i++) {
-      var uri = gltfResolvePath(path, gltf.buffers[bufferNames[i]].uri);
+  for(var bufferName in gltf.buffers || {})
+    if(Object.prototype.hasOwnProperty.call(Object, gltf.buffers, bufferName)) {
+      var bufferValue = gltf.buffers[bufferName];
+      if(typeof bufferValue === "undefined" || (bufferValue === null || typeof bufferValue === "undefined")) {
+        return Promise.reject("");
+      }
+      var uri = gltfResolvePath(path, bufferValue.uri);
       promises.push(H3DU.loadFileFromUrl(uri, "arraybuffer"));
-      promiseNames.push(bufferNames[i]);
+      promiseNames.push(bufferName);
       promiseKinds.push(0);
     }
-  }
-  if(typeof gltf.shaders !== "undefined" && gltf.shaders !== null) {
-    var shaderNames = Object.keys(gltf.shaders);
-    for(i = 0;i < shaderNames.length;i++) {
-      uri = gltfResolvePath(path, gltf.shaders[shaderNames[i]].uri);
+  for(var shaderName in gltf.shaders || {})
+    if(Object.prototype.hasOwnProperty.call(Object, gltf.shaders, shaderName)) {
+      var shaderValue = gltf.shaders[shaderName];
+      if(typeof shaderValue === "undefined" || (shaderValue === null || typeof shaderValue === "undefined")) {
+        return Promise.reject("");
+      }
+      uri = gltfResolvePath(path, shaderValue.uri);
       promises.push(H3DU.loadFileFromUrl(uri));
-      promiseNames.push(shaderNames[i]);
+      promiseNames.push(shaderName);
       promiseKinds.push(1);
     }
-  }
   return H3DU.getPromiseResultsAll(promises)
    .then(function(promiseResults) {
-     var keys;
-     var buffers = {};
-     var shaders = {};
-     var meshes = {};
-     var programs = {};
-     for(var i = 0;i < promiseKinds.length;i++) {
-       if(promiseKinds[i] === 0) {
-         buffers[promiseNames[i]] = promiseResults[i].data;
-       } else if(promiseKinds[i] === 1) {
-         shaders[promiseNames[i]] = promiseResults[i].data;
-       }
-     }
-     if(typeof gltf.programs !== "undefined" && gltf.programs !== null) {
-       if(gltf.programs.length > 0 && ((typeof gltf.shaders === "undefined" || gltf.shaders === null))) {
-         return Promise.reject("have programs but no shaders");
-       }
-       keys = Object.keys(gltf.programs);
-       for(i = 0;i < gltf.programs.length;i++) {
-         if(typeof programs.vertexShader === "undefined" || programs.vertexShader === null) {
-           return Promise.reject("no vertex shader");
-         }
-         if(typeof programs.fragmentShader === "undefined" || programs.fragmentShader === null) {
-           return Promise.reject("no fragment shader");
-         }
-         var vs = shaders[programs.vertexShader];
-         var fs = shaders[programs.fragmentShader];
-         if(vs === null || typeof vs === "undefined" || (fs === null || typeof fs === "undefined"))return Promise.reject("missing shader");
-         programs[gltf.programs[i]] = new H3DU.ShaderInfo(vs, fs);
-       }
-     }
-     var batch = new H3DU.Batch3D();
-     keys = Object.keys(gltf.scenes);
-     for(i = 0;i < keys.length;i++) {
-       var scene = gltf.scenes[keys[i]];
-       for(var n = 0;n < scene.nodes.length;n++) {
-         var node = gltf.nodes[scene.nodes[n]];
-         var nodeShapeGroup = new H3DU.ShapeGroup();
-         for(var m = 0;node.meshes && m < node.meshes.length;m++) {
-           var meshName = node.meshes[m];
-           var shapeGroup;
-           if(meshes[meshName]) {
-             nodeShapeGroup.addShape(meshes[meshName].copy());
-             continue;
-           }
-           var mesh = gltf.meshes[meshName];
-           var firstShape = null;
-           shapeGroup = new H3DU.ShapeGroup();
-           for(var p = 0;p < mesh.primitives.length;p++) {
-             var prim = mesh.primitives[p];
-             var meshBuffer = new H3DU.MeshBuffer(new H3DU.Mesh());
-             var attr = prim.attributes || {};
-             var attributeNames = Object.keys(attr);
-             var array;
-             var itemSize;
-             var maxCount = 0;
-             for(var j = 0;j < attributeNames.length;j++) {
-               var attrAcc = gltf.accessors[attr[attributeNames[j]]];
-               if(!attrAcc)return Promise.reject("Can't find accessor for " + attributeNames[j]);
-               maxCount = Math.max(maxCount, attrAcc.count);
-               var attrView = gltf.bufferViews[attrAcc.bufferView];
-               array = gltfArrayFromAccessor(buffers, attrAcc, attrView);
-               if(!array)return Promise.reject("Can't create array for " + attributeNames[j]);
-               itemSize = gltfItemSize(attrAcc.type);
-               if(itemSize === 0)return Promise.reject("Unsupported item type");
-               meshBuffer.setAttribute(attributeNames[j], 0, array, 0,
-         itemSize, itemSize);
-             }
-             if(typeof prim.indices !== "undefined" && prim.indices !== null) {
-               var indices = gltf.accessors[prim.indices];
-               var indicesView = gltf.bufferViews[indices.bufferView];
-               itemSize = gltfItemSize(indices.type);
-               if(itemSize !== 1)return Promise.reject("nonscalar indices not supported");
-               array = gltfArrayFromAccessor(buffers, indices, indicesView);
-               if(!array)return Promise.reject("Can't create indices");
-               meshBuffer.setIndices(array, gltfComponentSize(indices.componentType));
-             } else {
-     // Synthesize a list of indices
-               var indexArray = [];
-               for(var k = 0;k < maxCount;k++) {
-                 indexArray.push(k);
-               }
-               meshBuffer.setIndices(
-           maxCount < 65536 ? new Uint16Array(indexArray) :
-          new Uint32Array(indexArray),
-        maxCount < 65536 ? 2 : 4);
-             }
-             var shape = gltfMakeShape(meshBuffer);
-             var material = gltf.materials[prim.material];
-             if(typeof material.technique !== "undefined" && material.technique !== null) {
-               var technique = gltf.techniques[material.technique];
-               if(technique) {
-                 if(typeof material.values !== "undefined" && material.values !== null) {
-                 }
-               }
-             }
-             shapeGroup.addShape(shape);
-             if(p === 0)firstShape = shape;
-           }
-           var meshShape = mesh.primitives.length === 1 ? firstShape : shapeGroup;
-           meshes[meshName] = meshShape;
-           nodeShapeGroup.addShape(meshShape);
-         }
-         if(typeof node.matrix !== "undefined" && node.matrix !== null) {
-           nodeShapeGroup.setMatrix(node.matrix);
-         } else {
-           if(typeof node.translation !== "undefined" && node.translation !== null) {
-             var tr = node.translation;
-             nodeShapeGroup.getTransform().setPosition(tr[0], tr[1], tr[2]);
-           }
-           if(typeof node.rotation !== "undefined" && node.rotation !== null) {
-             tr = node.rotation;
-             nodeShapeGroup.getTransform().setQuaternion(node.rotation);
-           }
-           if(typeof node.scale !== "undefined" && node.scale !== null) {
-             tr = node.scale;
-             nodeShapeGroup.getTransform().setScale(tr[0], tr[1], tr[2]);
-           }
-         }
-         batch.addShape(nodeShapeGroup);
-       }
-     }
-     return Promise.resolve(batch);
+     var state = new GltfState(promiseResults, promiseKinds, promiseNames);
+     if(!state.readScenes())return Promise.reject(state.error);
+     return Promise.resolve(state.batch);
    });
 }
 /* exported readGltfFromUrl */
