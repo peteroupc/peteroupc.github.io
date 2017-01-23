@@ -6,7 +6,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>H3DU.BSplineCurve(controlPoints, knots, [bits]) <a id='H3DU.BSplineCurve'></a></h3>
+<p><a name='H3DU.BSplineCurve'></a></p>
+
+<h3>H3DU.BSplineCurve(controlPoints, knots, [bits])</h3>
 
 <p>A parametric evaluator for B-spline (basis spline) curves.</p>
 
@@ -59,7 +61,9 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 in a B-spline curve.</li>
 </ul>
 
-<h3>H3DU.BSplineCurve.DIVIDE_BIT <a id='H3DU.BSplineCurve.DIVIDE_BIT'></a> (constant)</h3>
+<p><a id='H3DU.BSplineCurve.DIVIDE_BIT'></a></p>
+
+<h3>H3DU.BSplineCurve.DIVIDE_BIT (constant)</h3>
 
 <p>Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
@@ -69,7 +73,9 @@ If this bit is set, the length of each control point must be at least 2.</p>
 
 <p>Default Value: <code>2</code></p>
 
-<h3>H3DU.BSplineCurve.HOMOGENEOUS_BIT <a id='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a> (constant)</h3>
+<p><a id='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a></p>
+
+<h3>H3DU.BSplineCurve.HOMOGENEOUS_BIT (constant)</h3>
 
 <p>Indicates that each other coordinate of each control point
 was premultiplied by the last coordinate of the point, that is,
@@ -78,7 +84,9 @@ Only used with WEIGHTED_BIT.</p>
 
 <p>Default Value: <code>4</code></p>
 
-<h3>H3DU.BSplineCurve.WEIGHTED_BIT <a id='H3DU.BSplineCurve.WEIGHTED_BIT'></a> (constant)</h3>
+<p><a id='H3DU.BSplineCurve.WEIGHTED_BIT'></a></p>
+
+<h3>H3DU.BSplineCurve.WEIGHTED_BIT (constant)</h3>
 
 <p>Indicates whether the last coordinate of each control point is a
 weight. If some of the weights differ, the curve is
@@ -89,11 +97,15 @@ method will be in homogeneous coordinates.</p>
 
 <p>Default Value: <code>1</code></p>
 
-<h3>H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS <a id='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a> (constant)</h3>
+<p><a id='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a></p>
+
+<h3>H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS (constant)</h3>
 
 <p>Combination of WEIGHTED_BIT and DIVIDE_BIT.</p>
 
-<h3>H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits]) <a id='H3DU.BSplineCurve.clamped'></a></h3>
+<p><a name='H3DU.BSplineCurve.clamped'></a></p>
+
+<h3>H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])</h3>
 
 <p>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points.</p>
@@ -113,7 +125,9 @@ Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> 
 
 <p>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
-<h3>H3DU.BSplineCurve.clampedKnots(controlPoints, degree) <a id='H3DU.BSplineCurve.clampedKnots'></a></h3>
+<p><a name='H3DU.BSplineCurve.clampedKnots'></a></p>
+
+<h3>H3DU.BSplineCurve.clampedKnots(controlPoints, degree)</h3>
 
 <p>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
@@ -133,7 +147,9 @@ Degree of the curve.</li>
 
 <p>A clamped uniform knot vector. (Type: Array.&lt;Number&gt;)</p>
 
-<h3>H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits]) <a id='H3DU.BSplineCurve.uniform'></a></h3>
+<p><a name='H3DU.BSplineCurve.uniform'></a></p>
+
+<h3>H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits])</h3>
 
 <p>Creates a B-spline curve with uniform knots.</p>
 
@@ -152,7 +168,9 @@ Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> 
 
 <p>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
-<h3>H3DU.BSplineCurve.uniformKnots(controlPoints, degree) <a id='H3DU.BSplineCurve.uniformKnots'></a></h3>
+<p><a name='H3DU.BSplineCurve.uniformKnots'></a></p>
+
+<h3>H3DU.BSplineCurve.uniformKnots(controlPoints, degree)</h3>
 
 <p>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</p>
@@ -170,7 +188,9 @@ Degree of the curve.</li>
 
 <p>A uniform knot vector. (Type: Array.&lt;Number&gt;)</p>
 
-<h3>H3DU.BSplineCurve#evaluate(u) <a id='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a></h3>
+<p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a></p>
+
+<h3>H3DU.BSplineCurve#evaluate(u)</h3>
 
 <p>Evaluates the curve function based on a point
 in a B-spline curve.</p>

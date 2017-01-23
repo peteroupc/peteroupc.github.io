@@ -6,25 +6,31 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h2>Introduction <a id=Introduction></a></h2>
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
 
 <p>This article describes two-dimensional paths. This is an extra included in the HTML 3D Library.</p>
 
 <p><strong>Download the latest version of the Public Domain HTML 3D
 Library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
 
-<h2>Contents <a id=Contents></a></h2>
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
 
 <p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Paths">Paths</a><br><a href="#How_to_Use">How to Use</a><br><a href="#Creating_Paths">Creating Paths</a><br>&nbsp;&nbsp;<a href="#SVG_Path_String">SVG Path String</a><br>&nbsp;&nbsp;<a href="#Building_Paths">Building Paths</a><br><a href="#Path_Segments">Path Segments</a><br><a href="#Methods">Methods</a><br></p>
 
-<h2>Paths <a id=Paths></a></h2>
+<h2>Paths</h2>
 
 <p>A path is a collection of two-dimensional line segments and/or curves. Many paths describe
 closed figures or connected strings of lines and curves. The <code>GraphicsPath</code> class
 currently supports line segments, quadratic and cubic B&eacute;zier curves, and elliptical arcs,
 as well as closed figures made from several path segments.</p>
 
-<h2>How to Use <a id=How_to_Use></a></h2>
+<p><a id=How_to_Use></a></p>
+
+<h2>How to Use</h2>
 
 <p>2D paths are implemented in a class called <a href="H3DU.GraphicsPath.html"><code>H3DU.GraphicsPath</code></a>, found in the file <em>extras/path.js</em> in
 the HTML 3D Library download.  To use this class, you must include the script &quot;extras/path.js&quot;,
@@ -34,12 +40,16 @@ as in this example.</p>
 &lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
-<h2>Creating Paths <a id=Creating_Paths></a></h2>
+<p><a id=Creating_Paths></a></p>
+
+<h2>Creating Paths</h2>
 
 <p>There are two ways to create paths: using an SVG path string, or by calling methods that add
 its segments.</p>
 
-<h3>SVG Path String <a id=SVG_Path_String></a></h3>
+<p><a id=SVG_Path_String></a></p>
+
+<h3>SVG Path String</h3>
 
 <p>If you&#39;ve worked with SVG, you may be familiar with this format for describing 2D paths. An
 SVG path string consists of one or more path commands that start with a single letter.
@@ -64,7 +74,9 @@ example:</p>
 <pre><code>var path = H3DU.GraphicsPath.fromString(&quot;M50,20C230,245,233,44,22,44&quot;)
 </code></pre>
 
-<h3>Building Paths <a id=Building_Paths></a></h3>
+<p><a id=Building_Paths></a></p>
+
+<h3>Building Paths</h3>
 
 <p>The other way to make paths is to call the <code>H3DU.GraphicsPath</code> constructor and call methods
 to add path segments to the path.</p>
@@ -79,7 +91,9 @@ of connected lines and curves.</p>
 <li><em>.closePath()</em> - Closes the path by drawing a line to the starting point, if needed.</li>
 </ul>
 
-<h2>Path Segments <a id=Path_Segments></a></h2>
+<p><a id=Path_Segments></a></p>
+
+<h2>Path Segments</h2>
 
 <p>Each path can include a number of line segments, B&eacute;zier curves, and elliptical arcs.
 Line segments are relatively easy to understand. The other two kinds of segments
@@ -96,7 +110,9 @@ curve uses 4 points, two of which are control points.</p>
 parameterize an elliptic arc, as seen in the <em>.arc()</em>, <em>.arcTo()</em>, and <em>.arcSvgTo()</em> methods
 of the <code>H3DU.GraphicsPath</code> class.</p>
 
-<h2>Methods <a id=Methods></a></h2>
+<p><a id=Methods></a></p>
+
+<h2>Methods</h2>
 
 <ul>
 <li>The <em>.getLength()</em> method finds the approximate length of a path.</li>

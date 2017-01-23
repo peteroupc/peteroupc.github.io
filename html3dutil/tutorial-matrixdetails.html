@@ -6,7 +6,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h2>Matrix Details <a id=Matrix_Details></a></h2>
+<p><a id=Matrix_Details></a></p>
+
+<h2>Matrix Details</h2>
 
 <p>A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
@@ -16,11 +18,13 @@ A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.</p>
 
 <p>This section contains detailed information on matrices.</p>
 
-<h2>Contents <a id=Contents></a></h2>
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
 
 <p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br>&nbsp;&nbsp;<a href="#A_Matrix_Transforms_Between_Coordinate_Systems">A Matrix Transforms Between Coordinate Systems</a><br><a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br></p>
 
-<h2>Arrangement <a id=Arrangement></a></h2>
+<h2>Arrangement</h2>
 
 <p>All functions dealing with 4x4 matrices assume that
 the translation elements in x, y, and z are located in the
@@ -89,7 +93,9 @@ into the matrix arrays passed to <code>H3DU.Math</code>&#39;s matrix methods.</p
 </mfenced>
 </math>
 
-<h3>A Matrix Transforms Between Coordinate Systems <a id=A_Matrix_Transforms_Between_Coordinate_Systems></a></h3>
+<p><a id=A_Matrix_Transforms_Between_Coordinate_Systems></a></p>
+
+<h3>A Matrix Transforms Between Coordinate Systems</h3>
 
 <p>A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate
 system.  These are four 3-element vectors that describe how the three axes and the center map
@@ -167,7 +173,9 @@ the second column shows a Y-axis vector at (0, 0.5, 0.866025),
 the third column shows a Y-axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).</p>
 
-<h2>Transforming Points <a id=Transforming_Points></a></h2>
+<p><a id=Transforming_Points></a></p>
+
+<h2>Transforming Points</h2>
 
 <p>The transformation formula multiplies a matrix by a 3D point to change that point&#39;s
 position:</p>
@@ -201,7 +209,9 @@ Transforms a 3-element vector with a 3x3 matrix</li>
 Does a perspective-correct transformation of a 3D point with a 4x4 matrix</li>
 </ul>
 
-<h3>Translation <a id=Translation></a></h3>
+<p><a id=Translation></a></p>
+
+<h3>Translation</h3>
 
 <p>A translation is a shifting of an object&#39;s position. In a transformation matrix,
 this shifting effectively happens after all other transformations such as scaling and rotation.
@@ -260,7 +270,9 @@ Returns a translation matrix</li>
 Multiplies a matrix by a translation.</li>
 </ul>
 
-<h3>Scaling <a id=Scaling></a></h3>
+<p><a id=Scaling></a></p>
+
+<h3>Scaling</h3>
 
 <p>Scaling changes an object&#39;s size. Scaling uses the 1st,
 6th, and 11th elements of the matrix as seen here:</p>
@@ -338,7 +350,9 @@ Returns a 4x4 identity matrix</li>
 Returns a 3x3 identity matrix</li>
 </ul>
 
-<h3>Rotation <a id=Rotation></a></h3>
+<p><a id=Rotation></a></p>
+
+<h3>Rotation</h3>
 
 <p>Rotation changes an object&#39;s orientation. Rotation uses the upper-left
 corner of a matrix. Given an angle of rotation, &theta;,
@@ -616,7 +630,9 @@ shown with three decimal places are approximate.</p>
 </tr>
 </tbody></table>
 
-<h3>Matrix Multiplication <a id=Matrix_Multiplication></a></h3>
+<p><a id=Matrix_Multiplication></a></p>
+
+<h3>Matrix Multiplication</h3>
 
 <p>When two matrices are multiplied, the combined matrix will be such
 that the transformations they describe happen in reverse
@@ -639,7 +655,9 @@ mat4rotate involve multiplying 4x4 matrices.</p>
 Multiplies two matrices</li>
 </ul>
 
-<h3>Other Transformations <a id=Other_Transformations></a></h3>
+<p><a id=Other_Transformations></a></p>
+
+<h3>Other Transformations</h3>
 
 <p>In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1). (Such transformations are called <em>affine transformations</em>, those that
@@ -668,7 +686,9 @@ Returns a frustum matrix</li>
 Returns a field-of-view perspective matrix</li>
 </ul>
 
-<h3>Matrix Inversions <a id=Matrix_Inversions></a></h3>
+<p><a id=Matrix_Inversions></a></p>
+
+<h3>Matrix Inversions</h3>
 
 <p>An inverted matrix describes a transformation that undoes another transformation. For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original

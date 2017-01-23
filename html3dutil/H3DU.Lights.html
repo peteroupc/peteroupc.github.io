@@ -6,7 +6,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>H3DU.Lights() <a id='H3DU.Lights'></a></h3>
+<p><a name='H3DU.Lights'></a></p>
+
+<h3>H3DU.Lights()</h3>
 
 <p>A collection of light sources. It stores the scene&#39;s
 ambient color as well as data on one or more light sources.
@@ -37,14 +39,18 @@ values, and the default value for <code>sceneAmbient</code>.</li>
 <li><a href="#H3DU.Lights_H3DU.Lights_setPointLight">setPointLight</a><br>Sets a point light.</li>
 </ul>
 
-<h3>H3DU.Lights.MAX_LIGHTS <a id='H3DU.Lights.MAX_LIGHTS'></a> (constant)</h3>
+<p><a id='H3DU.Lights.MAX_LIGHTS'></a></p>
+
+<h3>H3DU.Lights.MAX_LIGHTS (constant)</h3>
 
 <p>Maximum number of lights supported
 by the default shader program.</p>
 
 <p>Default Value: <code>3</code></p>
 
-<h3>H3DU.Lights#sceneAmbient <a id='H3DU.Lights_sceneAmbient'></a></h3>
+<p><a id='H3DU.Lights_sceneAmbient'></a></p>
+
+<h3>H3DU.Lights#sceneAmbient</h3>
 
 <p>Ambient color for the scene. This is the color of the light
 that shines on every part of every object equally and in
@@ -64,7 +70,9 @@ only used on objects that use <a href="H3DU.Material.html">H3DU.Material</a>, no
 
 <p>Default Value: <code>&quot;[0.2,0.2,0.2]&quot;</code></p>
 
-<h3>H3DU.Lights#getCount() <a id='H3DU.Lights_H3DU.Lights_getCount'></a></h3>
+<p><a name='H3DU.Lights_H3DU.Lights_getCount'></a></p>
+
+<h3>H3DU.Lights#getCount()</h3>
 
 <p>Gets the number of lights defined in this object.</p>
 
@@ -72,7 +80,9 @@ only used on objects that use <a href="H3DU.Material.html">H3DU.Material</a>, no
 
 <p>Return value. (Type: Number)</p>
 
-<h3>H3DU.Lights#getLight(index) <a id='H3DU.Lights_H3DU.Lights_getLight'></a></h3>
+<p><a name='H3DU.Lights_H3DU.Lights_getLight'></a></p>
+
+<h3>H3DU.Lights#getLight(index)</h3>
 
 <p>Gets information about the light source at the given index.</p>
 
@@ -87,7 +97,9 @@ Zero-based index of the light to set. The first light has index 0, the second ha
 
 <p>The corresponding light source object. (Type: LightSource)</p>
 
-<h3>H3DU.Lights#setAmbient(r, g, b, [a]) <a id='H3DU.Lights_H3DU.Lights_setAmbient'></a></h3>
+<p><a name='H3DU.Lights_H3DU.Lights_setAmbient'></a></p>
+
+<h3>H3DU.Lights#setAmbient(r, g, b, [a])</h3>
 
 <p>Sets the color of the scene&#39;s ambient light.</p>
 
@@ -108,7 +120,9 @@ Alpha color component (0-1). Currently not used.</li>
 
 <p>This object. (Type: <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>)</p>
 
-<h3>H3DU.Lights#setBasic() <a id='H3DU.Lights_H3DU.Lights_setBasic'></a></h3>
+<p><a name='H3DU.Lights_H3DU.Lights_setBasic'></a></p>
+
+<h3>H3DU.Lights#setBasic()</h3>
 
 <p>Resets this object to a basic configuration for
 light sources: one light source with its default
@@ -118,7 +132,9 @@ values, and the default value for <code>sceneAmbient</code>.</p>
 
 <p>This object. (Type: <a href="H3DU.Lights.html">H3DU.Lights</a>)</p>
 
-<h3>H3DU.Lights#setDirectionalLight(index, direction, [diffuse], [specular]) <a id='H3DU.Lights_H3DU.Lights_setDirectionalLight'></a></h3>
+<p><a name='H3DU.Lights_H3DU.Lights_setDirectionalLight'></a></p>
+
+<h3>H3DU.Lights#setDirectionalLight(index, direction, [diffuse], [specular])</h3>
 
 <p>Sets a directional light.</p>
 
@@ -139,7 +155,9 @@ A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color
 
 <p>This object. (Type: <a href="H3DU.Lights.html">H3DU.Lights</a>)</p>
 
-<h3>H3DU.Lights#setParams(index, params) <a id='H3DU.Lights_H3DU.Lights_setParams'></a></h3>
+<p><a name='H3DU.Lights_H3DU.Lights_setParams'></a></p>
+
+<h3>H3DU.Lights#setParams(index, params)</h3>
 
 <p>Sets parameters for the light source at the given index.</p>
 
@@ -156,7 +174,9 @@ An object as described in H3DU.LightSource.setParams.</li>
 
 <p>This object. (Type: <a href="H3DU.Lights.html">H3DU.Lights</a>)</p>
 
-<h3>H3DU.Lights#setPointLight(index, position, [diffuse], [specular]) <a id='H3DU.Lights_H3DU.Lights_setPointLight'></a></h3>
+<p><a name='H3DU.Lights_H3DU.Lights_setPointLight'></a></p>
+
+<h3>H3DU.Lights#setPointLight(index, position, [diffuse], [specular])</h3>
 
 <p>Sets a point light.</p>
 

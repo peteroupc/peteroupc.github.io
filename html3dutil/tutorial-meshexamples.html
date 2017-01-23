@@ -8,11 +8,13 @@
 
 <p>This page contains source code for creating various kinds of 3D models on the fly.</p>
 
-<h2>Contents <a id=Contents></a></h2>
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
 
 <p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Cone">Cone</a><br><a href="#Floor">Floor</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br><a href="#Miscellaneous">Miscellaneous</a><br></p>
 
-<h2>3D Line <a id=3D_Line></a></h2>
+<h2>3D Line</h2>
 
 <p>This method creates a thin line-like 3D object.</p>
 
@@ -33,7 +35,9 @@ function create3DLine(point1,point2,thickness){
 }
 </code></pre>
 
-<h2>Cone <a id=Cone></a></h2>
+<p><a id=Cone></a></p>
+
+<h2>Cone</h2>
 
 <p>This method creates a cone that&#39;s closed at its base.</p>
 
@@ -44,7 +48,9 @@ function create3DLine(point1,point2,thickness){
 }
 </code></pre>
 
-<h2>Floor <a id=Floor></a></h2>
+<p><a id=Floor></a></p>
+
+<h2>Floor</h2>
 
 <p>This method creates a flat tiled floor.</p>
 
@@ -82,7 +88,9 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
 }
 </code></pre>
 
-<h2>Striped Disk <a id=Striped_Disk></a></h2>
+<p><a id=Striped_Disk></a></p>
+
+<h2>Striped Disk</h2>
 
 <p>This method creates a ring or disk striped in two colors.</p>
 
@@ -109,7 +117,9 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
 }
 </code></pre>
 
-<h2>Washer <a id=Washer></a></h2>
+<p><a id=Washer></a></p>
+
+<h2>Washer</h2>
 
 <p>This method creates a washer-shaped 3D model.</p>
 
@@ -127,7 +137,9 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
 }
 </code></pre>
 
-<h2>Miscellaneous <a id=Miscellaneous></a></h2>
+<p><a id=Miscellaneous></a></p>
+
+<h2>Miscellaneous</h2>
 
 <pre><code>function extrudePath(path, zStart, zEnd, flatness){
  var lines=path.getLines(flatness)

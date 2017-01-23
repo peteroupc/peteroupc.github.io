@@ -27,7 +27,6 @@ H3DU.MeshJSON._resolvePath = function(path, name) {
  // resolver, but sufficient here, as it will
  // only be used with relative path
  // strings
-
   var ret = path;
   var lastSlash = ret.lastIndexOf("/");
   if(lastSlash >= 0) {

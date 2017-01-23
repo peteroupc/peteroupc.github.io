@@ -6,7 +6,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h2>Introduction <a id=Introduction></a></h2>
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
 
 <p>This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
@@ -14,13 +16,14 @@ view transforms in 3D graphics, especially when using my
 and explains how the GL pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.</p>
 
-<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong>
+<a id=Contents></a></p>
 
-<h2>Contents <a id=Contents></a></h2>
+<h2>Contents</h2>
 
 <p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#The_Camera_and_Geometric_Transforms">The &quot;Camera&quot; and Geometric Transforms</a><br>&nbsp;&nbsp;<a href="#Overview_of_Transformations">Overview of Transformations</a><br><a href="#Projection_Transform">Projection Transform</a><br>&nbsp;&nbsp;<a href="#Perspective_Projection">Perspective Projection</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Demo">Demo</a><br>&nbsp;&nbsp;<a href="#Orthographic_Projection">Orthographic Projection</a><br>&nbsp;&nbsp;<a href="#Other_Projections">Other Projections</a><br><a href="#View_Transform">View Transform</a><br><a href="#Vertex_Coordinates_in_the_Graphics_System">Vertex Coordinates in the Graphics System</a><br><a href="#Other_Pages">Other Pages</a><br></p>
 
-<h2>The &quot;Camera&quot; and Geometric Transforms <a id=The_Camera_and_Geometric_Transforms></a></h2>
+<h2>The &quot;Camera&quot; and Geometric Transforms</h2>
 
 <p>The <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html"><code>Batch3D</code></a> class
 of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;.
@@ -41,7 +44,9 @@ batch3d.setLookAt([0,0,40]);
 batch3d.setLookAt([0,0,30], [0,2,0]);
 </code></pre>
 
-<h3>Overview of Transformations <a id=Overview_of_Transformations></a></h3>
+<p><a id=Overview_of_Transformations></a></p>
+
+<h3>Overview of Transformations</h3>
 
 <p>The HTML 3D library uses the following transformations:</p>
 
@@ -59,14 +64,18 @@ merely for the convenience of the library; all the graphics pipeline expects is 
 space coordinates of the things it draws. The pipeline uses those coordinates
 and their transformed <em>window coordinates</em> when rendering things on the screen.</p>
 
-<h2>Projection Transform <a id=Projection_Transform></a></h2>
+<p><a id=Projection_Transform></a></p>
+
+<h2>Projection Transform</h2>
 
 <p>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.</p>
 
 <p>Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below.</p>
 
-<h3>Perspective Projection <a id=Perspective_Projection></a></h3>
+<p><a id=Perspective_Projection></a></p>
+
+<h3>Perspective Projection</h3>
 
 <p>A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects
 look bigger than more distant objects with the same size, making the
@@ -141,13 +150,17 @@ of where they meet the near clipping plane.</li>
 <li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
 </ul>
 
-<h4>Demo <a id=Demo></a></h4>
+<p><a id=Demo></a></p>
+
+<h4>Demo</h4>
 
 <ul>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html">perspective.html</a> - Demonstrates a perspective projection.</li>
 </ul>
 
-<h3>Orthographic Projection <a id=Orthographic_Projection></a></h3>
+<p><a id=Orthographic_Projection></a></p>
+
+<h3>Orthographic Projection</h3>
 
 <p>An orthographic projection is one in which the left and right clipping planes are parallel to each other,
 and the top and bottom clipping planes are parallel to each other. This results in the near and far clipping
@@ -202,7 +215,9 @@ projection like in <code>mat4orthoAspect</code>. The aspect ratio used when calc
 adapts automatically to the <code>H3DU.Scene3D</code> in which
 the <code>Batch3D</code> is rendered, and the method&#39;s six parameters are the same as in <code>mat4orthoAspect</code>.</p>
 
-<h3>Other Projections <a id=Other_Projections></a></h3>
+<p><a id=Other_Projections></a></p>
+
+<h3>Other Projections</h3>
 
 <p>There are other kinds of possible projections, such as oblique projections
 or isometric projections. For these
@@ -218,7 +233,9 @@ method.</p>
 <li><code>matrix</code> - The 4x4 matrix to use.</li>
 </ul>
 
-<h2>View Transform <a id=View_Transform></a></h2>
+<p><a id=View_Transform></a></p>
+
+<h2>View Transform</h2>
 
 <p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to coordinates in <em>eye space</em>
 (also called <em>camera space</em> or <em>view space</em>), in which the &quot;camera&quot; is located at the center of the coordinate system: (0, 0, 0).
@@ -257,7 +274,9 @@ This is optional. The default is [0, 1, 0].</li>
 <li><code>matrix</code> - The 4x4 matrix to use.</li>
 </ul>
 
-<h2>Vertex Coordinates in the Graphics System <a id=Vertex_Coordinates_in_the_Graphics_System></a></h2>
+<p><a id=Vertex_Coordinates_in_the_Graphics_System></a></p>
+
+<h2>Vertex Coordinates in the Graphics System</h2>
 
 <p>The concepts of <em>eye space</em>, <em>camera space</em>, and <em>world space</em>, as well as
 the use of matrices related to them, such as <em>projection</em>, <em>view</em>, <em>model-view</em>,
@@ -286,7 +305,9 @@ will have the same range as the current <em>viewport</em>. A viewport is a recta
 whose size and position are generally expressed in pixels; to set the viewport&#39;s
 size, call the <code>setDimensions</code> method of <code>Scene3D</code>.</p>
 
-<h2>Other Pages <a id=Other_Pages></a></h2>
+<p><a id=Other_Pages></a></p>
+
+<h2>Other Pages</h2>
 
 <p>The following pages of mine on CodeProject also discuss this library:</p>
 

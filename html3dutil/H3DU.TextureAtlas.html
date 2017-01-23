@@ -6,7 +6,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>H3DU.TextureAtlas() <a id='H3DU.TextureAtlas'></a></h3>
+<p><a name='H3DU.TextureAtlas'></a></p>
+
+<h3>H3DU.TextureAtlas()</h3>
 
 <p>A texture atlas specifies the location and size of images within a single
 texture. It is useful when multiple different images should be drawn at
@@ -38,10 +40,12 @@ the HTML 3D Library. Example:</p>
 <li><a href="#H3DU.TextureAtlas.loadWithTextures">.loadWithTextures</a><br>Loads a texture atlas definition from a file along with the textures
 it uses.</li>
 <li><a href="#H3DU.TextureAtlas_H3DU.TextureAtlas_loadTextures">loadTextures</a><br>Loads the texture files used by this texture atlas.</li>
-<li><a href="#H3DU.TextureAtlas_H3DU.TextureAtlas_makeSprites">makeSprites</a><br>Makes a shape group used to display one or more sprites.</li>
-</ul>
+<li><p><a href="#H3DU.TextureAtlas_H3DU.TextureAtlas_makeSprites">makeSprites</a><br>Makes a shape group used to display one or more sprites.</p>
 
-<h3>H3DU.TextureAtlas.load(atlasFileName) <a id='H3DU.TextureAtlas.load'></a></h3>
+<p><a name='H3DU.TextureAtlas.load'></a></p>
+
+<h3>H3DU.TextureAtlas.load(atlasFileName)</h3></li>
+</ul>
 
 <p>Loads a texture atlas definition from a file.
 Note that this method only loads the texture atlas data and not the bitmaps
@@ -60,7 +64,9 @@ The URL of the texture atlas to load.</li>
 when the texture atlas data is loaded successfully (the result will be
 an H3DU.TextureAtlas object), and is rejected when an error occurs. (Type: <a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a>&gt;)</p>
 
-<h3>H3DU.TextureAtlas.loadWithTextures(atlasFileName, textureLoader) <a id='H3DU.TextureAtlas.loadWithTextures'></a></h3>
+<p><a name='H3DU.TextureAtlas.loadWithTextures'></a></p>
+
+<h3>H3DU.TextureAtlas.loadWithTextures(atlasFileName, textureLoader)</h3>
 
 <p>Loads a texture atlas definition from a file along with the textures
 it uses.</p>
@@ -87,7 +93,9 @@ following keys:<ul>
 in the order in which they are declared in the font data file.
 </ul> (Type: <a href="Promise.html">Promise</a>)</p>
 
-<h3>H3DU.TextureAtlas#loadTextures(textureLoader) <a id='H3DU.TextureAtlas_H3DU.TextureAtlas_loadTextures'></a></h3>
+<p><a name='H3DU.TextureAtlas_H3DU.TextureAtlas_loadTextures'></a></p>
+
+<h3>H3DU.TextureAtlas#loadTextures(textureLoader)</h3>
 
 <p>Loads the texture files used by this texture atlas.</p>
 
@@ -105,7 +113,9 @@ Texture loader object to use when loading the textures.</li>
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.html">H3DU.Texture</a> object. (Type: <a href="Promise.html">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>&gt;&gt;)</p>
 
-<h3>H3DU.TextureAtlas#makeSprites(sprites) <a id='H3DU.TextureAtlas_H3DU.TextureAtlas_makeSprites'></a></h3>
+<p><a name='H3DU.TextureAtlas_H3DU.TextureAtlas_makeSprites'></a></p>
+
+<h3>H3DU.TextureAtlas#makeSprites(sprites)</h3>
 
 <p>Makes a shape group used to display one or more sprites.
 For the sprites to show upright, the coordinate system should have the

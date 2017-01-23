@@ -6,7 +6,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>H3DU.Material([params], [diffuse], [specular], [shininess], [emission]) <a id='H3DU.Material'></a></h3>
+<p><a name='H3DU.Material'></a></p>
+
+<h3>H3DU.Material([params], [diffuse], [specular], [shininess], [emission])</h3>
 
 <p>Specifies parameters for geometry materials, which describe the appearance of a
 3D object. This includes how an object scatters, reflects, or absorbs light,
@@ -58,7 +60,9 @@ object and returns that object.</li>
 <li><a href="#H3DU.Material_H3DU.Material_setParams">setParams</a><br>Sets parameters for this material object.</li>
 </ul>
 
-<h3>H3DU.Material#ambient <a id='H3DU.Material_ambient'></a></h3>
+<p><a id='H3DU.Material_ambient'></a></p>
+
+<h3>H3DU.Material#ambient</h3>
 
 <p>Ambient color of this material.</p>
 
@@ -81,14 +85,18 @@ color.</p>
 
 <p>Default Value: <code>&quot;[0.2,0.2,0.2]&quot;</code></p>
 
-<h3>H3DU.Material#basic <a id='H3DU.Material_basic'></a></h3>
+<p><a id='H3DU.Material_basic'></a></p>
+
+<h3>H3DU.Material#basic</h3>
 
 <p>If true, only the &quot;diffuse&quot; and &quot;texture&quot; properties of this object are used
 when processing objects that use this material.</p>
 
 <p>Default Value: <code>false</code></p>
 
-<h3>H3DU.Material#diffuse <a id='H3DU.Material_diffuse'></a></h3>
+<p><a id='H3DU.Material_diffuse'></a></p>
+
+<h3>H3DU.Material#diffuse</h3>
 
 <p>Diffusion color of this material (also called &quot;albedo&quot;).
 This is the generally perceived color of the material when
@@ -101,7 +109,9 @@ workflow.</p>
 
 <p>Default Value: <code>&quot;[0.8,0.8,0.8,1]&quot;</code></p>
 
-<h3>H3DU.Material#emission <a id='H3DU.Material_emission'></a></h3>
+<p><a id='H3DU.Material_emission'></a></p>
+
+<h3>H3DU.Material#emission</h3>
 
 <p>Additive color emitted by objects with this material.
 See <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_emission">H3DU.PbrMaterial#emission</a>.</p>
@@ -110,19 +120,25 @@ See <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_emission">H3DU.PbrMaterial#e
 
 <p>Default Value: <code>&quot;[0,0,0]&quot;</code></p>
 
-<h3>H3DU.Material#normalMap <a id='H3DU.Material_normalMap'></a></h3>
+<p><a id='H3DU.Material_normalMap'></a></p>
+
+<h3>H3DU.Material#normalMap</h3>
 
 <p>Normal map (bump map) texture. See <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_normalMap">H3DU.PbrMaterial#normalMap</a>.</p>
 
 <p>Default Value: <code>null</code></p>
 
-<h3>H3DU.Material#shader <a id='H3DU.Material_shader'></a></h3>
+<p><a id='H3DU.Material_shader'></a></p>
+
+<h3>H3DU.Material#shader</h3>
 
 <p>Shader program to use when rendering objects with this material.</p>
 
 <p>Default Value: <code>null</code></p>
 
-<h3>H3DU.Material#shininess <a id='H3DU.Material_shininess'></a></h3>
+<p><a id='H3DU.Material_shininess'></a></p>
+
+<h3>H3DU.Material#shininess</h3>
 
 <p>Specular highlight exponent of this material.
 The greater the number, the more concentrated the specular
@@ -132,7 +148,9 @@ Ranges from 0 through 128.</p>
 
 <p>Default Value: <code>32</code></p>
 
-<h3>H3DU.Material#specular <a id='H3DU.Material_specular'></a></h3>
+<p><a id='H3DU.Material_specular'></a></p>
+
+<h3>H3DU.Material#specular</h3>
 
 <p>Specular highlight reflection of this material.
 This is usually a shade of gray (all three components are the same),
@@ -144,14 +162,18 @@ NOTE: Before version 2.0, this value&#39;s default was (0,0,0).</p>
 
 <p>Default Value: <code>&quot;[0.2,0.2,0.2]&quot;</code></p>
 
-<h3>H3DU.Material#specularMap <a id='H3DU.Material_specularMap'></a></h3>
+<p><a id='H3DU.Material_specularMap'></a></p>
+
+<h3>H3DU.Material#specularMap</h3>
 
 <p>Specular map texture.
 See <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_specularMap">H3DU.PbrMaterial#specularMap</a>.</p>
 
 <p>Default Value: <code>null</code></p>
 
-<h3>H3DU.Material#texture <a id='H3DU.Material_texture'></a></h3>
+<p><a id='H3DU.Material_texture'></a></p>
+
+<h3>H3DU.Material#texture</h3>
 
 <p>Texture for this material. Each color in the texture
 sets the diffusion (also called &quot;albedo&quot;)
@@ -161,7 +183,9 @@ of each part of the material.</p>
 
 <p>Default Value: <code>null</code></p>
 
-<h3>H3DU.Material.fromColor(r, g, b, [a]) <a id='H3DU.Material.fromColor'></a></h3>
+<p><a name='H3DU.Material.fromColor'></a></p>
+
+<h3>H3DU.Material.fromColor(r, g, b, [a])</h3>
 
 <p>Convenience method that returns an <a href="H3DU.Material.html">H3DU.Material</a>
 object from an RGBA color.</p>
@@ -183,7 +207,9 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 
 <p>The resulting material object. (Type: <a href="H3DU.Material.html">H3DU.Material</a>)</p>
 
-<h3>H3DU.Material.fromTexture(texture) <a id='H3DU.Material.fromTexture'></a></h3>
+<p><a name='H3DU.Material.fromTexture'></a></p>
+
+<h3>H3DU.Material.fromTexture(texture)</h3>
 
 <p>Convenience method that returns an <a href="H3DU.Material.html">H3DU.Material</a>
 object from a texture to apply to a 3D object&#39;s surface.</p>
@@ -199,7 +225,9 @@ object from a texture to apply to a 3D object&#39;s surface.</p>
 
 <p>The resulting material object. (Type: <a href="H3DU.Material.html">H3DU.Material</a>)</p>
 
-<h3>H3DU.Material#copy() <a id='H3DU.Material_H3DU.Material_copy'></a></h3>
+<p><a name='H3DU.Material_H3DU.Material_copy'></a></p>
+
+<h3>H3DU.Material#copy()</h3>
 
 <p>Clones this object&#39;s parameters to a new H3DU.Material
 object and returns that object. The material&#39;s texture
@@ -210,7 +238,9 @@ to the same object will be used.</p>
 
 <p>A copy of this object. (Type: <a href="H3DU.Material.html">H3DU.Material</a>)</p>
 
-<h3>H3DU.Material#setParams(params) <a id='H3DU.Material_H3DU.Material_setParams'></a></h3>
+<p><a name='H3DU.Material_H3DU.Material_setParams'></a></p>
+
+<h3>H3DU.Material#setParams(params)</h3>
 
 <p>Sets parameters for this material object.</p>
 

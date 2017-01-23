@@ -6,19 +6,22 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h2>Introduction <a id=Introduction></a></h2>
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
 
 <p>This page describes what graphics filters are and how they work in my
 public domain <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.
 It also describes several examples of graphics filters.</p>
 
-<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong>
+<a id=Contents></a></p>
 
-<h2>Contents <a id=Contents></a></h2>
+<h2>Contents</h2>
 
 <p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Graphics_Filters">Graphics Filters</a><br><a href="#Writing_Graphics_Filters">Writing Graphics Filters</a><br><a href="#Using_Graphics_Filters">Using Graphics Filters</a><br><a href="#Sample_Code">Sample Code</a><br><a href="#Examples">Examples</a><br>&nbsp;&nbsp;<a href="#Grayscale">Grayscale</a><br>&nbsp;&nbsp;<a href="#Invert">Invert</a><br>&nbsp;&nbsp;<a href="#Red_Tint">Red Tint</a><br>&nbsp;&nbsp;<a href="#Mirror_Filter">Mirror Filter</a><br>&nbsp;&nbsp;<a href="#Matrix_Filter">Matrix Filter</a><br>&nbsp;&nbsp;<a href="#Color_Matrix_Filter">Color Matrix Filter</a><br>&nbsp;&nbsp;<a href="#Pixelate_Filter">Pixelate Filter</a><br>&nbsp;&nbsp;<a href="#Wave_Filter">Wave Filter</a><br>&nbsp;&nbsp;<a href="#Waterpaint_Filter">Waterpaint Filter</a><br><a href="#Other_Pages">Other Pages</a><br></p>
 
-<h2>Graphics Filters <a id=Graphics_Filters></a></h2>
+<h2>Graphics Filters</h2>
 
 <p>In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame. They are implemented in a language called GLSL, or GL
@@ -33,7 +36,9 @@ affecting the other pixels, and GPUs are often much better designed for parallel
 a <em>frame buffer</em>. The frame buffer acts like a texture which will be rendered back to
 the screen with the help of the graphics filter&#39;s shader program.</p>
 
-<h2>Writing Graphics Filters <a id=Writing_Graphics_Filters></a></h2>
+<p><a id=Writing_Graphics_Filters></a></p>
+
+<h2>Writing Graphics Filters</h2>
 
 <p>In the HTML 3D Library, use the <code>makeEffect</code> method of the <code>H3DU.ShaderInfo</code> class to create
 graphics filters:</p>
@@ -86,7 +91,9 @@ can be used in the <code>textureEffect</code> function.</p>
 be found by searching the Web; note that there are many versions of GLSL and the one used
 in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
 
-<h2>Using Graphics Filters <a id=Using_Graphics_Filters></a></h2>
+<p><a id=Using_Graphics_Filters></a></p>
+
+<h2>Using Graphics Filters</h2>
 
 <p>To use a graphics filter, the application needs to prepare for its use by following these steps.</p>
 
@@ -142,7 +149,9 @@ passes mentioned above, the following happens.</p>
       As a result, a &quot;filtered&quot; version of the current frame will be drawn.
 </code></pre>
 
-<h2>Sample Code <a id=Sample_Code></a></h2>
+<p><a id=Sample_Code></a></p>
+
+<h2>Sample Code</h2>
 
 <p>Here is sample code for using a graphics filter.</p>
 
@@ -164,7 +173,9 @@ var renders=[
 scene.render(renders);
 </code></pre>
 
-<h2>Examples <a id=Examples></a></h2>
+<p><a id=Examples></a></p>
+
+<h2>Examples</h2>
 
 <ul>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html">squares.html</a> - Demonstrates graphics filters.</li>
@@ -175,14 +186,18 @@ of graphics filters implemented as shaders.</p>
 
 <p>Here are more details on some of the filters it includes.</p>
 
-<h3>Grayscale <a id=Grayscale></a></h3>
+<p><a id=Grayscale></a></p>
+
+<h3>Grayscale</h3>
 
 <p><img src="filters1.png" alt="Grayscale filtered image using former implementation"></p>
 
 <p>The grayscale filter converts the screen to black and white. This is currently
 implemented using the color matrix filter, described later, rather than the code already given above.</p>
 
-<h3>Invert <a id=Invert></a></h3>
+<p><a id=Invert></a></p>
+
+<h3>Invert</h3>
 
 <p><img src="filters2.png" alt="Invert filtered image using former implementation"></p>
 
@@ -202,7 +217,9 @@ return H3DU.ShaderInfo.makeEffect(context,
 }
 </code></pre>
 
-<h3>Red Tint <a id=Red_Tint></a></h3>
+<p><a id=Red_Tint></a></p>
+
+<h3>Red Tint</h3>
 
 <p><img src="filters9.png" alt="Red Tint filtered image using former implementation"></p>
 
@@ -219,7 +236,9 @@ return H3DU.ShaderInfo.makeEffect(context,[
 }
 </code></pre>
 
-<h3>Mirror Filter <a id=Mirror_Filter></a></h3>
+<p><a id=Mirror_Filter></a></p>
+
+<h3>Mirror Filter</h3>
 
 <p><img src="filters7.png" alt="Mirror filtered image"></p>
 
@@ -238,7 +257,9 @@ return H3DU.ShaderInfo.makeEffect(context,[
 
 <p>With a simple change, this filter can be modified to do a vertical flip (<code>1.0-uvCoord.y</code>) or even both flips.</p>
 
-<h3>Matrix Filter <a id=Matrix_Filter></a></h3>
+<p><a id=Matrix_Filter></a></p>
+
+<h3>Matrix Filter</h3>
 
 <p><img src="filters4.png" alt="Blur filtered image">
 <img src="filters8.png" alt="Edge detect filtered image"></p>
@@ -263,7 +284,9 @@ colors of its 4 adjacent pixels. Note that this example adds up to 1.</p>
 the &quot;blur&quot; and &quot;edge detect&quot; effects. The filter shows how it&#39;s possible for filters to read neighboring
 pixels, not just the current pixel, when implementing their effect.</p>
 
-<h3>Color Matrix Filter <a id=Color_Matrix_Filter></a></h3>
+<p><a id=Color_Matrix_Filter></a></p>
+
+<h3>Color Matrix Filter</h3>
 
 <p>This filter enables another family of image processing filters, which modify colors
 based on a transformation matrix.  This is a 4x4 matrix that is multiplied by the red/green/blue
@@ -282,7 +305,9 @@ black and white and shades of gray.</p>
 
 <p>This filter is implemented in the function <code>makeColorMatrix</code> in the demo.</p>
 
-<h3>Pixelate Filter <a id=Pixelate_Filter></a></h3>
+<p><a id=Pixelate_Filter></a></p>
+
+<h3>Pixelate Filter</h3>
 
 <p><img src="filters5.png" alt="Pixelate filtered image"></p>
 
@@ -308,7 +333,9 @@ return H3DU.ShaderInfo.makeEffect([
 
 <p>The demo changes the &quot;coarseness&quot; parameter with time to animate the pixelation effect.</p>
 
-<h3>Wave Filter <a id=Wave_Filter></a></h3>
+<p><a id=Wave_Filter></a></p>
+
+<h3>Wave Filter</h3>
 
 <p><img src="filters3.png" alt="Wave filtered image"></p>
 
@@ -318,7 +345,9 @@ frame for the undulation effect.</p>
 
 <p>This filter is implemented in the function <code>makeWave</code> in the demo.</p>
 
-<h3>Waterpaint Filter <a id=Waterpaint_Filter></a></h3>
+<p><a id=Waterpaint_Filter></a></p>
+
+<h3>Waterpaint Filter</h3>
 
 <p><img src="filters6.png" alt="Waterpaint filtered image"></p>
 
@@ -327,7 +356,9 @@ named &quot;Themaister&quot;.</p>
 
 <p>This filter is implemented in the function <code>makeWaterpaint</code> in the demo.</p>
 
-<h2>Other Pages <a id=Other_Pages></a></h2>
+<p><a id=Other_Pages></a></p>
+
+<h2>Other Pages</h2>
 
 <p>The following pages of mine on CodeProject also discuss this library:</p>
 

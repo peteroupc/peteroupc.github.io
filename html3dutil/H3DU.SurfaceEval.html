@@ -6,7 +6,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<h3>H3DU.SurfaceEval() <a id='H3DU.SurfaceEval'></a></h3>
+<p><a name='H3DU.SurfaceEval'></a></p>
+
+<h3>H3DU.SurfaceEval()</h3>
 
 <p>An evaluator of parametric functions for generating
 vertex positions, normals, colors, and texture coordinates
@@ -38,10 +40,12 @@ surface.</li>
 normals rather than use the parametric evaluator
 specified for normal generation, if any.</li>
 <li><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_texCoord">texCoord</a><br>Specifies a parametric surface function for generating texture coordinates.</li>
-<li><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_vertex">vertex</a><br>Specifies a parametric surface function for generating vertex positions.</li>
-</ul>
+<li><p><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_vertex">vertex</a><br>Specifies a parametric surface function for generating vertex positions.</p>
 
-<h3>H3DU.SurfaceEval#color(evaluator) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_color'></a></h3>
+<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_color'></a></p>
+
+<h3>H3DU.SurfaceEval#color(evaluator)</h3></li>
+</ul>
 
 <p>Specifies a parametric surface function for generating color values.</p>
 
@@ -56,7 +60,9 @@ An object that must contain a function named &quot;evaluate&quot;, giving 3 valu
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<h3>H3DU.SurfaceEval#evalOne(mesh, u, v) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_evalOne'></a></h3>
+<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_evalOne'></a></p>
+
+<h3>H3DU.SurfaceEval#evalOne(mesh, u, v)</h3>
 
 <p>Generates vertex positions and attributes based on a point
 in a parametric surface.</p>
@@ -76,7 +82,9 @@ V-coordinate of the curve to evaluate.</li>
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<h3>H3DU.SurfaceEval#evalSurface(mesh, [mode], [un], [vn], [u1], [u2], [v1], [v2]) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_evalSurface'></a></h3>
+<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_evalSurface'></a></p>
+
+<h3>H3DU.SurfaceEval#evalSurface(mesh, [mode], [un], [vn], [u1], [u2], [v1], [v2])</h3>
 
 <p>Generates the vertex positions and attributes of a parametric
 surface.</p>
@@ -106,7 +114,9 @@ Ending U-coordinate of the surface to evaluate. Default is 1.</li>
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<h3>H3DU.SurfaceEval#normal(evaluator) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_normal'></a></h3>
+<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_normal'></a></p>
+
+<h3>H3DU.SurfaceEval#normal(evaluator)</h3>
 
 <p>Specifies a parametric surface function for generating normals.</p>
 
@@ -175,7 +185,9 @@ Math.sin(u)*-Math.sin(v)*Math.sin(u),
 }})
 </code></pre>
 
-<h3>H3DU.SurfaceEval#setAutoNormal(value) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal'></a></h3>
+<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal'></a></p>
+
+<h3>H3DU.SurfaceEval#setAutoNormal(value)</h3>
 
 <p>Sets whether this object will automatically generate
 normals rather than use the parametric evaluator
@@ -193,7 +205,9 @@ Either true or false. True means normals will automatically be generated; false 
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<h3>H3DU.SurfaceEval#texCoord(evaluator) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_texCoord'></a></h3>
+<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_texCoord'></a></p>
+
+<h3>H3DU.SurfaceEval#texCoord(evaluator)</h3>
 
 <p>Specifies a parametric surface function for generating texture coordinates.</p>
 
@@ -219,7 +233,9 @@ texture coordinates.</p>
 &quot;use strict&quot;; return [u,v] }});
 </code></pre>
 
-<h3>H3DU.SurfaceEval#vertex(evaluator) <a id='H3DU.SurfaceEval_H3DU.SurfaceEval_vertex'></a></h3>
+<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_vertex'></a></p>
+
+<h3>H3DU.SurfaceEval#vertex(evaluator)</h3>
 
 <p>Specifies a parametric surface function for generating vertex positions.</p>
 

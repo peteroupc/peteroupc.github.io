@@ -11,11 +11,13 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 
 <p>Here is an overview of these data types.</p>
 
-<h2>Contents <a id=Contents></a></h2>
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
 
 <p><a href="#Contents">Contents</a><br><a href="#Vectors">Vectors</a><br>&nbsp;&nbsp;<a href="#Unit_Vectors">Unit Vectors</a><br><a href="#Matrices">Matrices</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Combining_Transforms">Combining Transforms</a><br><a href="#Describing_Rotations">Describing Rotations</a><br>&nbsp;&nbsp;<a href="#Axis_of_Rotation">Axis of Rotation</a><br>&nbsp;&nbsp;<a href="#Quaternions">Quaternions</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Generating_Quaternions">Generating Quaternions</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Using_Quaternions">Using Quaternions</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Multiplying_Quaternions">Multiplying Quaternions</a><br>&nbsp;&nbsp;<a href="#Tait_Bryan_angles">Tait-Bryan angles</a><br>&nbsp;&nbsp;<a href="#4x4_Matrices">4x4 Matrices</a><br><a href="#Planes">Planes</a><br><a href="#Boxes">Boxes</a><br><a href="#Coordinate_Systems">Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Differences_in_Behavior">Differences in Behavior</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Projection_and_view_matrices">Projection and view matrices</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate">Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Cross_product_vec3cross_and_normals">Cross product (<code>vec3cross</code>) and normals</a><br>&nbsp;&nbsp;<a href="#Winding_and_face_classification">Winding and face classification</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Finding_a_triangle_s_winding">Finding a triangle&#39;s winding</a><br></p>
 
-<h2>Vectors <a id=Vectors></a></h2>
+<h2>Vectors</h2>
 
 <p>A vector is a line segment pointing in a certain <em>direction</em> and
 having a certain <em>length</em>.  In addition to a direction, a vector can
@@ -39,7 +41,9 @@ fourth element is anything other than 0, the vector is in <em>homogeneous
 coordinates</em>, where the 3D position equals the first three elements divided
 by the fourth.)</p>
 
-<h3>Unit Vectors <a id=Unit_Vectors></a></h3>
+<p><a id=Unit_Vectors></a></p>
+
+<h3>Unit Vectors</h3>
 
 <p>A <em>unit vector</em> is a vector with a length of 1. (A vector&#39;s <em>length</em> is the square root
 of the sum of the squares of its components.) A vector can be &quot;normalized&quot; to
@@ -58,7 +62,9 @@ the vector&#39;s direction).</p>
 <p>Note that due to rounding error, normalizing a vector with an <code>H3DU.Math</code> method
 might not necessarily result in a vector with a length of 1.</p>
 
-<h2>Matrices <a id=Matrices></a></h2>
+<p><a id=Matrices></a></p>
+
+<h2>Matrices</h2>
 
 <p>A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
@@ -67,7 +73,9 @@ Functions dealing with matrices begin with &quot;mat&quot;.
 A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.
 For more details, see the <a href="tutorial-matrixdetails.html">Matrix Details</a> tutorial.</p>
 
-<h3>Translation <a id=Translation></a></h3>
+<p><a id=Translation></a></p>
+
+<h3>Translation</h3>
 
 <p>A translation is a shifting of an object&#39;s position.</p>
 
@@ -79,7 +87,9 @@ an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 <a href="H3DU.Math.html#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a>. This will put the translation
 before the other transformations.</p>
 
-<h3>Scaling <a id=Scaling></a></h3>
+<p><a id=Scaling></a></p>
+
+<h3>Scaling</h3>
 
 <p>Scaling changes an object&#39;s size.</p>
 
@@ -91,7 +101,9 @@ factors to change the object&#39;s size. For example, a Y-factor of 2 doubles an
 <a href="H3DU.Math.html#H3DU.Math.mat4scale">H3DU.Math.mat4scale()</a>. This will put the scaling
 before the other transformations.</p>
 
-<h3>Rotation <a id=Rotation></a></h3>
+<p><a id=Rotation></a></p>
+
+<h3>Rotation</h3>
 
 <p>Rotation changes an object&#39;s orientation.</p>
 
@@ -102,7 +114,9 @@ and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation
 <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>. This will put the rotation
 before the other transformations.</p>
 
-<h3>Combining Transforms <a id=Combining_Transforms></a></h3>
+<p><a id=Combining_Transforms></a></p>
+
+<h3>Combining Transforms</h3>
 
 <p>The order in which you do transforms is important. In general, scaling then translating is
 not the same as translating then scaling. Assuming your geometry is centered at the origin
@@ -122,12 +136,16 @@ before the translations (shifts) take place.</p>
 This takes two matrices and returns one combined matrix. The combined matrix will have the effect
 of doing the second matrix&#39;s transform, then the first matrix&#39;s transform.</p>
 
-<h2>Describing Rotations <a id=Describing_Rotations></a></h2>
+<p><a id=Describing_Rotations></a></p>
+
+<h2>Describing Rotations</h2>
 
 <p>Rotations in 3D space can be described in many ways, including
 quaternions, Tait-Bryan angles, and an angle and axis.</p>
 
-<h3>Axis of Rotation <a id=Axis_of_Rotation></a></h3>
+<p><a id=Axis_of_Rotation></a></p>
+
+<h3>Axis of Rotation</h3>
 
 <p>A rotation can be described using an <em>angle</em> and an <em>axis of rotation</em>,
 for example, in the <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate</a> method.</p>
@@ -158,13 +176,17 @@ describe the same axis of rotation.</p>
 <p>Unless stated otherwise, an axis of rotation passed to an <code>H3DU.Math</code>
 method need not be a <a href="#Unit_Vectors">unit vector</a>.</p>
 
-<h3>Quaternions <a id=Quaternions></a></h3>
+<p><a id=Quaternions></a></p>
+
+<h3>Quaternions</h3>
 
 <p>A quaternion is a 4-element vector that can describe a
 3D rotation. Functions dealing with quaternions begin with
 &quot;quat&quot;.</p>
 
-<h4>Generating Quaternions <a id=Generating_Quaternions></a></h4>
+<p><a id=Generating_Quaternions></a></p>
+
+<h4>Generating Quaternions</h4>
 
 <p>Functions that generate quaternions include:</p>
 
@@ -178,7 +200,9 @@ a rotation from one vector to another.</li>
 <li><a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.</li>
 </ul>
 
-<h4>Using Quaternions <a id=Using_Quaternions></a></h4>
+<p><a id=Using_Quaternions></a></p>
+
+<h4>Using Quaternions</h4>
 
 <p>For best results when using quaternions:</p>
 
@@ -193,14 +217,18 @@ or <a href="H3DU.Math.html#H3DU.Math.quatNormInPlace"><code>quatNormInPlace()</c
 every few frames. (Quaternions that describe a 3D rotation should be <a href="#Unit_Vectors">unit vectors</a>.)</li>
 </ul>
 
-<h4>Multiplying Quaternions <a id=Multiplying_Quaternions></a></h4>
+<p><a id=Multiplying_Quaternions></a></p>
+
+<h4>Multiplying Quaternions</h4>
 
 <p>When two quaternions are multiplied (for example, with {@H3DU.Math.quatMultiply}),
 the result is a combined rotation in which the second rotation happens
 before the first rotation (when applied in the global coordinate frame).
 Like matrix multiplication, the order in which you multiply quaternions is important.</p>
 
-<h3>Tait-Bryan angles <a id=Tait_Bryan_angles></a></h3>
+<p><a id=Tait_Bryan_angles></a></p>
+
+<h3>Tait-Bryan angles</h3>
 
 <p>Pitch-yaw-roll angles (also called Tait-Bryan angles) describe three different rotations
 around three different axes, called the pitch, yaw, and roll axes (or the X, Y, Z axes,
@@ -227,11 +255,15 @@ Converts from Tait-Bryan angles to a quaternion</li>
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 
-<h3>4x4 Matrices <a id=4x4_Matrices></a></h3>
+<p><a id=4x4_Matrices></a></p>
+
+<h3>4x4 Matrices</h3>
 
 <p>A 4x4 matrix can describe a 3D rotation; see <a href="#Rotation">&quot;Rotation&quot;, above</a>.</p>
 
-<h2>Planes <a id=Planes></a></h2>
+<p><a id=Planes></a></p>
+
+<h2>Planes</h2>
 
 <p>A 4-element array can describe a plane in the following manner:</p>
 
@@ -258,7 +290,9 @@ is the distance from the plane to the origin (0,0,0).</li>
 its normal has a length of 1.</li>
 </ul>
 
-<h2>Boxes <a id=Boxes></a></h2>
+<p><a id=Boxes></a></p>
+
+<h2>Boxes</h2>
 
 <p>An array of six numbers can describe an axis-aligned bounding box (AABB).
 If it does, the first three numbers are the box&#39;s minimum X, Y, and Z coordinates,
@@ -275,7 +309,9 @@ box is considered empty.</p>
 <li><a href="H3DU.Math.html#H3DU.Math.boxIsEmpty">H3DU.Math.boxIsEmpty</a> - Determines whether a box is empty.</li>
 </ul>
 
-<h2>Coordinate Systems <a id=Coordinate_Systems></a></h2>
+<p><a id=Coordinate_Systems></a></p>
+
+<h2>Coordinate Systems</h2>
 
 <p>There are two conventions of 3D coordinate systems, left-handed and
 right-handed:</p>
@@ -294,9 +330,13 @@ right-handed), if the X axis points in the thumb&#39;s
 direction and the Y axis points in the index finger&#39;s direction, the Z axis will
 point in the direction the other three fingers point.</p>
 
-<h3>Differences in Behavior <a id=Differences_in_Behavior></a></h3>
+<p><a id=Differences_in_Behavior></a></p>
 
-<h4>Projection and view matrices <a id=Projection_and_view_matrices></a></h4>
+<h3>Differences in Behavior</h3>
+
+<p><a id=Projection_and_view_matrices></a></p>
+
+<h4>Projection and view matrices</h4>
 
 <p>The difference between a left-handed and right-handed coordinate system
 lies in how 3D points are transformed, mainly due to the projection and view
@@ -322,7 +362,9 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14).</p>
 
-<h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>) <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a></h4>
+<p><a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a></p>
+
+<h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</h4>
 
 <p>While the <a href="#Axis_of_Rotation">axis of rotation</a> points toward the viewer, if the angle&#39;s value
 is positive (resp. negative) and the coordinate system is...</p>
@@ -332,7 +374,9 @@ is positive (resp. negative) and the coordinate system is...</p>
 <li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
 </ul>
 
-<h4>Cross product (<code>vec3cross</code>) and normals <a id=Cross_product_vec3cross_and_normals></a></h4>
+<p><a id=Cross_product_vec3cross_and_normals></a></p>
+
+<h4>Cross product (<code>vec3cross</code>) and normals</h4>
 
 <ul>
 <li>Given a triangle formed by points A, B, and C, in that order, the <a href="a%20href=%22H3DU.Math.html#H3DU.Math.vec3cross%22%3EH3DU.Math.vec3cross%3C/a">cross product</a>
@@ -345,7 +389,9 @@ with B, in that order, is a normal of that triangle.</li>
 run in a counterclockwise path for right-handed coordinate systems, or a clockwise path for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)</p>
 
-<h3>Winding and face classification <a id=Winding_and_face_classification></a></h3>
+<p><a id=Winding_and_face_classification></a></p>
+
+<h3>Winding and face classification</h3>
 
 <p>A two-dimensional triangle has counterclockwise <em>winding</em> if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex. Otherwise, it has clockwise winding. If the triangle is in 3D space, it&#39;s first transformed into 2D <em>window coordinates</em> before its winding is found. (Window coordinates roughly correspond to screen pixels.)</p>
 
@@ -353,7 +399,9 @@ point in opposite directions.)</p>
 other triangles are <em>back faces</em>. To change which kinds of triangles are
 front faces, call the <code>frontFace</code> method of Scene3D.</p>
 
-<h4>Finding a triangle&#39;s winding <a id=Finding_a_triangle_s_winding></a></h4>
+<p><a id=Finding_a_triangle_s_winding></a></p>
+
+<h4>Finding a triangle&#39;s winding</h4>
 
 <p>To find a triangle&#39;s winding, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle&#39;s signed area.</p>
 
