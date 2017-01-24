@@ -19,7 +19,6 @@ H3DU._FrenetFrames = function(func) {
   var isClosed = false;
   var res = 50;
   var nextSample = null;
-
   var lastSample = func.evaluate(1.0);
   var totalLength = 0;
   var samples = [];

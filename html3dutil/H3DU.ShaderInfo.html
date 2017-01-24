@@ -16,7 +16,7 @@ and a fragment shader (which processes pixels). Shader programs
 are specially designed for running on a graphics processing unit,
 or GPU.</p>
 
-<p>This class also stores uniform values associated with the shader
+<p>This class also stores semantics and uniform values associated with the shader
 source code.</p>
 
 <p>Note that this class is not associated with any WebGL context, so the
@@ -67,11 +67,7 @@ copied to that object.</li>
 
 <h3>H3DU.ShaderInfo.getDefaultFragment()</h3>
 
-<p>Gets the text of the default fragment shader. Putting &quot;#define SHADING\n&quot;
-at the start of the return value enables the lighting model.
-Putting &quot;#define SPECULAR\n&quot;
-at the start of the return value enables specular highlights (as long
-as SHADING is also enabled).</p>
+<p>Gets the text of the default fragment shader.</p>
 
 <h4>Return Value</h4>
 
