@@ -429,9 +429,9 @@ H3DU.MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz)
   t16[9] = u[2];
   t16[10] = f[2];
   t16[11] = 0.0;
-  t16[12] = -((viewerPos[0] * s[0] + viewerPos[1] * s[1] + viewerPos[2] * s[2]));
-  t16[13] = -((viewerPos[0] * u[0] + viewerPos[1] * u[1] + viewerPos[2] * u[2]));
-  t16[14] = -((viewerPos[0] * f[0] + viewerPos[1] * f[1] + viewerPos[2] * f[2]));
+  t16[12] = -(viewerPos[0] * s[0] + viewerPos[1] * s[1] + viewerPos[2] * s[2]);
+  t16[13] = -(viewerPos[0] * u[0] + viewerPos[1] * u[1] + viewerPos[2] * u[2]);
+  t16[14] = -(viewerPos[0] * f[0] + viewerPos[1] * f[1] + viewerPos[2] * f[2]);
   t16[15] = 1.0;
   return this.multMatrix(t16);
 };

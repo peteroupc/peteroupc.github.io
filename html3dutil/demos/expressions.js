@@ -526,7 +526,7 @@ Operation.prototype.degen = function() {
     }
   }
   cv = this.constantValue();
-  if (!((cv === null || typeof cv === "undefined"))) {
+  if (!(cv === null || typeof cv === "undefined")) {
     return new Constant(cv);
   }
   return this;
@@ -1172,7 +1172,7 @@ var getExpression = function(expr) {
       }
       expressions[expressions.length - 1].nodes.push(lastexpr);
     } else if (token[0] === "function") {
-      if (!(((((c = i + 1 >= tokens.length) !== false && (c !== null && typeof c !== "undefined") ? c : tokens[i + 1][0] === "lparen"))))) {
+      if (!((c = i + 1 >= tokens.length) !== false && (c !== null && typeof c !== "undefined") ? c : tokens[i + 1][0] === "lparen")) {
         throw new Error("left paren expected");
       }
       i += 1;

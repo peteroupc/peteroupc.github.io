@@ -1103,7 +1103,7 @@
     var t5 = 1.0 / Math.sqrt(t4[0] * t4[0] + t4[1] * t4[1]);
     var t6 = [t4[0] * t5, t4[1] * t5]; // tangent vector from p2 to p1
     var cross = t3[0] * t6[1] - t3[1] * t6[0];
-    var t7 = ((1.0 + (t3[0] * t6[0] + t3[1] * t6[1]))) * radius / Math.abs(cross);
+    var t7 = (1.0 + (t3[0] * t6[0] + t3[1] * t6[1])) * radius / Math.abs(cross);
     var t8 = [t3[0] * t7, t3[1] * t7];
     var t10 = [t6[0] * t7, t6[1] * t7];
     var startTangent = [x1 + t8[0], y1 + t8[1]];

@@ -23,10 +23,8 @@ uploads its texture data to a WebGL context.</li>
 <li><a href="#H3DU.TextureLoader_H3DU.TextureLoader_loadAndMapTexturesAll">loadAndMapTexturesAll</a><br>Loads one or more textures by their URL and uploads their data to a WebGL context.</li>
 <li><a href="#H3DU.TextureLoader_H3DU.TextureLoader_loadCubeMap">loadCubeMap</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.TextureLoader_H3DU.TextureLoader_loadTexture">loadTexture</a><br>Loads a texture by its URL and stores its data.</li>
-<li><a href="#H3DU.TextureLoader_H3DU.TextureLoader_loadTexturesAll">loadTexturesAll</a><br>Loads the textures referred to in an array of URLs and
-stores their texture data.</li>
-<li><a href="#H3DU.TextureLoader_H3DU.TextureLoader_mapTexture">mapTexture</a><br>Uploads a texture object to a WebGL context.</li>
-<li><p><a href="#H3DU.TextureLoader_H3DU.TextureLoader_mapTextures">mapTextures</a><br>Uploads an array of textures to a WebGL context.</p>
+<li><p><a href="#H3DU.TextureLoader_H3DU.TextureLoader_loadTexturesAll">loadTexturesAll</a><br>Loads the textures referred to in an array of URLs and
+stores their texture data.</p>
 
 <p><a name='H3DU.TextureLoader_H3DU.TextureLoader_dispose'></a></p>
 
@@ -67,8 +65,8 @@ uploads its texture data to a WebGL context.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>texture</code> (Type: String)<br>
-URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM&#39;s Image class.</li>
+<li><code>texture</code> (Type: String | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a>)<br>
+An object described in H3DU.TextureLoader.loadTexture.</li>
 <li><code>context</code> (Type: WebGLRenderingContext | object)<br>
 A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
 </ul>
@@ -88,8 +86,8 @@ and is rejected when an error occurs. (Type: <a href="Promise.html">Promise</a>.
 <h4>Parameters</h4>
 
 <ul>
-<li><code>textures</code> (Type: Array.&lt;String&gt;)<br>
-Arrays of URLs of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM&#39;s Image class.</li>
+<li><code>textures</code> (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a>)&gt;)<br>
+An array of objects described in H3DU.TextureLoader.loadTexture.</li>
 <li><code>context</code> (Type: WebGLRenderingContext | object)<br>
 A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
 <li><code>resolve</code> (Type: function) (optional)<br>
@@ -132,8 +130,8 @@ resolves, each item in the resulting array will be a loaded
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: String)<br>
-URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM&#39;s Image class.</li>
+<li><code>name</code> (Type: String | TextureInfo)<br>
+URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM&#39;s Image class. TODO: More docs.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -151,8 +149,8 @@ stores their texture data.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>textures</code> (Type: Array.&lt;String&gt;)<br>
-An array of URLs of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM&#39;s Image class.</li>
+<li><code>textures</code> (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a>)&gt;)<br>
+An array of objects described in H3DU.TextureLoader.loadTexture.</li>
 <li><code>resolve</code> (Type: function) (optional)<br>
 A function called as each individual texture is loaded.</li>
 <li><code>reject</code> (Type: function) (optional)<br>
@@ -165,44 +163,6 @@ A function called as each individual texture is loaded.</li>
 <a href="H3DU.html#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.html">H3DU.Texture</a> object. (Type: <a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>&gt;)</p>
-
-<p><a name='H3DU.TextureLoader_H3DU.TextureLoader_mapTexture'></a></p>
-
-<h3>H3DU.TextureLoader#mapTexture(texture, context)</h3>
-
-<p>Uploads a texture object to a WebGL context.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>texture</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a>)<br>
-The texture object to map. Each texture&#39;s data must already have been loaded. If the texture has the same name as a texture already uploaded to the given context, it will be skipped.</li>
-<li><code>context</code> (Type: WebGLRenderingContext | object)<br>
-A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>)</p>
-
-<p><a name='H3DU.TextureLoader_H3DU.TextureLoader_mapTextures'></a></p>
-
-<h3>H3DU.TextureLoader#mapTextures(textures, context)</h3>
-
-<p>Uploads an array of textures to a WebGL context.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>textures</code> (Type: Array.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>&gt;)<br>
-An array of texture objects to upload. Each texture&#39;s data must already have been loaded. Textures with the same name as textures already uploaded to the given context will be skipped.</li>
-<li><code>context</code> (Type: WebGLRenderingContext | object)<br>
-A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -271,6 +231,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
 <li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a></li>
 <li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>

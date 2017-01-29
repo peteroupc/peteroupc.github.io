@@ -313,8 +313,8 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
 /** @private */
 H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, xPos, yPos, params, extra, meshesForPage) {
   "use strict";
-// var height=((typeof params.lineHeight !== "undefined" &&
-// params.lineHeight !== null)) ? params.lineHeight : this.common.lineHeight;
+// var height=(typeof params.lineHeight !== "undefined" &&
+// params.lineHeight !== null) ? params.lineHeight : this.common.lineHeight;
   var lastChar = -1;
   for(var i = startPos;i < endPos;i++) {
     var c = str.charCodeAt(i);

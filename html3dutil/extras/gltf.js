@@ -7,7 +7,6 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-
 function gltfMakeArray(componentType, buffer) {
   "use strict";
   if(componentType === 5120)return new Int8Array(buffer);
@@ -59,7 +58,7 @@ function gltfResolvePath(path, name) {
   return ret;
 }
 /** @private */
-function GltfState(gltf, promiseResults, promiseKinds, promiseNames) {
+function GltfState(gltf, path, promiseResults, promiseKinds, promiseNames) {
   "use strict";
   this.buffers = {};
   this.shaders = {};
@@ -67,6 +66,7 @@ function GltfState(gltf, promiseResults, promiseKinds, promiseNames) {
   this.nodeShapes = {};
   this.error = "";
   this.gltf = gltf;
+  this.path = path;
   this.version = 0; // glTF 1.0
   this.animChannels = [];
   for(var i = 0;i < promiseKinds.length;i++) {
@@ -120,13 +120,58 @@ GltfState.prototype.preparePrograms = function() {
     }
   return ret;
 };
+
+/** @private */
+GltfState.prototype.readTexture = function(texture) {
+  "use strict";
+  if(typeof texture === "undefined" || (texture === null || typeof texture === "undefined")) {
+    return null;
+  }
+  if(typeof texture.sampler === "undefined" || texture.sampler === null) {
+    return null;
+  }
+  var sampler = texture.sampler;
+  if(typeof texture.source === "undefined" || texture.source === null) {
+    return null;
+  }
+  var source = texture.source;
+  var format = typeof texture.format === "undefined" || texture.format === null ? 6408 : texture.format;
+  var internalFormat = typeof texture.internalFormat === "undefined" || texture.internalFormat === null ?
+             format : texture.internalFormat;
+  var target = typeof texture.target === "undefined" || texture.target === null ? 3553 : texture.target;
+  var type = typeof texture.type === "undefined" || texture.type === null ? 5121 : texture.type;
+  if(typeof this.gltf.samplers === "undefined" || this.gltf.samplers === null ||
+ (typeof this.gltf.samplers[sampler] === "undefined" || this.gltf.samplers[sampler] === null)) {
+    return null;
+  }
+
+  if(typeof this.gltf.images === "undefined" || this.gltf.images === null ||
+ (typeof this.gltf.images[source] === "undefined" || this.gltf.images[source] === null)) {
+    return null;
+  }
+  var sourceValue = this.gltf.images[source];
+  if(typeof sourceValue.uri === "undefined" || sourceValue.uri === null) {
+    return null;
+  }
+  var uri = gltfResolvePath(this.path, sourceValue.uri);
+  return new H3DU.TextureInfo({
+    "magFilter": typeof sampler.magFilter === "undefined" || sampler.magFilter === null ? 9729 : sampler.magFilter,
+    "minFilter": typeof sampler.minFilter === "undefined" || sampler.minFilter === null ? 9986 : sampler.minFilter,
+    "wrapS": typeof sampler.wrapS === "undefined" || sampler.wrapS === null ? 10497 : sampler.wrapS,
+    "wrapT": typeof sampler.wrapT === "undefined" || sampler.wrapT === null ? 10497 : sampler.wrapT,
+    "format":format,
+    "internalFormat":internalFormat,
+    "uri":uri,
+    "target":target,
+    "type":type
+  });
+};
+
 /** @private */
 GltfState.prototype.readTechnique = function(technique) {
   "use strict";
-  if(typeof technique.program === "undefined" || technique.program === null) {
-    return null;
-  }
-  if(typeof this.programs[technique.program] === "undefined" || this.programs[technique.program] === null) {
+  if(typeof technique.program === "undefined" || technique.program === null ||
+  typeof this.programs[technique.program] === "undefined" || this.programs[technique.program] === null) {
     return null;
   }
   var program = this.programs[technique.program];
@@ -151,10 +196,16 @@ GltfState.prototype.readTechnique = function(technique) {
         } else {
           uniformValue = param.value;
         }
-        unif[uniformKey] = uniformValue;
         if(param.type === 35678) {
-    // TODO: Refers to a texture in gltf.textures
+          if(typeof this.gltf.textures === "undefined" || this.gltf.textures === null ||
+ (typeof this.gltf.textures[uniformValue] === "undefined" || this.gltf.textures[uniformValue] === null)) {
+            return null;
+          }
+          var tex = this.gltf.textures[uniformValue];
+          uniformValue = this.readTexture(tex);
+          if(!uniformValue)return null;
         }
+        unif[uniformKey] = uniformValue;
         shader.setUniforms(unif);
       }
       if(typeof param.semantic !== "undefined" && param.semantic !== null) {
@@ -325,8 +376,6 @@ GltfState.prototype.arrayFromAccessor = function(accessor) {
   }
   var buf = bufferData.slice(bufferOffset, bufferEnd);
   var array = gltfMakeArray(componentType, buf);
- // console.log(new GltfArray(array, count, type, componentSize,
-  // byteStride))
   if(!array) {
     return null;
   }
@@ -762,7 +811,7 @@ function readGltf(gltf, path) {
     }
   return H3DU.getPromiseResultsAll(promises)
    .then(function(promiseResults) {
-     var state = new GltfState(gltf, promiseResults, promiseKinds, promiseNames);
+     var state = new GltfState(gltf, path, promiseResults, promiseKinds, promiseNames);
      var retState = state.readScenes();
      if(!retState)return Promise.reject(state.error);
      retState = state.readAnimations();
@@ -773,8 +822,7 @@ function readGltf(gltf, path) {
 /**
  * TODO: Not documented yet.
  * @param {*} url
- * @returns {*}
- */
+ * @returns {*} Return value. */
 H3DU.loadGltfFromUrl = function(url) {
   "use strict";
   return H3DU.loadFileFromUrl(url, "json").then(function(data) {
