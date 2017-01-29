@@ -498,9 +498,9 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
   var first = true;
   var x, y, z;
   var iX, iY, iZ;
-  for(iX = 0, x = xmin;iX < xsize; iX += 1, x += xstep) {
-    for(iY = 0, y = ymin;iY < ysize; iY += 1, y += ystep) {
-      for(iZ = 0, z = zmin;iZ < zsize; iZ += 1, z += zstep) {
+  for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
+    for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
+      for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {
         if(this._isOnSurface(x, y, z, xstep, ystep, zstep)) {
           if(first) {
             first = false;
@@ -551,9 +551,9 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
   var zstep = (zmax - zmin) / (zsize - 1);
   var x, y, z;
   var iX, iY, iZ;
-  for(iX = 0, x = xmin;iX < xsize; iX += 1, x += xstep) {
-    for(iY = 0, y = ymin;iY < ysize; iY += 1, y += ystep) {
-      for(iZ = 0, z = zmin;iZ < zsize; iZ += 1, z += zstep) {
+  for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
+    for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
+      for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {
         if(this._isOnSurface(x, y, z, xstep, ystep, zstep)) {
           mesh.vertex3(x + xstep / 2, y + ystep / 2, z + zstep / 2);
         }
@@ -596,9 +596,9 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
   if(xstep !== 0 && ystep !== 0 && zstep !== 0) {
     var x, y, z;
     var iX, iY, iZ;
-    for(iX = 0, x = xmin;iX < xsize; iX += 1, x += xstep) {
-      for(iY = 0, y = ymin;iY < ysize; iY += 1, y += ystep) {
-        for(iZ = 0, z = zmin;iZ < zsize; iZ += 1, z += zstep) {
+    for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
+      for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
+        for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {
           this._vMarchCube1(mesh, x, y, z, xstep, ystep, zstep, tmpobj);
         }
       }

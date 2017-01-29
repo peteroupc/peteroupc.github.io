@@ -83,7 +83,7 @@ H3DU.MeshJSON.toJSON = function(mesh) {
     var idx = obj.length;
     var index = idx / 3;
     var endIdx = Math.max(0, idx - 48);
-    for(var i = idx - 3;i >= endIdx;i -= 3) {
+    for(var i = idx - 3; i >= endIdx; i -= 3) {
       if(obj[i] === x && obj[i + 1] === y && obj[i + 2] === z) {
         return i / 3;
       }
@@ -97,7 +97,7 @@ H3DU.MeshJSON.toJSON = function(mesh) {
     var idx = obj.length;
     var index = idx / 2;
     var endIdx = Math.max(0, idx - 48);
-    for(var i = idx - 2;i >= endIdx;i -= 2) {
+    for(var i = idx - 2; i >= endIdx; i -= 2) {
       if(obj[i] === x && obj[i + 1] === y) {
         return i / 2;
       }
@@ -110,7 +110,7 @@ H3DU.MeshJSON.toJSON = function(mesh) {
     var idx = obj.length;
     var index = idx;
     var endIdx = Math.max(0, idx - 48);
-    for(var i = idx - 1;i >= endIdx;i -= 1) {
+    for(var i = idx - 1; i >= endIdx; i -= 1) {
       if(obj[i] === x) {
         return i;
       }
@@ -123,7 +123,7 @@ H3DU.MeshJSON.toJSON = function(mesh) {
     var idx = faces.length;
     var flags = 0;
     faces.push(0);
-    for(var j = 0;j < 3;j++) {
+    for(var j = 0; j < 3; j++) {
       faces.push(
     pushItemAndMaybeReuse3(vertices,
       roundNum(prim[j].position[0]),
@@ -132,7 +132,7 @@ H3DU.MeshJSON.toJSON = function(mesh) {
     }
     if(prim[0].uv && prim[1].uv && prim[2].uv) {
       var tc = texcoords[0];
-      for(j = 0;j < 3;j++) {
+      for(j = 0; j < 3; j++) {
         faces.push(
      pushItemAndMaybeReuse2(tc,
       roundNum(prim[j].uv[0]),
@@ -141,7 +141,7 @@ H3DU.MeshJSON.toJSON = function(mesh) {
       flags |= 0x08;
     }
     if(prim[0].normal && prim[1].normal && prim[2].normal) {
-      for(j = 0;j < 3;j++) {
+      for(j = 0; j < 3; j++) {
         faces.push(
      pushItemAndMaybeReuse3(normals,
       roundNum(prim[j].normal[0]),
@@ -151,7 +151,7 @@ H3DU.MeshJSON.toJSON = function(mesh) {
       flags |= 0x20;
     }
     if(prim[0].color && prim[1].color && prim[2].color) {
-      for(j = 0;j < 3;j++) {
+      for(j = 0; j < 3; j++) {
         faces.push(
      pushItemAndMaybeReuse1(colors,
       colorToHex(prim[j].color)));
@@ -231,7 +231,7 @@ H3DU.MeshJSON._Model = function(mesh) {
   this.materials = [null];
   this.toShape = function() {
     var group = new H3DU.ShapeGroup();
-    for(var i = 0;i < this.meshes.length;i++) {
+    for(var i = 0; i < this.meshes.length; i++) {
       var shape = new H3DU.Shape(this.meshes[i]);
       if(this.materials[i])shape.setMaterial(this.materials[i]);
       group.addShape(shape);
@@ -239,7 +239,7 @@ H3DU.MeshJSON._Model = function(mesh) {
     return group;
   };
   this._setMeshes = function(meshes, materials) {
-    for(var i = 0;i < meshes.length;i++) {
+    for(var i = 0; i < meshes.length; i++) {
       this.meshes[i] = meshes[i];
       this.materials[i] = materials[i];
     }
@@ -272,7 +272,7 @@ H3DU.MeshJSON.loadJSON = function(url) {
     if(json.indices) {
       var verts = [];
       if(json.normals) {
-        for(i = 0;i < json.vertices.length;i += 3) {
+        for(i = 0; i < json.vertices.length; i += 3) {
           verts.push(json.vertices[i]);
           verts.push(json.vertices[i + 1]);
           verts.push(json.vertices[i + 2]);
@@ -290,7 +290,7 @@ H3DU.MeshJSON.loadJSON = function(url) {
 
       var materials = [];
       if(json.materials && json.materials.length > 0) {
-        for(i = 0;i < json.materials.length;i++) {
+        for(i = 0; i < json.materials.length; i++) {
           materials.push(H3DU.MeshJSON._getJsonMaterial(f.url, json.materials[i]));
           meshes[i] = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES);
         }
@@ -299,7 +299,7 @@ H3DU.MeshJSON.loadJSON = function(url) {
         materials[0] = null;
       }
       var quadIndices = [0, 1, 3, 2, 3, 1];
-      for(i = 0;i < json.faces.length;) {
+      for(i = 0; i < json.faces.length;) {
         var flags = json.faces[i++];
         var size = (flags & 0x01) !== 0 ? 4 : 3;
         var vertPtr = i;
@@ -343,7 +343,7 @@ H3DU.MeshJSON.loadJSON = function(url) {
           mesh.color3(convHexColor(json.colors[json.faces[colors]]));
         }
         var trisize = size === 4 ? 6 : 3;
-        for(var j = 0;j < trisize;j++) {
+        for(var j = 0; j < trisize; j++) {
           var idx;
           if(vnormals >= 0) {
             idx = json.faces[vnormals + (size === 4 ? quadIndices[j] : j)] * 3;

@@ -36,15 +36,15 @@ function horizontalGradient(color1, color2) {
   color2 = H3DU.toGLColor(color2);
   var arr = [];
   var size = 32;
-  for(var i = 0;i < size;i++) {
+  for(var i = 0; i < size; i++) {
     arr.push(
     H3DU.Math.vec4scaleInPlace(H3DU.Math.vec4lerp(color1, color2, i / (size - 1)), 255)
   );
   }
   var gradient = [];
   i = 0;
-  for(var y = 0;y < size;y++) {
-    for(var x = 0;x < size;x++, i += 4) {
+  for(var y = 0; y < size; y++) {
+    for(var x = 0; x < size; x++, i += 4) {
       gradient[i] = Math.round(arr[x][0]);
       gradient[i + 1] = Math.round(arr[x][1]);
       gradient[i + 2] = Math.round(arr[x][2]);
@@ -63,7 +63,7 @@ function radialGradient(colorCenter, colorEdges) {
   var gradient = [];
   var arr = [];
   var size = 32;
-  for(var i = 0;i < 32;i++) {
+  for(var i = 0; i < 32; i++) {
     arr.push(
     H3DU.Math.vec4scaleInPlace(H3DU.Math.vec4lerp(colorCenter, colorEdges, i / 31), 255)
   );
@@ -71,8 +71,8 @@ function radialGradient(colorCenter, colorEdges) {
   i = 0;
   var radius = (size - 1) * 0.5;
   var recipradius = 1.0 / radius;
-  for (var y = 0;y < size;y++) {
-    for (var x = 0;x < size;x++, i += 4) {
+  for (var y = 0; y < size; y++) {
+    for (var x = 0; x < size; x++, i += 4) {
       var yy = (y - radius) * recipradius;
       var xx = (x - radius) * recipradius;
       var a = arr[Math.min(31, Math.floor(31 * Math.sqrt(xx * xx + yy * yy)))];

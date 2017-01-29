@@ -93,7 +93,7 @@ function setRanges(ranges) {
   "use strict";
   var settings = document.getElementById("settings");
   settings.innerHTML = "";
-  for(var i = 0;i < ranges.length;i++) {
+  for(var i = 0; i < ranges.length; i++) {
     settings.appendChild(ranges[i]);
   }
 }

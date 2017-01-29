@@ -11,7 +11,7 @@ var Extras = {
     "use strict";
     var fillOffset = 0;
 
-    for(var i = 0;i < arr.length;i++) {
+    for(var i = 0; i < arr.length; i++) {
       if(fillOffset !== i && arr[i] !== null) {
         arr[fillOffset] = arr[i];
         fillOffset++;
@@ -23,7 +23,7 @@ var Extras = {
   },
   "includes":function(arr, value) {
     "use strict";
-    for(var i = 0;i < arr.length;i++) {
+    for(var i = 0; i < arr.length; i++) {
       if(arr[i] === value)return true;
     }
     return false;
@@ -186,7 +186,7 @@ Expression.simplifyNodes = function(nodes) {
     nextNode = null,
     op = null;
       // Eliminate expression nodes
-  for(i = 0;i < nodes.length;i++) {
+  for(i = 0; i < nodes.length; i++) {
     node = nodes[i];
     if(!node)continue;
     if(node instanceof Expression) {
@@ -245,7 +245,7 @@ Expression.simplifyNodes = function(nodes) {
   }
   Extras.compact(nodes);
   passes = [["mul", "div"], ["plus", "minus"]];
-  for (pass__ = 0;pass__ < passes.length;pass__++) {
+  for (pass__ = 0; pass__ < passes.length; pass__++) {
     pass = passes[pass__];
     prevNode = null;
     prevNodeIndex = -1;
@@ -354,7 +354,7 @@ Operation.prototype.equals = function(x) {
   if (!(this.operator === x.operator)) {
     return false;
   }
-  for (i = 0;i < this.nodes.length;i++) {
+  for (i = 0; i < this.nodes.length; i++) {
     if (!(this.nodes[i] === x.nodes[i])) {
       return false;
     }
@@ -397,7 +397,7 @@ Operation.prototype.simplify = function() {
           continue;
         }
         if (node instanceof Operation && node.operator === this.operator) {
-          for (n__ = 0;n__ < node.nodes.length;n__++) {
+          for (n__ = 0; n__ < node.nodes.length; n__++) {
             n = node.nodes[n__];
             realnode = n;
             this.nodes.push(realnode);
@@ -416,7 +416,7 @@ Operation.prototype.simplify = function() {
             cv = null;
             haveNonconst = false;
             c = node.nodes[1].constantValue();
-            for (n__ = 0;n__ < node.nodes.length;n__++) {
+            for (n__ = 0; n__ < node.nodes.length; n__++) {
               n = node.nodes[n__];
               c = n.constantValue();
               if (c !== null && typeof c !== "undefined") {
@@ -448,7 +448,7 @@ Operation.prototype.simplify = function() {
           }
           if (cv === 0 && i === 0) {
             var found = false;
-            for (j = i + 1;j < this.nodes.length;j++) {
+            for (j = i + 1; j < this.nodes.length; j++) {
               if(this.nodes[j].constantValue() === 0) {
                 found = true;
                 break;
@@ -461,7 +461,7 @@ Operation.prototype.simplify = function() {
               return this;
             }
           } else if(node.isOperation("mul") && i > 0) {
-            for (j = 0;j < node.nodes.length;j++) {
+            for (j = 0; j < node.nodes.length; j++) {
               if(node.nodes[j].equals(this.nodes[0])) {
                 this.nodes[0] = new Constant(1);
                 node.nodes[j] = new Constant(1);
@@ -546,7 +546,7 @@ Operation.prototype.constantValue = function() {
 
   if ((b = (c = this.operator === "plus") !== false && (c !== null && typeof c !== "undefined") ? c : this.operator === "mul") !== false && (b !== null && typeof b !== "undefined") ? b : this.operator === "div") {
     val = null;
-    for (node__ = 0;node__ < this.nodes.length;node__++) {
+    for (node__ = 0; node__ < this.nodes.length; node__++) {
       node = this.nodes[node__];
       cv = node.constantValue();
       if (cv === null || typeof cv === "undefined") {
@@ -588,7 +588,7 @@ Operation.func = function(operation) {
   var op = null,
     arg = null;
   op = new Operation(operation);
-  for (arg = 1;arg < arguments.length;arg++) {
+  for (arg = 1; arg < arguments.length; arg++) {
     op.nodes.push(arguments[arg]);
   }
   return op.degen();
@@ -623,7 +623,7 @@ Operation.prototype.copy = function() {
   "use strict";
   var op = new Operation(this.operator);
   op.negative = this.negative;
-  for (var node__ = 0;node__ < this.nodes.length;node__++) {
+  for (var node__ = 0; node__ < this.nodes.length; node__++) {
     op.nodes.push(this.nodes[node__].copy());
   }
   return op;
@@ -639,16 +639,16 @@ Operation.prototype.negate = function() {
     node__ = null;
   op = new Operation(this.operator);
   if(op.operator === "plus") {
-    for (node__ = 0;node__ < this.nodes.length;node__++) {
+    for (node__ = 0; node__ < this.nodes.length; node__++) {
       op.nodes.push(this.nodes[node__].negate());
     }
   } else if(op.operator === "mul" || op.operator === "div") {
-    for (node__ = 0;node__ < this.nodes.length;node__++) {
+    for (node__ = 0; node__ < this.nodes.length; node__++) {
       op.nodes.push(node__ === 0 ? this.nodes[node__].negate() : this.nodes[node__]);
     }
   } else {
     op.negative = !this.negative;
-    for (node__ = 0;node__ < this.nodes.length;node__++) {
+    for (node__ = 0; node__ < this.nodes.length; node__++) {
       op.nodes.push(this.nodes[node__]);
     }
   }
@@ -689,7 +689,7 @@ Operation.prototype.multiply = function(x) {
     }
   }
   if (this.operator === "mul") {
-    for(var i = 0;i < this.nodes.length;i++) {
+    for(var i = 0; i < this.nodes.length; i++) {
       if(this.nodes[i].equals(x)) {
         var c = this.copy();
         c.nodes[i] = Operation.func("pow", c.nodes[i], new Constant(2));
@@ -728,7 +728,7 @@ Operation.prototype.toJSString = function() {
     op = null;
   var p1;
   opArray = [];
-  for (i__ = 0;i__ < this.nodes.length;i__++) {
+  for (i__ = 0; i__ < this.nodes.length; i__++) {
     i = this.nodes[i__];
     if(i instanceof Variable) {
       if(i.name !== "u" && i.name !== "v") {
@@ -745,7 +745,7 @@ Operation.prototype.toJSString = function() {
     if (this.negative) {
       ret += "-(";
     }
-    for (i = 0;i < opArray.length;i++) {
+    for (i = 0; i < opArray.length; i++) {
       op = opArray[i];
       if (i > 0) {
         ret += " + ";
@@ -789,7 +789,7 @@ Operation.prototype.toString = function() {
     op = null;
 
   opArray = [];
-  for (i__ = 0;i__ < this.nodes.length;i__++) {
+  for (i__ = 0; i__ < this.nodes.length; i__++) {
     i = this.nodes[i__];
     paren = (b = i instanceof Operation, b !== false && (b !== null && typeof b !== "undefined") ?
         (c = (d = i.operator === "plus") !== false && (d !== null && typeof d !== "undefined") ? d : i.operator === "mul") !== false &&
@@ -802,7 +802,7 @@ Operation.prototype.toString = function() {
     if (this.negative) {
       ret += "-(";
     }
-    for (i = 0;i < opArray.length;i++) {
+    for (i = 0; i < opArray.length; i++) {
       op = opArray[i];
       if (i > 0) {
         ret += " + ";
@@ -1222,7 +1222,7 @@ var getSingleVariable = function(op, variable) {
   var i = null,
     node = null;
 
-  for (i = 0;i < op.length();i++) {
+  for (i = 0; i < op.length(); i++) {
     node = op.get(i);
     if (node instanceof Operation) {
       if (!this.getSingleVariable(node, variable)) {
@@ -1247,7 +1247,7 @@ var findPartialDerivative = function(expr, differential) {
       return expr.get(start);
     }
     ret = new Constant(1);
-    for (i = 0;i < count;i++) {
+    for (i = 0; i < count; i++) {
       ret = ret.multiply(expr.get(start + i));
     }
     return ret;
@@ -1260,7 +1260,7 @@ var findPartialDerivative = function(expr, differential) {
       return expr.get(start);
     }
     ret = new Constant(1);
-    for (i = 0;i < count;i++) {
+    for (i = 0; i < count; i++) {
       ret = ret.divide(expr.get(start + i));
     }
     return ret;
@@ -1338,7 +1338,7 @@ var findPartialDerivative = function(expr, differential) {
     }
   } else if (expr.isOperation("plus")) {
     ops = new Constant(0);
-    for (i = 0;i < expr.length();i++) {
+    for (i = 0; i < expr.length(); i++) {
       ops = ops.add(findPartialDerivative(expr.get(i), differential));
     }
     return ops;

@@ -26,7 +26,7 @@ H3DU._FrenetFrames = function(func) {
   if(H3DU._FrenetFrames._distSq(func.evaluate(0), lastSample) < H3DU._FrenetFrames._EPSILON) {
     isClosed = true;
   }
-  for(var i = 0;i <= res;i++) {
+  for(var i = 0; i <= res; i++) {
     var t = i / res;
     var e0 = nextSample ? nextSample : func.evaluate(t);
     var e01 = func.evaluate(i === res ? t - H3DU._FrenetFrames._EPSILON : t + H3DU._FrenetFrames._EPSILON);
@@ -67,7 +67,7 @@ H3DU._FrenetFrames = function(func) {
     this.normals[res] = this.normals[0];
     this.binormals[res] = this.binormals[0];
     this.tangents[res] = this.tangents[0];
-    for(i = 0;i < res - 1;i++) {
+    for(i = 0; i < res - 1; i++) {
       runningLength += lengths[i];
       var lenproportion = runningLength / totalLength;
       var newq = H3DU.Math.quatFromAxisAngle(angle * lenproportion, this.tangents[i + 1]);
@@ -101,7 +101,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
       n = this.normals[index];
       t = this.tangents[index];
     } else {
-      for(i = 0;i < this.vectorsCache.length;i += 2) {
+      for(i = 0; i < this.vectorsCache.length; i += 2) {
         if(this.vectorsCache[i] === u) {
           this.cacheHits = (this.cacheHits || 0) + 1;
           return this.vectorsCache[i + 1];
@@ -123,7 +123,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
       cache = true;
     }
   } else {
-    for(i = 0;i < this.vectorsCache.length;i += 2) {
+    for(i = 0; i < this.vectorsCache.length; i += 2) {
       if(this.vectorsCache[i] === u) {
         this.cacheHits = (this.cacheHits || 0) + 1;
         return this.vectorsCache[i + 1];

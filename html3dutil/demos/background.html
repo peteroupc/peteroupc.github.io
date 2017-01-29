@@ -89,8 +89,8 @@ CanvasBackground.rgb2hls = function(rgb) {
     h = ((vmax - b) * 60 + hvd) / vd;
     h -= ((vmax - g) * 60 + hvd) / vd;
   } else if (b === vmax) {
-    h = 240 + ((vmax - g) * 60 + hvd) / vd ;
-    h -= ((vmax - r) * 60 + hvd) / vd ;
+    h = 240 + ((vmax - g) * 60 + hvd) / vd;
+    h -= ((vmax - r) * 60 + hvd) / vd;
   } else {
     h = 120 + ((vmax - r) * 60 + hvd) / vd;
     h -= ((vmax - b) * 60 + hvd) / vd;

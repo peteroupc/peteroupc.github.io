@@ -67,7 +67,7 @@ function Labels(scene, batch) {
     var width = this.scene.getClientWidth();
     var height = this.scene.getClientHeight();
     proj = H3DU.Math.mat4multiply(proj, view);
-    for(var i = 0;i < this.labels.length;i++) {
+    for(var i = 0; i < this.labels.length; i++) {
       this.labels[i].update(proj, width, height);
     }
   };
@@ -107,7 +107,7 @@ var rotation = [0, 0, 0];
 var timer = {};
 H3DU.renderLoop(function(time) {
   "use strict";
-  for(var i = 0;i < sub.shapes.length;i++) {
+  for(var i = 0; i < sub.shapes.length; i++) {
     sub.shapes[i].setQuaternion(
       H3DU.Math.quatFromTaitBryan(rotation));
   }

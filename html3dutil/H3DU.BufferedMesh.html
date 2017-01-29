@@ -21,7 +21,7 @@ contexts.</b></p>
 <ul>
 <li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a> | <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>
 A geometric mesh object. Cannot be null.</li>
-<li><code>context</code> (Type: WebGLRenderingContext | object)<br>
+<li><code>context</code> (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
 A WebGL context to create a buffer from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context. (Note that this constructor uses a WebGL context rather than a shader program because buffer objects are not specific to shader programs.)</li>
 </ul>
 
@@ -77,7 +77,7 @@ A shader program object to get the IDs from for attributes named &quot;position&
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: WebGLRenderingContext)</p>
+<p>Return value. (Type: WebGLRenderingContext | WebGL2RenderingContext)</p>
 
 <p><a name='H3DU.BufferedMesh_H3DU.BufferedMesh_primitiveCount'></a></p>
 

@@ -45,7 +45,7 @@ H3DU.ObjData._MtlData = function() {
 H3DU.ObjData.prototype.toShape = function() {
   "use strict";
   var multi = new H3DU.ShapeGroup();
-  for(var i = 0;i < this.meshes.length;i++) {
+  for(var i = 0; i < this.meshes.length; i++) {
     var shape = new H3DU.Shape(this.meshes[i].data);
     var mat = this._getMaterial(this.meshes[i]);
     shape.setMaterial(mat);
@@ -58,7 +58,7 @@ H3DU.ObjData.prototype._gatherTextureNames = function() {
   "use strict";
   var textures = [];
   if(this.mtl) {
-    for(var i = 0;i < this.mtl.list.length;i++) {
+    for(var i = 0; i < this.mtl.list.length; i++) {
       var mtl = this.mtl.list[i].data;
       if(mtl.texture) {
         textures.push(mtl.texture);
@@ -80,7 +80,7 @@ H3DU.ObjData.prototype._gatherTextureNames = function() {
 H3DU.ObjData.prototype.toShapeFromName = function(name) {
   "use strict";
   var multi = new H3DU.ShapeGroup();
-  for(var i = 0;i < this.meshes.length;i++) {
+  for(var i = 0; i < this.meshes.length; i++) {
     if(this.meshes[i].name !== name)continue;
     var shape = new H3DU.Shape(this.meshes[i].data);
     var mat = this._getMaterial(this.meshes[i]);
@@ -124,7 +124,7 @@ H3DU.ObjData.prototype._getMaterial = function(mesh) {
 /** @private */
 H3DU.ObjData._MtlData.prototype._resolveTextures = function() {
   "use strict";
-  for(var i = 0;i < this.list.length;i++) {
+  for(var i = 0; i < this.list.length; i++) {
     var mtl = this.list[i].data;
     if(mtl.texture) {
       var resolvedName = H3DU.ObjData._resolvePath(
@@ -138,7 +138,7 @@ H3DU.ObjData._MtlData.prototype._resolveTextures = function() {
 H3DU.ObjData._MtlData.prototype.getMaterialNames = function() {
   "use strict";
   var names = [];
-  for(var i = 0;i < this.list.length;i++) {
+  for(var i = 0; i < this.list.length; i++) {
     names.push(this.list[i].name);
   }
   return names;
@@ -147,7 +147,7 @@ H3DU.ObjData._MtlData.prototype.getMaterialNames = function() {
 /** @private */
 H3DU.ObjData._MtlData.prototype.getMaterial = function(name) {
   "use strict";
-  for(var i = 0;i < this.list.length;i++) {
+  for(var i = 0; i < this.list.length; i++) {
     if(this.list[i].name === name) {
       return this.list[i].data;
     }
@@ -370,7 +370,7 @@ H3DU.ObjData._MtlData._loadMtl = function(str) {
   var firstLine = true;
   var materials = [];
   var currentMat = null;
-  for(var i = 0;i < lines.length;i++) {
+  for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
   // skip empty lines
     if(line.length === 0)continue;
@@ -454,7 +454,7 @@ H3DU.ObjData._MtlData._loadMtl = function(str) {
   }
   var mtl = new H3DU.ObjData._MtlData();
   mtl.list = materials;
-  for(i = 0;i < mtl.list.length;i++) {
+  for(i = 0; i < mtl.list.length; i++) {
     mtl.list[i].data = H3DU.ObjData._MtlData._getMaterial(mtl.list[i].data);
   }
   return {"success": mtl};
@@ -503,7 +503,7 @@ H3DU.ObjData._loadObj = function(str) {
   var oldObjName = "";
   var seenFacesAfterObjName = false;
   var flat = false;
-  for(var i = 0;i < lines.length;i++) {
+  for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
   // skip empty lines
     if(line.length === 0)continue;

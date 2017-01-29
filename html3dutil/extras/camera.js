@@ -184,7 +184,7 @@ H3DU.InputTracker = function(element) {
  */
 H3DU.InputTracker.prototype.dispose = function() {
   "use strict";
-  for(var i = 0;i < this.handlers.length;i++) {
+  for(var i = 0; i < this.handlers.length; i++) {
     var h = this.handlers[i];
     h[0].removeEventListener(h[1], h[2]);
   }

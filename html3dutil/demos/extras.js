@@ -25,7 +25,7 @@ function FourierKnot(a, b) {
   this.evaluate = function(u) {
     u *= H3DU.Math.PiTimes2;
     var ret = [0, 0, 0];
-    for(var i = 0;i < this.a.length;i++) {
+    for(var i = 0; i < this.a.length; i++) {
       var iu = (i + 1) * u;
       var c = Math.cos(iu);
       var s = iu >= 0 && iu < 6.283185307179586 ? iu <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(iu);

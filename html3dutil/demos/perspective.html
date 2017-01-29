@@ -134,7 +134,7 @@ function meshAddLine(mesh, point1, point2, thickness) {
 }
 function meshAddLineStrip(mesh, strip, thickness) {
   "use strict";
-  for(var i = 0;i < strip.length - 1;i++) {
+  for(var i = 0; i < strip.length - 1; i++) {
     mesh = meshAddLine(mesh, strip[i], strip[i + 1], thickness);
   }
   return mesh;
@@ -171,14 +171,14 @@ var spheres = new H3DU.ShapeGroup();
 var radius = 0.3;
 var sphereMesh = H3DU.Meshes.createSphere(radius);
 var sphere = new H3DU.Shape(sphereMesh);
-for(var i = -10; i <= 10;i++) {
+for(var i = -10; i <= 10; i++) {
   var shape = sphere.copy().setPosition(1, -1, i);
   if(!H3DU.Math.frustumHasSphere(frustum, 1, -1, i, radius)) {
     shape.setColor("red");
   }
   spheres.addShape(shape);
 }
-for(i = -10; i <= 10;i++) {
+for(i = -10; i <= 10; i++) {
   shape = sphere.copy().setPosition(2, 2, i);
   if(!H3DU.Math.frustumHasSphere(frustum, 2, 2, i, radius)) {
     shape.setColor("red");

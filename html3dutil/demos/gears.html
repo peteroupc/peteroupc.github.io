@@ -32,7 +32,7 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
   mesh.normal3( 0.0, 0.0, 1.0 );
 /* draw front face */
   mesh.mode(H3DU.Mesh.QUAD_STRIP );
-  for (i = 0;i <= teeth;i++) {
+  for (i = 0; i <= teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
@@ -45,7 +45,7 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
 /* draw front sides of teeth */
   mesh.mode(H3DU.Mesh.QUADS );
   da = 2.0 * Math.PI / teeth / 4.0;
-  for (i = 0;i < teeth;i++) {
+  for (i = 0; i < teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
@@ -58,7 +58,7 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
   mesh.normal3( 0.0, 0.0, -1.0 );
 /* draw back face */
   mesh.mode(H3DU.Mesh.QUAD_STRIP );
-  for (i = 0;i <= teeth;i++) {
+  for (i = 0; i <= teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
@@ -71,7 +71,7 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
 /* draw back sides of teeth */
   mesh.mode(H3DU.Mesh.QUADS );
   da = 2.0 * Math.PI / teeth / 4.0;
-  for (i = 0;i < teeth;i++) {
+  for (i = 0; i < teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
@@ -83,7 +83,7 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
 
 /* draw outward faces of teeth */
   mesh.mode(H3DU.Mesh.QUAD_STRIP );
-  for (i = 0;i < teeth;i++) {
+  for (i = 0; i < teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
@@ -112,7 +112,7 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
 
 /* draw inside radius cylinder */
   mesh.mode(H3DU.Mesh.QUAD_STRIP );
-  for (i = 0;i <= teeth;i++) {
+  for (i = 0; i <= teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);

@@ -72,7 +72,7 @@ function pathFloor(path, z, flatness) {
   var tris = path.getTriangles(flatness);
   var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
    .normal3(0, 0, 1);
-  for(var i = 0;i < tris.length;i++) {
+  for(var i = 0; i < tris.length; i++) {
     var tri = tris[i];
     mesh.vertex3(tri[0], tri[1], z)
    .vertex3(tri[2], tri[3], z)
@@ -86,7 +86,7 @@ function extrudePath(path, zStart, zEnd, flatness) {
   var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES);
   var z1 = Math.min(zStart, zEnd);
   var z2 = Math.max(zStart, zEnd);
-  for(var i = 0;i < lines.length;i++) {
+  for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
     var dx = line[2] - line[0];
     var dy = line[3] - line[1];

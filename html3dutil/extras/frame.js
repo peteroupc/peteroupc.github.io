@@ -52,7 +52,7 @@ H3DU.FrameCounter.prototype.update = function() {
   if(this.frameGaps.length > 0 && this.frameCount >= 30) {
     this.frameCount = 0;
     var total = 0;
-    for(var i = 0;i < this.frameGaps.length;i++) {
+    for(var i = 0; i < this.frameGaps.length; i++) {
       total += this.frameGaps[i];
     }
     total /= 1.0 * this.frameGaps.length;

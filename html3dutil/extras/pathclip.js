@@ -494,7 +494,7 @@
     this.contours = [];
     if(path !== null && typeof path !== "undefined") {
       this.subpaths = path._getSubpaths(flatness);
-      for(var i = 0;i < this.subpaths.length;i++) {
+      for(var i = 0; i < this.subpaths.length; i++) {
         this.contours[i] = new Polygon._Contour(this.subpaths[i]);
       }
     }
@@ -513,10 +513,10 @@
     };
     this.toPath = function() {
       var p = new GraphicsPath();
-      for(var i = 0;i < this.contours.length;i++) {
+      for(var i = 0; i < this.contours.length; i++) {
         var c = this.contours[i];
         var cv = c.vertices;
-        for(var j = 0;j < cv.length;j += 2) {
+        for(var j = 0; j < cv.length; j += 2) {
           if(j === 0) {
             p.moveTo(cv[j], cv[j + 1]);
           } else {

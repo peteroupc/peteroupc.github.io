@@ -183,7 +183,7 @@ function setKernelMatrix(program, matrix) {
   var mat = [];
  // Ensure the sum of each matrix
  // element is 1
-  for(var i = 0;i < 9;i++) {
+  for(var i = 0; i < 9; i++) {
     mat[i] = matrix[i] / weight;
   }
   program.setUniforms({"matrix":mat});
@@ -476,9 +476,9 @@ function blindsGroup() {
   var color = true;
   var oddrow = false;
   var group = new H3DU.ShapeGroup();
-  for(var x = -100;x < 100;x += 20) {
+  for(var x = -100; x < 100; x += 20) {
     color = oddrow;
-    for(var y = -100;y < 100;y += 20) {
+    for(var y = -100; y < 100; y += 20) {
       var xx = (x / 100 + 1) / 2;
       var yy = (y / 100 + 1) / 2;
       var mesh = H3DU.Meshes.createPlane(0.2, 0.2);
@@ -524,11 +524,11 @@ H3DU.renderLoop(function(time) {
       "globalTime":Math.PI * 2 * H3DU.getTimePosition(timer, time, 5000)
     });
   }
-  for(i = 0;i < blinds.shapes.length;i++) {
+  for(i = 0; i < blinds.shapes.length; i++) {
     blinds.shapes[i].setQuaternion(
       H3DU.Math.quatFromAxisAngle(rot, 0, 1, 0));
   }
-  for(i = 0;i < platonic.shapes.length;i++) {
+  for(i = 0; i < platonic.shapes.length; i++) {
     platonic.shapes[i].setQuaternion(
       H3DU.Math.quatFromTaitBryan(rotation));
   }

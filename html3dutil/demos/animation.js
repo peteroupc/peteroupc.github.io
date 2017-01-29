@@ -31,7 +31,7 @@ Animator._compact = function(arr) {
   "use strict";
   var fillOffset = 0;
 
-  for(var i = 0;i < arr.length;i++) {
+  for(var i = 0; i < arr.length; i++) {
     if(fillOffset !== i && arr[i] !== null) {
       arr[fillOffset] = arr[i];
       fillOffset++;
@@ -50,7 +50,7 @@ function Animators() {
 /** @private */
 Animators.prototype._ensure = function(shape) {
   "use strict";
-  for(var i = 0;i < this.list.length;i++) {
+  for(var i = 0; i < this.list.length; i++) {
     if(this.list[i].shape === shape)return this.list[i];
   }
   var anim = new Animator(shape);
@@ -90,7 +90,7 @@ Animators.prototype.thenPause = function(time) {
 /** @private */
 Animators.prototype.update = function(time) {
   "use strict";
-  for(var i = 0;i < this.list.length;i++) {
+  for(var i = 0; i < this.list.length; i++) {
     this.list[i].update(time);
   }
 };
@@ -121,7 +121,7 @@ Animator.prototype.update = function(time) {
   var a;
   var posChanged = false;
   var visChanged = false;
-  for(var i = 0;i < this.positionAnim.length;i++) {
+  for(var i = 0; i < this.positionAnim.length; i++) {
     a = this.positionAnim[i];
     if(!a)continue;
     if(time < a[2])continue; // hasn't begun yet
@@ -137,7 +137,7 @@ Animator.prototype.update = function(time) {
       this.shape.setPosition(H3DU.Math.vec3lerp(a[0], a[1], t));
     }
   }
-  for(i = 0;i < this.visibleAnim.length;i++) {
+  for(i = 0; i < this.visibleAnim.length; i++) {
     a = this.visibleAnim[i];
     if(!a)continue;
     if(time >= a[1]) {
@@ -162,10 +162,10 @@ function makeFloor(xStart, yStart, width, height, tileSize, z) {
   if(lastY <= 0)lastY = 1.0;
   if(lastX <= 0)lastX = 1.0;
   mesh.normal3(0, 0, 1);
-  for(var y = 0;y < tilesY;y++) {
+  for(var y = 0; y < tilesY; y++) {
     var endY = y === tilesY - 1 ? 1.0 - lastY : 0.0;
     var endPosY = y === tilesY - 1 ? yStart + height : yStart + (y + 1) * tileSize;
-    for(var x = 0;x < tilesX;x++) {
+    for(var x = 0; x < tilesX; x++) {
       var endX = x === tilesX - 1 ? lastX : 1.0;
       var endPosX = x === tilesX - 1 ? xStart + width : xStart + (x + 1) * tileSize;
       mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)

@@ -66,7 +66,7 @@ H3DU.TextFont = function() {
   this.chars = chars;
   this.pages = pages;
   this.kern = [];
-  for(var i = 0;i < kernings.length;i++) {
+  for(var i = 0; i < kernings.length; i++) {
     var k = kernings[i];
     if(!this.kern[k.first])this.kern[k.first] = [];
     this.kern[k.first][k.second] = k;
@@ -79,7 +79,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
   var i;
   if(typeof str === "string") {
     spl = str.split(",");
-    for(i = 0;i < spl.length;i++) {
+    for(i = 0; i < spl.length; i++) {
       spl[i] = parseInt(spl[i], 10);
     }
   } else if(str !== null && typeof str !== "undefined" &&
@@ -88,7 +88,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
   } else {
     spl = [];
   }
-  for(i = spl.length;i < minLength;i++) {
+  for(i = spl.length; i < minLength; i++) {
     spl.push(0);
   }
   return spl;
@@ -116,7 +116,7 @@ H3DU.TextFont.prototype.measure = function(str, params) {
   var linebreaks = this._findLineBreaks(str, scale, width);
   var size = 0;
   var yPos = 0;
-  for(var i = 0;i < linebreaks.length;i += 3) {
+  for(var i = 0; i < linebreaks.length; i += 3) {
     size = Math.max(size, linebreaks[i + 2]);
     yPos += height;
   }
@@ -128,7 +128,7 @@ H3DU.TextFont.prototype._measureWord = function(
   "use strict";
   var xPos = 0;
   var xSize = 0;
-  for(var i = startIndex;i < endIndex;i++) {
+  for(var i = startIndex; i < endIndex; i++) {
     var c = str.charCodeAt(i);
     if(c >= 0xd800 && c < 0xdc00 && i + 1 < endIndex) {
       c = 0x10000 + (c - 0xd800 << 10) + (str.charCodeAt(i + 1) -
@@ -171,7 +171,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
   var linePositions = [];
   var currentClass = -1;
  // Find the runs of non-whitespace/whitespace in the text
-  for(var i = 0;i < str.length;i++) {
+  for(var i = 0; i < str.length; i++) {
     var c = str.charCodeAt(i);
     if(c >= 0xd800 && c < 0xdc00 && i + 1 < str.length) {
       c = 0x10000 + (c - 0xd800 << 10) + (str.charCodeAt(i + 1) -
@@ -212,7 +212,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
   var xSize = 0;
   var lineStart = 0;
   var possibleLineEnd = 0;
-  for(i = 0;i < classes.length;i++) {
+  for(i = 0; i < classes.length; i++) {
     if(classes[i] === 2) {
     // mandatory line break
       linePositions.push(lineStart, breaks[i], xSize);
@@ -296,7 +296,7 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
   }
   color = hasColor ? color : [0, 0, 0, 0];
   var meshesForPage = this.makeTextMeshes(str, params);
-  for(var i = 0;i < meshesForPage.length;i++) {
+  for(var i = 0; i < meshesForPage.length; i++) {
     var mfp = meshesForPage[i];
     if(!mfp)continue;
     var sh = new H3DU.Shape(mfp);
@@ -316,7 +316,7 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
 // var height=(typeof params.lineHeight !== "undefined" &&
 // params.lineHeight !== null) ? params.lineHeight : this.common.lineHeight;
   var lastChar = -1;
-  for(var i = startPos;i < endPos;i++) {
+  for(var i = startPos; i < endPos; i++) {
     var c = str.charCodeAt(i);
     if(c >= 0xd800 && c < 0xdc00 && i + 1 < endPos) {
       c = 0x10000 + (c - 0xd800 << 10) + (str.charCodeAt(i + 1) -
@@ -416,7 +416,7 @@ H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
     "scale":height / this.common.lineHeight
   };
   meshesForPage = [];
-  for(var i = 0;i < this.pages.length;i++) {
+  for(var i = 0; i < this.pages.length; i++) {
     meshesForPage[i] = null;
   }
   var linebreaks = this._findLineBreaks(str, extra.scale, width);
@@ -425,11 +425,11 @@ H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
   }
   if(width < 0) {
   // Calculate max width if no explicit width was given
-    for(i = 0;i < linebreaks.length;i += 3) {
+    for(i = 0; i < linebreaks.length; i += 3) {
       width = i === 0 ? linebreaks[i + 2] : Math.max(width, linebreaks[i + 2]);
     }
   }
-  for(i = 0;i < linebreaks.length;i += 3) {
+  for(i = 0; i < linebreaks.length; i += 3) {
     var x = xPos;
     if(align === 1)x += (width - linebreaks[i + 2]) * 0.5;
     else if(align === 2)x = x + width - linebreaks[i + 2];
@@ -458,7 +458,7 @@ H3DU.TextFont._elementToObject = function(element) {
   "use strict";
   var attrs = element.getAttributeNames();
   var x = {};
-  for(var i = 0;i < attrs.length;i++) {
+  for(var i = 0; i < attrs.length; i++) {
     var n = attrs[i];
     if(n === "face" || n === "charset" || n === "file" || n === "padding" ||
      n === "spacing") {
@@ -481,10 +481,10 @@ H3DU.TextFont._loadJsonFontInner = function(data) {
    !json.common) {
     return null;
   }
-  for(var i = 0;i < json.chars.length;i++) {
+  for(var i = 0; i < json.chars.length; i++) {
     xchars[json.chars[i].id] = json.chars[i];
   }
-  for(i = 0;i < json.pages.length;i++) {
+  for(i = 0; i < json.pages.length; i++) {
     var p = json.pages[i];
     xpages[i] = H3DU.TextFont._resolvePath(data.url, p);
   }
@@ -512,15 +512,15 @@ H3DU.TextFont._loadXmlFontInner = function(data) {
   var p;
   var xcommons = H3DU.TextFont._elementToObject(commons[0]);
   var xinfos = H3DU.TextFont._elementToObject(infos[0]);
-  for(var i = 0;i < pages.length;i++) {
+  for(var i = 0; i < pages.length; i++) {
     p = H3DU.TextFont._elementToObject(pages[i]);
     xpages[p.id] = H3DU.TextFont._resolvePath(data.url, p.file);
   }
-  for(i = 0;i < chars.length;i++) {
+  for(i = 0; i < chars.length; i++) {
     p = H3DU.TextFont._elementToObject(chars[i]);
     xchars[p.id] = p;
   }
-  for(i = 0;i < kernings.length;i++) {
+  for(i = 0; i < kernings.length; i++) {
     p = H3DU.TextFont._elementToObject(kernings[i]);
     xkernings.push(p);
   }
@@ -606,7 +606,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
   var commons = {};
   var havetype = [false, false, false, false, false, false];
   function utf8stringsize(view, startIndex, endIndex) {
-    for(var i = startIndex;i < endIndex;i++) {
+    for(var i = startIndex; i < endIndex; i++) {
       if(view.getUint8(i) === 0) {
         return i - startIndex;
       }
@@ -614,7 +614,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
     return -1;
   }
   function utf8string(view, startIndex, endIndex) {
-    for(var i = startIndex;i < endIndex;i++) {
+    for(var i = startIndex; i < endIndex; i++) {
       if(view.getUint8(i) === 0) {
         return H3DU.TextFont._decodeUtf8(view, startIndex, i);
       }
@@ -683,7 +683,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
       if(ss < 0) {
         return null;
       }
-      for(var x = 0;x < size;x += ss + 1) {
+      for(var x = 0; x < size; x += ss + 1) {
         var name = utf8string(view, offset, offset + ss + 1);
         if(name === null || typeof name === "undefined") {
           return null;
@@ -693,7 +693,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
       }
       break;
     case 4:
-      for(x = 0;x < size;x += 20) {
+      for(x = 0; x < size; x += 20) {
         ch = {};
         ch.id = view.getUint32(offset, true);
         ch.x = view.getUint16(offset + 4, true);
@@ -710,7 +710,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
       }
       break;
     case 5:
-      for(x = 0;x < size;x += 10) {
+      for(x = 0; x < size; x += 10) {
         ch = {};
         ch.first = view.getUint32(offset, true);
         ch.second = view.getUint32(offset + 4, true);
@@ -737,7 +737,7 @@ H3DU.TextFont._loadTextFontInner = function(data) {
   var common = null;
   var fontinfo = null;
 
-  for(var i = 0;i < lines.length;i++) {
+  for(var i = 0; i < lines.length; i++) {
     var e = (/^(\w+)\s+(.*)/).exec(lines[i]);
     if(!e)continue;
     var word = e[1];
@@ -838,7 +838,7 @@ H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
 H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
   "use strict";
   var textures = [];
-  for(var i = 0;i < this.pages.length;i++) {
+  for(var i = 0; i < this.pages.length; i++) {
     if(!this.pages[i])throw new Error();
     textures.push(this.pages[i]);
   }
@@ -994,12 +994,12 @@ H3DU.TextureAtlas = function() {
 H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
   "use strict";
   var meshes = [];
-  for(var i = 0;i < sprites.length;i++) {
+  for(var i = 0; i < sprites.length; i++) {
     if(!sprites[i])throw new Error();
     this._makeSprite(sprites[i].name, sprites[i].index, sprites[i].x, sprites[i].y, meshes);
   }
   var group = new H3DU.ShapeGroup();
-  for(i = 0;i < meshes.length;i++) {
+  for(i = 0; i < meshes.length; i++) {
     var mfp = meshes[i];
     if(!mfp)continue;
     var sh = new H3DU.Shape(mfp);
@@ -1086,7 +1086,7 @@ H3DU.TextureAtlas._loadText = function(data) {
   var spriteHash = {};
   var textureInfos = [];
   var currentSprite = null;
-  for(var i = 0;i < lines.length;i++) {
+  for(var i = 0; i < lines.length; i++) {
     switch(state) {
     case 0: // File name
       if((/^\s*$/).test(lines[i]))break;
@@ -1170,7 +1170,7 @@ H3DU.TextureAtlas._loadText = function(data) {
           e1split = value.split(/\s*,\s*/);
           if(e1split.length !== 4)return null;
           var e1data = [];
-          for(var j = 0;j < e1split.length;j++) {
+          for(var j = 0; j < e1split.length; j++) {
             if(!(/^-?\d+$/).test(e1split[j]))return null;
             e1data[j] = parseInt(e1split[j], 10);
           }
@@ -1206,7 +1206,7 @@ H3DU.TextureAtlas._loadText = function(data) {
   }
   spriteHash = {};
   var ret = new H3DU.TextureAtlas();
-  for(i = 0;i < sprites.length;i++) {
+  for(i = 0; i < sprites.length; i++) {
     var si = sprites[i];
     var index = si.index === null ? -1 : si.index;
     if(spriteHash[si.name] === null || typeof spriteHash[si.name] === "undefined") {
@@ -1226,7 +1226,7 @@ H3DU.TextureAtlas._loadText = function(data) {
     }
   }
   ret.pages = [];
-  for(i = 0;i < textureInfos.length;i++) {
+  for(i = 0; i < textureInfos.length; i++) {
     ret.pages.push(textureInfos[i].name);
   }
   ret.sprites = spriteHash;
@@ -1246,13 +1246,13 @@ H3DU.TextureAtlas._loadText = function(data) {
 H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
   "use strict";
   var textures = [];
-  for(var i = 0;i < this.pages.length;i++) {
+  for(var i = 0; i < this.pages.length; i++) {
     if(!this.pages[i])throw new Error();
     textures.push(this.pages[i]);
   }
   var that = this;
   return textureLoader.loadTexturesAll(textures).then(function(r) {
-    for(var i = 0;i < r.length;i++) {
+    for(var i = 0; i < r.length; i++) {
       if(typeof that.textureInfos[i].size === "undefined" || that.textureInfos[i].size === null) {
         that.textureInfos[i].size = [r[i].getWidth(), r[i].getHeight()];
       }
@@ -1318,7 +1318,7 @@ H3DU.TextureAtlas.load = function(atlasFileName) {
        "data":H3DU.TextFont._decodeUtf8(view, 0, view.byteLength)
      });
      if(!ret)return Promise.reject({"url":data.url});
-     for(var i = 0;i < ret.textures.length;i++) {
+     for(var i = 0; i < ret.textures.length; i++) {
        var p = ret.textures[i];
        ret.textures[i] = H3DU.TextFont._resolvePath(data.url, p);
      }

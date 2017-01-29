@@ -71,12 +71,12 @@ H3DU.MatrixStack.prototype.loadTransposeMatrix = function(mat) {
   "use strict";
   var m = mat.slice(0, 16);
   var tmp;
-  tmp = m[1];m[1] = m[4];m[4] = tmp;
-  tmp = m[2];m[2] = m[8];m[8] = tmp;
-  tmp = m[3];m[3] = m[12];m[12] = tmp;
-  tmp = m[6];m[6] = m[9];m[9] = tmp;
-  tmp = m[7];m[7] = m[13];m[13] = tmp;
-  tmp = m[11];m[11] = m[14];m[14] = tmp;
+  tmp = m[1]; m[1] = m[4]; m[4] = tmp;
+  tmp = m[2]; m[2] = m[8]; m[8] = tmp;
+  tmp = m[3]; m[3] = m[12]; m[12] = tmp;
+  tmp = m[6]; m[6] = m[9]; m[9] = tmp;
+  tmp = m[7]; m[7] = m[13]; m[13] = tmp;
+  tmp = m[11]; m[11] = m[14]; m[14] = tmp;
   this.stack[this.stack.length - 1] = m;
   return this;
 };

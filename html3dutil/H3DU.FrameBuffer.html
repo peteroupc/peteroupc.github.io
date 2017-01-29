@@ -25,7 +25,7 @@ bound to the WebGL context will remain unchanged.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>context</code> (Type: WebGLRenderingContext | object)<br>
+<li><code>context</code> (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
 WebGL context to associate with this buffer, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
 <li><code>width</code> (Type: Number)<br>
 Width, in pixels, of the frame buffer. Fractional values are rounded up.</li>
@@ -92,7 +92,7 @@ it.)</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: WebGLRenderingContext)</p>
+<p>Return value. (Type: WebGLRenderingContext | WebGL2RenderingContext)</p>
 
 <p><a name='H3DU.FrameBuffer_H3DU.FrameBuffer_resize'></a></p>
 

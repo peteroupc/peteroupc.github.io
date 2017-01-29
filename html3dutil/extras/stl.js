@@ -73,7 +73,7 @@
 
     var state = H3DU._StlData.INITIAL;
 
-    for(var i = 0;i < lines.length;i++) {
+    for(var i = 0; i < lines.length; i++) {
       var line = lines[i];
   // skip empty lines
       if(line.length === 0 || (/^\s*$/).test(line))continue;

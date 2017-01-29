@@ -28,7 +28,7 @@ function TriangleParticles(scene, count, w, h) {
   this.scene = scene;
   this.timer = {};
   this.height = h;
-  for(var i = 0;i < count;i++) {
+  for(var i = 0; i < count; i++) {
     var tri = TriangleParticles.generateTri(this.width, this.height);
     this.tris.push(tri);
     this.group.addShape(
@@ -39,7 +39,7 @@ function TriangleParticles(scene, count, w, h) {
 TriangleParticles.prototype.update = function(time) {
   "use strict";
   var frames = H3DU.newFrames(this.timer, time);
-  for(var i = 0;i < this.tris.length;i++) {
+  for(var i = 0; i < this.tris.length; i++) {
     this.tris[i].life -= frames;
     if(this.tris[i].life <= 0) {
       var tri = TriangleParticles.generateTri(this.width, this.height);

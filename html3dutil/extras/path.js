@@ -267,7 +267,7 @@
   };
 /** @private */
   GraphicsPath.prototype._start = function() {
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
       if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._startPoint(s);
     }
@@ -275,7 +275,7 @@
   };
 /** @private */
   GraphicsPath.prototype._end = function() {
-    for(var i = this.segments.length - 1;i >= 0;i--) {
+    for(var i = this.segments.length - 1; i >= 0; i--) {
       var s = this.segments[i];
       if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._endPoint(s);
     }
@@ -292,7 +292,7 @@
     var oldpos = null;
     var ret = "";
 
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       var a = this.segments[i];
       if(a[0] === GraphicsPath.CLOSE) {
         ret += "Z";
@@ -384,7 +384,7 @@
     if(this.segments.length === 0)return 0;
     var totalLength = 0;
     if(flatness === null || typeof flatness === "undefined")flatness = 1.0;
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
       var len = GraphicsPath._length(s);
       totalLength += len;
@@ -407,7 +407,7 @@
   GraphicsPath.prototype.getLines = function(flatness) {
     var ret = [];
     if(flatness === null || typeof flatness === "undefined")flatness = 1.0;
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
 
       if(s[0] === GraphicsPath.QUAD) {
@@ -440,7 +440,7 @@
     var path = new GraphicsPath();
     var last = null;
     if(flatness === null || typeof flatness === "undefined")flatness = 1.0;
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
 
       if(s[0] === GraphicsPath.CLOSE) {
@@ -458,18 +458,18 @@
       if(s[0] === GraphicsPath.QUAD) {
         GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
      s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
-        for(j = 0;j < ret.length;j++) {
+        for(j = 0; j < ret.length; j++) {
           path.lineTo(ret[j][2], ret[j][3]);
         }
       } else if(s[0] === GraphicsPath.CUBIC) {
         GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
      s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
-        for(j = 0;j < ret.length;j++) {
+        for(j = 0; j < ret.length; j++) {
           path.lineTo(ret[j][2], ret[j][3]);
         }
       } else if(s[0] === GraphicsPath.ARC) {
         GraphicsPath._flattenArc(s, 0.0, 1.0, ret, flatness * 2, 0);
-        for(j = 0;j < ret.length;j++) {
+        for(j = 0; j < ret.length; j++) {
           path.lineTo(ret[j][2], ret[j][3]);
         }
       } else if(s[0] !== GraphicsPath.CLOSE) {
@@ -559,7 +559,7 @@
     var inf = Number.POSITIVE_INFINITY;
     var ret = [inf, inf, -inf, inf];
     var first = true;
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
 
       var ax, ay;
@@ -633,7 +633,7 @@
         } else {
           angles.push(0, Math.PI, Math.PI * 0.5, Math.PI * 1.5);
         }
-        for(var k = 0;k < angles.length;k++) {
+        for(var k = 0; k < angles.length; k++) {
           if(GraphicsPath._angleInRange(angles[k], theta, delta)) {
             GraphicsPath._accBoundsArc(ret, first, rx, ry, cosp, sinp, cx, cy, angles[k]);
           }
@@ -656,7 +656,7 @@
 
     var lastClosed = false;
     var ret = new GraphicsPath();
-    for(var i = this.segments.length - 1;i >= 0;i--) {
+    for(var i = this.segments.length - 1; i >= 0; i--) {
       var s = this.segments[i];
       var startpt = GraphicsPath._startPoint(s);
       var endpt = GraphicsPath._endPoint(s);
@@ -700,7 +700,7 @@
     var lastpty = 0;
     var first = true;
     var curPath = null;
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
 
       var startpt = GraphicsPath._startPoint(s);
@@ -718,20 +718,20 @@
       if(s[0] === GraphicsPath.QUAD) {
         GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
      s[5], s[6], 0.0, 1.0, tmp, flatness * 2, 0);
-        for(j = 0;j < tmp.length;j++) {
+        for(j = 0; j < tmp.length; j++) {
           curPath.push(tmp[j][2]);
           curPath.push(tmp[j][3]);
         }
       } else if(s[0] === GraphicsPath.CUBIC) {
         GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
      s[5], s[6], s[7], s[8], 0.0, 1.0, tmp, flatness * 2, 0);
-        for(j = 0;j < tmp.length;j++) {
+        for(j = 0; j < tmp.length; j++) {
           curPath.push(tmp[j][2]);
           curPath.push(tmp[j][3]);
         }
       } else if(s[0] === GraphicsPath.ARC) {
         GraphicsPath._flattenArc(s, 0.0, 1.0, tmp, flatness * 2, 0);
-        for(j = 0;j < tmp.length;j++) {
+        for(j = 0; j < tmp.length; j++) {
           curPath.push(tmp[j][2]);
           curPath.push(tmp[j][3]);
         }
@@ -747,7 +747,7 @@
     this.curves = curves;
     this.cumulativeLengths = [];
     var totalLength = 0;
-    for(var i = 0;i < this.curves.length;i++) {
+    for(var i = 0; i < this.curves.length; i++) {
       this.cumulativeLengths.push(totalLength);
       totalLength += this.curves[i].totalLength;
     }
@@ -791,7 +791,7 @@
     this.segments = segments;
     var totalLength = 0;
     var isClosed = false;
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       totalLength += this.segments[i][1];
     }
     if(this.segments.length > 0) {
@@ -917,7 +917,7 @@
     var first = true;
     var curPath = null;
     var curLength = 0;
-    for(var i = 0;i < this.segments.length;i++) {
+    for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
       var len = 0;
       var startpt = GraphicsPath._startPoint(s);
@@ -947,7 +947,7 @@
         } else if(s[0] === GraphicsPath.ARC) {
           GraphicsPath._flattenArc(s, 0.0, 1.0, pieces, flatness * 2, 1);
         }
-        for(var j = 0;j < pieces.length;j += 3) {
+        for(var j = 0; j < pieces.length; j += 3) {
           cumulativeLengths.push(len);
           len += pieces[j + 2];
         }
@@ -961,7 +961,7 @@
         curLength += len;
       }
     }
-    for(i = 0;i < subpaths.length;i++) {
+    for(i = 0; i < subpaths.length; i++) {
       curves.push(new GraphicsPath._Curve(subpaths[i]));
     }
     return new GraphicsPath._CurveList(curves);
@@ -994,7 +994,7 @@
     }
     var curves = this.getCurves(flatness);
     var points = [];
-    for(var i = 0;i < numPoints;i++) {
+    for(var i = 0; i < numPoints; i++) {
       var t = i / (numPoints - 1);
       var ev = curves.evaluate(t);
       points.push([ev[0], ev[1]]);
@@ -1253,7 +1253,7 @@
     var bp = (xmax + xmin) * 0.5;
     var ret = 0;
     var lg = GraphicsPath._legendreGauss24;
-    for(var i = 0;i < lg.length;i += 2) {
+    for(var i = 0; i < lg.length; i += 2) {
       var weight = lg[i];
       var abscissa = lg[i + 1];
       ret += weight * func(bm * abscissa + bp);
@@ -1360,7 +1360,7 @@
     var ret = [];
     var t5 = Math.tan(step * 0.5);
     var t7 = Math.sin(step) * third * (Math.sqrt(3.0 * t5 * t5 + 4.0) - 1.0);
-    for(var idx = 0;idx < arcs;idx++) {
+    for(var idx = 0; idx < arcs; idx++) {
       var ang1 = angle1 + idx * step;
       var ang2 = angle1 + (idx + 1) * step;
       var t2 = Math.cos(ang1);
@@ -1620,13 +1620,13 @@
     var e = trans[4];
     var f = trans[5];
     var x, y, i, j;
-    for(i = 0;i < this.segments.length;i++) {
+    for(i = 0; i < this.segments.length; i++) {
       var s = this.segments[i].slice(0);
       switch(this.segments[i][0]) {
       case GraphicsPath.LINE:
       case GraphicsPath.QUAD:
       case GraphicsPath.CUBIC:
-        for(j = 1;j < s.length;j += 2) {
+        for(j = 1; j < s.length; j += 2) {
           x = a * s[j] + c * s[j + 1] + e;
           y = b * s[j] + d * s[j + 1] + f;
           s[j] = x;
@@ -1651,9 +1651,9 @@
         curves[0][1] = s[2];
         curves[curves.length - 1][6] = s[8];
         curves[curves.length - 1][7] = s[9];
-        for(j = 0;j < curves.length;j++) {
+        for(j = 0; j < curves.length; j++) {
           var cs = curves[j];
-          for(var k = 0;k < 8;k += 2) {
+          for(var k = 0; k < 8; k += 2) {
             x = a * cs[j] + c * cs[j + 1] + e;
             y = b * cs[j] + d * cs[j + 1] + f;
             cs[j] = x;
@@ -1741,7 +1741,7 @@
       if(!started && c !== 0x4d && c !== 0x6d) {
    // not a move-to command when path
    // started
-        failed = true;break;
+        failed = true; break;
       }
   // NOTE: Doesn't implement SVG2 meaning of Z
   // command yet because it's not yet fully specified
@@ -1758,11 +1758,11 @@
           cury = c === 0x6d ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
           if(y === null || typeof y === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
      // console.log([x,y])
           if(sep)ret.lineTo(curx + x, cury + y);
@@ -1779,11 +1779,11 @@
           cury = c === 0x6c ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
           if(y === null || typeof y === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           ret.lineTo(curx + x, cury + y);
           sep = true;
@@ -1796,7 +1796,7 @@
           curpt = c === 0x68 ? ret.endPos[0] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           ret.lineTo(curpt + x, ret.endPos[1]);
           sep = true;
@@ -1809,7 +1809,7 @@
           curpt = c === 0x76 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           ret.lineTo(ret.endPos[0], curpt + x);
           sep = true;
@@ -1823,27 +1823,27 @@
           cury = c === 0x63 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
           if(y === null || typeof y === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           x2 = GraphicsPath._nextNumber(str, index, true);
           if(x2 === null || typeof x2 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           y2 = GraphicsPath._nextNumber(str, index, true);
           if(y2 === null || typeof y2 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           var x3 = GraphicsPath._nextNumber(str, index, true);
           if(x3 === null || typeof x3 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           var y3 = GraphicsPath._nextNumber(str, index, true);
           if(y3 === null || typeof y3 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           ret.bezierCurveTo(curx + x, cury + y, curx + x2, cury + y2,
        curx + x3, cury + y3);
@@ -1858,19 +1858,19 @@
           cury = c === 0x71 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
           if(y === null || typeof y === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           x2 = GraphicsPath._nextNumber(str, index, true);
           if(x2 === null || typeof x2 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           y2 = GraphicsPath._nextNumber(str, index, true);
           if(y2 === null || typeof y2 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           ret.quadraticCurveTo(curx + x, cury + y, curx + x2, cury + y2);
           sep = true;
@@ -1884,28 +1884,28 @@
           cury = c === 0x61 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
           if(y === null || typeof y === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           var rot = GraphicsPath._nextNumber(str, index, true);
           if(rot === null || typeof rot === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           var largeArc = GraphicsPath._nextAfterSepReq(str, index);
           var sweep = GraphicsPath._nextAfterSep(str, index);
           if(largeArc === -1 || sweep === -1) {
-            failed = true;break;
+            failed = true; break;
           }
           x2 = GraphicsPath._nextNumber(str, index, true);
           if(x2 === null || typeof x2 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           y2 = GraphicsPath._nextNumber(str, index, true);
           if(y2 === null || typeof y2 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           ret.arcSvgTo(x + curx, y + cury, rot, largeArc !== 0x30,
        sweep !== 0x30, x2 + curx, y2 + cury);
@@ -1920,19 +1920,19 @@
           cury = c === 0x73 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
           if(y === null || typeof y === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           x2 = GraphicsPath._nextNumber(str, index, true);
           if(x2 === null || typeof x2 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           y2 = GraphicsPath._nextNumber(str, index, true);
           if(y2 === null || typeof y2 === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           xcp = ret.endPos[0];
           ycp = ret.endPos[1];
@@ -1955,11 +1955,11 @@
           cury = c === 0x74 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
           if(x === null || typeof x === "undefined") {
-            if(!sep)failed = true;break;
+            if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
           if(y === null || typeof y === "undefined") {
-            failed = true;break;
+            failed = true; break;
           }
           xcp = ret.endPos[0];
           ycp = ret.endPos[1];
@@ -2187,7 +2187,7 @@
     var firstVertex = true;
     this.vertexCount = 0;
     var i;
-    for(i = 0;i < vertLength;i += 2) {
+    for(i = 0; i < vertLength; i += 2) {
       var x = vertices[i];
       var y = vertices[i + 1];
       if(i > 0 && x === lastX && y === lastY) {
@@ -2360,7 +2360,7 @@
     var firstOrient = 0;
     var tris = [];
     var i, j;
-    for(i = 0;i < subpaths.length;i++) {
+    for(i = 0; i < subpaths.length; i++) {
       var contour = new Triangulate._Contour(subpaths[i]);
   // NOTE: Ignores contours with winding 0
   // (empty, zero area, sometimes self-intersecting)
@@ -2375,15 +2375,15 @@
     if(contours2.length === 0 || contours1.length === 0) {
   // All the contours have the same winding order
       var c = contours2.length === 0 ? contours1 : contours2;
-      for(i = 0;i < c.length;i++) {
+      for(i = 0; i < c.length; i++) {
         Triangulate._triangulate(c[i], tris);
       }
     } else {
       var c1 = firstOrient > 0 ? contours1 : contours2;
       var c2 = firstOrient > 0 ? contours2 : contours1;
-      for(i = 0;i < c2.length;i++) {
+      for(i = 0; i < c2.length; i++) {
         if(!c2[i])continue;
-        for(j = 0;j < c1.length;j++) {
+        for(j = 0; j < c1.length; j++) {
           if(!c1[j])continue;
           var maxPoint = c2[i].maxXNode;
     // Find out if the contour is inside another contour,
@@ -2398,10 +2398,10 @@
           }
         }
       }
-      for(i = 0;i < c1.length;i++) {
+      for(i = 0; i < c1.length; i++) {
         Triangulate._triangulate(c1[i], tris);
       }
-      for(i = 0;i < c2.length;i++) {
+      for(i = 0; i < c2.length; i++) {
         Triangulate._triangulate(c2[i], tris);
       }
     }

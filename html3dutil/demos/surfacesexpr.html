@@ -229,10 +229,10 @@ function link0() {
   var ekeys = ["custom-x", "custom-y", "custom-z"];
   var consts = ["minu", "minv", "maxu", "maxv"];
   var ckeys = ["custom-minu", "custom-minv", "custom-maxu", "custom-maxv"];
-  for(var i = 0;i < exprs.length;i++) {
+  for(var i = 0; i < exprs.length; i++) {
     validateListener(exprs[i], ekeys[i]);
   }
-  for(i = 0;i < consts.length;i++) {
+  for(i = 0; i < consts.length; i++) {
     validateConstListener(consts[i], ckeys[i]);
   }
   updateShape(updateMesh, allsettings, shapeGroup);
