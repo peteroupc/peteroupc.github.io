@@ -751,6 +751,7 @@
       this.cumulativeLengths.push(totalLength);
       totalLength += this.curves[i].totalLength;
     }
+    this.cumulativeLengths.push(totalLength);
     this.totalLength = totalLength;
   };
   GraphicsPath._CurveList.prototype.getCurves = function() {
@@ -832,8 +833,12 @@
           var cumulativeLengths = seg[5];
           var segParts = seg[4];
           var segPartialLen = partialLen - segstart;
+
           var segLeft = 0;
-          var segRight = cumulativeLengths.length;
+          var lastCumuLength = cumulativeLengths[cumulativeLengths.length - 1];
+          segPartialLen = Math.max(0, segPartialLen);
+          segPartialLen = Math.min(lastCumuLength, segPartialLen);
+          var segRight = cumulativeLengths.length - 1;
           while(segLeft <= segRight) {
             var segMid = (segLeft + segRight) / 2 | 0;
             var partStart = cumulativeLengths[segMid];
@@ -951,6 +956,7 @@
           cumulativeLengths.push(len);
           len += pieces[j + 2];
         }
+        cumulativeLengths.push(len);
         curPath.push([s[0], len, curLength, s.slice(0), pieces, cumulativeLengths]);
         curLength += len;
       } else if(s[0] === GraphicsPath.LINE) {
@@ -1051,8 +1057,8 @@
     return this;
   };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Gets the current point stored in this path.
+ * @returns {Array<Number>} A two-element array giving the X and Y coordinates of the current point.
  * @memberof! GraphicsPath#
  */
   GraphicsPath.prototype.getCurrentPoint = function() {
@@ -1942,11 +1948,12 @@
           if(y2 === null || typeof y2 === "undefined") {
             failed = true; break;
           }
-          xcp = ret.endPos[0];
+          xcp = ret.endPos[0]; // control point to use if previous segment is not a cubic
           ycp = ret.endPos[1];
           endx = ret.endPos[0];
           endy = ret.endPos[1];
-    // TODO: Verify SVG behavior if previous segment is not a cubic
+    // NOTE: If previous segment is not a cubic, first control
+    // point is same as current point.
           if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.CUBIC) {
             xcp = ret.segments[ret.segments.length - 1][5];
@@ -1970,11 +1977,12 @@
           if(y === null || typeof y === "undefined") {
             failed = true; break;
           }
-          xcp = ret.endPos[0];
+          xcp = ret.endPos[0]; // control point to use if previous segment is not a quad
           ycp = ret.endPos[1];
           endx = ret.endPos[0];
           endy = ret.endPos[1];
-    // TODO: Verify SVG behavior if previous segment is not a quad
+    // NOTE: If previous segment is not a quad, first control
+    // point is same as current point.
           if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.QUAD) {
             xcp = ret.segments[ret.segments.length - 1][3];
