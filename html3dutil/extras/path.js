@@ -1050,6 +1050,15 @@
     this.incomplete = false;
     return this;
   };
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! GraphicsPath#
+ */
+  GraphicsPath.prototype.getCurrentPoint = function() {
+    return [this.endPos[0], this.endPos[1]];
+  };
+
 /** @private */
   GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
     var t1 = x1 - x0;
@@ -1408,8 +1417,7 @@
     if(x1 === x2 && y1 === y2) {
       return this;
     }
-    rot %= 360;
-    rot *= Math.PI / 180;
+    rot = (rot >= 0 && rot < 360 ? rot : rot % 360 + (rot < 0 ? 360 : 0)) * Math.PI / 180;
     rx = Math.abs(rx);
     ry = Math.abs(ry);
     var xmid = (x1 - x2) * 0.5;
@@ -1938,6 +1946,7 @@
           ycp = ret.endPos[1];
           endx = ret.endPos[0];
           endy = ret.endPos[1];
+    // TODO: Verify SVG behavior if previous segment is not a cubic
           if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.CUBIC) {
             xcp = ret.segments[ret.segments.length - 1][5];
@@ -1965,6 +1974,7 @@
           ycp = ret.endPos[1];
           endx = ret.endPos[0];
           endy = ret.endPos[1];
+    // TODO: Verify SVG behavior if previous segment is not a quad
           if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.QUAD) {
             xcp = ret.segments[ret.segments.length - 1][3];
