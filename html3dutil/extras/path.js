@@ -30,6 +30,8 @@
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
+ * Some methods may be defined in other scripts, in which case the
+ * script to be included this way will be mentioned.
  * @alias H3DU.GraphicsPath
  * @class
  */
@@ -1423,7 +1425,8 @@
     if(x1 === x2 && y1 === y2) {
       return this;
     }
-    rot = (rot >= 0 && rot < 360 ? rot : rot % 360 + (rot < 0 ? 360 : 0)) * Math.PI / 180;
+    rot = rot >= 0 && rot < 6.283185307179586 ? rot : rot % 6.283185307179586 +
+       (rot < 0 ? 6.283185307179586 : 0);
     rx = Math.abs(rx);
     ry = Math.abs(ry);
     var xmid = (x1 - x2) * 0.5;
