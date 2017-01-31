@@ -19,7 +19,7 @@
  * @param {Number} x1 X coordinate of the line segment's ending point.
  * @param {Number} y1 X coordinate of the line segment's ending point.
  * @returns {H3DU.GraphicsPath} This object.
- * @memberof! GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
 H3DU.GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
   "use strict";
@@ -40,7 +40,7 @@ H3DU.GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
  * to close the path will be added to the path (even if only one pair of numbers is given in "pointCoords").
  * @returns {H3DU.GraphicsPath} This object. If "pointCoords" is empty, no path segments will be appended.
  * Throws an error if "pointCoords" has an odd length.
- * @memberof! GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
 H3DU.GraphicsPath.prototype.polygon = function(polygon, pointCoords, closed) {
   "use strict";
@@ -52,30 +52,6 @@ H3DU.GraphicsPath.prototype.polygon = function(polygon, pointCoords, closed) {
   }
   if(closed)this.closePath();
   return this;
-};
-/**
- * Adds path segments to this path that form an axis-aligned rectangle.
- * <p>To use this method, you must include the script "extras/pathshapes.js";
- * this is in addition to "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
- * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {Number} x X coordinate of the rectangle's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
- * @param {Number} y Y coordinate of the rectangle's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
- * @param {Number} w Width of the rectangle.
- * @param {Number} h Height of the rectangle.
- * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! H3DU.GraphicsPath#
- */
-H3DU.GraphicsPath.prototype.rect = function(x, y, w, h) {
-  "use strict";
-  if(w < 0 || h < 0)return this;
-  return this.moveTo(x, y)
-  .lineTo(x + w, y)
-  .lineTo(x + w, y + h)
-  .lineTo(x, y + h)
-  .closePath();
 };
 
 /**
@@ -97,7 +73,7 @@ H3DU.GraphicsPath.prototype.rect = function(x, y, w, h) {
  * up the rectangle's corners.
  * Will be adjusted to be not less than 0 and not greater than "h".
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
 H3DU.GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   "use strict";
@@ -145,7 +121,7 @@ H3DU.GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  * @param {Number} w Width of the ellipse's bounding box.
  * @param {Number} h Height of the ellipse's bounding box.
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
 H3DU.GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
   "use strict";
@@ -193,7 +169,7 @@ H3DU.GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  * @param {Number} start Starting angle of the arc, in degrees.
  * 0 means the positive X axis, 90 means the positive Y axis,
  * 180 means the negative X axis, and 270 means the negative Y axis.
- * @param {Number} sweep Length of the arc in degrees. Can be greater than 360 or
+ * @param {Number} sweep Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or
  * less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming
  * the coordinate system's X axis points right and the Y axis down, positive angles run
  * clockwise and negative angles counterclockwise.
@@ -203,7 +179,7 @@ H3DU.GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  * will append a "pie slice" to the path (the arc and two line segments connecting
  * each end of the arc to the ellipse's center).
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! GraphicPath#
+ * @memberof! H3DU.GraphicsPath#
  */
 H3DU.GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
   "use strict";

@@ -222,9 +222,10 @@ window.addEventListener("load", function() {
   a.href = "javascript:void(null)";
   a.innerHTML = "View Source";
   var e = document.createElement("pre");
+  var demo = document.getElementById("demo");
   e.setAttribute("style", "border:2px solid;margin:2px 2px 2px 2px;left:10;padding:2px 2px 2px 2px;" +
   "background:rgba(255,255,255,0.8);left:10%;width:85%;height:80%;overflow:scroll;position:absolute;float:right;top:2em");
-  e.innerHTML = document.getElementById("demo").textContent.replace(/</g, "&lt;");
+  e.innerHTML = demo ? demo.textContent.replace(/</g, "&lt;") : "";
   e.style.display = "none";
   document.body.appendChild(a);
   document.body.appendChild(e);

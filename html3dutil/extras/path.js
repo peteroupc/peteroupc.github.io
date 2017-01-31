@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, define, exports */
+/* global define, exports */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -283,6 +283,47 @@
     }
     return [0, 0];
   };
+
+/**
+ * Merges the path segments in another path onto this one.
+ * @param {H3DU.GraphicsPath} path Another graphics path.
+ * Can be null.
+ * @returns {H3DU.GraphicsPath} This object.
+ * @memberof! H3DU.GraphicsPath#
+ */
+  GraphicsPath.prototype.merge = function(path) {
+    var oldpos = null;
+    if(!path)return this;
+    for(var i = 0; i < path.segments.length; i++) {
+      var a = path.segments[i];
+      if(a[0] === GraphicsPath.CLOSE) {
+        this.closePath();
+      } else {
+        var start = GraphicsPath._startPoint(a);
+        if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
+          this.moveTo(start[0], start[1]);
+        }
+        oldpos = GraphicsPath._endPoint(a);
+        if(a[0] === GraphicsPath.LINE) {
+          this.lineTo(start[0], start[1]);
+        }
+        if(a[0] === GraphicsPath.QUAD) {
+          this.quadraticCurveTo(a[3], a[4], a[5], a[6]);
+        }
+        if(a[0] === GraphicsPath.CUBIC) {
+          this.bezierCurveTo(a[3], a[4], a[5], a[6], a[7], a[8]);
+        }
+        if(a[0] === GraphicsPath.ARC) {
+          var delta = a[13] - a[12];
+          var largeArc = Math.abs(delta) > Math.PI;
+          this.arcSvgTo(a[3], a[4], a[5] * GraphicsPath._toDegrees,
+    largeArc, delta > 0, a[8], a[9]);
+        }
+      }
+    }
+    return this;
+  };
+
 /**
  * Returns this path in the form of a string in SVG path format.
  * See {@link H3DU.GraphicsPath.fromString}.
@@ -360,8 +401,6 @@
       return GraphicsPath._quadCurveLength(a[1], a[2], a[3], a[4],
      a[5], a[6]);
     } else if(a[0] === GraphicsPath.CUBIC) {
- // flat=[];
- // len=0;
       return GraphicsPath._cubicCurveLength(a[1], a[2], a[3], a[4],
      a[5], a[6], a[7], a[8]);
     } else if(a[0] === GraphicsPath.ARC) {
@@ -622,7 +661,7 @@
         var cy = s[11];
         var theta = s[12];
         var delta = s[13];
-        var rot = s[5];
+        var rot = s[5]; // Rotation in radians
         var cosp = Math.cos(rot);
         var sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
         var angles = [];
@@ -684,7 +723,8 @@
       } else if(s[0] === GraphicsPath.CUBIC) {
         ret.bezierCurveTo(s[5], s[6], s[3], s[4], s[1], s[2]);
       } else if(s[0] === GraphicsPath.ARC) {
-        ret.arcSvgTo(s[3], s[4], s[5], s[6], !s[7], s[1], s[2]);
+        ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
+        s[6], !s[7], s[1], s[2]);
       } else if(s[0] !== GraphicsPath.CLOSE) {
         ret.lineTo(s[1], s[2]);
       }
@@ -1026,6 +1066,7 @@
     this.incomplete = false;
     return this;
   };
+
 /**
  * Moves the current start position and end position to the given position.
  * @param {Number} x X coordinate of the position.
@@ -1061,7 +1102,7 @@
 /**
  * Gets the current point stored in this path.
  * @returns {Array<Number>} A two-element array giving the X and Y coordinates of the current point.
- * @memberof! GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getCurrentPoint = function() {
     return [this.endPos[0], this.endPos[1]];
@@ -1317,7 +1358,7 @@
     var y2 = a[9];
     var rx = a[3];
     var ry = a[4];
-    var rot = a[5];
+    var rot = a[5]; // rotation in radians
     var xmid = (x1 - x2) * 0.5;
     var ymid = (y1 - y2) * 0.5;
     var xpmid = (x1 + x2) * 0.5;
@@ -1362,6 +1403,8 @@
     delta += theta1;
     return [cx, cy, theta1, delta];
   };
+  GraphicsPath._toRadians = Math.PI / 180;
+  GraphicsPath._toDegrees = 180.0 / Math.PI;
 /** @private */
   GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) {
     var crot = Math.cos(rot);
@@ -1425,8 +1468,9 @@
     if(x1 === x2 && y1 === y2) {
       return this;
     }
-    rot = rot >= 0 && rot < 6.283185307179586 ? rot : rot % 6.283185307179586 +
-       (rot < 0 ? 6.283185307179586 : 0);
+    rot = rot >= 0 && rot < 360 ? rot : rot % 360 +
+       (rot < 0 ? 360 : 0);
+    rot *= GraphicsPath._toRadians;
     rx = Math.abs(rx);
     ry = Math.abs(ry);
     var xmid = (x1 - x2) * 0.5;
@@ -1637,33 +1681,46 @@
     var e = trans[4];
     var f = trans[5];
     var x, y, i, j;
+    var tmp = [0];
     for(i = 0; i < this.segments.length; i++) {
-      var s = this.segments[i].slice(0);
-      switch(this.segments[i][0]) {
+      var s = this.segments[i];
+      switch(s[0]) {
+      case GraphicsPath.CLOSE:
+        ret.closePath();
+        break;
       case GraphicsPath.LINE:
       case GraphicsPath.QUAD:
       case GraphicsPath.CUBIC:
         for(j = 1; j < s.length; j += 2) {
-          x = a * s[j] + c * s[j + 1] + e;
-          y = b * s[j] + d * s[j + 1] + f;
-          s[j] = x;
-          s[j + 1] = y;
+          tmp[j] = a * s[j] + c * s[j + 1] + e;
+          tmp[j + 1] = b * s[j] + d * s[j + 1] + f;
         }
-        ret.segments.push(s);
+        if(s[0] === GraphicsPath.LINE)
+          ret.moveTo(tmp[1], tmp[2]).lineTo(tmp[3], tmp[4]);
+        else if(s[0] === GraphicsPath.QUAD)
+          ret.moveTo(tmp[1], tmp[2]).quadraticCurveTo(tmp[3], tmp[4], tmp[5], tmp[6]);
+        else if(s[0] === GraphicsPath.CUBIC)
+          ret.moveTo(tmp[1], tmp[2]).bezierCurveTo(tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8]);
         break;
       case GraphicsPath.ARC: {
         if(a === 1 && b === 0 && c === 0 && d === 1) {
-     // just a translation
-          s[1] += e;
-          s[2] += f;
-          s[8] += e;
-          s[9] += f;
-          s[10] += e;
-          s[11] += f;
-          ret.segments.push(s);
+          // just a translation
+          var delta = s[13] - s[12];
+          var largeArc = Math.abs(delta) > Math.PI;
+          ret.moveTo(s[1] + e, s[2] + f).arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
+         largeArc, delta > 0, s[8] + e, s[9] + f);
           break;
         }
-        var curves = H3DU.Math.arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
+        if(b === 0 && c === 0 && s[5] === 0) {
+    // any scale and ellipse rotation 0
+          delta = s[13] - s[12];
+          largeArc = Math.abs(delta) > Math.PI;
+          ret.moveTo(a * s[1] + e, d * s[2] + f).arcSvgTo(a * s[3], d * s[4], 0,
+         largeArc, delta > 0, a * s[8] + e, d * s[9] + f);
+          break;
+        }
+        var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
+        console.log(curves);
         curves[0][0] = s[1];
         curves[0][1] = s[2];
         curves[curves.length - 1][6] = s[8];
@@ -1671,36 +1728,41 @@
         for(j = 0; j < curves.length; j++) {
           var cs = curves[j];
           for(var k = 0; k < 8; k += 2) {
-            x = a * cs[j] + c * cs[j + 1] + e;
-            y = b * cs[j] + d * cs[j + 1] + f;
-            cs[j] = x;
-            cs[j + 1] = y;
+            x = a * cs[k] + c * cs[k + 1] + e;
+            y = b * cs[k] + d * cs[k + 1] + f;
+            cs[k] = x;
+            cs[k + 1] = y;
           }
-          ret.segments.push([GraphicsPath.CUBIC,
-            cs[0], cs[1], cs[2], cs[3], cs[4], cs[5], cs[6], cs[7]]);
+          ret.moveTo(cs[0], cs[1])
+       .bezierCurveTo(cs[2], cs[3], cs[4], cs[5], cs[6], cs[7]);
         }
         break;
       }
       default:
-        ret.segments.push(s);
         break;
       }
     }
     return ret;
   };
 
-/**
- * Adds four lines in an axis-aligned rectangle shape to the path.
- * @param {Number} x X coordinate of a corner of the rectangle.
- * @param {Number} y Y coordinate of a corner of the rectangle.
- * @param {Number} width X-offset (width) to another corner of the rectangle.
- * @param {Number} height Y-offset (height) to another corner of the rectangle.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
-  GraphicsPath.prototype.rect = function(x, y, width, height) {
-    return this.moveTo(x, y).lineTo(x + width, y).lineTo(x + width, y + height)
-   .lineTo(x, y + height).closePath().moveTo(x, y);
+  /**
+   * Adds path segments to this path that form an axis-aligned rectangle.
+   * @param {Number} x X coordinate of the rectangle's upper-left corner (assuming the
+   * coordinate system's X axis points right and the Y axis down).
+   * @param {Number} y Y coordinate of the rectangle's upper-left corner (assuming the
+   * coordinate system's X axis points right and the Y axis down).
+   * @param {Number} w Width of the rectangle.
+   * @param {Number} h Height of the rectangle.
+   * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+   * @memberof! H3DU.GraphicsPath#
+   */
+  GraphicsPath.prototype.rect = function(x, y, w, h) {
+    if(w < 0 || h < 0)return this;
+    return this.moveTo(x, y)
+  .lineTo(x + w, y)
+  .lineTo(x + w, y + h)
+  .lineTo(x, y + h)
+  .closePath();
   };
 
 /**
@@ -2249,7 +2311,7 @@
   };
   Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     var vert = this.vertexList.first();
-    if(vert === null || typeof vert === "undefined")return null;
+    if(typeof vert !== "undefined" && (vert !== null && typeof vert !== "undefined"))return null;
     var bounds = this.bounds;
     if(x < bounds[0] || y < bounds[1] || x > bounds[2] || y > bounds[2])return null;
     var lastVert = this.vertexList.last();
