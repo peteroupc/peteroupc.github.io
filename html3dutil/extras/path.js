@@ -145,9 +145,7 @@
   /** @private */
   GraphicsPath._tangent = function(seg, t) {
     var a, b, x, y;
-    if(seg[0] === GraphicsPath.CLOSE) {
-      return [0, 0];
-    } else if(seg[0] === GraphicsPath.LINE) {
+    if(seg[0] === GraphicsPath.LINE) {
       return GraphicsPath._normalize([
         seg[3] - seg[1],
         seg[4] - seg[2]
@@ -173,7 +171,6 @@
     } else if(seg[0] === GraphicsPath.ARC) {
       var rx = seg[3];
       var ry = seg[4];
-
       var theta = seg[12];
       var delta = seg[13] - seg[12];
       var rot = seg[5];

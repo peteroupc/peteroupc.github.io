@@ -8,7 +8,6 @@
  http://peteroupc.github.io/
 */
 // LATER: Convert batches/shape groups to glTF
-// TODO: Avoid making functions global
 (function(H3DU) {
   "use strict";
 /** @private */
@@ -75,7 +74,6 @@
         this.shaders[promiseNames[i]] = promiseResults[i].data;
       }
     }
-    this.version = "";
     if(typeof this.gltf.asset !== "undefined" && this.gltf.asset !== null) {
       if(!(typeof this.gltf.asset.version !== "undefined" && this.gltf.asset.version !== null)) {
         this.error = "No version despite appearance of asset object";
@@ -279,24 +277,18 @@
           var sem = 0;
           if(param.semantic === "MODEL" && param.type === 35676) {
             sem = H3DU.ShaderInfo.MODEL;
-          }
-          if(param.semantic === "VIEW" && param.type === 35676) {
+          } else if(param.semantic === "VIEW" && param.type === 35676) {
             sem = H3DU.ShaderInfo.VIEW;
-          }
-          if(param.semantic === "PROJECTION" && param.type === 35676) {
+          } else if(param.semantic === "PROJECTION" && param.type === 35676) {
             sem = H3DU.ShaderInfo.PROJECTION;
-          }
-          if(param.semantic === "MODELVIEW" && param.type === 35676) {
+          } else if(param.semantic === "MODELVIEW" && param.type === 35676) {
             sem = H3DU.ShaderInfo.MODELVIEW;
-          }
-          if(param.semantic === "MODELVIEWPROJECTION" && param.type === 35676) {
+          } else if(param.semantic === "MODELVIEWPROJECTION" && param.type === 35676) {
             sem = H3DU.ShaderInfo.MODELVIEWPROJECTION;
-          }
-          if(param.semantic === "MODELVIEWINVERSETRANSPOSE" &&
+          } else if(param.semantic === "MODELVIEWINVERSETRANSPOSE" &&
           param.type === 35675) {
             sem = H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE;
-          }
-          if(param.semantic === "VIEWINVERSE" &&
+          } else if(param.semantic === "VIEWINVERSE" &&
           param.type === 35676) {
             sem = H3DU.ShaderInfo.VIEWINVERSE;
           }
@@ -500,7 +492,9 @@
           }
           var materialType = techInfo.paramTypes[uniformName];
           var unifValue = this.getUniformValue(materialType, materialValue);
-          if(unifValue === null || typeof unifValue === "undefined")return null;
+          if(unifValue === null || typeof unifValue === "undefined") {
+            return null;
+          }
           unif[uniformName] = unifValue;
         }
         techInfo.shader.setUniforms(unif);
@@ -570,6 +564,7 @@
         }
       }
     this.animChannels = animChannels;
+    console.log(animChannels);
     return this;
   };
 
@@ -577,89 +572,113 @@
   GltfState.prototype.readNode = function(node, nodeName, parent) {
     var nodeShapeGroup = new H3DU.ShapeGroup();
     this.nodeShapes[nodeName] = nodeShapeGroup;
-    for(var meshName in node.meshes || {})
-      if(Object.prototype.hasOwnProperty.call( node.meshes, meshName)) {
-        var mesh = this.gltf.meshes[node.meshes[meshName]];
-        if(this.meshes[meshName]) {
-          nodeShapeGroup.addShape(this.meshes[meshName].copy());
-          continue;
+    var nodeMeshes = typeof node.meshes === "undefined" || node.meshes === null ? [] : node.meshes;
+    var i;
+    for(i = 0; i < nodeMeshes.length; i++) {
+      if(typeof nodeMeshes[i] === "undefined" || nodeMeshes[i] === null) {
+        return null;
+      }
+      var meshName = nodeMeshes[i];
+      if(typeof this.gltf.meshes === "undefined" || this.gltf.meshes === null ||
+ (typeof this.gltf.meshes[meshName] === "undefined" || this.gltf.meshes[meshName] === null)) {
+        return null;
+      }
+      var mesh = this.gltf.meshes[meshName];
+      if(this.meshes[meshName]) {
+        nodeShapeGroup.addShape(this.meshes[meshName].copy());
+        continue;
+      }
+      var firstShape = null;
+      var shapeGroup = new H3DU.ShapeGroup();
+      var prims = mesh.primitives || [];
+      for(var p = 0; p < prims.length; p++) {
+        var prim = prims[p];
+        var meshBuffer = new H3DU.MeshBuffer(new H3DU.Mesh());
+        var array;
+        var maxCount = 0;
+        var primMode = typeof prim.mode === "undefined" || prim.mode === null ? 4 : prim.mode;
+        if(primMode === 2 || primMode === 3 || primMode === 5 || primMode === 6) {
+      // TODO: LINE_STRIP, LINE_LOOP, TRIANGLE_STRIP, TRIANGLE_FAN
+          this.error = "Primitive mode " + primMode + " not yet supported";
+          return null;
         }
-        var firstShape = null;
-        var shapeGroup = new H3DU.ShapeGroup();
-        var prims = mesh.primitives || [];
-        for(var p = 0; p < prims.length; p++) {
-          var prim = prims[p];
-          var meshBuffer = new H3DU.MeshBuffer(new H3DU.Mesh());
-          var array;
-          var maxCount = 0;
-          for(var attributeName in prim.attributes || {})
-            if(Object.prototype.hasOwnProperty.call( prim.attributes, attributeName)) {
-              if(typeof this.gltf.accessors === "undefined" || this.gltf.accessors === null) {
-                return null;
-              }
-              var attrAcc = this.gltf.accessors[prim.attributes[attributeName]];
-              array = this.arrayFromAccessor(attrAcc);
-              if(!array) {
-                return null;
-              }
-              maxCount = Math.max(maxCount, array.valueCount);
-              meshBuffer.setAttribute(attributeName, 0, array.array, 0,
-                      array.elementsPerValue, array.elementStride());
-            }
-          if(typeof prim.indices !== "undefined" && prim.indices !== null) {
+        if(primMode > 6 || primMode < 0) {
+          this.error = "Primitive mode " + primMode + " is invalid";
+          return null;
+        }
+        for(var attributeName in prim.attributes || {})
+          if(Object.prototype.hasOwnProperty.call( prim.attributes, attributeName)) {
             if(typeof this.gltf.accessors === "undefined" || this.gltf.accessors === null) {
               return null;
             }
-            if(typeof this.gltf.accessors[prim.indices] === "undefined" || this.gltf.accessors[prim.indices] === null) {
-              return null;
-            }
-            var indexAccessor = this.gltf.accessors[prim.indices];
-            if(indexAccessor.componentType !== 5121 &&
-      indexAccessor.componentType !== 5123 &&
-      (this.version === 0 || indexAccessor.componentType !== 5125)) {
-              this.error = "invalid component type for indices"; return null;
-            }
-            array = this.arrayFromAccessor(indexAccessor);
+            var attrAcc = this.gltf.accessors[prim.attributes[attributeName]];
+            array = this.arrayFromAccessor(attrAcc);
             if(!array) {
               return null;
             }
-            if(array.elementsPerValue !== 1 || array.byteStride !== 0 && array.byteStride !== array.valueByteSize()) {
-              this.error = "invalid array for indices"; return null;
-            }
-            meshBuffer.setIndices(array.array, array.elementByteSize);
-          } else {
+            maxCount = Math.max(maxCount, array.valueCount);
+            meshBuffer.setAttribute(attributeName, 0, array.array, 0,
+                      array.elementsPerValue, array.elementStride());
+          }
+        if(typeof prim.indices !== "undefined" && prim.indices !== null) {
+          if(typeof this.gltf.accessors === "undefined" || this.gltf.accessors === null) {
+            return null;
+          }
+          if(typeof this.gltf.accessors[prim.indices] === "undefined" || this.gltf.accessors[prim.indices] === null) {
+            return null;
+          }
+          var indexAccessor = this.gltf.accessors[prim.indices];
+          if(indexAccessor.componentType !== 5121 &&
+      indexAccessor.componentType !== 5123 &&
+      (this.version === 0 || indexAccessor.componentType !== 5125)) {
+            this.error = "invalid component type for indices"; return null;
+          }
+          array = this.arrayFromAccessor(indexAccessor);
+          if(!array) {
+            return null;
+          }
+          if(array.elementsPerValue !== 1 ||
+      array.byteStride !== 0 && array.byteStride !== array.valueByteSize() ||
+      array.elementByteSize !== 1 && array.elementByteSize !== 2 && array.elementByteSize !== 4) {
+            this.error = "invalid array for indices"; return null;
+          }
+          meshBuffer.setIndices(array.array, array.elementByteSize);
+        } else {
      // Synthesize a list of indices
-            var indexArray = [];
-            for(var k = 0; k < maxCount; k++) {
-              indexArray.push(k);
-            }
-            meshBuffer.setIndices(
+          var indexArray = [];
+          for(var k = 0; k < maxCount; k++) {
+            indexArray.push(k);
+          }
+          meshBuffer.setIndices(
            maxCount < 65536 ? new Uint16Array(indexArray) :
           new Uint32Array(indexArray),
         maxCount < 65536 ? 2 : 4);
-          }
-          var shape = GltfState._makeShape(meshBuffer);
-          if(typeof prim.material !== "undefined" && prim.material !== null) {
-            var material = this.gltf.materials[prim.material];
-            if(typeof material.technique !== "undefined" && material.technique !== null) {
-              var technique = this.gltf.techniques[material.technique];
-              var techInfo = this.readTechnique(technique);
-              if(!techInfo) {
-                return null;
-              }
-              if(!this.readMaterialValues(material, techInfo)) {
-                return null;
-              }
-              shape.setMaterialParams({"shader":techInfo.shader});
-            }
-          }
-          shapeGroup.addShape(shape);
-          if(p === 0)firstShape = shape;
         }
-        var meshShape = prims.length === 1 ? firstShape : shapeGroup;
-        this.meshes[meshName] = meshShape;
-        nodeShapeGroup.addShape(meshShape);
+        var shape = GltfState._makeShape(meshBuffer);
+        if(typeof prim.material === "undefined" || prim.material === null ||
+    (typeof this.gltf.materials === "undefined" || this.gltf.materials === null) ||
+ (typeof this.gltf.materials[prim.material] === "undefined" || this.gltf.materials[prim.material] === null)) {
+          return null;
+        }
+        var material = this.gltf.materials[prim.material];
+        if(typeof material.technique !== "undefined" && material.technique !== null) {
+          var technique = this.gltf.techniques[material.technique];
+          var techInfo = this.readTechnique(technique);
+          if(!techInfo) {
+            return null;
+          }
+          if(!this.readMaterialValues(material, techInfo)) {
+            return null;
+          }
+          shape.setMaterialParams({"shader":techInfo.shader});
+        }
+        shapeGroup.addShape(shape);
+        if(p === 0)firstShape = shape;
       }
+      var meshShape = prims.length === 1 ? firstShape : shapeGroup;
+      this.meshes[meshName] = meshShape;
+      nodeShapeGroup.addShape(meshShape);
+    }
     if(typeof node.matrix !== "undefined" && node.matrix !== null) {
       nodeShapeGroup.getTransform().setMatrix(node.matrix);
     } else {
@@ -677,7 +696,7 @@
       }
     }
     if(typeof node.children !== "undefined" && node.children !== null) {
-      for(var i = 0; i < node.children.length; i++) {
+      for(i = 0; i < node.children.length; i++) {
         if(typeof node.children[i] === "undefined" || node.children[i] === null) {
           return null;
         }
@@ -787,40 +806,51 @@
       break;
     }
   };
-/**
- * TODO: Not documented yet.
- * @param {*} time
- * @returns {*} Return value.
- * @memberof! Gltf#
- */
+/** @private */
   Gltf.prototype.update = function(time) {
-    for(var i = 0; i < this.animChannels.length; i++) {
-      var ch = this.animChannels[i];
-      var node = ch.target;
-      var endTime = ch.sampler.input[ch.sampler.input.length - 1];
-      var pos = H3DU.getTimePosition(this.timer, time, endTime * 1000.0);
-      for(var j = 0; j < ch.sampler.input.length - 1; j++) {
-        var s = ch.sampler.input[j] / endTime;
-        var e = ch.sampler.input[j + 1] / endTime;
-        var fac = s === e ? 0.0 : (pos - e) / (e - s);
+    if(this.maxEndTimeSecs > 0) {
+      for(var i = 0; i < this.animChannels.length; i++) {
+        var ch = this.animChannels[i];
+        var node = ch.target;
+        var maxInput = ch.sampler.input[ch.sampler.input.length - 1];
+        var pos = H3DU.getTimePosition(this.timer, time,
+      this.maxEndTimeSecs * 1000.0);
+        if(pos * this.maxEndTimeSecs > maxInput) {
+        // Reached end of animation
+          var last = ch.sampler.output[ch.sampler.output.length - 1];
+          Gltf._interpolate(node, last, last, 0, ch.path);
+        } else {
+          var invEnd = 1.0 / this.maxEndTimeSecs;
+          var inputLen = ch.sampler.input.length;
+          for(var j = 0; j < inputLen; j++) {
+            var s = ch.sampler.input[j] * invEnd;
+            var e = ch.sampler.input[j + 1] * invEnd;
       // TODO: Support STEP interpolation
-        if(pos >= s && pos <= e) {
-          Gltf._interpolate(node, ch.sampler.output[j],
+            if(pos >= s && pos <= e) {
+              var fac = s === e ? 0.0 : (pos - s) / (e - s);
+              Gltf._interpolate(node,
+      ch.sampler.output[j],
             ch.sampler.output[j + 1], fac, ch.path);
+            }
+          }
         }
       }
     }
   };
-/**
- * TODO: Not documented yet.
- * @returns {*} Return value.
- * @memberof! GltfState#
- */
+
+/** @private */
   GltfState.prototype.toGltf = function() {
     var ret = new Gltf();
     ret.batch = this.batch;
     ret.animChannels = this.animChannels;
     ret.imageUris = this.imageUris;
+    ret.maxEndTimeSecs = 0;
+    for(var i = 0; i < ret.animChannels.length; i++) {
+      var input = ret.animChannels[i].sampler.input;
+      ret.maxEndTimeSecs = Math.max(
+      ret.maxEndTimeSecs,
+        input[input.length - 1]);
+    }
     return ret;
   };
 /** @private */
@@ -861,8 +891,9 @@
    });
   }
 /**
- * TODO: Not documented yet.
- * @param {*} url
+ * Loads a 3D scene stored in glTF format, together with the buffers and
+ * shaders it uses.
+ * @param {String} url URL of the glTF file to load.
  * @returns {Promise<Object>} A promise; when it resolves, the result will
  * be an object that implements the following methods:<ul>
  * <li><code>getBatch()</code> - Gets an {@link H3DU.Batch3D} object described
@@ -874,7 +905,8 @@
  * if the glTF data describes an animation; this method updates the state of the
  * 3D batch in accordance with that animation. The single parameter, <code>time</code>
  * (type Number), is a time stamp in milliseconds.
- * </ul>
+ * </ul>If an error occurs in loading the glTF data or any of the buffers and shaders
+ * it uses, the promise will be rejected.
  * @memberof! H3DU
  */
   H3DU.loadGltfFromUrl = function(url) {

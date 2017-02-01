@@ -35,8 +35,8 @@ URL of the texture data. Based on the URL, the texture may be loaded via the Jav
 <li><a href="#H3DU.Texture_H3DU.Texture_getHeight">getHeight</a><br>Gets this texture&#39;s known height.</li>
 <li><a href="#H3DU.Texture_H3DU.Texture_getName">getName</a><br>Gets the name of this texture.</li>
 <li><a href="#H3DU.Texture_H3DU.Texture_getWidth">getWidth</a><br>Gets this texture&#39;s known width.</li>
-<li><p><a href="#H3DU.Texture_H3DU.Texture_setClamp">setClamp</a><br>Sets the wrapping behavior of texture coordinates that
-fall out of range when using this texture.</p>
+<li><p><a href="#H3DU.Texture_H3DU.Texture_setClamp">setClamp</a><br><b>Deprecated: Use the TextureInfo class&#39;s &quot;wrapS&quot; and
+&quot;wrapT&quot; parameters instead.</b></p>
 
 <p><a name='H3DU.Texture.fromUint8Array'></a></p>
 
@@ -125,6 +125,9 @@ Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)<
 <p><a name='H3DU.Texture_H3DU.Texture_setClamp'></a></p>
 
 <h3>H3DU.Texture#setClamp(clamp)</h3>
+
+<p><b>Deprecated: Use the TextureInfo class&#39;s &quot;wrapS&quot; and
+&quot;wrapT&quot; parameters instead.</b></p>
 
 <p>Sets the wrapping behavior of texture coordinates that
 fall out of range when using this texture. This setting
