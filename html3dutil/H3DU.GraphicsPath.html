@@ -53,6 +53,7 @@ the path.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_getPoints">getPoints</a><br>Gets an array of points evenly spaced across the length
 of the path.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_getTriangles">getTriangles</a><br>Converts the subpaths in this path to triangles.</li>
+<li><a href="#H3DU.GraphicsPath_GraphicsPath_interpolate">interpolate</a><br>Does a linear interpolation between two graphics paths.</li>
 <li><a href="#H3DU.GraphicsPath.GraphicsPath_intersection">intersection</a><br>Computes the intersection, or the area common to both this path&#39;s shape
 and another path&#39;s shape.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_isIncomplete">isIncomplete</a><br>Returns whether the curve path is incomplete
@@ -67,6 +68,8 @@ sets the end position to the end of the segment.</li>
 at this path&#39;s current position.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_rect">rect</a><br>Adds path segments to this path that form an axis-aligned rectangle.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_reverse">reverse</a><br>Returns a path that reverses the course of this path.</li>
+<li><a href="#H3DU.GraphicsPath_GraphicsPath_toCurvePath">toCurvePath</a><br>Creates a path in which arcs are decomposed
+to cubic B&eacute;zier curves (which will approximate those arcs).</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_toLinePath">toLinePath</a><br>Creates a path in which curves and arcs are decomposed
 to line segments.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_toString">toString</a><br>Returns this path in the form of a string in SVG path format.</li>
@@ -305,9 +308,17 @@ The function returns a 3-element array containing
 the X, Y, and Z coordinates of the point lying on the curve at the given
 &quot;u&quot; position (however, the z will always be 0 since paths can currently
 only be 2-dimensional).
+<li><code>tangent(u)</code> - Takes one parameter, &quot;u&quot;, with the same meaning
+as for the &quot;evaluate&quot; method, and returns a 3-element array containing the
+the X, Y, and Z components of the
+tangent vector (which will generally be a <a href="tutorial-glmath.html">unit vector</a>) at the given point on the curve
+(the z will always be 0 since paths can currently
+only be 2-dimensional).
 </ul>
 <li><code>getLength()</code> - Returns the approximate total length of the path,
 in units.
+<li><code>tangent(u)</code> - Has the same effect as the &quot;tangent&quot;
+method for each curve, but applies to the path as a whole.
 <li><code>evaluate(u)</code> - Has the same effect as the &quot;evaluate&quot;
 method for each curve, but applies to the path as a whole.
 Note that calling this &quot;evaluate&quot; method is only
@@ -389,6 +400,25 @@ arrays each describing a single triangle. For each six-element
 array, the first two, next two, and last two numbers each
 describe a vertex position of that triangle (X and Y coordinates
 in that order). (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
+
+<p><a name='H3DU.GraphicsPath_GraphicsPath_interpolate'></a></p>
+
+<h3>GraphicsPath#interpolate(other, t)</h3>
+
+<p>Does a linear interpolation between two graphics paths.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>other</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>
+The second graphics path.</li>
+<li><code>t</code> (Type: Number)<br>
+An interpolation factor, generally ranging from 0 through 1. Closer to 0 means closer to this path, and closer to 1 means closer to &quot;other&quot;. If the input paths contain arc segments that differ in the large arc and sweep flags, the flags from the first path&#39;s arc are used if &quot;t&quot; is less than 0.5; and the flags from the second path&#39;s arc are used otherwise.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The interpolated path. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
 <p><a name='H3DU.GraphicsPath.GraphicsPath_intersection'></a></p>
 
@@ -558,6 +588,18 @@ Height of the rectangle.</li>
 
 <p>A GraphicsPath
 object with its path segments reversed. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
+
+<p><a name='H3DU.GraphicsPath_GraphicsPath_toCurvePath'></a></p>
+
+<h3>GraphicsPath#toCurvePath()</h3>
+
+<p>Creates a path in which arcs are decomposed
+to cubic B&eacute;zier curves (which will approximate those arcs).</p>
+
+<h4>Return Value</h4>
+
+<p>A path consisting only of line
+segments, B&eacute;zier curves, and close commands. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_toLinePath'></a></p>
 

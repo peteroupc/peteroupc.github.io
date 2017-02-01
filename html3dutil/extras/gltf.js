@@ -696,9 +696,22 @@
 
 /** @private */
   GltfState.prototype.readScenes = function() {
-    for(var sceneKey in this.gltf.scenes || {})
-      if(Object.prototype.hasOwnProperty.call(this.gltf.scenes, sceneKey)) {
-        var scene = this.gltf.scenes[sceneKey];
+    var defaultScene = typeof this.gltf.scene === "undefined" ? null : this.gltf.scene;
+    var scenes = typeof this.gltf.scenes === "undefined" || this.gltf.scenes === null ? [] : this.gltf.scenes;
+    var sceneKeys = Object.keys(scenes);
+    if((defaultScene === null || typeof defaultScene === "undefined") && sceneKeys.length === 1) {
+      defaultScene = sceneKeys[0];
+    }
+    if(defaultScene === null || typeof defaultScene === "undefined") {
+      // nothing to render
+      return this;
+    }
+    for(var sceneKey in scenes)
+      if(Object.prototype.hasOwnProperty.call(scenes, sceneKey)) {
+        if(sceneKey !== defaultScene) {
+          continue;
+        }
+        var scene = scenes[sceneKey];
         for(var nodeKey in scene.nodes || {})
           if(Object.prototype.hasOwnProperty.call( scene.nodes, nodeKey)) {
             var nodeName = scene.nodes[nodeKey];
