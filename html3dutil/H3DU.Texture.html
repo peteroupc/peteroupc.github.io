@@ -69,8 +69,8 @@ Height, in pixels, of the texture.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: String | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a>)<br>
-URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM&#39;s Image class. TODO: More docs.</li>
+<li><code>name</code> (Type: String | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a> | H3DU.Textureo)<br>
+An <a href="H3DU.Texture.html">H3DU.Texture</a> object, an <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. Images with a TGA extension that use the RGBA or grayscale format are supported. Images supported by the browser will be loaded via the JavaScript DOM&#39;s Image class.</li>
 <li><code>textureCache</code> (Type: Object) (optional)<br>
 An object whose keys are the names of textures already loaded. This will help avoid loading the same texture more than once. This parameter is optional and may be omitted.</li>
 </ul>

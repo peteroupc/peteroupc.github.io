@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global define, exports, x1, x2, x3, x4, y1, y2, y3, y4 */
+/* global define, exports */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -420,21 +420,6 @@
       }
     }
     return ret;
-  };
-/** @private */
-  GraphicsPath._cubicCurveLengthIntegrand = function(t) {
-    // Length of derivative of cubic Bezier vector function
-    var tm1 = t - 1;
-    var tm1sq = tm1 * tm1;
-    var c = x3 - x4;
-    var b = 2 * x3 * tm1 - 2 * x2 * tm1;
-    var a = x1 * tm1sq - x2 * tm1sq;
-    var x = a + t * (b + t * c);
-    c = y3 - y4;
-    b = 2 * y3 * tm1 - 2 * y2 * tm1;
-    a = y1 * tm1sq - y2 * tm1sq;
-    var y = a + t * (b + t * c);
-    return Math.sqrt(9 * x * x + 9 * y * y); // (3*x,3*y) is derivative
   };
    /** @private */
   GraphicsPath._quadCurveLength = function(x1, y1, x2, y2, x3, y3) {

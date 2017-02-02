@@ -18,26 +18,6 @@ See the <a href="tutorial-overview.html">Library Overview</a> tutorial.</p>
 <p>This page describes miscellaneous utility methods included in the
 library.</p>
 
-<h3>Members</h3>
-
-<ul>
-<li><a href="#H3DU.Semantic.BITANGENT">Semantic.BITANGENT</a><br>Attribute semantic for a bitangent vector.</li>
-<li><a href="#H3DU.Semantic.COLOR">Semantic.COLOR</a><br>Attribute semantic for a color.</li>
-<li><a href="#H3DU.Semantic.JOINT">Semantic.JOINT</a><br>Attribute semantic for a skinning joint.</li>
-<li><a href="#H3DU.Semantic.MODEL">Semantic.MODEL</a><br>Uniform semantic for a model matrix.</li>
-<li><a href="#H3DU.Semantic.MODELVIEW">Semantic.MODELVIEW</a><br>Uniform semantic for a model-view matrix.</li>
-<li><a href="#H3DU.Semantic.MODELVIEWINVERSETRANSPOSE">Semantic.MODELVIEWINVERSETRANSPOSE</a><br>Uniform semantic for the inverse of the 3x3 transpose of the model view matrix.</li>
-<li><a href="#H3DU.Semantic.MODELVIEWPROJECTION">Semantic.MODELVIEWPROJECTION</a><br>Uniform semantic for a model-view-projection matrix.</li>
-<li><a href="#H3DU.Semantic.NORMAL">Semantic.NORMAL</a><br>Attribute semantic for a vertex normal.</li>
-<li><a href="#H3DU.Semantic.POSITION">Semantic.POSITION</a><br>Attribute semantic for a vertex position.</li>
-<li><a href="#H3DU.Semantic.PROJECTION">Semantic.PROJECTION</a><br>Uniform semantic for a projection matrix.</li>
-<li><a href="#H3DU.Semantic.TANGENT">Semantic.TANGENT</a><br>Attribute semantic for a tangent vector.</li>
-<li><a href="#H3DU.Semantic.TEXCOORD">Semantic.TEXCOORD</a><br>Attribute semantic for a texture coordinate.</li>
-<li><a href="#H3DU.Semantic.VIEW">Semantic.VIEW</a><br>Uniform semantic for a view matrix.</li>
-<li><a href="#H3DU.Semantic.VIEWINVERSE">Semantic.VIEWINVERSE</a><br>Uniform semantic for an inverse view matrix.</li>
-<li><a href="#H3DU.Semantic.WEIGHT">Semantic.WEIGHT</a><br>Attribute semantic for a skinning weight.</li>
-</ul>
-
 <h3>Methods</h3>
 
 <ul>
@@ -63,102 +43,12 @@ the last known time, where a frame&#39;s length is 1/60 of a second.</li>
 and queue requests to call that function once per frame,
 using <code>window.requestAnimationFrame</code>
 or a &quot;polyfill&quot; method.</li>
-<li><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
-</ul>
-
-<p><a id='H3DU.Semantic.BITANGENT'></a></p>
-
-<h3>H3DU.Semantic.BITANGENT (constant)</h3>
-
-<p>Attribute semantic for a bitangent vector.</p>
-
-<p><a id='H3DU.Semantic.COLOR'></a></p>
-
-<h3>H3DU.Semantic.COLOR (constant)</h3>
-
-<p>Attribute semantic for a color.</p>
-
-<p><a id='H3DU.Semantic.JOINT'></a></p>
-
-<h3>H3DU.Semantic.JOINT (constant)</h3>
-
-<p>Attribute semantic for a skinning joint.</p>
-
-<p><a id='H3DU.Semantic.MODEL'></a></p>
-
-<h3>H3DU.Semantic.MODEL (constant)</h3>
-
-<p>Uniform semantic for a model matrix.</p>
-
-<p><a id='H3DU.Semantic.MODELVIEW'></a></p>
-
-<h3>H3DU.Semantic.MODELVIEW (constant)</h3>
-
-<p>Uniform semantic for a model-view matrix.</p>
-
-<p><a id='H3DU.Semantic.MODELVIEWINVERSETRANSPOSE'></a></p>
-
-<h3>H3DU.Semantic.MODELVIEWINVERSETRANSPOSE (constant)</h3>
-
-<p>Uniform semantic for the inverse of the 3x3 transpose of the model view matrix.</p>
-
-<p><a id='H3DU.Semantic.MODELVIEWPROJECTION'></a></p>
-
-<h3>H3DU.Semantic.MODELVIEWPROJECTION (constant)</h3>
-
-<p>Uniform semantic for a model-view-projection matrix.</p>
-
-<p><a id='H3DU.Semantic.NORMAL'></a></p>
-
-<h3>H3DU.Semantic.NORMAL (constant)</h3>
-
-<p>Attribute semantic for a vertex normal.</p>
-
-<p><a id='H3DU.Semantic.POSITION'></a></p>
-
-<h3>H3DU.Semantic.POSITION (constant)</h3>
-
-<p>Attribute semantic for a vertex position.</p>
-
-<p><a id='H3DU.Semantic.PROJECTION'></a></p>
-
-<h3>H3DU.Semantic.PROJECTION (constant)</h3>
-
-<p>Uniform semantic for a projection matrix.</p>
-
-<p><a id='H3DU.Semantic.TANGENT'></a></p>
-
-<h3>H3DU.Semantic.TANGENT (constant)</h3>
-
-<p>Attribute semantic for a tangent vector.</p>
-
-<p><a id='H3DU.Semantic.TEXCOORD'></a></p>
-
-<h3>H3DU.Semantic.TEXCOORD (constant)</h3>
-
-<p>Attribute semantic for a texture coordinate.</p>
-
-<p><a id='H3DU.Semantic.VIEW'></a></p>
-
-<h3>H3DU.Semantic.VIEW (constant)</h3>
-
-<p>Uniform semantic for a view matrix.</p>
-
-<p><a id='H3DU.Semantic.VIEWINVERSE'></a></p>
-
-<h3>H3DU.Semantic.VIEWINVERSE (constant)</h3>
-
-<p>Uniform semantic for an inverse view matrix.</p>
-
-<p><a id='H3DU.Semantic.WEIGHT'></a></p>
-
-<h3>H3DU.Semantic.WEIGHT (constant)</h3>
-
-<p>Attribute semantic for a skinning weight.</p>
+<li><p><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</p>
 
 <p><a name='H3DU.loadGltfFromUrl'></a></p>
 
-<h3>H3DU.loadGltfFromUrl(url)</h3>
+<h3>H3DU.loadGltfFromUrl(url)</h3></li>
+</ul>
 
 <p>Loads a 3D scene stored in glTF format, together with the buffers and
 shaders it uses.</p>
