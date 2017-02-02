@@ -37,8 +37,10 @@ Red box was animated with quatNlerp, blue box with quatSlerp</div>
   // Create a box mesh 10 units in size
   var mesh = H3DU.Meshes.createBox(10, 20, 20).toWireFrame();
   // Create a shape based on the mesh and give it a red color
-  var shape = new H3DU.Shape(mesh).setColor("red").setMaterialParams({"basic":true});
-  var shape2 = new H3DU.Shape(mesh).setColor("blue").setMaterialParams({"basic":true});
+  var shape = new H3DU.Shape(mesh).setColor("red");
+  var shape2 = new H3DU.Shape(mesh).setColor("blue");
+  shape.getMaterial().makeBasic();
+  shape2.getMaterial().makeBasic();
   // Add the shape to the scene
   sub.addShape(shape);
   sub.addShape(shape2);

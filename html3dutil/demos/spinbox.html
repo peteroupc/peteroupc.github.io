@@ -63,13 +63,9 @@ window.onload = function() {
     Step = 5,
     Scale = 1;
   Xstep = Step;
-// Here, the material parameter basic is
-// set to make the line pure white and unaffected
-// by shading (otherwise, the shading would
-// make the line look gray)
   var o = new H3DU.Shape(makeObject())
-     .setColor("white")
-     .setMaterialParams({"basic":true});
+     .setColor("white");
+  o.getMaterial().makeBasic();
   sub.addShape(o);
   scene.addShape(sub);
 

@@ -32,7 +32,9 @@ canvas { width:100%; height:100%; overflow: hidden; }
     .vertex2(0.5, -0.5)
     .color3("blue")
     .vertex2(-0.5, -0.5);
-  sub.addShape(new H3DU.Shape(mesh).setMaterialParams({"basic":true}));
+  var sh = new H3DU.Shape(mesh);
+  sh.getMaterial().makeBasic();
+  sub.addShape(sh);
   H3DU.renderLoop(function() {
     "use strict";
     scene.render(sub);

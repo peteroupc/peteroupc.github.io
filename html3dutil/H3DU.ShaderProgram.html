@@ -51,7 +51,7 @@ Source text of a fragment shader in GLSL. If null, a default fragment shader is 
 <li><a href="#H3DU.ShaderProgram.makeCopyEffect">.makeCopyEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.makeEffect">.makeEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.makeEffectFragment">.makeEffectFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic">setSemantic</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic">setSemantic</a><br>Sets the semantic for a vertex attribute.</li>
 <li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_dispose">dispose</a><br>Disposes resources from this shader program.</li>
 <li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_get">get</a><br>Gets the location of the given uniform or attribute&#39;s name in this program.</li>
 <li><a href="#H3DU.ShaderProgram_H3DU.ShaderProgram_getContext">getContext</a><br>Gets the WebGL context associated with this shader program object.</li>
@@ -189,21 +189,25 @@ See H3DU.ShaderProgram.makeEffect().</li>
 
 <p><a name='H3DU.ShaderProgram_H3DU.ShaderInfo_setSemantic'></a></p>
 
-<h3>H3DU.ShaderInfo#setSemantic(name, sem, index)</h3>
+<h3>H3DU.ShaderInfo#setSemantic(name, semantic, semanticIndex)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Sets the semantic for a vertex attribute.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: *)</li>
-<li><code>sem</code> (Type: *)</li>
-<li><code>index</code> (Type: *)</li>
+<li><code>name</code> (Type: String)<br>
+Name of the attribute.</li>
+<li><code>semantic</code> (Type: Number | String)<br>
+An attribute semantic, such as <a href="H3DU.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
+<li><code>semanticIndex</code> (Type: Number)<br>
+The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;semantic&quot; is a string.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>This object. Throws an error if the given
+semantic is unsupported. (Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>)</p>
 
 <p><a name='H3DU.ShaderProgram_H3DU.ShaderProgram_dispose'></a></p>
 
@@ -357,6 +361,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
+<li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>

@@ -50,7 +50,7 @@ copied to that object.</li>
 <li><a href="#H3DU.ShaderInfo_H3DU.ShaderInfo_dispose">dispose</a><br><b>Deprecated: Yes</b></li>
 <li><a href="#H3DU.ShaderInfo_H3DU.ShaderInfo_getFragmentShader">getFragmentShader</a><br>Gets the text of the fragment shader stored in this object.</li>
 <li><a href="#H3DU.ShaderInfo_H3DU.ShaderInfo_getVertexShader">getVertexShader</a><br>Gets the text of the vertex shader stored in this object.</li>
-<li><a href="#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniformSemantic">setUniformSemantic</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniformSemantic">setUniformSemantic</a><br>Sets a semantic for the given named uniform.</li>
 <li><p><a href="#H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms">setUniforms</a><br>Sets the values of one or more uniforms used by this shader program.</p>
 
 <p><a name='H3DU.ShaderInfo.getBasicVertex'></a></p>
@@ -199,18 +199,20 @@ copied to that object.</p>
 
 <h3>H3DU.ShaderInfo#setUniformSemantic(u, sem)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Sets a semantic for the given named uniform.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: *)</li>
-<li><code>sem</code> (Type: *)</li>
+<li><code>u</code> (Type: String)<br>
+The name of the uniform.</li>
+<li><code>sem</code> (Type: Number)<br>
+A uniform semantic given in <a href="H3DU.Semantic.html">H3DU.Semantic</a>.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>This object. (Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>)</p>
 
 <p><a name='H3DU.ShaderInfo_H3DU.ShaderInfo_setUniforms'></a></p>
 
@@ -289,6 +291,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
+<li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>

@@ -61,8 +61,8 @@ TriangleParticles.makeShapeFromTri = function(tri) {
    .color3(tri.color)
    .vertex3(tri.position[0], tri.position[1], tri.position[2])
    .vertex3(tri.position[3], tri.position[4], tri.position[5])
-   .vertex3(tri.position[6], tri.position[7], tri.position[8]))
-   .setMaterialParams({"basic":true});
+   .vertex3(tri.position[6], tri.position[7], tri.position[8]));
+  sh.getMaterial().makeBasic();
   sh.getTransform().setPosition(
   tri.center[0], tri.center[1], tri.center[2]
  );
