@@ -522,14 +522,45 @@ H3DU.MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
   "use strict";
   var invww = 1.0 / ww;
   var invwh = 1.0 / wh;
-  wx -= vp[0];
-  wy -= vp[1];
-  var scaleX = vp[2] * invww;
-  var scaleY = vp[3] * invwh;
-  return this
-   .translate(-wx * 2 * invww, -wy * 2 * invwh, 0)
-   .scale(scaleX * 2, -scaleY * 2, 1)
-   .multMatrix([0.5, 0, 0, 0, 0, -0.5, 0, 0, 0, 0, 1, 0, 0.5, -0.5, 0, 1]);
+  var t5 = -(wx - vp[0]) * 2.0 * invww;
+  var t6 = -(wy - vp[1]) * 2.0 * invwh;
+  var t7 = vp[2] * invww * 2.0;
+  var t8 = -(vp[3] * invwh) * 2.0;
+  var mat = this.stack[this.stack.length - 1];
+  var t9 = t7 * mat[0];
+  var t10 = t7 * mat[1];
+  var t11 = t7 * mat[2];
+  var t12 = t7 * mat[3];
+  var t13 = t8 * mat[4];
+  var t14 = t8 * mat[5];
+  var t15 = t8 * mat[6];
+  var t16 = t8 * mat[7];
+  this.stack[this.stack.length - 1] = [
+    0.5 * t9,
+    0.5 * t10,
+    0.5 * t11,
+    0.5 * t12,
+    -0.5 * t13,
+    -0.5 * t14,
+    -0.5 * t15,
+    -0.5 * t16,
+    mat[8], mat[9], mat[10], mat[11],
+    0.5 * t9 + -0.5 * t13 + (
+    t5 * mat[0] +
+    t6 * mat[4] +
+   mat[12]),
+    0.5 * t10 + -0.5 * t14 + (t5 * mat[1] +
+    t6 * mat[5] +
+   mat[13]),
+    0.5 * t11 + -0.5 * t15 + (
+    t5 * mat[2] +
+    t6 * mat[6] +
+   mat[14]),
+    0.5 * t12 + -0.5 * t16 + (
+    t5 * mat[3] +
+    t6 * mat[7] +
+   mat[15])];
+  return this;
 };
 
 /* exported MatrixStack */

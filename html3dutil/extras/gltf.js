@@ -81,6 +81,7 @@
         this.version = 1;
     }
     this.programs = this.preparePrograms();
+    // TODO: Why Batch3D and not ShapeGroup?
     this.batch = new H3DU.Batch3D();
     this.imageUris = [];
     for(var k in this.gltf.images || {})
@@ -97,18 +98,32 @@
       }
   }
 /** @private */
-  GltfState._makeArray = function(componentType, buffer) {
-    if(componentType === 5120)return new Int8Array(buffer);
-    if(componentType === 5121)return new Uint8Array(buffer);
-    if(componentType === 5122)return new Int16Array(buffer);
-    if(componentType === 5123)return new Uint16Array(buffer);
-    if(componentType === 5124)return new Int32Array(buffer);
-    if(componentType === 5125)return new Uint32Array(buffer);
-    if(componentType === 5126)return new Float32Array(buffer);
+  GltfState._makeArray = function(componentType, buffer, bufferOffset, elementCount) {
+    if(componentType === 5120) {
+      return new Int8Array(buffer, bufferOffset, elementCount);
+    }
+    if(componentType === 5121) {
+      return new Uint8Array(buffer, bufferOffset, elementCount);
+    }
+    if(componentType === 5122) {
+      return new Int16Array(buffer, bufferOffset, elementCount);
+    }
+    if(componentType === 5123) {
+      return new Uint16Array(buffer, bufferOffset, elementCount);
+    }
+    if(componentType === 5124) {
+      return new Int32Array(buffer, bufferOffset, elementCount);
+    }
+    if(componentType === 5125) {
+      return new Uint32Array(buffer, bufferOffset, elementCount);
+    }
+    if(componentType === 5126) {
+      return new Float32Array(buffer, bufferOffset, elementCount);
+    }
     return null;
   };
 /** @private */
-  GltfState._itemSize = function(type) {
+  GltfState._elementsPerValue = function(type) {
     if(type === "SCALAR")return 1;
     if(type === "VEC2")return 2;
     if(type === "VEC3")return 3;
@@ -138,7 +153,7 @@
     return ret;
   };
 /** @private */
-  GltfState._componentSize = function(componentType) {
+  GltfState._bytesPerElement = function(componentType) {
     if(componentType === 5120 || componentType === 5121)return 1;
     if(componentType === 5122 || componentType === 5123)return 2;
     if(componentType === 5124 || componentType === 5125)return 4;
@@ -276,21 +291,21 @@
         if(typeof param.semantic !== "undefined" && param.semantic !== null) {
           var sem = 0;
           if(param.semantic === "MODEL" && param.type === 35676) {
-            sem = H3DU.ShaderInfo.MODEL;
+            sem = H3DU.Semantic.MODEL;
           } else if(param.semantic === "VIEW" && param.type === 35676) {
-            sem = H3DU.ShaderInfo.VIEW;
+            sem = H3DU.Semantic.VIEW;
           } else if(param.semantic === "PROJECTION" && param.type === 35676) {
-            sem = H3DU.ShaderInfo.PROJECTION;
+            sem = H3DU.Semantic.PROJECTION;
           } else if(param.semantic === "MODELVIEW" && param.type === 35676) {
-            sem = H3DU.ShaderInfo.MODELVIEW;
+            sem = H3DU.Semantic.MODELVIEW;
           } else if(param.semantic === "MODELVIEWPROJECTION" && param.type === 35676) {
-            sem = H3DU.ShaderInfo.MODELVIEWPROJECTION;
+            sem = H3DU.Semantic.MODELVIEWPROJECTION;
           } else if(param.semantic === "MODELVIEWINVERSETRANSPOSE" &&
           param.type === 35675) {
-            sem = H3DU.ShaderInfo.MODELVIEWINVERSETRANSPOSE;
+            sem = H3DU.Semantic.MODELVIEWINVERSETRANSPOSE;
           } else if(param.semantic === "VIEWINVERSE" &&
           param.type === 35676) {
-            sem = H3DU.ShaderInfo.VIEWINVERSE;
+            sem = H3DU.Semantic.VIEWINVERSE;
           }
           if(sem === 0) {
             console.log("Unsupported semantic: " + param.semantic);
@@ -343,7 +358,7 @@
       return null;
     }
     var componentType = accessor.componentType;
-    var componentSize = GltfState._componentSize(componentType);
+    var componentSize = GltfState._bytesPerElement(componentType);
     if(componentSize === 0) {
       this.error = "Unsupported component type";
       return null;
@@ -387,17 +402,22 @@
     var bufferData = this.buffers[bufferViewBuffer];
     var viewByteOffset = bufferView.byteOffset;
     var viewByteLength = typeof bufferView.byteLength === "undefined" || bufferView.byteLength === null ? 0 : bufferView.byteLength;
-    var itemSize = GltfState._itemSize(type);
+    var itemSize = GltfState._elementsPerValue(type);
+    var bytesPerElement = GltfState._bytesPerElement(componentType);
     if(itemSize === 0) {
       return null;
     }
     var bufferOffset = viewByteOffset + byteOffset;
-    var bufferEnd = viewByteOffset + viewByteLength;
-    if(bufferOffset > bufferEnd) {
+    var bufferLength = viewByteLength - byteOffset;
+    var elementCount = itemSize * count;
+    if(elementCount < 0) {
       return null;
     }
-    var buf = bufferData.slice(bufferOffset, bufferEnd);
-    var array = GltfState._makeArray(componentType, buf);
+    if(elementCount * bytesPerElement > bufferLength) {
+      this.error = "Buffer can't fit given number of values";
+      return null;
+    }
+    var array = GltfState._makeArray(componentType, bufferData, bufferOffset, elementCount);
     if(!array) {
       return null;
     }
@@ -564,7 +584,6 @@
         }
       }
     this.animChannels = animChannels;
-    console.log(animChannels);
     return this;
   };
 
@@ -661,8 +680,14 @@
           return null;
         }
         var material = this.gltf.materials[prim.material];
+  // TODO: Avoid reading the same material more than once
         if(typeof material.technique !== "undefined" && material.technique !== null) {
+          if(typeof this.gltf.techniques === "undefined" || this.gltf.techniques === null ||
+ (typeof this.gltf.techniques[material.technique] === "undefined" || this.gltf.techniques[material.technique] === null)) {
+            return null;
+          }
           var technique = this.gltf.techniques[material.technique];
+    // TODO: Avoid reading the same technique more than once
           var techInfo = this.readTechnique(technique);
           if(!techInfo) {
             return null;
