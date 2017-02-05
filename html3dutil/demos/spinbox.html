@@ -64,8 +64,7 @@ window.onload = function() {
     Scale = 1;
   Xstep = Step;
   var o = new H3DU.Shape(makeObject())
-     .setColor("white");
-  o.getMaterial().makeBasic();
+     .setMaterial(H3DU.Material.fromBasic("white"));
   sub.addShape(o);
   scene.addShape(sub);
 

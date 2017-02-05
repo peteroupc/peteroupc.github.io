@@ -61,6 +61,8 @@
     this.buffers = {};
     this.shaders = {};
     this.meshes = {};
+    this.materials = {};
+    this.techniques = {};
     this.nodeShapes = {};
     this.error = "";
     this.gltf = gltf;
@@ -81,8 +83,7 @@
         this.version = 1;
     }
     this.programs = this.preparePrograms();
-    // TODO: Why Batch3D and not ShapeGroup?
-    this.batch = new H3DU.Batch3D();
+    this.batch = new H3DU.ShapeGroup();
     this.imageUris = [];
     for(var k in this.gltf.images || {})
       if(Object.prototype.hasOwnProperty.call(this.gltf.images, k)) {
@@ -259,7 +260,16 @@
   };
 
 /** @private */
-  GltfState.prototype.readTechnique = function(technique) {
+  GltfState.prototype.readTechnique = function(techniqueName) {
+    if(typeof this.techniques[techniqueName] !== "undefined" && this.techniques[techniqueName] !== null) {
+      // Technique was already read, return it
+      return this.techniques[techniqueName];
+    }
+    if(typeof this.gltf.techniques === "undefined" || this.gltf.techniques === null ||
+ (typeof this.gltf.techniques[techniqueName] === "undefined" || this.gltf.techniques[techniqueName] === null)) {
+      return null;
+    }
+    var technique = this.gltf.techniques[techniqueName];
     if(typeof technique.program === "undefined" || technique.program === null ||
   typeof this.programs[technique.program] === "undefined" || this.programs[technique.program] === null) {
       return null;
@@ -289,6 +299,7 @@
           unif[uniformKey] = unifValue;
         }
         if(typeof param.semantic !== "undefined" && param.semantic !== null) {
+    // TODO: Semantic + param.node
           var sem = 0;
           if(param.semantic === "MODEL" && param.type === 35676) {
             sem = H3DU.Semantic.MODEL;
@@ -335,11 +346,13 @@
           shader.setSemantic(attributeKey, semantic);
         }
       }
-    return {
+    var ret = {
       "shader":shader,
       "paramTypes":paramTypes,
       "paramValues":paramValues
     };
+    this.techniques[techniqueName] = ret;
+    return ret;
   };
 /** @private */
   GltfState.prototype.arrayFromAccessor = function(accessor) {
@@ -495,6 +508,12 @@
   };
 /** @private */
   GltfState.prototype.readMaterialValues = function(material, techInfo) {
+    var shader = techInfo.shader;
+    if(typeof material.values === "undefined" || material.values === null) {
+      return shader;
+    }
+    // We have parameter values, make a copy of this shader
+    shader = shader.copy();
     for(var materialKey in material.values || {})
       if(Object.prototype.hasOwnProperty.call( material.values, materialKey)) {
         var materialValue = material.values[materialKey];
@@ -517,9 +536,9 @@
           }
           unif[uniformName] = unifValue;
         }
-        techInfo.shader.setUniforms(unif);
+        shader.setUniforms(unif);
       }
-    return this;
+    return shader;
   };
 /** @private */
   GltfState.prototype.readAnimations = function() {
@@ -674,28 +693,29 @@
         maxCount < 65536 ? 2 : 4);
         }
         var shape = GltfState._makeShape(meshBuffer);
-        if(typeof prim.material === "undefined" || prim.material === null ||
-    (typeof this.gltf.materials === "undefined" || this.gltf.materials === null) ||
- (typeof this.gltf.materials[prim.material] === "undefined" || this.gltf.materials[prim.material] === null)) {
+        if(typeof prim.material === "undefined" || prim.material === null) {
           return null;
         }
-        var material = this.gltf.materials[prim.material];
-  // TODO: Avoid reading the same material more than once
-        if(typeof material.technique !== "undefined" && material.technique !== null) {
-          if(typeof this.gltf.techniques === "undefined" || this.gltf.techniques === null ||
- (typeof this.gltf.techniques[material.technique] === "undefined" || this.gltf.techniques[material.technique] === null)) {
+        if(typeof this.materials[prim.material] !== "undefined" && this.materials[prim.material] !== null) {
+          shape.setMaterial(this.materials[prim.material]);
+        } else {
+          if(typeof this.gltf.materials === "undefined" || this.gltf.materials === null ||
+ (typeof this.gltf.materials[prim.material] === "undefined" || this.gltf.materials[prim.material] === null)) {
             return null;
           }
-          var technique = this.gltf.techniques[material.technique];
-    // TODO: Avoid reading the same technique more than once
-          var techInfo = this.readTechnique(technique);
-          if(!techInfo) {
-            return null;
+          var material = this.gltf.materials[prim.material];
+          if(typeof material.technique !== "undefined" && material.technique !== null) {
+            var techInfo = this.readTechnique(material.technique);
+            if(!techInfo) {
+              return null;
+            }
+            var shader = this.readMaterialValues(material, techInfo);
+            if(shader === null || typeof shader === "undefined") {
+              return null;
+            }
+            shape.setMaterialParams({"shader":shader});
           }
-          if(!this.readMaterialValues(material, techInfo)) {
-            return null;
-          }
-          shape.setMaterialParams({"shader":techInfo.shader});
+          this.materials[prim.material] = shape.getMaterial();
         }
         shapeGroup.addShape(shape);
         if(p === 0)firstShape = shape;
@@ -783,7 +803,7 @@
   };
 
 /** @private */
-  Gltf.prototype.getBatch = function() {
+  Gltf.prototype.getShape = function() {
     return this.batch;
   };
 /** @private */
@@ -921,7 +941,7 @@
  * @param {String} url URL of the glTF file to load.
  * @returns {Promise<Object>} A promise; when it resolves, the result will
  * be an object that implements the following methods:<ul>
- * <li><code>getBatch()</code> - Gets an {@link H3DU.Batch3D} object described
+ * <li><code>getShape()</code> - Gets an {@link H3DU.ShapeGroup} object described
  * by the glTF data.
  * <li><code>getImageURIs()</code> - Gets an array of URI (uniform resource identifier)
  * strings for the texture images described by the glTF data. Each URI will be relative

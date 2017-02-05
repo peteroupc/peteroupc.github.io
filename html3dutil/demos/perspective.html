@@ -153,7 +153,7 @@ function frustumMesh(frustum) {
     nearRect[3], nearRect[2], nearRect[0]], thickness);
   meshAddLineStrip(mesh, [farRect[0], farRect[1],
     farRect[3], farRect[2], farRect[0]], thickness);
-  return mesh.setColor3("yellow");
+  return mesh;
 }
 
   // Create the 3D scene; find the HTML canvas and pass it
@@ -187,7 +187,7 @@ for(i = -10; i <= 10; i++) {
   }
   spheres.addShape(shape);
 }
-sub.addShape(new H3DU.Shape(mesh));
+sub.addShape(new H3DU.Shape(mesh).setColor("yellow"));
 sub.addShape(spheres);
   // Set up the render loop
 H3DU.renderLoop(function() {

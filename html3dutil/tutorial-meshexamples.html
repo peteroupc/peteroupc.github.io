@@ -141,24 +141,7 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
 
 <h2>Miscellaneous</h2>
 
-<pre><code>function extrudePath(path, zStart, zEnd, flatness){
- var lines=path.getLines(flatness)
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
- var z1=Math.min(zStart,zEnd)
- var z2=Math.max(zStart,zEnd)
- for(var i=0;i&lt;lines.length;i++){
-  var line=lines[i]
-  mesh.vertex3(line[0],line[1],z1)
-   .vertex3(line[0],line[1],z2)
-   .vertex3(line[2],line[3],z1)
-   .vertex3(line[2],line[3],z1)
-   .vertex3(line[0],line[1],z2)
-   .vertex3(line[2],line[3],z2)
- }
- mesh.recalcNormals()
- return mesh
-}
-// Demonstrates making a mesh plane from triangles
+<pre><code>// Demonstrates making a mesh plane from triangles
 function createPathDisk(path, z, flatness){
  if(z==null)z=0
  var tris=path.getTriangles(flatness);
@@ -178,6 +161,7 @@ function setBoxSizeAndBounds(shape,box){
  shape.setScale(H3DU.Math.boxDimensions(box))
  return shape
 }
+
 function wireBox(box, color){
   if(!color)color=&quot;gray&quot;;
  var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
