@@ -69,7 +69,7 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
 }
 function regularPoly(path, sides, radius, cx, cy, phaseInDegrees) {
   "use strict";
-  if(sides === 0)return path;
+  if(sides <= 0)return path;
   var phase = (phaseInDegrees || 0) * H3DU.Math.ToDegrees;
   for(var i = 0; i < sides; i++) {
     var angle = i * Math.PI * 2 / sides + phase;
@@ -86,7 +86,7 @@ function regularPoly(path, sides, radius, cx, cy, phaseInDegrees) {
 
 function regularStar(path, points, radiusOut, radiusIn, cx, cy, phaseInDegrees) {
   "use strict";
-  if(sides === 0)return path;
+  if(points <= 0)return path;
   var phase = (phaseInDegrees || 0) * H3DU.Math.ToDegrees;
   var sides = points * 2;
   for(var i = 0; i < sides; i++) {

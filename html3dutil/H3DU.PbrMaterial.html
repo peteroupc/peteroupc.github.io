@@ -58,9 +58,9 @@ material.</li>
 <ul>
 <li><a href="#H3DU.PbrMaterial_H3DU.PbrMaterial_copy">copy</a><br>Clones this object&#39;s parameters to a new <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>
 object and returns that object.</li>
-<li><a href="#H3DU.PbrMaterial_H3DU.PbrMaterial_fromBasic">fromBasic</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.PbrMaterial_H3DU.PbrMaterial_fromBasicTexture">fromBasicTexture</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.PbrMaterial_H3DU.PbrMaterial_setParams">setParams</a><br>Sets parameters for this material object.</li>
+<li><a href="#H3DU.PbrMaterial_H3DU.PbrMaterial.fromBasic">H3DU.PbrMaterial.fromBasic</a><br>Creates a material with its emission color set to the given color.</li>
+<li><a href="#H3DU.PbrMaterial_H3DU.PbrMaterial.fromBasicTexture">H3DU.PbrMaterial.fromBasicTexture</a><br>Creates a material with its emission map set to the given texture.</li>
 </ul>
 
 <p><a id='H3DU.PbrMaterial_albedo'></a></p>
@@ -350,26 +350,6 @@ to the same object will be used.</p>
 
 <p>A copy of this object. (Type: <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
 
-<p><a name='H3DU.PbrMaterial_H3DU.PbrMaterial_fromBasic'></a></p>
-
-<h3>H3DU.PbrMaterial#fromBasic()</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
-
-<p><a name='H3DU.PbrMaterial_H3DU.PbrMaterial_fromBasicTexture'></a></p>
-
-<h3>H3DU.PbrMaterial#fromBasicTexture()</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
-
 <p><a name='H3DU.PbrMaterial_H3DU.PbrMaterial_setParams'></a></p>
 
 <h3>H3DU.PbrMaterial#setParams(params)</h3>
@@ -386,6 +366,30 @@ An object whose keys have the possibilities given below, and whose values are th
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
+
+<p><a name='H3DU.PbrMaterial_H3DU.PbrMaterial.fromBasic'></a></p>
+
+<h3>H3DU.PbrMaterial#H3DU.PbrMaterial.fromBasic()</h3>
+
+<p>Creates a material with its emission color set to the given color.
+The effect will be that objects with that material will be drawn in that
+color without shading.</p>
+
+<h4>Return Value</h4>
+
+<p>A new material with the given emission color. (Type: <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
+
+<p><a name='H3DU.PbrMaterial_H3DU.PbrMaterial.fromBasicTexture'></a></p>
+
+<h3>H3DU.PbrMaterial#H3DU.PbrMaterial.fromBasicTexture()</h3>
+
+<p>Creates a material with its emission map set to the given texture.
+The effect will be that objects with that material will be drawn in that
+texture without shading.</p>
+
+<h4>Return Value</h4>
+
+<p>A new material with the given emission map. (Type: <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
