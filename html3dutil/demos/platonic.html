@@ -22,11 +22,6 @@ canvas { width:100%; height:100%; overflow: hidden; }
  http://peteroupc.github.io/
 */
 
-function shiny(color) {
-  "use strict";
-  return new H3DU.PbrMaterial({"diffuse":color});
-}
-
 // Class that positions an HTML text element
 function Label(text, pos) {
   "use strict";
@@ -84,24 +79,24 @@ sub.getLights().setBasic();
 var labels = new Labels(scene, sub);
 var mesh;
 mesh = Polyhedra.hexahedron(4.5, 0);
-var shape = new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15, 5, 0);
+var shape = new H3DU.Shape(mesh).setColor("red").setPosition(-15, 5, 0);
 sub.addShape(shape);
 labels.add("Cube", [-15, 5, 0]);
 mesh = Polyhedra.octahedron(4.5, 0);
 sub.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("blue")).setPosition(-5, 5, 0));
+    new H3DU.Shape(mesh).setColor("blue").setPosition(-5, 5, 0));
 labels.add("Octahedron", [-5, 5, 0]);
 mesh = Polyhedra.icosahedron(4.5, 0);
 sub.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("lime")).setPosition(5, 5, 0));
+    new H3DU.Shape(mesh).setColor("lime").setPosition(5, 5, 0));
 labels.add("Icosahedron", [5, 5, 0]);
 mesh = Polyhedra.tetrahedron(4.5, 0);
 sub.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15, 5, 0));
+    new H3DU.Shape(mesh).setColor("darkorange").setPosition(15, 5, 0));
 labels.add("Tetrahedron", [15, 5, 0]);
 mesh = Polyhedra.dodecahedron(4.5, 0);
 sub.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15, -5, 0));
+    new H3DU.Shape(mesh).setColor("yellow").setPosition(-15, -5, 0));
 labels.add("Dodecahedron", [-15, -5, 0]);
 var rotation = [0, 0, 0];
 var timer = {};

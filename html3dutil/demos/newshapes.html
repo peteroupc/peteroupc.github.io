@@ -12,7 +12,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global H3DU, makeFloor, rotateVec */
+/* global H3DU, createSkysphere, makeFloor, rotateVec */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -31,9 +31,14 @@ canvas { width:100%; height:100%; overflow: hidden; }
   var loader = new H3DU.TextureLoader();
   sub.getLights().setDirectionalLight(0, [0, -3, 1.2], [1, 1, 1]);
   sub.getLights().setDirectionalLight(1, [0, 3, 1.2], [0.6, 0.6, 0.6]);
-  loader.loadAndMapTexturesAll(["461223191.jpg"], scene).then(function(results) {
+  loader.loadAndMapTexturesAll([
+    "461223191.jpg",
+    "bluebackground.png"
+  ], scene).then(function(results) {
     "use strict";
     var mesh = null;
+    var skysphere = createSkysphere(100, results[1]);
+    skysphere.getTransform().setRotation(90, 1, 0, 0);
     sub.addShape(
     new H3DU.Shape(makeFloor(-5, -5, 10, 10, 1)).setTexture(results[0]));
     mesh = H3DU.Meshes.createSphere(0.5);

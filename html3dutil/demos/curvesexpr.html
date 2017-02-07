@@ -37,7 +37,7 @@ Example:<br>
 </div>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global H3DU, addRange, getExpression, updateShape */
+/* global H3DU, getExpression, updateShape */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -180,14 +180,6 @@ function validateConst(value) {
   } catch(ex) {
     return false;
   }
-}
-/* exported pushSetting */
-function pushSetting(ranges, name, label, min, max, step) {
-  "use strict";
-  ranges.push(addRange(label, min, max, step, allsettings[name], function(val) {
-    allsettings[name] = val;
-    updateShape(updateMesh, allsettings, shapeGroup);
-  }));
 }
 function validateListener(id, key) {
   "use strict";

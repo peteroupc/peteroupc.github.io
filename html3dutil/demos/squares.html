@@ -104,32 +104,14 @@ function makePixelate() {
     "}"].join("\n"));
 }
 
-// Public domain: http://www.dspguru.com/dsp/tricks/fixed-point-atan2-with-self-normalization
-var atan2glsl =
-"float arctan2(float y, float x) {" +
-"   float abs_y = abs(y)+1e-10;" +
-"   float r, angle;" +
-"   float divisor = abs_y+abs(x);" +
-"   if (x>=0.0) {" +
-"      r = (x - abs_y) / divisor;" +
-"      angle = 0.78539816339745 - 0.78539816339745 * r;" +
-"    } else {" +
-"       r = (x + abs_y) / divisor;" +
-"       angle = 2.35619449019234 - 0.78539816339745 * r;" +
-"    }" +
-"    if (y < 0.0)return -angle;" +
-"    else return angle;" +
-"}\n";
-
 function makeWarp() {
   "use strict";
   return H3DU.ShaderInfo.makeEffect([
     "uniform float coarseness;", // coarseness in pixels; 1 means normal
-    atan2glsl,
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
     " vec2 norm=uvCoord*2.0-1.0;",
     " float r=length(norm);",
-    " float phi=arctan2(norm.y,norm.x);",
+    " float phi=atan(norm.y,norm.x);",
     " r=sqrt(r);",
     " float x=((r*cos(phi))+1.0)*0.5;",
     " float y=((r*sin(phi))+1.0)*0.5;",
@@ -444,30 +426,25 @@ function linknone() {
   }
 }
 
-function shiny(color) {
-  "use strict";
-  return new H3DU.PbrMaterial({"diffuse":color});
-}
-
 function platonicGroup() {
   "use strict";
   var size = 4.5;
   var group = new H3DU.ShapeGroup();
   var mesh = Polyhedra.hexahedron(size);
   group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("red")).setPosition(-15, 5, 0));
+    new H3DU.Shape(mesh).setColor("red").setPosition(-15, 5, 0));
   mesh = Polyhedra.octahedron(size);
   group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("blue")).setPosition(-5, 5, 0));
+    new H3DU.Shape(mesh).setColor("blue").setPosition(-5, 5, 0));
   mesh = Polyhedra.icosahedron(size);
   group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("lime")).setPosition(5, 5, 0));
+    new H3DU.Shape(mesh).setColor("lime").setPosition(5, 5, 0));
   mesh = Polyhedra.tetrahedron(size);
   group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("darkorange")).setPosition(15, 5, 0));
+    new H3DU.Shape(mesh).setColor("darkorange").setPosition(15, 5, 0));
   mesh = Polyhedra.dodecahedron(size);
   group.addShape(
-    new H3DU.Shape(mesh).setMaterial(shiny("yellow")).setPosition(-15, -5, 0));
+    new H3DU.Shape(mesh).setColor("yellow").setPosition(-15, -5, 0));
   return group;
 }
 

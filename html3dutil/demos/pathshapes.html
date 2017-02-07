@@ -10,6 +10,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../extras/curvetube.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="pathutil.js"></script>
 <script src="https://peteroupc.github.io/colorpicker/cbox.js"></script>
 </head>
 <body>
@@ -25,7 +26,7 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global H3DU, makeAxisLines */
+/* global H3DU, makeAxisLines, pathFloor */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -100,21 +101,6 @@ function regularStar(path, points, radiusOut, radiusIn, cx, cy, phaseInDegrees) 
     else path.lineTo(x, y);
   }
   return path.closePath();
-}
-
-function pathFloor(path, z, flatness) {
-  "use strict";
-  if(z === null || typeof z === "undefined")z = 0;
-  var tris = path.getTriangles(flatness);
-  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0, 0, 1);
-  for(var i = 0; i < tris.length; i++) {
-    var tri = tris[i];
-    mesh.vertex3(tri[0], tri[1], z)
-   .vertex3(tri[2], tri[3], z)
-   .vertex3(tri[4], tri[5], z);
-  }
-  return mesh;
 }
 function extrudePath(path, zStart, zEnd, flatness) {
   "use strict";

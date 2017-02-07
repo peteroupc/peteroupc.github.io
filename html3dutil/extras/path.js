@@ -805,9 +805,11 @@
       if(s[0] !== GraphicsPath.CLOSE) {
         if(firstOrAfterClose) {
           ret.moveTo(endpt[0], endpt[1]);
+          firstOrAfterClose = false;
         } else if(lastptx !== endpt[0] || lastpty !== endpt[1]) {
-          if(lastClosed)
+          if(lastClosed) {
             ret.closePath();
+          }
           lastClosed = false;
           ret.moveTo(endpt[0], endpt[1]);
         }
@@ -815,8 +817,9 @@
         lastpty = startpt[1];
       }
       if(s[0] === GraphicsPath.CLOSE) {
-        if(lastClosed)
+        if(lastClosed) {
           ret.closePath();
+        }
         lastClosed = true;
         firstOrAfterClose = true;
       } else if(s[0] === GraphicsPath.QUAD) {
@@ -824,12 +827,17 @@
       } else if(s[0] === GraphicsPath.CUBIC) {
         ret.bezierCurveTo(s[5], s[6], s[3], s[4], s[1], s[2]);
       } else if(s[0] === GraphicsPath.ARC) {
+        var delta = s[13] - s[12];
+        var reversedSweep = delta < 0;
+        var largeArc = Math.abs(delta) > Math.PI;
         ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
-        s[6], !s[7], s[1], s[2]);
-      } else if(s[0] !== GraphicsPath.CLOSE) {
+        largeArc, reversedSweep, s[1], s[2]);
+      } else if(s[0] === GraphicsPath.LINE) {
         ret.lineTo(s[1], s[2]);
       }
     }
+    if(lastClosed)
+      ret.closePath();
     return ret;
   };
 
@@ -1037,7 +1045,12 @@
  * to "other". If the input paths contain arc
  * segments that differ in the large arc and sweep flags, the flags from
  * the first path's arc are used if "t" is less than 0.5; and the flags from
- * the second path's arc are used otherwise.
+ * the second path's arc are used otherwise.<p>For a nonlinear
+ * interpolation, define a function that takes a value that usually ranges from 0 through 1
+ * and generally returns
+ * A value that usually ranges from 0 through 1, and pass the result of that function to this method.
+ * See the documentation for {@link H3DU.Math.vec3lerp}
+ * for examples of interpolation functions.
  * @returns {H3DU.GraphicsPath} The interpolated path.
  * @memberof! H3DU.GraphicsPath#
  */
