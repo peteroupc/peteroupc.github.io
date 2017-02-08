@@ -35,8 +35,8 @@ function TorusKnot(p, q, outerRadius, innerRadius) {
   "use strict";
   this.period = p;
   this.revolutions = q;
-  this.outerRadius = outerRadius === null || typeof outerRadius === "undefined" ? 1 : outerRadius;
-  this.innerRadius = innerRadius === null || typeof innerRadius === "undefined" ? 0.25 : innerRadius;
+  this.outerRadius = typeof outerRadius === "undefined" || outerRadius === null ? 1 : outerRadius;
+  this.innerRadius = typeof innerRadius === "undefined" || innerRadius === null ? 0.25 : innerRadius;
   this.evaluate = function(u) {
     u *= H3DU.Math.PiTimes2;
     var pu = this.period * u;

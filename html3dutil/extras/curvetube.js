@@ -206,7 +206,7 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  */
 H3DU.CurveTube = function(func, thickness, sweptCurve) {
   "use strict";
-  this.thickness = thickness === null || typeof thickness === "undefined" ? 0.125 : thickness;
+  this.thickness = typeof thickness === "undefined" || thickness === null ? 0.125 : thickness;
   this.sweptCurve = sweptCurve;
   this.func = func;
   this.tangentFinder = new H3DU._FrenetFrames(func);

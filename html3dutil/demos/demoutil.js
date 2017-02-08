@@ -179,9 +179,9 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
 function makeMesh(func, resolutionU, resolutionV) {
     // Default resolution is 50
   "use strict";
-  if(resolutionV === null || typeof resolutionV === "undefined")resolutionV = resolutionU;
-  if(resolutionU === null || typeof resolutionU === "undefined")resolutionU = 50;
-  if(resolutionV === null || typeof resolutionV === "undefined")resolutionV = 50;
+  if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = resolutionU;
+  if(typeof resolutionU === "undefined" || resolutionU === null)resolutionU = 50;
+  if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = 50;
      // create a new mesh
   var mesh = new H3DU.Mesh();
      // define a color gradient evaluator for
@@ -246,7 +246,7 @@ window.addEventListener("load", function() {
 /* exported makeAxisLines */
 function makeAxisLines(width) {
   "use strict";
-  if(width === null || typeof width === "undefined")width = 0.01;
+  if(typeof width === "undefined" || width === null)width = 0.01;
   var xyz = new H3DU.ShapeGroup();
   var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(width / 2.0, 50, 6, 4));
   var zaxis = axisline.copy().setColor("blue");

@@ -42,9 +42,9 @@ var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
   this.yRadius = yRadius;
   this.zRadius = zRadius;
  // exponent for the sines and cosines in U-axis
-  this.n = n === null || typeof n === "undefined" ? 1 : n;
+  this.n = typeof n === "undefined" || n === null ? 1 : n;
  // exponent for the sines and cosines in V-axis
-  this.m = m === null || typeof m === "undefined" ? 1 : m;
+  this.m = typeof m === "undefined" || m === null ? 1 : m;
   this.evaluate = function(u, v) {
     u = 1 - u;
     if(u === 1) {
@@ -82,9 +82,9 @@ var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
   this.yRadius = yRadius;
   this.innerRadius = innerRadius;
  // exponent for the sines and cosines in U-axis
-  this.n = n === null || typeof n === "undefined" ? 1 : n;
+  this.n = typeof n === "undefined" || n === null ? 1 : n;
  // exponent for the sines and cosines in V-axis
-  this.m = m === null || typeof m === "undefined" ? 1 : m;
+  this.m = typeof m === "undefined" || m === null ? 1 : m;
   this.evaluate = function(u, v) {
     u = 1 - u;
     if(u === 1)u = 0;
@@ -124,9 +124,9 @@ var KleinBottle = function() {
 
 var MoebiusLikeStrip = function(maj, a, b) {
   "use strict";
-  this.maj = maj === null || typeof maj === "undefined" ? 1.25 : maj;
-  this.a = a === null || typeof a === "undefined" ? 0.125 : a;
-  this.b = b === null || typeof b === "undefined" ? 0.5 : b;
+  this.maj = typeof maj === "undefined" || maj === null ? 1.25 : maj;
+  this.a = typeof a === "undefined" || a === null ? 0.125 : a;
+  this.b = typeof b === "undefined" || b === null ? 0.5 : b;
   this.evaluate = function(u, v) {
     u *= Math.PI;
     if(v === 1)v = 0;
@@ -149,8 +149,8 @@ var MoebiusLikeStrip = function(maj, a, b) {
 
 var MoebiusStrip = function(radius, width) {
   "use strict";
-  this.radius = radius === null || typeof radius === "undefined" ? 1 : radius;
-  this.width = width === null || typeof width === "undefined" ? 0.5 : width;
+  this.radius = typeof radius === "undefined" || radius === null ? 1 : radius;
+  this.width = typeof width === "undefined" || width === null ? 0.5 : width;
   this.evaluate = function(u, v) {
     u = -this.width + this.width * 2 * u;
     v *= H3DU.Math.PiTimes2;

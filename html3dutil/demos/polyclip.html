@@ -8,12 +8,14 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="../extras/path.js"></script>
 <script type="text/javascript" src="../extras/pathclip.js"></script>
+<script type="text/javascript" src="../extras/pathshapes.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="pathutil.js"></script>
 </head>
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global H3DU */
+/* global H3DU, getPoints, pathFloor */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -24,46 +26,11 @@ canvas { width:100%; height:100%; overflow: hidden; }
  http://peteroupc.github.io/
 */
 
-function circle(path, x, y, radius) {
-  "use strict";
-  return path.moveTo(x, y - radius)
-   .arcTo(x + radius, y - radius, x + radius, y, radius)
-   .arcTo(x + radius, y + radius, x, y + radius, radius)
-   .arcTo(x - radius, y + radius, x - radius, y, radius)
-   .arcTo(x - radius, y - radius, x, y - radius, radius)
-   .closePath();
-}
-var path = circle(new H3DU.GraphicsPath(), 15, 15, 15);
-var path2 = circle(new H3DU.GraphicsPath(), 30, 15, 15);
+var path = new H3DU.GraphicsPath().ellipse(15, 15, 15, 15);
+var path2 = new H3DU.GraphicsPath().ellipse(30, 15, 15, 15);
 path = path.union(path2, 0.2);
 var curves = path.getCurves(0.2);
-function getPoints(curves, numPoints, offset) {
-  "use strict";
-  var points = [];
-  for(var i = 0; i < numPoints; i++) {
-    var t = i / (numPoints - 1) + offset;
-    if(t >= 0.0 && t <= 1.0) {
-      var ev = curves.evaluate(t);
-      points.push([ev[0], ev[1]]);
-    }
-  }
-  return points;
-}
 
-function pathFloor(path, z, flatness) {
-  "use strict";
-  if(z === null || typeof z === "undefined")z = 0;
-  var tris = path.getTriangles(flatness);
-  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0, 0, 1);
-  for(var i = 0; i < tris.length; i++) {
-    var tri = tris[i];
-    mesh.vertex3(tri[0], tri[1], z)
-   .vertex3(tri[2], tri[3], z)
-   .vertex3(tri[4], tri[5], z);
-  }
-  return mesh;
-}
 function pointMarch(
   group, // shape group containing the marching points
   curves, // curves of the path

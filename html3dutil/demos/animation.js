@@ -35,7 +35,7 @@ Animator._compact = function(arr) {
     if(fillOffset !== i && arr[i] !== null) {
       arr[fillOffset] = arr[i];
       fillOffset++;
-    } else if(arr[i] !== null && typeof arr[i] !== "undefined") {
+    } else if(typeof arr[i] !== "undefined" && arr[i] !== null) {
       fillOffset++;
     }
   }
@@ -153,7 +153,7 @@ Animator.prototype.update = function(time) {
 /* exported makeFloor */
 function makeFloor(xStart, yStart, width, height, tileSize, z) {
   "use strict";
-  if(z === null || typeof z === "undefined")z = 0.0;
+  if(typeof z === "undefined" || z === null)z = 0.0;
   var mesh = new H3DU.Mesh();
   var tilesX = Math.ceil(width / tileSize);
   var tilesY = Math.ceil(height / tileSize);

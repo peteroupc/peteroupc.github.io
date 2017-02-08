@@ -31,7 +31,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
   function makeMesh(func, resolution) {
     "use strict";
     // Default resolution is 50
-    if(resolution === null || typeof resolution === "undefined")resolution = 50;
+    if(typeof resolution === "undefined" || resolution === null)resolution = 50;
      // create a new mesh
     var mesh = new H3DU.Mesh();
      // define a color gradient evaluator for

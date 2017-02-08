@@ -229,7 +229,7 @@ H3DU.InputTracker.prototype.mousewheel = function(func) {
 H3DU.InputTracker._getPageX = function(o) {
   "use strict";
   var x = 0;
-  while(o !== null && typeof o !== "undefined") {
+  while(typeof o !== "undefined" && o !== null) {
     if(typeof o.offsetLeft !== "undefined")
       x += o.offsetLeft;
     o = o.offsetParent;
@@ -240,7 +240,7 @@ H3DU.InputTracker._getPageX = function(o) {
 H3DU.InputTracker._getPageY = function(o) {
   "use strict";
   var x = 0;
-  while(o !== null && typeof o !== "undefined") {
+  while(typeof o !== "undefined" && o !== null) {
     if(typeof o.offsetTop !== "undefined")
       x += o.offsetTop;
     o = o.offsetParent;

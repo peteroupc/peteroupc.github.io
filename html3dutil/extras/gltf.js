@@ -186,7 +186,7 @@
         }
         var vs = this.shaders[programValue.vertexShader];
         var fs = this.shaders[programValue.fragmentShader];
-        if(vs === null || typeof vs === "undefined" || (fs === null || typeof fs === "undefined")) {
+        if(typeof vs === "undefined" || vs === null || (((typeof fs === "undefined" || fs === null)))) {
           this.error = Promise.reject("missing shader");
           return null;
         }
@@ -197,7 +197,7 @@
 
 /** @private */
   GltfState.prototype.readTexture = function(texture) {
-    if(typeof texture === "undefined" || (texture === null || typeof texture === "undefined")) {
+    if(typeof texture === "undefined" || texture === null) {
       return null;
     }
     if(typeof texture.sampler === "undefined" || texture.sampler === null) {
@@ -249,8 +249,7 @@
       uniformValue = paramValue;
     }
     if(paramType === 35678) {
-      if(typeof this.gltf.textures === "undefined" || this.gltf.textures === null ||
-      typeof this.gltf.textures[uniformValue] === "undefined" || this.gltf.textures[uniformValue] === null) {
+      if(typeof this.gltf.textures === "undefined" || this.gltf.textures === null || this.gltf.textures[uniformValue] === null) {
         return null;
       }
       var tex = this.gltf.textures[uniformValue];
@@ -270,8 +269,7 @@
       return null;
     }
     var technique = this.gltf.techniques[techniqueName];
-    if(typeof technique.program === "undefined" || technique.program === null ||
-  typeof this.programs[technique.program] === "undefined" || this.programs[technique.program] === null) {
+    if(typeof technique.program === "undefined" || technique.program === null || this.programs[technique.program] === null) {
       return null;
     }
     var program = this.programs[technique.program];
@@ -293,7 +291,7 @@
         paramTypes[uniformKey] = param.type;
         if(typeof param.value !== "undefined" && param.value !== null) {
           var unifValue = this.getUniformValue( param.type, param.value);
-          if(unifValue === null || typeof unifValue === "undefined") {
+          if(typeof unifValue === "undefined" || unifValue === null) {
             return null;
           }
           unif[uniformKey] = unifValue;
@@ -342,7 +340,7 @@
           return null;
         }
         var semantic = param.semantic || null;
-        if(semantic !== null && typeof semantic !== "undefined") {
+        if(typeof semantic !== "undefined" && semantic !== null) {
           shader.setSemantic(attributeKey, semantic);
         }
       }
@@ -356,7 +354,7 @@
   };
 /** @private */
   GltfState.prototype.arrayFromAccessor = function(accessor) {
-    if(typeof accessor === "undefined" || (accessor === null || typeof accessor === "undefined")) {
+    if(typeof accessor === "undefined" || accessor === null) {
       return null;
     }
     if(typeof accessor.bufferView === "undefined" || accessor.bufferView === null) {
@@ -448,11 +446,11 @@
   };
 /** @private */
   GltfState.prototype.readSampler = function(sampler, parameters) {
-    if(typeof sampler === "undefined" || (sampler === null || typeof sampler === "undefined")) {
+    if(typeof sampler === "undefined" || sampler === null) {
       return null;
     }
     if(this.version === 0) {
-      if(typeof parameters === "undefined" || (parameters === null || typeof parameters === "undefined")) {
+      if(typeof parameters === "undefined" || parameters === null) {
         return null;
       }
     }
@@ -500,7 +498,7 @@
       this.error = "Input's component type is not FLOAT";
       return null;
     }
-    if(inputBuffer === null || typeof inputBuffer === "undefined" || (outputBuffer === null || typeof outputBuffer === "undefined")) {
+    if(typeof inputBuffer === "undefined" || inputBuffer === null || (((typeof outputBuffer === "undefined" || outputBuffer === null)))) {
       this.error = "Can't read input or output from sampler";
       return null;
     }
@@ -531,7 +529,7 @@
           }
           var materialType = techInfo.paramTypes[uniformName];
           var unifValue = this.getUniformValue(materialType, materialValue);
-          if(unifValue === null || typeof unifValue === "undefined") {
+          if(typeof unifValue === "undefined" || unifValue === null) {
             return null;
           }
           unif[uniformName] = unifValue;
@@ -552,7 +550,7 @@
           if(Object.prototype.hasOwnProperty.call(animationValue.samplers, samplerKey)) {
             var samplerValue = animationValue.samplers[samplerKey];
             var sampler = this.readSampler(samplerValue, params);
-            if(typeof sampler === "undefined" || (sampler === null || typeof sampler === "undefined")) {
+            if(typeof sampler === "undefined" || sampler === null) {
               return null;
             }
             samplers[samplerKey] = sampler;
@@ -710,7 +708,7 @@
               return null;
             }
             var shader = this.readMaterialValues(material, techInfo);
-            if(shader === null || typeof shader === "undefined") {
+            if(typeof shader === "undefined" || shader === null) {
               return null;
             }
             shape.setMaterialParams({"shader":shader});
@@ -763,10 +761,10 @@
     var defaultScene = typeof this.gltf.scene === "undefined" ? null : this.gltf.scene;
     var scenes = typeof this.gltf.scenes === "undefined" || this.gltf.scenes === null ? [] : this.gltf.scenes;
     var sceneKeys = Object.keys(scenes);
-    if((defaultScene === null || typeof defaultScene === "undefined") && sceneKeys.length === 1) {
+    if((((typeof defaultScene === "undefined" || defaultScene === null))) && sceneKeys.length === 1) {
       defaultScene = sceneKeys[0];
     }
-    if(defaultScene === null || typeof defaultScene === "undefined") {
+    if(typeof defaultScene === "undefined" || defaultScene === null) {
       // nothing to render
       return this;
     }
@@ -906,7 +904,7 @@
     for(var bufferName in gltf.buffers || {})
       if(Object.prototype.hasOwnProperty.call( gltf.buffers, bufferName)) {
         var bufferValue = gltf.buffers[bufferName];
-        if(typeof bufferValue === "undefined" || (bufferValue === null || typeof bufferValue === "undefined")) {
+        if(typeof bufferValue === "undefined" || bufferValue === null) {
           return Promise.reject("buffer not found");
         }
         var uri = GltfState._resolvePath(path, bufferValue.uri);
@@ -917,7 +915,7 @@
     for(var shaderName in gltf.shaders || {})
       if(Object.prototype.hasOwnProperty.call( gltf.shaders, shaderName)) {
         var shaderValue = gltf.shaders[shaderName];
-        if(typeof shaderValue === "undefined" || (shaderValue === null || typeof shaderValue === "undefined")) {
+        if(typeof shaderValue === "undefined" || shaderValue === null) {
           return Promise.reject("shader not found");
         }
         uri = GltfState._resolvePath(path, shaderValue.uri);

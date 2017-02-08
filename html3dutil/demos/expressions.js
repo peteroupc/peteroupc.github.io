@@ -15,7 +15,7 @@ var Extras = {
       if(fillOffset !== i && arr[i] !== null) {
         arr[fillOffset] = arr[i];
         fillOffset++;
-      } else if(arr[i] !== null && typeof arr[i] !== "undefined") {
+      } else if(typeof arr[i] !== "undefined" && arr[i] !== null) {
         fillOffset++;
       }
     }
@@ -136,7 +136,7 @@ var Operation = function(operator) {
 };
 var Constant = function(value, name) {
   "use strict";
-  if (name === null || typeof name === "undefined") {
+  if (typeof name === "undefined" || name === null) {
     name = null;
   }
   this.negative = value < 0;
@@ -257,7 +257,7 @@ Expression.simplifyNodes = function(nodes) {
         continue;
       }
       d = node instanceof Operator;
-      if (d !== false && (d !== null && typeof d !== "undefined") ? Extras.includes(pass, node.name) : d) {
+      if (d !== false && (((typeof d !== "undefined" && d !== null))) ? Extras.includes(pass, node.name) : d) {
         nextNode = nodes[i + 1];
         if (!Expression.isExpr(prevNode) || !Expression.isExpr(nextNode)) {
           throw new Error("expressions expected between operator");
@@ -380,7 +380,7 @@ Operation.prototype.simplify = function() {
   var neg;
   var j;
   Expression.simplifyNodes(this.nodes);
-  if ((b = (c = this.operator === "plus") !== false && (c !== null && typeof c !== "undefined") ? c : this.operator === "mul") !== false && (b !== null && typeof b !== "undefined") ? b : this.operator === "div") {
+  if ((b = (c = this.operator === "plus") !== false && (((typeof c !== "undefined" && c !== null))) ? c : this.operator === "mul") !== false && (((typeof b !== "undefined" && b !== null))) ? b : this.operator === "div") {
     done = false;
  // resimplify = false;
     while (!(b = done)) {
@@ -419,8 +419,8 @@ Operation.prototype.simplify = function() {
             for (n__ = 0; n__ < node.nodes.length; n__++) {
               n = node.nodes[n__];
               c = n.constantValue();
-              if (c !== null && typeof c !== "undefined") {
-                if (cv === null || typeof cv === "undefined") {
+              if (typeof c !== "undefined" && c !== null) {
+                if (typeof cv === "undefined" || cv === null) {
                   cv = 1;
                 }
                 cv /= c;
@@ -428,7 +428,7 @@ Operation.prototype.simplify = function() {
                 haveNonconst = true;
               }
             }
-            if (cv !== null && typeof cv !== "undefined" && !haveNonconst) {
+            if (typeof cv !== "undefined" && cv !== null && !haveNonconst) {
               this.nodes.push(new Constant(cv));
               this.nodes[i] = null;
               done = false;
@@ -491,12 +491,12 @@ Operation.prototype.simplify = function() {
             this.nodes.splice(0, this.nodes.length);
             this.nodes[0] = neg;
             return this;
-          } else if (cv !== null && typeof cv !== "undefined" && (constVals !== null && typeof constVals !== "undefined")) {
+          } else if (typeof cv !== "undefined" && cv !== null && (((typeof constVals !== "undefined" && constVals !== null)))) {
             constVals *= cv;
             this.nodes[constValsIndex] = new Constant(constVals);
             this.nodes[i] = null;
             done = false;
-          } else if (cv !== null && typeof cv !== "undefined") {
+          } else if (typeof cv !== "undefined" && cv !== null) {
             constVals = cv;
             constValsIndex = i;
           }
@@ -526,7 +526,7 @@ Operation.prototype.degen = function() {
     }
   }
   cv = this.constantValue();
-  if (!(cv === null || typeof cv === "undefined")) {
+  if (!(((typeof cv === "undefined" || cv === null)))) {
     return new Constant(cv);
   }
   return this;
@@ -544,15 +544,15 @@ Operation.prototype.constantValue = function() {
     node = null,
     cv = null;
 
-  if ((b = (c = this.operator === "plus") !== false && (c !== null && typeof c !== "undefined") ? c : this.operator === "mul") !== false && (b !== null && typeof b !== "undefined") ? b : this.operator === "div") {
+  if ((b = (c = this.operator === "plus") !== false && (((typeof c !== "undefined" && c !== null))) ? c : this.operator === "mul") !== false && (((typeof b !== "undefined" && b !== null))) ? b : this.operator === "div") {
     val = null;
     for (node__ = 0; node__ < this.nodes.length; node__++) {
       node = this.nodes[node__];
       cv = node.constantValue();
-      if (cv === null || typeof cv === "undefined") {
+      if (typeof cv === "undefined" || cv === null) {
         return null;
       }
-      if (val === null || typeof val === "undefined") {
+      if (typeof val === "undefined" || val === null) {
         val = cv;
       } else {
         if (this.operator === "plus") {
@@ -574,7 +574,7 @@ Operation.prototype.constantValue = function() {
     if(this.operator === "pow") {
       var cv1 = this.nodes[0].constantValue();
       var cv2 = this.nodes[1].constantValue();
-      if(cv1 !== null && typeof cv1 !== "undefined" && (cv2 !== null && typeof cv2 !== "undefined")) {
+      if(typeof cv1 !== "undefined" && cv1 !== null && (((typeof cv2 !== "undefined" && cv2 !== null)))) {
         var ret = Math.pow(cv1, cv2);
         return this.negative ? -ret : ret;
       }
@@ -735,9 +735,9 @@ Operation.prototype.toJSString = function() {
         throw new Error("invalid variable " + i.name);
       }
     }
-    paren = (b = i instanceof Operation, b !== false && (b !== null && typeof b !== "undefined") ? (c = (d = i.operator === "plus") !== false && (d !== null && typeof d !== "undefined") ?
-       d : i.operator === "mul") !== false && (c !== null && typeof c !== "undefined") ? c : i.operator === "div" : b);
-    opArray.push(paren !== false && (paren !== null && typeof paren !== "undefined") ? "(" + i.toJSString() + ")" : i.toJSString());
+    paren = (b = i instanceof Operation, b !== false && (((typeof b !== "undefined" && b !== null))) ? (c = (d = i.operator === "plus") !== false && (((typeof d !== "undefined" && d !== null))) ?
+       d : i.operator === "mul") !== false && (((typeof c !== "undefined" && c !== null))) ? c : i.operator === "div" : b);
+    opArray.push(paren !== false && (((typeof paren !== "undefined" && paren !== null))) ? "(" + i.toJSString() + ")" : i.toJSString());
   }
 
   if (this.operator === "plus") {
@@ -791,10 +791,10 @@ Operation.prototype.toString = function() {
   opArray = [];
   for (i__ = 0; i__ < this.nodes.length; i__++) {
     i = this.nodes[i__];
-    paren = (b = i instanceof Operation, b !== false && (b !== null && typeof b !== "undefined") ?
-        (c = (d = i.operator === "plus") !== false && (d !== null && typeof d !== "undefined") ? d : i.operator === "mul") !== false &&
-        (c !== null && typeof c !== "undefined") ? c : i.operator === "div" : b);
-    opArray.push(paren !== false && (paren !== null && typeof paren !== "undefined") ? "(" + i.toString() + ")" : i.toString());
+    paren = (b = i instanceof Operation, b !== false && (((typeof b !== "undefined" && b !== null))) ?
+        (c = (d = i.operator === "plus") !== false && (((typeof d !== "undefined" && d !== null))) ? d : i.operator === "mul") !== false &&
+        (((typeof c !== "undefined" && c !== null))) ? c : i.operator === "div" : b);
+    opArray.push(paren !== false && (((typeof paren !== "undefined" && paren !== null))) ? "(" + i.toString() + ")" : i.toString());
   }
 
   if (this.operator === "plus") {
@@ -1161,7 +1161,7 @@ var getExpression = function(expr) {
     lastexpr = expressions[expressions.length - 1];
     if (token[0] === "lparen") {
       prevexpr = lastexpr.nodes.length === 0 ? null : lastexpr.nodes[lastexpr.nodes.length - 1];
-      if ((c = prevexpr !== false && (prevexpr !== null && typeof prevexpr !== "undefined")) ? (d = (e = prevexpr instanceof Constant) !== false && (e !== null && typeof e !== "undefined") ? e : prevexpr instanceof Variable) !== false && (d !== null && typeof d !== "undefined") ? d : prevexpr instanceof Expression : c) {
+      if ((c = prevexpr !== false && (((typeof prevexpr !== "undefined" && prevexpr !== null)))) ? (d = (e = prevexpr instanceof Constant) !== false && (((typeof e !== "undefined" && e !== null))) ? e : prevexpr instanceof Variable) !== false && (((typeof d !== "undefined" && d !== null))) ? d : prevexpr instanceof Expression : c) {
         lastexpr.nodes.push(new Operator("mul"));
       }
       expressions.push(new Expression());
@@ -1172,7 +1172,7 @@ var getExpression = function(expr) {
       }
       expressions[expressions.length - 1].nodes.push(lastexpr);
     } else if (token[0] === "function") {
-      if (!((c = i + 1 >= tokens.length) !== false && (c !== null && typeof c !== "undefined") ? c : tokens[i + 1][0] === "lparen")) {
+      if (!((c = i + 1 >= tokens.length) !== false && (((typeof c !== "undefined" && c !== null))) ? c : tokens[i + 1][0] === "lparen")) {
         throw new Error("left paren expected");
       }
       i += 1;
@@ -1180,8 +1180,8 @@ var getExpression = function(expr) {
     } else if (token[0] === "constant") {
       if (token[1] < 0) {
         prevexpr = lastexpr.nodes.length === 0 ? null : lastexpr.nodes[lastexpr.nodes.length - 1];
-        if ((c = prevexpr !== false && (prevexpr !== null && typeof prevexpr !== "undefined")) ?
-          !((d = prevexpr instanceof Operator, d !== false && (d !== null && typeof d !== "undefined") ? prevexpr.name === "pow" : d)) : c) {
+        if ((c = prevexpr !== false && (((typeof prevexpr !== "undefined" && prevexpr !== null)))) ?
+          !((d = prevexpr instanceof Operator, d !== false && (((typeof d !== "undefined" && d !== null))) ? prevexpr.name === "pow" : d)) : c) {
           lastexpr.nodes.push(new Operator("plus"));
         }
         lastexpr.nodes.push(new Constant(token[1]));
@@ -1190,13 +1190,13 @@ var getExpression = function(expr) {
       }
     } else if (token[0] === "variable") {
       prevexpr = lastexpr.nodes.length === 0 ? null : lastexpr.nodes[lastexpr.nodes.length - 1];
-      if ((c = prevexpr !== false && (prevexpr !== null && typeof prevexpr !== "undefined")) ? (d = (e = prevexpr instanceof Constant) !== false && (e !== null && typeof e !== "undefined") ? e : prevexpr instanceof Variable) !== false && (d !== null && typeof d !== "undefined") ? d : prevexpr instanceof Expression : c) {
+      if ((c = prevexpr !== false && (((typeof prevexpr !== "undefined" && prevexpr !== null)))) ? (d = (e = prevexpr instanceof Constant) !== false && (((typeof e !== "undefined" && e !== null))) ? e : prevexpr instanceof Variable) !== false && (((typeof d !== "undefined" && d !== null))) ? d : prevexpr instanceof Expression : c) {
         lastexpr.nodes.push(new Operator("mul"));
       }
       lastexpr.nodes.push(new Variable(token[1]));
     } else if (token[0] === "knownconstant") {
       prevexpr = lastexpr.nodes.length === 0 ? null : lastexpr.nodes[lastexpr.nodes.length - 1];
-      if ((c = prevexpr !== false && (prevexpr !== null && typeof prevexpr !== "undefined")) ? (d = (e = prevexpr instanceof Constant) !== false && (e !== null && typeof e !== "undefined") ? e : prevexpr instanceof Variable) !== false && (d !== null && typeof d !== "undefined") ? d : prevexpr instanceof Expression : c) {
+      if ((c = prevexpr !== false && (((typeof prevexpr !== "undefined" && prevexpr !== null)))) ? (d = (e = prevexpr instanceof Constant) !== false && (((typeof e !== "undefined" && e !== null))) ? e : prevexpr instanceof Variable) !== false && (((typeof d !== "undefined" && d !== null))) ? d : prevexpr instanceof Expression : c) {
         lastexpr.nodes.push(new Operator("mul"));
       }
       lastexpr.nodes.push(new Constant(null, token[1]));
@@ -1352,7 +1352,7 @@ var findPartialDerivative = function(expr, differential) {
     } else if(ex.isOperation("pow")) {
       cv = ex.constantValue(ex.get(1));
       var cv0 = ex.constantValue(ex.get(0));
-      if(cv === null || typeof cv === "undefined" || Math.floor(cv) === cv || (cv0 === null || typeof cv0 === "undefined" || cv0 > 0)) {
+      if(typeof cv === "undefined" || cv === null || Math.floor(cv) === cv || (typeof cv0 === "undefined" || cv0 === null || cv0 > 0)) {
            // only works for rational exponents
         return findPartialDerivative(ex.get(1).multiply(Operation.func("ln", ex.get(0))), differential);
       }
@@ -1364,8 +1364,8 @@ var findPartialDerivative = function(expr, differential) {
   } else if (expr.isOperation("abs")) {
     ex = expr.get(0);
     cv = ex.getConstantValue();
-    if(cv !== null && typeof cv !== "undefined" && cv < 0)return new Constant(-1);
-    if(cv !== null && typeof cv !== "undefined" && cv > 0)return new Constant(1);
+    if(typeof cv !== "undefined" && cv !== null && cv < 0)return new Constant(-1);
+    if(typeof cv !== "undefined" && cv !== null && cv > 0)return new Constant(1);
     ret = ex.divide(Operation.func("abs", ex))
        .multiply(expr.negative ? -1 : 1);
     return ret.multiply(findPartialDerivative(expr.get(0), differential));

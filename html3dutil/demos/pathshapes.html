@@ -22,7 +22,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:sampleShape(4)">Octagon Figure</a>,
 <a href="javascript:sampleShape(5)">Nine-Pointed Star Figure</a>
 <br>
-Color: <input type=color value="#E0E0E0" id=colorsetting>
+Color: <input type=color value="#E0E0E0" id=colorsetting><br>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
@@ -36,7 +36,6 @@ Color: <input type=color value="#E0E0E0" id=colorsetting>
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-
 // Make a polygon with a hole
 var path = new H3DU.GraphicsPath()
  .moveTo(-1, 1, 0)
@@ -45,7 +44,8 @@ var path = new H3DU.GraphicsPath()
  .lineTo(1, -1)
  .lineTo(0, -1)
  .arcTo(-1, -1, -1, 0, 1)
- .closePath()
+ .closePath().reverse();
+var path2 = new H3DU.GraphicsPath()
  .moveTo(-0.5, 0.5, 0)
  .lineTo(-0.5, 0)
  .arcTo(-0.5, -0.5, 0, -0.5, 0.5)
@@ -54,6 +54,7 @@ var path = new H3DU.GraphicsPath()
  .arcTo(0.5, 0.5, 0, 0.5, 0.5)
  .lineTo(-0.5, 0.5)
  .closePath().reverse();
+path = path.merge(path2);
 
 function makeTubeFromPath(path, flatness, thickness, pathSection) {
   "use strict";
@@ -81,7 +82,6 @@ function regularPoly(path, sides, radius, cx, cy, phaseInDegrees) {
     if(i === 0)path.moveTo(x, y);
     else path.lineTo(x, y);
   }
-  console.log(path);
   return path.closePath();
 }
 

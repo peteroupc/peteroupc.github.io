@@ -82,7 +82,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
     for(i = 0; i < spl.length; i++) {
       spl[i] = parseInt(spl[i], 10);
     }
-  } else if(str !== null && typeof str !== "undefined" &&
+  } else if(typeof str !== "undefined" && str !== null &&
    str.constructor === Array && str.length >= minLength) {
     return str;
   } else {
@@ -290,7 +290,7 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
     textures = [textures];
   }
   var shader = null;
-  var hasColor = color !== null && typeof color !== "undefined";
+  var hasColor = typeof color !== "undefined" && color !== null;
   if(hasColor) {
     shader = new H3DU.ShaderInfo(null, H3DU.TextFont._textShader(msdf));
   }
@@ -624,7 +624,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
   while (offset < view.byteLength) {
     var type = view.getUint8(offset);
     var size = view.getUint32(offset + 1, true);
-    if(type === null || typeof type === "undefined" || type < 1 || type > 5) {
+    if(typeof type === "undefined" || type === null || type < 1 || type > 5) {
       return null;
     }
     if(havetype[type]) {
@@ -685,7 +685,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
       }
       for(var x = 0; x < size; x += ss + 1) {
         var name = utf8string(view, offset, offset + ss + 1);
-        if(name === null || typeof name === "undefined") {
+        if(typeof name === "undefined" || name === null) {
           return null;
         }
         pages.push(H3DU.TextFont._resolvePath(data.url, name));
@@ -1016,11 +1016,11 @@ H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
 H3DU.TextureAtlas.prototype._makeSprite = function(name, index, x, y, meshesForPage) {
   "use strict";
   var sprite = null;
-  if(name === null || typeof name === "undefined")return;
+  if(typeof name === "undefined" || name === null)return;
   if(Object.prototype.hasOwnProperty.call(this.sprites, name)) {
     sprite = this.sprites[name];
     if(sprite instanceof Array) {
-      if(index >= 0 && (index !== null && typeof index !== "undefined")) {
+      if(index >= 0 && (((typeof index !== "undefined" && index !== null)))) {
         sprite = sprite[index] || null;
       } else {
         sprite = null;
@@ -1209,7 +1209,7 @@ H3DU.TextureAtlas._loadText = function(data) {
   for(i = 0; i < sprites.length; i++) {
     var si = sprites[i];
     var index = si.index === null ? -1 : si.index;
-    if(spriteHash[si.name] === null || typeof spriteHash[si.name] === "undefined") {
+    if(typeof spriteHash[si.name] === "undefined" || spriteHash[si.name] === null) {
       if(index >= 0) {
         spriteHash[si.name] = [];
         spriteHash[si.name][index] = si;

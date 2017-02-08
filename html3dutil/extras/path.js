@@ -21,20 +21,160 @@
   if (exports.H3DU && exports.H3DU.GraphicsPath) {
     return;
   }
-/**
- * Represents a two-dimensional path.
- * <p>This class is considered a supplementary class to the
- * Public Domain HTML 3D Library and is not considered part of that
- * library. <p>
- * To use this class, you must include the script "extras/path.js"; the
- * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * Some methods may be defined in other scripts, in which case the
- * script to be included this way will be mentioned.
- * @alias H3DU.GraphicsPath
- * @class
- */
+
+  var LinkedListNode = function(item) {
+    this.data = item;
+    this.prev = null;
+    this.next = null;
+  };
+
+  var LinkedList = function() {
+    this.root = null;
+    this._last = null;
+    this.size = function() {
+      var k = this.root;
+      var ret = 0;
+      while(k) {
+        ret++;
+        k = k.next;
+      }
+      return ret;
+    };
+    this.first = function() {
+      return this.root;
+    };
+    this.last = function() {
+      return this._last;
+    };
+    this.front = function() {
+      return this.root ? this.root.data : null;
+    };
+    this.back = function() {
+      return this._last ? this._last.data : null;
+    };
+    this.clear = function() {
+      this.root = this._last = null;
+    };
+    this.spliceToBegin = function(list) {
+      if(list.root) {
+        this.root.prev = list._last;
+        list._last.next = this.root;
+        this.root = list.root;
+        list.clear();
+      }
+    };
+    this.spliceToEnd = function(list) {
+      if(list.root) {
+        this._last.next = list.root;
+        list.root.prev = this._last;
+        this._last = list._last;
+        list.clear();
+      }
+    };
+    this.spliceOneToEnd = function(list, listNode) {
+      list.erase(listNode);
+      return this.push(listNode.data);
+    };
+    this.erase = function(node) {
+      if(!node)return this;
+      if(node === this.root) {
+        this.root = node.next;
+      }
+      if(node === this._last) {
+        this._last = node.prev;
+      }
+      if(node.prev)
+        node.prev.next = node.next;
+      if(node.next)
+        node.next.prev = node.prev;
+      return this;
+    };
+    this.insertAfter = function(item, node) {
+      var newNode = new LinkedListNode(item);
+      if(node === this._last)
+        this._last = newNode;
+      var oldNext = node.next;
+      node.next = newNode;
+      newNode.prev = node;
+      newNode.next = oldNext;
+      if(oldNext) {
+        oldNext.prev = newNode;
+      }
+      return newNode;
+    };
+    this.push = function(item) {
+      if(!this.root) {
+        this.root = this._last = new LinkedListNode(item);
+      } else {
+        var node = new LinkedListNode(item);
+        this._last.next = node;
+        node.prev = this._last;
+        this._last = node;
+      }
+      return this;
+    };
+    this.reverse = function() {
+      var s = this.root;
+      var e = this._last;
+      if(!s)return;
+      var oldlast = e;
+      var oldroot = s;
+      while(s) {
+        var n = s.next;
+        var p = s.prev;
+        s.prev = n;
+        s.next = p;
+        s = n;
+      }
+      this.root = oldlast;
+      this._last = oldroot;
+      return this;
+    };
+    this.unshift = function(item) {
+      if(!this.root) {
+        this.root = this._last = new LinkedListNode(item);
+      } else {
+        var node = new LinkedListNode(item);
+        this.root.prev = node;
+        node.next = this.root;
+        this.root = node;
+      }
+      return this;
+    };
+    this.pop = function() {
+      if(this._last) {
+        if(this._last.prev)
+          this._last.prev.next = null;
+        this._last = this._last.prev;
+      }
+      return this;
+    };
+    this.shift = function() {
+      if(this.root) {
+        if(this.root.next)
+          this.root.next.prev = null;
+        this.root = this.root.next;
+      }
+      return this;
+    };
+  };
+
+  // --------------------------------------------------
+
+  /**
+   * Represents a two-dimensional path.
+   * <p>This class is considered a supplementary class to the
+   * Public Domain HTML 3D Library and is not considered part of that
+   * library. <p>
+   * To use this class, you must include the script "extras/path.js"; the
+   * class is not included in the "h3du_min.js" file which makes up
+   * the HTML 3D Library. Example:<pre>
+   * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
+   * Some methods may be defined in other scripts, in which case the
+   * script to be included this way will be mentioned.
+   * @alias H3DU.GraphicsPath
+   * @class
+   */
   function GraphicsPath() {
     this.segments = [];
     this.incomplete = false;
@@ -228,7 +368,7 @@
   };
 /** @private */
   GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, list, flatness, mode, depth) {
-    if(depth === null || typeof depth === "undefined")depth = 0;
+    if(typeof depth === "undefined" || depth === null)depth = 0;
  /* if(depth<1) {
   // subdivide the curve at the inflection points
   var ax=a1-3*a3+3*a5-a7
@@ -266,7 +406,7 @@
   };
 /** @private */
   GraphicsPath._flattenQuad = function(a1, a2, a3, a4, a5, a6, t1, t2, list, flatness, mode, depth) {
-    if(depth === null || typeof depth === "undefined")depth = 0;
+    if(typeof depth === "undefined" || depth === null)depth = 0;
     if(depth >= 20 || Math.abs(a1 - a3 - a3 + a5) + Math.abs(a2 - a4 - a4 + a6) <= flatness) {
       if(mode === 0) {
         list.push([a1, a2, a5, a6]);
@@ -298,7 +438,7 @@
   };
 /** @private */
   GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1, theta2, t1, t2, list, flatness, mode, depth) {
-    if(depth === null || typeof depth === "undefined")depth = 0;
+    if(typeof depth === "undefined" || depth === null)depth = 0;
     var thetaMid = (theta1 + theta2) * 0.5;
     var tmid = (t1 + t2) * 0.5;
     var ca = Math.cos(thetaMid);
@@ -351,7 +491,8 @@
   GraphicsPath.prototype.merge = function(path) {
     var oldpos = null;
     if(!path)return this;
-    for(var i = 0; i < path.segments.length; i++) {
+    var segsLength = path.segments.length;
+    for(var i = 0; i < segsLength; i++) {
       var a = path.segments[i];
       if(a[0] === GraphicsPath.CLOSE) {
         this.closePath();
@@ -362,7 +503,7 @@
         }
         oldpos = GraphicsPath._endPoint(a);
         if(a[0] === GraphicsPath.LINE) {
-          this.lineTo(start[0], start[1]);
+          this.lineTo(a[3], a[4]);
         }
         if(a[0] === GraphicsPath.QUAD) {
           this.quadraticCurveTo(a[3], a[4], a[5], a[6]);
@@ -374,7 +515,7 @@
           var delta = a[13] - a[12];
           var largeArc = Math.abs(delta) > Math.PI;
           this.arcSvgTo(a[3], a[4], a[5] * GraphicsPath._toDegrees,
-    largeArc, delta > 0, a[8], a[9]);
+                largeArc, delta > 0, a[8], a[9]);
         }
       }
     }
@@ -505,7 +646,7 @@
  */
   GraphicsPath.prototype.getLines = function(flatness) {
     var ret = [];
-    if(flatness === null || typeof flatness === "undefined")flatness = 1.0;
+    if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
       if(s[0] === GraphicsPath.QUAD) {
@@ -537,7 +678,7 @@
     var ret = [];
     var path = new GraphicsPath();
     var last = null;
-    if(flatness === null || typeof flatness === "undefined")flatness = 1.0;
+    if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
       if(s[0] === GraphicsPath.CLOSE) {
@@ -795,17 +936,19 @@
   GraphicsPath.prototype.reverse = function() {
     var lastptx = 0;
     var lastpty = 0;
-    var firstOrAfterClose = true;
+
     var lastClosed = false;
+
+    var pathStartX = 0;
+    var pathStartY = 0;
     var ret = new GraphicsPath();
     for(var i = this.segments.length - 1; i >= 0; i--) {
       var s = this.segments[i];
       var startpt = GraphicsPath._startPoint(s);
       var endpt = GraphicsPath._endPoint(s);
       if(s[0] !== GraphicsPath.CLOSE) {
-        if(firstOrAfterClose) {
+        if(i === this.segments.length - 1) {
           ret.moveTo(endpt[0], endpt[1]);
-          firstOrAfterClose = false;
         } else if(lastptx !== endpt[0] || lastpty !== endpt[1]) {
           if(lastClosed) {
             ret.closePath();
@@ -821,7 +964,31 @@
           ret.closePath();
         }
         lastClosed = true;
-        firstOrAfterClose = true;
+        var havePathStart = false;
+        for(var j = i - 1; j >= 0; j--) {
+          if(this.segments[j][0] === GraphicsPath.CLOSE) {
+            break;
+          }
+          startpt = GraphicsPath._startPoint(this.segments[j]);
+          endpt = GraphicsPath._endPoint(this.segments[j]);
+          if(havePathStart) {
+            if(pathStartX !== endpt[0] || pathStartY !== endpt[1]) {
+              break;
+            }
+          }
+          pathStartX = startpt[0];
+          pathStartY = startpt[1];
+          havePathStart = true;
+        }
+        if(havePathStart) {
+          ret.moveTo(pathStartX, pathStartY);
+          endpt = GraphicsPath._endPoint(this.segments[i - 1]);
+          if(pathStartX !== endpt[0] || pathStartY !== endpt[1]) {
+            ret.lineTo(endpt[0], endpt[1]);
+          }
+          lastptx = endpt[0];
+          lastpty = endpt[1];
+        }
       } else if(s[0] === GraphicsPath.QUAD) {
         ret.quadraticCurveTo(s[3], s[4], s[1], s[2]);
       } else if(s[0] === GraphicsPath.CUBIC) {
@@ -846,7 +1013,7 @@
     var tmp = [];
     var subpaths = [];
     var j;
-    if(flatness === null || typeof flatness === "undefined")flatness = 1.0;
+    if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
     var lastptx = 0;
     var lastpty = 0;
     var first = true;
@@ -1208,7 +1375,7 @@
   GraphicsPath.prototype.getCurves = function(flatness) {
     var subpaths = [];
     var curves = [];
-    if(flatness === null || typeof flatness === "undefined")flatness = 1.0;
+    if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
     var lastptx = 0;
     var lastpty = 0;
     var first = true;
@@ -2098,11 +2265,11 @@
           curx = c === 0x6d ? ret.endPos[0] : 0;
           cury = c === 0x6d ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
-          if(y === null || typeof y === "undefined") {
+          if(typeof y === "undefined" || y === null) {
             failed = true; break;
           }
      // console.log([x,y])
@@ -2119,11 +2286,11 @@
           curx = c === 0x6c ? ret.endPos[0] : 0;
           cury = c === 0x6c ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
-          if(y === null || typeof y === "undefined") {
+          if(typeof y === "undefined" || y === null) {
             failed = true; break;
           }
           ret.lineTo(curx + x, cury + y);
@@ -2136,7 +2303,7 @@
         for (;;) {
           curpt = c === 0x68 ? ret.endPos[0] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           ret.lineTo(curpt + x, ret.endPos[1]);
@@ -2149,7 +2316,7 @@
         for (;;) {
           curpt = c === 0x76 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           ret.lineTo(ret.endPos[0], curpt + x);
@@ -2163,27 +2330,27 @@
           curx = c === 0x63 ? ret.endPos[0] : 0;
           cury = c === 0x63 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
-          if(y === null || typeof y === "undefined") {
+          if(typeof y === "undefined" || y === null) {
             failed = true; break;
           }
           x2 = GraphicsPath._nextNumber(str, index, true);
-          if(x2 === null || typeof x2 === "undefined") {
+          if(typeof x2 === "undefined" || x2 === null) {
             failed = true; break;
           }
           y2 = GraphicsPath._nextNumber(str, index, true);
-          if(y2 === null || typeof y2 === "undefined") {
+          if(typeof y2 === "undefined" || y2 === null) {
             failed = true; break;
           }
           var x3 = GraphicsPath._nextNumber(str, index, true);
-          if(x3 === null || typeof x3 === "undefined") {
+          if(typeof x3 === "undefined" || x3 === null) {
             failed = true; break;
           }
           var y3 = GraphicsPath._nextNumber(str, index, true);
-          if(y3 === null || typeof y3 === "undefined") {
+          if(typeof y3 === "undefined" || y3 === null) {
             failed = true; break;
           }
           ret.bezierCurveTo(curx + x, cury + y, curx + x2, cury + y2,
@@ -2198,19 +2365,19 @@
           curx = c === 0x71 ? ret.endPos[0] : 0;
           cury = c === 0x71 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
-          if(y === null || typeof y === "undefined") {
+          if(typeof y === "undefined" || y === null) {
             failed = true; break;
           }
           x2 = GraphicsPath._nextNumber(str, index, true);
-          if(x2 === null || typeof x2 === "undefined") {
+          if(typeof x2 === "undefined" || x2 === null) {
             failed = true; break;
           }
           y2 = GraphicsPath._nextNumber(str, index, true);
-          if(y2 === null || typeof y2 === "undefined") {
+          if(typeof y2 === "undefined" || y2 === null) {
             failed = true; break;
           }
           ret.quadraticCurveTo(curx + x, cury + y, curx + x2, cury + y2);
@@ -2224,15 +2391,15 @@
           curx = c === 0x61 ? ret.endPos[0] : 0;
           cury = c === 0x61 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
-          if(y === null || typeof y === "undefined") {
+          if(typeof y === "undefined" || y === null) {
             failed = true; break;
           }
           var rot = GraphicsPath._nextNumber(str, index, true);
-          if(rot === null || typeof rot === "undefined") {
+          if(typeof rot === "undefined" || rot === null) {
             failed = true; break;
           }
           var largeArc = GraphicsPath._nextAfterSepReq(str, index);
@@ -2241,11 +2408,11 @@
             failed = true; break;
           }
           x2 = GraphicsPath._nextNumber(str, index, true);
-          if(x2 === null || typeof x2 === "undefined") {
+          if(typeof x2 === "undefined" || x2 === null) {
             failed = true; break;
           }
           y2 = GraphicsPath._nextNumber(str, index, true);
-          if(y2 === null || typeof y2 === "undefined") {
+          if(typeof y2 === "undefined" || y2 === null) {
             failed = true; break;
           }
           ret.arcSvgTo(x + curx, y + cury, rot, largeArc !== 0x30,
@@ -2260,19 +2427,19 @@
           curx = c === 0x73 ? ret.endPos[0] : 0;
           cury = c === 0x73 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
-          if(y === null || typeof y === "undefined") {
+          if(typeof y === "undefined" || y === null) {
             failed = true; break;
           }
           x2 = GraphicsPath._nextNumber(str, index, true);
-          if(x2 === null || typeof x2 === "undefined") {
+          if(typeof x2 === "undefined" || x2 === null) {
             failed = true; break;
           }
           y2 = GraphicsPath._nextNumber(str, index, true);
-          if(y2 === null || typeof y2 === "undefined") {
+          if(typeof y2 === "undefined" || y2 === null) {
             failed = true; break;
           }
           xcp = ret.endPos[0]; // control point to use if previous segment is not a cubic
@@ -2297,11 +2464,11 @@
           curx = c === 0x74 ? ret.endPos[0] : 0;
           cury = c === 0x74 ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
-          if(x === null || typeof x === "undefined") {
+          if(typeof x === "undefined" || x === null) {
             if(!sep)failed = true; break;
           }
           y = GraphicsPath._nextNumber(str, index, true);
-          if(y === null || typeof y === "undefined") {
+          if(typeof y === "undefined" || y === null) {
             failed = true; break;
           }
           xcp = ret.endPos[0]; // control point to use if previous segment is not a quad
@@ -2333,35 +2500,51 @@
   Triangulate._EAR = 2;
   Triangulate._REFLEX = 3;
 /** @private */
-  Triangulate._pointInTri = function(i1, i2, i3, pt) {
-    var t1 = Math.min(i3[0], i1[0]);
-    var t2 = Math.min(i3[1], i1[1]);
-    var t = i1[0] < pt[0] === pt[0] <= i3[0] &&
-  (pt[1] - t2) * (Math.max(i3[0], i1[0]) - t1) < (Math.max(i3[1], i1[1]) - t2) * (pt[0] - t1);
-    var t4 = Math.min(i1[0], i2[0]);
-    var t5 = Math.min(i1[1], i2[1]);
-    t ^= i2[0] < pt[0] === pt[0] <= i1[0] &&
-   (pt[1] - t5) * (Math.max(i1[0], i2[0]) - t4) < (Math.max(i1[1], i2[1]) - t5) * (pt[0] - t4);
-    var t7 = Math.min(i2[0], i3[0]);
-    var t8 = Math.min(i2[1], i3[1]);
-    t ^= i3[0] < pt[0] === pt[0] <= i2[0] &&
-   (pt[1] - t8) * (Math.max(i2[0], i3[0]) - t7) < (Math.max(i2[1], i3[1]) - t8) * (pt[0] - t7);
-    return t;
+  Triangulate._pointInTri = function(i1, i2, i3, p) {
+    if(p[0] === i1[0] && p[1] === i1[1])return false;
+    if(p[0] === i2[0] && p[1] === i2[1])return false;
+    if(p[0] === i3[0] && p[1] === i3[1])return false;
+    var t3 = i2[0] - i3[0];
+    var t4 = i2[1] - i3[1];
+    var t5 = i2[0] - i1[0];
+    var t6 = i2[1] - i1[1];
+    var t7 = t5 * t3 + t6 * t4;
+    var t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
+    t3 * t3 + t4 * t4);
+    if (Math.sqrt(Math.abs(t8)) > 1e-9) {
+      var t9 = i3[0] - i1[0];
+      var t10 = i3[1] - i1[1];
+      var t11 = i2[0] - i1[0];
+      var t12 = i2[1] - i1[1];
+      var t13 = p[0] - i1[0];
+      var t14 = p[1] - i1[1];
+      var t15 = t9 * t9 + t10 * t10;
+      var t16 = t9 * t11 + t10 * t12;
+      var t17 = t9 * t13 + t10 * t14;
+      var t18 = t11 * t11 + t12 * t12;
+      var t19 = t11 * t13 + t12 * t14;
+      var t20 = 1.0 / (t15 * t18 - t16 * t16);
+      var t21 = (t18 * t17 - t16 * t19) * t20;
+      var t22 = (t15 * t19 - t16 * t17) * t20;
+      return t21 > 1e-9 && t22 > 1e-9 &&
+     t21 + t22 < 1.0 - 1e-9;
+    } else {
+      return false;
+    }
   };
-/** @private */
-  Triangulate._vertClass = function(v, ori) {
+  /** @private */
+  Triangulate._vertClass = function(v, ori, vertices) {
     var curori = Triangulate._triOrient(v.prev.data, v.data, v.next.data);
     if(curori === 0 || curori === ori) {
   // This is a convex vertex, find out whether this
   // is an ear
-      var vert = v.next.next;
-      for (;;) {
-        if(vert === v.prev || vert === v || vert === v.next)
-          break;
-        if(Triangulate._pointInTri(v.prev.data, v.data, v.next.data, vert.data)) {
+      for (var i = 0; i < vertices.length; i++) {
+        var vert = vertices[i];
+        if(v.prev === vert || v === vert || v.next === vert)continue;
+        var ptintri = Triangulate._pointInTri(v.prev.data, v.data, v.next.data, vert.data);
+        if(ptintri) {
           return Triangulate._CONVEX;
         }
-        vert = vert.next;
       }
       return Triangulate._EAR;
     } else {
@@ -2375,143 +2558,28 @@
     ori += v3[0] * v1[1] - v3[1] * v1[0];
     return ori === 0 ? 0 : ori < 0 ? -1 : 1;
   };
-
-  var LinkedListNode = function(item) {
-    this.data = item;
-    this.prev = null;
-    this.next = null;
+/** @private */
+  Triangulate._triangleMidAngle = function(v1, v2, v3) {
+    var dx1 = v2[0] - v1[0];
+    var dy1 = v2[1] - v1[1];
+    var len = dx1 * dx1 + dy1 * dy1;
+    if(len !== 0) {
+      dx1 /= len;
+      dy1 /= len;
+    }
+    var dx2 = v3[0] - v1[0];
+    var dy2 = v3[1] - v1[1];
+    len = dx2 * dx2 + dy2 * dy2;
+    if(len !== 0) {
+      dx2 /= len;
+      dy2 /= len;
+    }
+    var dot = dx1 * dx2 + dy1 * dy2;
+    if(dot < -1)dot = -1;
+    if(dot > 1)dot = 1;
+    return Math.acos(dot);
   };
 
-  var LinkedList = function() {
-    this.root = null;
-    this._last = null;
-    this.size = function() {
-      var k = this.root;
-      var ret = 0;
-      while(k) {
-        ret++;
-        k = k.next;
-      }
-      return ret;
-    };
-    this.first = function() {
-      return this.root;
-    };
-    this.last = function() {
-      return this._last;
-    };
-    this.front = function() {
-      return this.root ? this.root.data : null;
-    };
-    this.back = function() {
-      return this._last ? this._last.data : null;
-    };
-    this.clear = function() {
-      this.root = this._last = null;
-    };
-    this.spliceToBegin = function(list) {
-      if(list.root) {
-        this.root.prev = list._last;
-        list._last.next = this.root;
-        this.root = list.root;
-        list.clear();
-      }
-    };
-    this.spliceToEnd = function(list) {
-      if(list.root) {
-        this._last.next = list.root;
-        list.root.prev = this._last;
-        this._last = list._last;
-        list.clear();
-      }
-    };
-    this.spliceOneToEnd = function(list, listNode) {
-      list.erase(listNode);
-      return this.push(listNode.data);
-    };
-    this.erase = function(node) {
-      if(!node)return this;
-      if(node === this.root) {
-        this.root = node.next;
-      }
-      if(node === this._last) {
-        this._last = node.prev;
-      }
-      if(node.prev)
-        node.prev.next = node.next;
-      if(node.next)
-        node.next.prev = node.prev;
-      return this;
-    };
-    this.insertAfter = function(item, node) {
-      var newNode = new LinkedListNode(item);
-      if(node === this._last)
-        this._last = newNode;
-      var oldNext = node.next;
-      node.next = newNode;
-      newNode.prev = node;
-      newNode.next = oldNext;
-      if(oldNext) {
-        oldNext.prev = newNode;
-      }
-      return newNode;
-    };
-    this.push = function(item) {
-      if(!this.root) {
-        this.root = this._last = new LinkedListNode(item);
-      } else {
-        var node = new LinkedListNode(item);
-        this._last.next = node;
-        node.prev = this._last;
-        this._last = node;
-      }
-      return this;
-    };
-    this.reverse = function() {
-      var s = this.root;
-      var e = this._last;
-      if(!s)return;
-      var oldlast = e;
-      var oldroot = s;
-      while(s) {
-        var n = s.next;
-        var p = s.prev;
-        s.prev = n;
-        s.next = p;
-        s = n;
-      }
-      this.root = oldlast;
-      this._last = oldroot;
-      return this;
-    };
-    this.unshift = function(item) {
-      if(!this.root) {
-        this.root = this._last = new LinkedListNode(item);
-      } else {
-        var node = new LinkedListNode(item);
-        this.root.prev = node;
-        node.next = this.root;
-        this.root = node;
-      }
-      return this;
-    };
-    this.pop = function() {
-      if(this._last) {
-        if(this._last.prev)
-          this._last.prev.next = null;
-        this._last = this._last.prev;
-      }
-      return this;
-    };
-    this.shift = function() {
-      if(this.root) {
-        if(this.root.next)
-          this.root.next.prev = null;
-        this.root = this.root.next;
-      }
-      return this;
-    };
-  };
 /** @private */
   Triangulate._Contour = function(vertices) {
     this.vertexList = new LinkedList();
@@ -2573,7 +2641,7 @@
   };
   Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     var vert = this.vertexList.first();
-    if(typeof vert !== "undefined" && (vert !== null && typeof vert !== "undefined"))return null;
+    if(typeof vert === "undefined" || vert === null)return null;
     var bounds = this.bounds;
     if(x < bounds[0] || y < bounds[1] || x > bounds[2] || y > bounds[2])return null;
     var lastVert = this.vertexList.last();
@@ -2699,6 +2767,7 @@
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getTriangles = function(flatness) {
+    if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
     var subpaths = this._getSubpaths(flatness);
     var contours1 = [];
     var contours2 = [];
@@ -2755,7 +2824,6 @@
 /** @private */
   Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
     var vpnode = dstNode;
-
     var c2node = maxPoint;
     var count = 0;
     while(c2node) {
@@ -2764,7 +2832,7 @@
       count++;
     }
     c2node = src.first();
-    while(c2node !== maxPoint && (c2node !== null && typeof c2node !== "undefined")) {
+    while(c2node !== maxPoint && (((typeof c2node !== "undefined" && c2node !== null)))) {
       vpnode = dst.insertAfter(c2node.data, vpnode);
       c2node = c2node.next;
       count++;
@@ -2796,24 +2864,54 @@
  // Make the vertex list circular
     var first = contour.vertexList.first();
     var last = contour.vertexList.last();
-    var vert;
     if(!last)throw new Error();
+    var vert;
+    var vertices = [];
+    vert = first;
+    for (;;) {
+      vertices.push(vert);
+      if(vert === last)break;
+      vert = vert.next;
+    }
     first.prev = last;
     last.next = first;
-    vert = contour.vertexList.first();
+
     while(contour.vertexCount > 3) {
-      var vertexClass = Triangulate._vertClass(vert,
-    contour.winding);
-      var nextVert = vert.next;
-      if(vertexClass === Triangulate._EAR) {
-        tri = [vert.prev.data[0], vert.prev.data[1],
-          vert.data[0], vert.data[1],
-          vert.next.data[0], vert.next.data[1]];
-        tris.push(tri);
-        contour.vertexList.erase(vert);
-        contour.vertexCount--;
+      vert = contour.vertexList.first();
+      var minAngleEar = null;
+      var firstMinAngle = false;
+      var angle = Math.PI;
+      for(var i = 0; i < contour.vertexCount; i++) {
+        var vertexClass = Triangulate._vertClass(vert,
+          contour.winding, vertices);
+        if(vertexClass === Triangulate._EAR) {
+          if(typeof minAngleEar === "undefined" || minAngleEar === null) {
+            minAngleEar = vert;
+            firstMinAngle = true;
+          } else {
+            if(firstMinAngle) {
+              angle = Triangulate._triangleMidAngle(minAngleEar.prev.data,
+        minAngleEar.data, minAngleEar.next.data);
+              firstMinAngle = false;
+            }
+            var thisAngle = Triangulate._triangleMidAngle(vert.prev.data, vert.data, vert.next.data);
+            if(thisAngle < angle) {
+              minAngleEar = vert;
+              angle = thisAngle;
+            }
+          }
+        }
+        vert = vert.next;
       }
-      vert = nextVert;
+      if(!minAngleEar) {
+        minAngleEar = contour.vertexList.first();
+      }
+      tri = [minAngleEar.prev.data[0], minAngleEar.prev.data[1],
+        minAngleEar.data[0], minAngleEar.data[1],
+        minAngleEar.next.data[0], minAngleEar.next.data[1]];
+      tris.push(tri);
+      contour.vertexList.erase(minAngleEar);
+      contour.vertexCount--;
     }
     t1 = contour.vertexList.first();
     tri = [];

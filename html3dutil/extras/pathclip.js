@@ -236,7 +236,7 @@
       } else {
         this.left = child;
       }
-      if(child !== null && typeof child !== "undefined") {
+      if(typeof child !== "undefined" && child !== null) {
         child.p = this;
       }
     };
@@ -249,7 +249,7 @@
         var p = this.p;
         var that = this;
         var tmp = that;
-        while(p !== null && typeof p !== "undefined" && tmp === p.left) {
+        while(typeof p !== "undefined" && p !== null && tmp === p.left) {
           tmp = p;
           p = p.p;
         }
@@ -265,7 +265,7 @@
         var p = this.p;
         var that = this;
         var tmp = that;
-        while(p !== null && typeof p !== "undefined" && tmp === p.right) {
+        while(typeof p !== "undefined" && p !== null && tmp === p.right) {
           tmp = p;
           p = p.p;
         }
@@ -293,30 +293,30 @@
 /** @private */
   RedBlackTree.prototype.first = function() {
     var r = this.root;
-    if(r === null || typeof r === "undefined")return null;
+    if(typeof r === "undefined" || r === null)return null;
     while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
     return r;
   };
 /** @private */
   RedBlackTree.prototype.last = function() {
     var r = this.root;
-    if(r === null || typeof r === "undefined")return null;
+    if(typeof r === "undefined" || r === null)return null;
     while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
     return r;
   };
 /** @private */
   RedBlackTree.prototype.find = function(data) {
     var it = this.root;
-    while(it !== null && typeof it !== "undefined") {
+    while(typeof it !== "undefined" && it !== null) {
       var cmp = this.cmp(it.data, data);
       if(cmp === 0)break;
       it = cmp < 0 ? it.right : it.left;
     }
-    return it === null || typeof it === "undefined" ? null : it.data;
+    return typeof it === "undefined" || it === null ? null : it.data;
   };
 /** @private */
   RedBlackTree._red = function(node) {
-    return node !== null && typeof node !== "undefined" && node.red === 1;
+    return typeof node !== "undefined" && node !== null && node.red === 1;
   };
 /** @private */
   RedBlackTree._single = function(root, dir) {
@@ -370,7 +370,7 @@
             p.setLink(last, p = RedBlackTree._single( q, dir ));
           else if( !RedBlackTree._red( q.link(!dir) ) ) {
             var s = p.link(!last);
-            if( s !== null && typeof s !== "undefined" ) {
+            if( typeof s !== "undefined" && s !== null ) {
               if( !RedBlackTree._red( s.link(!last) ) && !RedBlackTree._red( s.link(last) ) ) {
               /* Color flip */
                 p.red = false;
@@ -394,7 +394,7 @@
       }
 
     /* Replace and remove the saved node */
-      if( f !== null && typeof f !== "undefined" ) {
+      if( typeof f !== "undefined" && f !== null ) {
         f.data = q.data;
         p.setLink(p.right === q, q.link(typeof q.left === "undefined" || q.left === null));
       }
@@ -436,7 +436,7 @@
 
     /* Search down the tree for a place to insert */
       for (;;) {
-        if ( q === null || typeof q === "undefined" ) {
+        if ( typeof q === "undefined" || q === null ) {
         /* Insert a new node at the first null link */
           p.setLink(dir, q = new RedBlackTreeNode(data));
         } else if ( RedBlackTree._red( q.left ) && RedBlackTree._red( q.right ) ) {
@@ -467,7 +467,7 @@
         dir = cmp < 0;
 
       /* Move the helpers down */
-        if ( g !== null && typeof g !== "undefined" )
+        if ( typeof g !== "undefined" && g !== null )
           t = g;
 
         g = p;
@@ -492,7 +492,7 @@
   var Polygon = function(path, flatness) {
     this.subpaths = [];
     this.contours = [];
-    if(path !== null && typeof path !== "undefined") {
+    if(typeof path !== "undefined" && path !== null) {
       this.subpaths = path._getSubpaths(flatness);
       for(var i = 0; i < this.subpaths.length; i++) {
         this.contours[i] = new Polygon._Contour(this.subpaths[i]);
@@ -715,7 +715,7 @@
     this.left = b;
     this.pl = apl;
     this.other = o;
-    this.type = t === null || typeof t === "undefined" ? Clipper.NORMAL : t;
+    this.type = typeof t === "undefined" || t === null ? Clipper.NORMAL : t;
     this.poss = null;
     this.inOut = false;
     this.inside = false;
@@ -899,7 +899,7 @@
         else
        prev = null;
       // Compute the inside and inOut flags
-        if(prev === null || typeof prev === "undefined") { // there is not a previous line segment in S?
+        if(typeof prev === "undefined" || prev === null) { // there is not a previous line segment in S?
       // console.log("prev is end")
           e.inside = e.inOut = false;
         } else if(prev.data.type !== Clipper.NORMAL) {
@@ -933,11 +933,11 @@
       }*/
       // Process a possible intersection between "e" and its next neighbor in S
         next = next.next();
-        if(next !== null && typeof next !== "undefined")
+        if(typeof next !== "undefined" && next !== null)
           this.possibleIntersection(e, next.data);
 
       // Process a possible intersection between "e" and its previous neighbor in S
-        if(prev !== null && typeof prev !== "undefined")
+        if(typeof prev !== "undefined" && prev !== null)
           this.possibleIntersection(prev.data, e);
       } else { // the line segment must be removed from S
       // console.log([e.other.p,e.other.id])
@@ -983,7 +983,7 @@
         }
       // delete line segment associated to e from S and check for intersection between the neighbors of "e" in S
         S.erase(sli.data);
-        if(next !== null && typeof next !== "undefined" && (prev !== null && typeof prev !== "undefined")) {
+        if(typeof next !== "undefined" && next !== null && (((typeof prev !== "undefined" && prev !== null)))) {
           this.possibleIntersection(prev.data, next.data);
         }
       }
@@ -1267,7 +1267,7 @@
  * @memberof! H3DU.GraphicsPath
  */
     GraphicsPath.prototype.union = function(path, flatness) {
-      if(path === null || typeof path === "undefined")return this;
+      if(typeof path === "undefined" || path === null)return this;
       var polygon1 = new Polygon(this, flatness);
       var polygon2 = new Polygon(path, flatness);
       var retval = new Clipper(polygon1, polygon2).compute(Clipper.UNION);
@@ -1287,7 +1287,7 @@
  * @memberof! H3DU.GraphicsPath
  */
     GraphicsPath.prototype.difference = function(path, flatness) {
-      if(path === null || typeof path === "undefined")return this;
+      if(typeof path === "undefined" || path === null)return this;
       var polygon1 = new Polygon(this, flatness);
       var polygon2 = new Polygon(path, flatness);
       var retval = new Clipper(polygon1, polygon2).compute(Clipper.DIFFERENCE);
@@ -1307,7 +1307,7 @@
  * @memberof! H3DU.GraphicsPath
  */
     GraphicsPath.prototype.intersection = function(path, flatness) {
-      if(path === null || typeof path === "undefined")return this;
+      if(typeof path === "undefined" || path === null)return this;
       var polygon1 = new Polygon(this, flatness);
       var polygon2 = new Polygon(path, flatness);
       var retval = new Clipper(polygon1, polygon2).compute(Clipper.INTERSECTION);
@@ -1327,7 +1327,7 @@
  * @memberof! H3DU.GraphicsPath
  */
     GraphicsPath.prototype.xor = function(path, flatness) {
-      if(path === null || typeof path === "undefined")return this;
+      if(typeof path === "undefined" || path === null)return this;
       var polygon1 = new Polygon(this, flatness);
       var polygon2 = new Polygon(path, flatness);
       var retval = new Clipper(polygon1, polygon2).compute(Clipper.XOR);
