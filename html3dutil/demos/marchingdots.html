@@ -13,7 +13,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global H3DU, getPoints, pathFloor */
+/* global H3DU, pathFloor, pointMarch */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -30,24 +30,6 @@ var path = H3DU.GraphicsPath.fromString(
 "M 44.155643,23.75 C 44.155643,45.413332 45.663332,43.905643 24,43.905643 2.3366679,43.905643 3.8443565,45.413332 3.8443565,23.75 3.8443565,2.0866679 2.3366679,3.5943565 24,3.5943565 c 21.663332,0 20.155643,-1.5076886 20.155643,20.1556435 z"
 );
 var curves = path.getCurves(0.2);
-function pointMarch(
-  group, // shape group containing the marching points
-  curves, // curves of the path
-  t // value from 0 to 1 specifying the point in time of the animation
-) {
-  "use strict";
-  var POINTCOUNT = 50;
-  var adjust = t * (1.0 / (POINTCOUNT - 1));
-  var pts = getPoints(curves, POINTCOUNT, adjust);
-  for(var i = 0; i < pts.length; i++) {
-    if(!group.shapes[i])continue;
-    group.shapes[i].setVisible(true).setPosition(pts[i][0], pts[i][1], 0);
-  }
-  for(var j = pts.length; j < POINTCOUNT; j++) {
-    if(!group.shapes[j])continue;
-    group.shapes[j].setVisible(false);
-  }
-}
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 scene.setClearColor("white");
 var sub = new H3DU.Batch3D()

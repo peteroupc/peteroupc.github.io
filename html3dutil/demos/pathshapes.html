@@ -26,7 +26,7 @@ Color: <input type=color value="#E0E0E0" id=colorsetting><br>
 </p>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global H3DU, makeAxisLines, pathFloor */
+/* global H3DU, makeAxisLines, makeTubeFromPath, pathFloor */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -56,19 +56,6 @@ var path2 = new H3DU.GraphicsPath()
  .closePath().reverse();
 path = path.merge(path2);
 
-function makeTubeFromPath(path, flatness, thickness, pathSection) {
-  "use strict";
-  var mesh = new H3DU.Mesh();
-  var curves = path.getCurves(flatness);
-  var resolution = Math.ceil(curves.getLength() / flatness / 10);
-  var curveSection = pathSection ? pathSection.getCurves(flatness) : null;
-  new H3DU.SurfaceEval()
-    .vertex(new H3DU.CurveTube(curves, thickness, curveSection))
-    .setAutoNormal(true)
-    .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
-      Math.ceil(2 * thickness / flatness));
-  return mesh;
-}
 function regularPoly(path, sides, radius, cx, cy, phaseInDegrees) {
   "use strict";
   if(sides <= 0)return path;

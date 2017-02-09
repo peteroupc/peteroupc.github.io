@@ -94,7 +94,7 @@ function CustomSurface(x, y, z, minu, maxu, minv, maxv) {
     getExpression(minv).constantValue(),
     getExpression(maxv).constantValue()];
   if(ranges[0] === null || ranges[1] === null ||
-  ranges[2] === null || ranges[3] === null) {
+  (typeof ranges[2] === "undefined" || ranges[2] === null) || ranges[3] === null) {
     throw new Error("min/max must be a constant");
   }
   if(isNaN(ranges[0]) || isNaN(ranges[1]) ||

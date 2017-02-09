@@ -1020,7 +1020,7 @@ H3DU.TextureAtlas.prototype._makeSprite = function(name, index, x, y, meshesForP
   if(Object.prototype.hasOwnProperty.call(this.sprites, name)) {
     sprite = this.sprites[name];
     if(sprite instanceof Array) {
-      if(index >= 0 && (((typeof index !== "undefined" && index !== null)))) {
+      if(index >= 0 && (typeof index !== "undefined" && index !== null)) {
         sprite = sprite[index] || null;
       } else {
         sprite = null;

@@ -186,7 +186,7 @@
         }
         var vs = this.shaders[programValue.vertexShader];
         var fs = this.shaders[programValue.fragmentShader];
-        if(typeof vs === "undefined" || vs === null || (((typeof fs === "undefined" || fs === null)))) {
+        if(typeof vs === "undefined" || vs === null || (typeof fs === "undefined" || fs === null)) {
           this.error = Promise.reject("missing shader");
           return null;
         }
@@ -249,7 +249,7 @@
       uniformValue = paramValue;
     }
     if(paramType === 35678) {
-      if(typeof this.gltf.textures === "undefined" || this.gltf.textures === null || this.gltf.textures[uniformValue] === null) {
+      if((typeof this.gltf.textures === "undefined" || this.gltf.textures === null) || this.gltf.textures[uniformValue] === null) {
         return null;
       }
       var tex = this.gltf.textures[uniformValue];
@@ -269,7 +269,7 @@
       return null;
     }
     var technique = this.gltf.techniques[techniqueName];
-    if(typeof technique.program === "undefined" || technique.program === null || this.programs[technique.program] === null) {
+    if((typeof technique.program === "undefined" || technique.program === null) || this.programs[technique.program] === null) {
       return null;
     }
     var program = this.programs[technique.program];
@@ -498,7 +498,7 @@
       this.error = "Input's component type is not FLOAT";
       return null;
     }
-    if(typeof inputBuffer === "undefined" || inputBuffer === null || (((typeof outputBuffer === "undefined" || outputBuffer === null)))) {
+    if(typeof inputBuffer === "undefined" || inputBuffer === null || (typeof outputBuffer === "undefined" || outputBuffer === null)) {
       this.error = "Can't read input or output from sampler";
       return null;
     }
@@ -761,7 +761,7 @@
     var defaultScene = typeof this.gltf.scene === "undefined" ? null : this.gltf.scene;
     var scenes = typeof this.gltf.scenes === "undefined" || this.gltf.scenes === null ? [] : this.gltf.scenes;
     var sceneKeys = Object.keys(scenes);
-    if((((typeof defaultScene === "undefined" || defaultScene === null))) && sceneKeys.length === 1) {
+    if((typeof defaultScene === "undefined" || defaultScene === null) && sceneKeys.length === 1) {
       defaultScene = sceneKeys[0];
     }
     if(typeof defaultScene === "undefined" || defaultScene === null) {

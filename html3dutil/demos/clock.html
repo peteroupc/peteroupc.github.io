@@ -79,34 +79,34 @@ function ClockShape(scene) {
       var hourhand = 360 * hms / (3600 * 12);
       var minutehand = 360 * (hms % 3600) / 3600;
       var secondhand = 360 * (hms % 60) / 60;
-      this.shape.shapes[3].getTransform().setRotation(-hourhand, 0, 0, 1);
-      this.shape.shapes[4].getTransform().setRotation(-minutehand, 0, 0, 1);
-      this.shape.shapes[5].getTransform().setRotation(-secondhand, 0, 0, 1);
+      this.shape.getShape(3).getTransform().setRotation(-hourhand, 0, 0, 1);
+      this.shape.getShape(4).getTransform().setRotation(-minutehand, 0, 0, 1);
+      this.shape.getShape(5).getTransform().setRotation(-secondhand, 0, 0, 1);
     }
   };
   this.setColor = function(color) {
     var rgb = H3DU.toGLColor(color);
     if((rgb[0] + rgb[1] + rgb[2]) / 3 >= 0.5) {
       var halftoneColor = H3DU.Math.vec3lerp(rgb.slice(0, 4), [0, 0, 0], 0.5);
-      this.shape.shapes[3].setColor("black");
-      this.shape.shapes[4].setColor("black");
-      this.shape.shapes[5].setColor(halftoneColor);
-      this.shape.shapes[6].setColor("black");
-      this.shape.shapes[7].setColor(halftoneColor);
+      this.shape.getShape(3).setColor("black");
+      this.shape.getShape(4).setColor("black");
+      this.shape.getShape(5).setColor(halftoneColor);
+      this.shape.getShape(6).setColor("black");
+      this.shape.getShape(7).setColor(halftoneColor);
     } else {
       halftoneColor = H3DU.Math.vec3lerp(rgb.slice(0, 4), [1, 1, 1], 0.5);
-      this.shape.shapes[3].setColor("white");
-      this.shape.shapes[4].setColor("white");
-      this.shape.shapes[5].setColor(halftoneColor);
-      this.shape.shapes[6].setColor("white");
-      this.shape.shapes[7].setColor(halftoneColor);
+      this.shape.getShape(3).setColor("white");
+      this.shape.getShape(4).setColor("white");
+      this.shape.getShape(5).setColor(halftoneColor);
+      this.shape.getShape(6).setColor("white");
+      this.shape.getShape(7).setColor(halftoneColor);
     }
     var borderColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 0.5);
-    this.shape.shapes[0].setColor(borderColor);
+    this.shape.getShape(0).setColor(borderColor);
     var frontColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 1.0);
-    this.shape.shapes[1].setColor(frontColor);
+    this.shape.getShape(1).setColor(frontColor);
     var backColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 0.75);
-    this.shape.shapes[2].setColor(backColor);
+    this.shape.getShape(2).setColor(backColor);
   };
   this.setColor("#ffffff");
   this.update();

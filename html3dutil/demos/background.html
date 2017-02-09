@@ -147,6 +147,8 @@ CanvasBackground.prototype.start = function() {
     .setClearColor(rgb[0] / 255.0, rgb[1] / 255.0, rgb[2] / 255.0, 1.0);
   this.scene = new H3DU.Batch3D();
   this.scene.getLights().setDirectionalLight(0, [0, 0, -1]);
+  this.shapeGroup = new H3DU.ShapeGroup();
+  this.scene.addShape(this.shapeGroup);
   this.cubeMesh = new H3DU.Shape(H3DU.Meshes.createBox(2, 2, 2));
   this.sphereMesh = new H3DU.Shape(H3DU.Meshes.createSphere());
   this.torusMesh = new H3DU.Shape(H3DU.Meshes.createTorus(0.5, 1));
@@ -176,9 +178,9 @@ CanvasBackground.prototype.animate = function(time) {
 CanvasBackground.prototype.drawOne = function() {
   "use strict";
   var newhls = this.constructor.varyColor(this.hls);
-  if(this.scene.shapes.length > 300) {
+  if(this.scene.shapeCount() > 300) {
    // Delete the oldest shape generated
-    this.scene.removeShape(this.scene.shapes[0]);
+    this.scene.removeShape(this.shapeGroup.getShape(0));
   }
   var x = this.constructor.rand(2000) / 1000.0 - 1.0;
   var y = this.constructor.rand(2000) / 1000.0 - 1.0;
@@ -190,7 +192,6 @@ CanvasBackground.prototype.drawOne = function() {
   rgb[0] /= 255;
   rgb[1] /= 255;
   rgb[2] /= 255;
-  // var angle = this.constructor.rand(160);
   var vector = H3DU.Math.quatFromTaitBryan(
      this.constructor.rand(360),
      this.constructor.rand(360),
@@ -200,7 +201,7 @@ CanvasBackground.prototype.drawOne = function() {
     .setQuaternion(vector)
     .setPosition(x, y, z)
     .setColor(rgb);
-  this.scene.addShape(shape);
+  this.shapeGroup.addShape(shape);
 };
 var cb = new CanvasBackground(document.getElementById("canvas"));
 cb.setColor("lime");

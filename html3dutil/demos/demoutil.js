@@ -135,8 +135,8 @@ function updateShape(func, allsettings, shapeGroup) {
       settings.appendChild(div);
     }
   }
-  if(shapeGroup.shapes.length > 0) {
-    shapeGroup.removeShape(shapeGroup.shapes[0]);
+  if(shapeGroup.shapeCount() > 0) {
+    shapeGroup.removeShape(shapeGroup.getShape(0));
   }
   shapeGroup.addShape(new H3DU.Shape(func(allsettings)).setMaterial(
     new H3DU.PbrMaterial({

@@ -49,6 +49,11 @@ H3DU._FrenetFrames = function(func) {
     if(i > 0) {
       normal = H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3cross(this.binormals[i - 1], tangent));
+      if(normal[0] === 0 && normal[1] === 0 && normal[2] === 0) {
+        // Normal is calculated to be 0, indicating that the tangent
+        // and previous binormal were parallel
+        normal = H3DU._FrenetFrames.normalFromTangent(tangent);
+      }
     } else {
       normal = H3DU._FrenetFrames.normalFromTangent(tangent);
     }

@@ -29,7 +29,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 var scene = new H3DU.Scene3D(document.getElementById("canvas")).setClearColor("white");
 var sub = new H3DU.Batch3D();
 sub.getLights().setDirectionalLight(0, [0, -3, 1.2]);
-var shapes = [];
+var shapeArray = [];
 var shapecolors = ["white", "blue", "red", "green", "brown", "orange", "purple"];
   // Outer radius of each washer
 var shapesizes = [1, 0.9, 0.8, 0.7, 0.6, 0.7, 0.8];
@@ -49,7 +49,7 @@ loader.loadAndMapTexturesAll([
   for(var i = 0; i < shapecolors.length; i++) {
     var s = new H3DU.Shape(createWasher(0.5, shapesizes[i], 0.1, 32)).setColor(shapecolors[i])
       .setVisible(false);
-    shapes.push(s);
+    shapeArray.push(s);
     sub.addShape(s);
   }
   sub.addShape(
@@ -63,10 +63,10 @@ loader.loadAndMapTexturesAll([
     sub.setLookAt(rotateVec([0, -3, 1.2], angle), [0, 0, 0], [0, 0, 1]);
     fc.update();
     if(!anim) {
-      if(shapes.length > 0) {
+      if(shapeArray.length > 0) {
         anim = new Animators().startAt(time + 200);
-        for(var i = 0; i < shapes.length; i++) {
-          anim.thenShowAndMove(shapes[i], 0, 0, 4, 0, 0, 0.1 * i, 1000);
+        for(var i = 0; i < shapeArray.length; i++) {
+          anim.thenShowAndMove(shapeArray[i], 0, 0, 4, 0, 0, 0.1 * i, 1000);
         }
       }
     } else {

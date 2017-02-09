@@ -44,10 +44,9 @@ TriangleParticles.prototype.update = function(time) {
     if(this.tris[i].life <= 0) {
       var tri = TriangleParticles.generateTri(this.width, this.height);
       this.tris[i] = tri;
-      this.group.shapes[i] =
-    TriangleParticles.makeShapeFromTri(tri, this.scene);
+      this.group.setShape(i, TriangleParticles.makeShapeFromTri(tri, this.scene));
     } else {
-      var trans = this.group.shapes[i].getTransform();
+      var trans = this.group.getShape(i).getTransform();
       trans.movePosition(H3DU.Math.vec3scale(this.tris[i].movement, frames));
       trans.multRotation(this.tris[i].rotation * frames, 0, 0, 1);
     }

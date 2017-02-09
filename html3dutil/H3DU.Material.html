@@ -171,7 +171,11 @@ NOTE: Before version 2.0, this value&#39;s default was (0,0,0).</p>
 <h3>H3DU.Material#specularMap</h3>
 
 <p>Specular map texture.
-See <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_specularMap">H3DU.PbrMaterial#specularMap</a>.</p>
+See <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_specularMap">H3DU.PbrMaterial#specularMap</a>.
+NOTE: If this property specifies a texture, this property will be used
+for the specular reflection rather than the &quot;specular&quot; property. This behavior
+is a change from versions earlier than 2.0, where this property, if present,
+multiplied the value of the &quot;specular&quot; property.</p>
 
 <p>Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a></p>
 

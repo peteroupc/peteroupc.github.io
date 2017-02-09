@@ -140,7 +140,7 @@ CubicBody.prototype.integrate = function(timeStep) {
 
 function Particles(scene, count, width, height) {
   "use strict";
-  this.shapes = new H3DU.ShapeGroup();
+  this.shapeGroup = new H3DU.ShapeGroup();
   var sphere = new H3DU.Shape(H3DU.Meshes.createSphere(1, 64, 64));
   this.bodies = [];
   this.bounds = [0, 0, -5000, width, height, 5000];
@@ -157,9 +157,9 @@ function Particles(scene, count, width, height) {
     shape.setScale(scale, scale, scale);
     shape.setPosition(p);
     shape.setColor([Math.random(), Math.random(), Math.random()]);
-    this.shapes.addShape(shape);
+    this.shapeGroup.addShape(shape);
   }
-  scene.addShape(this.shapes);
+  scene.addShape(this.shapeGroup);
   this.timeInfo = {};
 }
 Particles.prototype.update = function(time) {
@@ -169,7 +169,7 @@ Particles.prototype.update = function(time) {
     var body = this.bodies[i];
     body.integrate(timeStep);
     body.constrainToBox(this.bounds);
-    this.shapes.shapes[i].setPosition(body.x(), body.y(), body.z());
+    this.shapeGroup.getShapes(i).setPosition(body.x(), body.y(), body.z());
   }
 };
 

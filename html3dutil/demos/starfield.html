@@ -53,14 +53,14 @@ function starField(scene, range) {
 
 function moveStarField(group, range, frames) {
   "use strict";
-  for(var i = 0; i < group.shapes.length; i++) {
-    var pos = group.shapes[i].getMatrix();
+  for(var i = 0; i < group.shapeCount(); i++) {
+    var pos = group.getShape(i).getMatrix();
     if(pos[14] > range / 2) {
    // once the star is too close, move it elsewhere
-      setStarPos(group.shapes[i], range);
-      group.shapes[i].getTransform().movePosition(0, 0, -range);
+      setStarPos(group.getShape(i), range);
+      group.getShape(i).getTransform().movePosition(0, 0, -range);
     } else {
-      group.shapes[i].getTransform().movePosition(0, 0, range / 250 * frames);
+      group.getShape(i).getTransform().movePosition(0, 0, range / 250 * frames);
     }
   }
 }

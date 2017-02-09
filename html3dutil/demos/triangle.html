@@ -23,6 +23,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
   var scene = new H3DU.Scene3D(document.getElementById("canvas"));
   scene.setClearColor("white");
   var sub = new H3DU.Batch3D();
+  sub.getLights().setBasic();
   var mesh = new H3DU.Mesh()
     .mode(H3DU.Mesh.TRIANGLES)
     .normal3(0, 0, 1)

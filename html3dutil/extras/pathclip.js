@@ -983,7 +983,7 @@
         }
       // delete line segment associated to e from S and check for intersection between the neighbors of "e" in S
         S.erase(sli.data);
-        if(typeof next !== "undefined" && next !== null && (((typeof prev !== "undefined" && prev !== null)))) {
+        if(typeof next !== "undefined" && next !== null && (typeof prev !== "undefined" && prev !== null)) {
           this.possibleIntersection(prev.data, next.data);
         }
       }

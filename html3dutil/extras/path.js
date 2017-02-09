@@ -797,7 +797,7 @@
     }
   };
 /** @private */
-  GraphicsPath._normAngle = function(angle) {
+  GraphicsPath._normAngleRadians = function(angle) {
     var twopi = Math.PI * 2;
     var normAngle = angle;
     if(normAngle >= 0) {
@@ -813,9 +813,9 @@
     var twopi = Math.PI * 2;
     var diff = endAngle - startAngle;
     if(Math.abs(diff) >= twopi)return true;
-    var normAngle = GraphicsPath._normAngle(angle);
-    var normStart = GraphicsPath._normAngle(startAngle);
-    var normEnd = GraphicsPath._normAngle(endAngle);
+    var normAngle = GraphicsPath._normAngleRadians(angle);
+    var normStart = GraphicsPath._normAngleRadians(startAngle);
+    var normEnd = GraphicsPath._normAngleRadians(endAngle);
     if(startAngle === endAngle) {
       return normAngle === normStart;
     } else if(startAngle < endAngle) {
@@ -1605,36 +1605,45 @@
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
+    return this._arcInternal(x, y, radius, startAngle, endAngle, ccw, true);
+  };
+/** @private */
+  GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngle, ccw, drawLine) {
     if(radius < 0) {
       throw new Error("IndexSizeError");
     }
+    var normStart = GraphicsPath._normAngleRadians(startAngle);
+    var normEnd = GraphicsPath._normAngleRadians(endAngle);
     var twopi = Math.PI * 2;
-    var cosStart = Math.cos(startAngle);
-    var sinStart = startAngle >= 0 && startAngle < 6.283185307179586 ? startAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart) : Math.sin(startAngle);
-    var cosEnd = Math.cos(endAngle);
-    var sinEnd = endAngle >= 0 && endAngle < 6.283185307179586 ? endAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd) : Math.sin(endAngle);
+    var cosStart = Math.cos(normStart);
+    var sinStart = normStart <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
+    var cosEnd = Math.cos(normEnd);
+    var sinEnd = normEnd <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
     var startX = x + radius * cosStart;
     var startY = y + radius * sinStart;
     var endX = x + radius * cosEnd;
     var endY = y + radius * sinEnd;
+    if(drawLine) {
+      this.lineTo(startX, startY);
+    }
     if(startX === endX && startY === endY || radius === 0) {
-      return this.lineTo(startX, startY).lineTo(endX, endY);
+      return this.lineTo(endX, endY);
     }
     if(!ccw && endAngle - startAngle >= twopi ||
    ccw && startAngle - endAngle >= twopi) {
-      return this.lineTo(startX, startY)
-       .arc(x, y, radius, startAngle, startAngle + Math.PI, ccw)
-       .arc(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw)
-       .lineTo(startX, startY);
+      return this
+     ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
+           ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
+           ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
     } else {
       var delta = endAngle - startAngle;
       if(delta >= twopi || delta < 0) {
         var d = delta % twopi;
         if(d === 0 && delta !== 0) {
-          return this.lineTo(startX, startY)
-       .arc(x, y, radius, startAngle, startAngle + Math.PI, ccw)
-       .arc(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw)
-       .lineTo(startX, startY);
+          return this
+     ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
+           ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
+           ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
         }
         delta = d;
       }
@@ -2832,7 +2841,7 @@
       count++;
     }
     c2node = src.first();
-    while(c2node !== maxPoint && (((typeof c2node !== "undefined" && c2node !== null)))) {
+    while(c2node !== maxPoint && (typeof c2node !== "undefined" && c2node !== null)) {
       vpnode = dst.insertAfter(c2node.data, vpnode);
       c2node = c2node.next;
       count++;
