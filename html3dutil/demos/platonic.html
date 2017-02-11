@@ -59,8 +59,8 @@ function Labels(scene, batch) {
     if(this.labels.length === 0)return;
     var proj = this.batch.getProjectionMatrix();
     var view = this.batch.getViewMatrix();
-    var width = this.scene.getClientWidth();
-    var height = this.scene.getClientHeight();
+    var width = this.scene.getWidth();
+    var height = this.scene.getHeight();
     proj = H3DU.Math.mat4multiply(proj, view);
     for(var i = 0; i < this.labels.length; i++) {
       this.labels[i].update(proj, width, height);
@@ -104,8 +104,8 @@ var rotation = [0, 0, 0];
 var timer = {};
 H3DU.renderLoop(function(time) {
   "use strict";
-  for(var i = 0; i < sub.shapeCount(); i++) {
-    sub.getShape(i).setQuaternion(
+  for(var i = 0; i < shapeGroup.shapeCount(); i++) {
+    shapeGroup.getShape(i).setQuaternion(
       H3DU.Math.quatFromTaitBryan(rotation));
   }
   rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);

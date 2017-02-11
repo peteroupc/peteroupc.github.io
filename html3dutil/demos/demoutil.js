@@ -248,13 +248,23 @@ function makeAxisLines(width) {
   "use strict";
   if(typeof width === "undefined" || width === null)width = 0.01;
   var xyz = new H3DU.ShapeGroup();
-  var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(width / 2.0, 50, 6, 4));
+  var length = 50;
+  var halfLength = length / 2.0;
+  var axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(width / 2.0, length, 6, 4));
   var zaxis = axisline.copy().setColor("blue");
+  zaxis.getTransform().setPosition(0, 0, -halfLength);
   var yaxis = axisline.copy().setColor("green");
-  yaxis.getTransform().setRotation(90, 1, 0, 0);
+  yaxis.getTransform().setRotation(90, -1, 0, 0).setPosition(0, -halfLength, 0);
   var xaxis = axisline.copy().setColor("red");
-  xaxis.getTransform().setRotation(90, 0, 1, 0);
-  return xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis);
+  xaxis.getTransform().setRotation(90, 0, -1, 0).setPosition(-halfLength, 0, 0);
+  var zaxis2 = axisline.copy().setColor("blue");
+  zaxis2.getTransform().setPosition(0, 0, halfLength * 3).setScale(3);
+  var yaxis2 = axisline.copy().setColor("green");
+  yaxis2.getTransform().setRotation(90, -1, 0, 0).setPosition(0, halfLength * 3, 0).setScale(3);
+  var xaxis2 = axisline.copy().setColor("red");
+  xaxis2.getTransform().setRotation(90, 0, -1, 0).setPosition(halfLength * 3, 0, 0).setScale(3);
+  return xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis)
+     .addShape(xaxis2).addShape(yaxis2).addShape(zaxis2);
 }
 
 document.write("<script src='../extras/meshjson.js'></script>");

@@ -28,8 +28,17 @@
  */
 H3DU.InputTracker = function(element) {
   "use strict";
+  /** True if the left mouse button was detected as being down.
+   * @type {Boolean}
+   * @readonly */
   this.leftButton = false;
+  /** True if the right mouse button was detected as being down.
+   * @type {Boolean}
+   * @readonly */
   this.rightButton = false;
+  /** True if the middle mouse button was detected as being down.
+   * @type {Boolean}
+   * @readonly */
   this.middleButton = false;
   this.keys = [];
   this.lastClient = [];
@@ -214,7 +223,7 @@ H3DU.InputTracker.prototype.getKey = function(key) {
 /**
  * Sets a function to handle mouse wheel events.
  * @deprecated Will be removed in the future. Use the
- * deltaTicks method to find out whether the user
+ * mousePos method to find out whether the user
  * has rotated the mouse wheel.
  * @param {Function} func A function.
  * @memberof! H3DU.InputTracker#
@@ -392,7 +401,7 @@ H3DU.InputTracker.SUBTRACT = 109;
  * will be 0.
  * @memberof! H3DU.InputTracker#
  */
-H3DU.InputTracker.prototype.deltaXY = function() {
+H3DU.InputTracker.prototype.mousePos = function() {
   "use strict";
   return {
     "x":this.deltas.x,
@@ -402,6 +411,13 @@ H3DU.InputTracker.prototype.deltaXY = function() {
     "ticks":this.deltas.ticks
   };
 };
+/**
+ * An alias for {@link H3DU.InputTracker#mousePos}.
+ * @deprecated
+ * @returns {Object} An object described in the "mousePos" method.
+ * @memberof! H3DU.InputTracker#
+ */
+H3DU.InputTracker.prototype.deltaXY = H3DU.InputTracker.prototype.mousePos;
 /**
  * Retrieves the current position of the mouse within
  * the page's client area, as detected by the input

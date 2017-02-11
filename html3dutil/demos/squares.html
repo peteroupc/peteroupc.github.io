@@ -42,6 +42,11 @@ canvas { width:100%; height:100%; overflow: hidden; }
  http://peteroupc.github.io/
 */
 
+/*
+"#define posneg(signOf) ((signOf>=0) ? 1.0 : -1.0)\n"
+"#define sgnmul(signOf,mult) ((signOf>=0) ? (mult) : -(mult))\n"
+*/
+
 var currentFilter = null;
 var scene = null,
   renders = null,
@@ -110,11 +115,11 @@ function makeWarp() {
     "uniform float coarseness;", // coarseness in pixels; 1 means normal
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
     " vec2 norm=uvCoord*2.0-1.0;",
-    " float r=length(norm);",
-    " float phi=atan(norm.y,norm.x);",
+    " float r=length(norm)+0.001;",
+    " vec2 unitnorm=norm/r;",
     " r=sqrt(r);",
-    " float x=((r*cos(phi))+1.0)*0.5;",
-    " float y=((r*sin(phi))+1.0)*0.5;",
+    " float x=((r*unitnorm.x)+1.0)*0.5;",
+    " float y=((r*unitnorm.y)+1.0)*0.5;",
     " vec4 c=texture2D(sampler,vec2(x,y));",
     " return c;",
     "}"].join("\n"));
@@ -208,7 +213,7 @@ function makeWave() {
     " return sin(t*pi*2.0);",
     "}",
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
-    " float t=float(time)/100.0;",
+    " float t=float(time)*0.01;",
     " t=t+uvCoord.y;",
     " float offset=interp(fract(t*8.0));",
     " float x=clamp(uvCoord.x+offset*0.02,0.0,1.0);",

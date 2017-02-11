@@ -488,7 +488,9 @@
   };
 
   var GraphicsPath = {};
-
+  // NOTE: Much of the Polygon, Connector, and Clipper classes
+    // was translated to JavaScript by Peter O. from the public domain
+    // C++ code by Francisco Martinez and others.
   var Polygon = function(path, flatness) {
     this.subpaths = [];
     this.contours = [];
@@ -559,8 +561,6 @@
     this.clipping = c;
     this.nint = 0;
   };
-
-  GraphicsPath = {};
 
   function Connector() {
     this.openPolygons = new LinkedList();
@@ -731,10 +731,10 @@
       return !this.below(x);
     };
   };
-
+/*
   Clipper.SweepEvent.prototype.toString = function() {
     return Clipper._print(this);
-  };
+  };*/
 /** @private */
   Clipper.signedArea = function(a, b, c) {
     var xa = a[0] - c[0];
@@ -793,25 +793,18 @@
     }
     return Clipper.sweepEventComp(e1, e2);
   };
-/** @private
- * @param {Object} e1 Description of e1.
- * @param {Object} e2 Description of e2.
- * @returns {Object} Return value.
- */
+/** @private */
   Clipper.segmentCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.segmentComp(e1, e2) ? -1 : 1;
   };
-/** @private
- * @param {Object} e Description of e.
- * @returns {Object} Return value.
- */
+/** @private */
   Clipper.prototype.storeSweepEvent = function(e) {
     e.id = this.eventHolder.length;
     this.eventHolder.push(e);
     return e;
   };
-/** @private */
+  /*
   Clipper._print = function(e) {
     if(!e)return "null";
     var namesEventTypes = [
@@ -819,11 +812,8 @@
     return "Point: (" + e.p + ") Other point: (" + e.other.p + ")" + (e.left ? " (Left) " : " (Right) ") +
          (e.inside ? " (Inside) " : " (Outside) ") +  (e.inOut ? " (In-Out) " : " (Out-In) ") + "Type: " +
          namesEventTypes[e.type] + " Polygon: " + (e.pl === Clipper.SUBJECT ? " (SUBJECT)" : " (CLIPPING)");
-  };
-/** @private
- * @param {Object} op Description of op.
- * @returns {Object} Return value.
- */
+  };*/
+/** @private */
   Clipper.prototype.compute = function(op) {
   // Test 1 for trivial result case
     if(this.subject.ncontours() * this.clipping.ncontours() === 0) { // At least one of the polygons is empty

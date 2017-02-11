@@ -1,0 +1,171 @@
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="polyhedra.js"></script>
+<script type="text/javascript" src="../extras/camera.js"></script>
+</head>
+<body>
+<canvas width="600" height="450" id=canvas></canvas>
+<script id="demo">
+/* global H3DU, Polyhedra */
+// <!--
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
+
+function rayIntersectsBox(ray, box) {
+  "use strict";
+  var d = [ray[3], ray[4], ray[5]]; // direction
+  var p = [ray[0], ray[1], ray[2]]; // origin
+  var mn = 0.0;
+  var mx = Number.POSITIVE_INFINITY;
+    // X intersection
+  if (Math.abs(d[0]) < 1e-9) {
+    if (p[0] < box[0] || p[0] > box[3]) {
+      return null;
+    }
+  } else {
+    var recip = 1.0 / d[0];
+    var t1 = (box[0] - p[0]) * recip;
+    var t2 = (box[3] - p[0]) * recip;
+    mn = Math.max(mn, t1 > t2 ? t2 : t1);
+    mx = Math.min(mx, t1 > t2 ? t1 : t2);
+    if (mn > mx) {
+      return null;
+    }
+  }
+// Y intersection
+  if (Math.abs(d[1]) < 1e-9) {
+    if (p[1] < box[1] || p[1] > box[4]) {
+      return null;
+    }
+  } else {
+    recip = 1.0 / d[1];
+    t1 = (box[1] - p[1]) * recip;
+    t2 = (box[4] - p[1]) * recip;
+    mn = Math.max(mn, t1 > t2 ? t2 : t1);
+    mx = Math.min(mx, t1 > t2 ? t1 : t2);
+    if (mn > mx) {
+      return null;
+    }
+  }
+// Z intersection
+  if (Math.abs(d[2]) < 1e-9) {
+    if (p[2] < box[2] || p[2] > box[5]) {
+      return null;
+    }
+  } else {
+    recip = 1.0 / d[2];
+    t1 = (box[2] - p[2]) * recip;
+    t2 = (box[5] - p[2]) * recip;
+    mn = Math.max(mn, t1 > t2 ? t2 : t1);
+    mx = Math.min(mx, t1 > t2 ? t1 : t2);
+    if (mn > mx) {
+      return null;
+    }
+  }
+  return [
+    ray[0] + ray[3] * mn,
+    ray[1] + ray[4] * mn,
+    ray[2] + ray[5] * mn
+  ];
+}
+
+function raypick(x, y, scene, sub) {
+  "use strict";
+// TODO: Implement more fine-grained picking
+  var w = scene.getWidth();
+  var h = scene.getHeight();
+  var projview = H3DU.Math.mat4multiply(
+    sub.getProjectionMatrix(), sub.getViewMatrix());
+  var near = H3DU.Math.vec3fromWindowPoint([x, y, -1], projview, [0, 0, w, h]);
+  var far = H3DU.Math.vec3fromWindowPoint([x, y, 1], projview, [0, 0, w, h]);
+  var dist = H3DU.Math.vec3sub(far, near);
+  var ray = [near[0], near[1], near[2], dist[0], dist[1], dist[2]];
+  var group = sub.getShape(0);
+  for(var i = 0; i < group.shapeCount(); i++) {
+    var bounds = group.getShape(i).getBounds();
+    if(rayIntersectsBox(ray, bounds)) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
+   .cullFace(H3DU.Scene3D.BACK)
+   .setClearColor("white");
+var input = new H3DU.InputTracker(document);
+var sub = new H3DU.Batch3D()
+   .orthoAspect(-20, 20, -10, 10, -20, 20);
+sub.getLights().setBasic();
+var shapeGroup = new H3DU.ShapeGroup();
+sub.addShape(shapeGroup);
+var mesh;
+mesh = Polyhedra.hexahedron(4.5, 0);
+var shape = new H3DU.Shape(mesh).setColor("red").setPosition(-15, 5, 0);
+shapeGroup.addShape(shape);
+mesh = Polyhedra.octahedron(4.5, 0);
+shapeGroup.addShape(
+    new H3DU.Shape(mesh).setColor("blue").setPosition(-5, 5, 0));
+mesh = Polyhedra.icosahedron(4.5, 0);
+shapeGroup.addShape(
+    new H3DU.Shape(mesh).setColor("lime").setPosition(5, 5, 0));
+mesh = Polyhedra.tetrahedron(4.5, 0);
+shapeGroup.addShape(
+    new H3DU.Shape(mesh).setColor("darkorange").setPosition(15, 5, 0));
+mesh = Polyhedra.dodecahedron(4.5, 0);
+shapeGroup.addShape(
+    new H3DU.Shape(mesh).setColor("yellow").setPosition(-15, -5, 0));
+var rotation = [0, 0, 0];
+var timer = {};
+var objects = [];
+for(var i = 0; i < shapeGroup.shapeCount(); i++) {
+  objects.push(shapeGroup.getShape(i));
+}
+var lastPress = false;
+setInterval(function() {
+  "use strict";
+  input.update();
+  if(input.leftButton) {
+    if(lastPress === false) {
+    // Left button was just pressed
+      var mousePos = input.mousePos();
+      var o = raypick(mousePos.cx, mousePos.cy, scene, sub, objects);
+      for(var i = 0; i < objects.length; i++) {
+        if(o === i)
+          objects[i].getTransform().setScale(1.5);
+        else
+        objects[i].getTransform().setScale(1.0);
+      }
+      lastPress = true;
+    }
+  } else {
+    lastPress = false;
+  }
+}, 20);
+H3DU.renderLoop(function(time) {
+  "use strict";
+  for(var i = 0; i < shapeGroup.shapeCount(); i++) {
+    shapeGroup.getShape(i).setQuaternion(
+      H3DU.Math.quatFromTaitBryan(rotation));
+  }
+  rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);
+  rotation[1] = 360 * H3DU.getTimePosition(timer, time, 12000);
+  scene.render(sub);
+});
+// -->
+</script>
+</body>
