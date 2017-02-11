@@ -115,8 +115,8 @@ function makeWarp() {
     "uniform float coarseness;", // coarseness in pixels; 1 means normal
     "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
     " vec2 norm=uvCoord*2.0-1.0;",
-    " float r=length(norm)+0.001;",
-    " vec2 unitnorm=norm/r;",
+    " float r=length(norm);",
+    " vec2 unitnorm=(r==0.0) ? norm : (norm/r);",
     " r=sqrt(r);",
     " float x=((r*unitnorm.x)+1.0)*0.5;",
     " float y=((r*unitnorm.y)+1.0)*0.5;",
