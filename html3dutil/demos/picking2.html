@@ -12,9 +12,6 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </head>
 <body>
 <canvas width="600" height="450" id=canvas></canvas>
-<div style="position:absolute;left:0;top:0">
-<input id=scalepicked type=checkbox><label for=scalepicked>Scale picked object</label>
-</div>
 <script id="demo">
 /* global H3DU, Polyhedra, raypick */
 // <!--
@@ -54,18 +51,16 @@ shapeGroup.addShape(
 mesh = Polyhedra.dodecahedron(4.5, 0);
 shapeGroup.addShape(
     new H3DU.Shape(mesh).setColor("yellow").setPosition(-15, -5, 0));
-var pickdot = new H3DU.Shape(H3DU.Meshes.createSphere(0.5))
-  .setColor("green").setVisible(false);
-var pickdotShape = null;
-var pickdotLocal = null;
+var pickedShape = null;
+
 var rotation = [0, 0, 0];
 var timer = {};
 var objects = [];
 for(var i = 0; i < shapeGroup.shapeCount(); i++) {
   objects.push(shapeGroup.getShape(i));
 }
-shapeGroup.addShape(pickdot);
-var lastPress = false;
+
+/* exported scalePickedObject */
 function scalePickedObject() {
   "use strict";
   return document.getElementById("scalepicked").checked;
@@ -73,43 +68,28 @@ function scalePickedObject() {
 setInterval(function() {
   "use strict";
   input.update();
-  if(input.leftButton) {
-    if(lastPress === false) {
-    // Left button was just pressed
-      var mousePos = input.mousePos();
-      var viewport = [0, 0, scene.getWidth(), scene.getHeight()];
-      var projview = sub.getProjectionViewMatrix();
-      var o = raypick(mousePos.cx, mousePos.cy, projview, viewport, objects);
-      if(o.index >= 0) {
-        pickdotShape = objects[o.index];
-        pickdotLocal = o.local;
-        pickdot.setVisible(true);
-      } else {
-        pickdot.setVisible(false);
-        pickdotShape = null;
-      }
-      lastPress = true;
-    }
+  var mousePos = input.mousePos();
+  var viewport = [0, 0, scene.getWidth(), scene.getHeight()];
+  var projview = sub.getProjectionViewMatrix();
+  var o = raypick(mousePos.cx, mousePos.cy, projview, viewport, objects);
+  if(o.index >= 0) {
+    pickedShape = objects[o.index];
+ // pickedLocal = o.local;
   } else {
-    lastPress = false;
+    pickedShape = null;
   }
-}, 20);
+}, 100);
 H3DU.renderLoop(function(time) {
   "use strict";
   for(var i = 0; i < shapeGroup.shapeCount(); i++) {
     var shape = shapeGroup.getShape(i);
     shape.setQuaternion(
       H3DU.Math.quatFromTaitBryan(rotation));
-    if(shape === pickdotShape && scalePickedObject()) {
-      shape.getTransform().setScale(1.5);
+    if(shape === pickedShape) {
+      shape.setMaterialParams({"emission":[0.5, 0.5, 0.5]});
     } else {
-      shape.getTransform().setScale(1.0);
+      shape.setMaterialParams({"emission":[0, 0, 0]});
     }
-  }
-  if(pickdotShape) {
-    var matrix = pickdotShape.getMatrix();
-    var world = H3DU.Math.mat4projectVec3(matrix, pickdotLocal);
-    pickdot.setPosition(world);
   }
   rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);
   rotation[1] = 360 * H3DU.getTimePosition(timer, time, 12000);
