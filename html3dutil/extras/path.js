@@ -1007,9 +1007,19 @@
       ret.closePath();
     return ret;
   };
+/** @private */
+  GraphicsPath._pushXY = function(curPath, x, y, nodegen) {
+    if(!nodegen) {
+      curPath.push(x, y);
+    } else if(curPath.length === 0) {
+      curPath.push(x, y);
+    } else if(curPath[curPath.length - 1] !== y || curPath[curPath.length - 2] !== x) {
+      curPath.push(x, y);
+    }
+  };
 
 /** @private */
-  GraphicsPath.prototype._getSubpaths = function(flatness) {
+  GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
     var tmp = [];
     var subpaths = [];
     var j;
@@ -1020,7 +1030,6 @@
     var curPath = null;
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
-
       var startpt = GraphicsPath._startPoint(s);
       var endpt = GraphicsPath._endPoint(s);
       tmp.splice(0, tmp.length);
@@ -1037,25 +1046,21 @@
         GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
      s[5], s[6], 0.0, 1.0, tmp, flatness * 2, 0);
         for(j = 0; j < tmp.length; j++) {
-          curPath.push(tmp[j][2]);
-          curPath.push(tmp[j][3]);
+          GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
         }
       } else if(s[0] === GraphicsPath.CUBIC) {
         GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
      s[5], s[6], s[7], s[8], 0.0, 1.0, tmp, flatness * 2, 0);
         for(j = 0; j < tmp.length; j++) {
-          curPath.push(tmp[j][2]);
-          curPath.push(tmp[j][3]);
+          GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
         }
       } else if(s[0] === GraphicsPath.ARC) {
         GraphicsPath._flattenArc(s, 0.0, 1.0, tmp, flatness * 2, 0);
         for(j = 0; j < tmp.length; j++) {
-          curPath.push(tmp[j][2]);
-          curPath.push(tmp[j][3]);
+          GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
         }
       } else if(s[0] !== GraphicsPath.CLOSE) {
-        curPath.push(s[3]);
-        curPath.push(s[4]);
+        GraphicsPath._pushXY(curPath, s[3], s[4], nodegen);
       }
     }
     return subpaths;
@@ -2777,7 +2782,8 @@
  */
   GraphicsPath.prototype.getTriangles = function(flatness) {
     if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-    var subpaths = this._getSubpaths(flatness);
+    // NOTE: _getSubpaths doesn't add degenerate line segments
+    var subpaths = this._getSubpaths(flatness, true);
     var contours1 = [];
     var contours2 = [];
     var firstOrient = 0;

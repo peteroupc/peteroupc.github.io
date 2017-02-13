@@ -489,13 +489,14 @@
 
   var GraphicsPath = {};
   // NOTE: Much of the Polygon, Connector, and Clipper classes
-    // was translated to JavaScript by Peter O. from the public domain
-    // C++ code by Francisco Martinez and others.
+  // was adapted for JavaScript by Peter O. from the public domain
+  // C++ code by Francisco Martinez and others.
   var Polygon = function(path, flatness) {
     this.subpaths = [];
     this.contours = [];
     if(typeof path !== "undefined" && path !== null) {
-      this.subpaths = path._getSubpaths(flatness);
+      // Ignore degenerate line segments
+      this.subpaths = path._getSubpaths(flatness, true);
       for(var i = 0; i < this.subpaths.length; i++) {
         this.contours[i] = new Polygon._Contour(this.subpaths[i]);
       }
@@ -532,15 +533,6 @@
   };
 /** @private */
   Polygon._Contour = function(subpath) {
-  /*
- // For convenience, eliminate the last
- // vertex if it matches the first vertex
- if(vertLength>=4 &&
-    subpath[0]===subpath[vertLength-2] &&
-    subpath[1]===subpath[vertLength-1]) {
-  vertLength-=2;
- }
- */
     this.vertices = subpath;
     this.nvertices = function() {
       return this.vertices.length / 2;
@@ -994,7 +986,7 @@
  * @returns {Object} Return value.
  */
   Clipper.prototype.processSegment = function(s, pl) {
-    if(Clipper._ptEq(s[0], s[1])) // if the two edge endpoints are equal the segment is dicarded
+    if(Clipper._ptEq(s[0], s[1])) // if the two edge endpoints are equal the segment is discarded
       return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
     var e1 = this.storeSweepEvent(new Clipper.SweepEvent(s[0], true, pl, null));
     var e2 = this.storeSweepEvent(new Clipper.SweepEvent(s[1], true, pl, e1));

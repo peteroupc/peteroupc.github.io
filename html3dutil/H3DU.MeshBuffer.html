@@ -24,6 +24,8 @@ A geometric mesh object. A series of default attributes will be set based on tha
 <ul>
 <li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_getBounds">getBounds</a><br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.</li>
+<li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_getPositions">getPositions</a><br>Gets an array of vertex positions held by this mesh buffer,
+arranged by primitive</li>
 <li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveType">primitiveType</a><br>Gets the type of primitive stored in this mesh buffer.</li>
@@ -52,6 +54,21 @@ This calculation uses the attribute with the semantic POSITION
 and set index 0. If there is no such attribute,
 or no vertices are defined in this buffer, returns the array
 [Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.MeshBuffer_H3DU.MeshBuffer_getPositions'></a></p>
+
+<h3>H3DU.MeshBuffer#getPositions()</h3>
+
+<p>Gets an array of vertex positions held by this mesh buffer,
+arranged by primitive</p>
+
+<h4>Return Value</h4>
+
+<p>An array of primitives,
+each of which holds the vertices that make up that primitive.
+If this mesh holds triangles, each primitive will contain three
+vertices; if lines, two; and if points, one. Each vertex is a 3-element
+array containing that vertex&#39;s X, Y, and Z coordinates, in that order. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
 
 <p><a name='H3DU.MeshBuffer_H3DU.MeshBuffer_primitiveCount'></a></p>
 

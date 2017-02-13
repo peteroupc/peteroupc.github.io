@@ -7,6 +7,9 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+// An incomplete glTF implementation
+
 // LATER: Convert batches/shape groups to glTF
 (function(H3DU) {
   "use strict";

@@ -297,7 +297,8 @@ without transforming them.</p>
 screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
 perspective matrix returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, for example,
-transforms W to the negative Z coordinate in eye space.</p>
+transforms W to the negative Z coordinate in eye space, that is, it will increase with
+the distance to the coordinates from the &quot;eye&quot; or &quot;camera&quot;.</p>
 
 <p>To take perspective into account, the clip space X, Y, and Z coordinates are
 divided by the clip space W, and then converted to <em>window coordinates</em>,
@@ -305,6 +306,12 @@ which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current <em>viewport</em>. A viewport is a rectangle
 whose size and position are generally expressed in pixels; to set the viewport&#39;s
 size, call the <code>setDimensions</code> method of <code>Scene3D</code>.</p>
+
+<p>Dividing the X, Y, and Z coordinates by the clip space W results in the effect
+that as W gets higher and higher (and farther and farther from the &quot;eye&quot; or &quot;camera&quot;),
+the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This
+is the <em>perspective</em> effect mentioned earlier: objects will appear smaller and smaller
+as they are more and more distant from the &quot;camera&quot;.</p>
 
 <p><a id=Other_Pages></a></p>
 

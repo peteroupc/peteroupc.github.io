@@ -8,12 +8,13 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="demoutil.js"></script>
 <script type="text/javascript" src="polyhedra.js"></script>
 <script type="text/javascript" src="picking.js"></script>
+<script type="text/javascript" src="bsp.js"></script>
 <script type="text/javascript" src="../extras/camera.js"></script>
 </head>
 <body>
 <canvas width="600" height="450" id=canvas></canvas>
 <script id="demo">
-/* global H3DU, Polyhedra, raypick */
+/* global BspTree, H3DU, Polyhedra, raypick */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -43,12 +44,18 @@ mesh = Polyhedra.octahedron(4.5, 0);
 shapeGroup.addShape(
     new H3DU.Shape(mesh).setColor("blue").setPosition(-5, 5, 0));
 mesh = Polyhedra.icosahedron(4.5, 0);
+var mesh2 = new H3DU.Mesh().merge(mesh).transform(H3DU.Math.mat4translated(2, 2, 0));
+var bsp = BspTree.fromMeshBuffer(new H3DU.MeshBuffer(mesh));
+var bsp2 = BspTree.fromMeshBuffer(new H3DU.MeshBuffer(mesh2));
+mesh = bsp.intersection(bsp2).toMeshBuffer();
 shapeGroup.addShape(
     new H3DU.Shape(mesh).setColor("lime").setPosition(5, 5, 0));
 mesh = Polyhedra.tetrahedron(4.5, 0);
+mesh = bsp.union(bsp2).toMeshBuffer();
 shapeGroup.addShape(
     new H3DU.Shape(mesh).setColor("darkorange").setPosition(15, 5, 0));
 mesh = Polyhedra.dodecahedron(4.5, 0);
+mesh = bsp.difference(bsp2).toMeshBuffer();
 shapeGroup.addShape(
     new H3DU.Shape(mesh).setColor("yellow").setPosition(-15, -5, 0));
 var pickedShape = null;

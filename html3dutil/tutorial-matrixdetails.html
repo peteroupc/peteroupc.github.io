@@ -189,8 +189,8 @@ position:</p>
 
 <blockquote>
 <p>The <strong>a&prime;</strong><sub><em>w</em></sub> appears here because matrix transformation actually involves multiplying by
-a 4-element vector, which in this case is the vector (<strong>a</strong><sub><em>x</em></sub>, <strong>a</strong><sub><em>y</em></sub>, <strong>a</strong><sub><em>z</em></sub>, 1).
-The result will be  (<strong>a&prime;</strong><sub><em>x</em></sub>, <strong>a&prime;</strong><sub><em>y</em></sub>, <strong>a&prime;</strong><sub><em>z</em></sub>, <strong>a&prime;</strong><sub><em>w</em></sub>), which
+a 4-element vector, which in this case is the vector (<strong>a</strong><sub><em>x</em></sub>, <strong>a</strong><sub><em>y</em></sub>, <strong>a</strong><sub><em>z</em></sub>, 1)<sup><em>T</em></sup>.
+The result will be  (<strong>a&prime;</strong><sub><em>x</em></sub>, <strong>a&prime;</strong><sub><em>y</em></sub>, <strong>a&prime;</strong><sub><em>z</em></sub>, <strong>a&prime;</strong><sub><em>w</em></sub>)<sup><em>T</em></sup>, which
 is in <em>homogeneous coordinates</em>.  To convert these coordinates back to a 3D point, divide
 <strong>a&prime;</strong><sub><em>x</em></sub>, <strong>a&prime;</strong><sub><em>y</em></sub>,
 and <strong>a&prime;</strong><sub><em>z</em></sub> by <strong>a&prime;</strong><sub><em>w</em></sub>. (See also <a href="#Other_Transformations">&quot;Other Transformations&quot;</a>.)</p>
@@ -645,6 +645,19 @@ of multiplying matrices is important. This multiplication
 behavior in the HTML 3D Utility Library follows that of OpenGL and is opposite to that in the
 D3DX and DirectXMath libraries.</p>
 
+<p>To get an insight of how matrix multiplication works, treat the second matrix as a set
+of column vectors (with the same number of rows as the number of columns in the
+first matrix).  Multiplying the two matrices transforms these vectors in the same way
+as if the column vectors were transformed individually.  (This also explains why there can
+be one or more column vectors in the second matrix and not just four in the case of a 4x4 matrix,
+and also why transforming a column vector is the same as multiplying a 4x4 matrix by a
+matrix with one column and four rows.*)</p>
+
+<p>This insight reveals a practical use of matrix multiplication: transforming four 4-element
+vectors at once using a single matrix operation involving two 4x4 matrices.  After the
+matrix multiplication, the transformed vectors will be contained in each of the four columns
+of the output matrix.</p>
+
 <p>The methods <code>mat4multiply</code>, <code>mat4scale</code>, <code>mat4scaleInPlace</code>, <code>mat4translate</code>, and
 mat4rotate involve multiplying 4x4 matrices.</p>
 
@@ -654,6 +667,9 @@ mat4rotate involve multiplying 4x4 matrices.</p>
 <li><a href="H3DU.Math.html#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a> -
 Multiplies two matrices</li>
 </ul>
+
+<p>* Reading the <a href="https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection">tutorial by Dmitry Sokolov</a>
+led me to this highly useful insight.</p>
 
 <p><a id=Other_Transformations></a></p>
 

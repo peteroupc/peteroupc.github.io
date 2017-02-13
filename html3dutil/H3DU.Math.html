@@ -88,6 +88,7 @@ is at least partially inside a view frustum.</li>
 outside or inside a view frustum.</li>
 <li><a href="#H3DU.Math.frustumHasSphere">frustumHasSphere</a><br>Determines whether a sphere is at least
 partially inside a view frustum.</li>
+<li><a href="#H3DU.Math.mat3copy">mat3copy</a><br>Returns a copy of a 3x3 matrix.</li>
 <li><a href="#H3DU.Math.mat3identity">mat3identity</a><br>Returns the identity 3x3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).</li>
 <li><a href="#H3DU.Math.mat3invert">mat3invert</a><br>Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.</li>
@@ -180,6 +181,10 @@ vector with the result.</li>
 the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec3assign">vec3assign</a><br>Assigns the values of a 3-element vector into another
 3-element vector.</li>
+<li><a href="#H3DU.Math.vec3clamp">vec3clamp</a><br>Returns a 3-element vector in which each element of the given 3-element vector is clamped
+so it&#39;s not less than one value or greater than another value.</li>
+<li><a href="#H3DU.Math.vec3clampInPlace">vec3clampInPlace</a><br>Clamps each element of the given 3-element vector
+so it&#39;s not less than one value or greater than another value.</li>
 <li><a href="#H3DU.Math.vec3copy">vec3copy</a><br>Returns a copy of a 3-element vector.</li>
 <li><a href="#H3DU.Math.vec3cross">vec3cross</a><br>Finds the cross product of two 3-element vectors (called A and B).</li>
 <li><a href="#H3DU.Math.vec3dist">vec3dist</a><br>Finds the straight-line distance from one three-element vector
@@ -232,6 +237,10 @@ vector with the result.</li>
 the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec4assign">vec4assign</a><br>Assigns the values of a 4-element vector into another
 4-element vector.</li>
+<li><a href="#H3DU.Math.vec4clamp">vec4clamp</a><br>Returns a 4-element vector in which each element of the given 4-element vector is clamped
+so it&#39;s not less than one value or greater than another value.</li>
+<li><a href="#H3DU.Math.vec4clampInPlace">vec4clampInPlace</a><br>Clamps each element of the given 4-element vector
+so it&#39;s not less than one value or greater than another value.</li>
 <li><a href="#H3DU.Math.vec4copy">vec4copy</a><br>Returns a copy of a 4-element vector.</li>
 <li><a href="#H3DU.Math.vec4dot">vec4dot</a><br>Finds the dot product of two 4-element vectors.</li>
 <li><a href="#H3DU.Math.vec4length">vec4length</a><br>Returns the distance of this 4-element vector from the origin,
@@ -819,6 +828,23 @@ Radius of the sphere in world-space units.</li>
 is partially or totally
 inside the frustum; <code>false</code> otherwise. (Type: Boolean)</p>
 
+<p><a name='H3DU.Math.mat3copy'></a></p>
+
+<h3>(static) H3DU.Math.mat3copy(mat)</h3>
+
+<p>Returns a copy of a 3x3 matrix.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
+A 3x3atrix.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+
 <p><a name='H3DU.Math.mat3identity'></a></p>
 
 <h3>(static) H3DU.Math.mat3identity()</h3>
@@ -846,7 +872,7 @@ A 3x3 matrix.</li>
 <h4>Return Value</h4>
 
 <p>The resulting 3x3 matrix.
-Returns the identity matrix if this matrix is not invertible. (Type: Array.&lt;Number&gt;)</p>
+Returns the identity matrix if this matrix&#39;s determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.Math.mat3multiply'></a></p>
 
@@ -1045,7 +1071,7 @@ A 4x4 matrix.</li>
 <h4>Return Value</h4>
 
 <p>The resulting 4x4 matrix.
-Returns the identity matrix if this matrix is not invertible. (Type: Array.&lt;Number&gt;)</p>
+Returns the identity matrix if this matrix&#39;s determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.Math.mat4isIdentity'></a></p>
 
@@ -1084,11 +1110,11 @@ puts <code>lookingAt</code> at the center of the view.
 to the <code>lookingAt</code> point.</ul></p>
 
 <p>This method is designed for use in a <a href="tutorial-glmath.html">right-handed coordinate system</a>
-(the &quot;camera&quot; will point away from the Z axis).
+(the Z axis&#39;s direction will be from the &quot;camera&quot; to the point looked at).
 To adjust the result of this method for a left-handed system,
 reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
-10, 12, and 14); doing so will point the &quot;camera&quot; toward the Z axis.</p>
+10, 12, and 14); the Z axis&#39;s direction will thus be from the point looked at to the &quot;camera&quot;.</p>
 
 <h4>Parameters</h4>
 
@@ -1595,10 +1621,10 @@ were assumed to be (0, 0, 0, 1) instead of their actual values
 row of the matrix in column-major order) and as though the 3-element
 vector had a fourth element valued at 1.</p>
 
-<p>For transforming 3-dimensional coordinates
-with a matrix that may be in a perspective
-projection (whose last row is not necessarily (0, 0, 0, 1)), use
-the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method instead.</p>
+<p>For most purposes, use
+the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method instead, which supports
+4x4 matrices that may be in a perspective
+projection (whose last row is not necessarily (0, 0, 0, 1)).</p>
 
 <h4>Parameters</h4>
 
@@ -2219,9 +2245,45 @@ The 3-element vector whose values will be copied.</li>
 
 <p>The parameter &quot;dst&quot; (Type: Array.&lt;Number&gt;)</p>
 
+<p><a name='H3DU.Math.vec3clamp'></a></p>
+
+<h3>(static) H3DU.Math.vec3clamp(min, max, a)</h3>
+
+<p>Returns a 3-element vector in which each element of the given 3-element vector is clamped
+so it&#39;s not less than one value or greater than another value.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>min</code> (Type: Number)<br>
+Lowest possible value. Should not be greater than &quot;max&quot;.</li>
+<li><code>max</code> (Type: Number)<br>
+Highest possible value. Should not be less than &quot;min&quot;.</li>
+<li><p><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The resulting vector.</p>
+
+<p><a name='H3DU.Math.vec3clampInPlace'></a></p>
+
+<h3>(static) H3DU.Math.vec3clampInPlace(min, max, a)</h3></li>
+</ul>
+
+<p>Clamps each element of the given 3-element vector
+so it&#39;s not less than one value or greater than another value.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>min</code> (Type: Number)<br>
+Lowest possible value. Should not be greater than &quot;max&quot;.</li>
+<li><code>max</code> (Type: Number)<br>
+Highest possible value. Should not be less than &quot;min&quot;.</li>
+<li><p><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The vector &quot;a&quot;.</p>
+
 <p><a name='H3DU.Math.vec3copy'></a></p>
 
-<h3>(static) H3DU.Math.vec3copy(vec)</h3>
+<h3>(static) H3DU.Math.vec3copy(vec)</h3></li>
+</ul>
 
 <p>Returns a copy of a 3-element vector.</p>
 
@@ -2385,8 +2447,8 @@ if(H3DU.Math.vec3dot(vector, vector)&lt;20*20) {
 <p>Unprojects the X and Y <i>window coordinates</i>,
 and a Z depth coordinate, given in a 3-element vector,
 using the given transformation matrix and viewport
-width and height. The X coordinates in this space increase
-rightward and the Y coordinates in this space increase upward
+width and height. X window coordinates increase
+rightward and Y window coordinates increase upward
 or downward depending on the &quot;yUp&quot; parameter.</p>
 
 <h4>Parameters</h4>
@@ -2395,7 +2457,7 @@ or downward depending on the &quot;yUp&quot; parameter.</p>
 <li><code>vector</code> (Type: Array.&lt;Number&gt;)<br>
 A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.</li>
 <li><code>matrix</code> (Type: Array.&lt;Number&gt;)<br>
-A 4x4 matrix specifying the After undoing the viewport transformation, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix). To convert to object (model) space, this parameter will generally be a projection-view matrix multiplied by the world (model) matrix.</li>
+A 4x4 matrix specifying the After undoing the transformation to X and Y window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (a projection-view matrix multiplied by the world [model] matrix).</li>
 <li><code>viewport</code> (Type: Array.&lt;Number&gt;)<br>
 A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position&#39;s X coordinate, its Y coordinate, the viewport&#39;s width, and the viewport&#39;s height. Throws an error if the width or height is less than 0.</li>
 <li><code>yUp</code> (Type: Boolean) (optional)<br>
@@ -2832,8 +2894,8 @@ results in the same triple product.
 box) where three of its sides having a vertex in common are
 defined by A, B, and C, in any order.
 <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
-<li>The triple product is the same as the <i>determinant</i> of a 3x3 matrix whose
-rows or columns are the vectors A, B, and C, in that order.
+<li>The triple product is the same as the <i>determinant</i> (overall scaling factor)
+of a 3x3 matrix whose rows or columns are the vectors A, B, and C, in that order.
 <li>Assume A is perpendicular to vectors B and C. If the triple product
 is positive (resp. negative), then A points at (resp.
 points directly away from) the cross product of
@@ -2986,9 +3048,45 @@ The 4-element vector whose values will be copied.</li>
 
 <p>The parameter &quot;dst&quot;. (Type: Array.&lt;Number&gt;)</p>
 
+<p><a name='H3DU.Math.vec4clamp'></a></p>
+
+<h3>(static) H3DU.Math.vec4clamp(min, max, a)</h3>
+
+<p>Returns a 4-element vector in which each element of the given 4-element vector is clamped
+so it&#39;s not less than one value or greater than another value.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>min</code> (Type: Number)<br>
+Lowest possible value. Should not be greater than &quot;max&quot;.</li>
+<li><code>max</code> (Type: Number)<br>
+Highest possible value. Should not be less than &quot;min&quot;.</li>
+<li><p><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The resulting vector.</p>
+
+<p><a name='H3DU.Math.vec4clampInPlace'></a></p>
+
+<h3>(static) H3DU.Math.vec4clampInPlace(min, max, a)</h3></li>
+</ul>
+
+<p>Clamps each element of the given 4-element vector
+so it&#39;s not less than one value or greater than another value.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>min</code> (Type: Number)<br>
+Lowest possible value. Should not be greater than &quot;max&quot;.</li>
+<li><code>max</code> (Type: Number)<br>
+Highest possible value. Should not be less than &quot;min&quot;.</li>
+<li><p><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The vector &quot;a&quot;.</p>
+
 <p><a name='H3DU.Math.vec4copy'></a></p>
 
-<h3>(static) H3DU.Math.vec4copy(vec)</h3>
+<h3>(static) H3DU.Math.vec4copy(vec)</h3></li>
+</ul>
 
 <p>Returns a copy of a 4-element vector.</p>
 
