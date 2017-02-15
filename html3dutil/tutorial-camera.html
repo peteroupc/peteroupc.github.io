@@ -307,8 +307,9 @@ will have the same range as the current <em>viewport</em>. A viewport is a recta
 whose size and position are generally expressed in pixels; to set the viewport&#39;s
 size, call the <code>setDimensions</code> method of <code>Scene3D</code>.</p>
 
-<p>Dividing the X, Y, and Z coordinates by the clip space W results in the effect
-that as W gets higher and higher (and farther and farther from the &quot;eye&quot; or &quot;camera&quot;),
+<p>For the perspective matrix returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective"><code>mat4perspective</code></a>, dividing
+the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
+higher and higher (and farther and farther from the &quot;eye&quot; or &quot;camera&quot;),
 the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This
 is the <em>perspective</em> effect mentioned earlier: objects will appear smaller and smaller
 as they are more and more distant from the &quot;camera&quot;.</p>

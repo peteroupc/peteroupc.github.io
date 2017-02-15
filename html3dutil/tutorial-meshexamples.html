@@ -165,8 +165,8 @@ function setBoxSizeAndBounds(shape,box){
 function wireBox(box, color){
   if(!color)color=&quot;gray&quot;;
  var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
- var shape=new H3DU.Shape(boxMesh).setColor(color)
-    .setMaterialParams({&quot;basic&quot;:true})
+ var shape=new H3DU.Shape(boxMesh).setMaterial(
+    H3DU.Material.fromBasic(color))
  return setBoxSizeAndBounds(shape,box)
 }
 </code></pre>

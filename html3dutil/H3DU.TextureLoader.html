@@ -112,7 +112,8 @@ resolves, each item in the resulting array will be a loaded
 <h4>Parameters</h4>
 
 <ul>
-<li><code>texturesOrCubeMap</code> (Type: *)</li>
+<li><code>texturesOrCubeMap</code> (Type: Array.&lt;(String|<a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a>|<a href="H3DU.Texture.html">H3DU.Texture</a>)&gt; | <a href="H3DU.CubeMap.html">H3DU.CubeMap</a>)<br>
+TODO: Not documented yet</li>
 <li><code>resolve</code> (Type: function) (optional)<br>
 A function called as each individual texture is loaded and its promise resolves.</li>
 <li><code>reject</code> (Type: function) (optional)<br>
@@ -121,7 +122,10 @@ A function called as each individual texture is loaded and its promise is reject
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>A promise that resolves when
+all textures used by the cube map are loaded successfully
+(the result will be an H3DU.CubeMap object)
+and is rejected when an error occurs. (Type: <a href="Promise.html">Promise</a>.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>&gt;)</p>
 
 <p><a name='H3DU.TextureLoader_H3DU.TextureLoader_loadTexture'></a></p>
 

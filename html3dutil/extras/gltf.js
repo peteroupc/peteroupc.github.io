@@ -606,6 +606,70 @@
     this.animChannels = animChannels;
     return this;
   };
+  /** @private */
+  GltfState.arrayToView = function(arr, reference) {
+    if(reference instanceof Uint8Array) {
+      return new Uint8Array(arr);
+    }
+    if(reference instanceof Uint32Array) {
+      return new Uint32Array(arr);
+    }
+    return new Uint16Array(arr);
+  };
+  /** @private */
+  GltfState.lineStripToLines = function(strip) {
+    var ret = [];
+    if(strip.length < 2) {
+      return strip;
+    }
+
+    for(var i = 1; i < strip.length; i++) {
+      ret.push(strip[i - 1], strip[i]);
+    }
+    return GltfState.arrayToView(ret, strip);
+  };
+  /** @private */
+  GltfState.lineLoopToLines = function(strip) {
+    var ret = [];
+    if(strip.length < 2) {
+      return strip;
+    }
+
+    for(var i = 1; i < strip.length; i++) {
+      ret.push(strip[i - 1], strip[i]);
+    }
+    ret.push(strip[strip.length - 1], strip[0]);
+    return GltfState.arrayToView(ret, strip);
+  };
+
+/** @private */
+  GltfState.triangleFanToTriangles = function(fan) {
+    var ret = [];
+    if(fan.length < 3) {
+      return fan;
+    }
+    for(var i = 2; i < fan.length; i++) {
+      ret.push(fan[0], fan[i - 1], fan[i]);
+    }
+    return GltfState.arrayToView(ret, fan);
+  };
+
+/** @private */
+  GltfState.triangleStripToTriangles = function(strip) {
+    var ret = [];
+    if(strip.length < 3) {
+      return strip;
+    }
+    var flip = false;
+    for(var i = 2; i < strip.length; i++) {
+      if(flip) {
+        ret.push(strip[i - 2], strip[i - 1], strip[i]);
+      } else {
+        ret.push(strip[i - 1], strip[i - 2], strip[i]);
+      }
+    }
+    return GltfState.arrayToView(ret, strip);
+  };
 
 /** @private */
   GltfState.prototype.readNode = function(node, nodeName, parent) {
@@ -636,14 +700,22 @@
         var array;
         var maxCount = 0;
         var primMode = typeof prim.mode === "undefined" || prim.mode === null ? 4 : prim.mode;
-        if(primMode === 2 || primMode === 3 || primMode === 5 || primMode === 6) {
-      // TODO: LINE_STRIP, LINE_LOOP, TRIANGLE_STRIP, TRIANGLE_FAN
-          this.error = "Primitive mode " + primMode + " not yet supported";
-          return null;
-        }
+        var triangleFan = primMode === 6;
+        var triangleStrip = primMode === 5;
+        var lineStrip = primMode === 2;
+        var lineLoop = primMode === 3;
         if(primMode > 6 || primMode < 0) {
           this.error = "Primitive mode " + primMode + " is invalid";
           return null;
+        }
+        if(primMode === 0) {
+          meshBuffer.setPrimitiveType(H3DU.Mesh.POINTS);
+        }
+        if(primMode === 4 || triangleFan || triangleStrip) {
+          meshBuffer.setPrimitiveType(H3DU.Mesh.TRIANGLES);
+        }
+        if(primMode === 1 || lineStrip || lineLoop) {
+          meshBuffer.setPrimitiveType(H3DU.Mesh.LINES);
         }
         for(var attributeName in prim.attributes || {})
           if(Object.prototype.hasOwnProperty.call( prim.attributes, attributeName)) {
@@ -659,6 +731,8 @@
             meshBuffer.setAttribute(attributeName, 0, array.array, 0,
                       array.elementsPerValue, array.elementStride());
           }
+        var indexArray = null;
+        var indexSize = 0;
         if(typeof prim.indices !== "undefined" && prim.indices !== null) {
           if(typeof this.gltf.accessors === "undefined" || this.gltf.accessors === null) {
             return null;
@@ -681,18 +755,23 @@
       array.elementByteSize !== 1 && array.elementByteSize !== 2 && array.elementByteSize !== 4) {
             this.error = "invalid array for indices"; return null;
           }
-          meshBuffer.setIndices(array.array, array.elementByteSize);
+          indexArray = array.array;
+          indexSize = array.elementByteSize;
         } else {
      // Synthesize a list of indices
-          var indexArray = [];
+          var indexList = [];
           for(var k = 0; k < maxCount; k++) {
-            indexArray.push(k);
+            indexList.push(k);
           }
-          meshBuffer.setIndices(
-           maxCount < 65536 ? new Uint16Array(indexArray) :
-          new Uint32Array(indexArray),
-        maxCount < 65536 ? 2 : 4);
+          indexArray = maxCount < 65536 ? new Uint16Array(indexList) :
+            new Uint32Array(indexList);
+          indexSize = maxCount < 65536 ? 2 : 4;
         }
+        if(triangleFan)indexArray = GltfState.triangleFanToTriangles(indexArray);
+        if(triangleStrip)indexArray = GltfState.triangleStripToTriangles(indexArray);
+        if(lineStrip)indexArray = GltfState.lineStripToTriangles(indexArray);
+        if(lineLoop)indexArray = GltfState.lineLoopToTriangles(indexArray);
+        meshBuffer.setIndices(indexArray, indexSize);
         var shape = GltfState._makeShape(meshBuffer);
         if(typeof prim.material === "undefined" || prim.material === null) {
           return null;
