@@ -236,8 +236,7 @@ vector with the result.</li>
 the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec4assign">vec4assign</a><br>Assigns the values of a 4-element vector into another
 4-element vector.</li>
-<li><a href="#H3DU.Math.vec4clamp">vec4clamp</a><br>Returns a 4-element vector in which each element of the given 4-element vector is clamped
-so it&#39;s not less than one value or greater than another value.</li>
+<li><a href="#H3DU.Math.vec4clamp">vec4clamp</a><br>Returns a 4-element vector in which each element of the given 4-element vector is clamped</li>
 <li><a href="#H3DU.Math.vec4clampInPlace">vec4clampInPlace</a><br>Clamps each element of the given 4-element vector
 so it&#39;s not less than one value or greater than another value.</li>
 <li><a href="#H3DU.Math.vec4copy">vec4copy</a><br>Returns a copy of a 4-element vector.</li>
@@ -1194,7 +1193,7 @@ Leftmost coordinate of the orthographic view.</li>
 <li><code>r</code> (Type: Number)<br>
 Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: Number)<br>
-Bottommost coordinate of the orthographic v iew.</li>
+Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: Number)<br>
 Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>n</code> (Type: Number)<br>
@@ -1226,7 +1225,7 @@ Leftmost coordinate of the orthographic view.</li>
 <li><code>r</code> (Type: Number)<br>
 Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: Number)<br>
-Bottommost coordinate of the orthographic v iew.</li>
+Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: Number)<br>
 Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 </ul>
@@ -1260,7 +1259,7 @@ Leftmost coordinate of the view rectangle.</li>
 <li><code>r</code> (Type: Number)<br>
 Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: Number)<br>
-Bottommost coordinate of the orthographic v iew.</li>
+Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: Number)<br>
 Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>aspect</code> (Type: Number)<br>
@@ -1296,7 +1295,7 @@ Leftmost coordinate of the view rectangle.</li>
 <li><code>r</code> (Type: Number)<br>
 Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: Number)<br>
-Bottommost coordinate of the orthographic v iew.</li>
+Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: Number)<br>
 Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>n</code> (Type: Number)<br>
@@ -1394,10 +1393,8 @@ then returning that vector&#39;s new X, Y, and Z.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><p><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
-A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.</p>
-
-<p>If the matrix includes a projection transform returned by <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.html">H3DU.Math</a> methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods&#39; documentation.</p></li>
+<li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
+A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.html">H3DU.Math</a> methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods&#39; documentation.</li>
 <li><code>v</code> (Type: Array.&lt;Number&gt; | Number)<br>
 X coordinate of a 3D point to transform. If &quot;vy&quot; and &quot;vz&quot; are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.</li>
 <li><code>vy</code> (Type: Number)<br>
@@ -2248,7 +2245,7 @@ The 3-element vector whose values will be copied.</li>
 
 <p><a name='H3DU.Math.vec3clamp'></a></p>
 
-<h3>(static) H3DU.Math.vec3clamp(min, max, a)</h3>
+<h3>(static) H3DU.Math.vec3clamp(a, min, max)</h3>
 
 <p>Returns a 3-element vector in which each element of the given 3-element vector is clamped
 so it&#39;s not less than one value or greater than another value.</p>
@@ -2256,17 +2253,21 @@ so it&#39;s not less than one value or greater than another value.</p>
 <h4>Parameters</h4>
 
 <ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The vector to clamp.</li>
 <li><code>min</code> (Type: Number)<br>
 Lowest possible value. Should not be greater than &quot;max&quot;.</li>
 <li><code>max</code> (Type: Number)<br>
 Highest possible value. Should not be less than &quot;min&quot;.</li>
-<li><p><code>a</code> (Type: Array.&lt;Number&gt;)<br>
-The resulting vector.</p>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting vector. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.Math.vec3clampInPlace'></a></p>
 
-<h3>(static) H3DU.Math.vec3clampInPlace(min, max, a)</h3></li>
-</ul>
+<h3>(static) H3DU.Math.vec3clampInPlace(a, min, max)</h3>
 
 <p>Clamps each element of the given 3-element vector
 so it&#39;s not less than one value or greater than another value.</p>
@@ -2274,17 +2275,21 @@ so it&#39;s not less than one value or greater than another value.</p>
 <h4>Parameters</h4>
 
 <ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The vector to clamp.</li>
 <li><code>min</code> (Type: Number)<br>
 Lowest possible value. Should not be greater than &quot;max&quot;.</li>
 <li><code>max</code> (Type: Number)<br>
 Highest possible value. Should not be less than &quot;min&quot;.</li>
-<li><p><code>a</code> (Type: Array.&lt;Number&gt;)<br>
-The vector &quot;a&quot;.</p>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting vector. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.Math.vec3copy'></a></p>
 
-<h3>(static) H3DU.Math.vec3copy(vec)</h3></li>
-</ul>
+<h3>(static) H3DU.Math.vec3copy(vec)</h3>
 
 <p>Returns a copy of a 3-element vector.</p>
 
@@ -2358,6 +2363,16 @@ var db=H3DU.Math.vec3sub(b,c);
 var normal=H3DU.Math.vec3cross(da,db);
 // Find the triangle&#39;s area
 var area=H3DU.Math.vec3length(normal)*0.5;
+</code></pre>
+
+<p>The following example finds the cosine and sine of
+the angle between two unit vectors and the orthogonal unit vector of both.</p>
+
+<pre><code>var cr=H3DU.Math.vec3cross(unitA,unitB);
+var cosine=H3DU.Math.vec3dot(unitA,unitB); // Cosine of the angle
+var sine=H3DU.Math.vec3length(cr); // Sine of the angle
+// Cross product as a unit vector
+var normCross=sine==0 ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
 </code></pre>
 
 <p><a name='H3DU.Math.vec3dist'></a></p>
@@ -2461,19 +2476,12 @@ increase from front to back.</p>
 <ul>
 <li><code>vector</code> (Type: Array.&lt;Number&gt;)<br>
 A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.</li>
-<li><p><code>matrix</code> (Type: Array.&lt;Number&gt;)<br>
-A 4x4 matrix. After undoing the transformation to X and Y window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method.</p>
-
-<p>To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order).</p></li>
-</ul>
-
-<p>If the matrix includes a projection transform returned by <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.html">H3DU.Math</a> methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods&#39; documentation. If &quot;yUp&quot; is null, false, or omitted, the Y coordinates increase downward instead of upward and vice versa.</p>
-
-<ul>
-<li><code>viewport</code> (Type: Array.&lt;Number&gt;)<br>
-A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position&#39;s X coordinate, its Y coordinate, the viewport&#39;s width, and the viewport&#39;s height. Throws an error if the width or height is less than 0.</li>
+<li><code>matrix</code> (Type: Array.&lt;Number&gt;)<br>
+A 4x4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method.<br> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See <a href="H3DU.Math.html#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> for the meaning of window coordinates with respect to the &quot;matrix&quot; and &quot;yUp&quot; parameters.</li>
+<li><code>viewport</code> (Type: Boolean)<br>
+Has the same meaning as &quot;viewport&quot; in the <a href="H3DU.Math.html#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> method.</li>
 <li><code>yUp</code> (Type: Boolean) (optional)<br>
-If false, null, or omitted, reverses the sign of the Y coordinate returned by the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method before converting it to window coordinates. If window Y coordinates increase upward, the viewport&#39;s starting position is at the lower left corner. If those coordinates will increase downward, the viewport&#39;s starting position is at the upper left corner.</li>
+Has the same meaning as &quot;yUp&quot; in the <a href="H3DU.Math.html#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a> method.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -2875,18 +2883,11 @@ using the given transformation matrix and viewport rectangle.</p>
 <li><code>vector</code> (Type: Array.&lt;Number&gt;)<br>
 A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.</li>
 <li><code>matrix</code> (Type: Array.&lt;Number&gt;)<br>
-A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates.</li>
-</ul>
-
-<p>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.</p>
-
-<p>If the matrix includes a projection transform returned by <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.html">H3DU.Math</a> methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods&#39; documentation. If &quot;yUp&quot; is null, false, or omitted, the Y coordinates increase downward instead of upward and vice versa.</p>
-
-<ul>
+A 4x4 matrix to use to transform the vector according to the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>. <br>If the matrix includes a projection transform returned by <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>, <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>, or similar <a href="H3DU.Math.html">H3DU.Math</a> methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods&#39; documentation. If &quot;yUp&quot; is omitted or is a &quot;falsy&quot; value, the Y coordinates increase downward instead of upward or vice versa.</li>
 <li><code>viewport</code> (Type: Array.&lt;Number&gt;)<br>
 A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position&#39;s X coordinate, its Y coordinate, the viewport&#39;s width, and the viewport&#39;s height. Throws an error if the width or height is less than 0.</li>
 <li><code>yUp</code> (Type: Boolean) (optional)<br>
-If false, null, or omitted, reverses the sign of the Y coordinate returned by the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method before converting it to window coordinates. If window Y coordinates increase upward, the viewport&#39;s starting position is at the lower left corner. If those coordinates will increase downward, the viewport&#39;s starting position is at the upper left corner.</li>
+If omitted or a &quot;falsy&quot; value, reverses the sign of the Y coordinate returned by the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport&#39;s starting position is at the lower left corner. If those coordinates increase downward, the viewport&#39;s starting position is at the upper left corner.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -2933,33 +2934,6 @@ The third 3-element vector, or the second parameter to the cross product.</li>
 <h4>Return Value</h4>
 
 <p>A number giving the triple product. (Type: Number)</p>
-
-<h4>Example</h4>
-
-<p>The following example finds the signed angle of
-two vectors that lie on a plane with the given normal.</p>
-
-<pre><code>// The following example uses the positive Z axis as the normal
-// vector, since it&#39;s known to be perpendicular to vectorB and vectorC
-var normalVector = [0, 0, 1];
-var vectorB = [4, 2, 0];
-var vectorC = [5, 0, 0];
-vectorB=H3DU.Math.vec3normInPlace(vectorB);
-vectorC=H3DU.Math.vec3normInPlace(vectorC);
-normalVector=H3DU.Math.vec3normInPlace(normalVector);
-var dot=H3DU.Math.dot(vectorB,vectorC);
-// adjust dot for robustness
-dot=(dot&lt;-1 ? -1 : (dot&gt;1 ? 1 : dot));
-// acos will always return a positive angle here
-var angle=Math.acos(dot);
-var triple=H3DU.Math.vec3triple(normalVector,vectorB,vectorC);
-// The angle is negative if triple product is negative.
-// NOTE: While the &quot;normalVector&quot; points toward the viewer,
-// a positive value for the angle means the angle runs in
-// a counterclockwise direction for right-handed coordinate systems
-// and in a clockwise direction for left-handed systems.
-angle*=(triple&lt;0 ? -1.0 : 1.0);
-</code></pre>
 
 <p><a name='H3DU.Math.vec4abs'></a></p>
 
@@ -3066,25 +3040,28 @@ The 4-element vector whose values will be copied.</li>
 
 <p><a name='H3DU.Math.vec4clamp'></a></p>
 
-<h3>(static) H3DU.Math.vec4clamp(min, max, a)</h3>
+<h3>(static) H3DU.Math.vec4clamp(a, min, max)</h3>
 
-<p>Returns a 4-element vector in which each element of the given 4-element vector is clamped
-so it&#39;s not less than one value or greater than another value.</p>
+<p>Returns a 4-element vector in which each element of the given 4-element vector is clamped</p>
 
 <h4>Parameters</h4>
 
 <ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The vector to clamp.</li>
 <li><code>min</code> (Type: Number)<br>
 Lowest possible value. Should not be greater than &quot;max&quot;.</li>
 <li><code>max</code> (Type: Number)<br>
 Highest possible value. Should not be less than &quot;min&quot;.</li>
-<li><p><code>a</code> (Type: Array.&lt;Number&gt;)<br>
-The resulting vector.</p>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting vector. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.Math.vec4clampInPlace'></a></p>
 
-<h3>(static) H3DU.Math.vec4clampInPlace(min, max, a)</h3></li>
-</ul>
+<h3>(static) H3DU.Math.vec4clampInPlace(a, min, max)</h3>
 
 <p>Clamps each element of the given 4-element vector
 so it&#39;s not less than one value or greater than another value.</p>
@@ -3092,17 +3069,21 @@ so it&#39;s not less than one value or greater than another value.</p>
 <h4>Parameters</h4>
 
 <ul>
+<li><code>a</code> (Type: Array.&lt;Number&gt;)<br>
+The vector to clamp.</li>
 <li><code>min</code> (Type: Number)<br>
 Lowest possible value. Should not be greater than &quot;max&quot;.</li>
 <li><code>max</code> (Type: Number)<br>
 Highest possible value. Should not be less than &quot;min&quot;.</li>
-<li><p><code>a</code> (Type: Array.&lt;Number&gt;)<br>
-The vector &quot;a&quot;.</p>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting vector. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.Math.vec4copy'></a></p>
 
-<h3>(static) H3DU.Math.vec4copy(vec)</h3></li>
-</ul>
+<h3>(static) H3DU.Math.vec4copy(vec)</h3>
 
 <p>Returns a copy of a 4-element vector.</p>
 
@@ -3413,7 +3394,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -3430,7 +3410,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
 <li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
 <li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
-<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
 <li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>

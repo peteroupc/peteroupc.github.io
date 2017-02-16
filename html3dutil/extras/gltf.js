@@ -769,8 +769,8 @@
         }
         if(triangleFan)indexArray = GltfState.triangleFanToTriangles(indexArray);
         if(triangleStrip)indexArray = GltfState.triangleStripToTriangles(indexArray);
-        if(lineStrip)indexArray = GltfState.lineStripToTriangles(indexArray);
-        if(lineLoop)indexArray = GltfState.lineLoopToTriangles(indexArray);
+        if(lineStrip)indexArray = GltfState.lineStripToLines(indexArray);
+        if(lineLoop)indexArray = GltfState.lineLoopToLines(indexArray);
         meshBuffer.setIndices(indexArray, indexSize);
         var shape = GltfState._makeShape(meshBuffer);
         if(typeof prim.material === "undefined" || prim.material === null) {
@@ -950,7 +950,7 @@
           for(var j = 0; j < inputLen; j++) {
             var s = ch.sampler.input[j] * invEnd;
             var e = ch.sampler.input[j + 1] * invEnd;
-      // TODO: Support STEP interpolation
+      // LATER: Support STEP interpolation
             if(pos >= s && pos <= e) {
               var fac = s === e ? 0.0 : (pos - s) / (e - s);
               Gltf._interpolate(node,

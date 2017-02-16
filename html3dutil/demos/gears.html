@@ -32,27 +32,43 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
   mesh.normal3( 0.0, 0.0, 1.0 );
 /* draw front face */
   mesh.mode(H3DU.Mesh.QUAD_STRIP );
-  for (i = 0; i <= teeth; i++) {
+  var angleStep = H3DU.Math.PiTimes2 / teeth;
+  var cosStep = Math.cos(angleStep);
+  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  sinAngle = 0.0; // sin(0.0deg)
+  cosAngle = 1.0; // cos(0.0deg)
+  for(i = 0; i <= teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
-    cosAngle = Math.cos(angle);
-    sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
     mesh.vertex3( r0 * cosAngle, r0 * sinAngle, width * 0.5 );
     mesh.vertex3( r1 * cosAngle, r1 * sinAngle, width * 0.5 );
     mesh.vertex3( r0 * cosAngle, r0 * sinAngle, width * 0.5 );
     mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), width * 0.5 );
+    var ts = cosStep * sinAngle + sinStep * cosAngle;
+    var tc = cosStep * cosAngle - sinStep * sinAngle;
+    sinAngle = ts;
+    cosAngle = tc;
+
   }
 
 /* draw front sides of teeth */
   mesh.mode(H3DU.Mesh.QUADS );
   da = 2.0 * Math.PI / teeth / 4.0;
-  for (i = 0; i < teeth; i++) {
+  angleStep = H3DU.Math.PiTimes2 / teeth;
+  cosStep = Math.cos(angleStep);
+  sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  sinAngle = 0.0; // sin(0.0deg)
+  cosAngle = 1.0; // cos(0.0deg)
+  for(i = 0; i < teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
-    cosAngle = Math.cos(angle);
-    sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
     mesh.vertex3( r1 * cosAngle, r1 * sinAngle, width * 0.5 );
     mesh.vertex3( r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), width * 0.5 );
     mesh.vertex3( r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), width * 0.5 );
     mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), width * 0.5 );
+    ts = cosStep * sinAngle + sinStep * cosAngle;
+    tc = cosStep * cosAngle - sinStep * sinAngle;
+    sinAngle = ts;
+    cosAngle = tc;
+
   }
 
   mesh.normal3( 0.0, 0.0, -1.0 );

@@ -1850,13 +1850,16 @@
     var ret = [];
     var t5 = Math.tan(step * 0.5);
     var t7 = Math.sin(step) * third * (Math.sqrt(3.0 * t5 * t5 + 4.0) - 1.0);
-    for(var idx = 0; idx < arcs; idx++) {
-      var ang1 = angle1 + idx * step;
-      var ang2 = angle1 + (idx + 1) * step;
-      var t2 = Math.cos(ang1);
-      var t1 = ang1 >= 0 && ang1 < 6.283185307179586 ? ang1 <= 3.141592653589793 ? Math.sqrt(1.0 - t2 * t2) : -Math.sqrt(1.0 - t2 * t2) : Math.sin(ang1);
-      var t4 = Math.cos(ang2);
-      var t3 = ang2 >= 0 && ang2 < 6.283185307179586 ? ang2 <= 3.141592653589793 ? Math.sqrt(1.0 - t4 * t4) : -Math.sqrt(1.0 - t4 * t4) : Math.sin(ang2);
+ ; // var angleStep=H3DU.Math.PiTimes2/(arcs);
+var cosStep = Math.cos(step);
+var sinStep = (step>=0 && step<6.283185307179586) ? (step<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(step);
+var t2 = Math.cos(angle1);
+var t1 = (angle1>=0 && angle1<6.283185307179586) ? (angle1<=3.141592653589793 ? Math.sqrt(1.0-t2*t2) : -Math.sqrt(1.0-t2*t2)) : Math.sin(angle1);
+for(i<arcs;i++) {
+ var ts = cosStep*t1 + sinStep*t2;
+ var tc = cosStep*t2 - sinStep*t1;
+ var t3=ts;
+var t4=tc;
       var t8 = [cx + rx * crot * t2 - ry * srot * t1, cy + rx * srot * t2 + ry * crot * t1];
       var t9 = [cx + rx * crot * t4 - ry * srot * t3, cy + rx * srot * t4 + ry * crot * t3];
       var t10 = [-rx * crot * t1 - ry * srot * t2, -rx * srot * t1 + ry * crot * t2];
@@ -1864,7 +1867,9 @@
       var t12 = [t8[0] + t10[0] * t7, t8[1] + t10[1] * t7];
       var t13 = [t9[0] - t11[0] * t7, t9[1] - t11[1] * t7];
       ret.push([t8[0], t8[1], t12[0], t12[1], t13[0], t13[1], t9[0], t9[1]]);
-    }
+ t2 = tc;
+ t1 = ts;
+}
     return ret;
   };
 
@@ -2275,7 +2280,6 @@
       case 0x4d:case 0x6d:{ // 'M', 'm'
         sep = false;
         for (;;) {
-      // console.log("////"+[index,str.substr(index[0],30)])
           curx = c === 0x6d ? ret.endPos[0] : 0;
           cury = c === 0x6d ? ret.endPos[1] : 0;
           x = GraphicsPath._nextNumber(str, index, sep);
