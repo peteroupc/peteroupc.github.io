@@ -10,13 +10,13 @@
 
 <h3>H3DU.CubeMap(name)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>A cube map, or a set of six textures forming the sides of a cube.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: Array.&lt;(String|Texture)&gt;)<br>
-An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet. The six images are, in order, the image seen when looking toward the positive X axis, the negative X axis, positive Y, negative Y, positive Z, and negative Z.</li>
+<li><code>name</code> (Type: Array.&lt;(String|Texture|TextureInfo)&gt;)<br>
+An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet. The six texture are, in order, the texture seen when looking toward the positive X axis, the negative X axis, positive Y, negative Y, positive Z, and negative Z.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -78,8 +78,8 @@ Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)<
 <ul>
 <li><code>index</code> (Type: Number)<br>
 Texture index to set, from 0 through 5.</li>
-<li><code>texture</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | String)<br>
-An <a href="H3DU.Texture.html">H3DU.Texture</a> object or a string with the URL of the texture data.</li>
+<li><code>texture</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a> | String)<br>
+An <a href="H3DU.Texture.html">H3DU.Texture</a> object, a texture information object, or a string with the URL of the texture data.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -111,6 +111,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -127,6 +128,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
 <li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
 <li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
 <li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>

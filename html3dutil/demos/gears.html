@@ -34,7 +34,7 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
   mesh.mode(H3DU.Mesh.QUAD_STRIP );
   var angleStep = H3DU.Math.PiTimes2 / teeth;
   var cosStep = Math.cos(angleStep);
-  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sinAngle = 0.0; // sin(0.0deg)
   cosAngle = 1.0; // cos(0.0deg)
   for(i = 0; i <= teeth; i++) {
@@ -55,7 +55,7 @@ function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
   da = 2.0 * Math.PI / teeth / 4.0;
   angleStep = H3DU.Math.PiTimes2 / teeth;
   cosStep = Math.cos(angleStep);
-  sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sinAngle = 0.0; // sin(0.0deg)
   cosAngle = 1.0; // cos(0.0deg)
   for(i = 0; i < teeth; i++) {
