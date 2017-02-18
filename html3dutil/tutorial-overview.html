@@ -18,6 +18,8 @@
 
 <p>This page includes information on how to use the HTML 3D library, an overview of its features, and an example of a simple 3D-enabled Web page.</p>
 
+<p>NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta2 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the section &quot;History&quot; for more information.)</p>
+
 <p><a id=Example></a></p>
 
 <h2>Example</h2>
@@ -28,7 +30,7 @@
 
 <h2>Contents</h2>
 
-<p><a href="#Public_Domain_HTML_3D_Library">Public-Domain HTML 3D Library</a><br><a href="#Example">Example</a><br><a href="#Contents">Contents</a><br><a href="#How_to_Use">How to Use</a><br>&nbsp;&nbsp;<a href="#List_of_Classes">List of Classes</a><br>&nbsp;&nbsp;<a href="#H3DU_Scene3D"><code>H3DU.Scene3D</code></a><br>&nbsp;&nbsp;<a href="#The_Camera">The &quot;Camera&quot;</a><br>&nbsp;&nbsp;<a href="#3D_Models">3D Models</a><br>&nbsp;&nbsp;<a href="#Shapes">Shapes</a><br>&nbsp;&nbsp;<a href="#The_Render_Loop">The Render Loop</a><br><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a><br><a href="#Demos">Demos</a><br>&nbsp;&nbsp;<a href="#Simple_Demos">Simple Demos</a><br>&nbsp;&nbsp;<a href="#Materials">Materials</a><br>&nbsp;&nbsp;<a href="#Shapes_and_meshes">Shapes and meshes</a><br>&nbsp;&nbsp;<a href="#Paths">Paths</a><br>&nbsp;&nbsp;<a href="#Curves_and_Surfaces">Curves and Surfaces</a><br>&nbsp;&nbsp;<a href="#Textures">Textures</a><br>&nbsp;&nbsp;<a href="#Shaders">Shaders</a><br>&nbsp;&nbsp;<a href="#Particle_Systems">Particle Systems</a><br>&nbsp;&nbsp;<a href="#Loading_3D_Models">Loading 3D Models</a><br>&nbsp;&nbsp;<a href="#Selecting_Objects">Selecting Objects</a><br>&nbsp;&nbsp;<a href="#Text">Text</a><br>&nbsp;&nbsp;<a href="#Miscellaneous">Miscellaneous</a><br><a href="#Example">Example</a><br></p>
+<p><a href="#Public_Domain_HTML_3D_Library">Public-Domain HTML 3D Library</a><br><a href="#Example">Example</a><br><a href="#Contents">Contents</a><br><a href="#How_to_Use">How to Use</a><br>&nbsp;&nbsp;<a href="#List_of_Classes">List of Classes</a><br>&nbsp;&nbsp;<a href="#H3DU_Scene3D"><code>H3DU.Scene3D</code></a><br>&nbsp;&nbsp;<a href="#The_Camera">The &quot;Camera&quot;</a><br>&nbsp;&nbsp;<a href="#3D_Models">3D Models</a><br>&nbsp;&nbsp;<a href="#Shapes">Shapes</a><br>&nbsp;&nbsp;<a href="#The_Render_Loop">The Render Loop</a><br><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a><br><a href="#Demos">Demos</a><br>&nbsp;&nbsp;<a href="#Simple_Demos">Simple Demos</a><br>&nbsp;&nbsp;<a href="#Materials">Materials</a><br>&nbsp;&nbsp;<a href="#Shapes_and_meshes">Shapes and meshes</a><br>&nbsp;&nbsp;<a href="#Paths">Paths</a><br>&nbsp;&nbsp;<a href="#Curves_and_Surfaces">Curves and Surfaces</a><br>&nbsp;&nbsp;<a href="#Textures">Textures</a><br>&nbsp;&nbsp;<a href="#Shaders">Shaders</a><br>&nbsp;&nbsp;<a href="#Particle_Systems">Particle Systems</a><br>&nbsp;&nbsp;<a href="#Loading_3D_Models">Loading 3D Models</a><br>&nbsp;&nbsp;<a href="#Selecting_Objects">Selecting Objects</a><br>&nbsp;&nbsp;<a href="#Text">Text</a><br>&nbsp;&nbsp;<a href="#Miscellaneous">Miscellaneous</a><br><a href="#Example">Example</a><br><a href="#History">History</a><br>&nbsp;&nbsp;<a href="#Version_2_0_0_beta2">Version 2.0.0-beta2</a><br>&nbsp;&nbsp;<a href="#Version_2_0_0_beta1">Version 2.0.0-beta1:</a><br></p>
 
 <h2>How to Use</h2>
 
@@ -67,6 +69,7 @@ window.addEventListener(&quot;load&quot;,function(){
 <li><a href="https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html"><code>H3DU.MeshBuffer</code></a> - Represents a 3D model</li>
 <li><a href="https://peteroupc.github.io/html3dutil/H3DU.Meshes.html"><code>H3DU.Meshes</code></a> - Contains methods for generating common 3D models.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/H3DU.Material.html"><code>H3DU.Material</code></a>,
+<a href="https://peteroupc.github.io/html3dutil/H3DU.PbrMaterial.html"><code>H3DU.PbrMaterial</code></a>,
 <a href="https://peteroupc.github.io/html3dutil/H3DU.Texture.html"><code>H3DU.Texture</code></a> - Represents textures and colors for a 3D object&#39;s appearance.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/H3DU.Lights.html"><code>H3DU.Lights</code></a>,
 <a href="https://peteroupc.github.io/html3dutil/H3DU.LightSource.html"><code>H3DU.LightSource</code></a> - Represents light sources</li>
@@ -183,7 +186,7 @@ shape.setPosition(1,0,0);
 batch.addShape(shape);
 </code></pre>
 
-<p>The appearance of a 3D shape is known in the 3D graphics world as a &quot;material&quot;. It includes textures (images), colors, and light reflection parameters. The <a href="http://peteroupc.github.io/html3dutil/H3DU.Material.html"><code>Material</code></a> class holds data on some of these parameters, and is part of the definition of a shape.</p>
+<p>The appearance of a 3D shape is known in the 3D graphics world as a &quot;material&quot;. It includes textures (images), colors, and light reflection parameters. The <a href="http://peteroupc.github.io/html3dutil/H3DU.Material.html"><code>Material</code></a> class holds data on some of these parameters, and is part of the definition of a shape. The <a href="http://peteroupc.github.io/html3dutil/H3DU.PbrMaterial.html"><code>PbrMaterial</code></a> class does the same, but uses physically-based shading algorithms.</p>
 
 <p>Here are details on some of the <code>Shape</code> class&#39;s methods.</p>
 
@@ -366,7 +369,9 @@ of different sizes.</li>
 <h3>Selecting Objects</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/picking.html">demos/picking.html</a>,  <a href="https://peteroupc.github.io/html3dutil/demos/picking2.html">demos/picking2.html</a> - These demos demonstrate how object picking can be implemented.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/picking.html">demos/picking.html</a>,  <a href="https://peteroupc.github.io/html3dutil/demos/picking2.html">demos/picking2.html</a>,
+<a href="https://peteroupc.github.io/html3dutil/demos/picking3.html">demos/picking3.html</a>,</li>
+<li>These demos demonstrate how object picking can be implemented.</li>
 </ul>
 
 <p><a id=Text></a></p>
@@ -441,9 +446,48 @@ sub.getLights().setBasic();
 &lt;/body&gt;
 </code></pre>
 
+<p><a id=History></a></p>
+
 <h2>History</h2>
 
-<p>Version 2.0.0-beta1:</p>
+<p><a id=Version_2_0_0_beta2></a></p>
+
+<h3>Version 2.0.0-beta2</h3>
+
+<p>The changes in beta 2 from beta 1 include:</p>
+
+<ul>
+<li>Added H3DU.PbrMaterial class and supported physically-based shading in the default shader.</li>
+<li>H3DU.Shape objects contain H3DU.PbrMaterial by default.</li>
+<li>Extras folder contains a glTF loader, which is preliminary and incomplete.</li>
+<li>H3DU.Scene3D will create a WebGL 2 rendering context if possible and supported by the browser.</li>
+<li>H3DU.MeshBuffer stores vertex data by semantic (such as position, normal or texture coordinates), rather than by name.</li>
+<li>The new H3DU.Semantic class contains constants for attribute and uniform semantics.</li>
+<li>The new H3DU.TextureInfo class is a lightweight class for storing a texture&#39;s settings, but not its data.</li>
+<li>H3DU.ShaderInfo class can now accept H3DU.TextureInfo objects as uniform values.</li>
+<li>H3DU.Material can accept a parameter object in the constructor as it can in the setParams method, similarly to the
+new H3DU.PbrMaterial class.</li>
+<li>Added fromBasic and fromBasicTexture methods to H3DU.Material class.</li>
+<li>Many new methods were added to the H3DU.Math class, including methods to add and
+subtract 4-element vectors, to clamp vectors, and to convert to and from linear RGB colors,
+as well as vec3proj, vec4proj, mat3invert, and vec3fromWindowPoint methods.
+The frustumHasBox method was improved.</li>
+<li>The shapeCount, getShape, setShape, and copy methods were added to H3DU.ShapeGroup.</li>
+<li>New H3DU.CubeMap class holds information on the textures that make up a cube map.
+However, cube maps are not yet supported in the default shader (its code is
+currently commented out)</li>
+<li>In the H3DU.GraphicsPath extra, added methods for high-level shapes and path
+interpolation and improved code on path triangulation.</li>
+<li>H3DU.TextFont extra supports multichannel signed distance field fonts.</li>
+<li>Several new demos were added.</li>
+<li>Some methods were removed: setMaterialParams methods from both H3DU.Shape and H3DU.ShapeGroup; mapTexture and mapTexturesAll methods from TextureLoader; and forShader method from H3DU.Material.</li>
+<li>Renamed setOrientation and multOrientation in H3DU.Transform to setRotation and multRotation, and deprecated the old names.</li>
+<li>Bug fixes.</li>
+</ul>
+
+<p><a id=Version_2_0_0_beta1></a></p>
+
+<h3>Version 2.0.0-beta1:</h3>
 
 <ul>
 <li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now <a href="H3DU.Shape.html">H3DU.Shape</a> and <code>Mesh</code> is now <a href="H3DU.Mesh.html">H3DU.Mesh</a>.  Many classes in the &quot;extras&quot; directory are also moved to the <code>H3DU</code> namespace.</li>
@@ -474,7 +518,7 @@ as an extra that adds methods that compute the intersection, difference, union, 
 polygons. Path triangulation now supports polygons with holes.</li>
 <li>The default light configuration is no lights when creating a <a href="H3DU.LightSource.html">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.html">H3DU.Scene3D</a> without rendering a custom <code>Batch3D</code>, in which case the default is one light source with its default values.</li>
 <li>The default value for specular materials (<a href="H3DU.Material.html">H3DU.Material</a>) is now (0.1, 0.1, 0.1). The default value for shininess is now 32.</li>
-<li>The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.</li>
+<li>The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, <code>TRIANGLE_FAN</code> and <code>QUAD_STRIP</code>) in the same mesh is still supported.</li>
 <li>Many of the tutorials were edited heavily to accommodate the new version. The <code>GraphicsPath</code> tutorial was added.</li>
 <li>There were also numerous bug fixes.</li>
 <li>A known issue: When using the <a href="H3DU.Camera.html">H3DU.Camera</a> in conjunction with the compatibility behavior of <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, only one side of the scene will appear lighted by default.</li>

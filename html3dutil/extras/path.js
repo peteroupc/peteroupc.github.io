@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, define, exports */
+/* global define, exports */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -1850,7 +1850,7 @@
     var ret = [];
     var t5 = Math.tan(step * 0.5);
     var t7 = Math.sin(step) * third * (Math.sqrt(3.0 * t5 * t5 + 4.0) - 1.0);
-    step = H3DU.Math.PiTimes2 / arcs;
+    step = Math.PI * 2.0 / arcs;
     var cosStep = Math.cos(step);
     var sinStep = step >= 0 && step < 6.283185307179586 ? step <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(step);
     var t2 = Math.cos(angle1);
@@ -2944,8 +2944,9 @@
     }
     tris.push(tri);
   };
-  exports.H3DU.GraphicsPath = GraphicsPath;
-
+  if(typeof exports.H3DU !== "undefined" && exports.H3DU !== null) {
+    exports.H3DU.GraphicsPath = GraphicsPath;
+  }
 /* exported GraphicsPath */
 /**
  * Alias for the {@link H3DU.GraphicsPath} class.

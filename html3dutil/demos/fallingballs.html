@@ -169,7 +169,7 @@ Particles.prototype.update = function(time) {
     var body = this.bodies[i];
     body.integrate(timeStep);
     body.constrainToBox(this.bounds);
-    this.shapeGroup.getShapes(i).setPosition(body.x(), body.y(), body.z());
+    this.shapeGroup.getShape(i).setPosition(body.x(), body.y(), body.z());
   }
 };
 

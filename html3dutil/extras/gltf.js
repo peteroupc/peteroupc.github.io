@@ -11,6 +11,7 @@
 // An incomplete glTF implementation
 
 // LATER: Convert batches/shape groups to glTF
+// LATER: Support common material extension
 (function(H3DU) {
   "use strict";
 /** @private */
@@ -300,7 +301,7 @@
           unif[uniformKey] = unifValue;
         }
         if(typeof param.semantic !== "undefined" && param.semantic !== null) {
-    // TODO: Semantic + param.node
+    // LATER: Semantic + param.node
           var sem = 0;
           if(param.semantic === "MODEL" && param.type === 35676) {
             sem = H3DU.Semantic.MODEL;

@@ -92,9 +92,9 @@ H3DU.renderLoop(function(time) {
     shape.setQuaternion(
       H3DU.Math.quatFromTaitBryan(rotation));
     if(shape === pickedShape) {
-      shape.setMaterialParams({"emission":[0.5, 0.5, 0.5]});
+      shape.getMaterial().setParams({"emission":[0.5, 0.5, 0.5]});
     } else {
-      shape.setMaterialParams({"emission":[0, 0, 0]});
+      shape.getMaterial().setParams({"emission":[0, 0, 0]});
     }
   }
   rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);

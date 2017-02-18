@@ -39,8 +39,7 @@ A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.ht
 <li><a href="#H3DU.Shape_H3DU.Shape_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this scene.</li>
 <li><a href="#H3DU.Shape_H3DU.Shape_setColor">setColor</a><br>Sets material parameters that give the shape a certain color.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setMaterial">setMaterial</a><br>Sets this shape&#39;s material parameters.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setMaterialParams">setMaterialParams</a><br>Sets parameters of this shape&#39;s material.</li>
+<li><a href="#H3DU.Shape_H3DU.Shape_setMaterial">setMaterial</a><br>Sets this shape&#39;s material parameter object.</li>
 <li><a href="#H3DU.Shape_H3DU.Shape_setPosition">setPosition</a><br>Sets the relative position of this shape from its original
 position.</li>
 <li><a href="#H3DU.Shape_H3DU.Shape_setQuaternion">setQuaternion</a><br>Sets this object&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.</li>
@@ -186,30 +185,13 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 
 <h3>H3DU.Shape#setMaterial(material)</h3>
 
-<p>Sets this shape&#39;s material parameters.</p>
+<p>Sets this shape&#39;s material parameter object.</p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>material</code> (Type: <a href="H3DU.Material.html">H3DU.Material</a> | <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)<br>
-The material object to use. This parameter can&#39;t be a <a href="H3DU.Texture.html">H3DU.Texture</a> object.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
-
-<p><a name='H3DU.Shape_H3DU.Shape_setMaterialParams'></a></p>
-
-<h3>H3DU.Shape#setMaterialParams(params)</h3>
-
-<p>Sets parameters of this shape&#39;s material.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>params</code> (Type: Object)<br>
-An object described in H3DU.PbrMaterial#setParams.</li>
+The material object to use. Throws an error if this parameter is null, is omitted, or is a <a href="H3DU.Texture.html">H3DU.Texture</a> object</li>
 </ul>
 
 <h4>Return Value</h4>
