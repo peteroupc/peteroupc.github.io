@@ -1,0 +1,100 @@
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<div id=log style="position:absolute;left:0;top:0"></div>
+<script id="vertex" type="x-shader/x-shader">
+precision highp float;
+attribute vec3 position;
+varying vec2 posVar;
+
+void main(){
+ posVar=position.xy;
+ gl_Position=vec4(position,1.0);
+}
+</script>
+<script id="fragment" type="x-shader/x-shader">
+precision highp float;
+varying vec2 posVar;
+const vec2 EPS2 = vec2(0.0, 0.001);
+#define NORMAL(f,p) (vec3(f(p + EPS2.yxx) - f(p - EPS2.yxx),f(p + EPS2.xyx) - f(p - EPS2.xyx),f(p + EPS2.xxy) - f(p - EPS2.xxy)))
+#define GRADIENT1(f,p) (NORMAL(f,p)/(2.0*EPS2.y))
+#define GRADIENT2(f,p,a) (vec3(f(p + EPS2.yxx,a) - f(p - EPS2.yxx,a),f(p + EPS2.xyx,a) - f(p - EPS2.xyx,a),f(p + EPS2.xxy,a) - f(p - EPS2.xxy,a))/(2.0*EPS2.y))
+float sphere(vec3 p, float radius){
+  return length(p)-radius;
+}
+float distanceField(vec3 p){
+  float d1=sphere(p+vec3(0.3,0.0,0.0),0.50); // left sphere
+  float d2=sphere(p-vec3(0.3,0.0,0.0),0.50); // right sphere
+  return min(d1,d2); // use the shorter distance of the two
+}
+vec3 dfNormal(vec3 pos){
+  return normalize(NORMAL(distanceField,pos));
+}
+#define MAX_T 8.0
+vec3 march(vec3 origin, vec3 rayDirection){
+ // NOTE: rayDirection should be a unit vector
+ float d=0.0;
+ float dres=0.0;
+ vec3 pos=vec3(0.0);
+ for(int i=0;i<72;i++){
+  pos=origin+rayDirection*d;
+  float res=distanceField(pos);
+  res=max(res,0.0);
+  d+=res;
+  if(res<=0.000001){ dres=res; break; }
+  if(d>MAX_T){
+   dres=res;
+   break;
+  }
+ }
+ if(d<MAX_T){
+   // objects
+   vec3 diffuse = vec3(1.0);
+   vec3 normal = dfNormal(pos);
+   vec3 v = -rayDirection;
+   float ndotv = clamp(dot(normal, v),0.0,1.0);
+   vec3 color = diffuse * ndotv;
+   return color;
+ } else {
+   // background
+   float c=(origin.y+1.0)*0.5;
+   return vec3(c);
+ }
+}
+void main(){
+ // Sample four times for antialiasing
+ vec3 c=march(vec3(posVar.x-0.001,posVar.y-0.001,-1.0),vec3(0.0,0.0,1.0));
+ vec3 c1=march(vec3(posVar.x-0.001,posVar.y+0.001,-1.0),vec3(0.0,0.0,1.0));
+ vec3 c2=march(vec3(posVar.x+0.001,posVar.y-0.001,-1.0),vec3(0.0,0.0,1.0));
+ vec3 c3=march(vec3(posVar.x+0.001,posVar.y+0.001,-1.0),vec3(0.0,0.0,1.0));
+ vec3 cx=(c+c1+c2+c3)*0.25;
+ gl_FragColor=vec4(cx,1.0);
+}
+</script>
+
+<script id="demo">
+
+/* global H3DU */
+var vertexShader = document.getElementById("vertex").textContent;
+var fragmentShader = document.getElementById("fragment").textContent;
+
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+var batch = new H3DU.Batch3D().addShape(
+  new H3DU.Shape(new H3DU.Mesh(
+    [-1, 1, 0, -1, -1, 0,
+      1, 1, 0, 1, -1, 0],
+     [0, 1, 2, 2, 1, 3], 0)).setShader(
+        new H3DU.ShaderInfo(vertexShader, fragmentShader)));
+H3DU.renderLoop(function() {
+  "use strict";
+  scene.render(batch);
+});
+</script>
+</body>

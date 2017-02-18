@@ -766,35 +766,32 @@
   };
 
   /** @private */
-  GraphicsPath._accBounds = function(ret, first, s, t) {
+  GraphicsPath._accBounds = function(ret, s, t) {
     if(t >= 0 && t <= 1) {
       var pt = GraphicsPath._point(s, t);
-      if(first) {
-        ret[0] = ret[2] = pt[0];
-        ret[1] = ret[3] = pt[1];
-      } else {
-        ret[0] = Math.min(pt[0], ret[0]);
-        ret[1] = Math.min(pt[1], ret[1]);
-        ret[2] = Math.max(pt[0], ret[2]);
-        ret[3] = Math.max(pt[1], ret[3]);
-      }
+      ret[0] = Math.min(pt[0], ret[0]);
+      ret[1] = Math.min(pt[1], ret[1]);
+      ret[2] = Math.max(pt[0], ret[2]);
+      ret[3] = Math.max(pt[1], ret[3]);
     }
   };
+  /** @private */
+  GraphicsPath._accBoundsPoint = function(ret, x, y) {
+    ret[0] = Math.min(x, ret[0]);
+    ret[1] = Math.min(y, ret[1]);
+    ret[2] = Math.max(x, ret[2]);
+    ret[3] = Math.max(y, ret[3]);
+  };
 /** @private */
-  GraphicsPath._accBoundsArc = function(ret, first, rx, ry, cphi, sphi, cx, cy, angle) {
+  GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
     var ca = Math.cos(angle);
     var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
     var px = cphi * ca * rx - sphi * sa * ry + cx;
     var py = sphi * ca * rx + cphi * sa * ry + cy;
-    if(first) {
-      ret[0] = ret[2] = px;
-      ret[1] = ret[3] = py;
-    } else {
-      ret[0] = Math.min(px, ret[0]);
-      ret[1] = Math.min(py, ret[1]);
-      ret[2] = Math.max(px, ret[2]);
-      ret[3] = Math.max(py, ret[3]);
-    }
+    ret[0] = Math.min(px, ret[0]);
+    ret[1] = Math.min(py, ret[1]);
+    ret[2] = Math.max(px, ret[2]);
+    ret[3] = Math.max(py, ret[3]);
   };
 /** @private */
   GraphicsPath._normAngleRadians = function(angle) {
@@ -871,10 +868,10 @@
         ax = x1 - 2 * s[3] + x2;
         ay = y1 - 2 * s[4] + y2;
         if(ax !== 0) {
-          GraphicsPath._accBounds(ret, first, s, (x1 - s[3]) / ax);
+          GraphicsPath._accBounds(ret, s, (x1 - s[3]) / ax);
         }
         if(ay !== 0) {
-          GraphicsPath._accBounds(ret, first, s, (y1 - s[4]) / ay);
+          GraphicsPath._accBounds(ret, s, (y1 - s[4]) / ay);
         }
       } else if(s[0] === GraphicsPath.CUBIC) {
         x2 = s[7];
@@ -888,13 +885,13 @@
           var by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
           if(bx >= 0 && denomX !== 0) {
             bx = Math.sqrt(bx);
-            GraphicsPath._accBounds(ret, first, s, (ax - bx) / denomX);
-            GraphicsPath._accBounds(ret, first, s, (ax + bx) / denomX);
+            GraphicsPath._accBounds(ret, s, (ax - bx) / denomX);
+            GraphicsPath._accBounds(ret, s, (ax + bx) / denomX);
           }
           if(by >= 0 && denomY !== 0) {
             by = Math.sqrt(by);
-            GraphicsPath._accBounds(ret, first, s, (ay - by) / denomY);
-            GraphicsPath._accBounds(ret, first, s, (ay + by) / denomY);
+            GraphicsPath._accBounds(ret, s, (ay - by) / denomY);
+            GraphicsPath._accBounds(ret, s, (ay + by) / denomY);
           }
         }
       } else if(s[0] === GraphicsPath.ARC) {
@@ -907,19 +904,34 @@
         var rot = s[5]; // Rotation in radians
         var cosp = Math.cos(rot);
         var sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
-        var angles = [];
-        var angle;
-        if(cosp !== 0 && sinp !== 0) {
-          angle = Math.atan2(-ry * sinp / cosp, rx);
-          angles.push(angle, angle + Math.PI);
-          angle = Math.atan2(ry * cosp / sinp, rx);
-          angles.push(angle, angle + Math.PI);
+        if(delta >= Math.PI * 2) {
+    // This arc goes around the entire ellipse, giving
+    // it a much simpler formula for the bounding box
+          ax = cosp * rx;
+          ay = sinp * rx;
+          bx = -sinp * ry;
+          by = cosp * ry;
+          var distx = Math.sqrt(ax * ax + bx * bx);
+          var disty = Math.sqrt(ay * ay + by * by);
+          GraphicsPath._accBoundsPoint(ret, cx + distx, cy + disty);
+          GraphicsPath._accBoundsPoint(ret, cx + distx, cy - disty);
+          GraphicsPath._accBoundsPoint(ret, cx - distx, cy + disty);
+          GraphicsPath._accBoundsPoint(ret, cx - distx, cy - disty);
         } else {
-          angles.push(0, Math.PI, Math.PI * 0.5, Math.PI * 1.5);
-        }
-        for(var k = 0; k < angles.length; k++) {
-          if(GraphicsPath._angleInRange(angles[k], theta, delta)) {
-            GraphicsPath._accBoundsArc(ret, first, rx, ry, cosp, sinp, cx, cy, angles[k]);
+          var angles = [];
+          var angle;
+          if(cosp !== 0 && sinp !== 0) {
+            angle = Math.atan2(-ry * sinp / cosp, rx);
+            angles.push(angle, angle + Math.PI);
+            angle = Math.atan2(ry * cosp / sinp, rx);
+            angles.push(angle, angle + Math.PI);
+          } else {
+            angles.push(0, Math.PI, Math.PI * 0.5, Math.PI * 1.5);
+          }
+          for(var k = 0; k < angles.length; k++) {
+            if(GraphicsPath._angleInRange(angles[k], theta, delta)) {
+              GraphicsPath._accBoundsArc(ret, rx, ry, cosp, sinp, cx, cy, angles[k]);
+            }
           }
         }
       }

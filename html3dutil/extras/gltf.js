@@ -167,12 +167,14 @@
   };
 /** @private */
   GltfState._makeShape = function(mesh) {
-    return new H3DU.Shape(mesh).setMaterialParams({
+    var sh = new H3DU.Shape(mesh);
+    sh.getMaterial().setParams({
       "albedo":[0, 0, 0],
       "emission":[0.5, 0.5, 0.5],
       "metalness":0.0,
       "roughness":1.0
     });
+    return sh;
   };
 /** @private */
   GltfState.prototype.preparePrograms = function() {
@@ -794,7 +796,7 @@
             if(typeof shader === "undefined" || shader === null) {
               return null;
             }
-            shape.setMaterialParams({"shader":shader});
+            shape.getMaterial().setParams({"shader":shader});
           }
           this.materials[prim.material] = shape.getMaterial();
         }
