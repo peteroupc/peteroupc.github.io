@@ -902,22 +902,32 @@
         var theta = s[12];
         var delta = s[13];
         var rot = s[5]; // Rotation in radians
-        var cosp = Math.cos(rot);
-        var sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
-        if(delta >= Math.PI * 2) {
+        var cosp, sinp;
+        if(Math.abs(delta) >= Math.PI * 2) {
     // This arc goes around the entire ellipse, giving
     // it a much simpler formula for the bounding box
-          ax = cosp * rx;
-          ay = sinp * rx;
-          bx = -sinp * ry;
-          by = cosp * ry;
-          var distx = Math.sqrt(ax * ax + bx * bx);
-          var disty = Math.sqrt(ay * ay + by * by);
+          var distx, disty;
+          if(rx === ry) {
+       // The arc forms a circle
+            distx = rx;
+            disty = ry;
+          } else {
+            cosp = Math.cos(rot);
+            sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
+            ax = cosp * rx;
+            ay = sinp * rx;
+            bx = -sinp * ry;
+            by = cosp * ry;
+            distx = Math.sqrt(ax * ax + bx * bx);
+            disty = Math.sqrt(ay * ay + by * by);
+          }
           GraphicsPath._accBoundsPoint(ret, cx + distx, cy + disty);
           GraphicsPath._accBoundsPoint(ret, cx + distx, cy - disty);
           GraphicsPath._accBoundsPoint(ret, cx - distx, cy + disty);
           GraphicsPath._accBoundsPoint(ret, cx - distx, cy - disty);
         } else {
+          cosp = Math.cos(rot);
+          sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
           var angles = [];
           var angle;
           if(cosp !== 0 && sinp !== 0) {
