@@ -903,7 +903,7 @@
         var delta = s[13];
         var rot = s[5]; // Rotation in radians
         var cosp, sinp;
-        if(Math.abs(delta) >= Math.PI * 2) {
+        if(Math.abs(delta - theta) >= Math.PI * 2) {
     // This arc goes around the entire ellipse, giving
     // it a much simpler formula for the bounding box
           var distx, disty;
