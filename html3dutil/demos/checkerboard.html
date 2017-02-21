@@ -5,8 +5,13 @@ body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <script type="text/javascript" src="../h3du_min.js"></script>
+<script src="https://peteroupc.github.io/colorpicker/cbox.js"></script>
 </head>
 <body>
+<p style="position:absolute;left:0;top:1em">
+Black Color: <input type=color value="#EEEEEE" id=blackcolor><br>
+White Color: <input type=color value="#EECCCC" id=whitecolor><br>
+</p>
 <canvas id=canvas></canvas>
 <script id="vertex" type="x-shader/x-shader">
 precision highp float;
@@ -19,14 +24,15 @@ void main(){
 </script>
 <script id="fragment" type="x-shader/x-shader">
 precision highp float;
+uniform vec3 blackColor;
+uniform vec3 whiteColor;
 varying vec2 posVar;
-#define SQUARES_PER_ROW 8.0
+uniform float squaresPerRow;
 void main(){
- vec2 pos=mod(posVar*SQUARES_PER_ROW,4.0);
+ vec2 pos=mod(posVar*squaresPerRow,4.0);
  float sgn=(pos.x>=2.0 ? 1.0 : -1.0)*(pos.y>=2.0 ? 1.0 : -1.0);
  float s=(sgn>0.0) ? 1.0 : 0.0;
- // mix(black color, white color, s)
- vec3 color=mix(vec3(1.0,0.6,0.6),vec3(1.0,0.9,0.9),s);
+ vec3 color=mix(blackColor,whiteColor,s);
  gl_FragColor=vec4(color,1.0);
 }
 </script>
@@ -38,12 +44,26 @@ var fragmentShader = document.getElementById("fragment").textContent;
 
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 var shader = new H3DU.ShaderInfo(vertexShader, fragmentShader);
+shader.setUniforms({
+  "blackColor":H3DU.toGLColor(document.getElementById("blackcolor").value).slice(0, 3),
+  "whiteColor":H3DU.toGLColor(document.getElementById("whitecolor").value).slice(0, 3),
+  "squaresPerRow":8
+});
 var batch = new H3DU.Batch3D().addShape(
   new H3DU.Shape(new H3DU.Mesh(
     [-1, 1, 0, -1, -1, 0,
       1, 1, 0, 1, -1, 0],
      [0, 1, 2, 2, 1, 3], 0)).setShader(shader));
-
+document.getElementById("blackcolor").addEventListener("change",
+   function(e) {
+     "use strict";
+     shader.setUniforms({"blackColor":H3DU.toGLColor(e.target.value).slice(0, 3)});
+   });
+document.getElementById("whitecolor").addEventListener("change",
+   function(e) {
+     "use strict";
+     shader.setUniforms({"whiteColor":H3DU.toGLColor(e.target.value).slice(0, 3)});
+   });
 H3DU.renderLoop(function() {
   "use strict";
   scene.render(batch);

@@ -22,10 +22,11 @@ void main(){
 varying vec2 posVar;
 uniform float u_time;
 void main(){
-float n;
+ float n;
  n=fbmwarp(posVar+u_time*0.1,2.5,0.8,3.0,0.3);
  n=(n+1.0)*0.5;
- gl_FragColor=vec4(palette(vec3(1.0,0.8,0.6),vec3(0.5,0.65,0.75),n),1.0);
+ vec3 color=palette(vec3(1.0,0.8,0.6),vec3(0.5,0.65,0.75),n);
+ gl_FragColor=vec4(color,1.0);
 }
 </script>
 
@@ -36,18 +37,46 @@ var fragmentShader = "precision highp float;\n" +
   fragmentShaderLib() + "\n" +
   document.getElementById("fragment").textContent;
 
-var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
+ .setClearColor("white");
 var shader = new H3DU.ShaderInfo(vertexShader, fragmentShader);
+shader.setUniforms({"u_time":0});
+// Create a quad to fill the frame buffer
 var batch = new H3DU.Batch3D().addShape(
   new H3DU.Shape(new H3DU.Mesh(
     [-1, 1, 0, -1, -1, 0,
       1, 1, 0, 1, -1, 0],
      [0, 1, 2, 2, 1, 3], 0)).setShader(shader));
-
+// Create a square-sized frame buffer info
+var fbo = new H3DU.FrameBufferInfo(512, 512);
+// Render to the frame buffer
+scene.render([
+  new H3DU.RenderPass3D(batch, {
+    "frameBuffer":fbo,
+    "useFrameBufferSize":true
+  })
+]);
+// //////////////////////////////////////////////////////
+var b2 = new H3DU.Batch3D()
+   .perspectiveAspect(45, 0.1, 100)
+   .setLookAt([0, 0, 40]);
+b2.getLights().setBasic();
+var mesh = H3DU.Meshes.createBox(10, 20, 20);
+var shape = new H3DU.Shape(mesh).setTexture(fbo);
+b2.addShape(shape);
+   // Create a timer
+var timer = {};
+  // Set up the render loop
 H3DU.renderLoop(function(time) {
   "use strict";
-  shader.setUniforms({"u_time":time / 1000.0});
-  scene.render(batch);
+   // Update the shape's rotation
+  var q = H3DU.Math.quatFromTaitBryan(
+        360 * H3DU.getTimePosition(timer, time, 6000),
+       360 * H3DU.getTimePosition(timer, time, 12000),
+       0
+      );
+  shape.setQuaternion(q);
+  scene.render(b2);
 });
 </script>
 </body>

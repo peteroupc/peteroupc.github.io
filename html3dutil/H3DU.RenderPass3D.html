@@ -8,7 +8,7 @@
 
 <p><a name='H3DU.RenderPass3D'></a></p>
 
-<h3>H3DU.RenderPass3D(subScene, [parameters])</h3>
+<h3>H3DU.RenderPass3D(batch, [parameters])</h3>
 
 <p>Describes a batch (a scene graph of 3D objects) and options for
 rendering that batch.</p>
@@ -16,7 +16,7 @@ rendering that batch.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>subScene</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>
+<li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>
 The batch to render using the options described by this object.</li>
 <li><code>parameters</code> (Type: Object) (optional)<br>
 An object whose keys have the possibilities given in H3DU.RenderParams#setParams, and whose values are those allowed for each key.</li>
@@ -25,12 +25,14 @@ An object whose keys have the possibilities given in H3DU.RenderParams#setParams
 <h3>Members</h3>
 
 <ul>
+<li><a href="#H3DU.RenderPass3D_batch">batch</a><br>The batch to render.</li>
 <li><a href="#H3DU.RenderPass3D_clearColor">clearColor</a><br>Whether to clear the color buffer before rendering the batch.</li>
 <li><a href="#H3DU.RenderPass3D_clearDepth">clearDepth</a><br>Whether to clear the depth buffer before rendering the batch.</li>
 <li><a href="#H3DU.RenderPass3D_clearStencil">clearStencil</a><br>Whether to clear the stencil buffer before rendering the batch.</li>
 <li><a href="#H3DU.RenderPass3D_frameBuffer">frameBuffer</a><br>Framebuffer to render to.</li>
 <li><a href="#H3DU.RenderPass3D_shader">shader</a><br>Shader to use.</li>
-<li><a href="#H3DU.RenderPass3D_subScene">subScene</a><br>The batch to render.</li>
+<li><a href="#H3DU.RenderPass3D_useFrameBufferSize">useFrameBufferSize</a><br>Use the dimensions of the given framebuffer rather than those
+of the scene rendering it.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -38,6 +40,14 @@ An object whose keys have the possibilities given in H3DU.RenderParams#setParams
 <ul>
 <li><a href="#H3DU.RenderPass3D_H3DU.RenderPass3D_setParams">setParams</a><br>Sets parameters for this render pass object.</li>
 </ul>
+
+<p><a id='H3DU.RenderPass3D_batch'></a></p>
+
+<h3>H3DU.RenderPass3D#batch</h3>
+
+<p>The batch to render.</p>
+
+<p>Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a></p>
 
 <p><a id='H3DU.RenderPass3D_clearColor'></a></p>
 
@@ -83,13 +93,16 @@ An object whose keys have the possibilities given in H3DU.RenderParams#setParams
 
 <p>Default Value: <code>null</code></p>
 
-<p><a id='H3DU.RenderPass3D_subScene'></a></p>
+<p><a id='H3DU.RenderPass3D_useFrameBufferSize'></a></p>
 
-<h3>H3DU.RenderPass3D#subScene</h3>
+<h3>H3DU.RenderPass3D#useFrameBufferSize</h3>
 
-<p>The batch to render.</p>
+<p>Use the dimensions of the given framebuffer rather than those
+of the scene rendering it.</p>
 
-<p>Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a></p>
+<p>Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></p>
+
+<p>Default Value: <code>false</code></p>
 
 <p><a name='H3DU.RenderPass3D_H3DU.RenderPass3D_setParams'></a></p>
 
@@ -101,7 +114,7 @@ An object whose keys have the possibilities given in H3DU.RenderParams#setParams
 
 <ul>
 <li><code>parameters</code> (Type: Object)<br>
-An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>subScene</code> - The batch to render. An <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> object. <li><code>clearColor</code> - Whether to clear the color buffer before rendering the batch. Either true or false. <li><code>clearDepth</code> - Whether to clear the depth buffer before rendering the batch. Either true or false. <li><code>clearStencil</code> - Whether to clear the stencil buffer before rendering the batch. Either true or false. <li><code>frameBuffer</code> - Framebuffer to render to. An <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a> object. <li><code>shader</code> - Shader to use. An <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a> object. </ul> Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.</li>
+An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>subScene</code> - The batch to render. An <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> object. <li><code>clearColor</code> - Whether to clear the color buffer before rendering the batch. Either true or false. <li><code>clearDepth</code> - Whether to clear the depth buffer before rendering the batch. Either true or false. <li><code>clearStencil</code> - Whether to clear the stencil buffer before rendering the batch. Either true or false. <li><code>frameBuffer</code> - Framebuffer to render to. An <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a> object. <li><code>shader</code> - Shader to use. An <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a> object. <li><code>useFrameBufferSize</code> - Use the dimensions of the given framebuffer rather than those of the scene rendering it. </ul> Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.</li>
 </ul>
 
 <h4>Return Value</h4>
