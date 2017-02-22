@@ -255,7 +255,7 @@
       uniformValue = paramValue;
     }
     if(paramType === 35678) {
-      if((typeof this.gltf.textures === "undefined" || this.gltf.textures === null) || this.gltf.textures[uniformValue] === null) {
+      if(typeof this.gltf.textures === "undefined" || this.gltf.textures === null || (typeof this.gltf.textures[uniformValue] === "undefined" || this.gltf.textures[uniformValue] === null)) {
         return null;
       }
       var tex = this.gltf.textures[uniformValue];

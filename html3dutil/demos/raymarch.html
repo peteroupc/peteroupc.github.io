@@ -159,7 +159,6 @@ H3DU.renderLoop(function(time) {
   var antialias = document.getElementById("aaenabled").checked;
   var vector = [-5 * Math.sin(angle), 0, -5 * Math.cos(angle)];
   batch.setLookAt(vector);
-  console.log(batch.getProjectionViewMatrix());
   shader.setUniforms({"antialias":antialias ? 1.0 : 0.0});
   scene.render(batch);
 });

@@ -198,7 +198,7 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  * @param {Object} [sweptCurve] Object describing
  * a two-dimensional curve to serve as the cross section of the extruded shape,
  * corresponding to the V coordinate of the CurveTube's
- * "evaluate" method.
+ * "evaluate" method.<p>
  * If this parameter is null or omitted, uses a circular cross section
  * in which the V coordinate ranges from 0 through
  * 1. The curve object must contain a function

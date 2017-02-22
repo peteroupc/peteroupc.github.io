@@ -20,7 +20,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:sampleShape(2)">Closed figure</a>,
 <a href="javascript:sampleShape(3)">Tube</a>,
 <a href="javascript:sampleShape(4)">Octagon Figure</a>,
-<a href="javascript:sampleShape(5)">Nine-Pointed Star Figure</a>
+<a href="javascript:sampleShape(5)">Nine-Pointed Star Figure</a>,
+<a href="javascript:sampleShape(6)">Nine-Pointed Star Path</a>
 <br>
 Color: <input type=color value="#E0E0E0" id=colorsetting><br>
 </p>
@@ -59,15 +60,24 @@ path = path.merge(path2);
 function regularPoly(path, sides, radius, cx, cy, phaseInDegrees) {
   "use strict";
   if(sides <= 0)return path;
-  var phase = (phaseInDegrees || 0) * H3DU.Math.ToDegrees;
+  var phase = (phaseInDegrees || 0) * H3DU.Math.ToRadians;
+  var angleStep = H3DU.Math.PiTimes2 / sides;
+  var cosStep = Math.cos(angleStep);
+  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  var c = Math.cos(phase);
+  var s = phase >= 0 && phase < 6.283185307179586 ? phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(phase);
   for(var i = 0; i < sides; i++) {
-    var angle = i * Math.PI * 2 / sides + phase;
-    var c = Math.cos(angle);
-    var s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
     var x = cx + c * radius;
     var y = cy + s * radius;
-    if(i === 0)path.moveTo(x, y);
-    else path.lineTo(x, y);
+    if(i === 0) {
+      path.moveTo(x, y);
+    } else {
+      path.lineTo(x, y);
+    }
+    var ts = cosStep * s + sinStep * c;
+    var tc = cosStep * c - sinStep * s;
+    s = ts;
+    c = tc;
   }
   return path.closePath();
 }
@@ -75,19 +85,38 @@ function regularPoly(path, sides, radius, cx, cy, phaseInDegrees) {
 function regularStar(path, points, radiusOut, radiusIn, cx, cy, phaseInDegrees) {
   "use strict";
   if(points <= 0)return path;
-  var phase = (phaseInDegrees || 0) * H3DU.Math.ToDegrees;
+  var phase = (phaseInDegrees || 0) * H3DU.Math.ToRadians;
   var sides = points * 2;
+  var angleStep = H3DU.Math.PiTimes2 / sides;
+  var cosStep = Math.cos(angleStep);
+  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  var c = Math.cos(phase);
+  var s = phase >= 0 && phase < 6.283185307179586 ? phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(phase);
   for(var i = 0; i < sides; i++) {
-    var angle = i * Math.PI * 2 / sides + phase;
     var radius = (i & 1) === 0 ? radiusOut : radiusIn;
-    var c = Math.cos(angle);
-    var s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
     var x = cx + c * radius;
     var y = cy + s * radius;
-    if(i === 0)path.moveTo(x, y);
-    else path.lineTo(x, y);
+    if(i === 0) {
+      path.moveTo(x, y);
+    } else {
+      path.lineTo(x, y);
+    }
+    var ts = cosStep * s + sinStep * c;
+    var tc = cosStep * c - sinStep * s;
+    s = ts;
+    c = tc;
   }
   return path.closePath();
+}
+function makeLinePath(path, z, flatness) {
+  "use strict";
+  var lines = path.getLines(flatness);
+  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.LINES);
+  for(var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    mesh.vertex3(line[0], line[1], z).vertex3(line[2], line[3], z);
+  }
+  return mesh;
 }
 function extrudePath(path, zStart, zEnd, flatness) {
   "use strict";
@@ -137,6 +166,10 @@ function createSampleShape(index) {
   case 5: {
     p = regularStar(new H3DU.GraphicsPath(), 9, 1, 0.8, 0, 0);
     return pathClosedFigure(p, -0.25, 0.25, 0.01);
+  }
+  case 6: {
+    p = regularStar(new H3DU.GraphicsPath(), 9, 1, 0.8, 0, 0);
+    return makeLinePath(p, 0, 0.01);
   }
   default:
     return new H3DU.Mesh();

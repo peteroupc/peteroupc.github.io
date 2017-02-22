@@ -32,7 +32,9 @@ An object that must contain a function named &quot;evaluate&quot;, which takes t
 <li><code>thickness</code> (Type: Number) (optional)<br>
 Radius of the extruded tube. If this parameter is null or omitted, the default is 0.125.</li>
 <li><p><code>sweptCurve</code> (Type: Object) (optional)<br>
-Object describing a two-dimensional curve to serve as the cross section of the extruded shape, corresponding to the V coordinate of the CurveTube&#39;s &quot;evaluate&quot; method. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The curve object must contain a function named &quot;evaluate&quot;, with the same meaning as for the &quot;func&quot; parameter, except the third element, if any, of the return value is ignored.</p>
+Object describing a two-dimensional curve to serve as the cross section of the extruded shape, corresponding to the V coordinate of the CurveTube&#39;s &quot;evaluate&quot; method.</p>
+
+<p>If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The curve object must contain a function named &quot;evaluate&quot;, with the same meaning as for the &quot;func&quot; parameter, except the third element, if any, of the return value is ignored.</p>
 
 <p>The curve need not be closed.</p>
 
