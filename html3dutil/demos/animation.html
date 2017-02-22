@@ -9,6 +9,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="demoutil.js"></script>
 <script type="text/javascript" src="animation.js"></script>
 <script type="text/javascript" src="skysphere.js"></script>
+<script type="text/javascript" src="shaderlib.js"></script>
 </head>
 <body>
 <canvas id=canvas></canvas>
@@ -23,6 +24,34 @@ canvas { width:100%; height:100%; overflow: hidden; }
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+function createSkysphere2(size) {
+  "use strict";
+  var fragment = ["precision mediump float;",
+      fragmentShaderLib(),
+      "varying vec4 positionVar;",
+      "void main() {",
+      " float c=fbm(positionVar.xyz/positionVar.w,1.0,1.0,2.0,0.5);",
+      " vec3 color=mix(vec3(0.8,1.0,0.95),vec3(1.0,1.0,1.0),c);",
+      " gl_FragColor=vec4(color,1.0);",
+      "}"
+    ].join("\n");
+  var shader = new H3DU.ShaderInfo(
+ ["attribute vec3 position;",
+   "uniform mat4 projection;",
+   "uniform mat4 worldMatrix;",
+   "uniform mat4 modelViewMatrix;",
+   "varying vec4 positionVar;",
+   "void main() {",
+   "positionVar=worldMatrix*vec4(position,1.0);",
+   "gl_Position=(projection*modelViewMatrix)*vec4(position,1.0);",
+   "}"
+ ].join("\n"), fragment
+);
+ shader.setUniformSemantic("worldMatrix",H3DU.Semantic.MODEL);
+  return new H3DU.Shape(H3DU.Meshes.createSphere(size))
+  .setShader(shader);
+}
 
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
@@ -42,9 +71,8 @@ loader.loadAndMapTexturesAll([
 ], scene).then(function(textures) {
   "use strict";
   // add skysphere
-  var skysphere = createSkysphere(100, textures[1]);
-  skysphere.getTransform().setRotation(90, 1, 0, 0);
-  sub.addShape(skysphere);
+  var skysphere = createSkysphere2(10);
+  //skysphere.getTransform().setRotation(90, 1, 0, 0);
    // create a stack of washers, each with different sizes
   for(var i = 0; i < shapecolors.length; i++) {
     var s = new H3DU.Shape(createWasher(0.5, shapesizes[i], 0.1, 32)).setColor(shapecolors[i])
@@ -54,7 +82,8 @@ loader.loadAndMapTexturesAll([
   }
   sub.addShape(
     new H3DU.Shape(makeFloor(-5, -5, 10, 10, 1)).setTexture(textures[0]));
-   // Start the render loop
+   sub.addShape(skysphere);
+  // Start the render loop
   var anim = null;
   var timer = {};
   H3DU.renderLoop(function(time) {

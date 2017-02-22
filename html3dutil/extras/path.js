@@ -1738,7 +1738,7 @@
   GraphicsPath._numIntegrate = function(func, xmin, xmax) {
 /*
 * Estimates the integral of a function. The integral
-* is the area between the function's graph and the X axis,
+* is like the area between the function's graph and the X axis,
 * where areas above the X axis add to the integral, and areas
 * below the X axis subtract from it.
 * @private
