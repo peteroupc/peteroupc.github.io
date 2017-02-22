@@ -95,7 +95,7 @@ function CustomCurve(x, y, z, minu, maxu) {
   var ranges = [
     getExpression(minu).constantValue(),
     getExpression(maxu).constantValue()];
-  if((typeof ranges[0] === "undefined" || ranges[0] === null) || ranges[1] === null) {
+  if(typeof ranges[0] === "undefined" || ranges[0] === null || (typeof ranges[1] === "undefined" || ranges[1] === null)) {
     throw new Error("min/max must be a constant");
   }
   if(isNaN(ranges[0]) || isNaN(ranges[1])) {

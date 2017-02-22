@@ -22,6 +22,25 @@ source code.</p>
 <p>Note that this class is not associated with any WebGL context, so the
 uniform values this object stores is not set for any WebGL context.</p>
 
+<p>Currently, the following attribute names are associated
+with this object by default:<ul>
+<li><code>position</code> - &quot;POSITION&quot; semantic</li>
+<li><code>normal</code> - &quot;NORMAL&quot; semantic</li>
+<li><code>uv</code> - &quot;TEXCOORD_0&quot; semantic</li>
+<li><code>tangent</code> - Attribute for tangents.</li>
+<li><code>bitangent</code> - Attribute for bitangents</li>
+<li><code>colorAttr</code> - &quot;COLOR&quot;</li>
+</ul></p>
+
+<p>Currently, the following uniform names are associated
+with this object by default:<ul>
+<li><code>projection</code> - Projection matrix</li>
+<li><code>modelViewMatrix</code> - Model-view matrix</li>
+<li><code>normalMatrix</code> - Inverse transpose of the model-view matrix</li>
+<li><code>world</code> - World matrix.</li>
+<li><code>inverseView</code> - Inverse view matrix.</li>
+</ul></p>
+
 <h4>Parameters</h4>
 
 <ul>
