@@ -188,7 +188,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
     "evaluate":function(u) {
       u *= H3DU.Math.PiTimes2;
       var cosu = Math.cos(u);
-      var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
+      var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
       return [cosu, sinu];
     }
   };
