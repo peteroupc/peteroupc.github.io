@@ -150,7 +150,7 @@ An object that must contain a function named &quot;evaluate&quot;, giving one or
 
 <ul>
 <li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a function named &quot;evaluate&quot;. It takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns an array of the result of the evaluation.</li>
+An object that may or must contain the following methods:<ul> <li>evaluate(<code>u</code>) - A method that takes a curve coordinate (<code>u</code>), generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation. <li>tangent(<code>u</code>, <code>v</code>) - A method that takes the same parameters as &quot;evaluate&quot; and returns the tangent of the surface at the given coordinates. The return value should not be &quot;normalized&quot; to a unit vector. This method is optional. </ul></li>
 </ul>
 
 <h4>Return Value</h4>

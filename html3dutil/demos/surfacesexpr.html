@@ -32,7 +32,7 @@ class, example:<br>
 </div>
 <canvas id=canvas></canvas>
 <script id="demo">
-/* global H3DU, addRange, getExpression, normalCalcExpr, updateShape */
+/* global H3DU, addRange, getExpression, makeMesh, normalCalcExpr, updateShape */
 // <!--
 /*
  Any copyright to this file is released to the Public Domain.
@@ -48,40 +48,9 @@ if(typeof Math.sign === "undefined") {
     return x < 0 ? -1 : x === 0 ? 0 : 1;
   };
 }
-function makeMesh(func, resolution) {
+function makeMeshDoubleSided(func, resolution) {
   "use strict";
-    // Default resolution is 50
-  if(typeof resolution === "undefined" || resolution === null)resolution = 50;
-     // create a new mesh
-  var mesh = new H3DU.Mesh();
-     // define a color gradient evaluator for
-     // demonstration purposes. Instead of X, Y, and Z,
-     // generate a Red/Green/Blue color based on
-     // the same parameters U and V as the surface
-     // function for 3D points.
-  var colorGradient = {
-    "evaluate":function(u, v) {
-      return [1 - u, v, u];
-    }
-  };
-     // generate the parametric surface.
-
-  new H3DU.SurfaceEval()
-      .vertex(func)
-    // Specify the color gradient evaluator defined above
-      .color(colorGradient)
-    // Generate normals for the parametric surface,
-    // which is required for lighting to work correctly
-      .setAutoNormal(true)
-    // Evaluate the surface and generate a triangle
-    // mesh, using resolution+1 different U-coordinates ranging
-    // from 0 to 1, and resolution+1
-    // different V-coordinates ranging from 0 to 1
-    // Instead of Mesh.TRIANGLES, we could use
-    // Mesh.LINES to create a wireframe mesh,
-    // or Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution, resolution);
-    // Surface generated, return the mesh
+  var mesh = makeMesh(func, resolution, resolution);
   var otherWinding = new H3DU.Mesh().merge(mesh).reverseWinding().reverseNormals();
   return mesh.merge(otherWinding);
 }
@@ -121,9 +90,8 @@ function CustomSurface(x, y, z, minu, maxu, minv, maxv) {
   " " + normalExpr[2].toJSString() + "];\n";
   this.getCode = function() {
     return "var evaluator=new H3DU.SurfaceEval().vertex({\n" +
-    "\"evaluate\":function(u, v) {\n" + code + "}})\n" +
-    ".normal({\n" +
-    "\"evaluate\":function(u, v) {\n" + normalCode + "}})\n";
+    "\"evaluate\":function(u, v) {\n" + code + "},\n" +
+    "\"gradient\":function(u, v) {\n" + normalCode + "}})\n";
   };
   this.evaluate = null;
   try {
@@ -165,7 +133,7 @@ function updateMesh() {
    );
     if(!cs.evaluate)return new H3DU.Mesh();
     document.getElementById("sourceCode").value = cs.getCode();
-    return makeMesh(cs, 70);
+    return makeMeshDoubleSided(cs, 70);
   default:
     return new H3DU.Mesh();
   }

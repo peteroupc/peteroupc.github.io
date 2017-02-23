@@ -110,6 +110,9 @@ before the other transformations.</p>
 <p>To create a rotation matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation">axis of rotation</a>. For example, specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation around the X axis, and <code>(80, [0, 2, 3])</code> means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
 
+<p>When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
+ <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.</p>
+
 <p>To multiply an existing matrix by a rotation, use
 <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>. This will put the rotation
 before the other transformations.</p>

@@ -12,7 +12,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <input id=aaenabled type=checkbox><label for=aaenabled>Enable anti-aliasing</label>
 </div>
 <script id="vertex" type="x-shader/x-shader">
-precision highp float;
+precision mediump float;
 attribute vec3 position;
 varying vec2 posVar;
 varying vec4 rayStartVar;
@@ -65,7 +65,7 @@ void main(){
 }
 </script>
 <script id="fragment" type="x-shader/x-shader">
-precision highp float;
+precision mediump float;
 varying vec2 posVar;
 varying vec4 rayStartVar;
 varying vec4 rayEndVar;

@@ -71,6 +71,23 @@ H3DU.SurfaceOfRevolution = function(curve, minval, maxval, axis) {
     }
     return ret;
   };
+  this.gradient = function(u, v) {
+    if(this._axisQuat) {
+      return H3DU.SurfaceEval.numGradient(this, u, v);
+    }
+    v = minval + (maxval - minval) * v;
+    u *= H3DU.Math.PiTimes2;
+    var cosu = Math.cos(u);
+    var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    var curvepos = H3DU.CurveEval.findTangent(this.curve, v);
+    var cp1 = curvepos[1];
+    var cp0 = curvepos[0];
+    var x = cp0 * cosu;
+    var y = cp0 * sinu;
+    var z = cp1;
+    var ret = [x, y, z];
+    return ret;
+  };
 };
 /** @private */
 H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
@@ -170,7 +187,9 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
   if(!curve)curve = {
     "evaluate":function(u) {
       u *= H3DU.Math.PiTimes2;
-      return [Math.cos(u), Math.sin(u)];
+      var cosu = Math.cos(u);
+      var sinu = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosu*cosu) : -Math.sqrt(1.0-cosu*cosu)) : Math.sin(u);
+      return [cosu, sinu];
     }
   };
   return new H3DU.SurfaceOfRevolution({

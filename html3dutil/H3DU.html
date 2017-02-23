@@ -23,6 +23,18 @@ library.</p>
 <ul>
 <li><a href="#H3DU.loadGltfFromUrl">.loadGltfFromUrl</a><br>Loads a 3D scene stored in glTF format, together with the buffers and
 shaders it uses.</li>
+<li><a href="#H3DU.CurveEval.findTangent">CurveEval.findTangent</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.CurveEval.numTangent">CurveEval.numTangent</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.SurfaceEval.findBitangent">SurfaceEval.findBitangent</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.SurfaceEval.findGradient">SurfaceEval.findGradient</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.SurfaceEval.findTangent">SurfaceEval.findTangent</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.SurfaceEval.numBitangent">SurfaceEval.numBitangent</a><br>Finds an approximate bitangent vector for the given surface evaluator
+at the given U and V coordinates by using numerical differentiation
+of the &quot;evaluate&quot; method with respect to the U axis.</li>
+<li><a href="#H3DU.SurfaceEval.numGradient">SurfaceEval.numGradient</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.SurfaceEval.numTangent">SurfaceEval.numTangent</a><br>Finds an approximate tangent vector for the given surface evaluator
+at the given U and V coordinates by using numerical differentiation
+of the &quot;evaluate&quot; method with respect to the V axis.</li>
 <li><a href="#H3DU.createCanvasElement">createCanvasElement</a><br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</li>
 <li><a href="#H3DU.get3DContext">get3DContext</a><br>Creates a 3D rendering context from an HTML canvas element.</li>
@@ -75,6 +87,188 @@ if the glTF data describes an animation; this method updates the state of the
 (type Number), is a time stamp in milliseconds.
 </ul>If an error occurs in loading the glTF data or any of the buffers and shaders
 it uses, the promise will be rejected. (Type: <a href="Promise.html">Promise</a>.&lt;Object&gt;)</p>
+
+<p><a name='H3DU.CurveEval.findTangent'></a></p>
+
+<h3>(static) H3DU.CurveEval.findTangent(e, u, v)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: *)</li>
+<li><code>u</code> (Type: *)</li>
+<li><code>v</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
+<p><a name='H3DU.CurveEval.numTangent'></a></p>
+
+<h3>(static) H3DU.CurveEval.numTangent(e, u)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.CurveEval#vertex.</li>
+<li><code>u</code> (Type: Number)<br>
+U-coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
+<p><a name='H3DU.SurfaceEval.findBitangent'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.findBitangent(e, u, v)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.SurfaceEval#vertex.</li>
+<li><code>u</code> (Type: Number)<br>
+U-coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V-coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A bitangent vector of at least 3 elements. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval.findGradient'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.findGradient(e, u, v)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.SurfaceEval#vertex.</li>
+<li><code>u</code> (Type: Number)<br>
+U-coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V-coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A gradient vector of at least 3 elements. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval.findTangent'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.findTangent(e, u, v)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.SurfaceEval#vertex.</li>
+<li><code>u</code> (Type: Number)<br>
+U-coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V-coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A tangent vector of at least 3 elements. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval.numBitangent'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.numBitangent(e, u, v)</h3>
+
+<p>Finds an approximate bitangent vector for the given surface evaluator
+at the given U and V coordinates by using numerical differentiation
+of the &quot;evaluate&quot; method with respect to the U axis.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.SurfaceEval#vertex.</li>
+<li><code>u</code> (Type: Number)<br>
+U-coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V-coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A bitangent vector of at least 3 elements. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval.numGradient'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.numGradient(e, u, v)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<p>To generate normals for a function for a regular surface (usually
+a continuous, unbroken surface such as a sphere, disk, or open
+cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
+the function used for vertex calculation (we&#39;ll call it <b>F</b>) with
+respect to u, then find the partial derivative of <b>F</b> with respect to
+v, then take their <a href="H3DU.Math.html#H3DU.Math.vec3cross">cross product</a>. The result will be
+the gradient, which will be normal to the surface.
+In mathematical notation, this looks like:
+<b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
+&#x2202;<b>F</b>/&#x2202;<i>v</i>.</p>
+
+<p>(Note: &#x2202;<b>F</b>/&#x2202;<i>u</i> is also called the <i>bitangent</i>
+or <i>binormal vector</i>, and &#x2202;<b>F</b>/&#x2202;<i>v</i> is also
+called the <i>tangent vector</i>.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.SurfaceEval#vertex.</li>
+<li><code>u</code> (Type: Number)<br>
+U-coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V-coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A gradient vector of at least 3 elements. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval.numTangent'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.numTangent(e, u, v)</h3>
+
+<p>Finds an approximate tangent vector for the given surface evaluator
+at the given U and V coordinates by using numerical differentiation
+of the &quot;evaluate&quot; method with respect to the V axis.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.SurfaceEval#vertex.</li>
+<li><code>u</code> (Type: Number)<br>
+U-coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V-coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A tangent vector of at least 3 elements. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.createCanvasElement'></a></p>
 

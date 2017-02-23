@@ -175,6 +175,24 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
   updateShape(updateMeshFunc, allsettings, shapeGroup);
 }
 
+function NormalGenWrapper(f) {
+  "use strict";
+  this.f = f;
+  this.evaluate = function(u, v) {
+    return this.f.evaluate(u, v);
+  };
+  this.c = 0;
+  this.gradient = function(u, v) {
+    return H3DU.SurfaceEval.findGradient(this.f, u, v);
+  };
+  this.tangent = function(u, v) {
+    return H3DU.SurfaceEval.findTangent(this.f, u, v);
+  };
+  this.bitangent = function(u, v) {
+    return H3DU.SurfaceEval.findBitangent(this.f, u, v);
+  };
+}
+
 /* exported makeMesh */
 function makeMesh(func, resolutionU, resolutionV) {
     // Default resolution is 50
@@ -194,14 +212,12 @@ function makeMesh(func, resolutionU, resolutionV) {
       return [1 - u, v, u];
     }
   };
-     // generate the parametric surface.
+  // generate the parametric surface.
+  mesh = new H3DU.Mesh();
   new H3DU.SurfaceEval()
-      .vertex(func)
+      .vertex(new NormalGenWrapper(func))
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
-    // Generate normals for the parametric surface,
-    // which is required for lighting to work correctly
-      .setAutoNormal(true)
     // Evaluate the surface and generate a triangle
     // mesh, using resolution+1 different U-coordinates ranging
     // from 0 to 1, and resolution+1
