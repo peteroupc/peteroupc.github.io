@@ -9,7 +9,7 @@
 /* global H3DU */
 
 /**
- * Parametric evaluator for a surface of revolution, which results by revolving
+ * A [surface evaluator object]{@link H3DU.SurfaceEval.vector} for a surface of revolution, which results by revolving
  * an X/Y curve around an axis.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
@@ -20,17 +20,9 @@
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @class
  * @alias H3DU.SurfaceOfRevolution
- * @param {Function} curve Curve to rotate about the axis of rotation, as
- * specified in the "axis" parameter.
- * The curve function must contain a function
- * named "evaluate", which takes the following parameter:<ul>
- * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
- * </ul>
- * The evaluator function returns an array of at least 2 elements: the first
- * element is the X coordinate of the curve's position (corresponding to
- * elevation), and the second
- * element is the Y coordinate (corresponding to
- * radius).<p>
+ * @param {Object} curve A [curve evaluator object]{@link H3DU.CurveEval.vector} that describes a 2-dimensional curve to rotate about the axis of rotation, as
+ * specified in the "axis" parameter. The curve's X coordinates
+ * correspond to elevation, and its Y coordinates correspond to radius.<p>
  * If the curve function draws a curve that goes both above and below the axis of rotation, such
  * as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must
  * restrict the curve definition to no more than half of the curve.
@@ -101,7 +93,7 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
   v[2] = t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4;
 };
 /**
- * Creates a parametric evaluator for a surface of revolution
+ * Creates a [surface evaluator object]{@link H3DU.SurfaceEval.vector} for a surface of revolution
  * whose curve is the graph of a single-variable function.
  * The resulting surface will have a circular cross section
  * along its length.
@@ -156,22 +148,15 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
   }, minval, maxval, axis);
 };
 /**
- * Parametric evaluator for a torus, a special case of a surface of revolution.
+ * A [surface evaluator object]{@link H3DU.SurfaceEval.vector} for a torus, a special case of a surface of revolution.
  * @param {Number} outerRadius Radius from the center to the innermost
  * part of the torus.
  * @param {Number} innerRadius Radius from the inner edge to the innermost
  * part of the torus.
- * @param {Function} [curve] Object describing
- * a curve to serve as the cross section of the torus.
- * The curve need not be closed; in fact, certain special surfaces can result
+ * @param {Object} [curve] A [curve evaluator object]{@link H3DU.CurveEval.vector} that describes a 2-dimensional curve to serve as
+ * the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result
  * by leaving the ends open.
- * The curve function must contain a function
- * named "evaluate", which takes the following parameter:<ul>
- * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
- * </ul>
- * The evaluator function returns an array of at least 2 elements: the first
- * element is the X coordinate of the curve's position, and the second
- * element is the Y coordinate. If null or omitted, uses a circular cross section.
+ * If null or omitted, uses a circular cross section.
  * @param {Array<Number>} [axis] Axis of rotation, which the torus
  * will pass through.
  * If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
@@ -212,8 +197,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
 var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
 
 /**
- * Parametric evaluator for a
- * curve drawn by a circle that rolls along the inside
+ * A [curve evaluator object]{@link H3DU.CurveEval.vector} for a curve drawn by a circle that rolls along the inside
  * of another circle, whose position is fixed with a center of (0,0).
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
@@ -280,8 +264,7 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
 };
 
 /**
- * Parametric evaluator for a
- * curve drawn by a circle that rolls along the X axis.
+ * A [curve evaluator object]{@link H3DU.CurveEval.vector} for a curve drawn by a circle that rolls along the X axis.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
@@ -318,8 +301,7 @@ H3DU.Trochoid = function(radius, distFromCenter) {
 };
 
 /**
- * Parametric evaluator for a
- * curve drawn by a circle that rolls along the outside
+ * A [curve evaluator object]{@link H3DU.CurveEval.vector} for a curve drawn by a circle that rolls along the outside
  * of another circle, whose position is fixed, with a center of (0,0).
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that

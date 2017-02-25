@@ -10,7 +10,7 @@
 
 <h3>H3DU.BSplineCurve(controlPoints, knots, [bits])</h3>
 
-<p>A parametric evaluator for B-spline (basis spline) curves.</p>
+<p>A curve evaluator object for a B-spline (basis spline) curve.</p>
 
 <h4>Parameters</h4>
 
@@ -54,7 +54,7 @@ be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
 <li><a href="#H3DU.BSplineCurve.clampedKnots">.clampedKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
-except that with the knot vector, curve will start and end at the first and last control points and will
+except that with the knot vector curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
 <li><a href="#H3DU.BSplineCurve.uniform">.uniform</a><br>Creates a B-spline curve with uniform knots.</li>
@@ -128,7 +128,9 @@ Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> 
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
+<p>Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
 <p><a name='H3DU.BSplineCurve.clampedKnots'></a></p>
 
@@ -136,7 +138,7 @@ Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> 
 
 <p>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
-except that with the knot vector, curve will start and end at the first and last control points and will
+except that with the knot vector curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</p>
 
@@ -151,7 +153,9 @@ Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If 
 
 <h4>Return Value</h4>
 
-<p>A clamped uniform knot vector. (Type: Array.&lt;Number&gt;)</p>
+<p>A clamped uniform knot vector.
+The first knot will be 0 and the last knot will be 1.
+(This is a change in version 2.0.) (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BSplineCurve.uniform'></a></p>
 
@@ -172,7 +176,9 @@ Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> 
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
+<p>Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
 <p><a name='H3DU.BSplineCurve.uniformKnots'></a></p>
 
@@ -192,7 +198,9 @@ Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If 
 
 <h4>Return Value</h4>
 
-<p>A uniform knot vector. (Type: Array.&lt;Number&gt;)</p>
+<p>A uniform knot vector. The first
+knot will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a></p>
 

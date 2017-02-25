@@ -29,7 +29,6 @@ H3DU._FrenetFrames = function(func) {
   for(var i = 0; i <= res; i++) {
     var t = i / res;
     var e0 = nextSample ? nextSample : func.evaluate(t);
-    var e01 = func.evaluate(i === res ? t - H3DU._FrenetFrames._EPSILON : t + H3DU._FrenetFrames._EPSILON);
     if(isClosed && i > 0) {
       var len = Math.sqrt(H3DU._FrenetFrames._distSq(e0, samples[i - 1]));
       totalLength += len;
@@ -37,14 +36,7 @@ H3DU._FrenetFrames = function(func) {
     }
     nextSample = i === res ? e0 : func.evaluate((i + 1) / res);
     samples.push(e0);
-    var tangent = H3DU.Math.vec3normInPlace(
-    H3DU.Math.vec3sub(e01, e0));
-    if(t === 1) {
-      // This is the endpoint.
-      // Since we evaluated backward in this case, the tangent
-      // will be backward; negate it here
-      H3DU.Math.vec3scaleInPlace(tangent, -1);
-    }
+    var tangent = H3DU._FrenetFrames._getTangent(func, t, e0);
     var normal;
     if(i > 0) {
       normal = H3DU.Math.vec3normInPlace(
@@ -84,6 +76,25 @@ H3DU._FrenetFrames = function(func) {
   }
 };
 /** @private */
+H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
+  "use strict";
+  var tangent;
+  if(typeof H3DU.CurveEval.findTangent !== "undefined" && H3DU.CurveEval.findTangent !== null) {
+    tangent = H3DU.CurveEval.findTangent(func, t);
+  } else {
+    var sampleAtNearbyPoint = func.evaluate(t === 1 ? t - H3DU._FrenetFrames._EPSILON :
+  t + H3DU._FrenetFrames._EPSILON);
+    tangent = H3DU.Math.vec3normInPlace(
+    H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
+    if(t === 1) {
+      // Since we evaluated backward in this case, the tangent
+      // will be backward; negate it here
+      H3DU.Math.vec3scaleInPlace(tangent, -1);
+    }
+  }
+  return H3DU.Math.vec3normInPlace(tangent);
+};
+/** @private */
 H3DU._FrenetFrames.normalFromTangent = function(tangent) {
   "use strict";
   return H3DU.Math.vec3normInPlace(H3DU.Math.vec3perp(tangent));
@@ -97,7 +108,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   var b, n, t;
   var val = [];
   var cache = false;
-  var i, e0, e01, normal, tangent, binormal;
+  var i, e0, normal, tangent, binormal;
   if(u >= 0 && u <= 1) {
     var index = u * (this.binormals.length - 1);
     if(Math.abs(index - Math.round(index)) < H3DU._FrenetFrames._EPSILON) {
@@ -115,9 +126,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
       this.cacheMisses = (this.cacheMisses || 0) + 1;
       index = Math.floor(index);
       e0 = sample;
-      e01 = this.func.evaluate(u + H3DU._FrenetFrames._EPSILON);
-      tangent = H3DU.Math.vec3normInPlace(
-    H3DU.Math.vec3sub(e01, e0));
+      tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
       normal = H3DU.Math.vec3normInPlace(
      H3DU.Math.vec3cross(this.binormals[index], tangent));
       binormal = H3DU.Math.vec3normInPlace(
@@ -136,9 +145,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
     }
     this.cacheMisses = (this.cacheMisses || 0) + 1;
     e0 = sample;
-    e01 = this.func.evaluate(u + H3DU._FrenetFrames._EPSILON);
-    tangent = H3DU.Math.vec3normInPlace(
-    H3DU.Math.vec3sub(e01, e0));
+    tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
     normal = H3DU._FrenetFrames.normalFromTangent(tangent);
     binormal = H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3cross(tangent, normal));
@@ -175,8 +182,7 @@ H3DU._FrenetFrames._distSq = function(a, b) {
   return dx * dx + dy * dy + dz * dz;
 };
 /**
- * Evaluator for a parametric surface in the form
- * of a tube extruded from a parametric curve.
+ * A [surface evaluator object]{@link H3DU.SurfaceEval.vector} for a tube extruded from a parametric curve.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
@@ -186,28 +192,17 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
  * @class
  * @alias H3DU.CurveTube
- * @param {Object} func An object that must contain a function
- * named "evaluate", which takes the following parameter:<ul>
- * <li><code>u</code> - A curve coordinate, generally from 0 to 1.
- * </ul>
- * The evaluator function returns a 3-element array: the first
- * element is the X coordinate of the curve's position, the second
- * element is the Y coordinate, and the third is the Z coordinate.
+ * @param {Object} func A [curve evaluator object]{@link H3DU.CurveEval.vector} that describes the 3-dimensional curve to extrude
+ * a tube from.
  * @param {Number} [thickness] Radius of the
  * extruded tube. If this parameter is null or omitted, the default is 0.125.
- * @param {Object} [sweptCurve] Object describing
- * a two-dimensional curve to serve as the cross section of the extruded shape,
- * corresponding to the V coordinate of the CurveTube's
- * "evaluate" method.<p>
- * If this parameter is null or omitted, uses a circular cross section
- * in which the V coordinate ranges from 0 through
- * 1. The curve object must contain a function
- * named "evaluate", with the same meaning as for the "func" parameter,
- * except the third element, if any, of the return value is ignored.<p>
- * The curve need not be closed.<p>
- * The cross section will generally have a radius of 1 unit; bigger
- * or smaller cross sections will affect the meaning of the "thickness"
- * parameter.
+ * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.CurveEval.vector} that
+ * describes a two-dimensional curve to serve as
+ * the cross section of the extruded shape. The curve need not be closed. If this parameter is null
+ * or omitted, uses a
+ * circular cross section in which the V coordinate ranges from 0 through
+ * 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections
+ * will affect the meaning of the "thickness" parameter.
  */
 H3DU.CurveTube = function(func, thickness, sweptCurve) {
   "use strict";

@@ -112,11 +112,11 @@ return mesh;
 }
 </code></pre>
 
-<p>In the HTML 3D Library, parametric surface objects define one method, <code>evaluate</code>,
+<p>In the HTML 3D Library, surface evaluator objects define a method, <code>evaluate</code>,
 which returns a 3D point given a U parameter and a V parameter. (By default, U and
 V each range from 0 through 1.)</p>
 
-<p>The following code is a very simple surface evaluator.</p>
+<p>The following code is a very simple surface evaluator object.</p>
 
 <pre><code>var evaluator = {
   &quot;evaluate&quot;:function(u, v){
@@ -185,7 +185,7 @@ and the API references for the <a href="http://peteroupc.github.io/html3dutil/H3
 
 <h2>Chaining Surface Functions</h2>
 
-<p>The technique of using evaluators is very flexible. In fact, you can chain evaluators,
+<p>The technique of using surface evaluator objects is very flexible. In fact, you can chain evaluators,
 using the output of one evaluator as the input of another evaluator. This can be used
 to transform the surface&#39;s points to new positions.</p>
 

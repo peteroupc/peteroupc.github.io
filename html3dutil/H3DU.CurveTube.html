@@ -10,8 +10,7 @@
 
 <h3>H3DU.CurveTube(func, [thickness], [sweptCurve])</h3>
 
-<p>Evaluator for a parametric surface in the form
-of a tube extruded from a parametric curve.</p>
+<p>A surface evaluator object for a tube extruded from a parametric curve.</p>
 
 <p>This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -28,17 +27,11 @@ the HTML 3D Library. Example:</p>
 
 <ul>
 <li><code>func</code> (Type: Object)<br>
-An object that must contain a function named &quot;evaluate&quot;, which takes the following parameter:<ul> <li><code>u</code> - A curve coordinate, generally from 0 to 1. </ul> The evaluator function returns a 3-element array: the first element is the X coordinate of the curve&#39;s position, the second element is the Y coordinate, and the third is the Z coordinate.</li>
+A curve evaluator object that describes the 3-dimensional curve to extrude a tube from.</li>
 <li><code>thickness</code> (Type: Number) (optional)<br>
 Radius of the extruded tube. If this parameter is null or omitted, the default is 0.125.</li>
-<li><p><code>sweptCurve</code> (Type: Object) (optional)<br>
-Object describing a two-dimensional curve to serve as the cross section of the extruded shape, corresponding to the V coordinate of the CurveTube&#39;s &quot;evaluate&quot; method.</p>
-
-<p>If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The curve object must contain a function named &quot;evaluate&quot;, with the same meaning as for the &quot;func&quot; parameter, except the third element, if any, of the return value is ignored.</p>
-
-<p>The curve need not be closed.</p>
-
-<p>The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the &quot;thickness&quot; parameter.</p></li>
+<li><code>sweptCurve</code> (Type: Object) (optional)<br>
+A curve evaluator object that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the &quot;thickness&quot; parameter.</li>
 </ul>
 
 <h3>Methods</h3>

@@ -10,7 +10,7 @@
 
 <h3>H3DU.BezierCurve(cp, [u1], [u2])</h3>
 
-<p>A parametric evaluator for B&eacute;zier curves.</p>
+<p>A curve evaluator object for a B&eacute;zier curve.</p>
 
 <p>A B&eacute;zier curve is defined by a series of control points, where
 the first and last control points define the endpoints of the curve, and
@@ -31,17 +31,65 @@ Ending point for the purpose of interpolation; it will correspond to 1. May be o
 <h3>Methods</h3>
 
 <ul>
+<li><a href="#H3DU.BezierCurve.fromCardinalSpline">.fromCardinalSpline</a><br>Creates an array of B&eacute;zier curves from the control points of a cardinal spline.</li>
+<li><a href="#H3DU.BezierCurve.fromHermiteSpline">.fromHermiteSpline</a><br>Creates an array of B&eacute;zier curves from the control points of a Hermite spline.</li>
 <li><a href="#H3DU.BezierCurve_H3DU.BezierCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
 in a B&eacute;zier curve.</li>
 <li><a href="#H3DU.BezierCurve_H3DU.BezierCurve_getPoints">getPoints</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.BezierCurve_H3DU.BezierCurve_split">split</a><br>Splits this B&eacute;zier curve into two.</li>
-<li><a href="#H3DU.BezierCurve_H3DU.BezierCurve_tangent">tangent</a><br>TODO: Not documented yet.</li>
-<li><p><a href="#H3DU.BezierCurve_H3DU.BezierCurve.fromHermiteCurve">H3DU.BezierCurve.fromHermiteCurve</a><br>Creates a B&eacute;zier curve from the control points of a Hermite curve.</p>
+<li><p><a href="#H3DU.BezierCurve_H3DU.BezierCurve_tangent">tangent</a><br>Finds the tangent (derivative) of
+this curve at the given point.</p>
+
+<p><a name='H3DU.BezierCurve.fromCardinalSpline'></a></p>
+
+<h3>H3DU.BezierCurve.fromCardinalSpline(curve, [tension], [u1], [u2])</h3></li>
+</ul>
+
+<p>Creates an array of B&eacute;zier curves from the control points of a cardinal spline.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.</li>
+<li><code>tension</code> (Type: Number) (optional)<br>
+A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).</li>
+<li><code>u1</code> (Type: Number) (optional)<br>
+Starting point for the purpose of interpolation; it will correspond to 0. May be omitted; default is 0.</li>
+<li><code>u2</code> (Type: Number) (optional)<br>
+Ending point for the purpose of interpolation; it will correspond to 1. May be omitted; default is 1.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A array of cubic B&eacute;zier curves describing the
+same path as the cardinal spline. (Type: <a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a>)</p>
+
+<p><a name='H3DU.BezierCurve.fromHermiteSpline'></a></p>
+
+<h3>H3DU.BezierCurve.fromHermiteSpline(curve, [u1], [u2])</h3>
+
+<p>Creates an array of B&eacute;zier curves from the control points of a Hermite spline.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the tangent vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
+<li><code>u1</code> (Type: Number) (optional)<br>
+Starting point for the purpose of interpolation; it will correspond to 0. May be omitted; default is 0.</li>
+<li><code>u2</code> (Type: Number) (optional)<br>
+Ending point for the purpose of interpolation; it will correspond to 1. May be omitted; default is 1.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A array of cubic B&eacute;zier curves describing the
+same path as the Hermite spline. (Type: <a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a>)</p>
 
 <p><a name='H3DU.BezierCurve_H3DU.BezierCurve_evaluate'></a></p>
 
-<h3>H3DU.BezierCurve#evaluate(u)</h3></li>
-</ul>
+<h3>H3DU.BezierCurve#evaluate(u)</h3>
 
 <p>Evaluates the curve function based on a point
 in a B&eacute;zier curve.</p>
@@ -76,7 +124,7 @@ points.push(curve.evaluate(i/10.0));
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>TODO: Not documented yet. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
 
 <p><a name='H3DU.BezierCurve_H3DU.BezierCurve_split'></a></p>
 
@@ -101,38 +149,20 @@ is the curve from that point to the end of the original curve. (Type: Array.&lt;
 
 <h3>H3DU.BezierCurve#tangent(u)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Finds the tangent (derivative) of
+this curve at the given point.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: *)</li>
+<li><code>u</code> (Type: Number)<br>
+Point on the curve to evaluate (generally within the range given in the constructor).</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
-
-<p><a name='H3DU.BezierCurve_H3DU.BezierCurve.fromHermiteCurve'></a></p>
-
-<h3>H3DU.BezierCurve#H3DU.BezierCurve.fromHermiteCurve(curve, [u1], [u2])</h3>
-
-<p>Creates a B&eacute;zier curve from the control points of a Hermite curve.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
-An array of four control points, each with the same number of elements. The first and second control points are the start and end points of the Hermite curve, respectively; the third control point is the tangent vector (derivative) at the start point; and the fourth control point is the tangent vector at the end point.</li>
-<li><code>u1</code> (Type: Number) (optional)<br>
-Starting point for the purpose of interpolation; it will correspond to 0. May be omitted; default is 0.</li>
-<li><code>u2</code> (Type: Number) (optional)<br>
-Ending point for the purpose of interpolation; it will correspond to 1. May be omitted; default is 1.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A B&eacute;zier curve describing the same path as the Hermite curve. (Type: <a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a>)</p>
+<p>An array giving the tangent at the given point.
+It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
