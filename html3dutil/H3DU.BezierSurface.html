@@ -21,27 +21,49 @@ necessarily cross the surface.</p>
 
 <ul>
 <li><code>cp</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
-An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the V axis. For example, a degree-3 (cubic) surface along the V axis contains 4 control points, one in each control point array. A degree of 1 on both the U and V axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the U axis. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
+An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the V axis. For example, a degree-3 (cubic) surface along the V axis contains 4 control points, one in each control point array. A degree of 1 on both the U and V axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the U axis. <li>The number of elements in the first control point&#39;s represents the number of elements in all the control points. </ul></li>
 <li><code>u1</code> (Type: Number) (optional)<br>
-Starting point for the purpose of interpolation along the U-axis; it will correspond to 0. May be omitted; default is 0.</li>
+Starting point for the purpose of interpolation along the U axis; it will correspond to 0. May be omitted; default is 0.</li>
 <li><code>u2</code> (Type: Number) (optional)<br>
-Ending point for the purpose of interpolation along the U-axis; it will correspond to 1. May be omitted; default is 1.</li>
+Ending point for the purpose of interpolation along the U axis; it will correspond to 1. May be omitted; default is 1.</li>
 <li><code>v1</code> (Type: Number) (optional)<br>
-Starting point for the purpose of interpolation along the V-axis; it will correspond to 0. May be omitted; default is 0.</li>
+Starting point for the purpose of interpolation along the V axis; it will correspond to 0. May be omitted; default is 0.</li>
 <li><code>v2</code> (Type: Number) (optional)<br>
-Ending point for the purpose of interpolation along the V-axis; it will correspond to 1. May be omitted; default is 1.</li>
+Ending point for the purpose of interpolation along the V axis; it will correspond to 1. May be omitted; default is 1.</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><p><a href="#H3DU.BezierSurface_H3DU.BezierSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
-in a B&eacute;zier surface.</p>
+<li><a href="#H3DU.BezierSurface_H3DU.BezierSurface_bitangent">bitangent</a><br>Finds the bitangent vector at the given point on this surface.</li>
+<li><a href="#H3DU.BezierSurface_H3DU.BezierSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
+in a B&eacute;zier surface.</li>
+<li><p><a href="#H3DU.BezierSurface_H3DU.BezierSurface_tangent">tangent</a><br>Finds the tangent vector at the given point on this surface.</p>
+
+<p><a name='H3DU.BezierSurface_H3DU.BezierSurface_bitangent'></a></p>
+
+<h3>H3DU.BezierSurface#bitangent(u, v)</h3></li>
+</ul>
+
+<p>Finds the bitangent vector at the given point on this surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the surface to evaluate (generally within the range given in the constructor).</li>
+<li><code>v</code> (Type: Number)<br>
+V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of the bitangent vector at the given U and V
+coordinates. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BezierSurface_H3DU.BezierSurface_evaluate'></a></p>
 
-<h3>H3DU.BezierSurface#evaluate(u, v)</h3></li>
-</ul>
+<h3>H3DU.BezierSurface#evaluate(u, v)</h3>
 
 <p>Evaluates the surface function based on a point
 in a B&eacute;zier surface.</p>
@@ -50,16 +72,35 @@ in a B&eacute;zier surface.</p>
 
 <ul>
 <li><code>u</code> (Type: Number)<br>
-U-coordinate of the surface to evaluate (generally within the range given in the constructor).</li>
+U coordinate of the surface to evaluate (generally within the range given in the constructor).</li>
 <li><code>v</code> (Type: Number)<br>
-V-coordinate of the surface to evaluate.</li>
+V coordinate of the surface to evaluate.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>An array of the result of
-the evaluation. Its length will be equal to the
-length of a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+the evaluation. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.BezierSurface_H3DU.BezierSurface_tangent'></a></p>
+
+<h3>H3DU.BezierSurface#tangent(u, v)</h3>
+
+<p>Finds the tangent vector at the given point on this surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the surface to evaluate (generally within the range given in the constructor).</li>
+<li><code>v</code> (Type: Number)<br>
+V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of the tangent vector at the given U and V
+coordinates. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

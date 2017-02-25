@@ -20,7 +20,7 @@ An array of control points. Each control point is an array with the same length 
 <li><p><code>knots</code> (Type: Array.&lt;Number&gt;)<br>
 Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.</p>
 
-<p>The length of this parameter minus 1, minus the number of control points, represents the degree of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains 4 more knots than the number of control points. A degree of 1 results in straight line segments.</p>
+<p>The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains 4 more knots than the number of control points. A degree of 1 results in straight line segments.</p>
 
 <p>The knot vector must be a monotonically nondecreasing sequence and the first knot must not equal the last.</p>
 
@@ -49,11 +49,14 @@ weight.</li>
 
 <ul>
 <li><a href="#H3DU.BSplineCurve.clamped">.clamped</a><br>Creates a B-spline curve with uniform knots, except that
-the curve will start and end at the first and last control points.</li>
+the curve will start and end at the first and last control points and will
+be tangent to the line between the first and second control points
+and to the line between the next-to-last and last control points.</li>
 <li><a href="#H3DU.BSplineCurve.clampedKnots">.clampedKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
-except that with the knot vector, the curve will start and end at the
-first and last control points.</li>
+except that with the knot vector, curve will start and end at the first and last control points and will
+be tangent to the line between the first and second control points
+and to the line between the next-to-last and last control points.</li>
 <li><a href="#H3DU.BSplineCurve.uniform">.uniform</a><br>Creates a B-spline curve with uniform knots.</li>
 <li><a href="#H3DU.BSplineCurve.uniformKnots">.uniformKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
@@ -108,7 +111,9 @@ method will be in homogeneous coordinates.</p>
 <h3>H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])</h3>
 
 <p>Creates a B-spline curve with uniform knots, except that
-the curve will start and end at the first and last control points.</p>
+the curve will start and end at the first and last control points and will
+be tangent to the line between the first and second control points
+and to the line between the next-to-last and last control points.</p>
 
 <h4>Parameters</h4>
 
@@ -131,8 +136,9 @@ Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> 
 
 <p>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
-except that with the knot vector, the curve will start and end at the
-first and last control points.</p>
+except that with the knot vector, curve will start and end at the first and last control points and will
+be tangent to the line between the first and second control points
+and to the line between the next-to-last and last control points.</p>
 
 <h4>Parameters</h4>
 
@@ -140,7 +146,7 @@ first and last control points.</p>
 <li><code>controlPoints</code> (Type: Number)<br>
 Number of control points the curve will have.</li>
 <li><code>degree</code> (Type: Number)<br>
-Degree of the curve.</li>
+Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -181,7 +187,7 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 <li><code>controlPoints</code> (Type: Number)<br>
 Number of control points the curve will have.</li>
 <li><code>degree</code> (Type: Number)<br>
-Degree of the curve.</li>
+Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 </ul>
 
 <h4>Return Value</h4>

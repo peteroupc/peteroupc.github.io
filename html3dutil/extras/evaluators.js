@@ -32,10 +32,10 @@
  * element is the Y coordinate (corresponding to
  * radius).<p>
  * If the curve function draws a curve that goes both above and below the axis of rotation, such
- * as a circle or ellipse, the V-coordinates given in _minval_ and _maxval_ must
+ * as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must
  * restrict the curve definition to no more than half of the curve.
- * @param {Number} minval Smallest V-coordinate.
- * @param {Number} maxval Largest V-coordinate. If _minval_ is greater than
+ * @param {Number} minval Smallest V coordinate.
+ * @param {Number} maxval Largest V coordinate. If _minval_ is greater than
  * _maxval_, both values will be swapped.
  * @param {Array<Number>} [axis] Axis of rotation, around which the curve
  * will be rotated to generate the surface of revolution. If null or omitted, the positive
@@ -237,7 +237,7 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   this.inner = innerRadius;
   this.distFromInner = distFromInnerCenter;
  /**
-  * Generates a point on the curve from the given u coordinate.
+  * Generates a point on the curve from the given U coordinate.
   * @function
   * @param {Number} u U coordinate.
   * @returns {Array<Number>} A 3-element array specifying a 3D point.
@@ -299,7 +299,7 @@ H3DU.Trochoid = function(radius, distFromCenter) {
   this.inner = radius;
   this.distFromCenter = distFromCenter;
  /**
-  * Generates a point on the curve from the given u coordinate.
+  * Generates a point on the curve from the given U coordinate.
   * @function
   * @param {Number} u U coordinate.
   * @returns {Array<Number>} A 3-element array specifying a 3D point.
@@ -343,7 +343,7 @@ H3DU.Epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   this.inner = innerRadius;
   this.distFromInner = distFromInnerCenter;
  /**
-  * Generates a point on the curve from the given u coordinate.
+  * Generates a point on the curve from the given U coordinate.
   * @function
   * @param {Number} u U coordinate.
   * @returns {Array<Number>} A 3-element array specifying a 3D point.

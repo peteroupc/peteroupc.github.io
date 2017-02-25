@@ -31,8 +31,12 @@ Ending point for the purpose of interpolation; it will correspond to 1. May be o
 <h3>Methods</h3>
 
 <ul>
-<li><p><a href="#H3DU.BezierCurve_H3DU.BezierCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
-in a B&eacute;zier curve.</p>
+<li><a href="#H3DU.BezierCurve_H3DU.BezierCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
+in a B&eacute;zier curve.</li>
+<li><a href="#H3DU.BezierCurve_H3DU.BezierCurve_getPoints">getPoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.BezierCurve_H3DU.BezierCurve_split">split</a><br>Splits this B&eacute;zier curve into two.</li>
+<li><a href="#H3DU.BezierCurve_H3DU.BezierCurve_tangent">tangent</a><br>TODO: Not documented yet.</li>
+<li><p><a href="#H3DU.BezierCurve_H3DU.BezierCurve.fromHermiteCurve">H3DU.BezierCurve.fromHermiteCurve</a><br>Creates a B&eacute;zier curve from the control points of a Hermite curve.</p>
 
 <p><a name='H3DU.BezierCurve_H3DU.BezierCurve_evaluate'></a></p>
 
@@ -52,8 +56,7 @@ Point on the curve to evaluate (generally within the range given in the construc
 <h4>Return Value</h4>
 
 <p>An array of the result of
-the evaluation. Its length will be equal to the
-length of a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+the evaluation. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 
 <h4>Example</h4>
 
@@ -64,6 +67,72 @@ for(var i=0;i&lt;=10;i++) {
 points.push(curve.evaluate(i/10.0));
 }
 </code></pre>
+
+<p><a name='H3DU.BezierCurve_H3DU.BezierCurve_getPoints'></a></p>
+
+<h3>H3DU.BezierCurve#getPoints()</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
+<p><a name='H3DU.BezierCurve_H3DU.BezierCurve_split'></a></p>
+
+<h3>H3DU.BezierCurve#split(u)</h3>
+
+<p>Splits this B&eacute;zier curve into two.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the point in the curve to split it in two (generally within the range given in the constructor).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of two B&eacute;zier curves: the
+first is the curve from the start of the original curve to the point given in &quot;u&quot;, and the second
+is the curve from that point to the end of the original curve. (Type: Array.&lt;BezierCurve&gt;)</p>
+
+<p><a name='H3DU.BezierCurve_H3DU.BezierCurve_tangent'></a></p>
+
+<h3>H3DU.BezierCurve#tangent(u)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
+<p><a name='H3DU.BezierCurve_H3DU.BezierCurve.fromHermiteCurve'></a></p>
+
+<h3>H3DU.BezierCurve#H3DU.BezierCurve.fromHermiteCurve(curve, [u1], [u2])</h3>
+
+<p>Creates a B&eacute;zier curve from the control points of a Hermite curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of four control points, each with the same number of elements. The first and second control points are the start and end points of the Hermite curve, respectively; the third control point is the tangent vector (derivative) at the start point; and the fourth control point is the tangent vector at the end point.</li>
+<li><code>u1</code> (Type: Number) (optional)<br>
+Starting point for the purpose of interpolation; it will correspond to 0. May be omitted; default is 0.</li>
+<li><code>u2</code> (Type: Number) (optional)<br>
+Ending point for the purpose of interpolation; it will correspond to 1. May be omitted; default is 1.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A B&eacute;zier curve describing the same path as the Hermite curve. (Type: <a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a>)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

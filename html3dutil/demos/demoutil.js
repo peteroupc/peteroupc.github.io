@@ -219,9 +219,9 @@ function makeMesh(func, resolutionU, resolutionV) {
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
     // Evaluate the surface and generate a triangle
-    // mesh, using resolution+1 different U-coordinates ranging
+    // mesh, using resolution+1 different U coordinates ranging
     // from 0 to 1, and resolution+1
-    // different V-coordinates ranging from 0 to 1
+    // different V coordinates ranging from 0 to 1
     // Instead of H3DU.Mesh.TRIANGLES, we could use
     // H3DU.Mesh.LINES to create a wireframe mesh,
     // or H3DU.Mesh.POINTS to create a point mesh.

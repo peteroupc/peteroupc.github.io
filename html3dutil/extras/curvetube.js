@@ -218,7 +218,7 @@ H3DU.CurveTube = function(func, thickness, sweptCurve) {
 };
 
 /**
- * Generates a point on the extruded tube from the given u and v coordinates.
+ * Generates a point on the extruded tube from the given u and V coordinates.
  * @param {Number} u U coordinate. This will run the length of the curve.
  * @param {Number} v V coordinate. This will sweep around the extruded
  * tube.
