@@ -76,7 +76,6 @@ function CustomCurve(x, y, z, minu, maxu) {
   var ye = getExpression(y);
   var ze = getExpression(z);
   var code = "" +
-  "u=" + ranges[0] + "+u*" + (ranges[1] - ranges[0]) + ";\n" +
   "return [" +
   " " + xe.toJSString() + "," +
   " " + ye.toJSString() + "," +
@@ -84,9 +83,16 @@ function CustomCurve(x, y, z, minu, maxu) {
   this.getCode = function() {
   // TODO: Write gradient here
     return "var evaluator=new H3DU.CurveEval().vertex({\n" +
-   "\"evaluate\":function(u) {\n" + code + "}})\n";
+   "\"evaluate\":function(u) {\n" + code + "},\n" +
+   "\"endpoints\":function(u) {\n return [" + ranges[0] + "," + ranges[1] + "},\n" +
+   "})\n";
   };
+  this.rangeMax = ranges[1];
+  this.rangeMin = ranges[0];
   this.evaluate = null;
+  this.endpoints = function() {
+    return [this.rangeMin, this.rangeMax];
+  };
   try {
     // NOTE: The code variable was generated from parsed and
     // validated expressions, with a limited set of supported
@@ -102,13 +108,11 @@ function CustomCurve(x, y, z, minu, maxu) {
 var shapeGroup = new H3DU.ShapeGroup();
 var allsettings = {
   "current":0,
-  "custom-x":"cos(v)*cos(u)",
-  "custom-y":"sin(v)*cos(u)",
+  "custom-x":"cos(u)",
+  "custom-y":"cos(u)",
   "custom-z":"sin(u)",
   "custom-minu":"-pi/2",
-  "custom-maxu":"pi/2",
-  "custom-minv":"pi",
-  "custom-maxv":"-pi"
+  "custom-maxu":"pi/2"
 };
 
 function updateMesh() {
@@ -120,9 +124,7 @@ function updateMesh() {
       allsettings["custom-y"],
       allsettings["custom-z"],
       allsettings["custom-minu"],
-      allsettings["custom-maxu"],
-      allsettings["custom-minv"],
-      allsettings["custom-maxv"]
+      allsettings["custom-maxu"]
     );
     if(!cs.evaluate)return new H3DU.Mesh();
     document.getElementById("sourceCode").value = cs.getCode();

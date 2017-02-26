@@ -77,6 +77,9 @@ function NormalGenWrapper2(f) {
   this.bitangent = function(u, v) {
     return H3DU.SurfaceEval.findBitangent(this.f, u, v);
   };
+  this.endpoints = function() {
+    return H3DU.SurfaceEval.findEndPoints();
+  };
 }
 
 /* exported makeTubeFromPath */

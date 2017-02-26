@@ -73,6 +73,10 @@ function CustomSurface(x, y, z, minu, maxu, minv, maxv) {
   var xe = getExpression(x);
   var ye = getExpression(y);
   var ze = getExpression(z);
+  this.ranges = ranges.slice(0, 4);
+  this.endpoints = function() {
+    return this.ranges.slice(0, 4);
+  };
   var code = "" +
   "u=" + ranges[0] + "+u*" + (ranges[1] - ranges[0]) + ";\n" +
   "v=" + ranges[2] + "+v*" + (ranges[3] - ranges[2]) + ";\n" +
@@ -91,7 +95,9 @@ function CustomSurface(x, y, z, minu, maxu, minv, maxv) {
   this.getCode = function() {
     return "var evaluator=new H3DU.SurfaceEval().vertex({\n" +
     "\"evaluate\":function(u, v) {\n" + code + "},\n" +
-    "\"gradient\":function(u, v) {\n" + normalCode + "}})\n";
+    "\"gradient\":function(u, v) {\n" + normalCode + "},\n" +
+    "\"endpoints\":function() {\n return [" + ranges[0] + "," + ranges[1] +
+       "," + ranges[2] + "," + ranges[3] + "]; }})\n";
   };
   this.evaluate = null;
   try {

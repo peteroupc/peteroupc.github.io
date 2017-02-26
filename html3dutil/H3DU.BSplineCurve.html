@@ -37,12 +37,15 @@ Bits for defining input and controlling output. Zero or more of H3DU.BSplineCurv
 <li><a href="#H3DU.BSplineCurve.DIVIDE_BIT">.DIVIDE_BIT</a><br>Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
 coordinate.</li>
-<li><a href="#H3DU.BSplineCurve.HOMOGENEOUS_BIT">.HOMOGENEOUS_BIT</a><br>Indicates that each other coordinate of each control point
-was premultiplied by the last coordinate of the point, that is,
-each control point is in homogeneous coordinates.</li>
-<li><a href="#H3DU.BSplineCurve.WEIGHTED_BIT">.WEIGHTED_BIT</a><br>Indicates whether the last coordinate of each control point is a
-weight.</li>
-<li><a href="#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS">.WEIGHTED_DIVIDE_BITS</a><br>Combination of WEIGHTED_BIT and DIVIDE_BIT.</li>
+<li><a href="#H3DU.BSplineCurve.HOMOGENEOUS_BIT">.HOMOGENEOUS_BIT</a><br><b>Deprecated: This bit is deprecated because the B-spline
+equation works the same whether control points are in conventional
+coordinates or in homogeneous coordinates.</b></li>
+<li><a href="#H3DU.BSplineCurve.WEIGHTED_BIT">.WEIGHTED_BIT</a><br><b>Deprecated: Support for this control point format may be dropped
+in the future. Instead of using this bit, supply control points in homogeneous
+coordinates (where each other coordinate is premultiplied by the last)
+and use <code>DIVIDE_BIT</code> to convert the
+results to conventional coordinates.</b></li>
+<li><a href="#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS">.WEIGHTED_DIVIDE_BITS</a><br><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b></li>
 </ul>
 
 <h3>Methods</h3>
@@ -62,6 +65,7 @@ and to the line between the next-to-last and last control points.</li>
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 <li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
 in a B-spline curve.</li>
+<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_tangent">tangent</a><br>TODO: Not documented yet.</li>
 </ul>
 
 <p><a id='H3DU.BSplineCurve.DIVIDE_BIT'></a></p>
@@ -70,15 +74,22 @@ in a B-spline curve.</li>
 
 <p>Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
-coordinate. This is used with WEIGHTED_BIT to convert
+coordinate. This is used to convert
 homogeneous coordinates to conventional coordinates.
 If this bit is set, the length of each control point must be at least 2.</p>
+
+<p>A B-spline curve that has control points whose last coordinate is other than
+1 is a <i>rational</i> B-spline curve.</p>
 
 <p>Default Value: <code>2</code></p>
 
 <p><a id='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a></p>
 
 <h3>H3DU.BSplineCurve.HOMOGENEOUS_BIT (constant)</h3>
+
+<p><b>Deprecated: This bit is deprecated because the B-spline
+equation works the same whether control points are in conventional
+coordinates or in homogeneous coordinates.</b></p>
 
 <p>Indicates that each other coordinate of each control point
 was premultiplied by the last coordinate of the point, that is,
@@ -91,11 +102,16 @@ Only used with WEIGHTED_BIT.</p>
 
 <h3>H3DU.BSplineCurve.WEIGHTED_BIT (constant)</h3>
 
+<p><b>Deprecated: Support for this control point format may be dropped
+in the future. Instead of using this bit, supply control points in homogeneous
+coordinates (where each other coordinate is premultiplied by the last)
+and use <code>DIVIDE_BIT</code> to convert the
+results to conventional coordinates.</b></p>
+
 <p>Indicates whether the last coordinate of each control point is a
 weight. If some of the weights differ, the curve is
 considered a <i>rational</i> B-spline curve.
-If this bit is set, the length of each control point must be at least 2,
-and points returned by the curve&#39;s <code>evaluate</code>
+If this bit is set, points returned by the curve&#39;s <code>evaluate</code>
 method will be in homogeneous coordinates.</p>
 
 <p>Default Value: <code>1</code></p>
@@ -103,6 +119,8 @@ method will be in homogeneous coordinates.</p>
 <p><a id='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a></p>
 
 <h3>H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS (constant)</h3>
+
+<p><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b></p>
 
 <p>Combination of WEIGHTED_BIT and DIVIDE_BIT.</p>
 
@@ -230,6 +248,22 @@ for(var i=0;i&lt;=10;i++) {
 points.push(curve.evaluate(i/10.0));
 }
 </code></pre>
+
+<p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_tangent'></a></p>
+
+<h3>H3DU.BSplineCurve#tangent(u)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

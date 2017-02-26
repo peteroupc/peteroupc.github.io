@@ -23,11 +23,12 @@ H3DU._FrenetFrames = function(func) {
   var totalLength = 0;
   var samples = [];
   var lengths = [];
+  this.endpoints = H3DU._FrenetFrames.getEndPoints();
   if(H3DU._FrenetFrames._distSq(func.evaluate(0), lastSample) < H3DU._FrenetFrames._EPSILON) {
     isClosed = true;
   }
   for(var i = 0; i <= res; i++) {
-    var t = i / res;
+    var t = this.endpoints[0] + (this.endpoints[1] - this.endpoints[0]) * (i / res);
     var e0 = nextSample ? nextSample : func.evaluate(t);
     if(isClosed && i > 0) {
       var len = Math.sqrt(H3DU._FrenetFrames._distSq(e0, samples[i - 1]));
@@ -76,17 +77,34 @@ H3DU._FrenetFrames = function(func) {
   }
 };
 /** @private */
+H3DU._FrenetFrames.getEndPoints = function(func) {
+  "use strict";
+  if(typeof H3DU.CurveEval.findEndPoints !== "undefined" && H3DU.CurveEval.findEndPoints !== null) {
+    return H3DU.CurveEval.findEndPoints();
+  } else if(typeof func.endpoints !== "undefined" && func.endpoints !== null) {
+    return func.endpoints();
+  } else {
+    return [0, 1];
+  }
+};
+/** @private */
 H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
   "use strict";
   var tangent;
   if(typeof H3DU.CurveEval.findTangent !== "undefined" && H3DU.CurveEval.findTangent !== null) {
     tangent = H3DU.CurveEval.findTangent(func, t);
   } else {
-    var sampleAtNearbyPoint = func.evaluate(t === 1 ? t - H3DU._FrenetFrames._EPSILON :
-  t + H3DU._FrenetFrames._EPSILON);
+    var direction = t === 1 ? -1 : 1;
+    var sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._FrenetFrames._EPSILON);
     tangent = H3DU.Math.vec3normInPlace(
     H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
-    if(t === 1) {
+    if(tangent[0] === 0 && tangent[1] === 0 && tangent[2] === 0) {
+      direction = -direction;
+      sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._FrenetFrames._EPSILON);
+      tangent = H3DU.Math.vec3normInPlace(
+            H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
+    }
+    if(direction < 0) {
       // Since we evaluated backward in this case, the tangent
       // will be backward; negate it here
       H3DU.Math.vec3scaleInPlace(tangent, -1);
@@ -104,13 +122,14 @@ H3DU._FrenetFrames._EPSILON = 0.000001;
 /** @private */
 H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   "use strict";
+  var uNorm = (u - this.endpoints[0]) * 1.0 / (this.endpoints[1] - this.endpoints[0]);
   var sample = this.func.evaluate(u);
   var b, n, t;
   var val = [];
   var cache = false;
   var i, e0, normal, tangent, binormal;
-  if(u >= 0 && u <= 1) {
-    var index = u * (this.binormals.length - 1);
+  if(uNorm >= 0 && uNorm <= 1) {
+    var index = uNorm * (this.binormals.length - 1);
     if(Math.abs(index - Math.round(index)) < H3DU._FrenetFrames._EPSILON) {
       index = Math.round(index);
       b = this.binormals[index];
@@ -119,11 +138,11 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
     } else {
       for(i = 0; i < this.vectorsCache.length; i += 2) {
         if(this.vectorsCache[i] === u) {
-          this.cacheHits = (this.cacheHits || 0) + 1;
+          // this.cacheHits = (this.cacheHits || 0) + 1;
           return this.vectorsCache[i + 1];
         }
       }
-      this.cacheMisses = (this.cacheMisses || 0) + 1;
+      // this.cacheMisses = (this.cacheMisses || 0) + 1;
       index = Math.floor(index);
       e0 = sample;
       tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
@@ -139,11 +158,11 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   } else {
     for(i = 0; i < this.vectorsCache.length; i += 2) {
       if(this.vectorsCache[i] === u) {
-        this.cacheHits = (this.cacheHits || 0) + 1;
+        // this.cacheHits = (this.cacheHits || 0) + 1;
         return this.vectorsCache[i + 1];
       }
     }
-    this.cacheMisses = (this.cacheMisses || 0) + 1;
+    // this.cacheMisses = (this.cacheMisses || 0) + 1;
     e0 = sample;
     tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
     normal = H3DU._FrenetFrames.normalFromTangent(tangent);
@@ -182,7 +201,7 @@ H3DU._FrenetFrames._distSq = function(a, b) {
   return dx * dx + dy * dy + dz * dz;
 };
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval.vector} for a tube extruded from a parametric curve.
+ * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a tube extruded from a parametric curve.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
@@ -192,11 +211,11 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
  * @class
  * @alias H3DU.CurveTube
- * @param {Object} func A [curve evaluator object]{@link H3DU.CurveEval.vector} that describes the 3-dimensional curve to extrude
+ * @param {Object} func A [curve evaluator object]{@link H3DU.CurveEval#vertex} that describes the 3-dimensional curve to extrude
  * a tube from.
  * @param {Number} [thickness] Radius of the
  * extruded tube. If this parameter is null or omitted, the default is 0.125.
- * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.CurveEval.vector} that
+ * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.CurveEval#vertex} that
  * describes a two-dimensional curve to serve as
  * the cross section of the extruded shape. The curve need not be closed. If this parameter is null
  * or omitted, uses a
@@ -211,7 +230,21 @@ H3DU.CurveTube = function(func, thickness, sweptCurve) {
   this.func = func;
   this.tangentFinder = new H3DU._FrenetFrames(func);
 };
-
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! H3DU.CurveTube#
+ */
+H3DU.CurveTube.prototype.endpoints = function() {
+  "use strict";
+  var ep = H3DU._FrenetFrames.getEndPoints(this.func);
+  if(typeof this.sweptCurve !== "undefined" && this.sweptCurve !== null) {
+    var sp = H3DU._FrenetFrames.getEndPoints(this.sweptCurve);
+    return [ep[0], ep[1], sp[0], sp[1]];
+  } else {
+    return [ep[0], ep[1], 0, H3DU.Math.PiTimes2];
+  }
+};
 /**
  * Generates a point on the extruded tube from the given u and V coordinates.
  * @param {Number} u U coordinate. This will run the length of the curve.
@@ -235,9 +268,8 @@ H3DU.CurveTube.prototype.evaluate = function(u, v) {
     sy = sampleY + (-basisVectors[1] * t1 + basisVectors[4] * t2) * this.thickness;
     sz = sampleZ + (-basisVectors[2] * t1 + basisVectors[5] * t2) * this.thickness;
   } else {
-    var vt = H3DU.Math.PiTimes2 * v;
-    t1 = Math.cos(vt);
-    t2 = vt >= 0 && vt < 6.283185307179586 ? vt <= 3.141592653589793 ? Math.sqrt(1.0 - t1 * t1) : -Math.sqrt(1.0 - t1 * t1) : Math.sin(vt);
+    t1 = Math.cos(v);
+    t2 = v >= 0 && v < 6.283185307179586 ? v <= 3.141592653589793 ? Math.sqrt(1.0 - t1 * t1) : -Math.sqrt(1.0 - t1 * t1) : Math.sin(v);
     sx = sampleX + (-basisVectors[0] * t1 + basisVectors[3] * t2) * this.thickness;
     sy = sampleY + (-basisVectors[1] * t1 + basisVectors[4] * t2) * this.thickness;
     sz = sampleZ + (-basisVectors[2] * t1 + basisVectors[5] * t2) * this.thickness;

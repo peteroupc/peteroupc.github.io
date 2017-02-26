@@ -8,7 +8,6 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../extras/evaluators.js"></script>
 <script type="text/javascript" src="../extras/camera.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
-<script type="text/javascript" src="extras.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
 </head>
 <body>
@@ -29,10 +28,43 @@ canvas { width:100%; height:100%; overflow: hidden; }
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-if(typeof Math.sign === "undefined") {
-  Math.sign = function(x) {
-    "use strict";
-    return x < 0 ? -1 : x === 0 ? 0 : 1;
+/**
+ * A curve evaluator object that calculates a knot in the form of the Fourier series<p>
+ * <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).<p>
+ * @param {Array<Array<Number>>} a The cosine coefficients.
+ * @param {Array<Array<Number>>} b The sine coefficients.
+ */
+/* exported FourierKnot */
+function FourierKnot(a, b) {
+  "use strict";
+  this.a = a; // Cosine coefficients
+  this.b = b; // Sine coefficients
+  this.idx = 0;
+  if(this.a.length !== this.b.length) {
+    throw new Error("a and b must be the same length");
+  }
+  this.endpoints = function() {
+    return [0, H3DU.Math.PITimes2];
+  };
+  this.evaluate = function(u) {
+    var ret = [0, 0, 0];
+  // var angleStep=H3DU.Math.PiTimes2/(this.a.length);
+    var cosStep = Math.cos(u);
+    var sinStep = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(u);
+    var c = sinStep;
+    var s = cosStep;
+    for(var i = 0; i < this.a.length; i++) {
+      var ai = this.a[i];
+      var bi = this.b[i];
+      ret[0] += c * ai[0] + s * bi[0];
+      ret[1] += c * ai[1] + s * bi[1];
+      ret[2] += c * ai[2] + s * bi[2];
+      var ts = cosStep * c + sinStep * s;
+      var tc = cosStep * s - sinStep * c;
+      c = ts;
+      s = tc;
+    }
+    return ret;
   };
 }
 
@@ -45,17 +77,10 @@ var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
   this.n = typeof n === "undefined" || n === null ? 1 : n;
  // exponent for the sines and cosines in V-axis
   this.m = typeof m === "undefined" || m === null ? 1 : m;
+  this.endpoints = function() {
+    return [-Math.PI / 2, Math.PI / 2, -Math.PI, Math.PI];
+  };
   this.evaluate = function(u, v) {
-    u = 1 - u;
-    if(u === 1) {
-      u = Math.PI / 2;
-    } else {
-      u *= Math.PI;
-      u -= Math.PI / 2;
-    }
-    if(v === 1)v = 0;
-    v *= H3DU.Math.PiTimes2;
-    v -= Math.PI;
     var cosu = Superellipsoid.cospow(u, this.n);
     return [
       Superellipsoid.cospow(v, this.m) * cosu * this.xRadius,
@@ -68,12 +93,12 @@ var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
 Superellipsoid.sinpow = function(x, n) {
   "use strict";
   var r = Math.sin(x);
-  return Math.sign(r) * Math.pow(Math.abs(r), n);
+  return (r > 0 ? 1 : -1) * Math.pow(Math.abs(r), n);
 };
 Superellipsoid.cospow = function(x, n) {
   "use strict";
   var r = Math.cos(x);
-  return Math.sign(r) * Math.pow(Math.abs(r), n);
+  return (r > 0 ? 1 : -1) * Math.pow(Math.abs(r), n);
 };
 
 var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
@@ -85,12 +110,10 @@ var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
   this.n = typeof n === "undefined" || n === null ? 1 : n;
  // exponent for the sines and cosines in V-axis
   this.m = typeof m === "undefined" || m === null ? 1 : m;
+  this.endpoints = function() {
+    return [0, H3DU.Math.PiTimes2, 0, H3DU.Math.PiTimes2];
+  };
   this.evaluate = function(u, v) {
-    u = 1 - u;
-    if(u === 1)u = 0;
-    u *= H3DU.Math.PiTimes2;
-    if(v === 1)v = 0;
-    v *= H3DU.Math.PiTimes2;
     var cosu = Superellipsoid.cospow(u, this.n);
     return [
       Superellipsoid.cospow(v, this.m) * (cosu * this.innerRadius + this.xRadius),
@@ -102,9 +125,10 @@ var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
 
 var KleinBottle = function() {
   "use strict";
+  this.endpoints = function() {
+    return [0, H3DU.Math.PiTimes2, 0, H3DU.Math.PiTimes2];
+  };
   this.evaluate = function(u, v) {
-    u *= H3DU.Math.PiTimes2;
-    v *= H3DU.Math.PiTimes2;
     var x, y, z;
     var cosu = Math.cos(u);
     var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
@@ -114,7 +138,7 @@ var KleinBottle = function() {
       x = 3 * cosu * (1 + sinu) + 2 * (1 - cosu / 2) * cosu * cosv;
       z = -8 * sinu - 2 * (1 - cosu / 2) * sinu * cosv;
     } else {
-      x = 3 * cosu * (1 + sinu) + 2 * (1 - cosu / 2) * Math.cos(v + Math.PI);
+      x = 3 * cosu * (1 + sinu) + 2 * (1 - cosu / 2) * ((cosv * -1.0));
       z = -8 * sinu;
     }
     y = -2 * (1 - cosu / 2) * sinv;
@@ -127,11 +151,10 @@ var MoebiusLikeStrip = function(maj, a, b) {
   this.maj = typeof maj === "undefined" || maj === null ? 1.25 : maj;
   this.a = typeof a === "undefined" || a === null ? 0.125 : a;
   this.b = typeof b === "undefined" || b === null ? 0.5 : b;
+  this.endpoints = function() {
+    return [0, Math.PI, 0, H3DU.Math.PiTimes2];
+  };
   this.evaluate = function(u, v) {
-    u *= Math.PI;
-    if(v === 1)v = 0;
-    v *= H3DU.Math.PiTimes2;
-    u = -u;
     var x, y, z;
     var cosu = Math.cos(u);
     var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
@@ -139,8 +162,9 @@ var MoebiusLikeStrip = function(maj, a, b) {
     var sinv = v >= 0 && v < 6.283185307179586 ? v <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v);
     x = this.a * cosv * cosu - this.b * sinv * sinu;
     z = this.a * cosv * sinu + this.b * sinv * cosu;
-    var cosu2 = Math.cos(u * 2);
-    var sinu2 = u * 2 >= 0 && u * 2 < 6.283185307179586 ? u * 2 <= 3.141592653589793 ? Math.sqrt(1.0 - cosu2 * cosu2) : -Math.sqrt(1.0 - cosu2 * cosu2) : Math.sin(u * 2);
+    // Find the sine and cosine of u + u
+    var cosu2 = cosu * cosu - sinu * sinu;
+    var sinu2 = sinu * cosu * 2;
     y = (this.maj + x) * sinu2;
     x = (this.maj + x) * cosu2;
     return [x, z, y];
@@ -151,14 +175,16 @@ var MoebiusStrip = function(radius, width) {
   "use strict";
   this.radius = typeof radius === "undefined" || radius === null ? 1 : radius;
   this.width = typeof width === "undefined" || width === null ? 0.5 : width;
+  this.endpoints = function() {
+    return [-this.width, this.width, 0, H3DU.Math.PiTimes2];
+  };
   this.evaluate = function(u, v) {
-    u = -this.width + this.width * 2 * u;
-    v *= H3DU.Math.PiTimes2;
     var x, y, z;
-    var cosv = Math.cos(v === 1 ? 0 : v);
-    var sinv = (v === 1 ? 0 : v) >= 0 && (v === 1 ? 0 : v) < 6.283185307179586 ? (v === 1 ? 0 : v) <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v === 1 ? 0 : v);
-    var cosv2 = Math.cos(v / 2);
-    var sinv2 = v / 2 >= 0 && v / 2 < 6.283185307179586 ? v / 2 <= 3.141592653589793 ? Math.sqrt(1.0 - cosv2 * cosv2) : -Math.sqrt(1.0 - cosv2 * cosv2) : Math.sin(v / 2);
+    var halfv = v / 2;
+    var cosv2 = Math.cos(halfv);
+    var sinv2 = (halfv>=0 && halfv<6.283185307179586) ? (halfv<=3.141592653589793 ? Math.sqrt(1.0-cosv2*cosv2) : -Math.sqrt(1.0-cosv2*cosv2)) : Math.sin(halfv);
+    var cosv = cosv2 * cosv2 - sinv2 * sinv2;
+    var sinv = 2 * sinv2 * cosv2;
     var tmp = u * cosv2 + this.radius;
     x = cosv * tmp;
     y = sinv * tmp;
@@ -307,14 +333,15 @@ addLink("B-Spline Surface", function() {
         var cp = [
           j * 5.0 / 5 - 2.5,
           i * 5.0 / 5 - 2.5,
-          Math.random() * 2.5 - 1.25
+          Math.random() * 2.5 - 1.25,
+          Math.random() * 0.75 + 0.5
         ];
         c.push(cp);
       }
       bspline.push(c);
     }
     if(!bsplineSurf)
-      bsplineSurf = H3DU.BSplineSurface.clamped(bspline, 3, 3);
+      bsplineSurf = H3DU.BSplineSurface.clamped(bspline, 3, 3, H3DU.BSplineCurve.DIVIDE);
     return makeMesh(bsplineSurf);
   }, {});
 });
@@ -330,6 +357,7 @@ camera.setDistance(5);
 var pc = new H3DU.FrameCounterDiv();
 link0();
 sub.addShape(shapeGroup);
+// if(false)
 H3DU.renderLoop(function() {
   "use strict";
   pc.update();

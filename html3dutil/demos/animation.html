@@ -72,7 +72,6 @@ loader.loadAndMapTexturesAll([
   "use strict";
   // add skysphere
   var skysphere = createSkysphere2(10);
-  //skysphere.getTransform().setRotation(90, 1, 0, 0);
    // create a stack of washers, each with different sizes
   for(var i = 0; i < shapecolors.length; i++) {
     var s = new H3DU.Shape(createWasher(0.5, shapesizes[i], 0.1, 32)).setColor(shapecolors[i])

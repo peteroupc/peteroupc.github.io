@@ -38,7 +38,6 @@ function TorusKnot(p, q, outerRadius, innerRadius) {
   this.outerRadius = typeof outerRadius === "undefined" || outerRadius === null ? 1 : outerRadius;
   this.innerRadius = typeof innerRadius === "undefined" || innerRadius === null ? 0.25 : innerRadius;
   this.evaluate = function(u) {
-    u *= H3DU.Math.PiTimes2;
     var pu = this.period * u;
     var qu = this.revolutions * u;
     var tmp = this.innerRadius * Math.cos(pu) + this.outerRadius;
@@ -47,6 +46,9 @@ function TorusKnot(p, q, outerRadius, innerRadius) {
       tmp * Math.sin(qu),
       this.innerRadius * Math.sin(pu)
     ];
+  };
+  this.endpoints = function() {
+    return [0, H3DU.Math.PiTimes2];
   };
 }
 TorusKnot.getFlatCurve = function(period, outerRadius, innerRadius) {
@@ -61,6 +63,9 @@ TorusKnot.getFlatCurve = function(period, outerRadius, innerRadius) {
    // not its shape
       ret[2] = 0;
       return ret;
+    },
+    "endpoints":function() {
+      return [0, H3DU.Math.PiTimes2];
     }
   };
 };

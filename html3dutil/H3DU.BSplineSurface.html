@@ -31,8 +31,10 @@ Bits for defining input and controlling output. Zero or more of H3DU.BSplineCurv
 <li><a href="#H3DU.BSplineSurface.clamped">.clamped</a><br>Creates a B-spline surface with uniform knots, except that
 the surface&#39;s edges lie on the edges of the control point array.</li>
 <li><a href="#H3DU.BSplineSurface.uniform">.uniform</a><br>Creates a B-spline surface with uniform knots.</li>
-<li><p><a href="#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
-in a B-spline surface.</p>
+<li><a href="#H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent">bitangent</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
+in a B-spline surface.</li>
+<li><p><a href="#H3DU.BSplineSurface_H3DU.BSplineSurface_tangent">tangent</a><br>TODO: Not documented yet.</p>
 
 <p><a name='H3DU.BSplineSurface.clamped'></a></p>
 
@@ -86,6 +88,23 @@ Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface<
 knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>)</p>
 
+<p><a name='H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent'></a></p>
+
+<h3>H3DU.BSplineSurface#bitangent(u, v)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: *)</li>
+<li><code>v</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
 <p><a name='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a></p>
 
 <h3>H3DU.BSplineSurface#evaluate(u, v)</h3>
@@ -107,6 +126,23 @@ V coordinate of the surface to evaluate.</li>
 <p>An array of the result of
 the evaluation. It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.BSplineSurface_H3DU.BSplineSurface_tangent'></a></p>
+
+<h3>H3DU.BSplineSurface#tangent(u, v)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: *)</li>
+<li><code>v</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

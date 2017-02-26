@@ -9,7 +9,7 @@
 /* global H3DU */
 
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval.vector} for a surface of revolution, which results by revolving
+ * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a surface of revolution, which results by revolving
  * an X/Y curve around an axis.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
@@ -20,7 +20,7 @@
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @class
  * @alias H3DU.SurfaceOfRevolution
- * @param {Object} curve A [curve evaluator object]{@link H3DU.CurveEval.vector} that describes a 2-dimensional curve to rotate about the axis of rotation, as
+ * @param {Object} curve A [curve evaluator object]{@link H3DU.CurveEval#vertex} that describes a 2-dimensional curve to rotate about the axis of rotation, as
  * specified in the "axis" parameter. The curve's X coordinates
  * correspond to elevation, and its Y coordinates correspond to radius.<p>
  * If the curve function draws a curve that goes both above and below the axis of rotation, such
@@ -40,46 +40,44 @@ H3DU.SurfaceOfRevolution = function(curve, minval, maxval, axis) {
   "use strict";
   this.curve = curve;
   this.minval = Math.min(minval, maxval);
-  this.maxval = Math.min(minval, maxval);
+  this.maxval = Math.max(minval, maxval);
   this._axis = axis;
   this._axisQuat = null;
   if(this._axis) {
     this._axisQuat = H3DU.Math.quatFromVectors([0, 0, 1], this._axis);
   }
-  this.evaluate = function(u, v) {
-    v = minval + (maxval - minval) * v;
-    var curvepos = this.curve.evaluate(v);
-    u *= H3DU.Math.PiTimes2;
-    var cosu = Math.cos(u);
-    var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
-    var cp1 = curvepos[1];
-    var cp0 = curvepos[0];
-    var x = cp1 * cosu;
-    var y = cp1 * sinu;
-    var z = cp0;
-    var ret = [x, y, z];
-    if(this._axisQuat) {
-      H3DU.SurfaceOfRevolution._quatTransformInPlace(this._axisQuat, ret);
-    }
-    return ret;
-  };
-  this.gradient = function(u, v) {
-    if(this._axisQuat) {
-      return H3DU.SurfaceEval.numGradient(this, u, v);
-    }
-    v = minval + (maxval - minval) * v;
-    u *= H3DU.Math.PiTimes2;
-    var cosu = Math.cos(u);
-    var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
-    var curvepos = H3DU.CurveEval.findTangent(this.curve, v);
-    var cp1 = curvepos[1];
-    var cp0 = curvepos[0];
-    var x = cp0 * cosu;
-    var y = cp0 * sinu;
-    var z = cp1;
-    var ret = [x, y, z];
-    return ret;
-  };
+};
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ * @memberof! H3DU.SurfaceOfRevolution#
+ */
+H3DU.SurfaceOfRevolution.prototype.endpoints = function() {
+  "use strict";
+  return [0, H3DU.Math.PiTimes2, this.minval, this.maxval];
+};
+/**
+ * TODO: Not documented yet.
+ * @param {*} u
+ * @param {*} v
+ * @returns {*} Return value.
+ * @memberof! H3DU.SurfaceOfRevolution#
+ */
+H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
+  "use strict";
+  var curvepos = this.curve.evaluate(v);
+  var cosu = Math.cos(u);
+  var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+  var cp1 = curvepos[1];
+  var cp0 = curvepos[0];
+  var x = cp1 * cosu;
+  var y = cp1 * sinu;
+  var z = cp0;
+  var ret = [x, y, z];
+  if(this._axisQuat) {
+    H3DU.SurfaceOfRevolution._quatTransformInPlace(this._axisQuat, ret);
+  }
+  return ret;
 };
 /** @private */
 H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
@@ -93,7 +91,7 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
   v[2] = t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4;
 };
 /**
- * Creates a [surface evaluator object]{@link H3DU.SurfaceEval.vector} for a surface of revolution
+ * Creates a [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a surface of revolution
  * whose curve is the graph of a single-variable function.
  * The resulting surface will have a circular cross section
  * along its length.
@@ -148,12 +146,13 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
   }, minval, maxval, axis);
 };
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval.vector} for a torus, a special case of a surface of revolution.
+ * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a torus, a special case of a surface of revolution.
  * @param {Number} outerRadius Radius from the center to the innermost
  * part of the torus.
  * @param {Number} innerRadius Radius from the inner edge to the innermost
  * part of the torus.
- * @param {Object} [curve] A [curve evaluator object]{@link H3DU.CurveEval.vector} that describes a 2-dimensional curve to serve as
+ * @param {Object} [curve] A [curve evaluator object]{@link H3DU.CurveEval#vertex} that
+ * describes a 2-dimensional curve to serve as
  * the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result
  * by leaving the ends open.
  * If null or omitted, uses a circular cross section.
@@ -171,10 +170,14 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
   "use strict";
   if(!curve)curve = {
     "evaluate":function(u) {
-      u *= H3DU.Math.PiTimes2;
       var cosu = Math.cos(u);
       var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
       return [cosu, sinu];
+    },
+    "tangent":function(u) {
+      var cosu = Math.cos(u);
+      var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+      return [-sinu, cosu];
     }
   };
   return new H3DU.SurfaceOfRevolution({
@@ -183,8 +186,11 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
       var x = innerRadius * curvept[1];
       var y = outerRadius + innerRadius * curvept[0];
       return [x, y, 0];
+    },
+    "endpoints":function() {
+      return [0, H3DU.Math.PiTimes2];
     }
-  }, 0, Math.PI, axis);
+  }, 0, H3DU.Math.PiTimes2, axis);
 };
 
 /* exported SurfaceOfRevolution */
@@ -197,7 +203,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
 var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
 
 /**
- * A [curve evaluator object]{@link H3DU.CurveEval.vector} for a curve drawn by a circle that rolls along the inside
+ * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a curve drawn by a circle that rolls along the inside
  * of another circle, whose position is fixed with a center of (0,0).
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
@@ -228,7 +234,6 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   * Only the X and Y coordinates will be other than 0.
   */
   this.evaluate = function(u) {
-    u *= H3DU.Math.PiTimes2;
     var oi = this.outer - this.inner;
     var term = oi * u / this.inner;
     var cosu = Math.cos(u),
@@ -240,6 +245,9 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
       oi * sinu - this.distFromInner * sint,
       0
     ];
+  };
+  this.endpoints = function() {
+    return [0, H3DU.Math.PiTimes2];
   };
  /**
   * Creates a modified version of this curve so that it
@@ -264,7 +272,7 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
 };
 
 /**
- * A [curve evaluator object]{@link H3DU.CurveEval.vector} for a curve drawn by a circle that rolls along the X axis.
+ * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a curve drawn by a circle that rolls along the X axis.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
@@ -289,7 +297,6 @@ H3DU.Trochoid = function(radius, distFromCenter) {
   * Only the X and Y coordinates will be other than 0.
   */
   this.evaluate = function(u) {
-    u *= H3DU.Math.PiTimes2;
     var cosu = Math.cos(u);
     var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
     return [
@@ -298,10 +305,19 @@ H3DU.Trochoid = function(radius, distFromCenter) {
       0
     ];
   };
+  this.endpoints = function() {
+    return [0, H3DU.Math.PiTimes2];
+  };
+  this.tangent = function(u) {
+    var cosu = Math.cos(u);
+    var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    return [this.inner - this.distFromCenter * cosu,
+      this.distFromCenter * sinu, 0];
+  };
 };
 
 /**
- * A [curve evaluator object]{@link H3DU.CurveEval.vector} for a curve drawn by a circle that rolls along the outside
+ * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a curve drawn by a circle that rolls along the outside
  * of another circle, whose position is fixed, with a center of (0,0).
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
@@ -332,7 +348,6 @@ H3DU.Epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   * Only the X and Y coordinates will be other than 0.
   */
   this.evaluate = function(u) {
-    u *= H3DU.Math.PiTimes2;
     var oi = this.outer + this.inner;
     var term = oi * u / this.inner;
     var cosu = Math.cos(u),
@@ -344,6 +359,9 @@ H3DU.Epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
       oi * sinu - this.distFromInner * sint,
       0
     ];
+  };
+  this.endpoints = function() {
+    return [0, H3DU.Math.PiTimes2];
   };
  /**
   * Creates a modified version of this curve so that it
