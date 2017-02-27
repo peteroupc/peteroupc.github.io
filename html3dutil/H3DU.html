@@ -23,16 +23,16 @@ library.</p>
 <ul>
 <li><a href="#H3DU.loadGltfFromUrl">.loadGltfFromUrl</a><br>Loads a 3D scene stored in glTF format, together with the buffers and
 shaders it uses.</li>
-<li><a href="#H3DU.CurveEval.findEndPoints">CurveEval.findEndPoints</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.CurveEval.findTangent">CurveEval.findTangent</a><br>Finds an approximate tangent (derivative) for the given curve evaluator
+<li><a href="#H3DU.CurveEval.findEndPoints">CurveEval.findEndPoints</a><br>Finds the end points of the curve described by the given curve evaluator object.</li>
+<li><a href="#H3DU.CurveEval.findTangent">CurveEval.findTangent</a><br>Finds an approximate tangent (derivative) for the given curve evaluator object
 at the given U coordinate.</li>
-<li><a href="#H3DU.SurfaceEval.findBitangent">SurfaceEval.findBitangent</a><br>Finds an approximate bitangent vector for the given surface evaluator
+<li><a href="#H3DU.SurfaceEval.findBitangent">SurfaceEval.findBitangent</a><br>Finds an approximate bitangent vector for the given surface evaluator object
 at the given U and V coordinates.</li>
-<li><a href="#H3DU.SurfaceEval.findEndPoints">SurfaceEval.findEndPoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.SurfaceEval.findEndPoints">SurfaceEval.findEndPoints</a><br>Finds the end points of the surface described by the given surface evaluator object.</li>
 <li><a href="#H3DU.SurfaceEval.findGradient">SurfaceEval.findGradient</a><br>Finds an approximate gradient vector for
 the given surface evaluator
 at the given U and V coordinates.</li>
-<li><a href="#H3DU.SurfaceEval.findTangent">SurfaceEval.findTangent</a><br>Finds an approximate tangent vector for the given surface evaluator
+<li><a href="#H3DU.SurfaceEval.findTangent">SurfaceEval.findTangent</a><br>Finds an approximate tangent vector for the given surface evaluator object
 at the given U and V coordinates.</li>
 <li><a href="#H3DU.createCanvasElement">createCanvasElement</a><br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</li>
@@ -89,26 +89,28 @@ it uses, the promise will be rejected. (Type: <a href="Promise.html">Promise</a>
 
 <p><a name='H3DU.CurveEval.findEndPoints'></a></p>
 
-<h3>(static) H3DU.CurveEval.findEndPoints(e, u)</h3>
+<h3>(static) H3DU.CurveEval.findEndPoints(e)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Finds the end points of the curve described by the given curve evaluator object.
+This method calls the evaluator&#39;s <code>endpoints</code>
+method if it implements it; otherwise, returns <code>[0, 1]</code></p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>e</code> (Type: *)</li>
-<li><code>u</code> (Type: *)</li>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.CurveEval#vertex.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>A two-element array giving the curve&#39;s end points. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.CurveEval.findTangent'></a></p>
 
 <h3>(static) H3DU.CurveEval.findTangent(e, u)</h3>
 
-<p>Finds an approximate tangent (derivative) for the given curve evaluator
+<p>Finds an approximate tangent (derivative) for the given curve evaluator object
 at the given U coordinate. This method calls the evaluator&#39;s <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the U axis using the <code>evaluate</code> method.</p>
@@ -130,7 +132,7 @@ U coordinate of the curve to evaluate.</li>
 
 <h3>(static) H3DU.SurfaceEval.findBitangent(e, u, v)</h3>
 
-<p>Finds an approximate bitangent vector for the given surface evaluator
+<p>Finds an approximate bitangent vector for the given surface evaluator object
 at the given U and V coordinates. This method calls the evaluator&#39;s <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the V axis using the <code>evaluate</code> method.</p>
@@ -152,20 +154,22 @@ V coordinate of the surface to evaluate.</li>
 
 <p><a name='H3DU.SurfaceEval.findEndPoints'></a></p>
 
-<h3>(static) H3DU.SurfaceEval.findEndPoints(e, u)</h3>
+<h3>(static) H3DU.SurfaceEval.findEndPoints(e)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Finds the end points of the surface described by the given surface evaluator object.
+This method calls the evaluator&#39;s <code>endpoints</code>
+method if it implements it; otherwise, returns <code>[0, 1]</code></p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>e</code> (Type: *)</li>
-<li><code>u</code> (Type: *)</li>
+<li><code>e</code> (Type: Object)<br>
+An object described in H3DU.SurfaceEval#vertex.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>A four-element array giving the surface&#39;s end points. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.SurfaceEval.findGradient'></a></p>
 
@@ -209,7 +213,7 @@ V coordinate of the surface to evaluate.</li>
 
 <h3>(static) H3DU.SurfaceEval.findTangent(e, u, v)</h3>
 
-<p>Finds an approximate tangent vector for the given surface evaluator
+<p>Finds an approximate tangent vector for the given surface evaluator object
 at the given U and V coordinates. This method calls the evaluator&#39;s <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the U axis using the <code>evaluate</code> method.</p>

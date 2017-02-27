@@ -97,13 +97,17 @@ versions.) (Type: <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>)</p
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: *)</li>
-<li><code>v</code> (Type: *)</li>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V coordinate of the surface to evaluate.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>An array giving the bitangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a></p>
 
@@ -116,7 +120,7 @@ in a B-spline surface.</p>
 
 <ul>
 <li><code>u</code> (Type: Number)<br>
-U coordinate of the surface to evaluate (from 0 through 1).</li>
+U coordinate of the surface to evaluate. NOTE: Since version 2.0, this parameter and the &quot;v&quot; parameter are no longer scaled according to the curve&#39;s knot vector.</li>
 <li><code>v</code> (Type: Number)<br>
 V coordinate of the surface to evaluate.</li>
 </ul>
@@ -136,13 +140,17 @@ if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: *)</li>
-<li><code>v</code> (Type: *)</li>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V coordinate of the surface to evaluate.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>An array giving the tangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

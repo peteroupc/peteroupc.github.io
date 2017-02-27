@@ -152,7 +152,7 @@ An object that must contain a function named <code>evaluate</code>, giving one o
 <li><p><code>evaluator</code> (Type: Object)<br>
 A <b>curve evaluator object</b>, which is an object that may or must contain the following methods:<ul> <li><code>evaluate(u)</code> - A method that takes a curve coordinate (<code>u</code>), generally from 0 to 1. This method is required. This method returns an array of the result of the evaluation. <li><code>tangent(u)</code> - A method that takes the same parameter as <code>evaluate</code> and returns the tangent of the surface at the given coordinate.</p>
 
-<p>The <b>tangent</b> of a curve is a vector which is the derivative of the <code>evaluate</code> method at the given coordinate. The tangent vector returned by this method should not be &quot;normalized&quot; to a unit vector. This method is optional. </ul></p></li>
+<p>The <b>tangent</b> of a curve is a vector which is the derivative of the <code>evaluate</code> method at the given coordinate. The tangent vector returned by this method should not be &quot;normalized&quot; to a unit vector. This method is optional. <li><code>endpoints()</code> - A method that returns a two-element array. The first element is the starting coordinate of the curve, and the second is its ending coordinate. This method is optional. If not given, the default end points are <code>[0, 1]</code>. </ul></p></li>
 </ul>
 
 <h4>Return Value</h4>

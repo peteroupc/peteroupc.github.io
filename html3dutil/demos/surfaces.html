@@ -48,7 +48,6 @@ function FourierKnot(a, b) {
   };
   this.evaluate = function(u) {
     var ret = [0, 0, 0];
-  // var angleStep=H3DU.Math.PiTimes2/(this.a.length);
     var cosStep = Math.cos(u);
     var sinStep = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(u);
     var c = sinStep;
@@ -333,20 +332,19 @@ addLink("B-Spline Surface", function() {
         var cp = [
           j * 5.0 / 5 - 2.5,
           i * 5.0 / 5 - 2.5,
-          Math.random() * 2.5 - 1.25,
-          Math.random() * 0.75 + 0.5
+          Math.random() * 2.5 - 1.25
         ];
         c.push(cp);
       }
       bspline.push(c);
     }
     if(!bsplineSurf)
-      bsplineSurf = H3DU.BSplineSurface.clamped(bspline, 3, 3, H3DU.BSplineCurve.DIVIDE);
+      bsplineSurf = H3DU.BSplineSurface.clamped(bspline, 3, 3);
     return makeMesh(bsplineSurf);
   }, {});
 });
 
-  // Create the 3D scene; find the HTML canvas and pass it
+// Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 var input = new H3DU.InputTracker(scene.getCanvas());
@@ -357,7 +355,6 @@ camera.setDistance(5);
 var pc = new H3DU.FrameCounterDiv();
 link0();
 sub.addShape(shapeGroup);
-// if(false)
 H3DU.renderLoop(function() {
   "use strict";
   pc.update();
