@@ -1,0 +1,134 @@
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="shaderlib.js"></script>
+</head>
+<body>
+<p style="position:absolute;left:0;top:1em">
+<a href="javascript:link1()">Red/blue linear</a>,
+<a href="javascript:link2()">Green/yellow linear</a>,
+<a href="javascript:link3()">Red/blue radial</a>,
+<a href="javascript:link4()">Green/yellow radial</a>
+</p>
+<canvas id=canvas></canvas>
+<script id="horizontalGradientFragment" type="x-shader/x-shader">
+precision mediump float;
+varying vec2 posVar;
+uniform vec4 color1;
+uniform vec4 color2;
+void main(){
+ float c=(posVar.x+1.0)*0.5;
+ vec3 color=mix(color1.rgb,color2.rgb,c);
+ gl_FragColor=vec4(color,1.0);
+}
+</script>
+<script id="radialGradientFragment" type="x-shader/x-shader">
+precision mediump float;
+varying vec2 posVar;
+uniform vec4 colorCenter;
+uniform vec4 colorEdges;
+void main(){
+ float c=length(posVar);
+ c=(c>1.0) ? 1.0 : c;
+ vec3 color=mix(colorCenter.rgb,colorEdges.rgb,c);
+ gl_FragColor=vec4(color,1.0);
+}
+</script>
+
+<script id="demo">
+/* global H3DU, Uint8Array */
+// <!--
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
+
+var vertexShader="precision mediump float;attribute vec3 position;varying vec2 posVar;\n"+
+"void main(){ posVar=position.xy; gl_Position=vec4(position,1.0); }"
+
+var horizontalGradientShader=new H3DU.ShaderInfo(
+   vertexShader,document.getElementById("horizontalGradientFragment").textContent)
+var radialGradientShader=new H3DU.ShaderInfo(
+   vertexShader,document.getElementById("radialGradientFragment").textContent)
+
+function horizontalGradient(scene,c1,c2){
+ horizontalGradientShader.setUniforms({
+    "color1":H3DU.toGLColor(c1),
+    "color2":H3DU.toGLColor(c2)
+ })
+ return renderTexture(scene,horizontalGradientShader,128,128)
+}
+function radialGradient(scene,c1,c2){
+ radialGradientShader.setUniforms({
+    "colorCenter":H3DU.toGLColor(c1),
+    "colorEdges":H3DU.toGLColor(c2)
+ })
+ return renderTexture(scene,radialGradientShader,128,128)
+}
+
+var scene = new H3DU.Scene3D(document.getElementById("canvas"))
+    .setClearColor("white");
+// Generate the four gradient frame buffers
+var redBlueLinear=horizontalGradient(scene,"red","blue");
+var greenYellowLinear=horizontalGradient(scene,"green","yellow");
+var redBlueRadial=radialGradient(scene,"red","blue");
+var greenYellowRadial=radialGradient(scene,"green","yellow");
+
+var shape = null;
+/* exported link1 */
+function link1() {
+  "use strict";
+  shape.setTexture(redBlueLinear);
+}
+/* exported link2 */
+function link2() {
+  "use strict";
+  shape.setTexture(greenYellowLinear);
+}
+/* exported link3 */
+function link3() {
+  "use strict";
+  shape.setTexture(redBlueRadial);
+}
+/* exported link4 */
+function link4() {
+  "use strict";
+  shape.setTexture(greenYellowRadial);
+}
+
+var sub = new H3DU.Batch3D()
+   // Set the perspective view. Camera has a 45-degree field of view
+   // and will see objects from 0.1 to 100 units away.
+   .perspectiveAspect(45, 0.1, 100)
+   // Move the camera back 40 units.
+   .setLookAt([0, 0, 40]);
+sub.getLights().setBasic();
+var fc = new H3DU.FrameCounterDiv();
+var mesh = H3DU.Meshes.createBox(10, 20, 20);
+shape = new H3DU.Shape(mesh).setTexture(redBlueLinear);
+sub.addShape(shape);
+var timer = {};
+H3DU.renderLoop(function(time) {
+  "use strict";
+  fc.update();
+  var q = H3DU.Math.quatFromTaitBryan([
+    360 * H3DU.getTimePosition(timer, time, 6000),
+    360 * H3DU.getTimePosition(timer, time, 12000),
+    0
+  ]);
+  shape.setQuaternion(q);
+  scene.render(sub);
+});
+// -->
+</script>
+</body>

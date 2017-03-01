@@ -83,8 +83,11 @@
     if(typeof this.gltf.asset !== "undefined" && this.gltf.asset !== null) {
       if(!(typeof this.gltf.asset.version !== "undefined" && this.gltf.asset.version !== null)) {
         this.error = "No version despite appearance of asset object";
-      } else if(this.gltf.asset.version === "1.1")
+      } else if(this.gltf.asset.version === "1.1") {
         this.version = 1;
+      } else if(this.gltf.asset.version === "2.0") {
+        this.version = 2;
+      }
     }
     this.programs = this.preparePrograms();
     this.batch = new H3DU.ShapeGroup();
@@ -787,12 +790,36 @@
             return null;
           }
           var material = this.gltf.materials[prim.material];
-          if(typeof material.technique !== "undefined" && material.technique !== null) {
+          if(this.version >= 2 && (typeof material.pbrMetallicRoughness !== "undefined" && material.pbrMetallicRoughness !== null)) {
+            var shader = shape.getMaterial().shader;
+            var pbr = material.pbrMetallicRoughness;
+            if(typeof pbr.baseColorFactor === "undefined" || pbr.baseColorFactor === null) {
+              return null;
+            }
+            var baseColor = pbr.baseColorFactor;
+            if(typeof pbr.metallicFactor === "undefined" || pbr.metallicFactor === null) {
+              return null;
+            }
+            var metal = pbr.metallicFactor;
+            if(typeof pbr.roughnessFactor === "undefined" || pbr.roughnessFactor === null) {
+              return null;
+            }
+            var rough = pbr.roughnessFactor;
+            var pbrMaterial = new H3DU.PbrMaterial({
+              "albedo":baseColor,
+              "metalness":metal,
+              "roughness":rough
+            });
+            shape.setMaterial(pbrMaterial);
+            shape.getMaterial().setParams({"shader":shader});
+          }
+          if(typeof material.technique !== "undefined" &&
+        material.technique !== null && this.version < 2) {
             var techInfo = this.readTechnique(material.technique);
             if(!techInfo) {
               return null;
             }
-            var shader = this.readMaterialValues(material, techInfo);
+            shader = this.readMaterialValues(material, techInfo);
             if(typeof shader === "undefined" || shader === null) {
               return null;
             }

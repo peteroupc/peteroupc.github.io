@@ -22,7 +22,7 @@ A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.</p>
 
 <h2>Contents</h2>
 
-<p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br>&nbsp;&nbsp;<a href="#A_Matrix_Transforms_Between_Coordinate_Systems">A Matrix Transforms Between Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Why_a_4x4_Matrix">Why a 4x4 Matrix?</a><br><a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Other_Transformations">Other Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br><a href="#Rotation_Example">Rotation Example</a><br></p>
+<p><a href="#Matrix_Details">Matrix Details</a><br><a href="#Contents">Contents</a><br><a href="#Arrangement">Arrangement</a><br>&nbsp;&nbsp;<a href="#A_Matrix_Transforms_Between_Coordinate_Systems">A Matrix Transforms Between Coordinate Systems</a><br>&nbsp;&nbsp;<a href="#Why_a_4x4_Matrix">Why a 4x4 Matrix?</a><br><a href="#Transforming_Points">Transforming Points</a><br>&nbsp;&nbsp;<a href="#Scaling">Scaling</a><br>&nbsp;&nbsp;<a href="#Translation">Translation</a><br>&nbsp;&nbsp;<a href="#Rotation">Rotation</a><br>&nbsp;&nbsp;<a href="#Matrix_Multiplication">Matrix Multiplication</a><br>&nbsp;&nbsp;<a href="#Projective_Transformations">Projective Transformations</a><br>&nbsp;&nbsp;<a href="#Matrix_Inversions">Matrix Inversions</a><br><a href="#Rotation_Example">Rotation Example</a><br></p>
 
 <h2>Arrangement</h2>
 
@@ -182,7 +182,7 @@ but not where it points <em>from</em>.  It&#39;s enough to use a 3x3 matrix to d
 linear transformations in 3D space.</p>
 
 <p>But certain other transformations, such as <a href="#Translation">translation</a> and
-<a href="#Other_Transformations">perspective</a>, are common in 3D computer graphics.
+<a href="#Projective_Transformations">perspective</a>, are common in 3D computer graphics.
 To describe translation and perspective in 3D, the 3x3 matrix must be
 augmented by an additional row and column, turning it into a 4x4 matrix.</p>
 
@@ -193,7 +193,7 @@ components are the point&#39;s <em>homogeneous coordinates</em> (unless the
 vector&#39;s W is 0).  To convert these coordinates back to 3D, divide
 X, Y, and Z by W.  This is usually only required, however, if the
 matrix describes a perspective projection (see
-<a href="#Other_Transformations">&quot;Other Transformations&quot;</a>).</p>
+<a href="#Projective_Transformations">&quot;Projective Transformations&quot;</a>).</p>
 
 <p>A similar situation applies in 2D between 2x2 and 3x3 matrices as it does
 in 3D between 3x3 and 4x4 matrices.</p>
@@ -620,10 +620,7 @@ order. For example, if the first matrix (input matrix) describes a translation a
 matrix describes a scaling, the multiplied matrix will
 describe the effect of scaling then translation.</p>
 
-<p>Matrix multiplication is not commutative; the order
-of multiplying matrices is important. This multiplication
-behavior in the HTML 3D Utility Library follows that of OpenGL and is opposite to that in the
-D3DX and DirectXMath libraries.</p>
+<p>Matrix multiplication is not commutative; the order of multiplying matrices is important.</p>
 
 <p>To get an insight of how matrix multiplication works, treat the second matrix as a group
 of column vectors (with the same number of rows as the number of columns in the
@@ -635,7 +632,7 @@ matrix with one column and four rows.*)</p>
 
 <p>This insight reveals a practical use of matrix multiplication: transforming four 4-element
 vectors at once using a single matrix operation involving two 4x4 matrices.  After the
-matrix multiplication, the transformed vectors will be contained in each of the four columns
+matrix multiplication, each of the transformed vectors will be contained in one of the four columns
 of the output matrix.</p>
 
 <p>The methods <code>mat4multiply</code>, <code>mat4scale</code>, <code>mat4scaleInPlace</code>, <code>mat4translate</code>, and
@@ -651,17 +648,24 @@ Multiplies two matrices</li>
 <p>* Reading the <a href="https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection">tutorial by Dmitry Sokolov</a>
 led me to this highly useful insight.</p>
 
-<p><a id=Other_Transformations></a></p>
+<p><a id=Projective_Transformations></a></p>
 
-<h3>Other Transformations</h3>
+<h3>Projective Transformations</h3>
 
 <p>In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1). (Such transformations are called <em>affine transformations</em>, those that
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the <code>H3DU.Math</code> library.</p>
 
-<p>One example of such a transformation is found in a <em>perspective projection</em> matrix, as
-returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a> or <a href="H3DU.Math.html#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>. When
+<p>Transformations that don&#39;t necessarily preserve straightness and parallelism of lines are
+called <em>projective transformations</em>.  An NxN matrix which has one more row and one more column
+than the number of dimensions, can describe projective transformations.  For example,
+a 4x4 matrix can describe 3D projective transformations in the form of linear transformations
+on homogeneous coordinates (see <a href="#Why_a_4x4_Matrix">&quot;Why a 4x4 Matrix?&quot;</a>).  For a
+3D projective transformation, the last row in the matrix is not necessarily (0, 0, 0, 1).</p>
+
+<p>One example of a projective transformation is found in a <em>perspective projection</em> matrix,
+as returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a> or <a href="H3DU.Math.html#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>. When
 a 4-element vector is transformed with this matrix, its W component is generated by setting
 it to the negative Z coordinate in <em>eye space</em>, or more specifically, as follows:</p>
 
@@ -669,9 +673,7 @@ it to the negative Z coordinate in <em>eye space</em>, or more specifically, as 
 <li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + -1 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
 </ul>
 
-<p><small>The graphics pipeline (outside of this JavaScript library) uses this W component
-to help achieve the perspective rendering effect
-(see <a href="tutorial-camera.html"><em>The &quot;Camera&quot; and Geometric Transforms</em></a>).</small></p>
+<p>For more on perspective projections, see <a href="tutorial-camera.html"><em>The &quot;Camera&quot; and Geometric Transforms</em></a>).</p>
 
 <p>Related functions:</p>
 

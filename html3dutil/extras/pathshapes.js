@@ -252,3 +252,126 @@ H3DU.GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, 
   "use strict";
   return this.arcShape(x + w * 0.5, y + h * 0.5, w, h, start, sweep, type);
 };
+/**
+ * TODO: Not documented yet.
+ * @param {*} x0
+ * @param {*} y0
+ * @param {*} x1
+ * @param {*} y1
+ * @param {*} headWidth
+ * @param {*} headLength
+ * @param {*} tailWidth
+ * @returns {*} Return value.
+ * @memberof! H3DU.GraphicsPath#
+ */
+H3DU.GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, tailWidth) {
+  "use strict";
+  var dx = x1 - x0;
+  var dy = y1 - y0;
+  var arrowLen = Math.sqrt(dx * dx + dy * dy);
+  if(arrowLen === 0)return this;
+  var halfTailWidth = tailWidth * 0.5;
+  var halfHeadWidth = headWidth * 0.5;
+  var invArrowLen = 1.0 / arrowLen;
+  var cosRot = dx * invArrowLen;
+  var sinRot = dy * invArrowLen;
+  headLength = Math.min(headLength, arrowLen);
+  var shaftLength = arrowLen - headLength;
+  var x, y;
+  this.moveTo(x0, y0);
+  x = halfTailWidth * sinRot + x0;
+  y = -halfTailWidth * cosRot + y0;
+  this.lineTo(x, y);
+  x = shaftLength * cosRot - -halfTailWidth * sinRot + x0;
+  y = shaftLength * sinRot + -halfTailWidth * cosRot + y0;
+  this.lineTo(x, y);
+  x = shaftLength * cosRot - -halfHeadWidth * sinRot + x0;
+  y = shaftLength * sinRot + -halfHeadWidth * cosRot + y0;
+  this.lineTo(x, y).lineTo(x1, y1);
+  x = shaftLength * cosRot - halfHeadWidth * sinRot + x0;
+  y = shaftLength * sinRot + halfHeadWidth * cosRot + y0;
+  this.lineTo(x, y);
+  x = shaftLength * cosRot - halfTailWidth * sinRot + x0;
+  y = shaftLength * sinRot + halfTailWidth * cosRot + y0;
+  this.lineTo(x, y);
+  x = -halfTailWidth * sinRot + x0;
+  y = halfTailWidth * cosRot + y0;
+  this.lineTo(x, y);
+  this.closePath();
+  return this;
+};
+/**
+ * TODO: Not documented yet.
+ * @param {*} path
+ * @param {*} cx
+ * @param {*} cy
+ * @param {*} sides
+ * @param {*} radius
+ * @param {*} phaseInDegrees
+ * @returns {*} Return value. */
+H3DU.GraphicsPath.regularPolygon = function(path, cx, cy, sides, radius, phaseInDegrees) {
+  "use strict";
+  if(sides <= 0)return path;
+  var phase = phaseInDegrees || 0;
+  phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
+       (phase < 0 ? 360 : 0);
+  phase *= H3DU.Math.ToRadians;
+  var angleStep = H3DU.Math.PiTimes2 / sides;
+  var cosStep = Math.cos(angleStep);
+  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  var c = Math.cos(phase);
+  var s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
+  for(var i = 0; i < sides; i++) {
+    var x = cx + c * radius;
+    var y = cy + s * radius;
+    if(i === 0) {
+      path.moveTo(x, y);
+    } else {
+      path.lineTo(x, y);
+    }
+    var ts = cosStep * s + sinStep * c;
+    var tc = cosStep * c - sinStep * s;
+    s = ts;
+    c = tc;
+  }
+  return path.closePath();
+};
+/**
+ * TODO: Not documented yet.
+ * @param {*} path
+ * @param {*} cx
+ * @param {*} cy
+ * @param {*} points
+ * @param {*} radiusOut
+ * @param {*} radiusIn
+ * @param {*} phaseInDegrees
+ * @returns {*} Return value. */
+H3DU.GraphicsPath.regularStar = function(path, cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
+  "use strict";
+  if(points <= 0)return path;
+  var phase = phaseInDegrees || 0;
+  phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
+       (phase < 0 ? 360 : 0);
+  phase *= H3DU.Math.ToRadians;
+  var sides = points * 2;
+  var angleStep = H3DU.Math.PiTimes2 / sides;
+  var cosStep = Math.cos(angleStep);
+  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  var c = Math.cos(phase);
+  var s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
+  for(var i = 0; i < sides; i++) {
+    var radius = (i & 1) === 0 ? radiusOut : radiusIn;
+    var x = cx + c * radius;
+    var y = cy + s * radius;
+    if(i === 0) {
+      path.moveTo(x, y);
+    } else {
+      path.lineTo(x, y);
+    }
+    var ts = cosStep * s + sinStep * c;
+    var tc = cosStep * c - sinStep * s;
+    s = ts;
+    c = tc;
+  }
+  return path.closePath();
+};

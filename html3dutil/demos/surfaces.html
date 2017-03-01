@@ -49,7 +49,7 @@ function FourierKnot(a, b) {
   this.evaluate = function(u) {
     var ret = [0, 0, 0];
     var cosStep = Math.cos(u);
-    var sinStep = (u>=0 && u<6.283185307179586) ? (u<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(u);
+    var sinStep = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(u);
     var c = sinStep;
     var s = cosStep;
     for(var i = 0; i < this.a.length; i++) {
@@ -181,7 +181,7 @@ var MoebiusStrip = function(radius, width) {
     var x, y, z;
     var halfv = v / 2;
     var cosv2 = Math.cos(halfv);
-    var sinv2 = (halfv>=0 && halfv<6.283185307179586) ? (halfv<=3.141592653589793 ? Math.sqrt(1.0-cosv2*cosv2) : -Math.sqrt(1.0-cosv2*cosv2)) : Math.sin(halfv);
+    var sinv2 = halfv >= 0 && halfv < 6.283185307179586 ? halfv <= 3.141592653589793 ? Math.sqrt(1.0 - cosv2 * cosv2) : -Math.sqrt(1.0 - cosv2 * cosv2) : Math.sin(halfv);
     var cosv = cosv2 * cosv2 - sinv2 * sinv2;
     var sinv = 2 * sinv2 * cosv2;
     var tmp = u * cosv2 + this.radius;

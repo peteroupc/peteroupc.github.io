@@ -52,12 +52,17 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 except that with the knot vector curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
+<li><a href="#H3DU.BSplineCurve.fromCardinalSpline">.fromCardinalSpline</a><br>Creates an array of B-Spline curves from the control points of a cardinal spline.</li>
+<li><a href="#H3DU.BSplineCurve.fromHermiteSpline">.fromHermiteSpline</a><br>Creates an array of B-Spline curves from the control points of a Hermite spline.</li>
 <li><a href="#H3DU.BSplineCurve.uniform">.uniform</a><br>Creates a B-spline curve with uniform knots.</li>
 <li><a href="#H3DU.BSplineCurve.uniformKnots">.uniformKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_endpoints">endpoints</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
 in a B-spline curve.</li>
-<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_tangent">tangent</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_split">split</a><br>Splits this B-Spline curve into two at the given point.</li>
+<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_tangent">tangent</a><br>Finds the tangent (derivative) of
+this curve at the given point.</li>
 </ul>
 
 <p><a id='H3DU.BSplineCurve.DIVIDE_BIT'></a></p>
@@ -167,6 +172,44 @@ Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If 
 The first knot will be 0 and the last knot will be 1.
 (This is a change in version 2.0.) (Type: Array.&lt;Number&gt;)</p>
 
+<p><a name='H3DU.BSplineCurve.fromCardinalSpline'></a></p>
+
+<h3>H3DU.BSplineCurve.fromCardinalSpline(curve, [tension])</h3>
+
+<p>Creates an array of B-Spline curves from the control points of a cardinal spline.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.</li>
+<li><code>tension</code> (Type: Number) (optional)<br>
+A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A array of cubic B-Spline curves describing the
+same path as the cardinal spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
+
+<p><a name='H3DU.BSplineCurve.fromHermiteSpline'></a></p>
+
+<h3>H3DU.BSplineCurve.fromHermiteSpline(curve)</h3>
+
+<p>Creates an array of B-Spline curves from the control points of a Hermite spline.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the tangent vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A array of cubic B-Spline curves describing the
+same path as the Hermite spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
+
 <p><a name='H3DU.BSplineCurve.uniform'></a></p>
 
 <h3>H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits])</h3>
@@ -212,6 +255,16 @@ Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If 
 knot will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: Array.&lt;Number&gt;)</p>
 
+<p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_endpoints'></a></p>
+
+<h3>H3DU.BSplineCurve#endpoints()</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
 <p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a></p>
 
 <h3>H3DU.BSplineCurve#evaluate(u)</h3>
@@ -241,11 +294,34 @@ points.push(curve.evaluate(i/10.0));
 }
 </code></pre>
 
+<p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_split'></a></p>
+
+<h3>H3DU.BSplineCurve#split(u)</h3>
+
+<p>Splits this B-Spline curve into two at the given point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+Point on the curve where this curve will be split.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array containing two B-Spline curves: the
+first is the part of the curve before the given point, and the second
+is the part of the curve after the given point. The first element
+will be null if <code>u</code> is at or before the start of the curve.
+The second element
+will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>&gt;)</p>
+
 <p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_tangent'></a></p>
 
 <h3>H3DU.BSplineCurve#tangent(u)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Finds the tangent (derivative) of
+this curve at the given point.</p>
 
 <h4>Parameters</h4>
 
@@ -256,7 +332,9 @@ Point on the curve to evaluate.</li>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>An array giving the tangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
