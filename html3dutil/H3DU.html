@@ -21,10 +21,6 @@ library.</p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.loadGltfFromUrl">.loadGltfFromUrl</a><br>Loads a 3D scene stored in glTF format, together with the buffers and
-shaders it uses.</li>
-<li><a href="#H3DU.GraphicsPath.regularPolygon">GraphicsPath.regularPolygon</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.GraphicsPath.regularStar">GraphicsPath.regularStar</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.createCanvasElement">createCanvasElement</a><br>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</li>
 <li><a href="#H3DU.get3DContext">get3DContext</a><br>Creates a 3D rendering context from an HTML canvas element.</li>
@@ -39,6 +35,9 @@ its work.</li>
 <li><a href="#H3DU.getTimePosition">getTimePosition</a><br>Gets the position of a time value within an interval.</li>
 <li><a href="#H3DU.is3DContext">is3DContext</a><br>Returns whether the given object is a 3D rendering context.</li>
 <li><a href="#H3DU.loadFileFromUrl">loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.</li>
+<li><a href="#H3DU.loadGltfFromUrl">loadGltfFromUrl</a><br>Loads a 3D scene stored in glTF format, together with the buffers and
+shaders it uses.</li>
+<li><a href="#H3DU.loadStlFromUrl">loadStlFromUrl</a><br>Loads a .STL file asynchronously.</li>
 <li><a href="#H3DU.newFrames">newFrames</a><br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame&#39;s length is 1/60 of a second.</li>
 <li><a href="#H3DU.renderLoop">renderLoop</a><br>This method will call a function once before returning,
@@ -47,83 +46,10 @@ using <code>window.requestAnimationFrame</code>
 or a &quot;polyfill&quot; method.</li>
 <li><p><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</p>
 
-<p><a name='H3DU.loadGltfFromUrl'></a></p>
-
-<h3>H3DU.loadGltfFromUrl(url)</h3></li>
-</ul>
-
-<p>Loads a 3D scene stored in glTF format, together with the buffers and
-shaders it uses.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>url</code> (Type: String)<br>
-URL of the glTF file to load.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise; when it resolves, the result will
-be an object that implements the following methods:<ul>
-<li><code>getShape()</code> - Gets an <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> object described
-by the glTF data.
-<li><code>getImageURIs()</code> - Gets an array of URI (uniform resource identifier)
-strings for the texture images described by the glTF data. Each URI will be relative
-to the &quot;url&quot; parameter of the loadGltfFromFile method.
-<li><code>update(time)</code> - A single-parameter method that should be called
-if the glTF data describes an animation; this method updates the state of the
-3D batch in accordance with that animation. The single parameter, <code>time</code>
-(type Number), is a time stamp in milliseconds.
-</ul>If an error occurs in loading the glTF data or any of the buffers and shaders
-it uses, the promise will be rejected. (Type: <a href="Promise.html">Promise</a>.&lt;Object&gt;)</p>
-
-<p><a name='H3DU.GraphicsPath.regularPolygon'></a></p>
-
-<h3>(static) H3DU.GraphicsPath.regularPolygon(path, cx, cy, sides, radius, phaseInDegrees)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>path</code> (Type: *)</li>
-<li><code>cx</code> (Type: *)</li>
-<li><code>cy</code> (Type: *)</li>
-<li><code>sides</code> (Type: *)</li>
-<li><code>radius</code> (Type: *)</li>
-<li><code>phaseInDegrees</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
-
-<p><a name='H3DU.GraphicsPath.regularStar'></a></p>
-
-<h3>(static) H3DU.GraphicsPath.regularStar(path, cx, cy, points, radiusOut, radiusIn, phaseInDegrees)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>path</code> (Type: *)</li>
-<li><code>cx</code> (Type: *)</li>
-<li><code>cy</code> (Type: *)</li>
-<li><code>points</code> (Type: *)</li>
-<li><code>radiusOut</code> (Type: *)</li>
-<li><code>radiusIn</code> (Type: *)</li>
-<li><code>phaseInDegrees</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
-
 <p><a name='H3DU.createCanvasElement'></a></p>
 
-<h3>(static) H3DU.createCanvasElement(parent, width, height)</h3>
+<h3>(static) H3DU.createCanvasElement(parent, width, height)</h3></li>
+</ul>
 
 <p>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</p>
@@ -330,6 +256,66 @@ the parameter&#39;s &quot;data&quot; property will be:<ul>
 <li>For response type &quot;json&quot;, the JavaScript object decoded
 from JSON.
 <li>For any other type, a string of the file&#39;s text.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
+
+<p><a name='H3DU.loadGltfFromUrl'></a></p>
+
+<h3>(static) H3DU.loadGltfFromUrl(url)</h3>
+
+<p>Loads a 3D scene stored in glTF format, together with the buffers and
+shaders it uses.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>url</code> (Type: String)<br>
+URL of the glTF file to load.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise; when it resolves, the result will
+be an object that implements the following methods:<ul>
+<li><code>getShape()</code> - Gets an <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> object described
+by the glTF data.
+<li><code>getImageURIs()</code> - Gets an array of URI (uniform resource identifier)
+strings for the texture images described by the glTF data. Each URI will be relative
+to the &quot;url&quot; parameter of the loadGltfFromFile method.
+<li><code>update(time)</code> - A single-parameter method that should be called
+if the glTF data describes an animation; this method updates the state of the
+3D batch in accordance with that animation. The single parameter, <code>time</code>
+(type Number), is a time stamp in milliseconds.
+</ul>If an error occurs in loading the glTF data or any of the buffers and shaders
+it uses, the promise will be rejected. (Type: <a href="Promise.html">Promise</a>.&lt;Object&gt;)</p>
+
+<p><a name='H3DU.loadStlFromUrl'></a></p>
+
+<h3>(static) H3DU.loadStlFromUrl(url)</h3>
+
+<p>Loads a .STL file asynchronously.</p>
+
+<p>This method is considered a supplementary method to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this method, you must include the script &quot;extras/stl.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/stl.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>url</code> (Type: String)<br>
+The URL to load.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A promise that resolves when the
+.STL file is loaded successfully (the result will be an <a href="H3DU.Mesh.html">H3DU.Mesh</a> object),
+and is rejected when an error occurs when loading the .STL file. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <p><a name='H3DU.newFrames'></a></p>
 

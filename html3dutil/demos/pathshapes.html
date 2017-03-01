@@ -110,7 +110,6 @@ function createSampleShape(index) {
   case 2:
     return pathClosedFigure(path, -0.25, 0.25, 0.01);
   case 3:
-  // TODO: Tube now appears to be only partially drawn
     return makeTubeFromPath(path, 0.01, 0.1);
   case 4: {
     var p = new H3DU.GraphicsPath().regularPolygon(0, 0, 8, 1);

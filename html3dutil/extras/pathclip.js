@@ -13,14 +13,14 @@
 // Data structures
 // //////////////////////////////////////////////////////////////////////////////////////////////
 
-/** @private */
+/** @ignore */
   var LinkedListNode = function(item) {
     this.data = item;
     this.prev = null;
     this.next = null;
   };
 
-/** @private */
+/** @ignore */
   var LinkedList = function() {
     this.root = null;
     this._last = null;
@@ -152,7 +152,7 @@
     };
   };
 
-/** @private */
+/** @ignore */
   var PriorityQueue = function(comparer) {
  // Based on Doug Lea's public domain Heap class in Java
     this.comparer = comparer;
@@ -285,26 +285,26 @@
       return this._size;
     };
   };
-/** @private */
+/** @ignore */
   RedBlackTree._defaultCompare = function(a, b) {
     if(a === b)return 0;
     return a < b ? -1 : 1;
   };
-/** @private */
+/** @ignore */
   RedBlackTree.prototype.first = function() {
     var r = this.root;
     if(typeof r === "undefined" || r === null)return null;
     while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
     return r;
   };
-/** @private */
+/** @ignore */
   RedBlackTree.prototype.last = function() {
     var r = this.root;
     if(typeof r === "undefined" || r === null)return null;
     while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
     return r;
   };
-/** @private */
+/** @ignore */
   RedBlackTree.prototype.find = function(data) {
     var it = this.root;
     while(typeof it !== "undefined" && it !== null) {
@@ -314,11 +314,11 @@
     }
     return typeof it === "undefined" || it === null ? null : it.data;
   };
-/** @private */
+/** @ignore */
   RedBlackTree._red = function(node) {
     return typeof node !== "undefined" && node !== null && node.red === 1;
   };
-/** @private */
+/** @ignore */
   RedBlackTree._single = function(root, dir) {
     var save = root.link(!dir);
     root.setLink(!dir, save.link(dir));
@@ -327,12 +327,12 @@
     save.red = false;
     return save;
   };
-/** @private */
+/** @ignore */
   RedBlackTree._double = function(root, dir) {
     root.setLink(!dir, RedBlackTree._single( root.link(!dir), !dir ));
     return RedBlackTree._single( root, dir );
   };
-/** @private */
+/** @ignore */
   RedBlackTree.prototype.erase = function(data) {
     if(typeof this.root !== "undefined" && this.root !== null) {
       var head = new RedBlackTreeNode(null); /* False tree root */
@@ -410,7 +410,7 @@
       --this._size;
     }
   };
-/** @private */
+/** @ignore */
   RedBlackTree.prototype.insert = function(data) {
     if(!data)throw new Error();
     var retval = null;
@@ -531,7 +531,7 @@
       return p;
     };
   };
-/** @private */
+/** @ignore */
   Polygon._Contour = function(subpath) {
     this.vertices = subpath;
     this.nvertices = function() {
@@ -565,9 +565,7 @@
       return this.closedPolygons.size();
     };
   }
-/** @private
- * @returns {Object} Return value.
- */
+/** @ignore */
   Polygon.PointChain = function() {
     this.l = new LinkedList();
     this._closed = false;
@@ -644,10 +642,7 @@
     }
     return false;
   };
-/** @private
- * @param {Object} s Description of s.
- * @returns {Object} Return value.
- */
+/** @ignore */
   Connector.prototype.add = function(s) {
     var j = this.openPolygons.first();
     while(j) {
@@ -673,7 +668,7 @@
     chain.init(s);
     this.openPolygons.push(chain);
   };
-/** @private */
+/** @ignore */
   Connector.prototype.toPolygon = function() {
     var polygon = new Polygon(null);
     var j = this.closedPolygons.first();
@@ -700,7 +695,7 @@
   Clipper.NON_CONTRIBUTING = 1;
   Clipper.SAME_TRANSITION = 2;
   Clipper.DIFFERENT_TRANSITION = 3;
-/** @private */
+/** @ignore */
   Clipper.SweepEvent = function(pp, b, apl, o, t) {
     this.p = pp;
     this.id = -1;
@@ -727,7 +722,7 @@
   Clipper.SweepEvent.prototype.toString = function() {
     return Clipper._print(this);
   };*/
-/** @private */
+/** @ignore */
   Clipper.signedArea = function(a, b, c) {
     var xa = a[0] - c[0];
     var ya = a[1] - c[1];
@@ -735,7 +730,7 @@
     var yb = b[1] - c[1];
     return 0.5 * (xa * yb - xb * ya);
   };
-/** @private */
+/** @ignore */
   Clipper._ptEq = function(a, b) {
     return a[0] === b[0] && a[1] === b[1];
   };
@@ -753,11 +748,7 @@
   // Same point, both events are left endpoints or both are right endpoints. The event associate to the bottom segment is processed first
     return e1.above(e2.other.p);
   };
-/** @private
- * @param {Object} e1 Description of e1.
- * @param {Object} e2 Description of e2.
- * @returns {Object} Return value.
- */
+/** @ignore */
   Clipper.sweepEventCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.sweepEventComp(e1, e2) ? -1 : 1;
@@ -785,12 +776,12 @@
     }
     return Clipper.sweepEventComp(e1, e2);
   };
-/** @private */
+/** @ignore */
   Clipper.segmentCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.segmentComp(e1, e2) ? -1 : 1;
   };
-/** @private */
+/** @ignore */
   Clipper.prototype.storeSweepEvent = function(e) {
     e.id = this.eventHolder.length;
     this.eventHolder.push(e);
@@ -805,7 +796,7 @@
          (e.inside ? " (Inside) " : " (Outside) ") +  (e.inOut ? " (In-Out) " : " (Out-In) ") + "Type: " +
          namesEventTypes[e.type] + " Polygon: " + (e.pl === Clipper.SUBJECT ? " (SUBJECT)" : " (CLIPPING)");
   };*/
-/** @private */
+/** @ignore */
   Clipper.prototype.compute = function(op) {
   // Test 1 for trivial result case
     if(this.subject.ncontours() * this.clipping.ncontours() === 0) { // At least one of the polygons is empty
@@ -980,11 +971,7 @@
     }
     return connector.toPolygon(result);
   };
-/** @private
- * @param {Object} s Description of s.
- * @param {Object} pl Description of pl.
- * @returns {Object} Return value.
- */
+/** @ignore */
   Clipper.prototype.processSegment = function(s, pl) {
     if(Clipper._ptEq(s[0], s[1])) // if the two edge endpoints are equal the segment is discarded
       return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
@@ -1003,13 +990,7 @@
     this.eq.push(e1);
     this.eq.push(e2);
   };
-/** @private
- * @param {Object} a Description of a.
- * @param {Object} b Description of b.
- * @param {Object} e Description of e.
- * @param {Object} f Description of f.
- * @returns {Object} Return value.
- */
+/** @ignore */
   Clipper.findIntersection = function(a, b, e, f) {
     var ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
   b[0][0], b[0][1], b[1][0], b[1][1]);
@@ -1023,7 +1004,7 @@
     }
     return ret.length;
   };
-/** @private */
+/** @ignore */
   Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, b2y) {
     var dpdeltad0;
     var t2 = a2x - a1x;
@@ -1119,11 +1100,7 @@
     return ret;
   };
 
-/** @private
- * @param {Object} e1 Description of e1.
- * @param {Object} e2 Description of e2.
- * @returns {Object} Return value.
- */
+/** @ignore */
   Clipper.prototype.possibleIntersection = function(e1, e2) {
 // if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
 // return false;
@@ -1200,7 +1177,7 @@
     sortedEvents[3].other.type = e1.inOut === e2.inOut ? Clipper.SAME_TRANSITION : Clipper.DIFFERENT_TRANSITION;
     this._divideSegment(sortedEvents[3].other, sortedEvents[2].p);
   };
-/** @private */
+/** @ignore */
   Clipper.prototype._divideSegment = function(e, p) {
   // "Right event" of the "left line segment" resulting from dividing e(the line segment associated to e)
     var r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
@@ -1221,7 +1198,7 @@
   };
 
   if(globalContext.H3DU.GraphicsPath) {
-/** @lends GraphicsPath */
+/** @lends H3DU.GraphicsPath */
     GraphicsPath = globalContext.H3DU.GraphicsPath;
 /**
  * Computes the combination of this path's shape with another
@@ -1246,7 +1223,10 @@
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} The union of the two paths.
- * @memberof! H3DU.GraphicsPath
+ * @instance
+ * @memberof! H3DU.GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
     GraphicsPath.prototype.union = function(path, flatness) {
       if(typeof path === "undefined" || path === null)return this;
@@ -1266,7 +1246,10 @@
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} The difference between this path
  * and the other path.
- * @memberof! H3DU.GraphicsPath
+ * @instance
+ * @memberof! H3DU.GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
     GraphicsPath.prototype.difference = function(path, flatness) {
       if(typeof path === "undefined" || path === null)return this;
@@ -1286,7 +1269,10 @@
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * both paths.
- * @memberof! H3DU.GraphicsPath
+ * @instance
+ * @memberof! H3DU.GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
     GraphicsPath.prototype.intersection = function(path, flatness) {
       if(typeof path === "undefined" || path === null)return this;
@@ -1306,7 +1292,10 @@
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * only one of the two paths.
- * @memberof! H3DU.GraphicsPath
+ * @instance
+ * @memberof! H3DU.GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
+ * @memberof! H3DU.GraphicsPath#
  */
     GraphicsPath.prototype.xor = function(path, flatness) {
       if(typeof path === "undefined" || path === null)return this;

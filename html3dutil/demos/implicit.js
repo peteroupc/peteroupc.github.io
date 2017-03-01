@@ -53,7 +53,7 @@ ImplicitSurface._a2iEdgeConnection =
         [0, 4], [1, 5], [2, 6], [3, 7]
 ];
 
-/** @private */
+/** @ignore */
 ImplicitSurface.prototype._getNormal = function(rfNormal, fX, fY, fZ) {
   "use strict";
   var ff = this.sampler.sample(fX, fY, fZ);
@@ -62,7 +62,7 @@ ImplicitSurface.prototype._getNormal = function(rfNormal, fX, fY, fZ) {
   rfNormal[2] = this.sampler.sample(fX, fY, fZ + 0.001) - ff;
   H3DU.Math.vec3normInPlace(rfNormal);
 };
-/** @private */
+/** @ignore */
 ImplicitSurface._fGetOffset = function(a, b, desired) {
   "use strict";
   var delta = b - a;
@@ -360,7 +360,7 @@ ImplicitSurface._a2iTriangleConnectionTable = [
     [8, 0, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 ];
-/** @private */
+/** @ignore */
 ImplicitSurface.prototype._isOnSurface = function(fX, fY, fZ, fScaleX, fScaleY, fScaleZ) {
   "use strict";
   var mx = 0;
@@ -396,7 +396,7 @@ ImplicitSurface.prototype._isOnSurface = function(fX, fY, fZ, fScaleX, fScaleY, 
   mx = Math.max(mx, value);
   return mn <= 0 && mx >= 0;
 };
-/** @private */
+/** @ignore */
 ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fScaleY, fScaleZ, tmpobj) {
   "use strict";
   var iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
@@ -478,7 +478,6 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
  * @param {Number} ymax Greatest value along the Y axis.
  * @param {Number} zmin Smallest value along the Z axis.
  * @param {Number} zmax Greatest value along the Z axis.
- * @memberof! ImplicitSurface#
  * @returns {Array<Number>} An array of six numbers describing a tight
  * axis-aligned bounding box
  * that fits this implicit surface within the given area. The first three numbers
@@ -487,6 +486,7 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
  * If no part of the boundary of the surface lies within the given
  * area, returns the array [Inf, Inf, Inf, -Inf,
  * -Inf, -Inf].
+ * @instance
  */
 ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
@@ -540,7 +540,7 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
  * @param {Number} zmin Smallest value along the Z axis.
  * @param {Number} zmax Greatest value along the Z axis.
  * @returns {ImplicitSurface} This object.
- * @memberof! ImplicitSurface#
+ * @instance
  */
 ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
@@ -576,8 +576,8 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
  * @param {Number} ymax Greatest value along the Y axis.
  * @param {Number} zmin Smallest value along the Z axis.
  * @param {Number} zmax Greatest value along the Z axis.
- * @memberof! ImplicitSurface#
  * @returns {ImplicitSurface} This object.
+ * @instance
  */
 ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
@@ -612,7 +612,6 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
  * @param {Object} a A sampling object (see ImplicitSurface constructor) that defines an implicit surface.
  * @param {Object} b A sampling object that defines another implicit surface.
  * @returns {Object} A sampling object that defines surface "a" together with surface "b"
- * @memberof! ImplicitSurface
  */
 ImplicitSurface.union = function(a, b) {
   "use strict";
@@ -628,7 +627,6 @@ ImplicitSurface.union = function(a, b) {
  * @param {Object} a A sampling object (see ImplicitSurface constructor) that defines an implicit surface.
  * @param {Object} b A sampling object that defines another implicit surface.
  * @returns {Object} A sampling object that defines surface "a" intersected with surface "b"
- * @memberof! ImplicitSurface
  */
 ImplicitSurface.intersection = function(a, b) {
   "use strict";
@@ -645,7 +643,6 @@ ImplicitSurface.intersection = function(a, b) {
  * @param {Object} b A sampling object that defines the surface
  * to subtract from the first surface.
  * @returns {Object} A sampling object that defines surface "a" with surface "b" subtracted from it.
- * @memberof! ImplicitSurface
  */
 ImplicitSurface.difference = function(a, b) {
   "use strict";

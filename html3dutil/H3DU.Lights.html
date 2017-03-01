@@ -20,7 +20,7 @@ the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
 <h3>Members</h3>
 
 <ul>
-<li><a href="#H3DU.Lights.MAX_LIGHTS">.MAX_LIGHTS</a><br>Maximum number of lights supported
+<li><a href="#H3DU.Lights.MAX_LIGHTS">MAX_LIGHTS</a><br>Maximum number of lights supported
 by the default shader program.</li>
 <li><a href="#H3DU.Lights_sceneAmbient">sceneAmbient</a><br>Ambient color for the scene.</li>
 </ul>
@@ -28,15 +28,15 @@ by the default shader program.</li>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Lights_H3DU.Lights_getCount">getCount</a><br>Gets the number of lights defined in this object.</li>
-<li><a href="#H3DU.Lights_H3DU.Lights_getLight">getLight</a><br>Gets information about the light source at the given index.</li>
-<li><a href="#H3DU.Lights_H3DU.Lights_setAmbient">setAmbient</a><br>Sets the color of the scene&#39;s ambient light.</li>
-<li><a href="#H3DU.Lights_H3DU.Lights_setBasic">setBasic</a><br>Resets this object to a basic configuration for
+<li><a href="#H3DU.Lights_getCount">getCount</a><br>Gets the number of lights defined in this object.</li>
+<li><a href="#H3DU.Lights_getLight">getLight</a><br>Gets information about the light source at the given index.</li>
+<li><a href="#H3DU.Lights_setAmbient">setAmbient</a><br>Sets the color of the scene&#39;s ambient light.</li>
+<li><a href="#H3DU.Lights_setBasic">setBasic</a><br>Resets this object to a basic configuration for
 light sources: one light source with its default
 values, and the default value for <code>sceneAmbient</code>.</li>
-<li><a href="#H3DU.Lights_H3DU.Lights_setDirectionalLight">setDirectionalLight</a><br>Sets a directional light.</li>
-<li><a href="#H3DU.Lights_H3DU.Lights_setParams">setParams</a><br>Sets parameters for the light source at the given index.</li>
-<li><a href="#H3DU.Lights_H3DU.Lights_setPointLight">setPointLight</a><br>Sets a point light.</li>
+<li><a href="#H3DU.Lights_setDirectionalLight">setDirectionalLight</a><br>Sets a directional light.</li>
+<li><a href="#H3DU.Lights_setParams">setParams</a><br>Sets parameters for the light source at the given index.</li>
+<li><a href="#H3DU.Lights_setPointLight">setPointLight</a><br>Sets a point light.</li>
 </ul>
 
 <p><a id='H3DU.Lights.MAX_LIGHTS'></a></p>
@@ -70,7 +70,7 @@ only used on objects that use <a href="H3DU.Material.html">H3DU.Material</a>, no
 
 <p>Default Value: <code>&quot;[0.2,0.2,0.2]&quot;</code></p>
 
-<p><a name='H3DU.Lights_H3DU.Lights_getCount'></a></p>
+<p><a name='H3DU.Lights_getCount'></a></p>
 
 <h3>H3DU.Lights#getCount()</h3>
 
@@ -80,7 +80,7 @@ only used on objects that use <a href="H3DU.Material.html">H3DU.Material</a>, no
 
 <p>Return value. (Type: Number)</p>
 
-<p><a name='H3DU.Lights_H3DU.Lights_getLight'></a></p>
+<p><a name='H3DU.Lights_getLight'></a></p>
 
 <h3>H3DU.Lights#getLight(index)</h3>
 
@@ -97,7 +97,7 @@ Zero-based index of the light to set. The first light has index 0, the second ha
 
 <p>The corresponding light source object. (Type: LightSource)</p>
 
-<p><a name='H3DU.Lights_H3DU.Lights_setAmbient'></a></p>
+<p><a name='H3DU.Lights_setAmbient'></a></p>
 
 <h3>H3DU.Lights#setAmbient(r, g, b, [a])</h3>
 
@@ -120,7 +120,7 @@ Alpha color component (0-1). Currently not used.</li>
 
 <p>This object. (Type: <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>)</p>
 
-<p><a name='H3DU.Lights_H3DU.Lights_setBasic'></a></p>
+<p><a name='H3DU.Lights_setBasic'></a></p>
 
 <h3>H3DU.Lights#setBasic()</h3>
 
@@ -132,7 +132,7 @@ values, and the default value for <code>sceneAmbient</code>.</p>
 
 <p>This object. (Type: <a href="H3DU.Lights.html">H3DU.Lights</a>)</p>
 
-<p><a name='H3DU.Lights_H3DU.Lights_setDirectionalLight'></a></p>
+<p><a name='H3DU.Lights_setDirectionalLight'></a></p>
 
 <h3>H3DU.Lights#setDirectionalLight(index, direction, [diffuse], [specular])</h3>
 
@@ -155,7 +155,7 @@ A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color
 
 <p>This object. (Type: <a href="H3DU.Lights.html">H3DU.Lights</a>)</p>
 
-<p><a name='H3DU.Lights_H3DU.Lights_setParams'></a></p>
+<p><a name='H3DU.Lights_setParams'></a></p>
 
 <h3>H3DU.Lights#setParams(index, params)</h3>
 
@@ -174,7 +174,7 @@ An object as described in H3DU.LightSource.setParams.</li>
 
 <p>This object. (Type: <a href="H3DU.Lights.html">H3DU.Lights</a>)</p>
 
-<p><a name='H3DU.Lights_H3DU.Lights_setPointLight'></a></p>
+<p><a name='H3DU.Lights_setPointLight'></a></p>
 
 <h3>H3DU.Lights#setPointLight(index, position, [diffuse], [specular])</h3>
 

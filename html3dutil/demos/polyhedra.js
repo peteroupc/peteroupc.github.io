@@ -35,7 +35,7 @@ Polyhedra.normDistances = function(vertices, radius) {
     vertices[i + 2] *= norm;
   }
 };
-/** @private */
+/** @ignore */
 Polyhedra.scaleVertices = function(vertices, radius) {
   "use strict";
   for(var i = 0; i < vertices.length; i += 3) {

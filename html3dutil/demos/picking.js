@@ -326,14 +326,14 @@ var AABBNode = function() {
   this.separator = null;
   this.isLeaf = false;
 };
-/** @private */
+/** @ignore */
 AABBTree.prototype._buildTree = function(mesh) {
   "use strict";
   this.root = new AABBNode();
   var faces = mesh.getPositions();
   this._buildNode(this.root, faces, 0);
 };
-/** @private */
+/** @ignore */
 AABBTree.prototype._buildNode = function(node, faces, level) {
   "use strict";
   node.level = level;

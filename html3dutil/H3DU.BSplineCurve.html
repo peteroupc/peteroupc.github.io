@@ -10,7 +10,7 @@
 
 <h3>H3DU.BSplineCurve(controlPoints, knots, [bits])</h3>
 
-<p>A curve evaluator object for a B-spline (basis spline) curve.</p>
+<p>A <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> for a B-spline (basis spline) curve.</p>
 
 <h4>Parameters</h4>
 
@@ -26,43 +26,44 @@ Bits for defining input and controlling output. Zero or more of H3DU.BSplineCurv
 <h3>Members</h3>
 
 <ul>
-<li><a href="#H3DU.BSplineCurve.DIVIDE_BIT">.DIVIDE_BIT</a><br>Indicates to divide each other coordinate of the returned point
+<li><a href="#H3DU.BSplineCurve.DIVIDE_BIT">DIVIDE_BIT</a><br>Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
 coordinate.</li>
-<li><a href="#H3DU.BSplineCurve.HOMOGENEOUS_BIT">.HOMOGENEOUS_BIT</a><br><b>Deprecated: This bit is deprecated because the B-spline
+<li><a href="#H3DU.BSplineCurve.HOMOGENEOUS_BIT">HOMOGENEOUS_BIT</a><br><b>Deprecated: This bit is deprecated because the B-spline
 equation works the same whether control points are in conventional
 coordinates or in homogeneous coordinates.</b></li>
-<li><a href="#H3DU.BSplineCurve.WEIGHTED_BIT">.WEIGHTED_BIT</a><br><b>Deprecated: Support for this control point format may be dropped
+<li><a href="#H3DU.BSplineCurve.WEIGHTED_BIT">WEIGHTED_BIT</a><br><b>Deprecated: Support for this control point format may be dropped
 in the future. Instead of using this bit, supply control points in homogeneous
 coordinates (where each other coordinate is premultiplied by the last)
 and use <code>DIVIDE_BIT</code> to convert the
 results to conventional coordinates.</b></li>
-<li><a href="#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS">.WEIGHTED_DIVIDE_BITS</a><br><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b></li>
+<li><a href="#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS">WEIGHTED_DIVIDE_BITS</a><br><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b></li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.BSplineCurve.clamped">.clamped</a><br>Creates a B-spline curve with uniform knots, except that
+<li><a href="#H3DU.BSplineCurve.clamped">clamped</a><br>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
-<li><a href="#H3DU.BSplineCurve.clampedKnots">.clampedKnots</a><br>Generates a knot vector with uniform knots, to be
+<li><a href="#H3DU.BSplineCurve.clampedKnots">clampedKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
 except that with the knot vector curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
-<li><a href="#H3DU.BSplineCurve.fromCardinalSpline">.fromCardinalSpline</a><br>Creates an array of B-Spline curves from the control points of a cardinal spline.</li>
-<li><a href="#H3DU.BSplineCurve.fromHermiteSpline">.fromHermiteSpline</a><br>Creates an array of B-Spline curves from the control points of a Hermite spline.</li>
-<li><a href="#H3DU.BSplineCurve.uniform">.uniform</a><br>Creates a B-spline curve with uniform knots.</li>
-<li><a href="#H3DU.BSplineCurve.uniformKnots">.uniformKnots</a><br>Generates a knot vector with uniform knots, to be
-passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
-<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_endpoints">endpoints</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
+<li><a href="#H3DU.BSplineCurve_endpoints">endpoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.BSplineCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
 in a B-spline curve.</li>
-<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_split">split</a><br>Splits this B-Spline curve into two at the given point.</li>
-<li><a href="#H3DU.BSplineCurve_H3DU.BSplineCurve_tangent">tangent</a><br>Finds the tangent (derivative) of
+<li><a href="#H3DU.BSplineCurve.fromCardinalSpline">fromCardinalSpline</a><br>Creates an array of B-Spline curves from the control points of a cardinal spline.</li>
+<li><a href="#H3DU.BSplineCurve.fromHermiteSpline">fromHermiteSpline</a><br>Creates an array of B-Spline curves from the control points of a Hermite spline.</li>
+<li><a href="#H3DU.BSplineCurve_getPoints">getPoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.BSplineCurve_split">split</a><br>Splits this B-Spline curve into two at the given point.</li>
+<li><a href="#H3DU.BSplineCurve_tangent">tangent</a><br>Finds the <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">tangent</a> (derivative) of
 this curve at the given point.</li>
+<li><a href="#H3DU.BSplineCurve.uniform">uniform</a><br>Creates a B-spline curve with uniform knots.</li>
+<li><a href="#H3DU.BSplineCurve.uniformKnots">uniformKnots</a><br>Generates a knot vector with uniform knots, to be
+passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 </ul>
 
 <p><a id='H3DU.BSplineCurve.DIVIDE_BIT'></a></p>
@@ -123,7 +124,7 @@ method will be in homogeneous coordinates.</p>
 
 <p><a name='H3DU.BSplineCurve.clamped'></a></p>
 
-<h3>H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])</h3>
+<h3>(static) H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])</h3>
 
 <p>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
@@ -149,7 +150,7 @@ versions.) (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
 <p><a name='H3DU.BSplineCurve.clampedKnots'></a></p>
 
-<h3>H3DU.BSplineCurve.clampedKnots(controlPoints, degree)</h3>
+<h3>(static) H3DU.BSplineCurve.clampedKnots(controlPoints, degree)</h3>
 
 <p>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
@@ -172,90 +173,7 @@ Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If 
 The first knot will be 0 and the last knot will be 1.
 (This is a change in version 2.0.) (Type: Array.&lt;Number&gt;)</p>
 
-<p><a name='H3DU.BSplineCurve.fromCardinalSpline'></a></p>
-
-<h3>H3DU.BSplineCurve.fromCardinalSpline(curve, [tension])</h3>
-
-<p>Creates an array of B-Spline curves from the control points of a cardinal spline.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
-An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.</li>
-<li><code>tension</code> (Type: Number) (optional)<br>
-A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A array of cubic B-Spline curves describing the
-same path as the cardinal spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
-
-<p><a name='H3DU.BSplineCurve.fromHermiteSpline'></a></p>
-
-<h3>H3DU.BSplineCurve.fromHermiteSpline(curve)</h3>
-
-<p>Creates an array of B-Spline curves from the control points of a Hermite spline.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
-An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the tangent vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A array of cubic B-Spline curves describing the
-same path as the Hermite spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
-
-<p><a name='H3DU.BSplineCurve.uniform'></a></p>
-
-<h3>H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits])</h3>
-
-<p>Creates a B-spline curve with uniform knots.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
-Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
-<li><code>degree</code> (Type: Number) (optional)<br>
-Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
-<li><code>bits</code> (Type: Number) (optional)<br>
-Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. The first
-knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
-versions.) (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
-
-<p><a name='H3DU.BSplineCurve.uniformKnots'></a></p>
-
-<h3>H3DU.BSplineCurve.uniformKnots(controlPoints, degree)</h3>
-
-<p>Generates a knot vector with uniform knots, to be
-passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>controlPoints</code> (Type: Number)<br>
-Number of control points the curve will have.</li>
-<li><code>degree</code> (Type: Number)<br>
-Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A uniform knot vector. The first
-knot will be 0 and the last knot will be 1. (This is a change from previous
-versions.) (Type: Array.&lt;Number&gt;)</p>
-
-<p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_endpoints'></a></p>
+<p><a name='H3DU.BSplineCurve_endpoints'></a></p>
 
 <h3>H3DU.BSplineCurve#endpoints()</h3>
 
@@ -265,7 +183,7 @@ versions.) (Type: Array.&lt;Number&gt;)</p>
 
 <p>Return value. (Type: *)</p>
 
-<p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_evaluate'></a></p>
+<p><a name='H3DU.BSplineCurve_evaluate'></a></p>
 
 <h3>H3DU.BSplineCurve#evaluate(u)</h3>
 
@@ -294,7 +212,65 @@ points.push(curve.evaluate(i/10.0));
 }
 </code></pre>
 
-<p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_split'></a></p>
+<p><a name='H3DU.BSplineCurve.fromCardinalSpline'></a></p>
+
+<h3>(static) H3DU.BSplineCurve.fromCardinalSpline(curve, [tension])</h3>
+
+<p>Creates an array of B-Spline curves from the control points of a cardinal spline.</p>
+
+<p>To use this method, you must include the script &quot;extras/spline.js&quot;. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/spline.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.</li>
+<li><code>tension</code> (Type: Number) (optional)<br>
+A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A array of cubic B-Spline curves describing the
+same path as the cardinal spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
+
+<p><a name='H3DU.BSplineCurve.fromHermiteSpline'></a></p>
+
+<h3>(static) H3DU.BSplineCurve.fromHermiteSpline(curve)</h3>
+
+<p>Creates an array of B-Spline curves from the control points of a Hermite spline.</p>
+
+<p>To use this method, you must include the script &quot;extras/spline.js&quot;. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/spline.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the tangent vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A array of cubic B-Spline curves describing the
+same path as the Hermite spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
+
+<p><a name='H3DU.BSplineCurve_getPoints'></a></p>
+
+<h3>H3DU.BSplineCurve#getPoints()</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
+
+<p><a name='H3DU.BSplineCurve_split'></a></p>
 
 <h3>H3DU.BSplineCurve#split(u)</h3>
 
@@ -316,11 +292,11 @@ will be null if <code>u</code> is at or before the start of the curve.
 The second element
 will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>&gt;)</p>
 
-<p><a name='H3DU.BSplineCurve_H3DU.BSplineCurve_tangent'></a></p>
+<p><a name='H3DU.BSplineCurve_tangent'></a></p>
 
 <h3>H3DU.BSplineCurve#tangent(u)</h3>
 
-<p>Finds the tangent (derivative) of
+<p>Finds the <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">tangent</a> (derivative) of
 this curve at the given point.</p>
 
 <h4>Parameters</h4>
@@ -335,6 +311,51 @@ Point on the curve to evaluate.</li>
 <p>An array giving the tangent vector.
 It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.BSplineCurve.uniform'></a></p>
+
+<h3>(static) H3DU.BSplineCurve.uniform(controlPoints, [degree], [bits])</h3>
+
+<p>Creates a B-spline curve with uniform knots.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><code>degree</code> (Type: Number) (optional)<br>
+Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: Number) (optional)<br>
+Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
+
+<p><a name='H3DU.BSplineCurve.uniformKnots'></a></p>
+
+<h3>(static) H3DU.BSplineCurve.uniformKnots(controlPoints, degree)</h3>
+
+<p>Generates a knot vector with uniform knots, to be
+passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Number)<br>
+Number of control points the curve will have.</li>
+<li><code>degree</code> (Type: Number)<br>
+Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A uniform knot vector. The first
+knot will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: Array.&lt;Number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

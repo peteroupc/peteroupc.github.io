@@ -42,7 +42,7 @@ HTML Canvas 2D Context.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_bezierCurveTo">bezierCurveTo</a><br>Adds a cubic B&eacute;zier curve to this path starting
 at this path&#39;s current position.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_closePath">closePath</a><br>Makes this path closed.</li>
-<li><a href="#H3DU.GraphicsPath.GraphicsPath_difference">difference</a><br>Computes the difference between this path&#39;s shape and another
+<li><a href="#H3DU.GraphicsPath_GraphicsPath_difference">difference</a><br>Computes the difference between this path&#39;s shape and another
 path&#39;s shape.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_getBounds">getBounds</a><br>Calculates an axis-aligned bounding box that tightly
 fits this graphics path.</li>
@@ -54,7 +54,7 @@ the path.</li>
 of the path.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_getTriangles">getTriangles</a><br>Converts the subpaths in this path to triangles.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_interpolate">interpolate</a><br>Does a linear interpolation between two graphics paths.</li>
-<li><a href="#H3DU.GraphicsPath.GraphicsPath_intersection">intersection</a><br>Computes the intersection, or the area common to both this path&#39;s shape
+<li><a href="#H3DU.GraphicsPath_GraphicsPath_intersection">intersection</a><br>Computes the intersection, or the area common to both this path&#39;s shape
 and another path&#39;s shape.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_isIncomplete">isIncomplete</a><br>Returns whether the curve path is incomplete
 because of an error in parsing the curve string.</li>
@@ -76,26 +76,28 @@ to line segments.</li>
 <li><a href="#H3DU.GraphicsPath_GraphicsPath_transform">transform</a><br>Returns a modified version of this path that is transformed
 according to the given affine transformation (a transformation
 that keeps straight lines straight and parallel lines parallel).</li>
-<li><a href="#H3DU.GraphicsPath.GraphicsPath_union">union</a><br>Computes the combination of this path&#39;s shape with another
+<li><a href="#H3DU.GraphicsPath_GraphicsPath_union">union</a><br>Computes the combination of this path&#39;s shape with another
 path&#39;s shape.</li>
-<li><a href="#H3DU.GraphicsPath.GraphicsPath_xor">xor</a><br>Computes the shape contained in either this path or another path,
+<li><a href="#H3DU.GraphicsPath_GraphicsPath_xor">xor</a><br>Computes the shape contained in either this path or another path,
 but not both.</li>
-<li><a href="#H3DU.GraphicsPath_H3DU.GraphicsPath_arcShape">arcShape</a><br>Adds path segments to this path that form an arc running along an axis-aligned
+<li><a href="#H3DU.GraphicsPath.GraphicsPath.fromString">GraphicsPath.fromString</a><br>Creates a graphics path from a string whose format follows
+the SVG specification.</li>
+<li><a href="#H3DU.GraphicsPath_arcShape">arcShape</a><br>Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse&#39;s center
 and dimensions, start angle, and sweep angle.</li>
-<li><a href="#H3DU.GraphicsPath_H3DU.GraphicsPath_arcShapeForBox">arcShapeForBox</a><br>Adds path segments to this path that form an arc running along an axis-aligned
+<li><a href="#H3DU.GraphicsPath_arcShapeForBox">arcShapeForBox</a><br>Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse&#39;s corner point
 and dimensions, start angle, and sweep angle.</li>
-<li><a href="#H3DU.GraphicsPath_H3DU.GraphicsPath_arrow">arrow</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.GraphicsPath_H3DU.GraphicsPath_ellipse">ellipse</a><br>Adds path segments to this path that form an axis-aligned ellipse given its center
+<li><a href="#H3DU.GraphicsPath_arrow">arrow</a><br>Adds path segments to this path in the form of an arrow shape.</li>
+<li><a href="#H3DU.GraphicsPath_ellipse">ellipse</a><br>Adds path segments to this path that form an axis-aligned ellipse given its center
 and dimensions.</li>
-<li><a href="#H3DU.GraphicsPath_H3DU.GraphicsPath_ellipseForBox">ellipseForBox</a><br>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse&#39;s corner point
+<li><a href="#H3DU.GraphicsPath_ellipseForBox">ellipseForBox</a><br>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse&#39;s corner point
 and dimensions.</li>
-<li><a href="#H3DU.GraphicsPath_H3DU.GraphicsPath_line">line</a><br>Adds a line segment to this path.</li>
-<li><a href="#H3DU.GraphicsPath_H3DU.GraphicsPath_polygon">polygon</a><br>Adds path segments to this path that form a polygon or a connected line segment strand.</li>
-<li><a href="#H3DU.GraphicsPath_H3DU.GraphicsPath_roundRect">roundRect</a><br>Adds path segments to this path that form an axis-aligned rounded rectangle.</li>
-<li><p><a href="#H3DU.GraphicsPath.fromString">fromString</a><br>Creates a graphics path from a string whose format follows
-the SVG specification.</p>
+<li><a href="#H3DU.GraphicsPath_line">line</a><br>Adds a line segment to this path.</li>
+<li><a href="#H3DU.GraphicsPath_polygon">polygon</a><br>Adds path segments to this path that form a polygon or a connected line segment strand.</li>
+<li><a href="#H3DU.GraphicsPath_regularPolygon">regularPolygon</a><br>Adds path segments to this path that form a regular polygon.</li>
+<li><a href="#H3DU.GraphicsPath_regularStar">regularStar</a><br>Adds path segments to this path that form a regular N-pointed star.</li>
+<li><p><a href="#H3DU.GraphicsPath_roundRect">roundRect</a><br>Adds path segments to this path that form an axis-aligned rounded rectangle.</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_arc'></a></p>
 
@@ -223,9 +225,9 @@ path&#39;s start position, if necessary.</p>
 
 <p>This object. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath.GraphicsPath_difference'></a></p>
+<p><a name='H3DU.GraphicsPath_GraphicsPath_difference'></a></p>
 
-<h3>(static) GraphicsPath#difference(path, [flatness])</h3>
+<h3>GraphicsPath#difference(path, [flatness])</h3>
 
 <p>Computes the difference between this path&#39;s shape and another
 path&#39;s shape. The points given in the H3DU.GraphicsPath#union method
@@ -423,9 +425,9 @@ An interpolation factor, generally ranging from 0 through 1. Closer to 0 means c
 
 <p>The interpolated path. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath.GraphicsPath_intersection'></a></p>
+<p><a name='H3DU.GraphicsPath_GraphicsPath_intersection'></a></p>
 
-<h3>(static) GraphicsPath#intersection(path, [flatness])</h3>
+<h3>GraphicsPath#intersection(path, [flatness])</h3>
 
 <p>Computes the intersection, or the area common to both this path&#39;s shape
 and another path&#39;s shape. The points given in the H3DU.GraphicsPath#union method
@@ -628,7 +630,7 @@ segments and close commands. (Type: <a href="H3DU.GraphicsPath.html">H3DU.Graphi
 <h3>GraphicsPath#toString()</h3>
 
 <p>Returns this path in the form of a string in SVG path format.
-See <a href="H3DU.GraphicsPath.html#H3DU.GraphicsPath.fromString">H3DU.GraphicsPath.fromString</a>.</p>
+See H3DU.GraphicsPath.fromString.</p>
 
 <h4>Return Value</h4>
 
@@ -654,9 +656,9 @@ An array of six numbers describing a 2-dimensional affine transformation. For ea
 
 <p>The transformed version of this path. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath.GraphicsPath_union'></a></p>
+<p><a name='H3DU.GraphicsPath_GraphicsPath_union'></a></p>
 
-<h3>(static) GraphicsPath#union(path, [flatness])</h3>
+<h3>GraphicsPath#union(path, [flatness])</h3>
 
 <p>Computes the combination of this path&#39;s shape with another
 path&#39;s shape. The following points apply to this method:<ul>
@@ -691,9 +693,9 @@ When curves and arcs are decomposed to line segments, the segments will be close
 
 <p>The union of the two paths. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath.GraphicsPath_xor'></a></p>
+<p><a name='H3DU.GraphicsPath_GraphicsPath_xor'></a></p>
 
-<h3>(static) GraphicsPath#xor(path, [flatness])</h3>
+<h3>GraphicsPath#xor(path, [flatness])</h3>
 
 <p>Computes the shape contained in either this path or another path,
 but not both. The points given in the H3DU.GraphicsPath#union method
@@ -713,7 +715,35 @@ When curves and arcs are decomposed to line segments, the segments will be close
 <p>A path whose shape is contained in
 only one of the two paths. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_H3DU.GraphicsPath_arcShape'></a></p>
+<p><a name='H3DU.GraphicsPath.GraphicsPath.fromString'></a></p>
+
+<h3>(static) H3DU.GraphicsPath.GraphicsPath.fromString(str)</h3>
+
+<p>Creates a graphics path from a string whose format follows
+the SVG specification.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>str</code> (Type: String)<br>
+A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). &quot;largeArc&quot; and &quot;sweep&quot; are flags, &quot;0&quot; for false and &quot;1&quot; for true. &quot;rot&quot; is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lower-case letters mean any X and Y coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn&#39;t introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting path. If an error
+occurs while parsing the path, the path&#39;s &quot;isIncomplete() method
+will return <code>true</code>. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
+
+<h4>Example</h4>
+
+<p>The following example creates a graphics path
+from an SVG string describing a polyline.</p>
+
+<pre><code>var path=H3DU.GraphicsPath.fromString(&quot;M10,20L40,30,24,32,55,22&quot;)
+</code></pre>
+
+<p><a name='H3DU.GraphicsPath_arcShape'></a></p>
 
 <h3>H3DU.GraphicsPath#arcShape(cx, cy, w, h, start, sweep, type)</h3>
 
@@ -751,7 +781,7 @@ Type of arc to append to the path. If 0, will append an unclosed arc. If 1, will
 
 <p>This object. If &quot;w&quot; or &quot;h&quot; is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_H3DU.GraphicsPath_arcShapeForBox'></a></p>
+<p><a name='H3DU.GraphicsPath_arcShapeForBox'></a></p>
 
 <h3>H3DU.GraphicsPath#arcShapeForBox(x, y, w, h, start, sweep, type)</h3>
 
@@ -789,29 +819,44 @@ Type of arc to append to the path. If 0, will append an unclosed arc. If 1, will
 
 <p>This object. If &quot;w&quot; or &quot;h&quot; is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_H3DU.GraphicsPath_arrow'></a></p>
+<p><a name='H3DU.GraphicsPath_arrow'></a></p>
 
 <h3>H3DU.GraphicsPath#arrow(x0, y0, x1, y1, headWidth, headLength, tailWidth)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Adds path segments to this path in the form of an arrow shape.</p>
+
+<p>To use this method, you must include the script &quot;extras/pathshapes.js&quot;;
+this is in addition to &quot;extras/path.js&quot;. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;extras/pathshapes.js&quot;&gt;&lt;/script&gt;
+</code></pre>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x0</code> (Type: *)</li>
-<li><code>y0</code> (Type: *)</li>
-<li><code>x1</code> (Type: *)</li>
-<li><code>y1</code> (Type: *)</li>
-<li><code>headWidth</code> (Type: *)</li>
-<li><code>headLength</code> (Type: *)</li>
-<li><code>tailWidth</code> (Type: *)</li>
+<li><code>x0</code> (Type: Number)<br>
+X coordinate of the arrow&#39;s tail, at its very end.</li>
+<li><code>y0</code> (Type: Number)<br>
+Y coordinate of the arrow&#39;s tail, at its very end.</li>
+<li><code>x1</code> (Type: Number)<br>
+X coordinate of the arrow&#39;s tip.</li>
+<li><code>y1</code> (Type: Number)<br>
+Y coordinate of the arrow&#39;s tip.</li>
+<li><code>headWidth</code> (Type: Number)<br>
+Width of the arrowhead&#39;s base from side to side.</li>
+<li><code>headLength</code> (Type: Number)<br>
+Length of the arrowhead from its tip to its base.</li>
+<li><code>tailWidth</code> (Type: Number)<br>
+Width of the arrow&#39;s tail from side to side</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>This object. Nothing will be added to the path if the distance
+from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_H3DU.GraphicsPath_ellipse'></a></p>
+<p><a name='H3DU.GraphicsPath_ellipse'></a></p>
 
 <h3>H3DU.GraphicsPath#ellipse(cx, cy, w, h)</h3>
 
@@ -842,7 +887,7 @@ Height of the ellipse&#39;s bounding box.</li>
 
 <p>This object. If &quot;w&quot; or &quot;h&quot; is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_H3DU.GraphicsPath_ellipseForBox'></a></p>
+<p><a name='H3DU.GraphicsPath_ellipseForBox'></a></p>
 
 <h3>H3DU.GraphicsPath#ellipseForBox(x, y, w, h)</h3>
 
@@ -873,7 +918,7 @@ Height of the ellipse&#39;s bounding box.</li>
 
 <p>This object. If &quot;w&quot; or &quot;h&quot; is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_H3DU.GraphicsPath_line'></a></p>
+<p><a name='H3DU.GraphicsPath_line'></a></p>
 
 <h3>H3DU.GraphicsPath#line(x0, y0, x1, y1)</h3>
 
@@ -890,11 +935,11 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 
 <ul>
 <li><code>x0</code> (Type: Number)<br>
-X coordinate of the line segment&#39;s starting point.</li>
+X coordinate of the line segment&#39;s starting point. The <code>moveTo</code> method will be called on the starting point.</li>
 <li><code>y0</code> (Type: Number)<br>
 Y coordinate of the line segment&#39;s starting point.</li>
 <li><code>x1</code> (Type: Number)<br>
-X coordinate of the line segment&#39;s ending point.</li>
+X coordinate of the line segment&#39;s ending point. The <code>lineTo</code> method will be called on the ending point.</li>
 <li><code>y1</code> (Type: Number)<br>
 X coordinate of the line segment&#39;s ending point.</li>
 </ul>
@@ -903,7 +948,7 @@ X coordinate of the line segment&#39;s ending point.</li>
 
 <p>This object. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_H3DU.GraphicsPath_polygon'></a></p>
+<p><a name='H3DU.GraphicsPath_polygon'></a></p>
 
 <h3>H3DU.GraphicsPath#polygon(pointCoords, closed)</h3>
 
@@ -930,7 +975,73 @@ If &quot;true&quot;, the sequence of points describes a closed polygon and a com
 <p>This object. If &quot;pointCoords&quot; is empty, no path segments will be appended.
 Throws an error if &quot;pointCoords&quot; has an odd length. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_H3DU.GraphicsPath_roundRect'></a></p>
+<p><a name='H3DU.GraphicsPath_regularPolygon'></a></p>
+
+<h3>H3DU.GraphicsPath#regularPolygon(cx, cy, sides, radius, phaseInDegrees)</h3>
+
+<p>Adds path segments to this path that form a regular polygon.</p>
+
+<p>To use this method, you must include the script &quot;extras/pathshapes.js&quot;;
+this is in addition to &quot;extras/path.js&quot;. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;extras/pathshapes.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>cx</code> (Type: Number)<br>
+X coordinate of the center of the polygon.</li>
+<li><code>cy</code> (Type: Number)<br>
+Y coordinate of the center of the polygon.</li>
+<li><code>sides</code> (Type: Number)<br>
+Number of sides the polygon has. Nothing will be added to the path if this value is 2 or less.</li>
+<li><code>radius</code> (Type: Number)<br>
+Radius from the center to each vertex of the polygon.</li>
+<li><code>phaseInDegrees</code> (Type: Number)<br>
+Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
+
+<p><a name='H3DU.GraphicsPath_regularStar'></a></p>
+
+<h3>H3DU.GraphicsPath#regularStar(cx, cy, points, radiusOut, radiusIn, phaseInDegrees)</h3>
+
+<p>Adds path segments to this path that form a regular N-pointed star.</p>
+
+<p>To use this method, you must include the script &quot;extras/pathshapes.js&quot;;
+this is in addition to &quot;extras/path.js&quot;. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;extras/pathshapes.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>cx</code> (Type: Number)<br>
+X coordinate of the center of the star.</li>
+<li><code>cy</code> (Type: Number)<br>
+Y coordinate of the center of the star.</li>
+<li><code>points</code> (Type: Number)<br>
+Number of points the star has. Nothing will be added to the path if this value is 0 or less.</li>
+<li><code>radiusOut</code> (Type: Number)<br>
+Radius from the center to each outer vertex of the star.</li>
+<li><code>radiusIn</code> (Type: Number)<br>
+Radius from the center to each inner vertex of the star.</li>
+<li><code>phaseInDegrees</code> (Type: Number)<br>
+Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
+
+<p><a name='H3DU.GraphicsPath_roundRect'></a></p>
 
 <h3>H3DU.GraphicsPath#roundRect(x, y, w, h, arccx, arccy)</h3>
 
@@ -963,34 +1074,6 @@ Vertical extent (from end to end) of the ellipse formed by each arc that makes u
 <h4>Return Value</h4>
 
 <p>This object. If &quot;w&quot; or &quot;h&quot; is 0, no path segments will be appended. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
-
-<p><a name='H3DU.GraphicsPath.fromString'></a></p>
-
-<h3>(static) H3DU.GraphicsPath.fromString(str)</h3>
-
-<p>Creates a graphics path from a string whose format follows
-the SVG specification.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>str</code> (Type: String)<br>
-A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). &quot;largeArc&quot; and &quot;sweep&quot; are flags, &quot;0&quot; for false and &quot;1&quot; for true. &quot;rot&quot; is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lower-case letters mean any X and Y coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn&#39;t introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed).</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The resulting path. If an error
-occurs while parsing the path, the path&#39;s &quot;isIncomplete() method
-will return <code>true</code>. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
-
-<h4>Example</h4>
-
-<p>The following example creates a graphics path
-from an SVG string describing a polyline.</p>
-
-<pre><code>var path=GraphicsPath.fromString(&quot;M10,20L40,30,24,32,55,22&quot;)
-</code></pre>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

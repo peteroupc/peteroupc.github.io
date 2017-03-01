@@ -24,7 +24,7 @@
  * or element to track keyboard and mouse events for.
  * If null or omitted, uses the calling application's HTML document.
  * @class
- * @alias H3DU.InputTracker
+ * @memberof H3DU
  */
 H3DU.InputTracker = function(element) {
   "use strict";
@@ -188,7 +188,7 @@ H3DU.InputTracker = function(element) {
 };
 /**
  * Disposes all resources used by this input tracker.
- * @memberof! H3DU.InputTracker#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.InputTracker.prototype.dispose = function() {
@@ -213,7 +213,7 @@ H3DU.InputTracker.prototype.dispose = function() {
  * input tracker.
  * @returns {Number} key Key code of the key to check.
  * @returns {Boolean} True if the key is currently pressed; otherwise, false.
- * @memberof! H3DU.InputTracker#
+ * @instance
  */
 H3DU.InputTracker.prototype.getKey = function(key) {
   "use strict";
@@ -226,7 +226,7 @@ H3DU.InputTracker.prototype.getKey = function(key) {
  * mousePos method to find out whether the user
  * has rotated the mouse wheel.
  * @param {Function} func A function.
- * @memberof! H3DU.InputTracker#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.InputTracker.prototype.mousewheel = function(func) {
@@ -234,7 +234,7 @@ H3DU.InputTracker.prototype.mousewheel = function(func) {
   this.mouseWheelCallback = func;
 };
 
-/** @private */
+/** @ignore */
 H3DU.InputTracker._getPageX = function(o) {
   "use strict";
   var x = 0;
@@ -245,7 +245,7 @@ H3DU.InputTracker._getPageX = function(o) {
   }
   return x;
 };
-/** @private */
+/** @ignore */
 H3DU.InputTracker._getPageY = function(o) {
   "use strict";
   var x = 0;
@@ -260,128 +260,107 @@ H3DU.InputTracker._getPageY = function(o) {
  * the keys for the other letters of the English alphabet.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.A = 65;
 /** Key code for the 0 key. Add 1 through 9 to get
  * the keys for the other basic digits 1 through 9.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.ZERO = 48;
 /** Key code for the return key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.RETURN = 10;
 /** Key code for the enter key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.ENTER = 13;
 /** Key code for the tab key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.TAB = 9;
 /** Key code for the shift key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.SHIFT = 16;
 /** Key code for the return key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.CTRL = 17;
 /** Key code for the return key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.ALT = 18;
 /** Key code for the return key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.ESC = 27;
 /** Key code for the space bar.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.SPACE = 32;
 /** Key code for the page up key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.PAGEUP = 33;
 /** Key code for the page down key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.PAGEDOWN = 34;
 /** Key code for the end key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.END = 35;
 /** Key code for the home key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.HOME = 36;
 /** Key code for the left arrow key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.LEFT = 37;
 /** Key code for the up arrow key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.UP = 38;
 /** Key code for the right arrow key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.RIGHT = 39;
 /** Key code for the down arrow key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.DOWN = 40;
 /** Key code for the delete key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.DELETE = 46;
 /** Key code for the plus key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.ADD = 107;
 /** Key code for the minus key.
  * @const
  * @default
- * @memberof! H3DU.InputTracker
  */
 H3DU.InputTracker.SUBTRACT = 109;
 /**
@@ -399,7 +378,7 @@ H3DU.InputTracker.SUBTRACT = 109;
  * </ul>
  * If this object's update method wasn't called, all these values
  * will be 0.
- * @memberof! H3DU.InputTracker#
+ * @instance
  */
 H3DU.InputTracker.prototype.mousePos = function() {
   "use strict";
@@ -415,7 +394,7 @@ H3DU.InputTracker.prototype.mousePos = function() {
  * An alias for {@link H3DU.InputTracker#mousePos}.
  * @deprecated
  * @returns {Object} An object described in the "mousePos" method.
- * @memberof! H3DU.InputTracker#
+ * @instance
  */
 H3DU.InputTracker.prototype.deltaXY = H3DU.InputTracker.prototype.mousePos;
 /**
@@ -433,7 +412,7 @@ H3DU.InputTracker.prototype.deltaXY = H3DU.InputTracker.prototype.mousePos;
  * last time this method was called (or the time this tracker
  * was created if it wasn't) to the current mouse wheel position.
  * @returns {H3DU.InputTracker} This object.
- * @memberof! H3DU.InputTracker#
+ * @instance
  */
 H3DU.InputTracker.prototype.update = function() {
   "use strict";
@@ -492,7 +471,7 @@ var InputTracker = H3DU.InputTracker;
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
  * @class
- * @alias H3DU.Camera
+ * @memberof H3DU
  * @param {H3DU.Batch3D} batch A 3D batch to associate with this
  * camera object. <i>Using a {@link H3DU.Scene3D} here is deprecated.</i>
  * @param {Number} fov Vertical field of view, in degrees. Should be less
@@ -539,7 +518,7 @@ H3DU.Camera = function(batch, fov, nearZ, farZ, canvas) {
   this.input = new H3DU.InputTracker(canvas);
 };
 
-/** @private */
+/** @ignore */
 H3DU.Camera.prototype._orbit = function(deltaMouseX, deltaMouseY, angleMultiplier) {
   "use strict";
   var x = deltaMouseX * angleMultiplier;
@@ -562,7 +541,7 @@ H3DU.Camera.prototype._orbit = function(deltaMouseX, deltaMouseY, angleMultiplie
   this.setPosition(x, y, z);
 };
 
-/** @private */
+/** @ignore */
 H3DU.Camera.prototype._trackball = function(deltaMouseX, deltaMouseY, angleMultiplier) {
   "use strict";
   var x = deltaMouseX * angleMultiplier;
@@ -570,7 +549,7 @@ H3DU.Camera.prototype._trackball = function(deltaMouseX, deltaMouseY, angleMulti
   this.moveAngleHorizontal(x);
   this.moveAngleVertical(y);
 };
-/** @private */
+/** @ignore */
 H3DU.Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
   "use strict";
   var x = deltaMouseX * multiplier;
@@ -578,7 +557,7 @@ H3DU.Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
   this.moveHorizontal(x);
   this.moveVertical(y);
 };
-/** @private */
+/** @ignore */
 H3DU.Camera.prototype._updateView = function() {
   "use strict";
   var mat = H3DU.Math.mat4lookat(
@@ -586,7 +565,7 @@ H3DU.Camera.prototype._updateView = function() {
   this.scene.setViewMatrix(mat);
   return this;
 };
-/** @private */
+/** @ignore */
 H3DU.Camera._velocity = function(toVec, fromVec) {
   "use strict";
   var velocity = H3DU.Math.vec3norm( H3DU.Math.vec3sub(toVec, fromVec));
@@ -604,7 +583,7 @@ H3DU.Camera._velocity = function(toVec, fromVec) {
  * be equal to the near plane distance. Does nothing if the
  * distance is 0 or less.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.setDistance = function(dist) {
   "use strict";
@@ -621,14 +600,14 @@ H3DU.Camera.prototype.setDistance = function(dist) {
 /**
  * Finds the distance from the camera's position to the reference point.
  * @returns {Number} Return value.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.getDistance = function() {
   "use strict";
   return H3DU.Math.vec3length(
     H3DU.Math.vec3sub(this.position, this.center));
 };
-/** @private */
+/** @ignore */
 H3DU.Camera._transformRel = function(quat, point, origin) {
   "use strict";
   var rotPoint = H3DU.Math.vec3sub(point, origin);
@@ -645,7 +624,7 @@ H3DU.Camera._transformRel = function(quat, point, origin) {
  * negative values downward. If the coordinate-system is left-handed,
  * vice versa.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.moveAngleVertical = function(angleDegrees) {
   "use strict";
@@ -671,7 +650,7 @@ H3DU.Camera.prototype.moveAngleVertical = function(angleDegrees) {
  * @method
  * @deprecated Renamed to "moveAngleVertical".
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.turnVertical = H3DU.Camera.prototype.moveAngleVertical;
 
@@ -684,7 +663,7 @@ H3DU.Camera.prototype.turnVertical = H3DU.Camera.prototype.moveAngleVertical;
  * negative values rightward. If the coordinate-system is left-handed,
  * vice versa.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
   "use strict";
@@ -707,7 +686,7 @@ H3DU.Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
  * @method
  * @deprecated Renamed to "moveAngleHorizontal".
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.turnHorizontal = H3DU.Camera.prototype.moveAngleHorizontal;
 
@@ -720,7 +699,7 @@ H3DU.Camera.prototype.turnHorizontal = H3DU.Camera.prototype.moveAngleHorizontal
  * negative values leftward. If the coordinate-system is left-handed,
  * vice versa.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
   "use strict";
@@ -740,7 +719,7 @@ H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
  * negative values downward. If the coordinate-system is left-handed,
  * vice versa.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
   "use strict";
@@ -762,7 +741,7 @@ H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
  * @param {Number} [cy] The camera's new Y coordinate.
  * @param {Number} [cz] The camera's new Z coordinate.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
   "use strict";
@@ -786,7 +765,7 @@ H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
  * @returns {H3DU.Camera} This object.
  * @method
  * @deprecated Renamed to "setPosition".
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
 
@@ -798,7 +777,7 @@ H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
  * @returns {H3DU.Camera} This object.
  * @method
  * @deprecated Renamed to "setPosition".
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
 
@@ -806,7 +785,7 @@ H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
  * Gets the position of the camera.
  * @returns {Array<Number>} An array of three numbers giving
  * the X, Y, and Z coordinates of the camera's position, respectively.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.getPosition = function() {
   "use strict";
@@ -819,7 +798,7 @@ H3DU.Camera.prototype.getPosition = function() {
  * @param {Number} dist The distance to move. Positive
  * values mean forward, and negative distances mean back.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.moveClose = function(dist) {
   "use strict";
@@ -830,7 +809,7 @@ H3DU.Camera.prototype.moveClose = function(dist) {
  * @param {Number} dist The distance to move. Positive
  * values mean forward, and negative distances mean back.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.moveForward = function(dist) {
   "use strict";
@@ -848,7 +827,7 @@ H3DU.Camera.prototype.moveForward = function(dist) {
  * @deprecated Use "moveHorizontal" instead.
  * @param {Number} dist Distance to move the camera.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.moveCenterHorizontal = function(dist) {
   "use strict";
@@ -859,7 +838,7 @@ H3DU.Camera.prototype.moveCenterHorizontal = function(dist) {
  * @deprecated Use "moveVertical" instead.
  * @param {Number} dist Distance to move the camera.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.moveCenterVertical = function(dist) {
   "use strict";
@@ -869,7 +848,7 @@ H3DU.Camera.prototype.moveCenterVertical = function(dist) {
  * Moves the camera horizontally relative to the camera's up vector.
  * @param {Number} dist Distance to move the camera.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.moveHorizontal = function(dist) {
   "use strict";
@@ -887,7 +866,7 @@ H3DU.Camera.prototype.moveHorizontal = function(dist) {
  * Moves the camera toward or away from the camera's up vector.
  * @param {Number} dist Distance to move the camera.
  * @returns {H3DU.Camera} This object.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.moveVertical = function(dist) {
   "use strict";
@@ -906,7 +885,7 @@ H3DU.Camera.prototype.moveVertical = function(dist) {
  * @returns {Array<Number>} The return value as a unit
  * vector (a ["normalized" vector]{@link H3DU.Math.vec3norm} with a length of 1).
  * Returns (0,0,0) if the reference point is the same as the camera's position.
- * @memberof! H3DU.Camera#
+ * @instance
  */
 H3DU.Camera.prototype.getVectorFromCenter = function() {
   "use strict";
@@ -920,7 +899,7 @@ H3DU.Camera.prototype.getVectorFromCenter = function() {
  * method should be called right after the tracker's
  * 'update' method was called. <i>Note that future versions
  * may require this parameter.</i>
- * @memberof! H3DU.Camera#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.Camera.prototype.update = function(input) {
@@ -937,7 +916,7 @@ H3DU.Camera.prototype.update = function(input) {
   }
   return this._updateNew(input || this.input);
 };
-/** @private */
+/** @ignore */
 H3DU.Camera.prototype._updateNew = function(input) {
   "use strict";
   if(!input)return this;

@@ -19,7 +19,7 @@
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @class
- * @alias H3DU.SurfaceOfRevolution
+ * @memberof H3DU
  * @param {Object} curve A [curve evaluator object]{@link H3DU.CurveEval#vertex} that describes a 2-dimensional curve to rotate about the axis of rotation, as
  * specified in the "axis" parameter. The curve's X coordinates
  * correspond to elevation, and its Y coordinates correspond to radius.<p>
@@ -50,7 +50,7 @@ H3DU.SurfaceOfRevolution = function(curve, minval, maxval, axis) {
 /**
  * TODO: Not documented yet.
  * @returns {*} Return value.
- * @memberof! H3DU.SurfaceOfRevolution#
+ * @instance
  */
 H3DU.SurfaceOfRevolution.prototype.endpoints = function() {
   "use strict";
@@ -61,7 +61,7 @@ H3DU.SurfaceOfRevolution.prototype.endpoints = function() {
  * @param {*} u
  * @param {*} v
  * @returns {*} Return value.
- * @memberof! H3DU.SurfaceOfRevolution#
+ * @instance
  */
 H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
   "use strict";
@@ -79,7 +79,7 @@ H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
   }
   return ret;
 };
-/** @private */
+/** @ignore */
 H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
   "use strict";
   var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
@@ -117,7 +117,6 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
  * @returns {H3DU.SurfaceOfRevolution} Return value.
- * @memberof! H3DU.SurfaceOfRevolution
  * @example <caption>The following creates an evaluator for a cone
  * which starts at the origin and runs 10 units along the Z axis.</caption>
  * var surf=H3DU.SurfaceOfRevolution.fromFunction(
@@ -164,7 +163,6 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
  * @returns {H3DU.SurfaceOfRevolution} Return value.
- * @memberof! H3DU.SurfaceOfRevolution
  */
 H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
   "use strict";

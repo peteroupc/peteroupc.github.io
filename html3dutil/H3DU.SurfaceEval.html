@@ -30,139 +30,32 @@ and z(u, v) returns a Z coordinate.</p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.SurfaceEval.findBitangent">.findBitangent</a><br>Finds an approximate bitangent vector for the given surface evaluator object
+<li><a href="#H3DU.SurfaceEval_color">color</a><br>Specifies a parametric surface function for generating color values.</li>
+<li><a href="#H3DU.SurfaceEval_evalOne">evalOne</a><br>Generates vertex positions and attributes based on a point
+in a parametric surface.</li>
+<li><a href="#H3DU.SurfaceEval_evalSurface">evalSurface</a><br>Generates the vertex positions and attributes of a parametric
+surface.</li>
+<li><a href="#H3DU.SurfaceEval.findBitangent">findBitangent</a><br>Finds an approximate <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">bitangent vector</a> for the given surface evaluator object
 at the given U and V coordinates.</li>
-<li><a href="#H3DU.SurfaceEval.findEndPoints">.findEndPoints</a><br>Finds the end points of the surface described by the given surface evaluator object.</li>
-<li><a href="#H3DU.SurfaceEval.findGradient">.findGradient</a><br>Finds an approximate gradient vector for
+<li><a href="#H3DU.SurfaceEval.findEndPoints">findEndPoints</a><br>Finds the end points of the surface described by the given <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>.</li>
+<li><a href="#H3DU.SurfaceEval.findGradient">findGradient</a><br>Finds an approximate <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">gradient vector</a> for
 the given surface evaluator
 at the given U and V coordinates.</li>
-<li><a href="#H3DU.SurfaceEval.findTangent">.findTangent</a><br>Finds an approximate tangent vector for the given surface evaluator object
+<li><a href="#H3DU.SurfaceEval.findTangent">findTangent</a><br>Finds an approximate <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">tangent vector</a> for the given surface evaluator object
 at the given U and V coordinates.</li>
-<li><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_color">color</a><br>Specifies a parametric surface function for generating color values.</li>
-<li><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_evalOne">evalOne</a><br>Generates vertex positions and attributes based on a point
-in a parametric surface.</li>
-<li><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_evalSurface">evalSurface</a><br>Generates the vertex positions and attributes of a parametric
-surface.</li>
-<li><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_normal">normal</a><br><b>Deprecated: Use the &quot;vertex&quot; method instead, specifying an object
+<li><a href="#H3DU.SurfaceEval_normal">normal</a><br><b>Deprecated: Use the &quot;vertex&quot; method instead, specifying an object
 that implements a method named &quot;gradient&quot;.</b></li>
-<li><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal">setAutoNormal</a><br><b>Deprecated: In the future, this class may always generate
+<li><a href="#H3DU.SurfaceEval_setAutoNormal">setAutoNormal</a><br><b>Deprecated: In the future, this class may always generate
 normals, rendering this method unnecessary. You should use the &quot;vertex&quot;
 method, specifying an object that implements a method named
 &quot;gradient&quot;.</b></li>
-<li><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_texCoord">texCoord</a><br>Specifies a parametric surface function for generating texture coordinates.</li>
-<li><p><a href="#H3DU.SurfaceEval_H3DU.SurfaceEval_vertex">vertex</a><br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.</p>
+<li><a href="#H3DU.SurfaceEval_texCoord">texCoord</a><br>Specifies a parametric surface function for generating texture coordinates.</li>
+<li><p><a href="#H3DU.SurfaceEval_vertex">vertex</a><br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.</p>
 
-<p><a name='H3DU.SurfaceEval.findBitangent'></a></p>
+<p><a name='H3DU.SurfaceEval_color'></a></p>
 
-<h3>H3DU.SurfaceEval.findBitangent(e, u, v)</h3></li>
+<h3>H3DU.SurfaceEval#color(evaluator)</h3></li>
 </ul>
-
-<p>Finds an approximate bitangent vector for the given surface evaluator object
-at the given U and V coordinates. This method calls the evaluator&#39;s <code>bitangent</code>
-method if it implements it; otherwise, does a numerical differentiation
-with respect to the V axis using the <code>evaluate</code> method.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>e</code> (Type: Object)<br>
-An object described in H3DU.SurfaceEval#vertex.</li>
-<li><code>u</code> (Type: Number)<br>
-U coordinate of the surface to evaluate.</li>
-<li><code>v</code> (Type: Number)<br>
-V coordinate of the surface to evaluate.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A bitangent vector . (Type: Array.&lt;Number&gt;)</p>
-
-<p><a name='H3DU.SurfaceEval.findEndPoints'></a></p>
-
-<h3>H3DU.SurfaceEval.findEndPoints(e)</h3>
-
-<p>Finds the end points of the surface described by the given surface evaluator object.
-This method calls the evaluator&#39;s <code>endpoints</code>
-method if it implements it; otherwise, returns <code>[0, 1]</code></p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>e</code> (Type: Object)<br>
-An object described in H3DU.SurfaceEval#vertex.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A four-element array giving the surface&#39;s end points. (Type: Array.&lt;Number&gt;)</p>
-
-<p><a name='H3DU.SurfaceEval.findGradient'></a></p>
-
-<h3>H3DU.SurfaceEval.findGradient(e, u, v)</h3>
-
-<p>Finds an approximate gradient vector for
-the given surface evaluator
-at the given U and V coordinates.</p>
-
-<p>This method calls the evaluator&#39;s <code>gradient</code>
-method if it implements it; otherwise, calls the evaluator&#39;s <code>bitangent</code> and <code>tangent</code> methods if it implements them; otherwise, does a numerical differentiation using the <code>evaluate</code> method.</p>
-
-<p>To generate normals for a function for a regular surface (usually
-a continuous, unbroken surface such as a sphere, disk, or open
-cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
-the function used for vertex calculation (we&#39;ll call it <b>F</b>) with
-respect to u, then find the partial derivative of <b>F</b> with respect to
-v, then take their <a href="H3DU.Math.html#H3DU.Math.vec3cross">cross product</a>. The result will be
-the gradient, which will be normal to the surface.
-In mathematical notation, this looks like:
-<b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
-&#x2202;<b>F</b>/&#x2202;<i>v</i>.</p>
-
-<p>(Note: These two partial derivatives are also called the tangent vector
-and the bitangent (or binormal) vector, respectively.)</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>e</code> (Type: Object)<br>
-An object described in H3DU.SurfaceEval#vertex.</li>
-<li><code>u</code> (Type: Number)<br>
-U coordinate of the surface to evaluate.</li>
-<li><code>v</code> (Type: Number)<br>
-V coordinate of the surface to evaluate.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A gradient vector. (Type: Array.&lt;Number&gt;)</p>
-
-<p><a name='H3DU.SurfaceEval.findTangent'></a></p>
-
-<h3>H3DU.SurfaceEval.findTangent(e, u, v)</h3>
-
-<p>Finds an approximate tangent vector for the given surface evaluator object
-at the given U and V coordinates. This method calls the evaluator&#39;s <code>tangent</code>
-method if it implements it; otherwise, does a numerical differentiation
-with respect to the U axis using the <code>evaluate</code> method.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>e</code> (Type: Object)<br>
-An object described in H3DU.SurfaceEval#vertex.</li>
-<li><code>u</code> (Type: Number)<br>
-U coordinate of the surface to evaluate.</li>
-<li><code>v</code> (Type: Number)<br>
-V coordinate of the surface to evaluate.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A tangent vector . (Type: Array.&lt;Number&gt;)</p>
-
-<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_color'></a></p>
-
-<h3>H3DU.SurfaceEval#color(evaluator)</h3>
 
 <p>Specifies a parametric surface function for generating color values.</p>
 
@@ -170,14 +63,14 @@ V coordinate of the surface to evaluate.</li>
 
 <ul>
 <li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See H3DU.SurfaceEval#vertex. </ul></li>
+An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_evalOne'></a></p>
+<p><a name='H3DU.SurfaceEval_evalOne'></a></p>
 
 <h3>H3DU.SurfaceEval#evalOne(mesh, u, v)</h3>
 
@@ -199,7 +92,7 @@ V coordinate of the surface to evaluate.</li>
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_evalSurface'></a></p>
+<p><a name='H3DU.SurfaceEval_evalSurface'></a></p>
 
 <h3>H3DU.SurfaceEval#evalSurface(mesh, [mode], [un], [vn], [u1], [u2], [v1], [v2])</h3>
 
@@ -218,20 +111,127 @@ Number of subdivisions along the U axis. Default is 24.</li>
 <li><code>vn</code> (Type: Number) (optional)<br>
 Number of subdivisions along the V axis. Default is 24.</li>
 <li><code>u1</code> (Type: Number) (optional)<br>
-Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the surface evaluator object, or 0 if not given.</li>
+Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.</li>
 <li><code>u2</code> (Type: Number) (optional)<br>
-Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the surface evaluator object, or 1 if not given.</li>
+Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 1 if not given.</li>
 <li><code>v1</code> (Type: Number) (optional)<br>
-Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the surface evaluator object, or 0 if not given.</li>
+Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.</li>
 <li><code>v2</code> (Type: Number) (optional)<br>
-Ending V coordinate of the surface to evaluate. Default is the ending V coordinate given by the surface evaluator object, or 1 if not given.</li>
+Ending V coordinate of the surface to evaluate. Default is the ending V coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 1 if not given.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_normal'></a></p>
+<p><a name='H3DU.SurfaceEval.findBitangent'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.findBitangent(e, u, v)</h3>
+
+<p>Finds an approximate <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">bitangent vector</a> for the given surface evaluator object
+at the given U and V coordinates. This method calls the evaluator&#39;s <code>bitangent</code>
+method if it implements it; otherwise, does a numerical differentiation
+with respect to the V axis using the <code>evaluate</code> method.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>.</li>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A bitangent vector . (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval.findEndPoints'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.findEndPoints(e)</h3>
+
+<p>Finds the end points of the surface described by the given <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>.
+This method calls the evaluator&#39;s <code>endpoints</code>
+method if it implements it; otherwise, returns <code>[0, 1]</code></p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A four-element array giving the surface&#39;s end points. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval.findGradient'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.findGradient(e, u, v)</h3>
+
+<p>Finds an approximate <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">gradient vector</a> for
+the given surface evaluator
+at the given U and V coordinates.</p>
+
+<p>This method calls the evaluator&#39;s <code>gradient</code>
+method if it implements it; otherwise, calls the evaluator&#39;s <code>bitangent</code> and <code>tangent</code> methods if it implements them; otherwise, does a numerical differentiation using the <code>evaluate</code> method.</p>
+
+<p>To generate normals for a function for a regular surface (usually
+a continuous, unbroken surface such as a sphere, disk, or open
+cylinder), find the <a href="http://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of
+the function used for vertex calculation (we&#39;ll call it <b>F</b>) with
+respect to u, then find the partial derivative of <b>F</b> with respect to
+v, then take their <a href="H3DU.Math.html#H3DU.Math.vec3cross">cross product</a>. The result will be
+the gradient, which will be normal to the surface.
+In mathematical notation, this looks like:
+<b>c</b> = &#x2202;<b>F</b>/&#x2202;<i>u</i> &times;
+&#x2202;<b>F</b>/&#x2202;<i>v</i>.</p>
+
+<p>(Note: These two partial derivatives are also called the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">tangent vector</a>
+and the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">bitangent (or binormal) vector</a>, respectively.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>.</li>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A gradient vector. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval.findTangent'></a></p>
+
+<h3>(static) H3DU.SurfaceEval.findTangent(e, u, v)</h3>
+
+<p>Finds an approximate <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">tangent vector</a> for the given surface evaluator object
+at the given U and V coordinates. This method calls the evaluator&#39;s <code>tangent</code>
+method if it implements it; otherwise, does a numerical differentiation
+with respect to the U axis using the <code>evaluate</code> method.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> (Type: Object)<br>
+An object described in <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>.</li>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A tangent vector . (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.SurfaceEval_normal'></a></p>
 
 <h3>H3DU.SurfaceEval#normal(evaluator)</h3>
 
@@ -244,14 +244,14 @@ that implements a method named &quot;gradient&quot;.</b></p>
 
 <ul>
 <li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See H3DU.SurfaceEval#vertex. </ul></li>
+An object that must contain a function named <code>evaluate</code>, giving 3 values as a result. See <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_setAutoNormal'></a></p>
+<p><a name='H3DU.SurfaceEval_setAutoNormal'></a></p>
 
 <h3>H3DU.SurfaceEval#setAutoNormal(value)</h3>
 
@@ -276,7 +276,7 @@ Either true or false. True means normals will automatically be generated; false 
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_texCoord'></a></p>
+<p><a name='H3DU.SurfaceEval_texCoord'></a></p>
 
 <h3>H3DU.SurfaceEval#texCoord(evaluator)</h3>
 
@@ -286,7 +286,7 @@ Either true or false. True means normals will automatically be generated; false 
 
 <ul>
 <li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a function named <code>evaluate</code>, giving 2 values as a result. See H3DU.SurfaceEval#vertex. </ul></li>
+An object that must contain a function named <code>evaluate</code>, giving 2 values as a result. See <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">H3DU.SurfaceEval#vertex</a>. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -304,7 +304,7 @@ texture coordinates.</p>
 &quot;use strict&quot;; return [u,v] }});
 </code></pre>
 
-<p><a name='H3DU.SurfaceEval_H3DU.SurfaceEval_vertex'></a></p>
+<p><a name='H3DU.SurfaceEval_vertex'></a></p>
 
 <h3>H3DU.SurfaceEval#vertex(evaluator)</h3>
 
@@ -314,7 +314,7 @@ texture coordinates.</p>
 
 <ul>
 <li><code>evaluator</code> (Type: Object)<br>
-A <b>surface evaluator object</b>, which is an object that may or must contain the following methods:<ul> <li><code>evaluate(u, v)</code> - A method that takes a horizontal-axis coordinate (<code>u</code>), generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1. This method is required. This method returns a vector of the result of the evaluation. <li><code>gradient(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the gradient of the surface at the given coordinates. This method is optional.<br> The <b>gradient</b> is a vector pointing up and away from the surface, or alternatively, the cross product of the tangent vector and bitangent vector, in that order. The gradient returned by this method should not be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. <li><a id="tangentvector"></a><code>tangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the tangent vector of the surface at the given coordinates. This method is optional.<br> The <b>tangent vector</b> is the vector pointing toward the U axis, or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>. The tangent vector returned by this method should not be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. <li><a id="bitangentvector"></a><code>bitangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the bitangent vector of the surface at the given coordinates. This method is optional.<br> The <b>bitangent vector</b> is the vector pointing toward the V axis, or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method should not be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. <li><code>endpoints()</code> - A method that returns a four-element array. The first and second elements are the starting and ending U coordinates, respectively, of the surface, and the third and fourth elements are its starting and ending V coordinates. This method is optional. If not given, the default end points are <code>[0, 1, 0, 1]</code>. </ul></li>
+A <b>surface evaluator object</b>, which is an object that may or must contain the following methods:<ul> <li><code>evaluate(u, v)</code> - A method that takes a horizontal-axis coordinate (<code>u</code>), generally from 0 to 1, and a vertical-axis coordinate (<code>v</code>), generally from 0 to 1. This method is required. This method returns a vector of the result of the evaluation. <li><code>gradient(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the gradient of the surface at the given coordinates. This method is optional.<br> The <b>gradient</b> is a vector pointing up and away from the surface, or alternatively, the cross product of the tangent vector and bitangent vector, in that order. The gradient returned by this method should not be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. <li><a id="tangentvector"></a><code>tangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the tangent vector of the surface at the given coordinates. This method is optional.<br> The <b>tangent vector</b> is the vector pointing in the direction of the U axis, or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>. The tangent vector returned by this method should not be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. <li><a id="bitangentvector"></a><code>bitangent(u, v)</code> - A method that takes the same parameters as <code>evaluate</code> and returns the bitangent vector of the surface at the given coordinates. This method is optional.<br> The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method should not be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. <li><code>endpoints()</code> - A method that returns a four-element array. The first and second elements are the starting and ending U coordinates, respectively, of the surface, and the third and fourth elements are its starting and ending V coordinates. This method is optional. If not given, the default end points are <code>[0, 1, 0, 1]</code>. </ul></li>
 </ul>
 
 <h4>Return Value</h4>

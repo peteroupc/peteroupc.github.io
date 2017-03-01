@@ -30,7 +30,7 @@ H3DU.ObjData = function() {
   this.mtl = null;
   this.meshes = [];
 };
-/** @private */
+/** @ignore */
 H3DU.ObjData._MtlData = function() {
   "use strict";
   this.url = null;
@@ -40,7 +40,7 @@ H3DU.ObjData._MtlData = function() {
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
  * @returns {H3DU.ShapeGroup} Group of shapes.
- * @memberof! H3DU.ObjData#
+ * @instance
  */
 H3DU.ObjData.prototype.toShape = function() {
   "use strict";
@@ -53,7 +53,7 @@ H3DU.ObjData.prototype.toShape = function() {
   }
   return multi;
 };
-/** @private */
+/** @ignore */
 H3DU.ObjData.prototype._gatherTextureNames = function() {
   "use strict";
   var textures = [];
@@ -75,7 +75,7 @@ H3DU.ObjData.prototype._gatherTextureNames = function() {
  * of the model to use.
  * @returns {H3DU.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
- * @memberof! H3DU.ObjData#
+ * @instance
  */
 H3DU.ObjData.prototype.toShapeFromName = function(name) {
   "use strict";
@@ -89,7 +89,7 @@ H3DU.ObjData.prototype.toShapeFromName = function(name) {
   }
   return multi;
 };
-/** @private */
+/** @ignore */
 H3DU.ObjData._resolvePath = function(path, name) {
   "use strict";
  // Relatively dumb for a relative path
@@ -107,7 +107,7 @@ H3DU.ObjData._resolvePath = function(path, name) {
   return ret;
 };
 
-/** @private */
+/** @ignore */
 H3DU.ObjData.prototype._getMaterial = function(mesh) {
   "use strict";
   if(!this.mtl || !mesh) {
@@ -121,7 +121,7 @@ H3DU.ObjData.prototype._getMaterial = function(mesh) {
   }
 };
 
-/** @private */
+/** @ignore */
 H3DU.ObjData._MtlData.prototype._resolveTextures = function() {
   "use strict";
   for(var i = 0; i < this.list.length; i++) {
@@ -134,7 +134,7 @@ H3DU.ObjData._MtlData.prototype._resolveTextures = function() {
     }
   }
 };
-/** @private */
+/** @ignore */
 H3DU.ObjData._MtlData.prototype.getMaterialNames = function() {
   "use strict";
   var names = [];
@@ -144,7 +144,7 @@ H3DU.ObjData._MtlData.prototype.getMaterialNames = function() {
   return names;
 };
 
-/** @private */
+/** @ignore */
 H3DU.ObjData._MtlData.prototype.getMaterial = function(name) {
   "use strict";
   for(var i = 0; i < this.list.length; i++) {
@@ -154,7 +154,7 @@ H3DU.ObjData._MtlData.prototype.getMaterial = function(name) {
   }
   return null;
 };
-/** @private */
+/** @ignore */
 H3DU.ObjData._MtlData._getMaterial = function(mtl) {
   "use strict";
   var shininess = 1.0;
@@ -236,7 +236,6 @@ H3DU.ObjData._MtlData._getMaterial = function(mtl) {
  * <li><code>getMaterialNames()</code> - Gets an array of names of all the materials included in this MTL file.
  * </li>
  * </ul>
- * @memberof! H3DU.ObjData
  */
 H3DU.ObjData.loadMtlFromUrl = function(url) {
   "use strict";
@@ -268,7 +267,6 @@ H3DU.ObjData.loadMtlFromUrl = function(url) {
  * MTL is also loaded successfully (the result is an H3DU.ObjData object),
  * and is rejected when an error occurs when loading the OBJ file or any of
  * its textures.
- * @memberof! H3DU.ObjData
  */
 H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
   "use strict";
@@ -294,7 +292,6 @@ H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
  * the OBJ file is loaded successfully, whether or not its associated
  * MTL is also loaded successfully (the result is an H3DU.ObjData object),
  * and is rejected when an error occurs when loading the OBJ file.
- * @memberof! H3DU.ObjData
  */
 H3DU.ObjData.loadObjFromUrl = function(url) {
   "use strict";
@@ -329,7 +326,7 @@ H3DU.ObjData.loadObjFromUrl = function(url) {
      return Promise.reject(e);
    });
 };
-/** @private */
+/** @ignore */
 H3DU.ObjData._MtlData._loadMtl = function(str) {
   "use strict";
   function xyzToRgb(xyz) {
@@ -459,7 +456,7 @@ H3DU.ObjData._MtlData._loadMtl = function(str) {
   }
   return {"success": mtl};
 };
-/** @private */
+/** @ignore */
 H3DU.ObjData._refIndex = function(idxstr, arr) {
   "use strict";
   var ret = parseInt(idxstr, 10);
@@ -467,7 +464,7 @@ H3DU.ObjData._refIndex = function(idxstr, arr) {
   if(ret < 0 || ret >= arr.length)ret = 0;
   return ret;
 };
-/** @private */
+/** @ignore */
 H3DU.ObjData._loadObj = function(str) {
   "use strict";
   var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";

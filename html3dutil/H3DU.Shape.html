@@ -29,46 +29,36 @@ A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.ht
 <h3>Methods</h3>
 
 <ul>
+<li><a href="#H3DU.Shape_copy">copy</a><br>Makes a copy of this object.</li>
+<li><a href="#H3DU.Shape_getBounds">getBounds</a><br>Finds a bounding box that holds all vertices in this shape.</li>
+<li><a href="#H3DU.Shape_getMaterial">getMaterial</a><br>Returns the material used by this shape object.</li>
+<li><a href="#H3DU.Shape_getMatrix">getMatrix</a><br>Gets the transformation matrix used by this shape.</li>
 <li><a href="#H3DU.Shape_getMeshBuffer">getMeshBuffer</a><br>Returns a reference to the mesh buffer used by this shape.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_copy">copy</a><br>Makes a copy of this object.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_getBounds">getBounds</a><br>Finds a bounding box that holds all vertices in this shape.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_getMaterial">getMaterial</a><br>Returns the material used by this shape object.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_getMatrix">getMatrix</a><br>Gets the transformation matrix used by this shape.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_getTransform">getTransform</a><br>Returns the transform used by this shape object.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_getVisible">getVisible</a><br>Gets whether this shape will be drawn on rendering.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
+<li><a href="#H3DU.Shape_getTransform">getTransform</a><br>Returns the transform used by this shape object.</li>
+<li><a href="#H3DU.Shape_getVisible">getVisible</a><br>Gets whether this shape will be drawn on rendering.</li>
+<li><a href="#H3DU.Shape_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this scene.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setColor">setColor</a><br>Sets material parameters that give the shape a certain color.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setMaterial">setMaterial</a><br>Sets this shape&#39;s material parameter object.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setPosition">setPosition</a><br>Sets the relative position of this shape from its original
+<li><a href="#H3DU.Shape_setColor">setColor</a><br>Sets material parameters that give the shape a certain color.</li>
+<li><a href="#H3DU.Shape_setMaterial">setMaterial</a><br>Sets this shape&#39;s material parameter object.</li>
+<li><a href="#H3DU.Shape_setPosition">setPosition</a><br>Sets the relative position of this shape from its original
 position.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setQuaternion">setQuaternion</a><br>Sets this object&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setScale">setScale</a><br>Sets the scale of this shape relative to its original
+<li><a href="#H3DU.Shape_setQuaternion">setQuaternion</a><br>Sets this object&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.</li>
+<li><a href="#H3DU.Shape_setScale">setScale</a><br>Sets the scale of this shape relative to its original
 size.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setShader">setShader</a><br>Sets this shape&#39;s material to a shader with the given URL.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setTexture">setTexture</a><br>Sets material parameters that give the shape a texture with the given URL.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setTextureAndColor">setTextureAndColor</a><br>Sets this shape&#39;s material to the given texture, and its ambient and
+<li><a href="#H3DU.Shape_setShader">setShader</a><br>Sets this shape&#39;s material to a shader with the given URL.</li>
+<li><a href="#H3DU.Shape_setTexture">setTexture</a><br>Sets material parameters that give the shape a texture with the given URL.</li>
+<li><a href="#H3DU.Shape_setTextureAndColor">setTextureAndColor</a><br>Sets this shape&#39;s material to the given texture, and its ambient and
 diffuse parameters to the given color.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setTransform">setTransform</a><br>Sets this shape&#39;s transformation
+<li><a href="#H3DU.Shape_setTransform">setTransform</a><br>Sets this shape&#39;s transformation
 to a copy of the given transformation.</li>
-<li><a href="#H3DU.Shape_H3DU.Shape_setVisible">setVisible</a><br>Sets whether this shape will be drawn on rendering.</li>
-<li><p><a href="#H3DU.Shape_H3DU.Shape_vertexCount">vertexCount</a><br>Gets the number of vertices composed by
+<li><a href="#H3DU.Shape_setVisible">setVisible</a><br>Sets whether this shape will be drawn on rendering.</li>
+<li><p><a href="#H3DU.Shape_vertexCount">vertexCount</a><br>Gets the number of vertices composed by
 all shapes in this scene.</p>
 
-<p><a name='H3DU.Shape_getMeshBuffer'></a></p>
+<p><a name='H3DU.Shape_copy'></a></p>
 
-<h3>#getMeshBuffer()</h3></li>
+<h3>H3DU.Shape#copy()</h3></li>
 </ul>
-
-<p>Returns a reference to the mesh buffer used by this shape.</p>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
-
-<p><a name='H3DU.Shape_H3DU.Shape_copy'></a></p>
-
-<h3>H3DU.Shape#copy()</h3>
 
 <p>Makes a copy of this object. The copied object
 will have its own version of the transform and
@@ -81,7 +71,7 @@ The copied shape won&#39;t have a parent.</p>
 
 <p>A copy of this object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_getBounds'></a></p>
+<p><a name='H3DU.Shape_getBounds'></a></p>
 
 <h3>H3DU.Shape#getBounds()</h3>
 
@@ -100,7 +90,7 @@ last three are the largest-valued X, Y, and Z coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;Number&gt;)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_getMaterial'></a></p>
+<p><a name='H3DU.Shape_getMaterial'></a></p>
 
 <h3>H3DU.Shape#getMaterial()</h3>
 
@@ -111,18 +101,28 @@ The material won&#39;t be copied.</p>
 
 <p>Return value. (Type: <a href="H3DU.Material.html">H3DU.Material</a> | <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_getMatrix'></a></p>
+<p><a name='H3DU.Shape_getMatrix'></a></p>
 
 <h3>H3DU.Shape#getMatrix()</h3>
 
 <p>Gets the transformation matrix used by this shape.
-See H3DU.Transform#getMatrix.</p>
+See <a href="H3DU.Transform.html#H3DU.Transform_getMatrix">H3DU.Transform#getMatrix</a>.</p>
 
 <h4>Return Value</h4>
 
 <p>The current transformation matrix. (Type: Array.&lt;Number&gt;)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_getTransform'></a></p>
+<p><a name='H3DU.Shape_getMeshBuffer'></a></p>
+
+<h3>H3DU.Shape#getMeshBuffer()</h3>
+
+<p>Returns a reference to the mesh buffer used by this shape.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
+
+<p><a name='H3DU.Shape_getTransform'></a></p>
 
 <h3>H3DU.Shape#getTransform()</h3>
 
@@ -133,7 +133,7 @@ The transform won&#39;t be copied.</p>
 
 <p>Return value. (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_getVisible'></a></p>
+<p><a name='H3DU.Shape_getVisible'></a></p>
 
 <h3>H3DU.Shape#getVisible()</h3>
 
@@ -143,7 +143,7 @@ The transform won&#39;t be copied.</p>
 
 <p>True if this shape will be visible; otherwise, false. (Type: Boolean)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_primitiveCount'></a></p>
+<p><a name='H3DU.Shape_primitiveCount'></a></p>
 
 <h3>H3DU.Shape#primitiveCount()</h3>
 
@@ -154,7 +154,7 @@ and points) composed by all shapes in this scene.</p>
 
 <p>Return value. (Type: Number)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setColor'></a></p>
+<p><a name='H3DU.Shape_setColor'></a></p>
 
 <h3>H3DU.Shape#setColor(r, g, b, [a])</h3>
 
@@ -181,7 +181,7 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 
 <p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setMaterial'></a></p>
+<p><a name='H3DU.Shape_setMaterial'></a></p>
 
 <h3>H3DU.Shape#setMaterial(material)</h3>
 
@@ -198,18 +198,18 @@ The material object to use. Throws an error if this parameter is null, is omitte
 
 <p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setPosition'></a></p>
+<p><a name='H3DU.Shape_setPosition'></a></p>
 
 <h3>H3DU.Shape#setPosition(x, y, z)</h3>
 
 <p>Sets the relative position of this shape from its original
-position. See H3DU.Transform#setPosition</p>
+position. See <a href="H3DU.Transform.html#H3DU.Transform_setPosition">H3DU.Transform#setPosition</a></p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>x</code> (Type: number | Array.&lt;Number&gt;)<br>
-X coordinate or a 3-element position array, as specified in H3DU.Transform#setScale.</li>
+X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.</li>
 <li><code>y</code> (Type: Number)<br>
 Y coordinate.</li>
 <li><code>z</code> (Type: Number)<br>
@@ -220,12 +220,12 @@ Z coordinate.</li>
 
 <p>This object. (Type: <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setQuaternion'></a></p>
+<p><a name='H3DU.Shape_setQuaternion'></a></p>
 
 <h3>H3DU.Shape#setQuaternion(quat)</h3>
 
 <p>Sets this object&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
-See H3DU.Transform#setQuaternion.</p>
+See <a href="H3DU.Transform.html#H3DU.Transform_setQuaternion">H3DU.Transform#setQuaternion</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -238,18 +238,18 @@ A four-element array describing the rotation.</li>
 
 <p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setScale'></a></p>
+<p><a name='H3DU.Shape_setScale'></a></p>
 
 <h3>H3DU.Shape#setScale(x, y, z)</h3>
 
 <p>Sets the scale of this shape relative to its original
-size. See H3DU.Transform#setScale</p>
+size. See <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a></p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>x</code> (Type: number | Array.&lt;Number&gt;)<br>
-Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in H3DU.Transform#setScale.</li>
+Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.</li>
 <li><code>y</code> (Type: Number)<br>
 Scaling factor for this object&#39;s height.</li>
 <li><code>z</code> (Type: Number)<br>
@@ -260,7 +260,7 @@ Scaling factor for this object&#39;s depth.</li>
 
 <p>This object. (Type: <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setShader'></a></p>
+<p><a name='H3DU.Shape_setShader'></a></p>
 
 <h3>H3DU.Shape#setShader(shader)</h3>
 
@@ -277,7 +277,7 @@ Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.h
 
 <p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setTexture'></a></p>
+<p><a name='H3DU.Shape_setTexture'></a></p>
 
 <h3>H3DU.Shape#setTexture(name)</h3>
 
@@ -294,7 +294,7 @@ Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.h
 
 <p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setTextureAndColor'></a></p>
+<p><a name='H3DU.Shape_setTextureAndColor'></a></p>
 
 <h3>H3DU.Shape#setTextureAndColor(name, r, g, b, [a])</h3>
 
@@ -320,7 +320,7 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 
 <p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setTransform'></a></p>
+<p><a name='H3DU.Shape_setTransform'></a></p>
 
 <h3>H3DU.Shape#setTransform(transform)</h3>
 
@@ -338,7 +338,7 @@ The transformation to set to a copy of.</li>
 
 <p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_setVisible'></a></p>
+<p><a name='H3DU.Shape_setVisible'></a></p>
 
 <h3>H3DU.Shape#setVisible(value)</h3>
 
@@ -355,7 +355,7 @@ True if this shape will be visible; otherwise, false.</li>
 
 <p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
-<p><a name='H3DU.Shape_H3DU.Shape_vertexCount'></a></p>
+<p><a name='H3DU.Shape_vertexCount'></a></p>
 
 <h3>H3DU.Shape#vertexCount()</h3>
 

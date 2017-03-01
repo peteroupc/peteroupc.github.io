@@ -22,7 +22,7 @@
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
- * @alias H3DU.loadStlFromUrl
+ * @memberof H3DU
  * @param {String} url The URL to load.
  * @returns {Promise} A promise that resolves when the
  * .STL file is loaded successfully (the result will be an {@link H3DU.Mesh} object),
@@ -46,17 +46,17 @@
      return Promise.reject(e);
    });
   };
-/** @private */
+/** @ignore */
   H3DU._StlData.INITIAL = 0;
-/** @private */
+/** @ignore */
   H3DU._StlData.IN_SOLID = 1;
-/** @private */
+/** @ignore */
   H3DU._StlData.IN_FACET = 2;
-/** @private */
+/** @ignore */
   H3DU._StlData.IN_OUTER_LOOP = 3;
-/** @private */
+/** @ignore */
   H3DU._StlData.AFTER_SOLID = 3;
-/** @private */
+/** @ignore */
   H3DU._StlData._loadStl = function(str) {
     var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
     var facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +

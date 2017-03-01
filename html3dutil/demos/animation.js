@@ -26,7 +26,7 @@ function Animator(shape) {
   this.positionAnim = [];
   this.visibleAnim = [];
 }
-/** @private */
+/** @ignore */
 Animator._compact = function(arr) {
   "use strict";
   var fillOffset = 0;
@@ -47,7 +47,7 @@ function Animators() {
   this.list = [];
   this.curTime = 0;
 }
-/** @private */
+/** @ignore */
 Animators.prototype._ensure = function(shape) {
   "use strict";
   for(var i = 0; i < this.list.length; i++) {
@@ -57,51 +57,51 @@ Animators.prototype._ensure = function(shape) {
   this.list.push(anim);
   return anim;
 };
-/** @private */
+/** @ignore */
 Animators.prototype.startAt = function(time) {
   "use strict";
   this.curTime = time;
   return this;
 };
-/** @private */
+/** @ignore */
 Animators.prototype.thenShow = function(shape) {
   "use strict";
   this._ensure(shape).setVisibleAt(true, this.curTime);
   return this;
 };
-/** @private */
+/** @ignore */
 Animators.prototype.thenShowAndMove = function(shape, x, y, z, x2, y2, z2, dur) {
   "use strict";
   return this.thenShow(shape).thenMove(shape, x, y, z, x2, y2, z2, dur);
 };
-/** @private */
+/** @ignore */
 Animators.prototype.thenMove = function(shape, x, y, z, x2, y2, z2, dur) {
   "use strict";
   this._ensure(shape).moveTo(x, y, z, x2, y2, z2, this.curTime, dur);
   this.curTime += dur;
   return this;
 };
-/** @private */
+/** @ignore */
 Animators.prototype.thenPause = function(time) {
   "use strict";
   this.curTime += time;
   return this;
 };
-/** @private */
+/** @ignore */
 Animators.prototype.update = function(time) {
   "use strict";
   for(var i = 0; i < this.list.length; i++) {
     this.list[i].update(time);
   }
 };
-/** @private */
+/** @ignore */
 Animator.prototype.showAndMoveTo = function(
   x, y, z, x2, y2, z2, startInMs, durationInMs) {
   "use strict";
   return this.setVisibleAt(true, startInMs)
    .moveTo(x, y, z, x2, y2, z2, startInMs, durationInMs);
 };
-/** @private */
+/** @ignore */
 Animator.prototype.moveTo = function(
   x, y, z, x2, y2, z2, startInMs, durationInMs) {
   "use strict";
@@ -109,13 +109,13 @@ Animator.prototype.moveTo = function(
   [x, y, z], [x2, y2, z2], startInMs, startInMs + durationInMs]);
   return this;
 };
-/** @private */
+/** @ignore */
 Animator.prototype.setVisibleAt = function(vis, timeInMs) {
   "use strict";
   this.visibleAnim.push([!!vis, timeInMs]);
   return this;
 };
-/** @private */
+/** @ignore */
 Animator.prototype.update = function(time) {
   "use strict";
   var a;

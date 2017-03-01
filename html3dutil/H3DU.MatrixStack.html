@@ -30,37 +30,37 @@ the HTML 3D Library. Example:</p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_frustum">frustum</a><br>Modifies the matrix at the top of this stack by multiplying it by
+<li><a href="#H3DU.MatrixStack_frustum">frustum</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a frustum matrix.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_get">get</a><br>Gets a copy of the matrix at the top of this stack.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_loadIdentity">loadIdentity</a><br>Modifies the matrix at the top of this stack by replacing it with the identity matrix.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_loadMatrix">loadMatrix</a><br>Modifies the matrix at the top of this stack by replacing it with the given matrix.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_loadTransposeMatrix">loadTransposeMatrix</a><br>Modifies the matrix at the top of this stack by replacing it with the
+<li><a href="#H3DU.MatrixStack_get">get</a><br>Gets a copy of the matrix at the top of this stack.</li>
+<li><a href="#H3DU.MatrixStack_loadIdentity">loadIdentity</a><br>Modifies the matrix at the top of this stack by replacing it with the identity matrix.</li>
+<li><a href="#H3DU.MatrixStack_loadMatrix">loadMatrix</a><br>Modifies the matrix at the top of this stack by replacing it with the given matrix.</li>
+<li><a href="#H3DU.MatrixStack_loadTransposeMatrix">loadTransposeMatrix</a><br>Modifies the matrix at the top of this stack by replacing it with the
 transpose of the given matrix.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_lookAt">lookAt</a><br>Modifies the matrix at the top of this stack by multiplying it by
+<li><a href="#H3DU.MatrixStack_lookAt">lookAt</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a camera view.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_multMatrix">multMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by another matrix.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_multTransposeMatrix">multTransposeMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by the transpose of
+<li><a href="#H3DU.MatrixStack_multMatrix">multMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by another matrix.</li>
+<li><a href="#H3DU.MatrixStack_multTransposeMatrix">multTransposeMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by the transpose of
 another matrix.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_ortho">ortho</a><br>Modifies the matrix at the top of this stack by multiplying it by
+<li><a href="#H3DU.MatrixStack_ortho">ortho</a><br>Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_ortho2d">ortho2d</a><br>Modifies the matrix at the top of this stack by multiplying it by
+<li><a href="#H3DU.MatrixStack_ortho2d">ortho2d</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a 2D orthographic projection.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_perspective">perspective</a><br>Modifies the matrix at the top of this stack by multiplying it by
+<li><a href="#H3DU.MatrixStack_perspective">perspective</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_pickMatrix">pickMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by
+<li><a href="#H3DU.MatrixStack_pickMatrix">pickMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix that transforms the view to a portion of the viewport.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_popMatrix">popMatrix</a><br>Removes the matrix at the top of this stack, making
+<li><a href="#H3DU.MatrixStack_popMatrix">popMatrix</a><br>Removes the matrix at the top of this stack, making
 the matrix beneath it the new top matrix.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_pushMatrix">pushMatrix</a><br>Makes a copy of the matrix at the top of this stack
+<li><a href="#H3DU.MatrixStack_pushMatrix">pushMatrix</a><br>Makes a copy of the matrix at the top of this stack
 and puts the copy on top of the stack.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_rotate">rotate</a><br>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.</li>
-<li><a href="#H3DU.MatrixStack_H3DU.MatrixStack_scale">scale</a><br>Modifies the matrix at the top of this stack by multiplying it by a
+<li><a href="#H3DU.MatrixStack_rotate">rotate</a><br>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.</li>
+<li><a href="#H3DU.MatrixStack_scale">scale</a><br>Modifies the matrix at the top of this stack by multiplying it by a
 scaling transformation.</li>
-<li><p><a href="#H3DU.MatrixStack_H3DU.MatrixStack_translate">translate</a><br>Modifies the matrix at the top of this stack by multiplying it by a
+<li><p><a href="#H3DU.MatrixStack_translate">translate</a><br>Modifies the matrix at the top of this stack by multiplying it by a
 translation transformation.</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_frustum'></a></p>
+<p><a name='H3DU.MatrixStack_frustum'></a></p>
 
 <h3>H3DU.MatrixStack#frustum(l, r, b, t, n, f)</h3></li>
 </ul>
@@ -90,7 +90,7 @@ The distance from the camera to the far clipping plane. Objects beyond this dist
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_get'></a></p>
+<p><a name='H3DU.MatrixStack_get'></a></p>
 
 <h3>H3DU.MatrixStack#get()</h3>
 
@@ -100,7 +100,7 @@ The distance from the camera to the far clipping plane. Objects beyond this dist
 
 <p>. (Type: Array.&lt;Number&gt;)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_loadIdentity'></a></p>
+<p><a name='H3DU.MatrixStack_loadIdentity'></a></p>
 
 <h3>H3DU.MatrixStack#loadIdentity()</h3>
 
@@ -110,7 +110,7 @@ The distance from the camera to the far clipping plane. Objects beyond this dist
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_loadMatrix'></a></p>
+<p><a name='H3DU.MatrixStack_loadMatrix'></a></p>
 
 <h3>H3DU.MatrixStack#loadMatrix(mat)</h3>
 
@@ -127,7 +127,7 @@ A matrix to replace the top of the stack with.</li>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_loadTransposeMatrix'></a></p>
+<p><a name='H3DU.MatrixStack_loadTransposeMatrix'></a></p>
 
 <h3>H3DU.MatrixStack#loadTransposeMatrix(mat)</h3>
 
@@ -145,7 +145,7 @@ A matrix whose transpose will replace the top of the stack.</li>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_lookAt'></a></p>
+<p><a name='H3DU.MatrixStack_lookAt'></a></p>
 
 <h3>H3DU.MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz)</h3>
 
@@ -180,7 +180,7 @@ Z coordinate of the up vector.</li>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_multMatrix'></a></p>
+<p><a name='H3DU.MatrixStack_multMatrix'></a></p>
 
 <h3>H3DU.MatrixStack#multMatrix(mat)</h3>
 
@@ -202,7 +202,7 @@ A matrix to multiply the current one by.</li>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_multTransposeMatrix'></a></p>
+<p><a name='H3DU.MatrixStack_multTransposeMatrix'></a></p>
 
 <h3>H3DU.MatrixStack#multTransposeMatrix(mat)</h3>
 
@@ -225,7 +225,7 @@ A matrix whose transpose the current matrix will be multiplied by.</li>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_ortho'></a></p>
+<p><a name='H3DU.MatrixStack_ortho'></a></p>
 
 <h3>H3DU.MatrixStack#ortho(l, r, b, t, n, f)</h3>
 
@@ -257,7 +257,7 @@ Distance from the camera to the far clipping plane. A positive value means the p
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_ortho2d'></a></p>
+<p><a name='H3DU.MatrixStack_ortho2d'></a></p>
 
 <h3>H3DU.MatrixStack#ortho2d(l, r, b, t)</h3>
 
@@ -282,7 +282,7 @@ Topmost coordinate of the 2D view. (Note that t can be greater than b or vice ve
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_perspective'></a></p>
+<p><a name='H3DU.MatrixStack_perspective'></a></p>
 
 <h3>H3DU.MatrixStack#perspective(fov, aspect, n, f)</h3>
 
@@ -308,7 +308,7 @@ The distance from the camera to the far clipping plane. Objects beyond this dist
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_pickMatrix'></a></p>
+<p><a name='H3DU.MatrixStack_pickMatrix'></a></p>
 
 <h3>H3DU.MatrixStack#pickMatrix(wx, wy, ww, wh, vp)</h3>
 
@@ -334,7 +334,7 @@ A 4-element array giving the X and Y coordinates of the lower left corner follow
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_popMatrix'></a></p>
+<p><a name='H3DU.MatrixStack_popMatrix'></a></p>
 
 <h3>H3DU.MatrixStack#popMatrix()</h3>
 
@@ -346,7 +346,7 @@ effect if the stack has only one matrix.</p>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_pushMatrix'></a></p>
+<p><a name='H3DU.MatrixStack_pushMatrix'></a></p>
 
 <h3>H3DU.MatrixStack#pushMatrix()</h3>
 
@@ -357,7 +357,7 @@ and puts the copy on top of the stack.</p>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_rotate'></a></p>
+<p><a name='H3DU.MatrixStack_rotate'></a></p>
 
 <h3>H3DU.MatrixStack#rotate(angle, x, y, z)</h3>
 
@@ -380,7 +380,7 @@ Z-component of the axis of rotation.</li>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_scale'></a></p>
+<p><a name='H3DU.MatrixStack_scale'></a></p>
 
 <h3>H3DU.MatrixStack#scale(x, y, z)</h3>
 
@@ -402,7 +402,7 @@ Scale factor along the Z axis.</li>
 
 <p>This object. (Type: <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a>)</p>
 
-<p><a name='H3DU.MatrixStack_H3DU.MatrixStack_translate'></a></p>
+<p><a name='H3DU.MatrixStack_translate'></a></p>
 
 <h3>H3DU.MatrixStack#translate(x, y, z)</h3>
 

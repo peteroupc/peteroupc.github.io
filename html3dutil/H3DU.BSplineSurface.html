@@ -10,7 +10,7 @@
 
 <h3>H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits])</h3>
 
-<p>A surface evaluator object for a B-spline (basis spline) surface.</p>
+<p>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.</p>
 
 <h4>Parameters</h4>
 
@@ -28,20 +28,42 @@ Bits for defining input and controlling output. Zero or more of H3DU.BSplineCurv
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.BSplineSurface.clamped">.clamped</a><br>Creates a B-spline surface with uniform knots, except that
-the surface&#39;s edges lie on the edges of the control point array.</li>
-<li><a href="#H3DU.BSplineSurface.uniform">.uniform</a><br>Creates a B-spline surface with uniform knots.</li>
-<li><a href="#H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent">bitangent</a><br>Finds the bitangent vector at the
+<li><a href="#H3DU.BSplineSurface_bitangent">bitangent</a><br>Finds the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">bitangent vector</a> at the
 given point on the surface.</li>
-<li><a href="#H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
+<li><a href="#H3DU.BSplineSurface.clamped">clamped</a><br>Creates a B-spline surface with uniform knots, except that
+the surface&#39;s edges lie on the edges of the control point array.</li>
+<li><a href="#H3DU.BSplineSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
 in a B-spline surface.</li>
-<li><p><a href="#H3DU.BSplineSurface_H3DU.BSplineSurface_tangent">tangent</a><br>Finds the tangent vector at the
+<li><a href="#H3DU.BSplineSurface_tangent">tangent</a><br>Finds the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">tangent vector</a> at the
+given point on the surface.</li>
+<li><p><a href="#H3DU.BSplineSurface.uniform">uniform</a><br>Creates a B-spline surface with uniform knots.</p>
+
+<p><a name='H3DU.BSplineSurface_bitangent'></a></p>
+
+<h3>H3DU.BSplineSurface#bitangent(u, v)</h3></li>
+</ul>
+
+<p>Finds the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">bitangent vector</a> at the
 given point on the surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: Number)<br>
+V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array giving the bitangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BSplineSurface.clamped'></a></p>
 
-<h3>H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])</h3></li>
-</ul>
+<h3>(static) H3DU.BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])</h3>
 
 <p>Creates a B-spline surface with uniform knots, except that
 the surface&#39;s edges lie on the edges of the control point array.</p>
@@ -65,54 +87,7 @@ Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface<
 knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>)</p>
 
-<p><a name='H3DU.BSplineSurface.uniform'></a></p>
-
-<h3>H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])</h3>
-
-<p>Creates a B-spline surface with uniform knots.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;Number&gt;&gt;&gt;)<br>
-Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
-<li><code>degreeU</code> (Type: Number) (optional)<br>
-Degree of the B-Spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
-<li><code>degreeV</code> (Type: Number) (optional)<br>
-Degree of the B-Spline surface along the V axis If null or omitted, the default is 3.</li>
-<li><code>bits</code> (Type: Number) (optional)<br>
-Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. The first
-knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
-versions.) (Type: <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>)</p>
-
-<p><a name='H3DU.BSplineSurface_H3DU.BSplineSurface_bitangent'></a></p>
-
-<h3>H3DU.BSplineSurface#bitangent(u, v)</h3>
-
-<p>Finds the bitangent vector at the
-given point on the surface.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>u</code> (Type: Number)<br>
-U coordinate of the surface to evaluate.</li>
-<li><code>v</code> (Type: Number)<br>
-V coordinate of the surface to evaluate.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>An array giving the bitangent vector.
-It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
-
-<p><a name='H3DU.BSplineSurface_H3DU.BSplineSurface_evaluate'></a></p>
+<p><a name='H3DU.BSplineSurface_evaluate'></a></p>
 
 <h3>H3DU.BSplineSurface#evaluate(u, v)</h3>
 
@@ -134,11 +109,11 @@ V coordinate of the surface to evaluate.</li>
 the evaluation. It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 
-<p><a name='H3DU.BSplineSurface_H3DU.BSplineSurface_tangent'></a></p>
+<p><a name='H3DU.BSplineSurface_tangent'></a></p>
 
 <h3>H3DU.BSplineSurface#tangent(u, v)</h3>
 
-<p>Finds the tangent vector at the
+<p>Finds the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">tangent vector</a> at the
 given point on the surface.</p>
 
 <h4>Parameters</h4>
@@ -155,6 +130,31 @@ V coordinate of the surface to evaluate.</li>
 <p>An array giving the tangent vector.
 It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.BSplineSurface.uniform'></a></p>
+
+<h3>(static) H3DU.BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])</h3>
+
+<p>Creates a B-spline surface with uniform knots.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;Number&gt;&gt;&gt;)<br>
+Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
+<li><code>degreeU</code> (Type: Number) (optional)<br>
+Degree of the B-Spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>degreeV</code> (Type: Number) (optional)<br>
+Degree of the B-Spline surface along the V axis If null or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: Number) (optional)<br>
+Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

@@ -127,7 +127,7 @@
       return deriv;
     }
 
-    /** @private */
+    /** @ignore */
     H3DU.PolynomialCurve = function(cp, u1, u2) {
       if(typeof u1 === "undefined" && typeof u2 === "undefined") {
         this.uoffset = 0;
@@ -147,13 +147,13 @@
       this.cp = cp;
       this.elements = cp[0].length;
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialCurve.prototype.setBasis = function(basis, degree) {
       this.matrix = basis;
       this.degree = degree;
       this.derivMatrix = makeDerivativeMatrix(this.matrix, degree + 1, degree + 1);
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialCurve.prototype.evaluate = function(u) {
       var t = (u - this.uoffset) * this.umul;
       if(this.degree === 0) {
@@ -163,7 +163,7 @@
       return evaluatePolys(this.matrix, this.degree + 1, this.degree + 1,
        this.cp, this.elements, t);
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialCurve.prototype.tangent = function(u) {
       var t = (u - this.uoffset) * this.umul;
       if(this.degree === 0) {
@@ -176,7 +176,7 @@
       return evaluatePolys(this.derivMatrix, this.degree + 1, this.degree,
        this.cp, this.elements, t);
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialCurve.makeBezierMatrix = function(degree) {
      // Generates a matrix where each row
      // is a Bernstein polynomial of the given degree.
@@ -212,7 +212,7 @@
       }
       return mat;
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialSurface = function(cp, u1, u2, v1, v2) {
       if(typeof u1 === "undefined" && typeof u2 === "undefined" &&
     typeof v1 === "undefined" && typeof v2 === "undefined") {
@@ -242,11 +242,11 @@
       this.elements = cp[0][0].length;
     };
 
-/** @private */
+/** @ignore */
     H3DU.PolynomialSurface.prototype.endpoints = function() {
       return [this.uoffset, this.u2];
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialSurface.prototype.setBasis = function(basisU, basisV, degreeU, degreeV) {
       if(this.cp.length - 1 < degreeV)throw new Error();
       if(this.cp[0].length - 1 < degreeU)throw new Error();
@@ -262,7 +262,7 @@
         this.derivMatrixV = makeDerivativeMatrix(this.matrixV, this.degreeV + 1, this.degreeV + 1);
       }
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialSurface.prototype.evaluate = function(u, v) {
       var tu = (u - this.uoffset) * this.umul;
       var tv = (v - this.voffset) * this.vmul;
@@ -275,7 +275,7 @@
       var ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
       return ret;
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialSurface.prototype.bitangent = function(u, v) {
       var tu = (u - this.uoffset) * this.umul;
       var tv = (v - this.voffset) * this.vmul;
@@ -291,7 +291,7 @@
       ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
       return ret;
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialSurface.prototype.tangent = function(u, v) {
       var tu = (u - this.uoffset) * this.umul;
       var tv = (v - this.voffset) * this.vmul;
@@ -307,7 +307,7 @@
       ret = combineCoeffs(coeffsU, coeffsV, this.cp, this.elements);
       return ret;
     };
-/** @private */
+/** @ignore */
     H3DU.PolynomialSurface.prototype.endpoints = function() {
       return [this.uoffset, this.u2, this.voffset, this.v2];
     };

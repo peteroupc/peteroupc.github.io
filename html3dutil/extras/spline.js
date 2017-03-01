@@ -10,6 +10,8 @@
 
 /**
  * Creates an array of B-Spline curves from the control points of a Hermite spline.
+ * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
+ * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
  * @param {Array<Array<Number>>} curve An array of control points,
  * each with the same number of values, that describe a Hermite spline.
  * Each pair of control points takes up two elements of the array and consists
@@ -17,7 +19,6 @@
  * The array must have an even number of control points and at least four control points.
  * @returns {H3DU.BSplineCurve} A array of cubic B-Spline curves describing the
  * same path as the Hermite spline.
- * @memberof! H3DU.BSplineCurve
  */
 H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
   "use strict";
@@ -48,6 +49,8 @@ H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
 
 /**
  * Creates an array of B-Spline curves from the control points of a cardinal spline.
+ * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
+ * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
  * @param {Array<Array<Number>>} curve An array of control points,
  * each with the same number of values, that describe a cardinal spline.
  * Each point, except the first and the last, will be tangent to the line that connects the
@@ -58,7 +61,6 @@ H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
  * is commonly called a <i>Catmull-Rom spline</i>).
  * @returns {H3DU.BSplineCurve} A array of cubic B-Spline curves describing the
  * same path as the cardinal spline.
- * @memberof! H3DU.BSplineCurve
  */
 H3DU.BSplineCurve.fromCardinalSpline = function(spline, tension) {
   "use strict";

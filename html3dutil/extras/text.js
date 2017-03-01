@@ -46,7 +46,7 @@
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
  * @class
- * @alias H3DU.TextFont
+ * @memberof H3DU
  */
 H3DU.TextFont = function() {
   "use strict";
@@ -72,7 +72,7 @@ H3DU.TextFont = function() {
     this.kern[k.first][k.second] = k;
   }
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont._toArray = function(str, minLength) {
   "use strict";
   var spl;
@@ -104,7 +104,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
  * U+000A, that break lines).
- * @memberof! H3DU.TextFont#
+ * @instance
  */
 H3DU.TextFont.prototype.measure = function(str, params) {
   "use strict";
@@ -122,7 +122,7 @@ H3DU.TextFont.prototype.measure = function(str, params) {
   }
   return [size, yPos];
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont.prototype._measureWord = function(
   str, startIndex, endIndex, lastChar, scale, info) {
   "use strict";
@@ -159,7 +159,7 @@ H3DU.TextFont.prototype._measureWord = function(
   info[1] = xSize; // width of the word
   info[2] = lastChar; // last character of the word
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
   "use strict";
   if(str.length === 0) {
@@ -277,7 +277,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * If null or omitted, uses the default filenames for texture pages defined in this font.
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
- * @memberof! H3DU.TextFont#
+ * @instance
  */
 H3DU.TextFont.prototype.textShape = function(str, params) {
   "use strict";
@@ -308,13 +308,12 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
       "diffuse":color,
       "shader": shader
     });
-    console.log(material);
     sh.setMaterial(material);
     group.addShape(sh);
   }
   return group;
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, xPos, yPos, params, extra, meshesForPage) {
   "use strict";
   var lastChar = -1;
@@ -397,7 +396,7 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
  * @returns {Array<Mesh>} An array of meshes representing the text.
  * There is one mesh for each texture page of the font. If none of the
  * text uses a given page, the corresponding mesh will be null.
- * @memberof! H3DU.TextFont#
+ * @instance
  */
 H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
   "use strict";
@@ -441,7 +440,7 @@ H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
   }
   return meshesForPage;
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont._resolvePath = function(path, name) {
  // Relatively dumb for a relative path
  // resolver, but sufficient for H3DU.TextFont's purposes
@@ -455,7 +454,7 @@ H3DU.TextFont._resolvePath = function(path, name) {
   }
   return ret;
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont._elementToObject = function(element) {
   "use strict";
   var attrs = element.getAttributeNames();
@@ -472,7 +471,7 @@ H3DU.TextFont._elementToObject = function(element) {
   }
   return x;
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont._loadJsonFontInner = function(data) {
   "use strict";
   var xchars = [];
@@ -496,7 +495,7 @@ H3DU.TextFont._loadJsonFontInner = function(data) {
   return new H3DU.TextFont(json.info, xchars, xpages, xkernings,
    json.common, data.url);
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont._loadXmlFontInner = function(data) {
   "use strict";
   var doc = data.data;
@@ -528,7 +527,7 @@ H3DU.TextFont._loadXmlFontInner = function(data) {
   }
   return new H3DU.TextFont(xinfos, xchars, xpages, xkernings, xcommons, data.url);
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont._decodeUtf8 = function(data, offset, endOffset) {
   "use strict";
   var ret = [];
@@ -590,7 +589,7 @@ H3DU.TextFont._decodeUtf8 = function(data, offset, endOffset) {
     }
   }
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont._loadBinaryFontInner = function(data) {
   "use strict";
   var view = new DataView(data.data);
@@ -728,7 +727,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
   }
   return new H3DU.TextFont(info, chars, pages, kernings, commons, data.url);
 };
-/** @private */
+/** @ignore */
 H3DU.TextFont._loadTextFontInner = function(data) {
   "use strict";
   var text = data.data;
@@ -805,7 +804,6 @@ H3DU.TextFont._loadTextFontInner = function(data) {
  * <li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
  * in the order in which they are declared in the font data file.
  * </ul>
- * @memberof! H3DU.TextFont
  */
 H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
   "use strict";
@@ -835,7 +833,7 @@ H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- * @memberof! H3DU.TextFont#
+ * @instance
  */
 H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
   "use strict";
@@ -861,7 +859,6 @@ H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
  * @returns {Promise<H3DU.TextFont>} A promise that is resolved
  * when the font data is loaded successfully (the result will be
  * an H3DU.TextFont object), and is rejected when an error occurs.
- * @memberof! H3DU.TextFont
  */
 H3DU.TextFont.load = function(fontFileName) {
   "use strict";
@@ -876,9 +873,7 @@ H3DU.TextFont.load = function(fontFileName) {
    function(data) {
      var ret = H3DU.TextFont._loadBinaryFontInner(data);
      return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url});
-   }, function(e) {
-      console.log(e);
-    });
+   });
   } else if(/\.fnt$/i.exec(fontFileName)) {
     return H3DU.loadFileFromUrl(fontFileName, "arraybuffer").then(
    function(data) {
@@ -910,7 +905,7 @@ H3DU.TextFont.load = function(fontFileName) {
   }
 };
 
-/** @private */
+/** @ignore */
 H3DU.TextFont._textureShader = function() {
   "use strict";
   var shader = [
@@ -929,7 +924,7 @@ H3DU.TextFont._textureShader = function() {
   return shader;
 };
 
-/** @private */
+/** @ignore */
 H3DU.TextFont._textShader = function(msdf) {
   "use strict";
   var shader = [
@@ -983,7 +978,7 @@ H3DU.TextFont._textShader = function(msdf) {
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
  * @class
- * @alias H3DU.TextureAtlas
+ * @memberof H3DU
  */
 H3DU.TextureAtlas = function() {
   "use strict";
@@ -1011,7 +1006,7 @@ H3DU.TextureAtlas = function() {
  * <li><code>y</code> - Y coordinate of the sprite.
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
- * @memberof! H3DU.TextureAtlas#
+ * @instance
  */
 H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
   "use strict";
@@ -1035,7 +1030,7 @@ H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
   }
   return group;
 };
-/** @private */
+/** @ignore */
 H3DU.TextureAtlas.prototype._makeSprite = function(name, index, x, y, meshesForPage) {
   "use strict";
   var sprite = null;
@@ -1078,7 +1073,7 @@ H3DU.TextureAtlas.prototype._makeSprite = function(name, index, x, y, meshesForP
      .vertex2(vx2, vy2);
   }
 };
-/** @private */
+/** @ignore */
 H3DU.TextureAtlas._checkSprite = function(sprite) {
   "use strict";
   if(!sprite)return false;
@@ -1097,7 +1092,7 @@ H3DU.TextureAtlas._checkSprite = function(sprite) {
   }
   return true;
 };
-/** @private */
+/** @ignore */
 H3DU.TextureAtlas._loadText = function(data) {
   "use strict";
   var text = data.data;
@@ -1264,7 +1259,7 @@ H3DU.TextureAtlas._loadText = function(data) {
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- * @memberof! H3DU.TextureAtlas#
+ * @instance
  */
 H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
   "use strict";
@@ -1299,7 +1294,6 @@ H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
  * <li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
  * in the order in which they are declared in the font data file.
  * </ul>
- * @memberof! H3DU.TextureAtlas
  */
 H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
   "use strict";
@@ -1329,7 +1323,6 @@ H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
  * @returns {Promise<H3DU.TextureAtlas>} A promise that is resolved
  * when the texture atlas data is loaded successfully (the result will be
  * an H3DU.TextureAtlas object), and is rejected when an error occurs.
- * @memberof! H3DU.TextureAtlas
  */
 H3DU.TextureAtlas.load = function(atlasFileName) {
   "use strict";

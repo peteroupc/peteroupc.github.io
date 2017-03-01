@@ -20,7 +20,7 @@ function BspTree(polygons) {
   this.faces = null;
   this._buildNode(polygons);
 }
-/** @private */
+/** @ignore */
 BspTree._negatePlane = function(plane) {
   "use strict";
   return [-plane[0], -plane[1], -plane[2], plane[3], plane[4], plane[5]];
@@ -29,7 +29,7 @@ BspTree._negatePlane = function(plane) {
  * Generates a mesh buffer containing the polygons
  * stored in this BSP tree.
  * @returns {H3DU.MeshBuffer} Return value.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.toMeshBuffer = function() {
   "use strict";
@@ -37,7 +37,7 @@ BspTree.prototype.toMeshBuffer = function() {
   this._toMeshInternal(mesh);
   return new H3DU.MeshBuffer(mesh);
 };
-/** @private */
+/** @ignore */
 BspTree.prototype._toMeshInternal = function(mesh) {
   "use strict";
   if(typeof this.faces !== "undefined" && this.faces !== null) {
@@ -58,7 +58,7 @@ BspTree.prototype._toMeshInternal = function(mesh) {
     this.backTree._toMeshInternal(mesh);
   }
 };
-/** @private */
+/** @ignore */
 BspTree.prototype._getFacesInternal = function(polygons) {
   "use strict";
   if(typeof this.faces !== "undefined" && this.faces !== null) {
@@ -77,7 +77,7 @@ BspTree.prototype._getFacesInternal = function(polygons) {
 /**
  * Gets a copy of the polygons used in this BSP tree.
  * @returns {Array<Polygon>} An array of the polygons.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.getPolygons = function() {
   "use strict";
@@ -88,7 +88,7 @@ BspTree.prototype.getPolygons = function() {
 /**
  * Flips the solid and empty space for this BSP tree.
  * @returns {BspTree} This object.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.flip = function() {
   "use strict";
@@ -143,7 +143,7 @@ function Polygon(verts) {
     this.plane = BspTree._negatePlane(this.plane);
   };
 }
-/** @private */
+/** @ignore */
 BspTree._classifyPolygons = function(polygons, plane) {
   "use strict";
   var frontFaces = [];
@@ -177,7 +177,7 @@ BspTree._classifyPolygons = function(polygons, plane) {
     "onFaces":onFaces
   };
 };
-/** @private */
+/** @ignore */
 BspTree._splitPolygon = function(poly, splitPlane, info) {
   "use strict";
   var front = new Polygon();
@@ -213,7 +213,7 @@ BspTree._splitPolygon = function(poly, splitPlane, info) {
   info.frontFaces.push(front);
   info.backFaces.push(back);
 };
-/** @private */
+/** @ignore */
 BspTree._addAll = function(dst, src) {
   "use strict";
   for(var elemIndex = 0; elemIndex < src.length; elemIndex++) {
@@ -221,7 +221,7 @@ BspTree._addAll = function(dst, src) {
     dst.push(elem);
   }
 };
-/** @private */
+/** @ignore */
 BspTree._handleOnAndCrossing = function(info, plane) {
   "use strict";
   var splittingPlaneNormal = plane.slice(0, 3);
@@ -239,7 +239,7 @@ BspTree._handleOnAndCrossing = function(info, plane) {
     BspTree._splitPolygon(info.crossingFaces[i], plane, info);
   }
 };
-/** @private */
+/** @ignore */
 BspTree.prototype._clipInternal = function(polygons) {
   "use strict";
   polygons = polygons || [];
@@ -266,7 +266,7 @@ BspTree.prototype._clipInternal = function(polygons) {
  * Clips the solid areas of another BSP tree out of this one.
  * @param {BspTree} node Another BSP tree.
  * @returns {BspTree} This object.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.clip = function(node) {
   "use strict";
@@ -301,13 +301,13 @@ BspTree.fromMeshBuffer = function(mesh) {
 /**
  * Creates a copy of this BSP tree.
  * @returns {BspTree} A copy of this object.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.copy = function() {
   "use strict";
   return new BspTree(this.getPolygons());
 };
-/** @private */
+/** @ignore */
 BspTree.prototype._clipflip2 = function(other) {
   "use strict";
   for(var i = 0; i < 2; i++) {
@@ -320,7 +320,7 @@ BspTree.prototype._clipflip2 = function(other) {
  * this tree or the given tree or both.
  * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.union = function(other) {
   "use strict";
@@ -335,7 +335,7 @@ BspTree.prototype.union = function(other) {
  * this tree that are not common to the given tree.
  * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.difference = function(other) {
   "use strict";
@@ -350,7 +350,7 @@ BspTree.prototype.difference = function(other) {
  * to both this tree and the given tree.
  * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.intersection = function(other) {
   "use strict";
@@ -365,13 +365,13 @@ BspTree.prototype.intersection = function(other) {
  * this tree or the given tree but not both.
  * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
- * @memberof! BspTree#
+ * @instance
  */
 BspTree.prototype.xor = function(other) {
   "use strict";
   return this.union(other).difference(this.intersection(other));
 };
-/** @private */
+/** @ignore */
 BspTree.prototype._buildNode = function(polygons) {
   "use strict";
   if(polygons.length === 0) {

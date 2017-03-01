@@ -172,6 +172,7 @@
    * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
    * Some methods may be defined in other scripts, in which case the
    * script to be included this way will be mentioned.
+   * @memberof H3DU
    * @alias H3DU.GraphicsPath
    * @class
    */
@@ -181,7 +182,7 @@
     this.startPos = [0, 0];
     this.endPos = [0, 0];
   }
-/** @private */
+/** @ignore */
   var Triangulate = {};
   GraphicsPath.CLOSE = 0;
   GraphicsPath.LINE = 1;
@@ -195,12 +196,13 @@
  * closePath command, or another path segment
  * is added to the path.
  * @returns {Boolean} Return value.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.isIncomplete = function() {
     return this.incomplete;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._startPoint = function(a) {
     if(a[0] === GraphicsPath.CLOSE) {
       return [0, 0];
@@ -208,7 +210,7 @@
       return [a[1], a[2]];
     }
   };
-/** @private */
+/** @ignore */
   GraphicsPath._endPoint = function(a) {
     if(a[0] === GraphicsPath.CLOSE) {
       return [0, 0];
@@ -218,7 +220,7 @@
       return [a[a.length - 2], a[a.length - 1]];
     }
   };
-/** @private */
+/** @ignore */
   GraphicsPath._point = function(seg, t) {
     var a, b, x, y;
     if(seg[0] === GraphicsPath.CLOSE) {
@@ -271,7 +273,7 @@
       return [0, 0];
     }
   };
-/** @private */
+/** @ignore */
   GraphicsPath._normalize = function(v2) {
     var len = Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
     if(len !== 0) {
@@ -282,7 +284,7 @@
     return v2;
   };
 
-  /** @private */
+  /** @ignore */
   GraphicsPath._tangent = function(seg, t) {
     var a, b, x, y;
     if(seg[0] === GraphicsPath.LINE) {
@@ -329,7 +331,7 @@
     }
   };
 
-/** @private */
+/** @ignore */
   GraphicsPath._subdivide2 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, list, flatness, mode, depth) {
     var x1 = a1 + (a3 - a1) * tcut;
     var x2 = a3 + (a5 - a3) * tcut;
@@ -347,7 +349,7 @@
     GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
     GraphicsPath._flattenCubic(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, list, flatness, mode, depth + 1);
   };
-/** @private */
+/** @ignore */
   GraphicsPath._subdivide3 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, tcut2, list, flatness, mode, depth) {
     var x1 = a1 + (a3 - a1) * tcut;
     var x2 = a3 + (a5 - a3) * tcut;
@@ -366,7 +368,7 @@
     GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
     GraphicsPath._subdivide2(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, tcutx, list, flatness, mode, depth + 1);
   };
-/** @private */
+/** @ignore */
   GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
  /* if(depth<1) {
@@ -404,7 +406,7 @@
       GraphicsPath._subdivide2(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, 0.5, list, flatness, mode, depth);
     }
   };
-/** @private */
+/** @ignore */
   GraphicsPath._flattenQuad = function(a1, a2, a3, a4, a5, a6, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
     if(depth >= 20 || Math.abs(a1 - a3 - a3 + a5) + Math.abs(a2 - a4 - a4 + a6) <= flatness) {
@@ -428,7 +430,7 @@
       GraphicsPath._flattenQuad(xc, yc, x2, y2, a5, a6, tmid, t2, list, flatness, mode, depth + 1);
     }
   };
-/** @private */
+/** @ignore */
   GraphicsPath._flattenArc = function(a, t1, t2, list, flatness, mode, depth) {
     var rot = a[5];
     var crot = Math.cos(rot);
@@ -436,7 +438,7 @@
     var ellipseInfo = [a[3], a[4], a[10], a[11], crot, srot];
     GraphicsPath._flattenArcInternal(ellipseInfo, a[1], a[2], a[8], a[9], a[12], a[13], t1, t2, list, flatness, mode, depth);
   };
-/** @private */
+/** @ignore */
   GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1, theta2, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
     var thetaMid = (theta1 + theta2) * 0.5;
@@ -464,7 +466,7 @@
       GraphicsPath._flattenArcInternal(ellipseInfo, xmid, ymid, x2, y2, thetaMid, theta2, tmid, t2, list, flatness, mode, depth + 1);
     }
   };
-/** @private */
+/** @ignore */
   GraphicsPath.prototype._start = function() {
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
@@ -472,7 +474,7 @@
     }
     return [0, 0];
   };
-/** @private */
+/** @ignore */
   GraphicsPath.prototype._end = function() {
     for(var i = this.segments.length - 1; i >= 0; i--) {
       var s = this.segments[i];
@@ -486,6 +488,7 @@
  * @param {H3DU.GraphicsPath} path Another graphics path.
  * Can be null.
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.merge = function(path) {
@@ -527,6 +530,7 @@
  * See {@link H3DU.GraphicsPath.fromString}.
  * @returns {String} A string describing the path in the SVG path
  * format.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.toString = function() {
@@ -562,7 +566,7 @@
     }
     return ret;
   };
-   /** @private */
+   /** @ignore */
   GraphicsPath._quadCurveLength = function(x1, y1, x2, y2, x3, y3) {
     var integrand = function(t) {
       // Length of derivative of quadratic Bezier vector function
@@ -573,7 +577,7 @@
     };
     return GraphicsPath._numIntegrate(integrand, 0, 1);
   };
-/** @private */
+/** @ignore */
   GraphicsPath._cubicCurveLength = function(x1, y1, x2, y2, x3, y3, x4, y4) {
     var integrand = function(t) {
       // Length of derivative of cubic Bezier vector function
@@ -591,7 +595,7 @@
     };
     return GraphicsPath._numIntegrate(integrand, 0, 1);
   };
-/** @private */
+/** @ignore */
   GraphicsPath._length = function(a) {
     if(a[0] === GraphicsPath.LINE) {
       var dx = a[3] - a[1];
@@ -619,6 +623,7 @@
  * @param {Number} [flatness] No longer used by this method.
  * @returns {Number} Approximate length of this path
  * in units.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.pathLength = function() {
@@ -642,6 +647,7 @@
  * Each line segment is an array of four numbers: the X and
  * Y coordinates of the start point, respectively, then the X and
  * Y coordinates of the end point, respectively.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getLines = function(flatness) {
@@ -672,6 +678,7 @@
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path consisting only of line
  * segments and close commands.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.toLinePath = function(flatness) {
@@ -726,6 +733,7 @@
    * to cubic B&eacute;zier curves (which will approximate those arcs).
    * @returns {H3DU.GraphicsPath} A path consisting only of line
    * segments, B&eacute;zier curves, and close commands.
+   * @instance
    * @memberof! H3DU.GraphicsPath#
    */
   GraphicsPath.prototype.toCurvePath = function() {
@@ -763,7 +771,7 @@
     return path;
   };
 
-  /** @private */
+  /** @ignore */
   GraphicsPath._accBounds = function(ret, s, t) {
     if(t >= 0 && t <= 1) {
       var pt = GraphicsPath._point(s, t);
@@ -773,14 +781,14 @@
       ret[3] = Math.max(pt[1], ret[3]);
     }
   };
-  /** @private */
+  /** @ignore */
   GraphicsPath._accBoundsPoint = function(ret, x, y) {
     ret[0] = Math.min(x, ret[0]);
     ret[1] = Math.min(y, ret[1]);
     ret[2] = Math.max(x, ret[2]);
     ret[3] = Math.max(y, ret[3]);
   };
-/** @private */
+/** @ignore */
   GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
     var ca = Math.cos(angle);
     var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
@@ -791,7 +799,7 @@
     ret[2] = Math.max(px, ret[2]);
     ret[3] = Math.max(py, ret[3]);
   };
-/** @private */
+/** @ignore */
   GraphicsPath._normAngleRadians = function(angle) {
     var twopi = Math.PI * 2;
     var normAngle = angle;
@@ -803,7 +811,7 @@
     }
     return normAngle;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
     var twopi = Math.PI * 2;
     var diff = endAngle - startAngle;
@@ -833,6 +841,7 @@
  * the lowest X and Y coordinates, and the last two are
  * the highest X and Y coordinates. If the path is empty,
  * returns the array (Infinity, Infinity, -Infinity, -Infinity).
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getBounds = function() {
@@ -951,6 +960,7 @@
  * Returns a path that reverses the course of this path.
  * @returns {H3DU.GraphicsPath} A GraphicsPath
  * object with its path segments reversed.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.reverse = function() {
@@ -1027,7 +1037,7 @@
       ret.closePath();
     return ret;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._pushXY = function(curPath, x, y, nodegen) {
     if(!nodegen) {
       curPath.push(x, y);
@@ -1038,7 +1048,7 @@
     }
   };
 
-/** @private */
+/** @ignore */
   GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
     var tmp = [];
     var subpaths = [];
@@ -1085,7 +1095,7 @@
     }
     return subpaths;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._CurveList = function(curves) {
     this.curves = curves;
     this.cumulativeLengths = [];
@@ -1130,7 +1140,7 @@
     }
     return null;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._Curve = function(segments) {
     this.segments = segments;
     var totalLength = 0;
@@ -1244,6 +1254,7 @@
  * See the documentation for {@link H3DU.Math.vec3lerp}
  * for examples of interpolation functions.
  * @returns {H3DU.GraphicsPath} The interpolated path.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.interpolate = function(other, t) {
@@ -1395,6 +1406,7 @@
  * recommended when drawing the path as a set of points, not lines, since
  * the path may contain several disconnected parts.
  * </ul>
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getCurves = function(flatness) {
@@ -1473,6 +1485,7 @@
  * an empty array if <i>numPoints</i> is less than 1. Returns
  * an array consisting of the start point if <i>numPoints</i>
  * is 1.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getPoints = function(numPoints, flatness) {
@@ -1496,6 +1509,7 @@
  * Makes this path closed. Adds a line segment to the
  * path's start position, if necessary.
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.closePath = function() {
@@ -1515,6 +1529,7 @@
  * @param {Number} x X coordinate of the position.
  * @param {Number} y Y coordinate of the position.
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.moveTo = function(x, y) {
@@ -1532,6 +1547,7 @@
  * @param {Number} x X coordinate of the end of the line segment.
  * @param {Number} y Y coordinate of the end of the line segment.
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.lineTo = function(x, y) {
@@ -1545,13 +1561,14 @@
 /**
  * Gets the current point stored in this path.
  * @returns {Array<Number>} A two-element array giving the X and Y coordinates of the current point.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getCurrentPoint = function() {
     return [this.endPos[0], this.endPos[1]];
   };
 
-/** @private */
+/** @ignore */
   GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
     var t1 = x1 - x0;
     var t2 = y1 - y0;
@@ -1585,6 +1602,7 @@
  * @param {Number} y2 Y coordinate of the point described under "x2".
  * @param {Number} radius Radius of the circle the arc forms a part of.
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
@@ -1628,12 +1646,13 @@
  * (assuming the X axis points right and the Y axis points
  * down under the coordinate system).
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
     return this._arcInternal(x, y, radius, startAngle, endAngle, ccw, true);
   };
-/** @private */
+/** @ignore */
   GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngle, ccw, drawLine) {
     if(radius < 0) {
       throw new Error("IndexSizeError");
@@ -1688,6 +1707,7 @@
  * @param {Number} x2 X coordinate of the curve's end point.
  * @param {Number} y2 Y coordinate of the curve's end point.
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
@@ -1708,6 +1728,7 @@
  * @param {Number} x3 X coordinate of the curve's end point.
  * @param {Number} y3 Y coordinate of the curve's end point.
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
@@ -1733,7 +1754,7 @@
     0.028531388628933663, 0.9747285559713095,
     0.0123412297999872, 0.9951872199970213
   ];
-/** @private */
+/** @ignore */
   GraphicsPath._numIntegrate = function(func, xmin, xmax) {
 /*
 * Estimates the integral of a function. The integral
@@ -1770,7 +1791,7 @@
     }
     return ret * bm;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._ellipticArcLength = function(xRadius, yRadius, startAngle, endAngle) {
     if(startAngle === endAngle || xRadius <= 0 || yRadius <= 0)return 0;
     if(xRadius === yRadius) {
@@ -1787,7 +1808,7 @@
     return Math.abs(mx * GraphicsPath._numIntegrate(
    ellipticIntegrand, startAngle, endAngle));
   };
-/** @private */
+/** @ignore */
   GraphicsPath._vecangle = function(a, b, c, d) {
     var dot = a * c + b * d;
     var denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
@@ -1801,7 +1822,7 @@
     if(sgn < 0)ret = -ret;
     return ret;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._arcSvgToCenterParam = function(a) {
     var x1 = a[1];
     var y1 = a[2];
@@ -1856,7 +1877,7 @@
   };
   GraphicsPath._toRadians = Math.PI / 180;
   GraphicsPath._toDegrees = 180.0 / Math.PI;
-/** @private */
+/** @ignore */
   GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) {
     var crot = Math.cos(rot);
     var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
@@ -1913,6 +1934,7 @@
  * @param {Number} x2 X coordinate of the arc's end point.
  * @param {Number} y2 Y coordinate of the arc's end point.
  * @returns {H3DU.GraphicsPath} This object.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2) {
@@ -1956,7 +1978,7 @@
     this.incomplete = false;
     return this;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._nextAfterWs = function(str, index) {
     while(index[0] < str.length) {
       var c = str.charCodeAt(index[0]);
@@ -1967,7 +1989,7 @@
     }
     return -1;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._nextAfterSepReq = function(str, index) {
     var comma = false;
     var havesep = false;
@@ -1987,7 +2009,7 @@
     }
     return -1;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._nextAfterSep = function(str, index) {
     var comma = false;
     while(index[0] < str.length) {
@@ -2003,14 +2025,14 @@
     }
     return -1;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._peekNextNumber = function(str, index) {
     var oldindex = index[0];
     var ret = GraphicsPath._nextNumber(str, index, true) !== null;
     index[0] = oldindex;
     return ret;
   };
-/** @private */
+/** @ignore */
   GraphicsPath._nextNumber = function(str, index, afterSep) {
     var oldindex = index[0];
     var c = afterSep ?
@@ -2126,6 +2148,7 @@
  * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
  * trans[3] * Y + trans[5]`.
  * @returns {H3DU.GraphicsPath} The transformed version of this path.
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.transform = function(trans) {
@@ -2223,6 +2246,7 @@
    * @param {Number} w Width of the rectangle.
    * @param {Number} h Height of the rectangle.
    * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+   * @instance
    * @memberof! H3DU.GraphicsPath#
    */
   GraphicsPath.prototype.rect = function(x, y, w, h) {
@@ -2274,7 +2298,8 @@
  * will return <code>true</code>.
  * @example <caption>The following example creates a graphics path
  * from an SVG string describing a polyline.</caption>
- * var path=GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
+ * var path=H3DU.GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
+ * @memberof! H3DU.GraphicsPath
  */
   GraphicsPath.fromString = function(str) {
     var index = [0];
@@ -2538,7 +2563,7 @@
   Triangulate._CONVEX = 1;
   Triangulate._EAR = 2;
   Triangulate._REFLEX = 3;
-/** @private */
+/** @ignore */
   Triangulate._pointInTri = function(i1, i2, i3, p) {
     if(p[0] === i1[0] && p[1] === i1[1])return false;
     if(p[0] === i2[0] && p[1] === i2[1])return false;
@@ -2571,7 +2596,7 @@
       return false;
     }
   };
-  /** @private */
+  /** @ignore */
   Triangulate._vertClass = function(v, ori, vertices) {
     var curori = Triangulate._triOrient(v.prev.data, v.data, v.next.data);
     if(curori === 0 || curori === ori) {
@@ -2590,14 +2615,14 @@
       return Triangulate._REFLEX;
     }
   };
-/** @private */
+/** @ignore */
   Triangulate._triOrient = function(v1, v2, v3) {
     var ori = v1[0] * v2[1] - v1[1] * v2[0];
     ori += v2[0] * v3[1] - v2[1] * v3[0];
     ori += v3[0] * v1[1] - v3[1] * v1[0];
     return ori === 0 ? 0 : ori < 0 ? -1 : 1;
   };
-/** @private */
+/** @ignore */
   Triangulate._triangleMidAngle = function(v1, v2, v3) {
     var dx1 = v2[0] - v1[0];
     var dy1 = v2[1] - v1[1];
@@ -2619,7 +2644,7 @@
     return Math.acos(dot);
   };
 
-/** @private */
+/** @ignore */
   Triangulate._Contour = function(vertices) {
     this.vertexList = new LinkedList();
     var vertLength = vertices.length;
@@ -2803,6 +2828,7 @@
  * array, the first two, next two, and last two numbers each
  * describe a vertex position of that triangle (X and Y coordinates
  * in that order).
+ * @instance
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getTriangles = function(flatness) {
@@ -2861,7 +2887,7 @@
     }
     return tris;
   };
-/** @private */
+/** @ignore */
   Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
     var vpnode = dstNode;
     var c2node = maxPoint;
@@ -2882,7 +2908,7 @@
     count += 2;
     return count;
   };
-/** @private */
+/** @ignore */
   Triangulate._triangulate = function(contour, tris) {
     var t1, tri;
     if(!contour || contour.vertexCount < 3 || contour.winding === 0) {

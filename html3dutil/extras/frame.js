@@ -17,7 +17,7 @@
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
  * @class
- * @alias H3DU.FrameCounter
+ * @memberof H3DU
  */
 H3DU.FrameCounter = function() {
   "use strict";
@@ -29,7 +29,7 @@ H3DU.FrameCounter = function() {
 /**
  * Updates the state for determining the frame count.
  * This method should be called once per frame.
- * @memberof! H3DU.FrameCounter#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.FrameCounter.prototype.update = function() {
@@ -62,7 +62,7 @@ H3DU.FrameCounter.prototype.update = function() {
 /**
  * Gets the calculated frames per second, based
  * on how often the update method was called.
- * @memberof! H3DU.FrameCounter#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.FrameCounter.prototype.getFPS = function() {
@@ -80,7 +80,7 @@ H3DU.FrameCounter.prototype.getFPS = function() {
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
  * @class
- * @alias H3DU.FrameCounterDiv
+ * @memberof H3DU
  */
 H3DU.FrameCounterDiv = function() {
   "use strict";
@@ -88,7 +88,7 @@ H3DU.FrameCounterDiv = function() {
   this.count = 0;
   this.fc = new H3DU.FrameCounter();
 };
-/** @private */
+/** @ignore */
 H3DU.FrameCounterDiv._makeDiv = function() {
   "use strict";
   var referenceElement = document.documentElement;
@@ -103,7 +103,7 @@ H3DU.FrameCounterDiv._makeDiv = function() {
 };
 /**
  * Updates the frame counter HTML element.
- * @memberof! H3DU.FrameCounterDiv#
+ * @instance
  * @returns {Object} Return value.
  */
 H3DU.FrameCounterDiv.prototype.update = function() {
@@ -135,8 +135,6 @@ var PrimitiveCounter = function() {
 /**
  * This method used to update this object's state.
  * @deprecated Will be removed in the future.
- * @memberof! PrimitiveCounter
- * @alias update
  * @returns {Object} Return value.
  */
   this.update = function() {

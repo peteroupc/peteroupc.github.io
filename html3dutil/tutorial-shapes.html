@@ -296,7 +296,7 @@ specify the proper normals.</p>
 
 <h4>recalcNormals()</h4>
 
-<p>You can use the <code>recalcNormals()</code> method to
+<p>You can use the <a href="H3DU.Mesh.html#H3DU.Mesh_recalcNormals"><code>recalcNormals()</code></a> method to
 recalculate the mesh&#39;s normals,
 in order to give the shape a flat or smooth appearance or to shade the shape from
 the inside or the outside. This method takes two parameters:</p>
@@ -313,12 +313,12 @@ is shaded from the inside; otherwise, <code>false</code>.</li>
 <p>For normal calculation to properly affect shading, each triangle in
 the mesh must have its vertices ordered in the same winding (counterclockwise or
 clockwise) throughout. If the
-vertices have the wrong order, use the <code>reverseWinding()</code>
+vertices have the wrong order, use the <a href="H3DU.Mesh.html#H3DU.Mesh_reverseWinding"><code>reverseWinding()</code></a>
 method to change their order.</p>
 
 <blockquote>
 <p>Note: For right-handed coordinate systems, as will be the case when using,
-for example, the <code>Batch3D.perspectiveAspect()</code> method,
+for example, the <a href="H3DU.Batch3D.html#H3DU.Batch3D_perspectiveAspect"><code>Batch3D.perspectiveAspect()</code></a> method,
 if the mesh describes a closed convex surface (such as a sphere or cube),
 each triangle&#39;s vertices (as they appear when the triangle&#39;s front side is seen)
 must be ordered counterclockwise for the shape to be shaded from the outside.</p>

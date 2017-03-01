@@ -10,7 +10,7 @@
 
 <h3>H3DU.SurfaceOfRevolution(curve, minval, maxval, [axis])</h3>
 
-<p>A surface evaluator object for a surface of revolution, which results by revolving
+<p>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution, which results by revolving
 an X/Y curve around an axis.</p>
 
 <p>This class is considered a supplementary class to the
@@ -28,7 +28,7 @@ the HTML 3D Library. Example:</p>
 
 <ul>
 <li><p><code>curve</code> (Type: Object)<br>
-A curve evaluator object that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the &quot;axis&quot; parameter. The curve&#39;s X coordinates correspond to elevation, and its Y coordinates correspond to radius.</p>
+A <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the &quot;axis&quot; parameter. The curve&#39;s X coordinates correspond to elevation, and its Y coordinates correspond to radius.</p>
 
 <p>If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V coordinates given in <em>minval</em> and <em>maxval</em> must restrict the curve definition to no more than half of the curve.</p></li>
 <li><code>minval</code> (Type: Number)<br>
@@ -42,18 +42,45 @@ Axis of rotation, around which the curve will be rotated to generate the surface
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.SurfaceOfRevolution.fromFunction">.fromFunction</a><br>Creates a surface evaluator object for a surface of revolution
+<li><a href="#H3DU.SurfaceOfRevolution_endpoints">endpoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.SurfaceOfRevolution_evaluate">evaluate</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.SurfaceOfRevolution.fromFunction">fromFunction</a><br>Creates a <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.</li>
-<li><a href="#H3DU.SurfaceOfRevolution.torus">.torus</a><br>A surface evaluator object for a torus, a special case of a surface of revolution.</li>
-<li><a href="#H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_endpoints">endpoints</a><br>TODO: Not documented yet.</li>
-<li><p><a href="#H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_evaluate">evaluate</a><br>TODO: Not documented yet.</p>
+<li><p><a href="#H3DU.SurfaceOfRevolution.torus">torus</a><br>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.</p>
+
+<p><a name='H3DU.SurfaceOfRevolution_endpoints'></a></p>
+
+<h3>H3DU.SurfaceOfRevolution#endpoints()</h3></li>
+</ul>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
+<p><a name='H3DU.SurfaceOfRevolution_evaluate'></a></p>
+
+<h3>H3DU.SurfaceOfRevolution#evaluate(u, v)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: *)</li>
+<li><code>v</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
 
 <p><a name='H3DU.SurfaceOfRevolution.fromFunction'></a></p>
 
-<h3>H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])</h3></li>
-</ul>
+<h3>(static) H3DU.SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])</h3>
 
-<p>Creates a surface evaluator object for a surface of revolution
+<p>Creates a <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
 The resulting surface will have a circular cross section
 along its length.
@@ -109,9 +136,9 @@ function(x) {
 
 <p><a name='H3DU.SurfaceOfRevolution.torus'></a></p>
 
-<h3>H3DU.SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])</h3>
+<h3>(static) H3DU.SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])</h3>
 
-<p>A surface evaluator object for a torus, a special case of a surface of revolution.</p>
+<p>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a torus, a special case of a surface of revolution.</p>
 
 <h4>Parameters</h4>
 
@@ -121,7 +148,7 @@ Radius from the center to the innermost part of the torus.</li>
 <li><code>innerRadius</code> (Type: Number)<br>
 Radius from the inner edge to the innermost part of the torus.</li>
 <li><code>curve</code> (Type: Object) (optional)<br>
-A curve evaluator object that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section.</li>
+A <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section.</li>
 <li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
 Axis of rotation, which the torus will pass through. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.html">unit vector</a>.</li>
 </ul>
@@ -129,33 +156,6 @@ Axis of rotation, which the torus will pass through. If null or omitted, the pos
 <h4>Return Value</h4>
 
 <p>Return value. (Type: <a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a>)</p>
-
-<p><a name='H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_endpoints'></a></p>
-
-<h3>H3DU.SurfaceOfRevolution#endpoints()</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
-
-<p><a name='H3DU.SurfaceOfRevolution_H3DU.SurfaceOfRevolution_evaluate'></a></p>
-
-<h3>H3DU.SurfaceOfRevolution#evaluate(u, v)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>u</code> (Type: *)</li>
-<li><code>v</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

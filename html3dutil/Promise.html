@@ -27,58 +27,16 @@ Function that takes two arguments: the first is a function to call when resolvin
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#Promise_Promise_catch">catch</a><br>Creates a promise that calls a function if
-this promise is rejected.</li>
-<li><a href="#Promise_Promise_then">then</a><br>Creates a promise that calls a function depending on whether
-this promise resolves or is rejected.</li>
 <li><a href="#Promise.all">all</a><br>Wait for all these promises to complete.</li>
 <li><a href="#Promise.race">race</a><br>Creates a promise that resolves or is rejected when one of those promises
 resolves or is rejected.</li>
 <li><a href="#Promise.reject">reject</a><br>Returns a promise that is rejected.</li>
 <li><p><a href="#Promise.resolve">resolve</a><br>Returns a promise that resolves.</p>
 
-<p><a name='Promise_Promise_catch'></a></p>
-
-<h3>Promise#catch(onRejected)</h3></li>
-</ul>
-
-<p>Creates a promise that calls a function if
-this promise is rejected.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>onRejected</code> (Type: function)<br>
-To be called once this promise gets rejected</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise. (Type: <a href="Promise.html">Promise</a>)</p>
-
-<p><a name='Promise_Promise_then'></a></p>
-
-<h3>Promise#then(onFulfilled, [onRejected])</h3>
-
-<p>Creates a promise that calls a function depending on whether
-this promise resolves or is rejected.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>onFulfilled</code> (Type: function)<br>
-To be called once this promise gets fulfilled</li>
-<li><code>onRejected</code> (Type: function) (optional)<br>
-To be called once this promise gets rejected</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise. (Type: <a href="Promise.html">Promise</a>)</p>
-
 <p><a name='Promise.all'></a></p>
 
-<h3>(static) Promise.all(all)</h3>
+<h3>(static) Promise.all(all)</h3></li>
+</ul>
 
 <p>Wait for all these promises to complete. One failed =&gt; this fails too.</p>
 

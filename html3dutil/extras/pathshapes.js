@@ -15,11 +15,13 @@
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
  * @param {Number} x0 X coordinate of the line segment's starting point.
+ * The <code>moveTo</code> method will be called on the starting point.
  * @param {Number} y0 Y coordinate of the line segment's starting point.
  * @param {Number} x1 X coordinate of the line segment's ending point.
+ * The <code>lineTo</code> method will be called on the ending point.
  * @param {Number} y1 X coordinate of the line segment's ending point.
  * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
+ * @instance
  */
 H3DU.GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
   "use strict";
@@ -40,7 +42,7 @@ H3DU.GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
  * to close the path will be added to the path (even if only one pair of numbers is given in "pointCoords").
  * @returns {H3DU.GraphicsPath} This object. If "pointCoords" is empty, no path segments will be appended.
  * Throws an error if "pointCoords" has an odd length.
- * @memberof! H3DU.GraphicsPath#
+ * @instance
  */
 H3DU.GraphicsPath.prototype.polygon = function(polygon, pointCoords, closed) {
   "use strict";
@@ -73,7 +75,7 @@ H3DU.GraphicsPath.prototype.polygon = function(polygon, pointCoords, closed) {
  * up the rectangle's corners.
  * Will be adjusted to be not less than 0 and not greater than "h".
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! H3DU.GraphicsPath#
+ * @instance
  */
 H3DU.GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   "use strict";
@@ -121,7 +123,7 @@ H3DU.GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  * @param {Number} w Width of the ellipse's bounding box.
  * @param {Number} h Height of the ellipse's bounding box.
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! H3DU.GraphicsPath#
+ * @instance
  */
 H3DU.GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
   "use strict";
@@ -148,7 +150,7 @@ H3DU.GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
  * @param {Number} w Width of the ellipse's bounding box.
  * @param {Number} h Height of the ellipse's bounding box.
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! H3DU.GraphicsPath#
+ * @instance
  */
 H3DU.GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
   "use strict";
@@ -179,7 +181,7 @@ H3DU.GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  * will append a "pie slice" to the path (the arc and two line segments connecting
  * each end of the arc to the ellipse's center).
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! H3DU.GraphicsPath#
+ * @instance
  */
 H3DU.GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
   "use strict";
@@ -246,23 +248,28 @@ H3DU.GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) 
  * will append a "pie slice" to the path (the arc and two line segments connecting
  * each end of the arc to the ellipse's center).
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
- * @memberof! H3DU.GraphicsPath#
+ * @instance
  */
 H3DU.GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, type) {
   "use strict";
   return this.arcShape(x + w * 0.5, y + h * 0.5, w, h, start, sweep, type);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} x0
- * @param {*} y0
- * @param {*} x1
- * @param {*} y1
- * @param {*} headWidth
- * @param {*} headLength
- * @param {*} tailWidth
- * @returns {*} Return value.
- * @memberof! H3DU.GraphicsPath#
+ * Adds path segments to this path in the form of an arrow shape.
+ * <p>To use this method, you must include the script "extras/pathshapes.js";
+ * this is in addition to "extras/path.js". Example:<pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
+ * @param {Number} x0 X coordinate of the arrow's tail, at its very end.
+ * @param {Number} y0 Y coordinate of the arrow's tail, at its very end.
+ * @param {Number} x1 X coordinate of the arrow's tip.
+ * @param {Number} y1 Y coordinate of the arrow's tip.
+ * @param {Number} headWidth Width of the arrowhead's base from side to side.
+ * @param {Number} headLength Length of the arrowhead from its tip to its base.
+ * @param {Number} tailWidth Width of the arrow's tail from side to side
+ * @returns {H3DU.GraphicsPath} This object. Nothing will be added to the path if the distance
+ * from (x0, y0) and (x1, y1) is 0 or extremely close to 0.
+ * @instance
  */
 H3DU.GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, tailWidth) {
   "use strict";
@@ -282,11 +289,11 @@ H3DU.GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLeng
   x = halfTailWidth * sinRot + x0;
   y = -halfTailWidth * cosRot + y0;
   this.lineTo(x, y);
-  x = shaftLength * cosRot - -halfTailWidth * sinRot + x0;
-  y = shaftLength * sinRot + -halfTailWidth * cosRot + y0;
+  x = shaftLength * cosRot + halfTailWidth * sinRot + x0;
+  y = shaftLength * sinRot - halfTailWidth * cosRot + y0;
   this.lineTo(x, y);
-  x = shaftLength * cosRot - -halfHeadWidth * sinRot + x0;
-  y = shaftLength * sinRot + -halfHeadWidth * cosRot + y0;
+  x = shaftLength * cosRot + halfHeadWidth * sinRot + x0;
+  y = shaftLength * sinRot - halfHeadWidth * cosRot + y0;
   this.lineTo(x, y).lineTo(x1, y1);
   x = shaftLength * cosRot - halfHeadWidth * sinRot + x0;
   y = shaftLength * sinRot + halfHeadWidth * cosRot + y0;
@@ -301,17 +308,25 @@ H3DU.GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLeng
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} path
- * @param {*} cx
- * @param {*} cy
- * @param {*} sides
- * @param {*} radius
- * @param {*} phaseInDegrees
- * @returns {*} Return value. */
-H3DU.GraphicsPath.regularPolygon = function(path, cx, cy, sides, radius, phaseInDegrees) {
+ * Adds path segments to this path that form a regular polygon.
+ * <p>To use this method, you must include the script "extras/pathshapes.js";
+ * this is in addition to "extras/path.js". Example:<pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
+ * @param {Number} cx X coordinate of the center of the polygon.
+ * @param {Number} cy Y coordinate of the center of the polygon.
+ * @param {Number} sides Number of sides the polygon has. Nothing will be added to the path if this
+ * value is 2 or less.
+ * @param {Number} radius Radius from the center to each vertex of the polygon.
+ * @param {Number} phaseInDegrees Starting angle of the first vertex of the polygon, in degrees.
+ * 0 means the positive X axis, 90 means the positive Y axis,
+ * 180 means the negative X axis, and 270 means the negative Y axis.
+ * @returns {H3DU.GraphicsPath} This object.
+ * @instance
+ */
+H3DU.GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInDegrees) {
   "use strict";
-  if(sides <= 0)return path;
+  if(sides <= 2)return this;
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
@@ -325,30 +340,38 @@ H3DU.GraphicsPath.regularPolygon = function(path, cx, cy, sides, radius, phaseIn
     var x = cx + c * radius;
     var y = cy + s * radius;
     if(i === 0) {
-      path.moveTo(x, y);
+      this.moveTo(x, y);
     } else {
-      path.lineTo(x, y);
+      this.lineTo(x, y);
     }
     var ts = cosStep * s + sinStep * c;
     var tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
-  return path.closePath();
+  return this.closePath();
 };
 /**
- * TODO: Not documented yet.
- * @param {*} path
- * @param {*} cx
- * @param {*} cy
- * @param {*} points
- * @param {*} radiusOut
- * @param {*} radiusIn
- * @param {*} phaseInDegrees
- * @returns {*} Return value. */
-H3DU.GraphicsPath.regularStar = function(path, cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
+ * Adds path segments to this path that form a regular N-pointed star.
+ * <p>To use this method, you must include the script "extras/pathshapes.js";
+ * this is in addition to "extras/path.js". Example:<pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
+ * @param {Number} cx X coordinate of the center of the star.
+ * @param {Number} cy Y coordinate of the center of the star.
+ * @param {Number} points Number of points the star has. Nothing will be added to the path if this
+ * value is 0 or less.
+ * @param {Number} radiusOut Radius from the center to each outer vertex of the star.
+ * @param {Number} radiusIn Radius from the center to each inner vertex of the star.
+ * @param {Number} phaseInDegrees Starting angle of the first vertex of the polygon, in degrees.
+ * 0 means the positive X axis, 90 means the positive Y axis,
+ * 180 means the negative X axis, and 270 means the negative Y axis.
+ * @returns {H3DU.GraphicsPath} This object.
+ * @instance
+ */
+H3DU.GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
   "use strict";
-  if(points <= 0)return path;
+  if(points <= 0)return this;
   var phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
@@ -364,14 +387,14 @@ H3DU.GraphicsPath.regularStar = function(path, cx, cy, points, radiusOut, radius
     var x = cx + c * radius;
     var y = cy + s * radius;
     if(i === 0) {
-      path.moveTo(x, y);
+      this.moveTo(x, y);
     } else {
-      path.lineTo(x, y);
+      this.lineTo(x, y);
     }
     var ts = cosStep * s + sinStep * c;
     var tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
-  return path.closePath();
+  return this.closePath();
 };

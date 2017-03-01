@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 /* global H3DU */
-/** @private */
+/** @ignore */
 H3DU._FrenetFrames = function(func) {
   "use strict";
   this.func = func;
@@ -76,7 +76,7 @@ H3DU._FrenetFrames = function(func) {
     }
   }
 };
-/** @private */
+/** @ignore */
 H3DU._FrenetFrames.getEndPoints = function(func) {
   "use strict";
   if(typeof H3DU.CurveEval.findEndPoints !== "undefined" && H3DU.CurveEval.findEndPoints !== null) {
@@ -87,7 +87,7 @@ H3DU._FrenetFrames.getEndPoints = function(func) {
     return [0, 1];
   }
 };
-/** @private */
+/** @ignore */
 H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
   "use strict";
   var tangent;
@@ -112,14 +112,14 @@ H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
   }
   return H3DU.Math.vec3normInPlace(tangent);
 };
-/** @private */
+/** @ignore */
 H3DU._FrenetFrames.normalFromTangent = function(tangent) {
   "use strict";
   return H3DU.Math.vec3normInPlace(H3DU.Math.vec3perp(tangent));
 };
-/** @private */
+/** @ignore */
 H3DU._FrenetFrames._EPSILON = 0.000001;
-/** @private */
+/** @ignore */
 H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   "use strict";
   var uNorm = (u - this.endpoints[0]) * 1.0 / (this.endpoints[1] - this.endpoints[0]);
@@ -138,11 +138,9 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
     } else {
       for(i = 0; i < this.vectorsCache.length; i += 2) {
         if(this.vectorsCache[i] === u) {
-          // this.cacheHits = (this.cacheHits || 0) + 1;
           return this.vectorsCache[i + 1];
         }
       }
-      // this.cacheMisses = (this.cacheMisses || 0) + 1;
       index = Math.floor(index);
       e0 = sample;
       tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
@@ -158,11 +156,9 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   } else {
     for(i = 0; i < this.vectorsCache.length; i += 2) {
       if(this.vectorsCache[i] === u) {
-        // this.cacheHits = (this.cacheHits || 0) + 1;
         return this.vectorsCache[i + 1];
       }
     }
-    // this.cacheMisses = (this.cacheMisses || 0) + 1;
     e0 = sample;
     tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
     normal = H3DU._FrenetFrames.normalFromTangent(tangent);
@@ -192,7 +188,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   }
   return val;
 };
-/** @private */
+/** @ignore */
 H3DU._FrenetFrames._distSq = function(a, b) {
   "use strict";
   var dx = b[0] - a[0];
@@ -210,7 +206,7 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
  * @class
- * @alias H3DU.CurveTube
+ * @memberof H3DU
  * @param {Object} func A [curve evaluator object]{@link H3DU.CurveEval#vertex} that describes the 3-dimensional curve to extrude
  * a tube from.
  * @param {Number} [thickness] Radius of the
@@ -233,7 +229,7 @@ H3DU.CurveTube = function(func, thickness, sweptCurve) {
 /**
  * TODO: Not documented yet.
  * @returns {*} Return value.
- * @memberof! H3DU.CurveTube#
+ * @instance
  */
 H3DU.CurveTube.prototype.endpoints = function() {
   "use strict";
@@ -251,7 +247,7 @@ H3DU.CurveTube.prototype.endpoints = function() {
  * @param {Number} v V coordinate. This will sweep around the extruded
  * tube.
  * @returns {Array<Number>} A 3-element array specifying a 3D point.
- * @memberof! H3DU.CurveTube#
+ * @instance
  */
 H3DU.CurveTube.prototype.evaluate = function(u, v) {
   "use strict";
