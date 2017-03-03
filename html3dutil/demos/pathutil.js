@@ -62,26 +62,6 @@ function pointMarch(
   }
 }
 
-function NormalGenWrapper2(f) {
-  "use strict";
-  this.f = f;
-  this.evaluate = function(u, v) {
-    return this.f.evaluate(u, v);
-  };
-  this.gradient = function(u, v) {
-    return H3DU.SurfaceEval.findGradient(this.f, u, v);
-  };
-  this.tangent = function(u, v) {
-    return H3DU.SurfaceEval.findTangent(this.f, u, v);
-  };
-  this.bitangent = function(u, v) {
-    return H3DU.SurfaceEval.findBitangent(this.f, u, v);
-  };
-  this.endpoints = function() {
-    return H3DU.SurfaceEval.findEndPoints(this.f);
-  };
-}
-
 /* exported makeTubeFromPath */
 function makeTubeFromPath(path, flatness, thickness, pathSection) {
   "use strict";
@@ -90,7 +70,7 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
   var resolution = Math.ceil(curves.getLength() / flatness / 10);
   var curveSection = pathSection ? pathSection.getCurves(flatness) : null;
   new H3DU.SurfaceEval()
-    .vertex(new NormalGenWrapper2(new H3DU.CurveTube(curves, thickness, curveSection)))
+    .vertex(H3DU.SurfaceEval.wrapEvaluator(new H3DU.CurveTube(curves, thickness, curveSection)))
     .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
       Math.ceil(2 * thickness / flatness));
   return mesh;

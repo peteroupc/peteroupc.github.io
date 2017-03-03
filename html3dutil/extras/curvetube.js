@@ -23,12 +23,12 @@ H3DU._FrenetFrames = function(func) {
   var totalLength = 0;
   var samples = [];
   var lengths = [];
-  this.endpoints = H3DU._FrenetFrames.getEndPoints();
+  this.endPoints = H3DU._FrenetFrames.getEndPoints(func);
   if(H3DU._FrenetFrames._distSq(func.evaluate(0), lastSample) < H3DU._FrenetFrames._EPSILON) {
     isClosed = true;
   }
   for(var i = 0; i <= res; i++) {
-    var t = this.endpoints[0] + (this.endpoints[1] - this.endpoints[0]) * (i / res);
+    var t = this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * (i / res);
     var e0 = nextSample ? nextSample : func.evaluate(t);
     if(isClosed && i > 0) {
       var len = Math.sqrt(H3DU._FrenetFrames._distSq(e0, samples[i - 1]));
@@ -80,9 +80,9 @@ H3DU._FrenetFrames = function(func) {
 H3DU._FrenetFrames.getEndPoints = function(func) {
   "use strict";
   if(typeof H3DU.CurveEval.findEndPoints !== "undefined" && H3DU.CurveEval.findEndPoints !== null) {
-    return H3DU.CurveEval.findEndPoints();
-  } else if(typeof func.endpoints !== "undefined" && func.endpoints !== null) {
-    return func.endpoints();
+    return H3DU.CurveEval.findEndPoints(func);
+  } else if(typeof func.endPoints !== "undefined" && func.endPoints !== null) {
+    return func.endPoints();
   } else {
     return [0, 1];
   }
@@ -122,7 +122,7 @@ H3DU._FrenetFrames._EPSILON = 0.000001;
 /** @ignore */
 H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   "use strict";
-  var uNorm = (u - this.endpoints[0]) * 1.0 / (this.endpoints[1] - this.endpoints[0]);
+  var uNorm = (u - this.endPoints[0]) * 1.0 / (this.endPoints[1] - this.endPoints[0]);
   var sample = this.func.evaluate(u);
   var b, n, t;
   var val = [];
@@ -231,7 +231,7 @@ H3DU.CurveTube = function(func, thickness, sweptCurve) {
  * @returns {*} Return value.
  * @instance
  */
-H3DU.CurveTube.prototype.endpoints = function() {
+H3DU.CurveTube.prototype.endPoints = function() {
   "use strict";
   var ep = H3DU._FrenetFrames.getEndPoints(this.func);
   if(typeof this.sweptCurve !== "undefined" && this.sweptCurve !== null) {

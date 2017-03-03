@@ -47,10 +47,11 @@ function TorusKnot(p, q, outerRadius, innerRadius) {
       this.innerRadius * Math.sin(pu)
     ];
   };
-  this.endpoints = function() {
+  this.endPoints = function() {
     return [0, H3DU.Math.PiTimes2];
   };
 }
+
 TorusKnot.getFlatCurve = function(period, outerRadius, innerRadius) {
   "use strict";
  // NOTE: This function demonstrates how curve evaluators
@@ -64,7 +65,7 @@ TorusKnot.getFlatCurve = function(period, outerRadius, innerRadius) {
       ret[2] = 0;
       return ret;
     },
-    "endpoints":function() {
+    "endPoints":function() {
       return [0, H3DU.Math.PiTimes2];
     }
   };

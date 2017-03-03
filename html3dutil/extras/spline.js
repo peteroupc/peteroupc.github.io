@@ -9,7 +9,7 @@
 */
 
 /**
- * Creates an array of B-Spline curves from the control points of a Hermite spline.
+ * Creates an array of B-spline curves from the control points of a Hermite spline.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
  * @param {Array<Array<Number>>} curve An array of control points,
@@ -17,7 +17,7 @@
  * Each pair of control points takes up two elements of the array and consists
  * of the coordinates of that point followed by the tangent vector (derivative) at that point.
  * The array must have an even number of control points and at least four control points.
- * @returns {H3DU.BSplineCurve} A array of cubic B-Spline curves describing the
+ * @returns {H3DU.BSplineCurve} A array of cubic B-spline curves describing the
  * same path as the Hermite spline.
  */
 H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
@@ -48,7 +48,7 @@ H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
 };
 
 /**
- * Creates an array of B-Spline curves from the control points of a cardinal spline.
+ * Creates an array of B-spline curves from the control points of a cardinal spline.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
  * @param {Array<Array<Number>>} curve An array of control points,
@@ -59,7 +59,7 @@ H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
  * @param {Number} [tension] A tension parameter ranging from 0 to 1. Closer to 1
  * means closer to a straight line. If null or omitted, this value is 0.5 (indicating what
  * is commonly called a <i>Catmull-Rom spline</i>).
- * @returns {H3DU.BSplineCurve} A array of cubic B-Spline curves describing the
+ * @returns {H3DU.BSplineCurve} A array of cubic B-spline curves describing the
  * same path as the cardinal spline.
  */
 H3DU.BSplineCurve.fromCardinalSpline = function(spline, tension) {

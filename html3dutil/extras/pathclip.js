@@ -745,7 +745,7 @@
       return e1.p[1] > e2.p[1];
     if(e1.left !== e2.left) // Same point, but one is a left endpoint and the other a right endpoint. The right endpoint is processed first
       return e1.left;
-  // Same point, both events are left endpoints or both are right endpoints. The event associate to the bottom segment is processed first
+  // Same point, both events are left endPoints or both are right endPoints. The event associate to the bottom segment is processed first
     return e1.above(e2.other.p);
   };
 /** @ignore */
@@ -828,7 +828,7 @@
       return result;
     }
   // Boolean operation is not trivial
-  // Insert all the endpoints associated to the line segments into the event queue
+  // Insert all the endPoints associated to the line segments into the event queue
     for(i = 0; i < this.subject.ncontours(); i++)
       for(j = 0; j < this.subject.contour(i).nvertices(); j++)
         this.processSegment(this.subject.contour(i).segment(j), Clipper.SUBJECT);
@@ -973,7 +973,7 @@
   };
 /** @ignore */
   Clipper.prototype.processSegment = function(s, pl) {
-    if(Clipper._ptEq(s[0], s[1])) // if the two edge endpoints are equal the segment is discarded
+    if(Clipper._ptEq(s[0], s[1])) // if the two edge endPoints are equal the segment is discarded
       return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
     var e1 = this.storeSweepEvent(new Clipper.SweepEvent(s[0], true, pl, null));
     var e2 = this.storeSweepEvent(new Clipper.SweepEvent(s[1], true, pl, e1));
@@ -1204,7 +1204,7 @@
  * Computes the combination of this path's shape with another
  * path's shape. The following points apply to this method:<ul>
  * <li>This method treats unclosed subpaths as implicitly closed
- * by connecting their endpoints with their start points.
+ * by connecting their endPoints with their start points.
  * <li>Currently, the algorithm supports only polygons made up
  * of line segments, so curves and arcs are converted to line
  * segments before applying the operation.

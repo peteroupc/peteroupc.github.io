@@ -243,7 +243,7 @@
     };
 
 /** @ignore */
-    H3DU.PolynomialSurface.prototype.endpoints = function() {
+    H3DU.PolynomialSurface.prototype.endPoints = function() {
       return [this.uoffset, this.u2];
     };
 /** @ignore */
@@ -308,7 +308,7 @@
       return ret;
     };
 /** @ignore */
-    H3DU.PolynomialSurface.prototype.endpoints = function() {
+    H3DU.PolynomialSurface.prototype.endPoints = function() {
       return [this.uoffset, this.u2, this.voffset, this.v2];
     };
   }(H3DU));

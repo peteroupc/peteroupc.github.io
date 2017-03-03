@@ -10,7 +10,12 @@
 
 <h3>H3DU.BSplineCurve(controlPoints, knots, [bits])</h3>
 
-<p>A <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> for a B-spline (basis spline) curve.</p>
+<p>A <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> for a B-spline (basis spline) curve.
+B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
+A B&eacute;zier curve is defined by a series of control points, where
+the first and last control points define the endPoints of the curve, and
+the remaining control points define the curve&#39;s shape, though they don&#39;t
+necessarily cross the curve.</p>
 
 <h4>Parameters</h4>
 
@@ -52,13 +57,15 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 except that with the knot vector curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
-<li><a href="#H3DU.BSplineCurve_endpoints">endpoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.BSplineCurve_endPoints">endPoints</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.BSplineCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
 in a B-spline curve.</li>
-<li><a href="#H3DU.BSplineCurve.fromCardinalSpline">fromCardinalSpline</a><br>Creates an array of B-Spline curves from the control points of a cardinal spline.</li>
-<li><a href="#H3DU.BSplineCurve.fromHermiteSpline">fromHermiteSpline</a><br>Creates an array of B-Spline curves from the control points of a Hermite spline.</li>
-<li><a href="#H3DU.BSplineCurve_getPoints">getPoints</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.BSplineCurve_split">split</a><br>Splits this B-Spline curve into two at the given point.</li>
+<li><a href="#H3DU.BSplineCurve.fromBezierCurve">fromBezierCurve</a><br>Creates a B-spline curve from the control points of a B&eacute;zier curve.</li>
+<li><a href="#H3DU.BSplineCurve.fromCardinalSpline">fromCardinalSpline</a><br>Creates an array of B-spline curves from the control points of a cardinal spline.</li>
+<li><a href="#H3DU.BSplineCurve.fromHermiteSpline">fromHermiteSpline</a><br>Creates an array of B-spline curves from the control points of a Hermite spline.</li>
+<li><a href="#H3DU.BSplineCurve_getPoints">getPoints</a><br>Gets a reference to the array of control points used
+in this curve object.</li>
+<li><a href="#H3DU.BSplineCurve_split">split</a><br>Splits this B-spline curve into two at the given point.</li>
 <li><a href="#H3DU.BSplineCurve_tangent">tangent</a><br>Finds the <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">tangent</a> (derivative) of
 this curve at the given point.</li>
 <li><a href="#H3DU.BSplineCurve.uniform">uniform</a><br>Creates a B-spline curve with uniform knots.</li>
@@ -137,7 +144,7 @@ and to the line between the next-to-last and last control points.</p>
 <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
 Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 <li><code>degree</code> (Type: Number) (optional)<br>
-Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 <li><code>bits</code> (Type: Number) (optional)<br>
 Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 </ul>
@@ -164,7 +171,7 @@ and to the line between the next-to-last and last control points.</p>
 <li><code>controlPoints</code> (Type: Number)<br>
 Number of control points the curve will have.</li>
 <li><code>degree</code> (Type: Number)<br>
-Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -173,9 +180,9 @@ Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If 
 The first knot will be 0 and the last knot will be 1.
 (This is a change in version 2.0.) (Type: Array.&lt;Number&gt;)</p>
 
-<p><a name='H3DU.BSplineCurve_endpoints'></a></p>
+<p><a name='H3DU.BSplineCurve_endPoints'></a></p>
 
-<h3>H3DU.BSplineCurve#endpoints()</h3>
+<h3>H3DU.BSplineCurve#endPoints()</h3>
 
 <p>TODO: Not documented yet.</p>
 
@@ -194,7 +201,7 @@ in a B-spline curve.</p>
 
 <ul>
 <li><code>u</code> (Type: Number)<br>
-Point on the curve to evaluate. NOTE: Since version 2.0, this parameter is no longer scaled according to the curve&#39;s knot vector.</li>
+Point on the curve to evaluate. NOTE: Since version 2.0, this parameter is no longer scaled according to the curve&#39;s knot vector. To get the curve&#39;s extents, call this object&#39;s <code>endPoints</code> method.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -205,18 +212,37 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
 
 <h4>Example</h4>
 
-<pre><code>// Generate 11 points forming the B-spline curve.
+<pre><code>// Generate 11 points forming the curve.
 var points=[];
 for(var i=0;i&lt;=10;i++) {
 points.push(curve.evaluate(i/10.0));
 }
 </code></pre>
 
+<p><a name='H3DU.BSplineCurve.fromBezierCurve'></a></p>
+
+<h3>(static) H3DU.BSplineCurve.fromBezierCurve(controlPoints, [bits])</h3>
+
+<p>Creates a B-spline curve from the control points of a B&eacute;zier curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor. The curve&#39;s degree will equal the number of control points minus 1.</li>
+<li><code>bits</code> (Type: Number) (optional)<br>
+Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
+
 <p><a name='H3DU.BSplineCurve.fromCardinalSpline'></a></p>
 
 <h3>(static) H3DU.BSplineCurve.fromCardinalSpline(curve, [tension])</h3>
 
-<p>Creates an array of B-Spline curves from the control points of a cardinal spline.</p>
+<p>Creates an array of B-spline curves from the control points of a cardinal spline.</p>
 
 <p>To use this method, you must include the script &quot;extras/spline.js&quot;. Example:</p>
 
@@ -234,14 +260,14 @@ A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight 
 
 <h4>Return Value</h4>
 
-<p>A array of cubic B-Spline curves describing the
+<p>A array of cubic B-spline curves describing the
 same path as the cardinal spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
 <p><a name='H3DU.BSplineCurve.fromHermiteSpline'></a></p>
 
 <h3>(static) H3DU.BSplineCurve.fromHermiteSpline(curve)</h3>
 
-<p>Creates an array of B-Spline curves from the control points of a Hermite spline.</p>
+<p>Creates an array of B-spline curves from the control points of a Hermite spline.</p>
 
 <p>To use this method, you must include the script &quot;extras/spline.js&quot;. Example:</p>
 
@@ -257,24 +283,25 @@ An array of control points, each with the same number of values, that describe a
 
 <h4>Return Value</h4>
 
-<p>A array of cubic B-Spline curves describing the
+<p>A array of cubic B-spline curves describing the
 same path as the Hermite spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
 <p><a name='H3DU.BSplineCurve_getPoints'></a></p>
 
 <h3>H3DU.BSplineCurve#getPoints()</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Gets a reference to the array of control points used
+in this curve object.</p>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
+<p>An object described in the constructor to <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
 
 <p><a name='H3DU.BSplineCurve_split'></a></p>
 
 <h3>H3DU.BSplineCurve#split(u)</h3>
 
-<p>Splits this B-Spline curve into two at the given point.</p>
+<p>Splits this B-spline curve into two at the given point.</p>
 
 <h4>Parameters</h4>
 
@@ -285,7 +312,7 @@ Point on the curve where this curve will be split.</li>
 
 <h4>Return Value</h4>
 
-<p>An array containing two B-Spline curves: the
+<p>An array containing two B-spline curves: the
 first is the part of the curve before the given point, and the second
 is the part of the curve after the given point. The first element
 will be null if <code>u</code> is at or before the start of the curve.
@@ -324,7 +351,7 @@ if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&
 <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
 Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 <li><code>degree</code> (Type: Number) (optional)<br>
-Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 <li><code>bits</code> (Type: Number) (optional)<br>
 Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 </ul>
@@ -348,7 +375,7 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 <li><code>controlPoints</code> (Type: Number)<br>
 Number of control points the curve will have.</li>
 <li><code>degree</code> (Type: Number)<br>
-Degree of the B-Spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 </ul>
 
 <h4>Return Value</h4>

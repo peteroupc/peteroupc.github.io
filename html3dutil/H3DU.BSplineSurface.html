@@ -10,7 +10,12 @@
 
 <h3>H3DU.BSplineSurface(controlPoints, knotsU, knotsV, [bits])</h3>
 
-<p>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.</p>
+<p>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a B-spline (basis spline) surface.
+B-spline surfaces can also represent all B&eacute;zier surfaces (see <a href="H3DU.BSplineSurface.html#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>).
+A B&eacute;zier surface is defined by a series of control points, where
+the control points on each corner define the endPoints of the surface, and
+the remaining control points define the surface&#39;s shape, though they don&#39;t
+necessarily cross the surface.</p>
 
 <h4>Parameters</h4>
 
@@ -34,6 +39,8 @@ given point on the surface.</li>
 the surface&#39;s edges lie on the edges of the control point array.</li>
 <li><a href="#H3DU.BSplineSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
 in a B-spline surface.</li>
+<li><a href="#H3DU.BSplineSurface.fromBezierSurface">fromBezierSurface</a><br>Creates a B-spline surface from the control points of a B&eacute;zier surface.</li>
+<li><a href="#H3DU.BSplineSurface.getPoints">getPoints</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.BSplineSurface_tangent">tangent</a><br>Finds the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">tangent vector</a> at the
 given point on the surface.</li>
 <li><p><a href="#H3DU.BSplineSurface.uniform">uniform</a><br>Creates a B-spline surface with uniform knots.</p>
@@ -74,9 +81,9 @@ the surface&#39;s edges lie on the edges of the control point array.</p>
 <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;Number&gt;&gt;&gt;)<br>
 Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
 <li><code>degreeU</code> (Type: Number) (optional)<br>
-Degree of the B-Spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 <li><code>degreeV</code> (Type: Number) (optional)<br>
-Degree of the B-Spline surface along the V axis If null or omitted, the default is 3.</li>
+Degree of the B-spline surface along the V axis If null or omitted, the default is 3.</li>
 <li><code>bits</code> (Type: Number) (optional)<br>
 Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
 </ul>
@@ -98,7 +105,7 @@ in a B-spline surface.</p>
 
 <ul>
 <li><code>u</code> (Type: Number)<br>
-U coordinate of the surface to evaluate. NOTE: Since version 2.0, this parameter and the &quot;v&quot; parameter are no longer scaled according to the curve&#39;s knot vector.</li>
+U coordinate of the surface to evaluate. NOTE: Since version 2.0, this parameter and the &quot;v&quot; parameter are no longer scaled according to the curve&#39;s knot vector. To get the surface&#39;s extents, call this object&#39;s <code>endPoints</code> method.</li>
 <li><code>v</code> (Type: Number)<br>
 V coordinate of the surface to evaluate.</li>
 </ul>
@@ -108,6 +115,35 @@ V coordinate of the surface to evaluate.</li>
 <p>An array of the result of
 the evaluation. It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.BSplineSurface.fromBezierSurface'></a></p>
+
+<h3>(static) H3DU.BSplineSurface.fromBezierSurface(controlPoints, [bits])</h3>
+
+<p>Creates a B-spline surface from the control points of a B&eacute;zier surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+Array of control points as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor. The curve&#39;s degree along the U axis will equal the number of control points in the first control point array minus 1. The curve&#39;s degree along the V axis will equal the number of control point arrays minus 1.</li>
+<li><code>bits</code> (Type: Number) (optional)<br>
+Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a>)</p>
+
+<p><a name='H3DU.BSplineSurface.getPoints'></a></p>
+
+<h3>(static) H3DU.BSplineSurface.getPoints()</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
 
 <p><a name='H3DU.BSplineSurface_tangent'></a></p>
 
@@ -143,9 +179,9 @@ if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&
 <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;Number&gt;&gt;&gt;)<br>
 Array of control point arrays as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
 <li><code>degreeU</code> (Type: Number) (optional)<br>
-Degree of the B-Spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 <li><code>degreeV</code> (Type: Number) (optional)<br>
-Degree of the B-Spline surface along the V axis If null or omitted, the default is 3.</li>
+Degree of the B-spline surface along the V axis If null or omitted, the default is 3.</li>
 <li><code>bits</code> (Type: Number) (optional)<br>
 Bits as specified in the <a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a> constructor.</li>
 </ul>

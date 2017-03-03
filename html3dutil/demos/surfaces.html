@@ -43,7 +43,7 @@ function FourierKnot(a, b) {
   if(this.a.length !== this.b.length) {
     throw new Error("a and b must be the same length");
   }
-  this.endpoints = function() {
+  this.endPoints = function() {
     return [0, H3DU.Math.PITimes2];
   };
   this.evaluate = function(u) {
@@ -76,7 +76,7 @@ var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
   this.n = typeof n === "undefined" || n === null ? 1 : n;
  // exponent for the sines and cosines in V-axis
   this.m = typeof m === "undefined" || m === null ? 1 : m;
-  this.endpoints = function() {
+  this.endPoints = function() {
     return [-Math.PI / 2, Math.PI / 2, -Math.PI, Math.PI];
   };
   this.evaluate = function(u, v) {
@@ -109,7 +109,7 @@ var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
   this.n = typeof n === "undefined" || n === null ? 1 : n;
  // exponent for the sines and cosines in V-axis
   this.m = typeof m === "undefined" || m === null ? 1 : m;
-  this.endpoints = function() {
+  this.endPoints = function() {
     return [0, H3DU.Math.PiTimes2, 0, H3DU.Math.PiTimes2];
   };
   this.evaluate = function(u, v) {
@@ -124,7 +124,7 @@ var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
 
 var KleinBottle = function() {
   "use strict";
-  this.endpoints = function() {
+  this.endPoints = function() {
     return [0, H3DU.Math.PiTimes2, 0, H3DU.Math.PiTimes2];
   };
   this.evaluate = function(u, v) {
@@ -150,7 +150,7 @@ var MoebiusLikeStrip = function(maj, a, b) {
   this.maj = typeof maj === "undefined" || maj === null ? 1.25 : maj;
   this.a = typeof a === "undefined" || a === null ? 0.125 : a;
   this.b = typeof b === "undefined" || b === null ? 0.5 : b;
-  this.endpoints = function() {
+  this.endPoints = function() {
     return [0, Math.PI, 0, H3DU.Math.PiTimes2];
   };
   this.evaluate = function(u, v) {
@@ -174,7 +174,7 @@ var MoebiusStrip = function(radius, width) {
   "use strict";
   this.radius = typeof radius === "undefined" || radius === null ? 1 : radius;
   this.width = typeof width === "undefined" || width === null ? 0.5 : width;
-  this.endpoints = function() {
+  this.endPoints = function() {
     return [-this.width, this.width, 0, H3DU.Math.PiTimes2];
   };
   this.evaluate = function(u, v) {

@@ -1,0 +1,130 @@
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
+<script type="text/javascript" src="../extras/curvetube.js"></script>
+<script type="text/javascript" src="../extras/evaluators.js"></script>
+<script type="text/javascript" src="../extras/path.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<div style="position:absolute;left:0;top:0;width:25%">Design reminiscent of a popular drawing toy</div>
+<script id="demo">
+/* global H3DU */
+// <!--
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
+
+function gcd(u, v) {
+  "use strict";
+  u = Math.abs(u);
+  v = Math.abs(v);
+  if (u === 0 || v === 0 || u === v) {
+    return u === 0 ? v : u;
+  }
+  do {
+    if (u > v) {
+      u -= v;
+    } else {
+      v -= u;
+    }
+  } while (u !== v);
+  return u;
+}
+
+function hypo(ce, mesh, radius, ringTeeth, wheelTeeth, relDist, phaseInRingTeeth) {
+  "use strict";
+  var phase = phaseInRingTeeth;
+  if(!phase)phase = 0;
+  phase = phase * 360 / ringTeeth;
+  var innerRadius = radius * wheelTeeth / ringTeeth;
+  var distFromCenter = relDist * innerRadius;
+  var curve = new H3DU.Hypotrochoid(radius, innerRadius, distFromCenter, phase);
+  var factor = gcd(ringTeeth, wheelTeeth);
+  var rt = ringTeeth / factor;
+  var wt = wheelTeeth / factor;
+  var trips = Math.min(rt, wt);
+  var lines = 60 * trips;
+  var extent = H3DU.Math.PiTimes2 * trips;
+  return ce.vertex(curve).evalCurve(mesh, H3DU.Mesh.LINES, lines, 0, extent);
+}
+
+function epi(ce, mesh, radius, ringTeeth, wheelTeeth, relDist, phaseInRingTeeth) {
+  "use strict";
+  var phase = phaseInRingTeeth;
+  if(!phase)phase = 0;
+  phase = phase * 360 / ringTeeth;
+  var rollerRadius = radius * wheelTeeth / ringTeeth;
+  var distFromCenter = relDist * rollerRadius;
+  var curve = new H3DU.Epitrochoid(radius, rollerRadius, distFromCenter, phase);
+  var factor = gcd(ringTeeth, wheelTeeth);
+  var rt = ringTeeth / factor;
+  var wt = wheelTeeth / factor;
+  var trips = Math.min(rt, wt);
+  var lines = 90 * trips;
+  var extent = H3DU.Math.PiTimes2 * trips;
+  return ce.vertex(curve).evalCurve(mesh, H3DU.Mesh.LINES, lines, 0, extent);
+}
+
+function drawingToyDesign() {
+  "use strict";
+  var ce = new H3DU.CurveEval();
+  var mesh = new H3DU.Mesh();
+// Inner design
+  ce.color({
+    "evaluate":function() {
+      return [0, 0, 1];
+    }
+  });
+  hypo(ce, mesh, 2, 96, 52, 0.75);
+  hypo(ce, mesh, 2, 96, 50, 0.65, 2);
+  hypo(ce, mesh, 2, 96, 48, 0.55, 4);
+  ce.color({
+    "evaluate":function() {
+      return [1, 0, 0];
+    }
+  });
+  hypo(ce, mesh, 2, 96, 46, 0.45, 6);
+  hypo(ce, mesh, 2, 96, 52, 0.35, 8);
+ // Outer design
+  ce.color({
+    "evaluate":function() {
+      return [0, 1, 0];
+    }
+  });
+  epi(ce, mesh, 2.3, 144, 64, 0.9);
+  epi(ce, mesh, 2.3, 144, 64, 0.8, 5);
+  epi(ce, mesh, 2.3, 144, 64, 0.7, 10);
+  epi(ce, mesh, 2.3, 144, 64, 0.6, 15);
+  return mesh;
+}
+
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+scene.setClearColor("white");
+var sub = new H3DU.Batch3D()
+   .perspectiveAspect(45, 1, 1000)
+   .setLookAt([0, 0, 10]);
+  // var fc = new H3DU.FrameCounterDiv();
+var group = new H3DU.ShapeGroup();
+sub.getLights().setBasic();
+var mesh = drawingToyDesign();
+group.addShape(new H3DU.Shape(mesh));
+sub.addShape(group);
+H3DU.renderLoop(function() {
+  "use strict";
+  scene.render(sub);
+});
+// -->
+</script>
+</body>

@@ -1481,7 +1481,7 @@
  * value, given in units. If null or omitted, default is 1.
  * @returns {Array<Array<Number>>} Array of points lying on
  * the path and evenly spaced across the length of the path,
- * starting and ending with the path's endpoints. Returns
+ * starting and ending with the path's endPoints. Returns
  * an empty array if <i>numPoints</i> is less than 1. Returns
  * an array consisting of the start point if <i>numPoints</i>
  * is 1.

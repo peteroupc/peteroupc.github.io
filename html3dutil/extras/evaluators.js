@@ -52,7 +52,7 @@ H3DU.SurfaceOfRevolution = function(curve, minval, maxval, axis) {
  * @returns {*} Return value.
  * @instance
  */
-H3DU.SurfaceOfRevolution.prototype.endpoints = function() {
+H3DU.SurfaceOfRevolution.prototype.endPoints = function() {
   "use strict";
   return [0, H3DU.Math.PiTimes2, this.minval, this.maxval];
 };
@@ -185,7 +185,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
       var y = outerRadius + innerRadius * curvept[0];
       return [x, y, 0];
     },
-    "endpoints":function() {
+    "endPoints":function() {
       return [0, H3DU.Math.PiTimes2];
     }
   }, 0, H3DU.Math.PiTimes2, axis);
@@ -202,7 +202,7 @@ var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
 
 /**
  * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a curve drawn by a circle that rolls along the inside
- * of another circle, whose position is fixed with a center of (0,0).
+ * of another circle, whose position is fixed, with a center of (0,0).
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
@@ -214,16 +214,21 @@ var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
  * @param {Number} outerRadius Radius of the circle whose position
  * is fixed.
  * @param {Number} innerRadius Radius of the rolling circle.
- * A hypocycloid results when outerRadius=innerRadius.
+ * A hypocycloid results when distFromInnerCenter=innerRadius.
  * @param {Number} distFromInnerCenter Distance from the center of the
- * rolling circle to the drawing pen.. A prolate hypotrochoid results when
- * distFromInnerCenter is greater than innerRadius.
+ * rolling circle to the drawing pen.
+ * @param {Number} [phaseInDegrees] Starting angle of the inner circle from
+ * the positive X axis, in degrees. Default is 0.
  */
-H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
+H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, phaseInDegrees) {
   "use strict";
   this.outer = outerRadius;
   this.inner = innerRadius;
   this.distFromInner = distFromInnerCenter;
+  var phase = phaseInDegrees || 0;
+  phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
+       (phase < 0 ? 360 : 0);
+  this.phase = phase * H3DU.Math.ToRadians;
  /**
   * Generates a point on the curve from the given U coordinate.
   * @function
@@ -234,8 +239,9 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   this.evaluate = function(u) {
     var oi = this.outer - this.inner;
     var term = oi * u / this.inner;
-    var cosu = Math.cos(u),
-      sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    var uangle = u + this.phase;
+    var cosu = Math.cos(uangle),
+      sinu = uangle >= 0 && uangle < 6.283185307179586 ? uangle <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uangle);
     var cost = Math.cos(term),
       sint = term >= 0 && term < 6.283185307179586 ? term <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(term);
     return [
@@ -244,7 +250,15 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
       0
     ];
   };
-  this.endpoints = function() {
+  /**
+   * Gets the endpoints of this curve.
+   * For this curve evaluator object, the curve
+   * starts at 0 and ends at &pi;*2.
+   * @function
+   * @returns {Array<Number>} An array containing the two
+   * endpoints of the curve. The first number is the start of the curve,
+   * and the second number is the end of the curve. */
+  this.endPoints = function() {
     return [0, H3DU.Math.PiTimes2];
   };
  /**
@@ -269,6 +283,23 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   };
 };
 
+/**
+ * Creates a [curve evaluator object]{@link H3DU.CurveEval#vertex} for a rose, a special
+ * form of hypotrochoid.
+ * @param {Number} n Parameter that determines the petal form of the rose.
+ * For example, the rose is symmetrical if this number is even.
+ * @param {Number} distFromInnerCenter Distance from the center of the
+ * rolling circle to the drawing pen. A prolate hypotrochoid results when
+ * distFromInnerCenter is greater than innerRadius.
+ * @param {Number} [phaseInDegrees] Starting angle of the inner circle from
+ * the positive X axis, in degrees. Default is 0.
+ */
+H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, phaseInDegrees) {
+  "use strict";
+  var denom = n + 1;
+  return new H3DU.Hypotrochoid(2 * n * distFromInnerCenter / denom,
+      distFromInnerCenter * (n - 1) / denom, distFromInnerCenter, phaseInDegrees);
+};
 /**
  * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a curve drawn by a circle that rolls along the X axis.
  * <p>This class is considered a supplementary class to the
@@ -303,7 +334,15 @@ H3DU.Trochoid = function(radius, distFromCenter) {
       0
     ];
   };
-  this.endpoints = function() {
+  /**
+   * Gets the endpoints of this curve.
+   * For this curve evaluator object, the curve
+   * starts at 0 and ends at &pi;*2.
+   * @function
+   * @returns {Array<Number>} An array containing the two
+   * endpoints of the curve. The first number is the start of the curve,
+   * and the second number is the end of the curve. */
+  this.endPoints = function() {
     return [0, H3DU.Math.PiTimes2];
   };
   this.tangent = function(u) {
@@ -317,6 +356,7 @@ H3DU.Trochoid = function(radius, distFromCenter) {
 /**
  * A [curve evaluator object]{@link H3DU.CurveEval#vertex} for a curve drawn by a circle that rolls along the outside
  * of another circle, whose position is fixed, with a center of (0,0).
+ * The rolling circle will start at the positive X axis of the fixed circle.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
@@ -327,17 +367,22 @@ H3DU.Trochoid = function(radius, distFromCenter) {
  * @class
  * @param {Number} outerRadius Radius of the circle whose position
  * is fixed.
- * @param {Number} innerRadius Radius of the rolling circle.
- * An epicycloid results when outerRadius=innerRadius.
- * @param {Number} distFromInnerCenter Distance from the center of the
- * rolling circle to the drawing pen. A prolate epitrochoid results when
- * distFromInnerCenter is greater than innerRadius.
+ * @param {Number} rollerRadius Radius of the rolling circle.
+ * An epicycloid results when distFromRollerCenter=rollerRadius.
+ * @param {Number} distFromRollerCenter Distance from the center of the
+ * rolling circle to the drawing pen.
+ * @param {Number} phaseInDegrees Starting angle of the rolling circle
+ * from the positive X axis, in degrees. Default is 0.
  */
-H3DU.Epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
+H3DU.Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, phaseInDegrees) {
   "use strict";
   this.outer = outerRadius;
-  this.inner = innerRadius;
-  this.distFromInner = distFromInnerCenter;
+  this.roller = rollerRadius;
+  this.distFromRoller = distFromRollerCenter;
+  var phase = phaseInDegrees || 0;
+  phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
+       (phase < 0 ? 360 : 0);
+  this.phase = phase * H3DU.Math.ToRadians;
  /**
   * Generates a point on the curve from the given U coordinate.
   * @function
@@ -346,19 +391,28 @@ H3DU.Epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   * Only the X and Y coordinates will be other than 0.
   */
   this.evaluate = function(u) {
-    var oi = this.outer + this.inner;
-    var term = oi * u / this.inner;
-    var cosu = Math.cos(u),
-      sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    var oi = this.outer + this.roller;
+    var term = oi * u / this.roller;
+    var uangle = u + this.phase;
+    var cosu = Math.cos(uangle),
+      sinu = uangle >= 0 && uangle < 6.283185307179586 ? uangle <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uangle);
     var cost = Math.cos(term),
       sint = term >= 0 && term < 6.283185307179586 ? term <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(term);
     return [
-      oi * cosu - this.distFromInner * cost,
-      oi * sinu - this.distFromInner * sint,
+      oi * cosu - this.distFromRoller * cost,
+      oi * sinu - this.distFromRoller * sint,
       0
     ];
   };
-  this.endpoints = function() {
+  /**
+   * Gets the endpoints of this curve.
+   * For this curve evaluator object, the curve
+   * starts at 0 and ends at &pi;*2.
+   * @function
+   * @returns {Array<Number>} An array containing the two
+   * endpoints of the curve. The first number is the start of the curve,
+   * and the second number is the end of the curve. */
+  this.endPoints = function() {
     return [0, H3DU.Math.PiTimes2];
   };
  /**
@@ -369,17 +423,17 @@ H3DU.Epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter) {
   * @returns {H3DU.Epitrochoid} Return value.
   */
   this.scaleTo = function(radius) {
-    var oi = this.outer + this.inner;
+    var oi = this.outer + this.roller;
     var mx = Math.abs(Math.max(
-   -oi - this.distFromInner,
-   -oi + this.distFromInner,
-   oi - this.distFromInner,
-   oi + this.distFromInner));
+   -oi - this.distFromRoller,
+   -oi + this.distFromRoller,
+   oi - this.distFromRoller,
+   oi + this.distFromRoller));
     var ratio = radius / mx;
     return new H3DU.Epitrochoid(
    this.outer * ratio,
-   this.inner * ratio,
-   this.distFromInner * ratio);
+   this.roller * ratio,
+   this.distFromRoller * ratio);
   };
 };
 

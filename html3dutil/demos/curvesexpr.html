@@ -81,16 +81,15 @@ function CustomCurve(x, y, z, minu, maxu) {
   " " + ye.toJSString() + "," +
   " " + ze.toJSString() + "];\n";
   this.getCode = function() {
-  // TODO: Write gradient here
     return "var evaluator=new H3DU.CurveEval().vertex({\n" +
    "\"evaluate\":function(u) {\n" + code + "},\n" +
-   "\"endpoints\":function(u) {\n return [" + ranges[0] + "," + ranges[1] + "},\n" +
+   "\"endPoints\":function(u) {\n return [" + ranges[0] + "," + ranges[1] + "},\n" +
    "})\n";
   };
   this.rangeMax = ranges[1];
   this.rangeMin = ranges[0];
   this.evaluate = null;
-  this.endpoints = function() {
+  this.endPoints = function() {
     return [this.rangeMin, this.rangeMax];
   };
   try {

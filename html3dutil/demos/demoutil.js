@@ -175,27 +175,6 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
   updateShape(updateMeshFunc, allsettings, shapeGroup);
 }
 
-function NormalGenWrapper(f) {
-  "use strict";
-  this.f = f;
-  this.evaluate = function(u, v) {
-    return this.f.evaluate(u, v);
-  };
-  this.c = 0;
-  this.gradient = function(u, v) {
-    return H3DU.SurfaceEval.findGradient(this.f, u, v);
-  };
-  this.tangent = function(u, v) {
-    return H3DU.SurfaceEval.findTangent(this.f, u, v);
-  };
-  this.bitangent = function(u, v) {
-    return H3DU.SurfaceEval.findBitangent(this.f, u, v);
-  };
-  this.endpoints = function() {
-    return H3DU.SurfaceEval.findEndPoints(this.f);
-  };
-}
-
 /* exported makeMesh */
 function makeMesh(func, resolutionU, resolutionV) {
     // Default resolution is 50
@@ -218,7 +197,7 @@ function makeMesh(func, resolutionU, resolutionV) {
   // generate the parametric surface.
   mesh = new H3DU.Mesh();
   new H3DU.SurfaceEval()
-      .vertex(new NormalGenWrapper(func))
+      .vertex(H3DU.SurfaceEval.wrapEvaluator(func))
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
     // Evaluate the surface and generate a triangle
