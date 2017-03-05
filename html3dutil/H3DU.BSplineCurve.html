@@ -13,7 +13,7 @@
 <p>A <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> for a B-spline (basis spline) curve.
 B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
 A B&eacute;zier curve is defined by a series of control points, where
-the first and last control points define the endPoints of the curve, and
+the first and last control points define the end points of the curve, and
 the remaining control points define the curve&#39;s shape, though they don&#39;t
 necessarily cross the curve.</p>
 
@@ -57,7 +57,7 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 except that with the knot vector curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
-<li><a href="#H3DU.BSplineCurve_endPoints">endPoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.BSplineCurve_endPoints">endPoints</a><br>Returns the starting and coordinates of this curve.</li>
 <li><a href="#H3DU.BSplineCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
 in a B-spline curve.</li>
 <li><a href="#H3DU.BSplineCurve.fromBezierCurve">fromBezierCurve</a><br>Creates a B-spline curve from the control points of a B&eacute;zier curve.</li>
@@ -184,11 +184,12 @@ The first knot will be 0 and the last knot will be 1.
 
 <h3>H3DU.BSplineCurve#endPoints()</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Returns the starting and coordinates of this curve.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>A two-element array containing
+the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BSplineCurve_evaluate'></a></p>
 

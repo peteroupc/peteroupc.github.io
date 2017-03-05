@@ -81,7 +81,7 @@ function drawingToyDesign() {
   "use strict";
   var ce = new H3DU.CurveEval();
   var mesh = new H3DU.Mesh();
-// Inner design
+ // Inner design
   ce.color({
     "evaluate":function() {
       return [0, 0, 1];
@@ -115,12 +115,12 @@ scene.setClearColor("white");
 var sub = new H3DU.Batch3D()
    .perspectiveAspect(45, 1, 1000)
    .setLookAt([0, 0, 10]);
-  // var fc = new H3DU.FrameCounterDiv();
 var group = new H3DU.ShapeGroup();
 sub.getLights().setBasic();
 var mesh = drawingToyDesign();
 group.addShape(new H3DU.Shape(mesh));
 sub.addShape(group);
+
 H3DU.renderLoop(function() {
   "use strict";
   scene.render(sub);

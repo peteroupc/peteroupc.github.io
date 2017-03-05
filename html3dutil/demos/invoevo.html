@@ -79,7 +79,6 @@ function curveInvolute(evaluator) {
       var arclen = neweval.arcLength(u);
       var tangent = neweval.tangent(u);
       var position = neweval.evaluate(u);
-  // var denom = Math.sqrt(tangent[0] * tangent[0] + tangent[1] * tangent[1]);
       return _vecAdd(position,
         _vecNormInPlaceAndScale(tangent, -arclen));
     },
@@ -225,7 +224,6 @@ scene.setClearColor("white");
 var sub = new H3DU.Batch3D()
    .perspectiveAspect(45, 1, 1000)
    .setLookAt([0, 0, 10]);
-  // var fc = new H3DU.FrameCounterDiv();
 var group = new H3DU.ShapeGroup();
 sub.getLights().setBasic();
 var mesh = makeCurvePath(simpleCurve);

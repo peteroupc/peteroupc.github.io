@@ -34,7 +34,7 @@ No longer used since version 2.0. The starting and ending points will be (0, 0).
 
 <ul>
 <li><a href="#H3DU.BezierSurface_bitangent">bitangent</a><br>Finds the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">bitangent vector</a> at the given point on this surface.</li>
-<li><a href="#H3DU.BezierSurface_endPoints">endPoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.BezierSurface_endPoints">endPoints</a><br>Returns the starting and ending U and V coordinates of this surface.</li>
 <li><a href="#H3DU.BezierSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
 in a B&eacute;zier surface.</li>
 <li><p><a href="#H3DU.BezierSurface_tangent">tangent</a><br>Finds the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">tangent vector</a> at the given point on this surface.</p>
@@ -64,11 +64,13 @@ coordinates. It will have as many elements as a control point, as specified in t
 
 <h3>H3DU.BezierSurface#endPoints()</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Returns the starting and ending U and V coordinates of this surface.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>A four-element array. The first and second
+elements are the starting and ending U coordinates, respectively, of the surface, and the third
+and fourth elements are its starting and ending V coordinates. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BezierSurface_evaluate'></a></p>
 
