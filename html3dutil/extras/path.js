@@ -1359,13 +1359,8 @@
   };
 
 /**
- * Gets an object for the curves described by this path.
- * The resulting object can be used to retrieve the points
- * that lie on the path or as a parameter for one of
- * the {@link H3DU.CurveEval} methods, in the
- * {@link CurveTube} class, or any other class that
- * accepts parametric curves.<p>
- * The return value doesn't track changes to the path.
+ * Gets a [curve evaluator object]{@link H3DU.Curve} for
+ * the curves described by this path. The return value doesn't track changes to the path.
  * @param {Number} [flatness] When curves and arcs
  * are decomposed to line segments for the purpose of
  * calculating their length, the
@@ -1410,7 +1405,8 @@
  * @memberof! H3DU.GraphicsPath#
  */
   GraphicsPath.prototype.getCurves = function(flatness) {
-    // TODO: "tangent" method should probably not normalize to unit vector
+    // NOTE: Uses a "tangent" method, not "velocity", because
+    // that method's return values are generally unit vectors.
     var subpaths = [];
     var curves = [];
     if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;

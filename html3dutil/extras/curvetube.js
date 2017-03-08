@@ -10,7 +10,7 @@
 /** @ignore */
 H3DU._FrenetFrames = function(func) {
   "use strict";
-  this.func = func;
+  this.func = typeof H3DU.Curve !== "undefined" && H3DU.Curve !== null ? new H3DU.Curve(func) : func;
   this.normals = [];
   this.binormals = [];
   this.tangents = [];
@@ -19,28 +19,28 @@ H3DU._FrenetFrames = function(func) {
   var isClosed = false;
   var res = 50;
   var nextSample = null;
-  var lastSample = func.evaluate(1.0);
   var totalLength = 0;
   var samples = [];
   var lengths = [];
   this.endPoints = H3DU._FrenetFrames.getEndPoints(func);
-  if(H3DU._FrenetFrames._distSq(func.evaluate(0), lastSample) < H3DU._FrenetFrames._EPSILON) {
+  var lastSample = this.func.evaluate(this.endPoints[1]);
+  if(H3DU._FrenetFrames._distSq(this.func.evaluate(0), lastSample) < H3DU._FrenetFrames._EPSILON) {
     isClosed = true;
   }
   for(var i = 0; i <= res; i++) {
     var t = this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * (i / res);
-    var e0 = nextSample ? nextSample : func.evaluate(t);
+    var e0 = nextSample ? nextSample : this.func.evaluate(t);
     if(isClosed && i > 0) {
       var len = Math.sqrt(H3DU._FrenetFrames._distSq(e0, samples[i - 1]));
       totalLength += len;
       lengths.push(len);
     }
-    nextSample = i === res ? e0 : func.evaluate((i + 1) / res);
+    nextSample = i === res ? e0 : this.func.evaluate((i + 1) / res);
     samples.push(e0);
-    var tangent = H3DU._FrenetFrames._getTangent(func, t, e0);
+    var tangent = H3DU._FrenetFrames._getTangent(this.func, t, e0);
     var normal;
     if(i > 0) {
-      normal = H3DU.Math.vec3normInPlace(
+      normal = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3cross(this.binormals[i - 1], tangent));
       if(normal[0] === 0 && normal[1] === 0 && normal[2] === 0) {
         // Normal is calculated to be 0, indicating that the tangent
@@ -50,7 +50,7 @@ H3DU._FrenetFrames = function(func) {
     } else {
       normal = H3DU._FrenetFrames.normalFromTangent(tangent);
     }
-    var binormal = H3DU.Math.vec3normInPlace(
+    var binormal = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3cross(tangent, normal));
     this.normals[i] = normal;
     this.binormals[i] = binormal;
@@ -79,9 +79,7 @@ H3DU._FrenetFrames = function(func) {
 /** @ignore */
 H3DU._FrenetFrames.getEndPoints = function(func) {
   "use strict";
-  if(typeof H3DU.CurveEval.findEndPoints !== "undefined" && H3DU.CurveEval.findEndPoints !== null) {
-    return H3DU.CurveEval.findEndPoints(func);
-  } else if(typeof func.endPoints !== "undefined" && func.endPoints !== null) {
+  if(typeof func.endPoints !== "undefined" && func.endPoints !== null) {
     return func.endPoints();
   } else {
     return [0, 1];
@@ -91,17 +89,17 @@ H3DU._FrenetFrames.getEndPoints = function(func) {
 H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
   "use strict";
   var tangent;
-  if(typeof H3DU.CurveEval.findTangent !== "undefined" && H3DU.CurveEval.findTangent !== null) {
-    tangent = H3DU.CurveEval.findTangent(func, t);
+  if(typeof func.velocity !== "undefined" && func.velocity !== null) {
+    tangent = func.velocity(t);
   } else {
     var direction = t === 1 ? -1 : 1;
     var sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._FrenetFrames._EPSILON);
-    tangent = H3DU.Math.vec3normInPlace(
-    H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
+    tangent = H3DU.Math.vec3normalizeInPlace(
+       H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
     if(tangent[0] === 0 && tangent[1] === 0 && tangent[2] === 0) {
       direction = -direction;
       sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._FrenetFrames._EPSILON);
-      tangent = H3DU.Math.vec3normInPlace(
+      tangent = H3DU.Math.vec3normalizeInPlace(
             H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
     }
     if(direction < 0) {
@@ -110,12 +108,12 @@ H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
       H3DU.Math.vec3scaleInPlace(tangent, -1);
     }
   }
-  return H3DU.Math.vec3normInPlace(tangent);
+  return H3DU.Math.vec3normalizeInPlace(tangent);
 };
 /** @ignore */
 H3DU._FrenetFrames.normalFromTangent = function(tangent) {
   "use strict";
-  return H3DU.Math.vec3normInPlace(H3DU.Math.vec3perp(tangent));
+  return H3DU.Math.vec3normalizeInPlace(H3DU.Math.vec3perp(tangent));
 };
 /** @ignore */
 H3DU._FrenetFrames._EPSILON = 0.000001;
@@ -144,9 +142,9 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
       index = Math.floor(index);
       e0 = sample;
       tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
-      normal = H3DU.Math.vec3normInPlace(
+      normal = H3DU.Math.vec3normalizeInPlace(
      H3DU.Math.vec3cross(this.binormals[index], tangent));
-      binormal = H3DU.Math.vec3normInPlace(
+      binormal = H3DU.Math.vec3normalizeInPlace(
      H3DU.Math.vec3cross(tangent, normal));
       b = binormal;
       n = normal;
@@ -162,7 +160,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
     e0 = sample;
     tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
     normal = H3DU._FrenetFrames.normalFromTangent(tangent);
-    binormal = H3DU.Math.vec3normInPlace(
+    binormal = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3cross(tangent, normal));
     b = binormal;
     n = normal;
@@ -207,11 +205,11 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
  * @class
  * @memberof H3DU
- * @param {Object} func A [curve evaluator object]{@link H3DU.CurveEval#vertex} that describes the 3-dimensional curve to extrude
+ * @param {Object} func A [curve evaluator object]{@link H3DU.Curve} that describes the 3-dimensional curve to extrude
  * a tube from.
  * @param {Number} [thickness] Radius of the
  * extruded tube. If this parameter is null or omitted, the default is 0.125.
- * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.CurveEval#vertex} that
+ * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.Curve} that
  * describes a two-dimensional curve to serve as
  * the cross section of the extruded shape. The curve need not be closed. If this parameter is null
  * or omitted, uses a

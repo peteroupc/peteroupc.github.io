@@ -60,7 +60,7 @@ ImplicitSurface.prototype._getNormal = function(rfNormal, fX, fY, fZ) {
   rfNormal[0] = this.sampler.sample(fX + 0.001, fY, fZ) - ff;
   rfNormal[1] = this.sampler.sample(fX, fY + 0.001, fZ) - ff;
   rfNormal[2] = this.sampler.sample(fX, fY, fZ + 0.001) - ff;
-  H3DU.Math.vec3normInPlace(rfNormal);
+  H3DU.Math.vec3normalizeInPlace(rfNormal);
 };
 /** @ignore */
 ImplicitSurface._fGetOffset = function(a, b, desired) {

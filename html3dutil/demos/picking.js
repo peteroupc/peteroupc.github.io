@@ -17,7 +17,7 @@ var EPSILON = 1e-9;
 
 function getIntersectionRayBox(ray, box) {
   "use strict";
-  var d = H3DU.Math.vec3normInPlace([ray[3], ray[4], ray[5]]); // direction: last 3 elements of ray
+  var d = H3DU.Math.vec3normalizeInPlace([ray[3], ray[4], ray[5]]); // direction: last 3 elements of ray
   var p = [ray[0], ray[1], ray[2]]; // origin: first 3 elements of ray
   var mn = 0.0;
   var mx = Number.POSITIVE_INFINITY;
@@ -99,7 +99,7 @@ function triangleToPlane(face) {
   var ac = H3DU.Math.vec3sub(face[0], face[2]);
   var bc = H3DU.Math.vec3sub(face[1], face[2]);
   // Find a normal of the triangle
-  var planeNormal = H3DU.Math.vec3normInPlace(H3DU.Math.vec3cross(ac, bc));
+  var planeNormal = H3DU.Math.vec3normalizeInPlace(H3DU.Math.vec3cross(ac, bc));
   // Find the triangle's centroid, which will lie on the plane
   var planeOrigin = [
     (face[0][0] + face[1][0] + face[2][0]) / 3.0,
@@ -162,7 +162,7 @@ function getClosestPointToTriangle3D(p, a, b, c) {
 function getIntersectionRayPlane(ray, plane) {
   "use strict";
   var r1origin = ray.slice(0, 3);
-  var r1direction = H3DU.Math.vec3normInPlace([ray[3], ray[4], ray[5]]);
+  var r1direction = H3DU.Math.vec3normalizeInPlace([ray[3], ray[4], ray[5]]);
   var ab = r1direction;
   var p1normal = plane.slice(0, 3);
   var p1origin = plane.slice(3, 6);

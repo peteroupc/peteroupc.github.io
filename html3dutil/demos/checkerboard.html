@@ -49,11 +49,6 @@ shader.setUniforms({
   "whiteColor":H3DU.toGLColor(document.getElementById("whitecolor").value).slice(0, 3),
   "squaresPerRow":8
 });
-var batch = new H3DU.Batch3D().addShape(
-  new H3DU.Shape(new H3DU.Mesh(
-    [-1, 1, 0, -1, -1, 0,
-      1, 1, 0, 1, -1, 0],
-     [0, 1, 2, 2, 1, 3], 0)).setShader(shader));
 document.getElementById("blackcolor").addEventListener("change",
    function(e) {
      "use strict";
@@ -64,6 +59,11 @@ document.getElementById("whitecolor").addEventListener("change",
      "use strict";
      shader.setUniforms({"whiteColor":H3DU.toGLColor(e.target.value).slice(0, 3)});
    });
+var batch = new H3DU.Batch3D().addShape(
+  new H3DU.Shape(new H3DU.Mesh(
+    [-1, 1, 0, -1, -1, 0,
+      1, 1, 0, 1, -1, 0],
+     [0, 1, 2, 2, 1, 3], 0)).setShader(shader));
 H3DU.renderLoop(function() {
   "use strict";
   scene.render(batch);

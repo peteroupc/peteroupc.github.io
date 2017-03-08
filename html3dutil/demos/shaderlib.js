@@ -90,8 +90,7 @@ function fragmentShaderLib() {
     "float fbm(vec2 x, float freq, float amp, float lac, float gain) {",
     // Unrolled to avoid compilation failures.
     // 6 "octaves", or iterations.
-    "   float ret=0.0;",
-    "   ret+=noise(x*freq)*amp;",
+    "   float ret=noise(x*freq)*amp;",
     "   amp*=gain;",
     "   freq*=lac;",
     "    ret+=noise(x*freq)*amp;",
@@ -112,8 +111,7 @@ function fragmentShaderLib() {
     "float fbm(vec3 x, float freq, float amp, float lac, float gain) {",
     // Unrolled to avoid compilation failures.
     // 6 "octaves", or iterations.
-    "   float ret=0.0;",
-    "   ret+=noise(x*freq)*amp;",
+    "   float ret=noise(x*freq)*amp;",
     "   amp*=gain;",
     "   freq*=lac;",
     "    ret+=noise(x*freq)*amp;",

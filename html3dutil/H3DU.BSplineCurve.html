@@ -10,12 +10,16 @@
 
 <h3>H3DU.BSplineCurve(controlPoints, knots, [bits])</h3>
 
-<p>A <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> for a B-spline (basis spline) curve.
-B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).
+<p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.
+B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).</p>
+
+<p><b>B&eacute;zier Curves</b>
 A B&eacute;zier curve is defined by a series of control points, where
 the first and last control points define the end points of the curve, and
 the remaining control points define the curve&#39;s shape, though they don&#39;t
 necessarily cross the curve.</p>
+
+<p><strong>Augments:</strong> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
 
 <h4>Parameters</h4>
 
@@ -48,6 +52,9 @@ results to conventional coordinates.</b></li>
 <h3>Methods</h3>
 
 <ul>
+<li><a href="#H3DU.BSplineCurve_accel">accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.BSplineCurve_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</li>
 <li><a href="#H3DU.BSplineCurve.clamped">clamped</a><br>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
@@ -65,12 +72,13 @@ in a B-spline curve.</li>
 <li><a href="#H3DU.BSplineCurve.fromHermiteSpline">fromHermiteSpline</a><br>Creates an array of B-spline curves from the control points of a Hermite spline.</li>
 <li><a href="#H3DU.BSplineCurve_getPoints">getPoints</a><br>Gets a reference to the array of control points used
 in this curve object.</li>
+<li><a href="#H3DU.BSplineCurve_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
 <li><a href="#H3DU.BSplineCurve_split">split</a><br>Splits this B-spline curve into two at the given point.</li>
-<li><a href="#H3DU.BSplineCurve_tangent">tangent</a><br>Finds the <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">tangent</a> (derivative) of
-this curve at the given point.</li>
 <li><a href="#H3DU.BSplineCurve.uniform">uniform</a><br>Creates a B-spline curve with uniform knots.</li>
 <li><a href="#H3DU.BSplineCurve.uniformKnots">uniformKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><a href="#H3DU.BSplineCurve_velocity">velocity</a><br>Finds the velocity (derivative) of
+this curve at the given point.</li>
 </ul>
 
 <p><a id='H3DU.BSplineCurve.DIVIDE_BIT'></a></p>
@@ -128,6 +136,51 @@ method will be in homogeneous coordinates.</p>
 <p><b>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</b></p>
 
 <p>Combination of WEIGHTED_BIT and DIVIDE_BIT.</p>
+
+<p><a name='H3DU.BSplineCurve_accel'></a></p>
+
+<h3>H3DU.BSplineCurve#accel(u)</h3>
+
+<p>Finds an approximate acceleration vector at the given U coordinate of this curve.
+This method calls the evaluator&#39;s <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.</p>
+
+<p>The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.BSplineCurve_arcLength'></a></p>
+
+<h3>H3DU.BSplineCurve#arcLength(u)</h3>
+
+<p>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
+This method calls the evaluator&#39;s <code>arcLength</code>
+method if it implements it; otherwise, calculates a numerical integral using the velocity vector.</p>
+
+<p>The <b>arc length</b> function returns a number; if the curve is &quot;smooth&quot;, this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BSplineCurve.clamped'></a></p>
 
@@ -222,15 +275,15 @@ points.push(curve.evaluate(i/10.0));
 
 <p><a name='H3DU.BSplineCurve.fromBezierCurve'></a></p>
 
-<h3>(static) H3DU.BSplineCurve.fromBezierCurve(controlPoints, [bits])</h3>
+<h3>(static) H3DU.BSplineCurve.fromBezierCurve(cp, [bits])</h3>
 
 <p>Creates a B-spline curve from the control points of a B&eacute;zier curve.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
-Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor. The curve&#39;s degree will equal the number of control points minus 1.</li>
+<li><code>cp</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 results in a straight line segment. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
 <li><code>bits</code> (Type: Number) (optional)<br>
 Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 </ul>
@@ -298,6 +351,30 @@ in this curve object.</p>
 
 <p>An object described in the constructor to <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
 
+<p><a name='H3DU.BSplineCurve_normal'></a></p>
+
+<h3>H3DU.BSplineCurve#normal(u)</h3>
+
+<p>Finds an approximate principal normal vector at the given U coordinate of this curve.
+This method calls the evaluator&#39;s <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
+
+<p>The <b>principal normal</b> of a curve is the derivative of the &quot;normalized&quot; velocity
+vector divided by that derivative&#39;s length. The normal returned by this method
+<i>should</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with H3DU.Surface#gradient.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number&gt;)</p>
+
 <p><a name='H3DU.BSplineCurve_split'></a></p>
 
 <h3>H3DU.BSplineCurve#split(u)</h3>
@@ -319,26 +396,6 @@ is the part of the curve after the given point. The first element
 will be null if <code>u</code> is at or before the start of the curve.
 The second element
 will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>&gt;)</p>
-
-<p><a name='H3DU.BSplineCurve_tangent'></a></p>
-
-<h3>H3DU.BSplineCurve#tangent(u)</h3>
-
-<p>Finds the <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">tangent</a> (derivative) of
-this curve at the given point.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>u</code> (Type: Number)<br>
-Point on the curve to evaluate.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>An array giving the tangent vector.
-It will have as many elements as a control point (or one fewer
-if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.BSplineCurve.uniform'></a></p>
 
@@ -384,6 +441,26 @@ Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If 
 <p>A uniform knot vector. The first
 knot will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.BSplineCurve_velocity'></a></p>
+
+<h3>H3DU.BSplineCurve#velocity(u)</h3>
+
+<p>Finds the velocity (derivative) of
+this curve at the given point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+Point on the curve to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array giving the velocity vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -412,6 +489,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.ArcLengthParamCurve.html">H3DU.ArcLengthParamCurve</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
@@ -420,6 +498,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
+<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>

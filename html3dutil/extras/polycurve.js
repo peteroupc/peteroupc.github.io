@@ -147,6 +147,8 @@
       this.cp = cp;
       this.elements = cp[0].length;
     };
+    H3DU.PolynomialCurve.prototype = Object.create(H3DU.Curve.prototype);
+    Object.assign(H3DU.PolynomialCurve.prototype, {"constructor": H3DU.PolynomialCurve});
 /** @ignore */
     H3DU.PolynomialCurve.prototype.setBasis = function(basis, degree) {
       this.matrix = basis;

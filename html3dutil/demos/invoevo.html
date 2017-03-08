@@ -73,11 +73,11 @@ function _vecScale(v1, s) {
 
 function curveInvolute(evaluator) {
   "use strict";
-  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  var neweval = evaluator;
   return {
     "evaluate":function(u) {
       var arclen = neweval.arcLength(u);
-      var tangent = neweval.tangent(u);
+      var tangent = neweval.velocity(u);
       var position = neweval.evaluate(u);
       return _vecAdd(position,
         _vecNormInPlaceAndScale(tangent, -arclen));
@@ -89,11 +89,11 @@ function curveInvolute(evaluator) {
 }
 function curveEvolute(evaluator) {
   "use strict";
-  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  var neweval = evaluator;
   return {
     "evaluate":function(u) {
       var position = neweval.evaluate(u);
-      var tangent = neweval.tangent(u);
+      var tangent = neweval.velocity(u);
       var accel = neweval.accel(u);
       var denom = tangent[0] * accel[1] - accel[0] * tangent[1];
       var numpart = tangent[0] * tangent[0] + tangent[1] * tangent[1];
@@ -111,10 +111,10 @@ function curveEvolute(evaluator) {
 /* exported curveRadialCurve */
 function curveRadialCurve(evaluator, ox, oy) {
   "use strict";
-  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  var neweval = evaluator;
   return {
     "evaluate":function(u) {
-      var tangent = neweval.tangent(u);
+      var tangent = neweval.velocity(u);
       var accel = neweval.accel(u);
       var denom = tangent[0] * accel[1] - accel[0] * tangent[1];
       var numpart = tangent[0] * tangent[0] + tangent[1] * tangent[1];
@@ -131,13 +131,13 @@ function curveRadialCurve(evaluator, ox, oy) {
 }
 function curveOrthotomic(evaluator, ox, oy) {
   "use strict";
-  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  var neweval = evaluator;
   return {
     "evaluate":function(u) {
       var position = neweval.evaluate(u);
       var dx = position[0] - ox;
       var dy = position[1] - oy;
-      var tangent = neweval.tangent(u);
+      var tangent = neweval.velocity(u);
       var denom = tangent[0] * tangent[0] + tangent[1] * tangent[1];
       var rate = 2 * (tangent[0] * dy - tangent[1] * dx) / denom;
       return [ox - tangent[1] * rate, oy + tangent[0] * rate, 0];
@@ -155,11 +155,11 @@ function curveCatacaustic(evaluator, ox, oy) {
 /* exported curvePedalCurve */
 function curvePedalCurve(evaluator, ox, oy) {
   "use strict";
-  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  var neweval = evaluator;
   return {
     "evaluate":function(u) {
       var position = neweval.evaluate(u);
-      var tangent = neweval.tangent(u);
+      var tangent = neweval.velocity(u);
       var tangentXSq = tangent[0] * tangent[0];
       var tangentYSq = tangent[1] * tangent[1];
       var tanXY = tangent[0] * tangent[1];
@@ -177,7 +177,7 @@ function curvePedalCurve(evaluator, ox, oy) {
 
 function curveInverse(evaluator, ox, oy, radius) {
   "use strict";
-  var neweval = H3DU.CurveEval.wrapEvaluator(evaluator);
+  var neweval = evaluator;
   return {
     "evaluate":function(u) {
       var position = neweval.evaluate(u);
@@ -196,20 +196,20 @@ function curveInverse(evaluator, ox, oy, radius) {
 /* exported ruledSurface */
 function ruledSurface(directrix, director) {
   "use strict";
-  return H3DU.SurfaceEval.wrapEvaluator({
+  return new H3DU.Curve({
     "evaluate":function(u, v) {
       var dx = directrix.evaluate(u);
       var dr = _vecScale(director.evaluate(u), v);
       return _vecAdd(dx, dr);
     },
     "endPoints":function() {
-      var ep = H3DU.CurveEval.findEndPoints(directrix);
+      var ep = directrix.endPoints();
       return [ep[0], ep[1], 0, 1];
     }
   });
 }
 
-var simpleCurve = {
+var simpleCurve = new H3DU.Curve({
   "evaluate":function(u) {
     "use strict";
     return [Math.cos(u) * 1.5, Math.sin(u) * 0.8, 0];
@@ -217,7 +217,7 @@ var simpleCurve = {
   "endPoints":function() {
     "use strict"; return [-Math.PI, Math.PI];
   }
-};
+});
 
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 scene.setClearColor("white");

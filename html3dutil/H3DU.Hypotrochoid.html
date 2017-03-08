@@ -10,15 +10,15 @@
 
 <h3>H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [rotationDegrees])</h3>
 
-<p>A <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
+<p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).</p>
 
 <p>The following curves can be generated with this class (in the following
 descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
 and D = <code>distFromRollerCenter</code>).<ul>
-<li>Hypocycloid: D = R.</li>
-<li>Curtate hypocycloid: D &lt; R.</li>
-<li>Prolate hypocycloid: D &gt; R.</li>
+<li>Hypocycloid: D = R (hypotrochoid touching the fixed circle).</li>
+<li>Curtate hypocycloid: D &lt; R (hypotrochoid not touching the fixed circle).</li>
+<li>Prolate hypocycloid: D &gt; R (hypotrochoid crossing the fixed circle).</li>
 <li>Circle: O = R*2; the circle will have radius R - D.</li>
 <li>Ellipse: O = R*2; the ellipse (unrotated) will have width abs(R+D)*2
 and height abs(R-D)*2.</li>
@@ -38,6 +38,8 @@ the HTML 3D Library. Example:</p>
 <pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
+<p><strong>Augments:</strong> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
+
 <h4>Parameters</h4>
 
 <ul>
@@ -54,30 +56,59 @@ Rotation angle of the curve, in degrees. Default is 0.</li>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Hypotrochoid_arcLength">arcLength</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.Hypotrochoid_accel">accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.Hypotrochoid_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</li>
 <li><a href="#H3DU.Hypotrochoid_endPoints">endPoints</a><br>Gets the endpoints of this curve.</li>
 <li><a href="#H3DU.Hypotrochoid_evaluate">evaluate</a><br>Finds the coordinates of a point on the curve from the given U coordinate.</li>
-<li><a href="#H3DU.Hypotrochoid.rose">rose</a><br>Creates a <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
+<li><a href="#H3DU.Hypotrochoid_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.Hypotrochoid.rose">rose</a><br>Creates a <a href="H3DU.Curve.html">curve evaluator object</a> for a rose, a special
 form of hypotrochoid.</li>
-<li><p><a href="#H3DU.Hypotrochoid_scaleTo">scaleTo</a><br>Creates a modified version of this curve so that it
-fits the given radius.</p>
+<li><a href="#H3DU.Hypotrochoid_scaleTo">scaleTo</a><br>Creates a modified version of this curve so that it
+fits the given radius.</li>
+<li><p><a href="#H3DU.Hypotrochoid_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</p>
 
-<p><a name='H3DU.Hypotrochoid_arcLength'></a></p>
+<p><a name='H3DU.Hypotrochoid_accel'></a></p>
 
-<h3>H3DU.Hypotrochoid#arcLength(u)</h3></li>
+<h3>H3DU.Hypotrochoid#accel(u)</h3></li>
 </ul>
 
-<p>TODO: Not documented yet.</p>
+<p>Finds an approximate acceleration vector at the given U coordinate of this curve.
+This method calls the evaluator&#39;s <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.</p>
+
+<p>The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: *)</li>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. * @instance (Type: *)</p>
+<p>An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number&gt;)</p>
+
+<p><a name='H3DU.Hypotrochoid_arcLength'></a></p>
+
+<h3>H3DU.Hypotrochoid#arcLength(u)</h3>
+
+<p>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.Hypotrochoid_endPoints'></a></p>
 
@@ -91,7 +122,7 @@ starts at 0 and ends at &pi;*2.</p>
 
 <p>An array containing the two
 endpoints of the curve. The first number is the start of the curve,
-and the second number is the end of the curve. (Type: Array.&lt;Number&gt;)</p>
+and the second number is the end of the curve. * @instance (Type: Array.&lt;Number&gt;)</p>
 
 <p><a name='H3DU.Hypotrochoid_evaluate'></a></p>
 
@@ -111,11 +142,35 @@ U coordinate.</li>
 <p>A 3-element array specifying a 3D point.
 Only the X and Y coordinates can be other than 0. (Type: Array.&lt;Number&gt;)</p>
 
+<p><a name='H3DU.Hypotrochoid_normal'></a></p>
+
+<h3>H3DU.Hypotrochoid#normal(u)</h3>
+
+<p>Finds an approximate principal normal vector at the given U coordinate of this curve.
+This method calls the evaluator&#39;s <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
+
+<p>The <b>principal normal</b> of a curve is the derivative of the &quot;normalized&quot; velocity
+vector divided by that derivative&#39;s length. The normal returned by this method
+<i>should</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with H3DU.Surface#gradient.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number&gt;)</p>
+
 <p><a name='H3DU.Hypotrochoid.rose'></a></p>
 
 <h3>(static) H3DU.Hypotrochoid.rose(n, distFromInnerCenter, [rotationDegrees])</h3>
 
-<p>Creates a <a href="H3DU.CurveEval.html#H3DU.CurveEval_vertex">curve evaluator object</a> for a rose, a special
+<p>Creates a <a href="H3DU.Curve.html">curve evaluator object</a> for a rose, a special
 form of hypotrochoid.</p>
 
 <h4>Parameters</h4>
@@ -146,6 +201,29 @@ Desired radius of the curve.</li>
 <h4>Return Value</h4>
 
 <p>Return value. (Type: <a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a>)</p>
+
+<p><a name='H3DU.Hypotrochoid_velocity'></a></p>
+
+<h3>H3DU.Hypotrochoid#velocity(u)</h3>
+
+<p>Finds an approximate velocity vector at the given U coordinate of this curve.
+This method calls the evaluator&#39;s <code>velocity</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the position (from the <code>evaluate</code> method).</p>
+
+<p>The <b>velocity</b> of a curve is a vector which is the derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: Number)<br>
+U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a velocity vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -174,6 +252,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.ArcLengthParamCurve.html">H3DU.ArcLengthParamCurve</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
@@ -182,6 +261,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
+<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>

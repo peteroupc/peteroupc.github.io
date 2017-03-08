@@ -108,7 +108,13 @@ before the other transformations.</p>
 <p>Rotation changes an object&#39;s orientation.</p>
 
 <p>To create a rotation matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
-and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation">axis of rotation</a>. For example, specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation around the X axis, and <code>(80, [0, 2, 3])</code> means a 45-degree rotation around the axis that starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</p>
+and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation">axis of rotation</a>. For example:</p>
+
+<ul>
+<li>Specifying <code>(45, [1, 0, 0])</code> means a 45-degree rotation of the point around the X axis.</li>
+<li>Specifying <code>(80, [0, 2, 3])</code> means a 45-degree rotation of the point around the axis that
+starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</li>
+</ul>
 
 <p>When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
  <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.</p>
@@ -150,11 +156,11 @@ quaternions, Tait-Bryan angles, and an angle and axis.</p>
 
 <h3>Axis of Rotation</h3>
 
-<p>A rotation can be described using an <em>angle</em> and an <em>axis of rotation</em>,
-for example, in the <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate</a> method.</p>
+<p>A rotation of vectors or points can be described using an <em>angle</em>
+and an <em>axis of rotation</em>, for example, in the <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate</a> method.</p>
 
-<p>An axis of rotation is a vector pointing in a certain direction.  When a point
-is rotated at any angle around this axis, the new point will lie
+<p>An axis of rotation is a vector pointing in a certain direction.  When a point (or vector)
+is rotated at any angle around this axis, the new point (or vector) will lie
 on the same plane as the previous point.  The axis of rotation describes
 a vector that is perpendicular to that plane&#39;s surface (the plane&#39;s <em>normal</em>).
 Here are examples of an axis of rotation.</p>
@@ -184,8 +190,7 @@ method need not be a <a href="#Unit_Vectors">unit vector</a>.</p>
 <h3>Quaternions</h3>
 
 <p>A quaternion is a 4-element vector that can describe a
-3D rotation. Functions dealing with quaternions begin with
-&quot;quat&quot;.</p>
+3D rotation. Functions dealing with quaternions begin with &quot;quat&quot;.</p>
 
 <p><a id=Generating_Quaternions></a></p>
 
@@ -213,6 +218,7 @@ a rotation from one vector to another.</li>
 <li>Store the rotation of each object as a single quaternion.</li>
 <li>As rotations happen each frame, convert the rotation (which may be
 in pitch/yaw/roll or another form, depending on the input device) to a quaternion
+(see <a href="#Generating_Quaternions">&quot;Generating Quaternions&quot;</a>
 and <a href="H3DU.Math.html#H3DU.Math.quatMultiply">multiply</a> that quaternion by the current
 quaternion to get the object&#39;s new rotation.</li>
 <li>Normalize the rotation quaternion (using <a href="H3DU.Math.html#H3DU.Math.quatNorm"><code>quatNorm()</code></a>
@@ -234,8 +240,8 @@ Like matrix multiplication, the order in which you multiply quaternions is impor
 <h3>Tait-Bryan angles</h3>
 
 <p>Pitch-yaw-roll angles (also called Tait-Bryan angles) describe three different rotations
-around three different axes, called the pitch, yaw, and roll axes (or the X, Y, Z axes,
-respectively), which occur one after the other.  However:</p>
+of the same vector around three different axes, called the pitch, yaw, and roll axes
+(or the X, Y, Z axes, respectively), which occur one after the other.  However:</p>
 
 <ul>
 <li>There are multiple conventions for pitch-yaw-roll angles, including the order of
@@ -262,7 +268,7 @@ Converts from a quaternion to Tait-Bryan angles</li>
 
 <h3>4x4 Matrices</h3>
 
-<p>A 4x4 matrix can describe a 3D rotation; see <a href="#Rotation">&quot;Rotation&quot;, above</a>.</p>
+<p>A 4x4 matrix can describe a 3D vector rotation; see <a href="#Rotation">&quot;Rotation&quot;, above</a>.</p>
 
 <p><a id=Planes></a></p>
 
@@ -450,6 +456,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.ArcLengthParamCurve.html">H3DU.ArcLengthParamCurve</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
@@ -458,6 +465,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
+<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
