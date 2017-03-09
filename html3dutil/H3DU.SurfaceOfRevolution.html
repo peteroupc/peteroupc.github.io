@@ -32,11 +32,11 @@ the HTML 3D Library. Example:</p>
 A <a href="H3DU.Curve.html">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the &quot;axis&quot; parameter. The curve&#39;s X coordinates correspond to elevation, and its Y coordinates correspond to radius.</p>
 
 <p>If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V coordinates given in <em>minval</em> and <em>maxval</em> must restrict the curve definition to no more than half of the curve.</p></li>
-<li><code>minval</code> (Type: Number)<br>
+<li><code>minval</code> (Type: number)<br>
 Smallest V coordinate.</li>
-<li><code>maxval</code> (Type: Number)<br>
+<li><code>maxval</code> (Type: number)<br>
 Largest V coordinate. If <em>minval</em> is greater than <em>maxval</em>, both values will be swapped.</li>
-<li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+<li><code>axis</code> (Type: Array.&lt;number&gt;) (optional)<br>
 Axis of rotation, around which the curve will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.html">unit vector</a>.</li>
 </ul>
 
@@ -69,16 +69,16 @@ whose curve is the graph of a single-variable function.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: Number)<br>
+<li><code>u</code> (Type: number)<br>
 U coordinate of the surface to evaluate.</li>
-<li><code>v</code> (Type: Number)<br>
+<li><code>v</code> (Type: number)<br>
 V coordinate of the surface to evaluate.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>An array containing the coordinates
-of the position at the given point. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+of the position at the given point. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.SurfaceOfRevolution.fromFunction'></a></p>
 
@@ -97,11 +97,11 @@ bases of these surfaces won&#39;t be generated).</p>
 <ul>
 <li><code>func</code> (Type: function)<br>
 Function whose graph will be rotated about the axis of rotation, as specified in the &quot;axis&quot; parameter. The function takes a number as a single parameter and returns a number. The return value is effectively the radius of each part of the surface from beginning to end.</li>
-<li><code>minval</code> (Type: Number)<br>
+<li><code>minval</code> (Type: number)<br>
 Smallest parameter of the function. This is a number of units from the origin along the axis of rotation.</li>
-<li><code>maxval</code> (Type: Number)<br>
+<li><code>maxval</code> (Type: number)<br>
 Largest parameter of the function. This is a number of units from the origin along the axis of rotation. If <em>minval</em> is greater than <em>maxval</em>, both values will be swapped.</li>
-<li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+<li><code>axis</code> (Type: Array.&lt;number&gt;) (optional)<br>
 Axis of rotation, around which the function graph will be rotated to generate the surface of revolution. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.html">unit vector</a>.</li>
 </ul>
 
@@ -147,13 +147,13 @@ function(x) {
 <h4>Parameters</h4>
 
 <ul>
-<li><code>outerRadius</code> (Type: Number)<br>
+<li><code>outerRadius</code> (Type: number)<br>
 Radius from the center to the innermost part of the torus.</li>
-<li><code>innerRadius</code> (Type: Number)<br>
+<li><code>innerRadius</code> (Type: number)<br>
 Radius from the inner edge to the innermost part of the torus.</li>
 <li><code>curve</code> (Type: Object) (optional)<br>
 A <a href="H3DU.Curve.html">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null or omitted, uses a circular cross section with a radius of 1.</li>
-<li><code>axis</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+<li><code>axis</code> (Type: Array.&lt;number&gt;) (optional)<br>
 Axis of rotation, which the torus will pass through. If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.html">unit vector</a>.</li>
 </ul>
 
@@ -226,6 +226,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -254,6 +255,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

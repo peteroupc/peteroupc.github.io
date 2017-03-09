@@ -19,7 +19,7 @@
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @memberof H3DU
  * @param {Object} curve A [curve evaluator object]{@link H3DU.Curve} that describes a 2-dimensional curve to rotate about the axis of rotation, as
  * specified in the "axis" parameter. The curve's X coordinates
@@ -27,10 +27,10 @@
  * If the curve function draws a curve that goes both above and below the axis of rotation, such
  * as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must
  * restrict the curve definition to no more than half of the curve.
- * @param {Number} minval Smallest V coordinate.
- * @param {Number} maxval Largest V coordinate. If _minval_ is greater than
+ * @param {number} minval Smallest V coordinate.
+ * @param {number} maxval Largest V coordinate. If _minval_ is greater than
  * _maxval_, both values will be swapped.
- * @param {Array<Number>} [axis] Axis of rotation, around which the curve
+ * @param {Array<number>} [axis] Axis of rotation, around which the curve
  * will be rotated to generate the surface of revolution. If null or omitted, the positive
  * Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing
  * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
@@ -48,10 +48,11 @@ H3DU.SurfaceOfRevolution = function(curve, minval, maxval, axis) {
     this._axisQuat = H3DU.Math.quatFromVectors([0, 0, 1], this._axis);
   }
 };
+H3DU.SurfaceOfRevolution.prototype = Object.create(H3DU.Surface.prototype);
+H3DU.SurfaceOfRevolution.prototype.constructor = H3DU.SurfaceOfRevolution;
 /**
  * TODO: Not documented yet.
  * @returns {*} Return value.
- * @instance
  */
 H3DU.SurfaceOfRevolution.prototype.endPoints = function() {
   "use strict";
@@ -59,11 +60,10 @@ H3DU.SurfaceOfRevolution.prototype.endPoints = function() {
 };
 /**
  * Finds the coordinates of the given point of this surface.
- * @param {Number} u U coordinate of the surface to evaluate.
- * @param {Number} v V coordinate of the surface to evaluate.
- * @returns {Array<Number>} An array containing the coordinates
+ * @param {number} u U coordinate of the surface to evaluate.
+ * @param {number} v V coordinate of the surface to evaluate.
+ * @returns {Array<number>} An array containing the coordinates
  * of the position at the given point. It will have as many elements as a control point, as specified in the constructor.
- * @instance
  */
 H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
   "use strict";
@@ -106,12 +106,12 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
  * as a single parameter and returns a number. The return
  * value is effectively the radius of each part of the surface
  * from beginning to end.
- * @param {Number} minval Smallest parameter of the function.
+ * @param {number} minval Smallest parameter of the function.
  * This is a number of units from the origin along the axis of rotation.
- * @param {Number} maxval Largest parameter of the function.
+ * @param {number} maxval Largest parameter of the function.
  * This is a number of units from the origin along the axis of rotation.
  * If _minval_ is greater than _maxval_, both values will be swapped.
- * @param {Array<Number>} [axis] Axis of rotation, around which the
+ * @param {Array<number>} [axis] Axis of rotation, around which the
  * function graph will be rotated to generate the surface of revolution.
  * If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
  * This parameter is a 3-element array describing
@@ -148,16 +148,16 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
 };
 /**
  * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a torus, a special case of a surface of revolution.
- * @param {Number} outerRadius Radius from the center to the innermost
+ * @param {number} outerRadius Radius from the center to the innermost
  * part of the torus.
- * @param {Number} innerRadius Radius from the inner edge to the innermost
+ * @param {number} innerRadius Radius from the inner edge to the innermost
  * part of the torus.
  * @param {Object} [curve] A [curve evaluator object]{@link H3DU.Curve} that
  * describes a 2-dimensional curve to serve as
  * the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result
  * by leaving the ends open.
  * If null or omitted, uses a circular cross section with a radius of 1.
- * @param {Array<Number>} [axis] Axis of rotation, which the torus
+ * @param {Array<number>} [axis] Axis of rotation, which the torus
  * will pass through.
  * If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
  * This parameter is a 3-element array describing
@@ -196,7 +196,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
 /* exported SurfaceOfRevolution */
 /**
  * Alias for the {@link H3DU.SurfaceOfRevolution} class.
- * @class
+ * @constructor
  * @alias SurfaceOfRevolution
  * @deprecated Use {@link H3DU.SurfaceOfRevolution} instead.
  */
@@ -224,15 +224,15 @@ var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @augments H3DU.Curve
- * @param {Number} outerRadius Radius of the circle whose position
+ * @param {number} outerRadius Radius of the circle whose position
  * is fixed.
- * @param {Number} innerRadius Radius of the rolling circle.
+ * @param {number} innerRadius Radius of the rolling circle.
  * A hypocycloid results when distFromInnerCenter=innerRadius.
- * @param {Number} distFromInnerCenter Distance from the center of the
+ * @param {number} distFromInnerCenter Distance from the center of the
  * rolling circle to the drawing pen.
- * @param {Number} [rotationDegrees] Rotation angle of the curve, in degrees. Default is 0.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
  */
 H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees) {
   "use strict";
@@ -249,15 +249,14 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rota
   this.cosPhase = cosPhase;
 };
 H3DU.Hypotrochoid.prototype = Object.create(H3DU.Curve.prototype);
-Object.assign(H3DU.Hypotrochoid.prototype, {"constructor": H3DU.Hypotrochoid});
+H3DU.Hypotrochoid.prototype.constructor = H3DU.Hypotrochoid;
 
  /**
   * Finds the coordinates of a point on the curve from the given U coordinate.
   * @function
-  * @param {Number} u U coordinate.
-  * @returns {Array<Number>} A 3-element array specifying a 3D point.
+  * @param {number} u U coordinate.
+  * @returns {Array<number>} A 3-element array specifying a 3D point.
   * Only the X and Y coordinates can be other than 0.
-  * @instance
   */
 H3DU.Hypotrochoid.prototype.evaluate = function(u) {
   "use strict";
@@ -278,9 +277,9 @@ H3DU.Hypotrochoid.prototype.evaluate = function(u) {
    * For this curve evaluator object, the curve
    * starts at 0 and ends at &pi;*2.
    * @function
-   * @returns {Array<Number>} An array containing the two
+   * @returns {Array<number>} An array containing the two
    * endpoints of the curve. The first number is the start of the curve,
-   * and the second number is the end of the curve. * @instance
+   * and the second number is the end of the curve.
    */
 H3DU.Hypotrochoid.prototype.endPoints = function() {
   "use strict";
@@ -290,9 +289,8 @@ H3DU.Hypotrochoid.prototype.endPoints = function() {
   * Creates a modified version of this curve so that it
   * fits the given radius.
   * @function
-  * @param {Number} radius Desired radius of the curve.
+  * @param {number} radius Desired radius of the curve.
   * @returns {H3DU.Hypotrochoid} Return value.
-  * @instance
   */
 H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
   "use strict";
@@ -311,9 +309,8 @@ H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
 /**
  * Finds an approximate arc length (distance) between the start of this
  * curve and the point at the given U coordinate of this curve.
- * @param {Number} u U coordinate of a point on the curve.
- * @returns {Array<Number>} The approximate arc length of this curve at the given U coordinate.
- * @instance
+ * @param {number} u U coordinate of a point on the curve.
+ * @returns {Array<number>} The approximate arc length of this curve at the given U coordinate.
  */
 H3DU.Hypotrochoid.prototype.arcLength = function(u) {
   "use strict";
@@ -338,13 +335,12 @@ H3DU.Hypotrochoid.prototype.arcLength = function(u) {
 /**
  * Creates a [curve evaluator object]{@link H3DU.Curve} for a rose, a special
  * form of hypotrochoid.
- * @param {Number} n Parameter that determines the petal form of the rose.
+ * @param {number} n Parameter that determines the petal form of the rose.
  * For example, the rose is symmetrical if this number is even.
- * @param {Number} distFromInnerCenter Distance from the center of the
- * rolling circle to the drawing pen. A prolate hypotrochoid results when
- * distFromInnerCenter is greater than innerRadius.
- * @param {Number} [rotationDegrees] Starting angle of the inner circle from
- * the positive X axis, in degrees. Default is 0.
+ * @param {number} distFromInnerCenter Distance from the center of the
+ * rolling circle to the drawing pen.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+ * @returns {H3DU.Hypotrochoid} The resulting curve evaluator object.
  */
 H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
   "use strict";
@@ -368,10 +364,10 @@ H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @augments H3DU.Curve
- * @param {Number} radius Radius of the rolling circle.
- * @param {Number} distFromCenter Distance from the center of the
+ * @param {number} radius Radius of the rolling circle.
+ * @param {number} distFromCenter Distance from the center of the
  * rolling circle to the drawing pen.
  */
 H3DU.Trochoid = function(radius, distFromCenter) {
@@ -380,15 +376,14 @@ H3DU.Trochoid = function(radius, distFromCenter) {
   this.distFromCenter = distFromCenter;
 };
 H3DU.Trochoid.prototype = Object.create(H3DU.Curve.prototype);
-Object.assign(H3DU.Trochoid.prototype, {"constructor": H3DU.Trochoid});
+H3DU.Trochoid.prototype.constructor = H3DU.Trochoid;
 
  /**
   * Generates a point on the curve from the given U coordinate.
   * @function
-  * @param {Number} u U coordinate.
-  * @returns {Array<Number>} A 3-element array specifying a 3D point.
+  * @param {number} u U coordinate.
+  * @returns {Array<number>} A 3-element array specifying a 3D point.
   * Only the X and Y coordinates will be other than 0.
-  * @instance
   */
 H3DU.Trochoid.prototype.evaluate = function(u) {
   "use strict";
@@ -405,9 +400,9 @@ H3DU.Trochoid.prototype.evaluate = function(u) {
    * For this curve evaluator object, the curve
    * starts at 0 and ends at &pi;*2.
    * @function
-   * @returns {Array<Number>} An array containing the two
+   * @returns {Array<number>} An array containing the two
    * endpoints of the curve. The first number is the start of the curve,
-   * and the second number is the end of the curve. * @instance
+   * and the second number is the end of the curve. *
    */
 H3DU.Trochoid.prototype.endPoints = function() {
   "use strict";
@@ -415,9 +410,8 @@ H3DU.Trochoid.prototype.endPoints = function() {
 };
 /**
  * Finds the velocity (derivative) of this curve at the given point.
- * @param {Number} u Point on the curve to evaluate.
- * @returns {Array<Number>} An array giving the velocity vector.
- * @instance
+ * @param {number} u Point on the curve to evaluate.
+ * @returns {Array<number>} An array giving the velocity vector.
  */
 H3DU.Trochoid.prototype.velocity = function(u) {
   "use strict";
@@ -449,15 +443,15 @@ H3DU.Trochoid.prototype.velocity = function(u) {
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @augments H3DU.Curve
- * @param {Number} outerRadius Radius of the circle whose position
+ * @param {number} outerRadius Radius of the circle whose position
  * is fixed.
- * @param {Number} rollerRadius Radius of the rolling circle.
+ * @param {number} rollerRadius Radius of the rolling circle.
  * An epicycloid results when distFromRollerCenter=rollerRadius.
- * @param {Number} distFromRollerCenter Distance from the center of the
+ * @param {number} distFromRollerCenter Distance from the center of the
  * rolling circle to the drawing pen.
- * @param {Number} [rotationDegrees] Rotation angle of the curve, in degrees. Default is 0.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
  */
 H3DU.Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, rotationDegrees) {
   "use strict";
@@ -474,15 +468,14 @@ H3DU.Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, rot
   this.cosPhase = cosPhase;
 };
 H3DU.Epitrochoid.prototype = Object.create(H3DU.Curve.prototype);
-Object.assign(H3DU.Epitrochoid.prototype, {"constructor": H3DU.Epitrochoid});
+H3DU.Epitrochoid.prototype.constructor = H3DU.Epitrochoid;
 
  /**
   * Generates a point on the curve from the given U coordinate.
   * @function
-  * @param {Number} u U coordinate.
-  * @returns {Array<Number>} A 3-element array specifying a 3D point.
+  * @param {number} u U coordinate.
+  * @returns {Array<number>} A 3-element array specifying a 3D point.
   * Only the X and Y coordinates will be other than 0.
-  * @instance
   */
 H3DU.Epitrochoid.prototype.evaluate = function(u) {
   "use strict";
@@ -504,9 +497,9 @@ H3DU.Epitrochoid.prototype.evaluate = function(u) {
    * For this curve evaluator object, the curve
    * starts at 0 and ends at &pi;*2.
    * @function
-   * @returns {Array<Number>} An array containing the two
+   * @returns {Array<number>} An array containing the two
    * endpoints of the curve. The first number is the start of the curve,
-   * and the second number is the end of the curve. * @instance
+   * and the second number is the end of the curve. *
    */
 H3DU.Epitrochoid.prototype.endPoints = function() {
   "use strict";
@@ -516,9 +509,8 @@ H3DU.Epitrochoid.prototype.endPoints = function() {
   * Creates a modified version of this curve so that it
   * fits the given radius.
   * @function
-  * @param {Number} radius Desired radius of the curve.
+  * @param {number} radius Desired radius of the curve.
   * @returns {H3DU.Epitrochoid} Return value.
-  * @instance
   */
 H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
   "use strict";
@@ -550,7 +542,7 @@ H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @augments H3DU.Curve
  * @memberof H3DU
  * @param {Object} curve A [curve evaluator object]{@link H3DU.Curve}
@@ -563,7 +555,7 @@ H3DU.ArcLengthParamCurve = function(curve) {
   this._init(curve);
 };
 H3DU.ArcLengthParamCurve.prototype = Object.create(H3DU.Curve.prototype);
-Object.assign(H3DU.ArcLengthParamCurve.prototype, {"constructor": H3DU.ArcLengthParamCurve});
+H3DU.ArcLengthParamCurve.prototype.constructor = H3DU.ArcLengthParamCurve;
 /** @ignore */
 H3DU.ArcLengthParamCurve.prototype._init = function(curve) {
   "use strict";
@@ -631,8 +623,8 @@ H3DU.ArcLengthParamCurve.prototype._init = function(curve) {
   * methods. (Note that velocity and acceleration depend on parameterization; for
   * example, the length of the velocity vector may differ for the underlying curve object
   * than for this one, even though both vectors generally point in the same direction.)
-  * @param {Number} u Distance to the point from the start of the curve.
-  * @returns {Number} The U coordinate for the given point.
+  * @param {number} u Distance to the point from the start of the curve.
+  * @returns {number} The U coordinate for the given point.
   * @example <caption>The following example gets an array
   * of U coordinates for the curve, spaced evenly.</caption>
   * var points=[]; // Create an array of points
@@ -641,7 +633,6 @@ H3DU.ArcLengthParamCurve.prototype._init = function(curve) {
   * var dist=i*length/19; // Will be spaced 1/19 of the total length
   * points.push(this.getCoordinate(dist));
   * }
-  * @instance
   */
 H3DU.ArcLengthParamCurve.prototype.getCoordinate = function(s) {
   "use strict";
@@ -692,7 +683,6 @@ H3DU.ArcLengthParamCurve.prototype.getCoordinate = function(s) {
  * TODO: Not documented yet.
  * @param {*} count
  * @returns {*} Return value.
- * @instance
  */
 H3DU.ArcLengthParamCurve.prototype.getPoints = function(count) {
   "use strict";
@@ -710,11 +700,10 @@ H3DU.ArcLengthParamCurve.prototype.getPoints = function(count) {
 /**
  * Gets the endpoints of this curve.
  * @function
- * @returns {Array<Number>} An array containing the two
+ * @returns {Array<number>} An array containing the two
  * endpoints of the curve. The first number is the start of the curve,
  * and the second number is the end of the curve (also the curve's
  * total length).
- * @instance
  */
 H3DU.ArcLengthParamCurve.prototype.endPoints = function() {
   "use strict";
@@ -723,9 +712,8 @@ H3DU.ArcLengthParamCurve.prototype.endPoints = function() {
 /**
  * Finds the arc length (distance) between the start of this
  * curve and the point at the given U coordinate of this curve.
- * @param {Number} u U coordinate of a point on the curve.
- * @returns {Array<Number>} The arc length of this curve at the given U coordinate.
- * @instance
+ * @param {number} u U coordinate of a point on the curve.
+ * @returns {Array<number>} The arc length of this curve at the given U coordinate.
  */
 H3DU.ArcLengthParamCurve.prototype.arcLength = function(s) {
   "use strict";
@@ -734,10 +722,9 @@ H3DU.ArcLengthParamCurve.prototype.arcLength = function(s) {
  /**
   * Generates a point on the curve which is the given distance away
   * from the start of the curve.
-  * @param {Number} u Distance to the point from the start of the curve.
-  * @returns {Array<Number>} An array specifying the position of the given
+  * @param {number} u Distance to the point from the start of the curve.
+  * @returns {Array<number>} An array specifying the position of the given
   * point. It will have as many elements as for the underlying curve.
-  * @instance
   */
 H3DU.ArcLengthParamCurve.prototype.evaluate = function(s) {
   "use strict";
@@ -747,7 +734,7 @@ H3DU.ArcLengthParamCurve.prototype.evaluate = function(s) {
 /* exported Hypotrochoid */
 /**
  * Alias for the {@link H3DU.Hypotrochoid} class.
- * @class
+ * @constructor
  * @alias Hypotrochoid
  * @deprecated Use {@link H3DU.Hypotrochoid} instead.
  */
@@ -756,7 +743,7 @@ var Hypotrochoid = H3DU.Hypotrochoid;
 /* exported Trochoid */
 /**
  * Alias for the {@link H3DU.Trochoid} class.
- * @class
+ * @constructor
  * @alias Trochoid
  * @deprecated Use {@link H3DU.Trochoid} instead.
  */
@@ -765,7 +752,7 @@ var Trochoid = H3DU.Trochoid;
 /* exported Epitrochoid */
 /**
  * Alias for the {@link H3DU.Epitrochoid} class.
- * @class
+ * @constructor
  * @alias Epitrochoid
  * @deprecated Use {@link H3DU.Epitrochoid} instead.
  */

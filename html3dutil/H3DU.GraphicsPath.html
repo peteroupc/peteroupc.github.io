@@ -112,15 +112,15 @@ HTML Canvas 2D Context.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the center of the circle that the arc forms a part of.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate of the circle&#39;s center.</li>
-<li><code>radius</code> (Type: Number)<br>
+<li><code>radius</code> (Type: number)<br>
 Radius of the circle.</li>
-<li><code>startAngle</code> (Type: Number)<br>
+<li><code>startAngle</code> (Type: number)<br>
 Starting angle of the arc, in radians. 0 means the positive X axis, &pi;/2 means the positive Y axis, &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.</li>
-<li><code>endAngle</code> (Type: Number)<br>
+<li><code>endAngle</code> (Type: number)<br>
 Ending angle of the arc, in radians.</li>
 <li><code>ccw</code> (Type: Boolean)<br>
 Whether the arc runs counterclockwise (assuming the X axis points right and the Y axis points down under the coordinate system).</li>
@@ -140,19 +140,19 @@ using the parameterization used by the SVG specification.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>rx</code> (Type: Number)<br>
+<li><code>rx</code> (Type: number)<br>
 X axis radius of the ellipse that the arc will be formed from.</li>
-<li><code>ry</code> (Type: Number)<br>
+<li><code>ry</code> (Type: number)<br>
 Y axis radius of the ellipse that the arc will be formed from.</li>
-<li><code>rot</code> (Type: Number)<br>
+<li><code>rot</code> (Type: number)<br>
 Rotation of the ellipse in degrees (clockwise assuming the X axis points right and the Y axis points down under the coordinate system).</li>
 <li><code>largeArc</code> (Type: Boolean)<br>
 In general, there are four possible solutions for arcs given the start and end points, rotation, and x- and y-radii. If true, chooses an arc solution with the larger arc length; if false, smaller.</li>
 <li><code>sweep</code> (Type: Boolean)<br>
 If true, the arc solution chosen will run clockwise (assuming the X axis points right and the Y axis points down under the coordinate system); if false, counterclockwise.</li>
-<li><code>x2</code> (Type: Number)<br>
+<li><code>x2</code> (Type: number)<br>
 X coordinate of the arc&#39;s end point.</li>
-<li><code>y2</code> (Type: Number)<br>
+<li><code>y2</code> (Type: number)<br>
 Y coordinate of the arc&#39;s end point.</li>
 </ul>
 
@@ -171,15 +171,15 @@ HTML Canvas 2D Context.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x1</code> (Type: Number)<br>
+<li><code>x1</code> (Type: number)<br>
 X coordinate of a point that, along with the current end point, forms a tangent line. The point where the circle touches this tangent line is the start point of the arc, and if the point isn&#39;t the same as the current end point, this method adds a line segment connecting the two points. (Note that the start point of the arc is not necessarily the same as (x1, y1) or the current end point.)</li>
-<li><code>y1</code> (Type: Number)<br>
+<li><code>y1</code> (Type: number)<br>
 Y coordinate of the point described under &quot;x1&quot;.</li>
-<li><code>x2</code> (Type: Number)<br>
+<li><code>x2</code> (Type: number)<br>
 X coordinate of a point that, along with the point (x1, y1), forms a tangent line. The point where the circle touches this tangent line is the end point of the arc. (Note that the end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).) When this method returns, the current end point will be set to the end point of the arc.</li>
-<li><code>y2</code> (Type: Number)<br>
+<li><code>y2</code> (Type: number)<br>
 Y coordinate of the point described under &quot;x2&quot;.</li>
-<li><code>radius</code> (Type: Number)<br>
+<li><code>radius</code> (Type: number)<br>
 Radius of the circle the arc forms a part of.</li>
 </ul>
 
@@ -197,17 +197,17 @@ at this path&#39;s current position.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the curve&#39;s first control point.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 X coordinate of the curve&#39;s first control point.</li>
-<li><code>x2</code> (Type: Number)<br>
+<li><code>x2</code> (Type: number)<br>
 Y coordinate of the curve&#39;s second control point.</li>
-<li><code>y2</code> (Type: Number)<br>
+<li><code>y2</code> (Type: number)<br>
 Y coordinate of the curve&#39;s second control point.</li>
-<li><code>x3</code> (Type: Number)<br>
+<li><code>x3</code> (Type: number)<br>
 X coordinate of the curve&#39;s end point.</li>
-<li><code>y3</code> (Type: Number)<br>
+<li><code>y3</code> (Type: number)<br>
 Y coordinate of the curve&#39;s end point.</li>
 </ul>
 
@@ -239,7 +239,7 @@ apply to this method.</p>
 <ul>
 <li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>
 A path to combine with this one.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
 </ul>
 
@@ -261,7 +261,7 @@ fits this graphics path.</p>
 describing the bounding box. The first two are
 the lowest X and Y coordinates, and the last two are
 the highest X and Y coordinates. If the path is empty,
-returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;Number&gt;)</p>
+returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_getCurrentPoint'></a></p>
 
@@ -271,7 +271,7 @@ returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;N
 
 <h4>Return Value</h4>
 
-<p>A two-element array giving the X and Y coordinates of the current point. (Type: Array.&lt;Number&gt;)</p>
+<p>A two-element array giving the X and Y coordinates of the current point. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_getCurves'></a></p>
 
@@ -283,7 +283,7 @@ the curves described by this path. The return value doesn&#39;t track changes to
 <h4>Parameters</h4>
 
 <ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1. This is only used to make the arc-length parameterization more accurate if the path contains curves or arcs.</li>
 </ul>
 
@@ -334,7 +334,7 @@ the path.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
 </ul>
 
@@ -343,7 +343,7 @@ When curves and arcs are decomposed to line segments, the segments will be close
 <p>Array of line segments.
 Each line segment is an array of four numbers: the X and
 Y coordinates of the start point, respectively, then the X and
-Y coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
+Y coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_getPoints'></a></p>
 
@@ -355,9 +355,9 @@ of the path.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>numPoints</code> (Type: Number)<br>
+<li><code>numPoints</code> (Type: number)<br>
 Number of points to return.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
 </ul>
 
@@ -368,7 +368,7 @@ the path and evenly spaced across the length of the path,
 starting and ending with the path&#39;s endPoints. Returns
 an empty array if <i>numPoints</i> is less than 1. Returns
 an array consisting of the start point if <i>numPoints</i>
-is 1. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
+is 1. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_getTriangles'></a></p>
 
@@ -387,7 +387,7 @@ differs from the first subpath&#39;s winding order can be holes.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
 </ul>
 
@@ -397,7 +397,7 @@ When curves and arcs are decomposed to line segments, the segments will be close
 arrays each describing a single triangle. For each six-element
 array, the first two, next two, and last two numbers each
 describe a vertex position of that triangle (X and Y coordinates
-in that order). (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
+in that order). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_interpolate'></a></p>
 
@@ -410,7 +410,7 @@ in that order). (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
 <ul>
 <li><code>other</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>
 The second graphics path.</li>
-<li><code>t</code> (Type: Number)<br>
+<li><code>t</code> (Type: number)<br>
 An interpolation factor, generally ranging from 0 through 1. Closer to 0 means closer to this path, and closer to 1 means closer to &quot;other&quot;. If the input paths contain arc segments that differ in the large arc and sweep flags, the flags from the first path&#39;s arc are used if &quot;t&quot; is less than 0.5; and the flags from the second path&#39;s arc are used otherwise.</li>
 </ul>
 
@@ -433,7 +433,7 @@ apply to this method.</p>
 <ul>
 <li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>
 A path to combine with this one.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
 </ul>
 
@@ -454,7 +454,7 @@ is added to the path.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Boolean)</p>
+<p>Return value. (Type: boolean)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_lineTo'></a></p>
 
@@ -467,9 +467,9 @@ sets the end position to the end of the segment.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the end of the line segment.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate of the end of the line segment.</li>
 </ul>
 
@@ -503,9 +503,9 @@ Another graphics path. Can be null.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the position.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate of the position.</li>
 </ul>
 
@@ -522,14 +522,14 @@ Y coordinate of the position.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 No longer used by this method.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>Approximate length of this path
-in units. (Type: Number)</p>
+in units. (Type: number)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_quadraticCurveTo'></a></p>
 
@@ -541,13 +541,13 @@ at this path&#39;s current position.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the curve&#39;s control point.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate of the curve&#39;s control point.</li>
-<li><code>x2</code> (Type: Number)<br>
+<li><code>x2</code> (Type: number)<br>
 X coordinate of the curve&#39;s end point.</li>
-<li><code>y2</code> (Type: Number)<br>
+<li><code>y2</code> (Type: number)<br>
 Y coordinate of the curve&#39;s end point.</li>
 </ul>
 
@@ -564,13 +564,13 @@ Y coordinate of the curve&#39;s end point.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the rectangle&#39;s upper-left corner (assuming the coordinate system&#39;s X axis points right and the Y axis down).</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate of the rectangle&#39;s upper-left corner (assuming the coordinate system&#39;s X axis points right and the Y axis down).</li>
-<li><code>w</code> (Type: Number)<br>
+<li><code>w</code> (Type: number)<br>
 Width of the rectangle.</li>
-<li><code>h</code> (Type: Number)<br>
+<li><code>h</code> (Type: number)<br>
 Height of the rectangle.</li>
 </ul>
 
@@ -611,7 +611,7 @@ to line segments.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
 </ul>
 
@@ -630,7 +630,7 @@ See H3DU.GraphicsPath.fromString.</p>
 <h4>Return Value</h4>
 
 <p>A string describing the path in the SVG path
-format. (Type: String)</p>
+format. (Type: string)</p>
 
 <p><a name='H3DU.GraphicsPath_GraphicsPath_transform'></a></p>
 
@@ -643,7 +643,7 @@ that keeps straight lines straight and parallel lines parallel).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>trans</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>trans</code> (Type: Array.&lt;number&gt;)<br>
 An array of six numbers describing a 2-dimensional affine transformation. For each point in the current path, its new X coordinate is <code>trans[0] \* X + trans[2] \* Y + trans[4]</code>, and its new Y coordinate is <code>trans[1] \* X + trans[3] \* Y + trans[5]</code>.</li>
 </ul>
 
@@ -680,7 +680,7 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <ul>
 <li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>
 A path to combine with this one.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
 </ul>
 
@@ -701,7 +701,7 @@ apply to this method.</p>
 <ul>
 <li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>
 A path to combine with this one.</li>
-<li><code>flatness</code> (Type: Number) (optional)<br>
+<li><code>flatness</code> (Type: number) (optional)<br>
 When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null or omitted, default is 1.</li>
 </ul>
 
@@ -720,7 +720,7 @@ the SVG specification.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>str</code> (Type: String)<br>
+<li><code>str</code> (Type: string)<br>
 A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). &quot;largeArc&quot; and &quot;sweep&quot; are flags, &quot;0&quot; for false and &quot;1&quot; for true. &quot;rot&quot; is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lower-case letters mean any X and Y coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn&#39;t introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed).</li>
 </ul>
 
@@ -756,19 +756,19 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cx</code> (Type: Number)<br>
+<li><code>cx</code> (Type: number)<br>
 X coordinate of the ellipse&#39;s center.</li>
-<li><code>cy</code> (Type: Number)<br>
+<li><code>cy</code> (Type: number)<br>
 Y coordinate of the ellipse&#39;s center.</li>
-<li><code>w</code> (Type: Number)<br>
+<li><code>w</code> (Type: number)<br>
 Width of the ellipse&#39;s bounding box.</li>
-<li><code>h</code> (Type: Number)<br>
+<li><code>h</code> (Type: number)<br>
 Height of the ellipse&#39;s bounding box.</li>
-<li><code>start</code> (Type: Number)<br>
+<li><code>start</code> (Type: number)<br>
 Starting angle of the arc, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.</li>
-<li><code>sweep</code> (Type: Number)<br>
+<li><code>sweep</code> (Type: number)<br>
 Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system&#39;s X axis points right and the Y axis down, positive angles run clockwise and negative angles counterclockwise.</li>
-<li><code>type</code> (Type: Number)<br>
+<li><code>type</code> (Type: number)<br>
 Type of arc to append to the path. If 0, will append an unclosed arc. If 1, will append an elliptical segment to the path (the arc and a line segment connecting its ends). If 2, will append a &quot;pie slice&quot; to the path (the arc and two line segments connecting each end of the arc to the ellipse&#39;s center).</li>
 </ul>
 
@@ -794,19 +794,19 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the ellipse&#39;s bounding box&#39;s upper-left corner (assuming the coordinate system&#39;s X axis points right and the Y axis down).</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate of the ellipse&#39;s bounding box&#39;s upper-left corner (assuming the coordinate system&#39;s X axis points right and the Y axis down).</li>
-<li><code>w</code> (Type: Number)<br>
+<li><code>w</code> (Type: number)<br>
 Width of the ellipse&#39;s bounding box.</li>
-<li><code>h</code> (Type: Number)<br>
+<li><code>h</code> (Type: number)<br>
 Height of the ellipse&#39;s bounding box.</li>
-<li><code>start</code> (Type: Number)<br>
+<li><code>start</code> (Type: number)<br>
 Starting angle of the arc, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.</li>
-<li><code>sweep</code> (Type: Number)<br>
+<li><code>sweep</code> (Type: number)<br>
 Length of the arc in degrees. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system&#39;s X axis points right and the Y axis down, positive angles run clockwise and negative angles counterclockwise.</li>
-<li><code>type</code> (Type: Number)<br>
+<li><code>type</code> (Type: number)<br>
 Type of arc to append to the path. If 0, will append an unclosed arc. If 1, will append an elliptical segment to the path (the arc and a line segment connecting its ends). If 2, will append a &quot;pie slice&quot; to the path (the arc and two line segments connecting each end of the arc to the ellipse&#39;s center).</li>
 </ul>
 
@@ -830,19 +830,19 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x0</code> (Type: Number)<br>
+<li><code>x0</code> (Type: number)<br>
 X coordinate of the arrow&#39;s tail, at its very end.</li>
-<li><code>y0</code> (Type: Number)<br>
+<li><code>y0</code> (Type: number)<br>
 Y coordinate of the arrow&#39;s tail, at its very end.</li>
-<li><code>x1</code> (Type: Number)<br>
+<li><code>x1</code> (Type: number)<br>
 X coordinate of the arrow&#39;s tip.</li>
-<li><code>y1</code> (Type: Number)<br>
+<li><code>y1</code> (Type: number)<br>
 Y coordinate of the arrow&#39;s tip.</li>
-<li><code>headWidth</code> (Type: Number)<br>
+<li><code>headWidth</code> (Type: number)<br>
 Width of the arrowhead&#39;s base from side to side.</li>
-<li><code>headLength</code> (Type: Number)<br>
+<li><code>headLength</code> (Type: number)<br>
 Length of the arrowhead from its tip to its base.</li>
-<li><code>tailWidth</code> (Type: Number)<br>
+<li><code>tailWidth</code> (Type: number)<br>
 Width of the arrow&#39;s tail from side to side</li>
 </ul>
 
@@ -868,13 +868,13 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cx</code> (Type: Number)<br>
+<li><code>cx</code> (Type: number)<br>
 X coordinate of the ellipse&#39;s center.</li>
-<li><code>cy</code> (Type: Number)<br>
+<li><code>cy</code> (Type: number)<br>
 Y coordinate of the ellipse&#39;s center.</li>
-<li><code>w</code> (Type: Number)<br>
+<li><code>w</code> (Type: number)<br>
 Width of the ellipse&#39;s bounding box.</li>
-<li><code>h</code> (Type: Number)<br>
+<li><code>h</code> (Type: number)<br>
 Height of the ellipse&#39;s bounding box.</li>
 </ul>
 
@@ -899,13 +899,13 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the ellipse&#39;s bounding box&#39;s upper-left corner (assuming the coordinate system&#39;s X axis points right and the Y axis down).</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate of the ellipse&#39;s bounding box&#39;s upper-left corner (assuming the coordinate system&#39;s X axis points right and the Y axis down).</li>
-<li><code>w</code> (Type: Number)<br>
+<li><code>w</code> (Type: number)<br>
 Width of the ellipse&#39;s bounding box.</li>
-<li><code>h</code> (Type: Number)<br>
+<li><code>h</code> (Type: number)<br>
 Height of the ellipse&#39;s bounding box.</li>
 </ul>
 
@@ -929,13 +929,13 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x0</code> (Type: Number)<br>
+<li><code>x0</code> (Type: number)<br>
 X coordinate of the line segment&#39;s starting point. The <code>moveTo</code> method will be called on the starting point.</li>
-<li><code>y0</code> (Type: Number)<br>
+<li><code>y0</code> (Type: number)<br>
 Y coordinate of the line segment&#39;s starting point.</li>
-<li><code>x1</code> (Type: Number)<br>
+<li><code>x1</code> (Type: number)<br>
 X coordinate of the line segment&#39;s ending point. The <code>lineTo</code> method will be called on the ending point.</li>
-<li><code>y1</code> (Type: Number)<br>
+<li><code>y1</code> (Type: number)<br>
 X coordinate of the line segment&#39;s ending point.</li>
 </ul>
 
@@ -959,9 +959,9 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>pointCoords</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>pointCoords</code> (Type: Array.&lt;number&gt;)<br>
 An array of numbers containing the X and Y coordinates of each point in the sequence of line segments. Each pair of numbers gives the X and Y coordinates, in that order, of one of the points in the sequence. The number of elements in the array must be even. If two or more pairs of numbers are given, line segments will connect each point given (except the last) to the next point given.</li>
-<li><code>closed</code> (Type: Number)<br>
+<li><code>closed</code> (Type: number)<br>
 If &quot;true&quot;, the sequence of points describes a closed polygon and a command to close the path will be added to the path (even if only one pair of numbers is given in &quot;pointCoords&quot;).</li>
 </ul>
 
@@ -986,15 +986,15 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cx</code> (Type: Number)<br>
+<li><code>cx</code> (Type: number)<br>
 X coordinate of the center of the polygon.</li>
-<li><code>cy</code> (Type: Number)<br>
+<li><code>cy</code> (Type: number)<br>
 Y coordinate of the center of the polygon.</li>
-<li><code>sides</code> (Type: Number)<br>
+<li><code>sides</code> (Type: number)<br>
 Number of sides the polygon has. Nothing will be added to the path if this value is 2 or less.</li>
-<li><code>radius</code> (Type: Number)<br>
+<li><code>radius</code> (Type: number)<br>
 Radius from the center to each vertex of the polygon.</li>
-<li><code>phaseInDegrees</code> (Type: Number)<br>
+<li><code>phaseInDegrees</code> (Type: number)<br>
 Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.</li>
 </ul>
 
@@ -1018,17 +1018,17 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cx</code> (Type: Number)<br>
+<li><code>cx</code> (Type: number)<br>
 X coordinate of the center of the star.</li>
-<li><code>cy</code> (Type: Number)<br>
+<li><code>cy</code> (Type: number)<br>
 Y coordinate of the center of the star.</li>
-<li><code>points</code> (Type: Number)<br>
+<li><code>points</code> (Type: number)<br>
 Number of points the star has. Nothing will be added to the path if this value is 0 or less.</li>
-<li><code>radiusOut</code> (Type: Number)<br>
+<li><code>radiusOut</code> (Type: number)<br>
 Radius from the center to each outer vertex of the star.</li>
-<li><code>radiusIn</code> (Type: Number)<br>
+<li><code>radiusIn</code> (Type: number)<br>
 Radius from the center to each inner vertex of the star.</li>
-<li><code>phaseInDegrees</code> (Type: Number)<br>
+<li><code>phaseInDegrees</code> (Type: number)<br>
 Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.</li>
 </ul>
 
@@ -1052,17 +1052,17 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Number)<br>
+<li><code>x</code> (Type: number)<br>
 X coordinate of the rectangle&#39;s upper-left corner (assuming the coordinate system&#39;s X axis points right and the Y axis down).</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate of the rectangle&#39;s upper-left corner (assuming the coordinate system&#39;s X axis points right and the Y axis down).</li>
-<li><code>w</code> (Type: Number)<br>
+<li><code>w</code> (Type: number)<br>
 Width of the rectangle.</li>
-<li><code>h</code> (Type: Number)<br>
+<li><code>h</code> (Type: number)<br>
 Height of the rectangle.</li>
-<li><code>arccx</code> (Type: Number)<br>
+<li><code>arccx</code> (Type: number)<br>
 Horizontal extent (from end to end) of the ellipse formed by each arc that makes up the rectangle&#39;s corners. Will be adjusted to be not less than 0 and not greater than &quot;w&quot;.</li>
-<li><code>arccy</code> (Type: Number)<br>
+<li><code>arccy</code> (Type: number)<br>
 Vertical extent (from end to end) of the ellipse formed by each arc that makes up the rectangle&#39;s corners. Will be adjusted to be not less than 0 and not greater than &quot;h&quot;.</li>
 </ul>
 
@@ -1135,6 +1135,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -1163,6 +1164,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

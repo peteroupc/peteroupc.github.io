@@ -22,7 +22,7 @@ the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>
+<li><code>mesh</code> (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> | <a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a>)<br>
 A mesh in the form of a buffer object. Cannot be null. For <a href="H3DU.Mesh.html">H3DU.Mesh</a> objects, the <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a> created will use the mesh in its current state and won&#39;t track future changes. <i>Using <a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a> objects as the parameter is deprecated.</i></li>
 </ul>
 
@@ -88,7 +88,7 @@ that fits all vertices in the shape. The first three numbers
 are the smallest-valued X, Y, and Z coordinates, and the
 last three are the largest-valued X, Y, and Z coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
--Inf, -Inf]. (Type: Array.&lt;Number&gt;)</p>
+-Inf, -Inf]. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Shape_getMaterial'></a></p>
 
@@ -110,7 +110,7 @@ See <a href="H3DU.Transform.html#H3DU.Transform_getMatrix">H3DU.Transform#getMat
 
 <h4>Return Value</h4>
 
-<p>The current transformation matrix. (Type: Array.&lt;Number&gt;)</p>
+<p>The current transformation matrix. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Shape_getMeshBuffer'></a></p>
 
@@ -141,7 +141,7 @@ The transform won&#39;t be copied.</p>
 
 <h4>Return Value</h4>
 
-<p>True if this shape will be visible; otherwise, false. (Type: Boolean)</p>
+<p>True if this shape will be visible; otherwise, false. (Type: boolean)</p>
 
 <p><a name='H3DU.Shape_primitiveCount'></a></p>
 
@@ -152,7 +152,7 @@ and points) composed by all shapes in this scene.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 
 <p><a name='H3DU.Shape_setColor'></a></p>
 
@@ -167,13 +167,13 @@ precedence over the color given in this method.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
 A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
-<li><code>g</code> (Type: Number)<br>
+<li><code>g</code> (Type: number)<br>
 Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: Number)<br>
+<li><code>b</code> (Type: number)<br>
 Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: Number) (optional)<br>
+<li><code>a</code> (Type: number) (optional)<br>
 Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
 </ul>
 
@@ -208,17 +208,17 @@ position. See <a href="H3DU.Transform.html#H3DU.Transform_setPosition">H3DU.Tran
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;Number&gt;)<br>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>
 X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Y coordinate.</li>
-<li><code>z</code> (Type: Number)<br>
+<li><code>z</code> (Type: number)<br>
 Z coordinate.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
 <p><a name='H3DU.Shape_setQuaternion'></a></p>
 
@@ -230,7 +230,7 @@ See <a href="H3DU.Transform.html#H3DU.Transform_setQuaternion">H3DU.Transform#se
 <h4>Parameters</h4>
 
 <ul>
-<li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>
 A four-element array describing the rotation.</li>
 </ul>
 
@@ -248,17 +248,17 @@ size. See <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#s
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;Number&gt;)<br>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>
 Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Scaling factor for this object&#39;s height.</li>
-<li><code>z</code> (Type: Number)<br>
+<li><code>z</code> (Type: number)<br>
 Scaling factor for this object&#39;s depth.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>)</p>
+<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
 
 <p><a name='H3DU.Shape_setShader'></a></p>
 
@@ -306,13 +306,13 @@ diffuse parameters to the given color.</p>
 <ul>
 <li><code>name</code> (Type: String | <a href="H3DU.Texture.html">H3DU.Texture</a> | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a>)<br>
 <a href="H3DU.Texture.html">H3DU.Texture</a> object, <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet.</li>
-<li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
 A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
-<li><code>g</code> (Type: Number)<br>
+<li><code>g</code> (Type: number)<br>
 Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: Number)<br>
+<li><code>b</code> (Type: number)<br>
 Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: Number) (optional)<br>
+<li><code>a</code> (Type: number) (optional)<br>
 Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
 </ul>
 
@@ -364,7 +364,7 @@ all shapes in this scene.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -431,6 +431,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -459,6 +460,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

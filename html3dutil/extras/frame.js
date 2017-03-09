@@ -16,7 +16,7 @@
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @memberof H3DU
  */
 H3DU.FrameCounter = function() {
@@ -29,7 +29,6 @@ H3DU.FrameCounter = function() {
 /**
  * Updates the state for determining the frame count.
  * This method should be called once per frame.
- * @instance
  * @returns {Object} Return value.
  */
 H3DU.FrameCounter.prototype.update = function() {
@@ -62,7 +61,6 @@ H3DU.FrameCounter.prototype.update = function() {
 /**
  * Gets the calculated frames per second, based
  * on how often the update method was called.
- * @instance
  * @returns {Object} Return value.
  */
 H3DU.FrameCounter.prototype.getFPS = function() {
@@ -79,7 +77,7 @@ H3DU.FrameCounter.prototype.getFPS = function() {
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/frame.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @memberof H3DU
  */
 H3DU.FrameCounterDiv = function() {
@@ -103,7 +101,6 @@ H3DU.FrameCounterDiv._makeDiv = function() {
 };
 /**
  * Updates the frame counter HTML element.
- * @instance
  * @returns {Object} Return value.
  */
 H3DU.FrameCounterDiv.prototype.update = function() {
@@ -125,7 +122,7 @@ H3DU.FrameCounterDiv.prototype.update = function() {
  * This class used to manage an HTML element
  * that displayed the number of primitives drawn.
  * @deprecated Will be removed in the future.
- * @class
+ * @constructor
  * @alias PrimitiveCounter
  */
 /* exported PrimitiveCounter */
@@ -145,7 +142,7 @@ var PrimitiveCounter = function() {
 /* exported FrameCounter */
 /**
  * Alias for the {@link H3DU.FrameCounter} class.
- * @class
+ * @constructor
  * @alias FrameCounter
  * @deprecated Use {@link H3DU.FrameCounter} instead.
  */
@@ -153,7 +150,7 @@ var FrameCounter = H3DU.FrameCounter;
 /* exported FrameCounterDiv */
 /**
  * Alias for the {@link H3DU.FrameCounterDiv} class.
- * @class
+ * @constructor
  * @alias FrameCounterDiv
  * @deprecated Use {@link H3DU.FrameCounterDiv} instead.
  */

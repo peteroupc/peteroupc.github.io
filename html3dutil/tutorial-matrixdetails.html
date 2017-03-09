@@ -657,12 +657,12 @@ led me to this highly useful insight.</p>
 keep parallel lines parallel.) However, this is not the case for
 some transformations in the <code>H3DU.Math</code> library.</p>
 
-<p>Transformations that don&#39;t necessarily preserve straightness and parallelism of lines are
-called <em>projective transformations</em>.  An NxN matrix which has one more row and one more column
-than the number of dimensions, can describe projective transformations.  For example,
-a 4x4 matrix can describe 3D projective transformations in the form of linear transformations
-on homogeneous coordinates (see <a href="#Why_a_4x4_Matrix">&quot;Why a 4x4 Matrix?&quot;</a>).  For a
-3D projective transformation, the last row in the matrix is not necessarily (0, 0, 0, 1).</p>
+<p>Transformations that don&#39;t necessarily parallelism of lines are called <em>projective transformations</em>.
+An NxN matrix can describe projective transformations if it has one more row and one more column
+than the number of dimensions.  For example, a 4x4 matrix can describe 3D projective transformations
+in the form of linear transformations on homogeneous coordinates (see
+<a href="#Why_a_4x4_Matrix">&quot;Why a 4x4 Matrix?&quot;</a>).  For a 3D projective transformation, the last row
+in the matrix is not necessarily (0, 0, 0, 1).</p>
 
 <p>One example of a projective transformation is found in a <em>perspective projection</em> matrix,
 as returned by <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a> or <a href="H3DU.Math.html#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>. When
@@ -673,7 +673,7 @@ it to the negative Z coordinate in <em>eye space</em>, or more specifically, as 
 <li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + -1 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
 </ul>
 
-<p>For more on perspective projections, see <a href="tutorial-camera.html"><em>The &quot;Camera&quot; and Geometric Transforms</em></a>).</p>
+<p>For more on perspective projections, see <a href="tutorial-camera.html"><em>The &quot;Camera&quot; and Geometric Transforms</em></a>.</p>
 
 <p>Related functions:</p>
 
@@ -829,6 +829,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -857,6 +858,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

@@ -203,11 +203,11 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @memberof H3DU
  * @param {Object} func A [curve evaluator object]{@link H3DU.Curve} that describes the 3-dimensional curve to extrude
  * a tube from.
- * @param {Number} [thickness] Radius of the
+ * @param {number} [thickness] Radius of the
  * extruded tube. If this parameter is null or omitted, the default is 0.125.
  * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.Curve} that
  * describes a two-dimensional curve to serve as
@@ -224,10 +224,18 @@ H3DU.CurveTube = function(func, thickness, sweptCurve) {
   this.func = func;
   this.tangentFinder = new H3DU._FrenetFrames(func);
 };
+H3DU.CurveTube.prototype = Object.create(H3DU.Surface.prototype);
+H3DU.CurveTube.prototype.constructor = H3DU.CurveTube;
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
- * @instance
+ * Returns the starting and ending U and V coordinates of this surface.
+ * @returns A four-element array. The first and second
+ * elements are the starting and ending U coordinates, respectively, of the surface, and the third
+ * and fourth elements are its starting and ending V coordinates.
+ * The starting and ending U coordinates will be the extruded curve's end points (or <code>[0, 1]</code>
+ * if it doesn't implement an <code>endPoints</code> method).
+ * The starting and ending V coordinates are <code>[0, &pi;]</code> by default, but if a cross
+ * section curve is defined, those V coordinates will be that curve's end points (or <code>[0, 1]</code>
+ * if it doesn't implement an <code>endPoints</code> method).
  */
 H3DU.CurveTube.prototype.endPoints = function() {
   "use strict";
@@ -241,11 +249,10 @@ H3DU.CurveTube.prototype.endPoints = function() {
 };
 /**
  * Generates a point on the extruded tube from the given u and V coordinates.
- * @param {Number} u U coordinate. This will run the length of the curve.
- * @param {Number} v V coordinate. This will sweep around the extruded
+ * @param {number} u U coordinate. This will run the length of the curve.
+ * @param {number} v V coordinate. This will sweep around the extruded
  * tube.
- * @returns {Array<Number>} A 3-element array specifying a 3D point.
- * @instance
+ * @returns {Array<number>} A 3-element array specifying a 3D point.
  */
 H3DU.CurveTube.prototype.evaluate = function(u, v) {
   "use strict";
@@ -273,7 +280,7 @@ H3DU.CurveTube.prototype.evaluate = function(u, v) {
 /* exported CurveTube */
 /**
  * Alias for the {@link H3DU.CurveTube} class.
- * @class
+ * @constructor
  * @alias CurveTube
  * @deprecated Use {@link H3DU.CurveTube} instead.
  */

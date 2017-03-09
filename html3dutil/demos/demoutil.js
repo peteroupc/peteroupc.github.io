@@ -197,7 +197,7 @@ function makeMesh(func, resolutionU, resolutionV) {
   // generate the parametric surface.
   mesh = new H3DU.Mesh();
   new H3DU.SurfaceEval()
-      .vertex(H3DU.SurfaceEval.wrapEvaluator(func))
+      .vertex(new H3DU.Surface(func))
     // Specify the color gradient evaluator defined above
       .color(colorGradient)
     // Evaluate the surface and generate a triangle

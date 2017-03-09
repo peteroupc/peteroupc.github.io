@@ -1218,14 +1218,11 @@
  * &lt;script type="text/javascript" src="extras/pathclip.js">&lt;/script></pre>
  * </ul>
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} The union of the two paths.
- * @instance
- * @memberof! H3DU.GraphicsPath#
- * @memberof! H3DU.GraphicsPath#
  * @memberof! H3DU.GraphicsPath#
  */
     GraphicsPath.prototype.union = function(path, flatness) {
@@ -1240,15 +1237,12 @@
  * path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} The difference between this path
  * and the other path.
- * @instance
- * @memberof! H3DU.GraphicsPath#
- * @memberof! H3DU.GraphicsPath#
  * @memberof! H3DU.GraphicsPath#
  */
     GraphicsPath.prototype.difference = function(path, flatness) {
@@ -1263,15 +1257,12 @@
  * and another path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * both paths.
- * @instance
- * @memberof! H3DU.GraphicsPath#
- * @memberof! H3DU.GraphicsPath#
  * @memberof! H3DU.GraphicsPath#
  */
     GraphicsPath.prototype.intersection = function(path, flatness) {
@@ -1286,15 +1277,12 @@
  * but not both. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
  * @param {H3DU.GraphicsPath} path A path to combine with this one.
- * @param {Number} [flatness] When curves and arcs
+ * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * only one of the two paths.
- * @instance
- * @memberof! H3DU.GraphicsPath#
- * @memberof! H3DU.GraphicsPath#
  * @memberof! H3DU.GraphicsPath#
  */
     GraphicsPath.prototype.xor = function(path, flatness) {

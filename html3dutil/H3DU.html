@@ -6,7 +6,7 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a id='H3DU'></a></p>
+<p><a name='H3DU'></a></p>
 
 <h3>H3DU</h3>
 
@@ -88,7 +88,7 @@ A function to call if an error occurs in creating the context. The function take
 
 <p>A 3D rendering context, or null
 if an error occurred in creating the context. Returns null if &quot;canvasElement&quot;
-is null or not an HTML canvas element. (Type: WebGLRenderingContext)</p>
+is null or not an HTML canvas element. (Type: Object)</p>
 
 <p><a name='H3DU.get3DOr2DContext'></a></p>
 
@@ -108,7 +108,7 @@ An HTML canvas element.</li>
 
 <p>A 3D or 2D rendering context, or null
 if an error occurred in creating the context. Returns null if &quot;canvasElement&quot;
-is null or not an HTML canvas element. (Type: WebGLRenderingContext)</p>
+is null or not an HTML canvas element. (Type: Object)</p>
 
 <p><a name='H3DU.getPromiseResults'></a></p>
 
@@ -185,9 +185,9 @@ This method may be called any number of times each frame.</p>
 <ul>
 <li><code>timer</code> (Type: Object)<br>
 An object that will hold two properties:<ul> <li>&quot;time&quot; - initial time value, in milliseconds. <li>&quot;lastTime&quot; - last known time value, in milliseconds. Will be set to the value given in &quot;timeInMs&quot; before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.</li>
-<li><code>timeInMs</code> (Type: Number)<br>
+<li><code>timeInMs</code> (Type: number)<br>
 A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.</li>
-<li><code>intervalInMs</code> (Type: Number)<br>
+<li><code>intervalInMs</code> (Type: number)<br>
 The length of the interval (animation cycle), in milliseconds.</li>
 </ul>
 
@@ -196,7 +196,7 @@ The length of the interval (animation cycle), in milliseconds.</li>
 <p>A value in the range [0, 1), where closer
 to 0 means &quot;timeInMs&quot; lies
 closer to the start, and closer to 1 means closer
-to the end of the interval. If an initial time wasn&#39;t set, returns 0. (Type: Number)</p>
+to the end of the interval. If an initial time wasn&#39;t set, returns 0. (Type: number)</p>
 
 <h4>Example</h4>
 
@@ -207,7 +207,7 @@ The variable <code>time</code> is assumed to be a time
 value in milliseconds, such as the parameter of a
 <code>requestAnimationFrame()</code> callback method.</p>
 
-<pre><code>var angle = 360 * H3DU.getTimePosition(timer, time, 5000);
+<pre><code>var angle = 360 * export var getTimePosition(timer, time, 5000);
 </code></pre>
 
 <p><a name='H3DU.is3DContext'></a></p>
@@ -225,20 +225,20 @@ The object to check.</li>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Boolean)</p>
+<p>Return value. (Type: boolean)</p>
 
 <p><a name='H3DU.loadFileFromUrl'></a></p>
 
-<h3>(static) H3DU.loadFileFromUrl(url, responseType)</h3>
+<h3>(static) H3DU.loadFileFromUrl(url, [responseType])</h3>
 
 <p>Loads a file from a URL asynchronously, using XMLHttpRequest.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>url</code> (Type: String)<br>
+<li><code>url</code> (Type: string)<br>
 URL of the file to load.</li>
-<li><code>responseType</code> (Type: string | null)<br>
+<li><code>responseType</code> (Type: string) (optional)<br>
 Expected data type of the file. Can be &quot;json&quot;, &quot;xml&quot;, &quot;text&quot;, or &quot;arraybuffer&quot;. If null or omitted, the default is &quot;text&quot;.</li>
 </ul>
 
@@ -267,7 +267,7 @@ shaders it uses.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>url</code> (Type: String)<br>
+<li><code>url</code> (Type: string)<br>
 URL of the glTF file to load.</li>
 </ul>
 
@@ -307,7 +307,7 @@ the HTML 3D Library. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>url</code> (Type: String)<br>
+<li><code>url</code> (Type: string)<br>
 The URL to load.</li>
 </ul>
 
@@ -330,7 +330,7 @@ This method should be called only once each frame.</p>
 <ul>
 <li><code>timer</code> (Type: Object)<br>
 An object described in <a href="H3DU.html#H3DU.getTimePosition">H3DU.getTimePosition</a>.</li>
-<li><code>timeInMs</code> (Type: Number)<br>
+<li><code>timeInMs</code> (Type: number)<br>
 A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</li>
 </ul>
 
@@ -339,7 +339,7 @@ A time value, in milliseconds. This could be the parameter received in a <code>r
 <p>The number of frame-length intervals relative to
 the last known time held in the parameter &quot;timer&quot;.
 The number can include fractional frames. If an
-initial time or last known time wasn&#39;t set, returns 0. (Type: Number)</p>
+initial time or last known time wasn&#39;t set, returns 0. (Type: number)</p>
 
 <p><a name='H3DU.renderLoop'></a></p>
 
@@ -359,7 +359,7 @@ The function to call. The function takes one parameter, &quot;time&quot;, which 
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Object)</p>
+<p>This function doesn&#39;t return a value. (Type: void)</p>
 
 <p><a name='H3DU.toGLColor'></a></p>
 
@@ -408,13 +408,13 @@ and so on, including the newly added <code>rebeccapurple</code>.
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;Number&gt; | number | string)<br>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
 One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.</li>
-<li><code>g</code> (Type: Number)<br>
+<li><code>g</code> (Type: number)<br>
 Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: Number)<br>
+<li><code>b</code> (Type: number)<br>
 Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: Number) (optional)<br>
+<li><code>a</code> (Type: number) (optional)<br>
 Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
 </ul>
 
@@ -423,7 +423,7 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 <p>The color as a 4-element array; if the color is
 invalid, returns [0,0,0,0], or transparent black. Numbers less
 than 0 are clamped to 0, and numbers greater than 1 are
-clamped to 1. (Type: Array.&lt;Number&gt;)</p>
+clamped to 1. (Type: Array.&lt;number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -490,6 +490,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -518,6 +519,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

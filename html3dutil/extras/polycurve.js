@@ -148,7 +148,7 @@
       this.elements = cp[0].length;
     };
     H3DU.PolynomialCurve.prototype = Object.create(H3DU.Curve.prototype);
-    Object.assign(H3DU.PolynomialCurve.prototype, {"constructor": H3DU.PolynomialCurve});
+    H3DU.PolynomialCurve.prototype.constructor = H3DU.PolynomialCurve;
 /** @ignore */
     H3DU.PolynomialCurve.prototype.setBasis = function(basis, degree) {
       this.matrix = basis;
@@ -243,6 +243,8 @@
       this.cp = cp;
       this.elements = cp[0][0].length;
     };
+    H3DU.PolynomialSurface.prototype = Object.create(H3DU.Surface.prototype);
+    H3DU.PolynomialSurface.prototype.constructor = H3DU.PolynomialSurface;
 
 /** @ignore */
     H3DU.PolynomialSurface.prototype.endPoints = function() {

@@ -23,7 +23,7 @@
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
  * @memberof H3DU
- * @param {String} url The URL to load.
+ * @param {string} url The URL to load.
  * @returns {Promise} A promise that resolves when the
  * .STL file is loaded successfully (the result will be an {@link H3DU.Mesh} object),
  * and is rejected when an error occurs when loading the .STL file.

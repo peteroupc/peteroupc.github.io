@@ -1048,7 +1048,7 @@
 /**
  * Loads a 3D scene stored in glTF format, together with the buffers and
  * shaders it uses.
- * @param {String} url URL of the glTF file to load.
+ * @param {string} url URL of the glTF file to load.
  * @returns {Promise<Object>} A promise; when it resolves, the result will
  * be an object that implements the following methods:<ul>
  * <li><code>getShape()</code> - Gets an {@link H3DU.ShapeGroup} object described

@@ -10,15 +10,15 @@
 /**
  * Contains helper methods for generating the five platonic solids
  * and other polyhedra.
- * @class
+ * @constructor
  */
 var Polyhedra = {};
 /**
  * Normalizes the distance from the origin to each vertex in the given
  * array to a fixed radius.
- * @param {Array<Number>} vertices An array of vertices, where each
+ * @param {Array<number>} vertices An array of vertices, where each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array.
- * @param {Number} radius Distance from the origin where each vertex
+ * @param {number} radius Distance from the origin where each vertex
  * will be normalized to.
  * @returns {Object} Return value.
  */
@@ -47,17 +47,17 @@ Polyhedra.scaleVertices = function(vertices, radius) {
 /**
  * Modifies the vertices and indices of a solid to
  * generate an approximation of a sphere.
- * @param {Array<Array<Number>>} vi A two-element array. The first
+ * @param {Array<Array<number>>} vi A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
- * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
+ * @param {number} radius Maximum radius from the center of the solid to one of its vertices.
+ * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {Array<Array<Number>>} The "vi" parameter, which will likely be modified.
+ * @returns {Array<Array<number>>} The "vi" parameter, which will likely be modified.
  */
 Polyhedra.makeSphere = function(vi, radius, level) {
   "use strict";
@@ -103,7 +103,7 @@ Polyhedra.makeSphere = function(vi, radius, level) {
 /**
  * Convenience method for generating a flat-shaded
  * mesh using an array of vertices and indices.
- * @param {Array<Array<Number>>} vi A two-element array. The first
+ * @param {Array<Array<number>>} vi A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
@@ -119,8 +119,8 @@ Polyhedra.makeMesh = function(vi) {
 };
 /**
  * Generates a mesh of a regular octahedron or a sphere based on that solid.
- * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
+ * @param {number} radius Maximum radius from the center of the solid to one of its vertices.
+ * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -133,8 +133,8 @@ Polyhedra.octahedron = function(radius, level) {
 };
 /**
  * Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.
- * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
+ * @param {number} radius Maximum radius from the center of the solid to one of its vertices.
+ * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -147,8 +147,8 @@ Polyhedra.hexahedron = function(radius, level) {
 };
 /**
  * Generates a mesh of a regular icosahedron or a sphere based on that solid.
- * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
+ * @param {number} radius Maximum radius from the center of the solid to one of its vertices.
+ * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -161,8 +161,8 @@ Polyhedra.icosahedron = function(radius, level) {
 };
 /**
  * Generates a mesh of a regular dodecahedron or a sphere based on that solid.
- * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
+ * @param {number} radius Maximum radius from the center of the solid to one of its vertices.
+ * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -175,8 +175,8 @@ Polyhedra.dodecahedron = function(radius, level) {
 };
 /**
  * Generates a mesh of a regular tetrahedron or a sphere based on that solid.
- * @param {Number} radius Maximum radius from the center of the solid to one of its vertices.
- * @param {Number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
+ * @param {number} radius Maximum radius from the center of the solid to one of its vertices.
+ * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
  * @returns {H3DU.Mesh} The generated solid.
@@ -189,7 +189,7 @@ Polyhedra.tetrahedron = function(radius, level) {
 };
 /**
  * Gets the vertices of a regular octahedron with radius 1.
- * @returns {Array<Array<Number>>} A two-element array. The first
+ * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
@@ -218,7 +218,7 @@ Polyhedra.octahedronFaces = function() {
 };
 /**
  * Gets the vertices of a tetrahedron with radius 1.
- * @returns {Array<Array<Number>>} A two-element array. The first
+ * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
@@ -233,7 +233,7 @@ Polyhedra.tetrahedronFaces = function() {
 };
 /**
  * Gets the vertices of a regular icosahedron with maximum radius 1.
- * @returns {Array<Array<Number>>} A two-element array. The first
+ * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
@@ -257,7 +257,7 @@ Polyhedra.icosahedronFaces = function() {
 };
 /**
  * Gets the vertices of a hexahedron (cube) with maximum radius 1.
- * @returns {Array<Array<Number>>} A two-element array. The first
+ * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
@@ -273,7 +273,7 @@ Polyhedra.hexahedronFaces = function() {
 /**
  * Gets a more compact representation of the vertices of a hexahedron
  * (cube) with maximum radius 1.
- * @returns {Array<Array<Number>>} A two-element array. The first
+ * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
@@ -290,7 +290,7 @@ Polyhedra.hexahedronFacesCompact = function() {
 };
 /**
  * Gets the vertices of a dodecahedron with maximum radius 1.
- * @returns {Array<Array<Number>>} A two-element array. The first
+ * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
@@ -306,7 +306,7 @@ Polyhedra.dodecahedronFaces = function() {
 /**
  * Gets a more compact representation of the vertices of a dodecahedron
  * with maximum radius 1.
- * @returns {Array<Array<Number>>} A two-element array. The first
+ * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
  * vertex's X, Y, and Z coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying

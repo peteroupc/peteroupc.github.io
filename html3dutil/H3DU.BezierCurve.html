@@ -10,21 +10,21 @@
 
 <h3>H3DU.BezierCurve(cp, [u1], [u2])</h3>
 
+<p><strong>Augments:</strong> Curve</p>
+
 <p><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b></p>
 
 <p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B&eacute;zier curve.</p>
 
-<p><strong>Augments:</strong> <a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></p>
-
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cp</code> (Type: Array.&lt;Array.&lt;Number&gt;&gt;)<br>
+<li><code>cp</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>
 An array of control points as specified in <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>.</li>
-<li><code>u1</code> (Type: Number) (optional)<br>
+<li><code>u1</code> (Type: number) (optional)<br>
 No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation.)</li>
-<li><code>u2</code> (Type: Number) (optional)<br>
+<li><code>u2</code> (Type: number) (optional)<br>
 No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation.)</li>
 </ul>
 
@@ -45,7 +45,7 @@ in a B&eacute;zier curve.</p>
 <h4>Return Value</h4>
 
 <p>A two-element array. The first and second
-elements are the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;Number&gt;)</p>
+elements are the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.BezierCurve_evaluate'></a></p>
 
@@ -57,14 +57,14 @@ in a B&eacute;zier curve.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: Number)<br>
+<li><code>u</code> (Type: number)<br>
 Point on the curve to evaluate (generally within the range given in the constructor).</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>An array of the result of
-the evaluation. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;Number&gt;)</p>
+the evaluation. It will have as many elements as a control point, as specified in the constructor. (Type: Array.&lt;number&gt;)</p>
 
 <h4>Example</h4>
 
@@ -141,6 +141,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -169,6 +170,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

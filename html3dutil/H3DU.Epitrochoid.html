@@ -10,6 +10,8 @@
 
 <h3>H3DU.Epitrochoid(outerRadius, rollerRadius, distFromRollerCenter, [rotationDegrees])</h3>
 
+<p><strong>Augments:</strong> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
+
 <p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
 The rolling circle will start at the positive X axis of the fixed circle.</p>
@@ -38,19 +40,17 @@ the HTML 3D Library. Example:</p>
 <pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
-<p><strong>Augments:</strong> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
-
 <h4>Parameters</h4>
 
 <ul>
-<li><code>outerRadius</code> (Type: Number)<br>
+<li><code>outerRadius</code> (Type: number)<br>
 Radius of the circle whose position is fixed.</li>
-<li><code>rollerRadius</code> (Type: Number)<br>
+<li><code>rollerRadius</code> (Type: number)<br>
 Radius of the rolling circle. An epicycloid results when distFromRollerCenter=rollerRadius.</li>
-<li><code>distFromRollerCenter</code> (Type: Number)<br>
+<li><code>distFromRollerCenter</code> (Type: number)<br>
 Distance from the center of the rolling circle to the drawing pen.</li>
-<li><code>rotationDegrees</code> (Type: Number) (optional)<br>
-Rotation angle of the curve, in degrees. Default is 0.</li>
+<li><code>rotationDegrees</code> (Type: number) (optional)<br>
+Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -72,7 +72,7 @@ fits the given radius.</li>
 </ul>
 
 <p>Finds an approximate acceleration vector at the given U coordinate of this curve.
-This method calls the evaluator&#39;s <code>accel</code>
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
 
@@ -81,14 +81,14 @@ the velocity vector.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: Number)<br>
+<li><code>u</code> (Type: number)<br>
 U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>An array describing an acceleration vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number&gt;)</p>
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Epitrochoid_arcLength'></a></p>
 
@@ -96,7 +96,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;N
 
 <p>Finds an approximate arc length (distance) between the start of this
 curve and the point at the given U coordinate of this curve.
-This method calls the evaluator&#39;s <code>arcLength</code>
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.</p>
 
 <p>The <b>arc length</b> function returns a number; if the curve is &quot;smooth&quot;, this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.</p>
@@ -104,13 +104,13 @@ method if it implements it; otherwise, calculates a numerical integral using the
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: Number)<br>
+<li><code>u</code> (Type: number)<br>
 U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;Number&gt;)</p>
+<p>The approximate arc length of this curve at the given U coordinate. (Type: number)</p>
 
 <p><a name='H3DU.Epitrochoid_endPoints'></a></p>
 
@@ -124,7 +124,7 @@ starts at 0 and ends at &pi;*2.</p>
 
 <p>An array containing the two
 endpoints of the curve. The first number is the start of the curve,
-and the second number is the end of the curve. * @instance (Type: Array.&lt;Number&gt;)</p>
+and the second number is the end of the curve. * (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Epitrochoid_evaluate'></a></p>
 
@@ -135,38 +135,38 @@ and the second number is the end of the curve. * @instance (Type: Array.&lt;Numb
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: Number)<br>
+<li><code>u</code> (Type: number)<br>
 U coordinate.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>A 3-element array specifying a 3D point.
-Only the X and Y coordinates will be other than 0. (Type: Array.&lt;Number&gt;)</p>
+Only the X and Y coordinates will be other than 0. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Epitrochoid_normal'></a></p>
 
 <h3>H3DU.Epitrochoid#normal(u)</h3>
 
 <p>Finds an approximate principal normal vector at the given U coordinate of this curve.
-This method calls the evaluator&#39;s <code>normal</code>
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
 
 <p>The <b>principal normal</b> of a curve is the derivative of the &quot;normalized&quot; velocity
 vector divided by that derivative&#39;s length. The normal returned by this method
-<i>should</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with H3DU.Surface#gradient.)</p>
+<i>should</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="H3DU.Surface.html#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: Number)<br>
+<li><code>u</code> (Type: number)<br>
 U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>An array describing a normal vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number&gt;)</p>
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Epitrochoid_scaleTo'></a></p>
 
@@ -178,7 +178,7 @@ fits the given radius.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>radius</code> (Type: Number)<br>
+<li><code>radius</code> (Type: number)<br>
 Desired radius of the curve.</li>
 </ul>
 
@@ -191,7 +191,7 @@ Desired radius of the curve.</li>
 <h3>H3DU.Epitrochoid#velocity(u)</h3>
 
 <p>Finds an approximate velocity vector at the given U coordinate of this curve.
-This method calls the evaluator&#39;s <code>velocity</code>
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).</p>
 
@@ -200,14 +200,14 @@ the position (from the <code>evaluate</code> method).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: Number)<br>
+<li><code>u</code> (Type: number)<br>
 U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>An array describing a velocity vector. It should have at least as many
-elements as the number of dimensions of the underlying curve. (Type: Array.&lt;Number&gt;)</p>
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -274,6 +274,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -302,6 +303,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

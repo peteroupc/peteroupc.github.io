@@ -23,7 +23,7 @@
  * @param {HTMLElement|HTMLDocument} element The HTML document
  * or element to track keyboard and mouse events for.
  * If null or omitted, uses the calling application's HTML document.
- * @class
+ * @constructor
  * @memberof H3DU
  */
 H3DU.InputTracker = function(element) {
@@ -188,7 +188,6 @@ H3DU.InputTracker = function(element) {
 };
 /**
  * Disposes all resources used by this input tracker.
- * @instance
  * @returns {Object} Return value.
  */
 H3DU.InputTracker.prototype.dispose = function() {
@@ -211,9 +210,8 @@ H3DU.InputTracker.prototype.dispose = function() {
 /**
  * Gets whether a key is pressed, as detected by this
  * input tracker.
- * @returns {Number} key Key code of the key to check.
- * @returns {Boolean} True if the key is currently pressed; otherwise, false.
- * @instance
+ * @returns {number} key Key code of the key to check.
+ * @returns {boolean} True if the key is currently pressed; otherwise, false.
  */
 H3DU.InputTracker.prototype.getKey = function(key) {
   "use strict";
@@ -226,7 +224,6 @@ H3DU.InputTracker.prototype.getKey = function(key) {
  * mousePos method to find out whether the user
  * has rotated the mouse wheel.
  * @param {Function} func A function.
- * @instance
  * @returns {Object} Return value.
  */
 H3DU.InputTracker.prototype.mousewheel = function(func) {
@@ -378,7 +375,6 @@ H3DU.InputTracker.SUBTRACT = 109;
  * </ul>
  * If this object's update method wasn't called, all these values
  * will be 0.
- * @instance
  */
 H3DU.InputTracker.prototype.mousePos = function() {
   "use strict";
@@ -394,7 +390,6 @@ H3DU.InputTracker.prototype.mousePos = function() {
  * An alias for {@link H3DU.InputTracker#mousePos}.
  * @deprecated
  * @returns {Object} An object described in the "mousePos" method.
- * @instance
  */
 H3DU.InputTracker.prototype.deltaXY = H3DU.InputTracker.prototype.mousePos;
 /**
@@ -412,7 +407,6 @@ H3DU.InputTracker.prototype.deltaXY = H3DU.InputTracker.prototype.mousePos;
  * last time this method was called (or the time this tracker
  * was created if it wasn't) to the current mouse wheel position.
  * @returns {H3DU.InputTracker} This object.
- * @instance
  */
 H3DU.InputTracker.prototype.update = function() {
   "use strict";
@@ -448,7 +442,7 @@ H3DU.InputTracker.prototype.update = function() {
 /* exported InputTracker */
 /**
  * Alias for the {@link H3DU.InputTracker} class.
- * @class
+ * @constructor
  * @alias InputTracker
  * @deprecated Use {@link H3DU.InputTracker} instead.
  */
@@ -470,17 +464,17 @@ var InputTracker = H3DU.InputTracker;
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @memberof H3DU
  * @param {H3DU.Batch3D} batch A 3D batch to associate with this
  * camera object. <i>Using a {@link H3DU.Scene3D} here is deprecated.</i>
- * @param {Number} fov Vertical field of view, in degrees. Should be less
+ * @param {number} fov Vertical field of view, in degrees. Should be less
  * than 180 degrees. (The smaller
  * this number, the bigger close objects appear to be.) See {@link H3DU.Math.mat4perspective}.
- * @param {Number} nearZ The distance from the camera to
+ * @param {number} nearZ The distance from the camera to
  * the near clipping plane. Objects closer than this distance won't be seen.
  * See {@link H3DU.Math.mat4perspective}. This should be slightly greater than 0.
- * @param {Number} farZ The distance from the camera to
+ * @param {number} farZ The distance from the camera to
  * the far clipping plane. Objects beyond this distance will be too far
  * to be seen. See {@link H3DU.Math.mat4perspective}.
  * @param {HTMLCanvasElement} [canvas] A canvas to associate with this
@@ -578,12 +572,11 @@ H3DU.Camera._velocity = function(toVec, fromVec) {
 /**
  * Moves the camera a given distance from the reference
  * point without changing its orientation.
- * @param {Number} dist Positive number giving the distance.
+ * @param {number} dist Positive number giving the distance.
  * If this is less than the near plane distance, the distance will
  * be equal to the near plane distance. Does nothing if the
  * distance is 0 or less.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.setDistance = function(dist) {
   "use strict";
@@ -599,8 +592,7 @@ H3DU.Camera.prototype.setDistance = function(dist) {
 
 /**
  * Finds the distance from the camera's position to the reference point.
- * @returns {Number} Return value.
- * @instance
+ * @returns {number} Return value.
  */
 H3DU.Camera.prototype.getDistance = function() {
   "use strict";
@@ -618,13 +610,12 @@ H3DU.Camera._transformRel = function(quat, point, origin) {
 /**
  * Moves the camera upward or downward so that it faces
  * the same reference point at the same distance.
- * @param {Number} angleDegrees The angle to rotate the camera,
+ * @param {number} angleDegrees The angle to rotate the camera,
  * in degrees. If the coordinate-system is right-handed, positive
  * values rotate the camera upward, and
  * negative values downward. If the coordinate-system is left-handed,
  * vice versa.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.moveAngleVertical = function(angleDegrees) {
   "use strict";
@@ -642,7 +633,7 @@ H3DU.Camera.prototype.moveAngleVertical = function(angleDegrees) {
 /**
  * Moves the camera upward or downward so that it faces
  * the same reference point at the same distance.
- * @param {Number} angleDegrees The angle to rotate the camera,
+ * @param {number} angleDegrees The angle to rotate the camera,
  * in degrees. If the coordinate-system is right-handed, positive
  * values rotate the camera upward, and
  * negative values downward. If the coordinate-system is left-handed,
@@ -650,20 +641,18 @@ H3DU.Camera.prototype.moveAngleVertical = function(angleDegrees) {
  * @method
  * @deprecated Renamed to "moveAngleVertical".
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.turnVertical = H3DU.Camera.prototype.moveAngleVertical;
 
 /**
  * Moves the camera to the left or right so that it faces
  * the same reference point at the same distance.
- * @param {Number} angleDegrees The angle to rotate the camera,
+ * @param {number} angleDegrees The angle to rotate the camera,
  * in degrees. If the coordinate-system is right-handed, positive
  * values rotate the camera leftward, and
  * negative values rightward. If the coordinate-system is left-handed,
  * vice versa.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
   "use strict";
@@ -678,7 +667,7 @@ H3DU.Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
 /**
  * Moves the camera to the left or right so that it faces
  * the same reference point at the same distance.
- * @param {Number} angleDegrees The angle to rotate the camera,
+ * @param {number} angleDegrees The angle to rotate the camera,
  * in degrees. If the coordinate-system is right-handed, positive
  * values rotate the camera leftward, and
  * negative values rightward. If the coordinate-system is left-handed,
@@ -686,20 +675,18 @@ H3DU.Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
  * @method
  * @deprecated Renamed to "moveAngleHorizontal".
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.turnHorizontal = H3DU.Camera.prototype.moveAngleHorizontal;
 
 /**
  * Turns the camera to the left or right so that it faces
  * the same distance from a reference point.
- * @param {Number} angleDegrees The angle to rotate the camera,
+ * @param {number} angleDegrees The angle to rotate the camera,
  * in degrees. If the coordinate-system is right-handed, positive
  * values rotate the camera rightward, and
  * negative values leftward. If the coordinate-system is left-handed,
  * vice versa.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
   "use strict";
@@ -713,13 +700,12 @@ H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
 /**
  * Turns the camera upward or downward so that it faces
  * the same distance from a reference point.
- * @param {Number} angleDegrees The angle to rotate the camera,
+ * @param {number} angleDegrees The angle to rotate the camera,
  * in degrees. If the coordinate-system is right-handed, positive
  * values rotate the camera upward, and
  * negative values downward. If the coordinate-system is left-handed,
  * vice versa.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
   "use strict";
@@ -735,13 +721,12 @@ H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
 };
 /**
  * Sets the position of the camera.
- * @param {Number} cx The camera's new X coordinate,
+ * @param {number} cx The camera's new X coordinate,
  * or a 3-element vector containing the X, Y, and Z coordinates.
  * In the latter case, "cy" and "cz" can be omitted.
- * @param {Number} [cy] The camera's new Y coordinate.
- * @param {Number} [cz] The camera's new Z coordinate.
+ * @param {number} [cy] The camera's new Y coordinate.
+ * @param {number} [cz] The camera's new Z coordinate.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
   "use strict";
@@ -759,33 +744,30 @@ H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
 
 /**
  * Sets the position of the camera.
- * @param {Number} cx The camera's new X coordinate.
- * @param {Number} cy The camera's new Y coordinate.
- * @param {Number} cz The camera's new Z coordinate.
+ * @param {number} cx The camera's new X coordinate.
+ * @param {number} cy The camera's new Y coordinate.
+ * @param {number} cz The camera's new Z coordinate.
  * @returns {H3DU.Camera} This object.
  * @method
  * @deprecated Renamed to "setPosition".
- * @instance
  */
 H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
 
 /**
  * Sets the position of the camera.
- * @param {Number} cx The camera's new X coordinate.
- * @param {Number} cy The camera's new Y coordinate.
- * @param {Number} cz The camera's new Z coordinate.
+ * @param {number} cx The camera's new X coordinate.
+ * @param {number} cy The camera's new Y coordinate.
+ * @param {number} cz The camera's new Z coordinate.
  * @returns {H3DU.Camera} This object.
  * @method
  * @deprecated Renamed to "setPosition".
- * @instance
  */
 H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
 
 /**
  * Gets the position of the camera.
- * @returns {Array<Number>} An array of three numbers giving
+ * @returns {Array<number>} An array of three numbers giving
  * the X, Y, and Z coordinates of the camera's position, respectively.
- * @instance
  */
 H3DU.Camera.prototype.getPosition = function() {
   "use strict";
@@ -795,10 +777,9 @@ H3DU.Camera.prototype.getPosition = function() {
 /**
  * Moves the camera the given distance, but not too close
  * to the reference point.
- * @param {Number} dist The distance to move. Positive
+ * @param {number} dist The distance to move. Positive
  * values mean forward, and negative distances mean back.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.moveClose = function(dist) {
   "use strict";
@@ -806,10 +787,9 @@ H3DU.Camera.prototype.moveClose = function(dist) {
 };
 /**
  * Moves the camera forward the given distance.
- * @param {Number} dist The distance to move. Positive
+ * @param {number} dist The distance to move. Positive
  * values mean forward, and negative distances mean back.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.moveForward = function(dist) {
   "use strict";
@@ -825,9 +805,8 @@ H3DU.Camera.prototype.moveForward = function(dist) {
 /**
  * Moves the camera horizontally relative to the camera's up vector.
  * @deprecated Use "moveHorizontal" instead.
- * @param {Number} dist Distance to move the camera.
+ * @param {number} dist Distance to move the camera.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.moveCenterHorizontal = function(dist) {
   "use strict";
@@ -836,9 +815,8 @@ H3DU.Camera.prototype.moveCenterHorizontal = function(dist) {
 /**
  * Moves the camera toward or away from the camera's up vector.
  * @deprecated Use "moveVertical" instead.
- * @param {Number} dist Distance to move the camera.
+ * @param {number} dist Distance to move the camera.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.moveCenterVertical = function(dist) {
   "use strict";
@@ -846,9 +824,8 @@ H3DU.Camera.prototype.moveCenterVertical = function(dist) {
 };
 /**
  * Moves the camera horizontally relative to the camera's up vector.
- * @param {Number} dist Distance to move the camera.
+ * @param {number} dist Distance to move the camera.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.moveHorizontal = function(dist) {
   "use strict";
@@ -864,9 +841,8 @@ H3DU.Camera.prototype.moveHorizontal = function(dist) {
 };
 /**
  * Moves the camera toward or away from the camera's up vector.
- * @param {Number} dist Distance to move the camera.
+ * @param {number} dist Distance to move the camera.
  * @returns {H3DU.Camera} This object.
- * @instance
  */
 H3DU.Camera.prototype.moveVertical = function(dist) {
   "use strict";
@@ -882,10 +858,9 @@ H3DU.Camera.prototype.moveVertical = function(dist) {
 /**
  * Gets the 3-element vector that points from the reference
  * point to the camera's position.
- * @returns {Array<Number>} The return value as a unit
+ * @returns {Array<number>} The return value as a unit
  * vector (a ["normalized" vector]{@link H3DU.Math.vec3normalize} with a length of 1).
  * Returns (0,0,0) if the reference point is the same as the camera's position.
- * @instance
  */
 H3DU.Camera.prototype.getVectorFromCenter = function() {
   "use strict";
@@ -899,7 +874,6 @@ H3DU.Camera.prototype.getVectorFromCenter = function() {
  * method should be called right after the tracker's
  * 'update' method was called. <i>Note that future versions
  * may require this parameter.</i>
- * @instance
  * @returns {Object} Return value.
  */
 H3DU.Camera.prototype.update = function(input) {
@@ -950,7 +924,7 @@ H3DU.Camera.prototype._updateNew = function(input) {
 /* exported Camera */
 /**
  * Alias for the {@link H3DU.Camera} class.
- * @class
+ * @constructor
  * @alias Camera
  * @deprecated Use {@link H3DU.Camera} instead.
  */

@@ -81,7 +81,7 @@ used to represent the font.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>fontFileName</code> (Type: String)<br>
+<li><code>fontFileName</code> (Type: string)<br>
 The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>&quot;.xml&quot;: XML</li> <li>&quot;.json&quot;: JSON</li> <li>&quot;.bin&quot;: Binary</li> <li>&quot;.fnt&quot;: Text or binary</li> <li>All others: Text</li></ul></li>
 </ul>
 
@@ -121,7 +121,7 @@ used by that font.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>fontFileName</code> (Type: String)<br>
+<li><code>fontFileName</code> (Type: string)<br>
 The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>&quot;.xml&quot;: XML</li> <li>&quot;.json&quot;: JSON</li> <li>&quot;.bin&quot;: Binary</li> <li>&quot;.fnt&quot;: Text or binary</li> <li>All others: Text</li></ul></li>
 <li><code>textureLoader</code> (Type: <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>)<br>
 Texture loader object to use when loading the textures.</li>
@@ -150,7 +150,7 @@ needed to draw text with this font.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>str</code> (Type: String)<br>
+<li><code>str</code> (Type: string)<br>
 The text to draw. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
 <li><code>params</code> (Type: Object)<br>
 An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>x</code> - X coordinate of the top left corner of the text. If null or omitted, uses 0. For the text to show upright, the coordinate system should have the X axis pointing right and the Y axis pointing down (for example, an orthographic projection where the left and top coordinates are less than the right and bottom coordinates, respectively). <li><code>y</code> - Y coordinate of the top left corner of the text. If null or omitted, uses 0. <li><code>lineHeight</code> - Height of each line of the text in units. If null or omitted, uses the line height given in the font. <li><code>width</code> - Maximum width of each line. Lines that exceed this width will be wrapped. <li><code>align</code> - Horizontal text alignment. Can be &quot;left&quot;, &quot;center&quot;, or &quot;right&quot; (all strings). </ul></li>
@@ -172,7 +172,7 @@ drawn using this font.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>str</code> (Type: String)<br>
+<li><code>str</code> (Type: string)<br>
 The text string to measure. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
 <li><code>params</code> (Type: Object)<br>
 An object described in <a href="H3DU.TextFont.html#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>.</li>
@@ -183,7 +183,7 @@ An object described in <a href="H3DU.TextFont.html#H3DU.TextFont_makeTextMeshes"
 <p>An array of two numbers;
 the first is the width of the string, and the second is the
 height of the string (taking into account line feed characters,
-U+000A, that break lines). (Type: Array.&lt;Number&gt;)</p>
+U+000A, that break lines). (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.TextFont_textShape'></a></p>
 
@@ -199,7 +199,7 @@ than the right and bottom coordinates, respectively).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>str</code> (Type: String)<br>
+<li><code>str</code> (Type: string)<br>
 The text to draw. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
 <li><code>params</code> (Type: Object)<br>
 An object described in <a href="H3DU.TextFont.html#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (<a href="H3DU.Texture.html">H3DU.Texture</a>) to use with this font, or a single <a href="H3DU.Texture.html">H3DU.Texture</a> if only one texture page is used. If null or omitted, uses the default filenames for texture pages defined in this font. </ul></li>
@@ -274,6 +274,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -302,6 +303,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

@@ -70,7 +70,7 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
   var resolution = Math.ceil(curves.getLength() / flatness / 10);
   var curveSection = pathSection ? pathSection.getCurves(flatness) : null;
   new H3DU.SurfaceEval()
-    .vertex(H3DU.SurfaceEval.wrapEvaluator(new H3DU.CurveTube(curves, thickness, curveSection)))
+    .vertex(new H3DU.CurveTube(curves, thickness, curveSection))
     .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
       Math.ceil(2 * thickness / flatness));
   return mesh;

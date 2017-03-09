@@ -12,7 +12,7 @@
  * Creates an array of B-spline curves from the control points of a Hermite spline.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
- * @param {Array<Array<Number>>} curve An array of control points,
+ * @param {Array<Array<number>>} curve An array of control points,
  * each with the same number of values, that describe a Hermite spline.
  * Each pair of control points takes up two elements of the array and consists
  * of the coordinates of that point followed by the tangent vector (derivative) at that point.
@@ -51,12 +51,12 @@ H3DU.BSplineCurve.fromHermiteSpline = function(spline) {
  * Creates an array of B-spline curves from the control points of a cardinal spline.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
- * @param {Array<Array<Number>>} curve An array of control points,
+ * @param {Array<Array<number>>} curve An array of control points,
  * each with the same number of values, that describe a cardinal spline.
  * Each point, except the first and the last, will be tangent to the line that connects the
  * points adjacent to it. The spline starts at the second control point and ends
  * at the next-to-last control point. The array must have at least four control points.
- * @param {Number} [tension] A tension parameter ranging from 0 to 1. Closer to 1
+ * @param {number} [tension] A tension parameter ranging from 0 to 1. Closer to 1
  * means closer to a straight line. If null or omitted, this value is 0.5 (indicating what
  * is commonly called a <i>Catmull-Rom spline</i>).
  * @returns {H3DU.BSplineCurve} A array of cubic B-spline curves describing the

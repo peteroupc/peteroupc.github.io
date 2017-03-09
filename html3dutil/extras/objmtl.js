@@ -16,7 +16,7 @@
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/objmtl.js">&lt;/script></pre>
- * @class */
+ * @constructor */
 H3DU.ObjData = function() {
   "use strict";
   /** URL of the OBJ file. */
@@ -40,7 +40,6 @@ H3DU.ObjData._MtlData = function() {
  * Creates one or more 3D shapes from the data
  * in this OBJ file.
  * @returns {H3DU.ShapeGroup} Group of shapes.
- * @instance
  */
 H3DU.ObjData.prototype.toShape = function() {
   "use strict";
@@ -71,11 +70,10 @@ H3DU.ObjData.prototype._gatherTextureNames = function() {
  * Creates one or more {@link H3DU.Shape} objects from the named portion
  * of the data in this OBJ file. If a MTL file was also loaded, the
  * shape will have the corresponding material, if it uses one.
- * @param {String} name Name from the OBJ file of the portion
+ * @param {string} name Name from the OBJ file of the portion
  * of the model to use.
  * @returns {H3DU.ShapeGroup} Group of shapes. The group
  * will be empty if no shapes with the given name exist.
- * @instance
  */
 H3DU.ObjData.prototype.toShapeFromName = function(name) {
   "use strict";
@@ -225,7 +223,7 @@ H3DU.ObjData._MtlData._getMaterial = function(mtl) {
 };
 /**
  * Loads a material (MTL) file asynchronously.
- * @param {String} url The URL to load the material data file.
+ * @param {string} url The URL to load the material data file.
  * @returns {Promise} A promise that resolves when
  * the MTL file is loaded successfully,
  * and is rejected when an error occurs when loading the MTL file.
@@ -259,7 +257,7 @@ H3DU.ObjData.loadMtlFromUrl = function(url) {
  * Loads a WaveFront OBJ file (along with its associated MTL, or
  * material file, if available), along with the textures it uses,
  * asynchronously.
- * @param {String} url The URL to load.
+ * @param {string} url The URL to load.
  * @param {TextureLoader} textureLoader An object to load
  * textures with.
  * @returns {Promise} A promise that resolves when
@@ -287,7 +285,7 @@ H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
 /**
  * Loads a WaveFront OBJ file (along with its associated MTL, or
  * material file, if available) asynchronously.
- * @param {String} url The URL to load.
+ * @param {string} url The URL to load.
  * @returns {Promise} A promise that resolves when
  * the OBJ file is loaded successfully, whether or not its associated
  * MTL is also loaded successfully (the result is an H3DU.ObjData object),
@@ -705,7 +703,7 @@ H3DU.ObjData._loadObj = function(str) {
 /* exported ObjData */
 /**
  * Alias for the {@link H3DU.ObjData} class.
- * @class
+ * @constructor
  * @alias ObjData
  * @deprecated Use {@link H3DU.ObjData} instead.
  */

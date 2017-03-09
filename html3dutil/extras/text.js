@@ -45,7 +45,7 @@
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @memberof H3DU
  */
 H3DU.TextFont = function() {
@@ -97,14 +97,13 @@ H3DU.TextFont._toArray = function(str, minLength) {
 /**
  * Calculates the width and height of a text string when
  * drawn using this font.
- * @param {String} str The text string to measure. Line breaks
+ * @param {string} str The text string to measure. Line breaks
  * ("\n", "\r", "\r\n") are recognized by this method.
  * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
- * @returns {Array<Number>} An array of two numbers;
+ * @returns {Array<number>} An array of two numbers;
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
  * U+000A, that break lines).
- * @instance
  */
 H3DU.TextFont.prototype.measure = function(str, params) {
   "use strict";
@@ -262,7 +261,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * X axis pointing right and the Y axis pointing down (for example, an
  * orthographic projection where the left and top coordinates are less
  * than the right and bottom coordinates, respectively).
- * @param {String} str The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
+ * @param {string} str The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
  * by this method.
  * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
  * Can also contain the following keys:<ul>
@@ -277,7 +276,6 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * If null or omitted, uses the default filenames for texture pages defined in this font.
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
- * @instance
  */
 H3DU.TextFont.prototype.textShape = function(str, params) {
   "use strict";
@@ -373,7 +371,7 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
 /**
  * Creates an array of meshes containing the primitives
  * needed to draw text with this font.
- * @param {String} str The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized
+ * @param {string} str The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized
  * by this method.
  * @param {Object} params An object whose keys have
  * the possibilities given below, and whose values are those
@@ -396,7 +394,6 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
  * @returns {Array<Mesh>} An array of meshes representing the text.
  * There is one mesh for each texture page of the font. If none of the
  * text uses a given page, the corresponding mesh will be null.
- * @instance
  */
 H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
   "use strict";
@@ -785,7 +782,7 @@ H3DU.TextFont._loadTextFontInner = function(data) {
 /**
  * Loads a bitmap font definition from a file along with the textures
  * used by that font.
- * @param {String} fontFileName The URL of the font data file
+ * @param {string} fontFileName The URL of the font data file
  * to load. The following file extensions are read as the following formats:<ul>
  * <li>".xml": XML</li>
  * <li>".json": JSON</li>
@@ -833,7 +830,6 @@ H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- * @instance
  */
 H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
   "use strict";
@@ -849,7 +845,7 @@ H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
  * Loads a bitmap font definition from a file.
  * Note that this method only loads the font data and not the bitmaps
  * used to represent the font.
- * @param {String} fontFileName The URL of the font data file
+ * @param {string} fontFileName The URL of the font data file
  * to load. The following file extensions are read as the following formats:<ul>
  * <li>".xml": XML</li>
  * <li>".json": JSON</li>
@@ -977,7 +973,7 @@ H3DU.TextFont._textShader = function(msdf) {
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
- * @class
+ * @constructor
  * @memberof H3DU
  */
 H3DU.TextureAtlas = function() {
@@ -1006,7 +1002,6 @@ H3DU.TextureAtlas = function() {
  * <li><code>y</code> - Y coordinate of the sprite.
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
- * @instance
  */
 H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
   "use strict";
@@ -1259,7 +1254,6 @@ H3DU.TextureAtlas._loadText = function(data) {
  * {@link H3DU.getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
  * {@link H3DU.Texture} object.
- * @instance
  */
 H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
   "use strict";
@@ -1281,7 +1275,7 @@ H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
 /**
  * Loads a texture atlas definition from a file along with the textures
  * it uses.
- * @param {String} atlasFileName The URL of the texture atlas to load.
+ * @param {string} atlasFileName The URL of the texture atlas to load.
  * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
  * loading the textures.
  * @returns {Promise} A promise that is resolved
@@ -1319,7 +1313,7 @@ H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
  * Loads a texture atlas definition from a file.
  * Note that this method only loads the texture atlas data and not the bitmaps
  * used by the texture atlas.
- * @param {String} atlasFileName The URL of the texture atlas to load.
+ * @param {string} atlasFileName The URL of the texture atlas to load.
  * @returns {Promise<H3DU.TextureAtlas>} A promise that is resolved
  * when the texture atlas data is loaded successfully (the result will be
  * an H3DU.TextureAtlas object), and is rejected when an error occurs.

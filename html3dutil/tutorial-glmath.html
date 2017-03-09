@@ -20,9 +20,9 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 <h2>Vectors</h2>
 
 <p>A vector is a line segment pointing in a certain <em>direction</em> in space and
-having a certain <em>length</em>.  In addition to a direction, a vector can
-describe a position (by pointing to that position from
-a certain starting point), or a color.</p>
+having a certain <em>length</em> and an unspecified starting point.
+A particular vector can instead be treated as describing a position
+(by pointing to that position from a certain starting point), or a color.</p>
 
 <p>In <code>H3DU.Math</code>, vectors are stored in arrays of numbers (usually
 three or four numbers), and functions dealing with vectors begin
@@ -172,12 +172,15 @@ Here are examples of an axis of rotation.</p>
 </ul>
 
 <p>While the axis of rotation points toward the viewer, if the angle&#39;s value
-is positive (resp. negative) and the <a href="#Coordinate_Systems">coordinate system</a> is...</p>
+is positive and the <a href="#Coordinate_Systems">coordinate system</a> is...</p>
 
 <ul>
-<li>...right handed, then the angle runs counterclockwise (resp. clockwise).</li>
-<li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
+<li>...right handed, then the angle runs counterclockwise.</li>
+<li>...left handed, then the angle runs clockwise.</li>
 </ul>
+
+<p>While the axis of rotation points toward the viewer, if the angle&#39;s value
+is negative, then the angle runs in the opposite direction.</p>
 
 <p>Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
 describe the same axis of rotation.</p>
@@ -341,6 +344,13 @@ right-handed), if the X axis points in the thumb&#39;s
 direction and the Y axis points in the index finger&#39;s direction, the Z axis will
 point in the direction the other three fingers point.</p>
 
+<p>As used here, the Z axis is the <a href="H3DU.Math.html#H3DU.Math.vec3cross">cross product</a>
+of two perpendicular axes, namely the X axis and the Y axis, in that order.
+Which of the X, Y, or Z axes is the right, up, or forward axis is essentially
+arbitrary; for example, some conventions may have the Z axis, rather than Y,
+be the up axis.  Therefore, these three axes are defined here to avoid
+confusion.</p>
+
 <p><a id=Differences_in_Behavior></a></p>
 
 <h3>Differences in Behavior</h3>
@@ -350,7 +360,7 @@ point in the direction the other three fingers point.</p>
 <h4>Projection and view matrices</h4>
 
 <p>The difference between a left-handed and right-handed coordinate system
-lies in how 3D points are transformed, mainly due to the projection and view
+affects how 3D points are transformed, mainly in the projection and view
 matrices.</p>
 
 <p>The following methods return <strong>projection matrices</strong> for a right-handed coordinate system.
@@ -378,26 +388,33 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 <h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</h4>
 
 <p>While the <a href="#Axis_of_Rotation">axis of rotation</a> points toward the viewer, if the angle&#39;s value
-is positive (resp. negative) and the coordinate system is...</p>
+is positive and the <a href="#Coordinate_Systems">coordinate system</a> is...</p>
 
 <ul>
-<li>...right handed, then the angle runs counterclockwise (resp. clockwise).</li>
-<li>...left handed, then the angle runs clockwise (resp. counterclockwise).</li>
+<li>...right handed, then the angle runs counterclockwise.</li>
+<li>...left handed, then the angle runs clockwise.</li>
 </ul>
+
+<p>While the axis of rotation points toward the viewer, if the angle&#39;s value
+is negative, then the angle runs in the opposite direction.</p>
 
 <p><a id=Cross_product_vec3cross_and_normals></a></p>
 
 <h4>Cross product (<code>vec3cross</code>) and normals</h4>
 
+<p>Given a triangle formed by...</p>
+
 <ul>
-<li>Given a triangle formed by points A, B, and C, in that order, the <a href="a%20href=%22H3DU.Math.html#H3DU.Math.vec3cross%22%3EH3DU.Math.vec3cross%3C/a">cross product</a>
-of the vector (A minus C) with (B minus C), in that order, is a <em>normal</em> of that triangle (a vector that&#39;s perpendicular to the triangle&#39;s surface).</li>
-<li>By extension, given a triangle formed by point A, point B, and point (0,0,0), in that order, the cross product of A
-with B, in that order, is a normal of that triangle.</li>
+<li>points (A minus C), (B minus C), and C, in that order, or</li>
+<li>points A, B, and (0, 0, 0), in that order,</li>
 </ul>
 
-<p>In either case, while this particular normal points toward the viewer, the triangle&#39;s vertices
-run in a counterclockwise path for right-handed coordinate systems, or a clockwise path for left-handed systems. (In general, there are two possible choices for normals, which each
+<p>the <a href="H3DU.Math.html#H3DU.Math.vec3cross">cross product</a> of the first point with the second,
+in that order, is a <em>normal</em> of that triangle (a vector that&#39;s perpendicular to the triangle&#39;s surface).</p>
+
+<p>While this particular normal points toward the viewer, the triangle&#39;s vertices
+run in a counterclockwise path for right-handed coordinate systems, or a clockwise path
+for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)</p>
 
 <p><a id=Winding_and_face_classification></a></p>
@@ -419,13 +436,15 @@ front faces, call the <a href="H3DU.Scene3D.html#H3DU.Scene3D_frontFace"><code>f
 <pre><code>(X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
 </code></pre>
 
-<p>If the result is positive (resp. negative), and the window space X axis points right and the Y axis points...</p>
+<p>If the result is positive, and the window space X axis points right and the Y axis points...</p>
 
 <ul>
 <li>...up (which is the case in WebGL), then the triangle
-has counterclockwise (resp. clockwise) winding.</li>
-<li>...down, then the triangle has clockwise (resp. counterclockwise) winding.</li>
+has counterclockwise winding.</li>
+<li>...down, then the triangle has clockwise winding.</li>
 </ul>
+
+<p>If the result is negative, then the triangle has the opposite winding.</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
@@ -494,6 +513,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -522,6 +542,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

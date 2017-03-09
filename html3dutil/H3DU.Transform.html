@@ -76,7 +76,7 @@ multiplied in that order, otherwise.
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Transform_getPosition'></a></p>
 
@@ -87,7 +87,7 @@ of an object relative to its original position.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Transform_getQuaternion'></a></p>
 
@@ -97,7 +97,7 @@ of an object relative to its original position.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Transform_getScale'></a></p>
 
@@ -109,7 +109,7 @@ For each component, 1 means no scaling.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Transform_isIdentity'></a></p>
 
@@ -119,7 +119,7 @@ For each component, 1 means no scaling.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Boolean)</p>
+<p>Return value. (Type: boolean)</p>
 
 <p><a name='H3DU.Transform_movePosition'></a></p>
 
@@ -132,11 +132,11 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>
 Number to add to the X coordinate, If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Number to add to the Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: Number)<br>
+<li><code>z</code> (Type: number)<br>
 Number to add to the Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
@@ -161,13 +161,13 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angle</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>
 The desired angle to rotate in degrees. See <a href="H3DU.Transform.html#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a>.</li>
-<li><code>v</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>
 X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
-<li><code>vy</code> (Type: Number)<br>
+<li><code>vy</code> (Type: number)<br>
 Y-component of the point lying on the axis of rotation.</li>
-<li><code>vz</code> (Type: Number)<br>
+<li><code>vz</code> (Type: number)<br>
 Z-component of the point lying on the axis of rotation.</li>
 </ul>
 
@@ -189,7 +189,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>
 A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> or <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>.</li>
 </ul>
 
@@ -222,13 +222,13 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angle</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>
 The desired angle to rotate in degrees. See <a href="H3DU.Transform.html#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a>.</li>
-<li><code>v</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>
 X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
-<li><code>vy</code> (Type: Number)<br>
+<li><code>vy</code> (Type: number)<br>
 Y-component of the point lying on the axis of rotation.</li>
-<li><code>vz</code> (Type: Number)<br>
+<li><code>vz</code> (Type: number)<br>
 Z-component of the point lying on the axis of rotation.</li>
 </ul>
 
@@ -244,7 +244,7 @@ Z-component of the point lying on the axis of rotation.</li>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
+<p>This object. (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)</p>
 
 <p><a name='H3DU.Transform_resetTransform'></a></p>
 
@@ -269,7 +269,7 @@ accordingly to the matrix given.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>value</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>value</code> (Type: Array.&lt;number&gt;)<br>
 A 4x4 matrix. This method will copy the value of this parameter.</li>
 </ul>
 
@@ -291,13 +291,13 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angle</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>
 The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
-<li><code>v</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>
 X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
-<li><code>vy</code> (Type: Number)<br>
+<li><code>vy</code> (Type: number)<br>
 Y-component of the point lying on the axis of rotation.</li>
-<li><code>vz</code> (Type: Number)<br>
+<li><code>vz</code> (Type: number)<br>
 Z-component of the point lying on the axis of rotation.</li>
 </ul>
 
@@ -316,11 +316,11 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>
 The X coordinate. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: Number)<br>
+<li><code>z</code> (Type: number)<br>
 The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
@@ -339,7 +339,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>quat</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>
 A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> and <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>, among others.</li>
 </ul>
 
@@ -369,13 +369,13 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angle</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>
 The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
-<li><code>v</code> (Type: Array.&lt;Number&gt; | number)<br>
+<li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>
 X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
-<li><code>vy</code> (Type: Number)<br>
+<li><code>vy</code> (Type: number)<br>
 Y-component of the point lying on the axis of rotation.</li>
-<li><code>vz</code> (Type: Number)<br>
+<li><code>vz</code> (Type: number)<br>
 Z-component of the point lying on the axis of rotation.</li>
 </ul>
 
@@ -394,11 +394,11 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;Number&gt;)<br>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>
 Scaling factor for this transform&#39;s width. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the scaling factors for width, height, and depth, respectively, or a single number giving the scaling factor for all three dimensions.</li>
-<li><code>y</code> (Type: Number)<br>
+<li><code>y</code> (Type: number)<br>
 Scaling factor for this transform&#39;s height.</li>
-<li><code>z</code> (Type: Number)<br>
+<li><code>z</code> (Type: number)<br>
 Scaling factor for this transform&#39;s depth.</li>
 </ul>
 
@@ -471,6 +471,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -499,6 +500,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

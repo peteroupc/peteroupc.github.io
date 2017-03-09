@@ -8,14 +8,14 @@
 
 <p><a name='H3DU.CubeMap'></a></p>
 
-<h3>H3DU.CubeMap(name)</h3>
+<h3>H3DU.CubeMap(textures)</h3>
 
 <p>A cube map, or a set of six textures forming the sides of a cube.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: Array.&lt;(String|Texture|TextureInfo)&gt;)<br>
+<li><code>textures</code> (Type: Array.&lt;(String|Texture|TextureInfo)&gt;)<br>
 An array of six elements, each of which is a URL of the texture data or the texture object itself. However, this constructor will not load those images yet. The six texture are, in order, the texture seen when looking toward the positive X axis, the negative X axis, positive Y, negative Y, positive Z, and negative Z.</li>
 </ul>
 
@@ -37,7 +37,7 @@ An array of six elements, each of which is a URL of the texture data or the text
 <h4>Return Value</h4>
 
 <p>This texture&#39;s height in pixels.
-Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)</p>
+Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: number)</p>
 
 <p><a name='H3DU.CubeMap_getTexture'></a></p>
 
@@ -48,13 +48,14 @@ Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)<
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: Number)<br>
+<li><code>index</code> (Type: number)<br>
 Texture index to get.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>The texture with the given index. (Type: <a href="H3DU.Texture.html">H3DU.Texture</a>)</p>
+<p>The texture with the given index,
+or null if the index is out of range. (Type: <a href="H3DU.Texture.html">H3DU.Texture</a>)</p>
 
 <p><a name='H3DU.CubeMap_getWidth'></a></p>
 
@@ -65,7 +66,7 @@ Texture index to get.</li>
 <h4>Return Value</h4>
 
 <p>This texture&#39;s width in pixels.
-Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)</p>
+Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: number)</p>
 
 <p><a name='H3DU.CubeMap_setTexture'></a></p>
 
@@ -76,7 +77,7 @@ Will be 0 if the texture&#39;s image data wasn&#39;t loaded yet. (Type: Number)<
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: Number)<br>
+<li><code>index</code> (Type: number)<br>
 Texture index to set, from 0 through 5.</li>
 <li><code>texture</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a> | String)<br>
 An <a href="H3DU.Texture.html">H3DU.Texture</a> object, a texture information object, or a string with the URL of the texture data.</li>
@@ -151,6 +152,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -179,6 +181,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

@@ -21,7 +21,7 @@ contexts.</b></p>
 <ul>
 <li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a> | <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>
 A geometric mesh object. Cannot be null.</li>
-<li><code>context</code> (Type: WebGLRenderingContext | WebGL2RenderingContext | object)<br>
+<li><code>context</code> (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>
 A WebGL context to create a buffer from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context. (Note that this constructor uses a WebGL context rather than a shader program because buffer objects are not specific to shader programs.)</li>
 </ul>
 
@@ -44,7 +44,7 @@ and points) composed by all shapes in this mesh.</li>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Object)</p>
+<p>This method doesn&#39;t return a value. (Type: void)</p>
 
 <p><a name='H3DU.BufferedMesh_draw'></a></p>
 
@@ -65,7 +65,7 @@ A shader program object to get the IDs from for attributes named &quot;position&
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Object)</p>
+<p>This method doesn&#39;t return a value. (Type: void)</p>
 
 <p><a name='H3DU.BufferedMesh_getContext'></a></p>
 
@@ -88,7 +88,7 @@ and points) composed by all shapes in this mesh.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 
 <p><a name='H3DU.BufferedMesh_vertexCount'></a></p>
 
@@ -98,7 +98,7 @@ and points) composed by all shapes in this mesh.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -165,6 +165,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -193,6 +194,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

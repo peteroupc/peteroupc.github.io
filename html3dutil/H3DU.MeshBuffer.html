@@ -54,7 +54,7 @@ last three are the largest-valued X, Y, and Z coordinates.
 This calculation uses the attribute with the semantic POSITION
 and set index 0. If there is no such attribute,
 or no vertices are defined in this buffer, returns the array
-[Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;Number&gt;)</p>
+[Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.MeshBuffer_getPositions'></a></p>
 
@@ -69,7 +69,7 @@ arranged by primitive</p>
 each of which holds the vertices that make up that primitive.
 If this mesh holds triangles, each primitive will contain three
 vertices; if lines, two; and if points, one. Each vertex is a 3-element
-array containing that vertex&#39;s X, Y, and Z coordinates, in that order. (Type: Array.&lt;Array.&lt;Number&gt;&gt;)</p>
+array containing that vertex&#39;s X, Y, and Z coordinates, in that order. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
 
 <p><a name='H3DU.MeshBuffer_primitiveCount'></a></p>
 
@@ -80,7 +80,7 @@ and points) composed by all shapes in this mesh.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 
 <p><a name='H3DU.MeshBuffer_primitiveType'></a></p>
 
@@ -91,11 +91,11 @@ and points) composed by all shapes in this mesh.</p>
 <h4>Return Value</h4>
 
 <p>Either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
-<a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: Number)</p>
+<a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: number)</p>
 
 <p><a name='H3DU.MeshBuffer_setAttribute'></a></p>
 
-<h3>H3DU.MeshBuffer#setAttribute(semantic, semanticIndex, buffer, startIndex, countPerVertex, stride)</h3>
+<h3>H3DU.MeshBuffer#setAttribute(name, index, buffer, startIndex, countPerVertex, stride)</h3>
 
 <p>Adds information about a buffer attribute to this
 mesh buffer (or sets an
@@ -106,17 +106,17 @@ stored in a vertex buffer.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>semantic</code> (Type: Number | String)<br>
+<li><code>name</code> (Type: Number | string)<br>
 An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
-<li><code>semanticIndex</code> (Type: Number)<br>
-The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;semantic&quot; is a string.</li>
+<li><code>index</code> (Type: number)<br>
+The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
 <li><code>buffer</code> (Type: Float32Array | Array)<br>
 The buffer where the per-vertex data is stored.</li>
-<li><code>startIndex</code> (Type: Number)<br>
+<li><code>startIndex</code> (Type: number)<br>
 The index into the array (starting from 0) where the first per-vertex item starts.</li>
-<li><code>countPerVertex</code> (Type: Number)<br>
+<li><code>countPerVertex</code> (Type: number)<br>
 The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3.</li>
-<li><code>stride</code> (Type: Number)<br>
+<li><code>stride</code> (Type: number)<br>
 The number of elements from the start of one per-vertex item to the start of the next.</li>
 </ul>
 
@@ -136,7 +136,7 @@ semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</
 <ul>
 <li><code>indices</code> (Type: Uint16Array | Uint32Array | Uint8Array)<br>
 Array of vertex indices.</li>
-<li><code>byteSize</code> (Type: Number)<br>
+<li><code>byteSize</code> (Type: number)<br>
 Size, in bytes, of each index. Must be 1, 2, or 4.</li>
 </ul>
 
@@ -153,7 +153,7 @@ Size, in bytes, of each index. Must be 1, 2, or 4.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>primType</code> (Type: Number)<br>
+<li><code>primType</code> (Type: number)<br>
 The primitive type, either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>.</li>
 </ul>
 
@@ -169,7 +169,7 @@ The primitive type, either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mes
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -236,6 +236,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -264,6 +265,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>

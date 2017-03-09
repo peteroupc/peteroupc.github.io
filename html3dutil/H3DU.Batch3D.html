@@ -14,6 +14,8 @@
 3D objects which will be drawn to the screen, as well as the camera&#39;s projection, the camera&#39;s
 position, and light sources to illuminate the 3D scene.</p>
 
+<h4>Parameters</h4>
+
 <h3>Methods</h3>
 
 <ul>
@@ -107,7 +109,7 @@ Contains information about the shader to use when rendering the contents of the 
 <h4>Return Value</h4>
 
 <p>A 4x4 matrix used as the current
-projection matrix. (Type: Array.&lt;Number&gt;)</p>
+projection matrix. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Batch3D_getProjectionViewMatrix'></a></p>
 
@@ -119,7 +121,7 @@ view matrix for this batch of shapes.</p>
 <h4>Return Value</h4>
 
 <p>A 4x4 matrix used as the current
-projection-view matrix. (Type: Array.&lt;Number&gt;)</p>
+projection-view matrix. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Batch3D_getShape'></a></p>
 
@@ -131,7 +133,7 @@ in this batch at the given index.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: Number)<br>
+<li><code>index</code> (Type: number)<br>
 Integer index, starting from 0, of the shape or shape group to set.</li>
 </ul>
 
@@ -148,7 +150,7 @@ in this batch at the given index, or null if none is found there. (Type: <a href
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Array.&lt;Number&gt;)</p>
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Batch3D_ortho2DAspect'></a></p>
 
@@ -167,13 +169,13 @@ or squishing it.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>l</code> (Type: Number)<br>
+<li><code>l</code> (Type: number)<br>
 Leftmost coordinate of the view rectangle.</li>
-<li><code>r</code> (Type: Number)<br>
+<li><code>r</code> (Type: number)<br>
 Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
-<li><code>b</code> (Type: Number)<br>
+<li><code>b</code> (Type: number)<br>
 Bottommost coordinate of the view rectangle.</li>
-<li><code>t</code> (Type: Number)<br>
+<li><code>t</code> (Type: number)<br>
 Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
 </ul>
 
@@ -199,17 +201,17 @@ or squishing it.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>l</code> (Type: Number)<br>
+<li><code>l</code> (Type: number)<br>
 Leftmost coordinate of the view rectangle.</li>
-<li><code>r</code> (Type: Number)<br>
+<li><code>r</code> (Type: number)<br>
 Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
-<li><code>b</code> (Type: Number)<br>
+<li><code>b</code> (Type: number)<br>
 Bottommost coordinate of the view rectangle.</li>
-<li><code>t</code> (Type: Number)<br>
+<li><code>t</code> (Type: number)<br>
 Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
-<li><code>e</code> (Type: Number)<br>
+<li><code>e</code> (Type: number)<br>
 Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
-<li><code>f</code> (Type: Number)<br>
+<li><code>f</code> (Type: number)<br>
 Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.</li>
 </ul>
 
@@ -230,11 +232,11 @@ see <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective
 <h4>Parameters</h4>
 
 <ul>
-<li><code>fov</code> (Type: Number)<br>
+<li><code>fov</code> (Type: number)<br>
 Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
-<li><code>near</code> (Type: Number)<br>
+<li><code>near</code> (Type: number)<br>
 The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
-<li><code>far</code> (Type: Number)<br>
+<li><code>far</code> (Type: number)<br>
 The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
 </ul>
 
@@ -251,7 +253,7 @@ and points) composed by all shapes in this batch of shapes.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 
 <p><a name='H3DU.Batch3D_removeShape'></a></p>
 
@@ -281,11 +283,11 @@ This method takes a camera&#39;s position (<code>eye</code>), and the point the 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>eye</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>eye</code> (Type: Array.&lt;number&gt;)<br>
 A 3-element vector specifying the camera position in world space.</li>
-<li><code>center</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+<li><code>center</code> (Type: Array.&lt;number&gt;) (optional)<br>
 A 3-element vector specifying the point in world space that the camera is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).</li>
-<li><code>up</code> (Type: Array.&lt;Number&gt;) (optional)<br>
+<li><code>up</code> (Type: Array.&lt;number&gt;) (optional)<br>
 A 3-element vector specifying the direction from the center of the camera to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the camera is held upright. This vector must not point in the same or opposite direction as the camera&#39;s view direction. (For best results, rotate the vector (0, 1, 0) so it points perpendicular to the camera&#39;s view direction.)</li>
 </ul>
 
@@ -302,7 +304,7 @@ A 3-element vector specifying the direction from the center of the camera to its
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>
 A 16-element matrix (4x4).</li>
 </ul>
 
@@ -319,7 +321,7 @@ A 16-element matrix (4x4).</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: Number)<br>
+<li><code>index</code> (Type: number)<br>
 Integer index, starting from 0, to set the shape or shape group at.</li>
 <li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>
 Shape object to set at the given index.</li>
@@ -327,7 +329,7 @@ Shape object to set at the given index.</li>
 
 <h4>Return Value</h4>
 
-<p>{H3DU.Batch</p>
+<p>This object. (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)</p>
 
 <p><a name='H3DU.Batch3D_setViewMatrix'></a></p>
 
@@ -338,7 +340,7 @@ Shape object to set at the given index.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mat</code> (Type: Array.&lt;Number&gt;)<br>
+<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>
 A 4x4 matrix to use as the view matrix.</li>
 </ul>
 
@@ -355,7 +357,7 @@ are direct children of this batch.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 
 <p><a name='H3DU.Batch3D_vertexCount'></a></p>
 
@@ -366,7 +368,7 @@ all shapes in this batch of shapes.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: Number)</p>
+<p>Return value. (Type: number)</p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -433,6 +435,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
@@ -461,6 +464,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="tutorial-overview.html">Library Overview</a></li>
 <li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
 <li><a href="tutorial-shapes.html">Creating Shapes</a></li>
+<li><a href="tutorial-subclass.html">Subclassing</a></li>
 <li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
 <li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
