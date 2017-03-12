@@ -13,19 +13,15 @@
 <p>Specifies parameters for light sources.</p>
 
 <p>NOTE: The default shader program assumes that all colors specified in this object are in
-the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
+the <a href="H3DU.Math.html#H3DU.Math.html">sRGB color space</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>params</code> (Type: Object | Array.&lt;number&gt;) (optional)<br>
-An object as described in &quot;setParams&quot;. <i>Using this parameter as described in the &quot;position&quot; property is deprecated since version 2.0.</i></li>
-<li><code>ambient</code> (Type: Array.&lt;number&gt;) (optional)<br>
-See &quot;ambient&quot; property. <i>This parameter is deprecated.</i></li>
-<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>
-See &quot;diffuse&quot; property. <i>This parameter is deprecated.</i></li>
-<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>
-See &quot;specular&quot; property. <i>This parameter is deprecated.</i></li>
+<li><code>params</code> (Type: Object | Array.&lt;number&gt;) (optional)<br>An object as described in &quot;setParams&quot;. <i>Using this parameter as described in the &quot;position&quot; property is deprecated since version 2.0.</i></li>
+<li><code>ambient</code> (Type: Array.&lt;number&gt;) (optional)<br>See &quot;ambient&quot; property. <i>This parameter is deprecated.</i></li>
+<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>See &quot;diffuse&quot; property. <i>This parameter is deprecated.</i></li>
+<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>See &quot;specular&quot; property. <i>This parameter is deprecated.</i></li>
 </ul>
 
 <h3>Members</h3>
@@ -50,7 +46,7 @@ and blue components respectively.</li>
 <li><a href="#H3DU.LightSource_setParams">setParams</a><br>Sets parameters for this material object.</li>
 </ul>
 
-<p><a id='H3DU.LightSource_ambient'></a></p>
+<p><a name='H3DU.LightSource_ambient'></a></p>
 
 <h3>H3DU.LightSource#ambient</h3>
 
@@ -63,19 +59,19 @@ The default is (0,0,0,1), or black.</p>
 
 <p>Default Value: <code>&quot;[0,0,0,1]&quot;</code></p>
 
-<p><a id='H3DU.LightSource_diffuse'></a></p>
+<p><a name='H3DU.LightSource_diffuse'></a></p>
 
 <h3>H3DU.LightSource#diffuse</h3>
 
 <p>A 4-element vector giving an additional color to multiply with the diffuse
 or albedo color (base color) of each object, in the red, green,
-and blue components respectively. See also <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>.
+and blue components respectively. See also <a href="H3DU.PbrMaterial.html#H3DU.html">H3DU.PbrMaterial#albedo</a>.
 Each component ranges from 0 to 1.
 The default is (1,1,1,1), or white.</p>
 
 <p>Default Value: <code>&quot;[1,1,1,1]&quot;</code></p>
 
-<p><a id='H3DU.LightSource_position'></a></p>
+<p><a name='H3DU.LightSource_position'></a></p>
 
 <h3>H3DU.LightSource#position</h3>
 
@@ -86,7 +82,7 @@ this vector&#39;s direction from the origin (0, 0, 0).
 
 <p>Default Value: <code>&quot;[0,0,1,0]&quot;</code></p>
 
-<p><a id='H3DU.LightSource_radius'></a></p>
+<p><a name='H3DU.LightSource_radius'></a></p>
 
 <h3>H3DU.LightSource#radius</h3>
 
@@ -95,7 +91,7 @@ with distance.</p>
 
 <p>Default Value: <code>0</code></p>
 
-<p><a id='H3DU.LightSource_specular'></a></p>
+<p><a name='H3DU.LightSource_specular'></a></p>
 
 <h3>H3DU.LightSource#specular</h3>
 
@@ -121,13 +117,14 @@ for <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>.</i></p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>params</code> (Type: Object)<br>
-An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>position</code> - Light position. (See <a href="H3DU.LightSource.html#H3DU.LightSource_position">H3DU.LightSource#position</a>.) <li><code>ambient</code> - Not used in the default shader program. <li><code>diffuse</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion color of each object (which is also called &quot;albedo&quot;). The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise. <li><code>specular</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise. <li><code>radius</code> - Radius of the light source. If 0, the light&#39;s intensity doesn&#39;t change with distance. </ul> If a value is null or undefined, it is ignored.</li>
+<li><code>params</code> (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>position</code> - Light position. (See <a href="H3DU.LightSource.html#H3DU.html">H3DU.LightSource#position</a>.) <li><code>ambient</code> - Not used in the default shader program. <li><code>diffuse</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion color of each object (which is also called &quot;albedo&quot;). The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise. <li><code>specular</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise. <li><code>radius</code> - Radius of the light source. If 0, the light&#39;s intensity doesn&#39;t change with distance. </ul> If a value is null or undefined, it is ignored.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.LightSource.html">H3DU.LightSource</a>)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -213,19 +210,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

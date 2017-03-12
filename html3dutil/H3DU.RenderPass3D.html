@@ -16,10 +16,8 @@ rendering that batch.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>
-The batch to render using the options described by this object.</li>
-<li><code>parameters</code> (Type: Object) (optional)<br>
-An object whose keys have the possibilities given in H3DU.RenderParams#setParams, and whose values are those allowed for each key.</li>
+<li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>The batch to render using the options described by this object.</li>
+<li><code>parameters</code> (Type: Object) (optional)<br>An object whose keys have the possibilities given in H3DU.RenderParams#setParams, and whose values are those allowed for each key.</li>
 </ul>
 
 <h3>Members</h3>
@@ -41,7 +39,7 @@ of the scene rendering it.</li>
 <li><a href="#H3DU.RenderPass3D_setParams">setParams</a><br>Sets parameters for this render pass object.</li>
 </ul>
 
-<p><a id='H3DU.RenderPass3D_batch'></a></p>
+<p><a name='H3DU.RenderPass3D_batch'></a></p>
 
 <h3>H3DU.RenderPass3D#batch</h3>
 
@@ -49,7 +47,7 @@ of the scene rendering it.</li>
 
 <p>Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a></p>
 
-<p><a id='H3DU.RenderPass3D_clearColor'></a></p>
+<p><a name='H3DU.RenderPass3D_clearColor'></a></p>
 
 <h3>H3DU.RenderPass3D#clearColor</h3>
 
@@ -57,7 +55,7 @@ of the scene rendering it.</li>
 
 <p>Default Value: <code>true</code></p>
 
-<p><a id='H3DU.RenderPass3D_clearDepth'></a></p>
+<p><a name='H3DU.RenderPass3D_clearDepth'></a></p>
 
 <h3>H3DU.RenderPass3D#clearDepth</h3>
 
@@ -65,7 +63,7 @@ of the scene rendering it.</li>
 
 <p>Default Value: <code>true</code></p>
 
-<p><a id='H3DU.RenderPass3D_clearStencil'></a></p>
+<p><a name='H3DU.RenderPass3D_clearStencil'></a></p>
 
 <h3>H3DU.RenderPass3D#clearStencil</h3>
 
@@ -73,7 +71,7 @@ of the scene rendering it.</li>
 
 <p>Default Value: <code>true</code></p>
 
-<p><a id='H3DU.RenderPass3D_frameBuffer'></a></p>
+<p><a name='H3DU.RenderPass3D_frameBuffer'></a></p>
 
 <h3>H3DU.RenderPass3D#frameBuffer</h3>
 
@@ -83,7 +81,7 @@ of the scene rendering it.</li>
 
 <p>Default Value: <code>null</code></p>
 
-<p><a id='H3DU.RenderPass3D_shader'></a></p>
+<p><a name='H3DU.RenderPass3D_shader'></a></p>
 
 <h3>H3DU.RenderPass3D#shader</h3>
 
@@ -93,7 +91,7 @@ of the scene rendering it.</li>
 
 <p>Default Value: <code>null</code></p>
 
-<p><a id='H3DU.RenderPass3D_useFrameBufferSize'></a></p>
+<p><a name='H3DU.RenderPass3D_useFrameBufferSize'></a></p>
 
 <h3>H3DU.RenderPass3D#useFrameBufferSize</h3>
 
@@ -113,13 +111,14 @@ of the scene rendering it.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>parameters</code> (Type: Object)<br>
-An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>subScene</code> - The batch to render. An <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> object. <li><code>clearColor</code> - Whether to clear the color buffer before rendering the batch. Either true or false. <li><code>clearDepth</code> - Whether to clear the depth buffer before rendering the batch. Either true or false. <li><code>clearStencil</code> - Whether to clear the stencil buffer before rendering the batch. Either true or false. <li><code>frameBuffer</code> - Framebuffer to render to. An <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a> object. <li><code>shader</code> - Shader to use. An <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a> object. <li><code>useFrameBufferSize</code> - Use the dimensions of the given framebuffer rather than those of the scene rendering it. </ul> Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.</li>
+<li><code>parameters</code> (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>subScene</code> - The batch to render. An <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> object. <li><code>clearColor</code> - Whether to clear the color buffer before rendering the batch. Either true or false. <li><code>clearDepth</code> - Whether to clear the depth buffer before rendering the batch. Either true or false. <li><code>clearStencil</code> - Whether to clear the stencil buffer before rendering the batch. Either true or false. <li><code>frameBuffer</code> - Framebuffer to render to. An <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a> object. <li><code>shader</code> - Shader to use. An <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a> object. <li><code>useFrameBufferSize</code> - Use the dimensions of the given framebuffer rather than those of the scene rendering it. </ul> Any or all of these keys can exist in the parameters object. If a value is undefined, it is ignored.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a>)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -205,19 +204,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

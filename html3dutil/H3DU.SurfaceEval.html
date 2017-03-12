@@ -32,20 +32,19 @@ normals, rendering this method unnecessary. You should use the &quot;vertex&quot
 method, specifying an object that implements a method named
 &quot;gradient&quot;.</b></li>
 <li><a href="#H3DU.SurfaceEval_texCoord">texCoord</a><br>Specifies a parametric surface function for generating texture coordinates.</li>
-<li><p><a href="#H3DU.SurfaceEval_vertex">vertex</a><br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.</p>
+<li><a href="#H3DU.SurfaceEval_vertex">vertex</a><br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.</li>
+</ul>
 
 <p><a name='H3DU.SurfaceEval_color'></a></p>
 
-<h3>H3DU.SurfaceEval#color(evaluator)</h3></li>
-</ul>
+<h3>H3DU.SurfaceEval#color(evaluator)</h3>
 
 <p>Specifies a parametric surface function for generating color values.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a method named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 3-element array.</li>
+<li><code>evaluator</code> (Type: Object)<br>An object that must contain a method named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 3-element array.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -62,12 +61,9 @@ in a parametric surface.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
-H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
-<li><code>u</code> (Type: number)<br>
-U coordinate of the surface to evaluate.</li>
-<li><code>v</code> (Type: number)<br>
-V coordinate of the surface to evaluate.</li>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
+<li><code>u</code> (Type: number)<br>U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: number)<br>V coordinate of the surface to evaluate.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -84,22 +80,14 @@ surface.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
-H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
-<li><code>mode</code> (Type: number) (optional)<br>
-If this value is H3DU.Mesh.TRIANGLES, or is null or omitted, generates a series of triangles defining the surface. If this value is H3DU.Mesh.LINES, generates a series of lines defining the surface. If this value is H3DU.Mesh.POINTS, generates a series of points along the surface. For any other value, this method has no effect.</li>
-<li><code>un</code> (Type: number) (optional)<br>
-Number of subdivisions along the U axis. Default is 24.</li>
-<li><code>vn</code> (Type: number) (optional)<br>
-Number of subdivisions along the V axis. Default is 24.</li>
-<li><code>u1</code> (Type: number) (optional)<br>
-Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.</li>
-<li><code>u2</code> (Type: number) (optional)<br>
-Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 1 if not given.</li>
-<li><code>v1</code> (Type: number) (optional)<br>
-Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.</li>
-<li><code>v2</code> (Type: number) (optional)<br>
-Ending V coordinate of the surface to evaluate. Default is the ending V coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 1 if not given.</li>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
+<li><code>mode</code> (Type: number) (optional)<br>If this value is H3DU.Mesh.TRIANGLES, or is null or omitted, generates a series of triangles defining the surface. If this value is H3DU.Mesh.LINES, generates a series of lines defining the surface. If this value is H3DU.Mesh.POINTS, generates a series of points along the surface. For any other value, this method has no effect.</li>
+<li><code>un</code> (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24.</li>
+<li><code>vn</code> (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24.</li>
+<li><code>u1</code> (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.html">surface evaluator object</a>, or 0 if not given.</li>
+<li><code>u2</code> (Type: number) (optional)<br>Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.html">surface evaluator object</a>, or 1 if not given.</li>
+<li><code>v1</code> (Type: number) (optional)<br>Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.html">surface evaluator object</a>, or 0 if not given.</li>
+<li><code>v2</code> (Type: number) (optional)<br>Ending V coordinate of the surface to evaluate. Default is the ending V coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.html">surface evaluator object</a>, or 1 if not given.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -118,8 +106,7 @@ that implements a method named &quot;gradient&quot;.</b></p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a method named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 3-element array.</li>
+<li><code>evaluator</code> (Type: Object)<br>An object that must contain a method named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 3-element array.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -143,8 +130,7 @@ By default, normals won&#39;t be generated automatically.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>value</code> (Type: Boolean)<br>
-Either true or false. True means normals will automatically be generated; false means they won&#39;t.</li>
+<li><code>value</code> (Type: Boolean)<br>Either true or false. True means normals will automatically be generated; false means they won&#39;t.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -160,8 +146,7 @@ Either true or false. True means normals will automatically be generated; false 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a method named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 2-element array.</li>
+<li><code>evaluator</code> (Type: Object)<br>An object that must contain a method named <code>evaluate</code> that takes a U coordinate and a V coordinate and returns a 2-element array.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -188,8 +173,7 @@ texture coordinates.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: <a href="H3DU.Surface.html">H3DU.Surface</a> | Object)<br>
-An object described in <a href="H3DU.Surface.html">H3DU.Surface</a>. Can be null, in which case, disables generating vertex positions.</li>
+<li><code>evaluator</code> (Type: <a href="H3DU.Surface.html">H3DU.Surface</a> | Object)<br>An object described in <a href="H3DU.Surface.html">H3DU.Surface</a>. Can be null, in which case, disables generating vertex positions.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -229,6 +213,8 @@ Math.sin(u)*-Math.sin(v)*Math.sin(u),
 0];
 }})
 </code></pre>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -314,19 +300,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

@@ -44,12 +44,12 @@ the last known time, where a frame&#39;s length is 1/60 of a second.</li>
 and queue requests to call that function once per frame,
 using <code>window.requestAnimationFrame</code>
 or a &quot;polyfill&quot; method.</li>
-<li><p><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</p>
+<li><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
+</ul>
 
 <p><a name='H3DU.createCanvasElement'></a></p>
 
-<h3>(static) H3DU.createCanvasElement(parent, width, height)</h3></li>
-</ul>
+<h3>(static) H3DU.createCanvasElement(parent, width, height)</h3>
 
 <p>Creates an HTML canvas element, optionally appending
 it to an existing HTML element.</p>
@@ -57,12 +57,9 @@ it to an existing HTML element.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>parent</code> (Type: HTMLElement | null)<br>
-If non-null, the parent element of the new HTML canvas element. The element will be appended as a child of this parent.</li>
-<li><code>width</code> (Type: number | null)<br>
-Width of the new canvas element, or if null, the width a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up. This parameter can&#39;t be a negative number.</li>
-<li><code>height</code> (Type: number | null)<br>
-Height of the new canvas element, or if null, the height a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up. This parameter can&#39;t be a negative number.</li>
+<li><code>parent</code> (Type: HTMLElement | null)<br>If non-null, the parent element of the new HTML canvas element. The element will be appended as a child of this parent.</li>
+<li><code>width</code> (Type: number | null)<br>Width of the new canvas element, or if null, the width a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up. This parameter can&#39;t be a negative number.</li>
+<li><code>height</code> (Type: number | null)<br>Height of the new canvas element, or if null, the height a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up. This parameter can&#39;t be a negative number.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -78,10 +75,8 @@ Height of the new canvas element, or if null, the height a <code>canvas</code> e
 <h4>Parameters</h4>
 
 <ul>
-<li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>
-An HTML canvas element.</li>
-<li><code>err</code> (Type: function)<br>
-A function to call if an error occurs in creating the context. The function takes one parameter consisting of a human- readable error message. If &quot;err&quot; is null, window.alert() will be used instead.</li>
+<li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>An HTML canvas element.</li>
+<li><code>err</code> (Type: function)<br>A function to call if an error occurs in creating the context. The function takes one parameter consisting of a human- readable error message. If &quot;err&quot; is null, window.alert() will be used instead.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -100,8 +95,7 @@ falling back to a 2D context if that fails.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>
-An HTML canvas element.</li>
+<li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>An HTML canvas element.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -121,12 +115,9 @@ its work.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>
-an array containing promise objects</li>
-<li><code>progressResolve</code> (Type: function) (optional)<br>
-A function called as each individual promise is resolved.</li>
-<li><code>progressReject</code> (Type: function) (optional)<br>
-A function called as each individual promise is rejected.</li>
+<li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>an array containing promise objects</li>
+<li><code>progressResolve</code> (Type: function) (optional)<br>A function called as each individual promise is resolved.</li>
+<li><code>progressReject</code> (Type: function) (optional)<br>A function called as each individual promise is rejected.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -154,12 +145,9 @@ its work.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>
-an array containing promise objects</li>
-<li><code>progressResolve</code> (Type: function) (optional)<br>
-a function called as each individual promise is resolved; optional</li>
-<li><code>progressReject</code> (Type: function) (optional)<br>
-a function called as each individual promise is rejected; optional</li>
+<li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>an array containing promise objects</li>
+<li><code>progressResolve</code> (Type: function) (optional)<br>a function called as each individual promise is resolved; optional</li>
+<li><code>progressReject</code> (Type: function) (optional)<br>a function called as each individual promise is rejected; optional</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -169,7 +157,7 @@ all of the promises are each resolved; the result will
 be an array of results from those promises,
 in the order in which those promises were listed.
 Will be rejected if any of the promises is rejected; the result
-will be an object as specified in <a href="H3DU.html#H3DU.getPromiseResults">H3DU.getPromiseResults</a>.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
+will be an object as specified in <a href="H3DU.html#H3DU.html">H3DU.getPromiseResults</a>.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
 
 <p><a name='H3DU.getTimePosition'></a></p>
 
@@ -183,12 +171,9 @@ This method may be called any number of times each frame.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>timer</code> (Type: Object)<br>
-An object that will hold two properties:<ul> <li>&quot;time&quot; - initial time value, in milliseconds. <li>&quot;lastTime&quot; - last known time value, in milliseconds. Will be set to the value given in &quot;timeInMs&quot; before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.</li>
-<li><code>timeInMs</code> (Type: number)<br>
-A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.</li>
-<li><code>intervalInMs</code> (Type: number)<br>
-The length of the interval (animation cycle), in milliseconds.</li>
+<li><code>timer</code> (Type: Object)<br>An object that will hold two properties:<ul> <li>&quot;time&quot; - initial time value, in milliseconds. <li>&quot;lastTime&quot; - last known time value, in milliseconds. Will be set to the value given in &quot;timeInMs&quot; before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.</li>
+<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.</li>
+<li><code>intervalInMs</code> (Type: number)<br>The length of the interval (animation cycle), in milliseconds.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -219,8 +204,7 @@ value in milliseconds, such as the parameter of a
 <h4>Parameters</h4>
 
 <ul>
-<li><code>context</code> (Type: Object)<br>
-The object to check.</li>
+<li><code>context</code> (Type: Object)<br>The object to check.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -236,10 +220,8 @@ The object to check.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>url</code> (Type: string)<br>
-URL of the file to load.</li>
-<li><code>responseType</code> (Type: string) (optional)<br>
-Expected data type of the file. Can be &quot;json&quot;, &quot;xml&quot;, &quot;text&quot;, or &quot;arraybuffer&quot;. If null or omitted, the default is &quot;text&quot;.</li>
+<li><code>url</code> (Type: string)<br>URL of the file to load.</li>
+<li><code>responseType</code> (Type: string) (optional)<br>Expected data type of the file. Can be &quot;json&quot;, &quot;xml&quot;, &quot;text&quot;, or &quot;arraybuffer&quot;. If null or omitted, the default is &quot;text&quot;.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -264,11 +246,21 @@ from JSON.
 <p>Loads a 3D scene stored in glTF format, together with the buffers and
 shaders it uses.</p>
 
+<p>This method is considered a supplementary method to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this class, you must include the script &quot;extras/gltf.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/gltf.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
 <h4>Parameters</h4>
 
 <ul>
-<li><code>url</code> (Type: string)<br>
-URL of the glTF file to load.</li>
+<li><code>url</code> (Type: string)<br>URL of the glTF file to load.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -307,8 +299,7 @@ the HTML 3D Library. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>url</code> (Type: string)<br>
-The URL to load.</li>
+<li><code>url</code> (Type: string)<br>The URL to load.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -328,10 +319,8 @@ This method should be called only once each frame.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>timer</code> (Type: Object)<br>
-An object described in <a href="H3DU.html#H3DU.getTimePosition">H3DU.getTimePosition</a>.</li>
-<li><code>timeInMs</code> (Type: number)<br>
-A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</li>
+<li><code>timer</code> (Type: Object)<br>An object described in <a href="H3DU.html#H3DU.html">H3DU.getTimePosition</a>.</li>
+<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -353,8 +342,7 @@ or a &quot;polyfill&quot; method.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>func</code> (Type: function)<br>
-The function to call. The function takes one parameter, &quot;time&quot;, which is the number of milliseconds since the page was loaded.</li>
+<li><code>func</code> (Type: function)<br>The function to call. The function takes one parameter, &quot;time&quot;, which is the number of milliseconds since the page was loaded.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -408,14 +396,10 @@ and so on, including the newly added <code>rebeccapurple</code>.
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
-One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.</li>
-<li><code>g</code> (Type: number)<br>
-Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number)<br>
-Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: number) (optional)<br>
-Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.</li>
+<li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -424,6 +408,8 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 invalid, returns [0,0,0,0], or transparent black. Numbers less
 than 0 are clamped to 0, and numbers greater than 1 are
 clamped to 1. (Type: Array.&lt;number&gt;)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -509,19 +495,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

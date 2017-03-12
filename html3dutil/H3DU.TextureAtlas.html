@@ -20,7 +20,7 @@ texture atlas can specify where those portions are found.</p>
 <p>This implementation supports the &quot;.atlas&quot; format.</p>
 
 <p>NOTE: The constructor should not be called directly by applications.
-Use the <a href="H3DU.TextureAtlas.html#H3DU.TextureAtlas.load">H3DU.TextureAtlas.load</a> method to get an H3DU.TextureAtlas object.</p>
+Use the <a href="H3DU.TextureAtlas.html#H3DU.TextureAtlas.html">H3DU.TextureAtlas.load</a> method to get an H3DU.TextureAtlas object.</p>
 
 <p>This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -40,12 +40,12 @@ the HTML 3D Library. Example:</p>
 <li><a href="#H3DU.TextureAtlas_loadTextures">loadTextures</a><br>Loads the texture files used by this texture atlas.</li>
 <li><a href="#H3DU.TextureAtlas.loadWithTextures">loadWithTextures</a><br>Loads a texture atlas definition from a file along with the textures
 it uses.</li>
-<li><p><a href="#H3DU.TextureAtlas_makeSprites">makeSprites</a><br>Makes a shape group used to display one or more sprites.</p>
+<li><a href="#H3DU.TextureAtlas_makeSprites">makeSprites</a><br>Makes a shape group used to display one or more sprites.</li>
+</ul>
 
 <p><a name='H3DU.TextureAtlas.load'></a></p>
 
-<h3>(static) H3DU.TextureAtlas.load(atlasFileName)</h3></li>
-</ul>
+<h3>(static) H3DU.TextureAtlas.load(atlasFileName)</h3>
 
 <p>Loads a texture atlas definition from a file.
 Note that this method only loads the texture atlas data and not the bitmaps
@@ -54,8 +54,7 @@ used by the texture atlas.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>atlasFileName</code> (Type: string)<br>
-The URL of the texture atlas to load.</li>
+<li><code>atlasFileName</code> (Type: string)<br>The URL of the texture atlas to load.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -73,14 +72,13 @@ an H3DU.TextureAtlas object), and is rejected when an error occurs. (Type: <a hr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>textureLoader</code> (Type: <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>)<br>
-Texture loader object to use when loading the textures.</li>
+<li><code>textureLoader</code> (Type: <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>)<br>Texture loader object to use when loading the textures.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>A promise as described in
-<a href="H3DU.html#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
+<a href="H3DU.html#H3DU.html">H3DU.getPromiseResultsAll</a>. If the promise
 resolves, each item in the resulting array will be a loaded
 <a href="H3DU.Texture.html">H3DU.Texture</a> object. (Type: <a href="Promise.html">Promise</a>.&lt;Array.&lt;<a href="H3DU.Texture.html">H3DU.Texture</a>&gt;&gt;)</p>
 
@@ -94,10 +92,8 @@ it uses.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>atlasFileName</code> (Type: string)<br>
-The URL of the texture atlas to load.</li>
-<li><code>textureLoader</code> (Type: <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>)<br>
-Texture loader object to use when loading the textures.</li>
+<li><code>atlasFileName</code> (Type: string)<br>The URL of the texture atlas to load.</li>
+<li><code>textureLoader</code> (Type: <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a>)<br>Texture loader object to use when loading the textures.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -128,13 +124,14 @@ should be scaled so that one unit equals one pixel.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>sprites</code> (Type: Array.&lt;Object&gt;)<br>
-An array of objects whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>name</code> - Name of the sprite, as listed in this texture atlas. <li><code>index</code> - If a sprite has multiple versions, use this index parameter to distinguish them. Index can&#39;t be less than 0. If a sprite doesn&#39;t have multiple versions, this value is not required. <li><code>x</code> - X coordinate of the sprite. <li><code>y</code> - Y coordinate of the sprite. </ul></li>
+<li><code>sprites</code> (Type: Array.&lt;Object&gt;)<br>An array of objects whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>name</code> - Name of the sprite, as listed in this texture atlas. <li><code>index</code> - If a sprite has multiple versions, use this index parameter to distinguish them. Index can&#39;t be less than 0. If a sprite doesn&#39;t have multiple versions, this value is not required. <li><code>x</code> - X coordinate of the sprite. <li><code>y</code> - Y coordinate of the sprite. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>The generated group of shapes. (Type: <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -220,19 +217,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

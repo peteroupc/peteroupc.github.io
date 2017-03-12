@@ -31,16 +31,11 @@ the HTML 3D Library. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>
-A 3D batch to associate with this camera object. <i>Using a <a href="H3DU.Scene3D.html">H3DU.Scene3D</a> here is deprecated.</i></li>
-<li><code>fov</code> (Type: number)<br>
-Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</li>
-<li><code>nearZ</code> (Type: number)<br>
-The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. This should be slightly greater than 0.</li>
-<li><code>farZ</code> (Type: number)<br>
-The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</li>
-<li><code>canvas</code> (Type: HTMLCanvasElement) (optional)<br>
-A canvas to associate with this camera object. <i>This argument is deprecated.</i></li>
+<li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>A 3D batch to associate with this camera object. <i>Using a <a href="H3DU.Scene3D.html">H3DU.Scene3D</a> here is deprecated.</i></li>
+<li><code>fov</code> (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4perspective</a>.</li>
+<li><code>nearZ</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. See <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4perspective</a>. This should be slightly greater than 0.</li>
+<li><code>farZ</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4perspective</a>.</li>
+<li><code>canvas</code> (Type: HTMLCanvasElement) (optional)<br>A canvas to associate with this camera object. <i>This argument is deprecated.</i></li>
 </ul>
 
 <h3>Methods</h3>
@@ -71,13 +66,13 @@ the same distance from a reference point.</li>
 the same distance from a reference point.</li>
 <li><a href="#H3DU.Camera_turnHorizontal">turnHorizontal</a><br><b>Deprecated: Renamed to &quot;moveAngleHorizontal&quot;.</b></li>
 <li><a href="#H3DU.Camera_turnVertical">turnVertical</a><br><b>Deprecated: Renamed to &quot;moveAngleVertical&quot;.</b></li>
-<li><p><a href="#H3DU.Camera_update">update</a><br>Updates information about this camera based
-on the state of an input tracker.</p>
+<li><a href="#H3DU.Camera_update">update</a><br>Updates information about this camera based
+on the state of an input tracker.</li>
+</ul>
 
 <p><a name='H3DU.Camera_getDistance'></a></p>
 
-<h3>H3DU.Camera#getDistance()</h3></li>
-</ul>
+<h3>H3DU.Camera#getDistance()</h3>
 
 <p>Finds the distance from the camera&#39;s position to the reference point.</p>
 
@@ -106,7 +101,7 @@ point to the camera&#39;s position.</p>
 <h4>Return Value</h4>
 
 <p>The return value as a unit
-vector (a <a href="H3DU.Math.html#H3DU.Math.vec3normalize">&quot;normalized&quot; vector</a> with a length of 1).
+vector (a <a href="H3DU.Math.html#H3DU.Math.html">&quot;normalized&quot; vector</a> with a length of 1).
 Returns (0,0,0) if the reference point is the same as the camera&#39;s position. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Camera_moveAngleHorizontal'></a></p>
@@ -119,8 +114,7 @@ the same reference point at the same distance.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angleDegrees</code> (Type: number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -137,8 +131,7 @@ the same reference point at the same distance.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angleDegrees</code> (Type: number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -156,8 +149,7 @@ The angle to rotate the camera, in degrees. If the coordinate-system is right-ha
 <h4>Parameters</h4>
 
 <ul>
-<li><code>dist</code> (Type: number)<br>
-Distance to move the camera.</li>
+<li><code>dist</code> (Type: number)<br>Distance to move the camera.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -175,8 +167,7 @@ Distance to move the camera.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>dist</code> (Type: number)<br>
-Distance to move the camera.</li>
+<li><code>dist</code> (Type: number)<br>Distance to move the camera.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -193,8 +184,7 @@ to the reference point.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>dist</code> (Type: number)<br>
-The distance to move. Positive values mean forward, and negative distances mean back.</li>
+<li><code>dist</code> (Type: number)<br>The distance to move. Positive values mean forward, and negative distances mean back.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -210,8 +200,7 @@ The distance to move. Positive values mean forward, and negative distances mean 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>dist</code> (Type: number)<br>
-The distance to move. Positive values mean forward, and negative distances mean back.</li>
+<li><code>dist</code> (Type: number)<br>The distance to move. Positive values mean forward, and negative distances mean back.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -227,8 +216,7 @@ The distance to move. Positive values mean forward, and negative distances mean 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>dist</code> (Type: number)<br>
-Distance to move the camera.</li>
+<li><code>dist</code> (Type: number)<br>Distance to move the camera.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -246,12 +234,9 @@ Distance to move the camera.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cx</code> (Type: number)<br>
-The camera&#39;s new X coordinate.</li>
-<li><code>cy</code> (Type: number)<br>
-The camera&#39;s new Y coordinate.</li>
-<li><code>cz</code> (Type: number)<br>
-The camera&#39;s new Z coordinate.</li>
+<li><code>cx</code> (Type: number)<br>The camera&#39;s new X coordinate.</li>
+<li><code>cy</code> (Type: number)<br>The camera&#39;s new Y coordinate.</li>
+<li><code>cz</code> (Type: number)<br>The camera&#39;s new Z coordinate.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -267,8 +252,7 @@ The camera&#39;s new Z coordinate.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>dist</code> (Type: number)<br>
-Distance to move the camera.</li>
+<li><code>dist</code> (Type: number)<br>Distance to move the camera.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -285,8 +269,7 @@ point without changing its orientation.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>dist</code> (Type: number)<br>
-Positive number giving the distance. If this is less than the near plane distance, the distance will be equal to the near plane distance. Does nothing if the distance is 0 or less.</li>
+<li><code>dist</code> (Type: number)<br>Positive number giving the distance. If this is less than the near plane distance, the distance will be equal to the near plane distance. Does nothing if the distance is 0 or less.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -302,12 +285,9 @@ Positive number giving the distance. If this is less than the near plane distanc
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cx</code> (Type: number)<br>
-The camera&#39;s new X coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, &quot;cy&quot; and &quot;cz&quot; can be omitted.</li>
-<li><code>cy</code> (Type: number) (optional)<br>
-The camera&#39;s new Y coordinate.</li>
-<li><code>cz</code> (Type: number) (optional)<br>
-The camera&#39;s new Z coordinate.</li>
+<li><code>cx</code> (Type: number)<br>The camera&#39;s new X coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, &quot;cy&quot; and &quot;cz&quot; can be omitted.</li>
+<li><code>cy</code> (Type: number) (optional)<br>The camera&#39;s new Y coordinate.</li>
+<li><code>cz</code> (Type: number) (optional)<br>The camera&#39;s new Z coordinate.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -324,8 +304,7 @@ the same distance from a reference point.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angleDegrees</code> (Type: number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera rightward, and negative values leftward. If the coordinate-system is left-handed, vice versa.</li>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera rightward, and negative values leftward. If the coordinate-system is left-handed, vice versa.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -342,8 +321,7 @@ the same distance from a reference point.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angleDegrees</code> (Type: number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -362,8 +340,7 @@ the same reference point at the same distance.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angleDegrees</code> (Type: number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -382,8 +359,7 @@ the same reference point at the same distance.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angleDegrees</code> (Type: number)<br>
-The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -400,13 +376,14 @@ on the state of an input tracker.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>input</code> (Type: <a href="H3DU.InputTracker.html">H3DU.InputTracker</a>) (optional)<br>
-An input tracker. This method should be called right after the tracker&#39;s &#39;update&#39; method was called. <i>Note that future versions may require this parameter.</i></li>
+<li><code>input</code> (Type: <a href="H3DU.InputTracker.html">H3DU.InputTracker</a>) (optional)<br>An input tracker. This method should be called right after the tracker&#39;s &#39;update&#39; method was called. <i>Note that future versions may require this parameter.</i></li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>Return value. (Type: Object)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -492,19 +469,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

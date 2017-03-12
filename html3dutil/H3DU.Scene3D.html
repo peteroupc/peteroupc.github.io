@@ -16,8 +16,7 @@
 <h4>Parameters</h4>
 
 <ul>
-<li><code>canvasOrContext</code> (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>
-A WebGL context to associate with this scene, or an HTML canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
+<li><code>canvasOrContext</code> (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>A WebGL context to associate with this scene, or an HTML canvas element to create a WebGL context from, or an object, such as H3DU.Scene3D, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
 </ul>
 
 <h3>Members</h3>
@@ -83,21 +82,21 @@ when the render() method is called.</li>
 <li><a href="#H3DU.Scene3D_setClearColor">setClearColor</a><br>Sets the color used when clearing the screen each frame.</li>
 <li><a href="#H3DU.Scene3D_setDimensions">setDimensions</a><br>Sets the viewport width and height for this scene.</li>
 <li><a href="#H3DU.Scene3D_setDirectionalLight">setDirectionalLight</a><br><b>Deprecated: Use the Lights method setDirectionalLight instead and the <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> method getLights. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_setFrustum">setFrustum</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_setFrustum">setFrustum</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_setLightParams">setLightParams</a><br><b>Deprecated: Use the Lights method setParams instead and the <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> method getLights. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_setLookAt">setLookAt</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setLookAt">H3DU.Batch3D#setLookAt</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_setOrtho">setOrtho</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_setOrtho2D">setOrtho2D</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2d">H3DU.Math.mat4ortho2d</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_setOrtho2DAspect">setOrtho2DAspect</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_setOrthoAspect">setOrthoAspect</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4orthoAspect">H3DU.Math.mat4orthoAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_setPerspective">setPerspective</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_setLookAt">setLookAt</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setLookAt</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_setOrtho">setOrtho</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_setOrtho2D">setOrtho2D</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2d">H3DU.Math.mat4ortho2d</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_setOrtho2DAspect">setOrtho2DAspect</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_setOrthoAspect">setOrthoAspect</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4orthoAspect">H3DU.Math.mat4orthoAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_setPerspective">setPerspective</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_setPointLight">setPointLight</a><br><b>Deprecated: Use the LightSource method setPointLight instead and the <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> method getLights. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_setProjectionMatrix">setProjectionMatrix</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_setProjectionMatrix">setProjectionMatrix</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_setUseDevicePixelRatio">setUseDevicePixelRatio</a><br>Sets whether to use the device&#39;s pixel ratio (if supported by
 the browser) in addition to the canvas&#39;s size when setting
 the viewport&#39;s dimensions.</li>
-<li><a href="#H3DU.Scene3D_setViewMatrix">setViewMatrix</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setViewMatrix">H3DU.Batch3D#setViewMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_useFilter">useFilter</a><br><b>Deprecated: Use the <a href="H3DU.Batch3D.html#H3DU.Batch3D.forFilter">H3DU.Batch3D.forFilter</a> method to create a batch
+<li><a href="#H3DU.Scene3D_setViewMatrix">setViewMatrix</a><br><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setViewMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
+<li><a href="#H3DU.Scene3D_useFilter">useFilter</a><br><b>Deprecated: Use the <a href="H3DU.Batch3D.html#H3DU.Batch3D.html">H3DU.Batch3D.forFilter</a> method to create a batch
 for rendering filter effects from a frame buffer, or use the H3DU.Batch3D.useShader
 method. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method
 until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
@@ -106,43 +105,43 @@ to set the shader programs they use.</b></li>
 <li><a href="#H3DU.Scene3D_vertexCount">vertexCount</a><br><b>Deprecated: Use the vertexCount method of <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 </ul>
 
-<p><a id='H3DU.Scene3D.BACK'></a></p>
+<p><a name='H3DU.Scene3D.BACK'></a></p>
 
 <h3>H3DU.Scene3D.BACK (constant)</h3>
 
 <p>Back side of a triangle. By default, triangles with clockwise winding are back-facing.</p>
 
-<p><a id='H3DU.Scene3D.CCW'></a></p>
+<p><a name='H3DU.Scene3D.CCW'></a></p>
 
 <h3>H3DU.Scene3D.CCW (constant)</h3>
 
 <p>Counterclockwise winding. A triangle has counterclockwise winding (or orientation) if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex, in the triangle&#39;s two-dimensional projection in <em>window coordinates</em> (which roughly correspond to its location on the screen or frame buffer).</p>
 
-<p><a id='H3DU.Scene3D.CW'></a></p>
+<p><a name='H3DU.Scene3D.CW'></a></p>
 
 <h3>H3DU.Scene3D.CW (constant)</h3>
 
 <p>Clockwise winding, the opposite of counterclockwise winding.</p>
 
-<p><a id='H3DU.Scene3D.FRONT'></a></p>
+<p><a name='H3DU.Scene3D.FRONT'></a></p>
 
 <h3>H3DU.Scene3D.FRONT (constant)</h3>
 
 <p>Front side of a triangle. By default, triangles with counterclockwise winding are front-facing.</p>
 
-<p><a id='H3DU.Scene3D.FRONT_AND_BACK'></a></p>
+<p><a name='H3DU.Scene3D.FRONT_AND_BACK'></a></p>
 
 <h3>H3DU.Scene3D.FRONT_AND_BACK (constant)</h3>
 
 <p>Back and front sides of a triangle.</p>
 
-<p><a id='H3DU.Scene3D.NONE'></a></p>
+<p><a name='H3DU.Scene3D.NONE'></a></p>
 
 <h3>H3DU.Scene3D.NONE (constant)</h3>
 
 <p>No face culling.</p>
 
-<p><a id='H3DU.Scene3D_shapes'></a></p>
+<p><a name='H3DU.Scene3D_shapes'></a></p>
 
 <h3>H3DU.Scene3D#shapes</h3>
 
@@ -166,8 +165,7 @@ Its parent will be set to no parent.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>
-A 3D shape.</li>
+<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>A 3D shape.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -215,8 +213,7 @@ when rendering this scene.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>value</code> (Type: number)<br>
-If this is <a href="H3DU.Scene3D.html#H3DU.Scene3D.BACK">H3DU.Scene3D.BACK</a>, <a href="H3DU.Scene3D.html#H3DU.Scene3D.FRONT">H3DU.Scene3D.FRONT</a>, or <a href="H3DU.Scene3D.html#H3DU.Scene3D.FRONT_AND_BACK">H3DU.Scene3D.FRONT_AND_BACK</a>, enables face culling of the specified faces. For any other value, disables face culling. By default, face culling is disabled.</li>
+<li><code>value</code> (Type: number)<br>If this is <a href="H3DU.Scene3D.html#H3DU.Scene3D.html">H3DU.Scene3D.BACK</a>, <a href="H3DU.Scene3D.html#H3DU.Scene3D.FRONT">H3DU.Scene3D.FRONT</a>, or <a href="H3DU.Scene3D.html#H3DU.Scene3D.FRONT_AND_BACK">H3DU.Scene3D.FRONT_AND_BACK</a>, enables face culling of the specified faces. For any other value, disables face culling. By default, face culling is disabled.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -242,8 +239,7 @@ If this is <a href="H3DU.Scene3D.html#H3DU.Scene3D.BACK">H3DU.Scene3D.BACK</a>, 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>value</code> (Type: number)<br>
-If this is <a href="H3DU.Scene3D.html#H3DU.Scene3D.CW">H3DU.Scene3D.CW</a>, clockwise triangles are front-facing. For any other value, counterclockwise triangles are front-facing, which is the default behavior. If using a left-handed coordinate system, set this value to <a href="H3DU.Scene3D.html#H3DU.Scene3D.CW">H3DU.Scene3D.CW</a>.</li>
+<li><code>value</code> (Type: number)<br>If this is <a href="H3DU.Scene3D.html#H3DU.Scene3D.html">H3DU.Scene3D.CW</a>, clockwise triangles are front-facing. For any other value, counterclockwise triangles are front-facing, which is the default behavior. If using a left-handed coordinate system, set this value to <a href="H3DU.Scene3D.html#H3DU.Scene3D.CW">H3DU.Scene3D.CW</a>.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -411,8 +407,7 @@ to a texture buffer object.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>texture</code> (Type: string | <a href="H3DU.Texture.html">H3DU.Texture</a>)<br>
-String giving the URL of the image to load, or an H3DU.Texture object whose data may or may not be loaded.</li>
+<li><code>texture</code> (Type: string | <a href="H3DU.Texture.html">H3DU.Texture</a>)<br>String giving the URL of the image to load, or an H3DU.Texture object whose data may or may not be loaded.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -436,12 +431,9 @@ to a texture buffer object.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>textureFiles</code> (Type: Array.&lt;string&gt;)<br>
-A list of URLs of the image to load.</li>
-<li><code>resolve</code> (Type: function) (optional)<br>
-Called for each URL that is loaded successfully and uploaded to a texture buffer (the argument will be an H3DU.Texture object.)</li>
-<li><code>reject</code> (Type: function) (optional)<br>
-Called for each URL for which an error occurs (the argument will be the data passed upon rejection).</li>
+<li><code>textureFiles</code> (Type: Array.&lt;string&gt;)<br>A list of URLs of the image to load.</li>
+<li><code>resolve</code> (Type: function) (optional)<br>Called for each URL that is loaded successfully and uploaded to a texture buffer (the argument will be an H3DU.Texture object.)</li>
+<li><code>reject</code> (Type: function) (optional)<br>Called for each URL for which an error occurs (the argument will be the data passed upon rejection).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -450,7 +442,7 @@ Called for each URL for which an error occurs (the argument will be the data pas
 all the URLs in the textureFiles array are either resolved or rejected.
 The result will be an object with three properties:
 &quot;successes&quot;, &quot;failures&quot;, and &quot;results&quot;.
-See <a href="H3DU.html#H3DU.getPromiseResults">H3DU.getPromiseResults</a>. (Type: <a href="Promise.html">Promise</a>)</p>
+See <a href="H3DU.html#H3DU.html">H3DU.getPromiseResults</a>. (Type: <a href="Promise.html">Promise</a>)</p>
 
 <p><a name='H3DU.Scene3D_loadTexture'></a></p>
 
@@ -464,8 +456,7 @@ loadTexturesAll instead.</b></p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: string)<br>
-URL of the image to load.</li>
+<li><code>name</code> (Type: string)<br>URL of the image to load.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -486,8 +477,7 @@ returns a shape object.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
-A geometric mesh object. The shape created will use the mesh in its current state and won&#39;t track future changes.</li>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>A geometric mesh object. The shape created will use the mesh in its current state and won&#39;t track future changes.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -520,8 +510,7 @@ H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>
-The 3D shape to remove.</li>
+<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>The 3D shape to remove.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -534,7 +523,7 @@ The 3D shape to remove.</li>
 
 <p>Renders all shapes added to this scene.
 This is usually called in a render loop, such
-as <a href="H3DU.html#H3DU.renderLoop">H3DU.renderLoop</a>.</p>
+as <a href="H3DU.html#H3DU.html">H3DU.renderLoop</a>.</p>
 
 <p>NOTE: For compatibility, the &quot;render&quot; function with a null or omitted parameter will clear the color
 buffer and depth buffer. This compatibility option may be dropped in the future.</p>
@@ -542,8 +531,7 @@ buffer and depth buffer. This compatibility option may be dropped in the future.
 <h4>Parameters</h4>
 
 <ul>
-<li><code>renderPasses</code> (Type: Array.&lt;<a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a>&gt; | <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>
-An array of scenes to draw, or a single batch to render. Can currently be null.</li>
+<li><code>renderPasses</code> (Type: Array.&lt;<a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a>&gt; | <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>An array of scenes to draw, or a single batch to render. Can currently be null.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -561,14 +549,10 @@ An array of scenes to draw, or a single batch to render. Can currently be null.<
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
-Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.toGLColor">HTML or CSS color</a>.</li>
-<li><code>g</code> (Type: number)<br>
-Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number)<br>
-Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: number) (optional)<br>
-Alpha color component (0-1). Currently not used.</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.html">HTML or CSS color</a>.</li>
+<li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). Currently not used.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -585,8 +569,7 @@ when the render() method is called.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>value</code> (Type: Boolean)<br>
-If true, will check whether to resize the canvas when the render() method is called. Default is true.</li>
+<li><code>value</code> (Type: Boolean)<br>If true, will check whether to resize the canvas when the render() method is called. Default is true.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -603,14 +586,10 @@ This color is black by default.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
-Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.toGLColor">HTML or CSS color</a>.</li>
-<li><code>g</code> (Type: number)<br>
-Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number)<br>
-Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: number) (optional)<br>
-Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.html">HTML or CSS color</a>.</li>
+<li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -626,10 +605,8 @@ Alpha color component (0-1). If the &quot;r&quot; parameter is given and this pa
 <h4>Parameters</h4>
 
 <ul>
-<li><code>width</code> (Type: number)<br>
-Width of the scene, in pixels. Will be rounded up.</li>
-<li><code>height</code> (Type: number)<br>
-Height of the scene, in pixels. Will be rounded up.</li>
+<li><code>width</code> (Type: number)<br>Width of the scene, in pixels. Will be rounded up.</li>
+<li><code>height</code> (Type: number)<br>Height of the scene, in pixels. Will be rounded up.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -647,14 +624,10 @@ Height of the scene, in pixels. Will be rounded up.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn&#39;t exist.</li>
-<li><code>position</code> (Type: Array.&lt;number&gt;)<br>
-A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively. May be null, in which case the default is (0, 0, 1).</li>
-<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>
-A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
-<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>
-A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn&#39;t exist.</li>
+<li><code>position</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively. May be null, in which case the default is (0, 0, 1).</li>
+<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
+<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -665,29 +638,23 @@ A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color
 
 <h3>H3DU.Scene3D#setFrustum(left, right, bottom, top, near, far)</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4frustum">H3DU.Math.mat4frustum</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets this scene&#39;s projection matrix to a perspective projection that defines
 the view frustum, or the limits in the camera&#39;s view.</p>
 
 <p>For considerations when choosing the &quot;near&quot; and &quot;far&quot; parameters,
-see <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</p>
+see <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4perspective</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>left</code> (Type: number)<br>
-X coordinate of the point where the left clipping plane meets the near clipping plane.</li>
-<li><code>right</code> (Type: number)<br>
-X coordinate of the point where the right clipping plane meets the near clipping plane.</li>
-<li><code>bottom</code> (Type: number)<br>
-Y coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
-<li><code>top</code> (Type: number)<br>
-Y coordinate of the point where the top clipping plane meets the near clipping plane.</li>
-<li><code>near</code> (Type: number)<br>
-The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
-<li><code>far</code> (Type: number)<br>
-The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+<li><code>left</code> (Type: number)<br>X coordinate of the point where the left clipping plane meets the near clipping plane.</li>
+<li><code>right</code> (Type: number)<br>X coordinate of the point where the right clipping plane meets the near clipping plane.</li>
+<li><code>bottom</code> (Type: number)<br>Y coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
+<li><code>top</code> (Type: number)<br>Y coordinate of the point where the top clipping plane meets the near clipping plane.</li>
+<li><code>near</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
+<li><code>far</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -705,10 +672,8 @@ The distance from the camera to the far clipping plane. Objects beyond this dist
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn&#39;t exist.</li>
-<li><code>params</code> (Type: Object)<br>
-An object as described in H3DU.LightSource.setParams.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn&#39;t exist.</li>
+<li><code>params</code> (Type: Object)<br>An object as described in H3DU.LightSource.setParams.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -719,7 +684,7 @@ An object as described in H3DU.LightSource.setParams.</li>
 
 <h3>H3DU.Scene3D#setLookAt(eye, [center], [up])</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setLookAt">H3DU.Batch3D#setLookAt</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setLookAt</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets this scene&#39;s view matrix to represent a camera view.
 This method takes a camera&#39;s position (<code>eye</code>), and the point the camera is viewing
@@ -728,12 +693,9 @@ This method takes a camera&#39;s position (<code>eye</code>), and the point the 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>eye</code> (Type: Array.&lt;number&gt;)<br>
-A 3-element vector specifying the camera position in world space.</li>
-<li><code>center</code> (Type: Array.&lt;number&gt;) (optional)<br>
-A 3-element vector specifying the point in world space that the camera is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).</li>
-<li><code>up</code> (Type: Array.&lt;number&gt;) (optional)<br>
-A 3-element vector specifying the direction from the center of the camera to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the camera is held upright. This vector must not point in the same or opposite direction as the camera&#39;s view direction. (For best results, rotate the vector (0, 1, 0) so it points perpendicular to the camera&#39;s view direction.)</li>
+<li><code>eye</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector specifying the camera position in world space.</li>
+<li><code>center</code> (Type: Array.&lt;number&gt;) (optional)<br>A 3-element vector specifying the point in world space that the camera is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).</li>
+<li><code>up</code> (Type: Array.&lt;number&gt;) (optional)<br>A 3-element vector specifying the direction from the center of the camera to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the camera is held upright. This vector must not point in the same or opposite direction as the camera&#39;s view direction. (For best results, rotate the vector (0, 1, 0) so it points perpendicular to the camera&#39;s view direction.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -744,7 +706,7 @@ A 3-element vector specifying the direction from the center of the camera to its
 
 <h3>H3DU.Scene3D#setOrtho(left, right, bottom, top, near, far)</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho">H3DU.Math.mat4ortho</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets this scene&#39;s projection matrix to an orthographic projection.
 In this projection, the left clipping plane is parallel to the right clipping
@@ -753,18 +715,12 @@ plane and the top to the bottom.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>left</code> (Type: number)<br>
-Leftmost coordinate of the 3D view.</li>
-<li><code>right</code> (Type: number)<br>
-Rightmost coordinate of the 3D view. (Note that right can be greater than left or vice versa.)</li>
-<li><code>bottom</code> (Type: number)<br>
-Bottommost coordinate of the 3D view.</li>
-<li><code>top</code> (Type: number)<br>
-Topmost coordinate of the 3D view. (Note that top can be greater than bottom or vice versa.)</li>
-<li><code>near</code> (Type: number)<br>
-Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
-<li><code>far</code> (Type: number)<br>
-Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.</li>
+<li><code>left</code> (Type: number)<br>Leftmost coordinate of the 3D view.</li>
+<li><code>right</code> (Type: number)<br>Rightmost coordinate of the 3D view. (Note that right can be greater than left or vice versa.)</li>
+<li><code>bottom</code> (Type: number)<br>Bottommost coordinate of the 3D view.</li>
+<li><code>top</code> (Type: number)<br>Topmost coordinate of the 3D view. (Note that top can be greater than bottom or vice versa.)</li>
+<li><code>near</code> (Type: number)<br>Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
+<li><code>far</code> (Type: number)<br>Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -775,7 +731,7 @@ Distance from the camera to the far clipping plane. A positive value means the p
 
 <h3>H3DU.Scene3D#setOrtho2D(left, right, bottom, top)</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2d">H3DU.Math.mat4ortho2d</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2d">H3DU.Math.mat4ortho2d</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets this scene&#39;s projection matrix to a 2D orthographic projection.
 The near and far clipping planes will be set to -1 and 1, respectively.</p>
@@ -783,14 +739,10 @@ The near and far clipping planes will be set to -1 and 1, respectively.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>left</code> (Type: number)<br>
-Leftmost coordinate of the 2D view.</li>
-<li><code>right</code> (Type: number)<br>
-Rightmost coordinate of the 2D view. (Note that right can be greater than left or vice versa.)</li>
-<li><code>bottom</code> (Type: number)<br>
-Bottommost coordinate of the 2D view.</li>
-<li><code>top</code> (Type: number)<br>
-Topmost coordinate of the 2D view. (Note that top can be greater than bottom or vice versa.)</li>
+<li><code>left</code> (Type: number)<br>Leftmost coordinate of the 2D view.</li>
+<li><code>right</code> (Type: number)<br>Rightmost coordinate of the 2D view. (Note that right can be greater than left or vice versa.)</li>
+<li><code>bottom</code> (Type: number)<br>Bottommost coordinate of the 2D view.</li>
+<li><code>top</code> (Type: number)<br>Topmost coordinate of the 2D view. (Note that top can be greater than bottom or vice versa.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -801,7 +753,7 @@ Topmost coordinate of the 2D view. (Note that top can be greater than bottom or 
 
 <h3>H3DU.Scene3D#setOrtho2DAspect(left, right, bottom, top, [aspect])</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets this scene&#39;s projection matrix to a 2D orthographic projection.
 The near and far clipping planes will be set to -1 and 1, respectively.</p>
@@ -814,16 +766,11 @@ or squishing it.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>left</code> (Type: number)<br>
-Leftmost coordinate of the view rectangle.</li>
-<li><code>right</code> (Type: number)<br>
-Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
-<li><code>bottom</code> (Type: number)<br>
-Bottommost coordinate of the view rectangle.</li>
-<li><code>top</code> (Type: number)<br>
-Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
-<li><code>aspect</code> (Type: number) (optional)<br>
-Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene&#39;s aspect ratio instead.</li>
+<li><code>left</code> (Type: number)<br>Leftmost coordinate of the view rectangle.</li>
+<li><code>right</code> (Type: number)<br>Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
+<li><code>bottom</code> (Type: number)<br>Bottommost coordinate of the view rectangle.</li>
+<li><code>top</code> (Type: number)<br>Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
+<li><code>aspect</code> (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene&#39;s aspect ratio instead.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -834,7 +781,7 @@ Desired aspect ratio of the viewport (ratio of width to height). If null or omit
 
 <h3>H3DU.Scene3D#setOrthoAspect(left, right, bottom, top, near, far, [aspect])</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4orthoAspect">H3DU.Math.mat4orthoAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4orthoAspect">H3DU.Math.mat4orthoAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets this scene&#39;s projection matrix to an orthographic projection.
 In this projection, the left clipping plane is parallel to the right clipping
@@ -848,20 +795,13 @@ or squishing it.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>left</code> (Type: number)<br>
-Leftmost coordinate of the view rectangle.</li>
-<li><code>right</code> (Type: number)<br>
-Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
-<li><code>bottom</code> (Type: number)<br>
-Bottommost coordinate of the view rectangle.</li>
-<li><code>top</code> (Type: number)<br>
-Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
-<li><code>near</code> (Type: number)<br>
-Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
-<li><code>far</code> (Type: number)<br>
-Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.</li>
-<li><code>aspect</code> (Type: number) (optional)<br>
-Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene&#39;s aspect ratio instead.</li>
+<li><code>left</code> (Type: number)<br>Leftmost coordinate of the view rectangle.</li>
+<li><code>right</code> (Type: number)<br>Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
+<li><code>bottom</code> (Type: number)<br>Bottommost coordinate of the view rectangle.</li>
+<li><code>top</code> (Type: number)<br>Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
+<li><code>near</code> (Type: number)<br>Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
+<li><code>far</code> (Type: number)<br>Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.</li>
+<li><code>aspect</code> (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene&#39;s aspect ratio instead.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -872,24 +812,20 @@ Desired aspect ratio of the viewport (ratio of width to height). If null or omit
 
 <h3>H3DU.Scene3D#setPerspective(fov, aspect, near, far)</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. For compatibility, existing code that doesn&#39;t use H3DU.Batch3D can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets this scene&#39;s projection matrix to a perspective projection.</p>
 
 <p>For considerations when choosing the &quot;near&quot; and &quot;far&quot; parameters,
-see <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</p>
+see <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4perspective</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>fov</code> (Type: number)<br>
-Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
-<li><code>aspect</code> (Type: number)<br>
-The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio (getAspect() or getClientAspect()).</li>
-<li><code>near</code> (Type: number)<br>
-The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
-<li><code>far</code> (Type: number)<br>
-The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+<li><code>fov</code> (Type: number)<br>Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
+<li><code>aspect</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio (getAspect() or getClientAspect()).</li>
+<li><code>near</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
+<li><code>far</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -914,14 +850,10 @@ scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on.</li>
-<li><code>position</code> (Type: Array.&lt;number&gt;)<br>
-Light position. (See <a href="H3DU.LightSource.html#H3DU.LightSource_position">H3DU.LightSource#position</a>.)</li>
-<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>
-A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
-<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>
-A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on.</li>
+<li><code>position</code> (Type: Array.&lt;number&gt;)<br>Light position. (See <a href="H3DU.LightSource.html#H3DU.html">H3DU.LightSource#position</a>.)</li>
+<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
+<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -932,17 +864,16 @@ A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color
 
 <h3>H3DU.Scene3D#setProjectionMatrix(matrix)</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setProjectionMatrix">H3DU.Batch3D#setProjectionMatrix</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setProjectionMatrix</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets the projection matrix for this object. The projection
-matrix can also be set using the <a href="H3DU.Scene3D.html#H3DU.Scene3D_setFrustum">H3DU.Scene3D#setFrustum</a>, <a href="H3DU.Scene3D.html#H3DU.Scene3D_setOrtho">H3DU.Scene3D#setOrtho</a>,
+matrix can also be set using the <a href="H3DU.Scene3D.html#H3DU.html">H3DU.Scene3D#setFrustum</a>, <a href="H3DU.Scene3D.html#H3DU.Scene3D_setOrtho">H3DU.Scene3D#setOrtho</a>,
 <a href="H3DU.Scene3D.html#H3DU.Scene3D_setOrtho2D">H3DU.Scene3D#setOrtho2D</a>, and <a href="H3DU.Scene3D.html#H3DU.Scene3D_setPerspective">H3DU.Scene3D#setPerspective</a> methods.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>
-A 16-element matrix (4x4).</li>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 16-element matrix (4x4).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -963,8 +894,7 @@ adjust the viewport.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>value</code> (Type: Boolean)<br>
-If true, use the device&#39;s pixel ratio when setting the viewport&#39;s dimensions. Default is true.</li>
+<li><code>value</code> (Type: Boolean)<br>If true, use the device&#39;s pixel ratio when setting the viewport&#39;s dimensions. Default is true.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -975,16 +905,15 @@ If true, use the device&#39;s pixel ratio when setting the viewport&#39;s dimens
 
 <h3>H3DU.Scene3D#setViewMatrix(matrix)</h3>
 
-<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.Batch3D_setViewMatrix">H3DU.Batch3D#setViewMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
+<p><b>Deprecated: Instead of this method, use <a href="H3DU.Batch3D.html#H3DU.html">H3DU.Batch3D#setViewMatrix</a> in conjunction with <a href="H3DU.Math.html#H3DU.Math.mat4ortho2dAspect">H3DU.Math.mat4ortho2dAspect</a>. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
 
 <p>Sets this scene&#39;s view matrix. The view matrix can also
-be set using the <a href="H3DU.Scene3D.html#H3DU.Scene3D_setLookAt">H3DU.Scene3D#setLookAt</a> method.</p>
+be set using the <a href="H3DU.Scene3D.html#H3DU.html">H3DU.Scene3D#setLookAt</a> method.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>
-A 16-element matrix (4x4).</li>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 16-element matrix (4x4).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -995,7 +924,7 @@ A 16-element matrix (4x4).</li>
 
 <h3>H3DU.Scene3D#useFilter(filterProgram)</h3>
 
-<p><b>Deprecated: Use the <a href="H3DU.Batch3D.html#H3DU.Batch3D.forFilter">H3DU.Batch3D.forFilter</a> method to create a batch
+<p><b>Deprecated: Use the <a href="H3DU.Batch3D.html#H3DU.Batch3D.html">H3DU.Batch3D.forFilter</a> method to create a batch
 for rendering filter effects from a frame buffer, or use the H3DU.Batch3D.useShader
 method. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method
 until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></p>
@@ -1006,8 +935,7 @@ scene is rendered.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>filterProgram</code> (Type: <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> | string | null)<br>
-The shader program to use.</li>
+<li><code>filterProgram</code> (Type: <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> | string | null)<br>The shader program to use.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1028,8 +956,7 @@ and prepared this object for the new program.)</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>program</code> (Type: <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> | null)<br>
-No longer used.</li>
+<li><code>program</code> (Type: <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> | null)<br>No longer used.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1048,6 +975,8 @@ all shapes in this scene.</p>
 <h4>Return Value</h4>
 
 <p>Return value. (Type: number)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -1133,19 +1062,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

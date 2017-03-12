@@ -1048,6 +1048,13 @@
 /**
  * Loads a 3D scene stored in glTF format, together with the buffers and
  * shaders it uses.
+ * <p>This method is considered a supplementary method to the
+ * Public Domain HTML 3D Library and is not considered part of that
+ * library. <p>
+ * To use this class, you must include the script "extras/gltf.js"; the
+ * class is not included in the "h3du_min.js" file which makes up
+ * the HTML 3D Library. Example:<pre>
+ * &lt;script type="text/javascript" src="extras/gltf.js">&lt;/script></pre>
  * @param {string} url URL of the glTF file to load.
  * @returns {Promise<Object>} A promise; when it resolves, the result will
  * be an object that implements the following methods:<ul>

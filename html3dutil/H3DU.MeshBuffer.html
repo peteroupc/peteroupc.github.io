@@ -15,8 +15,7 @@
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
-A geometric mesh object. A series of default attributes will be set based on that mesh&#39;s data.</li>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>A geometric mesh object. A series of default attributes will be set based on that mesh&#39;s data.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -34,12 +33,12 @@ mesh buffer (or sets an
 existing attribute&#39;s information).</li>
 <li><a href="#H3DU.MeshBuffer_setIndices">setIndices</a><br>Sets the array of vertex indices used by this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_setPrimitiveType">setPrimitiveType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
-<li><p><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer</p>
+<li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer</li>
+</ul>
 
 <p><a name='H3DU.MeshBuffer_getBounds'></a></p>
 
-<h3>H3DU.MeshBuffer#getBounds()</h3></li>
-</ul>
+<h3>H3DU.MeshBuffer#getBounds()</h3>
 
 <p>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.</p>
@@ -90,7 +89,7 @@ and points) composed by all shapes in this mesh.</p>
 
 <h4>Return Value</h4>
 
-<p>Either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
+<p>Either <a href="H3DU.Mesh.html#H3DU.Mesh.html">H3DU.Mesh.TRIANGLES</a>,
 <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: number)</p>
 
 <p><a name='H3DU.MeshBuffer_setAttribute'></a></p>
@@ -106,18 +105,12 @@ stored in a vertex buffer.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: Number | string)<br>
-An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
-<li><code>index</code> (Type: number)<br>
-The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
-<li><code>buffer</code> (Type: Float32Array | Array)<br>
-The buffer where the per-vertex data is stored.</li>
-<li><code>startIndex</code> (Type: number)<br>
-The index into the array (starting from 0) where the first per-vertex item starts.</li>
-<li><code>countPerVertex</code> (Type: number)<br>
-The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3.</li>
-<li><code>stride</code> (Type: number)<br>
-The number of elements from the start of one per-vertex item to the start of the next.</li>
+<li><code>name</code> (Type: Number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.html">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
+<li><code>index</code> (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
+<li><code>buffer</code> (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.</li>
+<li><code>startIndex</code> (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.</li>
+<li><code>countPerVertex</code> (Type: number)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3.</li>
+<li><code>stride</code> (Type: number)<br>The number of elements from the start of one per-vertex item to the start of the next.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -134,10 +127,8 @@ semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</
 <h4>Parameters</h4>
 
 <ul>
-<li><code>indices</code> (Type: Uint16Array | Uint32Array | Uint8Array)<br>
-Array of vertex indices.</li>
-<li><code>byteSize</code> (Type: number)<br>
-Size, in bytes, of each index. Must be 1, 2, or 4.</li>
+<li><code>indices</code> (Type: Uint16Array | Uint32Array | Uint8Array)<br>Array of vertex indices.</li>
+<li><code>byteSize</code> (Type: number)<br>Size, in bytes, of each index. Must be 1, 2, or 4.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -153,8 +144,7 @@ Size, in bytes, of each index. Must be 1, 2, or 4.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>primType</code> (Type: number)<br>
-The primitive type, either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>.</li>
+<li><code>primType</code> (Type: number)<br>The primitive type, either <a href="H3DU.Mesh.html#H3DU.Mesh.html">H3DU.Mesh.TRIANGLES</a>, <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -170,6 +160,8 @@ The primitive type, either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mes
 <h4>Return Value</h4>
 
 <p>Return value. (Type: number)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -255,19 +247,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

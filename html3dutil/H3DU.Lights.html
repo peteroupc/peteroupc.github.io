@@ -15,7 +15,7 @@ ambient color as well as data on one or more light sources.
 When constructed, the list of light sources will be empty.</p>
 
 <p>NOTE: The default shader program assumes that all colors specified in this object are in
-the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
+the <a href="H3DU.Math.html#H3DU.Math.html">sRGB color space</a>.</p>
 
 <h3>Members</h3>
 
@@ -39,7 +39,7 @@ values, and the default value for <code>sceneAmbient</code>.</li>
 <li><a href="#H3DU.Lights_setPointLight">setPointLight</a><br>Sets a point light.</li>
 </ul>
 
-<p><a id='H3DU.Lights.MAX_LIGHTS'></a></p>
+<p><a name='H3DU.Lights.MAX_LIGHTS'></a></p>
 
 <h3>H3DU.Lights.MAX_LIGHTS (constant)</h3>
 
@@ -48,7 +48,7 @@ by the default shader program.</p>
 
 <p>Default Value: <code>3</code></p>
 
-<p><a id='H3DU.Lights_sceneAmbient'></a></p>
+<p><a name='H3DU.Lights_sceneAmbient'></a></p>
 
 <h3>H3DU.Lights#sceneAmbient</h3>
 
@@ -89,8 +89,7 @@ only used on objects that use <a href="H3DU.Material.html">H3DU.Material</a>, no
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -106,14 +105,10 @@ Zero-based index of the light to set. The first light has index 0, the second ha
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
-Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.toGLColor">HTML or CSS color</a>.</li>
-<li><code>g</code> (Type: number)<br>
-Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number)<br>
-Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: number) (optional)<br>
-Alpha color component (0-1). Currently not used.</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.html">HTML or CSS color</a>.</li>
+<li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). Currently not used.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -141,14 +136,10 @@ values, and the default value for <code>sceneAmbient</code>.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
-<li><code>direction</code> (Type: Array.&lt;number&gt;)<br>
-A 3-element array giving the X, Y, and Z world space components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector&#39;s direction from the origin (0, 0, 0).</li>
-<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>
-A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
-<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>
-A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the specular highlight color will remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
+<li><code>direction</code> (Type: Array.&lt;number&gt;)<br>A 3-element array giving the X, Y, and Z world space components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector&#39;s direction from the origin (0, 0, 0).</li>
+<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
+<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the specular highlight color will remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -164,10 +155,8 @@ A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
-<li><code>params</code> (Type: Object)<br>
-An object as described in H3DU.LightSource.setParams.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
+<li><code>params</code> (Type: Object)<br>An object as described in H3DU.LightSource.setParams.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -183,19 +172,17 @@ An object as described in H3DU.LightSource.setParams.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
-<li><code>position</code> (Type: Array.&lt;number&gt;)<br>
-A 3-element array giving the X, Y, and Z world space coordinates, respectively, of the light&#39;s position.</li>
-<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>
-Diffuse color, as described in H3DU.Lights.setDirectionalLight.</li>
-<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>
-Specular color, as described in H3DU.Lights.setDirectionalLight.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
+<li><code>position</code> (Type: Array.&lt;number&gt;)<br>A 3-element array giving the X, Y, and Z world space coordinates, respectively, of the light&#39;s position.</li>
+<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>Diffuse color, as described in H3DU.Lights.setDirectionalLight.</li>
+<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>Specular color, as described in H3DU.Lights.setDirectionalLight.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.Lights.html">H3DU.Lights</a>)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -281,19 +268,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

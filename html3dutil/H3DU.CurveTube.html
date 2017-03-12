@@ -10,7 +10,7 @@
 
 <h3>H3DU.CurveTube(func, [thickness], [sweptCurve])</h3>
 
-<p>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.</p>
+<p>A <a href="H3DU.SurfaceEval.html#H3DU.html">surface evaluator object</a> for a tube extruded from a parametric curve.</p>
 
 <p>This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -26,24 +26,21 @@ the HTML 3D Library. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>func</code> (Type: Object)<br>
-A <a href="H3DU.Curve.html">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from.</li>
-<li><code>thickness</code> (Type: number) (optional)<br>
-Radius of the extruded tube. If this parameter is null or omitted, the default is 0.125.</li>
-<li><code>sweptCurve</code> (Type: Object) (optional)<br>
-A <a href="H3DU.Curve.html">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the &quot;thickness&quot; parameter.</li>
+<li><code>func</code> (Type: Object)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from.</li>
+<li><code>thickness</code> (Type: number) (optional)<br>Radius of the extruded tube. If this parameter is null or omitted, the default is 0.125.</li>
+<li><code>sweptCurve</code> (Type: Object) (optional)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the &quot;thickness&quot; parameter.</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
 <li><a href="#H3DU.CurveTube_endPoints">endPoints</a><br>Returns the starting and ending U and V coordinates of this surface.</li>
-<li><p><a href="#H3DU.CurveTube_evaluate">evaluate</a><br>Generates a point on the extruded tube from the given u and V coordinates.</p>
+<li><a href="#H3DU.CurveTube_evaluate">evaluate</a><br>Generates a point on the extruded tube from the given u and V coordinates.</li>
+</ul>
 
 <p><a name='H3DU.CurveTube_endPoints'></a></p>
 
-<h3>H3DU.CurveTube#endPoints()</h3></li>
-</ul>
+<h3>H3DU.CurveTube#endPoints()</h3>
 
 <p>Returns the starting and ending U and V coordinates of this surface.</p>
 
@@ -67,15 +64,15 @@ if it doesn&#39;t implement an <code>endPoints</code> method).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-U coordinate. This will run the length of the curve.</li>
-<li><code>v</code> (Type: number)<br>
-V coordinate. This will sweep around the extruded tube.</li>
+<li><code>u</code> (Type: number)<br>U coordinate. This will run the length of the curve.</li>
+<li><code>v</code> (Type: number)<br>V coordinate. This will sweep around the extruded tube.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>A 3-element array specifying a 3D point. (Type: Array.&lt;number&gt;)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -161,19 +158,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

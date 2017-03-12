@@ -33,12 +33,9 @@ log is output to the JavaScript console.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>context</code> (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>
-A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
-<li><code>vertexShader</code> (Type: string) (optional)<br>
-Source text of a vertex shader, in OpenGL ES Shading Language (GLSL). If null, a default vertex shader is used instead.</li>
-<li><code>fragmentShader</code> (Type: string) (optional)<br>
-Source text of a fragment shader in GLSL. If null, a default fragment shader is used instead.</li>
+<li><code>context</code> (Type: WebGLRenderingContext | WebGL2RenderingContext | Object)<br>A WebGL context to associate with this scene, or an object, such as <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, that implements a no-argument <code>getContext</code> method that returns a WebGL context.</li>
+<li><code>vertexShader</code> (Type: string) (optional)<br>Source text of a vertex shader, in OpenGL ES Shading Language (GLSL). If null, a default vertex shader is used instead.</li>
+<li><code>fragmentShader</code> (Type: string) (optional)<br>Source text of a fragment shader in GLSL. If null, a default fragment shader is used instead.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -47,22 +44,22 @@ Source text of a fragment shader in GLSL. If null, a default fragment shader is 
 <li><a href="#H3DU.ShaderProgram_dispose">dispose</a><br>Disposes resources from this shader program.</li>
 <li><a href="#H3DU.ShaderProgram_get">get</a><br>Gets the location of the given uniform or attribute&#39;s name in this program.</li>
 <li><a href="#H3DU.ShaderProgram_getContext">getContext</a><br>Gets the WebGL context associated with this shader program object.</li>
-<li><a href="#H3DU.ShaderProgram.getDefaultFragment">getDefaultFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultFragment">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.getDefaultVertex">getDefaultVertex</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultVertex">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.getEdgeDetectEffect">getEdgeDetectEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEdgeDetectEffect">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.getInvertEffect">getInvertEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeInvertEffect">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.getDefaultFragment">getDefaultFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.getDefaultVertex">getDefaultVertex</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.getEdgeDetectEffect">getEdgeDetectEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.getInvertEffect">getInvertEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram_getUniform">getUniform</a><br>Gets the value of the given uniform in this program.</li>
-<li><a href="#H3DU.ShaderProgram.makeCopyEffect">makeCopyEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.makeEffect">makeEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.makeEffectFragment">makeEffectFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.makeCopyEffect">makeCopyEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.makeEffect">makeEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEffect</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.makeEffectFragment">makeEffectFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram_setUniforms">setUniforms</a><br>Sets the values of one or more uniforms in this program.</li>
-<li><p><a href="#H3DU.ShaderProgram_use">use</a><br>Makes this program the active program in the WebGL
-context associated with it.</p>
+<li><a href="#H3DU.ShaderProgram_use">use</a><br>Makes this program the active program in the WebGL
+context associated with it.</li>
+</ul>
 
 <p><a name='H3DU.ShaderProgram_dispose'></a></p>
 
-<h3>H3DU.ShaderProgram#dispose()</h3></li>
-</ul>
+<h3>H3DU.ShaderProgram#dispose()</h3>
 
 <p>Disposes resources from this shader program.</p>
 
@@ -82,8 +79,7 @@ in the case of H3DU.ShaderInfo.)</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: string)<br>
-The name of an attribute or uniform defined in either the vertex or fragment shader of this shader program. If the uniform or attribute is an array, each element in the array is named as in these examples: &quot;unif[0]&quot;, &quot;unif[1]&quot;. If it&#39;s a struct, each member in the struct is named as in these examples: &quot;unif.member1&quot;, &quot;unif.member2&quot;. If it&#39;s an array of struct, each member is named as in these examples: &quot;unif[0].member1&quot;, &quot;unif[0].member2&quot;.</li>
+<li><code>name</code> (Type: string)<br>The name of an attribute or uniform defined in either the vertex or fragment shader of this shader program. If the uniform or attribute is an array, each element in the array is named as in these examples: &quot;unif[0]&quot;, &quot;unif[1]&quot;. If it&#39;s a struct, each member in the struct is named as in these examples: &quot;unif.member1&quot;, &quot;unif.member2&quot;. If it&#39;s an array of struct, each member is named as in these examples: &quot;unif[0].member1&quot;, &quot;unif[0].member2&quot;.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -105,7 +101,7 @@ name, or null if it doesn&#39;t exist. (Type: number | WebGLUniformLocation | nu
 
 <h3>(static) H3DU.ShaderProgram.getDefaultFragment()</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultFragment">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></p>
 
 <p>Gets the text of the default fragment shader. Putting &quot;#define SHADING\n&quot;
 at the start of the return value enables the lighting model.
@@ -121,7 +117,7 @@ as SHADING is also enabled).</p>
 
 <h3>(static) H3DU.ShaderProgram.getDefaultVertex()</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultVertex">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></p>
 
 <p>Gets the text of the default vertex shader. Putting &quot;#define SHADING\n&quot;
 at the start of the return value enables the lighting model.</p>
@@ -134,7 +130,7 @@ at the start of the return value enables the lighting model.</p>
 
 <h3>(static) H3DU.ShaderProgram.getEdgeDetectEffect([context])</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEdgeDetectEffect">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></p>
 
 <p>Generates a shader program that generates a two-color texture showing
 the source texture&#39;s edges.</p>
@@ -142,8 +138,7 @@ the source texture&#39;s edges.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>context</code> (Type: Object) (optional)<br>
-No longer used; ignored.</li>
+<li><code>context</code> (Type: Object) (optional)<br>No longer used; ignored.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -154,15 +149,14 @@ No longer used; ignored.</li>
 
 <h3>(static) H3DU.ShaderProgram.getInvertEffect([context])</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeInvertEffect">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></p>
 
 <p>Generates a shader program that inverts the colors of a texture.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>context</code> (Type: Object) (optional)<br>
-No longer used; ignored.</li>
+<li><code>context</code> (Type: Object) (optional)<br>No longer used; ignored.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -180,8 +174,7 @@ active program in the WebGL context.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: string)<br>
-The name of a uniform defined in either the vertex or fragment shader of this shader program. See get().</li>
+<li><code>name</code> (Type: string)<br>The name of a uniform defined in either the vertex or fragment shader of this shader program. See get().</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -193,7 +186,7 @@ an attribute is named, not a uniform. (Type: Number | Array.&lt;number&gt;)</p>
 
 <h3>(static) H3DU.ShaderProgram.makeCopyEffect()</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></p>
 
 <p>Generates a shader program that copies the colors of a texture.</p>
 
@@ -205,7 +198,7 @@ an attribute is named, not a uniform. (Type: Number | Array.&lt;number&gt;)</p>
 
 <h3>(static) H3DU.ShaderProgram.makeEffect(context, functionCode)</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEffect</a> instead.</b></p>
 
 <p>Generates a shader program for applying
 a raster effect (postprocessing effect) to a texture.</p>
@@ -213,10 +206,8 @@ a raster effect (postprocessing effect) to a texture.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>context</code> (Type: Object)<br>
-No longer used; ignored.</li>
-<li><p><code>functionCode</code> (Type: string)<br>
-A string giving shader code in OpenGL ES Shading Language (GLSL) that must contain a function with the following signature:</p>
+<li><code>context</code> (Type: Object)<br>No longer used; ignored.</li>
+<li><p><code>functionCode</code> (Type: string)<br>A string giving shader code in OpenGL ES Shading Language (GLSL) that must contain a function with the following signature:</p>
 
 <p>vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)</p>
 
@@ -231,7 +222,7 @@ A string giving shader code in OpenGL ES Shading Language (GLSL) that must conta
 
 <h3>(static) H3DU.ShaderProgram.makeEffectFragment(functionCode)</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></p>
 
 <p>Generates source code for a fragment shader for applying
 a raster effect to a texture.</p>
@@ -239,8 +230,7 @@ a raster effect to a texture.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>functionCode</code> (Type: string)<br>
-See H3DU.ShaderProgram.makeEffect().</li>
+<li><code>functionCode</code> (Type: string)<br>See H3DU.ShaderProgram.makeEffect().</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -258,8 +248,7 @@ saves their values until the next time this object&#39;s &quot;use&quot; method 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>uniforms</code> (Type: Object)<br>
-An object whose keys are the names of uniforms defined in either the vertex or fragment shader of this shader program. If the uniform is an array, each element in the array is named as in these examples: &quot;unif[0]&quot;, &quot;unif[1]&quot;. If it&#39;s a struct, each member in the struct is named as in these examples: &quot;unif.member1&quot;, &quot;unif.member2&quot;. If it&#39;s an array of struct, each member is named as in these examples: &quot;unif[0].member1&quot;, &quot;unif[0].member2&quot;. The value of each key depends on the data type expected for the uniform named by that key. The value can be a 3-, 4-, 9-, or 16-element array if the uniform is a &quot;vec3&quot;, &quot;vec4&quot;, &quot;mat3&quot;, or &quot;mat4&quot;, respectively, or a Number if the uniform is a &quot;float&quot; or &quot;int&quot;.</li>
+<li><code>uniforms</code> (Type: Object)<br>An object whose keys are the names of uniforms defined in either the vertex or fragment shader of this shader program. If the uniform is an array, each element in the array is named as in these examples: &quot;unif[0]&quot;, &quot;unif[1]&quot;. If it&#39;s a struct, each member in the struct is named as in these examples: &quot;unif.member1&quot;, &quot;unif.member2&quot;. If it&#39;s an array of struct, each member is named as in these examples: &quot;unif[0].member1&quot;, &quot;unif[0].member2&quot;. The value of each key depends on the data type expected for the uniform named by that key. The value can be a 3-, 4-, 9-, or 16-element array if the uniform is a &quot;vec3&quot;, &quot;vec4&quot;, &quot;mat3&quot;, or &quot;mat4&quot;, respectively, or a Number if the uniform is a &quot;float&quot; or &quot;int&quot;.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -279,6 +268,8 @@ was called), sets their values now.</p>
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a>)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -364,19 +355,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

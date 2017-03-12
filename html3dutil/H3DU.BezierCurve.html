@@ -10,9 +10,9 @@
 
 <h3>H3DU.BezierCurve(cp, [u1], [u2])</h3>
 
-<p><strong>Augments:</strong> Curve</p>
+<p><b>Augments:</b> Curve</p>
 
-<p><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
+<p><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.html">H3DU.BSplineCurve.fromBezierCurve</a>
 to create a B&eacute;zier curve.</b></p>
 
 <p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B&eacute;zier curve.</p>
@@ -20,25 +20,22 @@ to create a B&eacute;zier curve.</b></p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cp</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>
-An array of control points as specified in <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>.</li>
-<li><code>u1</code> (Type: number) (optional)<br>
-No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation.)</li>
-<li><code>u2</code> (Type: number) (optional)<br>
-No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation.)</li>
+<li><code>cp</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points as specified in <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.html">H3DU.BSplineCurve.fromBezierCurve</a>.</li>
+<li><code>u1</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the starting point for the purpose of interpolation.)</li>
+<li><code>u2</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 0). (This parameter was the ending point for the purpose of interpolation.)</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
 <li><a href="#H3DU.BezierCurve_endPoints">endPoints</a><br>Returns the starting and ending U coordinates of this curve.</li>
-<li><p><a href="#H3DU.BezierCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
-in a B&eacute;zier curve.</p>
+<li><a href="#H3DU.BezierCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
+in a B&eacute;zier curve.</li>
+</ul>
 
 <p><a name='H3DU.BezierCurve_endPoints'></a></p>
 
-<h3>H3DU.BezierCurve#endPoints()</h3></li>
-</ul>
+<h3>H3DU.BezierCurve#endPoints()</h3>
 
 <p>Returns the starting and ending U coordinates of this curve.</p>
 
@@ -57,8 +54,7 @@ in a B&eacute;zier curve.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-Point on the curve to evaluate (generally within the range given in the constructor).</li>
+<li><code>u</code> (Type: number)<br>Point on the curve to evaluate (generally within the range given in the constructor).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -75,6 +71,8 @@ for(var i=0;i&lt;=10;i++) {
 points.push(curve.evaluate(i/10.0));
 }
 </code></pre>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -160,19 +158,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

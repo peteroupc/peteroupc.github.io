@@ -25,20 +25,19 @@ function.</li>
 in a parametric curve.</li>
 <li><a href="#H3DU.CurveEval_normal">normal</a><br><b>Deprecated: Use the &quot;vertex&quot; method instead.</b></li>
 <li><a href="#H3DU.CurveEval_texCoord">texCoord</a><br>Specifies a parametric curve function for generating texture coordinates.</li>
-<li><p><a href="#H3DU.CurveEval_vertex">vertex</a><br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.</p>
+<li><a href="#H3DU.CurveEval_vertex">vertex</a><br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.</li>
+</ul>
 
 <p><a name='H3DU.CurveEval_color'></a></p>
 
-<h3>H3DU.CurveEval#color(evaluator)</h3></li>
-</ul>
+<h3>H3DU.CurveEval#color(evaluator)</h3>
 
 <p>Specifies a parametric curve function for generating color values.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 3-element array.</li>
+<li><code>evaluator</code> (Type: Object)<br>An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 3-element array.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -55,16 +54,11 @@ function.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
-A geometric mesh where the vertices will be generated.</li>
-<li><code>mode</code> (Type: number) (optional)<br>
-If this value is H3DU.Mesh.LINES, or is null or omitted, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.</li>
-<li><code>n</code> (Type: number) (optional)<br>
-Number of subdivisions of the curve to be drawn. Default is 24.</li>
-<li><code>u1</code> (Type: number) (optional)<br>
-Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 0 if not given.</li>
-<li><code>u2</code> (Type: number) (optional)<br>
-Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 1 if not given.</li>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>A geometric mesh where the vertices will be generated.</li>
+<li><code>mode</code> (Type: number) (optional)<br>If this value is H3DU.Mesh.LINES, or is null or omitted, generates a series of lines defining the curve. If this value is H3DU.Mesh.POINTS, generates a series of points along the curve. For any other value, this method has no effect.</li>
+<li><code>n</code> (Type: number) (optional)<br>Number of subdivisions of the curve to be drawn. Default is 24.</li>
+<li><code>u1</code> (Type: number) (optional)<br>Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 0 if not given.</li>
+<li><code>u2</code> (Type: number) (optional)<br>Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 1 if not given.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -81,10 +75,8 @@ in a parametric curve.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
-H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
-<li><code>u</code> (Type: number)<br>
-Point of the curve to evaluate.</li>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
+<li><code>u</code> (Type: number)<br>Point of the curve to evaluate.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -102,8 +94,7 @@ Point of the curve to evaluate.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 3-element array.</li>
+<li><code>evaluator</code> (Type: Object)<br>An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 3-element array.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -119,8 +110,7 @@ An object that must contain a method named <code>evaluate</code> that takes a si
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: Object)<br>
-An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 1- or 2-element array.</li>
+<li><code>evaluator</code> (Type: Object)<br>An object that must contain a method named <code>evaluate</code> that takes a single U coordinate and returns a 1- or 2-element array.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -136,8 +126,7 @@ An object that must contain a method named <code>evaluate</code> that takes a si
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: <a href="H3DU.Curve.html">H3DU.Curve</a> | Object)<br>
-An object described in <a href="H3DU.Curve.html">H3DU.Curve</a>. Can be null, in which case, disables generating vertex positions.</li>
+<li><code>evaluator</code> (Type: <a href="H3DU.Curve.html">H3DU.Curve</a> | Object)<br>An object described in <a href="H3DU.Curve.html">H3DU.Curve</a>. Can be null, in which case, disables generating vertex positions.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -173,6 +162,8 @@ return [0,Math.PiTimes2]
 }
 });
 </code></pre>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -258,19 +249,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

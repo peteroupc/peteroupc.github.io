@@ -49,12 +49,9 @@ or at that point, those methods may be deprecated.</li></ul></p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>vertices</code> (Type: Array.&lt;number&gt;) (optional)<br>
-An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.</li>
-<li><code>indices</code> (Type: Array.&lt;number&gt;) (optional)<br>
-An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null or omitted, creates an initially empty mesh.</li>
-<li><code>format</code> (Type: number) (optional)<br>
-A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul> If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can&#39;t be set. May be null or omitted, in which case &quot;format&quot; is set to 0.</li>
+<li><code>vertices</code> (Type: Array.&lt;number&gt;) (optional)<br>An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.</li>
+<li><code>indices</code> (Type: Array.&lt;number&gt;) (optional)<br>An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null or omitted, creates an initially empty mesh.</li>
+<li><code>format</code> (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul> If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can&#39;t be set. May be null or omitted, in which case &quot;format&quot; is set to 0.</li>
 </ul>
 
 <h3>Members</h3>
@@ -125,7 +122,7 @@ in this mesh.</li>
 <li><a href="#H3DU.Mesh_vertexCount">vertexCount</a><br>Gets the number of vertices included in this mesh.</li>
 </ul>
 
-<p><a id='H3DU.Mesh.BITANGENTS_BIT'></a></p>
+<p><a name='H3DU.Mesh.BITANGENTS_BIT'></a></p>
 
 <h3>H3DU.Mesh.BITANGENTS_BIT (constant)</h3>
 
@@ -133,7 +130,7 @@ in this mesh.</li>
 
 <p>Default Value: <code>16</code></p>
 
-<p><a id='H3DU.Mesh.COLORS_BIT'></a></p>
+<p><a name='H3DU.Mesh.COLORS_BIT'></a></p>
 
 <h3>H3DU.Mesh.COLORS_BIT (constant)</h3>
 
@@ -141,14 +138,14 @@ in this mesh.</li>
 
 <p>Default Value: <code>2</code></p>
 
-<p><a id='H3DU.Mesh.LINES'></a></p>
+<p><a name='H3DU.Mesh.LINES'></a></p>
 
 <h3>H3DU.Mesh.LINES (constant)</h3>
 
 <p>Primitive mode for rendering line segments, made up
 of 2 vertices each.</p>
 
-<p><a id='H3DU.Mesh.LINES_BIT'></a></p>
+<p><a name='H3DU.Mesh.LINES_BIT'></a></p>
 
 <h3>H3DU.Mesh.LINES_BIT (constant)</h3>
 
@@ -157,7 +154,7 @@ of triangles (3 vertices per line).</p>
 
 <p>Default Value: <code>256</code></p>
 
-<p><a id='H3DU.Mesh.LINE_STRIP'></a></p>
+<p><a name='H3DU.Mesh.LINE_STRIP'></a></p>
 
 <h3>H3DU.Mesh.LINE_STRIP (constant)</h3>
 
@@ -167,7 +164,7 @@ line is made up of the last vertex and 1 new vertex.</p>
 
 <p>Default Value: <code>3</code></p>
 
-<p><a id='H3DU.Mesh.NORMALS_BIT'></a></p>
+<p><a name='H3DU.Mesh.NORMALS_BIT'></a></p>
 
 <h3>H3DU.Mesh.NORMALS_BIT (constant)</h3>
 
@@ -175,7 +172,7 @@ line is made up of the last vertex and 1 new vertex.</p>
 
 <p>Default Value: <code>1</code></p>
 
-<p><a id='H3DU.Mesh.POINTS'></a></p>
+<p><a name='H3DU.Mesh.POINTS'></a></p>
 
 <h3>H3DU.Mesh.POINTS (constant)</h3>
 
@@ -184,7 +181,7 @@ of 1 vertex each.</p>
 
 <p>Default Value: <code>0</code></p>
 
-<p><a id='H3DU.Mesh.POINTS_BIT'></a></p>
+<p><a name='H3DU.Mesh.POINTS_BIT'></a></p>
 
 <h3>H3DU.Mesh.POINTS_BIT (constant)</h3>
 
@@ -192,7 +189,7 @@ of 1 vertex each.</p>
 
 <p>Default Value: <code>512</code></p>
 
-<p><a id='H3DU.Mesh.QUADS'></a></p>
+<p><a name='H3DU.Mesh.QUADS'></a></p>
 
 <h3>H3DU.Mesh.QUADS (constant)</h3>
 
@@ -204,7 +201,7 @@ vertices, in that order.</p>
 
 <p>Default Value: <code>7</code></p>
 
-<p><a id='H3DU.Mesh.QUAD_STRIP'></a></p>
+<p><a name='H3DU.Mesh.QUAD_STRIP'></a></p>
 
 <h3>H3DU.Mesh.QUAD_STRIP (constant)</h3>
 
@@ -218,7 +215,7 @@ vertices, in that order.</p>
 
 <p>Default Value: <code>8</code></p>
 
-<p><a id='H3DU.Mesh.TANGENTS_BIT'></a></p>
+<p><a name='H3DU.Mesh.TANGENTS_BIT'></a></p>
 
 <h3>H3DU.Mesh.TANGENTS_BIT (constant)</h3>
 
@@ -226,7 +223,7 @@ vertices, in that order.</p>
 
 <p>Default Value: <code>8</code></p>
 
-<p><a id='H3DU.Mesh.TEXCOORDS_BIT'></a></p>
+<p><a name='H3DU.Mesh.TEXCOORDS_BIT'></a></p>
 
 <h3>H3DU.Mesh.TEXCOORDS_BIT (constant)</h3>
 
@@ -234,7 +231,7 @@ vertices, in that order.</p>
 
 <p>Default Value: <code>4</code></p>
 
-<p><a id='H3DU.Mesh.TRIANGLES'></a></p>
+<p><a name='H3DU.Mesh.TRIANGLES'></a></p>
 
 <h3>H3DU.Mesh.TRIANGLES (constant)</h3>
 
@@ -243,7 +240,7 @@ of 3 vertices each.</p>
 
 <p>Default Value: <code>4</code></p>
 
-<p><a id='H3DU.Mesh.TRIANGLE_FAN'></a></p>
+<p><a name='H3DU.Mesh.TRIANGLE_FAN'></a></p>
 
 <h3>H3DU.Mesh.TRIANGLE_FAN (constant)</h3>
 
@@ -254,7 +251,7 @@ the previous vertex, and 1 new vertex.</p>
 
 <p>Default Value: <code>6</code></p>
 
-<p><a id='H3DU.Mesh.TRIANGLE_STRIP'></a></p>
+<p><a name='H3DU.Mesh.TRIANGLE_STRIP'></a></p>
 
 <h3>H3DU.Mesh.TRIANGLE_STRIP (constant)</h3>
 
@@ -281,12 +278,9 @@ not automatically be normalized to unit length.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)<br>
-X coordinate of the bitangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>
-Y coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>
-Z coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: number)<br>X coordinate of the bitangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number)<br>Y coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number)<br>Z coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -306,12 +300,9 @@ that mode. Only the red, green, and blue components will be used.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
-A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
-<li><code>g</code> (Type: number)<br>
-Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number)<br>
-Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a>, or the red color component (0-1).</li>
+<li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -328,8 +319,7 @@ in this mesh.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>func</code> (Type: function)<br>
-A function that will be called for each primitive in the mesh. The function takes a single parameter, consisting of an array of one, two, or three vertex objects. A point will have one vertex, a line two vertices and a triangle three. Each vertex object may have these properties:<ul> <li>&quot;position&quot;: A 3-element array of the vertex&#39;s position. Always present. <li>&quot;normal&quot;: A 3-element array of the vertex&#39;s normal. May be absent. <li>&quot;color&quot;: An at least 3-element array of the vertex&#39;s color. Each component generally ranges from 0 to 1. May be absent. <li>&quot;uv&quot;: A 2-element array of the vertex&#39;s texture coordinates (the first element is U, the second is V). Each component generally ranges from 0 to 1. May be absent. </ul></li>
+<li><code>func</code> (Type: function)<br>A function that will be called for each primitive in the mesh. The function takes a single parameter, consisting of an array of one, two, or three vertex objects. A point will have one vertex, a line two vertices and a triangle three. Each vertex object may have these properties:<ul> <li>&quot;position&quot;: A 3-element array of the vertex&#39;s position. Always present. <li>&quot;normal&quot;: A 3-element array of the vertex&#39;s normal. May be absent. <li>&quot;color&quot;: An at least 3-element array of the vertex&#39;s color. Each component generally ranges from 0 to 1. May be absent. <li>&quot;uv&quot;: A 2-element array of the vertex&#39;s texture coordinates (the first element is U, the second is V). Each component generally ranges from 0 to 1. May be absent. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -363,8 +353,7 @@ index in this mesh.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the vertex to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the vertex to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -384,8 +373,7 @@ index in this mesh.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the vertex normal to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the vertex normal to get. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -405,14 +393,13 @@ a normal. (Type: Array.&lt;number&gt;)</p>
 The vertices from the other mesh will be copied into this one,
 and the other mesh&#39;s indices copied or adapted.
 Also, resets the primitive
-mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
+mode (see <a href="H3DU.Mesh.html#H3DU.html">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>other</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>
-A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh&#39;s primitive type is incompatible with the the other mesh&#39;s primitive type (for example, a triangle type with LINE_STRIP).</li>
+<li><code>other</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh&#39;s primitive type is incompatible with the the other mesh&#39;s primitive type (for example, a triangle type with LINE_STRIP).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -445,8 +432,7 @@ in future versions.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>m</code> (Type: number)<br>
-A primitive type. One of the following: H3DU.Mesh.TRIANGLES, H3DU.Mesh.LINES, H3DU.Mesh.LINE_STRIP, H3DU.Mesh.TRIANGLE_STRIP, H3DU.Mesh.TRIANGLE_FAN, H3DU.Mesh.QUADS, H3DU.Mesh.QUAD_STRIP. Throws an error if the primitive type is incompatible with the current primitive type (for example, a triangle type with LINE_STRIP).</li>
+<li><code>m</code> (Type: number)<br>A primitive type. One of the following: H3DU.Mesh.TRIANGLES, H3DU.Mesh.LINES, H3DU.Mesh.LINE_STRIP, H3DU.Mesh.TRIANGLE_STRIP, H3DU.Mesh.TRIANGLE_FAN, H3DU.Mesh.QUADS, H3DU.Mesh.QUAD_STRIP. Throws an error if the primitive type is incompatible with the current primitive type (for example, a triangle type with LINE_STRIP).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -467,12 +453,9 @@ not automatically be normalized to unit length.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)<br>
-X coordinate of the normal. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>
-Y coordinate of the normal. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>
-Z coordinate of the normal. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: number)<br>X coordinate of the normal. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number)<br>Y coordinate of the normal. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number)<br>Z coordinate of the normal. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -515,10 +498,8 @@ be normalized to have a length of 1 (unless the normal is (0,0,0)).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>flat</code> (Type: Boolean)<br>
-If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.</li>
-<li><code>inward</code> (Type: Boolean)<br>
-If true, the generated normals will point inward; otherwise, outward.</li>
+<li><code>flat</code> (Type: Boolean)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.</li>
+<li><code>inward</code> (Type: Boolean)<br>If true, the generated normals will point inward; otherwise, outward.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -600,12 +581,9 @@ Only the color&#39;s red, green, and blue components will be used.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>
-A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
-<li><code>g</code> (Type: number)<br>
-Green component of the color (0-1). May be null or omitted if a string is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number)<br>
-Blue component of the color (0-1). May be null or omitted if a string is given as the &quot;r&quot; parameter.</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a>, or the red color component (0-1).</li>
+<li><code>g</code> (Type: number)<br>Green component of the color (0-1). May be null or omitted if a string is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number)<br>Blue component of the color (0-1). May be null or omitted if a string is given as the &quot;r&quot; parameter.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -623,14 +601,10 @@ equals the number of vertices in this mesh or greater.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.</li>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>
-X coordinate of the vertex position. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex position.</li>
-<li><code>y</code> (Type: number)<br>
-Y coordinate of the vertex position. May be null or omitted if &quot;x&quot; is an array.</li>
-<li><code>z</code> (Type: number)<br>
-Z coordinate of the vertex position. May be null or omitted if &quot;x&quot; is an array.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.</li>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X coordinate of the vertex position. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex position.</li>
+<li><code>y</code> (Type: number)<br>Y coordinate of the vertex position. May be null or omitted if &quot;x&quot; is an array.</li>
+<li><code>z</code> (Type: number)<br>Z coordinate of the vertex position. May be null or omitted if &quot;x&quot; is an array.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -648,14 +622,10 @@ equals the number of vertices in this mesh or greater.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.</li>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>
-X coordinate of the vertex normal. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex normal.</li>
-<li><code>y</code> (Type: number)<br>
-Y coordinate of the vertex normal. May be null or omitted if &quot;x&quot; is an array.</li>
-<li><code>z</code> (Type: number)<br>
-Z coordinate of the vertex normal. May be null or omitted if &quot;x&quot; is an array.</li>
+<li><code>index</code> (Type: number)<br>Zero-based index of the vertex to set. The index ranges from 0 to less than the number of vertices in the mesh, not the number of vertex indices.</li>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X coordinate of the vertex normal. Can also be a 3-element array giving the X, Y, and Z coordinates, respectively, of the vertex normal.</li>
+<li><code>y</code> (Type: number)<br>Y coordinate of the vertex normal. May be null or omitted if &quot;x&quot; is an array.</li>
+<li><code>z</code> (Type: number)<br>Z coordinate of the vertex normal. May be null or omitted if &quot;x&quot; is an array.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -676,12 +646,9 @@ not automatically be normalized to unit length.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)<br>
-X coordinate of the tangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>
-Y coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>
-Z coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: number)<br>X coordinate of the tangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number)<br>Y coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number)<br>Z coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -706,10 +673,8 @@ right corner (by default).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-X coordinate of the texture, from 0-1. If &quot;v&quot; are null or omitted, this is instead a 3-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>v</code> (Type: number)<br>
-Y coordinate of the texture, from 0-1. If &quot;u&quot; is an array, this parameter can be omitted.</li>
+<li><code>u</code> (Type: number)<br>X coordinate of the texture, from 0-1. If &quot;v&quot; are null or omitted, this is instead a 3-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>v</code> (Type: number)<br>Y coordinate of the texture, from 0-1. If &quot;u&quot; is an array, this parameter can be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -738,15 +703,14 @@ to lines. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 <p>Transforms the positions and normals of all the vertices currently
 in this mesh. The matrix won&#39;t affect vertices added afterwards.
 Also, resets the primitive
-mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
+mode (see <a href="H3DU.Mesh.html#H3DU.html">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices. Future vertices should not be
 added after calling this method without calling mode() first.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>
-A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).</li>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -763,10 +727,8 @@ be treated as 0.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>
-The X coordinate. If &quot;y&quot; is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>
-The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -785,12 +747,9 @@ and texture coordinates if they have been defined.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>
-The X coordinate. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>
-The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>
-The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number)<br>The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -806,6 +765,8 @@ The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</
 <h4>Return Value</h4>
 
 <p>Return value. (Type: number)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -891,19 +852,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

@@ -10,7 +10,7 @@
 
 <h3>H3DU.BSplineCurve(controlPoints, knots, [bits])</h3>
 
-<p><strong>Augments:</strong> Curve</p>
+<p><b>Augments:</b> Curve</p>
 
 <p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.
 B-spline curves can also represent all B&eacute;zier curves (see <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).</p>
@@ -25,12 +25,9 @@ necessarily cross the curve.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>
-An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point&#39;s length represents the size of all the control points.</li>
-<li><p><code>knots</code> (Type: Array.&lt;number&gt;)<br>
-Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve&#39;s degree. If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i>B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.<br> If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve, in which the first and last control points match the curve&#39;s end points.</p></li>
-<li><p><code>bits</code> (Type: number) (optional)<br>
-Bits for defining input and controlling output. Zero or more of BSplineCurve.WEIGHTED_BIT, BSplineCurve.HOMOGENEOUS_BIT, and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</p></li>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point&#39;s length represents the size of all the control points.</li>
+<li><p><code>knots</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve&#39;s degree. If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i>B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.<br> If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve, in which the first and last control points match the curve&#39;s end points.</p></li>
+<li><p><code>bits</code> (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of BSplineCurve.WEIGHTED_BIT, BSplineCurve.HOMOGENEOUS_BIT, and BSplineCurve.DIVIDE_BIT. If null or omitted, no bits are set.</p></li>
 </ul>
 
 <h3>Members</h3>
@@ -78,7 +75,7 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 this curve at the given point.</li>
 </ul>
 
-<p><a id='H3DU.BSplineCurve.DIVIDE_BIT'></a></p>
+<p><a name='H3DU.BSplineCurve.DIVIDE_BIT'></a></p>
 
 <h3>H3DU.BSplineCurve.DIVIDE_BIT (constant)</h3>
 
@@ -93,7 +90,7 @@ If this bit is set, the length of each control point must be at least 2.</p>
 
 <p>Default Value: <code>2</code></p>
 
-<p><a id='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a></p>
+<p><a name='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a></p>
 
 <h3>H3DU.BSplineCurve.HOMOGENEOUS_BIT (constant)</h3>
 
@@ -108,7 +105,7 @@ Only used with WEIGHTED_BIT.</p>
 
 <p>Default Value: <code>4</code></p>
 
-<p><a id='H3DU.BSplineCurve.WEIGHTED_BIT'></a></p>
+<p><a name='H3DU.BSplineCurve.WEIGHTED_BIT'></a></p>
 
 <h3>H3DU.BSplineCurve.WEIGHTED_BIT (constant)</h3>
 
@@ -126,7 +123,7 @@ method will be in homogeneous coordinates.</p>
 
 <p>Default Value: <code>1</code></p>
 
-<p><a id='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a></p>
+<p><a name='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a></p>
 
 <h3>H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS (constant)</h3>
 
@@ -146,12 +143,9 @@ and to the line between the next-to-last and last control points.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>
-Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
-<li><code>degree</code> (Type: number) (optional)<br>
-Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
-<li><code>bits</code> (Type: number) (optional)<br>
-Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -173,10 +167,8 @@ and to the line between the next-to-last and last control points.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>controlPoints</code> (Type: number | Object)<br>
-Number of control points the curve will have, or an array of control points.</li>
-<li><code>degree</code> (Type: number) (optional)<br>
-Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>controlPoints</code> (Type: number | Object)<br>Number of control points the curve will have, or an array of control points.</li>
+<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -206,8 +198,7 @@ in a B-spline curve.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-Point on the curve to evaluate. NOTE: Since version 2.0, this parameter is no longer scaled according to the curve&#39;s knot vector. To get the curve&#39;s extents, call this object&#39;s <code>endPoints</code> method.</li>
+<li><code>u</code> (Type: number)<br>Point on the curve to evaluate. NOTE: Since version 2.0, this parameter is no longer scaled according to the curve&#39;s knot vector. To get the curve&#39;s extents, call this object&#39;s <code>endPoints</code> method.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -234,10 +225,8 @@ points.push(curve.evaluate(i/10.0));
 <h4>Parameters</h4>
 
 <ul>
-<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>
-An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 results in a straight line segment. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
-<li><code>bits</code> (Type: number) (optional)<br>
-Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 results in a straight line segment. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -258,10 +247,8 @@ Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>curve</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>
-An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.</li>
-<li><code>tension</code> (Type: number) (optional)<br>
-A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).</li>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points, each with the same number of values, that describe a cardinal spline. Each point, except the first and the last, will be tangent to the line that connects the points adjacent to it. The spline starts at the second control point and ends at the next-to-last control point. The array must have at least four control points.</li>
+<li><code>tension</code> (Type: number) (optional)<br>A tension parameter ranging from 0 to 1. Closer to 1 means closer to a straight line. If null or omitted, this value is 0.5 (indicating what is commonly called a <i>Catmull-Rom spline</i>).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -283,8 +270,7 @@ same path as the cardinal spline. (Type: <a href="H3DU.BSplineCurve.html">H3DU.B
 <h4>Parameters</h4>
 
 <ul>
-<li><code>curve</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>
-An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the tangent vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
+<li><code>curve</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the tangent vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -312,8 +298,7 @@ in this curve object.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-Point on the curve where this curve will be split.</li>
+<li><code>u</code> (Type: number)<br>Point on the curve where this curve will be split.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -334,12 +319,9 @@ will be null if <code>u</code> is at or after the end of the curve. (Type: Array
 <h4>Parameters</h4>
 
 <ul>
-<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>
-Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
-<li><code>degree</code> (Type: number) (optional)<br>
-Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
-<li><code>bits</code> (Type: number) (optional)<br>
-Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>Array of control points as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
+<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -358,10 +340,8 @@ passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href=
 <h4>Parameters</h4>
 
 <ul>
-<li><code>controlPoints</code> (Type: number | Object)<br>
-Number of control points the curve will have, or an array of control points.</li>
-<li><code>degree</code> (Type: number) (optional)<br>
-Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
+<li><code>controlPoints</code> (Type: number | Object)<br>Number of control points the curve will have, or an array of control points.</li>
+<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null or omitted, the default is 3.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -380,8 +360,7 @@ this curve at the given point.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-Point on the curve to evaluate.</li>
+<li><code>u</code> (Type: number)<br>Point on the curve to evaluate.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -389,6 +368,8 @@ Point on the curve to evaluate.</li>
 <p>An array giving the velocity vector.
 It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number&gt;)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -474,19 +455,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

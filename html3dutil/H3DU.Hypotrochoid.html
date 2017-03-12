@@ -10,7 +10,7 @@
 
 <h3>H3DU.Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [rotationDegrees])</h3>
 
-<p><strong>Augments:</strong> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
+<p><b>Augments:</b> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
 
 <p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).</p>
@@ -43,14 +43,10 @@ the HTML 3D Library. Example:</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>outerRadius</code> (Type: number)<br>
-Radius of the circle whose position is fixed.</li>
-<li><code>innerRadius</code> (Type: number)<br>
-Radius of the rolling circle. A hypocycloid results when distFromInnerCenter=innerRadius.</li>
-<li><code>distFromInnerCenter</code> (Type: number)<br>
-Distance from the center of the rolling circle to the drawing pen.</li>
-<li><code>rotationDegrees</code> (Type: number) (optional)<br>
-Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
+<li><code>outerRadius</code> (Type: number)<br>Radius of the circle whose position is fixed.</li>
+<li><code>innerRadius</code> (Type: number)<br>Radius of the rolling circle. A hypocycloid results when distFromInnerCenter=innerRadius.</li>
+<li><code>distFromInnerCenter</code> (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.</li>
+<li><code>rotationDegrees</code> (Type: number) (optional)<br>Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -66,12 +62,12 @@ curve and the point at the given U coordinate of this curve.</li>
 form of hypotrochoid.</li>
 <li><a href="#H3DU.Hypotrochoid_scaleTo">scaleTo</a><br>Creates a modified version of this curve so that it
 fits the given radius.</li>
-<li><p><a href="#H3DU.Hypotrochoid_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</p>
+<li><a href="#H3DU.Hypotrochoid_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</li>
+</ul>
 
 <p><a name='H3DU.Hypotrochoid_accel'></a></p>
 
-<h3>H3DU.Hypotrochoid#accel(u)</h3></li>
-</ul>
+<h3>H3DU.Hypotrochoid#accel(u)</h3>
 
 <p>Finds an approximate acceleration vector at the given U coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>accel</code>
@@ -83,8 +79,7 @@ the velocity vector.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -102,8 +97,7 @@ curve and the point at the given U coordinate of this curve.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -133,8 +127,7 @@ and the second number is the end of the curve. (Type: Array.&lt;number&gt;)</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-U coordinate.</li>
+<li><code>u</code> (Type: number)<br>U coordinate.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -157,8 +150,7 @@ vector divided by that derivative&#39;s length. The normal returned by this meth
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -176,12 +168,9 @@ form of hypotrochoid.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>n</code> (Type: number)<br>
-Parameter that determines the petal form of the rose. For example, the rose is symmetrical if this number is even.</li>
-<li><code>distFromInnerCenter</code> (Type: number)<br>
-Distance from the center of the rolling circle to the drawing pen.</li>
-<li><code>rotationDegrees</code> (Type: number) (optional)<br>
-Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
+<li><code>n</code> (Type: number)<br>Parameter that determines the petal form of the rose. For example, the rose is symmetrical if this number is even.</li>
+<li><code>distFromInnerCenter</code> (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.</li>
+<li><code>rotationDegrees</code> (Type: number) (optional)<br>Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -198,8 +187,7 @@ fits the given radius.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>radius</code> (Type: number)<br>
-Desired radius of the curve.</li>
+<li><code>radius</code> (Type: number)<br>Desired radius of the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -220,14 +208,15 @@ the position (from the <code>evaluate</code> method).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>
-U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>An array describing a velocity vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -313,19 +302,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){

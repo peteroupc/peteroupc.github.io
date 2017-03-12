@@ -17,7 +17,7 @@ other <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> objects.</p>
 <h3>Members</h3>
 
 <ul>
-<li><a href="#H3DU.ShapeGroup_shapes">shapes</a><br><b>Deprecated: Use the <a href="H3DU.ShapeGroup.html#H3DU.ShapeGroup_shapeCount">H3DU.ShapeGroup#shapeCount</a>,
+<li><a href="#H3DU.ShapeGroup_shapes">shapes</a><br><b>Deprecated: Use the <a href="H3DU.ShapeGroup.html#H3DU.html">H3DU.ShapeGroup#shapeCount</a>,
 <a href="H3DU.ShapeGroup.html#H3DU.ShapeGroup_getShape">H3DU.ShapeGroup#getShape</a>, and
 <a href="H3DU.ShapeGroup.html#H3DU.ShapeGroup_setShape">H3DU.ShapeGroup#setShape</a> methods instead.</b></li>
 </ul>
@@ -56,11 +56,11 @@ are direct children of this shape group.</li>
 <li><a href="#H3DU.ShapeGroup_vertexCount">vertexCount</a><br>Gets the number of vertices composed by all shapes in this shape group.</li>
 </ul>
 
-<p><a id='H3DU.ShapeGroup_shapes'></a></p>
+<p><a name='H3DU.ShapeGroup_shapes'></a></p>
 
 <h3>H3DU.ShapeGroup#shapes</h3>
 
-<p><b>Deprecated: Use the <a href="H3DU.ShapeGroup.html#H3DU.ShapeGroup_shapeCount">H3DU.ShapeGroup#shapeCount</a>,
+<p><b>Deprecated: Use the <a href="H3DU.ShapeGroup.html#H3DU.html">H3DU.ShapeGroup#shapeCount</a>,
 <a href="H3DU.ShapeGroup.html#H3DU.ShapeGroup_getShape">H3DU.ShapeGroup#getShape</a>, and
 <a href="H3DU.ShapeGroup.html#H3DU.ShapeGroup_setShape">H3DU.ShapeGroup#setShape</a> methods instead.</b></p>
 
@@ -80,8 +80,7 @@ will be stored in the list of shapes.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>
-A 3D shape. Throws an error if null.</li>
+<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>A 3D shape. Throws an error if null.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -142,8 +141,7 @@ in this shape group at the given index.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Integer index, starting from 0, of the shape or shape group to set.</li>
+<li><code>index</code> (Type: number)<br>Integer index, starting from 0, of the shape or shape group to set.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -191,8 +189,7 @@ and points) composed by all shapes in this shape group.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>
-The 3D shape to remove.</li>
+<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>The 3D shape to remove.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -208,8 +205,7 @@ The 3D shape to remove.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>material</code> (Type: <a href="H3DU.Material.html">H3DU.Material</a>)<br>
-The material to use.</li>
+<li><code>material</code> (Type: <a href="H3DU.Material.html">H3DU.Material</a>)<br>The material to use.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -222,19 +218,16 @@ The material to use.</li>
 
 <p>Sets the relative position of the shapes in this group
 from their original position.
-See <a href="H3DU.Transform.html#H3DU.Transform_setPosition">H3DU.Transform#setPosition</a>
+See <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setPosition</a>
 This method will modify this shape group&#39;s transform
 rather than the transform for each shape in the group.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>
-X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.</li>
-<li><code>y</code> (Type: number)<br>
-Y coordinate.</li>
-<li><code>z</code> (Type: number)<br>
-Z coordinate.</li>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setScale</a>.</li>
+<li><code>y</code> (Type: number)<br>Y coordinate.</li>
+<li><code>z</code> (Type: number)<br>Z coordinate.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -253,8 +246,7 @@ rather than the transform for each shape in the group.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>
-A four-element array describing the rotation.</li>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -266,19 +258,16 @@ A four-element array describing the rotation.</li>
 <h3>H3DU.ShapeGroup#setScale(x, y, z)</h3>
 
 <p>Sets the scale of this shape group relative to its original
-size. See <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.
+size. See <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setScale</a>.
 This method will modify this shape group&#39;s transform
 rather than the transform for each shape in the group.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>
-Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.</li>
-<li><code>y</code> (Type: number)<br>
-Scaling factor for this object&#39;s height.</li>
-<li><code>z</code> (Type: number)<br>
-Scaling factor for this object&#39;s depth.</li>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setScale</a>.</li>
+<li><code>y</code> (Type: number)<br>Scaling factor for this object&#39;s height.</li>
+<li><code>z</code> (Type: number)<br>Scaling factor for this object&#39;s depth.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -294,8 +283,7 @@ Scaling factor for this object&#39;s depth.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>material</code> (Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>)<br>
-Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> here is deprecated.</i></li>
+<li><code>material</code> (Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>)<br>Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a> here is deprecated.</i></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -311,10 +299,8 @@ Source code for a WebGL shader program. <i>Using a <a href="H3DU.ShaderProgram.h
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: number)<br>
-Integer index, starting from 0, to set the shape or shape group at.</li>
-<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>
-Shape object to set at the given index.</li>
+<li><code>index</code> (Type: number)<br>Integer index, starting from 0, to set the shape or shape group at.</li>
+<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>Shape object to set at the given index.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -330,8 +316,7 @@ Shape object to set at the given index.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>material</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | String)<br>
-<a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet. This parameter can also be a <a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a> object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</li>
+<li><code>material</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | String)<br><a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet. This parameter can also be a <a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a> object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -351,8 +336,7 @@ with the child shape&#39;s transform as it renders the child shape.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>transform</code> (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)<br>
-The transform to copy for the use of this shape group.</li>
+<li><code>transform</code> (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)<br>The transform to copy for the use of this shape group.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -368,8 +352,7 @@ The transform to copy for the use of this shape group.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>value</code> (Type: Boolean)<br>
-True if this shape group will be visible; otherwise, false.</li>
+<li><code>value</code> (Type: Boolean)<br>True if this shape group will be visible; otherwise, false.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -396,6 +379,8 @@ are direct children of this shape group.</p>
 <h4>Return Value</h4>
 
 <p>Return value. (Type: number)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
@@ -481,19 +466,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
-<li><a href="tutorial-camera.html">The &quot;Camera&quot; and Geometric Transforms</a></li>
-<li><a href="tutorial-colors.html">Color Strings</a></li>
-<li><a href="tutorial-filters.html">Graphics Filters</a></li>
-<li><a href="tutorial-glmath.html">H3DU&#39;s Math Functions</a></li>
-<li><a href="tutorial-history.html">Older Version History</a></li>
-<li><a href="tutorial-matrixdetails.html">Matrix Details</a></li>
-<li><a href="tutorial-meshexamples.html">Examples of Creating Meshes on the Fly</a></li>
-<li><a href="tutorial-overview.html">Library Overview</a></li>
-<li><a href="tutorial-paths.html">2-Dimensional Graphics Paths</a></li>
-<li><a href="tutorial-shapes.html">Creating Shapes</a></li>
-<li><a href="tutorial-subclass.html">Subclassing</a></li>
-<li><a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a></li>
-<li><a href="tutorial-textures.html">Texture Examples</a></li>
 </ul>
 </nav><script>
 if(document.location.href.indexOf("file://")!=0){
