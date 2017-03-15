@@ -23,7 +23,7 @@ vertex positions and colors of a curve.</p>
 function.</li>
 <li><a href="#H3DU.CurveEval_evalOne">evalOne</a><br>Generates vertex positions and attributes based on a point
 in a parametric curve.</li>
-<li><a href="#H3DU.CurveEval_normal">normal</a><br><b>Deprecated: Use the &quot;vertex&quot; method instead.</b></li>
+<li><a href="#H3DU.CurveEval_normal">normal</a><br><strong>Deprecated: Use the &quot;vertex&quot; method instead.</strong></li>
 <li><a href="#H3DU.CurveEval_texCoord">texCoord</a><br>Specifies a parametric curve function for generating texture coordinates.</li>
 <li><a href="#H3DU.CurveEval_vertex">vertex</a><br>Specifies a curve evaluator object for generating the vertex positions of a parametric curve.</li>
 </ul>
@@ -87,7 +87,7 @@ in a parametric curve.</p>
 
 <h3>H3DU.CurveEval#normal(evaluator)</h3>
 
-<p><b>Deprecated: Use the &quot;vertex&quot; method instead.</b></p>
+<p><strong>Deprecated: Use the &quot;vertex&quot; method instead.</strong></p>
 
 <p>Specifies a parametric curve function for generating normals.</p>
 
@@ -133,36 +133,6 @@ in a parametric curve.</p>
 
 <p>This object. (Type: <a href="H3DU.CurveEval.html">H3DU.CurveEval</a>)</p>
 
-<h4>Example</h4>
-
-<p>The following function sets a circle as the curve
-to use for generating vertex positions. It demonstrates how all methods
-defined for curve evaluator objects can be implemented.</p>
-
-<pre><code>curveEval.vertex({&quot;evaluate&quot;:function(u) {
-&quot;use strict&quot;;
-return [Math.cos(u),Math.sin(u),0]
-},
-&quot;velocity&quot;:function(u) {
-return [-Math.sin(u),Math.cos(u),0]
-},
-&quot;accel&quot;:function(u) {
-return [-Math.cos(u),-Math.sin(u),0]
-},
-&quot;normal&quot;:function(u) {
-// NOTE: The velocity vector will already be a
-// unit vector, so we use the accel vector instead
-return H3DU.Math.vec3normalize(this.accel(u));
-},
-&quot;arcLength&quot;:function(u) {
-return u;
-},
-&quot;endPoints&quot;:function(u) {
-return [0,Math.PiTimes2]
-}
-});
-</code></pre>
-
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
@@ -186,13 +156,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.ArcLengthParamCurve.html">H3DU.ArcLengthParamCurve</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
@@ -203,7 +171,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
-<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
@@ -223,6 +190,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>

@@ -24,8 +24,8 @@
  * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
  * @memberof H3DU
  * @param {string} url The URL to load.
- * @returns {Promise} A promise that resolves when the
- * .STL file is loaded successfully (the result will be an {@link H3DU.Mesh} object),
+ * @returns {Promise<H3DU.MeshBuffer>} A promise that resolves when the
+ * .STL file is loaded successfully (the result will be an {@link H3DU.MeshBuffer} object),
  * and is rejected when an error occurs when loading the .STL file.
  */
   H3DU.loadStlFromUrl = function(url) {
@@ -117,6 +117,6 @@
       }
       return {"error": new Error("unsupported line: " + line)};
     }
-    return {"success": mesh};
+    return {"success": new H3DU.MeshBuffer(mesh)};
   };
 }(H3DU));

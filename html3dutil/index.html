@@ -6,7 +6,6 @@
 
 <ul>
 <li><a href="Camera.html">Camera</a><br><b>Deprecated: Use <a href="H3DU.Camera.html">H3DU.Camera</a> instead.</b></li>
-<li><a href="CurveTube.html">CurveTube</a><br><b>Deprecated: Use <a href="H3DU.CurveTube.html">H3DU.CurveTube</a> instead.</b></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a><br><b>Deprecated: Use <a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a> instead.</b></li>
 <li><a href="FrameCounter.html">FrameCounter</a><br><b>Deprecated: Use <a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a> instead.</b></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a><br><b>Deprecated: Use <a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a> instead.</b></li>
@@ -14,9 +13,6 @@
 <li><a href="H3DU.html">H3DU</a><br>The Public Domain HTML 3D Library contains classes and utility
 methods to ease the development of HTML 3D applications, such
 as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.</li>
-<li><a href="H3DU.ArcLengthParamCurve.html">H3DU.ArcLengthParamCurve</a><br>A <a href="H3DU.Curve.html">curve evaluator object</a> that
-wraps another curve evaluator object and remaps its U coordinates
-to an <i>arc length parameterization</i>.</li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.</li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a><br>A <a href="H3DU.SurfaceEval.html#H3DU.html">surface evaluator object</a> for a B-spline (basis spline) surface.</li>
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a><br>A <code>Batch3D</code> represents a so-called &quot;scene graph&quot;.</li>
@@ -33,12 +29,11 @@ view of a 3D scene, in the nature of an abstract &quot;camera&quot;.</li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.</li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a><br>An evaluator of curve evaluator objects for generating
 vertex positions and colors of a curve.</li>
-<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a><br>A <a href="H3DU.SurfaceEval.html#H3DU.html">surface evaluator object</a> for a tube extruded from a parametric curve.</li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).</li>
-<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a><br><b>Deprecated: This class is likely to become a private class.
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a><br><strong>Deprecated: This class is likely to become a private class.
 Use the FrameBufferInfo class instead, which is not coupled to WebGL
-contexts.</b></li>
+contexts.</strong></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.</li>
 <li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.</li>
 <li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a><br>A class that displays a frame counter HTML element.</li>
@@ -63,6 +58,8 @@ of 4x4 transformation matrices.</li>
 of various geometric shapes and solids.</li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a><br>WaveFront OBJ format.</li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a><br>A material for physically-based rendering.</li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a><br>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve
+made up of one or more individual curves.</li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a><br>Describes a batch (a scene graph of 3D objects) and options for
 rendering that batch.</li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering
@@ -105,7 +102,7 @@ from one coordinate system to another.</li>
 <li><a href="MatrixStack.html">MatrixStack</a><br><b>Deprecated: Use <a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a> instead.</b></li>
 <li><a href="MeshJSON.html">MeshJSON</a><br><b>Deprecated: Use <a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a> instead.</b></li>
 <li><a href="ObjData.html">ObjData</a><br><b>Deprecated: Use <a href="H3DU.ObjData.html">H3DU.ObjData</a> instead.</b></li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a><br><b>Deprecated: Will be removed in the future.</b></li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a><br><strong>Deprecated: Will be removed in the future.</strong></li>
 <li><a href="Promise.html">Promise</a><br>A promise holds a value to be resolved in the future.</li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a><br><b>Deprecated: Use <a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a> instead.</b></li>
 <li><a href="Trochoid.html">Trochoid</a><br><b>Deprecated: Use <a href="H3DU.Trochoid.html">H3DU.Trochoid</a> instead.</b></li>
@@ -225,13 +222,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.ArcLengthParamCurve.html">H3DU.ArcLengthParamCurve</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
@@ -242,7 +237,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
-<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
@@ -262,6 +256,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>

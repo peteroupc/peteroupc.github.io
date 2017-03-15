@@ -376,7 +376,6 @@ Operation.prototype.simplify = function() {
   Expression.simplifyNodes(this.nodes);
   if ((b = (c = this.operator === "plus") !== false && (typeof c !== "undefined" && c !== null) ? c : this.operator === "mul") !== false && (typeof b !== "undefined" && b !== null) ? b : this.operator === "div") {
     done = false;
- // resimplify = false;
     while (!(b = done)) {
       origlength = this.nodes.length;
       done = true;

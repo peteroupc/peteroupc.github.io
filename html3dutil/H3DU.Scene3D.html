@@ -64,13 +64,13 @@ H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_getProjectionMatrix">getProjectionMatrix</a><br><b>Deprecated: Use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> instead. To get the projection matrix of a Batch3D, call its getProjectionMatrix method. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_getViewMatrix">getViewMatrix</a><br><b>Deprecated: Use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> instead. To get the view matrix of a Batch3D, call its getViewMatrix method. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_getWidth">getWidth</a><br>Gets the viewport width for this scene.</li>
-<li><a href="#H3DU.Scene3D_loadAndMapTexture">loadAndMapTexture</a><br><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
-instead.</b></li>
-<li><a href="#H3DU.Scene3D_loadAndMapTextures">loadAndMapTextures</a><br><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
-instead.</b></li>
-<li><a href="#H3DU.Scene3D_loadTexture">loadTexture</a><br><b>Deprecated: Use the H3DU.TextureLoader method loadTexture or
-loadTexturesAll instead.</b></li>
-<li><a href="#H3DU.Scene3D_makeShape">makeShape</a><br><b>Deprecated: Use the H3DU.Shape constructor instead.</b></li>
+<li><a href="#H3DU.Scene3D_loadAndMapTexture">loadAndMapTexture</a><br><strong>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</strong></li>
+<li><a href="#H3DU.Scene3D_loadAndMapTextures">loadAndMapTextures</a><br><strong>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</strong></li>
+<li><a href="#H3DU.Scene3D_loadTexture">loadTexture</a><br><strong>Deprecated: Use the H3DU.TextureLoader method loadTexture or
+loadTexturesAll instead.</strong></li>
+<li><a href="#H3DU.Scene3D_makeShape">makeShape</a><br><strong>Deprecated: Use the H3DU.Shape constructor instead.</strong></li>
 <li><a href="#H3DU.Scene3D_primitiveCount">primitiveCount</a><br><b>Deprecated: Use the <code>primitiveCount</code> method of <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 <li><a href="#H3DU.Scene3D_removeShape">removeShape</a><br><b>Deprecated: Use the removeShape method of individual <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> instances
 instead. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom
@@ -100,8 +100,8 @@ the viewport&#39;s dimensions.</li>
 for rendering filter effects from a frame buffer, or use the H3DU.Batch3D.useShader
 method. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method
 until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
-<li><a href="#H3DU.Scene3D_useProgram">useProgram</a><br><b>Deprecated: Instead of this method, use the &quot;setShader&quot; program of individual shapes
-to set the shader programs they use.</b></li>
+<li><a href="#H3DU.Scene3D_useProgram">useProgram</a><br><strong>Deprecated: Instead of this method, use the &quot;setShader&quot; program of individual shapes
+to set the shader programs they use.</strong></li>
 <li><a href="#H3DU.Scene3D_vertexCount">vertexCount</a><br><b>Deprecated: Use the vertexCount method of <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> objects instead. For compatibility, existing code that doesn&#39;t use <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> can still call this method until it renders a custom H3DU.Batch3D. This compatibility behavior may be dropped in the future.</b></li>
 </ul>
 
@@ -398,8 +398,8 @@ after each call to the render() method.</p>
 
 <h3>H3DU.Scene3D#loadAndMapTexture(texture)</h3>
 
-<p><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
-instead.</b></p>
+<p><strong>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</strong></p>
 
 <p>Loads a texture from an image URL and uploads it
 to a texture buffer object.</p>
@@ -422,8 +422,8 @@ Returns null if the object is neither an <a href="H3DU.Texture.html">H3DU.Textur
 
 <h3>H3DU.Scene3D#loadAndMapTextures(textureFiles, [resolve], [reject])</h3>
 
-<p><b>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
-instead.</b></p>
+<p><strong>Deprecated: Use the H3DU.TextureLoader method loadAndMapTexturesAll
+instead.</strong></p>
 
 <p>Loads one or more textures from an image URL and uploads each of them
 to a texture buffer object.</p>
@@ -448,8 +448,8 @@ See <a href="H3DU.html#H3DU.html">H3DU.getPromiseResults</a>. (Type: <a href="Pr
 
 <h3>H3DU.Scene3D#loadTexture(name)</h3>
 
-<p><b>Deprecated: Use the H3DU.TextureLoader method loadTexture or
-loadTexturesAll instead.</b></p>
+<p><strong>Deprecated: Use the H3DU.TextureLoader method loadTexture or
+loadTexturesAll instead.</strong></p>
 
 <p>Loads a texture from an image URL.</p>
 
@@ -469,7 +469,7 @@ object), and is rejected when an error occurs. (Type: <a href="Promise.html">Pro
 
 <h3>H3DU.Scene3D#makeShape(mesh)</h3>
 
-<p><b>Deprecated: Use the H3DU.Shape constructor instead.</b></p>
+<p><strong>Deprecated: Use the H3DU.Shape constructor instead.</strong></p>
 
 <p>Creates a buffer from a geometric mesh and
 returns a shape object.</p>
@@ -946,8 +946,8 @@ scene is rendered.</p>
 
 <h3>H3DU.Scene3D#useProgram(program)</h3>
 
-<p><b>Deprecated: Instead of this method, use the &quot;setShader&quot; program of individual shapes
-to set the shader programs they use.</b></p>
+<p><strong>Deprecated: Instead of this method, use the &quot;setShader&quot; program of individual shapes
+to set the shader programs they use.</strong></p>
 
 <p>Has no effect. (In previous versions, this method changed
 the active shader program for this scene
@@ -999,13 +999,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.ArcLengthParamCurve.html">H3DU.ArcLengthParamCurve</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
@@ -1016,7 +1014,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
-<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
@@ -1036,6 +1033,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>

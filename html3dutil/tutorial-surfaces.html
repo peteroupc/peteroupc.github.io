@@ -19,7 +19,7 @@ public-domain <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a
 
 <h2>Contents</h2>
 
-<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#What_Is_a_Parametric_Surface">What Is a Parametric Surface?</a><br>&nbsp;&nbsp;<a href="#Why_two_variables">Why two variables?</a><br><a href="#Parametric_Surfaces_in_the_HTML_3D_Library">Parametric Surfaces in the HTML 3D Library</a><br><a href="#Chaining_Surface_Functions">Chaining Surface Functions</a><br><a href="#Parametric_Curves">Parametric Curves</a><br>&nbsp;&nbsp;<a href="#Generating_Parametric_Curves">Generating Parametric Curves</a><br><a href="#Curve_Evaluators_in_the_HTML_3D_Library">Curve Evaluators in the HTML 3D Library</a><br><a href="#Demos">Demos</a><br>&nbsp;&nbsp;<a href="#Creating_Your_Own_Curves_and_Surfaces">Creating Your Own Curves and Surfaces</a><br><a href="#Other_Pages">Other Pages</a><br></p>
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#What_Is_a_Parametric_Surface">What Is a Parametric Surface?</a><br>&nbsp;&nbsp;<a href="#Why_two_variables">Why two variables?</a><br><a href="#Parametric_Surfaces_in_the_HTML_3D_Library">Parametric Surfaces in the HTML 3D Library</a><br><a href="#Chaining_Surface_Functions">Chaining Surface Functions</a><br><a href="#Parametric_Curves">Parametric Curves</a><br>&nbsp;&nbsp;<a href="#Generating_Parametric_Curves">Generating Parametric Curves</a><br><a href="#Curve_and_Surface_Evaluators_in_the_HTML_3D_Library">Curve and Surface Evaluators in the HTML 3D Library</a><br><a href="#Demos">Demos</a><br>&nbsp;&nbsp;<a href="#Creating_Your_Own_Curves_and_Surfaces">Creating Your Own Curves and Surfaces</a><br><a href="#Other_Pages">Other Pages</a><br></p>
 
 <h2>What Is a Parametric Surface?</h2>
 
@@ -71,7 +71,7 @@ function &quot;warps&quot; this grid into a three-dimensional surface.</p>
 
 <p>The HTML 3D Library supports parametric surfaces using a class named
 <a href="http://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html"><code>SurfaceEval</code></a>. It helps
-generate verteX coordinates, texture coordinates, normals, and colors using a parametric surface
+generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, <code>makeMesh</code>, generates a parametric surface mesh
 that was used to produce the pictures on this page. A function similar to the <code>makeMesh</code> function
 presented here is included in the demos that come with the HTML 3D Library.</p>
@@ -282,9 +282,9 @@ the circle example above.</p>
   .evalCurve(mesh,H3DU.Mesh.LINES,100);
 </code></pre>
 
-<p><a id=Curve_Evaluators_in_the_HTML_3D_Library></a></p>
+<p><a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a></p>
 
-<h2>Curve Evaluators in the HTML 3D Library</h2>
+<h2>Curve and Surface Evaluators in the HTML 3D Library</h2>
 
 <p>The HTML 3D Library distribution includes the following evaluators of
 curves and surfaces. All the classes named below include an <code>evaluate</code>
@@ -293,16 +293,17 @@ method that returns 3D points lying on the curve or surface.</p>
 <p>General-purpose curves include:</p>
 
 <ul>
-<li><strong>B&eacute;zier curves.</strong> These are curves defined by two endpoints, and one
-or more <em>control points</em>, which control the shape of the curve but don&#39;t
-necessarily lie on the curve. B&eacute;zier curves are created using the
-<a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a> class.</li>
-<li><strong>B-Spline curves.</strong> These are more general curves than B&eacute;zier
-curves, where here, every point can be a control point, including the end points.
-B-Spline curves include <strong>NURBS</strong> curves (nonuniform and rational B-Spline curves,
+<li><strong>B-spline curves.</strong> These curves consist of control points (which control
+the shape of the curve but don&#39;t necessarily lie on the curve), and a
+<em>knot vector</em>, which controls the behavior of the control points. B-spline
+curves include <strong>NURBS</strong> curves (nonuniform and rational B-spline curves,
 with weights and non-uniform knots), making them a powerful way of setting the
 behavior of a curve. B-Spline curves are created using the
 <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> class.</li>
+<li><strong>B&eacute;zier curves.</strong> These are curves in which the first and last
+control point are the curve&#39;s endpoints. B&eacute;zier curves are a subset of B-spline
+curves and are created using the <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
+method.</li>
 </ul>
 
 <p>Special curves include the following. All of these classes are supplemental
@@ -330,7 +331,7 @@ curve. B-Spline surfaces are created using the <a href="H3DU.BSplineSurface.html
 
 <ul>
 <li><strong>Tubes.</strong> 3D surfaces in the form of a &quot;thickened&quot; 3D curve.
-Tubes are created using the <a href="H3DU.CurveTube.html">H3DU.CurveTube</a> class,
+Tubes are created using the H3DU.CurveTube class,
 a supplemental extra in the HTML 3D library.</li>
 <li><strong>Surfaces of revolution.</strong> Surfaces generated by rotating a 2D curve.
 Surfaces of revolution are created using the <a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a> class,
@@ -410,13 +411,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.ArcLengthParamCurve.html">H3DU.ArcLengthParamCurve</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
@@ -427,7 +426,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
-<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
@@ -447,6 +445,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>

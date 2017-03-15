@@ -66,9 +66,9 @@ function pointMarch(
 function makeTubeFromPath(path, flatness, thickness, pathSection) {
   "use strict";
   var mesh = new H3DU.Mesh();
-  var curves = path.getCurves(flatness);
+  var curves = path.getCurves();
   var resolution = Math.ceil(curves.getLength() / flatness / 10);
-  var curveSection = pathSection ? pathSection.getCurves(flatness) : null;
+  var curveSection = pathSection ? pathSection.getCurves() : null;
   new H3DU.SurfaceEval()
     .vertex(new H3DU.CurveTube(curves, thickness, curveSection))
     .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,

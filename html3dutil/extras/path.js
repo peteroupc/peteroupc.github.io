@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global define, exports */
+/* global H3DU, define, exports, x1, y1 */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -272,61 +272,29 @@
       return [0, 0];
     }
   };
-/** @ignore */
-  GraphicsPath._normalize = function(v2) {
-    var len = Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
-    if(len !== 0) {
-      var ilen = 1.0 / len;
-      v2[0] *= ilen;
-      v2[1] *= ilen;
-    }
-    return v2;
-  };
-
-  /** @ignore */
-  GraphicsPath._tangent = function(seg, t) {
-    var a, b, x, y;
+    /** @ignore */
+  GraphicsPath._segToCurve = function(seg, t) {
     if(seg[0] === GraphicsPath.LINE) {
-      return GraphicsPath._normalize([
-        seg[3] - seg[1],
-        seg[4] - seg[2]
-      ]);
+      return new LineCurve(seg[1], seg[2], seg[3], seg[4]);
     } else if(seg[0] === GraphicsPath.QUAD) {
-      var tm1 = t - 1;
-      return GraphicsPath._normalize([
-        2 * (seg[1] * tm1 - seg[3] * tm1 - seg[3] * t + seg[5] * t),
-        2 * (seg[2] * tm1 - seg[4] * tm1 - seg[4] * t + seg[6] * t)
-      ]);
+      return H3DU.BSplineCurve.fromBezierCurve([
+       [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0]]);
     } else if(seg[0] === GraphicsPath.CUBIC) {
-      tm1 = t - 1;
-      var tm1sq = tm1 * tm1;
-      var c = seg[5] - seg[7];
-      b = 2 * seg[5] * tm1 - 2 * seg[3] * tm1;
-      a = seg[1] * tm1sq - seg[3] * tm1sq;
-      x = 3 * (a + t * (b + t * c));
-      c = seg[6] - seg[8];
-      b = 2 * seg[6] * tm1 - 2 * seg[4] * tm1;
-      a = seg[2] * tm1sq - seg[4] * tm1sq;
-      y = 3 * (a + t * (b + t * c));
-      return GraphicsPath._normalize([x, y]);
+      return H3DU.BSplineCurve.fromBezierCurve([
+       [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
     } else if(seg[0] === GraphicsPath.ARC) {
+      if(t === 0)return [seg[1], seg[2]];
+      if(t === 1)return [seg[8], seg[9]];
       var rx = seg[3];
       var ry = seg[4];
+      var cx = seg[10];
+      var cy = seg[11];
       var theta = seg[12];
       var delta = seg[13] - seg[12];
       var rot = seg[5];
-      var angle = theta + delta * t;
-      var cr = Math.cos(rot);
-      var sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
-      var ca = Math.cos(angle);
-      var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
-      var caDeriv = -sa * delta;
-      var saDeriv = ca * delta;
-      return GraphicsPath._normalize([
-        cr * caDeriv * rx - sr * saDeriv * ry,
-        sr * caDeriv * rx + cr * saDeriv * ry]);
+      return new ArcCurve(seg[1], seg[2], seg[8], seg[9], rx, ry, rot, cx, cy, theta, delta);
     } else {
-      return [0, 0];
+      throw new Error();
     }
   };
 
@@ -370,27 +338,6 @@
 /** @ignore */
   GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, list, flatness, mode, depth) {
     if(typeof depth === "undefined" || depth === null)depth = 0;
- /* if(depth<1) {
-  // subdivide the curve at the inflection points
-  var ax=a1-3*a3+3*a5-a7
-  var ay=a2-3*a4+3*a6-a8
-  var tx=(ax === 0) ? -1 : (a1-2*a3+a5)/ax
-  var ty=(ay === 0) ? -1 : (a2-2*a4+a6)/ay
-  if(tx>=1)tx=-1
-  if(ty>=1)ty=-1
-  if(tx>0 && ty>0) {
-   var tmin=Math.min(tx,ty)
-   var tmax=Math.max(tx,ty)
-   GraphicsPath._subdivide3(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tmin,tmax,list,flatness,mode,depth)
-   return
-  } else if(tx>0) {
-   GraphicsPath._subdivide2(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,tx,list,flatness,mode,depth)
-   return
-  } else if(ty>0) {
-   GraphicsPath._subdivide2(a1,a2,a3,a4,a5,a6,a7,a8,t1,t2,ty,list,flatness,mode,depth)
-   return
-  }
- }*/
     if(depth >= 20 || Math.abs(a1 - a3 - a3 + a5) + Math.abs(a3 - a5 - a5 + a7) +
     Math.abs(a2 - a4 - a4 + a6) + Math.abs(a4 - a6 - a6 + a8) <= flatness) {
       if(mode === 0) {
@@ -567,10 +514,9 @@
   GraphicsPath._quadCurveLength = function(x1, y1, x2, y2, x3, y3) {
     var integrand = function(t) {
       // Length of derivative of quadratic Bezier vector function
-      var tm1 = t - 1;
-      var x = x1 * tm1 - x2 * tm1 - x2 * t + x3 * t;
-      var y = y1 * tm1 - y2 * tm1 - y2 * t + y3 * t;
-      return Math.sqrt(4 * x * x + 4 * y * y); // (2*x,2*y) is derivative
+      var dx = (2 * t - 2) * x1 + (-4 * t + 2) * x2 + 2 * t * x3;
+      var dy = (2 * t - 2) * y1 + (-4 * t + 2) * y2 + 2 * t * y3;
+      return Math.sqrt(dx * dx + dy * dy);
     };
     return GraphicsPath._numIntegrate(integrand, 0, 1);
   };
@@ -578,17 +524,9 @@
   GraphicsPath._cubicCurveLength = function(x1, y1, x2, y2, x3, y3, x4, y4) {
     var integrand = function(t) {
       // Length of derivative of cubic Bezier vector function
-      var tm1 = t - 1;
-      var tm1sq = tm1 * tm1;
-      var c = x3 - x4;
-      var b = 2 * x3 * tm1 - 2 * x2 * tm1;
-      var a = x1 * tm1sq - x2 * tm1sq;
-      var x = a + t * (b + t * c);
-      c = y3 - y4;
-      b = 2 * y3 * tm1 - 2 * y2 * tm1;
-      a = y1 * tm1sq - y2 * tm1sq;
-      var y = a + t * (b + t * c);
-      return Math.sqrt(9 * x * x + 9 * y * y); // (3*x,3*y) is derivative
+      var dx = ((-3 * t + 6) * t - 3) * x1 + ((9 * t - 12) * t + 3) * x2 + (-9 * t + 6) * t * x3 + 3 * t * t * x4;
+      var dy = ((-3 * t + 6) * t - 3) * y1 + ((9 * t - 12) * t + 3) * y2 + (-9 * t + 6) * t * y3 + 3 * t * t * y4;
+      return Math.sqrt(dx * dx + dy * dy);
     };
     return GraphicsPath._numIntegrate(integrand, 0, 1);
   };
@@ -622,8 +560,11 @@
  * in units.
  * @memberof! H3DU.GraphicsPath#
  */
-  GraphicsPath.prototype.pathLength = function() {
+  GraphicsPath.prototype.pathLength = function(flatness) {
     if(this.segments.length === 0)return 0;
+    if(typeof flatness !== "undefined" && flatness !== null) {
+      console.warn("Unused parameter flatness is defined");
+    }
     var totalLength = 0;
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
@@ -684,8 +625,6 @@
       var s = this.segments[i];
       if(s[0] === GraphicsPath.CLOSE) {
         path.closePath();
-
- // oldpos = null;
         continue;
       }
       var j;
@@ -1086,149 +1025,100 @@
     }
     return subpaths;
   };
+
+/** @ignore */
+  function LineCurve(x1, x2, y1, y2) {
+    this.x1 = x1;
+    this.x2 = x2;
+    this.y1 = y1;
+    this.y2 = y2;
+  }
+  LineCurve.prototype = Object.create(H3DU.Curve.prototype);
+  LineCurve.prototype.constructor = LineCurve;
+/**
+ * TODO: Not documented yet.
+ * @returns {*} Return value.
+ */
+  LineCurve.prototype.endPoints = function() {
+    return [0, 1];
+  };
+/** @ignore */
+  LineCurve.prototype.evaluate = function(u) {
+    return [
+      this.x1 + (this.x2 - this.x1) * u,
+      this.y1 + (this.y2 - this.y1) * u, 0
+    ];
+  };
+/** @ignore */
+  LineCurve.prototype.velocity = function() {
+    return [
+      this.x2 - this.x1,
+      this.y2 - this.y1, 0
+    ];
+  };
+/** @ignore */
+  LineCurve.prototype.arcLength = function(u) {
+    var x = this.x1 + (this.x2 - this.x1) * u;
+    var y = this.y1 + (this.y2 - this.y1) * u;
+    var dx = x - x1;
+    var dy = y - y1;
+    var ret = Math.sqrt(dx * dx + dy * dy);
+    if(u < 0)ret = -ret;
+    return ret;
+  };
+
+/** @ignore */
+  function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
+    this.x1 = x1;
+    this.x2 = x2;
+    this.y1 = y1;
+    this.y2 = y2;
+    this.rx = rx;
+    this.ry = ry;
+    var cr = Math.cos(rot);
+    var sr = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-cr*cr) : -Math.sqrt(1.0-cr*cr)) : Math.sin(rot);
+    this.cr = cr;
+    this.sr = sr;
+    this.cx = cx;
+    this.cy = cy;
+    this.theta = theta;
+    this.delta = delta;
+  }
+  ArcCurve.prototype = Object.create(H3DU.Curve.prototype);
+  ArcCurve.prototype.constructor = ArcCurve;
+/** @ignore */
+  ArcCurve.prototype.evaluate = function(t) {
+    if(t === 0)return [this.x1, this.y1, 0];
+    if(t === 1)return [this.x2, this.y2, 0];
+    var angle = this.theta + this.delta * t;
+    var ca = Math.cos(angle);
+    var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+    return [
+      this.cr * ca * this.rx - this.sr * sa * this.rx + this.cx,
+      this.sr * ca * this.rx + this.cr * sa * this.ry + this.cy, 0];
+  };
+/** @ignore */
+  ArcCurve.prototype.velocity = function(t) {
+    var angle = this.theta + this.delta * t;
+    var ca = Math.cos(angle);
+    var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+    var caDeriv = -sa * this.delta;
+    var saDeriv = ca * this.delta;
+    return [
+      this.cr * caDeriv * this.rx - this.sr * saDeriv * this.rx,
+      this.sr * caDeriv * this.rx + this.cr * saDeriv * this.ry, 0];
+  };
+
 /** @ignore */
   GraphicsPath._CurveList = function(curves) {
+    H3DU.Curve.apply(this,
+    [new H3DU.PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
     this.curves = curves;
-    this.cumulativeLengths = [];
-    var totalLength = 0;
-    for(var i = 0; i < this.curves.length; i++) {
-      this.cumulativeLengths.push(totalLength);
-      totalLength += this.curves[i].totalLength;
-    }
-    this.cumulativeLengths.push(totalLength);
-    this.totalLength = totalLength;
   };
+  GraphicsPath._CurveList.prototype = Object.create(H3DU.Curve.prototype);
+  GraphicsPath._CurveList.prototype.constructor = GraphicsPath._CurveList;
   GraphicsPath._CurveList.prototype.getCurves = function() {
     return this.curves;
-  };
-  GraphicsPath._CurveList.prototype.getLength = function() {
-    return this.totalLength;
-  };
-  GraphicsPath._CurveList.prototype.evaluate = function(u) {
-    if(this.curves.length === 0)return [0, 0, 0];
-    if(this.curves.length === 1)return this.curves[0].evaluate(u);
-    if(u < 0)u = 0;
-    if(u > 1)u = 1;
-    var partialLen = u * this.totalLength;
-    var left = 0;
-    var right = this.curves.length;
-    while(left <= right) {
-      var mid = (left + right) / 2 | 0;
-      var seg = this.curves[mid];
-      var segstart = this.cumulativeLengths[mid];
-      var segend = segstart + seg.totalLength;
-      if(partialLen >= segstart && partialLen < segend ||
-     partialLen === segend && mid + 1 === this.curves.length) {
-        var t = (partialLen - segstart) / seg.totalLength;
-        return seg.evaluate(t);
-      } else if(partialLen < segstart) {
-   // curve is behind
-        right = mid - 1;
-      } else {
-   // curve is ahead
-        left = mid + 1;
-      }
-    }
-    return null;
-  };
-/** @ignore */
-  GraphicsPath._Curve = function(segments) {
-    this.segments = segments;
-    var totalLength = 0;
-    var isClosed = false;
-    for(var i = 0; i < this.segments.length; i++) {
-      totalLength += this.segments[i][1];
-    }
-    if(this.segments.length > 0) {
-      var startpt = GraphicsPath._startPoint(this.segments[0][3]);
-      var endpt = GraphicsPath._endPoint(this.segments[this.segments.length - 1][3]);
-      isClosed = startpt[0] === endpt[0] && startpt[1] === endpt[1];
-    }
-    this._isClosed = isClosed;
-    this.totalLength = totalLength;
-  };
-  GraphicsPath._Curve.prototype.getLength = function() {
-    return this.totalLength;
-  };
-  GraphicsPath._Curve.prototype.evaluate = function(u) {
-    return this._evaluateEx(u, 0);
-  };
-  GraphicsPath._Curve.prototype.tangent = function(u) {
-    return this._evaluateEx(u, 1);
-  };
-  GraphicsPath._Curve.prototype._evaluateEx = function(u, kind) {
-    if(this._isClosed) {
-      if(u < 0)u += Math.ceil(u);
-      else if(u > 1)u -= Math.floor(u);
-    } else if(u < 0)u = 0;
-    else if(u > 1)u = 1;
-    if(this.segments.length === 0)return [0, 0, 0];
-    var partialLen = u * this.totalLength;
-    var left = 0;
-    var right = this.segments.length;
-    while(left <= right) {
-      var mid = (left + right) / 2 | 0;
-      var seg = this.segments[mid];
-      var segstart = seg[2];
-      var segend = segstart + seg[1];
-      if(partialLen >= segstart && partialLen < segend ||
-     partialLen === segend && mid + 1 === this.segments.length) {
-        var seginfo = seg[3];
-        var t = u === 1 ? 1.0 : (partialLen - segstart) / seg[1];
-        if(seg[0] === GraphicsPath.LINE) {
-          var x = seginfo[1] + (seginfo[3] - seginfo[1]) * t;
-          var y = seginfo[2] + (seginfo[4] - seginfo[2]) * t;
-          if(kind === 0) {
-            x = seginfo[1] + (seginfo[3] - seginfo[1]) * t;
-            y = seginfo[2] + (seginfo[4] - seginfo[2]) * t;
-            return [x, y, 0];
-          } else {
-            return GraphicsPath._normalize([
-              seginfo[3] - seginfo[1],
-              seginfo[4] - seginfo[2]
-            ]);
-          }
-        } else {
-          var cumulativeLengths = seg[5];
-          var segParts = seg[4];
-          var segPartialLen = partialLen - segstart;
-          var segLeft = 0;
-          var lastCumuLength = cumulativeLengths[cumulativeLengths.length - 1];
-          segPartialLen = Math.max(0, segPartialLen);
-          segPartialLen = Math.min(lastCumuLength, segPartialLen);
-          var segRight = cumulativeLengths.length - 1;
-          while(segLeft <= segRight) {
-            var segMid = (segLeft + segRight) / 2 | 0;
-            var partStart = cumulativeLengths[segMid];
-            var partIndex = segMid * 3;
-            var partLength = segParts[partIndex + 2];
-            var partEnd = partStart + partLength;
-            if(segPartialLen >= partStart && segPartialLen <= partEnd) {
-              var tStart = segParts[partIndex];
-              var tEnd = segParts[partIndex + 1];
-              var partT = u === 1 ? 1.0 : tStart + (segPartialLen - partStart) / partLength * (tEnd - tStart);
-              var point = kind === 0 ?
-        GraphicsPath._point(seginfo, partT) :
-        GraphicsPath._tangent(seginfo, partT);
-              point[2] = 0;
-              return point;
-            } else if(segPartialLen < partStart) {
-              segRight = segMid - 1;
-            } else {
-              segLeft = segMid + 1;
-            }
-          }
-          throw new Error("not implemented yet");
-        }
-      } else if(partialLen < segstart) {
-   // segment is behind
-        right = mid - 1;
-      } else {
-   // segment is ahead
-        left = mid + 1;
-      }
-    }
-    return null;
   };
 /**
  * Does a linear interpolation between two graphics paths.
@@ -1240,8 +1130,8 @@
  * the first path's arc are used if "t" is less than 0.5; and the flags from
  * the second path's arc are used otherwise.<p>For a nonlinear
  * interpolation, define a function that takes a value that usually ranges from 0 through 1
- * and generally returns
- * A value that usually ranges from 0 through 1, and pass the result of that function to this method.
+ * and generally returns a value that usually ranges from 0 through 1,
+ * and pass the result of that function to this method.
  * See the documentation for {@link H3DU.Math.vec3lerp}
  * for examples of interpolation functions.
  * @returns {H3DU.GraphicsPath} The interpolated path.
@@ -1351,45 +1241,19 @@
 /**
  * Gets a [curve evaluator object]{@link H3DU.Curve} for
  * the curves described by this path. The return value doesn't track changes to the path.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments for the purpose of
- * calculating their length, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1. This
- * is only used to make the arc-length parameterization more
- * accurate if the path contains curves or arcs.
- * @returns {Object} An object that implements
- * the following methods:<ul>
- * <li><code>getCurves()</code> - Returns a list of curves described
- * by this path. The list will contain one object for each disconnected
+ * @param {number} [flatness] This parameter is no longer used.
+ * @returns {Object} A [curve evaluator object]{@link H3DU.Curve} that implements
+ * the following additional method:<ul>
+ * <li><code>getCurves()</code> - Returns a list of [curve evaluator objects]{@link H3DU.Curve}
+ * described by this path. The list will contain one curve evaluator object for each disconnected
  * portion of the path. For example, if the path contains one polygon, the list will contain
- * one curve object. And if the path is empty, the list will be empty too.
- * <p>Each object will have the following methods:<ul>
- * <li><code>getLength()</code> - Returns the approximate total length of the curve,
- * in units.
- * <li><code>evaluate(u)</code> - Takes one parameter, "u", which
- * ranges from 0 to 1, depending on how far the point is from the start or
- * the end of the path (similar to arc-length parameterization).
- * The function returns a 3-element array containing
+ * one curve object. And if the path is empty, the list will be empty too. Each curve
+ * takes U coordinates that range from 0 to 1, depending on how far the point is from the start or
+ * the end of the path (similar to arc-length parameterization). Each curve
+ * returns a 3-element array containing
  * the X, Y, and Z coordinates of the point lying on the curve at the given
  * "u" position (however, the z will always be 0 since paths can currently
  * only be 2-dimensional).
- * <li><code>tangent(u)</code> - Takes one parameter, "u", with the same meaning
- * as for the <code>evaluate</code> method, and returns a 3-element array containing the
- * the X, Y, and Z components of the
- * tangent vector (which will generally be a [unit vector]{@tutorial glmath}) at the given point on the curve
- * (the z will always be 0 since paths can currently
- * only be 2-dimensional).
- * </ul>
- * <li><code>getLength()</code> - Returns the approximate total length of the path,
- * in units.
- * <li><code>tangent(u)</code> - Has the same effect as the <code>tangent</code>
- * method for each curve, but applies to the path as a whole.
- * <li><code>evaluate(u)</code> - Has the same effect as the <code>evaluate</code>
- * method for each curve, but applies to the path as a whole.
- * Note that calling this <code>evaluate</code> method is only
- * recommended when drawing the path as a set of points, not lines, since
- * the path may contain several disconnected parts.
  * </ul>
  * @memberof! H3DU.GraphicsPath#
  */
@@ -1398,59 +1262,33 @@
     // that method's return values are generally unit vectors.
     var subpaths = [];
     var curves = [];
-    if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
+    if(typeof flatness !== "undefined" && flatness !== null) {
+      console.warn("Unused parameter flatness is defined");
+    }
     var lastptx = 0;
     var lastpty = 0;
     var first = true;
     var curPath = null;
-    var curLength = 0;
+
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
-      var len = 0;
+
       var startpt = GraphicsPath._startPoint(s);
       var endpt = GraphicsPath._endPoint(s);
       if(s[0] !== GraphicsPath.CLOSE) {
         if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
           curPath = [];
-          curLength = 0;
+ // curLength = 0;
           subpaths.push(curPath);
           first = false;
         }
         lastptx = endpt[0];
         lastpty = endpt[1];
-      }
-      if(s[0] === GraphicsPath.QUAD ||
-      s[0] === GraphicsPath.CUBIC ||
-      s[0] === GraphicsPath.ARC) {
-        var pieces = [];
-        var cumulativeLengths = [];
-        len = 0;
-        if(s[0] === GraphicsPath.QUAD) {
-          GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-      s[5], s[6], 0.0, 1.0, pieces, flatness * 2, 1);
-        } else if(s[0] === GraphicsPath.CUBIC) {
-          GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-      s[5], s[6], s[7], s[8], 0.0, 1.0, pieces, flatness * 2, 1);
-        } else if(s[0] === GraphicsPath.ARC) {
-          GraphicsPath._flattenArc(s, 0.0, 1.0, pieces, flatness * 2, 1);
-        }
-        for(var j = 0; j < pieces.length; j += 3) {
-          cumulativeLengths.push(len);
-          len += pieces[j + 2];
-        }
-        cumulativeLengths.push(len);
-        curPath.push([s[0], len, curLength, s.slice(0), pieces, cumulativeLengths]);
-        curLength += len;
-      } else if(s[0] === GraphicsPath.LINE) {
-        var dx = s[3] - s[1];
-        var dy = s[4] - s[2];
-        len = Math.sqrt(dx * dx + dy * dy);
-        curPath.push([s[0], len, curLength, s.slice(0)]);
-        curLength += len;
+        curPath.push(GraphicsPath._segToCurve(s));
       }
     }
     for(i = 0; i < subpaths.length; i++) {
-      curves.push(new GraphicsPath._Curve(subpaths[i]));
+      curves.push(new H3DU.PiecewiseCurve(subpaths[i]).toArcLengthParam().fitRange(0, 1));
     }
     return new GraphicsPath._CurveList(curves);
   };
