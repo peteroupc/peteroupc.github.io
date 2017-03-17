@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, define, exports, x1, y1 */
+/* global H3DU, define, exports */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -161,6 +161,83 @@
 
   // --------------------------------------------------
 
+/** @ignore */
+  function LineCurve(x1, x2, y1, y2) {
+    this.x1 = x1;
+    this.x2 = x2;
+    this.y1 = y1;
+    this.y2 = y2;
+  }
+  LineCurve.prototype = Object.create(H3DU.Curve.prototype);
+  LineCurve.prototype.constructor = LineCurve;
+/** @ignore */
+  LineCurve.prototype.evaluate = function(u) {
+    return [
+      this.x1 + (this.x2 - this.x1) * u,
+      this.y1 + (this.y2 - this.y1) * u, 0
+    ];
+  };
+/** @ignore */
+  LineCurve.prototype.velocity = function() {
+    return [
+      this.x2 - this.x1,
+      this.y2 - this.y1, 0
+    ];
+  };
+/** @ignore */
+  LineCurve.prototype.arcLength = function(u) {
+    var x = this.x1 + (this.x2 - this.x1) * u;
+    var y = this.y1 + (this.y2 - this.y1) * u;
+    var dx = x - this.x1;
+    var dy = y - this.y1;
+    var ret = Math.sqrt(dx * dx + dy * dy);
+    if(u < 0)ret = -ret;
+    return ret;
+  };
+
+/** @ignore */
+  function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
+    this.x1 = x1;
+    this.x2 = x2;
+    this.y1 = y1;
+    this.y2 = y2;
+    this.rx = rx;
+    this.ry = ry;
+    var cr = Math.cos(rot);
+    var sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
+    this.cr = cr;
+    this.sr = sr;
+    this.cx = cx;
+    this.cy = cy;
+    this.theta = theta;
+    this.delta = delta;
+  }
+  ArcCurve.prototype = Object.create(H3DU.Curve.prototype);
+  ArcCurve.prototype.constructor = ArcCurve;
+/** @ignore */
+  ArcCurve.prototype.evaluate = function(t) {
+    if(t === 0)return [this.x1, this.y1, 0];
+    if(t === 1)return [this.x2, this.y2, 0];
+    var angle = this.theta + this.delta * t;
+    var ca = Math.cos(angle);
+    var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+    return [
+      this.cr * ca * this.rx - this.sr * sa * this.rx + this.cx,
+      this.sr * ca * this.rx + this.cr * sa * this.ry + this.cy, 0];
+  };
+/** @ignore */
+  ArcCurve.prototype.velocity = function(t) {
+    var angle = this.theta + this.delta * t;
+    var ca = Math.cos(angle);
+    var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+    var caDeriv = -sa * this.delta;
+    var saDeriv = ca * this.delta;
+    return [
+      this.cr * caDeriv * this.rx - this.sr * saDeriv * this.rx,
+      this.sr * caDeriv * this.rx + this.cr * saDeriv * this.ry, 0];
+  };
+
+   // --------------------------------------------------
   /**
    * Represents a two-dimensional path.
    * <p>This class is considered a supplementary class to the
@@ -1024,89 +1101,6 @@
       }
     }
     return subpaths;
-  };
-
-/** @ignore */
-  function LineCurve(x1, x2, y1, y2) {
-    this.x1 = x1;
-    this.x2 = x2;
-    this.y1 = y1;
-    this.y2 = y2;
-  }
-  LineCurve.prototype = Object.create(H3DU.Curve.prototype);
-  LineCurve.prototype.constructor = LineCurve;
-/**
- * TODO: Not documented yet.
- * @returns {*} Return value.
- */
-  LineCurve.prototype.endPoints = function() {
-    return [0, 1];
-  };
-/** @ignore */
-  LineCurve.prototype.evaluate = function(u) {
-    return [
-      this.x1 + (this.x2 - this.x1) * u,
-      this.y1 + (this.y2 - this.y1) * u, 0
-    ];
-  };
-/** @ignore */
-  LineCurve.prototype.velocity = function() {
-    return [
-      this.x2 - this.x1,
-      this.y2 - this.y1, 0
-    ];
-  };
-/** @ignore */
-  LineCurve.prototype.arcLength = function(u) {
-    var x = this.x1 + (this.x2 - this.x1) * u;
-    var y = this.y1 + (this.y2 - this.y1) * u;
-    var dx = x - x1;
-    var dy = y - y1;
-    var ret = Math.sqrt(dx * dx + dy * dy);
-    if(u < 0)ret = -ret;
-    return ret;
-  };
-
-/** @ignore */
-  function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
-    this.x1 = x1;
-    this.x2 = x2;
-    this.y1 = y1;
-    this.y2 = y2;
-    this.rx = rx;
-    this.ry = ry;
-    var cr = Math.cos(rot);
-    var sr = (rot>=0 && rot<6.283185307179586) ? (rot<=3.141592653589793 ? Math.sqrt(1.0-cr*cr) : -Math.sqrt(1.0-cr*cr)) : Math.sin(rot);
-    this.cr = cr;
-    this.sr = sr;
-    this.cx = cx;
-    this.cy = cy;
-    this.theta = theta;
-    this.delta = delta;
-  }
-  ArcCurve.prototype = Object.create(H3DU.Curve.prototype);
-  ArcCurve.prototype.constructor = ArcCurve;
-/** @ignore */
-  ArcCurve.prototype.evaluate = function(t) {
-    if(t === 0)return [this.x1, this.y1, 0];
-    if(t === 1)return [this.x2, this.y2, 0];
-    var angle = this.theta + this.delta * t;
-    var ca = Math.cos(angle);
-    var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
-    return [
-      this.cr * ca * this.rx - this.sr * sa * this.rx + this.cx,
-      this.sr * ca * this.rx + this.cr * sa * this.ry + this.cy, 0];
-  };
-/** @ignore */
-  ArcCurve.prototype.velocity = function(t) {
-    var angle = this.theta + this.delta * t;
-    var ca = Math.cos(angle);
-    var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
-    var caDeriv = -sa * this.delta;
-    var saDeriv = ca * this.delta;
-    return [
-      this.cr * caDeriv * this.rx - this.sr * saDeriv * this.rx,
-      this.sr * caDeriv * this.rx + this.cr * saDeriv * this.ry, 0];
   };
 
 /** @ignore */

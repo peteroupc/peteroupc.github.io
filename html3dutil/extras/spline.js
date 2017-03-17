@@ -15,7 +15,7 @@
  * @param {Array<Array<number>>} curve An array of control points,
  * each with the same number of values, that describe a Hermite spline.
  * Each pair of control points takes up two elements of the array and consists
- * of the coordinates of that point followed by the tangent vector (derivative) at that point.
+ * of the coordinates of that point followed by the velocity vector (derivative) at that point.
  * The array must have an even number of control points and at least four control points.
  * @returns {H3DU.PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the
  * same path as the Hermite spline.
