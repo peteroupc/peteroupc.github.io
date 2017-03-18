@@ -13,7 +13,7 @@
 <p>Specifies parameters for light sources.</p>
 
 <p>NOTE: The default shader program assumes that all colors specified in this object are in
-the <a href="H3DU.Math.html#H3DU.Math.html">sRGB color space</a>.</p>
+the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -65,7 +65,7 @@ The default is (0,0,0,1), or black.</p>
 
 <p>A 4-element vector giving an additional color to multiply with the diffuse
 or albedo color (base color) of each object, in the red, green,
-and blue components respectively. See also <a href="H3DU.PbrMaterial.html#H3DU.html">H3DU.PbrMaterial#albedo</a>.
+and blue components respectively. See also <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_albedo">H3DU.PbrMaterial#albedo</a>.
 Each component ranges from 0 to 1.
 The default is (1,1,1,1), or white.</p>
 
@@ -117,7 +117,7 @@ for <a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a>.</i></p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>params</code> (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>position</code> - Light position. (See <a href="H3DU.LightSource.html#H3DU.html">H3DU.LightSource#position</a>.) <li><code>ambient</code> - Not used in the default shader program. <li><code>diffuse</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion color of each object (which is also called &quot;albedo&quot;). The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise. <li><code>specular</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise. <li><code>radius</code> - Radius of the light source. If 0, the light&#39;s intensity doesn&#39;t change with distance. </ul> If a value is null or undefined, it is ignored.</li>
+<li><code>params</code> (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>position</code> - Light position. (See <a href="H3DU.LightSource.html#H3DU.LightSource_position">H3DU.LightSource#position</a>.) <li><code>ambient</code> - Not used in the default shader program. <li><code>diffuse</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving an additional color to multiply with the diffusion color of each object (which is also called &quot;albedo&quot;). The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise. <li><code>specular</code> - A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise. <li><code>radius</code> - Radius of the light source. If 0, the light&#39;s intensity doesn&#39;t change with distance. </ul> If a value is null or undefined, it is ignored.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -147,6 +147,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
@@ -162,6 +163,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>

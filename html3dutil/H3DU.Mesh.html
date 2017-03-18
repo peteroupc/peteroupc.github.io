@@ -300,7 +300,7 @@ that mode. Only the red, green, and blue components will be used.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a>, or the red color component (0-1).</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
 <li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 <li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 </ul>
@@ -393,7 +393,7 @@ a normal. (Type: Array.&lt;number&gt;)</p>
 The vertices from the other mesh will be copied into this one,
 and the other mesh&#39;s indices copied or adapted.
 Also, resets the primitive
-mode (see <a href="H3DU.Mesh.html#H3DU.html">H3DU.Mesh#mode</a>) so that future vertices given
+mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices.</p>
 
 <h4>Parameters</h4>
@@ -581,7 +581,7 @@ Only the color&#39;s red, green, and blue components will be used.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a>, or the red color component (0-1).</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
 <li><code>g</code> (Type: number)<br>Green component of the color (0-1). May be null or omitted if a string is given as the &quot;r&quot; parameter.</li>
 <li><code>b</code> (Type: number)<br>Blue component of the color (0-1). May be null or omitted if a string is given as the &quot;r&quot; parameter.</li>
 </ul>
@@ -703,14 +703,14 @@ to lines. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 <p>Transforms the positions and normals of all the vertices currently
 in this mesh. The matrix won&#39;t affect vertices added afterwards.
 Also, resets the primitive
-mode (see <a href="H3DU.Mesh.html#H3DU.html">H3DU.Mesh#mode</a>) so that future vertices given
+mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices. Future vertices should not be
 added after calling this method without calling mode() first.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).</li>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -789,6 +789,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
@@ -804,6 +805,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>

@@ -26,7 +26,7 @@ height, and depth, respectively.</li>
 <li><a href="#H3DU.Transform_isIdentity">isIdentity</a><br>Returns whether this transform is the identity transform.</li>
 <li><a href="#H3DU.Transform_movePosition">movePosition</a><br>Moves the relative position of an object from its original
 position.</li>
-<li><a href="#H3DU.Transform_multOrientation">multOrientation</a><br><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#multRotation</a> instead.
+<li><a href="#H3DU.Transform_multOrientation">multOrientation</a><br><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.Transform_multRotation">H3DU.Transform#multRotation</a> instead.
 This method&#39;s name is inaccurate because orientations are not rotations.</b></li>
 <li><a href="#H3DU.Transform_multQuaternion">multQuaternion</a><br>Combines an object&#39;s current rotation with another rotation
 described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
@@ -37,7 +37,7 @@ rotation.</li>
 <li><a href="#H3DU.Transform_reset">reset</a><br>Resets this transform to the untransformed state.</li>
 <li><a href="#H3DU.Transform_resetTransform">resetTransform</a><br><strong>Deprecated: Use the &quot;reset&quot; method instead.</strong></li>
 <li><a href="#H3DU.Transform_setMatrix">setMatrix</a><br>Sets this transform&#39;s transformation matrix.</li>
-<li><a href="#H3DU.Transform_setOrientation">setOrientation</a><br><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setRotation</a> instead.
+<li><a href="#H3DU.Transform_setOrientation">setOrientation</a><br><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a> instead.
 This method&#39;s name is inaccurate because orientations are not rotations.</b></li>
 <li><a href="#H3DU.Transform_setPosition">setPosition</a><br>Sets the relative position of an object from its original
 position.</li>
@@ -67,7 +67,7 @@ position, and matrix data.</p>
 
 <p>Gets the transformation matrix used by an object. Depending
 on the state of this transform, will return either:<ul>
-<li>The 4x4 matrix passed to <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setMatrix</a>, if the
+<li>The 4x4 matrix passed to <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>, if the
 matrix was defined with that method
 and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
 <li>The matrix resulting from the position, rotation, and scale properties,
@@ -126,7 +126,7 @@ For each component, 1 means no scaling.</p>
 <h3>H3DU.Transform#movePosition(x, y, z)</h3>
 
 <p>Moves the relative position of an object from its original
-position. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setMatrix</a>
+position. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
 and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
 
 <h4>Parameters</h4>
@@ -145,20 +145,20 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 
 <h3>H3DU.Transform#multOrientation(angle, v, vy, vz)</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#multRotation</a> instead.
+<p><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.Transform_multRotation">H3DU.Transform#multRotation</a> instead.
 This method&#39;s name is inaccurate because orientations are not rotations.</b></p>
 
 <p>Combines an object&#39;s current rotation with another rotation
 in the form of an angle and an axis of
 rotation. The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
-Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setMatrix</a>
+Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
 and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>The desired angle to rotate in degrees. See <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setRotation</a>.</li>
+<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>The desired angle to rotate in degrees. See <a href="H3DU.Transform.html#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a>.</li>
 <li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
 <li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.</li>
 <li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</li>
@@ -182,7 +182,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.quatFromAxisAngle</a> or <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>.</li>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> or <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -208,13 +208,13 @@ transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 in the form of an angle and an axis of
 rotation. The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
-Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setMatrix</a>
+Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
 and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>The desired angle to rotate in degrees. See <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setRotation</a>.</li>
+<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>The desired angle to rotate in degrees. See <a href="H3DU.Transform.html#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a>.</li>
 <li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
 <li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.</li>
 <li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</li>
@@ -268,11 +268,11 @@ accordingly to the matrix given.</p>
 
 <h3>H3DU.Transform#setOrientation(angle, v, vy, vz)</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setRotation</a> instead.
+<p><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a> instead.
 This method&#39;s name is inaccurate because orientations are not rotations.</b></p>
 
 <p>Sets this transform&#39;s rotation in the form of an angle and an axis of
-rotation. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setMatrix</a>
+rotation. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
 and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
 
 <h4>Parameters</h4>
@@ -293,7 +293,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h3>H3DU.Transform#setPosition(x, y, z)</h3>
 
 <p>Sets the relative position of an object from its original
-position. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setMatrix</a>
+position. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
 and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
 
 <h4>Parameters</h4>
@@ -319,7 +319,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h4>Parameters</h4>
 
 <ul>
-<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.quatFromAxisAngle</a> and <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>, among others.</li>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> and <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>, among others.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -342,7 +342,7 @@ transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 <h3>H3DU.Transform#setRotation(angle, v, vy, vz)</h3>
 
 <p>Sets this transform&#39;s rotation in the form of an angle and an axis of
-rotation. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setMatrix</a>
+rotation. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
 and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
 
 <h4>Parameters</h4>
@@ -363,7 +363,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <h3>H3DU.Transform#setScale(x, y, z)</h3>
 
 <p>Sets the scale of an object relative to its original
-size. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.html">H3DU.Transform#setMatrix</a>
+size. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
 and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
 
 <h4>Parameters</h4>
@@ -401,6 +401,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
@@ -416,6 +417,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>

@@ -44,14 +44,14 @@ log is output to the JavaScript console.</p>
 <li><a href="#H3DU.ShaderProgram_dispose">dispose</a><br>Disposes resources from this shader program.</li>
 <li><a href="#H3DU.ShaderProgram_get">get</a><br>Gets the location of the given uniform or attribute&#39;s name in this program.</li>
 <li><a href="#H3DU.ShaderProgram_getContext">getContext</a><br>Gets the WebGL context associated with this shader program object.</li>
-<li><a href="#H3DU.ShaderProgram.getDefaultFragment">getDefaultFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.getDefaultVertex">getDefaultVertex</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.getEdgeDetectEffect">getEdgeDetectEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.getInvertEffect">getInvertEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.getDefaultFragment">getDefaultFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultFragment">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.getDefaultVertex">getDefaultVertex</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultVertex">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.getEdgeDetectEffect">getEdgeDetectEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEdgeDetectEffect">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.getInvertEffect">getInvertEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeInvertEffect">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram_getUniform">getUniform</a><br>Gets the value of the given uniform in this program.</li>
-<li><a href="#H3DU.ShaderProgram.makeCopyEffect">makeCopyEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.makeEffect">makeEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEffect</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram.makeEffectFragment">makeEffectFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.makeCopyEffect">makeCopyEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.makeEffect">makeEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b></li>
+<li><a href="#H3DU.ShaderProgram.makeEffectFragment">makeEffectFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram_setUniforms">setUniforms</a><br>Sets the values of one or more uniforms in this program.</li>
 <li><a href="#H3DU.ShaderProgram_use">use</a><br>Makes this program the active program in the WebGL
 context associated with it.</li>
@@ -101,7 +101,7 @@ name, or null if it doesn&#39;t exist. (Type: number | WebGLUniformLocation | nu
 
 <h3>(static) H3DU.ShaderProgram.getDefaultFragment()</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultFragment">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></p>
 
 <p>Gets the text of the default fragment shader. Putting &quot;#define SHADING\n&quot;
 at the start of the return value enables the lighting model.
@@ -117,7 +117,7 @@ as SHADING is also enabled).</p>
 
 <h3>(static) H3DU.ShaderProgram.getDefaultVertex()</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultVertex">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></p>
 
 <p>Gets the text of the default vertex shader. Putting &quot;#define SHADING\n&quot;
 at the start of the return value enables the lighting model.</p>
@@ -130,7 +130,7 @@ at the start of the return value enables the lighting model.</p>
 
 <h3>(static) H3DU.ShaderProgram.getEdgeDetectEffect([context])</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEdgeDetectEffect">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></p>
 
 <p>Generates a shader program that generates a two-color texture showing
 the source texture&#39;s edges.</p>
@@ -149,7 +149,7 @@ the source texture&#39;s edges.</p>
 
 <h3>(static) H3DU.ShaderProgram.getInvertEffect([context])</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeInvertEffect">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></p>
 
 <p>Generates a shader program that inverts the colors of a texture.</p>
 
@@ -186,7 +186,7 @@ an attribute is named, not a uniform. (Type: Number | Array.&lt;number&gt;)</p>
 
 <h3>(static) H3DU.ShaderProgram.makeCopyEffect()</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></p>
 
 <p>Generates a shader program that copies the colors of a texture.</p>
 
@@ -198,7 +198,7 @@ an attribute is named, not a uniform. (Type: Number | Array.&lt;number&gt;)</p>
 
 <h3>(static) H3DU.ShaderProgram.makeEffect(context, functionCode)</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEffect</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b></p>
 
 <p>Generates a shader program for applying
 a raster effect (postprocessing effect) to a texture.</p>
@@ -222,7 +222,7 @@ a raster effect (postprocessing effect) to a texture.</p>
 
 <h3>(static) H3DU.ShaderProgram.makeEffectFragment(functionCode)</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.html">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></p>
+<p><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></p>
 
 <p>Generates source code for a fragment shader for applying
 a raster effect to a texture.</p>
@@ -292,6 +292,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
@@ -307,6 +308,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>

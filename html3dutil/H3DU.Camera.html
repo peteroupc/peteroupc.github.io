@@ -32,9 +32,9 @@ the HTML 3D Library. Example:</p>
 
 <ul>
 <li><code>batch</code> (Type: <a href="H3DU.Batch3D.html">H3DU.Batch3D</a>)<br>A 3D batch to associate with this camera object. <i>Using a <a href="H3DU.Scene3D.html">H3DU.Scene3D</a> here is deprecated.</i></li>
-<li><code>fov</code> (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4perspective</a>.</li>
-<li><code>nearZ</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. See <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4perspective</a>. This should be slightly greater than 0.</li>
-<li><code>farZ</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="H3DU.Math.html#H3DU.Math.html">H3DU.Math.mat4perspective</a>.</li>
+<li><code>fov</code> (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</li>
+<li><code>nearZ</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>. This should be slightly greater than 0.</li>
+<li><code>farZ</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective</a>.</li>
 <li><code>canvas</code> (Type: HTMLCanvasElement) (optional)<br>A canvas to associate with this camera object. <i>This argument is deprecated.</i></li>
 </ul>
 
@@ -101,7 +101,7 @@ point to the camera&#39;s position.</p>
 <h4>Return Value</h4>
 
 <p>The return value as a unit
-vector (a <a href="H3DU.Math.html#H3DU.Math.html">&quot;normalized&quot; vector</a> with a length of 1).
+vector (a <a href="H3DU.Math.html#H3DU.Math.vec3normalize">&quot;normalized&quot; vector</a> with a length of 1).
 Returns (0,0,0) if the reference point is the same as the camera&#39;s position. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Camera_moveAngleHorizontal'></a></p>
@@ -406,6 +406,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
@@ -421,6 +422,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>

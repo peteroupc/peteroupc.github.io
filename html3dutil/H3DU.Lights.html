@@ -15,7 +15,7 @@ ambient color as well as data on one or more light sources.
 When constructed, the list of light sources will be empty.</p>
 
 <p>NOTE: The default shader program assumes that all colors specified in this object are in
-the <a href="H3DU.Math.html#H3DU.Math.html">sRGB color space</a>.</p>
+the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
 
 <h3>Members</h3>
 
@@ -105,7 +105,7 @@ only used on objects that use <a href="H3DU.Material.html">H3DU.Material</a>, no
 <h4>Parameters</h4>
 
 <ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.html">HTML or CSS color</a>.</li>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.toGLColor">HTML or CSS color</a>.</li>
 <li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 <li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 <li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). Currently not used.</li>
@@ -138,8 +138,8 @@ values, and the default value for <code>sceneAmbient</code>.</p>
 <ul>
 <li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. If the light doesn&#39;t exist at that index, it will be created.</li>
 <li><code>direction</code> (Type: Array.&lt;number&gt;)<br>A 3-element array giving the X, Y, and Z world space components, respectively, of the a vector; the light will shine the brightest on surfaces that face the light in this vector&#39;s direction from the origin (0, 0, 0).</li>
-<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
-<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.html">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the specular highlight color will remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
+<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the diffuse color will remain unchanged. The default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
+<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the specular highlight color will remain unchanged. The default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -205,6 +205,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 
 <ul>
 <li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="FrameCounter.html">FrameCounter</a></li>
 <li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
@@ -220,6 +221,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
 <li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
