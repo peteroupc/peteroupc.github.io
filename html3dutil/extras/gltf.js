@@ -278,10 +278,14 @@
       return null;
     }
     var technique = this.gltf.techniques[techniqueName];
-    if((typeof technique.program === "undefined" || technique.program === null) || this.programs[technique.program] === null) {
+    if(typeof technique.program === "undefined" || technique.program === null) {
       return null;
     }
-    var program = this.programs[technique.program];
+    var tprog = technique.program;
+    if(typeof this.programs[tprog] === "undefined" || this.programs[tprog] === null) {
+      return null;
+    }
+    var program = this.programs[tprog];
     var shader = program.copy();
     var params = technique.parameters || {};
     var paramValues = {};

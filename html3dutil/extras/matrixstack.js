@@ -105,30 +105,14 @@ H3DU.MatrixStack.prototype.multMatrix = function(mat) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by the transpose of
  * another matrix.
- * The matrices are multiplied such that the transformations
- * they describe happen in the order given. For example, if the matrix
- * at the top of the stack describes a translation and the matrix
- * passed to this method describes a scaling, the multiplied matrix will describe
- * the effect of translation then scaling.
+ * @deprecated Use <code>multMatrix(H3DU.Math.mat4transpose(mat))</code> instead.
  * @param {Array<number>} mat A matrix whose transpose the current
  * matrix will be multiplied by.
  * @returns {H3DU.MatrixStack} This object.
  */
 H3DU.MatrixStack.prototype.multTransposeMatrix = function(mat) {
   "use strict";
-  var curmat = this.stack[this.stack.length - 1];
-  var dst = [];
-  for(var i = 0; i < 16; i += 4) {
-    for(var j = 0; j < 4; j++) {
-      dst[i + j] =
-        curmat[i] * mat[j] +
-        curmat[i + 1] * mat[j + 4] +
-        curmat[i + 2] * mat[j + 8] +
-        curmat[i + 3] * mat[j + 12];
-    }
-  }
-  this.stack[this.stack.length - 1] = dst;
-  return this;
+  return this.multMatrix(H3DU.Math.mat4transpose(mat));
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.

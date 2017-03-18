@@ -1,0 +1,123 @@
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="../extras/frame.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="../extras/meshjson.js"></script>
+<script type="text/javascript" src="animation.js"></script>
+<script type="text/javascript" src="skysphere.js"></script>
+<script type="text/javascript" src="shaderlib.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<div style="position:absolute;left:0;top:1em">
+<div id=settings>
+<form>
+Camera X: <input id=camerax type=range value="1" min="-1" max="1" step="0.1"><br>
+Camera Y: <input id=cameray type=range value="1" min="-1" max="1" step="0.1"><br>
+Camera Z: <input id=cameraz type=range value="1" min="-1" max="1" step="0.1">
+</form>
+</div>
+</div>
+<script id="demo">
+/* global Animators, H3DU, createSkysphere, createWasher, makeFloor, rotateVec */
+// <!--
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
+
+function createSkysphere2(size) {
+  "use strict";
+  var fragment = ["precision mediump float;",
+      fragmentShaderLib(),
+      "varying vec4 positionVar;",
+      "void main() {",
+      " float c=fbm(positionVar.xyz/positionVar.w,1.0,1.0,2.0,0.5);",
+      " vec3 color=mix(vec3(0.8,1.0,0.95),vec3(1.0,1.0,1.0),c);",
+      " gl_FragColor=vec4(color,1.0);",
+      "}"
+    ].join("\n");
+  var shader = new H3DU.ShaderInfo(
+ ["attribute vec3 position;",
+   "uniform mat4 projection;",
+   "uniform mat4 worldMatrix;",
+   "uniform mat4 modelViewMatrix;",
+   "varying vec4 positionVar;",
+   "void main() {",
+   "positionVar=worldMatrix*vec4(position,1.0);",
+   "gl_Position=(projection*modelViewMatrix)*vec4(position,1.0);",
+   "}"
+ ].join("\n"), fragment
+);
+ shader.setUniformSemantic("worldMatrix",H3DU.Semantic.MODEL);
+  return new H3DU.Shape(H3DU.Meshes.createSphere(size))
+  .setShader(shader);
+}
+
+  // Create the 3D scene; find the HTML canvas and pass it
+  // to Scene3D.
+var scene = new H3DU.Scene3D(document.getElementById("canvas")).setClearColor("white");
+var sub = new H3DU.Batch3D();
+sub.getLights().setDirectionalLight(0, [0, -3, 1.2]);
+var shapeArray = [];
+var shapecolors = ["white", "blue", "red", "green", "brown", "orange", "purple"];
+  // Outer radius of each washer
+var shapesizes = [1, 0.9, 0.8, 0.7, 0.6, 0.7, 0.8];
+var fc = new H3DU.FrameCounterDiv();
+var loader = new H3DU.TextureLoader();
+  // load the floor texture
+loader.loadAndMapTexturesAll([
+  "461223191.jpg",
+  "bluebackground.png"
+], scene).then(function(textures) {
+  "use strict";
+  // add skysphere
+  var skysphere = createSkysphere2(10);
+   // create a stack of washers, each with different sizes
+  for(var i = 0; i < shapecolors.length; i++) {
+    var s = new H3DU.Shape(createWasher(0.5, shapesizes[i], 0.1, 32)).setColor(shapecolors[i])
+      .setVisible(false);
+    shapeArray.push(s);
+    sub.addShape(s);
+  }
+  sub.addShape(
+    new H3DU.Shape(makeFloor(-5, -5, 10, 10, 1)).setTexture(textures[0]));
+   sub.addShape(skysphere);
+   sub.addShape(makeAxisLines())
+  // Start the render loop
+  var anim = null;
+  var timer = {};
+  H3DU.renderLoop(function(time) {
+    sub.perspectiveAspect(45, 1, 1000);
+    var angle = 360 * H3DU.getTimePosition(timer, time, 6000);
+    sub.orthoAspect(-2,2,-2,2,-5,15);
+    var cx=document.getElementById("camerax").value*1.0
+    var cy=document.getElementById("cameray").value*1.0
+    var cz=document.getElementById("cameraz").value*1.0
+    sub.setLookAt([cx,cy,cz],[0,0,0],[0,0,1])
+    fc.update();
+    if(!anim) {
+      if(shapeArray.length > 0) {
+        anim = new Animators().startAt(time + 200);
+        for(var i = 0; i < shapeArray.length; i++) {
+          anim.thenShowAndMove(shapeArray[i], 0, 0, 4, 0, 0, 0.1 * i, 1000);
+        }
+      }
+    } else {
+      anim.update(time);
+    }
+    scene.render(sub);
+  });
+});
+// -->
+</script>
+</body>
