@@ -101,11 +101,6 @@ function circleDesign() {
   drawCurve(ce,mesh,ellipse(0,1.0,3.8,3.8),240)
   drawCurve(ce,mesh,ellipse(-1.0,0,4.8,4.8),240)
   drawCurve(ce,mesh,ellipse(1.1,1.4,5.8,5.8),240)
-  ce.color({
-    "evaluate":function() {
-      return [0, 1, 0];
-    }
-  });
   return mesh;
 }
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));

@@ -1006,10 +1006,14 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
 10, 12, and 14); the Z axis&#39;s direction will thus be from the point looked at to the &quot;camera&quot;.</p>
 
+<p>When used in conjunction with an <a href="H3DU.Math.html#H3DU.Math.mat4ortho">orthographic projection</a>, set <code>lookingAt</code> to <code>[X, Y, Z]</code>,
+<code>viewerPos</code> to <code>[X+1,Y+1,Z+1]</code> (or <code>[X+1,Y+1,Z-1]</code> in a left-handed system),
+and <code>up</code> to <code>[0,1,0]</code>, to create an isometric view matrix. See the examples below.</p>
+
 <h4>Parameters</h4>
 
 <ul>
-<li><code>viewerPos</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector specifying the &quot;camera&quot; position in world space.<br> When used in conjunction with an <a href="H3DU.Math.html#H3DU.Math.mat4ortho">orthographic projection</a>, set <code>viewerPos</code> to the following (and use the default for <code>lookingAt</code>) to create the following view matrices: <ul> <li>Isometric projection: <code>[1,1,1]</code> (or <code>[1,1,-1]</code> in a left-handed system). See the examples below. </ul></li>
+<li><code>viewerPos</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector specifying the &quot;camera&quot; position in world space.</li>
 <li><code>lookingAt</code> (Type: Array.&lt;number&gt;) (optional)<br>A 3-element vector specifying the point in world space that the &quot;camera&quot; is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).</li>
 <li><code>up</code> (Type: Array.&lt;number&gt;) (optional)<br>A 3-element vector specifying the direction from the center of the &quot;camera&quot; to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the &quot;camera&quot; is held upright.<br> This vector must not be parallel to the view direction (the direction from &quot;viewerPos&quot; to &quot;lookingAt&quot;). (See the example for one way to ensure this.)<br></li>
 </ul>
@@ -1098,7 +1102,7 @@ objects with the same size won&#39;t appear smaller as they get more distant fro
 <p>When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
 view volume (as is the case in WebGL) will range from -1 to 1.
 For a matrix in which Z coordinates range from 0 to 1, divide the 11th and 15th elements
-of the result (zero-based index 10 and 14) by 2, then add 0.5 to the 15th element.</p>
+of the result (zero-based indices 10 and 14) by 2, then add 0.5 to the 15th element.</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
@@ -1131,7 +1135,7 @@ set to -1 and the far clipping plane set to 1.</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
 See <a href="H3DU.Math.html#H3DU.Math.mat4ortho">mat4ortho()</a> for information on the meaning of coordinates
-when using this matrix and on adjusting the return value for other conventions.</p>
+when using this matrix and on adjusting the matrix for other conventions.</p>
 
 <h4>Parameters</h4>
 
@@ -1162,8 +1166,8 @@ or squishing it.</p>
 set to -1 and the far clipping plane set to 1.</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
-See <a href="H3DU.Math.html#H3DU.Math.mat4orthoAspect">mat4orthoAspect()</a> for information on the meaning
-of coordinates when using this matrix and on adjusting the return value for other conventions.</p>
+See <a href="H3DU.Math.html#H3DU.Math.mat4ortho">mat4ortho()</a> for information on the meaning
+of coordinates when using this matrix and on adjusting the matrix for other conventions.</p>
 
 <h4>Parameters</h4>
 
@@ -1191,15 +1195,12 @@ ratio, the view rectangle will be centered on the viewport
 or otherwise moved and scaled so as to keep the entire view rectangle visible without stretching
 or squishing it.</p>
 
-<p>When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
-view volume (as is the case in WebGL) will range from -1 to 1.
-For a matrix in which Z coordinates range from 0 to 1, divide the 11th and 15th elements
-of the result (zero-based index 10 and 14) by 2, then add 0.5 to the 15th element.</p>
-
-<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>; see <a href="H3DU.Math.html#H3DU.Math.mat4ortho">mat4ortho()</a>.</p>
-
 <p>The projection returned by this method only scales and/or shifts the view, so that
 objects with the same size won&#39;t appear smaller as they get more distant from the &quot;camera&quot;.</p>
+
+<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
+See <a href="H3DU.Math.html#H3DU.Math.mat4ortho">mat4ortho()</a> for information on the meaning of coordinates
+when using this matrix and on adjusting the matrix for other conventions.</p>
 
 <h4>Parameters</h4>
 

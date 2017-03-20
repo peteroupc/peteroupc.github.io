@@ -7,9 +7,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <script type="text/javascript" src="../h3du_min.js"></script>
 <script type="text/javascript" src="../extras/frame.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
-<script type="text/javascript" src="../extras/meshjson.js"></script>
+<script type="text/javascript" src="backgrounds.js"></script>
 <script type="text/javascript" src="animation.js"></script>
-<script type="text/javascript" src="skysphere.js"></script>
 <script type="text/javascript" src="shaderlib.js"></script>
 </head>
 <body>
@@ -17,9 +16,9 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <div style="position:absolute;left:0;top:1em">
 <div id=settings>
 <form>
-Camera X: <input id=camerax type=range value="1" min="-1" max="1" step="0.1"><br>
-Camera Y: <input id=cameray type=range value="1" min="-1" max="1" step="0.1"><br>
-Camera Z: <input id=cameraz type=range value="1" min="-1" max="1" step="0.1">
+Camera X: <input id=camerax type=range value="1" min="-1" max="1" step="0.02"><span id=cameraxvalue></span><br>
+Camera Y: <input id=cameray type=range value="1" min="-1" max="1" step="0.02"><span id=camerayvalue></span><br>
+Camera Z: <input id=cameraz type=range value="1" min="-1" max="1" step="0.02"><span id=camerazvalue></span>
 </form>
 </div>
 </div>
@@ -34,54 +33,28 @@ Camera Z: <input id=cameraz type=range value="1" min="-1" max="1" step="0.1">
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-
-function createSkysphere2(size) {
-  "use strict";
-  var fragment = ["precision mediump float;",
-      fragmentShaderLib(),
-      "varying vec4 positionVar;",
-      "void main() {",
-      " float c=fbm(positionVar.xyz/positionVar.w,1.0,1.0,2.0,0.5);",
-      " vec3 color=mix(vec3(0.8,1.0,0.95),vec3(1.0,1.0,1.0),c);",
-      " gl_FragColor=vec4(color,1.0);",
-      "}"
-    ].join("\n");
-  var shader = new H3DU.ShaderInfo(
- ["attribute vec3 position;",
-   "uniform mat4 projection;",
-   "uniform mat4 worldMatrix;",
-   "uniform mat4 modelViewMatrix;",
-   "varying vec4 positionVar;",
-   "void main() {",
-   "positionVar=worldMatrix*vec4(position,1.0);",
-   "gl_Position=(projection*modelViewMatrix)*vec4(position,1.0);",
-   "}"
- ].join("\n"), fragment
-);
- shader.setUniformSemantic("worldMatrix",H3DU.Semantic.MODEL);
-  return new H3DU.Shape(H3DU.Meshes.createSphere(size))
-  .setShader(shader);
-}
-
   // Create the 3D scene; find the HTML canvas and pass it
   // to Scene3D.
 var scene = new H3DU.Scene3D(document.getElementById("canvas")).setClearColor("white");
 var sub = new H3DU.Batch3D();
 sub.getLights().setDirectionalLight(0, [0, -3, 1.2]);
 var shapeArray = [];
+var background=new StarburstBackground("#eeddcc","#eeeeee")
+var passes=[
+  new H3DU.RenderPass3D(background.getBatch()),
+  new H3DU.RenderPass3D(sub,{"clearColor":false})
+]
 var shapecolors = ["white", "blue", "red", "green", "brown", "orange", "purple"];
   // Outer radius of each washer
 var shapesizes = [1, 0.9, 0.8, 0.7, 0.6, 0.7, 0.8];
 var fc = new H3DU.FrameCounterDiv();
 var loader = new H3DU.TextureLoader();
-  // load the floor texture
+// load the floor texture
 loader.loadAndMapTexturesAll([
   "461223191.jpg",
   "bluebackground.png"
 ], scene).then(function(textures) {
   "use strict";
-  // add skysphere
-  var skysphere = createSkysphere2(10);
    // create a stack of washers, each with different sizes
   for(var i = 0; i < shapecolors.length; i++) {
     var s = new H3DU.Shape(createWasher(0.5, shapesizes[i], 0.1, 32)).setColor(shapecolors[i])
@@ -91,7 +64,6 @@ loader.loadAndMapTexturesAll([
   }
   sub.addShape(
     new H3DU.Shape(makeFloor(-5, -5, 10, 10, 1)).setTexture(textures[0]));
-   sub.addShape(skysphere);
    sub.addShape(makeAxisLines())
   // Start the render loop
   var anim = null;
@@ -99,10 +71,14 @@ loader.loadAndMapTexturesAll([
   H3DU.renderLoop(function(time) {
     sub.perspectiveAspect(45, 1, 1000);
     var angle = 360 * H3DU.getTimePosition(timer, time, 6000);
-    sub.orthoAspect(-2,2,-2,2,-5,15);
+    sub.orthoAspect(-2,2,-2,2,-7,15);
+    background.update(1000 * H3DU.getTimePosition(timer, time, 100000));
     var cx=document.getElementById("camerax").value*1.0
     var cy=document.getElementById("cameray").value*1.0
     var cz=document.getElementById("cameraz").value*1.0
+    document.getElementById("cameraxvalue").innerHTML=""+cx
+    document.getElementById("camerayvalue").innerHTML=""+cy
+    document.getElementById("camerazvalue").innerHTML=""+cz
     sub.setLookAt([cx,cy,cz],[0,0,0],[0,0,1])
     fc.update();
     if(!anim) {
@@ -115,7 +91,7 @@ loader.loadAndMapTexturesAll([
     } else {
       anim.update(time);
     }
-    scene.render(sub);
+    scene.render(passes);
   });
 });
 // -->
