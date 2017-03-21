@@ -212,10 +212,10 @@ the range [-1, 1], where:</p>
 <li>The pixel's red component is the vector's X component.
 <li>The pixel's green component is the vector's Y component.
 <li>The pixel's blue component is the vector's Z component.
-<li>An unchanged normal vector will have the value (0, 0, 1), which is usually
+<li>An unchanged normal vector is indicated by the value (0, 0, 1), which is usually
 the value (127, 127, 255) in most image formats.
 <li>The vector is normalized so its length is about equal to 1.
-<li>The vector is expressed in tangent space, where the Z axis points outward
+<li>The vector is expressed in <i>tangent space</i>, where the Z axis points outward
 and away from the surface's edges.
 </ul>
 
@@ -228,10 +228,8 @@ A strong tilt indicates strong relief detail at that point.</p>
 format that uses lossy compression, as compression artifacts can result in inaccurate
 normals in certain areas.</p>
 
-<p>For normal mapping to work, an object&#39;s mesh must include normals,
-tangents, bitangents, and texture coordinates, though if a <code>H3DU.Mesh</code>
-object only has normals and texture coordinates, the <code>recalcTangents()</code>
-method can calculate the tangents and bitangents appropriate for normal mapping.</p>
+<p>For normal mapping to work, an object&#39;s mesh must include normals
+and texture coordinates.</p>
 
 <p>Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a> | <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></p>
 
@@ -427,7 +425,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
-<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

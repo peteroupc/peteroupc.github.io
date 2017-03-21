@@ -1360,13 +1360,13 @@ function normalCalcExpr(vecExpr) {
   "use strict";
   var varu = new Variable("u");
   var varv = new Variable("v");
-   // partial derivative with respect to u (binormal)
+   // partial derivative with respect to u
   var derivU = [
     findPartialDerivative(vecExpr[0], varu),
     findPartialDerivative(vecExpr[1], varu),
     findPartialDerivative(vecExpr[2], varu)
   ];
-   // partial derivative with respect to v (tangent)
+   // partial derivative with respect to v
   var derivV = [
     findPartialDerivative(vecExpr[0], varv),
     findPartialDerivative(vecExpr[1], varv),

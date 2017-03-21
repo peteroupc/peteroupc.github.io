@@ -39,10 +39,10 @@ var scene = new H3DU.Scene3D(document.getElementById("canvas")).setClearColor("w
 var sub = new H3DU.Batch3D();
 sub.getLights().setDirectionalLight(0, [0, -3, 1.2]);
 var shapeArray = [];
-var background=new StarburstBackground("#eeddcc","#eeeeee")
+var background=new SunburstBackground("#eeddcc","#eeeeee")
 var passes=[
-  new H3DU.RenderPass3D(background.getBatch()),
-  new H3DU.RenderPass3D(sub,{"clearColor":false})
+  new H3DU.RenderPass(background.getBatch()),
+  new H3DU.RenderPass(sub,{"clearColor":false})
 ]
 var shapecolors = ["white", "blue", "red", "green", "brown", "orange", "purple"];
   // Outer radius of each washer

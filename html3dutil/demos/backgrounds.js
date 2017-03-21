@@ -7,8 +7,8 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* exported StarburstBackground */
-function StarburstBackground(black, white) {
+/* exported SunburstBackground */
+function SunburstBackground(black, white) {
   "use strict";
   var vertex = "precision mediump float;attribute vec3 position;varying vec2 posVar;" +
   "void main() {posVar=position.xy;gl_Position=vec4(position,1.0);}";

@@ -178,7 +178,7 @@ function renderTexture(scene, shader, width, height) {
   var fbo = new H3DU.FrameBufferInfo(width, height);
 // Render to the frame buffer
   scene.render([
-    new H3DU.RenderPass3D(batch, {
+    new H3DU.RenderPass(batch, {
       "frameBuffer":fbo,
       "useFrameBufferSize":true
     })

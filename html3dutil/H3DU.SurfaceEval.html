@@ -180,40 +180,6 @@ texture coordinates.</p>
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<h4>Example</h4>
-
-<p>The following example sets the vertex position and
-normal generation
-function for a parametric surface. To illustrate how the method is derived
-from the vector calculation method, that method is also given below. To
-derive the normal calculation, first look at the vector function:</p>
-
-<p><b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))</p>
-
-<p>Then, find the tangent and bitangent vectors:</p>
-
-<p>&#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
-&#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))</p>
-
-<p>Next, take their cross product:</p>
-
-<p><b>c</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br></p>
-
-<p>The result is the gradient, which will be normal to the surface.</p>
-
-<pre><code>surfaceEval.vertex({&quot;evaluate&quot;:function(u,v) {
-&quot;use strict&quot;;
-return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
-},
-&quot;gradient&quot;:function(u,v) {
-&quot;use strict&quot;;
-return [
-Math.cos(u)*-Math.sin(v)*Math.sin(u),
-Math.sin(u)*-Math.sin(v)*Math.sin(u),
-0];
-}})
-</code></pre>
-
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
@@ -274,7 +240,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
-<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

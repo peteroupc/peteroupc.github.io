@@ -52,7 +52,7 @@ interpolation and improved code on path triangulation.</li>
 <li><code>Scene3D</code>, now <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> class. Scene3D&#39;s <code>render</code> method now takes an array of <code>Batch3D</code>s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as <code>makeShape</code> and <code>setPerspective</code>, can still be used until <code>H3DU.Scene3D</code> renders a custom <code>H3DU.Batch3D</code>. This compatibility behavior may be dropped in the future.</li>
 <li>Alpha is disabled in WebGL contexts created with the <a href="H3DU.html#H3DU.get3DOr2DContext">H3DU.get3DOr2DContext</a> method.</li>
 <li>The <code>Scene3D</code> <a href="H3DU.Scene3D.html#H3DU.Scene3D_useProgram">H3DU.Scene3D#useProgram</a> method was deprecated and now does nothing.</li>
-<li>New <a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a> class holds information about how a batch of 3D models is to be rendered. It replaces the <code>Scene3D</code> <a href="H3DU.Scene3D.html#H3DU.Scene3D_useFilter">H3DU.Scene3D#useFilter</a> method, which now does nothing.</li>
+<li>New H3DU.RenderPass3D class holds information about how a batch of 3D models is to be rendered. It replaces the <code>Scene3D</code> <a href="H3DU.Scene3D.html#H3DU.Scene3D_useFilter">H3DU.Scene3D#useFilter</a> method, which now does nothing.</li>
 <li>New <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a> class holds information about a frame buffer; it replaces <a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a>.</li>
 <li>The <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code> classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>, <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a>, and <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>, respectively, which are not coupled to WebGL contexts.</li>
 <li>Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.</li>
@@ -308,7 +308,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
-<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

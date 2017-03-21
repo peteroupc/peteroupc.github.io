@@ -117,10 +117,10 @@ back to the screen.</p>
 <pre><code>var renders = [
   // The first batch renders the main batch&#39;s geometry to
   // the frame buffer info we just created.
-  new H3DU.RenderPass3D(batch,{&quot;frameBuffer&quot;:fbo}),
+  new H3DU.RenderPass(batch,{&quot;frameBuffer&quot;:fbo}),
   // The next batch renders the frame buffer&#39;s contents
   // back to the screen.
-  new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo))
+  new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene,fbo))
 ];
 </code></pre>
 
@@ -164,10 +164,10 @@ var subScene=new H3DU.Batch3D()
 // create an array of render passes
 var renders=[
   // The first pass renders to a frame buffer
-  new H3DU.RenderPass3D(subScene,{&quot;frameBuffer&quot;:fbo}),
+  new H3DU.RenderPass(subScene,{&quot;frameBuffer&quot;:fbo}),
   // The second pass renders the frame buffer to the main canvas,
   // using the given graphics filter
-  new H3DU.RenderPass3D(H3DU.Batch3D.forFilter(scene,fbo,currentFilter))
+  new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene,fbo,currentFilter))
 ]
 // Then, each time the scene needs to be rendered, call
 // this method
@@ -430,7 +430,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
-<li><a href="H3DU.RenderPass3D.html">H3DU.RenderPass3D</a></li>
+<li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
 <li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>

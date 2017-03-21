@@ -42,8 +42,8 @@ Doug Miles and Earl Allen, and "Aileron" from http://dotcolon.net/font/aileron/
   var shape2 = new H3DU.Shape(mesh).setColor("#e0e0e0");
   figureSub.addShape(shape2);
   var passes = [
-    new H3DU.RenderPass3D(figureSub),
-    new H3DU.RenderPass3D(textSub, {"clearColor":false})
+    new H3DU.RenderPass(figureSub),
+    new H3DU.RenderPass(textSub, {"clearColor":false})
   ];
   var timer = {};
   var loader = new H3DU.TextureLoader();

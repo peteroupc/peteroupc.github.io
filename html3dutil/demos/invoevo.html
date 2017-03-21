@@ -78,10 +78,10 @@ function curveInvolute(evaluator) {
   return {
     "evaluate":function(u) {
       var arclen = neweval.arcLength(u);
-      var tangent = neweval.velocity(u);
+      var velocity = neweval.velocity(u);
       var position = neweval.evaluate(u);
       return _vecAdd(position,
-        _vecNormInPlaceAndScale(tangent, -arclen));
+        _vecNormInPlaceAndScale(velocity, -arclen));
     },
     "endPoints":function() {
       return neweval.endPoints();
@@ -94,13 +94,13 @@ function curveEvolute(evaluator) {
   return {
     "evaluate":function(u) {
       var position = neweval.evaluate(u);
-      var tangent = neweval.velocity(u);
+      var velocity = neweval.velocity(u);
       var accel = neweval.accel(u);
-      var denom = tangent[0] * accel[1] - accel[0] * tangent[1];
-      var numpart = tangent[0] * tangent[0] + tangent[1] * tangent[1];
+      var denom = velocity[0] * accel[1] - accel[0] * velocity[1];
+      var numpart = velocity[0] * velocity[0] + velocity[1] * velocity[1];
       return [
-        position[0] - numpart * tangent[1] / denom,
-        position[1] + numpart * tangent[0] / denom,
+        position[0] - numpart * velocity[1] / denom,
+        position[1] + numpart * velocity[0] / denom,
         0
       ];
     },
@@ -115,13 +115,13 @@ function curveRadialCurve(evaluator, ox, oy) {
   var neweval = evaluator;
   return {
     "evaluate":function(u) {
-      var tangent = neweval.velocity(u);
+      var velocity = neweval.velocity(u);
       var accel = neweval.accel(u);
-      var denom = tangent[0] * accel[1] - accel[0] * tangent[1];
-      var numpart = tangent[0] * tangent[0] + tangent[1] * tangent[1];
+      var denom = velocity[0] * accel[1] - accel[0] * velocity[1];
+      var numpart = velocity[0] * velocity[0] + velocity[1] * velocity[1];
       return [
-        ox - numpart * tangent[1] / denom,
-        oy + numpart * tangent[0] / denom,
+        ox - numpart * velocity[1] / denom,
+        oy + numpart * velocity[0] / denom,
         0
       ];
     },
@@ -138,10 +138,10 @@ function curveOrthotomic(evaluator, ox, oy) {
       var position = neweval.evaluate(u);
       var dx = position[0] - ox;
       var dy = position[1] - oy;
-      var tangent = neweval.velocity(u);
-      var denom = tangent[0] * tangent[0] + tangent[1] * tangent[1];
-      var rate = 2 * (tangent[0] * dy - tangent[1] * dx) / denom;
-      return [ox - tangent[1] * rate, oy + tangent[0] * rate, 0];
+      var velocity = neweval.velocity(u);
+      var denom = velocity[0] * velocity[0] + velocity[1] * velocity[1];
+      var rate = 2 * (velocity[0] * dy - velocity[1] * dx) / denom;
+      return [ox - velocity[1] * rate, oy + velocity[0] * rate, 0];
     },
     "endPoints":function() {
       return neweval.endPoints();
@@ -160,14 +160,14 @@ function curvePedalCurve(evaluator, ox, oy) {
   return {
     "evaluate":function(u) {
       var position = neweval.evaluate(u);
-      var tangent = neweval.velocity(u);
-      var tangentXSq = tangent[0] * tangent[0];
-      var tangentYSq = tangent[1] * tangent[1];
-      var tanXY = tangent[0] * tangent[1];
-      var denom = tangentXSq + tangentYSq;
+      var velocity = neweval.velocity(u);
+      var velocityXSq = velocity[0] * velocity[0];
+      var velocityYSq = velocity[1] * velocity[1];
+      var tanXY = velocity[0] * velocity[1];
+      var denom = velocityXSq + velocityYSq;
       return [
-        (ox * tangentXSq + tangentYSq * position[0] + (oy - position[1]) * tanXY) / denom,
-        (oy * tangentYSq + tangentXSq * position[1] + (ox - position[0]) * tanXY) / denom,
+        (ox * velocityXSq + velocityYSq * position[0] + (oy - position[1]) * tanXY) / denom,
+        (oy * velocityYSq + velocityXSq * position[1] + (ox - position[0]) * tanXY) / denom,
         0];
     },
     "endPoints":function() {
