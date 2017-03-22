@@ -1,0 +1,372 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.Polyhedra</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.Polyhedra</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='H3DU.Polyhedra'></a></p>
+
+<h3>H3DU.Polyhedra()</h3>
+
+<p>Contains helper methods for generating the five platonic solids
+and other H3DU.Polyhedra.</p>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU.Polyhedra.dodecahedron">dodecahedron</a><br>Generates a mesh of a regular dodecahedron or a sphere based on that solid.</li>
+<li><a href="#H3DU.Polyhedra.dodecahedronFaces">dodecahedronFaces</a><br>Gets the vertices of a dodecahedron with maximum radius 1.</li>
+<li><a href="#H3DU.Polyhedra.dodecahedronFacesCompact">dodecahedronFacesCompact</a><br>Gets a more compact representation of the vertices of a dodecahedron
+with maximum radius 1.</li>
+<li><a href="#H3DU.Polyhedra.hexahedron">hexahedron</a><br>Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.</li>
+<li><a href="#H3DU.Polyhedra.hexahedronFaces">hexahedronFaces</a><br>Gets the vertices of a hexahedron (cube) with maximum radius 1.</li>
+<li><a href="#H3DU.Polyhedra.hexahedronFacesCompact">hexahedronFacesCompact</a><br>Gets a more compact representation of the vertices of a hexahedron
+(cube) with maximum radius 1.</li>
+<li><a href="#H3DU.Polyhedra.icosahedron">icosahedron</a><br>Generates a mesh of a regular icosahedron or a sphere based on that solid.</li>
+<li><a href="#H3DU.Polyhedra.icosahedronFaces">icosahedronFaces</a><br>Gets the vertices of a regular icosahedron with maximum radius 1.</li>
+<li><a href="#H3DU.Polyhedra.makeSphere">makeSphere</a><br>Modifies the vertices and indices of a solid to
+generate an approximation of a sphere.</li>
+<li><a href="#H3DU.Polyhedra.normDistances">normDistances</a><br>Normalizes the distance from the origin to each vertex in the given
+array to a fixed radius.</li>
+<li><a href="#H3DU.Polyhedra.octahedron">octahedron</a><br>Generates a mesh of a regular octahedron or a sphere based on that solid.</li>
+<li><a href="#H3DU.Polyhedra.octahedronFaces">octahedronFaces</a><br>Gets the vertices of a regular octahedron with radius 1.</li>
+<li><a href="#H3DU.Polyhedra.tetrahedron">tetrahedron</a><br>Generates a mesh of a regular tetrahedron or a sphere based on that solid.</li>
+<li><a href="#H3DU.Polyhedra.tetrahedronFaces">tetrahedronFaces</a><br>Gets the vertices of a tetrahedron with radius 1.</li>
+</ul>
+
+<p><a name='H3DU.Polyhedra.dodecahedron'></a></p>
+
+<h3>(static) H3DU.Polyhedra.dodecahedron(radius, level)</h3>
+
+<p>Generates a mesh of a regular dodecahedron or a sphere based on that solid.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>radius</code> (Type: number)<br>Maximum radius from the center of the solid to one of its vertices.</li>
+<li><code>level</code> (Type: number)<br>If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid&#39;s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The generated solid. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Polyhedra.dodecahedronFaces'></a></p>
+
+<h3>(static) H3DU.Polyhedra.dodecahedronFaces()</h3>
+
+<p>Gets the vertices of a dodecahedron with maximum radius 1.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='H3DU.Polyhedra.dodecahedronFacesCompact'></a></p>
+
+<h3>(static) H3DU.Polyhedra.dodecahedronFacesCompact()</h3>
+
+<p>Gets a more compact representation of the vertices of a dodecahedron
+with maximum radius 1.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='H3DU.Polyhedra.hexahedron'></a></p>
+
+<h3>(static) H3DU.Polyhedra.hexahedron(radius, level)</h3>
+
+<p>Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>radius</code> (Type: number)<br>Maximum radius from the center of the solid to one of its vertices.</li>
+<li><code>level</code> (Type: number)<br>If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid&#39;s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The generated solid. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Polyhedra.hexahedronFaces'></a></p>
+
+<h3>(static) H3DU.Polyhedra.hexahedronFaces()</h3>
+
+<p>Gets the vertices of a hexahedron (cube) with maximum radius 1.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='H3DU.Polyhedra.hexahedronFacesCompact'></a></p>
+
+<h3>(static) H3DU.Polyhedra.hexahedronFacesCompact()</h3>
+
+<p>Gets a more compact representation of the vertices of a hexahedron
+(cube) with maximum radius 1.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='H3DU.Polyhedra.icosahedron'></a></p>
+
+<h3>(static) H3DU.Polyhedra.icosahedron(radius, level)</h3>
+
+<p>Generates a mesh of a regular icosahedron or a sphere based on that solid.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>radius</code> (Type: number)<br>Maximum radius from the center of the solid to one of its vertices.</li>
+<li><code>level</code> (Type: number)<br>If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid&#39;s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The generated solid. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Polyhedra.icosahedronFaces'></a></p>
+
+<h3>(static) H3DU.Polyhedra.icosahedronFaces()</h3>
+
+<p>Gets the vertices of a regular icosahedron with maximum radius 1.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='H3DU.Polyhedra.makeSphere'></a></p>
+
+<h3>(static) H3DU.Polyhedra.makeSphere(vi, radius, level)</h3>
+
+<p>Modifies the vertices and indices of a solid to
+generate an approximation of a sphere.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vi</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>A two-element array. The first element contains an array of the vertices that make up the solid (each vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array), and the second element contains an array of vertex indices (multiplying each element by 3 will get the index to the first coordinate of the corresponding vertex in the first array).</li>
+<li><code>radius</code> (Type: number)<br>Maximum radius from the center of the solid to one of its vertices.</li>
+<li><code>level</code> (Type: number)<br>If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid&#39;s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The &quot;vi&quot; parameter, which will likely be modified. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='H3DU.Polyhedra.normDistances'></a></p>
+
+<h3>(static) H3DU.Polyhedra.normDistances(vertices, radius)</h3>
+
+<p>Normalizes the distance from the origin to each vertex in the given
+array to a fixed radius.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertices</code> (Type: Array.&lt;number&gt;)<br>An array of vertices, where each vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array.</li>
+<li><code>radius</code> (Type: number)<br>Distance from the origin where each vertex will be normalized to.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+
+<p><a name='H3DU.Polyhedra.octahedron'></a></p>
+
+<h3>(static) H3DU.Polyhedra.octahedron(radius, level)</h3>
+
+<p>Generates a mesh of a regular octahedron or a sphere based on that solid.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>radius</code> (Type: number)<br>Maximum radius from the center of the solid to one of its vertices.</li>
+<li><code>level</code> (Type: number)<br>If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid&#39;s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The generated solid. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Polyhedra.octahedronFaces'></a></p>
+
+<h3>(static) H3DU.Polyhedra.octahedronFaces()</h3>
+
+<p>Gets the vertices of a regular octahedron with radius 1.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='H3DU.Polyhedra.tetrahedron'></a></p>
+
+<h3>(static) H3DU.Polyhedra.tetrahedron(radius, level)</h3>
+
+<p>Generates a mesh of a regular tetrahedron or a sphere based on that solid.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>radius</code> (Type: number)<br>Maximum radius from the center of the solid to one of its vertices.</li>
+<li><code>level</code> (Type: number)<br>If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid&#39;s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The generated solid. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Polyhedra.tetrahedronFaces'></a></p>
+
+<h3>(static) H3DU.Polyhedra.tetrahedronFaces()</h3>
+
+<p>Gets the vertices of a tetrahedron with radius 1.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex&#39;s X, Y, and Z coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="FrameCounter.html">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
+<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
+<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
+<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
+<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
+<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
+<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
+<li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
+<li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
+<li><a href="InputTracker.html">InputTracker</a></li>
+<li><a href="MatrixStack.html">MatrixStack</a></li>
+<li><a href="MeshJSON.html">MeshJSON</a></li>
+<li><a href="ObjData.html">ObjData</a></li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.html">Trochoid</a></li>
+</ul>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

@@ -1,76 +1,222 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.CurveTube</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.ArcLengthParamCurve</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>H3DU.CurveTube</h1>
+<h1>H3DU.ArcLengthParamCurve</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name='H3DU.CurveTube'></a></p>
+<p><a name='H3DU.ArcLengthParamCurve'></a></p>
 
-<h3>H3DU.CurveTube(func, [thickness], [sweptCurve])</h3>
+<h3>H3DU.ArcLengthParamCurve(curve)</h3>
 
-<p>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.</p>
+<p><b>Augments:</b> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
+
+<p>A <a href="H3DU.Curve.html">curve evaluator object</a> that
+wraps another curve evaluator object and remaps its U coordinates
+to an <i>arc length parameterization</i>. Arc length
+parameterization allows for moving along a curve&#39;s path at a uniform
+speed and for generating points which are spaced evenly along that
+path -- both features are more difficult with most other kinds
+of curve parameterization.</p>
 
 <p>This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
 library.</p>
 
-<p>To use this class, you must include the script &quot;extras/curvetube.js&quot;; the
+<p>To use this class, you must include the script &quot;extras/evaluators.js&quot;; the
 class is not included in the &quot;h3du_min.js&quot; file which makes up
 the HTML 3D Library. Example:</p>
 
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/curvetube.js&quot;&gt;&lt;/script&gt;
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>func</code> (Type: Object)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from. For best results, the curve should be continuous and smooth.</li>
-<li><code>thickness</code> (Type: number) (optional)<br>Radius of the extruded tube. If this parameter is null or omitted, the default is 0.125.</li>
-<li><code>sweptCurve</code> (Type: Object) (optional)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the &quot;thickness&quot; parameter.</li>
+<li><code>curve</code> (Type: Object)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes a curve to convert to an arc length parameterization. The curve should be continuous and have a speed greater than 0 at every point on the curve.</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.CurveTube_endPoints">endPoints</a><br>Returns the starting and ending U and V coordinates of this surface.</li>
-<li><a href="#H3DU.CurveTube_evaluate">evaluate</a><br>Generates a point on the extruded tube from the given u and V coordinates.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_accel">accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_arcLength">arcLength</a><br>Finds the arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_endPoints">endPoints</a><br>Gets the endpoints of this curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_evaluate">evaluate</a><br>Generates a point on the curve which is the given distance away
+from the start of the curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_getCoordinate">getCoordinate</a><br>Finds the U coordinate for the point on the curve which is the given distance away
+from the start of the curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_getPoints">getPoints</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</li>
 </ul>
 
-<p><a name='H3DU.CurveTube_endPoints'></a></p>
+<p><a name='H3DU.ArcLengthParamCurve_accel'></a></p>
 
-<h3>H3DU.CurveTube#endPoints()</h3>
+<h3>H3DU.ArcLengthParamCurve#accel(u)</h3>
 
-<p>Returns the starting and ending U and V coordinates of this surface.</p>
+<p>Finds an approximate acceleration vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.</p>
 
-<h4>Return Value</h4>
-
-<p>A four-element array. The first and second
-elements are the starting and ending U coordinates, respectively, of the surface, and the third
-and fourth elements are its starting and ending V coordinates.
-The starting and ending U coordinates will be the extruded curve&#39;s end points (or <code>[0, 1]</code>
-if it doesn&#39;t implement an <code>endPoints</code> method).
-The starting and ending V coordinates are <code>[0, &pi;]</code> by default, but if a cross
-section curve is defined, those V coordinates will be that curve&#39;s end points (or <code>[0, 1]</code>
-if it doesn&#39;t implement an <code>endPoints</code> method).</p>
-
-<p><a name='H3DU.CurveTube_evaluate'></a></p>
-
-<h3>H3DU.CurveTube#evaluate(u, v)</h3>
-
-<p>Generates a point on the extruded tube from the given u and V coordinates.</p>
+<p>The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate. This will run the length of the curve.</li>
-<li><code>v</code> (Type: number)<br>V coordinate. This will sweep around the extruded tube.</li>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>A 3-element array specifying a 3D point. (Type: Array.&lt;number&gt;)</p>
+<p>An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.ArcLengthParamCurve_arcLength'></a></p>
+
+<h3>H3DU.ArcLengthParamCurve#arcLength(u)</h3>
+
+<p>Finds the arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The arc length of this curve at the given U coordinate. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.ArcLengthParamCurve_endPoints'></a></p>
+
+<h3>H3DU.ArcLengthParamCurve#endPoints()</h3>
+
+<p>Gets the endpoints of this curve.</p>
+
+<h4>Return Value</h4>
+
+<p>An array containing the two
+endpoints of the curve. The first number is the start of the curve,
+and the second number is the end of the curve (also the curve&#39;s
+total length). (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.ArcLengthParamCurve_evaluate'></a></p>
+
+<h3>H3DU.ArcLengthParamCurve#evaluate(u)</h3>
+
+<p>Generates a point on the curve which is the given distance away
+from the start of the curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>Distance to the point from the start of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array specifying the position of the given
+point. It will have as many elements as for the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.ArcLengthParamCurve_getCoordinate'></a></p>
+
+<h3>H3DU.ArcLengthParamCurve#getCoordinate(u)</h3>
+
+<p>Finds the U coordinate for the point on the curve which is the given distance away
+from the start of the curve. This can be used as the U coordinate to
+pass to the underlying <a href="H3DU.Curve.html">curve evaluator object</a>&#39;s
+methods. (Note that velocity and acceleration depend on parameterization; for
+example, the length of the velocity vector may differ for the underlying curve object
+than for this one, even though both vectors generally point in the same direction.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>Distance to the point from the start of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The U coordinate for the given point. (Type: number)</p>
+
+<h4>Example</h4>
+
+<p>The following example gets an array
+of U coordinates for the curve, spaced evenly.</p>
+
+<pre><code>var points=[]; // Create an array of points
+var length=this.endPoints()[0]; // Get the curve&#39;s length
+for(var i=0;i&lt;20;i++) { // Generate 20 points
+var dist=i*length/19; // Will be spaced 1/19 of the total length
+points.push(this.getCoordinate(dist));
+}
+</code></pre>
+
+<p><a name='H3DU.ArcLengthParamCurve_getPoints'></a></p>
+
+<h3>H3DU.ArcLengthParamCurve#getPoints(count)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>count</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
+<p><a name='H3DU.ArcLengthParamCurve_normal'></a></p>
+
+<h3>H3DU.ArcLengthParamCurve#normal(u)</h3>
+
+<p>Finds an approximate principal normal vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
+
+<p>The <b>principal normal</b> of a curve is the derivative of the &quot;normalized&quot; velocity
+vector divided by that derivative&#39;s length. The normal returned by this method
+<i>should</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="H3DU.Surface.html#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.ArcLengthParamCurve_velocity'></a></p>
+
+<h3>H3DU.ArcLengthParamCurve#velocity(u)</h3>
+
+<p>Finds an approximate velocity vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>velocity</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the position (from the <code>evaluate</code> method).</p>
+
+<p>The <b>velocity</b> of a curve is a vector which is the derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a velocity vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>

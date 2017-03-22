@@ -8,7 +8,7 @@
 */
 /* global H3DU */
 /** @ignore */
-H3DU._FrenetFrames = function(func) {
+H3DU._TBNFrames = function(func) {
   "use strict";
   this.func = typeof H3DU.Curve !== "undefined" && H3DU.Curve !== null ? new H3DU.Curve(func) : func;
   this.normals = [];
@@ -17,68 +17,74 @@ H3DU._FrenetFrames = function(func) {
   this.vectorsCache = [];
   this.vectorsCacheIndex = 0;
   var isClosed = false;
-  var res = 10;
+  var res = 50; // NOTE: Many samples of TBN frames are needed for accuracy
   var totalLength = 0;
-  var samples = [];
-  var lengths = [];
-  this.endPoints = H3DU._FrenetFrames.getEndPoints(func);
+
+  var runningLengths = [0];
+  this.endPoints = H3DU._TBNFrames.getEndPoints(func);
+  var firstSample = this.func.evaluate(this.endPoints[0]);
   var lastSample = this.func.evaluate(this.endPoints[1]);
-  if(H3DU._FrenetFrames._distSq(this.func.evaluate(0), lastSample) < H3DU._FrenetFrames._EPSILON) {
+  if(H3DU._TBNFrames._distSq(firstSample, lastSample) < H3DU._TBNFrames._EPSILON) {
     isClosed = true;
   }
   this.isClosed = isClosed;
+  totalLength = 0;
   for(var i = 0; i <= res; i++) {
     var t = this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * (i / res);
-    var e0 = this.func.evaluate(t);
-    if(isClosed && i > 0) {
-      var len = Math.sqrt(H3DU._FrenetFrames._distSq(e0, samples[i - 1]));
+    var e0;
+    if(i === 0)e0 = firstSample;
+    else if(i === res)e0 = lastSample;
+    else e0 = this.func.evaluate(t);
+    this.tangents[i] = H3DU._TBNFrames._getTangent(this.func, t, e0);
+    if(this.isClosed && i > 0) {
+      var len = H3DU.Math.vec3length(
+        H3DU.Math.vec3sub(this.tangents[i], this.tangents[i - 1]));
       totalLength += len;
-      lengths.push(len);
+      runningLengths[i] = totalLength;
     }
-    samples.push(e0);
-    var tangent = H3DU._FrenetFrames._getTangent(this.func, t, e0);
-    var normal;
-    if(i > 0) {
-      normal = H3DU.Math.vec3normalizeInPlace(
-         H3DU.Math.vec3cross(this.binormals[i - 1], tangent));
-      if(normal[0] === 0 && normal[1] === 0 && normal[2] === 0) {
-        // Normal is calculated to be 0, indicating that the tangent
-        // and previous binormal were parallel
-        normal = H3DU._FrenetFrames.normalFromTangent(tangent);
-      }
+  }
+  for(i = 0; i <= res; i++) {
+    if(i === 0) {
+      this.normals[i] = H3DU._TBNFrames.normalFromTangent(this.tangents[0]);
     } else {
-      normal = H3DU._FrenetFrames.normalFromTangent(tangent);
+      var b = H3DU.Math.vec3cross(this.tangents[i - 1], this.tangents[i]);
+      if(H3DU.Math.vec3length(b) < H3DU._TBNFrames._EPSILON) {
+        this.normals[i] = this.normals[i - 1];
+      } else {
+        H3DU.Math.vec3normalizeInPlace(b);
+        var cosAngle = H3DU.Math.vec3dot(this.tangents[i - 1], this.tangents[i]);
+        var sinAngle = Math.abs(H3DU.Math.vec3length(
+         H3DU.Math.vec3cross(this.tangents[i - 1], this.tangents[i])));
+        this.normals[i] = H3DU._TBNFrames._rotateVector(
+        this.normals[i - 1], b, sinAngle, cosAngle);
+      }
     }
-    var binormal = H3DU.Math.vec3normalizeInPlace(
-    H3DU.Math.vec3cross(tangent, normal));
-    this.normals[i] = normal;
-    this.binormals[i] = binormal;
-    this.tangents[i] = tangent;
   }
   if(isClosed && totalLength > 0) {
-  // Adjust angles of binormal and normal to prevent seams
+  // Adjust angles of normals to prevent seams
     var quat = H3DU.Math.quatFromVectors(this.normals[res], this.normals[0]);
     var angle = H3DU.Math.quatToAxisAngle(quat)[3];
-    var runningLength = 0;
+    angle *= H3DU.Math.ToRadians;
+
   // Set basis vectors at ends to the same value
     this.normals[res] = this.normals[0];
-    this.binormals[res] = this.binormals[0];
     this.tangents[res] = this.tangents[0];
     if(angle !== 0) {
-      for(i = 0; i < res - 1; i++) {
-        runningLength += lengths[i];
-        var lenproportion = runningLength / totalLength;
-        var newq = H3DU.Math.quatFromAxisAngle(angle * lenproportion, this.tangents[i + 1]);
-   // Rotate normal and binormal about the tangent, to keep them orthogonal to
-   // tangent and each other
-        this.normals[i + 1] = H3DU.Math.quatTransform(newq, this.normals[i + 1]);
-        this.binormals[i + 1] = H3DU.Math.quatTransform(newq, this.binormals[i + 1]);
+      for(i = 1; i <= res - 1; i++) {
+
+        cosAngle = Math.cos(angle);
+        sinAngle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(angle);
+        this.normals[i] = H3DU._TBNFrames._rotateVector(
+           this.normals[i], this.tangents[i], sinAngle, cosAngle);
       }
     }
+  }
+  for(i = 0; i <= res; i++) {
+    this.binormals[i] = H3DU.Math.vec3cross(this.tangents[i], this.normals[i]);
   }
 };
 /** @ignore */
-H3DU._FrenetFrames.getEndPoints = function(func) {
+H3DU._TBNFrames.getEndPoints = function(func) {
   "use strict";
   if(typeof func.endPoints !== "undefined" && func.endPoints !== null) {
     return func.endPoints();
@@ -87,23 +93,22 @@ H3DU._FrenetFrames.getEndPoints = function(func) {
   }
 };
 /** @ignore */
-H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
+H3DU._TBNFrames._getTangent = function(func, t, sampleAtPoint) {
   "use strict";
   var tangent;
-  // HACK: range checking on "t" is just a hack
-  if(typeof func.velocity !== "undefined" && func.velocity !== null && t < 1 && t > 0) {
+  if(typeof func.velocity !== "undefined" && func.velocity !== null) {
     tangent = func.velocity(t);
     if(tangent[0] !== 0 || tangent[1] !== 0 || tangent[2] !== 0) {
       return H3DU.Math.vec3normalizeInPlace(tangent);
     }
   }
   var direction = t === 1 ? -1 : 1;
-  var sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._FrenetFrames._EPSILON);
+  var sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._TBNFrames._EPSILON);
   tangent = H3DU.Math.vec3normalizeInPlace(
        H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
   if(tangent[0] === 0 && tangent[1] === 0 && tangent[2] === 0) {
     direction = -direction;
-    sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._FrenetFrames._EPSILON);
+    sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._TBNFrames._EPSILON);
     tangent = H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint);
   }
   if(direction < 0) {
@@ -114,14 +119,30 @@ H3DU._FrenetFrames._getTangent = function(func, t, sampleAtPoint) {
   return H3DU.Math.vec3normalizeInPlace(tangent);
 };
 /** @ignore */
-H3DU._FrenetFrames.normalFromTangent = function(tangent) {
+H3DU._TBNFrames._rotateVector = function(vec, reference, sinAngle, cosAngle) {
+  "use strict";
+  var vx = vec[0];
+  var vy = vec[1];
+  var vz = vec[2];
+  var bx = reference[0];
+  var by = reference[1];
+  var bz = reference[2];
+  var mc = 1.0 - cosAngle;
+  var x = vx * (cosAngle + bx * bx * mc) + vy * (-sinAngle * bz + bx * by * mc) + vz * (sinAngle * by + bx * bz * mc);
+  var y = vx * (sinAngle * bz + bx * by * mc) + vy * (cosAngle + by * by * mc) + vz * (-sinAngle * bx + by * bz * mc);
+  var z = vx * (-sinAngle * by + bx * bz * mc) + vy * (sinAngle * bx + by * bz * mc) + vz * (cosAngle + bz * bz * mc);
+  return [x, y, z];
+};
+
+/** @ignore */
+H3DU._TBNFrames.normalFromTangent = function(tangent) {
   "use strict";
   return H3DU.Math.vec3normalizeInPlace(H3DU.Math.vec3perp(tangent));
 };
 /** @ignore */
-H3DU._FrenetFrames._EPSILON = 0.000001;
+H3DU._TBNFrames._EPSILON = 0.000001;
 /** @ignore */
-H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
+H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
   "use strict";
   var uNorm = (u - this.endPoints[0]) * 1.0 / (this.endPoints[1] - this.endPoints[0]);
   var sample;
@@ -131,7 +152,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   var i, e0, normal, tangent, binormal;
   if(uNorm >= 0 && uNorm <= 1) {
     var index = uNorm * (this.binormals.length - 1);
-    if(Math.abs(index - Math.round(index)) < H3DU._FrenetFrames._EPSILON) {
+    if(Math.abs(index - Math.round(index)) < H3DU._TBNFrames._EPSILON) {
       index = Math.round(index);
       b = this.binormals[index];
       n = this.normals[index];
@@ -146,7 +167,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
       sample = this.func.evaluate(u);
       index = Math.floor(index);
       e0 = sample;
-      tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
+      tangent = H3DU._TBNFrames._getTangent(this.func, u, e0);
       normal = H3DU.Math.vec3normalizeInPlace(
        H3DU.Math.vec3cross(this.binormals[index], tangent));
       binormal = H3DU.Math.vec3normalizeInPlace(
@@ -162,20 +183,25 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
         return this.vectorsCache[i + 1];
       }
     }
-    sample = this.func.evaluate(u);
-    e0 = sample;
-    tangent = H3DU._FrenetFrames._getTangent(this.func, u, e0);
-    if(tangent[0] === 0 && tangent[1] === 0 && tangent[2] === 0 && this.isClosed) {
+    if(this.isClosed) {
       var un = uNorm - Math.floor(uNorm);
+      if(un < 0)un = 1.0 + un;
       return this.getSampleAndBasisVectors(
          this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * un);
     }
-    normal = H3DU._FrenetFrames.normalFromTangent(tangent);
+    sample = this.func.evaluate(u);
+    e0 = sample;
+    tangent = H3DU._TBNFrames._getTangent(this.func, u, e0);
+    normal = H3DU._TBNFrames.normalFromTangent(tangent);
     binormal = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3cross(tangent, normal));
     b = binormal;
     n = normal;
     t = tangent;
+    console.log(u);
+    console.log(tangent);
+    console.log(normal);
+    console.log(binormal);
     cache = true;
   }
   val[0] = n[0];
@@ -198,7 +224,7 @@ H3DU._FrenetFrames.prototype.getSampleAndBasisVectors = function(u) {
   return val;
 };
 /** @ignore */
-H3DU._FrenetFrames._distSq = function(a, b) {
+H3DU._TBNFrames._distSq = function(a, b) {
   "use strict";
   var dx = b[0] - a[0];
   var dy = b[1] - a[1];
@@ -218,7 +244,7 @@ H3DU._FrenetFrames._distSq = function(a, b) {
  * @constructor
  * @memberof H3DU
  * @param {Object} func A [curve evaluator object]{@link H3DU.Curve} that describes the 3-dimensional curve to extrude
- * a tube from.
+ * a tube from. For best results, the curve should be continuous and smooth.
  * @param {number} [thickness] Radius of the
  * extruded tube. If this parameter is null or omitted, the default is 0.125.
  * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.Curve} that
@@ -234,7 +260,7 @@ H3DU.CurveTube = function(func, thickness, sweptCurve) {
   this.thickness = typeof thickness === "undefined" || thickness === null ? 0.125 : thickness;
   this.sweptCurve = sweptCurve;
   this.func = func;
-  this.tangentFinder = new H3DU._FrenetFrames(func);
+  this.tangentFinder = new H3DU._TBNFrames(func);
 };
 H3DU.CurveTube.prototype = Object.create(H3DU.Surface.prototype);
 H3DU.CurveTube.prototype.constructor = H3DU.CurveTube;
@@ -251,9 +277,9 @@ H3DU.CurveTube.prototype.constructor = H3DU.CurveTube;
  */
 H3DU.CurveTube.prototype.endPoints = function() {
   "use strict";
-  var ep = H3DU._FrenetFrames.getEndPoints(this.func);
+  var ep = H3DU._TBNFrames.getEndPoints(this.func);
   if(typeof this.sweptCurve !== "undefined" && this.sweptCurve !== null) {
-    var sp = H3DU._FrenetFrames.getEndPoints(this.sweptCurve);
+    var sp = H3DU._TBNFrames.getEndPoints(this.sweptCurve);
     return [ep[0], ep[1], sp[0], sp[1]];
   } else {
     return [ep[0], ep[1], 0, H3DU.Math.PiTimes2];

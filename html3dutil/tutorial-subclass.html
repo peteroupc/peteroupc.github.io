@@ -1,76 +1,25 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.CurveTube</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Subclassing</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>H3DU.CurveTube</h1>
+<h1>Subclassing</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name='H3DU.CurveTube'></a></p>
+<p><a id=Subclasses></a></p>
 
-<h3>H3DU.CurveTube(func, [thickness], [sweptCurve])</h3>
+<h2>Subclasses</h2>
 
-<p>A <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a> for a tube extruded from a parametric curve.</p>
+<p>Some classes in the HTML 3D Library inherit the methods of others.  These classes
+are called subclasses.  To make a class a subclass of another, place the following code
+after the subclass&#39;s constructor:</p>
 
-<p>This class is considered a supplementary class to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
-
-<p>To use this class, you must include the script &quot;extras/curvetube.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
-
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/curvetube.js&quot;&gt;&lt;/script&gt;
+<pre><code>  SUBCLASS.prototype = Object.create(BASECLASS.prototype);
+  SUBCLASS.prototype.constructor = SUBCLASS;
 </code></pre>
 
-<h4>Parameters</h4>
-
-<ul>
-<li><code>func</code> (Type: Object)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from. For best results, the curve should be continuous and smooth.</li>
-<li><code>thickness</code> (Type: number) (optional)<br>Radius of the extruded tube. If this parameter is null or omitted, the default is 0.125.</li>
-<li><code>sweptCurve</code> (Type: Object) (optional)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the &quot;thickness&quot; parameter.</li>
-</ul>
-
-<h3>Methods</h3>
-
-<ul>
-<li><a href="#H3DU.CurveTube_endPoints">endPoints</a><br>Returns the starting and ending U and V coordinates of this surface.</li>
-<li><a href="#H3DU.CurveTube_evaluate">evaluate</a><br>Generates a point on the extruded tube from the given u and V coordinates.</li>
-</ul>
-
-<p><a name='H3DU.CurveTube_endPoints'></a></p>
-
-<h3>H3DU.CurveTube#endPoints()</h3>
-
-<p>Returns the starting and ending U and V coordinates of this surface.</p>
-
-<h4>Return Value</h4>
-
-<p>A four-element array. The first and second
-elements are the starting and ending U coordinates, respectively, of the surface, and the third
-and fourth elements are its starting and ending V coordinates.
-The starting and ending U coordinates will be the extruded curve&#39;s end points (or <code>[0, 1]</code>
-if it doesn&#39;t implement an <code>endPoints</code> method).
-The starting and ending V coordinates are <code>[0, &pi;]</code> by default, but if a cross
-section curve is defined, those V coordinates will be that curve&#39;s end points (or <code>[0, 1]</code>
-if it doesn&#39;t implement an <code>endPoints</code> method).</p>
-
-<p><a name='H3DU.CurveTube_evaluate'></a></p>
-
-<h3>H3DU.CurveTube#evaluate(u, v)</h3>
-
-<p>Generates a point on the extruded tube from the given u and V coordinates.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>u</code> (Type: number)<br>U coordinate. This will run the length of the curve.</li>
-<li><code>v</code> (Type: number)<br>V coordinate. This will sweep around the extruded tube.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A 3-element array specifying a 3D point. (Type: Array.&lt;number&gt;)</p>
+<p>where <code>SUBCLASS</code> is the name of the subclass, and BASECLASS is the name
+of the class whose methods the subclass will inherit.</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>

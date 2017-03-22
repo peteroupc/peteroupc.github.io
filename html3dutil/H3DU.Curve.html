@@ -1,0 +1,459 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.Curve</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>H3DU.Curve</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='H3DU.Curve'></a></p>
+
+<h3>H3DU.Curve(curve, [curveParam])</h3>
+
+<p>A curve evaluator object for a parametric curve.</p>
+
+<p>A parametric curve is a curve whose points are based on a
+parametric curve function. A curve function takes a number
+(U) and returns a point (in 1, 2, 3 or more dimensions, but
+usually 2 or 3) that lies on the curve. For example, in 3
+dimensions, a curve function has the following form:</p>
+
+<p><b>F</b>(u) = [ x(u), y(u), z(u) ]</p>
+
+<p>where x(u) returns an X coordinate, y(u) a Y coordinate,
+and z(u) returns a Z coordinate.</p>
+
+<p>Specialized curves should <a href="tutorial-subclass.html">subclass</a> this class and implement
+the <code>evaluate</code> method and, optionally, the other methods mentioned in the &quot;curve&quot; parameter below.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain the <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> methods, as described in the corresponding methods of this class.</li>
+<li><code>curveParam</code> (Type: Object) (optional)<br>TODO: Not documented yet.</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>The following function defines a parametric circle curve. It demonstrates how all methods
+defined for curve evaluator objects can be implemented.</p>
+
+<pre><code>var circle=new Curve({&quot;evaluate&quot;:function(u) {
+&quot;use strict&quot;;
+return [Math.cos(u),Math.sin(u),0]
+},
+&quot;velocity&quot;:function(u) {
+return [-Math.sin(u),Math.cos(u),0]
+},
+&quot;accel&quot;:function(u) {
+return [-Math.cos(u),-Math.sin(u),0]
+},
+&quot;jerk&quot;:function(u) {
+return [Math.sin(u),-Math.cos(u),0]
+},
+&quot;normal&quot;:function(u) {
+// NOTE: The velocity vector will already be a
+// unit vector, so we use the accel vector instead
+return H3DU.Math.vec3normalize(this.accel(u));
+},
+&quot;arcLength&quot;:function(u) {
+return u;
+},
+&quot;endPoints&quot;:function(u) {
+return [0,Math.PiTimes2]
+}
+});
+</code></pre>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#H3DU.Curve_accel">accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.Curve_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.Curve_changeEnds">changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.</li>
+<li><a href="#H3DU.Curve_endPoints">endPoints</a><br>Returns the starting and ending U coordinates of this curve.</li>
+<li><a href="#H3DU.Curve_evaluate">evaluate</a><br>Finds the position of this curve at the given U coordinate.</li>
+<li><a href="#H3DU.Curve_fitRange">fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.</li>
+<li><a href="#H3DU.Curve_getLength">getLength</a><br>Convenience method for getting the total length of this curve.</li>
+<li><a href="#H3DU.Curve_getPoints">getPoints</a><br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.</li>
+<li><a href="#H3DU.Curve_jerk">jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.Curve_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.Curve_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.</li>
+<li><a href="#H3DU.Curve_toArcLengthParam">toArcLengthParam</a><br>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>.</li>
+<li><a href="#H3DU.Curve_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</li>
+</ul>
+
+<p><a name='H3DU.Curve_accel'></a></p>
+
+<h3>H3DU.Curve#accel(u)</h3>
+
+<p>Finds an approximate acceleration vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.</p>
+
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.Curve_arcLength'></a></p>
+
+<h3>H3DU.Curve#arcLength(u)</h3>
+
+<p>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>arcLength</code>
+method if it implements it; otherwise, calculates a numerical integral using the velocity vector.</p>
+
+<p>The <b>arc length</b> function returns a number; if the curve is &quot;smooth&quot;, this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The approximate arc length of this curve at the given U coordinate. (Type: number)</p>
+
+<p><a name='H3DU.Curve_changeEnds'></a></p>
+
+<h3>H3DU.Curve#changeEnds(ep1, ep2)</h3>
+
+<p>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.
+For example, this method can be used to shrink the path of a curve
+from [0, &pi;] to [0, &pi;/8].</p>
+
+<p>Note, however, that in general, shrinking
+the range of a curve will not shrink the length of a curve
+in the same proportion, unless the curve&#39;s path runs at
+constant speed with respect to time. For example, shrinking the range of a curve
+from [0, 1] to [0, 0.5] will not generally result in a curve that&#39;s exactly half as
+long as the original curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ep1</code> (Type: number)<br>New start point of the curve.</li>
+<li><code>ep2</code> (Type: number)<br>New end point of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)</p>
+
+<p><a name='H3DU.Curve_endPoints'></a></p>
+
+<h3>H3DU.Curve#endPoints()</h3>
+
+<p>Returns the starting and ending U coordinates of this curve.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first element is the starting coordinate of
+the curve, and the second is its ending coordinate.
+Returns <code>[0, 1]</code> if the evaluator doesn&#39;t implement an <code>endPoints</code>
+method.</p>
+
+<p><a name='H3DU.Curve_evaluate'></a></p>
+
+<h3>H3DU.Curve#evaluate(u)</h3>
+
+<p>Finds the position of this curve at the given U coordinate.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a position. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.Curve_fitRange'></a></p>
+
+<h3>H3DU.Curve#fitRange(ep1, ep2)</h3>
+
+<p>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of U coordinates
+from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
+Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ep1</code> (Type: number)<br>New value to use as the start point of the curve.</li>
+<li><code>ep2</code> (Type: number)<br>New value to use as the end point of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)</p>
+
+<p><a name='H3DU.Curve_getLength'></a></p>
+
+<h3>H3DU.Curve#getLength()</h3>
+
+<p>Convenience method for getting the total length of this curve.</p>
+
+<h4>Return Value</h4>
+
+<p>The distance from the start of the curve to its end. (Type: number)</p>
+
+<p><a name='H3DU.Curve_getPoints'></a></p>
+
+<h3>H3DU.Curve#getPoints(count)</h3>
+
+<p>Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of curve positions. The first
+element will be the start of the curve. If &quot;count&quot; is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='H3DU.Curve_jerk'></a></p>
+
+<h3>H3DU.Curve#jerk(u)</h3>
+
+<p>Finds an approximate jerk vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>jerk</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the acceleration vector.</p>
+
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a jerk vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.Curve_normal'></a></p>
+
+<h3>H3DU.Curve#normal(u)</h3>
+
+<p>Finds an approximate principal normal vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
+
+<p>The <b>principal normal</b> of a curve is the derivative of the &quot;normalized&quot; velocity
+vector divided by that derivative&#39;s length. The normal returned by this method
+<i>should</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="H3DU.Surface.html#H3DU.Surface_gradient">H3DU.Surface#gradient</a>.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.Curve_tangent'></a></p>
+
+<h3>H3DU.Curve#tangent(u)</h3>
+
+<p>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+The <b>tangent vector</b> is the same as the velocity vector, but &quot;normalized&quot; to a unit vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.Curve_toArcLengthParam'></a></p>
+
+<h3>H3DU.Curve#toArcLengthParam()</h3>
+
+<p>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>. Arc length
+parameterization allows for moving along a curve&#39;s path at a uniform
+speed and for generating points which are spaced evenly along that
+path -- both features are more difficult with most other kinds
+of curve parameterization.</p>
+
+<p>The <i>end points</i> of the curve (obtained by calling the <code>endPoints</code>
+method) will be (0, N), where N is the distance to the end of the curve from its
+start.</p>
+
+<p>When converting to an arc length parameterization, the curve
+should be continuous and have a speed greater than 0 at every
+point on the curve.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="H3DU.Curve.html">H3DU.Curve</a>)</p>
+
+<p><a name='H3DU.Curve_velocity'></a></p>
+
+<h3>H3DU.Curve#velocity(u)</h3>
+
+<p>Finds an approximate velocity vector at the given U coordinate of this curve.
+The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>velocity</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the position (from the <code>evaluate</code> method).</p>
+
+<p>The <b>velocity</b> of a curve is a vector which is the derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a velocity vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="Camera.html">Camera</a></li>
+<li><a href="CurveTube.html">CurveTube</a></li>
+<li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="FrameCounter.html">FrameCounter</a></li>
+<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
+<li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
+<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
+<li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
+<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
+<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
+<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
+<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
+<li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
+<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
+<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.MeshJSON.html">H3DU.MeshJSON</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
+<li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
+<li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
+<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
+<li><a href="InputTracker.html">InputTracker</a></li>
+<li><a href="MatrixStack.html">MatrixStack</a></li>
+<li><a href="MeshJSON.html">MeshJSON</a></li>
+<li><a href="ObjData.html">ObjData</a></li>
+<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
+<li><a href="Trochoid.html">Trochoid</a></li>
+</ul>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

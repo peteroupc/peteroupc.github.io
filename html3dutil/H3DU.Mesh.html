@@ -46,13 +46,17 @@ or at that point, those methods may be deprecated.</li></ul></p>
 <ul>
 <li><code>vertices</code> (Type: Array.&lt;number&gt;) (optional)<br>An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.</li>
 <li><code>indices</code> (Type: Array.&lt;number&gt;) (optional)<br>An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null or omitted, creates an initially empty mesh.</li>
-<li><code>format</code> (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if H3DU.Mesh.NORMALS_BIT is set, plus <li> 3 more elements if H3DU.Mesh.COLORS_BIT is set, plus <li> 2 more elements if H3DU.Mesh.TEXCOORDS_BIT is set.</ul> If H3DU.Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If H3DU.Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can&#39;t be set. May be null or omitted, in which case &quot;format&quot; is set to 0.</li>
+<li><code>format</code> (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if Mesh.NORMALS_BIT is set, plus <li> 3 more elements if Mesh.COLORS_BIT is set, plus <li> 2 more elements if Mesh.TEXCOORDS_BIT is set.</ul> If Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can&#39;t be set. May be null or omitted, in which case &quot;format&quot; is set to 0.</li>
 </ul>
 
 <h3>Members</h3>
 
 <ul>
-<li><a href="#H3DU.Mesh.BITANGENTS_BIT">BITANGENTS_BIT</a><br>The mesh contains bitangent vectors for each vertex.</li>
+<li><a href="#H3DU.Mesh.BITANGENTS_BIT">BITANGENTS_BIT</a><br><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the H3DU.Semantics.BITANGENT
+semantic.</b></li>
 <li><a href="#H3DU.Mesh.COLORS_BIT">COLORS_BIT</a><br>The mesh contains colors for each vertex.</li>
 <li><a href="#H3DU.Mesh.LINES">LINES</a><br>Primitive mode for rendering line segments, made up
 of 2 vertices each.</li>
@@ -66,7 +70,11 @@ of 1 vertex each.</li>
 <li><a href="#H3DU.Mesh.QUADS">QUADS</a><br>Primitive mode for rendering quadrilaterals, made up
 of 4 vertices each.</li>
 <li><a href="#H3DU.Mesh.QUAD_STRIP">QUAD_STRIP</a><br>Primitive mode for rendering a strip of quadrilaterals (quads).</li>
-<li><a href="#H3DU.Mesh.TANGENTS_BIT">TANGENTS_BIT</a><br>The mesh contains tangent vectors for each vertex.</li>
+<li><a href="#H3DU.Mesh.TANGENTS_BIT">TANGENTS_BIT</a><br><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the H3DU.Semantics.TANGENT
+semantic.</b></li>
 <li><a href="#H3DU.Mesh.TEXCOORDS_BIT">TEXCOORDS_BIT</a><br>The mesh contains texture coordinates for each vertex.</li>
 <li><a href="#H3DU.Mesh.TRIANGLES">TRIANGLES</a><br>Primitive mode for rendering triangles, made up
 of 3 vertices each.</li>
@@ -77,7 +85,11 @@ of 3 vertices each.</li>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Mesh_bitangent3">bitangent3</a><br>Sets the current bitangent vector for this mesh.</li>
+<li><a href="#H3DU.Mesh_bitangent3">bitangent3</a><br><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the H3DU.Semantics.BITANGENT
+semantic.</b></li>
 <li><a href="#H3DU.Mesh_color3">color3</a><br>Sets the current color for this mesh.</li>
 <li><a href="#H3DU.Mesh_enumPrimitives">enumPrimitives</a><br>Enumerates the primitives (lines, triangles, and points) included
 in this mesh.</li>
@@ -93,11 +105,12 @@ index in this mesh.</li>
 <li><a href="#H3DU.Mesh_normalizeNormals">normalizeNormals</a><br>Modifies this mesh by normalizing the normals it defines
 to unit length.</li>
 <li><a href="#H3DU.Mesh_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
-or points) composed by all shapes in this mesh.</li>
+or points) that this mesh contains.</li>
 <li><a href="#H3DU.Mesh_recalcNormals">recalcNormals</a><br>Recalculates the normal vectors for triangles
 in this mesh.</li>
-<li><a href="#H3DU.Mesh_recalcTangents">recalcTangents</a><br>Recalculates the tangent and bitangent vectors for triangles
-in this mesh.</li>
+<li><a href="#H3DU.Mesh_recalcTangents">recalcTangents</a><br><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. This method
+may be reimplemented in the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class in the future.</b></li>
 <li><a href="#H3DU.Mesh_reverseNormals">reverseNormals</a><br>Modifies this mesh by reversing the sign of normals it defines.</li>
 <li><a href="#H3DU.Mesh_reverseWinding">reverseWinding</a><br>Reverses the winding order of the triangles in this mesh
 by swapping the second and third vertex indices of each one.</li>
@@ -106,7 +119,11 @@ by swapping the second and third vertex indices of each one.</li>
 given index.</li>
 <li><a href="#H3DU.Mesh_setVertexNormal">setVertexNormal</a><br>Sets the normal associated with the vertex with the
 given index.</li>
-<li><a href="#H3DU.Mesh_tangent3">tangent3</a><br>Sets the current tangent vector for this mesh.</li>
+<li><a href="#H3DU.Mesh_tangent3">tangent3</a><br><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the H3DU.Semantics.TANGENT
+semantic.</b></li>
 <li><a href="#H3DU.Mesh_texCoord2">texCoord2</a><br>Sets the current texture coordinates for this mesh.</li>
 <li><a href="#H3DU.Mesh_toWireFrame">toWireFrame</a><br>Converts this mesh to a new mesh with triangles converted
 to line segments.</li>
@@ -120,6 +137,12 @@ in this mesh.</li>
 <p><a name='H3DU.Mesh.BITANGENTS_BIT'></a></p>
 
 <h3>H3DU.Mesh.BITANGENTS_BIT (constant)</h3>
+
+<p><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the H3DU.Semantics.BITANGENT
+semantic.</b></p>
 
 <p>The mesh contains bitangent vectors for each vertex.</p>
 
@@ -214,6 +237,12 @@ vertices, in that order.</p>
 
 <h3>H3DU.Mesh.TANGENTS_BIT (constant)</h3>
 
+<p><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the H3DU.Semantics.TANGENT
+semantic.</b></p>
+
 <p>The mesh contains tangent vectors for each vertex.</p>
 
 <p>Default Value: <code>8</code></p>
@@ -262,6 +291,12 @@ vertices are swapped when generating that triangle.</p>
 <p><a name='H3DU.Mesh_bitangent3'></a></p>
 
 <h3>H3DU.Mesh#bitangent3(x, y, z)</h3>
+
+<p><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the H3DU.Semantics.BITANGENT
+semantic.</b></p>
 
 <p>Sets the current bitangent vector for this mesh. Future vertex positions
 defined (with vertex3()) will have this bitangent. The new current
@@ -420,14 +455,14 @@ vertices.</p>
 <p>An H3DU.Mesh object can contain primitives of different
 types, such as triangles and lines. For example, it&#39;s allowed
 to have a mesh with triangles, then call this method, say,
-with <code>H3DU.Mesh.LINE_STRIP</code> to add line segments
+with <code>Mesh.LINE_STRIP</code> to add line segments
 to that mesh. However, this functionality may be deprecated
 in future versions.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>m</code> (Type: number)<br>A primitive type. One of the following: H3DU.Mesh.TRIANGLES, H3DU.Mesh.LINES, H3DU.Mesh.LINE_STRIP, H3DU.Mesh.TRIANGLE_STRIP, H3DU.Mesh.TRIANGLE_FAN, H3DU.Mesh.QUADS, H3DU.Mesh.QUAD_STRIP. Throws an error if the primitive type is incompatible with the current primitive type (for example, a triangle type with LINE_STRIP).</li>
+<li><code>m</code> (Type: number)<br>A primitive type. One of the following: Mesh.TRIANGLES, Mesh.LINES, Mesh.LINE_STRIP, Mesh.TRIANGLE_STRIP, Mesh.TRIANGLE_FAN, Mesh.QUADS, Mesh.QUAD_STRIP. Throws an error if the primitive type is incompatible with the current primitive type (for example, a triangle type with LINE_STRIP).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -473,7 +508,7 @@ to unit length.</p>
 <h3>H3DU.Mesh#primitiveCount()</h3>
 
 <p>Gets the number of primitives (triangles, lines,
-or points) composed by all shapes in this mesh.</p>
+or points) that this mesh contains.</p>
 
 <h4>Return Value</h4>
 
@@ -504,6 +539,10 @@ be normalized to have a length of 1 (unless the normal is (0,0,0)).</p>
 <p><a name='H3DU.Mesh_recalcTangents'></a></p>
 
 <h3>H3DU.Mesh#recalcTangents()</h3>
+
+<p><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. This method
+may be reimplemented in the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class in the future.</b></p>
 
 <p>Recalculates the tangent and bitangent vectors for triangles
 in this mesh. This method only has an effect if this mesh
@@ -629,6 +668,12 @@ equals the number of vertices in this mesh or greater.</p>
 
 <h3>H3DU.Mesh#tangent3(x, y, z)</h3>
 
+<p><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the H3DU.Semantics.TANGENT
+semantic.</b></p>
+
 <p>Sets the current tangent vector for this mesh. Future vertex positions
 defined (with vertex3()) will have this normal. The new current
 tangent will apply to future vertices even if the current mode
@@ -694,7 +739,8 @@ to lines. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 <h3>H3DU.Mesh#transform(matrix)</h3>
 
 <p>Transforms the positions and normals of all the vertices currently
-in this mesh. The matrix won&#39;t affect vertices added afterwards.
+in this mesh. The matrix won&#39;t affect vertices added afterwards, and
+won&#39;t affect other attributes, including tangents and bitangents.
 Also, resets the primitive
 mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
 will not build upon previous vertices. Future vertices should not be
