@@ -28,7 +28,6 @@ H3DU._TBNFrames = function(func) {
     isClosed = true;
   }
   this.isClosed = isClosed;
-  totalLength = 0;
   for(var i = 0; i <= res; i++) {
     var t = this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * (i / res);
     var e0;
@@ -71,9 +70,9 @@ H3DU._TBNFrames = function(func) {
     this.tangents[res] = this.tangents[0];
     if(angle !== 0) {
       for(i = 1; i <= res - 1; i++) {
-
-        cosAngle = Math.cos(angle);
-        sinAngle = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(angle);
+        var subAngle = angle * runningLengths[i] / totalLength;
+        cosAngle = Math.cos(subAngle);
+        sinAngle = (subAngle>=0 && subAngle<6.283185307179586) ? (subAngle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(subAngle);
         this.normals[i] = H3DU._TBNFrames._rotateVector(
            this.normals[i], this.tangents[i], sinAngle, cosAngle);
       }
@@ -198,10 +197,6 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
     b = binormal;
     n = normal;
     t = tangent;
-    console.log(u);
-    console.log(tangent);
-    console.log(normal);
-    console.log(binormal);
     cache = true;
   }
   val[0] = n[0];

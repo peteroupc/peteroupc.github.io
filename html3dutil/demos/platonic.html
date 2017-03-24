@@ -76,6 +76,14 @@ var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white");
 var sub = new H3DU.Batch3D()
    .orthoAspect(-20, 20, -10, 10, -20, 20);
+
+sub.setViewMatrix([
+1,0.5,0,0,
+0,1,0,0,
+-1,0.5,1,0,
+0,0,0,1
+])
+
 sub.getLights().setBasic();
 var shapeGroup = new H3DU.ShapeGroup();
 sub.addShape(shapeGroup);

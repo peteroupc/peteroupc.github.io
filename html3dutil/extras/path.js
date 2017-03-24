@@ -1600,23 +1600,82 @@
     return ret * bm;
   };
 /** @ignore */
+  GraphicsPath._ellipseSemiLength = function(xRadius, yRadius) {
+    var a = Math.min(xRadius, yRadius);
+    var b = Math.max(xRadius, yRadius);
+          // use James Ivory's 1798 algorithm to calculate
+    // the half-length of an ellipse
+    var c = a / b;
+    var e = (1 - c) / (1 + c);
+    var esq = e * e;
+    var eseries = esq;
+    var series = 1 + 0.25 * eseries;
+    eseries *= esq;
+    series += eseries * 0.015625;
+    eseries *= esq;
+    series += eseries * 0.00390625;
+    eseries *= esq;
+    series += eseries * 0.00152587890625;
+    eseries *= esq;
+    series += eseries * 0.0007476806640625;
+    eseries *= esq;
+    series += eseries * 0.00042057037353515625;
+    // The series keeps going, but we stop here
+    return b * (Math.PI / (1 + e)) * series;
+  };
+/** @ignore */
+  GraphicsPath._ellipticE = function(phi, m) {
+    if(phi === 0)return 0;
+    if(phi <= Math.PI * 0.5) {
+      var ellipticIntegrand = function(x) {
+        var xsq = x * x;
+        return Math.sqrt((1 - xsq * m) / (1 - xsq));
+      };
+      return GraphicsPath._numIntegrate(ellipticIntegrand, 0, Math.sin(phi));
+    } else {
+      var halfpi = Math.PI * 0.5;
+      var u = Math.floor(phi / halfpi);
+      phi -= u * halfpi;
+      return GraphicsPath._ellipticE(halfpi, m) * u +
+      GraphicsPath._ellipticE(phi, m);
+    }
+  };
+/** @ignore */
   GraphicsPath._ellipticArcLength = function(xRadius, yRadius, startAngle, endAngle) {
     if(startAngle === endAngle || xRadius <= 0 || yRadius <= 0)return 0;
     if(xRadius === yRadius) {
   // for circular arc length this is extremely simple
       return Math.abs((endAngle - startAngle) * xRadius);
+    } else if(Math.abs(endAngle - startAngle) >= Math.PI * 2) {
+      // Length of a full ellipse (NOTE: This function assumes
+      // arc lengths of 360 degrees or less)
+      return GraphicsPath._ellipseSemiLength(xRadius, yRadius) * 2;
+    } else if(Math.abs(endAngle - startAngle) === Math.PI) {
+      // Length of a half ellipse
+      return GraphicsPath._ellipseSemiLength(xRadius, yRadius);
     }
     var mn = Math.min(xRadius, yRadius);
     var mx = Math.max(xRadius, yRadius);
     var eccSq = 1 - mn * mn / (mx * mx);
-    var ellipticIntegrand = function(x) {
-      var s = Math.sin(x);
-      return Math.sqrt(1 - s * s * eccSq);
-    };
-    return Math.abs(mx * GraphicsPath._numIntegrate(
-   ellipticIntegrand, startAngle, endAngle));
+    var sa = GraphicsPath._normAngleRadians(startAngle);
+    var ea = GraphicsPath._normAngleRadians(endAngle);
+    var saLength = mx * GraphicsPath._ellipticE(sa, eccSq);
+    var eaLength = mx * GraphicsPath._ellipticE(ea, eccSq);
+    if(startAngle < endAngle && sa < ea ||
+         startAngle > endAngle && sa > ea) {
+      return Math.abs(eaLength - saLength);
+    } else if(startAngle < endAngle) {
+      // startAngle -- seam -- endAngle
+      var tlen = mx * 4 * GraphicsPath._ellipticE(Math.PI * 0.5, eccSq);
+      return tlen - saLength + eaLength;
+    } else {
+  // endAngle -- seam -- startAngle
+      tlen = mx * 4 * GraphicsPath._ellipticE(Math.PI * 0.5, eccSq);
+      return tlen - eaLength + saLength;
+    }
   };
-/** @ignore */
+
+  /** @ignore */
   GraphicsPath._vecangle = function(a, b, c, d) {
     var dot = a * c + b * d;
     var denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
