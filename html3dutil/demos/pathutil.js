@@ -75,3 +75,65 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
       Math.ceil(2 * thickness / flatness));
   return mesh;
 }
+
+function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
+  "use strict";
+  var coords = [];
+  var connected = [];
+  var retval = [];
+  for(var i = 0; i < points; i++) {
+    connected[i] = false;
+  }
+  var phase = (phaseInDegrees || 0) * H3DU.Math.ToRadians;
+  var angleStep = H3DU.Math.PiTimes2 / points;
+  var cosStep = Math.cos(angleStep);
+  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var c = Math.cos(phase);
+  var s = (phase>=0 && phase<6.283185307179586) ? (phase<=3.141592653589793 ? Math.sqrt(1.0-c*c) : -Math.sqrt(1.0-c*c)) : Math.sin(phase);
+  for(i = 0; i < points; i++) {
+    coords.push([x + c * radius, y + s * radius]);
+    var ts = cosStep * s + sinStep * c;
+    var tc = cosStep * c - sinStep * s;
+    s = ts;
+    c = tc;
+  }
+  for (;;) {
+    var firstPoint = -1;
+    for(i = 0; i < points; i++) {
+      if(!connected[i]) {
+        firstPoint = i;
+        break;
+      }
+    }
+    if(firstPoint < 0)break;
+    var pt = firstPoint;
+    var lastPoint = -1;
+    while(!connected[pt]) {
+      connected[pt] = true;
+      if(lastPoint >= 0) {
+        retval.push(coords[lastPoint]);
+        retval.push(coords[pt]);
+      }
+      lastPoint = pt;
+      pt += jump;
+      pt %= points;
+    }
+    if(lastPoint) {
+      retval.push(coords[lastPoint]);
+      retval.push(coords[firstPoint]);
+    }
+  }
+  console.log(retval.length);
+  return retval;
+}
+
+/* exported starPolygonMesh */
+function starPolygonMesh(mesh, x, y, radius, points, skip) {
+  "use strict";
+  var sp = starPolygon(x, y, radius, points, skip);
+  mesh.mode(H3DU.Mesh.LINES);
+  for(var i = 0; i < sp.length; i += 2) {
+    mesh.vertex3(sp[i][0], sp[i][1], 0);
+    mesh.vertex3(sp[i + 1][0], sp[i + 1][1], 0);
+  }
+}

@@ -72,7 +72,7 @@ H3DU._TBNFrames = function(func) {
       for(i = 1; i <= res - 1; i++) {
         var subAngle = angle * runningLengths[i] / totalLength;
         cosAngle = Math.cos(subAngle);
-        sinAngle = (subAngle>=0 && subAngle<6.283185307179586) ? (subAngle<=3.141592653589793 ? Math.sqrt(1.0-cosAngle*cosAngle) : -Math.sqrt(1.0-cosAngle*cosAngle)) : Math.sin(subAngle);
+        sinAngle = subAngle >= 0 && subAngle < 6.283185307179586 ? subAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(subAngle);
         this.normals[i] = H3DU._TBNFrames._rotateVector(
            this.normals[i], this.tangents[i], sinAngle, cosAngle);
       }
