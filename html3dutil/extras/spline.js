@@ -15,14 +15,14 @@
  * in uniform parameterization.)
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
- * @param {Array<Array<number>>} curve An array of control points,
+ * @param {Array<Array<number>>} spline An array of control points,
  * each with the same number of values, that the curve will pass through.
  * Throws an error if there are fewer than two control points.
  * @param {number} [tension] A parameter that adjusts the length of the starting and ending
  * tangents of each curve segment. Ranges from -1 for double-length tangents to 1
  * for zero-length tangents. A value of 1 results in straight line segments. Default is 0.
  * @param {number} [continuity] A parameter that adjusts the direction of the starting and ending
- * tangents of each curve segment. Ranges from -1 to 1, where values closer to -1 to 1
+ * tangents of each curve segment. Ranges from -1 to 1, where values closer to -1 or closer to 1
  * result in tangents that are closer to perpendicular.
  * A value of -1 results in straight line segments. Default is 0.
  * @param {number} [bias] A parameter that adjusts the influence of the starting and ending
@@ -108,7 +108,11 @@ H3DU.PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, 
 };
 
 /**
- * Creates a piecewise curve made up of B-spline curves from the control points of a Hermite spline.
+ * Creates a piecewise curve made up of B-spline curves from the control points of a
+ * Hermite spline. A Hermite spline is a collection of points that the curve will go through,
+ * together with the velocity vectors (derivatives or instantaneous rates of change) at
+ * those points. Hermite splines are useful for representing an approximate polynomial form
+ * of a function or curve whose derivative is known.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
  * @param {Array<Array<number>>} curve An array of control points,
@@ -148,10 +152,13 @@ H3DU.PiecewiseCurve.fromHermiteSpline = function(spline) {
 
 /**
  * Creates a piecewise curve made up of B-spline curves from the control points of a
- * cubic Catmull-Rom spline.
+ * cubic Catmull-Rom spline. A Catmull-Rom spline is defined by
+ * a collection of control points that the spline
+ * will go through, and the shape of each curve segment is determined by the positions
+ * of neighboring points on the spline.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
- * @param {Array<Array<number>>} curve An array of control points,
+ * @param {Array<Array<number>>} spline An array of control points,
  * each with the same number of values, that the curve will pass through.
  * Throws an error if there are fewer than two control points.
  * @param {number} [param] A value that describes the curve's parameterization.

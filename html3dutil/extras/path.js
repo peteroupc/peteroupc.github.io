@@ -587,49 +587,6 @@
     }
     return ret;
   };
-   /** @ignore */
-  GraphicsPath._quadCurveLength = function(x1, y1, x2, y2, x3, y3) {
-    var integrand = function(t) {
-      // Length of derivative of quadratic Bezier vector function
-      var dx = (2 * t - 2) * x1 + (-4 * t + 2) * x2 + 2 * t * x3;
-      var dy = (2 * t - 2) * y1 + (-4 * t + 2) * y2 + 2 * t * y3;
-      return Math.sqrt(dx * dx + dy * dy);
-    };
-    return GraphicsPath._numIntegrate(integrand, 0, 1);
-  };
-/** @ignore */
-  GraphicsPath._cubicCurveLength = function(x1, y1, x2, y2, x3, y3, x4, y4) {
-    var integrand = function(t) {
-      // Length of derivative of cubic Bezier vector function
-      var dx = ((-3 * t + 6) * t - 3) * x1 + ((9 * t - 12) * t + 3) * x2 + (-9 * t + 6) * t * x3 + 3 * t * t * x4;
-      var dy = ((-3 * t + 6) * t - 3) * y1 + ((9 * t - 12) * t + 3) * y2 + (-9 * t + 6) * t * y3 + 3 * t * t * y4;
-      return Math.sqrt(dx * dx + dy * dy);
-    };
-    return GraphicsPath._numIntegrate(integrand, 0, 1);
-  };
-/** @ignore */
-  GraphicsPath._length = function(a) {
-    if(a[0] === GraphicsPath.LINE) {
-      var dx = a[3] - a[1];
-      var dy = a[4] - a[2];
-      return Math.sqrt(dx * dx + dy * dy);
-    } else if(a[0] === GraphicsPath.QUAD) {
-      return GraphicsPath._quadCurveLength(a[1], a[2], a[3], a[4],
-     a[5], a[6]);
-    } else if(a[0] === GraphicsPath.CUBIC) {
-      return GraphicsPath._cubicCurveLength(a[1], a[2], a[3], a[4],
-     a[5], a[6], a[7], a[8]);
-    } else if(a[0] === GraphicsPath.ARC) {
-      var rx = a[3];
-      var ry = a[4];
-      var theta = a[12];
-      var theta2 = a[13];
-      return GraphicsPath._ellipticArcLength(rx, ry, theta, theta2);
-    } else {
-      return 0;
-    }
-  };
-
 /**
  * Finds the approximate length of this path.
  * @param {number} [flatness] No longer used by this method.
@@ -642,13 +599,7 @@
     if(typeof flatness !== "undefined" && flatness !== null) {
       console.warn("Unused parameter flatness is defined");
     }
-    var totalLength = 0;
-    for(var i = 0; i < this.segments.length; i++) {
-      var s = this.segments[i];
-      var len = GraphicsPath._length(s);
-      totalLength += len;
-    }
-    return totalLength;
+    return this.getCurves().getLength();
   };
 /**
  * Gets an array of line segments approximating
@@ -940,7 +891,7 @@
           GraphicsPath._accBoundsPoint(ret, cx + distx, cy - disty);
           GraphicsPath._accBoundsPoint(ret, cx - distx, cy + disty);
           GraphicsPath._accBoundsPoint(ret, cx - distx, cy - disty);
-        } else {
+        } else if(delta !== theta) { // NOTE: Endpoints were already included in case delta==theta
           cosp = Math.cos(rot);
           sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
           var angles = [];
@@ -973,9 +924,7 @@
   GraphicsPath.prototype.reverse = function() {
     var lastptx = 0;
     var lastpty = 0;
-
     var lastClosed = false;
-
     var pathStartX = 0;
     var pathStartY = 0;
     var ret = new GraphicsPath();
@@ -1133,8 +1082,6 @@
  */
   GraphicsPath.prototype.interpolate = function(other, t) {
     if(!other || other.segments.length !== this.segments.length) {
-  // console.log(other.segments.length)
-  // console.log(this.segments.length)
       return null;
     }
     var tmpThis = [];
@@ -1546,133 +1493,6 @@
     this.endPos[1] = y3;
     this.incomplete = false;
     return this;
-  };
-
-  GraphicsPath._legendreGauss24 = [
-    0.12793819534675216, 0.06405689286260563,
-    0.1258374563468283, 0.1911188674736163,
-    0.12167047292780339, 0.3150426796961634,
-    0.1155056680537256, 0.4337935076260451,
-    0.10744427011596563, 0.5454214713888396,
-    0.09761865210411388, 0.6480936519369755,
-    0.08619016153195327, 0.7401241915785544,
-    0.0733464814110803, 0.820001985973903,
-    0.05929858491543678, 0.8864155270044011,
-    0.04427743881741981, 0.9382745520027328,
-    0.028531388628933663, 0.9747285559713095,
-    0.0123412297999872, 0.9951872199970213
-  ];
-/** @ignore */
-  GraphicsPath._numIntegrate = function(func, xmin, xmax) {
-/*
-* Estimates the integral of a function. The integral
-* is like the area between the function's graph and the X axis,
-* where areas above the X axis add to the integral, and areas
-* below the X axis subtract from it.
-* @private
-* @param {Function} func A function that takes one number
-* and returns a number. For best results,
-* the function should be continuous (informally, this means
-* its graph between <code>xmin</code> and
-* <code>xmax</code> can be drawn without lifting the pen).
-* @param {number} xmin Smallest input to the function,
-* or the lower limit to integration.
-* @param {number} xmax Largest input to the function,
-* or the upper limit to integration. If xmax is less than xmin,
-* this results in a negative integral.
-* @returns The approximate integral of _func_ between
-* _xmin_ and _xmax_.
-*/
-    if(xmax === xmin)return 0;
-    if(xmax < xmin) {
-      return -GraphicsPath._numIntegrate(func, xmax, xmin);
-    }
-    var bm = (xmax - xmin) * 0.5;
-    var bp = (xmax + xmin) * 0.5;
-    var ret = 0;
-    var lg = GraphicsPath._legendreGauss24;
-    for(var i = 0; i < lg.length; i += 2) {
-      var weight = lg[i];
-      var abscissa = lg[i + 1];
-      ret += weight * func(bm * abscissa + bp);
-      ret += weight * func(-bm * abscissa + bp);
-    }
-    return ret * bm;
-  };
-/** @ignore */
-  GraphicsPath._ellipseSemiLength = function(xRadius, yRadius) {
-    var a = Math.min(xRadius, yRadius);
-    var b = Math.max(xRadius, yRadius);
-          // use James Ivory's 1798 algorithm to calculate
-    // the half-length of an ellipse
-    var c = a / b;
-    var e = (1 - c) / (1 + c);
-    var esq = e * e;
-    var eseries = esq;
-    var series = 1 + 0.25 * eseries;
-    eseries *= esq;
-    series += eseries * 0.015625;
-    eseries *= esq;
-    series += eseries * 0.00390625;
-    eseries *= esq;
-    series += eseries * 0.00152587890625;
-    eseries *= esq;
-    series += eseries * 0.0007476806640625;
-    eseries *= esq;
-    series += eseries * 0.00042057037353515625;
-    // The series keeps going, but we stop here
-    return b * (Math.PI / (1 + e)) * series;
-  };
-/** @ignore */
-  GraphicsPath._ellipticE = function(phi, m) {
-    if(phi === 0)return 0;
-    if(phi <= Math.PI * 0.5) {
-      var ellipticIntegrand = function(x) {
-        var xsq = x * x;
-        return Math.sqrt((1 - xsq * m) / (1 - xsq));
-      };
-      return GraphicsPath._numIntegrate(ellipticIntegrand, 0, Math.sin(phi));
-    } else {
-      var halfpi = Math.PI * 0.5;
-      var u = Math.floor(phi / halfpi);
-      phi -= u * halfpi;
-      return GraphicsPath._ellipticE(halfpi, m) * u +
-      GraphicsPath._ellipticE(phi, m);
-    }
-  };
-/** @ignore */
-  GraphicsPath._ellipticArcLength = function(xRadius, yRadius, startAngle, endAngle) {
-    if(startAngle === endAngle || xRadius <= 0 || yRadius <= 0)return 0;
-    if(xRadius === yRadius) {
-  // for circular arc length this is extremely simple
-      return Math.abs((endAngle - startAngle) * xRadius);
-    } else if(Math.abs(endAngle - startAngle) >= Math.PI * 2) {
-      // Length of a full ellipse (NOTE: This function assumes
-      // arc lengths of 360 degrees or less)
-      return GraphicsPath._ellipseSemiLength(xRadius, yRadius) * 2;
-    } else if(Math.abs(endAngle - startAngle) === Math.PI) {
-      // Length of a half ellipse
-      return GraphicsPath._ellipseSemiLength(xRadius, yRadius);
-    }
-    var mn = Math.min(xRadius, yRadius);
-    var mx = Math.max(xRadius, yRadius);
-    var eccSq = 1 - mn * mn / (mx * mx);
-    var sa = GraphicsPath._normAngleRadians(startAngle);
-    var ea = GraphicsPath._normAngleRadians(endAngle);
-    var saLength = mx * GraphicsPath._ellipticE(sa, eccSq);
-    var eaLength = mx * GraphicsPath._ellipticE(ea, eccSq);
-    if(startAngle < endAngle && sa < ea ||
-         startAngle > endAngle && sa > ea) {
-      return Math.abs(eaLength - saLength);
-    } else if(startAngle < endAngle) {
-      // startAngle -- seam -- endAngle
-      var tlen = mx * 4 * GraphicsPath._ellipticE(Math.PI * 0.5, eccSq);
-      return tlen - saLength + eaLength;
-    } else {
-  // endAngle -- seam -- startAngle
-      tlen = mx * 4 * GraphicsPath._ellipticE(Math.PI * 0.5, eccSq);
-      return tlen - eaLength + saLength;
-    }
   };
 
   /** @ignore */
