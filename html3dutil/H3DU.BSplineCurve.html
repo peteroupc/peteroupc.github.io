@@ -13,8 +13,9 @@
 <p><strong>Augments:</strong> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
 
 <p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.
-A B-spline curve consists of one or more <i>control points</i>, which more or less follow the path
-of the curve, and a <i>knot vector</i>.</p>
+A B-spline curve is a parametric curve based on polynomial functions, one for each
+dimension of the curve. Each polynomial is generated using one or more <i>control points</i>, which more or less follow the path of the curve, and a <i>knot vector</i>, which determines, more
+or less, where each control point is spaced along the curve.</p>
 
 <p><b>B&eacute;zier Curves</b></p>
 
@@ -31,14 +32,22 @@ direction from the next-to-last to last control point.</p>
 <p>B&eacute;zier curves are a subset of B-spline curves
 (see <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>).</p>
 
+<p>Line segments (degree-1 curves with two control points) are
+subsets of B&eacute;zier curves.</p>
+
+<p>A B&eacute;zier curve&#39;s knot vector consists of as many zeros as the number
+of control points, followed by that many ones. For example, a degree-3 (cubic
+curve) contains three control points and the following knot vector:
+<code>[0, 0, 0, 0, 1, 1, 1, 1]</code>.</p>
+
 <p><b>Non-Uniform Curves</b></p>
 
-<p>A non-uniform curve is one whose knot vector is not evenly spaced,
+<p>A non-uniform B-spline curve is one whose knot vector is not evenly spaced,
 that is, the difference between one knot and the next isn&#39;t the same.</p>
 
 <p><b>Rational Curves</b></p>
 
-<p>A rational curve is an N-dimensional curve with N plus one coordinates
+<p>A rational B-spline curve is an N-dimensional curve with N plus one coordinates
 per control point (<i>homogeneous coordinates</i>). B-spline algorithms
 work the same way with homogeneous coordinates as with conventional
 coordinates, but if N-dimensional points are wanted, use the <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>
@@ -56,13 +65,92 @@ conventional coordinate by its weight, then append the weight as the control poi
 
 <p><i>NURBS</i> is an acronym for non-uniform rational B-spline curves.</p>
 
+<p><b>Polynomial Basis</b></p>
+
+<p>Any kind of polynomial curve can be converted to a different kind
+of polynomial curve, with the same degree and describing the same path,
+by transforming its control points. For example, a Hermite curve (another
+kind of polynomial curve) can be converted to the equivalent
+B-spline curve this way, or vice versa.</p>
+
+<p>Each kind of polynomial curve (such as B-spline or B&eacute;zier) is
+associated with a <i>basis matrix</i>, which defines the polynomial
+coefficients for each control point in the curve. For a degree (N-1) curve,
+the matrix will be NxN.</p>
+
+<p>Each &quot;column&quot; of a basis matrix is a polynomial equation
+containing the coefficients for each control point, and the columns are
+arranged from left to right. Each polynomial consists of coefficients, ranging from the
+highest order to the lowest, with respect to the parameter
+<code>t</code> and the corresponding control point. For example, the
+column <code>(3, 4, 2, 10)</code> describes the polynomial
+3xt<sup>3</sup> + 4xt<sup>2</sup> + 2xt + 10x, where <code>x</code>
+is the input control point. The polynomials
+are added together to get the final coordinate of the curve at the
+given <code>t</code> value.</p>
+
+<p>The following JavaScript code shows an example of a basis matrix -- the
+cubic B&eacute;zier basis matrix.<br>
+<code>var bezierBasisMatrix = [
+// For the purposes of the H3DU.Math matrix functions,
+// the polynomials are arranged &quot;column-wise&quot;, like this:
+// P1, P2, P3, P4
+-1,3,-3,1,
+3,-6,3,0,
+-3,3,0,0,
+1,0,0,0]</code></p>
+
+<p>For code that converts a curve from one kind to
+another, see the example.</p>
+
 <h4>Parameters</h4>
 
 <ul>
 <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point&#39;s length represents the size of all the control points.</li>
-<li><p><code>knots</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve&#39;s degree. If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.<br> If there are N times 2 knots with the first N knots equal to 0 and the rest equal to 1, where N is the number of control points, the control points describe a <i>B&eacute;zier</i> curve.</p></li>
-<li><p><code>bits</code> (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null or omitted, no bits are set.</p></li>
+<li><code>knots</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve&#39;s degree. If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null or omitted, no bits are set.</li>
 </ul>
+
+<h4>Example</h4>
+
+<p>The following code converts a cubic (degree-3)
+curve from one kind to another. The converted curve will generally
+have the same path as the original curve.</p>
+
+<pre><code>// &quot;srcBasis&quot; is a 4x4 basis matrix for the source curve type;
+// the control points will initially be of this type of curve.
+// var srcBasis = [ .... ]; // To be supplied or filled in.
+// &quot;dstBasis&quot; is a 4x4 basis matrix for the destination curve type.
+// It&#39;s defined here as the Bezier basis matrix for this example
+var dstBasis =[-1,3,-3,1, 3,-6,3,0, -3,3,0,0, 1,0,0,0];
+// Step 1: Invert the destination basis matrix
+var invertedDest=H3DU.Math.mat4invert(destBasis)
+// Step 2: Multiply the inverted destination matrix by the source
+// matrix (in our example, the Hermite basis matrix).
+var resultMatrix=H3DU.Math.mat4multiply(invertedDest,srcBasis)
+// Step 3: Convert the control points
+var newControlPoints=[[],[],[],[]]
+for(var i=0;i&lt;4;i++) {
+var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
+controlPoints[3][i]]
+// Transform the control points using the result matrix
+cp=H3DU.Math.vec4transform(resultMatrix,cp)
+// Set the new coordinates
+newControlPoints[0][i]=cp[0]
+newControlPoints[1][i]=cp[1]
+newControlPoints[2][i]=cp[2]
+newControlPoints[3][i]=cp[3]
+}
+// Finally, generate a Bezier curve (which is a special case
+// of a B-spline curve)
+var curve=new BSplineCurve(
+newControlPoints,
+[0,0,0,0,1,1,1,1] // cubic Bezier knot vector
+);
+// Alternatively, the curve could be generated with the
+// fromBezierCurve method:
+// var curve=BSplineCurve.fromBezierCurve(newControlPoints);
+</code></pre>
 
 <h3>Members</h3>
 
@@ -368,7 +456,7 @@ Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 results in a straight line segment. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 (two control points) results in a straight line segment. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
 <li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor.</li>
 </ul>
 

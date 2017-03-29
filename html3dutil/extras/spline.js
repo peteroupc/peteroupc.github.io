@@ -111,8 +111,10 @@ H3DU.PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, 
  * Creates a piecewise curve made up of B-spline curves from the control points of a
  * Hermite spline. A Hermite spline is a collection of points that the curve will go through,
  * together with the velocity vectors (derivatives or instantaneous rates of change) at
- * those points. Hermite splines are useful for representing an approximate polynomial form
- * of a function or curve whose derivative is known.
+ * those points.<p>
+ * Hermite splines are useful for representing an approximate polynomial form
+ * of a function or curve whose derivative is known; however, Hermite splines are not
+ * guaranteed to preserve the increasing or decreasing nature of the function or curve.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
  * @param {Array<Array<number>>} curve An array of control points,

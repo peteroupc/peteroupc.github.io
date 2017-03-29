@@ -1,4 +1,3 @@
-/* global _normAngleRadians, _simpsonRec */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -24,8 +23,8 @@ function simpsonRec(func, mn, mx, dir, depth, f1value, f3value, f5value) {
   } else if(depth < 10) {
     return simpHalves + (simpHalves - simpWhole) / 15;
   } else {
-    return _simpsonRec(func, mn, mn + bm * 2, dir, depth + 1, f1, f2, f3) +
-         _simpsonRec(func, mn + bm * 2, mx, dir, depth + 1, f3, f4, f5);
+    return simpsonRec(func, mn, mn + bm * 2, dir, depth + 1, f1, f2, f3) +
+         simpsonRec(func, mn + bm * 2, mx, dir, depth + 1, f3, f4, f5);
   }
 }
 /** @ignore */
@@ -54,11 +53,10 @@ function _numIntegrate(func, xmin, xmax) {
   var mn = Math.min(xmin, xmax);
   var mx = Math.max(xmin, xmax);
   var dir = xmax >= xmin ? 1 : -1;
-  return _simpsonRec(func, mn, mx, dir, 0, null, null, null);
+  return simpsonRec(func, mn, mx, dir, 0, null, null, null);
 }
 
   /** @ignore */
-/* exported normAngleRadians */
 function normAngleRadians(angle) {
   "use strict";
   var twopi = Math.PI * 2;
@@ -125,13 +123,17 @@ function _ellipticE(phi, m) {
 function ellipticArcLength(xRadius, yRadius, startAngle, endAngle) {
   "use strict";
   if(startAngle === endAngle || xRadius <= 0 || yRadius <= 0)return 0;
-  if(xRadius === yRadius) {
-  // for circular arc length this is extremely simple
-    return Math.abs((endAngle - startAngle) * xRadius);
-  } else if(Math.abs(endAngle - startAngle) >= Math.PI * 2) {
+  if(Math.abs(endAngle - startAngle) >= Math.PI * 2) {
       // Length of a full ellipse (NOTE: This function assumes
       // arc lengths of 360 degrees or less)
-    return _ellipseSemiLength(xRadius, yRadius) * 2;
+    if(xRadius === yRadius) {
+      return Math.PI * 2 * xRadius;
+    } else {
+      return _ellipseSemiLength(xRadius, yRadius) * 2;
+    }
+  } else if(xRadius === yRadius) {
+  // for circular arc length this is extremely simple
+    return Math.abs((endAngle - startAngle) * xRadius);
   } else if(Math.abs(endAngle - startAngle) === Math.PI) {
       // Length of a half ellipse
     return _ellipseSemiLength(xRadius, yRadius);
@@ -139,8 +141,8 @@ function ellipticArcLength(xRadius, yRadius, startAngle, endAngle) {
   var mn = Math.min(xRadius, yRadius);
   var mx = Math.max(xRadius, yRadius);
   var eccSq = 1 - mn * mn / (mx * mx);
-  var sa = _normAngleRadians(startAngle);
-  var ea = _normAngleRadians(endAngle);
+  var sa = normAngleRadians(startAngle);
+  var ea = normAngleRadians(endAngle);
   var saLength = mx * _ellipticE(sa, eccSq);
   var eaLength = mx * _ellipticE(ea, eccSq);
   if(startAngle < endAngle && sa < ea ||
@@ -148,11 +150,11 @@ function ellipticArcLength(xRadius, yRadius, startAngle, endAngle) {
     return Math.abs(eaLength - saLength);
   } else if(startAngle < endAngle) {
       // startAngle -- seam -- endAngle
-    var tlen = mx * 4 * _ellipticE(Math.PI * 0.5, eccSq);
-    return tlen - saLength + eaLength;
+    var fullEllipseLength = _ellipseSemiLength(xRadius, yRadius) * 2;
+    return fullEllipseLength - saLength + eaLength;
   } else {
   // endAngle -- seam -- startAngle
-    tlen = mx * 4 * _ellipticE(Math.PI * 0.5, eccSq);
-    return tlen - eaLength + saLength;
+    fullEllipseLength = _ellipseSemiLength(xRadius, yRadius) * 2;
+    return fullEllipseLength - eaLength + saLength;
   }
 }
