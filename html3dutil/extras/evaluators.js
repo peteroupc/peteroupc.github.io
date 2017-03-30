@@ -60,7 +60,7 @@ H3DU.SurfaceOfRevolution.prototype.endPoints = function() {
  * @param {number} u U coordinate of the surface to evaluate.
  * @param {number} v V coordinate of the surface to evaluate.
  * @returns {Array<number>} An array containing the coordinates
- * of the position at the given point. It will have as many elements as a control point, as specified in the constructor.
+ * of the position at the given point. It will have three elements.
  */
 H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
   "use strict";

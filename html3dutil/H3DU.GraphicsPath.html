@@ -174,17 +174,18 @@ HTML Canvas 2D Context.</p>
 <h3>GraphicsPath#bezierCurveTo(x, y, x2, y2, x3, y3)</h3>
 
 <p>Adds a cubic B&eacute;zier curve to this path starting
-at this path&#39;s current position.</p>
+at this path&#39;s current position. The current position will be
+the curve&#39;s first control point.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)<br>X coordinate of the curve&#39;s first control point.</li>
-<li><code>y</code> (Type: number)<br>X coordinate of the curve&#39;s first control point.</li>
-<li><code>x2</code> (Type: number)<br>Y coordinate of the curve&#39;s second control point.</li>
-<li><code>y2</code> (Type: number)<br>Y coordinate of the curve&#39;s second control point.</li>
-<li><code>x3</code> (Type: number)<br>X coordinate of the curve&#39;s end point.</li>
-<li><code>y3</code> (Type: number)<br>Y coordinate of the curve&#39;s end point.</li>
+<li><code>x</code> (Type: number)<br>X coordinate of the curve&#39;s second control point.</li>
+<li><code>y</code> (Type: number)<br>X coordinate of the curve&#39;s second control point.</li>
+<li><code>x2</code> (Type: number)<br>Y coordinate of the curve&#39;s third control point.</li>
+<li><code>y2</code> (Type: number)<br>Y coordinate of the curve&#39;s third control point.</li>
+<li><code>x3</code> (Type: number)<br>X coordinate of the curve&#39;s end point (fourth control point).</li>
+<li><code>y3</code> (Type: number)<br>Y coordinate of the curve&#39;s end point (fourth control point).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -474,15 +475,16 @@ in units. (Type: number)</p>
 <h3>GraphicsPath#quadraticCurveTo(x, y, x2, y2)</h3>
 
 <p>Adds a quadratic B&eacute;zier curve to this path starting
-at this path&#39;s current position.</p>
+at this path&#39;s current position. The current position will be
+the curve&#39;s first control point.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)<br>X coordinate of the curve&#39;s control point.</li>
-<li><code>y</code> (Type: number)<br>Y coordinate of the curve&#39;s control point.</li>
-<li><code>x2</code> (Type: number)<br>X coordinate of the curve&#39;s end point.</li>
-<li><code>y2</code> (Type: number)<br>Y coordinate of the curve&#39;s end point.</li>
+<li><code>x</code> (Type: number)<br>X coordinate of the curve&#39;s second control point.</li>
+<li><code>y</code> (Type: number)<br>Y coordinate of the curve&#39;s second control point.</li>
+<li><code>x2</code> (Type: number)<br>X coordinate of the curve&#39;s end point (third control point).</li>
+<li><code>y2</code> (Type: number)<br>Y coordinate of the curve&#39;s end point (third control point).</li>
 </ul>
 
 <h4>Return Value</h4>

@@ -100,11 +100,10 @@ Line segments are relatively easy to understand. The other two kinds of segments
 deserve some discussion.</p>
 
 <p>A <em>B&eacute;zier curve</em> is a parametric curve based on a polynomial formula. In this kind of
-curve the endpoints are defined as they are, but the other points, the <em>control points</em>, define
-the shape of the curve, which generally doesn&#39;t pass through the control points but still
-follows them. A quadratic B&eacute;zier curve uses 3 points (for the three coefficients of the
-quadratic polynomial in each dimension), one of which is the control point. A cubic B&eacute;zier
-curve uses 4 points, two of which are control points.</p>
+curve the endpoints are defined as they are, but the other points define
+the shape of the curve and generally don&#39;t cross the curve.
+A quadratic B&eacute;zier curve uses 3 points. A cubic B&eacute;zier
+curve uses 4 points.</p>
 
 <p>An <em>elliptic arc</em> is a curve which forms part of an ellipse. There are several ways to
 parameterize an elliptic arc, as seen in the <em>.arc()</em>, <em>.arcTo()</em>, and <em>.arcSvgTo()</em> methods

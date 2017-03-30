@@ -19,8 +19,8 @@ of a triangle, can also specify the following attributes:</p>
 and blue components, respectively.)
 <li>A normal vector, which is a set of 3 values.
 Normal values are required for lighting to work properly.
-<li>A tangent vector, which is a set of 3 values.
-<li>A bitangent vector, which is a set of 3 values.
+<li>A tangent vector, which is a set of 3 values. (This is deprecated.)
+<li>A bitangent vector, which is a set of 3 values. (This is deprecated.)
 <li>Texture coordinates, which are a set of 2 values each ranging from 0 to
 1, where (0, 0) is the lower right corner of the texture (by default), and (1, 1) is the upper
 right corner (by default).
@@ -102,8 +102,8 @@ index in this mesh.</li>
 <li><a href="#H3DU.Mesh_merge">merge</a><br>Merges the vertices from another mesh into this one.</li>
 <li><a href="#H3DU.Mesh_mode">mode</a><br>Changes the primitive mode for this mesh.</li>
 <li><a href="#H3DU.Mesh_normal3">normal3</a><br>Sets the current normal for this mesh.</li>
-<li><a href="#H3DU.Mesh_normalizeNormals">normalizeNormals</a><br>Modifies this mesh by normalizing the normals it defines
-to unit length.</li>
+<li><a href="#H3DU.Mesh_normalizeNormals">normalizeNormals</a><br>Modifies this mesh by converting the normals it defines
+to &quot;unit vectors&quot; (&quot;normalized&quot; vectors with a length of 1).</li>
 <li><a href="#H3DU.Mesh_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 or points) that this mesh contains.</li>
 <li><a href="#H3DU.Mesh_recalcNormals">recalcNormals</a><br>Recalculates the normal vectors for triangles
@@ -496,8 +496,8 @@ not automatically be normalized to unit length.</p>
 
 <h3>H3DU.Mesh#normalizeNormals()</h3>
 
-<p>Modifies this mesh by normalizing the normals it defines
-to unit length.</p>
+<p>Modifies this mesh by converting the normals it defines
+to &quot;unit vectors&quot; (&quot;normalized&quot; vectors with a length of 1).</p>
 
 <h4>Return Value</h4>
 

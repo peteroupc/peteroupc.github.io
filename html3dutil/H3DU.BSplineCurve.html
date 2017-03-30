@@ -36,8 +36,8 @@ direction from the next-to-last to last control point.</p>
 subsets of B&eacute;zier curves.</p>
 
 <p>A B&eacute;zier curve&#39;s knot vector consists of as many zeros as the number
-of control points, followed by that many ones. For example, a degree-3 (cubic
-curve) contains three control points and the following knot vector:
+of control points, followed by that many ones. For example, a degree-3 (cubic)
+B&eacute;zier curve contains four control points and the following knot vector:
 <code>[0, 0, 0, 0, 1, 1, 1, 1]</code>.</p>
 
 <p><b>Non-Uniform Curves</b></p>
@@ -90,15 +90,17 @@ are added together to get the final coordinate of the curve at the
 given <code>t</code> value.</p>
 
 <p>The following JavaScript code shows an example of a basis matrix -- the
-cubic B&eacute;zier basis matrix.<br>
-<code>var bezierBasisMatrix = [
+cubic B&eacute;zier basis matrix.<br></p>
+
+<pre><code>var bezierBasisMatrix = [
 // For the purposes of the H3DU.Math matrix functions,
 // the polynomials are arranged &quot;column-wise&quot;, like this:
 // P1, P2, P3, P4
 -1,3,-3,1,
 3,-6,3,0,
 -3,3,0,0,
-1,0,0,0]</code></p>
+1,0,0,0]
+</code></pre>
 
 <p>For code that converts a curve from one kind to
 another, see the example.</p>
@@ -128,9 +130,10 @@ var invertedDest=H3DU.Math.mat4invert(destBasis)
 // Step 2: Multiply the inverted destination matrix by the source
 // matrix (in our example, the Hermite basis matrix).
 var resultMatrix=H3DU.Math.mat4multiply(invertedDest,srcBasis)
-// Step 3: Convert the control points
+// Step 3: Convert the control points one dimension
+// at a time
 var newControlPoints=[[],[],[],[]]
-for(var i=0;i&lt;4;i++) {
+for(var i=0;i&lt;controlPoints[0].length;i++) {
 var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
 controlPoints[3][i]]
 // Transform the control points using the result matrix
@@ -619,7 +622,8 @@ start.</p>
 
 <p>When converting to an arc length parameterization, the curve
 should be continuous and have a speed greater than 0 at every
-point on the curve.</p>
+point on the curve. The arc length parameterization used in
+this method is approximate.</p>
 
 <h4>Return Value</h4>
 

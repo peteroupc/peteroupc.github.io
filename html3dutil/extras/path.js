@@ -1458,11 +1458,12 @@
 
 /**
  * Adds a quadratic B&eacute;zier curve to this path starting
- * at this path's current position.
- * @param {number} x X coordinate of the curve's control point.
- * @param {number} y Y coordinate of the curve's control point.
- * @param {number} x2 X coordinate of the curve's end point.
- * @param {number} y2 Y coordinate of the curve's end point.
+ * at this path's current position. The current position will be
+ * the curve's first control point.
+ * @param {number} x X coordinate of the curve's second control point.
+ * @param {number} y Y coordinate of the curve's second control point.
+ * @param {number} x2 X coordinate of the curve's end point (third control point).
+ * @param {number} y2 Y coordinate of the curve's end point (third control point).
  * @returns {H3DU.GraphicsPath} This object.
  * @memberof! H3DU.GraphicsPath#
  */
@@ -1476,13 +1477,14 @@
   };
 /**
  * Adds a cubic B&eacute;zier curve to this path starting
- * at this path's current position.
- * @param {number} x X coordinate of the curve's first control point.
- * @param {number} y X coordinate of the curve's first control point.
- * @param {number} x2 Y coordinate of the curve's second control point.
- * @param {number} y2 Y coordinate of the curve's second control point.
- * @param {number} x3 X coordinate of the curve's end point.
- * @param {number} y3 Y coordinate of the curve's end point.
+ * at this path's current position. The current position will be
+ * the curve's first control point.
+ * @param {number} x X coordinate of the curve's second control point.
+ * @param {number} y X coordinate of the curve's second control point.
+ * @param {number} x2 Y coordinate of the curve's third control point.
+ * @param {number} y2 Y coordinate of the curve's third control point.
+ * @param {number} x3 X coordinate of the curve's end point (fourth control point).
+ * @param {number} y3 Y coordinate of the curve's end point (fourth control point).
  * @returns {H3DU.GraphicsPath} This object.
  * @memberof! H3DU.GraphicsPath#
  */
@@ -2190,11 +2192,12 @@
           if(typeof y2 === "undefined" || y2 === null) {
             failed = true; break;
           }
-          xcp = ret.endPos[0]; // control point to use if previous segment is not a cubic
+    // second control point to use if previous segment is not a cubic
+          xcp = ret.endPos[0];
           ycp = ret.endPos[1];
           endx = ret.endPos[0];
           endy = ret.endPos[1];
-    // NOTE: If previous segment is not a cubic, first control
+    // NOTE: If previous segment is not a cubic, second control
     // point is same as current point.
           if(ret.segments.length > 0 &&
         ret.segments[ret.segments.length - 1][0] === GraphicsPath.CUBIC) {
