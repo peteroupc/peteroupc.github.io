@@ -117,13 +117,13 @@ H3DU.Polyhedra.makeSphere = function(vi, radius, level) {
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
- * @returns {H3DU.Mesh} The generated mesh.
+ * @returns {H3DU.MeshBuffer} The generated mesh.
  */
 H3DU.Polyhedra.makeMesh = function(vi) {
  // Create the mesh and generate normals
  // for a flat-shaded appearance
   "use strict";
-  return new H3DU.Mesh(vi[0], vi[1]).recalcNormals(true);
+  return new H3DU.MeshBuffer(new H3DU.Mesh(vi[0], vi[1]).recalcNormals(true));
 };
 /**
  * Generates a mesh of a regular octahedron or a sphere based on that solid.
@@ -131,7 +131,7 @@ H3DU.Polyhedra.makeMesh = function(vi) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.MeshBuffer} The generated solid.
  */
 H3DU.Polyhedra.octahedron = function(radius, level) {
   "use strict";
@@ -145,7 +145,7 @@ H3DU.Polyhedra.octahedron = function(radius, level) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.MeshBuffer} The generated solid.
  */
 H3DU.Polyhedra.hexahedron = function(radius, level) {
   "use strict";
@@ -159,7 +159,7 @@ H3DU.Polyhedra.hexahedron = function(radius, level) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.MeshBuffer} The generated solid.
  */
 H3DU.Polyhedra.icosahedron = function(radius, level) {
   "use strict";
@@ -173,7 +173,7 @@ H3DU.Polyhedra.icosahedron = function(radius, level) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.MeshBuffer} The generated solid.
  */
 H3DU.Polyhedra.dodecahedron = function(radius, level) {
   "use strict";
@@ -187,7 +187,7 @@ H3DU.Polyhedra.dodecahedron = function(radius, level) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {H3DU.Mesh} The generated solid.
+ * @returns {H3DU.MeshBuffer} The generated solid.
  */
 H3DU.Polyhedra.tetrahedron = function(radius, level) {
   "use strict";

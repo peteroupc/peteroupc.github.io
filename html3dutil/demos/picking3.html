@@ -46,8 +46,9 @@ shapeGroup.addShape(
     new H3DU.Shape(mesh).setColor("blue").setPosition(-5, 5, 0));
 mesh = H3DU.Polyhedra.icosahedron(4.5, 0);
 var mesh2 = new H3DU.Mesh().merge(mesh).transform(H3DU.Math.mat4translated(2, 2, 0));
-var bsp = BspTree.fromMeshBuffer(new H3DU.MeshBuffer(mesh));
-var bsp2 = BspTree.fromMeshBuffer(new H3DU.MeshBuffer(mesh2));
+mesh2=new H3DU.MeshBuffer(mesh2)
+var bsp = BspTree.fromMeshBuffer(mesh);
+var bsp2 = BspTree.fromMeshBuffer(mesh2);
 mesh = bsp.intersection(bsp2).toMeshBuffer();
 shapeGroup.addShape(
     new H3DU.Shape(mesh).setColor("lime").setPosition(5, 5, 0));

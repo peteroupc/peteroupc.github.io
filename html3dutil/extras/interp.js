@@ -43,7 +43,7 @@ H3DU.Math.interpCubicBezier = function(a, b, c, d, t) {
   for(var i = 0; i < 10; i++) {
     var fx = tx * (3 * a * (tx * (tx - 2) + 1) - 3 * c * tx * (tx - 1) + tx * tx) - t;
     if(Math.abs(fx) < 1e-9)break;
-    var dfx = ((9 * tx - 12) * tx + 3) * a + (-9 * tx + 6) * tx * c + 3 * tx * tx;
+    var dfx = 3 * (((3 * tx - 4) * tx + 1) * a + (-3 * tx + 2) * tx * c + tx * tx);
     tx -= fx / dfx;
   }
   // Get Y coordinate

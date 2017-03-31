@@ -13,9 +13,14 @@
 <p><strong>Augments:</strong> <a href="H3DU.Curve.html">H3DU.Curve</a></p>
 
 <p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.
-A B-spline curve is a parametric curve based on polynomial functions, one for each
-dimension of the curve. Each polynomial is generated using one or more <i>control points</i>, which more or less follow the path of the curve, and a <i>knot vector</i>, which determines, more
-or less, where each control point is spaced along the curve.</p>
+A B-spline curve is a parametric curve based on polynomial functions.
+Each polynomial is generated using one or more
+<i>control points</i>, which more or less follow the path of the curve,
+and a <i>knot vector</i>, which determines, more or less, where each control
+point is spaced along the curve. This makes B-spline curves very powerful,
+since they can describe nearly all curves commonly used in computer
+graphics, including line segments, circles, ellipses, parabolas, and
+irregular smooth curves.</p>
 
 <p><b>B&eacute;zier Curves</b></p>
 
@@ -128,7 +133,7 @@ var dstBasis =[-1,3,-3,1, 3,-6,3,0, -3,3,0,0, 1,0,0,0];
 // Step 1: Invert the destination basis matrix
 var invertedDest=H3DU.Math.mat4invert(destBasis)
 // Step 2: Multiply the inverted destination matrix by the source
-// matrix (in our example, the Hermite basis matrix).
+// matrix
 var resultMatrix=H3DU.Math.mat4multiply(invertedDest,srcBasis)
 // Step 3: Convert the control points one dimension
 // at a time
