@@ -2283,53 +2283,118 @@
       return false;
     }
   };
-  /** @ignore */
-  Triangulate._vertClass = function(v, ori, vertices) {
-    var curori = Triangulate._triOrient(v.prev.data, v.data, v.next.data);
-    if(curori === 0 || curori === ori) {
-  // This is a convex vertex, find out whether this
-  // is an ear
-      for (var i = 0; i < vertices.length; i++) {
-        var vert = vertices[i];
-        if(v.prev === vert || v === vert || v.next === vert)continue;
-        var ptintri = Triangulate._pointInTri(v.prev.data, v.data, v.next.data, vert.data);
-        if(ptintri) {
-          return Triangulate._CONVEX;
-        }
+
+  var EPSILON = 1.1102230246251565e-16;
+  var ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
+
+// orient2D and dependent functions were
+// Adapted by Peter O. from the HE_Mesh library
+// written by Frederik Vanhoutte.
+
+  function cmpDoubleDouble(a, b) {
+    if(a[0] < b[0])return -1;
+    if(a[0] > b[0])return 1;
+    if(a[1] < b[1])return -1;
+    if(a[1] > b[1])return 1;
+    return 0;
+  }
+  function addDoubleDouble(a, b) {
+    var hi = a[0];
+    var lo = a[1];
+    var yhi = b[0];
+    var ylo = b[1];
+    if(isNaN(hi))return a;
+    if(isNaN(yhi))return b;
+    var H, h, T, t, S, s, e, f;
+    S = hi + yhi;
+    T = lo + ylo;
+    e = S - hi;
+    f = T - lo;
+    s = S - e;
+    t = T - f;
+    s = yhi - e + (hi - s);
+    t = ylo - f + (lo - t);
+    e = s + T;
+    H = S + e;
+    h = e + (S - H);
+    e = t + h;
+    var zhi = H + e;
+    var zlo = e + (H - zhi);
+    return [zhi, zlo];
+  }
+  function subDoubleDouble(a, b) {
+    if(isNaN(b[0]))return b;
+    return addDoubleDouble(a, [-b[0], -b[1]]);
+  }
+
+  function mulDoubleDouble(a, b) {
+    var hi = a[0];
+    var lo = a[1];
+    var yhi = b[0];
+    var ylo = b[1];
+    if(isNaN(hi))return a;
+    if(isNaN(yhi))return b;
+    var hx, tx, hy, ty, C, c;
+    C = 134217729.0 * hi;
+    hx = C - hi;
+    c = 134217729.0 * yhi;
+    hx = C - hx;
+    tx = hi - hx;
+    hy = c - yhi;
+    C = hi * yhi;
+    hy = c - hy;
+    ty = yhi - hy;
+    c = hx * hy - C + hx * ty + tx * hy + tx * ty +
+    (hi * ylo + lo * yhi);
+    var zhi = C + c;
+    hx = C - zhi;
+    return [zhi, c + hx];
+  }
+
+  function orient2D(pa, pb, pc) {
+    var detleft, detright, det;
+    var detsum, errbound;
+    var ax, ay, bx, by, cx, cy;
+    var acx, bcx, acy, bcy;
+    var detleft1, det1;
+    detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
+    detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
+    det = detleft - detright;
+    if (detleft > 0.0) {
+      if (detright <= 0.0) {
+        return det < 0 ? -1 : det === 0 ? 0 : 1;
+      } else {
+        detsum = detleft + detright;
       }
-      return Triangulate._EAR;
+    } else if (detleft < 0.0) {
+      if (detright >= 0.0) {
+        return det < 0 ? -1 : det === 0 ? 0 : 1;
+      } else {
+        detsum = -detleft - detright;
+      }
     } else {
-      return Triangulate._REFLEX;
+      return det < 0 ? -1 : det === 0 ? 0 : 1;
     }
-  };
-/** @ignore */
-  Triangulate._triOrient = function(v1, v2, v3) {
-    var ori = v1[0] * v2[1] - v1[1] * v2[0];
-    ori += v2[0] * v3[1] - v2[1] * v3[0];
-    ori += v3[0] * v1[1] - v3[1] * v1[0];
-    return ori === 0 ? 0 : ori < 0 ? -1 : 1;
-  };
-/** @ignore */
-  Triangulate._triangleMidAngle = function(v1, v2, v3) {
-    var dx1 = v2[0] - v1[0];
-    var dy1 = v2[1] - v1[1];
-    var len = dx1 * dx1 + dy1 * dy1;
-    if(len !== 0) {
-      dx1 /= len;
-      dy1 /= len;
+    errbound = ORIENT_ERROR_BOUND_2D * detsum;
+    if (det >= errbound || -det >= errbound) {
+      return det < 0 ? -1 : det === 0 ? 0 : 1;
     }
-    var dx2 = v3[0] - v1[0];
-    var dy2 = v3[1] - v1[1];
-    len = dx2 * dx2 + dy2 * dy2;
-    if(len !== 0) {
-      dx2 /= len;
-      dy2 /= len;
-    }
-    var dot = dx1 * dx2 + dy1 * dy2;
-    if(dot < -1)dot = -1;
-    if(dot > 1)dot = 1;
-    return Math.acos(dot);
-  };
+    det1 = [0.0, 0];
+    ax = [pa[0], 0];
+    ay = [pa[1], 0];
+    bx = [pb[0], 0];
+    by = [pb[1], 0];
+    cx = [pc[0], 0];
+    cy = [pc[1], 0];
+    acx = subDoubleDouble(ax, cx);
+    bcx = subDoubleDouble(bx, cx);
+    acy = subDoubleDouble(ay, cy);
+    bcy = subDoubleDouble(by, cy);
+    detleft1 = mulDoubleDouble(acx, bcy);
+    var detright1 = mulDoubleDouble(acy, bcx);
+    det1 = subDoubleDouble(detleft1, detright1);
+    return cmpDoubleDouble(det1, [0, 0]);
+  }
 
 /** @ignore */
   Triangulate._Contour = function(vertices) {
@@ -2461,7 +2526,7 @@
       if(iterVert !== nextVert) {
         var iterPrev = iterVert.prev ? iterVert.prev : lastVert;
         var iterNext = iterVert.next ? iterVert.next : firstVert;
-        var orient = Triangulate._triOrient(iterPrev.data, iterVert.data, iterNext.data);
+        var orient = orient2D(iterPrev.data, iterVert.data, iterNext.data);
         if(orient !== 0 && orient !== this.vertexList.winding) {
       // This is a reflex vertex
           var pointIn = Triangulate._pointInTri(
@@ -2496,6 +2561,247 @@
     }
     return innerReflexes[0][2];
   };
+
+// decomposePolygon and dependent functions were
+// Adapted by Peter O. from the HE_Mesh library
+// written by Frederik Vanhoutte.
+
+  function getLineIntersectionInto2D(a1, a2, b1, b2, p) {
+    var s1 = [a1[0] - a2[0], a1[1] - a2[1]];
+    var s2 = [b1[0] - b2[0], b1[1] - b2[1]];
+    var det = s1[0] * s2[1] - s1[1] * s2[0];
+    if (Math.abs(det) <= 1e-9) {
+      return false;
+    } else {
+      det = 1.0 / det;
+      var t2 = det * (a1[0] * s1[1] - a1[1] * s1[0] - (b1[0] * s1[1] - b1[1] * s1[0]));
+      p[0] = b1[0] * (1.0 - t2) + b2[0] * t2;
+      p[1] = b1[1] * (1.0 - t2) + b2[1] * t2;
+      return true;
+    }
+  }
+
+  function getSegmentIntersection2D(ap1, ap2, bp1, bp2) {
+    var A = [ap2[0] - ap1[0], ap2[1] - ap1[1], 0];
+    var B = [bp2[0] - bp1[0], bp2[1] - bp1[1], 0];
+    var BxA = B[0] * A[1] - B[1] * A[0];
+    if (Math.abs(BxA) <= 1e-9) {
+      return null;
+    }
+    var v1 = [ap1[0] - bp1[0], ap1[1] - bp1[1], 0];
+    var ambxA = v1[0] * A[1] - v1[1] * A[0];
+    if (Math.abs(ambxA) <= 1e-9) {
+      return null;
+    }
+    var tb = ambxA / BxA;
+    if (tb < 0.0 || tb > 1.0) {
+      return null;
+    }
+    var ip = [B[0] * tb, B[1] * tb, 0];
+    ip[0] += bp1[0];
+    ip[1] += bp1[1];
+    var ta = [ip[0] - ap1[0], ip[1] - ap1[1], 0];
+    ta = (ta[0] * A[0] + ta[1] * A[1]) / (A[0] * A[0] + A[1] * A[1]);
+    if (ta < 0.0 || ta > 1.0 || isNaN(ta)) {
+      return null;
+    }
+    return ip;
+  }
+
+  function addSublist(dst, src, i1, i2) {
+    for(var i = i1; i < i2; i++) {
+      dst.push(src[i]);
+    }
+  }
+
+  function isVisible(pointlist, i, j) {
+    var n = pointlist.length;
+    var iVertex, jVertex;
+    iVertex = pointlist[i];
+    jVertex = pointlist[j];
+    var iVertexPrev, iVertexNext, jVertexPrev, jVertexNext;
+    iVertexPrev = pointlist[i === 0 ? n - 1 : i - 1];
+    iVertexNext = pointlist[i + 1 === n ? 0 : i + 1];
+    jVertexPrev = pointlist[j === 0 ? n - 1 : j - 1];
+    jVertexNext = pointlist[j + 1 === n ? 0 : j + 1];
+    if (orient2D(iVertex, iVertexNext, iVertexPrev) < 0) {
+      if (orient2D(jVertex, iVertex, iVertexPrev) >= 0 &&
+          orient2D(jVertex, iVertex, iVertexNext) <= 0) {
+        return false;
+      }
+    } else if (orient2D(jVertex, iVertex, iVertexNext) <= 0 ||
+          orient2D(jVertex, iVertex, iVertexPrev) >= 0) {
+      return false;
+    }
+    if (orient2D(jVertex, jVertexNext, jVertexPrev) < 0) {
+      if (orient2D(iVertex, jVertex, jVertexPrev) >= 0 &&
+          orient2D(iVertex, jVertex, jVertexNext) <= 0) {
+        return false;
+      }
+    } else if (orient2D(iVertex, jVertex, jVertexNext) <= 0 ||
+          orient2D(iVertex, jVertex, jVertexPrev) >= 0) {
+      return false;
+    }
+    for (var k = 0; k < n; k++) {
+      var knext = k + 1 === n ? 0 : k + 1;
+      if (k === i || k === j || knext === i || knext === j) {
+        continue;
+      }
+      var kVertex = pointlist[k];
+      var kVertexNext = pointlist[knext];
+      var intsec = getSegmentIntersection2D(iVertex, jVertex, kVertex, kVertexNext);
+      if (typeof intsec !== "undefined" && intsec !== null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function decomposePolygon(pointlist, accumulator) {
+    var n = pointlist.length;
+    if (pointlist.length < 3) {
+      return;
+    }
+    var upperIntersection = [0, 0, 0];
+    var lowerIntersection = [0, 0, 0];
+    var upperDistance = Number.POSITIVE_INFINITY;
+    var lowerDistance = Number.POSITIVE_INFINITY;
+    var closestDistance = Number.POSITIVE_INFINITY;
+    var upperIndex = 0;
+    var lowerIndex = 0;
+    var closestIndex = 0;
+    var lower = [];
+    var upper = [];
+    for (var i = 0; i < n; i++) {
+      var iVertex = pointlist[i];
+      var iVertexPrev = pointlist[i === 0 ? n - 1 : i - 1];
+      var iVertexNext = pointlist[i + 1 === n ? 0 : i + 1];
+      if (orient2D(iVertex, iVertexNext, iVertexPrev) < 0) {
+        for (var j = 0; j < n; j++) {
+          var jVertex = pointlist[j];
+          var jVertexPrev = pointlist[j === 0 ? n - 1 : j - 1];
+          var jVertexNext = pointlist[j + 1 === n ? 0 : j + 1];
+          var intersection = [0, 0, 0];
+          if (orient2D(jVertex, iVertexPrev, iVertex) > 0 &&
+              orient2D(jVertexPrev, iVertexPrev, iVertex) <= 0) {
+            if (getLineIntersectionInto2D(iVertexPrev, iVertex, jVertex, jVertexPrev, intersection)) {
+              if (orient2D(intersection, iVertexNext, iVertex) < 0) {
+                var px = iVertex[0];
+                var py = iVertex[1];
+                var qx = intersection[0];
+                var qy = intersection[1];
+                var dist = (qx - px) * (qx - px) + (qy - py) * (qy - py);
+                if (dist < lowerDistance) {
+                  lowerDistance = dist;
+                  lowerIntersection[0] = intersection[0];
+                  lowerIntersection[1] = intersection[1];
+                  lowerIndex = j;
+                }
+              }
+            }
+          }
+          if (orient2D(jVertexNext, iVertexNext, iVertex) > 0 &&
+              orient2D(jVertex, iVertexNext, iVertex) <= 0) {
+            if (getLineIntersectionInto2D(iVertexNext, iVertex, jVertex, jVertexNext,
+                intersection)) {
+              if (orient2D(intersection, iVertexPrev, iVertex) > 0) {
+                px = iVertex[0];
+                py = iVertex[1];
+                qx = intersection[0];
+                qy = intersection[1];
+                dist = (qx - px) * (qx - px) + (qy - py) * (qy - py);
+                if (dist < upperDistance) {
+                  upperDistance = dist;
+                  upperIntersection[0] = intersection[0];
+                  upperIntersection[1] = intersection[1];
+                  upperIndex = j;
+                }
+              }
+            }
+          }
+        }
+        if (lowerIndex === (upperIndex + 1) % n) {
+          var midpoint = [
+            upperIntersection[0] + (lowerIntersection[0] - upperIntersection[0]) * 0.5,
+            upperIntersection[1] + (lowerIntersection[1] - upperIntersection[1]) * 0.5
+          ];
+          if (i < upperIndex) {
+            addSublist(lower, pointlist, i, upperIndex + 1);
+            lower.push(midpoint);
+            upper.push(midpoint);
+            if (lowerIndex !== 0) {
+              addSublist(upper, pointlist, lowerIndex, n);
+            }
+            addSublist(upper, pointlist, 0, i + 1);
+          } else {
+            if (i !== 0) {
+              addSublist(lower, pointlist, i, n);
+            }
+            addSublist(lower, pointlist, 0, upperIndex + 1);
+            lower.push(midpoint);
+            upper.push(midpoint);
+            addSublist(upper, pointlist, lowerIndex, i + 1);
+          }
+        } else {
+          if (lowerIndex > upperIndex) {
+            upperIndex += n;
+          }
+          closestIndex = lowerIndex;
+          for (j = lowerIndex; j <= upperIndex; j++) {
+            var jmod = j % n;
+            var q = pointlist[jmod];
+            if (q === iVertex || q === iVertexPrev || q === iVertexNext) {
+              continue;
+            }
+            if (isVisible(pointlist, i, jmod)) {
+              px = iVertex[0];
+              py = iVertex[1];
+              qx = q[0];
+              qy = q[1];
+              dist = (qx - px) * (qx - px) + (qy - py) * (qy - py);
+              if (dist < closestDistance) {
+                closestDistance = dist;
+                closestIndex = jmod;
+              }
+            }
+          }
+          if (i < closestIndex) {
+            addSublist(lower, pointlist, i, closestIndex + 1);
+            if (closestIndex !== 0) {
+              addSublist(upper, pointlist, closestIndex, n);
+            }
+            addSublist(upper, pointlist, 0, i + 1);
+          } else {
+            if (i !== 0) {
+              addSublist(lower, pointlist, i, n);
+            }
+            addSublist(lower, pointlist, 0, closestIndex + 1);
+            addSublist(upper, pointlist, closestIndex, i + 1);
+          }
+        }
+        var dp1 = lower.length < upper.length ? lower : upper;
+        var dp2 = lower.length < upper.length ? upper : lower;
+        decomposePolygon(dp1, accumulator);
+        decomposePolygon(dp2, accumulator);
+        return;
+      }
+    }
+    accumulator.push(pointlist);
+  }
+
+  function decomposeTriangles(points, tris) {
+    var polys = [];
+    decomposePolygon(points, polys);
+    for(var i = 0; i < polys.length; i++) {
+      var poly = polys[i];
+      for(var j = 0; j < poly.length - 2; j++) {
+        tris.push([
+          poly[0][0], poly[0][1],
+          poly[j + 1][0], poly[j + 1][1],
+          poly[j + 2][0], poly[j + 2][1]]);
+      }
+    }
+  }
 
 /**
  * Converts the subpaths in this path to triangles.
@@ -2613,69 +2919,15 @@
       tris.push(tri);
       return;
     }
- // Make the vertex list circular
     var first = contour.vertexList.first();
-    var last = contour.vertexList.last();
-    if(!last)throw new Error();
-    var vert;
+  // var last = contour.vertexList.last();
     var vertices = [];
-    vert = first;
-    for (;;) {
-      vertices.push(vert);
-      if(vert === last)break;
+    var vert = first;
+    while(vert) {
+      vertices.push([vert.data[0], vert.data[1]]);
       vert = vert.next;
     }
-    first.prev = last;
-    last.next = first;
-
-    while(contour.vertexCount > 3) {
-      vert = contour.vertexList.first();
-      var minAngleEar = null;
-      var firstMinAngle = false;
-      var angle = Math.PI;
-      for(var i = 0; i < contour.vertexCount; i++) {
-        var vertexClass = Triangulate._vertClass(vert,
-          contour.winding, vertices);
-        if(vertexClass === Triangulate._EAR) {
-          if(typeof minAngleEar === "undefined" || minAngleEar === null) {
-            minAngleEar = vert;
-            firstMinAngle = true;
-          } else {
-            if(firstMinAngle) {
-              angle = Triangulate._triangleMidAngle(minAngleEar.prev.data,
-        minAngleEar.data, minAngleEar.next.data);
-              firstMinAngle = false;
-            }
-            var thisAngle = Triangulate._triangleMidAngle(vert.prev.data, vert.data, vert.next.data);
-            if(thisAngle < angle) {
-              minAngleEar = vert;
-              angle = thisAngle;
-            }
-          }
-        }
-        vert = vert.next;
-      }
-      if(!minAngleEar) {
-        minAngleEar = contour.vertexList.first();
-      }
-      tri = [minAngleEar.prev.data[0], minAngleEar.prev.data[1],
-        minAngleEar.data[0], minAngleEar.data[1],
-        minAngleEar.next.data[0], minAngleEar.next.data[1]];
-      tris.push(tri);
-      contour.vertexList.erase(minAngleEar);
-      contour.vertexCount--;
-    }
-    t1 = contour.vertexList.first();
-    tri = [];
-    first = t1;
- // At this point, there will be only three
- // vertices left
-    while(t1) {
-      tri.push(t1.data[0], t1.data[1]);
-      t1 = t1.next;
-      if(t1 === first)break;
-    }
-    tris.push(tri);
+    decomposeTriangles(vertices, tris);
   };
   if(typeof exports.H3DU !== "undefined" && exports.H3DU !== null) {
     exports.H3DU.GraphicsPath = GraphicsPath;

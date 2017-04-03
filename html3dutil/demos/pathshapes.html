@@ -59,7 +59,7 @@ var path2 = new H3DU.GraphicsPath()
  .arcTo(0.5, 0.5, 0, 0.5, 0.5)
  .lineTo(-0.5, 0.5)
  .closePath().reverse();
-path = path.merge(path2);
+path = path.merge(path2); // TODO: Fix path tube
 
 function makeLinePath(path, z, flatness) {
   "use strict";
@@ -129,7 +129,7 @@ function createSampleShape(index) {
     return pathClosedFigure(p, -0.25, 0.25, 0.01);
   }
   case 8: {
-    p = new H3DU.GraphicsPath().arrow(0, -1.0, 0, 1.0, 0.4, 0.4, 0.25);
+    p = new H3DU.GraphicsPath().arrow(0, -1.0, 0, 1.0, 0.55, 0.6, 0.3);
     return pathClosedFigure(p, -0.25, 0.25, 0.01).recalcNormals(true);
   }
   default:

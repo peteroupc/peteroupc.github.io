@@ -140,6 +140,7 @@ an affine transformation matrix (without perspective) and returns the transforme
 <li><a href="#H3DU.Math.mat4transpose">mat4transpose</a><br>Returns the transpose of a 4x4 matrix.</li>
 <li><a href="#H3DU.Math.mat4transposeInPlace">mat4transposeInPlace</a><br>Transposes a 4x4 matrix in place without creating
 a new matrix.</li>
+<li><a href="#H3DU.Math.planeFromNormalAndPoint">planeFromNormalAndPoint</a><br>Creates a plane from a normal vector and a point on the plane.</li>
 <li><a href="#H3DU.Math.planeNorm">planeNorm</a><br><b>Deprecated: Use <a href="H3DU.Math.html#H3DU.Math.planeNormalize">H3DU.Math.planeNormalize</a> instead.
 The name of this method may be confused with a vector&#39;s &quot;norm&quot;, another name for its length.</b></li>
 <li><a href="#H3DU.Math.planeNormInPlace">planeNormInPlace</a><br><b>Deprecated: Use <a href="H3DU.Math.html#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> instead.
@@ -1608,6 +1609,23 @@ are converted to columns and vice versa.)</p>
 <h4>Return Value</h4>
 
 <p>The parameter &quot;mat&quot;. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.Math.planeFromNormalAndPoint'></a></p>
+
+<h3>(static) H3DU.Math.planeFromNormalAndPoint(normal, point)</h3>
+
+<p>Creates a plane from a normal vector and a point on the plane.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>normal</code> (Type: Array.&lt;number&gt;)<br>A three-element array identifying the plane&#39;s normal vector.</li>
+<li><code>point</code> (Type: Array.&lt;number&gt;)<br>A three-element array identifying a point on the plane.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A four-element array describing the plane. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Math.planeNorm'></a></p>
 
@@ -3540,6 +3558,9 @@ with its sign reversed. Moving all three parameters to different positions, thou
 results in the same triple product.
 <li>The triple product&#39;s absolute value is the volume of a parallelepiped (skewed
 box) where three of its sides having a vertex in common are
+defined by A, B, and C, in any order.
+<li>The triple product&#39;s absolute value divided by 6 is the volume of a tetrahedron,
+where three of its sides having a vertex in common are
 defined by A, B, and C, in any order.
 <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
 <li>The triple product is the same as the <i>determinant</i> (overall scaling factor)
