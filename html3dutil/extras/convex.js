@@ -236,12 +236,7 @@
       return mesh;
     };
   };
-/**
- * TODO: Not documented yet.
- * @param {*} f
- * @param {*} pointIndex
- * @returns {*} Return value.
- */
+/** @ignore */
   QuickHull.prototype.addPointToFace = function(f, pointIndex) {
     var D = QuickHull._getSignedDistanceToPlane(this.vertexData[ pointIndex ], f.P);
     var n = f.P.slice(0, 3);
@@ -256,12 +251,7 @@
     }
     return false;
   };
-/**
- * TODO: Not documented yet.
- * @param {*} pointCloud
- * @param {*} epsilon
- * @returns {*} Return value.
- */
+/** @ignore */
   QuickHull.prototype.buildMesh = function(pointCloud, epsilon) {
     if (pointCloud.length === 0) {
       this.mesh = new QuickHull._MeshBuilder();
@@ -698,7 +688,7 @@
  * that contains all the points given.
  * <p>To use this method, you must include the script "extras/convex.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/convex.js">&lt;/script></pre>
- * @param {Array<number>} An array of 3-element vectors each identifying
+ * @param {Array<number>} points An array of 3-element vectors each identifying
  * a 3-dimensional point.
  * @param {Boolean} [flat] If true, will generate normals such that the
  * figure will be flat shaded; otherwise, will generate normals such that the
