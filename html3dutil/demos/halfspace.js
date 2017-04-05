@@ -103,7 +103,7 @@ function prismMesh(size, height, sides) {
   var planes = [];
   var angleStep = H3DU.Math.PiTimes2 / sides;
   var cosStep = Math.cos(angleStep);
-  var sinStep = (angleStep>=0 && angleStep<6.283185307179586) ? (angleStep<=3.141592653589793 ? Math.sqrt(1.0-cosStep*cosStep) : -Math.sqrt(1.0-cosStep*cosStep)) : Math.sin(angleStep);
+  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   var s = 0.0; // sin(0deg)
   var c = 1.0; // cos(0deg)
   for(var i = 0; i < sides; i++) {

@@ -138,7 +138,7 @@ var resultMatrix=H3DU.Math.mat4multiply(invertedDest,srcBasis)
 // Step 3: Convert the control points one dimension
 // at a time
 var newControlPoints=[[],[],[],[]]
-for(var i=0;i&lt;controlPoints[0].length;i++) {
+for(var i=0;i &lt; controlPoints[0].length;i++) {
 var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
 controlPoints[3][i]]
 // Transform the control points using the result matrix
@@ -472,6 +472,22 @@ Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
 
 <p>Return value. (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
+<h4>Example</h4>
+
+<p>The following function generates a polygon curve using linear B&eacute;zier
+curves.</p>
+
+<pre><code>function polygonCurve(points) {
+var curves=[]
+for(var i=0;i &lt; points.length;i++) {
+var cp=points[i]
+var np=(i==points.length-1) ? points[0] : points[i+1]
+curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
+}
+return new H3DU.PiecewiseCurve(curves)
+}
+</code></pre>
+
 <p><a name='H3DU.BSplineCurve_getControlPoints'></a></p>
 
 <h3>H3DU.BSplineCurve#getControlPoints()</h3>
@@ -727,6 +743,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
 <li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferHelper.html">H3DU.BufferHelper</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>

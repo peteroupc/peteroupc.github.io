@@ -2250,39 +2250,6 @@
   Triangulate._CONVEX = 1;
   Triangulate._EAR = 2;
   Triangulate._REFLEX = 3;
-/** @ignore */
-  Triangulate._pointInTri = function(i1, i2, i3, p) {
-    if(p[0] === i1[0] && p[1] === i1[1])return false;
-    if(p[0] === i2[0] && p[1] === i2[1])return false;
-    if(p[0] === i3[0] && p[1] === i3[1])return false;
-    var t3 = i2[0] - i3[0];
-    var t4 = i2[1] - i3[1];
-    var t5 = i2[0] - i1[0];
-    var t6 = i2[1] - i1[1];
-    var t7 = t5 * t3 + t6 * t4;
-    var t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
-    t3 * t3 + t4 * t4);
-    if (Math.sqrt(Math.abs(t8)) > 1e-9) {
-      var t9 = i3[0] - i1[0];
-      var t10 = i3[1] - i1[1];
-      var t11 = i2[0] - i1[0];
-      var t12 = i2[1] - i1[1];
-      var t13 = p[0] - i1[0];
-      var t14 = p[1] - i1[1];
-      var t15 = t9 * t9 + t10 * t10;
-      var t16 = t9 * t11 + t10 * t12;
-      var t17 = t9 * t13 + t10 * t14;
-      var t18 = t11 * t11 + t12 * t12;
-      var t19 = t11 * t13 + t12 * t14;
-      var t20 = 1.0 / (t15 * t18 - t16 * t16);
-      var t21 = (t18 * t17 - t16 * t19) * t20;
-      var t22 = (t15 * t19 - t16 * t17) * t20;
-      return t21 > 1e-9 && t22 > 1e-9 &&
-     t21 + t22 < 1.0 - 1e-9;
-    } else {
-      return false;
-    }
-  };
 
   var EPSILON = 1.1102230246251565e-16;
   var ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
@@ -2395,6 +2362,33 @@
     det1 = subDoubleDouble(detleft1, detright1);
     return cmpDoubleDouble(det1, [0, 0]);
   }
+
+  /** @ignore */
+  Triangulate._pointInTri = function(i1, i2, i3, p) {
+    if(p[0] === i1[0] && p[1] === i1[1])return false;
+    if(p[0] === i2[0] && p[1] === i2[1])return false;
+    if(p[0] === i3[0] && p[1] === i3[1])return false;
+    var t3 = i2[0] - i3[0];
+    var t4 = i2[1] - i3[1];
+    var t5 = i2[0] - i1[0];
+    var t6 = i2[1] - i1[1];
+    var t7 = t5 * t3 + t6 * t4;
+    var t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
+    t3 * t3 + t4 * t4);
+    if (Math.sqrt(Math.abs(t8)) > 1e-9) {
+      var p1 = orient2D(i2, i3, p);
+      var p2 = orient2D(i2, i3, i1);
+      var b = p1 === 0 || p2 === 0 || p1 === p2;
+      p1 = orient2D(i1, i3, p);
+      p2 = orient2D(i1, i3, i2);
+      b = b && (p1 === 0 || p2 === 0 || p1 === p2);
+      p1 = orient2D(i1, i2, p);
+      p2 = orient2D(i1, i2, i3);
+      return b && (p1 === 0 || p2 === 0 || p1 === p2);
+    } else {
+      return false;
+    }
+  };
 
 /** @ignore */
   Triangulate._Contour = function(vertices) {
@@ -2520,7 +2514,6 @@
     var triangle1 = [x, y];
     var triangle2 = [closeVertices[0][0], y];
     var iterVert = firstVert;
-
     var innerReflexes = [];
     while(iterVert) {
       if(iterVert !== nextVert) {

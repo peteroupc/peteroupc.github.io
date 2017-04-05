@@ -7,7 +7,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-// Adapted by Peter O. from public-domain
+// Adapted by Peter O. from a public-domain
 // C++ implementation found at https://github.com/akuukka/quickhull
 
 (function(H3DU) {
@@ -557,7 +557,7 @@
 /** @ignore */
   QuickHull.prototype.getInitialTetrahedron = function() {
     var vertexCount = this.vertexData.length;
-    // If we have at most 4 points, just return a degenerate tetrahedron:
+    // If we have at most 4 points, just return a degenerate tetrahedron
     if (vertexCount <= 4) {
       var v = [0, Math.min(1, vertexCount - 1), Math.min(2, vertexCount - 1), Math.min(3, vertexCount - 1)];
       var N = QuickHull._getTriangleNormal(this.vertexData[v[0]], this.vertexData[v[1]], this.vertexData[v[2]]);
@@ -567,7 +567,7 @@
       return new QuickHull._MeshBuilder(v[0], v[1], v[2], v[3]);
     }
 
-    // Find two most distant extreme points.
+    // Find two most distant extreme points
     var maxD = this.epsilonSquared;
     var selectedPoints = [0, 0];
     for (var i = 0; i < 6; i++) {
