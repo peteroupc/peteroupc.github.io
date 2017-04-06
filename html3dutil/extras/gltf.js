@@ -742,7 +742,7 @@
                       array.elementsPerValue, array.elementStride());
           }
         var indexArray = null;
-        var indexSize = 0;
+
         if(typeof prim.indices !== "undefined" && prim.indices !== null) {
           if(typeof this.gltf.accessors === "undefined" || this.gltf.accessors === null) {
             return null;
@@ -766,7 +766,7 @@
             this.error = "invalid array for indices"; return null;
           }
           indexArray = array.array;
-          indexSize = array.elementByteSize;
+ // indexSize = array.elementByteSize;
         } else {
      // Synthesize a list of indices
           var indexList = [];
@@ -775,13 +775,13 @@
           }
           indexArray = maxCount < 65536 ? new Uint16Array(indexList) :
             new Uint32Array(indexList);
-          indexSize = maxCount < 65536 ? 2 : 4;
+ // indexSize = maxCount < 65536 ? 2 : 4;
         }
         if(triangleFan)indexArray = GltfState.triangleFanToTriangles(indexArray);
         if(triangleStrip)indexArray = GltfState.triangleStripToTriangles(indexArray);
         if(lineStrip)indexArray = GltfState.lineStripToLines(indexArray);
         if(lineLoop)indexArray = GltfState.lineLoopToLines(indexArray);
-        meshBuffer.setIndices(indexArray, indexSize);
+        meshBuffer.setIndices(indexArray);
         var shape = GltfState._makeShape(meshBuffer);
         if(typeof prim.material === "undefined" || prim.material === null) {
           return null;
