@@ -105,8 +105,7 @@ index in this mesh.</li>
 to &quot;unit vectors&quot; (&quot;normalized&quot; vectors with a length of 1).</li>
 <li><a href="#H3DU.Mesh_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 or points) that this mesh contains.</li>
-<li><a href="#H3DU.Mesh_recalcNormals">recalcNormals</a><br>Recalculates the normal vectors for triangles
-in this mesh.</li>
+<li><a href="#H3DU.Mesh_recalcNormals">recalcNormals</a><br><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.</b></li>
 <li><a href="#H3DU.Mesh_recalcTangents">recalcTangents</a><br><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. This method
 may be reimplemented in the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class in the future.</b></li>
@@ -514,6 +513,8 @@ or points) that this mesh contains.</p>
 
 <h3>H3DU.Mesh#recalcNormals(flat, inward)</h3>
 
+<p><b>Deprecated: Use <code>new H3DU.MeshBuffer(this).recalcNormals()</code> instead.</b></p>
+
 <p>Recalculates the normal vectors for triangles
 in this mesh. For this to properly affect shading, each triangle in
 the mesh must have its vertices defined in
@@ -736,7 +737,7 @@ added after calling this method without calling mode() first.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).</li>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>). (Normals need to be transformed specially because they describe directions, not points.)</li>
 </ul>
 
 <h4>Return Value</h4>

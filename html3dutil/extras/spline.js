@@ -156,7 +156,7 @@ H3DU.PiecewiseCurve.fromHermiteSpline = function(spline) {
  * Creates a piecewise curve made up of B-spline curves from the control points of a
  * cubic Catmull-Rom spline. A Catmull-Rom spline is defined by
  * a collection of control points that the spline
- * will go through, and the shape of each curve segment is determined by the positions
+ * will go through, and the shape of each curve segment is also determined by the positions
  * of neighboring points on the spline.
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>

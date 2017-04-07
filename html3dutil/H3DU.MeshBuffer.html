@@ -8,14 +8,14 @@
 
 <p><a name='H3DU.MeshBuffer'></a></p>
 
-<h3>H3DU.MeshBuffer(mesh)</h3>
+<h3>H3DU.MeshBuffer([mesh])</h3>
 
 <p>A geometric mesh in the form of buffer objects.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>A geometric mesh object. A series of default attributes will be set based on that mesh&#39;s data.</li>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>) (optional)<br>A geometric mesh object. A series of default attributes will be set based on that mesh&#39;s data. If null or omitted, an empty mesh buffer will be generated.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -24,13 +24,15 @@
 <li><a href="#H3DU.MeshBuffer_getAttribute">getAttribute</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.MeshBuffer_getBounds">getBounds</a><br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.</li>
-<li><a href="#H3DU.MeshBuffer_getIndices">getIndices</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer_getIndices">getIndices</a><br>Gets the array of vertex indices used by this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_getPositions">getPositions</a><br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive</li>
 <li><a href="#H3DU.MeshBuffer_merge">merge</a><br>TODO: Not documented yet.</li>
 <li><a href="#H3DU.MeshBuffer_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_primitiveType">primitiveType</a><br>Gets the type of primitive stored in this mesh buffer.</li>
+<li><a href="#H3DU.MeshBuffer_recalcNormals">recalcNormals</a><br>Recalculates the normal vectors for triangles
+in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_reverseNormals">reverseNormals</a><br>Modifies this mesh buffer by reversing the sign of normals it defines.</li>
 <li><a href="#H3DU.MeshBuffer_setAttribute">setAttribute</a><br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
@@ -40,7 +42,8 @@ existing attribute&#39;s information).</li>
 <li><a href="#H3DU.MeshBuffer_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
 in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer</li>
-<li><a href="#H3DU.MeshBuffer_vertexIndices">vertexIndices</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer_vertexIndices">vertexIndices</a><br>Gets the vertex indices of a given primitive (triangle, line,
+or point) in this mesh buffer.</li>
 </ul>
 
 <p><a name='H3DU.MeshBuffer_getAttribute'></a></p>
@@ -83,11 +86,11 @@ or no vertices are defined in this buffer, returns the array
 
 <h3>H3DU.MeshBuffer#getIndices()</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Gets the array of vertex indices used by this mesh buffer.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>Return value. (Type: Uint16Array | Uint32Array | Uint8Array)</p>
 
 <p><a name='H3DU.MeshBuffer_getPositions'></a></p>
 
@@ -120,6 +123,11 @@ array containing that vertex&#39;s X, Y, and Z coordinates, in that order. (Type
 
 <p>Return value. (Type: *)</p>
 
+<h4>Example</h4>
+
+<pre><code>var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
+</code></pre>
+
 <p><a name='H3DU.MeshBuffer_primitiveCount'></a></p>
 
 <h3>H3DU.MeshBuffer#primitiveCount()</h3>
@@ -141,6 +149,31 @@ and points) composed by all shapes in this mesh.</p>
 
 <p>Either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
 <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: number)</p>
+
+<p><a name='H3DU.MeshBuffer_recalcNormals'></a></p>
+
+<h3>H3DU.MeshBuffer#recalcNormals(flat, inward)</h3>
+
+<p>Recalculates the normal vectors for triangles
+in this mesh. For this to properly affect shading, each triangle in
+the mesh must have its vertices defined in
+counterclockwise order (if the triangle is being rendered
+in a right-handed coordinate system). Each normal calculated will
+be normalized to have a length of 1 (unless the normal is (0,0,0)).
+Will have an effect only if the position vector is at least 3 elements
+long. If the normal vector exists, but is not at least 3 elements long,
+this method will have no effect.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>flat</code> (Type: Boolean)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.</li>
+<li><code>inward</code> (Type: Boolean)<br>If true, the generated normals will point inward; otherwise, outward.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 
 <p><a name='H3DU.MeshBuffer_reverseNormals'></a></p>
 
@@ -236,7 +269,7 @@ in this mesh. The matrix won&#39;t affect other attributes, including tangents a
 <h4>Parameters</h4>
 
 <ul>
-<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>).</li>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>). (Normals need to be transformed specially because they describe directions, not points.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -257,18 +290,19 @@ in this mesh. The matrix won&#39;t affect other attributes, including tangents a
 
 <h3>H3DU.MeshBuffer#vertexIndices(primitiveIndex, ret)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Gets the vertex indices of a given primitive (triangle, line,
+or point) in this mesh buffer.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>primitiveIndex</code> (Type: *)</li>
-<li><code>ret</code> (Type: *)</li>
+<li><code>primitiveIndex</code> (Type: number)<br>The index (counting from 0) of the primitive whose indices will be retrieved.</li>
+<li><code>ret</code> (Type: Array.&lt;number&gt;)<br>An array where the vertex indices for the given primitive will be stored. If this mesh buffer stores triangles, three indices will be stored; if lines, two; and if points, one.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>The parameter &quot;ret&quot;. (Type: Array.&lt;number&gt;)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
