@@ -74,34 +74,33 @@ function ellipse(x,y,radiusX,radiusY) {
  return ellipseArc(x,y,radiusX,radiusY,0,Math.PI*2)
 };
 
-function drawCurve(ce,mesh,curve,lines) {
+function drawCurve(ce,curve,lines) {
   "use strict";
-  return ce.vertex(curve).evalCurve(mesh, H3DU.Mesh.LINES, lines||60);
+  return ce.position(curve).evalCurve(H3DU.Mesh.LINES, lines||60);
 }
 
 function circleDesign() {
   "use strict";
-  var ce = new H3DU.CurveEval();
-  var mesh = new H3DU.Mesh();
-  ce.color({
+  var ce = new H3DU.CurveBuilder();
+  ce.attribute({
     "evaluate":function() {
       return [0, 0, 1];
     }
-  });
-  drawCurve(ce,mesh,ellipse(0,0,1.5,1.8),240)
-  drawCurve(ce,mesh,ellipse(0,0,1.6,1.7),240)
-  drawCurve(ce,mesh,ellipse(0,0,1.7,1.6),240)
-  drawCurve(ce,mesh,ellipse(0,0,1.8,1.5),240)
-  ce.color({
+  },H3DU.Semantic.COLOR);
+  drawCurve(ce,ellipse(0,0,1.5,1.8),240)
+  drawCurve(ce,ellipse(0,0,1.6,1.7),240)
+  drawCurve(ce,ellipse(0,0,1.7,1.6),240)
+  drawCurve(ce,ellipse(0,0,1.8,1.5),240)
+  ce.attribute({
     "evaluate":function() {
       return [1, 0, 0];
     }
-  });
-  drawCurve(ce,mesh,ellipse(0,0,2.8,2.8),240)
-  drawCurve(ce,mesh,ellipse(0,1.0,3.8,3.8),240)
-  drawCurve(ce,mesh,ellipse(-1.0,0,4.8,4.8),240)
-  drawCurve(ce,mesh,ellipse(1.1,1.4,5.8,5.8),240)
-  return mesh;
+  },H3DU.Semantic.COLOR);
+  drawCurve(ce,ellipse(0,0,2.8,2.8),240)
+  drawCurve(ce,ellipse(0,1.0,3.8,3.8),240)
+  drawCurve(ce,ellipse(-1.0,0,4.8,4.8),240)
+  drawCurve(ce,ellipse(1.1,1.4,5.8,5.8),240)
+  return ce.toMeshBuffer();
 }
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 scene.setClearColor("white");

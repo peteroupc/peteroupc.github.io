@@ -192,28 +192,15 @@ function makeMesh(func, resolutionU, resolutionV) {
       return [1 - u, v, u];
     }
   };
-/*
-     // create a new mesh
-  var mesh = new H3DU.Mesh();
-  // generate the parametric surface.
-  mesh = new H3DU.Mesh();
-  new H3DU.SurfaceEval()
-      .vertex(new H3DU.Surface(func))
-    // Specify the color gradient evaluator defined above
-      .color(colorGradient)
+  return new H3DU.SurfaceBuilder()
+     .positionNormal(func)
+     .attribute(colorGradient, H3DU.Semantic.COLOR)
     // Evaluate the surface and generate a triangle
     // mesh, using resolution+1 different U coordinates,
     // and resolution+1 different V coordinates.
     // Instead of H3DU.Mesh.TRIANGLES, we could use
     // H3DU.Mesh.LINES to create a wireframe mesh,
     // or H3DU.Mesh.POINTS to create a point mesh.
-      .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolutionU, resolutionV);
-    // Surface generated, return the mesh
-  return mesh;
-*/
-  return new H3DU.SurfaceBuilder()
-     .positionNormal(func)
-     .attribute(colorGradient, H3DU.Semantic.COLOR)
      .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
      .toMeshBuffer();
 }

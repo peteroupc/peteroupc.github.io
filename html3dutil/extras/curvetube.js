@@ -228,7 +228,7 @@ H3DU._TBNFrames._distSq = function(a, b) {
 };
 
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a tube extruded from a parametric curve.
+ * A [surface evaluator object]{@link H3DU.Surface} for a tube extruded from a parametric curve.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>

@@ -27,15 +27,16 @@ function spiralCurve(radius, phase) {
 
 function spiralBackgroundShape(color) {
   "use strict";
-  var ce = new H3DU.CurveEval();
-  var mesh = new H3DU.Mesh();
+  var ce = new H3DU.CurveBuilder();
+  // var mesh = new H3DU.Mesh();
   for(var i = 0; i < 360; i += 10) {
     var curve = spiralCurve(0.1, i * Math.PI * 2 / 360);
     var length = curve.getLength();
-    var lines = Math.max(length / 0.2, 60);
-    ce.vertex(curve).evalCurve(mesh, H3DU.Mesh.LINES, lines);
+    var lines = Math.max(Math.ceil(length / 0.2), 60);
+    ce.position(curve).evalCurve(H3DU.Mesh.LINES, lines);
   }
-  return new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic(color));
+  console.log(ce.toMeshBuffer());
+  return new H3DU.Shape(ce.toMeshBuffer()).setMaterial(H3DU.Material.fromBasic(color));
 }
 
 /* exported spiralBatch */

@@ -53,19 +53,32 @@ canvas { width:100%; height:100%; overflow: hidden; }
     new H3DU.Shape(mesh).setColor("yellow").setPosition(-15, -5, 0));
   mesh = H3DU.Meshes.createCylinder(4.5, 4.5, 9)
    .transform(H3DU.Math.mat4translated(0, 0, -4.5))
-   .transform(H3DU.Math.mat4rotated(80, 1, 0, 0));
+   .transform(H3DU.Math.mat4rotated(80, 1,0, 0));
   sub.addShape(
-    new H3DU.Shape(mesh).setColor("brown").setPosition(-5, -5, 0));
+    new H3DU.Shape(mesh).setColor("brown")
+      .setPosition(-5, -5, 0)
+      );
   mesh = H3DU.Meshes.createPlane(9, 9);
   sub.addShape(
     new H3DU.Shape(mesh).setColor("darkgreen").setPosition(5, -5, 0));
   mesh = H3DU.Meshes.createCylinder(4.5, 0, 9)
    .transform(H3DU.Math.mat4translated(0, 0, -4.5))
-   .transform(H3DU.Math.mat4rotated(85, 1, 0, 0));
+   .transform(H3DU.Math.mat4rotated(85, 1,0, 0));
   sub.addShape(
-    new H3DU.Shape(mesh).setColor("rebeccapurple").setPosition(15, -5, 0));
-  H3DU.renderLoop(function() {
-    "use strict";
+    new H3DU.Shape(mesh).setColor("rebeccapurple")
+      .setPosition(15, -5, 0)
+      );
+var rotation = [0, 0, 0];
+var timer = {};
+H3DU.renderLoop(function(time) {
+  "use strict";
+  for(var i = 0; i < sub.shapeCount(); i++) {
+//    sub.getShape(i).setQuaternion(
+//      H3DU.Math.quatFromTaitBryan(rotation));
+  }
+//  rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);
+ // rotation[1] = 360 * H3DU.getTimePosition(timer, time, 12000);
+   //"use strict";
     scene.render(sub);
   });
 // -->

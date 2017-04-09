@@ -145,17 +145,6 @@ By default, normals won&#39;t be generated automatically.</p>
 
 <p>This object. (Type: <a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a>)</p>
 
-<h4>Example</h4>
-
-<p>The following example sets the surface
-function to a linear evaluator. Thus, coordinates passed to the
-evalOne and evalSurface methods will be interpolated as direct
-texture coordinates.</p>
-
-<pre><code>surface.texCoord({&quot;evaluate&quot;:function(u,v) {
-&quot;use strict&quot;; return [u,v] }});
-</code></pre>
-
 <p><a name='H3DU.SurfaceEval_vertex'></a></p>
 
 <h3>H3DU.SurfaceEval#vertex(evaluator)</h3>

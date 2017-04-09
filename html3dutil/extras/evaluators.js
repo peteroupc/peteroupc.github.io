@@ -9,7 +9,7 @@
 /* global H3DU */
 
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a surface of revolution,
+ * A [surface evaluator object]{@link H3DU.Surface} for a surface of revolution,
  * which results by revolving
  * a two-dimensional curve around an axis.
  * <p>This class is considered a supplementary class to the
@@ -90,7 +90,7 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
   v[2] = t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4;
 };
 /**
- * Creates a [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a surface of revolution
+ * Creates a [surface evaluator object]{@link H3DU.Surface} for a surface of revolution
  * whose curve is the graph of a single-variable function.
  * The resulting surface will have a circular cross section
  * along its length.
@@ -144,7 +144,7 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
   }, minval, maxval, axis);
 };
 /**
- * A [surface evaluator object]{@link H3DU.SurfaceEval#vertex} for a torus, a special case of a surface of revolution.
+ * A [surface evaluator object]{@link H3DU.Surface} for a torus, a special case of a surface of revolution.
  * @param {number} outerRadius Radius from the center to the innermost
  * part of the torus.
  * @param {number} innerRadius Radius from the inner edge to the innermost

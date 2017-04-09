@@ -23,9 +23,9 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:formulaEditorHelp()">Syntax help</a><br>
 Source code for the parametric<br>
 surface object. Use this object as<br>
-a parameter in the SurfaceEval<br>
-class, example:<br>
-<code>var surface = new H3DU.SurfaceEval()<br>
+a parameter in the <code>evalSurface</code> method
+of <code>SurfaceBuilder</code>, example:<br>
+<code>var surface = new H3DU.SurfaceBuilder()<br>
 .vertex({"evaluate":...});</code>.<br>
 <textarea id=sourceCode rows=5 cols=25>
 </textarea>
@@ -90,7 +90,7 @@ function CustomSurface(x, y, z, minu, maxu, minv, maxv) {
   " " + normalExpr[1].toJSString() + "," +
   " " + normalExpr[2].toJSString() + "];\n";
   this.getCode = function() {
-    return "var evaluator=new H3DU.SurfaceEval().vertex({\n" +
+    return "var evaluator=new H3DU.SurfaceBuilder().positionNormal({\n" +
     "\"evaluate\":function(u, v) {\n" + code + "},\n" +
     "\"gradient\":function(u, v) {\n" + normalCode + "},\n" +
     "\"endPoints\":function() {\n return [" + ranges[0] + "," + ranges[1] +
