@@ -27,7 +27,7 @@ bounding box that holds all vertices in the mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_getIndices">getIndices</a><br>Gets the array of vertex indices used by this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_getPositions">getPositions</a><br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive</li>
-<li><a href="#H3DU.MeshBuffer_merge">merge</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer_merge">merge</a><br>Merges the vertices from another mesh into this one.</li>
 <li><a href="#H3DU.MeshBuffer_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_primitiveType">primitiveType</a><br>Gets the type of primitive stored in this mesh buffer.</li>
@@ -41,7 +41,9 @@ existing attribute&#39;s information).</li>
 <li><a href="#H3DU.MeshBuffer_setPrimitiveType">setPrimitiveType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
 in this mesh.</li>
-<li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer</li>
+<li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer, that
+is, the number of vertex indices in its index buffer (some of which
+may be duplicates).</li>
 <li><a href="#H3DU.MeshBuffer_vertexIndices">vertexIndices</a><br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.</li>
 </ul>
@@ -55,13 +57,14 @@ or point) in this mesh buffer.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: Number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
 <li><code>index</code> (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>An object describing the vertex attribute, or null
+of the attribute doesn&#39;t exist. (Type: Array.&lt;Object&gt;)</p>
 
 <p><a name='H3DU.MeshBuffer_getBounds'></a></p>
 
@@ -111,17 +114,19 @@ array containing that vertex&#39;s X, Y, and Z coordinates, in that order. (Type
 
 <h3>H3DU.MeshBuffer#merge(other)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Merges the vertices from another mesh into this one.
+The vertices from the other mesh will be copied into this one,
+and the other mesh&#39;s indices copied or adapted.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>other</code> (Type: *)</li>
+<li><code>other</code> (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh&#39;s primitive type is not the same as the other mesh&#39;s primitive type</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>This object. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <h4>Example</h4>
 
@@ -214,7 +219,7 @@ stored in a vertex buffer.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: Number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
 <li><code>index</code> (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
 <li><code>buffer</code> (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.</li>
 <li><code>startIndex</code> (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.</li>
@@ -280,7 +285,9 @@ in this mesh. The matrix won&#39;t affect other attributes, including tangents a
 
 <h3>H3DU.MeshBuffer#vertexCount()</h3>
 
-<p>Gets the number of vertices in this mesh buffer</p>
+<p>Gets the number of vertices in this mesh buffer, that
+is, the number of vertex indices in its index buffer (some of which
+may be duplicates).</p>
 
 <h4>Return Value</h4>
 
@@ -343,6 +350,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
+<li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
 <li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
@@ -374,6 +382,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
+<li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
 <li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>

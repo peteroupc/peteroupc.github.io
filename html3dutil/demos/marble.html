@@ -38,12 +38,7 @@ var fragmentShader = "precision mediump float;\n" +
 
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 var shader = new H3DU.ShaderInfo(vertexShader, fragmentShader);
-var batch = new H3DU.Batch3D().addShape(
-  new H3DU.Shape(new H3DU.Mesh(
-    [-1, 1, 0, -1, -1, 0,
-      1, 1, 0, 1, -1, 0],
-     [0, 1, 2, 2, 1, 3], 0)).setShader(shader));
-
+var batch = quadBatch(shader)
 H3DU.renderLoop(function(time) {
   "use strict";
   shader.setUniforms({"u_time":time / 1000.0});

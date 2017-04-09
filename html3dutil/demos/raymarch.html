@@ -5,7 +5,8 @@ body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <script type="text/javascript" src="../h3du_min.js"></script>
-<script type="text/javascript" src="../demoutil.js"></script>
+<script type="text/javascript" src="demoutil.js"></script>
+<script type="text/javascript" src="shaderlib.js"></script>
 </head>
 <body>
 <canvas id=canvas></canvas>
@@ -146,11 +147,7 @@ var fragmentShader = document.getElementById("fragment").textContent;
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 var shader = new H3DU.ShaderInfo(vertexShader, fragmentShader);
 shader.setUniformSemantic("viewMatrix", H3DU.Semantic.VIEW);
-var batch = new H3DU.Batch3D().addShape(
-  new H3DU.Shape(new H3DU.Mesh(
-    [-1, 1, 0, -1, -1, 0,
-      1, 1, 0, 1, -1, 0],
-     [0, 1, 2, 2, 1, 3], 0)).setShader(shader));
+var batch = quadBatch(shader)
 batch.perspectiveAspect(45, 1, 20);
 batch.setLookAt([0.001, 0, -5], [0, 0, 0]);
 var timer = {};

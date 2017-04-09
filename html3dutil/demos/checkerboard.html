@@ -6,6 +6,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <script type="text/javascript" src="../h3du_min.js"></script>
 <script src="https://peteroupc.github.io/colorpicker/cbox.js"></script>
+<script src="shaderlib.js"></script>
 </head>
 <body>
 <p style="position:absolute;left:0;top:1em">
@@ -59,11 +60,7 @@ document.getElementById("whitecolor").addEventListener("change",
      "use strict";
      shader.setUniforms({"whiteColor":H3DU.toGLColor(e.target.value).slice(0, 3)});
    });
-var batch = new H3DU.Batch3D().addShape(
-  new H3DU.Shape(new H3DU.Mesh(
-    [-1, 1, 0, -1, -1, 0,
-      1, 1, 0, 1, -1, 0],
-     [0, 1, 2, 2, 1, 3], 0)).setShader(shader));
+var batch = quadBatch(shader);
 var time=0
 H3DU.renderLoop(function() {
   "use strict";

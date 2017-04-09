@@ -65,15 +65,13 @@ function pointMarch(
 /* exported makeTubeFromPath */
 function makeTubeFromPath(path, flatness, thickness, pathSection) {
   "use strict";
-  var mesh = new H3DU.Mesh();
   var curves = path.getCurves();
   var resolution = Math.ceil(curves.getLength() / flatness / 10);
   var curveSection = pathSection ? pathSection.getCurves() : null;
-  new H3DU.SurfaceEval()
-    .vertex(new H3DU.CurveTube(curves, thickness, curveSection))
-    .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolution,
-      Math.ceil(2 * thickness / flatness));
-  return mesh;
+  return new H3DU.SurfaceBuilder()
+    .positionNormal(new H3DU.CurveTube(curves, thickness, curveSection))
+    .evalSurface( H3DU.Mesh.TRIANGLES, resolution,
+      Math.ceil(2 * thickness / flatness)).toMeshBuffer();
 }
 
 function starPolygon(x, y, radius, points, jump, phaseInDegrees) {

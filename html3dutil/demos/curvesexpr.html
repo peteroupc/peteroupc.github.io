@@ -59,7 +59,7 @@ function makeMeshDoubleSided(func, resolution) {
   "use strict";
   var mesh = makeMesh(func, resolution, resolution);
   var otherWinding = new H3DU.Mesh().merge(mesh).reverseWinding().reverseNormals();
-  return mesh.merge(otherWinding);
+  return mesh.merge(new H3DU.MeshBuffer(otherWinding));
 }
 
 function CustomCurve(x, y, z, minu, maxu) {

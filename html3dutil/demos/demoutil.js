@@ -182,8 +182,6 @@ function makeMesh(func, resolutionU, resolutionV) {
   if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = resolutionU;
   if(typeof resolutionU === "undefined" || resolutionU === null)resolutionU = 50;
   if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = 50;
-     // create a new mesh
-  var mesh = new H3DU.Mesh();
      // define a color gradient evaluator for
      // demonstration purposes. Instead of X, Y, and Z,
      // generate a Red/Green/Blue color based on
@@ -194,6 +192,9 @@ function makeMesh(func, resolutionU, resolutionV) {
       return [1 - u, v, u];
     }
   };
+/*
+     // create a new mesh
+  var mesh = new H3DU.Mesh();
   // generate the parametric surface.
   mesh = new H3DU.Mesh();
   new H3DU.SurfaceEval()
@@ -209,6 +210,12 @@ function makeMesh(func, resolutionU, resolutionV) {
       .evalSurface(mesh, H3DU.Mesh.TRIANGLES, resolutionU, resolutionV);
     // Surface generated, return the mesh
   return mesh;
+*/
+  return new H3DU.SurfaceBuilder()
+     .positionNormal(func)
+     .attribute(colorGradient, H3DU.Semantic.COLOR)
+     .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
+     .toMeshBuffer();
 }
 
 window.addEventListener("load", function() {
