@@ -10,6 +10,8 @@
 
 <h3>H3DU.SurfaceEval()</h3>
 
+<p><b>Deprecated: Use <a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a> instead.</b></p>
+
 <p>An evaluator of parametric functions for generating
 vertex attributes of a surface.</p>
 
@@ -25,12 +27,10 @@ vertex attributes of a surface.</p>
 in a parametric surface.</li>
 <li><a href="#H3DU.SurfaceEval_evalSurface">evalSurface</a><br>Generates the vertex positions and attributes of a parametric
 surface.</li>
-<li><a href="#H3DU.SurfaceEval_normal">normal</a><br><strong>Deprecated: Use the &quot;vertex&quot; method instead, specifying an object
-that implements a method named &quot;gradient&quot;.</strong></li>
-<li><a href="#H3DU.SurfaceEval_setAutoNormal">setAutoNormal</a><br><strong>Deprecated: In the future, this class may always generate
-normals, rendering this method unnecessary. You should use the &quot;vertex&quot;
-method, specifying an object that implements a method named
-&quot;gradient&quot;.</strong></li>
+<li><a href="#H3DU.SurfaceEval_normal">normal</a><br>Specifies a parametric surface function for generating normals.</li>
+<li><a href="#H3DU.SurfaceEval_setAutoNormal">setAutoNormal</a><br>Sets whether this object will automatically generate
+normals rather than use the parametric evaluator
+specified for normal generation, if any.</li>
 <li><a href="#H3DU.SurfaceEval_texCoord">texCoord</a><br>Specifies a parametric surface function for generating texture coordinates.</li>
 <li><a href="#H3DU.SurfaceEval_vertex">vertex</a><br>Specifies a surface evaluator object for generating the vertex positions of a parametric surface.</li>
 </ul>
@@ -80,8 +80,8 @@ surface.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>H3DU.Mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
-<li><code>mode</code> (Type: number) (optional)<br>If this value is H3DU.Mesh.TRIANGLES, or is null or omitted, generates a series of triangles defining the surface. If this value is H3DU.Mesh.LINES, generates a series of lines defining the surface. If this value is H3DU.Mesh.POINTS, generates a series of points along the surface. For any other value, this method has no effect.</li>
+<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>The mesh where vertex positions and attributes will be generated. When this method returns, the current color, normal, and texture coordinates will be the same as they were before the method started.</li>
+<li><code>mode</code> (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, or is null or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.</li>
 <li><code>un</code> (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24.</li>
 <li><code>vn</code> (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24.</li>
 <li><code>u1</code> (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.SurfaceEval.html#H3DU.SurfaceEval_vertex">surface evaluator object</a>, or 0 if not given.</li>
@@ -98,9 +98,6 @@ surface.</p>
 
 <h3>H3DU.SurfaceEval#normal(evaluator)</h3>
 
-<p><strong>Deprecated: Use the &quot;vertex&quot; method instead, specifying an object
-that implements a method named &quot;gradient&quot;.</strong></p>
-
 <p>Specifies a parametric surface function for generating normals.</p>
 
 <h4>Parameters</h4>
@@ -116,11 +113,6 @@ that implements a method named &quot;gradient&quot;.</strong></p>
 <p><a name='H3DU.SurfaceEval_setAutoNormal'></a></p>
 
 <h3>H3DU.SurfaceEval#setAutoNormal(value)</h3>
-
-<p><strong>Deprecated: In the future, this class may always generate
-normals, rendering this method unnecessary. You should use the &quot;vertex&quot;
-method, specifying an object that implements a method named
-&quot;gradient&quot;.</strong></p>
 
 <p>Sets whether this object will automatically generate
 normals rather than use the parametric evaluator

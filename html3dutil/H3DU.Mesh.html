@@ -287,7 +287,7 @@ vertices are swapped when generating that triangle.</p>
 
 <p><a name='H3DU.Mesh_bitangent3'></a></p>
 
-<h3>H3DU.Mesh#bitangent3(x, y, z)</h3>
+<h3>H3DU.Mesh#bitangent3(x, [y], [z])</h3>
 
 <p><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
@@ -305,9 +305,9 @@ not automatically be normalized to unit length.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)<br>X coordinate of the bitangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>Y coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>Z coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>X coordinate of the bitangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>Y coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -316,7 +316,7 @@ not automatically be normalized to unit length.</p>
 
 <p><a name='H3DU.Mesh_color3'></a></p>
 
-<h3>H3DU.Mesh#color3(r, g, b)</h3>
+<h3>H3DU.Mesh#color3(r, [g], [b])</h3>
 
 <p>Sets the current color for this mesh. Future vertex positions
 defined (with vertex3()) will have this color. The new current
@@ -328,8 +328,8 @@ that mode. Only the red, green, and blue components will be used.</p>
 
 <ul>
 <li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
-<li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>g</code> (Type: number) (optional)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number) (optional)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -466,7 +466,7 @@ in future versions.</p>
 
 <p><a name='H3DU.Mesh_normal3'></a></p>
 
-<h3>H3DU.Mesh#normal3(x, y, z)</h3>
+<h3>H3DU.Mesh#normal3(x, [y], [z])</h3>
 
 <p>Sets the current normal for this mesh. Future vertex positions
 defined (with vertex3()) will have this normal. The new current
@@ -478,9 +478,9 @@ not automatically be normalized to unit length.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)<br>X coordinate of the normal. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>Y coordinate of the normal. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>Z coordinate of the normal. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>X coordinate of the normal. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>Y coordinate of the normal. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z coordinate of the normal. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -652,7 +652,7 @@ equals the number of vertices in this mesh or greater.</p>
 
 <p><a name='H3DU.Mesh_tangent3'></a></p>
 
-<h3>H3DU.Mesh#tangent3(x, y, z)</h3>
+<h3>H3DU.Mesh#tangent3(x, [y], [z])</h3>
 
 <p><b>Deprecated: Deprecated because the default shader no longer
 uses tangent and bitangent attributes for normal mapping. To define
@@ -670,9 +670,9 @@ not automatically be normalized to unit length.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number)<br>X coordinate of the tangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>Y coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>Z coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>X coordinate of the tangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>Y coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -681,7 +681,7 @@ not automatically be normalized to unit length.</p>
 
 <p><a name='H3DU.Mesh_texCoord2'></a></p>
 
-<h3>H3DU.Mesh#texCoord2(u, v)</h3>
+<h3>H3DU.Mesh#texCoord2(u, [v])</h3>
 
 <p>Sets the current texture coordinates for this mesh. Future vertex positions
 defined (with vertex3()) will have these texture coordinates.
@@ -697,8 +697,8 @@ right corner (by default).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>X coordinate of the texture, from 0-1. If &quot;v&quot; are null or omitted, this is instead a 3-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>v</code> (Type: number)<br>Y coordinate of the texture, from 0-1. If &quot;u&quot; is an array, this parameter can be omitted.</li>
+<li><code>u</code> (Type: Array.&lt;number&gt; | number)<br>X coordinate of the texture, from 0-1. If &quot;v&quot; are null or omitted, this is instead a 2-element array giving the X and Y coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>v</code> (Type: number) (optional)<br>Y coordinate of the texture, from 0-1. If &quot;u&quot; is an array, this parameter can be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -764,7 +764,7 @@ be treated as 0.</p>
 
 <p><a name='H3DU.Mesh_vertex3'></a></p>
 
-<h3>H3DU.Mesh#vertex3(x, y, z)</h3>
+<h3>H3DU.Mesh#vertex3(x, [y], [z])</h3>
 
 <p>Adds a new vertex to this mesh. If appropriate, adds an
 additional face index according to this mesh&#39;s current mode.
@@ -775,8 +775,8 @@ and texture coordinates if they have been defined.</p>
 
 <ul>
 <li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>y</code> (Type: number) (optional)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
