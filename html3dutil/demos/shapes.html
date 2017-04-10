@@ -68,17 +68,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
     new H3DU.Shape(mesh).setColor("rebeccapurple")
       .setPosition(15, -5, 0)
       );
-var rotation = [0, 0, 0];
-var timer = {};
 H3DU.renderLoop(function(time) {
   "use strict";
-  for(var i = 0; i < sub.shapeCount(); i++) {
-//    sub.getShape(i).setQuaternion(
-//      H3DU.Math.quatFromTaitBryan(rotation));
-  }
-//  rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);
- // rotation[1] = 360 * H3DU.getTimePosition(timer, time, 12000);
-   //"use strict";
     scene.render(sub);
   });
 // -->

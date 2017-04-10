@@ -41,7 +41,7 @@ function gcd(u, v) {
   return u;
 }
 
-function hypo(ce, mesh, radius, ringTeeth, wheelTeeth, relDist, phaseInRingTeeth) {
+function hypo(ce, radius, ringTeeth, wheelTeeth, relDist, phaseInRingTeeth) {
   "use strict";
   var phase = phaseInRingTeeth;
   if(!phase)phase = 0;
@@ -55,10 +55,10 @@ function hypo(ce, mesh, radius, ringTeeth, wheelTeeth, relDist, phaseInRingTeeth
   var trips = Math.min(rt, wt);
   var lines = 60 * trips;
   var extent = H3DU.Math.PiTimes2 * trips;
-  return ce.vertex(curve).evalCurve(mesh, H3DU.Mesh.LINES, lines, 0, extent);
+  return ce.position(curve).evalCurve(H3DU.Mesh.LINES, lines, 0, extent);
 }
 
-function epi(ce, mesh, radius, ringTeeth, wheelTeeth, relDist, phaseInRingTeeth) {
+function epi(ce, radius, ringTeeth, wheelTeeth, relDist, phaseInRingTeeth) {
   "use strict";
   var phase = phaseInRingTeeth;
   if(!phase)phase = 0;
@@ -72,40 +72,39 @@ function epi(ce, mesh, radius, ringTeeth, wheelTeeth, relDist, phaseInRingTeeth)
   var trips = Math.min(rt, wt);
   var lines = 90 * trips;
   var extent = H3DU.Math.PiTimes2 * trips;
-  return ce.vertex(curve).evalCurve(mesh, H3DU.Mesh.LINES, lines, 0, extent);
+  return ce.position(curve).evalCurve(H3DU.Mesh.LINES, lines, 0, extent);
 }
 
 function drawingToyDesign() {
   "use strict";
-  var ce = new H3DU.CurveEval();
-  var mesh = new H3DU.Mesh();
+  var ce = new H3DU.CurveBuilder();
  // Inner design
-  ce.color({
+  ce.attribute({
     "evaluate":function() {
       return [0, 0, 1];
     }
-  });
-  hypo(ce, mesh, 2, 96, 52, 0.75);
-  hypo(ce, mesh, 2, 96, 50, 0.65, 2);
-  hypo(ce, mesh, 2, 96, 48, 0.55, 4);
-  ce.color({
+  },H3DU.Semantic.COLOR);
+  hypo(ce, 2, 96, 52, 0.75);
+  hypo(ce, 2, 96, 50, 0.65, 2);
+  hypo(ce, 2, 96, 48, 0.55, 4);
+  ce.attribute({
     "evaluate":function() {
       return [1, 0, 0];
     }
-  });
-  hypo(ce, mesh, 2, 96, 46, 0.45, 6);
-  hypo(ce, mesh, 2, 96, 52, 0.35, 8);
+  },H3DU.Semantic.COLOR);
+  hypo(ce, 2, 96, 46, 0.45, 6);
+  hypo(ce, 2, 96, 52, 0.35, 8);
  // Outer design
-  ce.color({
+  ce.attribute({
     "evaluate":function() {
       return [0, 1, 0];
     }
-  });
-  epi(ce, mesh, 2.3, 144, 64, 0.9);
-  epi(ce, mesh, 2.3, 144, 64, 0.8, 5);
-  epi(ce, mesh, 2.3, 144, 64, 0.7, 10);
-  epi(ce, mesh, 2.3, 144, 64, 0.6, 15);
-  return mesh;
+  },H3DU.Semantic.COLOR);
+  epi(ce, 2.3, 144, 64, 0.9);
+  epi(ce, 2.3, 144, 64, 0.8, 5);
+  epi(ce, 2.3, 144, 64, 0.7, 10);
+  epi(ce, 2.3, 144, 64, 0.6, 15);
+  return ce.toMeshBuffer();
 }
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));
 scene.setClearColor("white");

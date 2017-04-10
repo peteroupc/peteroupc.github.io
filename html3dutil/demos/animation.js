@@ -175,7 +175,7 @@ function makeFloor(xStart, yStart, width, height, tileSize, z) {
      .texCoord2(endX, endY).vertex3(endPosX, endPosY, z);
     }
   }
-  return mesh;
+  return new H3DU.MeshBuffer(mesh);
 }
 
 /* exported rotateVec */

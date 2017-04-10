@@ -355,17 +355,26 @@ To attach a mesh to a 3D scene:</p>
 <pre><code>shape.setColor(&quot;red&quot;); // set the color to a CSS color
 shape.setColor(&quot;#338845&quot;); // set the color to an HTML color
 shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
-// set material parameters: ambient, diffuse,
-// specular, shininess (NOTE: if the mesh defines its own colors they
+// set material parameters (NOTE: if the mesh defines its own colors they
 // will override diffuse reflection given below)
-shape.setMaterial(new H3DU.Material(&quot;blue&quot;,&quot;blue&quot;,&quot;white&quot;,30));
-// set material parameters: ambient, diffuse,
-// specular, shininess, emission
-shape.setMaterial(new H3DU.Material(&quot;lime&quot;,&quot;lime&quot;,&quot;white&quot;,30,[0.2,0.2,0.2]));
-// set a texture; this requires the mesh to have texture
-// coordinates assigned to each vertex
-shape.setTexture(&quot;texture.png&quot;);
+shape.setMaterial(new H3DU.Material({
 </code></pre>
+
+<p>&quot;ambient&quot;:&quot;blue&quot;,
+   &quot;diffuse&quot;:&quot;blue&quot;,
+   &quot;specular&quot;:&quot;white&quot;,
+   &quot;shininess&quot;:30}));
+    // set material parameters: ambient, diffuse,
+    // specular, shininess, emission
+    shape.setMaterial(new H3DU.Material({
+   &quot;ambient&quot;:&quot;lime&quot;,
+   &quot;diffuse&quot;:&quot;lime&quot;,
+   &quot;specular&quot;:&quot;white&quot;,
+   &quot;emission&quot;:[0.2,0.2,0.2],
+   &quot;shininess&quot;:30}));
+    // set a texture; this requires the mesh to have texture
+    // coordinates assigned to each vertex
+    shape.setTexture(&quot;texture.png&quot;);</p>
 
 <p>Examples for setting position and transformation:</p>
 

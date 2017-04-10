@@ -90,12 +90,11 @@ function extrudePath(path, zStart, zEnd, flatness) {
    .vertex3(line[2], line[3], z2)
    .vertex3(line[0], line[1], z2);
   }
-  mesh.recalcNormals();
-  return mesh;
+  return new H3DU.MeshBuffer(mesh).recalcNormals();
 }
 function pathClosedFigure(path, zBottom, zTop, flatness) {
   "use strict";
-  var mesh = new H3DU.Mesh();
+  var mesh = new H3DU.MeshBuffer();
   mesh.merge(extrudePath(path, zBottom, zTop, flatness));
   mesh.merge(pathFloor(path, zTop, flatness));
   mesh.merge(pathFloor(path, zBottom, flatness).reverseWinding().reverseNormals());

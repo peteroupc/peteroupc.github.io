@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global Float32Array, H3DU */
+/* global H3DU */
 /**
  * Contains helper methods for generating the five platonic solids
  * and other polyhedra.<p>
@@ -124,7 +124,7 @@ H3DU.Polyhedra.makeMesh = function(vi) {
  // for a flat-shaded appearance
   "use strict";
   return new H3DU.MeshBuffer()
-   .setAttribute(H3DU.Semantic.POSITION, 0, new Float32Array(vi[0]), 0, 3, 3)
+   .setAttribute(H3DU.Semantic.POSITION, 0, vi[0], 0, 3, 3)
    .setIndices(vi[1])
    .recalcNormals(true);
 };

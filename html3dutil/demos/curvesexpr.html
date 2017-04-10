@@ -22,16 +22,16 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <a href="javascript:formulaEditorHelp()">Syntax help</a><br>
 <small>Source code for the parametric<br>
 curve object. Use this object as<br>
-a parameter in the CurveEval<br>
+a parameter in the CurveBuilder<br>
 class (the curve shown in this<br>
 demo is actually an extruded form<br>
 of the curve, just to illustrate depth;<br>
-CurveEval will only generate<br>
+CurveBuilder will only generate<br>
 the actual lines of the curve,<br>
 not the extruded surface).<br>
 Example:<br>
-<code>var surface = new H3DU.CurveEval()<br>
-.vertex({"evaluate":...});</code>.</small><br>
+<code>var surface = new H3DU.CurveBuilder()<br>
+.position({"evaluate":...});</code>.</small><br>
 <textarea id=sourceCode rows=5 cols=25>
 </textarea>
 <div id="settings"></div>
@@ -82,7 +82,7 @@ function CustomCurve(x, y, z, minu, maxu) {
   " " + ye.toJSString() + "," +
   " " + ze.toJSString() + "];\n";
   this.getCode = function() {
-    return "var evaluator=new H3DU.CurveEval().vertex({\n" +
+    return "var evaluator=new H3DU.CurveBuilder().position({\n" +
    "\"evaluate\":function(u) {\n" + code + "},\n" +
    "\"endPoints\":function(u) {\n return [" + ranges[0] + "," + ranges[1] + "},\n" +
    "})\n";

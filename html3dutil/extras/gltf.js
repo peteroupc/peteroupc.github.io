@@ -706,7 +706,7 @@
       var prims = mesh.primitives || [];
       for(var p = 0; p < prims.length; p++) {
         var prim = prims[p];
-        var meshBuffer = new H3DU.MeshBuffer(new H3DU.Mesh());
+        var meshBuffer = new H3DU.MeshBuffer();
         var array;
         var maxCount = 0;
         var primMode = typeof prim.mode === "undefined" || prim.mode === null ? 4 : prim.mode;
@@ -766,16 +766,14 @@
             this.error = "invalid array for indices"; return null;
           }
           indexArray = array.array;
- // indexSize = array.elementByteSize;
         } else {
      // Synthesize a list of indices
           var indexList = [];
           for(var k = 0; k < maxCount; k++) {
             indexList.push(k);
           }
-          indexArray = maxCount < 65536 ? new Uint16Array(indexList) :
+          indexArray = maxCount - 1 < 65536 ? new Uint16Array(indexList) :
             new Uint32Array(indexList);
- // indexSize = maxCount < 65536 ? 2 : 4;
         }
         if(triangleFan)indexArray = GltfState.triangleFanToTriangles(indexArray);
         if(triangleStrip)indexArray = GltfState.triangleStripToTriangles(indexArray);

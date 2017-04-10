@@ -30,10 +30,7 @@ of an ellipse</div>
 
 function makeCurvePath(curve) {
   "use strict";
-  var ce = new H3DU.CurveEval();
-  var mesh = new H3DU.Mesh();
-  ce.vertex(curve).evalCurve(mesh, H3DU.Mesh.LINES, 60);
-  return mesh;
+  return new H3DU.CurveBuilder().position(curve).evalCurve(H3DU.Mesh.LINES, 60).toMeshBuffer()
 }
 
 function _vecNormInPlaceAndScale(vec, scale) {
