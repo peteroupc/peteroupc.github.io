@@ -36,31 +36,24 @@ H3DU.MeshJSON._resolvePath = function(path, name) {
   }
   return ret;
 };
+/** @ignore */
+H3DU.MeshJSON._toArray = function(a) {
+  "use strict";
+  var arr = [];
+  for(var vIndex = 0; vIndex < a.length; vIndex++) {
+    var v = a[vIndex];
+    arr.push(v);
+  }
+  return arr;
+};
 /**
  * Converts a mesh to JSON format.
- * @param {H3DU.Mesh} mesh A mesh object, as used
+ * @param {H3DU.Mesh|H3DU.MeshBuffer} mesh A mesh object or mesh buffer object, as used
  * in the Public Domain HTML 3D Library.
  * @returns {string} A JSON string describing the mesh.
  */
 H3DU.MeshJSON.toJSON = function(mesh) {
   "use strict";
-  function colorToHex(x) {
-    var r = Math.round(x[0] * 255);
-    var g = Math.round(x[1] * 255);
-    var b = Math.round(x[2] * 255);
-    r = Math.min(Math.max(r, 0), 255);
-    g = Math.min(Math.max(g, 0), 255);
-    b = Math.min(Math.max(b, 0), 255);
-    return r << 16 | g << 8 | b;
-  }
-  var roundNum = function(num) {
-    return Math.round(num * 1000000) / 1000000;
-  };
-  var faces = [];
-  var vertices = [];
-  var colors = [];
-  var normals = [];
-  var texcoords = [[]];
   var json = {
     "metadata":{"formatVersion":3.1},
     "materials":[{
@@ -73,92 +66,27 @@ H3DU.MeshJSON.toJSON = function(mesh) {
       "specularCoef":5
     }]
   };
-  json.faces = faces;
-  json.vertices = vertices;
-  json.colors = colors;
-  json.uvs = texcoords;
-  json.normals = normals;
-  function pushItemAndMaybeReuse3(obj, x, y, z) {
-    var idx = obj.length;
-    var index = idx / 3;
-    var endIdx = Math.max(0, idx - 48);
-    for(var i = idx - 3; i >= endIdx; i -= 3) {
-      if(obj[i] === x && obj[i + 1] === y && obj[i + 2] === z) {
-        return i / 3;
-      }
-    }
-    obj.push(x);
-    obj.push(y);
-    obj.push(z);
-    return index;
+  if(mesh instanceof H3DU.Mesh) {
+    mesh = new H3DU.MeshBuffer(mesh);
   }
-  function pushItemAndMaybeReuse2(obj, x, y) {
-    var idx = obj.length;
-    var index = idx / 2;
-    var endIdx = Math.max(0, idx - 48);
-    for(var i = idx - 2; i >= endIdx; i -= 2) {
-      if(obj[i] === x && obj[i + 1] === y) {
-        return i / 2;
-      }
-    }
-    obj.push(x);
-    obj.push(y);
-    return index;
+  var helper = new H3DU.BufferHelper();
+  var pos = helper.getBuffer(mesh.getAttribute("POSITION_0"));
+  var norm = helper.getBuffer(mesh.getAttribute("NORMAL_0"));
+  var cols = helper.getBuffer(mesh.getAttribute("COLOR_0"));
+  var tc = helper.getBuffer(mesh.getAttribute("TEXCOORD_0"));
+  json.vertices = pos || [];
+  json.indices = H3DU.MeshJSON._toArray(mesh.getIndices());
+  if(typeof norm !== "undefined" && norm !== null) {
+    json.normals = H3DU.MeshJSON._toArray(norm);
   }
-  function pushItemAndMaybeReuse1(obj, x) {
-    var idx = obj.length;
-    var index = idx;
-    var endIdx = Math.max(0, idx - 48);
-    for(var i = idx - 1; i >= endIdx; i -= 1) {
-      if(obj[i] === x) {
-        return i;
-      }
-    }
-    obj.push(x);
-    return index;
+  if(typeof cols !== "undefined" && cols !== null) {
+    json.colors = H3DU.MeshJSON._toArray(cols);
   }
-  mesh.enumPrimitives(function(prim) {
-    if(prim.length !== 3)throw new Error("lines and points not supported");
-    var idx = faces.length;
-    var flags = 0;
-    faces.push(0);
-    for(var j = 0; j < 3; j++) {
-      faces.push(
-    pushItemAndMaybeReuse3(vertices,
-      roundNum(prim[j].position[0]),
-      roundNum(prim[j].position[1]),
-      roundNum(prim[j].position[2])));
-    }
-    if(prim[0].uv && prim[1].uv && prim[2].uv) {
-      var tc = texcoords[0];
-      for(j = 0; j < 3; j++) {
-        faces.push(
-     pushItemAndMaybeReuse2(tc,
-      roundNum(prim[j].uv[0]),
-      roundNum(prim[j].uv[1])));
-      }
-      flags |= 0x08;
-    }
-    if(prim[0].normal && prim[1].normal && prim[2].normal) {
-      for(j = 0; j < 3; j++) {
-        faces.push(
-     pushItemAndMaybeReuse3(normals,
-      roundNum(prim[j].normal[0]),
-      roundNum(prim[j].normal[1]),
-      roundNum(prim[j].normal[2])));
-      }
-      flags |= 0x20;
-    }
-    if(prim[0].color && prim[1].color && prim[2].color) {
-      for(j = 0; j < 3; j++) {
-        faces.push(
-     pushItemAndMaybeReuse1(colors,
-      colorToHex(prim[j].color)));
-      }
-      flags |= 0x80;
-    }
-    faces[idx] = flags;
-  });
+  if(typeof tc !== "undefined" && tc !== null) {
+    json.uvs = [H3DU.MeshJSON._toArray(tc)];
+  } else {
+    json.uvs = [[]];
+  }
   return JSON.stringify(json);
 };
 /** @ignore */
@@ -268,24 +196,13 @@ H3DU.MeshJSON.loadJSON = function(url) {
     var i, ret;
     if(!json.vertices)return Promise.reject(new Error("invalid JSON: no verts"));
     if(json.indices) {
-      var verts = [];
-      if(json.normals) {
-        for(i = 0; i < json.vertices.length; i += 3) {
-          verts.push(json.vertices[i]);
-          verts.push(json.vertices[i + 1]);
-          verts.push(json.vertices[i + 2]);
-          verts.push(json.normals[i]);
-          verts.push(json.normals[i + 1]);
-          verts.push(json.normals[i + 2]);
-        }
-        ret = new H3DU.MeshJSON._Model(new H3DU.Mesh(verts, json.indices, H3DU.Mesh.NORMALS_BIT));
-        return ret;
-      } else {
-        return new H3DU.MeshJSON._Model(new H3DU.Mesh(json.vertices, json.indices));
-      }
+      var mb = new H3DU.MeshBuffer();
+      mb.setIndices(json.indices);
+      mb.setAttribute("POSITION", 0, json.vertices, 0, 3);
+      if(typeof json.normals !== "undefined" && json.normals !== null)mb.setAttribute("NORMAL", 0, json.normals, 0, 3);
+      return new H3DU.MeshJSON._Model(mb);
     } else if(json.faces) {
       var meshes = [];
-
       var materials = [];
       if(json.materials && json.materials.length > 0) {
         for(i = 0; i < json.materials.length; i++) {

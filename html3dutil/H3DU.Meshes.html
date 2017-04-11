@@ -59,7 +59,7 @@ is used on each face of the box.</p>
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createCapsule'></a></p>
 
@@ -94,7 +94,7 @@ See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createClosedCylinder'></a></p>
 
@@ -128,7 +128,17 @@ to find the coordinates of a particular point on the cylinder.</p>
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
+
+<h4>Example</h4>
+
+<p>The following method creates a cone that&#39;s closed at its base.
+<img src="mesh1.png"></p>
+
+<pre><code>function createClosedCone(radius,height,slices) {
+return H3DU.Meshes.createClosedCylinder(radius,0,height,slices,1);
+}
+</code></pre>
 
 <p><a name='H3DU.Meshes.createConvexHull'></a></p>
 
@@ -198,7 +208,7 @@ left to right, and latitudes range from 90&deg; to 0&deg; to -90&deg; from top t
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createDisk'></a></p>
 
@@ -223,7 +233,7 @@ See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createLathe'></a></p>
 
@@ -250,7 +260,7 @@ Y to positive X axis.</p>
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createPartialDisk'></a></p>
 
@@ -274,7 +284,7 @@ See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createPlane'></a></p>
 
@@ -299,7 +309,7 @@ See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createPointedStar'></a></p>
 
@@ -319,7 +329,7 @@ Will also generate texture coordinates.</p>
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createSphere'></a></p>
 
@@ -358,7 +368,7 @@ left to right, and latitudes range from 90&deg; to 0&deg; to -90&deg; from top t
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.Meshes.createTorus'></a></p>
 
@@ -381,7 +391,7 @@ See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.
 
 <h4>Return Value</h4>
 
-<p>The generated mesh. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>The generated mesh. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>

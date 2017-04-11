@@ -52,8 +52,8 @@ if(typeof Math.sign === "undefined") {
 function makeMeshDoubleSided(func, resolution) {
   "use strict";
   var mesh = makeMesh(func, resolution, resolution);
-  var otherWinding = new H3DU.Mesh().merge(mesh).reverseWinding().reverseNormals();
-  return mesh.merge(new H3DU.MeshBuffer(otherWinding));
+  var otherWinding = new H3DU.MeshBuffer().merge(mesh).reverseWinding().reverseNormals();
+  return mesh.merge((otherWinding));
 }
 
 function CustomSurface(x, y, z, minu, maxu, minv, maxv) {
@@ -134,11 +134,11 @@ function updateMesh() {
       allsettings["custom-minv"],
       allsettings["custom-maxv"]
    );
-    if(!cs.evaluate)return new H3DU.Mesh();
+    if(!cs.evaluate)return new H3DU.MeshBuffer();
     document.getElementById("sourceCode").value = cs.getCode();
     return makeMeshDoubleSided(cs, 70);
   default:
-    return new H3DU.Mesh();
+    return new H3DU.MeshBuffer();
   }
 }
 

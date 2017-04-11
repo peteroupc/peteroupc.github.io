@@ -12,7 +12,7 @@
 
 <h2>Contents</h2>
 
-<p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Cone">Cone</a><br><a href="#Floor">Floor</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br><a href="#Miscellaneous">Miscellaneous</a><br></p>
+<p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Floor">Floor</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br><a href="#Miscellaneous">Miscellaneous</a><br></p>
 
 <h2>3D Line</h2>
 
@@ -32,19 +32,6 @@ function create3DLine(point1,point2,thickness){
   matrix[13]=midPoint[1]
   matrix[14]=midPoint[2]
   return line.transform(matrix);
-}
-</code></pre>
-
-<p><a id=Cone></a></p>
-
-<h2>Cone</h2>
-
-<p>This method creates a cone that&#39;s closed at its base.</p>
-
-<p><img src="mesh1.png" alt="Image of a cone"></p>
-
-<pre><code>function createClosedCone(radius,height,slices){
-  return H3DU.Meshes.createClosedCylinder(radius,0,height,slices,1);
 }
 </code></pre>
 
@@ -84,7 +71,7 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
      .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
   }
  }
- return mesh
+ return new H3DU.MeshBuffer(mesh)
 }
 </code></pre>
 
@@ -104,7 +91,7 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
 function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
  if(sectionCount==null)sectionCount=4
  var firstColor=true
- var ret=new H3DU.Mesh()
+ var ret=new H3DU.MeshBuffer()
  var sweep=360.0/sections;
  for(var i=0;i&lt;sections;i++){
   var angle=360.0*(i*1.0/sections);
@@ -153,7 +140,7 @@ function createPathDisk(path, z, flatness){
    .vertex3(tri[2],tri[3],z)
    .vertex3(tri[4],tri[5],z)
  }
- return mesh
+ return new H3DU.MeshBuffer(mesh)
 }
 
 function setBoxSizeAndBounds(shape,box){

@@ -19,7 +19,6 @@ H3DU._TBNFrames = function(func) {
   var isClosed = false;
   var res = 50; // NOTE: Many samples of TBN frames are needed for accuracy
   var totalLength = 0;
-
   var runningLengths = [0];
   this.endPoints = H3DU._TBNFrames.getEndPoints(func);
   var firstSample = this.func.evaluate(this.endPoints[0]);

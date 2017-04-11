@@ -391,7 +391,7 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
  * <li><code>align</code> - Horizontal text alignment.  Can be "left",
  * "center", or "right" (all strings).
  * </ul>
- * @returns {Array<Mesh>} An array of meshes representing the text.
+ * @returns {Array<H3DU.MeshBuffer>} An array of meshes representing the text.
  * There is one mesh for each texture page of the font. If none of the
  * text uses a given page, the corresponding mesh will be null.
  */
@@ -434,6 +434,9 @@ H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
     this._makeTextMeshesInner(str, linebreaks[i],
     linebreaks[i + 1], x, yPos, params, extra, meshesForPage);
     yPos += height;
+  }
+  for(i = 0; i < meshesForPage.length; i++) {
+    meshesForPage[i] = new H3DU.MeshBuffer(meshesForPage[i]);
   }
   return meshesForPage;
 };
