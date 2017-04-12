@@ -240,11 +240,10 @@ H3DU._TBNFrames._distSq = function(a, b) {
  * @param {Object} func A [curve evaluator object]{@link H3DU.Curve} that describes the 3-dimensional curve to extrude
  * a tube from. For best results, the curve should be continuous and smooth.
  * @param {number} [thickness] Radius of the
- * extruded tube. If this parameter is null or omitted, the default is 0.125.
+ * extruded tube. If this parameter is null, undefined, or omitted, the default is 0.125.
  * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.Curve} that
  * describes a two-dimensional curve to serve as
- * the cross section of the extruded shape. The curve need not be closed. If this parameter is null
- * or omitted, uses a
+ * the cross section of the extruded shape. The curve need not be closed. If this parameter is null, undefined, or omitted, uses a
  * circular cross section in which the V coordinate ranges from 0 through
  * 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections
  * will affect the meaning of the "thickness" parameter.

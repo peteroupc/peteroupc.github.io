@@ -131,7 +131,7 @@ function meshAddLine(mesh, point1, point2, thickness) {
   matrix[12] = midPoint[0];
   matrix[13] = midPoint[1];
   matrix[14] = midPoint[2];
-  line=new H3DU.MeshBuffer(line.transform(matrix))
+  line=(line.transform(matrix))
   return mesh.merge(line);
 }
 function meshAddLineStrip(mesh, strip, thickness) {

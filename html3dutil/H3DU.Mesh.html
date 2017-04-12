@@ -45,8 +45,8 @@ or at that point, those methods may be deprecated.</li></ul></p>
 
 <ul>
 <li><code>vertices</code> (Type: Array.&lt;number&gt;) (optional)<br>An array that contains data on each vertex of the mesh. Each vertex is made up of the same number of elements, as defined in format. May be null or omitted, in which case an empty vertex array is used.</li>
-<li><code>indices</code> (Type: Array.&lt;number&gt;) (optional)<br>An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null or omitted, creates an initially empty mesh.</li>
-<li><code>format</code> (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if Mesh.NORMALS_BIT is set, plus <li> 3 more elements if Mesh.COLORS_BIT is set, plus <li> 2 more elements if Mesh.TEXCOORDS_BIT is set.</ul> If Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can&#39;t be set. May be null or omitted, in which case &quot;format&quot; is set to 0.</li>
+<li><code>indices</code> (Type: Array.&lt;number&gt;) (optional)<br>An array of vertex indices. Each trio of indices specifies a separate triangle, or each pair of indices specifies a line segment. If null, undefined, or omitted, creates an initially empty mesh.</li>
+<li><code>format</code> (Type: number) (optional)<br>A set of bit flags depending on the kind of data each vertex contains. Each vertex contains 3 elements plus:<ul> <li> 3 more elements if Mesh.NORMALS_BIT is set, plus <li> 3 more elements if Mesh.COLORS_BIT is set, plus <li> 2 more elements if Mesh.TEXCOORDS_BIT is set, plus <li> 3 more elements if Mesh.TANGENTS_BIT is set (deprecated), plus <li> 3 more elements if Mesh.BITANGENTS_BIT is set (deprecated). </ul> If Mesh.LINES_BIT is set, each vertex index specifies a point of a line segment. If Mesh.POINTS_BIT is set, each vertex index specifies an individual point. Both bits can&#39;t be set. May be null or omitted, in which case &quot;format&quot; is set to 0.</li>
 </ul>
 
 <h3>Members</h3>
@@ -745,7 +745,7 @@ be treated as 0.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; is null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; is null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
 <li><code>y</code> (Type: number)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 

@@ -10,8 +10,8 @@
 
 /**
  * Creates a piecewise curve made up of B-spline curves from the control points of a
- * TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
- * (If tension, continuity, and bias are all 0, the result is a Catmull-Rom spline
+ * cubic TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
+ * (If tension, continuity, and bias are all 0, the result is a cubic Catmull-Rom spline
  * in uniform parameterization.)
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
@@ -27,7 +27,7 @@
  * A value of -1 results in straight line segments. Default is 0.
  * @param {number} [bias] A parameter that adjusts the influence of the starting and ending
  * tangents of each curve segment. The greater this number, the greater the
- * ending tangents influence the direction of the next curve segment i n comparison to the starting tangents. Ranges from -1 to 1. Default is 0.
+ * ending tangents influence the direction of the next curve segment in comparison to the starting tangents. Ranges from -1 to 1. Default is 0.
  * @param {number} [closed] If true, connects the last control point of the curve with the first.
  * Default is false.
  * @param {number} [rigidEnds] If true, the start and end of the piecewise curve

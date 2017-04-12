@@ -221,7 +221,7 @@ value in milliseconds, such as the parameter of a
 
 <ul>
 <li><code>url</code> (Type: string)<br>URL of the file to load.</li>
-<li><code>responseType</code> (Type: string) (optional)<br>Expected data type of the file. Can be &quot;json&quot;, &quot;xml&quot;, &quot;text&quot;, or &quot;arraybuffer&quot;. If null or omitted, the default is &quot;text&quot;.</li>
+<li><code>responseType</code> (Type: string) (optional)<br>Expected data type of the file. Can be &quot;json&quot;, &quot;xml&quot;, &quot;text&quot;, or &quot;arraybuffer&quot;. If null, undefined, or omitted, the default is &quot;text&quot;.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -399,7 +399,7 @@ and so on, including the newly added <code>rebeccapurple</code>.
 <li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.</li>
 <li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 <li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
+<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.</li>
 </ul>
 
 <h4>Return Value</h4>

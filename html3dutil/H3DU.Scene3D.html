@@ -589,7 +589,7 @@ This color is black by default.</p>
 <li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>Array of three or four color components; or the red color component (0-1); or a string specifying an <a href="H3DU.html#H3DU.toGLColor">HTML or CSS color</a>.</li>
 <li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 <li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null or omitted, this value is treated as 1.0.</li>
+<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -626,8 +626,8 @@ This color is black by default.</p>
 <ul>
 <li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn&#39;t exist.</li>
 <li><code>position</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively. May be null, in which case the default is (0, 0, 1).</li>
-<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
-<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
+<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null, undefined, or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
+<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null, undefined, or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -770,7 +770,7 @@ or squishing it.</p>
 <li><code>right</code> (Type: number)<br>Rightmost coordinate of the view rectangle. (Note that right can be greater than left or vice versa.)</li>
 <li><code>bottom</code> (Type: number)<br>Bottommost coordinate of the view rectangle.</li>
 <li><code>top</code> (Type: number)<br>Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
-<li><code>aspect</code> (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene&#39;s aspect ratio instead.</li>
+<li><code>aspect</code> (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null, undefined, or omitted, uses this scene&#39;s aspect ratio instead.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -801,7 +801,7 @@ or squishing it.</p>
 <li><code>top</code> (Type: number)<br>Topmost coordinate of the view rectangle. (Note that top can be greater than bottom or vice versa.)</li>
 <li><code>near</code> (Type: number)<br>Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
 <li><code>far</code> (Type: number)<br>Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer. (Note that near can be greater than far or vice versa.) The absolute difference between near and far should be as small as the application can accept.</li>
-<li><code>aspect</code> (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null or omitted, uses this scene&#39;s aspect ratio instead.</li>
+<li><code>aspect</code> (Type: number) (optional)<br>Desired aspect ratio of the viewport (ratio of width to height). If null, undefined, or omitted, uses this scene&#39;s aspect ratio instead.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -852,8 +852,8 @@ scene.setPerspective(45,scene.getClientAspect(),0.1,100);
 <ul>
 <li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on.</li>
 <li><code>position</code> (Type: Array.&lt;number&gt;)<br>Light position. (See <a href="H3DU.LightSource.html#H3DU.LightSource_position">H3DU.LightSource#position</a>.)</li>
-<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
-<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
+<li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null, undefined, or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
+<li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null, undefined, or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
 </ul>
 
 <h4>Return Value</h4>

@@ -1221,7 +1221,7 @@
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1.
+ * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} The union of the two paths.
  * @memberof! H3DU.GraphicsPath#
  */
@@ -1240,7 +1240,7 @@
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1.
+ * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} The difference between this path
  * and the other path.
  * @memberof! H3DU.GraphicsPath#
@@ -1260,7 +1260,7 @@
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1.
+ * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * both paths.
  * @memberof! H3DU.GraphicsPath#
@@ -1280,7 +1280,7 @@
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1.
+ * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path whose shape is contained in
  * only one of the two paths.
  * @memberof! H3DU.GraphicsPath#

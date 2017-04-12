@@ -22,8 +22,8 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 <ul>
 <li>Using the Meshes methods to make built-in shapes</li>
 <li>Making your own shapes with the <a href="H3DU.Mesh.html"><code>H3DU.Mesh</code></a> constructor</li>
-<li>Building up your own shapes using the vertex methods</li>
-<li>Binding meshes to shapes</li>
+<li>Building up your own shapes using the vertex methods of <a href="H3DU.Mesh.html"><code>H3DU.Mesh</code></a></li>
+<li>Binding mesh buffers to shapes</li>
 <li>Shape groups, or combinations of several shapes</li>
 </ul>
 
@@ -33,7 +33,7 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 
 <h2>Contents</h2>
 
-<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Creating_Shapes">Creating Shapes</a><br>&nbsp;&nbsp;<a href="#Built_In_Shapes">Built-In Shapes</a><br>&nbsp;&nbsp;<a href="#Custom_Shapes">Custom Shapes</a><br>&nbsp;&nbsp;<a href="#The_Mesh_Constructor">The Mesh Constructor</a><br>&nbsp;&nbsp;<a href="#Vertex_Methods">Vertex Methods</a><br>&nbsp;&nbsp;<a href="#Transforming_the_Mesh">Transforming the Mesh</a><br>&nbsp;&nbsp;<a href="#Texture_Coordinates">Texture Coordinates</a><br>&nbsp;&nbsp;<a href="#Normals">Normals</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#What_Are_Normals">What Are Normals?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Normals_on_Built_in_Shapes">Normals on Built-in Shapes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#recalcNormals">recalcNormals()</a><br><a href="#Binding_Shapes">Binding Shapes</a><br><a href="#Shape_Groups">Shape Groups</a><br><a href="#Other_Pages">Other Pages</a><br></p>
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Creating_Shapes">Creating Shapes</a><br>&nbsp;&nbsp;<a href="#Built_In_Shapes">Built-In Shapes</a><br>&nbsp;&nbsp;<a href="#Custom_Shapes">Custom Shapes</a><br>&nbsp;&nbsp;<a href="#The_Mesh_Constructor">The Mesh Constructor</a><br>&nbsp;&nbsp;<a href="#Vertex_Methods">Vertex Methods</a><br>&nbsp;&nbsp;<a href="#Texture_Coordinates">Texture Coordinates</a><br>&nbsp;&nbsp;<a href="#Building_the_Mesh">Building the Mesh</a><br>&nbsp;&nbsp;<a href="#Transforming_the_Mesh">Transforming the Mesh</a><br>&nbsp;&nbsp;<a href="#Normals">Normals</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#What_Are_Normals">What Are Normals?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Normals_on_Built_in_Shapes">Normals on Built-in Shapes</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#recalcNormals">recalcNormals()</a><br><a href="#Binding_Shapes">Binding Shapes</a><br><a href="#Shape_Groups">Shape Groups</a><br><a href="#Other_Pages">Other Pages</a><br></p>
 
 <h2>Creating Shapes</h2>
 
@@ -235,21 +235,6 @@ you call <code>mesh.mode(H3DU.Mesh.TRIANGLE_FAN)</code>, the newly defined <code
 &quot;disconnected&quot; from the previous one as far as the mesh object is concerned. However,
 a single <code>Mesh</code> can contain only one kind of primitive (triangles, lines, or points) at a time.</p>
 
-<p><a id=Transforming_the_Mesh></a></p>
-
-<h3>Transforming the Mesh</h3>
-
-<p>Once you&#39;ve created the mesh, you can use the <code>transform()</code> method to transform
-all the vertices in the mesh with a <a href="tutorial-glmath.html">4x4 matrix</a>. The
-<a href="https://peteroupc.github.io/html3dutil/demos/shapes.html">shapes.html</a> demo uses
-this method to adjust some of the meshes to make them look better on the screen.
-Example:</p>
-
-<pre><code>var matrix = H3DU.Math.mat4scaled(2,2,2);
-// Use the transform to double the mesh&#39;s size
-mesh = mesh.transform(matrix);
-</code></pre>
-
 <p><a id=Texture_Coordinates></a></p>
 
 <h3>Texture Coordinates</h3>
@@ -264,12 +249,37 @@ increase to the top (1).</p>
 <p>For example, texture coordinates (0, 1) indicate the top left corner of the texture,
 and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
 
+<p><a id=Building_the_Mesh></a></p>
+
+<h3>Building the Mesh</h3>
+
+<p>Call the MeshBuffer class to create a mesh buffer, whether it&#39;s created
+using the <code>H3DU.Mesh</code> constructor or by building it vertex by vertex:</p>
+
+<pre><code>var meshBuffer = new MeshBuffer(mesh);
+</code></pre>
+
+<p><a id=Transforming_the_Mesh></a></p>
+
+<h3>Transforming the Mesh</h3>
+
+<p>Once you&#39;ve created the mesh buffer, you can use the <code>transform()</code> method to transform
+all the vertices in the mesh buffer with a <a href="tutorial-glmath.html">4x4 matrix</a>. The
+<a href="https://peteroupc.github.io/html3dutil/demos/shapes.html">shapes.html</a> demo uses
+this method to adjust some of the mesh bufferes to make them look better on the screen.
+Example:</p>
+
+<pre><code>var matrix = H3DU.Math.mat4scaled(2,2,2);
+// Use the transform to double the mesh buffer&#39;s size
+meshBuffer.transform(matrix);
+</code></pre>
+
 <p><a id=Normals></a></p>
 
 <h3>Normals</h3>
 
 <p>For lighting and shading to work correctly, you must specify normals for all the
-vertices in the mesh.</p>
+vertices in the mesh buffer.</p>
 
 <p><a id=What_Are_Normals></a></p>
 
@@ -296,8 +306,8 @@ specify the proper normals.</p>
 
 <h4>recalcNormals()</h4>
 
-<p>You can use the <a href="H3DU.Mesh.html#H3DU.Mesh_recalcNormals"><code>recalcNormals()</code></a> method to
-recalculate the mesh&#39;s normals,
+<p>You can use the <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_recalcNormals"><code>recalcNormals()</code></a> method to
+recalculate the mesh buffer&#39;s normals,
 in order to give the shape a flat or smooth appearance or to shade the shape from
 the inside or the outside. This method takes two parameters:</p>
 
@@ -311,15 +321,15 @@ is shaded from the inside; otherwise, <code>false</code>.</li>
 </ul>
 
 <p>For normal calculation to properly affect shading, each triangle in
-the mesh must have its vertices ordered in the same winding (counterclockwise or
+the mesh buffer must have its vertices ordered in the same winding (counterclockwise or
 clockwise) throughout. If the
-vertices have the wrong order, use the <a href="H3DU.Mesh.html#H3DU.Mesh_reverseWinding"><code>reverseWinding()</code></a>
+vertices have the wrong order, use the <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_reverseWinding"><code>reverseWinding()</code></a>
 method to change their order.</p>
 
 <blockquote>
 <p>Note: For right-handed coordinate systems, as will be the case when using,
 for example, the <a href="H3DU.Batch3D.html#H3DU.Batch3D_perspectiveAspect"><code>Batch3D.perspectiveAspect()</code></a> method,
-if the mesh describes a closed convex surface (such as a sphere or cube),
+if the mesh buffer describes a closed convex surface (such as a sphere or cube),
 each triangle&#39;s vertices (as they appear when the triangle&#39;s front side is seen)
 must be ordered counterclockwise for the shape to be shaded from the outside.</p>
 </blockquote>
@@ -327,9 +337,9 @@ must be ordered counterclockwise for the shape to be shaded from the outside.</p
 <p>Example:</p>
 
 <pre><code>// Use flat shading, and shape is shaded from the outside
-mesh = mesh.recalcNormals(true, false);
+meshBuffer.recalcNormals(true, false);
 // Both parameters can be omitted, setting both to false
-mesh = mesh.recalcNormals();
+meshBuffer.recalcNormals();
 </code></pre>
 
 <p><a id=Binding_Shapes></a></p>
@@ -344,9 +354,9 @@ as well as its color, its appearance, and how its vertices will be transformed.
 To attach a mesh to a 3D scene:</p>
 
 <ol>
-<li><p>Create a <code>Shape</code> object by passing the mesh to the <code>H3DU.Shape</code> constructor:</p>
+<li><p>Create a <code>Shape</code> object by passing the mesh buffer to the <code>H3DU.Shape</code> constructor:</p>
 
-<pre><code>var shape = new H3DU.Shape(mesh);
+<pre><code>var shape = new H3DU.Shape(meshBuffer);
 </code></pre></li>
 <li><p>You may also set the <code>Shape</code>&#39;s color, appearance, and position, using the examples below:</p>
 

@@ -22,7 +22,7 @@
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
  * @param {HTMLElement|HTMLDocument} element The HTML document
  * or element to track keyboard and mouse events for.
- * If null or omitted, uses the calling application's HTML document.
+ * If null, undefined, or omitted, uses the calling application's HTML document.
  * @constructor
  * @memberof H3DU
  */

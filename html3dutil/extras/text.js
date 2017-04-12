@@ -273,7 +273,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * font.
  * <li><code>texture</code> - An array of textures ({@link H3DU.Texture}) to use with this font,
  * or a single {@link H3DU.Texture} if only one texture page is used.
- * If null or omitted, uses the default filenames for texture pages defined in this font.
+ * If null, undefined, or omitted, uses the default filenames for texture pages defined in this font.
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
  */
@@ -377,15 +377,15 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
  * the possibilities given below, and whose values are those
  * allowed for each key.<ul>
  * <li><code>x</code> - X coordinate of the top left corner of the text.
- * If null or omitted, uses 0.
+ * If null, undefined, or omitted, uses 0.
  * For the text to show upright, the coordinate system should have the
  * X axis pointing right and the Y axis pointing down (for example, an
  * orthographic projection where the left and top coordinates are less
  * than the right and bottom coordinates, respectively).
  * <li><code>y</code> - Y coordinate of the top left corner of the text.
- * If null or omitted, uses 0.
+ * If null, undefined, or omitted, uses 0.
  * <li><code>lineHeight</code> - Height of each line of the text in units.
- * If null or omitted, uses the line height given in the font.
+ * If null, undefined, or omitted, uses the line height given in the font.
  * <li><code>width</code> - Maximum width of each line. Lines
  * that exceed this width will be wrapped.
  * <li><code>align</code> - Horizontal text alignment.  Can be "left",

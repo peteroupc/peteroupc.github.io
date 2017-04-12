@@ -607,7 +607,7 @@
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1.
+ * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {Array<Array<number>>} Array of line segments.
  * Each line segment is an array of four numbers: the X and
  * Y coordinates of the start point, respectively, then the X and
@@ -639,7 +639,7 @@
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1.
+ * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {H3DU.GraphicsPath} A path consisting only of line
  * segments and close commands.
  * @memberof! H3DU.GraphicsPath#
@@ -1242,7 +1242,7 @@
  * are decomposed to line segments for the purpose of
  * calculating their length, the
  * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1.
+ * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {Array<Array<number>>} Array of points lying on
  * the path and evenly spaced across the length of the path,
  * starting and ending with the path's endPoints. Returns
@@ -2808,7 +2808,7 @@
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
- * value, given in units. If null or omitted, default is 1.
+ * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {Array<Array<number>>} Array of six-element
  * arrays each describing a single triangle. For each six-element
  * array, the first two, next two, and last two numbers each

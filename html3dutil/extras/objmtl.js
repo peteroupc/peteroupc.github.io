@@ -551,6 +551,7 @@ H3DU.ObjData._loadObj = function(str) {
       line = line.substr(e[0].length);
       if(lastPrimitiveSeen !== -1 && lastPrimitiveSeen !== prim &&
         mesh.vertexCount() > 0) {
+        mesh = new H3DU.MeshBuffer(mesh);
         if(!haveNormals) {
          // No normals in this mesh, so calculate them
           mesh.recalcNormals(flat);
@@ -633,6 +634,7 @@ H3DU.ObjData._loadObj = function(str) {
       if(e[1] === "usemtl") {
       // Changes the material used
         if(mesh.vertexCount() > 0) {
+          mesh = new H3DU.MeshBuffer(mesh);
           if(!haveNormals) {
          // No normals in this mesh, so calculate them
             mesh.recalcNormals(flat);
@@ -649,8 +651,9 @@ H3DU.ObjData._loadObj = function(str) {
         }
         usemtl = e[2];
       } else if(e[1] === "g") {
-      // Starts a new group
+        // Starts a new group
         if(mesh.vertexCount() > 0) {
+          mesh = new H3DU.MeshBuffer(mesh);
           if(!haveNormals) {
          // No normals in this mesh, so calculate them
             mesh.recalcNormals(flat);
@@ -666,7 +669,6 @@ H3DU.ObjData._loadObj = function(str) {
           usemtl = null;
           mesh = new H3DU.Mesh();
         }
- // meshName=e[2];
       } else if(e[1] === "o") {
         oldObjName = objName;
         objName = e[2];

@@ -31,7 +31,7 @@
  * @param {number} maxval Largest V coordinate. If _minval_ is greater than
  * _maxval_, both values will be swapped.
  * @param {Array<number>} [axis] Axis of rotation, around which the curve
- * will be rotated to generate the surface of revolution. If null or omitted, the positive
+ * will be rotated to generate the surface of revolution. If null, undefined, or omitted, the positive
  * Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing
  * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
  * run in the direction from the origin to the point given in this parameter. This
@@ -110,7 +110,7 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
  * If _minval_ is greater than _maxval_, both values will be swapped.
  * @param {Array<number>} [axis] Axis of rotation, around which the
  * function graph will be rotated to generate the surface of revolution.
- * If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
+ * If null, undefined, or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
  * This parameter is a 3-element array describing
  * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
  * run in the direction from the origin to the point given in this parameter. This
@@ -153,10 +153,10 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
  * describes a 2-dimensional curve to serve as
  * the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result
  * by leaving the ends open.
- * If null or omitted, uses a circular cross section with a radius of 1.
+ * If null, undefined, or omitted, uses a circular cross section with a radius of 1.
  * @param {Array<number>} [axis] Axis of rotation, which the torus
  * will pass through.
- * If null or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
+ * If null, undefined, or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
  * This parameter is a 3-element array describing
  * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
  * run in the direction from the origin to the point given in this parameter. This
