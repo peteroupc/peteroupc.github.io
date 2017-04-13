@@ -35,7 +35,7 @@ Red box was animated with quatNlerp, blue box with quatSlerp</div>
    // Move the camera back 40 units.
    .setLookAt([0, 0, 40]);
   // Create a box mesh 10 units in size
-  var mesh = H3DU.Meshes.createBox(10, 20, 20).toWireFrame();
+  var mesh = H3DU.Meshes.createBox(10, 20, 20).wireFrame();
   // Create a shape based on the mesh and give it a red color
   var shape = new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("red"));
   var shape2 = new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("blue"));
