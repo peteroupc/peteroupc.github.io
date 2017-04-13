@@ -1,162 +1,104 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Examples of Creating Meshes on the Fly</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.BufferHelper</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>Examples of Creating Meshes on the Fly</h1>
+<h1>H3DU.BufferHelper</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p>This page contains source code for creating various kinds of 3D models on the fly.</p>
+<p><a name='H3DU.BufferHelper'></a></p>
 
-<p><a id=Contents></a></p>
+<h3>H3DU.BufferHelper()</h3>
 
-<h2>Contents</h2>
+<p>A helper class for accessing and setting data in vertex attributes.</p>
 
-<p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Floor">Floor</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br><a href="#Miscellaneous">Miscellaneous</a><br></p>
+<h3>Methods</h3>
 
-<h2>3D Line</h2>
+<ul>
+<li><a href="#H3DU.BufferHelper_copy">copy</a><br>Copies the values of a vertex attribute into a new vertex attribute object.</li>
+<li><a href="#H3DU.BufferHelper_makeIndices">makeIndices</a><br>Generates an array of increasing vertex indices</li>
+<li><a href="#H3DU.BufferHelper_merge">merge</a><br>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.</li>
+<li><a href="#H3DU.BufferHelper_resolveSemantic">resolveSemantic</a><br>Resolves an attribute semantic and semantic index, which
+may optionally be given as a string instead, into two numbers giving
+the semantic and index.</li>
+</ul>
 
-<p>This method creates a thin line-like 3D object.</p>
+<p><a name='H3DU.BufferHelper_copy'></a></p>
 
-<pre><code>// point1, point2 - end points of the line
-// thickness - thickness of the line in units, default 1
-function create3DLine(point1,point2,thickness){
-  if(thickness==null)thickness=1
-  var vector=H3DU.Math.vec3sub(point1,point2);
-  var dist=H3DU.Math.vec3length(vector);
-  var normVector=H3DU.Math.vec3norm(vector);
-  var midPoint=H3DU.Math.vec3lerp(point1,point2,0.5);
-  var line=H3DU.Meshes.createCapsule(thickness/2,dist,6,4);
-  var matrix=H3DU.Math.quatToMat4(H3DU.Math.quatFromVectors([0,0,1],normVector));
-  matrix[12]=midPoint[0]
-  matrix[13]=midPoint[1]
-  matrix[14]=midPoint[2]
-  return line.transform(matrix);
-}
-</code></pre>
+<h3>H3DU.BufferHelper#copy(attr)</h3>
 
-<p><a id=Floor></a></p>
+<p>Copies the values of a vertex attribute into a new vertex attribute object.</p>
 
-<h2>Floor</h2>
+<h4>Parameters</h4>
 
-<p>This method creates a flat tiled floor.</p>
+<ul>
+<li><code>attr</code> (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.</li>
+</ul>
 
-<p><img src="floor.png" alt="Image of a floor"></p>
+<h4>Return Value</h4>
 
-<pre><code>// xStart, yStart - X and Y coordinates of the start of the floor
-// width, height - Width and height of the floor
-// tileSize - Size of each floor tile
-// z - Z coordinate where the floor will be placed (optional,
-// default 0)
-function makeFloor(xStart,yStart,width,height,tileSize,z){
- if(z==null)z=0.0
- var mesh=new H3DU.Mesh()
- var tilesX=Math.ceil(width/tileSize)
- var tilesY=Math.ceil(height/tileSize)
- var lastY=(height-(tilesY*tileSize))/tileSize
- var lastX=(width-(tilesX*tileSize))/tileSize
- if(lastY&lt;=0)lastY=1.0
- if(lastX&lt;=0)lastX=1.0
- mesh.normal3(0,0,1)
- for(var y=0;y&lt;tilesY;y++){
-  var endY=(y==tilesY-1) ? 1.0-lastY : 0.0
-  var endPosY=(y==tilesY-1) ? yStart+height : yStart+(y+1)*tileSize
-  for(var x=0;x&lt;tilesX;x++){
-   var endX=(x==tilesX-1) ? lastX : 1.0
-   var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
-   mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-     .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
-     .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
-     .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
-     .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
-  }
- }
- return new H3DU.MeshBuffer(mesh)
-}
-</code></pre>
+<p>A copy of the vertex attribute object. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
 
-<p><a id=Striped_Disk></a></p>
+<p><a name='H3DU.BufferHelper_makeIndices'></a></p>
 
-<h2>Striped Disk</h2>
+<h3>H3DU.BufferHelper#makeIndices(numIndices)</h3>
 
-<p>This method creates a ring or disk striped in two colors.</p>
+<p>Generates an array of increasing vertex indices</p>
 
-<p><img src="mesh2.png" alt="Image of a disk striped in red and almost-white"></p>
+<h4>Parameters</h4>
 
-<pre><code>// inner, outer - inner and outer radius of the disk
-// color1, color2 - colors of each stripe; for example:
-//   &quot;red&quot;, &quot;#223344&quot;, &quot;rgb(255,0,0)&quot;, [0,1,0]
-// sections - number of stripes
-// sectionCount - number of sections per stripe
-function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
- if(sectionCount==null)sectionCount=4
- var firstColor=true
- var ret=new H3DU.MeshBuffer()
- var sweep=360.0/sections;
- for(var i=0;i&lt;sections;i++){
-  var angle=360.0*(i*1.0/sections);
-  var mesh=H3DU.Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep)
-     .setColor3(firstColor ? color1 : color2)
-  firstColor=!firstColor
-  ret.merge(mesh);
- }
- return ret;
-}
-</code></pre>
+<ul>
+<li><code>numIndices</code> (Type: number)<br>The number of vertex indices to generate. The array will range from 0 to the number of vertex indices minus 1.</li>
+</ul>
 
-<p><a id=Washer></a></p>
+<h4>Return Value</h4>
 
-<h2>Washer</h2>
+<p>An array of vertex indices. (Type: Uint16Array | Uint32Array)</p>
 
-<p>This method creates a washer-shaped 3D model.</p>
+<p><a name='H3DU.BufferHelper_merge'></a></p>
 
-<p><img src="mesh3.png" alt="Image of a washer"></p>
+<h3>H3DU.BufferHelper#merge(attr1, indices1, attr2, indices2)</h3>
 
-<pre><code>function createWasher(inner,outer,height,slices){
-  var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
-  var outerCylinder=H3DU.Meshes.createCylinder(outer,outer,height,slices,1,false,false);
-  var base=H3DU.Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
-  var top=H3DU.Meshes.createDisk(inner,outer,slices,2,false);
-  // move the top disk to the top of the cylinder
-  top.transform(H3DU.Math.mat4translated(0,0,height));
-  // merge the base and the top
-  return innerCylinder.merge(outerCylinder).merge(base).merge(top);
-}
-</code></pre>
+<p>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.</p>
 
-<p><a id=Miscellaneous></a></p>
+<h4>Parameters</h4>
 
-<h2>Miscellaneous</h2>
+<ul>
+<li><code>attr1</code> (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as indices and all the values are zeros.</li>
+<li><code>indices1</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the first vertex attribute.</li>
+<li><code>attr2</code> (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as indices and all the values are zeros.</li>
+<li><code>indices2</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the second vertex attribute.</li>
+</ul>
 
-<pre><code>// Demonstrates making a mesh plane from triangles
-function createPathDisk(path, z, flatness){
- if(z==null)z=0
- var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0,0,1);
- for(var i=0;i&lt;tris.length;i++){
-  var tri=tris[i]
-  mesh.vertex3(tri[0],tri[1],z)
-   .vertex3(tri[2],tri[3],z)
-   .vertex3(tri[4],tri[5],z)
- }
- return new H3DU.MeshBuffer(mesh)
-}
+<h4>Return Value</h4>
 
-function setBoxSizeAndBounds(shape,box){
- shape.setPosition(H3DU.Math.boxCenter(box))
- shape.setScale(H3DU.Math.boxDimensions(box))
- return shape
-}
+<p>The merged attribute, where the vertices from the first vertex
+attribute come before those from the second. The merged attribute will have as many
+values as the sum of the lengths of &quot;indices1&quot; and &quot;indices2&quot;. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
 
-function wireBox(box, color){
-  if(!color)color=&quot;gray&quot;;
- var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
- var shape=new H3DU.Shape(boxMesh).setMaterial(
-    H3DU.Material.fromBasic(color))
- return setBoxSizeAndBounds(shape,box)
-}
-</code></pre>
+<p><a name='H3DU.BufferHelper_resolveSemantic'></a></p>
+
+<h3>H3DU.BufferHelper#resolveSemantic(name, [index])</h3>
+
+<p>Resolves an attribute semantic and semantic index, which
+may optionally be given as a string instead, into two numbers giving
+the semantic and index.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
+<li><code>index</code> (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string. Otherwise, if this value is null, undefined, or omitted, the default is 0.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A two-element array consisting
+of the semantic and semantic index, respectively, described in
+the &quot;name&quot; and &quot;index&quot; parameters. Returns null if &quot;name&quot; is a string,
+but doesn&#39;t describe a valid semantic. (Type: Array.&lt;number&gt;)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>

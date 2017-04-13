@@ -117,6 +117,6 @@
       }
       return {"error": new Error("unsupported line: " + line)};
     }
-    return {"success": new H3DU.MeshBuffer(mesh)};
+    return {"success": mesh.toMeshBuffer()};
   };
 }(H3DU));

@@ -67,7 +67,7 @@ H3DU.MeshJSON.toJSON = function(mesh) {
     }]
   };
   if(mesh instanceof H3DU.Mesh) {
-    mesh = new H3DU.MeshBuffer(mesh);
+    mesh = mesh.toMeshBuffer();
   }
   var helper = new H3DU.BufferHelper();
   var pos = helper.getBuffer(mesh.getAttribute("POSITION_0"));

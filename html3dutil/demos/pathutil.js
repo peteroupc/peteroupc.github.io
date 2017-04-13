@@ -35,7 +35,7 @@ function pathFloor(path, z, flatness) {
    .vertex3(tri[2], tri[3], z)
    .vertex3(tri[4], tri[5], z);
   }
-  return new H3DU.MeshBuffer(mesh);
+  return mesh.toMeshBuffer();
 }
 
 /* exported pointMarch */

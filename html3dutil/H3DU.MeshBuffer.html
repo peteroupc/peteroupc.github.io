@@ -8,7 +8,7 @@
 
 <p><a name='H3DU.MeshBuffer'></a></p>
 
-<h3>H3DU.MeshBuffer([mesh])</h3>
+<h3>H3DU.MeshBuffer()</h3>
 
 <p>A geometric mesh in the form of buffer objects.
 A mesh buffer is made up of one or more <a href="H3DU.BufferHelper.html">vertex attribute objects</a>,
@@ -17,11 +17,7 @@ the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
 can store vertices that make up triangles, line segments, or points.</p>
 
-<h4>Parameters</h4>
-
-<ul>
-<li><code>mesh</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>) (optional)<br>A geometric mesh object. A series of default attributes will be set based on that mesh&#39;s data. If null, undefined, or omitted, an empty mesh buffer will be generated.</li>
-</ul>
+<p>This constructor creates an empty mesh buffer.</p>
 
 <h3>Methods</h3>
 
@@ -51,6 +47,8 @@ assigning each value with the attribute semantic <code>COLOR</code>
 to the given color.</li>
 <li><a href="#H3DU.MeshBuffer_setIndices">setIndices</a><br>Sets the vertex indices used by this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_setPrimitiveType">setPrimitiveType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
+<li><a href="#H3DU.MeshBuffer_toWireFrame">toWireFrame</a><br><b>Deprecated: Included here for compatibility with <a href="H3DU.Mesh.html">H3DU.Mesh</a>.
+Use H3DU.MeshBuffer.wireFrame instead.</b></li>
 <li><a href="#H3DU.MeshBuffer_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
 in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer, that
@@ -58,7 +56,7 @@ is, the number of vertex indices in its index buffer (some of which
 may be duplicates).</li>
 <li><a href="#H3DU.MeshBuffer_vertexIndices">vertexIndices</a><br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.</li>
-<li><a href="#H3DU.MeshBuffer_wireFrame">wireFrame</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer_wireFrame">wireFrame</a><br>Converts the triangles in this mesh to line segments.</li>
 </ul>
 
 <p><a name='H3DU.MeshBuffer_getAttribute'></a></p>
@@ -77,7 +75,42 @@ or point) in this mesh buffer.</li>
 <h4>Return Value</h4>
 
 <p>A vertex buffer accessor, or null
-if the attribute doesn&#39;t exist. (Type: H3DU.BufferAccessor)</p>
+if the attribute doesn&#39;t exist. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
+
+<h4>Example</h4>
+
+<p>The following function gets the positions,
+normals, texture coordinates, and colors of each primitive
+(line, text, or point) in the mesh buffer. A point will have one
+vertex per primitive, a line two vertices and a triangle three.
+The attributes, if present, will be stored in the &quot;position&quot;,
+&quot;normal&quot;, &quot;uv&quot;, and &quot;color&quot; properties of each vertex.</p>
+
+<pre><code>function getPrimitives(mesh) {
+var p=mesh.getAttribute(&quot;POSITION&quot;)
+var n=mesh.getAttribute(&quot;NORMAL&quot;)
+var t=mesh.getAttribute(&quot;TEXCOORD_0&quot;)
+var c=mesh.getAttribute(&quot;COLOR&quot;)
+var ind=mesh.getIndices()
+var primSize = 3;
+if(mesh.primitiveType() === Mesh.LINES)primSize = 2;
+if(mesh.primitiveType() === Mesh.POINTS)primSize = 1;
+var ret=[]
+for(var i=0;i&lt;ind.length;i+=primSize) {
+var prim=[]
+var index=ind[i]
+for(var j=0;j&lt;primSize;j++) {
+var info={}
+if(p)info.position=p.getVec(index,[])
+if(n)info.normal=n.getVec(index,[])
+if(t)info.uv=t.getVec(index,[])
+if(c)info.color=c.getVec(index,[])
+}
+ret.push(prim)
+}
+return ret
+}
+</code></pre>
 
 <p><a name='H3DU.MeshBuffer_getBounds'></a></p>
 
@@ -210,7 +243,7 @@ ensures its values are each at least 3 elements long.</p>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+<p>This object. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.MeshBuffer_reverseNormals'></a></p>
 
@@ -349,6 +382,21 @@ regardless of semantic index, are affected by this method.</p>
 
 <p>This object. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
+<p><a name='H3DU.MeshBuffer_toWireFrame'></a></p>
+
+<h3>H3DU.MeshBuffer#toWireFrame()</h3>
+
+<p><b>Deprecated: Included here for compatibility with <a href="H3DU.Mesh.html">H3DU.Mesh</a>.
+Use H3DU.MeshBuffer.wireFrame instead.</b></p>
+
+<p>Creates a new mesh with triangles converted
+to line segments.</p>
+
+<h4>Return Value</h4>
+
+<p>A new mesh with triangles converted
+to lines. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
+
 <p><a name='H3DU.MeshBuffer_transform'></a></p>
 
 <h3>H3DU.MeshBuffer#transform(matrix)</h3>
@@ -402,11 +450,12 @@ or point) in this mesh buffer.</p>
 
 <h3>H3DU.MeshBuffer#wireFrame()</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Converts the triangles in this mesh to line segments.
+Has no effect if this mesh doesn&#39;t use triangles as primitives.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>This object. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>
@@ -442,6 +491,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
 <li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
 <li><a href="H3DU.BufferHelper.html">H3DU.BufferHelper</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>

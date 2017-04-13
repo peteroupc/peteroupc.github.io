@@ -118,6 +118,7 @@ TriangleParticles.generateTri = function(width, height) {
 var scene = new H3DU.Scene3D(document.getElementById("canvas"))
    .setClearColor("white");
 var sub = new H3DU.Batch3D();
+sub.getLights().setBasic();
 var tris = new TriangleParticles(sub, 200, scene.getWidth(), scene.getHeight());
   // Set up the render loop
 H3DU.renderLoop(function(time) {

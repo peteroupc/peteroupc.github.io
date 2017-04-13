@@ -436,7 +436,7 @@ H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
     yPos += height;
   }
   for(i = 0; i < meshesForPage.length; i++) {
-    meshesForPage[i] = new H3DU.MeshBuffer(meshesForPage[i]);
+    meshesForPage[i] = meshesForPage[i].toMeshBuffer();
   }
   return meshesForPage;
 };

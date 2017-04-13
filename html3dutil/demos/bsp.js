@@ -34,7 +34,7 @@ BspTree.prototype.toMeshBuffer = function() {
   "use strict";
   var mesh = new H3DU.Mesh();
   this._toMeshInternal(mesh);
-  return new H3DU.MeshBuffer(mesh);
+  return mesh.toMeshBuffer();
 };
 /** @ignore */
 BspTree.prototype._toMeshInternal = function(mesh) {

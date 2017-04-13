@@ -1,162 +1,133 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Examples of Creating Meshes on the Fly</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>H3DU.CurveBuilder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>Examples of Creating Meshes on the Fly</h1>
+<h1>H3DU.CurveBuilder</h1>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p>This page contains source code for creating various kinds of 3D models on the fly.</p>
+<p><a name='H3DU.CurveBuilder'></a></p>
 
-<p><a id=Contents></a></p>
+<h3>H3DU.CurveBuilder()</h3>
 
-<h2>Contents</h2>
+<p>An evaluator of curve evaluator objects for generating
+vertex attributes for a curve.</p>
 
-<p><a href="#Contents">Contents</a><br><a href="#3D_Line">3D Line</a><br><a href="#Floor">Floor</a><br><a href="#Striped_Disk">Striped Disk</a><br><a href="#Washer">Washer</a><br><a href="#Miscellaneous">Miscellaneous</a><br></p>
+<p>For more information, see the <a href="tutorial-surfaces.html">Parametric Curves and Parametric Surfaces</a> tutorial.</p>
 
-<h2>3D Line</h2>
+<h3>Methods</h3>
 
-<p>This method creates a thin line-like 3D object.</p>
+<ul>
+<li><a href="#H3DU.CurveBuilder_attribute">attribute</a><br>Sets the parametric curve used to generate vertex attribute values.</li>
+<li><a href="#H3DU.CurveBuilder_clearVertices">clearVertices</a><br>Clears the arrays of attribute values (such as positions and normals)
+and vertex indices generated so far.</li>
+<li><a href="#H3DU.CurveBuilder.curveToBuffer">curveToBuffer</a><br>Convenience method for creating a mesh buffer from a parametric
+curve.</li>
+<li><a href="#H3DU.CurveBuilder_evalCurve">evalCurve</a><br>Generates the vertex attributes of the parametric curves.</li>
+<li><a href="#H3DU.CurveBuilder_position">position</a><br>Sets the parametric curve used to generate vertex positions.</li>
+<li><a href="#H3DU.CurveBuilder_toMeshBuffer">toMeshBuffer</a><br>Generates a mesh buffer containing the vertex attributes
+generated so far.</li>
+</ul>
 
-<pre><code>// point1, point2 - end points of the line
-// thickness - thickness of the line in units, default 1
-function create3DLine(point1,point2,thickness){
-  if(thickness==null)thickness=1
-  var vector=H3DU.Math.vec3sub(point1,point2);
-  var dist=H3DU.Math.vec3length(vector);
-  var normVector=H3DU.Math.vec3norm(vector);
-  var midPoint=H3DU.Math.vec3lerp(point1,point2,0.5);
-  var line=H3DU.Meshes.createCapsule(thickness/2,dist,6,4);
-  var matrix=H3DU.Math.quatToMat4(H3DU.Math.quatFromVectors([0,0,1],normVector));
-  matrix[12]=midPoint[0]
-  matrix[13]=midPoint[1]
-  matrix[14]=midPoint[2]
-  return line.transform(matrix);
-}
-</code></pre>
+<p><a name='H3DU.CurveBuilder_attribute'></a></p>
 
-<p><a id=Floor></a></p>
+<h3>H3DU.CurveBuilder#attribute(curve, semantic, semanticIndex, [size])</h3>
 
-<h2>Floor</h2>
+<p>Sets the parametric curve used to generate vertex attribute values.</p>
 
-<p>This method creates a flat tiled floor.</p>
+<h4>Parameters</h4>
 
-<p><img src="floor.png" alt="Image of a floor"></p>
+<ul>
+<li><code>curve</code> (Type: Object)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes the parametric curve used to generate attribute.</li>
+<li><code>semantic</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
+<li><code>semanticIndex</code> (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string. If null or undefined, this value is 0.</li>
+<li><code>size</code> (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. Throws an error if this value is 0 or less.</li>
+</ul>
 
-<pre><code>// xStart, yStart - X and Y coordinates of the start of the floor
-// width, height - Width and height of the floor
-// tileSize - Size of each floor tile
-// z - Z coordinate where the floor will be placed (optional,
-// default 0)
-function makeFloor(xStart,yStart,width,height,tileSize,z){
- if(z==null)z=0.0
- var mesh=new H3DU.Mesh()
- var tilesX=Math.ceil(width/tileSize)
- var tilesY=Math.ceil(height/tileSize)
- var lastY=(height-(tilesY*tileSize))/tileSize
- var lastX=(width-(tilesX*tileSize))/tileSize
- if(lastY&lt;=0)lastY=1.0
- if(lastX&lt;=0)lastX=1.0
- mesh.normal3(0,0,1)
- for(var y=0;y&lt;tilesY;y++){
-  var endY=(y==tilesY-1) ? 1.0-lastY : 0.0
-  var endPosY=(y==tilesY-1) ? yStart+height : yStart+(y+1)*tileSize
-  for(var x=0;x&lt;tilesX;x++){
-   var endX=(x==tilesX-1) ? lastX : 1.0
-   var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
-   mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-     .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
-     .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
-     .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
-     .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
-  }
- }
- return new H3DU.MeshBuffer(mesh)
-}
-</code></pre>
+<h4>Return Value</h4>
 
-<p><a id=Striped_Disk></a></p>
+<p>This object. (Type: <a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a>)</p>
 
-<h2>Striped Disk</h2>
+<p><a name='H3DU.CurveBuilder_clearVertices'></a></p>
 
-<p>This method creates a ring or disk striped in two colors.</p>
+<h3>H3DU.CurveBuilder#clearVertices()</h3>
 
-<p><img src="mesh2.png" alt="Image of a disk striped in red and almost-white"></p>
+<p>Clears the arrays of attribute values (such as positions and normals)
+and vertex indices generated so far. The attributes themselves will remain.</p>
 
-<pre><code>// inner, outer - inner and outer radius of the disk
-// color1, color2 - colors of each stripe; for example:
-//   &quot;red&quot;, &quot;#223344&quot;, &quot;rgb(255,0,0)&quot;, [0,1,0]
-// sections - number of stripes
-// sectionCount - number of sections per stripe
-function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
- if(sectionCount==null)sectionCount=4
- var firstColor=true
- var ret=new H3DU.MeshBuffer()
- var sweep=360.0/sections;
- for(var i=0;i&lt;sections;i++){
-  var angle=360.0*(i*1.0/sections);
-  var mesh=H3DU.Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep)
-     .setColor3(firstColor ? color1 : color2)
-  firstColor=!firstColor
-  ret.merge(mesh);
- }
- return ret;
-}
-</code></pre>
+<h4>Return Value</h4>
 
-<p><a id=Washer></a></p>
+<p>This object. (Type: <a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a>)</p>
 
-<h2>Washer</h2>
+<p><a name='H3DU.CurveBuilder.curveToBuffer'></a></p>
 
-<p>This method creates a washer-shaped 3D model.</p>
+<h3>(static) H3DU.CurveBuilder.curveToBuffer(curve, [mode], [n], [u1], [u2])</h3>
 
-<p><img src="mesh3.png" alt="Image of a washer"></p>
+<p>Convenience method for creating a mesh buffer from a parametric
+curve. The mesh buffer will contain positions and vertex normals that
+cover the given surface.</p>
 
-<pre><code>function createWasher(inner,outer,height,slices){
-  var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
-  var outerCylinder=H3DU.Meshes.createCylinder(outer,outer,height,slices,1,false,false);
-  var base=H3DU.Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
-  var top=H3DU.Meshes.createDisk(inner,outer,slices,2,false);
-  // move the top disk to the top of the cylinder
-  top.transform(H3DU.Math.mat4translated(0,0,height));
-  // merge the base and the top
-  return innerCylinder.merge(outerCylinder).merge(base).merge(top);
-}
-</code></pre>
+<h4>Parameters</h4>
 
-<p><a id=Miscellaneous></a></p>
+<ul>
+<li><code>curve</code> (Type: Object)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes the parametric curve used to generate positions.</li>
+<li><code>mode</code> (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or is null, undefined, or omitted, generates a series of lines defining the curve. If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the curve. For any other value, this method has no effect.</li>
+<li><code>n</code> (Type: number) (optional)<br>Number of subdivisions of the curve to be drawn. Default is 24.</li>
+<li><code>u1</code> (Type: number) (optional)<br>Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 0 if not given.</li>
+<li><code>u2</code> (Type: number) (optional)<br>Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 1 if not given.</li>
+</ul>
 
-<h2>Miscellaneous</h2>
+<h4>Return Value</h4>
 
-<pre><code>// Demonstrates making a mesh plane from triangles
-function createPathDisk(path, z, flatness){
- if(z==null)z=0
- var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0,0,1);
- for(var i=0;i&lt;tris.length;i++){
-  var tri=tris[i]
-  mesh.vertex3(tri[0],tri[1],z)
-   .vertex3(tri[2],tri[3],z)
-   .vertex3(tri[4],tri[5],z)
- }
- return new H3DU.MeshBuffer(mesh)
-}
+<p>The generated mesh buffer. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
-function setBoxSizeAndBounds(shape,box){
- shape.setPosition(H3DU.Math.boxCenter(box))
- shape.setScale(H3DU.Math.boxDimensions(box))
- return shape
-}
+<p><a name='H3DU.CurveBuilder_evalCurve'></a></p>
 
-function wireBox(box, color){
-  if(!color)color=&quot;gray&quot;;
- var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
- var shape=new H3DU.Shape(boxMesh).setMaterial(
-    H3DU.Material.fromBasic(color))
- return setBoxSizeAndBounds(shape,box)
-}
-</code></pre>
+<h3>H3DU.CurveBuilder#evalCurve([mode], [n], [u1], [u2])</h3>
+
+<p>Generates the vertex attributes of the parametric curves.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mode</code> (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or is null, undefined, or omitted, generates a series of lines defining the curve. If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the curve. For any other value, this method has no effect.</li>
+<li><code>n</code> (Type: number) (optional)<br>Number of subdivisions of the curve to be drawn. Default is 24.</li>
+<li><code>u1</code> (Type: number) (optional)<br>Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 0 if not given.</li>
+<li><code>u2</code> (Type: number) (optional)<br>Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 1 if not given.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a>)</p>
+
+<p><a name='H3DU.CurveBuilder_position'></a></p>
+
+<h3>H3DU.CurveBuilder#position(curve, [size])</h3>
+
+<p>Sets the parametric curve used to generate vertex positions.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curve</code> (Type: Object)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes the parametric curve used to generate positions.</li>
+<li><code>size</code> (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. Throws an error if this value is 0 or less.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a>)</p>
+
+<p><a name='H3DU.CurveBuilder_toMeshBuffer'></a></p>
+
+<h3>H3DU.CurveBuilder#toMeshBuffer()</h3>
+
+<p>Generates a mesh buffer containing the vertex attributes
+generated so far. The mesh buffer&#39;s primitive type will equal the
+last type passed to the &quot;mode&quot; parameter in the H3DU.CurveBuilder.curveEval method.</p>
+
+<h4>Return Value</h4>
+
+<p>The generated mesh buffer. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>

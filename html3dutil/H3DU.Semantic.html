@@ -44,7 +44,8 @@ to uniforms and vertex attributes.</p>
 
 <h3>H3DU.Semantic.COLOR (constant)</h3>
 
-<p>Attribute semantic for a color.</p>
+<p>Attribute semantic for a color.
+The default shader uses 3-component colors.</p>
 
 <p><a name='H3DU.Semantic.CUSTOM'></a></p>
 
@@ -86,13 +87,15 @@ to uniforms and vertex attributes.</p>
 
 <h3>H3DU.Semantic.NORMAL (constant)</h3>
 
-<p>Attribute semantic for a vertex normal.</p>
+<p>Attribute semantic for a vertex normal.
+The default shader uses 3-dimensional normals.</p>
 
 <p><a name='H3DU.Semantic.POSITION'></a></p>
 
 <h3>H3DU.Semantic.POSITION (constant)</h3>
 
-<p>Attribute semantic for a vertex position.</p>
+<p>Attribute semantic for a vertex position.
+The default shader uses 3-dimensional positions.</p>
 
 <p><a name='H3DU.Semantic.PROJECTION'></a></p>
 
@@ -111,6 +114,15 @@ to uniforms and vertex attributes.</p>
 <h3>H3DU.Semantic.TEXCOORD (constant)</h3>
 
 <p>Attribute semantic for a texture coordinate.</p>
+
+<p>Note that the default shader supports only 2-dimensional
+texture coordinates. For such texturing tasks as mapping
+a square to a trapezoid, 3-dimensional texture coordinates
+are useful to ensure the texturing is perspective-correct.
+In this case, the 3-D texture coordinates are converted
+to 2-D by dividing the X and Y components by the Z component.
+In a fragment shader, this can look like the following
+code: <code>texCoord.xy/texCoord.z</code>.</p>
 
 <p><a name='H3DU.Semantic.VIEW'></a></p>
 
@@ -164,6 +176,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
 <li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
+<li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
 <li><a href="H3DU.BufferHelper.html">H3DU.BufferHelper</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
