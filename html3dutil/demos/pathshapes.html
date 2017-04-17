@@ -59,7 +59,7 @@ var path2 = new H3DU.GraphicsPath()
  .arcTo(0.5, 0.5, 0, 0.5, 0.5)
  .lineTo(-0.5, 0.5)
  .closePath().reverse();
-path = path.merge(path2); // TODO: Fix path tube
+path = path.merge(path2);
 
 function makeLinePath(path, z, flatness) {
   "use strict";
@@ -69,7 +69,7 @@ function makeLinePath(path, z, flatness) {
     var line = lines[i];
     mesh.vertex3(line[0], line[1], z).vertex3(line[2], line[3], z);
   }
-  return mesh;
+  return mesh.toMeshBuffer();
 }
 function extrudePath(path, zStart, zEnd, flatness) {
   "use strict";
@@ -90,7 +90,7 @@ function extrudePath(path, zStart, zEnd, flatness) {
    .vertex3(line[2], line[3], z2)
    .vertex3(line[0], line[1], z2);
   }
-  return new H3DU.MeshBuffer(mesh).recalcNormals();
+  return mesh.toMeshBuffer().recalcNormals(true);
 }
 function pathClosedFigure(path, zBottom, zTop, flatness) {
   "use strict";
@@ -104,13 +104,13 @@ function createSampleShape(index) {
   "use strict";
   switch(index) {
   case 0:
-    return pathFloor(path, 0, 0.01);
+     return pathFloor(path, 0, 0.01);
   case 1:
     return extrudePath(path, -0.2, 0.2, 0.01);
   case 2:
     return pathClosedFigure(path, -0.25, 0.25, 0.01);
   case 3:
-    return makeTubeFromPath(path, 0.01, 0.1);
+   return makeTubeFromPath(path, 0.01, 0.1);
   case 4: {
     var p = new H3DU.GraphicsPath().regularPolygon(0, 0, 8, 1);
     return pathClosedFigure(p, -0.25, 0.25, 0.01);

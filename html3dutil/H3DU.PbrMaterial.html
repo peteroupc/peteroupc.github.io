@@ -33,7 +33,8 @@ the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</p>
 <li><a href="#H3DU.PbrMaterial_albedoMap">albedoMap</a><br>A texture indicating the albedo (or base color) of each part of the texture,
 in the red, green, blue, and alpha channels.</li>
 <li><a href="#H3DU.PbrMaterial_emission">emission</a><br>Additive color emitted by objects with this material.</li>
-<li><a href="#H3DU.PbrMaterial_emissionMap">emissionMap</a><br>Emission map texture.</li>
+<li><a href="#H3DU.PbrMaterial_emissionMap">emissionMap</a><br>A texture where each pixel identifies the emission of that
+part of the texture, as specified in the texture&#39;s red, green, and blue channel.</li>
 <li><a href="#H3DU.PbrMaterial_invertRoughness">invertRoughness</a><br>If true, the roughness property is treated as a &quot;glossiness&quot; property,
 or 1 minus roughness, and the roughness map is treated as a &quot;glossiness&quot;
 map, or an inverted roughness map.</li>
@@ -41,7 +42,8 @@ map, or an inverted roughness map.</li>
 <li><a href="#H3DU.PbrMaterial_metalnessMap">metalnessMap</a><br>A texture indicating the metalness of each part of the texture,
 as specified in the texture&#39;s blue channel.</li>
 <li><a href="#H3DU.PbrMaterial_normalMap">normalMap</a><br>Normal map (bump map) texture.</li>
-<li><a href="#H3DU.PbrMaterial_occlusionMap">occlusionMap</a><br>Ambient occlusion map texture.</li>
+<li><a href="#H3DU.PbrMaterial_occlusionMap">occlusionMap</a><br>A texture where each pixel identifies the ambient occlusion of that
+part of the texture, as specified in the texture&#39;s red channel.</li>
 <li><a href="#H3DU.PbrMaterial_roughness">roughness</a><br>Describes the roughness of the surface described
 by this material.</li>
 <li><a href="#H3DU.PbrMaterial_roughnessMap">roughnessMap</a><br>A texture indicating the roughness of each part of the texture,
@@ -112,7 +114,7 @@ colors are used rather than this property to set the color defined here.</p>
 
 <p>Type: Array.&lt;number&gt;</p>
 
-<p>Default Value: <code>&quot;[0.8,0.8,0.8,1]&quot;</code></p>
+<p>Default Value: <code>&quot;[1,1,1,1]&quot;</code></p>
 
 <p><a name='H3DU.PbrMaterial_albedoMap'></a></p>
 
@@ -147,7 +149,10 @@ while negative values subtract from it. (0,0,0), the default, means no additive 
 
 <h3>H3DU.PbrMaterial#emissionMap</h3>
 
-<p>Emission map texture.</p>
+<p>A texture where each pixel identifies the emission of that
+part of the texture, as specified in the texture&#39;s red, green, and blue channel.
+If a texture is given, the emission found with this texture is multiplied by
+the value of the <a href="H3DU.PbrMaterial.html#H3DU.PbrMaterial_emission">H3DU.PbrMaterial#emission</a> property.</p>
 
 <p>Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a> | <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></p>
 
@@ -240,7 +245,8 @@ and texture coordinates.</p>
 
 <h3>H3DU.PbrMaterial#occlusionMap</h3>
 
-<p>Ambient occlusion map texture.</p>
+<p>A texture where each pixel identifies the ambient occlusion of that
+part of the texture, as specified in the texture&#39;s red channel.</p>
 
 <p>Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | <a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a> | <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></p>
 

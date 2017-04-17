@@ -15,30 +15,10 @@
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.BufferHelper_copy">copy</a><br>Copies the values of a vertex attribute into a new vertex attribute object.</li>
 <li><a href="#H3DU.BufferHelper_makeIndices">makeIndices</a><br>Generates an array of increasing vertex indices</li>
 <li><a href="#H3DU.BufferHelper_merge">merge</a><br>Merges two vertex attributes, whose vertices can be indexed differently, into one
 combined vertex attribute.</li>
-<li><a href="#H3DU.BufferHelper_resolveSemantic">resolveSemantic</a><br>Resolves an attribute semantic and semantic index, which
-may optionally be given as a string instead, into two numbers giving
-the semantic and index.</li>
 </ul>
-
-<p><a name='H3DU.BufferHelper_copy'></a></p>
-
-<h3>H3DU.BufferHelper#copy(attr)</h3>
-
-<p>Copies the values of a vertex attribute into a new vertex attribute object.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>attr</code> (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A copy of the vertex attribute object. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
 
 <p><a name='H3DU.BufferHelper_makeIndices'></a></p>
 
@@ -77,28 +57,6 @@ combined vertex attribute.</p>
 <p>The merged attribute, where the vertices from the first vertex
 attribute come before those from the second. The merged attribute will have as many
 values as the sum of the lengths of &quot;indices1&quot; and &quot;indices2&quot;. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
-
-<p><a name='H3DU.BufferHelper_resolveSemantic'></a></p>
-
-<h3>H3DU.BufferHelper#resolveSemantic(name, [index])</h3>
-
-<p>Resolves an attribute semantic and semantic index, which
-may optionally be given as a string instead, into two numbers giving
-the semantic and index.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
-<li><code>index</code> (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string. Otherwise, if this value is null, undefined, or omitted, the default is 0.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A two-element array consisting
-of the semantic and semantic index, respectively, described in
-the &quot;name&quot; and &quot;index&quot; parameters. Returns null if &quot;name&quot; is a string,
-but doesn&#39;t describe a valid semantic. (Type: Array.&lt;number&gt;)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p>

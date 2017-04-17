@@ -63,7 +63,6 @@ H3DU._TBNFrames = function(func) {
     var quat = H3DU.Math.quatFromVectors(this.normals[res], this.normals[0]);
     var angle = H3DU.Math.quatToAxisAngle(quat)[3];
     angle *= H3DU.Math.ToRadians;
-
   // Set basis vectors at ends to the same value
     this.normals[res] = this.normals[0];
     this.tangents[res] = this.tangents[0];
@@ -190,6 +189,7 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
     sample = this.func.evaluate(u);
     e0 = sample;
     tangent = H3DU._TBNFrames._getTangent(this.func, u, e0);
+
     normal = H3DU._TBNFrames.normalFromTangent(tangent);
     binormal = H3DU.Math.vec3normalizeInPlace(
     H3DU.Math.vec3cross(tangent, normal));

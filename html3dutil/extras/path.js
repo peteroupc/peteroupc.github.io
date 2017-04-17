@@ -162,7 +162,7 @@
   // --------------------------------------------------
 
 /** @ignore */
-  function LineCurve(x1, x2, y1, y2) {
+  function LineCurve(x1, y1, x2, y2) {
     this.x1 = x1;
     this.x2 = x2;
     this.y1 = y1;
@@ -1178,26 +1178,36 @@
     }
     return ret;
   };
+/** @ignore */
+  GraphicsPath._addSegment = function(a, c) {
+    if(a.length > 0 && c instanceof LineCurve) {
+      if(c.x1 === c.x2 && c.y1 === c.y2) {
+        // Degenerate line segment, don't add
+        return;
+      }
+    }
+    a.push(c);
+  };
 
-/**
- * Gets a [curve evaluator object]{@link H3DU.Curve} for
- * the curves described by this path. The return value doesn't track changes to the path.
- * @param {number} [flatness] This parameter is no longer used.
- * @returns {Object} A [curve evaluator object]{@link H3DU.Curve} that implements
- * the following additional method:<ul>
- * <li><code>getCurves()</code> - Returns a list of [curve evaluator objects]{@link H3DU.Curve}
- * described by this path. The list will contain one curve evaluator object for each disconnected
- * portion of the path. For example, if the path contains one polygon, the list will contain
- * one curve object. And if the path is empty, the list will be empty too. Each curve
- * takes U coordinates that range from 0 to 1, depending on how far the point is from the start or
- * the end of the path (similar to arc-length parameterization). Each curve
- * returns a 3-element array containing
- * the X, Y, and Z coordinates of the point lying on the curve at the given
- * "u" position (however, the z will always be 0 since paths can currently
- * only be 2-dimensional).
- * </ul>
- * @memberof! H3DU.GraphicsPath#
- */
+  /**
+   * Gets a [curve evaluator object]{@link H3DU.Curve} for
+   * the curves described by this path. The return value doesn't track changes to the path.
+   * @param {number} [flatness] This parameter is no longer used.
+   * @returns {Object} A [curve evaluator object]{@link H3DU.Curve} that implements
+   * the following additional method:<ul>
+   * <li><code>getCurves()</code> - Returns a list of [curve evaluator objects]{@link H3DU.Curve}
+   * described by this path. The list will contain one curve evaluator object for each disconnected
+   * portion of the path. For example, if the path contains one polygon, the list will contain
+   * one curve object. And if the path is empty, the list will be empty too. Each curve
+   * takes U coordinates that range from 0 to 1, depending on how far the point is from the start or
+   * the end of the path (similar to arc-length parameterization). Each curve
+   * returns a 3-element array containing
+   * the X, Y, and Z coordinates of the point lying on the curve at the given
+   * "u" position (however, the z will always be 0 since paths can currently
+   * only be 2-dimensional).
+   * </ul>
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getCurves = function(flatness) {
     // NOTE: Uses a "tangent" method, not "velocity", because
     // that method's return values are generally unit vectors.
@@ -1208,24 +1218,30 @@
     }
     var lastptx = 0;
     var lastpty = 0;
+    var startptx = 0;
+    var startpty = 0;
     var first = true;
     var curPath = null;
-
     for(var i = 0; i < this.segments.length; i++) {
       var s = this.segments[i];
-
       var startpt = GraphicsPath._startPoint(s);
       var endpt = GraphicsPath._endPoint(s);
       if(s[0] !== GraphicsPath.CLOSE) {
         if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
           curPath = [];
- // curLength = 0;
           subpaths.push(curPath);
+          startptx = startpt[0];
+          startpty = startpt[1];
           first = false;
         }
         lastptx = endpt[0];
         lastpty = endpt[1];
-        curPath.push(GraphicsPath._segToCurve(s));
+        GraphicsPath._addSegment(curPath, GraphicsPath._segToCurve(s));
+      } else {
+        GraphicsPath._addSegment(curPath,
+        new LineCurve(lastptx, lastpty, startptx, startpty));
+        lastptx = startptx;
+        lastpty = startpty;
       }
     }
     for(i = 0; i < subpaths.length; i++) {
