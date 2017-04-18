@@ -30,6 +30,22 @@ the piecewise curve.</p>
 <li><code>curves</code> (Type: Array.&lt;Object&gt;)<br>An array of curve evaluator objects, such as an instance of <a href="H3DU.Curve.html">H3DU.Curve</a> or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).</li>
 </ul>
 
+<h4>Example</h4>
+
+<pre><code>// Generates a piecewise polygon curve from an array of
+// vectors (arrays with the same number of elements) that
+// specify the points that make up the polygon.
+function polygonCurve(points) {
+var curves=[]
+for(var i=0;i&lt;points.length;i++) {
+var cp=points[i]
+var np=(i==points.length-1) ? points[0] : points[i+1]
+curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
+}
+return new H3DU.PiecewiseCurve(curves)
+}
+</code></pre>
+
 <h3>Methods</h3>
 
 <ul>

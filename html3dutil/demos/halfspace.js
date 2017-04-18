@@ -13,7 +13,7 @@ function getIntersectingPoint(p1, p2, p3) {
   var n1 = p1.slice(0, 3);
   var n2 = p2.slice(0, 3);
   var n3 = p3.slice(0, 3);
-  var d = H3DU.Math.vec3triple(n1, n2, n3);
+  var d = H3DU.Math.vec3dot(n1, H3DU.Math.vec3cross(n2, n3));
   if(Math.abs(d) >= 1e-9) {
     var n12 = H3DU.Math.vec3cross(n1, n2);
     var n23 = H3DU.Math.vec3cross(n2, n3);

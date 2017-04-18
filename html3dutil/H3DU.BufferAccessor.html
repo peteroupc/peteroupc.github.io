@@ -117,6 +117,9 @@ equal to the <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_countPerValue
 
 <p>Gets the first element of the attribute value with the given vertex index.</p>
 
+<p>Note that currently, this method does no bounds checking beyond the
+checking naturally done when accessing the attribute&#39;s buffer.</p>
+
 <h4>Parameters</h4>
 
 <ul>
@@ -169,6 +172,9 @@ checking naturally done when accessing the attribute&#39;s buffer.</p>
 <h3>H3DU.BufferAccessor#set(index, value)</h3>
 
 <p>Sets the first element of the attribute value with the given vertex index.</p>
+
+<p>Note that currently, this method does no bounds checking beyond the
+checking naturally done when writing to the attribute&#39;s buffer.</p>
 
 <h4>Parameters</h4>
 

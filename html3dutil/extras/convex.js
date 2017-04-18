@@ -191,7 +191,7 @@
       return [f.he, this.halfEdges[f.he].next,
         this.halfEdges[this.halfEdges[f.he].next].next];
     };
-    this.toMeshBuffer = function(points) {
+    this.toMeshVerticesIndices = function(points) {
       var faceProcessed = [];
       for(var i = 0; i < this.faces.size; i++) {
         faceProcessed[i] = false;
@@ -204,7 +204,11 @@
         }
       }
       var meshVertices = [];
-      if(faceStack.length === 0)return new H3DU.MeshBuffer();
+      for(i = 0; i < points.length; i++) {
+        var pt = points[i];
+        meshVertices.push(pt[0], pt[1], pt[2]);
+      }
+      var meshIndices = [];
       while(faceStack.length > 0) {
         var top = faceStack.pop();
         if(this.faces[top].isDisabled()) {
@@ -226,16 +230,16 @@
               faceStack.push(a);
             }
           }
-          var p = points[vertices[0]];
-          meshVertices.push(p[0], p[1], p[2]);
-          p = points[vertices[1]];
-          meshVertices.push(p[0], p[1], p[2]);
-          p = points[vertices[2]];
-          meshVertices.push(p[0], p[1], p[2]);
+          meshIndices.push(vertices[0], vertices[1], vertices[2]);
         }
       }
+      return [meshVertices, meshIndices];
+    };
+    this.toMeshBuffer = function(points) {
+      var mvi = this.toMeshVerticesIndices(points);
       return new H3DU.MeshBuffer()
-         .setAttribute("POSITION", 0, meshVertices, 0, 3);
+         .setAttribute("POSITION", 0, mvi[0], 0, 3)
+         .setIndices(mvi[1]);
     };
   };
 /** @ignore */
