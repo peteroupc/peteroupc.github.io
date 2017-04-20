@@ -40,6 +40,9 @@ value to the start of the next.</li>
 <li><a href="#H3DU.BufferAccessor_get">get</a><br>Gets the first element of the attribute value with the given vertex index.</li>
 <li><a href="#H3DU.BufferAccessor_getVec">getVec</a><br>Gets the elements of a vertex attribute value.</li>
 <li><a href="#H3DU.BufferAccessor.makeBlank">makeBlank</a><br>Generates a vertex attribute buffer, with each value set to all zeros.</li>
+<li><a href="#H3DU.BufferAccessor.makeIndices">makeIndices</a><br>Generates an array of increasing vertex indices.</li>
+<li><a href="#H3DU.BufferAccessor.merge">merge</a><br>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.</li>
 <li><a href="#H3DU.BufferAccessor_set">set</a><br>Sets the first element of the attribute value with the given vertex index.</li>
 <li><a href="#H3DU.BufferAccessor_setVec">setVec</a><br>Sets the elements of a vertex attribute value.</li>
 </ul>
@@ -167,6 +170,44 @@ checking naturally done when accessing the attribute&#39;s buffer.</p>
 
 <p>A blank vertex attribute buffer. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
 
+<p><a name='H3DU.BufferAccessor.makeIndices'></a></p>
+
+<h3>(static) H3DU.BufferAccessor.makeIndices(numIndices)</h3>
+
+<p>Generates an array of increasing vertex indices.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>numIndices</code> (Type: number)<br>The number of vertex indices to generate. The array will range from 0 to the number of vertex indices minus 1.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of vertex indices. (Type: Uint16Array | Uint32Array)</p>
+
+<p><a name='H3DU.BufferAccessor.merge'></a></p>
+
+<h3>(static) H3DU.BufferAccessor.merge(attr1, indices1, attr2, indices2)</h3>
+
+<p>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>attr1</code> (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of &quot;indices1&quot; and all the values are zeros.</li>
+<li><code>indices1</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the first vertex attribute.</li>
+<li><code>attr2</code> (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of &quot;indices2&quot; and all the values are zeros.</li>
+<li><code>indices2</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the second vertex attribute.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The merged attribute, where the vertices from the first vertex
+attribute come before those from the second. The merged attribute will have as many
+values as the sum of the lengths of &quot;indices1&quot; and &quot;indices2&quot;. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
+
 <p><a name='H3DU.BufferAccessor_set'></a></p>
 
 <h3>H3DU.BufferAccessor#set(index, value)</h3>
@@ -243,7 +284,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
-<li><a href="H3DU.BufferHelper.html">H3DU.BufferHelper</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>

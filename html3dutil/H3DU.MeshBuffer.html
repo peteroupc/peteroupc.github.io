@@ -11,7 +11,7 @@
 <h3>H3DU.MeshBuffer()</h3>
 
 <p>A geometric mesh in the form of buffer objects.
-A mesh buffer is made up of one or more <a href="H3DU.BufferHelper.html">vertex attribute objects</a>,
+A mesh buffer is made up of one or more <a href="H3DU.BufferAccessor.html">vertex attribute objects</a>,
 and an array of vertex indices. Each vertex attribute object contains
 the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
@@ -331,7 +331,7 @@ semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</
 
 <p>Sets all the vertices in this mesh to the given color, by
 assigning each value with the attribute semantic <code>COLOR</code>
-to the given color. (If the attribute&#39;s count per value
+to the given color. (If the attribute&#39;s <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_countPerValue">count per value</a>
 is less than 4, each such value will be set to as many elements of the converted 4-element
 color as possible.) If an attribute with the semantic <code>COLOR</code>
 doesn&#39;t exist, an attribute with the semantic <code>COLOR_0</code> and a count per
@@ -492,7 +492,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
 <li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
 <li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
-<li><a href="H3DU.BufferHelper.html">H3DU.BufferHelper</a></li>
 <li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
 <li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>

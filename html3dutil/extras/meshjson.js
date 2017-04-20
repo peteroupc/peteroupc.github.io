@@ -69,21 +69,21 @@ H3DU.MeshJSON.toJSON = function(mesh) {
   if(mesh instanceof H3DU.Mesh) {
     mesh = mesh.toMeshBuffer();
   }
-  var helper = new H3DU.BufferHelper();
-  var pos = helper.getBuffer(mesh.getAttribute("POSITION_0"));
-  var norm = helper.getBuffer(mesh.getAttribute("NORMAL_0"));
-  var cols = helper.getBuffer(mesh.getAttribute("COLOR_0"));
-  var tc = helper.getBuffer(mesh.getAttribute("TEXCOORD_0"));
-  json.vertices = pos || [];
+  var pos = mesh.getAttribute("POSITION_0");
+  var norm = mesh.getAttribute("NORMAL_0");
+  var cols = mesh.getAttribute("COLOR_0");
+  var tc = mesh.getAttribute("TEXCOORD_0");
+  var posBuffer = typeof pos !== "undefined" && pos !== null ? pos.buffer : [];
+  json.vertices = H3DU.MeshJSON._toArray(posBuffer);
   json.indices = H3DU.MeshJSON._toArray(mesh.getIndices());
   if(typeof norm !== "undefined" && norm !== null) {
-    json.normals = H3DU.MeshJSON._toArray(norm);
+    json.normals = H3DU.MeshJSON._toArray(norm.buffer);
   }
   if(typeof cols !== "undefined" && cols !== null) {
-    json.colors = H3DU.MeshJSON._toArray(cols);
+    json.colors = H3DU.MeshJSON._toArray(cols.buffer);
   }
   if(typeof tc !== "undefined" && tc !== null) {
-    json.uvs = [H3DU.MeshJSON._toArray(tc)];
+    json.uvs = [H3DU.MeshJSON._toArray(tc.buffer)];
   } else {
     json.uvs = [[]];
   }
@@ -279,6 +279,9 @@ H3DU.MeshJSON.loadJSON = function(url) {
         json.vertices[idx + 1],
         json.vertices[idx + 2]);
         }
+      }
+      for(i = 0; i < meshes.length; i++) {
+        meshes[i] = new H3DU.MeshBuffer(meshes[i]);
       }
       ret = new H3DU.MeshJSON._Model(null)._setMeshes(meshes, materials);
       return ret;

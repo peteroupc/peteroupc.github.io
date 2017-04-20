@@ -25,6 +25,35 @@ BspTree._negatePlane = function(plane) {
   "use strict";
   return [-plane[0], -plane[1], -plane[2], plane[3], plane[4], plane[5]];
 };
+
+/** @constructor
+ * @ignore */
+BspTree._MiniBuilder = function() {
+  "use strict";
+  this.vertices = [];
+  this.normals = [];
+  this.indices = [];
+  this.addPoly = function(poly) {
+    var index = this.vertices.length / 3;
+    for(var i = 0; i < poly.vertices.length; i++) {
+      var v = poly.vertices[i];
+      this.normals.push(poly.plane[0], poly.plane[1], poly.plane[2]);
+      this.vertices.push(v[0], v[1], v[2]);
+    }
+    for(i = 0; i < poly.vertices.length - 2; i++) {
+      this.indices.push(index);
+      this.indices.push(index + i + 1);
+      this.indices.push(index + i + 2);
+    }
+  };
+  this.toMeshBuffer = function() {
+    return new H3DU.MeshBuffer()
+    .setAttribute("POSITION", 0, this.vertices, 0, 3)
+    .setAttribute("NORMAL", 0, this.normals, 0, 3)
+    .setIndices(this.indices);
+  };
+};
+
 /**
  * Generates a mesh buffer containing the polygons
  * stored in this BSP tree.
@@ -32,7 +61,7 @@ BspTree._negatePlane = function(plane) {
  */
 BspTree.prototype.toMeshBuffer = function() {
   "use strict";
-  var mesh = new H3DU.Mesh();
+  var mesh = new BspTree._MiniBuilder();
   this._toMeshInternal(mesh);
   return mesh.toMeshBuffer();
 };
@@ -42,12 +71,7 @@ BspTree.prototype._toMeshInternal = function(mesh) {
   if(typeof this.faces !== "undefined" && this.faces !== null) {
     for(var polyIndex = 0; polyIndex < this.faces.length; polyIndex++) {
       var poly = this.faces[polyIndex];
-      mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
-      mesh.normal3(poly.plane);
-      for(var i = 0; i < poly.vertices.length; i++) {
-        mesh.vertex3(poly.vertices[i]);
-      }
-      mesh.vertex3(poly.vertices[0]);
+      mesh.addPoly(poly);
     }
   }
   if(typeof this.frontTree !== "undefined" && this.frontTree !== null) {
