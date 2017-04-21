@@ -30,7 +30,7 @@
 
 <h2>Contents</h2>
 
-<p><a href="#Public_Domain_HTML_3D_Library">Public-Domain HTML 3D Library</a><br><a href="#Example">Example</a><br><a href="#Contents">Contents</a><br><a href="#How_to_Use">How to Use</a><br>&nbsp;&nbsp;<a href="#List_of_Classes">List of Classes</a><br>&nbsp;&nbsp;<a href="#H3DU_Scene3D"><code>H3DU.Scene3D</code></a><br>&nbsp;&nbsp;<a href="#The_Camera">The &quot;Camera&quot;</a><br>&nbsp;&nbsp;<a href="#3D_Models">3D Models</a><br>&nbsp;&nbsp;<a href="#Shapes">Shapes</a><br>&nbsp;&nbsp;<a href="#The_Render_Loop">The Render Loop</a><br><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a><br><a href="#Demos">Demos</a><br>&nbsp;&nbsp;<a href="#Simple_Demos">Simple Demos</a><br>&nbsp;&nbsp;<a href="#Materials">Materials</a><br>&nbsp;&nbsp;<a href="#Shapes_and_meshes">Shapes and meshes</a><br>&nbsp;&nbsp;<a href="#Paths">Paths</a><br>&nbsp;&nbsp;<a href="#Curves_and_Surfaces">Curves and Surfaces</a><br>&nbsp;&nbsp;<a href="#Textures">Textures</a><br>&nbsp;&nbsp;<a href="#Shaders">Shaders</a><br>&nbsp;&nbsp;<a href="#Particle_Systems">Particle Systems</a><br>&nbsp;&nbsp;<a href="#Loading_3D_Models">Loading 3D Models</a><br>&nbsp;&nbsp;<a href="#Selecting_Objects">Selecting Objects</a><br>&nbsp;&nbsp;<a href="#Lights">Lights</a><br>&nbsp;&nbsp;<a href="#Text">Text</a><br>&nbsp;&nbsp;<a href="#Projections">Projections</a><br>&nbsp;&nbsp;<a href="#Miscellaneous">Miscellaneous</a><br><a href="#Example">Example</a><br><a href="#History">History</a><br>&nbsp;&nbsp;<a href="#Version_2_0_0_beta2">Version 2.0.0-beta2</a><br>&nbsp;&nbsp;<a href="#Version_2_0_0_beta1">Version 2.0.0-beta1:</a><br></p>
+<p><a href="#Public_Domain_HTML_3D_Library">Public-Domain HTML 3D Library</a><br><a href="#Example">Example</a><br><a href="#Contents">Contents</a><br><a href="#How_to_Use">How to Use</a><br>&nbsp;&nbsp;<a href="#List_of_Classes">List of Classes</a><br>&nbsp;&nbsp;<a href="#H3DU_Scene3D"><code>H3DU.Scene3D</code></a><br>&nbsp;&nbsp;<a href="#The_Camera">The &quot;Camera&quot;</a><br>&nbsp;&nbsp;<a href="#3D_Models">3D Models</a><br>&nbsp;&nbsp;<a href="#Shapes">Shapes</a><br>&nbsp;&nbsp;<a href="#The_Render_Loop">The Render Loop</a><br><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a><br><a href="#Demos">Demos</a><br>&nbsp;&nbsp;<a href="#Simple_Demos">Simple Demos</a><br>&nbsp;&nbsp;<a href="#Materials">Materials</a><br>&nbsp;&nbsp;<a href="#Shapes_and_meshes">Shapes and meshes</a><br>&nbsp;&nbsp;<a href="#Paths">Paths</a><br>&nbsp;&nbsp;<a href="#Curves_and_Surfaces">Curves and Surfaces</a><br>&nbsp;&nbsp;<a href="#Textures">Textures</a><br>&nbsp;&nbsp;<a href="#Shaders">Shaders</a><br>&nbsp;&nbsp;<a href="#Particle_Systems">Particle Systems</a><br>&nbsp;&nbsp;<a href="#Loading_3D_Models">Loading 3D Models</a><br>&nbsp;&nbsp;<a href="#Selecting_Objects">Selecting Objects</a><br>&nbsp;&nbsp;<a href="#Lights">Lights</a><br>&nbsp;&nbsp;<a href="#Text">Text</a><br>&nbsp;&nbsp;<a href="#Projections">Projections</a><br>&nbsp;&nbsp;<a href="#Miscellaneous">Miscellaneous</a><br><a href="#Example">Example</a><br><a href="#History">History</a><br>&nbsp;&nbsp;<a href="#Version_2_0_0_beta3">Version 2.0.0-beta3</a><br>&nbsp;&nbsp;<a href="#Version_2_0_0_beta2">Version 2.0.0-beta2</a><br>&nbsp;&nbsp;<a href="#Version_2_0_0_beta1">Version 2.0.0-beta1:</a><br></p>
 
 <h2>How to Use</h2>
 
@@ -482,6 +482,43 @@ sub.getLights().setBasic();
 <p><a id=History></a></p>
 
 <h2>History</h2>
+
+<p><a id=Version_2_0_0_beta3></a></p>
+
+<h3>Version 2.0.0-beta3</h3>
+
+<p>The changes in beta 3 from beta 2 include:</p>
+
+<ul>
+<li>The main library files were converted to ECMAScript&#39;s import/export convention.  The <code>rollup</code> tool
+is used to help generate the <code>h3du_min.js</code> file.</li>
+<li>HTML documentation included in distribution.</li>
+<li>&quot;Norm&quot; methods in H3DU.Math were renamed to use &quot;Normalize&quot; instead.</li>
+<li>New <code>convex.js</code> in extras folder generates the convex hull of a set of points.</li>
+<li>New <code>interp.js</code> in extras folder provides a cubic B&eacute;zier interpolation function.</li>
+<li>New <code>spline.js</code> in extras folder generates piecewise interpolating curves.</li>
+<li>New demos added, including demos showing how to generate procedural content using shaders.</li>
+<li>Several methods in H3DU.GraphicsPath were reimplemented.</li>
+<li>H3DU.BezierCurve and H3DU.BezierSpline are deprecated.</li>
+<li>H3DU.CurveBuilder and H3DU.SurfaceBuilder classes were created; they replace now-deprecated
+H3DU.CurveEval and H3DU.SurfaceEval classes.</li>
+<li>H3DU.MeshBuffer contains many new methods; in exchange, many of the H3DU.Mesh
+methods reimplemented in H3DU.MeshBuffer are deprecated.</li>
+<li>H3DU.Mesh is considerably deemphasized in this version; that class should only be used
+for building meshes, not storing them.</li>
+<li>H3DU.Curve and H3DU.Surface were created; these classes represent parametric curves
+and surfaces and offer methods for querying information at a given point on the curve or surface.
+Made several class derive from either class, including H3DU.BSplineCurve, H3DU.BSplineSurface,
+and new class H3DU.PiecewiseCurve.</li>
+<li>H3DU.RenderPass3D renamed to H3DU.RenderPass.</li>
+<li>Deleted fromBasic and fromBasicTexture methods from H3DU.PbrMaterial.</li>
+<li>Added JOINTS and WEIGHTS constants to H3DU.Semantic.</li>
+<li>Preliminary support for occlusion maps.</li>
+<li>Default diffuse/albedo in Material and PbrMaterial is now (1,1,1,1).</li>
+<li>New H3DU.BufferAccessor class represents a single vertex buffer.</li>
+<li>Many methods outside H3DU.Mesh now return H3DU.MeshBuffer instead of H3DU.Mesh.</li>
+<li>Bug fixes.</li>
+</ul>
 
 <p><a id=Version_2_0_0_beta2></a></p>
 
