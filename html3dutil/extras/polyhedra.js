@@ -124,7 +124,7 @@ H3DU.Polyhedra.makeMesh = function(vi) {
  // for a flat-shaded appearance
   "use strict";
   return new H3DU.MeshBuffer()
-   .setAttribute(H3DU.Semantic.POSITION, 0, vi[0], 0, 3)
+   .setAttribute("POSITION", vi[0], 3)
    .setIndices(vi[1])
    .recalcNormals(true);
 };

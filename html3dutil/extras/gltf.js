@@ -738,8 +738,8 @@
               return null;
             }
             maxCount = Math.max(maxCount, array.valueCount);
-            meshBuffer.setAttribute(attributeName, 0, array.array, 0,
-                      array.elementsPerValue, array.elementStride());
+            meshBuffer.setAttribute(attributeName, array.array,
+                      array.elementsPerValue, 0, array.elementStride());
           }
         var indexArray = null;
 

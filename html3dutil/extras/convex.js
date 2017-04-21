@@ -235,12 +235,6 @@
       }
       return [meshVertices, meshIndices];
     };
-    this.toMeshBuffer = function(points) {
-      var mvi = this.toMeshVerticesIndices(points);
-      return new H3DU.MeshBuffer()
-         .setAttribute("POSITION", 0, mvi[0], 0, 3)
-         .setIndices(mvi[1]);
-    };
   };
 /** @ignore */
   QuickHull.prototype.addPointToFace = function(f, pointIndex) {
@@ -707,6 +701,9 @@
   H3DU.Meshes.createConvexHull = function(points, flat, inside) {
     var bm = new QuickHull();
     bm.buildMesh(points, 1e-8);
-    return bm.mesh.toMeshBuffer(points).recalcNormals(flat, inside);
+    var mvi = bm.mesh.toMeshVerticesIndices(points);
+    return new H3DU.MeshBuffer()
+         .setAttribute("POSITION", mvi[0], 3)
+         .setIndices(mvi[1]).recalcNormals(flat, inside);
   };
 }(H3DU));

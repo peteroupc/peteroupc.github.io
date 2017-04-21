@@ -48,8 +48,8 @@ BspTree._MiniBuilder = function() {
   };
   this.toMeshBuffer = function() {
     return new H3DU.MeshBuffer()
-    .setAttribute("POSITION", 0, this.vertices, 0, 3)
-    .setAttribute("NORMAL", 0, this.normals, 0, 3)
+    .setAttribute("POSITION", this.vertices, 3)
+    .setAttribute("NORMAL", this.normals, 3)
     .setIndices(this.indices);
   };
 };

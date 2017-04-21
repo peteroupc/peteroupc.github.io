@@ -198,8 +198,10 @@ H3DU.MeshJSON.loadJSON = function(url) {
     if(json.indices) {
       var mb = new H3DU.MeshBuffer();
       mb.setIndices(json.indices);
-      mb.setAttribute("POSITION", 0, json.vertices, 0, 3);
-      if(typeof json.normals !== "undefined" && json.normals !== null)mb.setAttribute("NORMAL", 0, json.normals, 0, 3);
+      mb.setAttribute("POSITION", json.vertices, 3);
+      if(typeof json.normals !== "undefined" && json.normals !== null) {
+        mb.setAttribute("NORMAL", json.normals, 3);
+      }
       return new H3DU.MeshJSON._Model(mb);
     } else if(json.faces) {
       var meshes = [];

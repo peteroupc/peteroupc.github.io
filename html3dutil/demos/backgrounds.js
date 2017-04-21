@@ -1,4 +1,4 @@
-/* global H3DU */
+/* global H3DU, quadBatch */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -33,11 +33,7 @@ function SunburstBackground(black, white) {
     "whiteColor":H3DU.toGLColor(white).slice(0, 3),
     "time":0
   });
-  this.batch = new H3DU.Batch3D().addShape(
-  new H3DU.Shape(
-     new H3DU.MeshBuffer()
-    .setAttribute("POSITION", 0, [-1, 1, 0, -1, -1, 0, 1, 1, 0, 1, -1, 0], 0, 3)
-    .setIndices([0, 1, 2, 2, 1, 3])).setShader(this.shader));
+  this.batch = quadBatch(this.shader);
   this.getBatch = function() {
     return this.batch;
   };
@@ -70,11 +66,7 @@ function StripesBackground(black, white) {
     "whiteColor":H3DU.toGLColor(white).slice(0, 3),
     "time":0
   });
-  this.batch = new H3DU.Batch3D().addShape(
-  new H3DU.Shape(
-     new H3DU.MeshBuffer()
-    .setAttribute("POSITION", 0, [-1, 1, 0, -1, -1, 0, 1, 1, 0, 1, -1, 0], 0, 3)
-    .setIndices([0, 1, 2, 2, 1, 3])).setShader(this.shader));
+  this.batch = quadBatch(this.shader);
   this.getBatch = function() {
     return this.batch;
   };

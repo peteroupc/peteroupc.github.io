@@ -42,9 +42,14 @@ by swapping the second and third vertex indices of each one.</li>
 <li><a href="#H3DU.MeshBuffer_setAttribute">setAttribute</a><br>Adds information about a buffer attribute to this
 mesh buffer (or sets an
 existing attribute&#39;s information).</li>
+<li><a href="#H3DU.MeshBuffer_setAttributeEx">setAttributeEx</a><br>Adds information about a buffer attribute to this
+mesh buffer (or sets an
+existing attribute&#39;s information), taking a semantic index as
+an additional parameter.</li>
 <li><a href="#H3DU.MeshBuffer_setColor">setColor</a><br>Sets all the vertices in this mesh to the given color, by
 assigning each value with the attribute semantic <code>COLOR</code>
 to the given color.</li>
+<li><a href="#H3DU.MeshBuffer_setColor3">setColor3</a><br><b>Deprecated: Use <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setColor">H3DU.MeshBuffer#setColor</a> instead.</b></li>
 <li><a href="#H3DU.MeshBuffer_setIndices">setIndices</a><br>Sets the vertex indices used by this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_setPrimitiveType">setPrimitiveType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_toWireFrame">toWireFrame</a><br><b>Deprecated: Included here for compatibility with <a href="H3DU.Mesh.html">H3DU.Mesh</a>.
@@ -170,7 +175,7 @@ and the other mesh&#39;s indices copied or adapted.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>other</code> (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh&#39;s primitive type is not the same as the other mesh&#39;s primitive type</li>
+<li><code>other</code> (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> | <a href="H3DU.Mesh.html">H3DU.Mesh</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh&#39;s primitive type is not the same as the other mesh&#39;s primitive type. <i>Passing a Mesh to this method is for compatibility only and this feature may be dropped in the future.</i></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -301,7 +306,7 @@ new H3DU.MeshBuffer().merge(originalMesh).reverseWinding()
 
 <p><a name='H3DU.MeshBuffer_setAttribute'></a></p>
 
-<h3>H3DU.MeshBuffer#setAttribute(name, index, buffer, startIndex, countPerVertex, [stride])</h3>
+<h3>H3DU.MeshBuffer#setAttribute(name, buffer, countPerValue, [offset], [stride])</h3>
 
 <p>Adds information about a buffer attribute to this
 mesh buffer (or sets an
@@ -312,12 +317,38 @@ stored in a vertex buffer.</p>
 <h4>Parameters</h4>
 
 <ul>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid. If this isn&#39;t a string, the set index of the attribute will be 0 (see <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>).</li>
+<li><code>buffer</code> (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored. See <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.</li>
+<li><code>countPerValue</code> (Type: number)<br>The number of elements in each per-vertex item. See <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.</li>
+<li><code>offset</code> (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts.See <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.</li>
+<li><code>stride</code> (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. See <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object.Throws an error if the given
+semantic is unsupported. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
+
+<p><a name='H3DU.MeshBuffer_setAttributeEx'></a></p>
+
+<h3>H3DU.MeshBuffer#setAttributeEx(name, index, buffer, [countPerValue], [offset], [stride])</h3>
+
+<p>Adds information about a buffer attribute to this
+mesh buffer (or sets an
+existing attribute&#39;s information), taking a semantic index as
+an additional parameter. An attribute
+gives information about the per-vertex data used and
+stored in a vertex buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
 <li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
-<li><code>index</code> (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
-<li><code>buffer</code> (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored.</li>
-<li><code>startIndex</code> (Type: number)<br>The index into the array (starting from 0) where the first per-vertex item starts.</li>
-<li><code>countPerVertex</code> (Type: number)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less.</li>
-<li><code>stride</code> (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as &quot;countPerVertex&quot;. Throws an error if this value is 0 or less.</li>
+<li><code>index</code> (Type: number)<br>The semantic index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
+<li><code>buffer</code> (Type: Float32Array | Array | BufferAccessor)<br>The buffer where the per-vertex data is stored.</li>
+<li><code>countPerValue</code> (Type: number) (optional)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less. If &quot;buffer&quot; is a <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>, the value of &quot;countPerValue&quot; is taken from that accessor and this parameter is ignored; this parameter is currently required otherwise.</li>
+<li><code>offset</code> (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts. If null, undefined, or omitted, the default is 0. Throws an error if less than 0. If &quot;buffer&quot; is a <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>, the value of &quot;offset&quot; is taken from that accessor and this parameter is ignored.</li>
+<li><code>stride</code> (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as &quot;countPerValue&quot;. Throws an error if this value is 0 or less. If &quot;buffer&quot; is a <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>, the value of &quot;stride&quot; is taken from that accessor and this parameter is ignored.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -349,6 +380,15 @@ regardless of semantic index, are affected by this method.</p>
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
+
+<p><a name='H3DU.MeshBuffer_setColor3'></a></p>
+
+<h3>H3DU.MeshBuffer#setColor3()</h3>
+
+<p><b>Deprecated: Use <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setColor">H3DU.MeshBuffer#setColor</a> instead.</b></p>
+
+<p>Alias for the <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setColor">H3DU.MeshBuffer#setColor</a> method
+for compatibility.</p>
 
 <p><a name='H3DU.MeshBuffer_setIndices'></a></p>
 

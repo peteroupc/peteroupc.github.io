@@ -10,6 +10,41 @@
 
 <h2>Version History</h2>
 
+<p>Version 2.0.0-beta3:</p>
+
+<p>The changes in beta 3 from beta 2 include:</p>
+
+<ul>
+<li>The main library files were converted to ECMAScript&#39;s import/export convention.  The <code>rollup</code> tool
+is used to help generate the <code>h3du_min.js</code> file.</li>
+<li>HTML documentation included in distribution.</li>
+<li>&quot;Norm&quot; methods in H3DU.Math were renamed to use &quot;Normalize&quot; instead.</li>
+<li>New <code>convex.js</code> in extras folder generates the convex hull of a set of points.</li>
+<li>New <code>interp.js</code> in extras folder provides a cubic B&eacute;zier interpolation function.</li>
+<li>New <code>spline.js</code> in extras folder generates piecewise interpolating curves.</li>
+<li>New demos added, including demos showing how to generate procedural content using shaders.</li>
+<li>Several methods in H3DU.GraphicsPath were reimplemented.</li>
+<li>H3DU.BezierCurve and H3DU.BezierSpline are deprecated.</li>
+<li>H3DU.CurveBuilder and H3DU.SurfaceBuilder classes were created; they replace now-deprecated
+H3DU.CurveEval and H3DU.SurfaceEval classes.</li>
+<li>H3DU.MeshBuffer contains many new methods; in exchange, many of the H3DU.Mesh
+methods reimplemented in H3DU.MeshBuffer are deprecated.</li>
+<li>H3DU.Mesh is considerably deemphasized in this version; that class should only be used
+for building meshes, not storing them.</li>
+<li>H3DU.Curve and H3DU.Surface were created; these classes represent parametric curves
+and surfaces and offer methods for querying information at a given point on the curve or surface.
+Made several class derive from either class, including H3DU.BSplineCurve, H3DU.BSplineSurface,
+and new class H3DU.PiecewiseCurve.</li>
+<li>H3DU.RenderPass3D renamed to H3DU.RenderPass.</li>
+<li>Deleted fromBasic and fromBasicTexture methods from H3DU.PbrMaterial.</li>
+<li>Added JOINTS and WEIGHTS constants to H3DU.Semantic.</li>
+<li>Preliminary support for occlusion maps.</li>
+<li>Default diffuse/albedo in Material and PbrMaterial is now (1,1,1,1).</li>
+<li>New H3DU.BufferAccessor class represents a single vertex buffer.</li>
+<li>Many methods outside H3DU.Mesh now return H3DU.MeshBuffer instead of H3DU.Mesh.</li>
+<li>Bug fixes.</li>
+</ul>
+
 <p>Version 2.0.0-beta2:</p>
 
 <p>The changes in beta 2 from beta 1 include:</p>
