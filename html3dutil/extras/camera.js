@@ -738,7 +738,7 @@ H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
     this._updateView();
     return this;
   } else {
-    return this.setPosition(cx[0], cy[1], cz[2]);
+    return this.setPosition(cx[0], cx[1], cx[2]);
   }
 };
 
