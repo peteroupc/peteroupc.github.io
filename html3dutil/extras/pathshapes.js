@@ -42,15 +42,16 @@ H3DU.GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
  * @returns {H3DU.GraphicsPath} This object. If "pointCoords" is empty, no path segments will be appended.
  * Throws an error if "pointCoords" has an odd length.
  */
-H3DU.GraphicsPath.prototype.polygon = function(polygon, pointCoords, closed) {
+H3DU.GraphicsPath.prototype.polyline = function(pointCoords, closed) {
   "use strict";
+  var closedValue = typeof closed !== "undefined" && closed !== null ? closed : false;
   if(pointCoords.length === 0)return this;
   if(pointCoords.length % 2 !== 0)throw new Error();
   this.moveTo(pointCoords[0], pointCoords[1]);
   for(var i = 2; i < pointCoords.length; i += 2) {
     this.lineTo(pointCoords[i], pointCoords[i + 1]);
   }
-  if(closed)this.closePath();
+  if(closedValue)this.closePath();
   return this;
 };
 

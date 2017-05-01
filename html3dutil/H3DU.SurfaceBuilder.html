@@ -88,8 +88,8 @@ and vertex indices generated so far. The attributes themselves will remain.</p>
 
 <ul>
 <li><code>mode</code> (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, or is null, undefined, or omitted, generates a series of triangles defining the surface. If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, generates a series of lines defining the surface. If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the surface. For any other value, this method has no effect.</li>
-<li><code>un</code> (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24.</li>
-<li><code>vn</code> (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24.</li>
+<li><code>un</code> (Type: number) (optional)<br>Number of subdivisions along the U axis. Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.</li>
+<li><code>vn</code> (Type: number) (optional)<br>Number of subdivisions along the V axis. Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.</li>
 <li><code>u1</code> (Type: number) (optional)<br>Starting U coordinate of the surface to evaluate. Default is the starting U coordinate given by the <a href="H3DU.Surface.html">surface evaluator object</a>, or 0 if not given.</li>
 <li><code>u2</code> (Type: number) (optional)<br>Ending U coordinate of the surface to evaluate. Default is the ending U coordinate given by the <a href="H3DU.Surface.html">surface evaluator object</a>, or 1 if not given.</li>
 <li><code>v1</code> (Type: number) (optional)<br>Starting V coordinate of the surface to evaluate. Default is the starting V coordinate given by the <a href="H3DU.Surface.html">surface evaluator object</a>, or 0 if not given.</li>
