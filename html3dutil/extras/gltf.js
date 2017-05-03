@@ -15,7 +15,7 @@
 */
 
 /** @ignore */
-var GltfArray$1 = function(array, count, type, byteSize, byteStride) {
+var GltfArray = function(array, count, type, byteSize, byteStride) {
   this.type = type;
   this.array = array;
   this.elementByteSize = byteSize;
@@ -32,11 +32,11 @@ var GltfArray$1 = function(array, count, type, byteSize, byteStride) {
   this.elementCount = count * this.elementsPerValue;
 };
 /** @ignore */
-GltfArray$1.prototype.valueByteSize = function() {
+GltfArray.prototype.valueByteSize = function() {
   return this.elementByteSize * this.elementsPerValue;
 };
 /** @ignore */
-GltfArray$1.prototype.elementStride = function() {
+GltfArray.prototype.elementStride = function() {
   if(this.byteStride === 0) {
     return this.elementsPerValue;
   }
@@ -44,7 +44,7 @@ GltfArray$1.prototype.elementStride = function() {
 };
 
 /** @ignore */
-GltfArray$1.prototype.toValueArray = function() {
+GltfArray.prototype.toValueArray = function() {
   if(this.byteStride !== 0 && this.byteStride !== this.valueByteSize()) {
     throw new Error("Byte stride not yet supported in toValueArray");
   }
@@ -60,12 +60,13 @@ GltfArray$1.prototype.toValueArray = function() {
     return ret;
   }
 };
-  /** @ignore */
-var GltfUtil$1 = function() {
+  /** @ignore
+   * @constructor */
+var GltfUtil = function() {
     // empty
 };
   /** @ignore */
-GltfUtil$1.arrayToView = function(arr, reference) {
+GltfUtil.arrayToView = function(arr, reference) {
   if(reference instanceof Uint8Array) {
     return new Uint8Array(arr);
   }
@@ -75,7 +76,7 @@ GltfUtil$1.arrayToView = function(arr, reference) {
   return new Uint16Array(arr);
 };
   /** @ignore */
-GltfUtil$1.lineStripToLines = function(strip) {
+GltfUtil.lineStripToLines = function(strip) {
   var ret = [];
   if(strip.length < 2) {
     return strip;
@@ -84,10 +85,10 @@ GltfUtil$1.lineStripToLines = function(strip) {
   for(var i = 1; i < strip.length; i++) {
     ret.push(strip[i - 1], strip[i]);
   }
-  return GltfUtil$1.arrayToView(ret, strip);
+  return GltfUtil.arrayToView(ret, strip);
 };
   /** @ignore */
-GltfUtil$1.lineLoopToLines = function(strip) {
+GltfUtil.lineLoopToLines = function(strip) {
   var ret = [];
   if(strip.length < 2) {
     return strip;
@@ -96,11 +97,11 @@ GltfUtil$1.lineLoopToLines = function(strip) {
     ret.push(strip[i - 1], strip[i]);
   }
   ret.push(strip[strip.length - 1], strip[0]);
-  return GltfUtil$1.arrayToView(ret, strip);
+  return GltfUtil.arrayToView(ret, strip);
 };
 
 /** @ignore */
-GltfUtil$1.triangleFanToTriangles = function(fan) {
+GltfUtil.triangleFanToTriangles = function(fan) {
   var ret = [];
   if(fan.length < 3) {
     return fan;
@@ -108,11 +109,11 @@ GltfUtil$1.triangleFanToTriangles = function(fan) {
   for(var i = 2; i < fan.length; i++) {
     ret.push(fan[0], fan[i - 1], fan[i]);
   }
-  return GltfUtil$1.arrayToView(ret, fan);
+  return GltfUtil.arrayToView(ret, fan);
 };
 
 /** @ignore */
-GltfUtil$1.triangleStripToTriangles = function(strip) {
+GltfUtil.triangleStripToTriangles = function(strip) {
   var ret = [];
   if(strip.length < 3) {
     return strip;
@@ -125,11 +126,11 @@ GltfUtil$1.triangleStripToTriangles = function(strip) {
       ret.push(strip[i - 1], strip[i - 2], strip[i]);
     }
   }
-  return GltfUtil$1.arrayToView(ret, strip);
+  return GltfUtil.arrayToView(ret, strip);
 };
 
 /** @ignore */
-GltfUtil$1._elementsPerValue = function(type) {
+GltfUtil._elementsPerValue = function(type) {
   if(type === "SCALAR")return 1;
   if(type === "VEC2")return 2;
   if(type === "VEC3")return 3;
@@ -140,7 +141,7 @@ GltfUtil$1._elementsPerValue = function(type) {
   return 0;
 };
 /** @ignore */
-GltfUtil$1._resolvePath = function(path, name) {
+GltfUtil._resolvePath = function(path, name) {
  // Return data URIs directly
   if(name.indexOf("data:") === 0) {
     return name;
@@ -160,7 +161,7 @@ GltfUtil$1._resolvePath = function(path, name) {
 };
 
 /** @ignore */
-GltfUtil$1._makeArray = function(componentType, buffer, bufferOffset, elementCount) {
+GltfUtil._makeArray = function(componentType, buffer, bufferOffset, elementCount) {
   if(componentType === 5120) {
     return new Int8Array(buffer, bufferOffset, elementCount);
   }
@@ -185,7 +186,7 @@ GltfUtil$1._makeArray = function(componentType, buffer, bufferOffset, elementCou
   return null;
 };
 /** @ignore */
-GltfUtil$1._bytesPerElement = function(componentType) {
+GltfUtil._bytesPerElement = function(componentType) {
   if(componentType === 5120 || componentType === 5121)return 1;
   if(componentType === 5122 || componentType === 5123)return 2;
   if(componentType === 5124 || componentType === 5125)return 4;
@@ -193,7 +194,7 @@ GltfUtil$1._bytesPerElement = function(componentType) {
   return 0;
 };
   /** @ignore */
-GltfUtil$1._lerp = function(s, e, t) {
+GltfUtil._lerp = function(s, e, t) {
   if(s.length === 4 && e.length === 4) {
     return H3DU.Math.vec4lerp(s, e, t);
   } else if(s.length === 3 && e.length === 3) {
@@ -204,7 +205,7 @@ GltfUtil$1._lerp = function(s, e, t) {
   }
 };
 /** @ignore */
-GltfUtil$1._slerp = function(s, e, t) {
+GltfUtil._slerp = function(s, e, t) {
   if(s.length === 4 && e.length === 4) {
     return H3DU.Math.quatSlerp(s, e, t);
   } else {
@@ -212,8 +213,87 @@ GltfUtil$1._slerp = function(s, e, t) {
     return null;
   }
 };
+/** @ignore */
+GltfUtil.hasUniqueItems = function(items) {
+  if(items.length === 0)return true;
+  if(items.length === 1 && items[0] >= 0)return true;
+  if(items[0] < 0)return false;
+  var s = items.sort();
+  for(var i = 0; i < s.length - 1; i++) {
+    if(s[i] === s[i + 1])return false;
+  }
+  return true;
+};
+  /** @ignore */
+GltfUtil.addExtensionsExtras = function(property, retval) {
+  retval.extras = typeof property.extras !== "undefined" && property.extras !== null ?
+  property.extras : {};
+  retval.extensions = typeof property.extensions !== "undefined" && property.extensions !== null ?
+    property.extensions : {};
+  return retval;
+};
+  /** @ignore */
+GltfUtil.parseStringDefault = function(value, defaultValue) {
+  if(typeof value === "undefined")return defaultValue;
+  if(typeof value !== "string")throw new Error();
+  return value;
+};
+  /** @ignore */
+GltfUtil.parseString = function(value) {
+  if(typeof value === "undefined")return "";
+  if(typeof value !== "string")throw new Error();
+  return value;
+};
+  /** @ignore */
+GltfUtil.parseArrayFixedLength = function(value, len, defvalue) {
+  if(typeof value === "undefined")return defvalue;
+  if(!(value instanceof Array) || value.length !== len)throw new Error();
+  return value;
+};
+  /** @ignore */
+GltfUtil.parseArrayMin1 = function(value) {
+  if(typeof value === "undefined")return [];
+  if(!(value instanceof Array) || value.length === 0)throw new Error();
+  return value;
+};
+/**
+ * TODO: Not documented yet.
+ * @param {*} value
+ * @returns {*} Return value.
+ */
+GltfUtil.parseArrayUniqueMin1 = function(value) {
+  if(typeof value === "undefined")return [];
+  if(!(value instanceof Array) || value.length === 0 ||
+     !GltfUtil.hasUniqueItems(value))throw new Error();
+  return value;
+};
+// Process a nonnegative integer value, returning -1
+// if the value is undefined
+GltfUtil.parseNonnegativeInteger = function(value) {
+  if(typeof value === "undefined")return -1;
+  if(typeof value !== "number" || Math.floor(value) !== value || isNaN(value) ||
+     value === Number.POSITIVE_INFINITY || value < 0)throw new Error();
+  return value;
+};
+  /** @ignore */
+GltfUtil.parseNonnegativeNumber = function(value) {
+  if(typeof value === "undefined")return -1;
+  if(typeof value !== "number" || isNaN(value) ||
+     value === Number.POSITIVE_INFINITY || value < 0)throw new Error();
+  return value;
+};
+  /** @ignore */
+GltfUtil.parseNonnegativeNumberDefault = function(value, defValue) {
+  return typeof value === "undefined" ? defValue :
+     GltfUtil.parseNonnegativeNumber(value);
+};
+  /** @ignore */
+GltfUtil.parseNonnegativeIntegerDefault = function(value, defValue) {
+  return typeof value === "undefined" ? defValue :
+     GltfUtil.parseNonnegativeInteger(value);
+};
 
-/* global Gltf, GltfArray, GltfUtil, H3DU, Promise, Uint16Array, Uint32Array, path */
+/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -222,6 +302,88 @@ GltfUtil$1._slerp = function(s, e, t) {
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+function GltfInfo() {
+  this.animChannels = [];
+  this.batch = null;
+  this.timer = {};
+  this.imageUris = [];
+}
+/** @ignore */
+GltfInfo.prototype.getImageURIs = function() {
+  return this.imageUris.slice(0, this.imageUris.length);
+};
+
+/** @ignore */
+GltfInfo.prototype.getShape = function() {
+  return this.batch;
+};
+/** @ignore */
+GltfInfo._interpolate = function(node, s, e, t, path) {
+  switch(path) {
+  case 0: {
+      // translation
+    node.getTransform().setPosition(
+         GltfUtil._lerp(s, e, t));
+    break;
+  }
+  case 1: {
+      // scale
+    node.getTransform().setScale(
+         GltfUtil._lerp(s, e, t));
+    break;
+  }
+  case 2: {
+      // rotation
+    node.getTransform().setQuaternion(
+         GltfUtil._slerp(s, e, t));
+    break;
+  }
+  default:
+    break;
+  }
+};
+/** @ignore */
+GltfInfo.prototype.update = function(time) {
+  if(this.maxEndTimeSecs > 0) {
+    for(var i = 0; i < this.animChannels.length; i++) {
+      var ch = this.animChannels[i];
+      var node = ch.target;
+      var maxInput = ch.sampler.input[ch.sampler.input.length - 1];
+      var pos = H3DU.getTimePosition(this.timer, time,
+      this.maxEndTimeSecs * 1000.0);
+      if(pos * this.maxEndTimeSecs > maxInput) {
+        // Reached end of animation
+        var last = ch.sampler.output[ch.sampler.output.length - 1];
+        GltfInfo._interpolate(node, last, last, 0, ch.path);
+      } else {
+        var invEnd = 1.0 / this.maxEndTimeSecs;
+        var inputLen = ch.sampler.input.length;
+        for(var j = 0; j < inputLen; j++) {
+          var s = ch.sampler.input[j] * invEnd;
+          var e = ch.sampler.input[j + 1] * invEnd;
+      // LATER: Support STEP interpolation
+          if(pos >= s && pos <= e) {
+            var fac = s === e ? 0.0 : (pos - s) / (e - s);
+            GltfInfo._interpolate(node,
+      ch.sampler.output[j],
+            ch.sampler.output[j + 1], fac, ch.path);
+          }
+        }
+      }
+    }
+  }
+};
+
+/* global H3DU, Promise, Uint16Array, Uint32Array */
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
+
 /** @ignore
  * @constructor */
 function GltfState1(gltf, path, promiseResults, promiseKinds, promiseNames) {
@@ -268,17 +430,6 @@ function GltfState1(gltf, path, promiseResults, promiseKinds, promiseNames) {
       }
     }
 }
-/** @ignore */
-GltfState1._makeShape = function(mesh) {
-  var sh = new H3DU.Shape(mesh);
-  sh.getMaterial().setParams({
-    "albedo":[0, 0, 0],
-    "emission":[0.5, 0.5, 0.5],
-    "metalness":0.0,
-    "roughness":1.0
-  });
-  return sh;
-};
 /** @ignore */
 GltfState1.prototype.preparePrograms = function() {
   var ret = {};
@@ -428,9 +579,12 @@ GltfState1.prototype.readTechnique = function(techniqueName) {
         } else if(param.semantic === "VIEWINVERSE" &&
           param.type === 35676) {
           sem = H3DU.Semantic.VIEWINVERSE;
+        } else if(param.semantic === "JOINTMATRIX" &&
+          param.type === 35676) {
+          sem = H3DU.Semantic.JOINTMATRIX;
         }
         if(sem === 0) {
-          console.log("Unsupported semantic: " + param.semantic);
+          console.log("Unsupported semantic: " + [param.semantic, param.type]);
         } else {
           shader.setUniformSemantic(uniformKey, sem);
         }
@@ -816,7 +970,13 @@ GltfState1.prototype.readNode = function(node, nodeName, parent) {
       if(lineStrip)indexArray = GltfUtil.lineStripToLines(indexArray);
       if(lineLoop)indexArray = GltfUtil.lineLoopToLines(indexArray);
       meshBuffer.setIndices(indexArray);
-      var shape = GltfState1._makeShape(meshBuffer);
+      var shape = new H3DU.Shape(meshBuffer);
+      shape.getMaterial().setParams({
+        "albedo":[0, 0, 0],
+        "emission":[0.5, 0.5, 0.5],
+        "metalness":0.0,
+        "roughness":1.0
+      });
       if(typeof prim.material === "undefined" || prim.material === null) {
         return null;
       }
@@ -941,7 +1101,7 @@ GltfState1.prototype.readScenes = function() {
 
 /** @ignore */
 GltfState1.prototype.toGltf = function() {
-  var ret = new Gltf();
+  var ret = new GltfInfo();
   ret.batch = this.batch;
   ret.animChannels = this.animChannels;
   ret.imageUris = this.imageUris;
@@ -957,7 +1117,7 @@ GltfState1.prototype.toGltf = function() {
 /**
  * @ignore
  */
-GltfState1.readBuffersAndShaders = function(gltf, promises, promiseKinds, promiseNames) {
+GltfState1.readBuffersAndShaders = function(gltf, path, promises, promiseKinds, promiseNames) {
   for(var bufferName in gltf.buffers || {})
     if(Object.prototype.hasOwnProperty.call( gltf.buffers, bufferName)) {
       var bufferValue = gltf.buffers[bufferName];
@@ -987,7 +1147,7 @@ GltfState1.readGltf = function(gltf, path) {
   var promises = [];
   var promiseKinds = [];
   var promiseNames = [];
-  GltfState1.readBuffersAndShaders(gltf, promises, promiseKinds, promiseNames);
+  GltfState1.readBuffersAndShaders(gltf, path, promises, promiseKinds, promiseNames);
   return H3DU.getPromiseResultsAll(promises)
    .then(function(promiseResults) {
      var state = new GltfState1(gltf, path, promiseResults, promiseKinds, promiseNames);
@@ -999,7 +1159,7 @@ GltfState1.readGltf = function(gltf, path) {
    });
 };
 
-/* global H3DU */
+/* global GltfState2, H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -1008,6 +1168,8 @@ GltfState1.readGltf = function(gltf, path) {
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+// LATER: Convert batches/shape groups to glTF
 
 /**
  * Loads a 3D scene stored in glTF format, together with the buffers and
@@ -1039,9 +1201,9 @@ H3DU.loadGltfFromUrl = function(url) {
     var gltf = data.data;
 
     if(typeof gltf.asset !== "undefined" && gltf.asset !== null && (typeof gltf.asset.version !== "undefined" && gltf.asset.version !== null)) {
-      if(gltf.asset.version === "2.0") {
-        throw new Error("Not supported yet");
-      } else if(gltf.asset.version !== "1.0") {
+      if(gltf.asset.version === "2.0" && (typeof GltfState2 !== "undefined" && GltfState2 !== null)) {
+        return GltfState2.readGltf(gltf, data.url);
+      } else if(gltf.asset.version !== "1.0" && gltf.asset.version !== "1.0.1") {
         throw new Error("Not supported yet");
       }
     }
