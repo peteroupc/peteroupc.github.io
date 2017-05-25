@@ -62,8 +62,9 @@ var cbor = CBORObject.NewMap()
    .Add(&quot;array&quot;, CBORObject.NewArray().Add(999f).Add(&quot;xyz&quot;))
    .Add(&quot;bytes&quot;, new byte[] { 0, 1, 2 });
 // The following converts the map to CBOR
-byte[] bytes = cbor.EncodeToBytes();
-// The following converts the map to JSON
+byte[] cborByteArray = cbor.EncodeToBytes();
+// The following converts the map to JSON (the &quot;bytes&quot;
+// property, as given above, will be converted to base64)
 string json = cbor.ToJSONString();
 Console.WriteLine(json);
 </code></pre>

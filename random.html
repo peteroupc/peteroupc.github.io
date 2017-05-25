@@ -1,0 +1,174 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Two Kinds of Random-number Generators Most Applications Need</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>The Two Kinds of Random-number Generators Most Applications Need</h1>
+
+<p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
+
+<p>Begun on Mar. 5, 2016; last updated on May 22, 2017.</p>
+
+<p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
+
+<h2>Introduction</h2>
+
+<p>As I see it, there are two kinds of random-number generators (RNGs) needed by applications, namely--</p>
+
+<ul>
+<li>unpredictable random generators (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot;), and</li>
+<li>statistically random generators.</li>
+</ul>
+
+<p>The following is a sketch of a C programming interface that specifies two functions that could meet these two needs.</p>
+
+<h2>Unpredictable RNGs</h2>
+
+<p>Unpredictable random implementations (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) are indispensable in information security contexts, such as--</p>
+
+<ul>
+<li> generating encryption keys,</li>
+<li> generating &quot;salts&quot; to vary cryptographic hashes of the same password, and</li>
+<li> use in secure communication protocols.</li>
+</ul>
+
+<p>They are also useful in other contexts, such as--</p>
+
+<ul>
+<li> shuffling a digital deck of cards, for reasons described later, and</li>
+<li> cases where the application generates random numbers so infrequently that the RNG&#39;s speed is not a concern.</li>
+</ul>
+
+<p>The goal of this kind of generator is to keep the random numbers from being guessed easily.</p>
+
+<pre><code>int random(uint8_t[] bytes, size_t size);
+</code></pre>
+
+<p>Generates random bits using an unpredictable-random implementation.</p>
+
+<ul>
+<li> Quality: An unpredictable-random implementation generates random bits that are unpredictable.</li>
+<li> Predictability: &quot;Unpredictable&quot; means that an outside party, even if the random algorithm used and extremely many outputs of the implementation are known--
+
+<ul>
+<li>  cannot guess prior unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the implementation&#39;s internal state at the given point in time, and</li>
+<li>  cannot guess future unseen bits of that sequence correctly with more than a 50% chance per bit without knowledge of that state at the given point in time (or, where feasible by the implementation, with that knowledge).</li>
+</ul></li>
+<li> Seeding: If the implementation uses a deterministic algorithm to generate random numbers, its internal state must be seeded with unpredictable data. The internal state (the part of the algorithm&#39;s state that can be initialized with arbitrary data) must be at least 128 bits and should be at least 238 bits (the length in bits of 54 factorial). The seed must be at least the same size as the internal state.</li>
+<li> Reseeding: The internal state should be reseeded from time to time to ensure each bit of the output is unpredictable even if an outside party somehow gains knowledge of its internal state.</li>
+<li> Speed: The implementation should select algorithms that are reasonably fast for most applications.</li>
+<li> Time Complexity: The implementation must run in amortized linear time on the size of the output array.</li>
+<li> Thread Safety: The implementation should be safe for concurrent use by multiple threads.</li>
+<li> Examples: The &quot;/dev/urandom&quot; device on many Unix-based operating systems; CryptGenRandom function on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).</li>
+</ul>
+
+<p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.</p>
+
+<h2>Statistical RNGs</h2>
+
+<p>Statistically random generators are needed by simulations and many games to bring an element of chance and variation to the application. This kind of generator is generally suitable only if--</p>
+
+<ul>
+<li> information security is not involved,</li>
+<li> 20 or fewer items are being shuffled (in cases where the RNG is used for shuffling), and</li>
+<li> the application generates random numbers frequently enough that the RNG&#39;s speed is a concern.</li>
+</ul>
+
+<p>The goal of this kind of generator is for each possible outcome to be equally likely.</p>
+
+<pre><code>int random_fast(uint8_t[] bytes, size_t size);
+</code></pre>
+
+<p>Generates random bits using a statistical-random implementation.</p>
+
+<ul>
+<li> Quality: A statistical-random implementation generates random bits that, theoretically, are uniformly randomly chosen independently of the other bits. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no <a href="http://xoroshiro.di.unimi.it/#quality">systematic failures</a> in TestU01&#39;s BigCrush test battery [L&#39;Ecuyer and Simard 2007] meets these requirements.)</li>
+<li> Predictability: The implementation&#39;s output must not be trivially predictable.</li>
+<li> Seeding: The implementation must be seeded with information not known <em>a priori</em> by the implementation, such as random bits from an unpredictable-random implementation. As far as practical, the seed should not be trivially predictable. The internal state must be at least 64 bits and should be at least 128 bits. The seed must be at least the same size as the internal state.</li>
+<li> Reseeding: The implementation may reseed the internal state from time to time. It should do so if its internal state&#39;s size is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the RNG&#39;s period.</li>
+<li> Speed: The implementation should select algorithms that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
+<li> Time Complexity: The implementation must run in amortized linear time on the size of the output array.</li>
+<li> Thread Safety: The implementation should be safe for concurrent use by multiple threads.</li>
+<li> Examples: The &quot;xorshift128+&quot; and Lehmer128 random number generators.</li>
+</ul>
+
+<p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.</p>
+
+<h2>Shuffling</h2>
+
+<p>A deterministic random number generator (DRNG) can&#39;t generate more permutations of random number sequences than its period. A DRNG can&#39;t generate all permutations of a list if the factorial of its size is greater than the DRNG&#39;s period. This means that the items in a shuffled list of that size will never appear in certain orders when that DRNG is used to shuffle it.</p>
+
+<p>A DRNG with period 264, for example, can&#39;t generate all permutations of a list with more than 20 items; with period 2128, more than 34 items; with period 2226, more than 52 items; and with period 2256, more than 57 items.</p>
+
+<p>When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.</p>
+
+<h2>Seedable Random Generators</h2>
+
+<p>In addition, some applications generate results based on apparently-random principles, starting from a known initial state. One notable example is a &quot;code&quot;, or password, for generating a particular game level in some role-playing games.</p>
+
+<p>Functions for seeding random number algorithms are not included, because applications that require seeding usually care about reproducible results. Such applications often need to keep not only the RNG algorithm stable, but also any algorithm that uses that RNG algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which RNG algorithm to use for such purpose depends on the application. But here are some recommendations:</p>
+
+<ul>
+<li> Any RNG algorithm selected for producing reproducible results should meet at least the quality and predictability requirements of a statistical-random implementation, and should be reasonably fast.</li>
+<li> Any seed passed as input to that algorithm should be 64 bits or greater.</li>
+</ul>
+
+<p>An application should only use seeding if:</p>
+
+<ol>
+<li>the initial state (the seed) which the &quot;random&quot; result will be generated from is known (for example, because it&#39;s hard-coded or because it was entered by the user),</li>
+<li>the application needs to generate the same &quot;random&quot; result multiple times,</li>
+<li> it would be impractical to convey that &quot;random&quot; result without relying on seeding, such as-
+
+<ul>
+<li>  by saving the result to a file, or</li>
+<li>  by distributing the results or the random numbers to networked users as they are generated, and</li>
+</ul></li>
+<li>the RNG algorithm and any procedure using that algorithm to generate that &quot;random&quot; result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application&#39;s functionality.)</li>
+</ol>
+
+<p>On the other hand, an application need not use seeding if the randomness is only used for slight and inconspicuous visual variations, provided the visual variations have no impact on information security or on gameplay. For such purposes, the random-number generator need only be as strong as required to achieve the desired visual variations.</p>
+
+<h2>Conclusion</h2>
+
+<p>In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified above will meet the needs of these applications.</p>
+
+<p>Feel free to send comments. They may help improve this page.</p>
+
+<h2>License</h2>
+
+<p>This article, along with any associated source code and files, is licensed under <a href="http://creativecommons.org/licenses/publicdomain/">A Public Domain dedication</a></p>
+</div><nav id="navigation"><p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>
