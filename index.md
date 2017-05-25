@@ -2,7 +2,14 @@ peteroupc.github.io
 ====
 
 Welcome to peteroupc.github.io. This page contains more information
-on several of my programming projects on GitHub:
+on several of my programming projects on GitHub.  View [this site's repository](https://github.com/peteroupc/peteroupc.github.io)
+to see this site's source code.
+
+### Articles
+
+Open-source articles on programming subjects.
+
+* [The Two Kinds of Random-number Generators Most Applications Need](./random.html).
 
 ### HTML/JavaScript
 
