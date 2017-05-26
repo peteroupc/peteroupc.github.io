@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 22, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 27, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -51,14 +51,19 @@
 
 <ul>
 <li>  cannot guess prior unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the implementation&#39;s internal state at the given point in time, and</li>
-<li>  cannot guess future unseen bits of that sequence correctly with more than a 50% chance per bit without knowledge of that state at the given point in time (or, where feasible by the implementation, with that knowledge).</li>
+<li>  cannot guess future unseen bits of that sequence correctly with more than a 50% chance per bit without knowledge of that state at the given point in time (or -- if the implementation uses a nondeterministic RNG or otherwise finds it feasible -- with that knowledge).</li>
 </ul></li>
-<li> Seeding: If the implementation uses a deterministic algorithm to generate random numbers, its internal state must be seeded with unpredictable data. The internal state (the part of the algorithm&#39;s state that can be initialized with arbitrary data) must be at least 128 bits and should be at least 238 bits (the length in bits of 54 factorial). The seed must be at least the same size as the internal state.</li>
-<li> Reseeding: The internal state should be reseeded from time to time to ensure each bit of the output is unpredictable even if an outside party somehow gains knowledge of its internal state.</li>
+<li> Seeding: If the implementation uses a deterministic RNG algorithm, its internal state must be initialized (&quot;seeded&quot;) with a seed described below. The internal state (the part of the algorithm&#39;s state that can be initialized with arbitrary data) must be at least 128 bits and should be at least 238 bits (the length in bits of 54 factorial). The seed must be at least the same size as the internal state and consist of--
+
+<ul>
+<li> unpredictable data, or</li>
+<li> a cryptographic hash of unpredictable data plus arbitrary data (or vice versa), where the unpredictable data has at least the same size as the internal state.</li>
+</ul></li>
+<li> Reseeding: If the implementation uses a deterministic RNG algorithm, its internal state should be reseeded from time to time (using a seed described in the &quot;Seeding&quot; item) to ensure each bit of the output is unpredictable even if an outside party somehow gains knowledge of its internal state. If the implementation reseeds, it must do so before it generates more than 2<sup>68</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding. (Reseeding is not necessary if the implementation uses a nondeterministic RNG.)</li>
 <li> Speed: The implementation should select algorithms that are reasonably fast for most applications.</li>
 <li> Time Complexity: The implementation must run in amortized linear time on the size of the output array.</li>
 <li> Thread Safety: The implementation should be safe for concurrent use by multiple threads.</li>
-<li> Examples: The &quot;/dev/urandom&quot; device on many Unix-based operating systems; CryptGenRandom function on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).</li>
+<li> Examples: The &quot;<code>/dev/urandom</code>&quot; device on many Unix-based operating systems; <code>CryptGenRandom</code> function on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).</li>
 </ul>
 
 <p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.</p>
@@ -70,7 +75,7 @@
 <ul>
 <li> information security is not involved,</li>
 <li> 20 or fewer items are being shuffled (in cases where the RNG is used for shuffling), and</li>
-<li> the application generates random numbers frequently enough that the RNG&#39;s speed is a concern.</li>
+<li> the application generates random numbers so frequently that it would slow down undesirably if an unpredictable RNG were used instead.</li>
 </ul>
 
 <p>The goal of this kind of generator is for each possible outcome to be equally likely.</p>
@@ -83,8 +88,15 @@
 <ul>
 <li> Quality: A statistical-random implementation generates random bits that, theoretically, are uniformly randomly chosen independently of the other bits. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no <a href="http://xoroshiro.di.unimi.it/#quality">systematic failures</a> in TestU01&#39;s BigCrush test battery [L&#39;Ecuyer and Simard 2007] meets these requirements.)</li>
 <li> Predictability: The implementation&#39;s output must not be trivially predictable.</li>
-<li> Seeding: The implementation must be seeded with information not known <em>a priori</em> by the implementation, such as random bits from an unpredictable-random implementation. As far as practical, the seed should not be trivially predictable. The internal state must be at least 64 bits and should be at least 128 bits. The seed must be at least the same size as the internal state.</li>
-<li> Reseeding: The implementation may reseed the internal state from time to time. It should do so if its internal state&#39;s size is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the RNG&#39;s period.</li>
+<li> Seeding: The implementation must be initialized (&quot;seeded&quot;) with a seed described below. The internal state must be at least 64 bits and should be at least 128 bits. The seed--
+
+<ul>
+<li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from an unpredictable-random implementation,</li>
+<li>must not be a fixed value or a user-entered value,</li>
+<li>should not be trivially predictable, as far as practical, and</li>
+<li>must be at least the same size as the internal state.</li>
+</ul></li>
+<li> Reseeding: The implementation may reseed the internal state from time to time (using a seed described in the &quot;Seeding&quot; item). It should do so if its internal state&#39;s size is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the RNG&#39;s period without reseeding.</li>
 <li> Speed: The implementation should select algorithms that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
 <li> Time Complexity: The implementation must run in amortized linear time on the size of the output array.</li>
 <li> Thread Safety: The implementation should be safe for concurrent use by multiple threads.</li>
@@ -101,23 +113,31 @@
 
 <p>When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.</p>
 
+<p>Shuffling a list is usually done with the <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a>.</p>
+
 <h2>Seedable Random Generators</h2>
 
 <p>In addition, some applications generate results based on apparently-random principles, starting from a known initial state. One notable example is a &quot;code&quot;, or password, for generating a particular game level in some role-playing games.</p>
 
-<p>Functions for seeding random number algorithms are not included, because applications that require seeding usually care about reproducible results. Such applications often need to keep not only the RNG algorithm stable, but also any algorithm that uses that RNG algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which RNG algorithm to use for such purpose depends on the application. But here are some recommendations:</p>
+<p>Functions for seeding random number algorithms are not included, because applications that require seeding usually care about reproducible results. Such applications often need to keep not only the RNG algorithm stable, but also any algorithm that uses that RNG algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which RNG algorithm to use for such purpose depends on the application. (Such an algorithm will necessarily be a DRNG.) But here are some recommendations:</p>
 
 <ul>
-<li> Any RNG algorithm selected for producing reproducible results should meet at least the quality and predictability requirements of a statistical-random implementation, and should be reasonably fast.</li>
+<li> Any DRNG algorithm selected for producing reproducible results should meet at least the quality and predictability requirements of a statistical-random implementation, and should be reasonably fast.</li>
 <li> Any seed passed as input to that algorithm should be 64 bits or greater.</li>
 </ul>
 
 <p>An application should only use seeding if:</p>
 
 <ol>
-<li>the initial state (the seed) which the &quot;random&quot; result will be generated from is known (for example, because it&#39;s hard-coded or because it was entered by the user),</li>
+<li>the initial state (the seed) which the &quot;random&quot; result will be generated from--
+
+<ul>
+<li>is hard-coded,</li>
+<li>was entered by the user, or</li>
+<li>was generated using a statistical or unpredictable RNG (as defined above),</li>
+</ul></li>
 <li>the application needs to generate the same &quot;random&quot; result multiple times,</li>
-<li> it would be impractical to convey that &quot;random&quot; result without relying on seeding, such as-
+<li> it would be impractical to convey that &quot;random&quot; result without relying on seeding, such as--
 
 <ul>
 <li>  by saving the result to a file, or</li>
