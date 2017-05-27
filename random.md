@@ -38,10 +38,15 @@ Generates random bits using an unpredictable-random implementation.
 -  Predictability: "Unpredictable" means that an outside party, even if the random algorithm used and extremely many outputs of the implementation are known--
     -   cannot guess prior unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the implementation's internal state at the given point in time, and
     -   cannot guess future unseen bits of that sequence correctly with more than a 50% chance per bit without knowledge of that state at the given point in time (or -- if the implementation uses a nondeterministic RNG or otherwise finds it feasible -- with that knowledge).
--  Seeding: If the implementation uses a deterministic RNG algorithm, it must be initialized ("seeded") with a seed described below. The RNG's seed length (the maximum size of the seed the RNG can take to initialize its state without truncating or compressing that seed) must be at least 128 bits and should be at least 256 bits. The seed must consist of--
-      1. unpredictable data of at least the same size as the RNG's seed length (but the RNG must not use its own output as part of that data), or
-      2. a cryptographic hash of two items -- data described in (1) and arbitrary data (or vice versa) -- where the hash's length is the RNG's seed length.
--  Reseeding: If the implementation uses a deterministic RNG algorithm, it should be reseeded from time to time (using a newly generated seed as described in the "Seeding" item) to ensure each bit of the output is unpredictable even if an outside party somehow gains knowledge of its internal state. If the implementation reseeds, it must do so before it generates more than 2<sup>68</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding. (Reseeding is not necessary if the implementation uses a nondeterministic RNG.)
+-  Seeding and Reseeding: The following applies only to deterministic RNG implementations; nondeterministic RNGs don't require seeding or reseeding.
+
+    The implementation must be initialized ("seeded") with a "seed" described as follows. The seed must consist of--
+    1. unpredictable data of at least the same size as the RNG's _seed length_ (but the RNG must not use its own output as part of that data), or
+    2. a cryptographic hash of two items -- data described in (i) and arbitrary data (or vice versa) -- where the hash's length is the RNG's _seed length_.
+
+     The _seed length_ is the maximum size of the seed the RNG can take to initialize its state without truncating or compressing that seed. It must be at least 128 bits and should be at least 256 bits.
+
+     The implementation should be reseeded from time to time (using a newly generated seed as described above) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>68</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.
 -  Speed: The implementation should select algorithms that are reasonably fast for most applications.
 -  Time Complexity: The implementation must run in amortized linear time on the size of the output array.
 -  Thread Safety: The implementation should be safe for concurrent use by multiple threads.
@@ -65,12 +70,13 @@ Generates random bits using a statistical-random implementation.
 
 -  Quality: A statistical-random implementation generates random bits that, theoretically, are uniformly randomly chosen independently of the other bits. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no [systematic failures](http://xoroshiro.di.unimi.it/#quality) in TestU01's BigCrush test battery [L'Ecuyer and Simard 2007] meets these requirements.)
 -  Predictability: The implementation's output must not be trivially predictable.
--  Seeding: The implementation must be initialized ("seeded") with a seed described below. The RNG's seed length must be at least 64 bits and should be at least 128 bits. The seed--
+-  Seeding and Reseeding: The implementation must be initialized ("seeded") with a seed described below. The RNG's _seed length_ must be at least 64 bits and should be at least 128 bits. The seed--
     - must consist of data not known _a priori_ by the implementation, such as random bits from an unpredictable-random implementation,
     - must not be a fixed value or a user-entered value,
     - should not be trivially predictable, as far as practical, and
-    - must be at least the same size as the RNG's seed length.
--  Reseeding: The implementation may reseed itself from time to time (using a newly generated seed as described in the "Seeding" item). It should do so if the RNG's seed length is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the RNG's period without reseeding.
+    - must be at least the same size as the RNG's _seed length_.
+
+    The implementation may reseed itself from time to time (using a newly generated seed as described above). It should do so if the RNG's seed length is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the RNG's period without reseeding.
 -  Speed: The implementation should select algorithms that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.
 -  Time Complexity: The implementation must run in amortized linear time on the size of the output array.
 -  Thread Safety: The implementation should be safe for concurrent use by multiple threads.
@@ -80,9 +86,9 @@ Generates random bits using a statistical-random implementation.
 
 ## Shuffling
 
-A deterministic random number generator (DRNG) can't generate more permutations of random number sequences than its period. A DRNG can't generate all permutations of a list if the factorial of its size is greater than the DRNG's period. This means that the items in a shuffled list of that size will never appear in certain orders when that DRNG is used to shuffle it.
+A deterministic random number generator (DRNG) can't generate more permutations of random number sequences than its _period_. A DRNG can't generate all permutations of a list if the factorial of its size is greater than the DRNG's period. This means that the items in a shuffled list of that size will never appear in certain orders when that DRNG is used to shuffle it.
 
-A DRNG with period 264, for example, can't generate all permutations of a list with more than 20 items; with period 2128, more than 34 items; with period 2226, more than 52 items; and with period 2256, more than 57 items.
+A DRNG with period 2<sup>64</sup>, for example, can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.
 
 When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.
 
