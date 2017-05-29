@@ -6,21 +6,62 @@
 
 <h1>com.upokecenter.util.ExtendedFloat</h1>
 
-<pre><code>@Deprecated public final class ExtendedFloat extends Object implements Comparable&lt;ExtendedFloat&gt;
+<pre><code>public final class ExtendedFloat extends Object implements Comparable&lt;ExtendedFloat&gt;
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
-
-<div class='block'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers and the output of
-this class's toString method.</div>
+<p><b>This class is largely obsolete. It will be replaced by a new version
+ of this class in a different namespace/package and library, called
+ <code>PeterO.Numbers.EFloat</code> in the <code>PeterO.Numbers</code>
+ library (in .NET), or <code>com.upokecenter.numbers.EFloat</code> in the <code>com.github.peteroupc/numbers</code>
+ artifact (in Java). This new class can be used in the
+ <code>CBORObject.FromObject(Object)</code> method (by including the new
+ library in your code, among other things), but this version of the
+ CBOR library doesn't include any methods that explicitly take an
+ <code>EFloat</code> as a parameter or return value.</b></p> <p> Represents
+ an arbitrary-precision binary floating-point number. Consists of an
+ integer mantissa and an integer exponent, both arbitrary-precision.
+ The value of the number equals mantissa * 2^exponent. This class also
+ supports values for negative zero, not-a-number (NaN) values, and
+ infinity.</p> <p>Passing a signaling NaN to any arithmetic operation
+ shown here will signal the flag FlagInvalid and return a quiet NaN,
+ even if another operand to that operation is a quiet NaN, unless
+ noted otherwise.</p> <p>Passing a quiet NaN to any arithmetic
+ operation shown here will return a quiet NaN, unless noted
+ otherwise.</p> <p>Unless noted otherwise, passing a null
+ arbitrary-precision binary float argument to any method here will
+ throw an exception.</p> <p>When an arithmetic operation signals the
+ flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not
+ throw an exception too, unless the operation's trap is enabled in the
+ precision context (see PrecisionContext's Traps property).</p> <p>An
+ arbitrary-precision binary float value can be serialized in one of
+ the following ways:</p> <ul> <li>By calling the toString() method.
+ However, not all strings can be converted back to an
+ arbitrary-precision binary float without loss, especially if the
+ string has a fractional part.</li> <li>By calling the
+ UnsignedMantissa, Exponent, and IsNegative properties, and calling
+ the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return
+ values combined will uniquely identify a particular
+ arbitrary-precision binary float value.</li></ul> <p>If an operation
+ requires creating an intermediate value that might be too big to fit
+ in memory (or might require more than 2 gigabytes of memory to store
+ -- due to the current use of a 32-bit integer internally as a
+ length), the operation may signal an invalid-operation flag and
+ return not-a-number (NaN). In certain rare cases, the compareTo
+ method may throw OutOfMemoryError (called OutOfMemoryError in
+ Java) in the same circumstances.</p> <p><b>Thread
+ safety:</b>Instances of this class are immutable, so they are
+ inherently safe for use by multiple threads. Multiple instances of
+ this object with the same properties are interchangeable, so they
+ should not be compared using the "==" operator (which only checks if
+ each side of the operator is the same instance).</p>
 
 <h2>Fields</h2>
 
 <ul>
 <li><code>static ExtendedFloat NaN</code><br>
-Deprecated.  A not-a-number value.</li>
+A not-a-number value.</li>
 <li><code>static ExtendedFloat NegativeInfinity</code><br>
-Deprecated.  Negative infinity, less than any other number.</li>
+Negative infinity, less than any other number.</li>
 <li><code>static ExtendedFloat NegativeZero</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
@@ -30,9 +71,9 @@ Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedFloat PositiveInfinity</code><br>
-Deprecated.  Positive infinity, greater than any other number.</li>
+Positive infinity, greater than any other number.</li>
 <li><code>static ExtendedFloat SignalingNaN</code><br>
-Deprecated.  A not-a-number value that signals an invalid operation flag when it&#39;s
+A not-a-number value that signals an invalid operation flag when it&#39;s
 passed as an argument to any arithmetic operation in
 arbitrary-precision binary float.</li>
 <li><code>static ExtendedFloat Ten</code><br>
@@ -48,28 +89,159 @@ Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <h2>Methods</h2>
 
 <ul>
+<li><code>ExtendedFloat Abs()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Abs(PrecisionContext context)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Add(ExtendedFloat otherValue)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Add(ExtendedFloat otherValue,
+PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>int compareTo(ExtendedFloat other)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat CompareToSignal(ExtendedFloat other,
+           PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat CompareToWithContext(ExtendedFloat other,
+                PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedFloat Create(BigInteger mantissa,
   BigInteger exponent)</code><br>
-Deprecated.  Creates a number with the value exponent*2^mantissa.</li>
+Creates a number with the value exponent*2^mantissa.</li>
 <li><code>static ExtendedFloat Create(int mantissaSmall,
   int exponentSmall)</code><br>
-Deprecated.  Creates a number with the value exponent*2^mantissa.</li>
+Creates a number with the value exponent*2^mantissa.</li>
+<li><code>static ExtendedFloat CreateNaN(BigInteger diag)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat CreateNaN(BigInteger diag,
+     boolean signaling,
+     boolean negative,
+     PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Divide(ExtendedFloat divisor)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Divide(ExtendedFloat divisor,
+  PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat[] DivideAndRemainderNaturalScale(ExtendedFloat divisor)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat[] DivideAndRemainderNaturalScale(ExtendedFloat divisor,
+                          PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat DivideToExponent(ExtendedFloat divisor,
+            BigInteger exponent,
+            PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat DivideToExponent(ExtendedFloat divisor,
+            BigInteger desiredExponent,
+            Rounding rounding)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat DivideToExponent(ExtendedFloat divisor,
+            long desiredExponentSmall,
+            PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat DivideToExponent(ExtendedFloat divisor,
+            long desiredExponentSmall,
+            Rounding rounding)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat DivideToIntegerNaturalScale(ExtendedFloat divisor)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat DivideToIntegerNaturalScale(ExtendedFloat divisor,
+                       PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat DivideToIntegerZeroScale(ExtendedFloat divisor,
+                    PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat DivideToSameExponent(ExtendedFloat divisor,
+                Rounding rounding)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>boolean equals(ExtendedFloat other)</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Deprecated.  Determines whether this object&#39;s mantissa and exponent are equal to
+Determines whether this object&#39;s mantissa and exponent are equal to
 those of another object and that other object is an
 arbitrary-precision decimal number.</li>
 <li><code>boolean EqualsInternal(ExtendedFloat otherValue)</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Exp(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat FromBigInteger(BigInteger bigint)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat FromDouble(double dbl)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat FromInt32(int valueSmaller)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat FromInt64(long valueSmall)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat FromSingle(float flt)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedFloat FromString(String str)</code><br>
-Deprecated.  Not documented yet.</li>
+Creates a binary float from a text string that represents a number.</li>
+<li><code>static ExtendedFloat FromString(String str,
+      int offset,
+      int length)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedFloat FromString(String str,
       int offset,
       int length,
@@ -77,19 +249,28 @@ Deprecated.  Not documented yet.</li>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat FromString(String str,
+      PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>BigInteger getExponent()</code><br>
-Deprecated.  Gets this object&#39;s exponent.</li>
+Gets this object&#39;s exponent.</li>
 <li><code>BigInteger getMantissa()</code><br>
-Deprecated.  Gets this object&#39;s un-scaled value.</li>
+Gets this object&#39;s un-scaled value.</li>
 <li><code>BigInteger getUnsignedMantissa()</code><br>
-Deprecated.  Gets the absolute value of this object&#39;s un-scaled value.</li>
+Gets the absolute value of this object&#39;s un-scaled value.</li>
 <li><code>int hashCode()</code><br>
-Deprecated.  Calculates this object&#39;s hash code.</li>
+Calculates this object&#39;s hash code.</li>
+<li><code>boolean isFinite()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>boolean IsInfinity()</code><br>
-Deprecated.  Gets a value indicating whether this object is positive or negative
+Gets a value indicating whether this object is positive or negative
 infinity.</li>
 <li><code>boolean IsNaN()</code><br>
-Deprecated.  Returns whether this object is a not-a-number value.</li>
+Returns whether this object is a not-a-number value.</li>
 <li><code>boolean isNegative()</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
@@ -110,12 +291,314 @@ Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean isZero()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Log(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Log10(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat Max(ExtendedFloat first,
+ExtendedFloat second)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat Max(ExtendedFloat first,
+ExtendedFloat second,
+PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat MaxMagnitude(ExtendedFloat first,
+        ExtendedFloat second)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat MaxMagnitude(ExtendedFloat first,
+        ExtendedFloat second,
+        PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat Min(ExtendedFloat first,
+ExtendedFloat second)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat Min(ExtendedFloat first,
+ExtendedFloat second,
+PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat MinMagnitude(ExtendedFloat first,
+        ExtendedFloat second)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat MinMagnitude(ExtendedFloat first,
+        ExtendedFloat second,
+        PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MovePointLeft(BigInteger bigPlaces)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MovePointLeft(BigInteger bigPlaces,
+         PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MovePointLeft(int places)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MovePointLeft(int places,
+         PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MovePointRight(BigInteger bigPlaces)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MovePointRight(BigInteger bigPlaces,
+          PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MovePointRight(int places)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MovePointRight(int places,
+          PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Multiply(ExtendedFloat otherValue)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Multiply(ExtendedFloat op,
+    PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MultiplyAndAdd(ExtendedFloat multiplicand,
+          ExtendedFloat augend)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MultiplyAndAdd(ExtendedFloat op,
+          ExtendedFloat augend,
+          PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat MultiplyAndSubtract(ExtendedFloat op,
+               ExtendedFloat subtrahend,
+               PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Negate()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Negate(PrecisionContext context)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat NextMinus(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat NextPlus(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat NextToward(ExtendedFloat otherValue,
+      PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static ExtendedFloat PI(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Plus(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Pow(ExtendedFloat exponent,
+PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Pow(int exponentSmall)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Pow(int exponentSmall,
+PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger Precision()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Quantize(BigInteger desiredExponent,
+    PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Quantize(ExtendedFloat otherValue,
+    PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Quantize(int desiredExponentSmall,
+    PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Reduce(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Remainder(ExtendedFloat divisor,
+     PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RemainderNaturalScale(ExtendedFloat divisor)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RemainderNaturalScale(ExtendedFloat divisor,
+                 PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RemainderNear(ExtendedFloat divisor,
+         PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RoundToBinaryPrecision(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RoundToExponent(BigInteger exponent,
+           PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RoundToExponent(int exponentSmall,
+           PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RoundToExponentExact(BigInteger exponent,
+                PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RoundToExponentExact(int exponentSmall,
+                PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RoundToIntegralExact(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RoundToIntegralNoRoundedFlag(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat RoundToPrecision(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat ScaleByPowerOfTwo(BigInteger bigPlaces)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat ScaleByPowerOfTwo(BigInteger bigPlaces,
+             PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat ScaleByPowerOfTwo(int places)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat ScaleByPowerOfTwo(int places,
+             PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>int signum()</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat SquareRoot(PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Subtract(ExtendedFloat otherValue)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedFloat Subtract(ExtendedFloat otherValue,
+    PrecisionContext ctx)</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger ToBigInteger()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger ToBigIntegerExact()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>double ToDouble()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>String ToEngineeringString()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>ExtendedDecimal ToExtendedDecimal()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>String ToPlainString()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>float ToSingle()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>String toString()</code><br>
-Deprecated.  Converts this value to a string.</li>
+Converts this value to a string.</li>
+<li><code>ExtendedFloat Ulp()</code><br>
+Deprecated.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
+Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -153,28 +636,30 @@ Deprecated.  Converts this value to a string.</li>
 <pre><code>public static final ExtendedFloat NaN
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>A not-a-number value.</p>
 
 <h3>SignalingNaN</h3>
 
 <pre><code>public static final ExtendedFloat SignalingNaN
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>A not-a-number value that signals an invalid operation flag when it&#x27;s
+ passed as an argument to any arithmetic operation in
+ arbitrary-precision binary float.</p>
 
 <h3>PositiveInfinity</h3>
 
 <pre><code>public static final ExtendedFloat PositiveInfinity
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Positive infinity, greater than any other number.</p>
 
 <h3>NegativeInfinity</h3>
 
 <pre><code>public static final ExtendedFloat NegativeInfinity
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Negative infinity, less than any other number.</p>
 
 <h2>Method Details</h2>
 
@@ -183,7 +668,8 @@ Deprecated.  Converts this value to a string.</li>
 <pre><code>public final BigInteger getExponent()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Gets this object&#x27;s exponent. This object&#x27;s value will be an
+ integer if the exponent is positive or zero.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -197,7 +683,7 @@ the exponent is positive or zero.</li>
 <pre><code>public final BigInteger getUnsignedMantissa()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Gets the absolute value of this object&#x27;s un-scaled value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -210,7 +696,7 @@ the exponent is positive or zero.</li>
 <pre><code>public final BigInteger getMantissa()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Gets this object&#x27;s un-scaled value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -236,7 +722,7 @@ value is negative (including a negative NaN).</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s mantissa and exponent are equal to
-those of another object; otherwise, <code>false</code> .</li>
+those of another object; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -263,7 +749,7 @@ null.</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s mantissa and exponent are equal to
-those of another object; otherwise, <code>false</code> .</li>
+those of another object; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -277,7 +763,9 @@ those of another object; otherwise, <code>false</code> .</li>
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Determines whether this object&#x27;s mantissa and exponent are equal to
+ those of another object and that other object is an
+ arbitrary-precision decimal number.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -302,7 +790,7 @@ those of another object; otherwise, <code>false</code> .</li>
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Calculates this object&#x27;s hash code.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -316,12 +804,70 @@ those of another object; otherwise, <code>false</code> .</li>
 <li>This object&#39;s hash code.</li>
 </ul>
 
+<h3>CreateNaN</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat CreateNaN(BigInteger diag)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>diag</code> - A number to use as diagnostic information associated with this
+object. If none is needed, should be zero.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A quiet not-a-number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>diag</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</p></li>
+</ul>
+
+<h3>CreateNaN</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat CreateNaN(BigInteger diag, boolean signaling, boolean negative, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>diag</code> - A number to use as diagnostic information associated with this
+object. If none is needed, should be zero.</p></li>
+<li><p><code>signaling</code> - Whether the return value will be signaling (true) or quiet
+(false).</p></li>
+<li><p><code>negative</code> - Whether the return value is negative.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>diag</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</p></li>
+</ul>
+
 <h3>Create</h3>
 
 <pre><code>public static ExtendedFloat Create(int mantissaSmall, int exponentSmall)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Creates a number with the value exponent*2^mantissa.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -341,7 +887,7 @@ those of another object; otherwise, <code>false</code> .</li>
 <pre><code>public static ExtendedFloat Create(BigInteger mantissa, BigInteger exponent)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Creates a number with the value exponent*2^mantissa.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -400,7 +946,8 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <pre><code>public static ExtendedFloat FromString(String str)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Creates a binary float from a text string that represents a number. See the
+ four-parameter FromString method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -411,7 +958,247 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An ExtendedFloat object.</li>
+<li>The parsed number, converted to arbitrary-precision binary float.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat FromString(String str, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object specifying the precision, rounding, and
+exponent range to apply to the parsed number. Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parsed number, converted to arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat FromString(String str, int offset, int length)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>str</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>str</code> (but not more than <code>str</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
+</ul>
+
+<h3>ToBigInteger</h3>
+
+<pre><code>@Deprecated public BigInteger ToBigInteger()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is infinity or NaN.</li>
+</ul>
+
+<h3>ToBigIntegerExact</h3>
+
+<pre><code>@Deprecated public BigInteger ToBigIntegerExact()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is infinity or NaN.</p></li>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is not an exact integer.</p></li>
+</ul>
+
+<h3>ToSingle</h3>
+
+<pre><code>@Deprecated public float ToSingle()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 32-bit floating-point number to this value. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 32-bit floating point number.</li>
+</ul>
+
+<h3>ToDouble</h3>
+
+<pre><code>@Deprecated public double ToDouble()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 64-bit floating-point number to this value. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 64-bit floating point number.</li>
+</ul>
+
+<h3>FromSingle</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat FromSingle(float flt)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>flt</code> - A 32-bit floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary float with the same value as <code>flt</code>.</li>
+</ul>
+
+<h3>FromBigInteger</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat FromBigInteger(BigInteger bigint)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigint</code> - An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigint</code> is null.</li>
+</ul>
+
+<h3>FromInt64</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat FromInt64(long valueSmall)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>valueSmall</code> - A 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float with the exponent set to 0.</li>
+</ul>
+
+<h3>FromInt32</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat FromInt32(int valueSmaller)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>valueSmaller</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float with the exponent set to 0.</li>
+</ul>
+
+<h3>FromDouble</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat FromDouble(double dbl)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>dbl</code> - A 64-bit floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary float with the same value as <code>dbl</code>.</li>
+</ul>
+
+<h3>ToExtendedDecimal</h3>
+
+<pre><code>@Deprecated public ExtendedDecimal ToExtendedDecimal()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An extended decimal with the same value as this extended float.</li>
 </ul>
 
 <h3>toString</h3>
@@ -419,7 +1206,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <pre><code>public String toString()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Converts this value to a string.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -432,6 +1219,32 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <ul>
 <li>A string representation of this object. The value is converted to
 decimal and the decimal form of this number&#39;s value is returned.</li>
+</ul>
+
+<h3>ToEngineeringString</h3>
+
+<pre><code>@Deprecated public String ToEngineeringString()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string.</li>
+</ul>
+
+<h3>ToPlainString</h3>
+
+<pre><code>@Deprecated public String ToPlainString()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string.</li>
 </ul>
 
 <h3>IsNegativeInfinity</h3>
@@ -465,7 +1278,7 @@ decimal and the decimal form of this number&#39;s value is returned.</li>
 <pre><code>public boolean IsNaN()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Returns whether this object is a not-a-number value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -479,12 +1292,27 @@ decimal and the decimal form of this number&#39;s value is returned.</li>
 <pre><code>public boolean IsInfinity()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Gets a value indicating whether this object is positive or negative
+ infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li><code>true</code> if this object is positive or negative infinity;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>isFinite</h3>
+
+<pre><code>@Deprecated public final boolean isFinite()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object is finite (not infinity or NaN);
 otherwise, <code>false</code>.</li>
 </ul>
 
@@ -498,7 +1326,7 @@ otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this object is negative, including negative zero;
+<li><code>true</code> if this object is negative, including negative zero;
 otherwise, <code>false</code>.</li>
 </ul>
 
@@ -530,31 +1358,6 @@ otherwise, <code>false</code>.</li>
 otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre><code>public int compareTo(ExtendedFloat other)
-</code></pre>
-
-<p>Deprecated.&nbsp;</p>
-
-<p><strong>Specified by:</strong></p>
-
-<ul>
-<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;ExtendedFloat&gt;</code></li>
-</ul>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A 32-bit signed integer.</li>
-</ul>
-
 <h3>signum</h3>
 
 <pre><code>@Deprecated public final int signum()
@@ -566,6 +1369,2229 @@ otherwise, <code>false</code>.</li>
 
 <ul>
 <li>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
+</ul>
+
+<h3>isZero</h3>
+
+<pre><code>@Deprecated public final boolean isZero()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value equals 0; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>Abs</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Abs()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>Negate</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Negate()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float. If this value is positive zero,
+returns positive zero.</li>
+</ul>
+
+<h3>Divide</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Divide(ExtendedFloat divisor)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - The number to divide by.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two numbers. Signals FlagDivideByZero and
+returns infinity if the divisor is 0 and the dividend is nonzero.
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
+the dividend are 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The result can&#39;t be exact because it would have
+a nonterminating binary expansion.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>DivideToSameExponent</h3>
+
+<pre><code>@Deprecated public ExtendedFloat DivideToSameExponent(ExtendedFloat divisor, Rounding rounding)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
+<li><p><code>rounding</code> - The rounding mode to use if the result must be scaled down
+to have the same exponent as this value.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two numbers. Signals FlagDivideByZero and
+returns infinity if the divisor is 0 and the dividend is nonzero.
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
+the dividend are 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The rounding mode is Rounding.Unnecessary and
+the result is not exact.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>DivideToIntegerNaturalScale</h3>
+
+<pre><code>@Deprecated public ExtendedFloat DivideToIntegerNaturalScale(ExtendedFloat divisor)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - The number to divide by.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The integer part of the quotient of the two objects. Signals
+FlagDivideByZero and returns infinity if the divisor is 0 and the
+dividend is nonzero. Signals FlagInvalid and returns not-a-number
+(NaN) if the divisor and the dividend are 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+</ul>
+
+<h3>Reduce</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Reduce(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This value with trailing zeros removed. Note that if the result has
+a very high exponent and the context says to clamp high exponents,
+there may still be some trailing zeros in the mantissa.</li>
+</ul>
+
+<h3>RemainderNaturalScale</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RemainderNaturalScale(ExtendedFloat divisor)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - The number to divide by.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+</ul>
+
+<h3>RemainderNaturalScale</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RemainderNaturalScale(ExtendedFloat divisor, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
+<li><p><code>ctx</code> - A precision context object to control the precision, rounding,
+and exponent range of the integer part of the result. This context
+will be used only in the division portion of the remainder
+calculation. Flags will be set on the given context only if the
+context&#39;s HasFlags is true and the integer part of the division
+result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+</ul>
+
+<h3>DivideToExponent</h3>
+
+<pre><code>@Deprecated public ExtendedFloat DivideToExponent(ExtendedFloat divisor, long desiredExponentSmall, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>desiredExponentSmall</code> - The desired exponent. A negative number places
+the cutoff point to the right of the usual decimal point. A positive
+number places the cutoff point to the left of the usual decimal
+point.</p></li>
+<li><p><code>ctx</code> - A precision context object to control the rounding mode to use if
+the result must be scaled down to have the same exponent as this
+value. If the precision given in the context is other than 0, calls
+the Quantize method with both arguments equal to the result of the
+operation (and can signal FlagInvalid and return NaN if the result
+doesn&#39;t fit the given precision). If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the default rounding mode is HalfEven.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects. Signals FlagDivideByZero and
+returns infinity if the divisor is 0 and the dividend is nonzero.
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
+the dividend are 0. Signals FlagInvalid and returns not-a-number
+(NaN) if the context defines an exponent range and the desired
+exponent is outside that range.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The rounding mode is Rounding.Unnecessary and
+the result is not exact.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>Divide</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Divide(ExtendedFloat divisor, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects. Signals FlagDivideByZero and
+returns infinity if the divisor is 0 and the dividend is nonzero.
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
+the dividend are 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - Either <code>ctx</code> is null or <code>ctx</code> &#39;s
+precision is 0, and the result would have a nonterminating binary
+expansion; or, the rounding mode is Rounding.Unnecessary and the
+result is not exact.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>DivideToExponent</h3>
+
+<pre><code>@Deprecated public ExtendedFloat DivideToExponent(ExtendedFloat divisor, long desiredExponentSmall, Rounding rounding)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>desiredExponentSmall</code> - The desired exponent. A negative number places
+the cutoff point to the right of the usual decimal point. A positive
+number places the cutoff point to the left of the usual decimal
+point.</p></li>
+<li><p><code>rounding</code> - The rounding mode to use if the result must be scaled down
+to have the same exponent as this value.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects. Signals FlagDivideByZero and
+returns infinity if the divisor is 0 and the dividend is nonzero.
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
+the dividend are 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The rounding mode is Rounding.Unnecessary and
+the result is not exact.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>DivideToExponent</h3>
+
+<pre><code>@Deprecated public ExtendedFloat DivideToExponent(ExtendedFloat divisor, BigInteger exponent, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>exponent</code> - The desired exponent. A negative number places the cutoff
+point to the right of the usual decimal point. A positive number
+places the cutoff point to the left of the usual decimal point.</p></li>
+<li><p><code>ctx</code> - A precision context object to control the rounding mode to use if
+the result must be scaled down to have the same exponent as this
+value. If the precision given in the context is other than 0, calls
+the Quantize method with both arguments equal to the result of the
+operation (and can signal FlagInvalid and return NaN if the result
+doesn&#39;t fit the given precision). If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the default rounding mode is HalfEven.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects. Signals FlagDivideByZero and
+returns infinity if the divisor is 0 and the dividend is nonzero.
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
+the dividend are 0. Signals FlagInvalid and returns not-a-number
+(NaN) if the context defines an exponent range and the desired
+exponent is outside that range.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The rounding mode is Rounding.Unnecessary and
+the result is not exact.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> or <code>exponent</code> is null.</p></li>
+</ul>
+
+<h3>DivideToExponent</h3>
+
+<pre><code>@Deprecated public ExtendedFloat DivideToExponent(ExtendedFloat divisor, BigInteger desiredExponent, Rounding rounding)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>desiredExponent</code> - The desired exponent. A negative number places the
+cutoff point to the right of the usual decimal point. A positive
+number places the cutoff point to the left of the usual decimal
+point.</p></li>
+<li><p><code>rounding</code> - The rounding mode to use if the result must be scaled down
+to have the same exponent as this value.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects. Signals FlagDivideByZero and
+returns infinity if the divisor is 0 and the dividend is nonzero.
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
+the dividend are 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The rounding mode is Rounding.Unnecessary and
+the result is not exact.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> or <code>desiredExponent</code> is null.</p></li>
+</ul>
+
+<h3>Abs</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Abs(PrecisionContext context)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>context</code> - A precision context to control precision, rounding, and
+exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The absolute value of this object.</li>
+</ul>
+
+<h3>Negate</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Negate(PrecisionContext context)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>context</code> - A precision context to control precision, rounding, and
+exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float. If this value is positive zero,
+returns positive zero.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>context</code> is null.</li>
+</ul>
+
+<h3>Add</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Add(ExtendedFloat otherValue)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The sum of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Subtract(ExtendedFloat otherValue)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The difference of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Subtract(ExtendedFloat otherValue, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>otherValue</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The difference of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>Multiply</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Multiply(ExtendedFloat otherValue)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - Another binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The product of the two binary floats.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>MultiplyAndAdd</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MultiplyAndAdd(ExtendedFloat multiplicand, ExtendedFloat augend)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>multiplicand</code> - The value to multiply.</p></li>
+<li><p><code>augend</code> - The value to add.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The result this * multiplicand + augend.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>multiplicand</code> or
+<code>augend</code> is null.</li>
+</ul>
+
+<h3>DivideToIntegerNaturalScale</h3>
+
+<pre><code>@Deprecated public ExtendedFloat DivideToIntegerNaturalScale(ExtendedFloat divisor, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
+<li><p><code>ctx</code> - A precision context object to control the precision, rounding,
+and exponent range of the integer part of the result. Flags will be
+set on the given context only if the context&#39;s HasFlags is true and
+the integer part of the result doesn&#39;t fit the precision and exponent
+range without rounding.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The integer part of the quotient of the two objects. Returns null if
+the return value would overflow the exponent range. A caller can
+handle a null return value by treating it as positive infinity if
+both operands have the same sign or as negative infinity if both
+operands have different signs. Signals FlagDivideByZero and returns
+infinity if the divisor is 0 and the dividend is nonzero. Signals
+FlagInvalid and returns not-a-number (NaN) if the divisor and the
+dividend are 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The rounding mode is Rounding.Unnecessary and
+the integer part of the result is not exact.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>DivideToIntegerZeroScale</h3>
+
+<pre><code>@Deprecated public ExtendedFloat DivideToIntegerZeroScale(ExtendedFloat divisor, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
+<li><p><code>ctx</code> - A precision context object to control the precision. The rounding
+and exponent range settings of this context are ignored. If HasFlags
+of the context is true, will also store the flags resulting from the
+operation (the flags are in addition to the pre-existing flags). Can
+be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The integer part of the quotient of the two objects. The exponent
+will be set to 0. Signals FlagDivideByZero and returns infinity if
+the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and
+returns not-a-number (NaN) if the divisor and the dividend are 0, or
+if the result doesn&#39;t fit the given precision.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+</ul>
+
+<h3>Remainder</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Remainder(ExtendedFloat divisor, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The remainder of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+</ul>
+
+<h3>RemainderNear</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RemainderNear(ExtendedFloat divisor, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
+<li><p><code>ctx</code> - A precision context object to control the precision. The rounding
+and exponent range settings of this context are ignored (the rounding
+mode is always treated as HalfEven). If HasFlags of the context is
+true, will also store the flags resulting from the operation (the
+flags are in addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The distance of the closest multiple. Signals FlagInvalid and
+returns not-a-number (NaN) if the divisor is 0, or either the result
+of integer division (the quotient) or the remainder wouldn&#39;t fit the
+given precision.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+</ul>
+
+<h3>NextMinus</h3>
+
+<pre><code>@Deprecated public ExtendedFloat NextMinus(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context object to control the precision and exponent
+range of the result. The rounding mode from this context is ignored.
+If HasFlags of the context is true, will also store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Returns the largest value that&#39;s less than the given value. Returns
+negative infinity if the result is negative infinity.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>ctx</code> is null, the
+precision is 0, or <code>ctx</code> has an unlimited exponent range.</li>
+</ul>
+
+<h3>NextPlus</h3>
+
+<pre><code>@Deprecated public ExtendedFloat NextPlus(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context object to control the precision and exponent
+range of the result. The rounding mode from this context is ignored.
+If HasFlags of the context is true, will also store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Returns the smallest value that&#39;s greater than the given value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>ctx</code> is null, the
+precision is 0, or <code>ctx</code> has an unlimited exponent range.</li>
+</ul>
+
+<h3>NextToward</h3>
+
+<pre><code>@Deprecated public ExtendedFloat NextToward(ExtendedFloat otherValue, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>otherValue</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>ctx</code> - A precision context object to control the precision and exponent
+range of the result. The rounding mode from this context is ignored.
+If HasFlags of the context is true, will also store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Returns the next value that is closer to the other object&#39; s value
+than this object&#39;s value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>ctx</code> is null, the
+precision is 0, or <code>ctx</code> has an unlimited exponent range.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</p></li>
+</ul>
+
+<h3>Max</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat Max(ExtendedFloat first, ExtendedFloat second, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>second</code> - Another arbitrary-precision binary float.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The larger value of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code> is null.</li>
+</ul>
+
+<h3>Min</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat Min(ExtendedFloat first, ExtendedFloat second, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>second</code> - Another arbitrary-precision binary float.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The smaller value of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code> is null.</li>
+</ul>
+
+<h3>MaxMagnitude</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat MaxMagnitude(ExtendedFloat first, ExtendedFloat second, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - Another arbitrary-precision binary float.</p></li>
+<li><p><code>second</code> - An arbitrary-precision binary float. (3).</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code> is null.</li>
+</ul>
+
+<h3>MinMagnitude</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat MinMagnitude(ExtendedFloat first, ExtendedFloat second, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - Another arbitrary-precision binary float.</p></li>
+<li><p><code>second</code> - An arbitrary-precision binary float. (3).</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code> is null.</li>
+</ul>
+
+<h3>Max</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat Max(ExtendedFloat first, ExtendedFloat second)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>second</code> - Another arbitrary-precision binary float.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The larger value of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code> is null.</li>
+</ul>
+
+<h3>Min</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat Min(ExtendedFloat first, ExtendedFloat second)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>second</code> - Another arbitrary-precision binary float.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The smaller value of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code> is null.</li>
+</ul>
+
+<h3>MaxMagnitude</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat MaxMagnitude(ExtendedFloat first, ExtendedFloat second)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - Another arbitrary-precision binary float.</p></li>
+<li><p><code>second</code> - An arbitrary-precision binary float. (3).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code> is null.</li>
+</ul>
+
+<h3>MinMagnitude</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat MinMagnitude(ExtendedFloat first, ExtendedFloat second)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - Another arbitrary-precision binary float.</p></li>
+<li><p><code>second</code> - An arbitrary-precision binary float. (3).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>first</code> or <code>second</code> is null.</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre><code>@Deprecated public int compareTo(ExtendedFloat other)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;ExtendedFloat&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Less than 0 if this object&#39;s value is less than the other value, or
+greater than 0 if this object&#39;s value is greater than the other value
+or if <code>other</code> is null, or 0 if both values are equal.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
+</ul>
+
+<h3>CompareToWithContext</h3>
+
+<pre><code>@Deprecated public ExtendedFloat CompareToWithContext(ExtendedFloat other, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>other</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>ctx</code> - A precision context. The precision, rounding, and exponent range
+are ignored. If HasFlags of the context is true, will store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Quiet NaN if this object or the other object is NaN, or 0 if both
+objects have the same value, or -1 if this object is less than the
+other value, or 1 if this object is greater.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
+</ul>
+
+<h3>CompareToSignal</h3>
+
+<pre><code>@Deprecated public ExtendedFloat CompareToSignal(ExtendedFloat other, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>other</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>ctx</code> - A precision context. The precision, rounding, and exponent range
+are ignored. If HasFlags of the context is true, will store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Quiet NaN if this object or the other object is NaN, or 0 if both
+objects have the same value, or -1 if this object is less than the
+other value, or 1 if this object is greater.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
+</ul>
+
+<h3>Add</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Add(ExtendedFloat otherValue, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>otherValue</code> - The number to add to.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The sum of thisValue and the other object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>Quantize</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Quantize(BigInteger desiredExponent, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>desiredExponent</code> - An arbitrary-precision integer.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary float with the same value as this object but with the
+exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
+if an overflow error occurred, or the rounded result can&#39;t fit the
+given precision, or if the context defines an exponent range and the
+given exponent is outside that range.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>desiredExponent</code>
+is null.</li>
+</ul>
+
+<h3>Quantize</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Quantize(int desiredExponentSmall, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>desiredExponentSmall</code> - A 32-bit signed integer.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary float with the same value as this object but with the
+exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
+if an overflow error occurred, or the rounded result can&#39;t fit the
+given precision, or if the context defines an exponent range and the
+given exponent is outside that range.</li>
+</ul>
+
+<h3>Quantize</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Quantize(ExtendedFloat otherValue, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>otherValue</code> - A binary float containing the desired exponent of the
+result. The mantissa is ignored. The exponent is the number of
+fractional digits in the result, expressed as a negative number. Can
+also be positive, which eliminates lower-order places from the
+number. For example, -3 means round to the thousandth (10^-3,
+0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0
+rounds the number to an integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision and rounding of the
+result. If HasFlags of the context is true, will also store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags). Can be null, in which case the default rounding
+mode is HalfEven.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary float with the same value as this object but with the
+exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
+if an overflow error occurred, or the result can&#39;t fit the given
+precision without rounding. Signals FlagInvalid and returns
+not-a-number (NaN) if the new exponent is outside of the valid range
+of the precision context, if it defines an exponent range.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
+</ul>
+
+<h3>RoundToIntegralExact</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RoundToIntegralExact(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context to control precision and rounding of the
+result. If HasFlags of the context is true, will also store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags). Can be null, in which case the default rounding
+mode is HalfEven.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary number rounded to the closest integer representable in the
+given precision. Signals FlagInvalid and returns not-a-number (NaN)
+if the result can&#39;t fit the given precision without rounding. Signals
+FlagInvalid and returns not-a-number (NaN) if the precision context
+defines an exponent range, the new exponent must be changed to 0 when
+rounding, and 0 is outside of the valid range of the precision
+context.</li>
+</ul>
+
+<h3>RoundToIntegralNoRoundedFlag</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RoundToIntegralNoRoundedFlag(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context to control precision and rounding of the
+result. If HasFlags of the context is true, will also store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags), except that this function will never add the
+FlagRounded and FlagInexact flags (the only difference between this
+and RoundToExponentExact). Can be null, in which case the default
+rounding mode is HalfEven.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary number rounded to the closest integer representable in the
+given precision, meaning if the result can&#39;t fit the precision,
+additional digits are discarded to make it fit. Signals FlagInvalid
+and returns not-a-number (NaN) if the precision context defines an
+exponent range, the new exponent must be changed to 0 when rounding,
+and 0 is outside of the valid range of the precision context.</li>
+</ul>
+
+<h3>RoundToExponentExact</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RoundToExponentExact(BigInteger exponent, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>exponent</code> - The minimum exponent the result can have. This is the
+maximum number of fractional digits in the result, expressed as a
+negative number. Can also be positive, which eliminates lower-order
+places from the number. For example, -3 means round to the sixteenth
+(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary number rounded to the closest value representable in the
+given precision. Signals FlagInvalid and returns not-a-number (NaN)
+if the result can&#39;t fit the given precision without rounding. Signals
+FlagInvalid and returns not-a-number (NaN) if the precision context
+defines an exponent range, the new exponent must be changed to the
+given exponent when rounding, and the given exponent is outside of
+the valid range of the precision context.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>exponent</code> is null.</li>
+</ul>
+
+<h3>RoundToExponent</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RoundToExponent(BigInteger exponent, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>exponent</code> - The minimum exponent the result can have. This is the
+maximum number of fractional digits in the result, expressed as a
+negative number. Can also be positive, which eliminates lower-order
+places from the number. For example, -3 means round to the sixteenth
+(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null, in which case the
+default rounding mode is HalfEven.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary number rounded to the closest value representable in the
+given precision, meaning if the result can&#39;t fit the precision,
+additional digits are discarded to make it fit. Signals FlagInvalid
+and returns not-a-number (NaN) if the precision context defines an
+exponent range, the new exponent must be changed to the given
+exponent when rounding, and the given exponent is outside of the
+valid range of the precision context.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>exponent</code> is null.</li>
+</ul>
+
+<h3>RoundToExponentExact</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RoundToExponentExact(int exponentSmall, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>exponentSmall</code> - The minimum exponent the result can have. This is the
+maximum number of fractional digits in the result, expressed as a
+negative number. Can also be positive, which eliminates lower-order
+places in the number. For example, -3 means round to the sixteenth
+(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary number rounded to the closest value representable in the
+given precision. Signals FlagInvalid and returns not-a-number (NaN)
+if the result can&#39;t fit the given precision without rounding. Signals
+FlagInvalid and returns not-a-number (NaN) if the precision context
+defines an exponent range, the new exponent must be changed to the
+given exponent when rounding, and the given exponent is outside of
+the valid range of the precision context.</li>
+</ul>
+
+<h3>RoundToExponent</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RoundToExponent(int exponentSmall, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>exponentSmall</code> - The minimum exponent the result can have. This is the
+maximum number of fractional digits in the result, expressed as a
+negative number. Can also be positive, which eliminates lower-order
+places in the number. For example, -3 means round to the sixteenth
+(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null, in which case the
+default rounding mode is HalfEven.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary number rounded to the closest value representable in the
+given precision, meaning if the result can&#39;t fit the precision,
+additional digits are discarded to make it fit. Signals FlagInvalid
+and returns not-a-number (NaN) if the precision context defines an
+exponent range, the new exponent must be changed to the given
+exponent when rounding, and the given exponent is outside of the
+valid range of the precision context.</li>
+</ul>
+
+<h3>Multiply</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Multiply(ExtendedFloat op, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>op</code> - Another binary float.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The product of the two binary floats.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>op</code> is null.</li>
+</ul>
+
+<h3>MultiplyAndAdd</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MultiplyAndAdd(ExtendedFloat op, ExtendedFloat augend, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>op</code> - The value to multiply.</p></li>
+<li><p><code>augend</code> - The value to add.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The result thisValue * multiplicand + augend.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>op</code> or <code>augend</code> is null.</li>
+</ul>
+
+<h3>MultiplyAndSubtract</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MultiplyAndSubtract(ExtendedFloat op, ExtendedFloat subtrahend, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>op</code> - The value to multiply.</p></li>
+<li><p><code>subtrahend</code> - The value to subtract.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The result thisValue * multiplicand - subtrahend.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>op</code> or <code>subtrahend</code> is null.</li>
+</ul>
+
+<h3>RoundToPrecision</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RoundToPrecision(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A context for controlling the precision, rounding mode, and
+exponent range. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest value to this object&#39;s value, rounded to the specified
+precision. Returns the same value as this object if <code>ctx</code> is
+null or the precision and exponent range are unlimited.</li>
+</ul>
+
+<h3>Plus</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Plus(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A context for controlling the precision, rounding mode, and
+exponent range. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest value to this object&#39;s value, rounded to the specified
+precision. Returns the same value as this object if <code>ctx</code> is
+null or the precision and exponent range are unlimited.</li>
+</ul>
+
+<h3>RoundToBinaryPrecision</h3>
+
+<pre><code>@Deprecated public ExtendedFloat RoundToBinaryPrecision(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A context for controlling the precision, rounding mode, and
+exponent range. The precision is interpreted as the maximum bit
+length of the mantissa. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest value to this object&#39;s value, rounded to the specified
+precision. Returns the same value as this object if <code>ctx</code> is
+null or the precision and exponent range are unlimited.</li>
+</ul>
+
+<h3>SquareRoot</h3>
+
+<pre><code>@Deprecated public ExtendedFloat SquareRoot(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). <i>This parameter cannot be
+null, as the square root function&#39;s results are generally not exact
+for many inputs.</i></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The square root. Signals the flag FlagInvalid and returns NaN if
+this object is less than 0 (the square root would be a complex
+number, but the return value is still NaN).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>ctx</code> is null or the
+precision is unlimited (the context&#39;s Precision property is 0).</li>
+</ul>
+
+<h3>Exp</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Exp(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). <i>This parameter cannot be
+null, as the exponential function&#39;s results are generally not
+exact.</i></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Exponential of this object. If this object&#39;s value is 1, returns an
+approximation to &quot; e&quot; within the given precision.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>ctx</code> is null or the
+precision is unlimited (the context&#39;s Precision property is 0).</li>
+</ul>
+
+<h3>Log</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Log(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). <i>This parameter cannot be
+null, as the ln function&#39;s results are generally not exact.</i></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Ln(this object). Signals the flag FlagInvalid and returns NaN if
+this object is less than 0 (the result would be a complex number with
+a real part equal to Ln of this object&#39;s absolute value and an
+imaginary part equal to pi, but the return value is still NaN.).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>ctx</code> is null or the
+precision is unlimited (the context&#39;s Precision property is 0).</li>
+</ul>
+
+<h3>Log10</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Log10(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). <i>This parameter cannot be
+null, as the ln function&#39;s results are generally not exact.</i></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
+not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
+and returns not-a-number (NaN) if the parameter <code>ctx</code> is null
+or the precision is unlimited (the context&#39;s Precision property is
+0).</li>
+</ul>
+
+<h3>Pow</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Pow(ExtendedFloat exponent, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>exponent</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This^exponent. Signals the flag FlagInvalid and returns NaN if this
+object and exponent are both 0; or if this value is less than 0 and
+the exponent either has a fractional part or is infinity.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>ctx</code> is null or the
+precision is unlimited (the context&#39;s Precision property is 0), and
+the exponent has a fractional part.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>exponent</code> is null.</p></li>
+</ul>
+
+<h3>Pow</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Pow(int exponentSmall, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>exponentSmall</code> - A 32-bit signed integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This^exponent. Signals the flag FlagInvalid and returns NaN if this
+object and exponent are both 0.</li>
+</ul>
+
+<h3>Pow</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Pow(int exponentSmall)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>exponentSmall</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This^exponent. Returns not-a-number (NaN) if this object and
+exponent are both 0.</li>
+</ul>
+
+<h3>PI</h3>
+
+<pre><code>@Deprecated public static ExtendedFloat PI(PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). <i>This parameter cannot be
+null, as &#x3c0; can never be represented exactly.</i></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The constant π rounded to the given precision.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>ctx</code> is null or the
+precision is unlimited (the context&#39;s Precision property is 0).</li>
+</ul>
+
+<h3>MovePointLeft</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MovePointLeft(int places)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>places</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>MovePointLeft</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MovePointLeft(int places, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>places</code> - A 32-bit signed integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>MovePointLeft</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MovePointLeft(BigInteger bigPlaces)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigPlaces</code> - An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigPlaces</code> is
+null.</li>
+</ul>
+
+<h3>MovePointLeft</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MovePointLeft(BigInteger bigPlaces, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bigPlaces</code> - An arbitrary-precision integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigPlaces</code> is
+null.</li>
+</ul>
+
+<h3>MovePointRight</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MovePointRight(int places)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>places</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>MovePointRight</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MovePointRight(int places, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>places</code> - A 32-bit signed integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>MovePointRight</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MovePointRight(BigInteger bigPlaces)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigPlaces</code> - An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigPlaces</code> is
+null.</li>
+</ul>
+
+<h3>MovePointRight</h3>
+
+<pre><code>@Deprecated public ExtendedFloat MovePointRight(BigInteger bigPlaces, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bigPlaces</code> - An arbitrary-precision integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A number whose scale is increased by <code>bigPlaces</code>, but not to
+more than 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigPlaces</code> is
+null.</li>
+</ul>
+
+<h3>ScaleByPowerOfTwo</h3>
+
+<pre><code>@Deprecated public ExtendedFloat ScaleByPowerOfTwo(int places)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>places</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>ScaleByPowerOfTwo</h3>
+
+<pre><code>@Deprecated public ExtendedFloat ScaleByPowerOfTwo(int places, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>places</code> - A 32-bit signed integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>ScaleByPowerOfTwo</h3>
+
+<pre><code>@Deprecated public ExtendedFloat ScaleByPowerOfTwo(BigInteger bigPlaces)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigPlaces</code> - An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigPlaces</code> is
+null.</li>
+</ul>
+
+<h3>ScaleByPowerOfTwo</h3>
+
+<pre><code>@Deprecated public ExtendedFloat ScaleByPowerOfTwo(BigInteger bigPlaces, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bigPlaces</code> - An arbitrary-precision integer.</p></li>
+<li><p><code>ctx</code> - A precision context to control precision, rounding, and exponent
+range of the result. If HasFlags of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A number whose scale is increased by <code>bigPlaces</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigPlaces</code> is
+null.</li>
+</ul>
+
+<h3>Precision</h3>
+
+<pre><code>@Deprecated public BigInteger Precision()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<h3>Ulp</h3>
+
+<pre><code>@Deprecated public ExtendedFloat Ulp()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary float.</li>
+</ul>
+
+<h3>DivideAndRemainderNaturalScale</h3>
+
+<pre><code>@Deprecated public ExtendedFloat[] DivideAndRemainderNaturalScale(ExtendedFloat divisor)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - The number to divide by.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 2 element array consisting of the quotient and remainder in that
+order.</li>
+</ul>
+
+<h3>DivideAndRemainderNaturalScale</h3>
+
+<pre><code>@Deprecated public ExtendedFloat[] DivideAndRemainderNaturalScale(ExtendedFloat divisor, PrecisionContext ctx)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
+<li><p><code>ctx</code> - A precision context object to control the precision, rounding,
+and exponent range of the result. This context will be used only in
+the division portion of the remainder calculation; as a result, it&#39;s
+possible for the remainder to have a higher precision than given in
+this context. Flags will be set on the given context only if the
+context&#39;s HasFlags is true and the integer part of the division
+result doesn&#39;t fit the precision and exponent range without rounding.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 2 element array consisting of the quotient and remainder in that
+order.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

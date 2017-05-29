@@ -6,13 +6,24 @@
 
 <h1>com.upokecenter.util.BigInteger</h1>
 
-<pre><code>@Deprecated public final class BigInteger extends Object implements Comparable&lt;BigInteger&gt;
+<pre><code>public final class BigInteger extends Object implements Comparable&lt;BigInteger&gt;
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
-
-<div class='block'>Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the output of
-this class's toString method.</div>
+<p><b>This class is largely obsolete. It will be replaced by a new version
+ of this class in a different namespace/package and library, called
+ <code>PeterO.Numbers.EInteger</code> in the <code>PeterO.Numbers</code>
+ library (in .NET), or <code>com.upokecenter.numbers.EInteger</code> in the
+ <code>com.github.peteroupc/numbers</code>
+ artifact (in Java). This new class can be used in the
+ <code>CBORObject.FromObject(Object)</code> method (by including the new
+ library in your code, among other things), but this version of the
+ CBOR library doesn't include any methods that explicitly take an
+ <code>EInteger</code> as a parameter or return value.</b></p> An
+ arbitrary-precision integer. <p><b>Thread safety:</b>Instances of
+ this class are immutable, so they are inherently safe for use by
+ multiple threads. Multiple instances of this object with the same
+ value are interchangeable, but they should be compared using the
+ "Equals" method rather than the "==" operator.</p>
 
 <h2>Fields</h2>
 
@@ -21,37 +32,198 @@ this class's toString method.</div>
 Deprecated.
 Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
 Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static BigInteger TEN</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>static BigInteger ZERO</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 </ul>
 
 <h2>Methods</h2>
 
 <ul>
+<li><code>BigInteger abs()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger add(BigInteger bigintAugend)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>int bitLength()</code><br>
-Deprecated.  Finds the minimum number of bits needed to represent this object&#39;s
+Finds the minimum number of bits needed to represent this object&#39;s
 value, except for its sign.</li>
+<li><code>boolean canFitInInt()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>int compareTo(BigInteger other)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger divide(BigInteger bigintDivisor)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger[] divideAndRemainder(BigInteger divisor)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Deprecated.  Determines whether this object and another object are equal.</li>
+Determines whether this object and another object are equal.</li>
+<li><code>static BigInteger fromByteArray(byte[] bytes,
+         boolean littleEndian)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static BigInteger fromBytes(byte[] bytes,
      boolean littleEndian)</code><br>
-Deprecated.  Initializes an arbitrary-precision integer from an array of bytes.</li>
+Initializes an arbitrary-precision integer from an array of bytes.</li>
 <li><code>static BigInteger fromRadixString(String str,
            int radix)</code><br>
-Deprecated.  Converts a string to an arbitrary-precision integer.</li>
+Converts a string to an arbitrary-precision integer.</li>
+<li><code>static BigInteger fromRadixSubstring(String str,
+              int radix,
+              int index,
+              int endIndex)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static BigInteger fromString(String str)</code><br>
-Deprecated.  Converts a string to an arbitrary-precision integer.</li>
+Converts a string to an arbitrary-precision integer.</li>
+<li><code>static BigInteger fromSubstring(String str,
+         int index,
+         int endIndex)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger gcd(BigInteger bigintSecond)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int getDigitCount()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int getLowBit()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int getLowestSetBit()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int getUnsignedBitLength()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>int hashCode()</code><br>
-Deprecated.  Returns the hash code for this instance.</li>
+Returns the hash code for this instance.</li>
+<li><code>int intValue()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int intValueChecked()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int intValueUnchecked()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean isEven()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean isZero()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>long longValue()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>long longValueChecked()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>long longValueUnchecked()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger mod(BigInteger divisor)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger ModPow(BigInteger pow,
+  BigInteger mod)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger multiply(BigInteger bigintMult)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger negate()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger pow(int powerSmall)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger PowBigIntVar(BigInteger power)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger remainder(BigInteger divisor)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger shiftLeft(int numberBits)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger shiftRight(int numberBits)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>int signum()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger sqrt()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger[] sqrtWithRemainder()</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>BigInteger subtract(BigInteger subtrahend)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>boolean testBit(int index)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>byte[] toByteArray(boolean littleEndian)</code><br>
+Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>byte[] toBytes(boolean littleEndian)</code><br>
-Deprecated.  Returns a byte array of this object&#39;s value.</li>
+Returns a byte array of this object&#39;s value.</li>
 <li><code>String toRadixString(int radix)</code><br>
-Deprecated.  Generates a string representing the value of this object, in the given
+Generates a string representing the value of this object, in the given
 radix.</li>
 <li><code>String toString()</code><br>
-Deprecated.  Converts this object to a text string in base 10.</li>
+Converts this object to a text string in base 10.</li>
 <li><code>static BigInteger valueOf(long longerValue)</code><br>
-Deprecated.  Converts a 64-bit signed integer to a big integer.</li>
+Converts a 64-bit signed integer to a big integer.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -63,26 +235,110 @@ Deprecated.  Converts a 64-bit signed integer to a big integer.</li>
 
 <p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
+<h3>TEN</h3>
+
+<pre><code>@Deprecated public static final BigInteger TEN
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<h3>ZERO</h3>
+
+<pre><code>@Deprecated public static final BigInteger ZERO
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
 <h2>Method Details</h2>
+
+<h3>isEven</h3>
+
+<pre><code>@Deprecated public final boolean isEven()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this value is even; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>isZero</h3>
+
+<pre><code>@Deprecated public final boolean isZero()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this value is 0; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>signum</h3>
+
+<pre><code>@Deprecated public final int signum()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>0 if this value is zero; -1 if this value is negative, or 1 if this
+value is positive.</li>
+</ul>
+
+<h3>fromByteArray</h3>
+
+<pre><code>@Deprecated public static BigInteger fromByteArray(byte[] bytes, boolean littleEndian)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A byte array.</p></li>
+<li><p><code>littleEndian</code> - A Boolean object.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+</ul>
 
 <h3>fromBytes</h3>
 
 <pre><code>public static BigInteger fromBytes(byte[] bytes, boolean littleEndian)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Initializes an arbitrary-precision integer from an array of bytes.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bytes</code> - A byte array consisting of the two&#39;s-complement form of the
-arbitrary-precision integer to create. The last byte contains the
-lowest 8-bits, the next-to-last contains the next lowest 8 bits, and
-so on. To encode negative numbers, take the absolute value of the
-number, subtract by 1, encode the number into bytes, XOR each byte,
-and if the most-significant bit of the first byte isn&#39;t set, add an
-additional byte at the start with the value 255. For little-endian,
-the byte order is reversed from the byte order just discussed.</p></li>
+<li><p><code>bytes</code> - A byte array consisting of the two&#39;s-complement integer
+representation of the arbitrary-precision integer to create. The last
+byte contains the lowest 8-bits, the next-to-last contains the next
+lowest 8 bits, and so on. To encode negative numbers, take the
+absolute value of the number, subtract by 1, encode the number into
+bytes, XOR each byte, and if the most-significant bit of the first
+byte isn&#39;t set, add an additional byte at the start with the value</p>
+
+<ol>
+<li>For little-endian, the byte order is reversed from the byte
+order just discussed.</li>
+</ol></li>
 <li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
 least-significant-byte first. If false, the byte order is big-endian,
 or most-significant-byte first.</p></li>
@@ -106,7 +362,7 @@ is 0.</li>
 <pre><code>public static BigInteger fromRadixString(String str, int radix)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Converts a string to an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -137,12 +393,54 @@ or greater than 36.</p></li>
 <li><p><code>NumberFormatException</code> - The string is empty or in an invalid format.</p></li>
 </ul>
 
+<h3>fromRadixSubstring</h3>
+
+<pre><code>@Deprecated public static BigInteger fromRadixSubstring(String str, int radix, int index, int endIndex)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string. The desired portion of the string must contain
+only characters allowed by the given radix, except that it may start
+with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The
+desired portion is not allowed to contain white space characters,
+including spaces.</p></li>
+<li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
+the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
+A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
+then A-F in radix 16.</p></li>
+<li><p><code>index</code> - The index of the string that starts the string portion.</p></li>
+<li><p><code>endIndex</code> - The index of the string that ends the string portion. The
+length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+string portion.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
+<code>endIndex</code> is less than 0, or either is greater than the
+string&#39;s length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
+<li><p><code>NumberFormatException</code> - The string portion is empty or in an invalid
+format.</p></li>
+</ul>
+
 <h3>fromString</h3>
 
 <pre><code>public static BigInteger fromString(String str)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Converts a string to an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -168,12 +466,50 @@ string.</li>
 format.</p></li>
 </ul>
 
+<h3>fromSubstring</h3>
+
+<pre><code>@Deprecated public static BigInteger fromSubstring(String str, int index, int endIndex)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string. The desired portion of the string must contain
+only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may start
+with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The
+desired portion is not allowed to contain white space characters,
+including spaces.</p></li>
+<li><p><code>index</code> - The index of the string that starts the string portion.</p></li>
+<li><p><code>endIndex</code> - The index of the string that ends the string portion. The
+length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+string portion.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
+<code>endIndex</code> is less than 0, or either is greater than the
+string&#39;s length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
+<li><p><code>NumberFormatException</code> - The string portion is empty or in an invalid
+format.</p></li>
+</ul>
+
 <h3>valueOf</h3>
 
 <pre><code>public static BigInteger valueOf(long longerValue)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Converts a 64-bit signed integer to a big integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -188,12 +524,54 @@ format.</p></li>
 number.</li>
 </ul>
 
+<h3>abs</h3>
+
+<pre><code>@Deprecated public BigInteger abs()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s value with the sign removed.</li>
+</ul>
+
+<h3>add</h3>
+
+<pre><code>@Deprecated public BigInteger add(BigInteger bigintAugend)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintAugend</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The sum of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
+null.</li>
+</ul>
+
 <h3>bitLength</h3>
 
 <pre><code>public int bitLength()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Finds the minimum number of bits needed to represent this object&#x27;s
+ value, except for its sign. If the value is negative, finds the
+ number of bits in a value equal to this object&#39;s absolute value minus
+ 1.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -202,12 +580,108 @@ number.</li>
 object&#39;s value is 0 or negative 1.</li>
 </ul>
 
+<h3>canFitInInt</h3>
+
+<pre><code>@Deprecated public boolean canFitInInt()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value is MinValue or greater, and
+MaxValue or less; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre><code>@Deprecated public int compareTo(BigInteger other)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;BigInteger&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
+</ul>
+
+<h3>divide</h3>
+
+<pre><code>@Deprecated public BigInteger divide(BigInteger bigintDivisor)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintDivisor</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The divisor is zero.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+null.</p></li>
+<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+</ul>
+
+<h3>divideAndRemainder</h3>
+
+<pre><code>@Deprecated public BigInteger[] divideAndRemainder(BigInteger divisor)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array with two big integers: the first is the quotient, and the
+second is the remainder.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+<li><p><code>ArithmeticException</code> - The parameter <code>divisor</code> is 0.</p></li>
+<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+</ul>
+
 <h3>equals</h3>
 
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Determines whether this object and another object are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -228,12 +702,52 @@ object&#39;s value is 0 or negative 1.</li>
 <code>false</code>.</li>
 </ul>
 
+<h3>gcd</h3>
+
+<pre><code>@Deprecated public BigInteger gcd(BigInteger bigintSecond)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintSecond</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintSecond</code> is
+null.</li>
+</ul>
+
+<h3>getDigitCount</h3>
+
+<pre><code>@Deprecated public int getDigitCount()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of decimal digits. Returns 1 if this object&#39; s value is
+0.</li>
+</ul>
+
 <h3>hashCode</h3>
 
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Returns the hash code for this instance.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -247,12 +761,469 @@ object&#39;s value is 0 or negative 1.</li>
 <li>A 32-bit signed integer.</li>
 </ul>
 
+<h3>getLowBit</h3>
+
+<pre><code>@Deprecated public int getLowBit()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The lowest bit set in the number, starting at 0. Returns 0 if this
+value is 0 or odd. (NOTE: In future versions, may return -1 instead
+if this value is 0.).</li>
+</ul>
+
+<h3>getLowestSetBit</h3>
+
+<pre><code>@Deprecated public int getLowestSetBit()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>See getLowBit().</li>
+</ul>
+
+<h3>getUnsignedBitLength</h3>
+
+<pre><code>@Deprecated public int getUnsignedBitLength()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bits in this object&#39;s value. Returns 0 if this
+object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
+</ul>
+
+<h3>intValue</h3>
+
+<pre><code>@Deprecated public int intValue()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+32-bit signed integer.</li>
+</ul>
+
+<h3>intValueChecked</h3>
+
+<pre><code>@Deprecated public int intValueChecked()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+32-bit signed integer.</li>
+</ul>
+
+<h3>intValueUnchecked</h3>
+
+<pre><code>@Deprecated public int intValueUnchecked()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>longValue</h3>
+
+<pre><code>@Deprecated public long longValue()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+64-bit signed integer.</li>
+</ul>
+
+<h3>longValueChecked</h3>
+
+<pre><code>@Deprecated public long longValueChecked()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+64-bit signed integer.</li>
+</ul>
+
+<h3>longValueUnchecked</h3>
+
+<pre><code>@Deprecated public long longValueUnchecked()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit signed integer.</li>
+</ul>
+
+<h3>mod</h3>
+
+<pre><code>@Deprecated public BigInteger mod(BigInteger divisor)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - A divisor greater than 0 (the modulus).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - The parameter <code>divisor</code> is negative.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>ModPow</h3>
+
+<pre><code>@Deprecated public BigInteger ModPow(BigInteger pow, BigInteger mod)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>pow</code> - Another arbitrary-precision integer.</p></li>
+<li><p><code>mod</code> - An arbitrary-precision integer. (3).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>pow</code> or <code>mod</code> is null.</li>
+</ul>
+
+<h3>multiply</h3>
+
+<pre><code>@Deprecated public BigInteger multiply(BigInteger bigintMult)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintMult</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The product of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintMult</code> is
+null.</li>
+</ul>
+
+<h3>negate</h3>
+
+<pre><code>@Deprecated public BigInteger negate()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s value with the sign reversed.</li>
+</ul>
+
+<h3>pow</h3>
+
+<pre><code>@Deprecated public BigInteger pow(int powerSmall)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>powerSmall</code> - The exponent to raise to.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The result. Returns 1 if <code>powerSmall</code> is 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>powerSmall</code> is less
+than 0.</li>
+</ul>
+
+<h3>PowBigIntVar</h3>
+
+<pre><code>@Deprecated public BigInteger PowBigIntVar(BigInteger power)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>power</code> - The exponent to raise to.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The result. Returns 1 if <code>power</code> is 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>power</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>power</code> is less than 0.</p></li>
+</ul>
+
+<h3>remainder</h3>
+
+<pre><code>@Deprecated public BigInteger remainder(BigInteger divisor)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>divisor</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The remainder of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+</ul>
+
+<h3>shiftLeft</h3>
+
+<pre><code>@Deprecated public BigInteger shiftLeft(int numberBits)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>numberBits</code> - The number of bits to shift. Can be negative, in which
+case this is the same as shiftRight with the absolute value of
+numberBits.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<h3>shiftRight</h3>
+
+<pre><code>@Deprecated public BigInteger shiftRight(int numberBits)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>numberBits</code> - Number of bits to shift right.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<h3>sqrt</h3>
+
+<pre><code>@Deprecated public BigInteger sqrt()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The square root of this object&#39;s value. Returns 0 if this value is 0
+or less.</li>
+</ul>
+
+<h3>sqrtWithRemainder</h3>
+
+<pre><code>@Deprecated public BigInteger[] sqrtWithRemainder()
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of two big integers: the first integer is the square root,
+and the second is the difference between this value and the square of
+the first integer. Returns two zeros if this value is 0 or less, or
+one and zero if this value equals 1.</li>
+</ul>
+
+<h3>subtract</h3>
+
+<pre><code>@Deprecated public BigInteger subtract(BigInteger subtrahend)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>subtrahend</code> - Another arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The difference of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>subtrahend</code> is
+null.</li>
+</ul>
+
+<h3>testBit</h3>
+
+<pre><code>@Deprecated public boolean testBit(int index)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>index</code> - Zero based index of the bit to test. 0 means the least
+significant bit.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if a bit is set in the two&#39;s-complement representation
+of this object&#39;s value; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>toByteArray</h3>
+
+<pre><code>@Deprecated public byte[] toByteArray(boolean littleEndian)
+</code></pre>
+
+<p>Deprecated.&nbsp;Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>littleEndian</code> - A Boolean object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A byte array.</li>
+</ul>
+
 <h3>toBytes</h3>
 
 <pre><code>public byte[] toBytes(boolean littleEndian)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Returns a byte array of this object&#x27;s value. The byte array will take
+ the form of the number&#39;s two&#39; s-complement representation, using the
+ fewest bytes necessary to represent its value unambiguously. If this
+ value is negative, the bits that appear &quot;before&quot; the most significant
+ bit of the number will be all ones.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -272,7 +1243,8 @@ single element 0.</li>
 <pre><code>public String toRadixString(int radix)
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Generates a string representing the value of this object, in the given
+ radix.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -306,7 +1278,7 @@ or greater than 36.</li>
 <pre><code>public String toString()
 </code></pre>
 
-<p>Deprecated.&nbsp;</p>
+<p>Converts this object to a text string in base 10.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -320,31 +1292,6 @@ or greater than 36.</li>
 <li>A string representation of this object. If negative, the string will
 begin with a minus sign (&quot;-&quot;, U+002D). The string will use the basic
 digits 0 to 9 (U + 0030 to U + 0039).</li>
-</ul>
-
-<h3>compareTo</h3>
-
-<pre><code>public int compareTo(BigInteger other)
-</code></pre>
-
-<p>Deprecated.&nbsp;</p>
-
-<p><strong>Specified by:</strong></p>
-
-<ul>
-<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;BigInteger&gt;</code></li>
-</ul>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>other</code> - A BigInteger object.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A 32-bit signed integer.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
