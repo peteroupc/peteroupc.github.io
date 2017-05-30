@@ -11,7 +11,7 @@
 
 <p>Represents an email message, and contains methods and properties for accessing and modifying email message data. This class implements the Internet Message Format (RFC 5322) and Multipurpose Internet Mail Extensions (MIME; RFC 2045-2047, RFC 2049).</p>
 
-<p>Thread safety: This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
+<p><b>Thread safety:</b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
 
 <p>The following lists known deviations from the mail specifications (Internet Message Format and MIME):</p>
 
@@ -43,7 +43,7 @@
     byte[] bytes);
 </code></pre>
 
-<p>Initializes a new instance of the  class. Reads from the given byte array to initialize the message.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -65,7 +65,7 @@ is null.</li>
     System.IO.Stream stream);
 </code></pre>
 
-<p>Initializes a new instance of the  class. Reads from the given Stream object to initialize the message.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -232,7 +232,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -261,7 +261,7 @@ The header field name is too long or contains an invalid character, or the heade
 <li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -288,7 +288,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>When encoding the message&#39;s body, if the message has a text content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or LF alone. If the message has any other content type, only CR followed by LF is considered a line break.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The generated message.</p>
 
@@ -306,7 +306,7 @@ The message can&#39;t be generated.</li>
 
 <p>Gets the byte array for this message&#39;s body. This method doesn&#39;t make a copy of that byte array.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A byte array.</p>
 
@@ -317,7 +317,7 @@ The message can&#39;t be generated.</li>
 
 <p>Returns the mail message contained in this message&#39;s body.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A message object if this object&#39;s content type is &quot;message/rfc822&quot;, &quot;message/news&quot;, or &quot;message/global&quot;, or null otherwise.</p>
 
@@ -339,7 +339,7 @@ The message can&#39;t be generated.</li>
 <li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An array containing eight elements. Returns null if the Date header doesn&#39;t exist, if the Date field is syntactically or semantically invalid, or if the field&#39;s year would overflow a 32-bit signed integer.</p>
 
@@ -357,7 +357,7 @@ The message can&#39;t be generated.</li>
 <li><i>name</i>: The name of a header field.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The value of the first header field with that name, or null if there is none.</p>
 
@@ -382,7 +382,7 @@ Name is null.</li>
 <li><i>index</i>: Zero-based index of the header field to get.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p>
 
@@ -408,7 +408,7 @@ is 0 or at least as high as the number of header fields.</li>
 <li><i>name</i>: The name of a header field.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An array containing the values of all header fields with the given name, in the order they appear in the message. The array will be empty if no header field has that name.</p>
 
@@ -433,7 +433,7 @@ Name is null.</li>
 <li><i>index</i>: Zero-based index of the header field to set.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -459,7 +459,7 @@ is 0 or at least as high as the number of header fields.</li>
 <li><i>name</i>: The name of the header field to remove.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -485,7 +485,7 @@ is null.</li>
 <li><i>bytes</i>: A byte array.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This object.</p>
 
@@ -504,7 +504,7 @@ is null.</li>
 
 <p>Sets this message&#39;s Date header field to the current time as its value.This method can be used when the message is considered complete and ready to be generated, for example, using the &quot;Generate()&quot; method.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This object.</p>
 
@@ -532,7 +532,7 @@ is null.</li>
 
 <p>.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This object.</p>
 
@@ -565,7 +565,7 @@ is null.</p></li>
 <li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -597,7 +597,7 @@ is null.</p></li>
 <li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -628,7 +628,7 @@ is null.</p></li>
 <li><p><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A Message object.</p>
 
@@ -659,7 +659,7 @@ is null.</p></li>
 <li><p><i>value</i>: The header field&#39;s value.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -688,7 +688,7 @@ is null.</p></li>
 <li><i>str</i>: A string consisting of the message in HTML format.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -716,7 +716,7 @@ is null.</li>
 <li><p><i>html</i>: A string consisting of the HTML version of the message.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -743,7 +743,7 @@ is null.</li>
 <li><i>str</i>: A string consisting of the message in plain text format.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>This instance.</p>
 
@@ -756,7 +756,8 @@ is null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
-</div><nav id="navigation"><p>
+</div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
+<p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">

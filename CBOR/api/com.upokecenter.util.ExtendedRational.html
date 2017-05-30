@@ -6,27 +6,13 @@
 
 <h1>com.upokecenter.util.ExtendedRational</h1>
 
-<pre><code>public final class ExtendedRational extends Object implements Comparable&lt;ExtendedRational&gt;
+<pre><code>@Deprecated public final class ExtendedRational extends Object implements Comparable&lt;ExtendedRational&gt;
 </code></pre>
 
-<p><b>This class is largely obsolete. It will be replaced by a new version
- of this class in a different namespace/package and library, called
- <code>PeterO.Numbers.ERational</code> in the <code>PeterO.Numbers</code>
- library (in .NET), or <code>com.upokecenter.numbers.ERational</code> in the
- <code>com.github.peteroupc/numbers</code>
- artifact (in Java). This new class can be used in the
- <code>CBORObject.FromObject(Object)</code> method (by including the new
- library in your code, among other things), but this version of the
- CBOR library doesn't include any methods that explicitly take an
- <code>ERational</code> as a parameter or return
- value.</b></p>Arbitrary-precision rational number. This class cannot
- be inherited; this is a change in version 2.0 from previous versions,
- where the class was inadvertently left inheritable. <p><b>Thread
- safety:</b>Instances of this class are immutable, so they are
- inherently safe for use by multiple threads. Multiple instances of
- this object with the same properties are interchangeable, so they
- should not be compared using the "==" operator (which only checks if
- each side of the operator is the same instance).</p>
+<p>Deprecated.&nbsp;</p>
+
+<div class='block'>Use ERational from PeterO.Numbers/com.upokecenter.numbers and the output of
+this class's toString method.</div>
 
 <h2>Fields</h2>
 
@@ -36,21 +22,21 @@ Deprecated.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedRational NegativeInfinity</code><br>
-Negative infinity, less than any other number.</li>
+Deprecated.  Negative infinity, less than any other number.</li>
 <li><code>static ExtendedRational NegativeZero</code><br>
-A rational number for negative zero.</li>
+Deprecated.  A rational number for negative zero.</li>
 <li><code>static ExtendedRational One</code><br>
-The rational number one.</li>
+Deprecated.  The rational number one.</li>
 <li><code>static ExtendedRational PositiveInfinity</code><br>
-Positive infinity, greater than any other number.</li>
+Deprecated.  Positive infinity, greater than any other number.</li>
 <li><code>static ExtendedRational SignalingNaN</code><br>
 Deprecated.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedRational Ten</code><br>
-The rational number ten.</li>
+Deprecated.  The rational number ten.</li>
 <li><code>static ExtendedRational Zero</code><br>
-A rational number for zero.</li>
+Deprecated.  A rational number for zero.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -58,137 +44,41 @@ A rational number for zero.</li>
 <ul>
 <li><code>ExtendedRational(BigInteger numerator,
             BigInteger denominator) com.upokecenter.ExtendedRational</code><br>
-Initializes a new instance of the com.upokecenter.ExtendedRational
+Deprecated.  Initializes a new instance of the com.upokecenter.ExtendedRational
 class.</li>
 </ul>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>ExtendedRational Abs()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedRational Add(ExtendedRational otherValue)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>int compareTo(ExtendedRational other)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>int CompareToBinary(ExtendedFloat other)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>int CompareToDecimal(ExtendedDecimal other)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+Deprecated.  Not documented yet.</li>
 <li><code>static ExtendedRational Create(BigInteger numerator,
   BigInteger denominator)</code><br>
-Creates a rational number with the given numerator and denominator.</li>
+Deprecated.  Creates a rational number with the given numerator and denominator.</li>
 <li><code>static ExtendedRational Create(int numeratorSmall,
   int denominatorSmall)</code><br>
-Creates a rational number with the given numerator and denominator.</li>
-<li><code>static ExtendedRational CreateNaN(BigInteger diag)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static ExtendedRational CreateNaN(BigInteger diag,
-     boolean signaling,
-     boolean negative)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedRational Divide(ExtendedRational otherValue)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+Deprecated.  Creates a rational number with the given numerator and denominator.</li>
 <li><code>boolean equals(ExtendedRational other)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+Deprecated.  Not documented yet.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Determines whether this object and another object are equal.</li>
-<li><code>static ExtendedRational FromBigInteger(BigInteger bigint)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static ExtendedRational FromDouble(double flt)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static ExtendedRational FromExtendedDecimal(ExtendedDecimal ef)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static ExtendedRational FromExtendedFloat(ExtendedFloat ef)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static ExtendedRational FromInt32(int smallint)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static ExtendedRational FromInt64(long longInt)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static ExtendedRational FromSingle(float flt)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
+Deprecated.  Not documented yet.</li>
 <li><code>BigInteger getDenominator()</code><br>
-Gets this object&#39;s denominator.</li>
+Deprecated.  Gets this object&#39;s denominator.</li>
 <li><code>BigInteger getNumerator()</code><br>
-Gets this object&#39;s numerator.</li>
+Deprecated.  Gets this object&#39;s numerator.</li>
 <li><code>BigInteger getUnsignedNumerator()</code><br>
-Gets this object&#39;s numerator with the sign removed.</li>
+Deprecated.  Gets this object&#39;s numerator with the sign removed.</li>
 <li><code>int hashCode()</code><br>
-Returns the hash code for this instance.</li>
+Deprecated.  Calculates the hash code for this object.</li>
 <li><code>boolean isFinite()</code><br>
 Deprecated.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean IsInfinity()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean IsNaN()</code><br>
-Returns whether this object is a not-a-number value.</li>
 <li><code>boolean isNegative()</code><br>
-Gets a value indicating whether this object&#39;s value is negative (including
+Deprecated.  Gets a value indicating whether this object&#39;s value is negative (including
 negative zero).</li>
-<li><code>boolean IsNegativeInfinity()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean IsPositiveInfinity()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean IsQuietNaN()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean IsSignalingNaN()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>boolean isZero()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedRational Multiply(ExtendedRational otherValue)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedRational Negate()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedRational Remainder(ExtendedRational otherValue)</code><br>
 Deprecated.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
@@ -196,52 +86,8 @@ Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
 Deprecated.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedRational Subtract(ExtendedRational otherValue)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>BigInteger ToBigInteger()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>BigInteger ToBigIntegerExact()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>double ToDouble()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedDecimal ToExtendedDecimal()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedDecimal ToExtendedDecimal(PrecisionContext ctx)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedDecimal ToExtendedDecimalExactIfPossible(PrecisionContext ctx)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedFloat ToExtendedFloat()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedFloat ToExtendedFloat(PrecisionContext ctx)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>ExtendedFloat ToExtendedFloatExactIfPossible(PrecisionContext ctx)</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>float ToSingle()</code><br>
-Deprecated.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.
-Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>String toString()</code><br>
-Converts this object to a text string.</li>
+Deprecated.  Converts this object to a text string.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -258,28 +104,28 @@ Converts this object to a text string.</li>
 <pre><code>public static final ExtendedRational NegativeInfinity
 </code></pre>
 
-<p>Negative infinity, less than any other number.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h3>NegativeZero</h3>
 
 <pre><code>public static final ExtendedRational NegativeZero
 </code></pre>
 
-<p>A rational number for negative zero.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h3>One</h3>
 
 <pre><code>public static final ExtendedRational One
 </code></pre>
 
-<p>The rational number one.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h3>PositiveInfinity</h3>
 
 <pre><code>public static final ExtendedRational PositiveInfinity
 </code></pre>
 
-<p>Positive infinity, greater than any other number.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h3>SignalingNaN</h3>
 
@@ -293,14 +139,14 @@ Converts this object to a text string.</li>
 <pre><code>public static final ExtendedRational Ten
 </code></pre>
 
-<p>The rational number ten.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h3>Zero</h3>
 
 <pre><code>public static final ExtendedRational Zero
 </code></pre>
 
-<p>A rational number for zero.</p>
+<p>Deprecated.&nbsp;</p>
 
 <h2>Method Details</h2>
 
@@ -309,7 +155,7 @@ Converts this object to a text string.</li>
 <pre><code>public final BigInteger getDenominator()
 </code></pre>
 
-<p>Gets this object&#39;s denominator.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -327,7 +173,7 @@ Converts this object to a text string.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object is finite (not infinity or NaN);
+<li><code>true</code> If this object is finite (not infinity or NaN);
 otherwise, <code>false</code>.</li>
 </ul>
 
@@ -336,13 +182,12 @@ otherwise, <code>false</code>.</li>
 <pre><code>public final boolean isNegative()
 </code></pre>
 
-<p>Gets a value indicating whether this object&#39;s value is negative (including
- negative zero).</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object&#39;s value is negative; otherwise, <code>false</code>.</li>
+<li><code>true</code> If this object&#39;s value is negative; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isZero</h3>
@@ -355,7 +200,7 @@ otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object&#39;s value equals 0; otherwise, <code>false</code>.</li>
+<li><code>true</code> If this object&#39;s value equals 0; otherwise, . <code>false</code>.</li>
 </ul>
 
 <h3>getNumerator</h3>
@@ -363,7 +208,7 @@ otherwise, <code>false</code>.</li>
 <pre><code>public final BigInteger getNumerator()
 </code></pre>
 
-<p>Gets this object&#39;s numerator.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -392,7 +237,7 @@ less than 0; and 1 if this value is greater than 0.</li>
 <pre><code>public final BigInteger getUnsignedNumerator()
 </code></pre>
 
-<p>Gets this object&#39;s numerator with the sign removed.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -406,7 +251,7 @@ returns the diagnostic information.</li>
 <pre><code>public static ExtendedRational Create(int numeratorSmall, int denominatorSmall)
 </code></pre>
 
-<p>Creates a rational number with the given numerator and denominator.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -426,7 +271,7 @@ returns the diagnostic information.</li>
 <pre><code>public static ExtendedRational Create(BigInteger numerator, BigInteger denominator)
 </code></pre>
 
-<p>Creates a rational number with the given numerator and denominator.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -448,254 +293,33 @@ returns the diagnostic information.</li>
 <code>denominator</code> is null.</li>
 </ul>
 
-<h3>CreateNaN</h3>
+<h3>toString</h3>
 
-<pre><code>@Deprecated public static ExtendedRational CreateNaN(BigInteger diag)
+<pre><code>public String toString()
 </code></pre>
 
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
+<p>Deprecated.&nbsp;</p>
 
-<p><strong>Parameters:</strong></p>
+<p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>diag</code> - A number to use as diagnostic information associated with this
-object. If none is needed, should be zero.</li>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>diag</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</p></li>
-</ul>
-
-<h3>CreateNaN</h3>
-
-<pre><code>@Deprecated public static ExtendedRational CreateNaN(BigInteger diag, boolean signaling, boolean negative)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>diag</code> - A number to use as diagnostic information associated with this
-object. If none is needed, should be zero.</p></li>
-<li><p><code>signaling</code> - Whether the return value will be signaling (true) or quiet
-(false).</p></li>
-<li><p><code>negative</code> - Whether the return value is negative.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>diag</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</p></li>
-</ul>
-
-<h3>FromBigInteger</h3>
-
-<pre><code>@Deprecated public static ExtendedRational FromBigInteger(BigInteger bigint)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>bigint</code> - An arbitrary-precision integer.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The exact value of the integer as a rational number.</li>
-</ul>
-
-<h3>FromDouble</h3>
-
-<pre><code>@Deprecated public static ExtendedRational FromDouble(double flt)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>flt</code> - A 64-bit floating-point number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A rational number with the same value as <code>flt</code>.</li>
-</ul>
-
-<h3>FromExtendedDecimal</h3>
-
-<pre><code>@Deprecated public static ExtendedRational FromExtendedDecimal(ExtendedDecimal ef)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>ef</code> - An arbitrary-precision decimal number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>ef</code> is null.</li>
-</ul>
-
-<h3>FromExtendedFloat</h3>
-
-<pre><code>@Deprecated public static ExtendedRational FromExtendedFloat(ExtendedFloat ef)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>ef</code> - An arbitrary-precision binary float.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>ef</code> is null.</li>
-</ul>
-
-<h3>FromInt32</h3>
-
-<pre><code>@Deprecated public static ExtendedRational FromInt32(int smallint)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>smallint</code> - A 32-bit signed integer.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision rational number.</li>
-</ul>
-
-<h3>FromInt64</h3>
-
-<pre><code>@Deprecated public static ExtendedRational FromInt64(long longInt)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>longInt</code> - A 64-bit signed integer.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision rational number.</li>
-</ul>
-
-<h3>FromSingle</h3>
-
-<pre><code>@Deprecated public static ExtendedRational FromSingle(float flt)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>flt</code> - A 32-bit floating-point number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A rational number with the same value as <code>flt</code>.</li>
-</ul>
-
-<h3>Abs</h3>
-
-<pre><code>@Deprecated public ExtendedRational Abs()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision rational number.</li>
-</ul>
-
-<h3>Add</h3>
-
-<pre><code>@Deprecated public ExtendedRational Add(ExtendedRational otherValue)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>otherValue</code> - Another arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The sum of the two numbers. Returns not-a-number (NaN) if either
-operand is NaN.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
-null.</li>
+<li>A string representation of this object. The result can be Infinity,
+NaN, or sNaN (with a minus sign before it for negative values), or a
+number of the following form: [-]numerator/denominator.</li>
 </ul>
 
 <h3>compareTo</h3>
 
-<pre><code>@Deprecated public int compareTo(ExtendedRational other)
+<pre><code>public int compareTo(ExtendedRational other)
 </code></pre>
 
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -706,98 +330,32 @@ null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision rational number.</li>
+<li><code>other</code> - An ExtendedRational object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Zero if the values are equal; a negative number if this instance is
-less, or a positive number if this instance is greater.</li>
+<li>A 32-bit signed integer.</li>
 </ul>
 
-<p><strong>Throws:</strong></p>
+<h3>equals</h3>
 
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
-</ul>
-
-<h3>CompareToBinary</h3>
-
-<pre><code>@Deprecated public int CompareToBinary(ExtendedFloat other)
+<pre><code>public boolean equals(ExtendedRational other)
 </code></pre>
 
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision binary float.</li>
+<li><code>other</code> - An ExtendedRational object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Zero if the values are equal; a negative number if this instance is
-less, or a positive number if this instance is greater.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
-</ul>
-
-<h3>CompareToDecimal</h3>
-
-<pre><code>@Deprecated public int CompareToDecimal(ExtendedDecimal other)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>other</code> - An arbitrary-precision decimal number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>Zero if the values are equal; a negative number if this instance is
-less, or a positive number if this instance is greater.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
-</ul>
-
-<h3>Divide</h3>
-
-<pre><code>@Deprecated public ExtendedRational Divide(ExtendedRational otherValue)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The quotient of the two objects.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
-null.</li>
+<li>A Boolean object.</li>
 </ul>
 
 <h3>equals</h3>
@@ -805,7 +363,7 @@ null.</li>
 <pre><code>public boolean equals(Object obj)
 </code></pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -822,33 +380,7 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>equals</h3>
-
-<pre><code>@Deprecated public boolean equals(ExtendedRational other)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>other</code> - Another arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object&#39;s properties are equal to the properties
-of another rational number object; otherwise, <code>false</code>.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
+<li>A Boolean object.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -856,7 +388,7 @@ of another rational number object; otherwise, <code>false</code>.</li>
 <pre><code>public int hashCode()
 </code></pre>
 
-<p>Returns the hash code for this instance.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -867,392 +399,12 @@ of another rational number object; otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit hash code.</li>
-</ul>
-
-<h3>IsInfinity</h3>
-
-<pre><code>@Deprecated public boolean IsInfinity()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object&#39;s value is infinity; otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>IsNaN</h3>
-
-<pre><code>public boolean IsNaN()
-</code></pre>
-
-<p>Returns whether this object is a not-a-number value.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object is a not-a-number value; otherwise,
-<code>false</code>.</li>
-</ul>
-
-<h3>IsNegativeInfinity</h3>
-
-<pre><code>@Deprecated public boolean IsNegativeInfinity()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object is negative infinity; otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>IsPositiveInfinity</h3>
-
-<pre><code>@Deprecated public boolean IsPositiveInfinity()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object is positive infinity; otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>IsQuietNaN</h3>
-
-<pre><code>@Deprecated public boolean IsQuietNaN()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object is a quiet not-a-number value;
-otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>IsSignalingNaN</h3>
-
-<pre><code>@Deprecated public boolean IsSignalingNaN()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object is a signaling not-a-number value (which
-causes an error if the value is passed to any arithmetic operation in
-this class); otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>Multiply</h3>
-
-<pre><code>@Deprecated public ExtendedRational Multiply(ExtendedRational otherValue)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The product of the two numbers.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
-null.</li>
-</ul>
-
-<h3>Negate</h3>
-
-<pre><code>@Deprecated public ExtendedRational Negate()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The negated form of this rational number.</li>
-</ul>
-
-<h3>Remainder</h3>
-
-<pre><code>@Deprecated public ExtendedRational Remainder(ExtendedRational otherValue)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The remainder of the two objects.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
-null.</li>
-</ul>
-
-<h3>Subtract</h3>
-
-<pre><code>@Deprecated public ExtendedRational Subtract(ExtendedRational otherValue)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The difference of the two objects.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
-null.</li>
-</ul>
-
-<h3>ToBigInteger</h3>
-
-<pre><code>@Deprecated public BigInteger ToBigInteger()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision integer.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or NaN.</li>
-</ul>
-
-<h3>ToBigIntegerExact</h3>
-
-<pre><code>@Deprecated public BigInteger ToBigIntegerExact()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision integer.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>ArithmeticException</code> - This object&#39;s value is infinity or NaN.</p></li>
-<li><p><code>ArithmeticException</code> - This object&#39;s value is not an exact integer.</p></li>
-</ul>
-
-<h3>ToDouble</h3>
-
-<pre><code>@Deprecated public double ToDouble()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The closest 64-bit floating-point number to this value. The return
-value can be positive infinity or negative infinity if this value
-exceeds the range of a 64-bit floating point number.</li>
-</ul>
-
-<h3>ToExtendedDecimal</h3>
-
-<pre><code>@Deprecated public ExtendedDecimal ToExtendedDecimal()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The exact value of the rational number, or not-a-number (NaN) if the
-result can&#39;t be exact because it has a nonterminating decimal
-expansion.</li>
-</ul>
-
-<h3>ToExtendedDecimal</h3>
-
-<pre><code>@Deprecated public ExtendedDecimal ToExtendedDecimal(PrecisionContext ctx)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>ctx</code> - A PrecisionContext object.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision decimal.</li>
-</ul>
-
-<h3>ToExtendedDecimalExactIfPossible</h3>
-
-<pre><code>@Deprecated public ExtendedDecimal ToExtendedDecimalExactIfPossible(PrecisionContext ctx)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>ctx</code> - A precision context object to control the precision. The rounding
-and exponent range settings of this context are ignored. This context
-will be used only if the exact result would have a nonterminating
-decimal expansion. If HasFlags of the context is true, will also
-store the flags resulting from the operation (the flags are in
-addition to the pre-existing flags). Can be null, in which case this
-method is the same as ToExtendedDecimal.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision decimal.</li>
-</ul>
-
-<h3>ToExtendedFloat</h3>
-
-<pre><code>@Deprecated public ExtendedFloat ToExtendedFloat()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The exact value of the rational number, or not-a-number (NaN) if the
-result can&#39;t be exact because it has a nonterminating binary
-expansion.</li>
-</ul>
-
-<h3>ToExtendedFloat</h3>
-
-<pre><code>@Deprecated public ExtendedFloat ToExtendedFloat(PrecisionContext ctx)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>ctx</code> - A PrecisionContext object.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision binary float.</li>
-</ul>
-
-<h3>ToExtendedFloatExactIfPossible</h3>
-
-<pre><code>@Deprecated public ExtendedFloat ToExtendedFloatExactIfPossible(PrecisionContext ctx)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>ctx</code> - A precision context object to control the precision. The rounding
-and exponent range settings of this context are ignored. This context
-will be used only if the exact result would have a nonterminating
-binary expansion. If HasFlags of the context is true, will also store
-the flags resulting from the operation (the flags are in addition to
-the pre-existing flags). Can be null, in which case this method is
-the same as ToExtendedFloat.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision binary float.</li>
-</ul>
-
-<h3>ToSingle</h3>
-
-<pre><code>@Deprecated public float ToSingle()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The closest 32-bit floating-point number to this value. The return
-value can be positive infinity or negative infinity if this value
-exceeds the range of a 32-bit floating point number.</li>
-</ul>
-
-<h3>toString</h3>
-
-<pre><code>public String toString()
-</code></pre>
-
-<p>Converts this object to a text string.</p>
-
-<p><strong>Overrides:</strong></p>
-
-<ul>
-<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string representation of this object. The result can be Infinity,
-NaN, or sNaN (with a minus sign before it for negative values), or a
-number of the following form: [-]numerator/denominator.</li>
+<li>A 32-bit signed integer.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
-</div><nav id="navigation"><p>
+</div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
+<p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">

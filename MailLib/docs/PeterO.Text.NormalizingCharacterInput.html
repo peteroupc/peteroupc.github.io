@@ -14,18 +14,18 @@
 
 <p>A character input class that implements the Unicode normalization algorithm and contains methods and functionality to test and convert text strings for normalization. This is similar to the deprecated Normalizer class, except it implements the ICharacterInput interface.</p>
 
-<p>The Unicode Standard includes characters, such as an acute accent, that can be combined with other characters to make new characters. For example, the letter E combines with an acute accent to make E-acute (É). In some cases, the combined form (E-acute) should be treated as equivalent to the uncombined form (E plus acute). For this reason, the standard defines fournormalization forms that convert strings to a single equivalent form:</p>
+<p>The Unicode Standard includes characters, such as an acute accent, that can be combined with other characters to make new characters. For example, the letter E combines with an acute accent to make E-acute (É). In some cases, the combined form (E-acute) should be treated as equivalent to the uncombined form (E plus acute). For this reason, the standard defines four<i>normalization forms</i> that convert strings to a single equivalent form:</p>
 
 <ul>
-<li><p>NFD (Normalization Form D) decomposes combined forms to their constituent characters (E plus acute, for example). This is called canonical decomposition.</p></li>
-<li><p>NFC does canonical decomposition, then combines certain constituent characters to their composites (E-acute, for example). This is called canonical composition.</p></li>
-<li><p>Two normalization forms, NFKC and NFKD, are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p></li>
+<li><p><b>NFD</b> (Normalization Form D) decomposes combined forms to their constituent characters (E plus acute, for example). This is called canonical decomposition.</p></li>
+<li><p><b>NFC</b> does canonical decomposition, then combines certain constituent characters to their composites (E-acute, for example). This is called canonical composition.</p></li>
+<li><p>Two normalization forms, <b>NFKC</b> and <b>NFKD</b>, are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p></li>
 <li><p>The four normalization forms also enforce a standardized order for combining marks, since they can otherwise appear in an arbitrary order.</p></li>
 </ul>
 
 <p>For more information, see Standard Annex 15 at <code>http://www.unicode.org/reports/tr15/</code> .</p>
 
-<p>Thread safety: This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
+<p><b>Thread safety:</b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
 
 <p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. In case doing so is required, the permission notice for the Unicode Character Database is given here:</p>
 
@@ -45,7 +45,7 @@
     PeterO.Text.ICharacterInput input);
 </code></pre>
 
-<p>Initializes a new instance of the  class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -60,7 +60,7 @@
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the  class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -83,7 +83,7 @@ is null.</li>
     string str);
 </code></pre>
 
-<p>Initializes a new instance of the  class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -100,7 +100,7 @@ is null.</li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the  class. Uses a portion of a string as the input.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class. Uses a portion of a string as the input.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -121,7 +121,7 @@ begins.</p></li>
     PeterO.Text.Normalization form);
 </code></pre>
 
-<p>Initializes a new instance of the  class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -138,7 +138,7 @@ begins.</p></li>
 
 <p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
-<p>Initializes a new instance of the  class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -155,7 +155,7 @@ begins.</p></li>
 
 <p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
-<p>Initializes a new instance of the  class using the given normalization form.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using the given normalization form.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -190,7 +190,7 @@ is null.</li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A list of the normalized Unicode characters.</p>
 
@@ -220,7 +220,7 @@ is null.</li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A list of the normalized Unicode characters.</p>
 
@@ -250,7 +250,7 @@ is null.</li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
@@ -277,7 +277,7 @@ The parameter &quot;charList&quot; is null.</li>
 <li><p><i>form</i>: Specifies the normalization form to check.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the text is normalized; otherwise,  <code>false</code> .</p>
 
@@ -305,7 +305,7 @@ is null.</li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
 
@@ -335,7 +335,7 @@ is null.</li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
@@ -363,7 +363,7 @@ is null.</li>
 <li><p><i>form</i>: The Unicode normalization form to convert to.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The parameter  <i>str</i>
  converted to the given normalization form.</p>
@@ -400,7 +400,7 @@ begins.</p></li>
 &#39;s length).</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The number of Unicode code points read, or 0 if the end of the source is reached.</p>
 
@@ -427,12 +427,13 @@ is less than  <i>length</i>
 
 <p>Reads a Unicode character from a data source.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to 0x10ffff), or the value -1 indicating the end of the source.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
-</div><nav id="navigation"><p>
+</div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
+<p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">

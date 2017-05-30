@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 27, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 30, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -89,7 +89,9 @@
 <ul>
 <li> Quality: A statistical-random implementation generates random bits that, theoretically, are uniformly randomly chosen independently of the other bits. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no <a href="http://xoroshiro.di.unimi.it/#quality">systematic failures</a> in <code>TestU01</code>&#39;s <code>BigCrush</code> test battery [L&#39;Ecuyer and Simard 2007] meets these requirements.)</li>
 <li> Predictability: The implementation&#39;s output must not be trivially predictable. &quot;Trivially predictable&quot; means that it&#39;s generally trivial to guess future outputs of the RNG given knowledge of the RNG algorithm and a sequence of outputs whose total length is no greater than the RNG&#39;s <em>seed length</em>.</li>
-<li><p>Seeding and Reseeding: The implementation must be initialized (&quot;seeded&quot;) with a seed described below. The RNG&#39;s <em>seed length</em> must be at least 64 bits and should be at least 128 bits. The seed--</p>
+<li><p>Seeding and Reseeding: The following applies only to deterministic RNGs.</p>
+
+<p>The implementation must be initialized (&quot;seeded&quot;) with a seed described below. The RNG&#39;s <em>seed length</em> must be at least 64 bits and should be at least 128 bits. The seed--</p>
 
 <ul>
 <li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from an unpredictable-random implementation,</li>
@@ -185,7 +187,8 @@ These building blocks, in turn, work essentially the same way regardless of the 
 <h2>License</h2>
 
 <p>This article, along with any associated source code and files, is licensed under <a href="http://creativecommons.org/licenses/publicdomain/">A Public Domain dedication</a></p>
-</div><nav id="navigation"><p>
+</div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
+<p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">

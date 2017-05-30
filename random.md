@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 27, 2017.
+Begun on Mar. 5, 2016; last updated on May 30, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -67,9 +67,11 @@ The goal of this kind of generator is for each possible outcome to be equally li
 
 Generates random bits using a statistical-random implementation.
 
--  Quality: A statistical-random implementation generates random bits that, theoretically, are uniformly randomly chosen independently of the other bits. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no [systematic failures](http://xoroshiro.di.unimi.it/#quality) in `TestU01`'s `BigCrush` test battery [L'Ecuyer and Simard 2007] meets these requirements.)
+-  Quality: A statistical-random implementation generates random bits, each of which, practically speaking, is uniformly randomly distributed independently of the other bits. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no [systematic failures](http://xoroshiro.di.unimi.it/#quality) in `TestU01`'s `BigCrush` test battery [L'Ecuyer and Simard 2007] meets these requirements.)
 -  Predictability: The implementation's output must not be trivially predictable. "Trivially predictable" means that it's generally trivial to guess future outputs of the RNG given knowledge of the RNG algorithm and a sequence of outputs whose total length is no greater than the RNG's _seed length_.
--  Seeding and Reseeding: The implementation must be initialized ("seeded") with a seed described below. The RNG's _seed length_ must be at least 64 bits and should be at least 128 bits. The seed--
+-  Seeding and Reseeding: The following applies only to deterministic RNGs.
+
+    The implementation must be initialized ("seeded") with a seed described below. The RNG's _seed length_ must be at least 64 bits and should be at least 128 bits. The seed--
     - must consist of data not known _a priori_ by the implementation, such as random bits from an unpredictable-random implementation,
     - must not be a fixed value or a user-entered value,
     - should not be trivially predictable, as far as practical, and

@@ -13,48 +13,48 @@
 
 <p>Now let&#39;s define some terms.</p>
 
-<p>Encoding Terms</p>
+<p><b>Encoding Terms</b></p>
 
 <ul>
-<li><p>A code point is a number that identifies a single text character, such as a letter, digit, or symbol. (A collection of such characters is also called an abstract character repertoire.)</p></li>
-<li><p>A character set is a set of code points which are each assigned to a single text character. (This may also be called acoded character set.) As used here, character sets don&#39;t define how code points are laid out in memory.</p></li>
-<li><p>A character encoding is a mapping from a sequence of code points, in one or more specific character sets, to a sequence of bytes and vice versa.</p></li>
-<li><p>ASCII is a 128-code-point character set that includes the English letters and digits, common punctuation and symbols, and control characters. As used here, its code points match the code points within the Basic Latin block (0-127 or U+0000 to U+007F) of the Unicode Standard.</p></li>
+<li><p>A <b>code point</b> is a number that identifies a single text character, such as a letter, digit, or symbol. (A collection of such characters is also called an <i>abstract character repertoire</i>.)</p></li>
+<li><p>A <b>character set</b> is a set of code points which are each assigned to a single text character. (This may also be called a<i>coded character set</i>.) As used here, character sets don&#39;t define how code points are laid out in memory.</p></li>
+<li><p>A <b>character encoding</b> is a mapping from a sequence of code points, in one or more specific character sets, to a sequence of bytes and vice versa.</p></li>
+<li><p><b>ASCII</b> is a 128-code-point character set that includes the English letters and digits, common punctuation and symbols, and control characters. As used here, its code points match the code points within the Basic Latin block (0-127 or U+0000 to U+007F) of the Unicode Standard.</p></li>
 </ul>
 
 <p>There are several kinds of character encodings:</p>
 
 <ul>
-<li><p>Single-byte encodings define a character set that assigns one code point to one byte. Thus, they can have a maximum of 256 code points. For example:</p></li>
+<li><p><b>Single-byte encodings</b> define a character set that assigns one code point to one byte. Thus, they can have a maximum of 256 code points. For example:</p></li>
 <li><p>(a) ISO 8859 encodings and  <code>windows-1252</code> .</p></li>
 <li><p>(b) ASCII is usually used as a single-byte encoding where each code point fits in the lower 7 bits of an eight-bit byte (in that case, the encoding is often called  <code>US-ASCII</code> ). In the Encoding Standard, all single-byte encodings use the ASCII characters as the first 128 code points of their character sets.</p></li>
-<li><p>Multi-byte encodings include code points from one or more character sets and assign some or all code points to several bytes. For example:</p></li>
+<li><p><b>Multi-byte encodings</b> include code points from one or more character sets and assign some or all code points to several bytes. For example:</p></li>
 <li><p>(a)  <code>UTF-16LE</code>  and  <code>UTF-16BE</code>  are two encodings defined in the Unicode Standard. They use 2 bytes for the most common code points, and 4 bytes for supplementary code points.</p></li>
 <li><p>(b)  <code>UTF-8</code>  is another encoding defined in the Unicode Standard. It uses 1 byte for ASCII and 2 to 4 bytes for the other Unicode code points.</p></li>
 <li><p>(c) Most legacy East Asian encodings, such as <code>Shift_JIS</code> ,  <code>GBK</code> , and  <code>Big5</code>  use 1 byte for ASCII (or a slightly modified version) and, usually, 2 or more bytes for national standard character sets. In many of these encodings, notably  <code>Shift_JIS</code> , characters whose code points use one byte traditionally take half the space of characters whose code points use two bytes.</p></li>
-<li><p>Escape-based encodings are combinations of single- and/or multi-byte encodings, and use escape sequences and/or shift codes to change which encoding to use for the bytes that follow. For example:</p></li>
+<li><p><b>Escape-based encodings</b> are combinations of single- and/or multi-byte encodings, and use escape sequences and/or shift codes to change which encoding to use for the bytes that follow. For example:</p></li>
 <li><p>(a)  <code>ISO-2022-JP</code>  supports several escape sequences that shift into different encodings, including a Katakana, a Kanji, and an ASCII encoding (with ASCII as the default).</p></li>
 <li><p>(b) UTF-7 (not included in the Encoding Standard) is an encoding that uses the Unicode Standard&#39;s character set, which is encoded using a limited subset of ASCII. The plus symbol (U+002B) is used to shift into a UTF-16BE multi-byte encoding (converted to a modified version of base-64) to encode other Unicode code points.</p></li>
-<li><p>The Encoding Standard also defines a replacement encoding, which causes a decoding error and is used to alias a few problematic or unsupported encoding names, such as <code>hz-gb-2312</code> .</p></li>
+<li><p>The Encoding Standard also defines a <b>replacement encoding</b>, which causes a decoding error and is used to alias a few problematic or unsupported encoding names, such as <code>hz-gb-2312</code> .</p></li>
 </ul>
 
-<p>Getting an Encoding</p>
+<p><b>Getting an Encoding</b></p>
 
 <p>The Encoding Standard includes UTF-8, UTF-16, and many legacy encodings, and gives each one of them a name. The <code>GetEncoding(name)</code>  method takes a name string and returns an ICharacterEncoding object that implements that encoding, or <code>null</code>  if the name is unrecognized.</p>
 
 <p>However, the Encoding Standard is designed to include only encodings commonly used on Web pages, not in other protocols such as email. For email, the Encoding class includes an alternate function  <code>GetEncoding(name, forEmail)</code> . Setting <code>forEmail</code>  to  <code>true</code>  will use rules modified from the Encoding Standard to better suit encoding and decoding text from email messages.</p>
 
-<p>Classes for Character Encodings</p>
+<p><b>Classes for Character Encodings</b></p>
 
 <p>This Encodings class provides access to common character encodings through classes as described below:</p>
 
 <ul>
-<li><p>An encoder class is a class that converts a sequence of bytes to a sequence of code points in the universal character set (otherwise known under the name Unicode). An encoder class implements the  <code>ICharacterEncoder</code>  interface.</p></li>
-<li><p>A decoder class is a class that converts a sequence of Unicode code points to a sequence of bytes. A decoder class implements the  <code>ICharacterDecoder</code>  interface.</p></li>
-<li><p>An encoding class allows access to both an encoder class and a decoder class and implements the <code>ICharacterEncoding</code>  interface. The encoder and decoder classes should implement the same character encoding.</p></li>
+<li><p>An <b>encoder class</b> is a class that converts a sequence of bytes to a sequence of code points in the universal character set (otherwise known under the name Unicode). An encoder class implements the  <code>ICharacterEncoder</code>  interface.</p></li>
+<li><p>A <b>decoder class</b> is a class that converts a sequence of Unicode code points to a sequence of bytes. A decoder class implements the  <code>ICharacterDecoder</code>  interface.</p></li>
+<li><p>An <b>encoding class</b> allows access to both an encoder class and a decoder class and implements the <code>ICharacterEncoding</code>  interface. The encoder and decoder classes should implement the same character encoding.</p></li>
 </ul>
 
-<p>Custom Encodings</p>
+<p><b>Custom Encodings</b></p>
 
 <p>Classes that implement the ICharacterEncoding interface can provide additional character encodings not included in the Encoding Standard. Some examples of these include the following:</p>
 
@@ -88,7 +88,7 @@
 <li><p><i>bytes</i>: A byte array.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A string consisting of the decoded text.</p>
 
@@ -125,7 +125,7 @@ begins.</p></li>
 &#39;s length).</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A string consisting of the decoded text.</p>
 
@@ -162,7 +162,7 @@ is less than  <i>length</i>
 <li><p><i>input</i>: A readable byte stream.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A string consisting of the decoded text.</p>
 
@@ -190,7 +190,7 @@ is null.</li>
 <li><p><i>input</i>: An object that implements a byte stream.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>The converted string.</p>
 
@@ -219,7 +219,7 @@ is null.</li>
 <li><p><i>encoder</i>: An object that implements a character encoder.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A byte array.</p>
 
@@ -248,7 +248,7 @@ is null.</li>
 <li><p><i>encoding</i>: An object that implements a given character encoding.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A byte array containing the encoded text.</p>
 
@@ -276,7 +276,7 @@ is null.</li>
 <li><p><i>enc</i>: An object implementing a character encoding (gives access to an encoder and a decoder).</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A byte array.</p>
 
@@ -465,7 +465,7 @@ is null.</li>
 <li><p><i>stream</i>: Byte stream to convert into Unicode characters.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An ICharacterInput object.</p>
 
@@ -485,7 +485,7 @@ is null.</li>
 <li><p><i>input</i>: Byte stream to convert into Unicode characters.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An ICharacterInput object.</p>
 
@@ -507,7 +507,7 @@ is null.</li>
 <li><p><i>stream</i>: Byte stream to convert into Unicode characters.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An ICharacterInput object.</p>
 
@@ -527,7 +527,7 @@ is null.</li>
 <li><p><i>input</i>: Byte stream to convert into Unicode characters.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An ICharacterInput object.</p>
 
@@ -545,7 +545,7 @@ is null.</li>
 <li><i>name</i>: A string naming a character encoding. See the ResolveAlias method. Can be null.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An object implementing a character encoding (gives access to an encoder and a decoder).</p>
 
@@ -565,7 +565,7 @@ is null.</li>
 <li><p><i>forEmail</i>: If false, uses the encoding resolution rules in the Encoding Standard. If true, uses modified rules as described in the ResolveAliasForEmail method.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An object that enables encoding and decoding text in the given character encoding. Returns null if the name is null or empty, or if it names an unrecognized or unsupported encoding.</p>
 
@@ -587,7 +587,7 @@ is null.</li>
 <li><p><i>allowReplacement</i>: If true, allows the label <code>replacement</code>  to return the replacement encoding.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An object that enables encoding and decoding text in the given character encoding. Returns null if the name is null or empty, or if it names an unrecognized or unsupported encoding.</p>
 
@@ -605,7 +605,7 @@ is null.</li>
 <li><i>reader</i>: A character input whose characters will be converted to a text string.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A text string containing the characters read.</p>
 
@@ -654,7 +654,7 @@ is null.</li>
 
 <p>.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A standardized name for the encoding. Returns the empty string if  <i>name</i>
  is null or empty, or if the encoding name is unsupported.</p>
@@ -678,7 +678,7 @@ is null.</li>
 
 <p>.</p>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A standardized name for the encoding. Returns the empty string if  <i>name</i>
  is null or empty, or if the encoding name is unsupported.</p>
@@ -699,7 +699,7 @@ is null.</li>
 <li><p><i>str</i>: A text string to encode into a byte array.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A byte array.</p>
 
@@ -728,7 +728,7 @@ is null.</li>
 <li><p><i>str</i>: A string to be encoded into a byte array.</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A byte array containing the string encoded in the given text encoding.</p>
 
@@ -754,7 +754,7 @@ is null.</li>
 <li><i>str</i>: A text string.</li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An ICharacterInput object.</p>
 
@@ -787,7 +787,7 @@ begins.</p></li>
 &#39;s length).</p></li>
 </ul>
 
-<p><b>Returns:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>An ICharacterInput object.</p>
 
@@ -808,7 +808,8 @@ is less than  <i>length</i>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
-</div><nav id="navigation"><p>
+</div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
+<p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">

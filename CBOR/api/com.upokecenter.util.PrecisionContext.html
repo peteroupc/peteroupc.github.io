@@ -6,104 +6,25 @@
 
 <h1>com.upokecenter.util.PrecisionContext</h1>
 
-<pre><code>public class PrecisionContext extends Object
+<pre><code>@Deprecated public class PrecisionContext extends Object
 </code></pre>
 
-<p><p><b>This class is largely obsolete. It will be replaced by a new version
- of this class in a different namespace/package and library, called
- <code>PeterO.Numbers.EContext</code> in the <code>PeterO.EContext</code> library
- (in .NET), or <code>com.upokecenter.numbers.EFloat</code> in the <code>com.github.peteroupc/numbers</code>
- artifact (in Java).</b></p>Contains parameters for controlling the
- precision, rounding, and exponent range of arbitrary-precision
- numbers.</p>
+<p>Deprecated.&nbsp;</p>
 
-<h2>Fields</h2>
+<div class='block'>Use EContext from PeterO.Numbers/com.upokecenter.numbers.</div>
+
+<h2>Methods</h2>
 
 <ul>
-<li><code>static PrecisionContext Basic</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext BigDecimalJava</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext Binary128</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext Binary16</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext Binary32</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext Binary64</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext CliDecimal</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext Decimal128</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext Decimal32</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext Decimal64</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagClamped</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagDivideByZero</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagInexact</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagInvalid</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagLostDigits</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagOverflow</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagRounded</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagSubnormal</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static int FlagUnderflow</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext JavaBigDecimal</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext Unlimited</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
+<li><code>PrecisionContext(int precision,
+            Rounding rounding,
+            int exponentMinSmall,
+            int exponentMaxSmall,
+            boolean clampNormalExponents) com.upokecenter.PrecisionContext</code><br>
+Deprecated.  Initializes a new instance of the com.upokecenter.PrecisionContext
+class.</li>
+<li><code>String toString()</code><br>
+Deprecated.  Gets a string representation of this object.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -113,587 +34,53 @@ Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
             Rounding rounding,
             int exponentMinSmall,
             int exponentMaxSmall,
-            boolean clampNormalExponents)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
+            boolean clampNormalExponents) com.upokecenter.PrecisionContext</code><br>
+Deprecated.  Initializes a new instance of the com.upokecenter.PrecisionContext
+class.</li>
 </ul>
-
-<h2>Methods</h2>
-
-<ul>
-<li><code>PrecisionContext Copy()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean ExponentWithinRange(BigInteger exponent)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext ForPrecision(int precision)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext ForPrecisionAndRounding(int precision,
-                   Rounding rounding)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>static PrecisionContext ForRounding(Rounding rounding)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean getAdjustExponent()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean getClampNormalExponents()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>BigInteger getEMax()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>BigInteger getEMin()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>int getFlags()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean getHasExponentRange()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean getHasFlags()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean getHasMaxPrecision()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>BigInteger getPrecision()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>Rounding getRounding()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>int getTraps()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean isPrecisionInBits()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean isSimplified()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>void setFlags(int value)</code><br></li>
-<li><code>String toString()</code><br>
-Gets a string representation of this object.</li>
-<li><code>PrecisionContext WithAdjustExponent(boolean adjustExponent)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithBigExponentRange(BigInteger exponentMin,
-                BigInteger exponentMax)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithBigPrecision(BigInteger bigintPrecision)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithBlankFlags()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithExponentClamp(boolean clamp)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithExponentRange(int exponentMinSmall,
-             int exponentMaxSmall)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithNoFlags()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithPrecision(int precision)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithPrecisionInBits(boolean isPrecisionBits)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithRounding(Rounding rounding)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithSimplified(boolean simplified)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithTraps(int traps)</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>PrecisionContext WithUnlimitedExponents()</code><br>
-Deprecated.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.
-Use EContext from PeterO.Numbers/com.upokecenter.numbers.</li>
-</ul>
-
-<h2>Field Details</h2>
-
-<h3>FlagClamped</h3>
-
-<pre><code>@Deprecated public static final int FlagClamped
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>FlagDivideByZero</h3>
-
-<pre><code>@Deprecated public static final int FlagDivideByZero
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>FlagInexact</h3>
-
-<pre><code>@Deprecated public static final int FlagInexact
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>FlagInvalid</h3>
-
-<pre><code>@Deprecated public static final int FlagInvalid
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>FlagLostDigits</h3>
-
-<pre><code>@Deprecated public static final int FlagLostDigits
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>FlagOverflow</h3>
-
-<pre><code>@Deprecated public static final int FlagOverflow
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>FlagRounded</h3>
-
-<pre><code>@Deprecated public static final int FlagRounded
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>FlagSubnormal</h3>
-
-<pre><code>@Deprecated public static final int FlagSubnormal
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>FlagUnderflow</h3>
-
-<pre><code>@Deprecated public static final int FlagUnderflow
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Basic</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Basic
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>BigDecimalJava</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext BigDecimalJava
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Binary128</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Binary128
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Binary16</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Binary16
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Binary32</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Binary32
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Binary64</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Binary64
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>CliDecimal</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext CliDecimal
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Decimal128</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Decimal128
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Decimal32</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Decimal32
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Decimal64</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Decimal64
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>JavaBigDecimal</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext JavaBigDecimal
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<h3>Unlimited</h3>
-
-<pre><code>@Deprecated public static final PrecisionContext Unlimited
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <h2>Method Details</h2>
 
-<h3>getAdjustExponent</h3>
+<h3>PrecisionContext</h3>
 
-<pre><code>@Deprecated public final boolean getAdjustExponent()
+<pre><code>public PrecisionContext(int precision, Rounding rounding, int exponentMinSmall, int exponentMaxSmall, boolean clampNormalExponents)
 </code></pre>
 
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if the EMax and EMin properties refer to the number&#39;s
-Exponent property adjusted to the number&#39;s precision, or false if
-they refer to just the number&#39;s Exponent property.</li>
-</ul>
-
-<h3>getClampNormalExponents</h3>
-
-<pre><code>@Deprecated public final boolean getClampNormalExponents()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>If true, a converted number&#39;s Exponent property will not be higher
-than EMax + 1 - Precision.</li>
-</ul>
-
-<h3>getEMax</h3>
-
-<pre><code>@Deprecated public final BigInteger getEMax()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The highest exponent possible when a converted number is expressed
-in scientific notation with one digit before the decimal point. For
-example, with a precision of 3 and an EMax of 100, the maximum value
-possible is 9.99E + 100. (This is not the same as the highest
-possible Exponent property.) If HasExponentRange is false, this value
-will be 0.</li>
-</ul>
-
-<h3>getEMin</h3>
-
-<pre><code>@Deprecated public final BigInteger getEMin()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The lowest exponent possible when a converted number is expressed in
-scientific notation with one digit before the decimal point.</li>
-</ul>
-
-<h3>getFlags</h3>
-
-<pre><code>@Deprecated public final int getFlags()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The flags that are set from converting numbers according to this
-precision context. If HasFlags is false, this value will be 0.</li>
-</ul>
-
-<h3>setFlags</h3>
-
-<pre><code>public final void setFlags(int value)
-</code></pre>
-
-<h3>getHasExponentRange</h3>
-
-<pre><code>@Deprecated public final boolean getHasExponentRange()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this context defines a minimum and maximum exponent;
-otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>getHasFlags</h3>
-
-<pre><code>@Deprecated public final boolean getHasFlags()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this context has a mutable Flags field; otherwise,
-<code>false</code>.</li>
-</ul>
-
-<h3>getHasMaxPrecision</h3>
-
-<pre><code>@Deprecated public final boolean getHasMaxPrecision()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this context defines a maximum precision; otherwise,
-<code>false</code>.</li>
-</ul>
-
-<h3>isPrecisionInBits</h3>
-
-<pre><code>@Deprecated public final boolean isPrecisionInBits()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this context&#39;s Precision property is in bits, rather
-than digits; otherwise, <code>false</code>. The default is false.</li>
-</ul>
-
-<h3>isSimplified</h3>
-
-<pre><code>@Deprecated public final boolean isSimplified()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if a &quot;simplified&quot; arithmetic will be used; otherwise,
-<code>false</code>.</li>
-</ul>
-
-<h3>getPrecision</h3>
-
-<pre><code>@Deprecated public final BigInteger getPrecision()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The maximum length of a converted number in digits, ignoring the
-decimal point and exponent.</li>
-</ul>
-
-<h3>getRounding</h3>
-
-<pre><code>@Deprecated public final Rounding getRounding()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The desired rounding mode when converting numbers that can&#39;t be
-represented in the given precision and exponent range.</li>
-</ul>
-
-<h3>getTraps</h3>
-
-<pre><code>@Deprecated public final int getTraps()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The traps that are set for each flag in the context.</li>
-</ul>
-
-<h3>ForPrecision</h3>
-
-<pre><code>@Deprecated public static PrecisionContext ForPrecision(int precision)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>precision</code> - Maximum number of digits (precision).</li>
+<li><p><code>precision</code> - The maximum number of digits a number can have, or 0 for an
+unlimited number of digits.</p></li>
+<li><p><code>rounding</code> - The rounding mode to use when a number can&#39;t fit the given
+precision.</p></li>
+<li><p><code>exponentMinSmall</code> - The minimum exponent.</p></li>
+<li><p><code>exponentMaxSmall</code> - The maximum exponent.</p></li>
+<li><p><code>clampNormalExponents</code> - Whether to clamp a number&#39;s significand to the
+given maximum precision (if it isn&#39;t zero) while remaining within the
+exponent range.</p></li>
 </ul>
 
-<p><strong>Returns:</strong></p>
+<h3>PrecisionContext</h3>
 
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>ForPrecisionAndRounding</h3>
-
-<pre><code>@Deprecated public static PrecisionContext ForPrecisionAndRounding(int precision, Rounding rounding)
+<pre><code>public PrecisionContext(int precision, Rounding rounding, int exponentMinSmall, int exponentMaxSmall, boolean clampNormalExponents)
 </code></pre>
 
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>precision</code> - Maximum number of digits (precision).</p></li>
-<li><p><code>rounding</code> - An ERounding object.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>ForRounding</h3>
-
-<pre><code>@Deprecated public static PrecisionContext ForRounding(Rounding rounding)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>rounding</code> - The rounding mode for the new precision context.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>Copy</h3>
-
-<pre><code>@Deprecated public PrecisionContext Copy()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>ExponentWithinRange</h3>
-
-<pre><code>@Deprecated public boolean ExponentWithinRange(BigInteger exponent)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>exponent</code> - An arbitrary-precision integer indicating the desired
-exponent.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if a number can have the given Exponent property under
-this precision context; otherwise, <code>false</code>. If this context
-allows unlimited precision, returns true for the exponent EMax and
-any exponent less than EMax.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>exponent</code> is null.</li>
+<li><p><code>precision</code> - The maximum number of digits a number can have, or 0 for an
+unlimited number of digits.</p></li>
+<li><p><code>rounding</code> - The rounding mode to use when a number can&#39;t fit the given
+precision.</p></li>
+<li><p><code>exponentMinSmall</code> - The minimum exponent.</p></li>
+<li><p><code>exponentMaxSmall</code> - The maximum exponent.</p></li>
+<li><p><code>clampNormalExponents</code> - Whether to clamp a number&#39;s significand to the
+given maximum precision (if it isn&#39;t zero) while remaining within the
+exponent range.</p></li>
 </ul>
 
 <h3>toString</h3>
@@ -701,8 +88,7 @@ any exponent less than EMax.</li>
 <pre><code>public String toString()
 </code></pre>
 
-<p>Gets a string representation of this object. Note that the format is not
- intended to be parsed and may change at any time.</p>
+<p>Deprecated.&nbsp;</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -716,260 +102,28 @@ any exponent less than EMax.</li>
 <li>A string representation of this object.</li>
 </ul>
 
-<h3>WithAdjustExponent</h3>
+<h3>toString</h3>
 
-<pre><code>@Deprecated public PrecisionContext WithAdjustExponent(boolean adjustExponent)
+<pre><code>public String toString()
 </code></pre>
 
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
+<p>Deprecated.&nbsp;</p>
 
-<p><strong>Parameters:</strong></p>
+<p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>adjustExponent</code> - The new value of the &quot;AdjustExponent&quot; property for the
-copy.</li>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithBigExponentRange</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithBigExponentRange(BigInteger exponentMin, BigInteger exponentMax)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>exponentMin</code> - Desired minimum exponent (EMin).</p></li>
-<li><p><code>exponentMax</code> - Desired maximum exponent (EMax).</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>exponentMin</code> is
-null.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>exponentMax</code> is
-null.</p></li>
-</ul>
-
-<h3>WithBigPrecision</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithBigPrecision(BigInteger bigintPrecision)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>bigintPrecision</code> - Desired maximum number of digits a number can have.
-If 0, the number of digits is unlimited.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>bigintPrecision</code>
-is null.</li>
-</ul>
-
-<h3>WithBlankFlags</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithBlankFlags()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithExponentClamp</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithExponentClamp(boolean clamp)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>clamp</code> - Desired value for ClampNormalExponents.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithExponentRange</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithExponentRange(int exponentMinSmall, int exponentMaxSmall)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>exponentMinSmall</code> - Desired minimum exponent (EMin).</p></li>
-<li><p><code>exponentMaxSmall</code> - Desired maximum exponent (EMax).</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithNoFlags</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithNoFlags()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithPrecision</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithPrecision(int precision)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>precision</code> - Desired maximum number of digits a number can have. If 0,
-the number of digits is unlimited.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithPrecisionInBits</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithPrecisionInBits(boolean isPrecisionBits)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>isPrecisionBits</code> - The new value of the &quot;IsPrecisionInBits&quot; property for
-the copy.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithRounding</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithRounding(Rounding rounding)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>rounding</code> - Desired value of the Rounding property.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithSimplified</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithSimplified(boolean simplified)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>simplified</code> - The new value of the &quot;IsSimplified&quot; property for the copy.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithTraps</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithTraps(int traps)
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>traps</code> - Flags representing the traps to enable. See the property
-&quot;Traps&quot;.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
-</ul>
-
-<h3>WithUnlimitedExponents</h3>
-
-<pre><code>@Deprecated public PrecisionContext WithUnlimitedExponents()
-</code></pre>
-
-<p>Deprecated.&nbsp;Use EContext from PeterO.Numbers/com.upokecenter.numbers.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A context object for arbitrary-precision arithmetic settings.</li>
+<li>A string representation of this object.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
-</div><nav id="navigation"><p>
+</div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
+<p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">
