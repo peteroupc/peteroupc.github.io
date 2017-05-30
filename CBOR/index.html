@@ -38,8 +38,7 @@ text to CBOR objects and back.</p>
 
 <p><strong>See the <a href="https://peteroupc.github.io/CBOR/docs/">C# (.NET) API documentation</a>.</strong></p>
 
-<p>The C# implementation is designed as a Portable Class Library, making it usable not only in the .NET
-Framework, but also Silverlight 5 and Windows Phone 8.</p>
+<p>The C# implementation is designed as a Portable Class Library, and supports the .NET Framework 4.0 and later.</p>
 
 <h2>Other Sites</h2>
 
@@ -63,8 +62,9 @@ var cbor = CBORObject.NewMap()
    .Add(&quot;array&quot;, CBORObject.NewArray().Add(999f).Add(&quot;xyz&quot;))
    .Add(&quot;bytes&quot;, new byte[] { 0, 1, 2 });
 // The following converts the map to CBOR
-byte[] bytes = cbor.EncodeToBytes();
-// The following converts the map to JSON
+byte[] cborByteArray = cbor.EncodeToBytes();
+// The following converts the map to JSON (the &quot;bytes&quot;
+// property, as given above, will be converted to base64)
 string json = cbor.ToJSONString();
 Console.WriteLine(json);
 </code></pre>
@@ -224,6 +224,13 @@ IRI are like URIs except that they also allow non-ASCII characters.</li>
 </ul>
 
 <h2>Release Notes</h2>
+
+<h3>Version 2.5</h3>
+
+<ul>
+<li>Sign the CBOR assembly with a strong name key</li>
+<li>Update <a href="https://www.nuget.org/packages/PeterO.Numbers"><code>PeterO.Numbers</code></a> to strong-named version</li>
+</ul>
 
 <h3>Version 2.4.2</h3>
 

@@ -18,7 +18,7 @@
     string str);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string; if the string begins with a byte-order mark (U+FEFF), it won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to U+DFFF) in the string are replaced with replacement characters (U+FFFD).</p>
+<p>Initializes a new instance of the  class using a Unicode 16-bit string; if the string begins with a byte-order mark (U+FEFF), it won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to U+DFFF) in the string are replaced with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -41,7 +41,7 @@ is null.</li>
     bool skipByteOrderMark);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string; any unpaired surrogate code points (U+D800 to U+DFFF) in the string are replaced with replacement characters (U+FFFD).</p>
+<p>Initializes a new instance of the  class using a Unicode 16-bit string; any unpaired surrogate code points (U+D800 to U+DFFF) in the string are replaced with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -66,7 +66,7 @@ is null.</li>
     bool errorThrow);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string.</p>
+<p>Initializes a new instance of the  class using a Unicode 16-bit string.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -92,7 +92,7 @@ is null.</li>
     int length);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
+<p>Initializes a new instance of the  class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -115,7 +115,7 @@ begins.</p></li>
     bool errorThrow);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
+<p>Initializes a new instance of the  class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -144,7 +144,7 @@ is null.</li>
     System.IO.Stream stream);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will read the stream as UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the stream, and replace invalid byte sequences with replacement characters (U+FFFD).</p>
+<p>Initializes a new instance of the  class; will read the stream as UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the stream, and replace invalid byte sequences with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -167,7 +167,7 @@ is null.</li>
     int mode);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U+FEFF) if it appears first in the stream and replace invalid byte sequences with replacement characters (U+FFFD).</p>
+<p>Initializes a new instance of the  class; will skip the byte-order mark (U+FEFF) if it appears first in the stream and replace invalid byte sequences with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -199,7 +199,7 @@ is null.</li>
     bool errorThrow);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U+FEFF) if it appears first in the stream.</p>
+<p>Initializes a new instance of the  class; will skip the byte-order mark (U+FEFF) if it appears first in the stream.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -236,7 +236,7 @@ is null.</li>
     bool dontSkipUtf8Bom);
 </code></pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
+<p>Initializes a new instance of the  class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -286,7 +286,7 @@ begins.</p></li>
 &#39;s length).</p></li>
 </ul>
 
-<p><b>Return Value:</b></p>
+<p><b>Returns:</b></p>
 
 <p>The number of code points read from the stream. This can be less than the  <i>length</i>
  parameter if the end of the stream is reached.</p>
@@ -314,7 +314,7 @@ is less than  <i>length</i>
 
 <p>Reads the next character from a Unicode stream or a string.</p>
 
-<p><b>Return Value:</b></p>
+<p><b>Returns:</b></p>
 
 <p>The next character, or -1 if the end of the string or stream was reached.</p>
 

@@ -27,7 +27,7 @@
 <li><p><i>output</i>: Output stream where the converted bytes will be written. The decoder can maintain internal state, including data on code points already passed as input, so this parameter should not change when using the same character encoder object.</p></li>
 </ul>
 
-<p><b>Return Value:</b></p>
+<p><b>Returns:</b></p>
 
 <p>The number of bytes written to the stream; -1 if no further code points remain (for example, if <em>c</em> is -1 indicating the end of the stream), or -2 if an encoding error occurs. (Note that it&#39;s possible for this method to return 0 if, for example, it can&#39;t generate new bytes yet based on the current input.). If this method returns -2, it should not write any bytes to the output stream.</p>
 

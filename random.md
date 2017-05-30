@@ -80,7 +80,7 @@ Generates random bits using a statistical-random implementation.
 -  Time Complexity: The implementation must run in amortized linear time on the size of the output array.
 -  Thread Safety: The implementation should be safe for concurrent use by multiple threads.
 -  Examples: The "`xorshift128+`" and `Lehmer128` random number generators.
--  Non-examples:  Mersenne Twister [systematically fails](http://xoroshiro.di.unimi.it/#quality) one of the `BigCrush` tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as `java.util.Random`) has a seed size of less than 64 bits.
+-  Non-examples:  Mersenne Twister [systematically fails](http://xoroshiro.di.unimi.it/#quality) one of the `BigCrush` tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as `java.util.Random`) has a _seed length_ of less than 64 bits.
 
 "bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.
 
@@ -122,28 +122,23 @@ On the other hand, an application need not use seeding if the randomness is only
 
 Whether an unpredictable or statistical RNG or another kind of RNG is used, two methods
 given below form the building blocks for writing code that makes practical use of randomness.
-Both methods assume the RNG produces uniformly random numbers, like the RNGs 
+Both methods assume the RNG produces uniformly random numbers, like the RNGs
 described in this article.
 
-1. To generate a random integer from 0 or greater, but less than N, use the RNG to generate as many
+1. To generate a random integer 0 or greater, but less than N, use the RNG to generate as many
 random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer.
 If that nonnegative integer is N or greater, repeat this process.
-2. To generate a random 64-bit floating-point number 0 or greater, but less than 1, generate a random 
-integer from 0 or greater, but less than 2<sup>53</sup>, then divide that integer by 2<sup>53</sup>.
-(See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks) 
+2. To generate a random 64-bit floating-point number 0 or greater, but less than 1, generate a random
+integer 0 or greater, but less than 2<sup>53</sup>, then divide that integer by 2<sup>53</sup>.
+(See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
 for further discussion.)
 
-Other methods to generate random numbers or integers--
-
-- that fall within a given range,
-- that follow a given distribution, such as a normal, hypergeometric, or binomial distribution, or
-- that follow a discrete or continuous weighted distribution such that some 
- numbers are more likely to occur than others,
-
-are out of scope for this article.  In general, such methods can be written in terms of the two basic
-building blocks for generating uniform random numbers.  These building blocks, in turn, work
-essentially the same way regardless of the RNG used (such as unpredictable, statistical,
-or seedable).
+Other methods to generate random numbers or integers that fall within a given range or that
+follow a given distribution, such as a normal, geometric, binomial, or discrete weighted
+distribution, are beyond the scope of this article.  In general, such methods can be
+written in terms of the two basic building blocks for generating uniform random numbers.
+These building blocks, in turn, work essentially the same way regardless of the RNG used
+(such as unpredictable, statistical, or seedable).
 
 ## Conclusion
 
