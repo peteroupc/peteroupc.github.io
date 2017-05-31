@@ -1,4 +1,4 @@
-# The Two Kinds of Random-number Generators Most Applications Need
+# The Two Kinds of random number generators Most Applications Need
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
@@ -8,7 +8,7 @@ Most apps that use random numbers care about either unpredictability or speed/hi
 
 ## Introduction
 
-As I see it, there are two kinds of random-number generators (RNGs) needed by applications, namely--
+As I see it, there are two kinds of random number generators (RNGs) needed by applications, namely--
 
 - unpredictable random generators, and
 - statistically random generators.
@@ -35,12 +35,11 @@ The goal of this kind of generator is to keep the random numbers from being gues
 
 Generates random bits using an unpredictable-random implementation.
 
--  Quality: An unpredictable-random implementation generates random bits that are unpredictable.
--  Predictability: "Unpredictable" means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the random algorithm or the implementation's internal state at the given point in time. (If the sequence was generated directly by a deterministic RNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
+-  Quality: An unpredictable-random implementation generates random bits that are unpredictable. "Unpredictable" means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the random algorithm, the implementation's internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a deterministic RNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
 -  Seeding and Reseeding: The following applies only to deterministic RNG implementations; nondeterministic RNGs don't require seeding or reseeding.
 
     The implementation must be initialized ("seeded") with a "seed" described as follows. The seed--
-    - must consist of unpredictable data, no part of which may be the RNG's own output (the unpredictable data may be mixed with other arbitrary data as long as the result is no less unpredictable), and
+    - must consist of unpredictable data (as defined above), no part of which may be the RNG's own output (the unpredictable data may be mixed with other arbitrary data as long as the result is no less unpredictable), and
     - must be at least the same size as the RNG's _seed length_.
 
     The _seed length_ is the maximum size of the seed the RNG can take to initialize its state without truncating or compressing that seed. It must be at least 128 bits and should be at least 256 bits.
@@ -67,8 +66,7 @@ The goal of this kind of generator is for each possible outcome to be equally li
 
 Generates random bits using a statistical-random implementation.
 
--  Quality: A statistical-random implementation generates random bits, each of which, practically speaking, is uniformly randomly distributed independently of the other bits. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no [systematic failures](http://xoroshiro.di.unimi.it/#quality) in `TestU01`'s `BigCrush` test battery [L'Ecuyer and Simard 2007] meets these requirements.)
--  Predictability: The implementation's output must not be trivially predictable. "Trivially predictable" means that it's generally trivial to guess future outputs of the RNG given knowledge of the RNG algorithm and a sequence of outputs whose total length is no greater than the RNG's _seed length_.
+-  Quality: A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no [systematic failures](http://xoroshiro.di.unimi.it/#quality) in `TestU01`'s `BigCrush` test battery [L'Ecuyer and Simard 2007] meets these requirements.)
 -  Seeding and Reseeding: The following applies only to deterministic RNGs.
 
     The implementation must be initialized ("seeded") with a seed described below. The RNG's _seed length_ must be at least 64 bits and should be at least 128 bits. The seed--
@@ -77,7 +75,7 @@ Generates random bits using a statistical-random implementation.
     - should not be trivially predictable, as far as practical, and
     - must be at least the same size as the RNG's _seed length_.
 
-    The implementation may reseed itself from time to time (using a newly generated seed as described above). It should do so if the RNG's seed length is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the RNG's period without reseeding.
+    The implementation may reseed itself from time to time (using a newly generated seed as described above). It should do so if the RNG's _seed length_ is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the RNG's period without reseeding.
 -  Speed: The implementation should select algorithms that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.
 -  Time Complexity: The implementation must run in amortized linear time on the size of the output array.
 -  Thread Safety: The implementation should be safe for concurrent use by multiple threads.
@@ -98,11 +96,11 @@ Shuffling a list is usually done with the [Fisher-Yates shuffle method](https://
 
 ## Seedable Random Generators
 
-In addition, some applications generate results based on apparently-random principles, starting from a known initial state. One notable example is a "code", or password, for generating a particular game level in some role-playing games.
+In addition, some applications generate results based on apparently-random principles, starting from a known initial state, or "seed". One notable example is a "code", or password, for generating a particular game level in some role-playing games.
 
 Functions for seeding random number algorithms are not included, because applications that require seeding usually care about reproducible results. Such applications often need to keep not only the RNG algorithm stable, but also any algorithm that uses that RNG algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which RNG algorithm to use for such purpose depends on the application. (Such an algorithm will necessarily be a DRNG.) But here are some recommendations:
 
--  Any DRNG algorithm selected for producing reproducible results should meet at least the quality and predictability requirements of a statistical-random implementation, and should be reasonably fast.
+-  Any DRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.
 -  The DRNG's _seed length_ should be 64 bits or greater.
 -  Any seed passed to the DRNG should be at least the same size as the DRNG's seed length.
 
@@ -118,14 +116,14 @@ An application should only use seeding if--
     -   by distributing the results or the random numbers to networked users as they are generated, and
 4. the RNG algorithm and any procedure using that algorithm to generate that "random" result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality.)
 
-On the other hand, an application need not use seeding if the randomness is only used for slight and inconspicuous visual variations, provided the visual variations have no impact on information security or on gameplay. For such purposes, the random-number generator need only be as strong as required to achieve the desired visual variations.
+On the other hand, an application need not use seeding if the randomness is only used for slight and inconspicuous visual variations, provided the visual variations have no impact on information security or on gameplay. For such purposes, the random number generator need only be as strong as required to achieve the desired visual variations.
 
 ## RNG Building Blocks
 
 Whether an unpredictable or statistical RNG or another kind of RNG is used, two methods
 given below form the building blocks for writing code that makes practical use of randomness.
 Both methods assume the RNG produces uniformly random numbers, like the RNGs
-described in this article.
+described in this page.
 
 1. To generate a random integer 0 or greater, but less than N, use the RNG to generate as many
 random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer.
@@ -135,19 +133,19 @@ integer 0 or greater, but less than 2<sup>53</sup>, then divide that integer by 
 (See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
 for further discussion.)
 
-Other methods to generate random numbers or integers that fall within a given range or that
+A detailed discussion of other methods to generate random numbers or integers that
 follow a given distribution, such as a normal, geometric, binomial, or discrete weighted
-distribution, are beyond the scope of this article.  In general, such methods can be
+distribution, or that fall within a given range, is outside the scope of this page.  In general, such methods can be
 written in terms of the two basic building blocks for generating uniform random numbers.
 These building blocks, in turn, work essentially the same way regardless of the RNG used
 (such as unpredictable, statistical, or seedable).
 
 ## Conclusion
 
-In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified above will meet the needs of these applications.
+In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified above will meet the needs of those applications.
 
 Feel free to send comments. They may help improve this page.
 
 ## License
 
-This article, along with any associated source code and files, is licensed under [A Public Domain dedication](http://creativecommons.org/licenses/publicdomain/)
+this page, along with any associated source code and files, is licensed under [A Public Domain dedication](http://creativecommons.org/licenses/publicdomain/)
