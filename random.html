@@ -1,29 +1,33 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Two Kinds of random number generators Most Applications Need</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>The Two Kinds of random number generators Most Applications Need</h1>
+<h1>Random Number Generator Recommendations for Applications</h1>
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 30, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 31, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
 <h2>Introduction</h2>
 
-<p>As I see it, there are two kinds of random number generators (RNGs) needed by applications, namely--</p>
+<p>As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely--</p>
 
 <ul>
 <li>unpredictable random generators, and</li>
 <li>statistically random generators.</li>
 </ul>
 
-<p>The following is a sketch of a C programming interface that specifies two functions that could meet these two needs.</p>
+<p>This page will discuss these two kinds of RNG in the nature of a sketch of a C programming interface. </p>
+
+<p>In addition, other applications require numbers that &quot;seem&quot; random but are based on an initial state, or &quot;seed&quot;.  This page will discuss when seeds should be used by applications.  </p>
+
+<p>Finally, this page will discuss issues on the practical use of RNGs in applications, namely, shuffling and the two &quot;building blocks&quot; for higher-level randomness methods.</p>
 
 <h2>Unpredictable RNGs</h2>
 
-<p>Unpredictable random implementations (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) are indispensable in information security contexts, such as--</p>
+<p>Unpredictable random implementations (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) are indispensable in computer security and information security contexts, such as--</p>
 
 <ul>
 <li> generating keying material, such as encryption keys,</li>
@@ -47,8 +51,8 @@
 <p>Generates random bits using an unpredictable-random implementation.</p>
 
 <ul>
-<li> Quality: An unpredictable-random implementation generates random bits that are unpredictable. &quot;Unpredictable&quot; means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the random algorithm, the implementation&#39;s internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a deterministic RNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</li>
-<li><p>Seeding and Reseeding: The following applies only to deterministic RNG implementations; nondeterministic RNGs don&#39;t require seeding or reseeding.</p>
+<li> <strong>Quality:</strong> An unpredictable-random implementation generates random bits that are unpredictable. &quot;Unpredictable&quot; means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the random algorithm, the implementation&#39;s internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a deterministic RNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</li>
+<li><p><strong>Seeding and Reseeding:</strong> The following applies only to deterministic RNG implementations; nondeterministic RNGs don&#39;t require seeding or reseeding.</p>
 
 <p>The implementation must be initialized (&quot;seeded&quot;) with a &quot;seed&quot; described as follows. The seed--</p>
 
@@ -60,10 +64,10 @@
 <p>The <em>seed length</em> is the maximum size of the seed the RNG can take to initialize its state without truncating or compressing that seed. It must be at least 128 bits and should be at least 256 bits.</p>
 
 <p>The implementation should be reseeded from time to time (using a newly generated seed as described above) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.</p></li>
-<li> Speed: The implementation should select algorithms that are reasonably fast for most applications.</li>
-<li> Time Complexity: The implementation must run in amortized linear time on the size of the output array.</li>
-<li> Thread Safety: The implementation should be safe for concurrent use by multiple threads.</li>
-<li> Examples: The &quot;<code>/dev/urandom</code>&quot; device on many Unix-based operating systems; <code>CryptGenRandom</code> function on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).</li>
+<li> <strong>Speed:</strong> The implementation should select algorithms that are reasonably fast for most applications.</li>
+<li> <strong>Time Complexity:</strong> The implementation must run in amortized linear time on the size of the output array.</li>
+<li> <strong>Thread Safety:</strong> The implementation should be safe for concurrent use by multiple threads.</li>
+<li> <strong>Examples:</strong> The &quot;<code>/dev/urandom</code>&quot; device on many Unix-based operating systems; <code>CryptGenRandom</code> function on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).</li>
 </ul>
 
 <p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.</p>
@@ -73,7 +77,7 @@
 <p>Statistically random generators are needed by simulations and many games to bring an element of chance and variation to the application. This kind of generator is generally suitable only if--</p>
 
 <ul>
-<li> information security is not involved,</li>
+<li> computer security and information security are not involved,</li>
 <li> 20 or fewer items are being shuffled (in cases where the RNG is used for shuffling), and</li>
 <li> the application generates random numbers so frequently that it would slow down undesirably if an unpredictable RNG were used instead.</li>
 </ul>
@@ -86,8 +90,8 @@
 <p>Generates random bits using a statistical-random implementation.</p>
 
 <ul>
-<li> Quality: A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no <a href="http://xoroshiro.di.unimi.it/#quality">systematic failures</a> in <code>TestU01</code>&#39;s <code>BigCrush</code> test battery [L&#39;Ecuyer and Simard 2007] meets these requirements.)</li>
-<li><p>Seeding and Reseeding: The following applies only to deterministic RNGs.</p>
+<li> <strong>Quality:</strong> A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no <a href="http://xoroshiro.di.unimi.it/#quality">systematic failures</a> in <code>TestU01</code>&#39;s <code>BigCrush</code> test battery [L&#39;Ecuyer and Simard 2007] meets these requirements.)</li>
+<li><p><strong>Seeding and Reseeding:</strong> The following applies only to deterministic RNGs.</p>
 
 <p>The implementation must be initialized (&quot;seeded&quot;) with a seed described below. The RNG&#39;s <em>seed length</em> must be at least 64 bits and should be at least 128 bits. The seed--</p>
 
@@ -99,35 +103,25 @@
 </ul>
 
 <p>The implementation may reseed itself from time to time (using a newly generated seed as described above). It should do so if the RNG&#39;s <em>seed length</em> is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the RNG&#39;s period without reseeding.</p></li>
-<li> Speed: The implementation should select algorithms that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
-<li> Time Complexity: The implementation must run in amortized linear time on the size of the output array.</li>
-<li> Thread Safety: The implementation should be safe for concurrent use by multiple threads.</li>
-<li> Examples: The &quot;<code>xorshift128+</code>&quot; and <code>Lehmer128</code> random number generators.</li>
-<li> Non-examples:  Mersenne Twister <a href="http://xoroshiro.di.unimi.it/#quality">systematically fails</a> one of the <code>BigCrush</code> tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code>) has a <em>seed length</em> of less than 64 bits.</li>
+<li> <strong>Speed:</strong> The implementation should select algorithms that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
+<li> <strong>Time Complexity:</strong> The implementation must run in amortized linear time on the size of the output array.</li>
+<li> <strong>Thread Safety:</strong> The implementation should be safe for concurrent use by multiple threads.</li>
+<li> <strong>Examples:</strong> The &quot;<code>xorshift128+</code>&quot; and <code>Lehmer128</code> random number generators.</li>
+<li> <strong>Non-Examples:</strong>  Mersenne Twister <a href="http://xoroshiro.di.unimi.it/#quality">systematically fails</a> one of the <code>BigCrush</code> tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code>) has a <em>seed length</em> of less than 64 bits.</li>
 </ul>
 
 <p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.</p>
 
-<h2>Shuffling</h2>
-
-<p>A deterministic random number generator (DRNG) can&#39;t generate more permutations of random number sequences than its <em>period</em>. A DRNG can&#39;t generate all permutations of a list if the factorial of its size is greater than the DRNG&#39;s period. This means that the items in a shuffled list of that size will never appear in certain orders when that DRNG is used to shuffle it.</p>
-
-<p>A DRNG with period 2<sup>64</sup>, for example, can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.</p>
-
-<p>When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.</p>
-
-<p>Shuffling a list is usually done with the <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a>.</p>
-
 <h2>Seedable Random Generators</h2>
 
-<p>In addition, some applications generate results based on apparently-random principles, starting from a known initial state, or &quot;seed&quot;. One notable example is a &quot;code&quot;, or password, for generating a particular game level in some role-playing games.</p>
+<p>In addition, some applications use deterministic RNGs (DRNGs) to generate results based on apparently-random principles, starting from a known initial state, or &quot;seed&quot;. One notable example is a &quot;code&quot;, or password, for generating a particular game level in some role-playing games.</p>
 
-<p>Functions for seeding random number algorithms are not included, because applications that require seeding usually care about reproducible results. Such applications often need to keep not only the RNG algorithm stable, but also any algorithm that uses that RNG algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which RNG algorithm to use for such purpose depends on the application. (Such an algorithm will necessarily be a DRNG.) But here are some recommendations:</p>
+<p>Functions for seeding random number algorithms are not included, because applications that require seeding usually care about reproducible results. Such applications often need to keep not only the DRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which DRNG to use for such purpose depends on the application. But here are some recommendations:</p>
 
 <ul>
 <li> Any DRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.</li>
 <li> The DRNG&#39;s <em>seed length</em> should be 64 bits or greater.</li>
-<li> Any seed passed to the DRNG should be at least the same size as the DRNG&#39;s seed length.</li>
+<li> Any seed passed to the DRNG should be at least the same size as the DRNG&#39;s <em>seed length</em>.</li>
 </ul>
 
 <p>An application should only use seeding if--</p>
@@ -147,12 +141,15 @@
 <li>  by saving the result to a file, or</li>
 <li>  by distributing the results or the random numbers to networked users as they are generated, and</li>
 </ul></li>
-<li>the RNG algorithm and any procedure using that algorithm to generate that &quot;random&quot; result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application&#39;s functionality.)</li>
+<li>the DRNG algorithm and any procedure using that algorithm to generate that &quot;random&quot; result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application&#39;s functionality.)</li>
 </ol>
 
-<p>On the other hand, an application need not use seeding if the randomness is only used for slight and inconspicuous visual variations, provided the visual variations have no impact on information security or on gameplay. For such purposes, the random number generator need only be as strong as required to achieve the desired visual variations.</p>
+<p>On the other hand, an application need not use seeding if the randomness is only used for slight and inconspicuous visual variations, provided the visual variations have no impact on application functionality and do not implicate
+computer or information security. For such purposes, the random number generator need only be as strong as required to achieve the desired visual variations.</p>
 
-<h2>RNG Building Blocks</h2>
+<h2>Using Random Number Generators</h2>
+
+<h3>RNG Building Blocks</h3>
 
 <p>Whether an unpredictable or statistical RNG or another kind of RNG is used, two methods
 given below form the building blocks for writing code that makes practical use of randomness.
@@ -160,13 +157,19 @@ Both methods assume the RNG produces uniformly random numbers, like the RNGs
 described in this page.</p>
 
 <ol>
-<li>To generate a random integer 0 or greater, but less than N, use the RNG to generate as many
+<li>The first building-block is to generate a random integer from 0 inclusive to N exclusive (here
+called <code>RNDINT(N)</code>). To do so, use the RNG to generate as many
 random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer.
 If that nonnegative integer is N or greater, repeat this process.</li>
-<li>To generate a random 64-bit floating-point number 0 or greater, but less than 1, generate a random
-integer 0 or greater, but less than 2<sup>53</sup>, then divide that integer by 2<sup>53</sup>.
+<li>The second building-block is to generate a random number from 0 inclusive to 1 exclusive.
+There are various versions of this, but two choices are:
+
+<ul>
+<li>64-bit IEEE 854 floating-point (Java <code>double</code>): Divide RNDINT(2<sup>53</sup>) by 2<sup>53</sup>.</li>
+<li>32-bit IEEE 854 floating-point (Java <code>float</code>): Divide RNDINT(2<sup>24</sup>) by 2<sup>24</sup>.
 (See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
 for further discussion.)</li>
+</ul></li>
 </ol>
 
 <p>A detailed discussion of other methods to generate random numbers or integers that
@@ -176,9 +179,18 @@ written in terms of the two basic building blocks for generating uniform random 
 These building blocks, in turn, work essentially the same way regardless of the RNG used
 (such as unpredictable, statistical, or seedable).</p>
 
+<h3>Shuffling</h3>
+
+<p>There are special considerations in play when applications use RNGs to shuffle a list of items.</p>
+
+<ol>
+<li><strong>Shuffling method.</strong> The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses is uniformly distributed and can generate all permutations of that list.  However, that method is also easy to get wrong.</li>
+<li><strong>Generating all permutations.</strong> A deterministic RNG (DRNG) can&#39;t generate more permutations of random number sequences than its <em>period</em>. (A DRNG&#39;s <em>period</em> is the number of random numbers it can generate in one sequence before the sequence repeats.  The <em>period</em> will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the DRNG&#39;s <em>seed length</em>.) A DRNG can&#39;t generate all permutations of a list if the factorial of its size is greater than the DRNG&#39;s period. This means that the items in a shuffled list of that size will never appear in certain orders when that DRNG is used to shuffle it.  For example, a DRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.</li>
+</ol>
+
 <h2>Conclusion</h2>
 
-<p>In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified above will meet the needs of those applications.</p>
+<p>In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the &quot;Unpredictable RNGs&quot; and &quot;Statistical RNGs&quot; sections will meet the needs of those applications.</p>
 
 <p>Feel free to send comments. They may help improve this page.</p>
 
