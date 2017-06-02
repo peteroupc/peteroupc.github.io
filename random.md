@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 1, 2017.
+Begun on Mar. 5, 2016; last updated on June 2, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -98,7 +98,7 @@ Generates random bits using a statistical-random implementation.
 
 In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or "seed". One notable example is a "code", or password, for generating a particular game level in some role-playing games.
 
-Functions for seeding random number algorithms are not included, because applications that require seeding usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which PRNG to use for such purpose depends on the application. But here are some recommendations:
+Applications that require seeding usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which PRNG to use for such purpose depends on the application. But here are some recommendations:
 
 -  Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.
 -  The PRNG's _seed length_ should be 64 bits or greater.
@@ -108,8 +108,9 @@ An application should only use seeding if--
 
 1. the initial state (the seed) which the "random" result will be generated from--
     - is hard-coded,
-    - was entered by the user, or
-    - was generated using a statistical or unpredictable RNG (as defined above),
+    - was entered by the user,
+    - was generated using a statistical or unpredictable RNG (as defined above), or
+    - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application needs to generate the same "random" result multiple times,
 3.  it would be impractical to store or distribute that "random" result without relying on seeding, such as--
     -   by saving the result to a file, or
@@ -122,7 +123,7 @@ computer or information security. For such purposes, the random number generator
 ## Using Random Number Generators
 
 The following topics deal with the practical use of RNGs in applications.  Unless stated otherwise,
-they apply regardless of the kind of RNG used (such as unpredictable or statistical).
+they apply regardless of the kind of RNG used (such as unpredictable, statistical, or seedable).
 
 ### RNG Building Blocks
 
@@ -131,14 +132,13 @@ of randomness. Both methods assume the RNG produces uniformly random numbers, li
 described in this page.
 
 1. The first building-block is to generate a random integer from 0 inclusive to N exclusive (here
-called `RNDINT(N)`). To do so, use the RNG to generate as many
+called `RNDINT(N)`), where N is an integer greater than 0. To do so, use the RNG to generate as many
 random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer.
 If that nonnegative integer is N or greater, repeat this process.
-2. The second building-block is to generate a random number from 0 inclusive to 1 exclusive.
-There are various versions of this, but two choices are:
-    - 64-bit IEEE 854 floating-point (Java `double`): Divide RNDINT(2<sup>53</sup>) by 2<sup>53</sup>.
-    - 32-bit IEEE 854 floating-point (Java `float`): Divide RNDINT(2<sup>24</sup>) by 2<sup>24</sup>.
-(See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
+2. The second building-block is to generate a random number from 0 inclusive to 1 exclusive. This can be
+implemented by calling `RNDINT(X)` and dividing by X.  For 64-bit IEEE 854 floating-point numbers
+(Java `double`), X will be 2<sup>53</sup>.  For 32-bit IEEE 854 floating-point numbers
+(Java `float`), X will be 2<sup>24</sup>. (See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
 for further discussion.)
 
 A detailed discussion of other methods to generate random numbers or integers that
@@ -146,19 +146,32 @@ follow a given distribution, such as a normal, geometric, binomial, or discrete 
 distribution, or that fall within a given range, is outside the scope of this page.  In general, such methods can be
 written in terms of the two basic building blocks for generating uniform random numbers.
 
+In my opinion, new programming languages should include methods for the two building blocks
+given above in their standard libraries -- one set for unpredictable-random generators, and another
+set for statistical RNGs.
+
 ### Shuffling
 
 There are special considerations in play when applications use RNGs to shuffle a list of items.
 
 1. **Shuffling method.** The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.
-2. **Generating all permutations.** A pseudorandom number generator (PRNG) can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of its size is greater than the generator's _period_. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.
+2. **Generating all permutations.** A pseudorandom number generator (PRNG) can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.
 
 ## Conclusion
 
 In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the "Unpredictable RNGs" and "Statistical RNGs" sections will meet the needs of those applications.
 
+What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today--
+- don't specify virtually any requirements on RNGs (such as C's `rand` function),
+- specify a relatively weak RNG (such as Java's `java.math.Random`, although it also includes a much stronger `SecureRandom` class),
+- implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP's `mt_rand` as well as in Python and Ruby),
+- seed RNGs with a timestamp by default (such as the [.NET Framework implementation of `System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx)), and/or
+- leave the default seeding unspecified (such as C's `rand` function).
+
+In addition, this document recommends using unpredictable RNGs in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable and statistical RNGs in new programming languages.
+
 Feel free to send comments. They may help improve this page.
 
 ## License
 
-this page, along with any associated source code and files, is licensed under [A Public Domain dedication](http://creativecommons.org/licenses/publicdomain/)
+This page is licensed under [A Public Domain dedication](http://creativecommons.org/licenses/publicdomain/).

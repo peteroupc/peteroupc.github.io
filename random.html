@@ -6,13 +6,13 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 1, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 2, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
 <h2>Introduction</h2>
 
-<p>As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely <em>unpredictable random generators</em> and <em>statistically random generators</em>. This page will discuss these two kinds of RNG in the nature of a sketch of a C programming interface. </p>
+<p>As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely <em>unpredictable random generators</em> and <em>statistically random generators</em>. This page will discuss these two kinds of RNG in the nature of a sketch of a C programming interface.</p>
 
 <p>In addition, other applications require numbers that &quot;seem&quot; random but are based on an initial state, or &quot;seed&quot;.  This page will discuss when seeds should be used by applications.</p>
 
@@ -65,7 +65,7 @@
 <li>must be at least the same size as the PRNG&#39;s <em>seed length</em>.</li>
 </ul>
 
-<p>The PRNG&#39;s <em>seed length</em> must be at least 128 bits and should be at least 256 bits. </p>
+<p>The PRNG&#39;s <em>seed length</em> must be at least 128 bits and should be at least 256 bits.</p>
 
 <p>The implementation should be reseeded from time to time (using a newly generated seed as described above) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.</p></li>
 <li> <strong>Speed:</strong> The implementation should select algorithms that are reasonably fast for most applications.</li>
@@ -103,10 +103,10 @@
 <li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from an unpredictable-random implementation,</li>
 <li>must not be a fixed value or a user-entered value,</li>
 <li>should not be trivially predictable, as far as practical, and</li>
-<li>must be at least the same size as the PRNG&#39;s <em>seed length</em>. </li>
+<li>must be at least the same size as the PRNG&#39;s <em>seed length</em>.</li>
 </ul>
 
-<p>The PRNG&#39;s <em>seed length</em> must be at least 64 bits and should be at least 128 bits. </p>
+<p>The PRNG&#39;s <em>seed length</em> must be at least 64 bits and should be at least 128 bits.</p>
 
 <p>The implementation may reseed itself from time to time (using a newly generated seed as described above). It should do so if the PRNG&#39;s <em>seed length</em> is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p></li>
 <li> <strong>Speed:</strong> The implementation should select algorithms that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
@@ -122,7 +122,7 @@
 
 <p>In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or &quot;seed&quot;. One notable example is a &quot;code&quot;, or password, for generating a particular game level in some role-playing games.</p>
 
-<p>Functions for seeding random number algorithms are not included, because applications that require seeding usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which PRNG to use for such purpose depends on the application. But here are some recommendations:</p>
+<p>Applications that require seeding usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which PRNG to use for such purpose depends on the application. But here are some recommendations:</p>
 
 <ul>
 <li> Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.</li>
@@ -137,8 +137,9 @@
 
 <ul>
 <li>is hard-coded,</li>
-<li>was entered by the user, or</li>
-<li>was generated using a statistical or unpredictable RNG (as defined above),</li>
+<li>was entered by the user,</li>
+<li>was generated using a statistical or unpredictable RNG (as defined above), or</li>
+<li>is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for a result that varies only daily),</li>
 </ul></li>
 <li>the application needs to generate the same &quot;random&quot; result multiple times,</li>
 <li> it would be impractical to store or distribute that &quot;random&quot; result without relying on seeding, such as--
@@ -156,7 +157,7 @@ computer or information security. For such purposes, the random number generator
 <h2>Using Random Number Generators</h2>
 
 <p>The following topics deal with the practical use of RNGs in applications.  Unless stated otherwise,
-they apply regardless of the kind of RNG used (such as unpredictable or statistical).</p>
+they apply regardless of the kind of RNG used (such as unpredictable, statistical, or seedable).</p>
 
 <h3>RNG Building Blocks</h3>
 
@@ -166,18 +167,14 @@ described in this page.</p>
 
 <ol>
 <li>The first building-block is to generate a random integer from 0 inclusive to N exclusive (here
-called <code>RNDINT(N)</code>). To do so, use the RNG to generate as many
+called <code>RNDINT(N)</code>), where N is an integer greater than 0. To do so, use the RNG to generate as many
 random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer.
 If that nonnegative integer is N or greater, repeat this process.</li>
-<li>The second building-block is to generate a random number from 0 inclusive to 1 exclusive.
-There are various versions of this, but two choices are:
-
-<ul>
-<li>64-bit IEEE 854 floating-point (Java <code>double</code>): Divide RNDINT(2<sup>53</sup>) by 2<sup>53</sup>.</li>
-<li>32-bit IEEE 854 floating-point (Java <code>float</code>): Divide RNDINT(2<sup>24</sup>) by 2<sup>24</sup>.
-(See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
+<li>The second building-block is to generate a random number from 0 inclusive to 1 exclusive. This can be
+implemented by calling <code>RNDINT(X)</code> and dividing by X.  For 64-bit IEEE 854 floating-point numbers
+(Java <code>double</code>), X will be 2<sup>53</sup>.  For 32-bit IEEE 854 floating-point numbers
+(Java <code>float</code>), X will be 2<sup>24</sup>. (See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
 for further discussion.)</li>
-</ul></li>
 </ol>
 
 <p>A detailed discussion of other methods to generate random numbers or integers that
@@ -185,24 +182,40 @@ follow a given distribution, such as a normal, geometric, binomial, or discrete 
 distribution, or that fall within a given range, is outside the scope of this page.  In general, such methods can be
 written in terms of the two basic building blocks for generating uniform random numbers.</p>
 
+<p>In my opinion, new programming languages should include methods for the two building blocks
+given above in their standard libraries -- one set for unpredictable-random generators, and another
+set for statistical RNGs.</p>
+
 <h3>Shuffling</h3>
 
 <p>There are special considerations in play when applications use RNGs to shuffle a list of items.</p>
 
 <ol>
 <li><strong>Shuffling method.</strong> The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.</li>
-<li><strong>Generating all permutations.</strong> A pseudorandom number generator (PRNG) can&#39;t generate all permutations of a list if the <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a> of its size is greater than the generator&#39;s <em>period</em>. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.</li>
+<li><strong>Generating all permutations.</strong> A pseudorandom number generator (PRNG) can&#39;t generate all permutations of a list if the <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a> of the list&#39;s size is greater than the generator&#39;s <em>period</em>. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation.</li>
 </ol>
 
 <h2>Conclusion</h2>
 
 <p>In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the &quot;Unpredictable RNGs&quot; and &quot;Statistical RNGs&quot; sections will meet the needs of those applications.</p>
 
+<p>What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today--</p>
+
+<ul>
+<li>don&#39;t specify virtually any requirements on RNGs (such as C&#39;s <code>rand</code> function),</li>
+<li>specify a relatively weak RNG (such as Java&#39;s <code>java.math.Random</code>, although it also includes a much stronger <code>SecureRandom</code> class),</li>
+<li>implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP&#39;s <code>mt_rand</code> as well as in Python and Ruby),</li>
+<li>seed RNGs with a timestamp by default (such as the <a href="https://msdn.microsoft.com/en-us/library/h343ddh9.aspx">.NET Framework implementation of <code>System.Random</code></a>), and/or</li>
+<li>leave the default seeding unspecified (such as C&#39;s <code>rand</code> function).</li>
+</ul>
+
+<p>In addition, this document recommends using unpredictable RNGs in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable and statistical RNGs in new programming languages.</p>
+
 <p>Feel free to send comments. They may help improve this page.</p>
 
 <h2>License</h2>
 
-<p>this page, along with any associated source code and files, is licensed under <a href="http://creativecommons.org/licenses/publicdomain/">A Public Domain dedication</a></p>
+<p>This page is licensed under <a href="http://creativecommons.org/licenses/publicdomain/">A Public Domain dedication</a>.</p>
 </div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
