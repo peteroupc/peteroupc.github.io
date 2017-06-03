@@ -1,0 +1,513 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generation Methods</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>Random Number Generation Methods</h1>
+
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
+
+<p>This page discusses many ways applications can extract random numbers
+from random number generators (RNGs) and includes pseudocode for most
+of them.</p>
+
+<p>RNGs include those that seek to generate &quot;unpredictable&quot; random numbers (also called &quot;cryptographically strong&quot; RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness.  In general, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in <a href="https://peteroupc.github.io/random.html">another document</a>.</p>
+
+<p>Note that the pseudocode doesn&#39;t cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.</p>
+
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
+
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Notes_and_Definitions">Notes and Definitions</a><br><a href="#Core_Random_Generation_Method">Core Random Generation Method</a><br><a href="#Random_Numbers_Within_a_Range">Random Numbers Within a Range</a><br>&nbsp;&nbsp;<a href="#Random_Integers_Within_a_Range">Random Integers Within a Range</a><br>&nbsp;&nbsp;<a href="#Random_Numbers_in_a_0_1_Bounded_Interval">Random Numbers in a 0-1 Bounded Interval</a><br>&nbsp;&nbsp;<a href="#Uniform_Numbers_Within_a_Range">Uniform Numbers Within a Range</a><br><a href="#Boolean_Conditions">Boolean Conditions</a><br><a href="#Shuffling">Shuffling</a><br><a href="#Choosing_an_Item_from_a_List">Choosing an Item from a List</a><br><a href="#Creating_a_Random_Character_String">Creating a Random Character String</a><br><a href="#Choosing_Several_Unique_Items">Choosing Several Unique Items</a><br><a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a><br><a href="#Triangular_Distribution">Triangular Distribution</a><br><a href="#Normal_Distribution">Normal Distribution</a><br><a href="#Binomial_Distribution">Binomial Distribution</a><br><a href="#Negative_Binomial_Distribution">Negative Binomial Distribution</a><br><a href="#Hypergeometric_Distribution">Hypergeometric Distribution</a><br><a href="#Poisson_Distribution">Poisson Distribution</a><br><a href="#Gamma_Distribution">Gamma Distribution</a><br><a href="#Other_Non_Uniform_Distributions">Other Non-Uniform Distributions</a><br><a href="#Conclusion">Conclusion</a><br><a href="#License">License</a><br></p>
+
+<p><a id=Notes_and_Definitions></a></p>
+
+<h2>Notes and Definitions</h2>
+
+<p>In this document:</p>
+
+<ul>
+<li>Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.</li>
+<li>Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list&#39;s size minus 1</li>
+<li><code>pi</code> is the constant &pi;, the ratio of a circle&#39;s circumference to its diameter.</li>
+<li><code>sin(a)</code>, <code>cos(a)</code>, and <code>tan(a)</code> are the sine, cosine, and tangent of the angle <code>a</code>, in radians.</li>
+<li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
+<li><code>sqrt(a)</code> is the square root of <code>a</code>.</li>
+<li><code>ln(a)</code> is the natural logarithm of <code>a</code>.  It corresponds to the <code>Math.log</code> method in Java and JavaScript.</li>
+<li><code>exp(a)</code> is the number <em>e</em> (base of natural logarithms) raised to the power <code>a</code>.</li>
+<li><code>NewList()</code> creates a new empty list.</li>
+<li><code>AddItem(list, item)</code> adds the item <code>item</code> to the list <code>list</code>.</li>
+<li><code>size(list)</code> returns the size of the list <code>list</code>.</li>
+<li><code>list[k]</code> refers to the item at index <code>k</code> of the list <code>list</code>.</li>
+</ul>
+
+<p><a id=Core_Random_Generation_Method></a></p>
+
+<h2>Core Random Generation Method</h2>
+
+<p>The core method for generating random numbers using an RNG is called <strong><code>RNDINT(N)</code></strong> in this document. It generates a random integer from 0 inclusive to N exclusive, where N is an integer greater than 0, and it assumes the generator produces uniformly random numbers.</p>
+
+<p><code>RNDINT(N)</code> can be implemented as follows: Use the RNG to generate as many random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer. If that nonnegative integer is N or greater, repeat this process.</p>
+
+<p>This core method can serve as the basis for all other methods described below that extract random numbers from RNGs.</p>
+
+<p><a id=Random_Numbers_Within_a_Range></a></p>
+
+<h2>Random Numbers Within a Range</h2>
+
+<p>The following methods aid in generating random numbers within a range.</p>
+
+<p><a id=Random_Integers_Within_a_Range></a></p>
+
+<h3>Random Integers Within a Range</h3>
+
+<ul>
+<li>Random integer from MIN inclusive to MAX exclusive: <code>MIN + RNDINT(MAX - MIN)</code></li>
+<li>Random integer from MIN inclusive to MAX inclusive: <code>MIN + RNDINT((MAX - MIN) + 1)</code></li>
+<li><strong>Example:</strong> Random integer from 10 inclusive to 40 exclusive: <code>10 + RNDINT(30)</code></li>
+</ul>
+
+<p><a id=Random_Numbers_in_a_0_1_Bounded_Interval></a></p>
+
+<h3>Random Numbers in a 0-1 Bounded Interval</h3>
+
+<p>The following idioms generate a random number in an interval bounded at 0 and 1.</p>
+
+<ul>
+<li><code>RNDU()</code>, a random number 0 or greater, but less than 1 (interval <code>[0, 1)</code>): <code>RNDINT(X) / X</code></li>
+<li><code>RNDNZU()</code>, a random number greater than 0, but less than 1 (interval <code>(0, 1)</code>): <code>(RNDINT(X-1) + 1) / X</code></li>
+<li>Random number 0 or greater, but 1 or less (interval <code>[0, 1]</code>): <code>(RNDINT(X + 1)) / X</code></li>
+<li>Random number greater than 0, but 1 or less (interval <code>(0, 1]</code>): <code>(RNDINT(X) + 1) / X</code></li>
+</ul>
+
+<p>In the method definitions given above, X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 854 floating-point numbers (Java <code>double</code>), X will be 2<sup>53</sup>.  For 32-bit IEEE 854 floating-point numbers (Java <code>float</code>), X will be 2<sup>24</sup>.  (See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
+for further discussion.)  Note that--</p>
+
+<ul>
+<li><code>RNDU()</code> corresponds to <code>Math.random()</code> in Java and JavaScript, and</li>
+</ul>
+
+<p><a id=Uniform_Numbers_Within_a_Range></a></p>
+
+<h3>Uniform Numbers Within a Range</h3>
+
+<ul>
+<li>Random number from MIN inclusive to MAX exclusive: <code>MIN + RNDU()*(MAX - MIN)</code></li>
+<li>Alternative way of generating a random integer from 0 inclusive to N exclusive: <code>floor(RNDU()*(N))</code>
+
+<ul>
+<li><strong>Example:</strong> In JavaScript, this can be implemented as: <code>Math.floor(Math.random()*N)</code></li>
+</ul></li>
+</ul>
+
+<p><a id=Boolean_Conditions></a></p>
+
+<h2>Boolean Conditions</h2>
+
+<p>To generate a condition that is true at the specified probabilities, use
+the following idioms in an <code>if</code> condition:</p>
+
+<ul>
+<li>True or false with equal probability: <code>RNDINT(2) == 0</code>.</li>
+<li>True with X percent probability: <code>RNDINT(100) &lt; X</code>.</li>
+<li>True with probability X/Y: <code>RNDINT(Y) &lt; X</code>.</li>
+<li>True with probability X, where X is from 0 through 1 (a <em>Bernoulli trial</em>): <code>RNDU() &lt; X</code>.</li>
+<li><strong>Example:</strong> True with probability 3/8: <code>RNDINT(8) &lt; 3</code>.</li>
+<li><strong>Example:</strong> True with 20% probability: <code>RNDINT(100) &lt; 20</code>.</li>
+</ul>
+
+<p><a id=Shuffling></a></p>
+
+<h2>Shuffling</h2>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.</p>
+
+<pre><code>METHOD Shuffle(list)
+   if size(list) &gt;= 2
+      // Set i to the last item&#39;s index
+      i = size(list) - 1
+      while i &gt; 0
+         // Choose an item ranging from the first item
+         // up to the item given in i
+         k = RNDINT(i + 1)
+         // The following is wrong since it introduces biases:
+         // k = RNDINT(size(list))
+         // The following is wrong since the algorithm won&#39;t
+         // choose from among all possible permutations:
+         // k = RNDINT(i)
+         // Swap item at index i with item at index k;
+         // in this case, i and k may be the same
+         tmp = list[i]
+         list[i] = list[k]
+         list[k] = tmp
+         // Move i so it points to the previous item
+         i = i - 1
+      end
+   end
+END METHOD
+</code></pre>
+
+<p>An important consideration with respect to shuffling is the kind of RNG used.  This is because a deterministic RNG can&#39;t generate all permutations of a list if the <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a> of the list&#39;s size is greater than the generator&#39;s <em>period</em> (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate &quot;unpredictable&quot; numbers suffer less from this problem.</p>
+
+<p><a id=Choosing_an_Item_from_a_List></a></p>
+
+<h2>Choosing an Item from a List</h2>
+
+<p>To choose an item from a list, use the idiom <code>list[RNDINT(size(list))]</code>.  This idiom assumes that the first item of the list is at position 0, the second is at position 1, and so on.</p>
+
+<p><a id=Creating_a_Random_Character_String></a></p>
+
+<h2>Creating a Random Character String</h2>
+
+<p>A commonly asked question involves how to generate a random string of characters (usually a random <em>alphanumeric string</em>, or string of letters and digits).</p>
+
+<p>The first step is to generate a list of the letters and digits (and/or other characters) the string can have.  Often, those characters will be--</p>
+
+<ul>
+<li>the basic digits &quot;0&quot; to &quot;9&quot; (U+0030-U+0039, nos. 48-57),</li>
+<li>the basic upper case letters &quot;A&quot; to &quot;Z&quot; (U+0041-U+005A, nos. 65-90), and</li>
+<li>the basic lower case letters &quot;a&quot; to &quot;z&quot; (U+0061-U+007A, nos. 96-122),</li>
+</ul>
+
+<p>as found in the Basic Latin block of the Unicode Standard. (Note that if the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the string.)</p>
+
+<p>The second step is to build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string (which is programming-language-dependent), where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.</p>
+
+<pre><code>  METHOD RandomString(characterList, stringSize)
+       i = 0
+       newString = NewList()
+       while i &lt; stringSize
+           // Choose a character from the list
+           randomChar = characterList[RNDINT(characterList)]
+           // Add the character to the string
+           AddItem(newString, randomChar)
+           i = i + 1
+        end
+        return newString
+  END METHOD
+</code></pre>
+
+<p><em><strong>Note:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated.  Random number generators alone should not be relied on to deliver unique results.</em></p>
+
+<p><a id=Choosing_Several_Unique_Items></a></p>
+
+<h2>Choosing Several Unique Items</h2>
+
+<p>Often, the need arises to choose <code>k</code> unique items or values from among <code>n</code> available items or values.</p>
+
+<p>If <code>n</code> is relatively small (for example, if there are 1000 available items, or there is a range of numbers from 0 to 1000 to choose from), then store the items in a list, <a href="#Shuffling">shuffle</a> that list, and choose the first <code>k</code> items from that list.</p>
+
+<p>If <code>k</code> unique integers of 32 bits or greater are to be chosen (so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2), or if <code>n</code> is otherwise relatively large, create a hash table storing the items already generated.  When a new item (or index to an item) is chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new item (or index).  Repeat this process until <code>k</code> items (or indices) were added to the hash table this way.  Performance considerations involving hash tables are outside the scope of this document.</p>
+
+<p><a id=Discrete_Weighted_Choice></a></p>
+
+<h2>Discrete Weighted Choice</h2>
+
+<p>Some applications need to choose random items such that some items are more likely to be chosen than others.</p>
+
+<p>The following pseudocode takes two lists, <code>list</code> and <code>weights</code>, and returns one item from the list <code>list</code>.  Items with greater weights (which are given at the corresponding indices in the list <code>weights</code>) are more likely to be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.)</p>
+
+<pre><code>METHOD WeightedChoice(list, weights)
+    if size(list) &lt;= 0 or size(weights) &lt; size(list): return error
+    sum = 0
+    // Get the sum of all weights
+    i = 0
+    while i &lt; size(weights)
+        sum = sum + weights[i]
+        i = i + 1
+    end
+    // Choose a random integer/number from 0 to less than
+    // the number of weights.
+    value = RNDINT(sum)
+    // NOTE: If the weights can be fractional numbers,
+    // use this instead:
+    // value = RNDU() * sum
+    // Choose the object according to the given value
+    i = 0
+    lastItem = size(list) - 1
+    while i &lt; size(weights)
+        value = value - weights[i]
+        if value &lt;= 0: return list[i]
+        if weights[i] &gt; 0: lastItem = i
+        i = i + 1
+    end
+    // Last resort (shouldn&#39;t happen unless rounding
+    // error happened somehow)
+    return list[lastItem]
+END METHOD
+</code></pre>
+
+<p><a id=Triangular_Distribution></a></p>
+
+<h2>Triangular Distribution</h2>
+
+<p>The following method generates a random number that follows a triangular distribution, a distribution that starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</p>
+
+<pre><code>METHOD Triangular(startpt, midpt, endpt)
+     if startpt==midpt or midpt==endpt or startpt&gt;midpt or
+         midpt&gt;endpt or startpt&gt;endpt: return error
+     ca = (midpt - startpt)
+     pdf = ca * ca / (endpt - startpt) * ca
+     rndvar = RNDU()
+     // Or `rndvar = (RNDINT(X + 1)) / X` if endpoint is to be included;
+     // see &quot;Uniform Numbers Within a Range&quot;, above
+     if rndvar&lt;pdf
+         # Left hand side
+         return startpt+ca*(pdf-rndvar)/pdf
+     else
+          # Right hand side
+         return midpt+(endpt-midpt)*(rndvar-pdf)/(1.0-pdf)
+     end
+end
+</code></pre>
+
+<p><a id=Normal_Distribution></a></p>
+
+<h2>Normal Distribution</h2>
+
+<p>The following method generates two <a href="https://wikipedia.org/wiki/Normal_distribution">normally-distributed</a>
+random numbers with mean <code>mu</code> (&mu;) and standard deviation <code>sigma</code> (&sigma;). (In a <em>standard normal distribution</em>, &mu; = 0 and &sigma; = 1.),
+using the so-called <a href="https://wikipedia.org/wiki/Box-Muller%20transformation">Box-Muller transformation</a>.</p>
+
+<pre><code>METHOD Normal2(mu, sigma)
+  s = sqrt(-2 * ln(RNDNZU())) * sigma
+  t = 2 * pi * RNDU()
+  // Return two normally-distributed numbers
+  return [mu + s * sin(t), mu + s * cos(t)]
+END METHOD
+</code></pre>
+
+<p>Since <code>Normal2</code> returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name <code>Normal</code> will be used in this document to represent a method that returns only one normally-distributed random number rather than two.</p>
+
+<p><a id=Binomial_Distribution></a></p>
+
+<h2>Binomial Distribution</h2>
+
+<p>The following method generates a random integer that follows a binomial distribution.  This number
+expresses the number of successes that have happened after a given number of trials
+(expressed as <code>successes</code> below), where the probability of a success is <code>p</code> (ranging from 0, never, to
+1, always).</p>
+
+<pre><code>METHOD Binomial(trials, p)
+    if successes &lt; 0: return error
+    if successes == 0: return 0
+    // Always succeeds
+    if p &gt;= 1.0: return trials
+    // Always fails
+    if p &lt;= 0.0: return 0
+    i = 0
+    count = 0
+    while i &lt; trials
+        if RNDU() &lt; p
+            // Success
+            count = count + 1
+        end
+        i = i + 1
+    end
+    return count
+END METHOD
+</code></pre>
+
+<p><a id=Negative_Binomial_Distribution></a></p>
+
+<h2>Negative Binomial Distribution</h2>
+
+<p>The following method generates a random integer that follows a negative binomial distribution.  This number
+expresses the number of failures that have happened after seeing a given number of successes
+(expressed as <code>successes</code> below), where the probability of a success is <code>p</code> (ranging from 0, never, to
+1, always).</p>
+
+<pre><code>METHOD NegativeBinomial(successes, p)
+    if successes &lt; 0: return error
+    if successes == 0: return 0
+    // Always succeeds
+    if p &gt;= 1.0: return 0
+    // Always fails (NOTE: infinity can be the maximum possible
+    // integer value if NegativeBinomial is implemented to return
+    // an integer)
+    if p &lt;= 0.0: return infinity
+    count = 0
+    total = 0
+    loop
+          if RNDU() &lt; p
+            // Success
+            total = total + 1
+            if total &gt;= successes
+                    return count
+            end
+        else
+            // Failure
+            count = count + 1
+        end
+    end
+END METHOD
+</code></pre>
+
+<p><a id=Hypergeometric_Distribution></a></p>
+
+<h2>Hypergeometric Distribution</h2>
+
+<p>The following method generates a random integer that follows a hypergeometric distribution.
+When a given number of items are drawn at random without replacement from a set of items
+labeled either <code>1</code> or <code>0</code>,  the random integer expresses the number of items drawn
+this way that are labeled <code>1</code>.  In the method below, <code>trials</code> is the number of items
+drawn at random, <code>ones</code> is the number of items labeled <code>1</code> in the set, and <code>count</code> is
+the number of items labeled <code>1</code> or <code>0</code> in that set.</p>
+
+<pre><code>METHOD Hypergeometric(trials, ones, count)
+    if ones &lt; 0 or count &lt; 0 or trials &lt; 0 or ones &gt; count or trials &gt; count
+            return error
+    end
+    if ones == 0: return 0
+    successes = 0
+    i = 0
+    currentCount = count
+    currentOnes = ones
+    while i &lt; trials and currentOnes &gt; 0
+            if RNDINT(currentCount) &lt; currentOnes
+                    currentOnes = currentOnes - 1
+                    successes = successes + 1
+            end
+            currentCount = currentCount - 1
+            i = i + 1
+    end
+    return successes
+END METHOD
+</code></pre>
+
+<p><a id=Poisson_Distribution></a></p>
+
+<h2>Poisson Distribution</h2>
+
+<p>The following method generates a random integer that follows a Poisson distribution.
+The integer is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can also
+be a fractional number.  The method given here is based on Knuth&#39;s method from 1969.</p>
+
+<pre><code>METHOD Poisson(mean)
+    if mean &lt; 0: return error
+    pn = exp(-mean)
+    p = 1.0
+    count = 0
+    loop
+        count = count + 1
+        p = p * RNDU()
+        if p &lt;= pn
+                return count - 1
+        end
+    end
+END METHOD
+</code></pre>
+
+<p><a id=Gamma_Distribution></a></p>
+
+<h2>Gamma Distribution</h2>
+
+<p>The following method generates a random number that follows a gamma distribution.
+The method given here is based on Marsaglia and Tsang&#39;s method from 2000.</p>
+
+<pre><code>METHOD GammaDist(a)
+    if a &lt;= -1: return error
+    d = a
+    v = 0
+    if a &lt; 1: d = d + 1
+    d = d - (1/3) // NOTE: 1/3 must be a fractional number
+    c = 1 / sqrt(9 * d)
+    loop
+        loop
+           x = Normal(0, 1)
+           v = c*x + 1;
+           v = v * v * v
+           if v &gt; 0: break
+        end
+        // Avoid possibility of u being 0 because
+        // of ln function below
+        u = RNDNZU()
+        x2 = x * x
+        if u &lt; 1 - (0.0331 * x2 * x2): break
+        if ln(u) &lt; (0.5 * x2) + (d * (1 - v + ln(v))): break
+    end
+    if a &lt; 1: return d * v * exp(ln(RNDNZU()) / a)
+    return d * v
+end
+</code></pre>
+
+<p>The two-parameter gamma distribution (<code>GammaDist2(a, b)</code>), where <code>b</code> is the scale, is simply <code>GammaDist(a) * b</code>.</p>
+
+<p><a id=Other_Non_Uniform_Distributions></a></p>
+
+<h2>Other Non-Uniform Distributions</h2>
+
+<ul>
+<li><strong>Beta distribution</strong>: <code>x / (x + GammaDist(b))</code>, where <code>x</code> is <code>GammaDist(a)</code> and <code>a</code> and <code>b</code> are
+the two parameters of the beta distribution.</li>
+<li><strong>Beta binomial distribution</strong>: <code>Binomial(trials, x / (x + GammaDist(b)))</code>, where <code>x</code> is <code>GammaDist(a)</code>, <code>a</code> and <code>b</code> are
+the two parameters of the beta distribution, and <code>trials</code> is a parameter of the binomial distribution.</li>
+<li><strong>Cauchy distribution</strong>: <code>scale * tan(pi * (RNDU()-0.5)) + mu</code>, where <code>mu</code> and <code>scale</code>
+are the two parameters of the Cauchy distribution.</li>
+<li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5) * 2</code>, where <code>df</code> is the number of degrees of
+freedom.</li>
+<li><strong>Exponential distribution</strong>: <code>-ln(RNDNZU()) / lambda</code>, where <code>lambda</code> is the inverse scale.</li>
+<li><strong>Geometric distribution</strong>: <code>NegativeBinomial(1, p)</code>, where <code>p</code> has the same meaning
+as in the negative binomial distribution.</li>
+<li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the
+same meaning as in the two-parameter gamma distribution.</li>
+<li><strong>Laplace (double exponential) distribution</strong>: <code>(ln(RNDNZU())-ln(RNDNZU()))*beta+mu</code>, where <code>beta</code> is the scale and <code>mu</code> is the mean.</li>
+<li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
+have the same meaning as in the normal distribution.</li>
+<li><strong>Snedecor&#39;s <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.</li>
+<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(0, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)</code>, where <code>df</code> is the number of degrees of freedom.</li>
+<li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDNZU()),1/a)</code>, where <code>a</code> and <code>b</code> are greater than 0.</li>
+</ul>
+
+<p><a id=Conclusion></a></p>
+
+<h2>Conclusion</h2>
+
+<p>This page discussed many ways applications can extract random numbers
+from random number generators.</p>
+
+<p>Feel free to send comments. They may help improve this page.  In particular, corrections to any method given on this page are welcome.</p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>This page is licensed under <a href="http://creativecommons.org/licenses/publicdomain/">A Public Domain dedication</a>.</p>
+</div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHfwYJKoZIhvcNAQcEoIIHcDCCB2wCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBTEjVSqAfM9cTLwXVwxBqNI8r1Il0SJNqahKnIJrEIZOdmziEnZsYS8kifxxbWCBrNGl1S/eO5kcMG6WO50eBSxFlNpweevNYIs0dIdfQZtiWcRD2yYzaWHBkHu3PmCCLmc3pPT5QaOc949w2dPcg+syabMOSwN94Mk67Wh//7pTELMAkGBSsOAwIaBQAwgfwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIm7w2yVS0zOeAgdhYAX/keBkbLTGS2k5QcVstRROvRVuMlDL7sy/YUie0YlEJKDFTFE7n6LP15AFfODDattjmqKJ7UZ+6hY9sqJhayUNqdl/rA/RYgPVKGWTM1l68+KFdz2SO3IHvBUJIAwnHFX1JVyNUAofSxWj+3eoN5MnQzskA4cKe/RFWB04oXxZS7/WCOHL3q3mlwFDSK83C3Wcqro7S18YnVxfJ4XGUQ7nlx1C9K0Xq+JbCGEC4D8yjQHzm9w3LqUOogiI3l9VVlXxuqcAdq+iBkAGIt3y4TXABMtXEFG2gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MTAxMzA4NDBaMCMGCSqGSIb3DQEJBDEWBBQImRl0rdSM38l1aTcRhxgiKb7ipTANBgkqhkiG9w0BAQEFAASBgE0IsEWvN+n6QuwDFkBMQO9C4z5uf7wAvoMDgifDKBCyGFmpYZPsKawkYVcS/kASDtyq6aWU3lqP+KweyA+0xfpAyE3R8/7p80uqGGs8bHGicxkl2pEkX95R23HGRa1pEDHFF1XQNkhns558WioFipI2RvmAAEaMgZQ1p+SV/cdu-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>
